@@ -1,7 +1,10 @@
 import { util } from "../../../../lib/util.js";
 import DataTable from "../../../../component/datatable.js";
+import SearchDialogBox from "../../../../component/searchDialogBox.js";
 
 const STRETCH_PANEL_WIDTH = 300;
+const MOVE_TASK_PLAN_ORDER_POSITION_UP = 1;
+const MOVE_TASK_PLAN_ORDER_POSITION_DOWN = 2;
 
 export default class IncidentTypeTaskDetailPlan {
 
@@ -309,10 +312,30 @@ export default class IncidentTypeTaskDetailPlan {
 				{
 					id: 2,
 					default_: false,
-					icon: "mdi mdi-delete-outline",
+					icon: "mdi mdi-arrow-up-bold",
+					label: "LBL_MOVE_UP",
+					multiselect: false,
+					position: 2,
+					showText: false,
+					itemRequired: true
+				},
+				{
+					id: 3,
+					default_: false,
+					icon: "mdi mdi-arrow-down-bold",
+					label: "LBL_MOVE_DOWN",
+					multiselect: false,
+					position: 3,
+					showText: false,
+					itemRequired: true
+				},
+				{
+					id: 4,
+					default_: false,
+					icon: "mdi mdi-delete",
 					label: "LBL_DELETE",
 					multiselect: true,
-					position: 2,
+					position: 4,
 					showText: false,
 					itemRequired: true
 				}
@@ -342,16 +365,40 @@ export default class IncidentTypeTaskDetailPlan {
 				commandId: 1,
 				function: (selectedIds) => {
 
-					
+					addTaskPlan();
+				}
+			});
+			
+			// MOVE UP SELECTED STATE
+			events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
+				commandId: 2,
+				function: (selectedIds) => {
+
+					if (Array.isArray(selectedIds) && selectedIds.length === 1) {
+						
+						moveTaskPlanOrder(selectedIds[0], MOVE_TASK_PLAN_ORDER_POSITION_UP);
+					} 
+				}
+			});
+			
+			// MOVE DOWN SELECTED STATE
+			events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
+				commandId: 3,
+				function: (selectedIds) => {
+
+					if (Array.isArray(selectedIds) && selectedIds.length === 1) {
+						
+						moveTaskPlanOrder(selectedIds[0], MOVE_TASK_PLAN_ORDER_POSITION_DOWN);
+					} 
 				}
 			});
 			
 			// REMOVE
 			events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
-				commandId: 2,
+				commandId: 4,
 				function: (selectedIds) => {
 
-					
+					removeTaskPlans(selectedIds);
 				}
 			});
 			
@@ -360,6 +407,169 @@ export default class IncidentTypeTaskDetailPlan {
 			webix.ui(self.dtTaskPlans.getView(), $$("incident-type-state-task-detail-content-plans-table-" + self.uid));
 			
 			self.dtTaskPlans.callbacks();
+			
+			function addTaskPlan() {
+				
+				let dialogPlanEntity = webix.copy(SearchDialogBox.CALLBACK);				
+				dialogPlanEntity.fillDialogEntity = fillDialogEntity;
+				dialogPlanEntity.dataType = SearchDialogBox.DIALOG_DATA_TYPE_TREE;
+				dialogPlanEntity.height = 600;
+				dialogPlanEntity.width = 800;
+				dialogPlanEntity.data = {};
+				
+				function fillDialogEntity(dialogEntity, onFilledDialogEntity) {
+
+					let promises = [];
+
+					promises.push(webix.ajax().get(appConfig.restUrl + self.config.restEndpoints.planNodes));
+					promises.push(webix.ajax().get(appConfig.restUrl + self.config.restEndpoints.planHierarchies));
+					promises.push(webix.ajax().get(appConfig.restUrl + self.config.restEndpoints.plans));
+
+					webix.promise.all(promises).then(function(responses) {
+
+						if (Array.isArray(responses) && responses.length === 3) {
+							
+							let itemsTree = [];
+							let itemRelationships = [];
+
+							let nodes = (responses[0] && responses[0].json()) ? responses[0].json() : [];
+							let relationships = responses[1] && responses[1].json() ? responses[1].json() : [];
+							let plans = responses[2] && responses[2].json() ? responses[2].json() : [];
+
+							if (Array.isArray(nodes) && nodes.length > 0) {
+
+								itemsTree = nodes.map(e => {
+
+									let plan = plans.find(p => (e.plan && p.id === e.plan.id));
+
+									return {
+
+										id: e.id,
+										label: plan ? plan.alias : e.alias,
+										plan: e.plan,
+										folder: !e.plan
+									}
+								});
+							}
+
+							if (Array.isArray(relationships) && relationships.length > 0) {
+
+								itemRelationships = relationships.map(e => {
+
+									return {
+
+										id: e.id,
+										nodeParentId: e.parent.id,
+										nodeChildId: e.child.id
+									}
+								});
+							}
+
+							dialogEntity.data.nodes = itemsTree;
+							dialogEntity.data.relationships = itemRelationships;
+							dialogEntity.data.nodeParentId = "nodeParentId";
+							dialogEntity.data.nodeChildId = "nodeChildId";
+							
+							onFilledDialogEntity(dialogEntity);
+						}
+					});					
+				}
+				
+				
+				let s = new SearchDialogBox(i18n.t("LBL_SELECT_PLAN"), dialogPlanEntity, onAccept);
+				s.show();
+				
+				function onAccept(selection) {
+
+					if (Array.isArray(selection) && selection.length > 0) {
+						
+						let newPlan = {
+							planId: selection[0].id,
+							plan: selection[0].alias,
+							position: getNextPosition()
+						}
+						
+						self.dtTaskPlans.add(newPlan);
+						
+						updateTaskPlanPositions();
+					}				
+				}
+			}
+			
+			function getNextPosition() {
+			
+				let position = 0;
+				
+				if (Array.isArray(self.dtTaskPlans.getAllItems())) {
+					
+					self.dtTaskPlans.getAllItems().forEach(item => {
+						
+						position = item.position > position ? item.position : position;  
+					});
+				}
+				
+				return ++position;
+			}
+			
+			function updateTaskPlanPositions() {
+				
+				let taskPlans = webix.copy(self.dtTaskPlans.getAllItems());
+				
+				if (Array.isArray(taskPlans)) {
+					
+					let position = 1;
+					taskPlans.forEach(taskPlan => {
+						
+						taskPlan.position = position++; 
+					});
+					
+					self.dtTaskPlans.update(taskPlans);
+				}
+			}
+			
+			function moveTaskPlanOrder(selectedId, moveTaskPlanOrderType) {
+				
+				let taskPlans = webix.copy(self.dtTaskPlans.getAllItems());
+				let taskPlan = taskPlans.find(e => e.id === selectedId);
+				
+				if (taskPlan) {
+					
+					let currentPosition = taskPlan.position; 
+					let newPosition = undefined;
+				
+					if (currentPosition > 0 && moveTaskPlanOrderType === MOVE_TASK_PLAN_ORDER_POSITION_DOWN) {
+						
+						if (currentPosition + 1 <= taskPlans.length) {
+							
+							newPosition = currentPosition + 1;	
+						}
+					}
+					else if (currentPosition > 1 && moveTaskPlanOrderType === MOVE_TASK_PLAN_ORDER_POSITION_UP) {
+						
+						newPosition = currentPosition -1;
+					}
+					
+					if (newPosition) {
+						
+						let taskPlanAffected = taskPlans.find(e => e.position === newPosition);
+						
+						taskPlanAffected.position = currentPosition;
+						taskPlan.position = newPosition;
+						
+						self.dtTaskPlans.update([taskPlan, taskPlanAffected]);
+					}	
+				}
+			}
+			
+			function removeTaskPlans(selectedIds) {
+				
+				if (Array.isArray(selectedIds)) {
+					
+					self.dtTaskPlans.delete(self.dtTaskPlans.getAllItems().filter(e => selectedIds.includes(e.id)));
+					
+					updateTaskPlanPositions();
+				}
+			}
 		}
 	}
 }	

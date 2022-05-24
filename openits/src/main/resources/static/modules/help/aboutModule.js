@@ -121,7 +121,9 @@ export default class AboutModule extends GenericModule {
 			let table = {
 				fields: ["component=LBL_ALIAS", "version=", "date=LBL_DATE", "commit=LBL_COMMIT"],
 				pkField: "id",
-				data: []
+				data: [],
+				width: 800,
+				height: 450
 			};
 			
 			if (self.clientInfo && self.clientInfo.gitInfo) {

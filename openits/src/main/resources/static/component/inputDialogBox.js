@@ -13,7 +13,8 @@ const ALERT_HEIGHT = {
 	NO_ALPHA_OR_TIMESTAMP: 57
 };
 
-const TEXTAREA_HEIGHT= 70;
+const TEXTAREA_HEIGHT = 70;
+const TEXTAREA_MAX_HEIGHT = 400;
 
 const WINDOW_HEIGHT={
 	TIMESTAMP: 400,
@@ -32,7 +33,20 @@ export default class InputDialogBox {
 		this.currentValue = currentValue;
 		this.valid = true;
 		this.dataType = dataType && dataType.id ? dataType : { id: DataType.ALPHANUMERIC };
-		this.isObject = (currentValue && typeof(currentValue) === "object" && this.dataType.id === DataType.ALPHANUMERIC) ? true : false;
+		
+		if (this.dataType.id === DataType.ALPHANUMERIC && currentValue) {
+			
+			try {
+				
+				this.currentValue = JSON.parse(currentValue);
+				
+				this.isObject = true;	
+			}
+			catch {
+				
+			}
+		}
+
 		this.uid = webix.uid();
 	}
 
@@ -278,7 +292,7 @@ export default class InputDialogBox {
 				const CORRECTION_FACTORS = {
 					WINDOW_HEIGHT: 110,
 					BODY_HEIGHT: 40,
-					TEXTAREA_HEIGHT_ISOBJECT:80,
+					TEXTAREA_HEIGHT_ISOBJECT:70,
 					TEXTAREA_HEIGHT: 10,
 					LINE_HEIGHT: 18,					 					
 				};
@@ -288,8 +302,9 @@ export default class InputDialogBox {
 					currentValue = JSON.stringify(self.currentValue, null, 3);
 					let numOfLines = currentValue.split(/\n+/).length;
 
-					textareaHeight = numOfLines * CORRECTION_FACTORS.LINE_HEIGHT;					
-					textareaHeight = (textareaHeight > HEIGHT.OBJECT - CORRECTION_FACTORS.WINDOW_HEIGHT) ? HEIGHT.OBJECT - CORRECTION_FACTORS.WINDOW_HEIGHT :textareaHeight;
+					textareaHeight = TEXTAREA_MAX_HEIGHT;
+					//textareaHeight = numOfLines * CORRECTION_FACTORS.LINE_HEIGHT;					
+					//textareaHeight = (textareaHeight > HEIGHT.OBJECT - CORRECTION_FACTORS.WINDOW_HEIGHT) ? HEIGHT.OBJECT - CORRECTION_FACTORS.WINDOW_HEIGHT :textareaHeight;
 														
 				} else {
 
@@ -300,35 +315,44 @@ export default class InputDialogBox {
 					view: "form",
 					borderless: true,
 					height: self.isObject ? textareaHeight : textareaHeight + CORRECTION_FACTORS.BODY_HEIGHT,
-					cols: [{
-						view: "textarea",
-						id: "input-dialog-" + self.uid,
-						css: self.isObject ? "textarea-inputdialogbox" : "",
-						name: "input-dialog-" + self.uid,
-						height: self.isObject ? textareaHeight - CORRECTION_FACTORS.TEXTAREA_HEIGHT_ISOBJECT: textareaHeight + CORRECTION_FACTORS.TEXTAREA_HEIGHT,
-						//placeholder: self.text,
-						maxHeight: 400,
-						scroll: "auto",
-						value: currentValue ? currentValue : undefined,
-
-						validate: function(value) {
-
-							let regEx = self.dataType.threshold1 ? new RegExp(self.dataType.threshold1) : undefined;
-
-							return (!regEx || regEx.test(value));
+					rows: [
+						{ height: 1 },
+						{
+							cols: [
+								{ width: 1 },
+								{
+									view: "textarea",
+									id: "input-dialog-" + self.uid,
+									name: "input-dialog-" + self.uid,
+									height: self.isObject ? textareaHeight - 20 : textareaHeight + CORRECTION_FACTORS.TEXTAREA_HEIGHT,
+									//placeholder: self.text,
+									maxHeight: TEXTAREA_MAX_HEIGHT,
+									scroll: "auto",
+									value: currentValue ? currentValue : undefined,
+			
+									validate: function(value) {
+			
+										let regEx = self.dataType.threshold1 ? new RegExp(self.dataType.threshold1) : undefined;
+			
+										return (!regEx || regEx.test(value));
+									},
+									on: {
+										onAfterRender: function() {
+			
+											this.focus();
+			
+											if (this.getValue()) {
+			
+												this.getInputNode().setSelectionRange(0, this.getValue().length);
+											}
+										}
+									}
+								},	
+								{ width: 1 }
+							]
 						},
-						on: {
-							onAfterRender: function() {
-
-								this.focus();
-
-								if (this.getValue()) {
-
-									this.getInputNode().setSelectionRange(0, this.getValue().length);
-								}
-							}
-						}
-					}]
+						{ height: 1 }
+					]
 				};
 
 				return stringBody;

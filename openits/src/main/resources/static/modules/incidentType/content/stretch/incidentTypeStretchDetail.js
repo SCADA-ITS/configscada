@@ -1,16 +1,19 @@
 import DataTable from "../../../../component/datatable.js";
+import SearchDialogBox from "../../../../component/searchDialogBox.js";
+import MessageBox from "../../../../component/messageBox.js";
 import { util } from "../../../../lib/util.js";
 
 const STRETCH_DETAIL_PANEL_WIDTH = 250;
-const FORM_LABEL_WIDTH = 200;
+const FORM_LABEL_WIDTH = 225;
 const FORM_FIELD_WIDTH = 400;
 
 
 export default class IncidentTypeStretchDetail {
 
-	constructor(config, uid, incidentTypeStretch, onUpdate) {
+	constructor(config, uid, incidentType, incidentTypeStretch, onUpdate) {
 		
 		this.config = config;
+		this.incidentType = incidentType;
 		this.incidentTypeStretch = incidentTypeStretch;
 		this.uid = uid;
 		this.onUpdate = onUpdate;
@@ -61,35 +64,15 @@ export default class IncidentTypeStretchDetail {
 											self.dtAlarmConditions.selectByIndex(0);
 										}, 50);
 									}
+									
+									$$("stretch-detaul-info-form-" + self.uid).attachEvent("onChange", function() {
+									    
+									    $$("incident-type-stretch-save-" + self.uid).enable();
+									});
+										
 								}
 							}
 						}
-					]
-				},
-				{ height: 10 },
-				{
-					height: 38,
-					cols: [
-						{},
-						{
-							view: "button",
-							css: "action-button",
-							width: 130,
-							height: 35,
-							label: i18n.t("LBL_SAVE"),
-							on: {
-								onItemClick() {
-									
-									(new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_SAVE_INCIDENT_TYPE_CHANGES_DESCRIPTION"), onAccept, null)).show();
-									
-									function onAccept() {
-									
-										// TODO: Save incident type form
-									}
-								}
-							}
-						},
-						{ width: 10 }
 					]
 				},
 				{ height: 10 }
@@ -104,7 +87,7 @@ export default class IncidentTypeStretchDetail {
 		
 				id: "incident-type-main-stretch-detail-info-" + self.uid,
 				css: { "background-color": "white" },
-				height: 165,
+				//height: 165,
 				rows: [
 					
 					getViewStretchDetailInfoHeader(),
@@ -169,17 +152,30 @@ export default class IncidentTypeStretchDetail {
 								{ width: 45 },
 								{
 									rows: [
-										{},
+										{ height: 20 },
 										{
 											cols: [
 												{ view: "text", id: "stretch-detaul-info-form-default-locationId-" + self.uid, name: "defaultLocationId", hidden: true, value: self.incidentTypeStretch.defaultLocation ? self.incidentTypeStretch.defaultLocation.id : "" },
-												{ view: "text", id: "stretch-detaul-info-form-default-location--" + self.uid, name: "defaultLocation", required: false, readonly: true, label: i18n.t("LBL_DEFAULT_LOCATION"), labelWidth: FORM_LABEL_WIDTH, width: FORM_FIELD_WIDTH - 38, value: self.incidentTypeStretch.defaultLocation ? self.incidentTypeStretch.defaultLocation.alias : "" },
+												{ view: "text", id: "stretch-detaul-info-form-default-location-" + self.uid, name: "defaultLocation", required: false, readonly: true, label: i18n.t("LBL_DEFAULT_LOCATION"), labelWidth: FORM_LABEL_WIDTH, width: FORM_FIELD_WIDTH - 38, value: self.incidentTypeStretch.defaultLocation ? self.incidentTypeStretch.defaultLocation.alias : "" },
 												{
 													view: "icon", icon: "wxi-search",
 													on: {
 														onItemClick: function() {
 	
-															// TODO: Load
+															selectLocationFromStretch(self.incidentTypeStretch.stretch, function(location) {
+																
+																if (location.id !== SearchDialogBox.ID_NOT_SELECTED) {
+																	
+																	$$("stretch-detaul-info-form-default-locationId-" + self.uid).setValue(location.id);
+																	$$("stretch-detaul-info-form-default-location-" + self.uid).setValue(location.alias);	
+																}
+																else {
+																	
+																	$$("stretch-detaul-info-form-default-locationId-" + self.uid).setValue(undefined);
+																	$$("stretch-detaul-info-form-default-location-" + self.uid).setValue(undefined);
+																}
+																
+															});
 														}
 													}
 												},
@@ -197,7 +193,7 @@ export default class IncidentTypeStretchDetail {
 												}
 											]
 										},
-										{ height: 10 },
+										{ height: 20 },
 										{
 											cols: [
 												{ view: "text", id: "stretch-detaul-info-form-cctv-scenarioId-" + self.uid, name: "cctvScenarioId", hidden: true, value: self.incidentTypeStretch.scenario ? self.incidentTypeStretch.scenario.id : "" },
@@ -207,7 +203,11 @@ export default class IncidentTypeStretchDetail {
 													on: {
 														onItemClick: function() {
 	
-															// TODO: Load cctv scenarios
+															selectScenario(function(scenario) {
+																
+																$$("stretch-detaul-info-form-cctv-scenarioId-" + self.uid).setValue(scenario.id);
+																$$("stretch-detaul-info-form-cctv-scenario-" + self.uid).setValue(scenario.alias);
+															});
 														}
 													}
 												},
@@ -215,22 +215,213 @@ export default class IncidentTypeStretchDetail {
 												{ view: "text", id: "stretch-detaul-info-form-operational-plan" + self.uid, name: "operationalPlan", required: false, label: i18n.t("LBL_OPERATIONAL_PLAN"), labelWidth: FORM_LABEL_WIDTH, value: self.incidentTypeStretch.operationalPlanUrl ? self.incidentTypeStretch.operationalPlanUrl : "" }
 											]
 										},
-										{}
+										{ height: 20 },
+										{
+											height: 38,
+											cols: [
+												{},
+												{
+													id: "incident-type-stretch-save-" + self.uid,
+													view: "button",
+													css: "action-button",
+													disabled: true,
+													width: 130,
+													height: 35,
+													label: i18n.t("LBL_SAVE"),
+													on: {
+														onItemClick() {
+															
+															(new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_SAVE_INCIDENT_TYPE_STRETCH_CHANGES_DESCRIPTION"), onAccept, null)).show();
+															
+															function onAccept() {
+															
+																updateIncidentTypeStretch();
+															}
+														}
+													}
+												}
+											]
+										},
+										{ height: 20 }
 									]
 								},
 								{ width: 45 }
 							]
 						}
-					],
-					rules: {
-						
-					}
+					]
 				}
 		
 				return form;
 			}
 			
 			return viewStretchDetailInfo;
+		}
+		
+		function updateIncidentTypeStretch() {
+			
+			let defaultLocationId = $$("stretch-detaul-info-form-default-locationId-" + self.uid).getValue();
+			
+			let body = {
+				imsIncidentTypeStretch: {
+					id: self.incidentTypeStretch.id,
+					alias: self.incidentTypeStretch.stretch.alias,
+					description: self.incidentTypeStretch.stretch.description,
+					incidentTypeId: self.incidentType.id,
+					multiInstance: self.incidentTypeStretch.multiInstance,
+					defaultLocationId: (defaultLocationId && defaultLocationId.length > 0) ? defaultLocationId : undefined,
+					operationalPlanUrl: $$("stretch-detaul-info-form-operational-plan" + self.uid).getValue(), 
+					stretchId: self.incidentTypeStretch.stretch.id
+				}
+			}
+			
+			webix.ajax().headers(CONTENT_TYPE_JSON).put(appConfig.restUrl + self.config.restEndpoints.updateIncidentTypeStretch, body).then(
+				function(response) {
+			
+					self.onUpdate("incident-type-stretch-" + self.uid);
+				}
+			);
+		}
+		
+		function selectScenario(onSelected) {
+				
+			let dialog = webix.copy(SearchDialogBox.CALLBACK);				
+			dialog.fillDialogEntity = fillDialogEntity;
+			dialog.dataType = SearchDialogBox.DIALOG_DATA_TYPE_TREE;
+			dialog.height = 600;
+			dialog.width = 800;
+			dialog.data = {};
+			
+			function fillDialogEntity(dialogEntity, onFilledDialogEntity) {
+
+				let promises = [];
+				
+				webix.ajax().get(appConfig.restUrl + self.config.restEndpoints.cctvHierarchies).then(function(response) {
+					
+					if (response != null) {
+
+						let hierarchies = response.json();
+						let relationships = [];
+						let nodes = [];
+						
+						if (Array.isArray(hierarchies) && hierarchies.length > 0) {
+						
+							relationships = hierarchies.map(e => {
+								
+								return {
+									
+									nodeParentId: e.parent.id,
+									nodeChildId: e.child.id,
+									scenarioId: e.child.scenario ? e.child.scenario.id: undefined 
+								}
+							});
+							
+							let nodesMap = new Map();
+							
+							hierarchies.forEach(e => {
+								
+								let node = {
+									id: e.id,
+									label: e.alias,
+									parent: {
+										id: e.parent.id,
+										label: e.parent.alias
+									},
+									child: {
+										id: e.child.id,
+										label: e.child.alias,
+										aux: {
+											scenario: e.child.scenario
+										} 
+									}
+								}
+								
+								nodesMap.set(node.parent.id, node.parent);
+								nodesMap.set(node.child.id, node.child);
+							});
+							
+							nodes = Array.from(nodesMap.values());
+							
+							dialogEntity.data.nodes = nodes;
+							dialogEntity.data.relationships = relationships;
+							dialogEntity.data.nodeParentId = "nodeParentId";
+							dialogEntity.data.nodeChildId = "nodeChildId";
+							
+							onFilledDialogEntity(dialogEntity);
+							
+						}
+					}
+				});
+			}
+			
+			(new SearchDialogBox(i18n.t("LBL_SELECT_CCTV_SCENARIO"), dialog, 
+			
+				function(selection) {
+				
+					if (Array.isArray(selection) && selection.length > 0 && selection[0].aux && selection[0].aux.scenario) {
+						
+						if (onSelected) {
+							
+							let scenario = {
+								id: selection[0].aux.scenario.id,
+								alias: selection[0].value
+							}
+							
+							onSelected(scenario);
+						}
+					}		
+				}
+			)).show();
+		}
+		
+		function selectLocationFromStretch(stretch, onSelect) {
+				
+			let dialog = webix.copy(SearchDialogBox.CALLBACK);
+			let label = i18n.t("LBL_SELECT_DEFAULT_LOCATION" + ": " + stretch.alias);
+			
+			dialog.fillDialogEntity = fillDialogEntity;
+			dialog.height = 600;
+			dialog.width = 800;
+				
+			function fillDialogEntity(dialogEntity, onFilledDialogEntity) {
+			
+				webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.locationsByStretch, { id: stretch.id })).then(
+					function(response) {
+				
+						let locations = response.json();
+						
+						dialogEntity.data = [];
+						dialogEntity.pkField = "id"
+						dialogEntity.fields = ["alias=LBL_LOCATION","description=LBL_DESCRIPTION"];
+						dialogEntity.sortFieldId = 2;
+						dialogEntity.showEmptyRowCol = -1;
+		
+						if (Array.isArray(locations) && locations.length > 0) {
+							
+							locations.forEach(location => {
+								
+								dialogEntity.data.push({
+									id: location.id,
+									alias: location.alias,
+									description: location.description
+								});
+							});
+						}
+						
+						onFilledDialogEntity(dialogEntity);
+					}
+				);
+			}
+			
+			(new SearchDialogBox(label, dialog, function(items) {
+
+				if (Array.isArray(items) && items.length === 1) {
+
+					if (onSelect) {
+						
+						onSelect(items[0]);
+					}
+				}
+			})).show();
 		}
 		
 		function getViewAlarmConditions() {

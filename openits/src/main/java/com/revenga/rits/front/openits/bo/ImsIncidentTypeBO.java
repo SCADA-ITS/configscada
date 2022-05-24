@@ -1,5 +1,6 @@
 package com.revenga.rits.front.openits.bo;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -86,5 +87,35 @@ public class ImsIncidentTypeBO extends GenericBO {
 		}
 		
 		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_INCIDENT_TYPES, incidentsFiltered);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public Object create(Object input) {
+
+		Map<String, Object> createdIncidentType = voDataSourceAdapter
+				.put(VODataSourceAdapter.DATA_SOURCE_CREATE_INCIDENT_TYPE, (Map<String, Object>) input);
+
+		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_CREATE_INCIDENT_TYPE, createdIncidentType);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public Object update(Object input) {
+
+		Map<String, Object> updatedIncidentType = voDataSourceAdapter
+				.put(VODataSourceAdapter.DATA_SOURCE_UPDATE_INCIDENT_TYPE, (Map<String, Object>) input);
+
+		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_UPDATE_INCIDENT_TYPE, updatedIncidentType);
+	}
+	
+	public Object delete(String id) {
+		
+		Map<String, Object> input = new HashMap<>();
+
+		input.put("imsIncidentTypeId", id);
+
+		Map<String, Object> deletedIncidentType = voDataSourceAdapter
+				.put(VODataSourceAdapter.DATA_SOURCE_DELETE_INCIDENT_TYPE, input);
+
+		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_DELETE_INCIDENT_TYPE, deletedIncidentType);
 	}
 }

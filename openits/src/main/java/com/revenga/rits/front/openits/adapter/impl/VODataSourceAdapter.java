@@ -249,6 +249,30 @@ public class VODataSourceAdapter {
 	public static final int DATA_SOURCE_GET_SERVER_TIME = getPropertyInt("get_server_time");
 	public static final int DATA_SOURCE_GET_SERVER_RESOURCES = getPropertyInt("get_server_resources");
 	
+	public static final int DATA_SOURCE_CREATE_INCIDENT_TYPE = getPropertyInt("create_incident_type");
+	public static final int DATA_SOURCE_UPDATE_INCIDENT_TYPE = getPropertyInt("update_incident_type");
+	public static final int DATA_SOURCE_DELETE_INCIDENT_TYPE = getPropertyInt("delete_incident_type");
+	
+	public static final int DATA_SOURCE_CREATE_INCIDENT_TYPE_STRETCH = getPropertyInt("create_incident_type_stretch");
+	public static final int DATA_SOURCE_UPDATE_INCIDENT_TYPE_STRETCH = getPropertyInt("update_incident_type_stretch");
+	public static final int DATA_SOURCE_DELETE_INCIDENT_TYPE_STRETCH = getPropertyInt("delete_incident_type_stretch");
+	
+	public static final int DATA_SOURCE_CREATE_INCIDENT_ALARM_CONDITION = getPropertyInt("create_incident_alarm_condition");
+	public static final int DATA_SOURCE_UPDATE_INCIDENT_ALARM_CONDITION = getPropertyInt("update_incident_alarm_condition");
+	public static final int DATA_SOURCE_DELETE_INCIDENT_ALARM_CONDITION = getPropertyInt("delete_incident_alarm_condition");
+	
+	public static final int DATA_SOURCE_CREATE_INCIDENT_TYPE_TASK = getPropertyInt("create_incident_type_task");
+	public static final int DATA_SOURCE_UPDATE_INCIDENT_TYPE_TASK = getPropertyInt("update_incident_type_task");
+	public static final int DATA_SOURCE_DELETE_INCIDENT_TYPE_TASK = getPropertyInt("delete_incident_type_task");
+	
+	public static final int DATA_SOURCE_CREATE_INCIDENT_TASK_PLAN = getPropertyInt("create_incident_task_plan");
+	public static final int DATA_SOURCE_UPDATE_INCIDENT_TASK_PLAN = getPropertyInt("update_incident_task_plan");
+	public static final int DATA_SOURCE_DELETE_INCIDENT_TASK_PLAN = getPropertyInt("delete_incident_task_plan");
+	
+	public static final int DATA_SOURCE_CREATE_INCIDENT_TYPE_STATE_TRANSITION = getPropertyInt("create_incident_type_state_transition");
+	public static final int DATA_SOURCE_UPDATE_INCIDENT_TYPE_STATE_TRANSITION = getPropertyInt("update_incident_type_state_transition");
+	public static final int DATA_SOURCE_DELETE_INCIDENT_TYPE_STATE_TRANSITION = getPropertyInt("delete_incident_type_state_transition");
+	
 	private static int getPropertyInt(final String prop) {
 		
 		if (!MapUtils.isEmpty(props)) {

@@ -1054,17 +1054,21 @@ export default class DataTable {
 		});
 
 		if (resultSelRows) {
-
+			
 			toolbar.elements.push(
 				{ 
 					id: "template-sel-" + this.uid,
 					borderless: true,
 					minWidth: 120,
 					template: function(obj) { 
-						return `<div class="sel_label"><span>${i18n.t("LBL_SEL")}</span><span class="sel_label_text">${" " + obj.selected + "/" + obj.total}</span></div>`;
+						
+						if (obj.selected !== undefined && obj.total !== undefined) {
+							
+							return `<div class="sel_label"><span>${i18n.t("LBL_SEL")}</span><span class="sel_label_text">${" " + obj.selected + "/" + obj.total}</span></div>`;	
+						}
 					}
 				}
-			);
+			);	
 		}
 
 		if (resultSearch) {

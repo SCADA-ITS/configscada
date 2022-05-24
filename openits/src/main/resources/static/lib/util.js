@@ -2305,7 +2305,8 @@ export let util = {
 						image: item.image,
 						stateColor: item.stateColor,
 						stateLabel: item.stateLabel
-					}
+					},
+					aux: item.aux ? webix.copy(item.aux) : undefined
 				};
 
 				return nodeAux;

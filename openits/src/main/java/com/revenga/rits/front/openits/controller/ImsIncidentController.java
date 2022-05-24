@@ -4,9 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,15 +16,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.revenga.rits.front.openits.bo.ImsExtIncidentBO;
 import com.revenga.rits.front.openits.bo.ImsExtIncidentTypeBO;
+import com.revenga.rits.front.openits.bo.ImsIncidentAlarmConditionBO;
 import com.revenga.rits.front.openits.bo.ImsIncidentGroupBO;
 import com.revenga.rits.front.openits.bo.ImsIncidentLevelBO;
 import com.revenga.rits.front.openits.bo.ImsIncidentReportBO;
 import com.revenga.rits.front.openits.bo.ImsIncidentStateBO;
 import com.revenga.rits.front.openits.bo.ImsIncidentTaskPlanBO;
+import com.revenga.rits.front.openits.bo.ImsIncidentTypeBO;
+import com.revenga.rits.front.openits.bo.ImsIncidentTypeStateTransitionBO;
+import com.revenga.rits.front.openits.bo.ImsIncidentTypeStretchBO;
 import com.revenga.rits.front.openits.bo.ImsIncidentTypeTaskBO;
 import com.revenga.rits.front.openits.bo.ImsTaskTypeBO;
-import com.revenga.rits.front.openits.bo.ImsIncidentTypeBO;
-import com.revenga.rits.front.openits.bo.ImsIncidentTypeStretchBO;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -67,6 +71,12 @@ public class ImsIncidentController {
 	
 	@Autowired
 	ImsIncidentTypeStretchBO imsIncidentTypeStretchBO;
+	
+	@Autowired
+	ImsIncidentAlarmConditionBO imsIncidentAlarmConditionBO;
+	
+	@Autowired
+	ImsIncidentTypeStateTransitionBO imsIncidentTypeStateTransitionBO;
 
 	@GetMapping(value = "/reports")
 	@ApiOperation(value = "Get all incident reports", notes = "Get all incident reports")
@@ -401,5 +411,161 @@ public class ImsIncidentController {
 			@ApiParam(name = "stretchId", type = "String", value = "Stretch id", example = "Stretch:1000", required = true) @PathVariable String stretchId) {
 
 		return new ResponseEntity<>(imsIncidentTypeStretchBO.getItem(incidentTypeId, stretchId), HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/create")
+	@ApiOperation(value = "Create Incident Type", notes = "Create Incident Type")
+	public ResponseEntity<Object> createIncidentType(@RequestBody Object incidentType) {
+
+		return new ResponseEntity<>(imsIncidentTypeBO.create(incidentType), HttpStatus.OK);
+	}
+	
+	@PutMapping(value = "/update")
+	@ApiOperation(value = "Update Incident Type", notes = "Update Incident Type")
+	public ResponseEntity<Object> updateIncidentType(@RequestBody Object incidentType) {
+
+		return new ResponseEntity<>(imsIncidentTypeBO.update(incidentType), HttpStatus.OK);
+	}
+	
+	@DeleteMapping(value = "/{id}")
+	@ApiOperation(value = "Delete Incident Type", notes = "Delete Incident Type")
+	public ResponseEntity<Object> deleteIncidentType(@ApiParam(
+			name = "id",
+			type = "String",
+			value = "Incident Type id",
+			example = "ImsIncidentType:3",
+			required = true) @PathVariable String id) {
+		
+		return new ResponseEntity<>(imsIncidentTypeBO.delete(id), HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/incidentTypeStretchs/create")
+	@ApiOperation(value = "Create Incident Type Stretch", notes = "Create Incident Type Stretch")
+	public ResponseEntity<Object> createIncidentTypeStretch(@RequestBody Object incidentTypeStretch) {
+
+		return new ResponseEntity<>(imsIncidentTypeStretchBO.create(incidentTypeStretch), HttpStatus.OK);
+	}
+	
+	@PutMapping(value = "/incidentTypeStretchs/update")
+	@ApiOperation(value = "Update Incident Type Stretch", notes = "Update Incident Type Stretch")
+	public ResponseEntity<Object> updateIncidentTypeStretch(@RequestBody Object incidentTypeStretch) {
+
+		return new ResponseEntity<>(imsIncidentTypeStretchBO.update(incidentTypeStretch), HttpStatus.OK);
+	}
+	
+	@DeleteMapping(value = "/incidentTypeStretchs/{id}")
+	@ApiOperation(value = "Delete Incident Type Stretch", notes = "Delete Incident Type Stretch")
+	public ResponseEntity<Object> deleteIncidentTypeStretch(@ApiParam(
+			name = "id",
+			type = "String",
+			value = "Incident Type Stretch id",
+			example = "ImsIncidentTypeStretch:3:1",
+			required = true) @PathVariable String id) {
+		
+		return new ResponseEntity<>(imsIncidentTypeStretchBO.delete(id), HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/incidentAlarmConditions/create")
+	@ApiOperation(value = "Create Incident Type Stretch", notes = "Create Incident Type Stretch")
+	public ResponseEntity<Object> createIncidentAlarmCondition(@RequestBody Object incidentAlarmCondition) {
+
+		return new ResponseEntity<>(imsIncidentAlarmConditionBO.create(incidentAlarmCondition), HttpStatus.OK);
+	}
+	
+	@PutMapping(value = "/incidentAlarmConditions/update")
+	@ApiOperation(value = "Update Incident Type Alarm conditions", notes = "Update Incident Type Alarm conditions")
+	public ResponseEntity<Object> updateIncidentAlarmCondition(@RequestBody Object incidentAlarmCondition) {
+
+		return new ResponseEntity<>(imsIncidentAlarmConditionBO.update(incidentAlarmCondition), HttpStatus.OK);
+	}
+	
+	@DeleteMapping(value = "/incidentAlarmConditions/{id}")
+	@ApiOperation(value = "Delete Incident Type Stretch", notes = "Delete Incident Type Stretch")
+	public ResponseEntity<Object> deleteIncidentAlarmCondition(@ApiParam(
+			name = "id",
+			type = "String",
+			value = "Incident Alarm Condition id",
+			example = "ImsIncidentAlarmCondition:1",
+			required = true) @PathVariable String id) {
+		
+		return new ResponseEntity<>(imsIncidentAlarmConditionBO.delete(id), HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/incidentTypeTasks/create")
+	@ApiOperation(value = "Create Incident Type Task", notes = "Create Incident Type Task")
+	public ResponseEntity<Object> createIncidentAlarmTask(@RequestBody Object incidentTypeTask) {
+
+		return new ResponseEntity<>(imsIncidentTypeTaskBO.create(incidentTypeTask), HttpStatus.OK);
+	}
+	
+	@PutMapping(value = "/incidentTypeTasks/update")
+	@ApiOperation(value = "Update Incident Type Task", notes = "Update Incident Type Task")
+	public ResponseEntity<Object> updateIncidentAlarmTask(@RequestBody Object incidentTypeTask) {
+
+		return new ResponseEntity<>(imsIncidentTypeTaskBO.update(incidentTypeTask), HttpStatus.OK);
+	}
+	
+	@DeleteMapping(value = "/incidentTypeTasks/{id}")
+	@ApiOperation(value = "Delete Incident Type Task", notes = "Delete Incident Type Task")
+	public ResponseEntity<Object> deleteIncidentAlarmTask(@ApiParam(
+			name = "id",
+			type = "String",
+			value = "Incident Type Task id",
+			example = "ImsIncidentTypeTask:1",
+			required = true) @PathVariable String id) {
+		
+		return new ResponseEntity<>(imsIncidentTypeTaskBO.delete(id), HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/incidentTaskPlans/create")
+	@ApiOperation(value = "Create Incident Task Plan", notes = "Create Incident Task Plan")
+	public ResponseEntity<Object> createIncidentTaskPlan(@RequestBody Object incidentTaskPlan) {
+
+		return new ResponseEntity<>(imsIncidentTaskPlanBO.create(incidentTaskPlan), HttpStatus.OK);
+	}
+	
+	@PutMapping(value = "/incidentTaskPlans/update")
+	@ApiOperation(value = "Update Incident Task Task", notes = "Update Incident Task Task")
+	public ResponseEntity<Object> updateIncidentTaskPlan(@RequestBody Object incidentTaskPlan) {
+
+		return new ResponseEntity<>(imsIncidentTaskPlanBO.update(incidentTaskPlan), HttpStatus.OK);
+	}
+	
+	@DeleteMapping(value = "/incidentTaskPlans/{id}")
+	@ApiOperation(value = "Delete Incident Task Plan", notes = "Delete Incident Task Plan")
+	public ResponseEntity<Object> deleteIncidentTaskPlan(@ApiParam(
+			name = "id",
+			type = "String",
+			value = "Incident Task Plan",
+			example = "ImsIncidentTaskPlan:1",
+			required = true) @PathVariable String id) {
+		
+		return new ResponseEntity<>(imsIncidentTaskPlanBO.delete(id), HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/incidentTypeStateTransitions/create")
+	@ApiOperation(value = "Create Incident Type State Transition", notes = "Create Type State Transition")
+	public ResponseEntity<Object> createIncidentTypeStateTransition(@RequestBody Object incidentTypeStateTransition) {
+
+		return new ResponseEntity<>(imsIncidentTypeStateTransitionBO.create(incidentTypeStateTransition), HttpStatus.OK);
+	}
+	
+	@PutMapping(value = "/incidentTypeStateTransitions/update")
+	@ApiOperation(value = "Update Type State Transition", notes = "Update Type State Transition")
+	public ResponseEntity<Object> updateIncidentTypeStateTransition(@RequestBody Object incidentTypeStateTransition) {
+
+		return new ResponseEntity<>(imsIncidentTypeStateTransitionBO.update(incidentTypeStateTransition), HttpStatus.OK);
+	}
+	
+	@DeleteMapping(value = "/incidentTypeStateTransitions/{id}")
+	@ApiOperation(value = "Delete Type State Transition", notes = "Delete Type State Transition")
+	public ResponseEntity<Object> deleteIncidentTypeStateTransition(@ApiParam(
+			name = "id",
+			type = "String",
+			value = "Incident Type State Transition",
+			example = "ImsIncidentTypeStateTransition:1:2",
+			required = true) @PathVariable String id) {
+		
+		return new ResponseEntity<>(imsIncidentTypeStateTransitionBO.delete(id), HttpStatus.OK);
 	}
 }

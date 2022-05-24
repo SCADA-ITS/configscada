@@ -3,6 +3,8 @@ import GenericModule from "../genericModule.js";
 import IncidentTypeContent from "./content/incidentTypeContent.js";
 import TreeView from "../../component/treeview.js";
 import OptionButtonList from "../../component/optionButtonList.js";
+import SearchDialogBox from "../../component/searchDialogBox.js";
+import MessageBox from "../../component/messageBox.js";
 
 const TREE_PANEL_WIDTH = 450;
 const PICTOGRAM_INCIDENT_TYPE_PATH = "incident_type";
@@ -19,6 +21,9 @@ export default class IncidentTypeModule extends GenericModule {
 		
 		this.firstGroupId = undefined;
 		this.incidentTypes = undefined;
+		
+		this.incidentTypeContent = undefined;
+		this.lastSelectedTabId = undefined;
 	}
 
 	loadData() {
@@ -40,7 +45,7 @@ export default class IncidentTypeModule extends GenericModule {
 			]
 		}
 
-		function load(incidentTypeId) {
+		function load(incidentTypeId, onLoad) {
 
 			webix.ajax().get(appConfig.restUrl + self.config.restEndpoints.incidentTypes).then(function(response) {
 				
@@ -54,41 +59,33 @@ export default class IncidentTypeModule extends GenericModule {
 	
 						if (incidentTypeId) {
 							
-							let incidentType = self.incidentTypes.find(e => e.id === incidentTypeId);
+							let selectedItems = self.treeView.getItemsById_(incidentTypeId);
 							
-							if (incidentType) {
+							if (Array.isArray(selectedItems) && selectedItems.length > 0) {
 								
-								self.treeView.select(incidentType.incidentGroup.id + "_" + incidentType.id);
+								let selectedItem = selectedItems[0];
+								
+								if (selectedItem.props && selectedItem.props.folder) {
+
+									self.treeView.expand(selectedItem.id);	
+								}
+								else {
 	
-								let selectedItems = self.treeView.getSelected();
-		
-								if (Array.isArray(selectedItems) && selectedItems.length === 1) {
-		
-									let selectedItem = selectedItems[0];
-									
-									self.treeView.update(incidentTypeId, selectedItem);
-		
-									if (selectedItem.props && selectedItem.props.folder) {
-		
-										self.treeView.expand(selectedItem.id)
-									}
-									else {
-		
-										let parent = self.treeView.getParent(selectedItem);
-		
-										if (parent) {
-		
-											self.treeView.expand(parent.id);
-										}
+									let parent = self.treeView.getParent(selectedItem);
+	
+									if (parent) {
+	
+										self.treeView.expand(parent.id);
 									}
 								}
+								
+								self.treeView.select(selectedItem.id);
 							}
 						}
 						else {
 							
 							if (self.firstGroupId) {
 								
-//								self.treeView.select(self.firstGroupId);
 								self.treeView.expand(self.firstGroupId);
 								
 								let firstItem = self.treeView.getFirstItem();
@@ -101,6 +98,11 @@ export default class IncidentTypeModule extends GenericModule {
 						}
 						
 						afterLoad();
+						
+						if (onLoad) {
+							
+							onLoad();	
+						}
 					}
 				}
 			});
@@ -242,27 +244,39 @@ export default class IncidentTypeModule extends GenericModule {
 								
 								incidentType = response.json();
 								
-								let incidentTypeContent = new IncidentTypeContent(self.config, self.uid, incidentType, onUpdate);
+								self.incidentTypeContent = new IncidentTypeContent(self.config, self.uid, incidentType, onUpdate);
 
-								webix.ui(incidentTypeContent.getView(), $$("incident-type-content-" + self.uid));
+								webix.ui(self.incidentTypeContent.getView(), $$("incident-type-content-" + self.uid));
 
 								$$("incident-type-loading-" + self.uid).hide();
 								$$("incident-type-content-" + self.uid).show();
 								$$("incident-type-resizer-" + self.uid).show();	
+								
+								if (self.lastSelectedTabId) {
+									
+									self.incidentTypeContent.selectTab(self.lastSelectedTabId);
+									
+									self.lastSelectedTabId = undefined;	
+								}
 							}
 						});
 					}
 				};
 
-				function onUpdate() {
+				function onUpdate(tabId) {
 					
 					let itemsSelected = self.treeView.getSelected();
+					self.lastSelectedTabId = tabId;
 		
 					if (Array.isArray(itemsSelected) && itemsSelected.length > 0) {
 		
 						let selected = itemsSelected[0];
 							
-						load(selected.id);
+						load(selected.id_);
+					}
+					else {
+						
+						load();
 					}
 				}
 
@@ -371,21 +385,183 @@ export default class IncidentTypeModule extends GenericModule {
 			}
 
 			metadata.treeCommands = [
-				{ id: 1, callbacks: [{ commandId: 2, function: onNewIncidentType }], position: 1, label: "LBL_NEW_ITEM", icon: "mdi mdi-plus", default: false, multiselect: false, itemRequired: true, grouped: false },
-				{ id: 2, callbacks: [{ commandId: 3, function: onDeleteIncidentType }], position: 2, label: "LBL_DELETE", icon: "mdi mdi-delete-outline", default: false, multiselect: false, itemRequired: true, grouped: false }
+				{ id: 1, callbacks: [{ commandId: 1, function: createIncidentType }], position: 1, label: "LBL_NEW_ITEM", icon: "mdi mdi-plus", default: false, multiselect: false, itemRequired: true, grouped: false },
+				{ id: 2, callbacks: [{ commandId: 2, function: deleteIncidentType }], position: 2, label: "LBL_DELETE", icon: "mdi mdi-delete-outline", default: false, multiselect: false, itemRequired: true, grouped: false }
 			];				
 			
 			function adapterElement2Tree() {
 				
 			}
 			
-			function onNewIncidentType(selectedPks) {
-
+			function createIncidentType(selectedIds) {
 				
+				if (Array.isArray(selectedIds) && selectedIds.length === 1) {
+				
+					let incidentTypeId = selectedIds[0];
+					
+					let treeItems = self.treeView.getItemsById_(incidentTypeId);
+					let treeItemGroup;
+					let incidentTypeGroupId;
+					
+					if (Array.isArray(treeItems) && treeItems.length > 0) {
+						
+						let treeItemSelected = treeItems[0];
+						
+						treeItemGroup = treeItemSelected.props.folder ? treeItemSelected : self.treeView.getParent(treeItemSelected);
+						
+						incidentTypeGroupId = treeItemGroup.id_; 
+						
+						selectIncidentLevel(function(incidentLevelId) {
+							
+							selectIncidentTypeState(function(incidentTypeStateId) {
+							
+								let body = {
+									imsIncidentType: {
+										alias: i18n.t("LBL_NEW_INCIDENT_TYPE"),
+										description: "",
+										iniIncidentStateId: incidentTypeStateId,
+										incidentLevelId: incidentLevelId,
+										defaultUserId: util.user.getUserData().id,
+										incidentGroupId: incidentTypeGroupId	
+									}
+								}
+								
+								webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.restEndpoints.createIncidentType, body).then(
+									function(response) {
+								
+										let incidentTypeResponse = response.json(); 
+										
+										if (incidentTypeResponse) {
+											
+											load(incidentTypeResponse.id);
+										}	
+									}
+								);
+							});
+						});
+					}
+				}
+
+				function selectIncidentLevel(onSelect) {
+				
+					let dialog = webix.copy(SearchDialogBox.CALLBACK);
+					let label = i18n.t("LBL_INCIDENT_LEVELS");
+					
+					dialog.fillDialogEntity = fillDialogEntity;
+					dialog.height = 600;
+					dialog.width = 800;
+						
+					function fillDialogEntity(dialogEntity, onFilledDialogEntity) {
+					
+						let incidentLevels = window.em.getAll(EntityType.IMS_INCIDENT_LEVEL);
+				
+						if (Array.isArray(incidentLevels) && incidentLevels.length > 0) {
+							
+							dialogEntity.data = [];
+			
+							dialogEntity.pkField = "id"
+							dialogEntity.fields = ["alias=LBL_INCIDENT_LEVEL"];
+							dialogEntity.sortFieldId = 2; 
+							
+							
+							incidentLevels.forEach(incidentLevel => {
+								
+								dialogEntity.data.push({
+									id: incidentLevel.id,
+									alias: i18n.t(incidentLevel.labelAlias)
+								});
+							});
+						}
+						
+						onFilledDialogEntity(dialogEntity);		
+					}
+					
+					(new SearchDialogBox(label, dialog, function(items) {
+		
+						if (Array.isArray(items) && items.length === 1) {
+		
+							if (onSelect) {
+								
+								onSelect(items[0].id);
+							}
+						}
+					})).show();
+
+				}
+				
+				function selectIncidentTypeState(onSelect) {
+			
+					let dialog = webix.copy(SearchDialogBox.CALLBACK);
+					let label = i18n.t("LBL_INCIDENT_TYPE_STATES");
+					
+					dialog.fillDialogEntity = fillDialogEntity;
+					dialog.height = 600;
+					dialog.width = 800;
+						
+					function fillDialogEntity(dialogEntity, onFilledDialogEntity) {
+					
+						webix.ajax().get(appConfig.restUrl + self.config.restEndpoints.incidentStates).then(
+							function(response) {
+						
+								let incidentTypeStates = response.json();
+								
+								if (Array.isArray(incidentTypeStates) && incidentTypeStates.length > 0) {
+									
+									incidentTypeStates = incidentTypeStates.filter(e => !e.finalState);
+								
+									dialogEntity.data = [];
+			
+									dialogEntity.pkField = "id"
+									dialogEntity.fields = ["alias=LBL_INCIDENT_TYPE_TASK_TYPE_ALIAS"];
+									dialogEntity.sortFieldId = 2; 
+									
+									incidentTypeStates.forEach(incidentTypeState => {
+										
+										dialogEntity.data.push({
+											id: incidentTypeState.id,
+											alias: i18n.t(incidentTypeState.labelAlias)
+										});
+									});
+									
+									onFilledDialogEntity(dialogEntity);		
+								}
+							}
+						);
+					}
+					
+					(new SearchDialogBox(label, dialog, function(items) {
+		
+						if (Array.isArray(items) && items.length === 1) {
+							
+							if (onSelect) {
+								
+								onSelect(items[0].id);
+							}
+						}
+					})).show();
+				}
 			}
 	
-			function onDeleteIncidentType(selectedPks) {
+			function deleteIncidentType(selectedIds) {
+				
+				if (Array.isArray(selectedIds) && selectedIds.length === 1) {
+				
+					let incidentTypeId = selectedIds[0];
+					
+					(new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_DELETE_INCIDENT_TYPE"), 
+						function() {
+							
+							webix.ajax().headers(CONTENT_TYPE_JSON).del(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.deleteIncidentType, { id: incidentTypeId })).then(
+								function(response) {
+							
+									load();
+								}
+							);
+						}
+					, null)).show();	
+				}
 	
+				
 			}
 			
 			return metadata;

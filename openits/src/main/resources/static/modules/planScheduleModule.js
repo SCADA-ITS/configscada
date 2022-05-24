@@ -437,7 +437,9 @@ export default class PlanScheduleModule extends GenericModule {
 
 										id: e.id,
 										label: plan ? plan.alias : e.alias,
-										plan: e.plan,
+										aux: {
+											plan: plan
+										},
 										folder: !e.plan
 									}
 								});
@@ -472,10 +474,12 @@ export default class PlanScheduleModule extends GenericModule {
 				
 				function onAccept(selection) {
 
-					if (Array.isArray(selection) && selection.length > 0) {
+					if (Array.isArray(selection) && selection.length > 0 && selection[0].aux && selection[0].aux.plan) {
 						
-						newPlan.plan = selection[0].alias;
-						newPlan.planId = selection[0].id;
+						let plan = selection[0].aux.plan;
+						
+						newPlan.plan = plan.alias;
+						newPlan.planId = plan.id;
 						self.newPlan = newPlan;
 		
 						$$(self.form.id).setValues(self.newPlan);	

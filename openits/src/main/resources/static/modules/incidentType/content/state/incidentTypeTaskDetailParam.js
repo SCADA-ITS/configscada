@@ -1,4 +1,5 @@
 import DataTable from "../../../../component/datatable.js";
+import InputDialogBox from "../../../../component/inputDialogBox.js";
 
 export default class IncidentTypeTaskDetailParam {
 
@@ -71,6 +72,7 @@ export default class IncidentTypeTaskDetailParam {
 				gridOptionValues: defaultGridOptionValues,
 				gridFields: [
 					{
+						id: 1,
 						extended: false,
 						filtered: false,
 						isEpochMilli: false,
@@ -88,6 +90,7 @@ export default class IncidentTypeTaskDetailParam {
 						}
 					},
 					{
+						id: 2,
 						extended: false,
 						filtered: false,
 						isEpochMilli: false,
@@ -107,6 +110,7 @@ export default class IncidentTypeTaskDetailParam {
 						}
 					},
 					{
+						id: 3,
 						extended: false,
 						filtered: false,
 						isEpochMilli: false,
@@ -126,6 +130,7 @@ export default class IncidentTypeTaskDetailParam {
 						}
 					},
 					{
+						id: 4,
 						extended: false,
 						filtered: false,
 						isEpochMilli: false,
@@ -145,6 +150,7 @@ export default class IncidentTypeTaskDetailParam {
 						}
 					},
 					{
+						id: 5,
 						extended: false,
 						filtered: false,
 						isEpochMilli: false,
@@ -164,6 +170,7 @@ export default class IncidentTypeTaskDetailParam {
 						}
 					},
 					{
+						id: 6,
 						extended: false,
 						filtered: false,
 						isEpochMilli: false,
@@ -191,7 +198,7 @@ export default class IncidentTypeTaskDetailParam {
 			metadata.gridCommands.push(
 				{
 					id: 1,
-					default_: false,
+					default_: true,
 					icon: "mdi mdi-pencil",
 					label: "LBL_EDIT",
 					multiselect: false,
@@ -229,19 +236,31 @@ export default class IncidentTypeTaskDetailParam {
 			// NEW TASK
 			events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
 				commandId: 1,
-				function: (selectedIds) => {
+				function: () => {
+					
+					let selectedItems = self.dtTaskTypeParams.getSelectedItems();
 
-					if (Array.isArray(selectedIds) && selectedIds.length === 1) {
+					if (Array.isArray(selectedItems) && selectedItems.length === 1) {
 						
-						editTaskParam(selectedIds[0]);	
+						editTaskParam(selectedItems[0]);	
 					}
 				}
 			});
 			
 			self.dtTaskTypeParams = new DataTable(null, null, metadata, data, events);
 			
-			function editTaskParam(taskParamId) {
+			function editTaskParam(taskParam) {
 				
+				(new InputDialogBox(i18n.t("LBL_DIALOG_EDIT_TASK_PARAM"), i18n.t("LBL_DIALOG_EDIT_TASK_PARAM_TEXT"), onAccept, false, taskParam.value, { id: taskParam.dataTypeId })).show();
+				
+				function onAccept(value) {
+					
+					let newTaskParam = webix.copy(taskParam);
+					
+					newTaskParam.value = value;
+					
+					self.dtTaskTypeParams.update(newTaskParam);
+				}
 			}
 			
 			return self.dtTaskTypeParams.getView();

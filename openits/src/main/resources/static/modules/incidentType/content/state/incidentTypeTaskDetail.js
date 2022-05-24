@@ -229,8 +229,22 @@ export default class IncidentTypeTaskDetail {
 		}
 	}
 	
-	create(incidentTypeTask, position) {
+	async create(incidentTypeTask, position) {
 		
-		let self = this;
+		let body = {
+			
+		}
+		
+		let data = await webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + this.config.restEndpoints.updateIncidentType, body);
+		
+		return data.json();
+	}
+	
+	delete (onDelete) {
+		
+		if (onDelete) {
+			
+			onDelete();
+		}
 	}
 }	

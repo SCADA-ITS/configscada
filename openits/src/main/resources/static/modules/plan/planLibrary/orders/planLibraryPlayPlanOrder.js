@@ -104,7 +104,9 @@ export default class PlanLibraryChangeParamConfigOrder extends PlanLibraryOrder 
 
 										id: e.id,
 										label: plan ? plan.alias : e.alias,
-										plan: e.plan,
+										aux: {
+											plan: e.plan
+										},
 										folder: !e.plan
 									}
 								});
@@ -138,9 +140,12 @@ export default class PlanLibraryChangeParamConfigOrder extends PlanLibraryOrder 
 
 			function onAccept(selectedIds) {
 
-				self.nextPlan = selectedIds[0];
-
-				webix.ui(getNextPlayPlanRow(), $$("next-plan-row-" + self.uid));
+				if (Array.isArray(selectedIds) && selectedIds.length > 0 && selectedIds[0].aux && selectedIds[0].aux.plan) {
+					
+					self.nextPlan = selectedIds[0].aux.plan;
+					
+					webix.ui(getNextPlayPlanRow(), $$("next-plan-row-" + self.uid)); 
+				}
 			}
 		}
 		

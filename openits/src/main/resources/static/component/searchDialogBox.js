@@ -25,13 +25,9 @@ export default class SearchDialogBox {
 		this.searchDataTable = undefined;
 		this.searchTreeView = undefined;
 		this.containerId = undefined;
-		this.planNodes = undefined;
-		this.planHierarchies = undefined;
-		this.plans = undefined;
 		this.pkField = (dialogEntity.pkField) ? dialogEntity.pkField : "id";
 		this.windowHeight = (dialogEntity.height) ? dialogEntity.height : 600;
 		this.windowWidth = (dialogEntity.width) ? dialogEntity.width : 800;
-		
 	}
 
 	show() {
@@ -51,37 +47,23 @@ export default class SearchDialogBox {
 				else if (self.dialogEntity.dataType === SearchDialogBox.DIALOG_DATA_TYPE_TREE) {
 
 					let selectedNode = self.searchTreeView.getSelected();
-
-					if (Array.isArray(selectedNode) && selectedNode.length > 0) {
-
-						let planNode = self.dialogEntity.data.nodes.find(e => e.id === selectedNode[0].id_);
-
-						if (planNode && planNode.plan) {
-
-							selected = [{
-								id: planNode.plan.id,
-								alias: planNode.label
-							}];
-						}
+					
+					if (Array.isArray(selectedNode) && selectedNode.length > 0 && !selectedNode[0].props.folder) {
+						
+						selected = selectedNode;
 					}
 				}
 				
-				let res = undefined;
-				
-				if (self.onAccept && Array.isArray(selected) && selected.length > 0) { 
+				if (self.onAccept && Array.isArray(selected) && selected.length > 0) {
 					
-					res = self.onAccept(selected);
+					// Prevent z-index disorder. Bug preventing inputboxes contained in tabs from being selected
+					setTimeout(function() {
 				
-					if (res === undefined || res === true) {
-						
-						$$(self.containerId).hide();
-						
-						setTimeout(function() {
+						self.onAccept(selected)						
 
-							$$(self.containerId).close();
-				
-						}, 100);
-					}
+					}, 1);
+					
+					$$(self.containerId).close();
 				}
 				else {
 					
@@ -195,7 +177,7 @@ export default class SearchDialogBox {
 							
 							let firstField = getFieldName(self.dialogEntity.fields[0]);
 							
-							emptyRow[firstField] = "[" + i18n.t("LBL_EMPTY") + "]";
+							emptyRow[firstField] = " [" + i18n.t("LBL_EMPTY") + "]";
 						}
 						
 						data.unshift(emptyRow);

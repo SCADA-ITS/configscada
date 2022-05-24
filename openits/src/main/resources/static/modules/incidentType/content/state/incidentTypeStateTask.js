@@ -1,4 +1,5 @@
 import DataTable from "../../../../component/datatable.js";
+import SearchDialogBox from "../../../../component/searchDialogBox.js";
 import IncidentTypeTaskDetail from "./incidentTypeTaskDetail.js";
 import { util } from "../../../../lib/util.js";
 
@@ -21,6 +22,7 @@ export default class IncidentTypeStateTask {
 		this.dtTasks = undefined;
 		
 		this.lastTabViewId = undefined;
+		this.incidentTypeTaskDetail = undefined;
 	}
 	
 	getView() {
@@ -65,6 +67,7 @@ export default class IncidentTypeStateTask {
 			function getViewDatatableTasks() {
 					
 				const defaultGridOptionValues = [
+					{ gridOption: { id: 1 }, value: "false" },
 					{ gridOption: { id: 2 }, value: "false" },
 					{ gridOption: { id: 3 }, value: "2" },
 					{ gridOption: { id: 4 }, value: "asc" },
@@ -84,6 +87,7 @@ export default class IncidentTypeStateTask {
 					gridOptionValues: defaultGridOptionValues,
 					gridFields: [
 						{
+							id: 1,
 							extended: false,
 							filtered: false,
 							isEpochMilli: false,
@@ -101,6 +105,7 @@ export default class IncidentTypeStateTask {
 							}
 						},
 						{
+							id: 2,
 							extended: false,
 							filtered: false,
 							isEpochMilli: false,
@@ -120,6 +125,7 @@ export default class IncidentTypeStateTask {
 							}
 						},
 						{
+							id: 3,
 							extended: false,
 							filtered: false,
 							isEpochMilli: false,
@@ -139,6 +145,7 @@ export default class IncidentTypeStateTask {
 							}
 						},
 						{
+							id: 4,
 							extended: false,
 							filtered: false,
 							isEpochMilli: false,
@@ -159,6 +166,7 @@ export default class IncidentTypeStateTask {
 							}
 						},
 						{
+							id: 5,
 							extended: false,
 							filtered: false,
 							isEpochMilli: false,
@@ -192,6 +200,7 @@ export default class IncidentTypeStateTask {
 							]
 						},
 						{
+							id: 6,
 							extended: false,
 							filtered: false,
 							isEpochMilli: false,
@@ -231,6 +240,7 @@ export default class IncidentTypeStateTask {
 							]
 						},
 						{
+							id: 7,
 							extended: false,
 							filtered: false,
 							isEpochMilli: false,
@@ -264,6 +274,7 @@ export default class IncidentTypeStateTask {
 							]
 						},
 						{
+							id: 8,
 							extended: false,
 							filtered: false,
 							isEpochMilli: false,
@@ -282,7 +293,6 @@ export default class IncidentTypeStateTask {
 								name: "string"
 							}
 						}
-						
 					]
 				};
 				
@@ -322,9 +332,9 @@ export default class IncidentTypeStateTask {
 					{
 						id: 4,
 						default_: false,
-						icon: "mdi mdi-delete-outline",
+						icon: "mdi mdi-delete",
 						label: "LBL_DELETE",
-						multiselect: true,
+						multiselect: false,
 						position: 4,
 						showText: false,
 						itemRequired: true
@@ -383,9 +393,9 @@ export default class IncidentTypeStateTask {
 					commandId: 4,
 					function: (selectedIds) => {
 	
-						if (Array.isArray(selectedIds) && selectedIds.length > 0) {
+						if (Array.isArray(selectedIds) && selectedIds.length === 1) {
 							
-							deleteIncidentTypeTask(selectedIds);	
+							deleteIncidentTypeTask();	
 						}
 					}
 				});
@@ -406,11 +416,11 @@ export default class IncidentTypeStateTask {
 				
 				if (incidentTypeTask) {
 					
-					let incidentTypeTaskDetail = new IncidentTypeTaskDetail(self.config, self.uid, self.incidentType, incidentTypeTask, self.onUpdate, self.lastTabViewId, function(lastTabViewId) { self.lastTabViewId = lastTabViewId } );
+					self.incidentTypeTaskDetail = new IncidentTypeTaskDetail(self.config, self.uid, self.incidentType, incidentTypeTask, self.onUpdate, self.lastTabViewId, function(lastTabViewId) { self.lastTabViewId = lastTabViewId } );
 					
-					webix.ui(incidentTypeTaskDetail.getView(), $$("incident-type-state-task-detail-" + self.uid));
+					webix.ui(self.incidentTypeTaskDetail.getView(), $$("incident-type-state-task-detail-" + self.uid));
 						
-					incidentTypeTaskDetail.loadData();
+					self.incidentTypeTaskDetail.loadData();
 				}
 			}
 		}
@@ -434,7 +444,7 @@ export default class IncidentTypeStateTask {
 					dialogEntity.data = [];
 	
 					dialogEntity.pkField = "id"
-					dialogEntity.fields = ["idIcon=", "alias=LBL_INCIDENT_TYPE_TASK_TYPE_ALIAS", "description=LBL_INCIDENT_TYPE_TASK_TYPE_DESCRIPTION"];
+					dialogEntity.fields = ["idIcon=", "alias=LBL_INCIDENT_TYPE_TASK_TYPE_ALIAS"];
 					dialogEntity.sortFieldId = 2; 
 					
 					dialogEntity.icons = {
@@ -451,8 +461,7 @@ export default class IncidentTypeStateTask {
 						dialogEntity.data.push({
 							id: incidentTypeTaskType.id,
 							idIcon: incidentTypeTaskType.id,
-							alias: i18n.t(incidentTypeTaskType.labelAlias),
-							description: i18n.t(incidentTypeTaskType.labelDescription)
+							alias: i18n.t(incidentTypeTaskType.labelAlias)
 						});
 					});
 				}
@@ -468,11 +477,13 @@ export default class IncidentTypeStateTask {
 
 					if (incidentTypeTaskType) {
 						
-						let incidentTypeTaskDetail = new IncidentTypeTaskDetail(self.config, self.uid, self.incidentType, undefined, self.onUpdate, self.lastTabViewId, function(lastTabViewId) {self.lastTabViewId = lastTabViewId });
+						self.incidentTypeTaskDetail = new IncidentTypeTaskDetail(self.config, self.uid, self.incidentType, undefined, self.onUpdate, self.lastTabViewId, function(lastTabViewId) {self.lastTabViewId = lastTabViewId });
 								
 						let position = 1;
 						
-						incidentTypeTaskDetail.create(incidentTypeTaskType, position);
+						self.incidentTypeTaskDetail.create(incidentTypeTaskType, position, function() {
+							
+						});
 					}
 				}
 			});
@@ -487,7 +498,34 @@ export default class IncidentTypeStateTask {
 		
 		function deleteIncidentTypeTask(incidentTypeTaskIds) {
 			
-			// TODO
+			if (Array.isArray(incidentTypeTaskIds) && incidentTypeTaskIds.length > 0) {
+				
+				let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_DIALOG_DELETE_SELECT_TASK_TYPES_DESCRIPTION"), onAccept, null);
+				ms.show();
+				
+				function onAccept() {
+					
+					let deleteTaskTypes = 0;
+					
+					incidentTypeTaskIds.forEach(incidentTypeTaskId => {
+						
+						let incidentTypeTask = self.incidentTypeTasks.find(e => e.id === incidentTypeTaskId);
+						
+						if (incidentTypeTask) {
+							
+							let incidentTypeTaskDetailToDelete = new IncidentTypeTaskDetail(self.config, self.uid, self.incidentType, incidentTypeTask);
+							
+							incidentTypeTaskDetailToDelete.delete(function() {
+							
+								if (++deleteTaskTypes == taskTypeIds.length) {
+										
+										
+								}
+							});	
+						}
+					});					
+				}
+			}
 		}
 		
 		function getViewTaskDetail() {

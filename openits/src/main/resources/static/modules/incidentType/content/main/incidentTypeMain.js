@@ -1,5 +1,4 @@
 import IncidentTypeInfo from "./incidentTypeInfo.js";
-import IncidentTypeStretch from "./incidentTypeStretch.js";
 
 export default class IncidentTypeMain {
 
@@ -10,7 +9,7 @@ export default class IncidentTypeMain {
 		this.uid = uid;
 		this.onUpdate = onUpdate;
 		
-		this.incidentTypeStretch = undefined;
+		this.incidentTypeInfo = undefined;
 	}
 	
 	getView() {
@@ -34,8 +33,7 @@ export default class IncidentTypeMain {
 				css: "bordered-layout",
 				rows: [
 					
-					getViewIncidentTypeInfo(),
-					getViewIncidentTypeStretch()
+					getViewIncidentTypeInfo()
 				]
 			}
 			
@@ -43,24 +41,13 @@ export default class IncidentTypeMain {
 				
 				let viewIncidentTypeInfo;
 				
-				self.viewIncidentTypeInfo = new IncidentTypeInfo(self.config, self.uid, self.incidentType, self.onUpdate);
+				self.incidentTypeInfo = new IncidentTypeInfo(self.config, self.uid, self.incidentType, self.onUpdate);
 				
-				viewIncidentTypeInfo = self.viewIncidentTypeInfo.getView(); 
+				viewIncidentTypeInfo = self.incidentTypeInfo.getView(); 
 				
 				return viewIncidentTypeInfo;
 			}
-			
-			function getViewIncidentTypeStretch() {
-				
-				let viewIncidentTypeStretch;
-				
-				self.incidentTypeStretch = new IncidentTypeStretch(self.config, self.uid, self.incidentType, self.onUpdate);
-				
-				viewIncidentTypeStretch = self.incidentTypeStretch.getView(); 
-				
-				return viewIncidentTypeStretch;
-			}
-			
+					
 			return viewMain;
 		}
 			

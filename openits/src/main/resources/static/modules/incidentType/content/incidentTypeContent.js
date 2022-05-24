@@ -1,4 +1,5 @@
 import IncidentTypeMain from "./main/incidentTypeMain.js";
+import IncidentTypeStretch from "./stretch/incidentTypeStretch.js";
 import IncidentTypeState from "./state/incidentTypeState.js";
 
 export default class IncidentTypeContent {
@@ -11,7 +12,9 @@ export default class IncidentTypeContent {
 		this.onUpdate = onUpdate;
 		
 		this.incidentTypeMain = new IncidentTypeMain(config, uid, incidentType, onUpdate);
+		this.incidentTypeStretch = new IncidentTypeStretch(config, uid, incidentType, onUpdate);
 		this.incidentTypeState = new IncidentTypeState(config, uid, incidentType, onUpdate);
+		
 	}
 	
 	getView() {
@@ -84,6 +87,7 @@ export default class IncidentTypeContent {
 				borderless: true,
 				cells: [
 					self.incidentTypeMain.getView(),
+					self.incidentTypeStretch.getView(),
 					self.incidentTypeState.getView()
 				],
 				multiview: {
@@ -98,5 +102,16 @@ export default class IncidentTypeContent {
 		}
 			
 		return view;
+	}
+	
+	selectTab(tabId) {
+		
+		let self = this;
+		let tabView = $$("view-incidentType-detail-" + self.uid);
+		
+		if (tabView) {
+			
+			tabView.setValue(tabId);
+		}		
 	}
 }	

@@ -1,5 +1,6 @@
 package com.revenga.rits.front.openits.bo;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
@@ -33,5 +34,35 @@ public class ImsIncidentTypeStretchBO extends GenericBO {
 		Map<String, Object> incidentTypeStretch = voDataSourceAdapter.get(VODataSourceAdapter.DATA_SOURCE_GET_INCIDENT_TYPE_STRETCH, new Object[] { stretchId, incidentTypeId });
 		
 		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_INCIDENT_TYPE_STRETCH, incidentTypeStretch);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public Object create(Object input) {
+
+		Map<String, Object> createdIncidentTypeStretch = voDataSourceAdapter
+				.put(VODataSourceAdapter.DATA_SOURCE_CREATE_INCIDENT_TYPE_STRETCH, (Map<String, Object>) input);
+
+		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_CREATE_INCIDENT_TYPE_STRETCH, createdIncidentTypeStretch);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public Object update(Object input) {
+
+		Map<String, Object> updatedIncidentTypeStretch = voDataSourceAdapter
+				.put(VODataSourceAdapter.DATA_SOURCE_UPDATE_INCIDENT_TYPE_STRETCH, (Map<String, Object>) input);
+
+		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_UPDATE_INCIDENT_TYPE_STRETCH, updatedIncidentTypeStretch);
+	}
+	
+	public Object delete(String id) {
+		
+		Map<String, Object> input = new HashMap<>();
+
+		input.put("imsIncidentTypeStretchId", id);
+
+		Map<String, Object> deletedIncidentTypeStretch = voDataSourceAdapter
+				.put(VODataSourceAdapter.DATA_SOURCE_DELETE_INCIDENT_TYPE_STRETCH, input);
+
+		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_DELETE_INCIDENT_TYPE_STRETCH, deletedIncidentTypeStretch);
 	}
 }

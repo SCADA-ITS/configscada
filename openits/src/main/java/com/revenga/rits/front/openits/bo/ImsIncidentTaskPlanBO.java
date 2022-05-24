@@ -1,5 +1,6 @@
 package com.revenga.rits.front.openits.bo;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,4 +37,33 @@ public class ImsIncidentTaskPlanBO extends GenericBO {
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
+	public Object create(Object input) {
+
+		Map<String, Object> createdIncidentTaskPlan = voDataSourceAdapter
+				.put(VODataSourceAdapter.DATA_SOURCE_CREATE_INCIDENT_TASK_PLAN, (Map<String, Object>) input);
+
+		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_CREATE_INCIDENT_TASK_PLAN, createdIncidentTaskPlan);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public Object update(Object input) {
+
+		Map<String, Object> updatedIncidentTaskPlan = voDataSourceAdapter
+				.put(VODataSourceAdapter.DATA_SOURCE_UPDATE_INCIDENT_TASK_PLAN, (Map<String, Object>) input);
+
+		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_UPDATE_INCIDENT_TASK_PLAN, updatedIncidentTaskPlan);
+	}
+	
+	public Object delete(String id) {
+		
+		Map<String, Object> input = new HashMap<>();
+
+		input.put("imsIncidentTaskPlanId", id);
+
+		Map<String, Object> deletedIncidentTaskPlan = voDataSourceAdapter
+				.put(VODataSourceAdapter.DATA_SOURCE_DELETE_INCIDENT_TASK_PLAN, input);
+
+		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_DELETE_INCIDENT_TASK_PLAN, deletedIncidentTaskPlan);
+	}
 }
