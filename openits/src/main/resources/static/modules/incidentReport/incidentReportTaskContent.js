@@ -12,11 +12,11 @@ export default class IncidentReportTaskContent {
 
 		this.config = parent.config;
 		this.parent = parent;
-		this.incidentReport = parent.incidentReport; 
+		this.incidentReport = parent.incidentReport;
 		this.taskState = taskState;
 		this.index = parent.index;
 		this.uid = parent.uid;
-		
+
 		this.incidentReportTaskDetailPlan = undefined;
 		this.incidentReportTaskDetailParam = undefined;
 		this.incidentReportTaskDetailInfo = undefined;
@@ -24,23 +24,23 @@ export default class IncidentReportTaskContent {
 	}
 
 	getView() {
-		
+
 		let self = this;
 		let view;
 		let userData = self.parent.parent.userData;
 		let stretchsInfo = self.parent.parent.stretchsInfo;
-		let sameUser =(userData.id === self.incidentReport.currentUser.id);
-		
+		let sameUser = (userData.id === self.incidentReport.currentUser.id);
+
 		view = {
 			id: "taskContent-" + self.index + "-" + self.uid,
-			css: { "border-width": "1px !important", "box-sizing": "border-box"},
+			css: { "border-width": "1px !important", "box-sizing": "border-box" },
 			rows: [
 				getViewHeader(),
 				{ height: 5 },
 				{
 					cols: [
 						{ width: 10 },
-						getViewBody(),		
+						getViewBody(),
 						{ width: 10 }
 					]
 				},
@@ -48,11 +48,11 @@ export default class IncidentReportTaskContent {
 				{ height: 4 }
 			]
 		};
-		
+
 		function getViewHeader() {
-			
+
 			let viewHeader;
-			
+
 			viewHeader = {
 				//view: "toolbar",
 				css: { "background": "#F4F5F9", "margin-left": "1px !important" },
@@ -65,14 +65,14 @@ export default class IncidentReportTaskContent {
 					}
 				]
 			}
-			
+
 			return viewHeader;
 		}
-		
+
 		function getViewBody() {
-			
+
 			let viewBody;
-			
+
 			viewBody = {
 				view: "tabview",
 				css: "auxiliary-tab",
@@ -80,27 +80,27 @@ export default class IncidentReportTaskContent {
 				cells: [],
 				tabbar: {
 					tabMargin: 6
-				}	
+				}
 			}
-			
+
 			if (Array.isArray(self.taskState.taskPlanStates) && self.taskState.taskPlanStates.length > 0) {
-				
+
 				self.incidentReportTaskDetailPlan = new IncidentReportTaskDetailPlan(self.config, self.incidentReport, self.taskState, self.index, self.uid);
-				
+
 				viewBody.cells.push({
 					header: i18n.t("LBL_PLANS"),
 					body: self.incidentReportTaskDetailPlan.getView()
 				});
 			}
-			
-			if (self.taskState.incidentTypeTask && self.taskState.incidentTypeTask.taskType && 
+
+			if (self.taskState.incidentTypeTask && self.taskState.incidentTypeTask.taskType &&
 				Array.isArray(self.taskState.incidentTypeTask.taskType.taskTypeParams) &&
-				self.taskState.incidentTypeTask.taskType.id != self.config.taskTypeSignalling && 
+				self.taskState.incidentTypeTask.taskType.id != self.config.taskTypeSignalling &&
 				self.taskState.incidentTypeTask.taskType.taskTypeParams.length > 0 &&
 				self.taskState.incidentTypeTask.taskType.taskTypeParams.findIndex(e => self.config.taskParamTypes.includes(e.paramType.id)) !== -1) {
-				
+
 				self.incidentReportTaskDetailParam = new IncidentReportTaskDetailParam(self.config, self.incidentReport, self.taskState, self.index, self.uid);
-				
+
 				viewBody.cells.push({
 					header: i18n.t("LBL_PARAMS"),
 					body: self.incidentReportTaskDetailParam.getView()
@@ -111,7 +111,7 @@ export default class IncidentReportTaskContent {
 				self.taskState.incidentTypeTask.taskType.id == self.config.taskTypeSignalling &&
 				Array.isArray(self.taskState.incidentTypeTask.incidentTypeTaskValues) &&
 				self.taskState.incidentTypeTask.incidentTypeTaskValues.length === 1 &&
-				
+
 				self.taskState.incidentTypeTask.incidentTypeTaskValues[0].taskTypeParam.id == self.config.taskTypeParamSignallingToSpath
 			) {
 
@@ -122,29 +122,29 @@ export default class IncidentReportTaskContent {
 					body: self.incidentReportTaskDetailSignallingSpath.getView()
 				});
 			}
-			
+
 			if (Array.isArray(self.taskState.elements) && self.taskState.elements.length > 0) {
-				
+
 				let incidentReportTaskDetailElement = new IncidentReportTaskDetailElement(self.config, self.incidentReport, self.taskState, self.index, self.uid);
-				
+
 				viewBody.cells.push({
 					header: i18n.t("LBL_EQUIPMENTS"),
 					body: incidentReportTaskDetailElement.getView()
 				});
 			}
-			
+
 			self.incidentReportTaskDetailInfo = new IncidentReportTaskDetailInfo(self.config, self.incidentReport, self.taskState, self.index, self.uid);
-			
+
 			viewBody.cells.push({
 				header: i18n.t("LBL_INFO"),
 				body: self.incidentReportTaskDetailInfo.getView()
 			});
-			
-			return viewBody;			
+
+			return viewBody;
 		}
-		
+
 		function getViewFooter() {
-			
+
 			let viewFooter;
 
 			viewFooter = {
@@ -155,10 +155,10 @@ export default class IncidentReportTaskContent {
 						view: "button",
 						css: (function() {
 
-							if ((!self.taskState.incidentTypeTask.auto && !self.taskState.completedAt) || self.taskState.incidentTypeTask.rerun === true)  {
+							if ((!self.taskState.incidentTypeTask.auto && !self.taskState.completedAt) || self.taskState.incidentTypeTask.rerun === true) {
 
 								return "action-button"
-								
+
 							} else {
 
 								return "action-button-dis";
@@ -168,7 +168,7 @@ export default class IncidentReportTaskContent {
 						height: 41,
 						width: 130,
 						disabled: !self.incidentReport.confirm || !sameUser,
-						hidden: !self.taskState.incidentTypeTask.rerun  && (self.taskState.incidentTypeTask.auto || self.taskState.completedAt),
+						hidden: !self.taskState.incidentTypeTask.rerun && (self.taskState.incidentTypeTask.auto || self.taskState.completedAt),
 						label: (function() {
 
 							let labelButton = (self.taskState.incidentTypeTask.incidentTaskFinalizeButton) ? i18n.t(self.taskState.incidentTypeTask.incidentTaskFinalizeButton) : i18n.t("LBL_INCIDENT_END_TASK");
@@ -179,37 +179,51 @@ export default class IncidentReportTaskContent {
 
 							onItemClick() {
 
-								let label = (self.taskState.incidentTypeTask.incidentTaskFinalizeMessage) ?  self.taskState.incidentTypeTask.incidentTaskFinalizeMessage : "LBL_INCIDENT_CONFIRM_END_TASK_DESCRIPTION";
-													
-								let ms = new MessageBox (MessageBox.CONFIRM, i18n.t(label), onAccept, null);
-								ms.show();
-								
-								function onAccept() {
+								let label = undefined;
+
+								if (Array.isArray(self.taskState.taskPlanStates) && self.taskState.taskPlanStates.length > 0 &&
+									self.taskState.taskPlanStates.filter(item => item.completedAt).length == 0) {
+
+									label = "LBL_INCIDENT_CONFIRM_END_TASK_DESCRIPTION_WITH_ANY_PLAN_COMPLETED";
+
+								} else if (self.taskState.incidentTypeTask.incidentTaskFinalizeMessage) {
 									
+									label = self.taskState.incidentTypeTask.incidentTaskFinalizeMessage;
+									
+								} else {
+									label = "LBL_INCIDENT_CONFIRM_END_TASK_DESCRIPTION";
+								}
+
+
+								let ms = new MessageBox(MessageBox.CONFIRM, i18n.t(label), onAccept, null);
+								ms.show();
+
+								function onAccept() {
+
 									if (self.taskState.incidentTypeTask.rerun === true || (self.taskState && !self.taskState.incidentTypeTask.auto && !self.taskState.completedAt)) {
-	
+
 										let endpoint = util.fillTemplate(self.config.actionEndpoints.finalizeTask, {
 											id: self.incidentReport.id,
 											taskId: self.parent.currentTask.incidentTypeTask.id
 										});
-										
+
 										let body = {};
 										let incidentTypeTaskValues = undefined;
-										
+
 										if (self.incidentReportTaskDetailParam) {
-											
+
 											incidentTypeTaskValues = self.incidentReportTaskDetailParam.getIncidentTypeTaskValues();
 										}
 										else if (self.incidentReportTaskDetailSignallingSpath) {
-											
+
 											incidentTypeTaskValues = self.incidentReportTaskDetailSignallingSpath.getIncidentTypeTaskValues();
 										}
-										
+
 										if (incidentTypeTaskValues) {
-												
-											body = { incidentTypeTaskValues: incidentTypeTaskValues };	
+
+											body = { incidentTypeTaskValues: incidentTypeTaskValues };
 										}
-		
+
 										log.debug("Incident report action => " + endpoint);
 
 										webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + endpoint, body).then(function(dat) {
@@ -217,7 +231,7 @@ export default class IncidentReportTaskContent {
 											self.parent.currentTask = undefined
 
 										}, function(response) { util.ajax.handleError(response); });
-									}										
+									}
 								};
 							}
 						}
@@ -225,10 +239,10 @@ export default class IncidentReportTaskContent {
 					{ width: 10 }
 				]
 			}
-			
+
 			return viewFooter;
 		}
-		
+
 		return view;
 	}
 }
