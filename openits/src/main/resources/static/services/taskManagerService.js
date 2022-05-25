@@ -3,7 +3,6 @@ import Taskbar from "../component/general/taskbar.js";
 import Task from "../component/general/task.js";
 import { util } from "../lib/util.js"
 
-
 export default class TaskManagerService extends GenericModule {
 	
 	constructor(module){
@@ -201,7 +200,7 @@ export default class TaskManagerService extends GenericModule {
 		    			left=${positionLeft},
 		    			top=${positionTop}`;
 		
-		let browser = window.open("./external.html?" + searchParams.toString(), i18n.t(label), features);
+		let browser = window.open("./external.html?" + searchParams.toString(), (new Date()).getTime(), features);
 		
 		if (browser) {
 			
