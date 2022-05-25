@@ -384,7 +384,7 @@ export default class CCTVMulti {
 											container = $$(self.parent.args.containerId);
 										}
 																		
-										let camViewer = new CamViewer(self.parent.config, element, w, h, CamViewer.MODE_MULTI, fit, container);
+										let camViewer = new CamViewer(self.parent.config, element, w, h, CamViewer.MODE_MULTI, fit, false, container);
 							
 										let viewCamViewer = camViewer.getView();
 										
