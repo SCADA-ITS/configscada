@@ -55,14 +55,18 @@ export default class GraphicIconCustomType {
 		
 		const INIT_TRANSFORM_S = "s" + [-1, 1].join();
 		
-		let transform_S = INIT_TRANSFORM_S;
+		let transform_S;
 		
-		if (self.g.transform().string && self.g.transform().string.indexOf("s") > -1) {
+		if (self.g.transform().globalMatrix) {
 			
-			transform_S = self.g.transform().string.replace("s", "s-");
+			let x = self.g.transform().globalMatrix.e + (self.g.getBBox().width);
+			let y = self.g.transform().globalMatrix.f;
+			let sx = self.g.transform().globalMatrix.a * -1;
+			let sy = self.g.transform().globalMatrix.d;
+			
+			let transformStr = "t" + [x, y].join() + ",s" + [sx, sy, 0, 0].join(); 
+			self.g.transform(transformStr);
 		}
-		
-		self.g.transform(transform_S);
 		
 		let childs = self.g.selectAll("*");
 		
