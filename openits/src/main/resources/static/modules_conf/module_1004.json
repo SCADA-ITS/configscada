@@ -71,5 +71,8 @@
 		"cancelIncident": "SystemPermission:11"
 	},
 	"executeTaskPlanDelaySecs": 2,
-	"systemParamConfirmIncident": "SystemParam:7"
+	"systemParamConfirmIncident": "SystemParam:7",
+	"showOperationalPlan": true,
+	"showDocuments": true,
+	"showAttachments": true
 }

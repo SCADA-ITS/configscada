@@ -37,7 +37,7 @@ export default class IncidentReportActionPanel {
 		let currentUserRole = currentUser.role.id;
 		let sameRole = (self.userData.role.id === currentUserRole);
 		let sameUser = (self.userData.id === currentUser.id);
-		let changeAssignIncident =  ((self.autoAssignPermissions && sameRole && !sameUser) || self.assignAnotherPermissions) ? true : false;
+		let changeAssignIncident = ((self.autoAssignPermissions && sameRole && !sameUser) || self.assignAnotherPermissions) ? true : false;
 		let onlyAutoassignIncident = (self.autoAssignPermissions && !self.assignAnotherPermissions) ? true : false;
 		let drawCounterLabel = false;
 		let viewActionPanel = {};
@@ -52,19 +52,19 @@ export default class IncidentReportActionPanel {
 					height: 1,
 					borderless: true,
 					on: {
-						
-						onDestruct: function(){
-											
+
+						onDestruct: function() {
+
 							clearInterval(self.timeOut);
 						},
-						onAfterRender: function (){
-							
-							if (drawCounterLabel){
-							
-								drawCounterLabel = false;	
+						onAfterRender: function() {
+
+							if (drawCounterLabel) {
+
+								drawCounterLabel = false;
 								getTimeRemaining();
 							}
-						}	
+						}
 					}
 				},
 				{
@@ -115,7 +115,7 @@ export default class IncidentReportActionPanel {
 											if (sameUser || (onlyAutoassignIncident && sameRole) || self.assignAnotherPermissions) {
 
 												return false;
-											}																				
+											}
 
 											return true;
 
@@ -127,18 +127,18 @@ export default class IncidentReportActionPanel {
 									})(),
 									height: 50,
 									label: (function() {
-										
-										let label = i18n.t("LBL_INCIDENT_ACTION_FINALIZE");								
+
+										let label = i18n.t("LBL_INCIDENT_ACTION_FINALIZE");
 										let positionCurrentState = self.incidentReport.sequenceOfStates.findIndex(seq => seq.state.id === self.incidentReport.incidentState.id)
 										let isLastState = self.incidentReport.sequenceOfStates.length > 1 && positionCurrentState >= self.incidentReport.sequenceOfStates.length - 2;
 
 										if (!self.closed) {
 
 											if (self.incidentReport.confirm === true) {
-												
+
 												if (!isLastState) {
-												
-													label = i18n.t("LBL_INCIDENT_ACTION_NEXT");	
+
+													label = i18n.t("LBL_INCIDENT_ACTION_NEXT");
 												}
 											}
 											else {
@@ -147,7 +147,7 @@ export default class IncidentReportActionPanel {
 												drawCounterLabel = true;
 											}
 										}
-										
+
 										return label;
 
 									})(),
@@ -198,7 +198,7 @@ export default class IncidentReportActionPanel {
 													}
 
 												} else {
-													
+
 													if (sameUser) {
 
 														let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_CONFIRM_CONFIRM_DESCRIPTION"), onAccept, null);
@@ -206,14 +206,14 @@ export default class IncidentReportActionPanel {
 
 													} else {
 
-														let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_CONFIRM_CONFIRM_DESCRIPTION"), function(){
-															
+														let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_CONFIRM_CONFIRM_DESCRIPTION"), function() {
+
 															onAccept(true);
-															
+
 														}, null);
 														ms.show();
 													}
-										
+
 													function onAccept(changeUser) {
 
 														let userId = (changeUser) ? self.userData.id : null;
@@ -250,7 +250,7 @@ export default class IncidentReportActionPanel {
 					css: "section",
 					label: `<div class="title"><span class="section-text">${i18n.t("LBL_INCIDENT_SECTION_DOCUMENTS")}</span></div>`,
 					borderless: true,
-					hidden: !self.incidentReport.confirm
+					hidden: !self.incidentReport.confirm || !(self.config.showOperationalPlan || self.config.showAttachments || self.config.showDocuments)
 				},
 				{ height: 20 },
 				{
@@ -407,7 +407,7 @@ export default class IncidentReportActionPanel {
 			}
 
 			buttonsArray.push(changeUserButton);
-			
+
 			if (self.incidentReport.alarms !== undefined && self.incidentReport.alarms.length > 0) {
 
 				showAlarmsButton = {
@@ -910,7 +910,7 @@ export default class IncidentReportActionPanel {
 		}
 
 		function cancelIncidentReport() {
-			
+
 			if (sameUser) {
 
 				let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_CONFIRM_CANCEL_DESCRIPTION"), onAccept, null);
@@ -927,7 +927,7 @@ export default class IncidentReportActionPanel {
 			}
 
 			function onAccept(changeUser) {
-				
+
 				let userId = (changeUser) ? self.userData.id : null;
 
 				let endpoint = util.fillTemplate(self.config.actionEndpoints.cancel, {
@@ -976,7 +976,7 @@ export default class IncidentReportActionPanel {
 
 			let body = []
 
-			if (self.incidentReport.operationalPlanUrl !== undefined) {
+			if (self.config.showOperationalPlan && self.incidentReport.operationalPlanUrl !== undefined) {
 
 				body.push(
 					{
@@ -999,44 +999,49 @@ export default class IncidentReportActionPanel {
 				body.push({ height: 10 });
 			}
 
-			body.push(
-				{
-					view: "button",
-					heigth: 50,
-					css: "panel-button",
-					label: i18n.t("LBL_INCIDENT_DOCUMENTS"),
-					tooltip: i18n.t("LBL_INCIDENT_DOCUMENTS_DESCRIPTION"),
-					type: "icon",
-					icon: "mdi mdi-file-document-multiple-outline",
-					on: {
+			if (self.config.showDocuments) {
+				body.push(
+					{
+						view: "button",
+						heigth: 50,
+						css: "panel-button",
+						label: i18n.t("LBL_INCIDENT_DOCUMENTS"),
+						tooltip: i18n.t("LBL_INCIDENT_DOCUMENTS_DESCRIPTION"),
+						type: "icon",
+						icon: "mdi mdi-file-document-multiple-outline",
+						on: {
 
-						onItemClick() {
+							onItemClick() {
 
-							showDocuments();
+								showDocuments();
+							}
+						}
+					});
+				body.push({ height: 10 });
+			}
+
+
+			if (self.config.showAttachments) {
+				body.push(
+					{
+						view: "button",
+						heigth: 50,
+						css: "panel-button",
+						label: i18n.t("LBL_INCIDENT_ATTACHMENTS"),
+						tooltip: i18n.t("LBL_INCIDENT_ATTACHMENTS_DESCRIPTION"),
+						type: "icon",
+						icon: "mdi mdi-attachment",
+						on: {
+
+							onItemClick() {
+
+								showAttachments();
+							}
 						}
 					}
-				});
-			body.push({ height: 10 });
+				);
+			}
 
-
-			body.push(
-				{
-					view: "button",
-					heigth: 50,
-					css: "panel-button",
-					label: i18n.t("LBL_INCIDENT_ATTACHMENTS"),
-					tooltip: i18n.t("LBL_INCIDENT_ATTACHMENTS_DESCRIPTION"),
-					type: "icon",
-					icon: "mdi mdi-attachment",
-					on: {
-
-						onItemClick() {
-
-							showAttachments();
-						}
-					}
-				}
-			);
 
 			return body;
 		}
@@ -1073,7 +1078,7 @@ export default class IncidentReportActionPanel {
 				let button = $$("action-button-" + self.uid);
 				let timeService = window.sm.getService(Services.TIME_SERVICE);
 				let actualDate = timeService.serverTimeMs;
-				let millisOfDiference = actualDate- generatedAt;
+				let millisOfDiference = actualDate - generatedAt;
 
 				if (millisOfDiference < (valueInSecs * 1000) && button) {
 
