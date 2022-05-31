@@ -62,6 +62,11 @@ export default class IncidentService extends GenericModule {
 	loadData() {
 
 		let self = this;
+		
+		if (util.ui.isExternal()) {
+			
+			return;
+		}
 
 		loadDefaultTimeConfirmIncident(function() {
 			

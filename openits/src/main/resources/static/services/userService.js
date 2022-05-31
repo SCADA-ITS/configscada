@@ -58,11 +58,11 @@ export default class UserService extends GenericModule {
 		let self = this;
 		let subscriptorService = window.sm.getService(Services.SUBSCRIPTOR_SERVICE);
 		
-		if (!window.userControlPanel && subscriptorService) {
-
-			window.userControlPanel = new UserControlPanel(self.config);
+		if (subscriptorService) {
 			
 			if (!util.ui.isExternal() && $$("icon-user-service")) {
+				
+				window.userControlPanel = new UserControlPanel(self.config);
 				
 				$$("icon-user-service").attachEvent("onItemClick", function(id, e) {
 	

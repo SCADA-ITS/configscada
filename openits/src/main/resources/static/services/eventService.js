@@ -1,3 +1,4 @@
+import { util } from "../lib/util.js";
 import GenericModule from "../modules/genericModule.js";
 import Notification from "./notification.js";
 import StompSubscriptorService from "../services/stompSubscriptorService.js";
@@ -55,6 +56,11 @@ export default class EventService extends GenericModule {
 	loadData() {
 
 		let self = this;
+		
+		if (util.ui.isExternal()) {
+			
+			return;
+		}
 		
 		loadEventsPendingToConfirm();
 		

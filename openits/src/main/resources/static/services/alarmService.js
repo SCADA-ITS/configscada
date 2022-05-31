@@ -1,3 +1,4 @@
+import { util } from "../lib/util.js";
 import GenericModule from "../modules/genericModule.js";
 import AlarmControlPanel from "../component/general/alarmControlPanel.js";
 import Notification from "./notification.js";
@@ -72,18 +73,21 @@ export default class AlarmService extends GenericModule {
 	loadData() {
 
 		let self = this;
+		
+		if (!util.ui.isExternal()) {
 			
-		if (!window.alarmControlPanel) {
+			if (!window.alarmControlPanel) {
 
-			window.alarmControlPanel = new AlarmControlPanel(self.config);
-		}
-
-		if ($$("icon-alarm-service")) {
+				window.alarmControlPanel = new AlarmControlPanel(self.config);
+			}
 			
-			$$("icon-alarm-service").attachEvent("onItemClick", function(id, e) {
-
-				callAlarmControlPanel();
-			});	
+			if ($$("icon-alarm-service")) {
+				
+				$$("icon-alarm-service").attachEvent("onItemClick", function(id, e) {
+	
+					callAlarmControlPanel();
+				});	
+			}	
 		}
 
 		self.alarms.stats = {};
@@ -94,12 +98,15 @@ export default class AlarmService extends GenericModule {
 		loadNoRecognizedAlarms();
 		loadFilteredAlarms();
 		
-		if (self.config.notification.enabled) {
+		if (!util.ui.isExternal()) {
 			
-			loadNotifications();	
+			if (self.config.notification.enabled) {
+			
+				loadNotifications();	
+			}
+			
+			loadAlarms();	
 		}
-		
-		loadAlarms();
 		
 		function loadActiveAlarms() {
 
