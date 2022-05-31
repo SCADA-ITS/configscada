@@ -165,7 +165,7 @@ export default class EventService extends GenericModule {
 	
 				function onMessage(data) {
 	
-					self.incidents.data.stats.eventPendingToConfirm = data.value;
+					self.events.data.stats.eventPendingToConfirm = data.value;
 	
 					window.userControlPanel.updateData();
 				}
