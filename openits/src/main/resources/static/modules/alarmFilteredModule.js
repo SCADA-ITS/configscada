@@ -1,5 +1,5 @@
 import GenericModule from "./genericModule.js";
-import AlarmFilteredMute from "./alarmFiltered/alarmFilteredMute.js";
+import AlarmFiltered from "./alarmFiltered/alarmFiltered.js";
 import AlarmFilteredWizard from "./alarmFiltered/alarmFilteredWizard.js";
 import AlarmFilteredView from "./alarmFiltered/alarmFilteredView.js";
 
@@ -15,9 +15,9 @@ export default class AlarmFilteredModule extends GenericModule {
 		this.args = args;
 		this.steps = undefined;
 
-		this.AlarmFilteredWizard = new AlarmFilteredWizard(this);
-		this.AlarmFilteredMute = new AlarmFilteredMute(this);
-		this.AlarmFilteredView = new AlarmFilteredView(this);
+		this.alarmFilteredWizard = new AlarmFilteredWizard(this);
+		this.alarmFiltered = new AlarmFiltered(this);
+		this.alarmFilteredView = new AlarmFilteredView(this);
 	}
 
 	getView() {
@@ -35,21 +35,25 @@ export default class AlarmFilteredModule extends GenericModule {
 
 		if (self.moduleAction.id === self.config.moduleAction.mute) {
 
-			self.AlarmFilteredMute.separateAlarms(true, self.args.selectedPks);
+			self.alarmFiltered.separateAlarms(true, self.args.selectedPks, false);
+			
+		} else if (self.moduleAction.id === self.config.moduleAction.disableAlarm) {
+
+			self.alarmFiltered.separateAlarms(true, self.args.selectedPks, true);
 
 		} else if (self.moduleAction.id === self.config.moduleAction.deleteAlarmFilter) {
 
-			self.AlarmFilteredMute.separateAlarms(false, self.args.selectedPks);
+			self.alarmFiltered.separateAlarms(false, self.args.selectedPks);
 
 		} else if (self.moduleAction.id === self.config.moduleAction.filterAlarmWizard) {
 
 			self.steps = webix.copy(self.config.steps.fromNoMap);
 
-			self.AlarmFilteredWizard.drawComponents();
+			self.alarmFilteredWizard.drawComponents();
 
-		} else if (self.moduleAction.id === self.config.moduleAction.view){
-			
-			self.AlarmFilteredView.show();
+		} else if (self.moduleAction.id === self.config.moduleAction.view) {
+
+			self.alarmFilteredView.show();
 		}
 
 	}

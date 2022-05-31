@@ -12,7 +12,7 @@ export default class IncidentReportTaskDetailPlan extends IncidentReportTaskDeta
 	constructor(config, incidentReport, taskState, index, uid) {
 
 		super(config, incidentReport, taskState, index, uid);
-		
+
 		this.dtPlans = undefined;
 	}
 
@@ -180,7 +180,7 @@ export default class IncidentReportTaskDetailPlan extends IncidentReportTaskDeta
 								name: "string"
 							}
 						},
-												{
+						{
 							extended: false,
 							filtered: true,
 							isEpochMilli: false,
@@ -291,9 +291,10 @@ export default class IncidentReportTaskDetailPlan extends IncidentReportTaskDeta
 				let data = [];
 				let taskPlanStates = self.taskState.taskPlanStates;
 
-				let position = 1;
 
 				if (Array.isArray(taskPlanStates) && taskPlanStates.length) {
+
+					taskPlanStates.sort((a, b) => (a.incidentTaskPlan.position > b.incidentTaskPlan.position) ? 1 : ((b.incidentTaskPlan.position > a.incidentTaskPlan.position) ? -1 : 0));
 
 					taskPlanStates.forEach(taskPlanState => {
 
@@ -301,7 +302,7 @@ export default class IncidentReportTaskDetailPlan extends IncidentReportTaskDeta
 
 						row = {
 							id: taskPlanState.incidentTaskPlan.plan.id,
-							position: position++,
+							position: taskPlanState.incidentTaskPlan.position,
 							plan: taskPlanState.incidentTaskPlan.plan.alias,
 							stretch: taskPlanState.incidentTaskPlan.stretch.alias,
 							status: taskPlanState.completedAt ? PLAN_EXECUTED : PLAN_NO_EXECUTED,

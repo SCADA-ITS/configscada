@@ -3,7 +3,7 @@
 		"mute": 101601,
 		"deleteAlarmFilter": 101602,
 		"filterAlarmWizard": 101603,
-		"muteModalAction": 101604,
+		"disableAlarm": 101604,
 		"view": 101605
 	},
 	"actionEndpoints": {

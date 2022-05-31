@@ -3,7 +3,7 @@ import CalendarDialogBox from "../../component/calendarDialogBox.js";
 import MessageBox from "../../component/messageBox.js";
 import InputDialogBox from "../../component/inputDialogBox.js";
 
-export default class AlarmFilteredMute {
+export default class AlarmFiltered {
 
 	constructor(parent) {
 
@@ -12,7 +12,7 @@ export default class AlarmFilteredMute {
 	}
 
 
-	separateAlarms(action, arrAlarms) {
+	separateAlarms(action, arrAlarms, alarmDisabled) {
 
 		let parent = this.parent;
 		let filterAlarms = [];
@@ -21,7 +21,7 @@ export default class AlarmFilteredMute {
 
 		if (action === ACTION.true) {
 
-			deleteFilters(action, arrAlarms);
+			deleteFilters(action, arrAlarms, alarmDisabled);
 
 		} else {
 
@@ -42,12 +42,12 @@ export default class AlarmFilteredMute {
 
 						if (counter === arrAlarms.length) {
 
-							let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_ALARM_REMOVE_FILTER_CONFIRM_DESCRIPTION"), onAccept, null);
+							let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_ALARM_REMOVE_FILTER_CONFIRM_DESCRIPTION"), onAccept, null);
 							ms.show();
-							
+
 							function onAccept() {
-								
-								deleteFilters(action, filterAlarms);
+
+								deleteFilters(action, filterAlarms, alarmDisabled);
 							};
 						}
 					});
@@ -56,28 +56,34 @@ export default class AlarmFilteredMute {
 		}
 
 
-		function deleteFilters(action, arrAlarms) {
+		function deleteFilters(action, arrAlarms, alarmDisabled) {
 
 			let title;
 			let text;
 
 			if (Array.isArray(arrAlarms) && arrAlarms.length > 0) {
 
-				title = action ? i18n.t("LBL_DIALOG_MUTE_ALARMS") : i18n.t("LBL_DIALOG_UNMUTE_ALARMS");
-				text = action ? i18n.t("LBL_ARE_YOU_SURE_MUTE") : i18n.t("LBL_ARE_YOU_SURE_UNMUTE");
+				if (alarmDisabled) {
+					title = action ? i18n.t("LBL_DIALOG_DISABLE_ALARMS") : i18n.t("LBL_DIALOG_ENABLE_ALARMS");
+					text = action ? i18n.t("LBL_ARE_YOU_SURE_DISABLE") : i18n.t("LBL_ARE_YOU_SURE_ENABLE");
+				} else {
+					title = action ? i18n.t("LBL_DIALOG_MUTE_ALARMS") : i18n.t("LBL_DIALOG_UNMUTE_ALARMS");
+					text = action ? i18n.t("LBL_ARE_YOU_SURE_MUTE") : i18n.t("LBL_ARE_YOU_SURE_UNMUTE");
+				}
+
 
 				if (action === ACTION.true) {
 
 					(new CalendarDialogBox(title, text, null, false, function(date) {
 
-							let timeService = window.sm.getService(Services.TIME_SERVICE);
-							let dat = new Date(timeService.getEpoch());
-						
-							return (Math.floor(date) < Math.floor(dat));
-						},
+						let timeService = window.sm.getService(Services.TIME_SERVICE);
+						let dat = new Date(timeService.getEpoch());
+
+						return (Math.floor(date) < Math.floor(dat));
+					},
 						onAcceptCalendar
-						)).show();
-					
+					)).show();
+
 					function onAcceptCalendar(dates) {
 
 						(new InputDialogBox(title, text, onAcceptInputDialogBox, false, null, { id: DataType.ALPHANUMERIC })).show();
@@ -89,7 +95,7 @@ export default class AlarmFilteredMute {
 								let responseAlarms = data.json();
 
 								if (Array.isArray(responseAlarms) && responseAlarms.length > 0) {
-									
+
 									let user = util.user.getUserData();
 									let alarmsToFilter = [];
 
@@ -100,7 +106,7 @@ export default class AlarmFilteredMute {
 											alarmConfigId: alarm.alarmConfig.id,
 											filteredUntil: dates.from.getTime(),
 											elementId: alarm.targetElement.id,
-											alarmDisabled: false,
+											alarmDisabled: alarmDisabled,
 											enable: true,
 											userId: user.id,
 											comment: comment
@@ -158,7 +164,7 @@ export default class AlarmFilteredMute {
 				}
 			}
 		}
-		
+
 
 
 	}
