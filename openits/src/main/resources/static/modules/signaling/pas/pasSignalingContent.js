@@ -21,7 +21,7 @@ export default class PasSignalingContent {
 
 		this.idStompSubscriptorPas = undefined;
 		this.idStompSubscriptorZones = undefined;
-		
+
 		this.commandEquipmentPermissions = util.module.isAllowedPermission(this.config.requiredPermissions.commandEquipment);
 	}
 
@@ -101,6 +101,10 @@ export default class PasSignalingContent {
 					if (self.zonesDataTable) {
 
 						self.zonesDataTable.callbacks();
+						
+						if (Array.isArray(self.selectedPks) && self.selectedPks.length > 0) {
+							self.zonesDataTable.select(self.selectedPks);
+						}
 					}
 
 					$$("view-loading-" + self.uid).hide();
@@ -218,7 +222,7 @@ export default class PasSignalingContent {
 
 			return viewContent;
 		}
-		
+
 		function getViewHeader() {
 
 			let currentPasState = getCurrentPasState();
@@ -509,7 +513,7 @@ export default class PasSignalingContent {
 						}
 					);
 				}
-				
+
 				let events = {};
 				events[DataTable.EventTypes.ON_COMMAND_EXEC] = [];
 
@@ -518,40 +522,40 @@ export default class PasSignalingContent {
 					function: () => {
 
 						let selectedItems = self.zonesDataTable.getSelectedItems();
-						
+
 						if (Array.isArray(selectedItems) && selectedItems.length > 0) {
-						
+
 							function callBack(message) {
-	
+
 								let command = self.config.commands.SEND_MESSAGE;
-	
+
 								command.elementId = self.element.id;
-								command.commandElementValues[0].value = JSON.stringify(selectedItems.map(e => {return e.messageZoneId}));
+								command.commandElementValues[0].value = JSON.stringify(selectedItems.map(e => { return e.messageZoneId }));
 								command.commandElementValues[1].value = JSON.stringify([message]);
-	
+
 								util.element.sendCommand([command], function(res) {
-									
+
 									if (res) {
-									
-										(new MessageBox (MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null)).show();	
+
+										(new MessageBox(MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null)).show();
 									}
 								}, i18n.t("LBL_PAS_EXECUTE_COMMAND"));
 							}
-	
+
 							if (self.pasLibraries && self.pasLibraries.pasLibrary) {
-	
+
 								let pasLibrary = new PasLibrary(self.pasLibraries.pasLibrary, callBack, selectedItems.length);
 								pasLibrary.show();
-	
+
 							} else {
-	
+
 								let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_NOT_FOUND_PAS_LIBRARY_TEXT"), null, null);
 								ms.show();
-							}	
+							}
 						}
-						
-						
-						
+
+
+
 
 					}
 				});
@@ -578,7 +582,7 @@ export default class PasSignalingContent {
 									let command = self.config.commands.SWITCH_OFF;
 
 									command.elementId = self.element.id;
-									command.commandElementValues[0].value = JSON.stringify(selectedItems.map(e => {return e.messageZoneId}));
+									command.commandElementValues[0].value = JSON.stringify(selectedItems.map(e => { return e.messageZoneId }));
 
 									let body = {
 										commands: []
@@ -628,31 +632,31 @@ export default class PasSignalingContent {
 			}
 			return viewBody;
 		}
-		
+
 		function onMessagePas(data) {
 
 			if (data) {
-	
+
 				self.element = eval("adapter." + self.config.adapters.element)(self.element, data);
-	
+
 				webix.ui(getViewHeader(), $$("view-content-header-" + self.uid));
 			}
 		}
-	
+
 		function onMessageZone(data) {
-	
+
 			if (data) {
-	
+
 				let oldZoneData = self.zonesDataTable.getItem(data.id);
-	
+
 				if (oldZoneData) {
-	
+
 					var zoneIndex = self.zones.findIndex(element => element.id == data.id);
-	
+
 					self.zones[zoneIndex] = eval("adapter." + self.config.adapters.element)(self.zones[zoneIndex], data);
-	
+
 					updateZone(self.zones[zoneIndex]);
-	
+
 					self.zonesDataTable.update(self.zones[zoneIndex]);
 				}
 			}
