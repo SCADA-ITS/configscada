@@ -18,7 +18,8 @@
 		"incidentTypes": "incidents/imsIncidentTypes",
 		"locationsStretchs": "locations/stretchs",
 		"elementsStretchs": "elements/byStretchs",
-		"systemParamConfirmIncident" : "system_params/${id}"
+		"systemParamConfirmIncident" : "system_params/${id}",
+		"incidentReportSummary": "incidents/reports/${id}/summary"
 	},
 	"topic": "/topic/incidentReport",
 	"actionEndpoints": {

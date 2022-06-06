@@ -172,8 +172,8 @@ export default class IncidentReportModule extends GenericModule {
 			let pendingRequest = this.args.selectedPks.length;
 
 			self.args.selectedPks.forEach(e => {
-
-				webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.incidentReport, { id: e })).then(function(dat) {
+				
+				webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.incidentReportSummary, { id: e })).then(function(dat) {
 
 					if (dat != null) {
 
