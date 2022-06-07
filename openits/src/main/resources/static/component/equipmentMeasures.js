@@ -117,6 +117,7 @@ export default class EquipmentMeasures {
 									id: element.id,
 									elementType: element.elementType.id,
 									elementValues: elementValues,
+									precision: element.precision
 								});
 
 							for (let elementValue of elementValues) {
@@ -150,6 +151,7 @@ export default class EquipmentMeasures {
 											id: element.id,
 											elementType: element.elementType.id,
 											elementValues: elementValuesArray,
+											precision: element.precision
 										});
 
 									for (let elementValue of elementValuesArray) {
@@ -247,7 +249,7 @@ export default class EquipmentMeasures {
 								});
 							}
 
-							drawInitMeasures(elementsSameTypeArray[0].elementValues);
+							drawInitMeasures(elementsSameTypeArray[0]);
 
 						} else {
 
@@ -256,19 +258,19 @@ export default class EquipmentMeasures {
 								let label = `<div>
 												<span>${el.alias}</span>												
 											</div>`;
-											
+
 								if (self.moduleAction) {
 
-								label = `<div>
+									label = `<div>
 											<span id='${el.id}' class='equipment-measures-info-label'>${el.alias}</span>												
-										</div>`																		
+										</div>`
 								}
 
 								data.push(
 									{ label: label, type: "label", id: el.alias, iconId: el.id }
 								);
 
-								drawInitMeasures(el.elementValues);
+								drawInitMeasures(el);
 							}
 						}
 
@@ -276,8 +278,9 @@ export default class EquipmentMeasures {
 
 							let labelEllipsis = `style='max-width: ${self.labelWidth * 0.95}px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis'`;
 							let valueEllipsis = `style='max-width: ${self.valueWidth * 0.75}px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis'`;
+							let properties = propertiesArray.elementValues;
 
-							for (let property of propertiesArray) {
+							for (let property of properties) {
 
 								let valuesForPrint = util.element.getValuesForPrint(null, property);
 								let value;
@@ -286,6 +289,7 @@ export default class EquipmentMeasures {
 
 								if (valuesForPrint.value && valuesForPrint.value != "-") {
 
+									let valueHTML;
 									let iconHTML = "";
 									let unit = "";
 
@@ -295,7 +299,16 @@ export default class EquipmentMeasures {
 										unit = valuesForPrint.unit;
 									}
 
-									let valueHTML = (valuesForPrint.hasEnumImage != undefined) ? `<img style="width:40px" src="${valuesForPrint.value}">` : `<span>${valuesForPrint.value}</span>`;
+									if (propertiesArray.precision && property.elementTypeParam && property.elementTypeParam.dataType && property.elementTypeParam.dataType.id === DataType.DECIMAL) {
+
+										let parseValue = parseFloat(valuesForPrint.value);
+
+										valueHTML = parseValue.toFixed(parseInt(propertiesArray.precision));
+
+									} else {
+
+										valueHTML = (valuesForPrint.hasEnumImage != undefined) ? `<img style="width:40px" src="${valuesForPrint.value}">` : `<span>${valuesForPrint.value}</span>`;
+									}
 
 									value = `<div id="${htmlId}" ${valueEllipsis} class="equipment-measures-values">${iconHTML} ${valueHTML} ${unit}</div>`;
 
@@ -376,13 +389,13 @@ export default class EquipmentMeasures {
 														id: "tb_btn-info-" + element.id + "-" + self.uid,
 														hidden: (self.combo) && (self.moduleAction) ? false : true,
 														type: "icon",
-														icon:  "mdi mdi-information-outline",
+														icon: "mdi mdi-information-outline",
 														width: 35,
 														height: 35,
 														css: "equipment-measures-info-icon",
 														on: {
-															onItemClick: function(obj){
-																
+															onItemClick: function(obj) {
+
 																let itemSelected = $$("tableContent-select-" + element.id + "-" + self.uid).getValue();
 
 																if (self.moduleAction != null) {
@@ -750,6 +763,7 @@ export default class EquipmentMeasures {
 			function drawMeasures() {
 
 				let htmlId;
+				let valueHTML;
 				let iconHTML = "";
 				let unit = "";
 				let values = {};
@@ -771,7 +785,18 @@ export default class EquipmentMeasures {
 					unit = valuesForPrint.unit;
 				}
 
-				let valueHTML = (valuesForPrint.hasEnumImage != undefined) ? `<img style="width:40px" src="${valuesForPrint.value}">` : `<span>${valuesForPrint.value}</span>`;
+				let updateWithPrecision = detailedElements.find(el => (el.id === elementId && el.precision));
+
+				if (updateWithPrecision && newMeasure.elementTypeParam && newMeasure.elementTypeParam.dataType && newMeasure.elementTypeParam.dataType.id === DataType.DECIMAL) {
+
+					let parseValue = parseFloat(valuesForPrint.value);
+
+					valueHTML = parseValue.toFixed(parseInt(updateWithPrecision.precision));
+
+				} else {
+
+					valueHTML = (valuesForPrint.hasEnumImage != undefined) ? `<img style="width:40px" src="${valuesForPrint.value}">` : `<span>${valuesForPrint.value}</span>`;
+				}
 
 				let value = `<div id="${htmlId}" style="max-width: ${self.valueWidth * 0.75}px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis" class="equipment-measures-values">${iconHTML} ${valueHTML} ${unit}</div>`;
 

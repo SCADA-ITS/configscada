@@ -388,10 +388,12 @@ export default class EquipmentViewerContent {
 						addModule(module, e);
 					}
 				});
-			}
+	
+			} else {
 
-			contentTabs.removeView("tab2remove" + self.uid);
-			
+				contentTabs.removeView("tab2remove" + self.uid);				
+			}
+		
 //			if(self.equipmentViewerInfo){
 //				
 //				self.equipmentViewerInfo.resizeMeasures();		
@@ -456,7 +458,7 @@ export default class EquipmentViewerContent {
 				contentTabs.getTabbar().hideOption("view-main-content-tab_body-" + moduleAction.id + "-" + self.uid);
 				contentTabs.getTabbar().setValue("view-main-content-tab_body-" + moduleAction.id + "-" + self.uid);
 				contentTabs.getTabbar().showOption("view-main-content-tab_body-" + moduleAction.id + "-" + self.uid);
-
+				contentTabs.removeView("tab2remove" + self.uid);	  
 
 				if ($$("view-main-content-tab-info-" + self.uid) != undefined) {
 
