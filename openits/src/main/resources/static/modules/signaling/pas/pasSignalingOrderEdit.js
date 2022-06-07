@@ -250,6 +250,7 @@ export default class PasSignalingOrderEdit {
 
 				viewBody = {
 					view: "form",
+					css: {"box-sizing": "border-box"},
 					elements: [
 						{
 							cols: [
