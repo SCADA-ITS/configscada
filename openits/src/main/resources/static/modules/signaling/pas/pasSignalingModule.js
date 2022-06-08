@@ -92,7 +92,11 @@ export default class VmsSignalingModule extends GenericModule {
 		
 						} else {
 					
-							self.currentElement = getElementFromElementId(self.args.selectedPks[0]);
+							if(self.args.selectedPks){
+							
+								self.currentElement = getElementFromElementId(self.args.selectedPks[0]);	
+							}
+							
 							load();					
 						}
 			
