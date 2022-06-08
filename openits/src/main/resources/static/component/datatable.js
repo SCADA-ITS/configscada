@@ -1742,7 +1742,8 @@ export default class DataTable {
 						dataType: gridField.gridFieldDataType.id,
 						value: undefined,
 						start: undefined,
-						end: undefined
+						end: undefined,
+						parameterized: gridField.parameterized
 					}
 					
 					if (gridField.gridFieldDataType.id != DataType.DATE.value) {
@@ -1780,25 +1781,32 @@ export default class DataTable {
 					for (let i = 0; res && i < filteredValues.length; i++) {
 	
 						let filteredValue = filteredValues[i];
-						
+
 						if (filteredValue.dataType != DataType.DATE.value) {
-							
-							res &= ((obj[filteredValue.sourceField]).toLowerCase().indexOf(filteredValue.value) !== -1);	
-						}
-						else {
-							
-							if (filteredValue.start) {
+
+							if (filteredValue.parameterized) {
 								
+								res &= ((obj[filteredValue.sourceField]).toLowerCase() === filteredValue.value);
+
+							} else {
+
+								res &= ((obj[filteredValue.sourceField]).toLowerCase().indexOf(filteredValue.value) !== -1);
+							}
+
+						} else {
+
+							if (filteredValue.start) {
+
 								if (filteredValue.end && filteredValue.end > filteredValue.start) {
-									
-									res &= obj[filteredValue.sourceField] >= filteredValue.start && obj[filteredValue.sourceField] < filteredValue.end;  
+
+									res &= obj[filteredValue.sourceField] >= filteredValue.start && obj[filteredValue.sourceField] < filteredValue.end;
 								}
 								else {
-									
+
 									res &= obj[filteredValue.sourceField] >= filteredValue.start;
 								}
 							}
-						}
+						}							
 					}
 	
 					res = res & checkInitFilter(obj);
