@@ -304,8 +304,10 @@ export default class PlanLibrarySignalingOrder extends PlanLibraryOrder {
 											on: {
 												onItemClick() {
 
-													onAccept(equipmentList.tableView.getSelectedIds());
-													$$(equipmentListWindow).close();
+													onAccept(equipmentList.tableView.getSelectedIds(), function() {
+															
+														$$(equipmentListWindow).close();
+													});												
 												}
 											}
 										}
@@ -326,25 +328,34 @@ export default class PlanLibrarySignalingOrder extends PlanLibraryOrder {
 				}
 
 
-				function onAccept(items) {
+				function onAccept(items, close) {
 
 					if (Array.isArray(items) && items.length > 0) {
 
-						webix.ajax().headers(HEADER_POST).post(appConfig.restUrl + self.config.restEndpoints.elementByIdsCommands, JSON.stringify(items)).then(
+						webix.ajax().headers(HEADER_POST).post(appConfig.restUrl + self.config.restEndpoints.elementByIdsCommands, JSON.stringify(items)).then(function(elementsSelectedResponse) {
 
-							function(dataElements) {
+							if (elementsSelectedResponse != null) {
 
-								if (dataElements) {
+								let elementsSelected = elementsSelectedResponse.json();
 
-									let elementsSelected = dataElements.json();
+								if (Array.isArray(elementsSelected) && elementsSelected.length > 0) {
 
-									if (Array.isArray(elementsSelected) && elementsSelected.length > 0) {
+									if (elementsSelected.length === 1) {
 
-										if (elementsSelected.length === 1) {
+										onSelectElement(elementsSelected[0]);
+										close();
 
-											onSelectElement(elementsSelected[0]);
+									} else {
 
-										} else {
+										let subtypeId = elementsSelected[0].elementSubtype.id;
+										let sameSubtype = true;
+
+										for (let i = 0; sameSubtype && i < elementsSelected.length; i++) {
+
+											sameSubtype =  (elementsSelected[i].elementSubtype.id === subtypeId) ? true : false;  
+										}
+
+										if (sameSubtype) {
 
 											let elementSelected = elements.find(element => element.id === elementsSelected[0].id);
 
@@ -379,8 +390,8 @@ export default class PlanLibrarySignalingOrder extends PlanLibraryOrder {
 															self.signalingModuleInstance = instance;
 															let win = $$(self.signalingModuleInstance.args.containerId);
 
-															util.ui.setTitle(win, i18n.t("LBL_CREATE_SIGNALING_ORDER"));
-
+															util.ui.setTitle(win, i18n.t("LBL_CREATE_SIGNALING_ORDER"));															
+															close();
 														});
 
 													} else {
@@ -390,10 +401,16 @@ export default class PlanLibrarySignalingOrder extends PlanLibraryOrder {
 													}
 												}
 											}
+											
+										} else {
+											
+											let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_ELEMENTS_OF_DIFFERENT_SUBTYPE"), null, null);
+											ms.show();																					
 										}
 									}
 								}
-							});
+							}
+						});
 					}
 				}
 			}
