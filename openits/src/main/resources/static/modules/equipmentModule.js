@@ -169,6 +169,8 @@ export default class EquipmentModule extends GenericModule {
 				cols: [
 					{
 						id: "view-main-list-equipments-" + self.uid,
+						width: 350,
+						maxWidth: 400,
 						header: function() {
 
 							return `<div>
@@ -481,6 +483,7 @@ export default class EquipmentModule extends GenericModule {
 
 													contentViews[VIEWS.TABLE].show();
 													contentViews[VIEWS.EQUIPMENT].hide();
+													util.ui.setTitle(self.args.containerId, i18n.t("LBL_EQUIPMENTS"), null);
 
 												} else if (newv === "switcher-element-hierarchy-" + self.uid) {
 
@@ -503,6 +506,7 @@ export default class EquipmentModule extends GenericModule {
 													if (Array.isArray(itemSelected) && itemSelected.length > 0) {
 
 														contentViews[VIEWS.EQUIPMENT].show();
+														util.ui.setTitle(self.args.containerId, i18n.t(itemSelected[0].value), null);
 
 													} else {
 
@@ -562,7 +566,7 @@ export default class EquipmentModule extends GenericModule {
 					self.dataTable.callbacks();
 					self.listView.enable(true);
 					$$("multi-" + self.uid).show();
-					$$("loadingContent-" + self.uid).hide();
+					$$("loadingContent-" + self.uid).hide();					
 				}
 			}, function(response) { util.ajax.handleError(response); });
 		}
