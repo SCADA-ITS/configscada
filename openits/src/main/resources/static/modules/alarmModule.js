@@ -702,7 +702,7 @@ export default class AlarmModule extends GenericModule {
 					{
 						width: 130,
 						view:"label", 
-						label: `<span class="alarm-view-text">${i18n.t(vlabel)}</span>`, 
+						label: `<span class="form-text-font">${i18n.t(vlabel)}</span>`, 
 						align:"left",
 						height: 27
 					},
@@ -744,7 +744,7 @@ export default class AlarmModule extends GenericModule {
 					{
 						width: 130,
 						view:"label", 
-						label: `<span class="alarm-view-text">${i18n.t(vlabel)}</span>`, 
+						label: `<span class="form-text-font">${i18n.t(vlabel)}</span>`, 
 						align:"left",
 						height: 27
 					},
@@ -779,7 +779,7 @@ export default class AlarmModule extends GenericModule {
 					{
 						width: 365,
 						view: "label",
-						label: `<span class="alarm-view-text">${i18n.t("LBL_ALARM_TYPE")} ${numType}, ${i18n.t(vlabel)}</span>`,
+						label: `<span class="form-text-font">${i18n.t("LBL_ALARM_TYPE")} ${numType}, ${i18n.t(vlabel)}</span>`,
 						align: "left",
 						height: 27
 					},
@@ -814,9 +814,9 @@ export default class AlarmModule extends GenericModule {
 						template: `<img style="max-width:100%; width:auto; width: -moz-available; width: -webkit-fill-available; height:auto; padding-right: 10px;" src="${icon}">`,
 					},
 					{
-						width: 130,
+						width: 365,
 						view:"label", 
-						label: `<span class="alarm-view-text">${i18n.t(vlabel)}</span>`, 
+						label: `<span class="form-text-font">${i18n.t(vlabel)}</span>`, 
 						align:"left",
 						height: 27
 					},
@@ -865,7 +865,6 @@ export default class AlarmModule extends GenericModule {
 
 			let label = alarm.deactivationComments ? (alarm.deactivationComments.startsWith(LABEL_PREFIX) ? i18n.t(alarm.deactivationComments) : alarm.deactivationComments) : undefined;
 
-
 			deactivationComments = {
 				css: "alarm-borders-bottom",
 				hidden: !label,
@@ -895,21 +894,27 @@ export default class AlarmModule extends GenericModule {
 		function windowHeight(alarm) {
 
 			let customHeight = undefined;
+			const CUSTOM_HEIGHT = {
+				WITHOUT_COMMENTS: 520,
+				WITH_ONE_COMMENT: 585,
+				WITH_TWO_COMMENTS: 645,
+				CORRECT_FACTOR: 50
+			};
 
 			if (alarm.recognizedComments && alarm.deactivationComments) {
 
-				customHeight = 645;
+				customHeight = CUSTOM_HEIGHT.WITH_TWO_COMMENTS;
 
 			} else if (alarm.recognizedComments || alarm.deactivationComments) {
 
-				customHeight = 585;
+				customHeight = CUSTOM_HEIGHT.WITH_ONE_COMMENT;
 
 			} else {
 
-				customHeight = 520;
+				customHeight = CUSTOM_HEIGHT.WITHOUT_COMMENTS;
 			}
 
-			alarmWindow.config.height = customHeight + 50;
+			alarmWindow.config.height = customHeight + CUSTOM_HEIGHT.CORRECT_FACTOR;
 			return customHeight;
 		}
 
@@ -974,48 +979,42 @@ export default class AlarmModule extends GenericModule {
 										{ height: 16 },
 										{
 											view: "label",
-											css: "alarm-view-title-label",
-											label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_ALARM_ACTIVATION")}</span></div>`,
+											label: i18n.t("LBL_ALARM_ACTIVATION"),
 											align: "left",
 											height: 20
 										},
 										{ height: 24 },
 										{
 											view: "label",
-											css: "alarm-view-title-label",
-											label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_ALARM_CONFIG_ALIAS")}</span></div>`,
+											label: i18n.t("LBL_ALARM_CONFIG_ALIAS"),
 											align: "left",
 											height: 20
 										},
 										{ height: 24 },
 										{
 											view: "label",
-											css: "alarm-view-title-label",
-											label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_ELEMENT_TYPE_ALIAS")}</span></div>`,
+											label: i18n.t("LBL_ELEMENT_TYPE_ALIAS"),
 											align: "left",
 											height: 20
 										},
 										{ height: 24 },
 										{
 											view: "label",
-											css: "alarm-view-title-label",
-											label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_ELEMENT_ALIAS")}</span></div>`,
+											label: i18n.t("LBL_ELEMENT_ALIAS"),
 											align: "left",
 											height: 20
 										},
 										{ height: 24 },
 										{
 											view: "label",
-											css: "alarm-view-title-label",
-											label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_ALARM_LEVEL")}</span></div>`,
+											label: i18n.t("LBL_ALARM_LEVEL"),
 											align: "left",
 											height: 20
 										},
 										{ height: 24 },
 										{
 											view: "label",
-											css: "alarm-view-title-label",
-											label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_ALARM_RECOGNIZED")}</span></div>`,
+											label: i18n.t("LBL_ALARM_RECOGNIZED"),
 											align: "left",
 											height: 27
 										},
@@ -1027,7 +1026,7 @@ export default class AlarmModule extends GenericModule {
 										{ height: 16 },
 										{
 											view: "label",
-											label: `<span class="alarm-view-text">${new Date(this.alarm.activation).toLocaleString(i18n.getLocale(), FORMAT_NUMERIC_DATES)}</span>`,
+											label: `<span class="form-text-font">${new Date(this.alarm.activation).toLocaleString(i18n.getLocale(), FORMAT_NUMERIC_DATES)}</span>`,
 											align: "left",
 											height: 20
 										},
@@ -1035,7 +1034,7 @@ export default class AlarmModule extends GenericModule {
 										{
 											id: "label-alarm-" + self.uid,
 											view: "label",
-											label: `<span id="labelAlarm" class="alarm-view-text" ${ellipsis}>${labelAlarm}</span>`,
+											label: `<span id="labelAlarm" class="form-text-font" ${ellipsis}>${labelAlarm}</span>`,
 											align: "left",
 											height: 20,
 											tooltip: function(obj) {
@@ -1067,21 +1066,21 @@ export default class AlarmModule extends GenericModule {
 										{ height: 24 },
 										{
 											view: "label",
-											label: `<span class="alarm-view-text">${this.targetElementTypeAlias}</span>`,
+											label: `<span class="form-text-font">${this.targetElementTypeAlias}</span>`,
 											align: "left",
 											height: 20
 										},
 										{ height: 24 },
 										{
 											view: "label",
-											label: `<span class="alarm-view-text">${this.targetElementAlias}</span>`,
+											label: `<span class="form-text-font">${this.targetElementAlias}</span>`,
 											align: "left",
 											height: 20
 										},
 										{ height: 24 },
 										{
 											view: "label",
-											label: `<span class="alarm-view-text">${i18n.t(this.alarmLevelAlias)}</span>`,
+											label: `<span class="form-text-font">${i18n.t(this.alarmLevelAlias)}</span>`,
 											align: "left",
 											height: 20
 										},
@@ -1103,28 +1102,24 @@ export default class AlarmModule extends GenericModule {
 										{ height: 24 },
 										{
 											view: "label",
-											css: "alarm-view-title-label",
-											label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_CRITICAL_LEVEL")}</span></div>`,
+											label: i18n.t("LBL_CRITICAL_LEVEL"),
 											align: "left",
 											height: 27
 										},
 										{ height: 24 },
 										{
 											view: "label",
-											css: "alarm-view-title-label",
-											label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_ALARM_TYPE")}</span></div>`,
+											label: i18n.t("LBL_ALARM_TYPE"),
 											align: "left",
 											height: 27
 										},
 										{ height: 24 },
 										{
 											view: "label",
-											css: "alarm-view-title-label",
-											label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_ALARM_STATE")}</span></div>`,
+											label: i18n.t("LBL_ALARM_STATE"),
 											align: "left",
 											height: 27
 										},
-
 									]
 								},
 								{

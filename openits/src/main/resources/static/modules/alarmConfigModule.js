@@ -168,9 +168,7 @@ export default class AlarmConfigModule extends GenericModule {
 				function getInfo() {
 
 					let infoDetails;
-					
-					
-
+						
 					infoDetails = {
 						css: { "box-sizing": "border-box", "border-bottom": "1px solid #e2e2e2", "border-left": "1px solid #e2e2e2", "border-right": "1px solid #e2e2e2" },
 						cols: [
@@ -180,8 +178,7 @@ export default class AlarmConfigModule extends GenericModule {
 									{ height: 90 },
 									{
 										view: "label",
-										//css: "alarm-view-title-label",
-										//label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_ALIAS")}</span></div>`,
+
 										label: i18n.t("LBL_ALIAS"),
 										align: "left",
 										height: 20
@@ -189,8 +186,6 @@ export default class AlarmConfigModule extends GenericModule {
 									{ height: 24 },
 									{
 										view: "label",
-										//css: "alarm-view-title-label",
-										//label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_ELEMENT_TYPE")}</span></div>`,
 										label: i18n.t("LBL_ELEMENT_TYPE"),
 										align: "left",
 										height: 20
@@ -198,8 +193,6 @@ export default class AlarmConfigModule extends GenericModule {
 									{ height: 24 },
 									{
 										view: "label",
-										//css: "alarm-view-title-label",
-										//label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_ELEMENT_ALIAS")}</span></div>`,
 										label: i18n.t("LBL_ELEMENT_ALIAS"),
 										align: "left",
 										height: 20
@@ -207,8 +200,6 @@ export default class AlarmConfigModule extends GenericModule {
 									{ height: 24 },
 									{
 										view: "label",
-										//css: "alarm-view-title-label",
-										//label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_ALARM_LEVEL")}</span></div>`,
 										label: i18n.t("LBL_ALARM_LEVEL"),
 										align: "left",
 										height: 20
@@ -216,8 +207,6 @@ export default class AlarmConfigModule extends GenericModule {
 									{ height: 24 },
 									{
 										view: "label",
-										//css: "alarm-view-title-label",
-										//label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_CRITICAL_LEVEL")}</span></div>`,
 										label: i18n.t("LBL_CRITICAL_LEVEL"),
 										align: "left",
 										height: 20
@@ -225,8 +214,6 @@ export default class AlarmConfigModule extends GenericModule {
 									{ height: 24 },
 									{
 										view: "label",
-										//css: "alarm-view-title-label",
-										//label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_ALARM_TYPE")}</span></div>`,
 										label: i18n.t("LBL_ALARM_TYPE"),
 										align: "left",
 										height: 20

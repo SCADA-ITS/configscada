@@ -2592,21 +2592,6 @@ p, input, textarea {
 	padding-left: 20px;	
 }
 
-
-.alarm-view-title-label {
-	/*font-family: HelveticaNeue-Medium;*/
-	font-family: Roboto;
-	font-size: 13px;
-	font-weight: 500;
-	font-stretch: normal;
-	font-style: normal;
-	line-height: normal;
-	letter-spacing: normal;
-	/*color: #333435;*/
-	/*color: var(--blue-strong);*/
-	color: #475466;
-}
-
 .form-text-font {
 	font-weight: normal;
 	overflow: hidden;
@@ -2649,19 +2634,6 @@ p, input, textarea {
 	letter-spacing: normal;
 	/*color: #92abcf;*/
 	/*color: var(--blue-strong);*/
-	color: #475466;
-}
-
-.alarm-view-text {
-	font-family: Roboto;
-	font-size: 13px;
-	font-weight: 300;
-	font-stretch: normal;
-	font-style: normal;
-	line-height: normal;
-	letter-spacing: normal;
-	/*color: #0f1724;*/
-	/*color:  var(--blue-strong);*/
 	color: #475466;
 }
 
@@ -2746,13 +2718,9 @@ p, input, textarea {
 
 .user-role-form {
 	box-sizing: border-box;
-	border: 1px solid var(--blue-mid-opacity-3) !important;
-	border-top: none !important;
-}
-
-.user-role-form .webix_inp_label {
-	color: #475466 !important;
-	font-size: 13px ;
+	border: 1px solid #e2e2e2;
+	border-top: none;
+	border-width: 1px !important;
 }
 
 .user-role-dt {

@@ -109,82 +109,72 @@ export default class AlarmFilteredView {
 									}
 									,
 									{
-										//css: "alarm-borders-top",
 										css: { "border": "1px solid #e2e2e2;", "box-sizing": "border-box" },
 										cols: [
 											{ width: 42 },
 											{
 												width: 194,
 												rows: [
-													{ height: 16 },
+													{ height: 24 },
 													{
 														view: "label",
-														css: "alarm-view-title-label",
-														label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_FILTERED_UNTIL")}</span></div>`,
+														label: i18n.t("LBL_FILTERED_UNTIL"),
 														align: "left",
 														height: 20
 													},
 													{ height: 24 },
 													{
 														view: "label",
-														css: "alarm-view-title-label",
-														label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_ALARM_CONFIG_ALIAS")}</span></div>`,
+														label: i18n.t("LBL_ALARM_CONFIG_ALIAS"),
 														align: "left",
 														height: 20
 													},
 													{ height: 24 },
 													{
 														view: "label",
-														css: "alarm-view-title-label",
-														label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_ELEMENT_TYPE_ALIAS")}</span></div>`,
+														label: i18n.t("LBL_ELEMENT_TYPE_ALIAS"),
 														align: "left",
 														height: 20
 													},
 													{ height: 24 },
 													{
 														view: "label",
-														css: "alarm-view-title-label",
-														label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_ELEMENT_ALIAS")}</span></div>`,
+														label: i18n.t("LBL_ELEMENT_ALIAS"),
 														align: "left",
 														height: 20
 													},
 													{ height: 24 },
 													{
 														view: "label",
-														css: "alarm-view-title-label",
-														label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_ALARM_LEVEL")}</span></div>`,
+														label: i18n.t("LBL_ALARM_LEVEL"),
 														align: "left",
 														height: 20
 													},
 													{ height: 24 },
 													{
 														view: "label",
-														css: "alarm-view-title-label",
-														label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_ALARM_TYPE")}</span></div>`,
+														label: i18n.t("LBL_ALARM_TYPE"),
 														align: "left",
 														height: 27
 													},
 													{ height: 24 },
 													{
 														view: "label",
-														css: "alarm-view-title-label",
-														label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_ALARM_FILTER_HAS_ALARMS")}</span></div>`,
+														label: i18n.t("LBL_ALARM_FILTER_HAS_ALARMS"),
 														align: "left",
 														height: 27
 													},
 													{ height: 24 },
 													{
 														view: "label",
-														css: "alarm-view-title-label",
-														label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_USER")}</span></div>`,
+														label: i18n.t("LBL_USER"),
 														align: "left",
 														height: 27
 													},
 													{ height: 24 },
 													{
 														view: "label",
-														css: "alarm-view-title-label",
-														label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_COMMENTS")}</span></div>`,
+														label: i18n.t("LBL_COMMENTS"),
 														align: "left",
 														hidden: (!alarmFiltered.comment) ? true : false,
 														height: 27
@@ -195,38 +185,38 @@ export default class AlarmFilteredView {
 											{
 												width: 400,
 												rows: [
-													{ height: 16 },
+													{ height: 24 },
 													{
 														view: "label",
-														label: `<span class="alarm-view-text">${new Date(alarmFiltered.filteredUntil).toLocaleString(i18n.getLocale(), FORMAT_NUMERIC_DATES)}</span>`,
+														label: `<span class="form-text-font">${new Date(alarmFiltered.filteredUntil).toLocaleString(i18n.getLocale(), FORMAT_NUMERIC_DATES)}</span>`,
 														align: "left",
 														height: 20
 													},
 													{ height: 24 },
 													{
 														view: "label",
-														label: `<span id="labelAlarm" class="alarm-view-text">${i18n.t(alarmConfig.labelAlias)}</span>`,
+														label: `<span id="labelAlarm" class="form-text-font">${i18n.t(alarmConfig.labelAlias)}</span>`,
 														align: "left",
 														height: 20
 													},
 													{ height: 24 },
 													{
 														view: "label",
-														label: `<span class="alarm-view-text">${i18n.t(alarmConfig.elementType.labelAlias)}</span>`,
+														label: `<span class="form-text-font">${i18n.t(alarmConfig.elementType.labelAlias)}</span>`,
 														align: "left",
 														height: 20
 													},
 													{ height: 24 },
 													{
 														view: "label",
-														label: `<span class="alarm-view-text">${element.alias}</span>`,
+														label: `<span class="form-text-font">${element.alias}</span>`,
 														align: "left",
 														height: 20
 													},
 													{ height: 24 },
 													{
 														view: "label",
-														label: `<span class="alarm-view-text">${i18n.t(alarmConfig.alarmLevel.labelAlias)}</span>`,
+														label: `<span class="form-text-font">${i18n.t(alarmConfig.alarmLevel.labelAlias)}</span>`,
 														align: "left",
 														height: 20
 													},
@@ -237,7 +227,7 @@ export default class AlarmFilteredView {
 													{ height: 24 },
 													{
 														view: "label",
-														label: `<span class="alarm-view-text">${alarmFiltered.user.name}</span>`,
+														label: `<span class="form-text-font">${alarmFiltered.user.name}</span>`,
 														align: "left",
 														height: 20
 													},
@@ -297,7 +287,7 @@ export default class AlarmFilteredView {
 								{
 									width: 130,
 									view: "label",
-									label: `<span class="alarm-view-text">${i18n.t(vlabel)}</span>`,
+									label: `<span class="form-text-font">${i18n.t(vlabel)}</span>`,
 									align: "left",
 									height: 27
 								}
@@ -322,7 +312,7 @@ export default class AlarmFilteredView {
 								{
 									width: 130,
 									view: "label",
-									label: `<span class="alarm-view-text">${i18n.t(vlabel)}</span>`,
+									label: `<span class="form-text-font">${i18n.t(vlabel)}</span>`,
 									align: "left",
 									height: 27
 								}
