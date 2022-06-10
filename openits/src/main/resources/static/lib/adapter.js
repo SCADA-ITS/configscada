@@ -611,50 +611,6 @@ export let adapter = {
 
 				return listOutput;
 			}
-		},
-
-		fan: {
-
-			getList(data, update_callback) {
-
-				let listOutput = [];
-
-				if (data != undefined && Array.isArray(data) && data.length > 0) {
-
-					data.forEach(e => {
-
-						let itemOutput = {};
-
-						itemOutput.id = e.id;
-						itemOutput.alias = e.alias;
-
-						if (e.elementTypeState != undefined) {
-
-							itemOutput.state = e.elementTypeState.id;
-						}
-
-						if (e.elementValues != undefined && Array.isArray(e.elementValues) && e.elementValues.length > 0) {
-
-							e.elementValues.forEach(elementValue => {
-
-								let elementTypeParamId = adapter.getElementTypeParamId(elementValue.id);
-
-								itemOutput[elementTypeParamId] = elementValue.value;
-
-							});
-						}
-
-						listOutput.push(itemOutput);
-					});
-
-					if (update_callback) {
-
-						update_callback(listOutput);
-					}
-				}
-
-				return listOutput;
-			}
 		}
 
 	}

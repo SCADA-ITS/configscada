@@ -4,6 +4,7 @@ import DataTable from "../../../component/datatable.js";
 import OptionDialogBox from "../../../component/optionDialogBox.js";
 import MessageBox from "../../../component/messageBox.js";
 import EquipmentMeasures from "../../../component/equipmentMeasures.js";
+import InputDialogBox from "../../../component/inputDialogBox.js";
 
 export default class TubeContent {
 
@@ -87,77 +88,105 @@ export default class TubeContent {
 				if (data != null) {
 
 					self.selectedTube = data.json();
-					
+
 					webix.ajax().get(appConfig.restUrl + self.parent.config.restEndpoints.elementsHierarchy).then(function(dataHierarchies) {
-						
+
 						if (dataHierarchies != null) {
 
 							let hierarchies = dataHierarchies.json();
-							
+
 							if (Array.isArray(hierarchies)) {
-								
+
 								let tubeFans = hierarchies.filter(h => h.parent.id === self.selectedTube.id && h.child.elementType.id === self.parent.config.elementTypeFan);
 
 								self.tubeEquipmentsNotFans = hierarchies.filter(h => h.parent.id === self.selectedTube.id && h.child.elementType.id != self.parent.config.elementTypeFan);
 
 								if (Array.isArray(tubeFans)) {
-									
+
 									let fanIds = tubeFans.map(t => {
-										
+
 										return t.child.id;
 									});
-									
+
 									webix.ajax().headers(HEADER_POST).post(appConfig.restUrl + self.parent.config.restEndpoints.elementByIds, JSON.stringify(fanIds)).then(function(dataFans) {
-									
+
 										if (dataFans != null) {
-											
+
 											let fans = dataFans.json();
-											
+
 											if (Array.isArray(fans) && fans.length > 0) {
-												
-												self.tubeFans = eval("adapter." + self.parent.config.adapters.fan)(fans, null);
-												
+
+												self.tubeFans = [];
+												fans.forEach(fan => {
+
+													let fanOut = {};
+													fanOut.id = fan.id;
+													fanOut.alias = fan.alias;
+													fanOut.state = (fan.elementTypeState) ? fan.elementTypeState.id : null;
+													fanOut.tubeCmdToSend = null;
+													fanOut.tubeCmdParamIds = null;
+													fanOut.tubeCmdToSendAlias = "-";
+													fanOut.tubeCmdParamArg = null;
+													fanOut.tubeCmdValue = '-';
+
+													if (fan.elementValues != undefined && Array.isArray(fan.elementValues)) {
+
+														fan.elementValues.forEach(elementValue => {
+
+															fanOut[util.element.getElementTypeParamId(elementValue.id)] = elementValue.value;
+
+														});
+													}
+
+													if (fan.elementSubtype) {
+
+														fanOut.elementSubtypeId = fan.elementSubtype.id;
+														fanOut.elementSubtypeLabelAlias = i18n.t(fan.elementSubtype.labelAlias);
+													}
+													self.tubeFans.push(fanOut);
+												});
+
 												webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.parent.config.restEndpoints.grid, { id: self.parent.config.gridId })).then(function(dataGrid) {
-													
+
 													if (dataGrid != null) {
-							
+
 														self.fanGrid = dataGrid.json();
-														
+
 														webix.ui(drawContent(), $$("view-tube-content-" + self.uid));
 														$$("view-tube-loading-" + self.uid).hide();
-									
+
 														if (self.tubeFansDataTable) {
-									
+
 															self.tubeFansDataTable.callbacks();
-															
+
 															if (Array.isArray(self.tubeFans)) {
-																
-																self.tubeFansDataTable.add(self.tubeFans);	
+
+																self.tubeFansDataTable.add(self.tubeFans);
 															}
-									
+
 															if (self.enabledFanIds) {
-									
+
 																self.tubeFansDataTable.select(self.enabledFanIds);
 															}
-									
+
 															if (getVentilationMode() && self.parent.config.ventilationModeOptions.find(option => option.id == getVentilationMode()).disableFanChange) {
-									
+
 																enableGridButtons(false)
 															}
 														}
-														
-														if(self.equipmentMeasures){
-															
+
+														if (self.equipmentMeasures) {
+
 															self.equipmentMeasures.loadData();
 														}
-									
+
 														connectWS();
-														
+
 														if (self.parent.treeView) {
 
 															self.parent.treeView.enable(true);
 														}
-														
+
 													}
 												});
 											}
@@ -188,7 +217,7 @@ export default class TubeContent {
 					if (enabled) {
 
 						changeStatusButton.enable();
-						
+
 					} else {
 
 						changeStatusButton.disable();
@@ -210,16 +239,16 @@ export default class TubeContent {
 		function getDisabledChangeRegime() {
 
 			let currentVentilationState = getCurrentVentilationState();
-			
+
 			let result = (currentVentilationState && currentVentilationState.id &&
 				self.parent.config.ventilationStates[currentVentilationState.id].actions.includes("SEND_VENTILATION_REGIME"));
-				
+
 			if (self.parent.args && self.parent.args.readOnly) {
-				
+
 				result &= (self.parent.args.readOnly !== true)
 			}
-				
-			return !result; 
+
+			return !result;
 		}
 
 		function getVentilationRegime(regimeId) {
@@ -336,7 +365,7 @@ export default class TubeContent {
 				tooltip: true,
 				on: {
 					onChange(newv, oldv) {
-						
+
 						this.blockEvent();
 						this.setValue(oldv);
 						this.unblockEvent();
@@ -360,22 +389,22 @@ export default class TubeContent {
 
 						function changeMode(newModeId, callbackCloseDialog) {
 
-							let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_VENTILATION_CHANGE_MODE_CONFIRM_DESCRIPTION"), onAccept, null);
+							let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_VENTILATION_CHANGE_MODE_CONFIRM_DESCRIPTION"), onAccept, null);
 							ms.show();
-							
+
 							function onAccept() {
-								
+
 								callbackCloseDialog(true);
 
 								let command = self.parent.config.commands.SEND_VENTILATION_MODE;
 								command.elementId = self.selectedTube.id;
 								command.commandElementValues[0].value = newModeId;
-											
+
 								util.element.sendCommand([command], function(res) {
-									
+
 									if (res) {
-									
-										(new MessageBox (MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null)).show();	
+
+										(new MessageBox(MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null)).show();
 									}
 								});
 							}
@@ -430,7 +459,7 @@ export default class TubeContent {
 					$$("label-regimen-2-" + self.uid).setValue('<div><span class="global-text-badge" style="background:#9c70303b; color: #9c7030a0;">' + i18n.t(getProposedRegime() ? getProposedRegime().labelAlias : "LBL_UNKNOWN") + '</span></div>')
 
 					let buttonChangeRegime = $$("view-content-button-change-regime-" + self.uid);
-					 
+
 					if (!ventilationMode) {
 
 						enableGridButtons(false);
@@ -444,19 +473,19 @@ export default class TubeContent {
 
 						if (self.parent.config.ventilationModeOptions.find(option => option.id == ventilationMode).disableRegimeChange) {
 
-							if(buttonChangeRegime){
-							
-								buttonChangeRegime.disable();	
-							}							
+							if (buttonChangeRegime) {
+
+								buttonChangeRegime.disable();
+							}
 
 						} else {
 
 							if (getDisabledChangeRegime()) {
 
-								if(buttonChangeRegime){
-								
-									buttonChangeRegime.disable();	
-								}								
+								if (buttonChangeRegime) {
+
+									buttonChangeRegime.disable();
+								}
 
 							} else {
 
@@ -486,31 +515,39 @@ export default class TubeContent {
 			function onMessageFan(data) {
 
 				if (data) {
-					
-					let newFanData = webix.copy(data);
 
-					let oldFanData = self.tubeFansDataTable.getItem(newFanData.id);
+					let oldFanData = self.tubeFansDataTable.getItem(data.id);
 
 					if (oldFanData) {
 
-						newFanData.tubeCmdToSend = oldFanData.tubeCmdToSend;
-						newFanData.tubeCmdParamIds = oldFanData.tubeCmdParamIds 
-						newFanData.tubeCmdToSendAlias = oldFanData.tubeCmdToSendAlias;
-						newFanData.alias = oldFanData.alias;
+						let newFanData = webix.copy(oldFanData);
 
-						let fanData = eval("adapter." + self.parent.config.adapters.fan)([newFanData], null);
-						self.tubeFansDataTable.update(fanData);
+						if (data.elementTypeState) {
+
+							newFanData.state = data.elementTypeState.id;
+						}
+
+						if (data.elementValues != undefined && Array.isArray(data.elementValues)) {
+
+							data.elementValues.forEach(elementValue => {
+
+								newFanData[util.element.getElementTypeParamId(elementValue.id)] = elementValue.value;
+
+							});
+						}
+
+						self.tubeFansDataTable.update(newFanData);
 					}
 				}
 			}
 		}
-		
-		
+
+
 		function enableGridButtons(enable) {
-			
+
 			if (self.parent.args && self.parent.args.readOnly) {
-				
-				enable &= (self.parent.args.readOnly !== true);	
+
+				enable &= (self.parent.args.readOnly !== true);
 			}
 
 			for (let command of self.tubeFansDataTable.metadata.gridCommands) {
@@ -693,7 +730,7 @@ export default class TubeContent {
 							}
 						]
 					};
-					
+
 					function getButtonChangeRegime() {
 
 						let buttonChangeRegime = { height: 38 };
@@ -832,7 +869,7 @@ export default class TubeContent {
 							rows: getTable()
 						}
 					});
-					
+
 					if (self.parent.config.viewEquipmentMeasures && self.parent.config.viewEquipmentMeasures.enabled === true) {
 
 						let elementsId = [];
@@ -865,14 +902,14 @@ export default class TubeContent {
 
 					//let data = self.tubeFans;
 					let data = [];
-					let metadataCopy = webix.copy(self.fanGrid.metadata);				
+					let metadataCopy = webix.copy(self.fanGrid.metadata);
 					let cleanButtonId = undefined;
 
 					let events = {};
 					events[DataTable.EventTypes.ON_COMMAND_EXEC] = [];
-					
+
 					if (Array.isArray(metadataCopy.gridCommands) && metadataCopy.gridCommands.length > 0) {
-						
+
 						if (self.parent.commandEquipmentPermission) {
 
 							metadataCopy.gridCommands.sort((a, b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));
@@ -897,7 +934,7 @@ export default class TubeContent {
 							metadataCopy.gridCommands = [];
 							infoButtonId = 1;
 						}
-																		
+
 						metadataCopy.gridCommands.push({
 							id: infoButtonId,
 							default_: true,
@@ -909,54 +946,121 @@ export default class TubeContent {
 							itemRequired: true,
 							unselectAllAfter: true
 						});
-						
+
 						metadataCopy.gridCommands.forEach(gridCmd => {
-							
+
 							if (gridCmd.args) {
-								
+
 								let args = JSON.parse(gridCmd.args);
-								
-								if (args.command && args.ids) {
-									
+
+								if (Array.isArray(args) && args.length > 0) {
+
 									events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
 										commandId: gridCmd.id,
 										function: () => {
-											
-											let commandElement = self.selectedTube.commandElements.find(e => e.id === args.command);
-				
+
+											let argsCommand = undefined;
+											let differentSubtype = false;
+
 											self.tubeFansDataTable.getSelectedItems().forEach(item => {
-												
+
 												let fanElementTypeState = item[self.parent.config.fanElementTypeState.field];
-												
-												if (fanElementTypeState && 
+
+												if (fanElementTypeState &&
 													self.parent.config.fanElementTypeState.allowed.includes(fanElementTypeState)) {
-													
-													item.tubeCmdToSend = commandElement.id;
-													item.tubeCmdParamIds = args.ids;
-													item.tubeCmdToSendAlias = i18n.t(commandElement.labelAlias);
-													self.tubeFansDataTable.update(item);	
+
+													let commandAux = args.find(e => (item.elementSubtypeId && e.elementSubtype === item.elementSubtypeId));
+
+													if (!commandAux) {
+
+														commandAux = args.find(e => !e.elementSubtype);
+													}
+
+													if (commandAux) {
+
+														if (argsCommand && argsCommand.command !== commandAux.command) {
+
+															differentSubtype = true;
+
+														} else if (!argsCommand) {
+
+															argsCommand = commandAux;
+														}
+													}
 												}
 											});
-				
-											checkDisableChangeStatusButton();
+
+											if (differentSubtype) {
+
+												let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_ELEMENTS_OF_DIFFERENT_SUBTYPE"), null, null);
+												ms.show();
+
+											} else if (argsCommand) {
+
+												let commandElement = self.selectedTube.commandElements.find(e => e.id === argsCommand.command);
+
+												if (commandElement) {
+
+													if (argsCommand.arg && commandElement.commandElementTypeParams) {
+
+														let commandElementTypeParam = commandElement.commandElementTypeParams.find(e => e.id === argsCommand.arg);
+
+														if (commandElementTypeParam) {
+
+															(new InputDialogBox(i18n.t(commandElementTypeParam.labelAlias), i18n.t("LBL_ENTER_VALUE"), function(value) {
+
+																self.tubeFansDataTable.getSelectedItems().forEach(item => {
+
+																	item.tubeCmdToSend = commandElement.id;
+																	item.tubeCmdParamIds = argsCommand.ids;
+																	item.tubeCmdToSendAlias = i18n.t(commandElement.labelAlias);
+																	item.tubeCmdParamArg = argsCommand.arg;
+																	item.tubeCmdValue = value;
+																	self.tubeFansDataTable.update(item)
+																});
+																checkDisableChangeStatusButton();
+															}, true, null,
+																{
+																	id: commandElementTypeParam.dataType ? commandElementTypeParam.dataType.id : null,
+																	labelUnit: commandElementTypeParam.labelUnit,
+																	threshold1: commandElementTypeParam.threshold1,
+																	threshold2: commandElementTypeParam.threshold2
+																})).show();
+
+														}
+
+													} else {
+														self.tubeFansDataTable.getSelectedItems().forEach(item => {
+
+															item.tubeCmdToSend = commandElement.id;
+															item.tubeCmdParamIds = argsCommand.ids;
+															item.tubeCmdToSendAlias = i18n.t(commandElement.labelAlias);
+															item.tubeCmdParamArg = null;
+															item.tubeCmdValue = '-';
+															self.tubeFansDataTable.update(item)
+														});
+														checkDisableChangeStatusButton();
+													}
+												}
+											}
 										}
 									});
 								}
-							}							
+							}
 						});
-						
+
 						events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
 							commandId: cleanButtonId,
 							function: () => {
-	
+
 								clearGrid();
 							}
 						});
-						
+
 						events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
 							commandId: infoButtonId,
 							function: () => {
-								
+
 								openEquipmentViewer();
 							}
 						});
@@ -966,42 +1070,44 @@ export default class TubeContent {
 
 					return self.tubeFansDataTable.getView();
 				}
-				
+
 				function clearGrid() {
-					
+
 					self.tubeFansDataTable.getAllItems().forEach(item => {
-	
+
 						item.tubeCmdToSend = null;
 						item.tubeCmdParamIds = null;
 						item.tubeCmdToSendAlias = "-";
+						item.tubeCmdParamArg = null;
+						item.tubeCmdValue = '-';
 						self.tubeFansDataTable.update(item);
 					});
 
-					checkDisableChangeStatusButton();	
+					checkDisableChangeStatusButton();
 				}
-				
+
 				function openEquipmentViewer() {
-					
+
 					let selectedItems = self.tubeFansDataTable.getSelectedItems();
-					
+
 					if (Array.isArray(selectedItems) && selectedItems.length == 1) {
-						
+
 						let selectedItem = selectedItems[0];
-						
+
 						if (selectedItem) {
-							
+
 							let module = util.module.getFromModuleAction(self.parent.config.equipmentViewer);
 
 							if (module) {
-		
+
 								let moduleAction = { id: self.parent.config.equipmentViewer };
 								let args = { selectedPks: [selectedItem.id] };
-		
+
 								util.module.open(module, moduleAction, VIEW_TYPE_WINDOW, null, args);
-							}	
+							}
 						}
 					}
-						
+
 				}
 
 				function getBottom() {
@@ -1009,7 +1115,7 @@ export default class TubeContent {
 					let bottom;
 
 					bottom = {
-						height:40,
+						height: 40,
 						cols: [
 							{},
 							{
@@ -1024,68 +1130,94 @@ export default class TubeContent {
 								click: function() {
 
 									let responseSend = 0;
-									let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_VENTILATION_CHANGE_STATUS_CONFIRM_DESCRIPTION"), onAccept, null);
+									let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_VENTILATION_CHANGE_STATUS_CONFIRM_DESCRIPTION"), onAccept, null);
 									ms.show();
-									
+
 									function onAccept() {
-										
+
 										let rows = self.tubeFansDataTable.getAllItems();
-										
+
 										let cmdMap = new Map();
-										
+
 										rows.forEach(row => {
-											
+
 											if (row.tubeCmdToSend && row.tubeCmdParamIds) {
+
+												let key = JSON.stringify([row.tubeCmdToSend, row.tubeCmdParamIds, row.tubeCmdParamArg, row.tubeCmdValue]);
 												
-												let mapItem = cmdMap.get([row.tubeCmdToSend, row.tubeCmdParamIds]);
-											
+												let mapItem = cmdMap.get(key);
+
 												if (Array.isArray(mapItem)) {
-													
+
 													mapItem.push(row.id);
 												}
 												else {
-													
-													cmdMap.set([row.tubeCmdToSend, row.tubeCmdParamIds], [row.id]);
-												}	
+
+													cmdMap.set(key, [row.id]);
+												}
 											}
 										});
-										
-										cmdMap.forEach((ids, command) => {
-											
+
+										cmdMap.forEach((ids, key) => {
+
+											let command = JSON.parse(key);
 											executeFansCommand(command, ids);
 										});
-										
+
 										self.tubeFansDataTable.unselectAll();
-										
+
 										function executeFansCommand(command, ids) {
-											
-											let commands = [{
-												commandElementTypeId: command[0],
-												elementId: self.selectedTube.id,
-												commandElementValues: [
-													{
-														commandElementTypeParamId: command[1],
-														value: JSON.stringify(ids)
-													}
-												]
-											}];
-											
-											if (Array.isArray(commands) && commands.length > 0) {
+
+											let commands = undefined;
+
+
+											if (command[2]) {
+
+												commands = [{
+													commandElementTypeId: command[0],
+													elementId: self.selectedTube.id,
+													commandElementValues: [
+														{
+															commandElementTypeParamId: command[1],
+															value: JSON.stringify(ids)
+														},
+														{
+															commandElementTypeParamId: command[2],
+															value: command[3].toString()
+														}
+													]
+												}];
 												
+											} else {
+												
+												commands = [{
+													commandElementTypeId: command[0],
+													elementId: self.selectedTube.id,
+													commandElementValues: [
+														{
+															commandElementTypeParamId: command[1],
+															value: JSON.stringify(ids)
+														}
+													]
+												}];
+											}
+
+											if (Array.isArray(commands) && commands.length > 0) {
+
 												util.element.sendCommand(commands, function(res) {
-													
+
 													if (!res) {
-														
+
 														clearGrid();
 													}
-													
+
 													if (++responseSend == cmdMap.size) {
-														
+
 														clearGrid();
-														
+
 														responseSend = 0;
-														
-														(new MessageBox (MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null)).show();
+
+														(new MessageBox(MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null)).show();
 													}
 												});
 											}

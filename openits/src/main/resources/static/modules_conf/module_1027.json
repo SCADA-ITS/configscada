@@ -24,8 +24,7 @@
 		"fan" : "/topic/element.ElementType:9.>"
 	},
 	"adapters": {
-		"element": "ws.element.update",
-		"fan": "ws.fan.getList"
+		"element": "ws.element.update"
 	},
 	"gridId": 1012,
 	"elementTypeTunnel": "ElementType:2001",
