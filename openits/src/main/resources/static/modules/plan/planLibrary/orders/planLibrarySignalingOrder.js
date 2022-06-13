@@ -347,13 +347,24 @@ export default class PlanLibrarySignalingOrder extends PlanLibraryOrder {
 
 									} else {
 
-										let subtypeId = elementsSelected[0].elementSubtype.id;
-										let sameSubtype = true;
+										let sameSubtype = true;										
+										let subtypeIdsArr = elementsSelected.filter(element => element.elementSubtype);
 
-										for (let i = 0; sameSubtype && i < elementsSelected.length; i++) {
+										if (Array.isArray(subtypeIdsArr) && subtypeIdsArr.length > 0) {
 
-											sameSubtype =  (elementsSelected[i].elementSubtype.id === subtypeId) ? true : false;  
-										}
+											if (subtypeIdsArr.length === elementsSelected.length) {
+
+												let subtypeId = elementsSelected[0].elementSubtype.id;
+
+												for (let i = 0; sameSubtype && i < elementsSelected.length; i++) {
+
+													sameSubtype = (elementsSelected[i].elementSubtype.id === subtypeId) ? true : false;
+												}
+											} else {
+
+												sameSubtype = false;
+											}
+										} 
 
 										if (sameSubtype) {
 
