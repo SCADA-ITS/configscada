@@ -987,6 +987,9 @@ export default class TubeContent {
 															argsCommand = commandAux;
 														}
 													}
+												} else {
+													let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_FAN_COMMAND_NOT_ALLOWED_WITH_THIS_STATE"), null, null);
+													ms.show();
 												}
 											});
 
@@ -1144,7 +1147,7 @@ export default class TubeContent {
 											if (row.tubeCmdToSend && row.tubeCmdParamIds) {
 
 												let key = JSON.stringify([row.tubeCmdToSend, row.tubeCmdParamIds, row.tubeCmdParamArg, row.tubeCmdValue]);
-												
+
 												let mapItem = cmdMap.get(key);
 
 												if (Array.isArray(mapItem)) {
@@ -1187,9 +1190,9 @@ export default class TubeContent {
 														}
 													]
 												}];
-												
+
 											} else {
-												
+
 												commands = [{
 													commandElementTypeId: command[0],
 													elementId: self.selectedTube.id,
