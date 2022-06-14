@@ -1,6 +1,7 @@
 package com.revenga.rits.front.openits.bo;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
@@ -27,6 +28,16 @@ public class ImsIncidentTypeStretchBO extends GenericBO {
 	public Map<String, Object> getItem(String id) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	public List<Map<String, Object>> getListByIncidenType(String incidentTypeId) {
+		
+		List<Map<String, Object>> incidentTypeStretchs = voDataSourceAdapter.getList(
+				VODataSourceAdapter.DATA_SOURCE_GET_INCIDENT_TYPE_STRETCHS_BY_INCIDENT_TYPE,
+				new Object[] { incidentTypeId });
+
+		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_INCIDENT_TYPE_STRETCHS_BY_INCIDENT_TYPE,
+				incidentTypeStretchs);
 	}
 	
 	public Map<String, Object> getItem(String incidentTypeId, String stretchId) {

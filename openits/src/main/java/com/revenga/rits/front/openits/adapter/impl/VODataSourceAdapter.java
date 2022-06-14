@@ -165,6 +165,7 @@ public class VODataSourceAdapter {
 	public static final int DATA_SOURCE_ADD_LOG_INCIDENT_INCIDENT_REPORT = getPropertyInt("add_log_incident_report");
 	public static final int DATA_SOURCE_DELETE_LOG_INCIDENT_INCIDENT_REPORT = getPropertyInt("delete_log_incident_report");
 	public static final int DATA_SOURCE_GET_INCIDENT_TYPE_STRETCHS = getPropertyInt("get_incident_type_stretchs");
+	public static final int DATA_SOURCE_GET_INCIDENT_TYPE_STRETCHS_BY_INCIDENT_TYPE = getPropertyInt("get_incident_type_stretchs_by_incident_type");
 	public static final int DATA_SOURCE_GET_INCIDENT_TYPE_STRETCH = getPropertyInt("get_incident_type_stretch");
 	public static final int DATA_SOURCE_CREATE_INCIDENT_REPORT = getPropertyInt("create_incident_report");
 	

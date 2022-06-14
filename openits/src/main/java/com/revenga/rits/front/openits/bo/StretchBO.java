@@ -35,15 +35,15 @@ public class StretchBO extends GenericBO {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Map<String, Object>> getListByIncidentType(String id) {
+	public List<Map<String, Object>> getListByIncidentType(String incidentTypeId) {
 
 		List<Map<String, Object>> stretchsFiltered = null;
-		List<Map<String, Object>> stretchs = voDataSourceAdapter.getList(VODataSourceAdapter.DATA_SOURCE_GET_STRETCHS, null);	
-						
-		if (!CollectionUtils.isEmpty(stretchs) && id != null) {
-
-			List<Map<String, Object>> listIncidentTypeStretchs = imsIncidentTypeStretchBO.getList();
+		List<Map<String, Object>> stretchs = voDataSourceAdapter.getList(VODataSourceAdapter.DATA_SOURCE_GET_STRETCHS, null);
 		
+		if (!CollectionUtils.isEmpty(stretchs) && incidentTypeId != null) {
+			
+			List<Map<String, Object>> listIncidentTypeStretchs = imsIncidentTypeStretchBO.getListByIncidenType(incidentTypeId);
+			
 			if (!CollectionUtils.isEmpty(listIncidentTypeStretchs)) {
 				
 				List<Map<String, Object>> listIncidentTypeStretchsFiltered = listIncidentTypeStretchs.stream()
@@ -53,7 +53,7 @@ public class StretchBO extends GenericBO {
 							
 							if (incidentType instanceof Map) {
 								
-								return ((Map<String, Object>) incidentType).get(FIELD_INCIDENT_TYPE_ID).equals(id);
+								return ((Map<String, Object>) incidentType).get(FIELD_INCIDENT_TYPE_ID).equals(incidentTypeId);
 							}
 							
 							return false;

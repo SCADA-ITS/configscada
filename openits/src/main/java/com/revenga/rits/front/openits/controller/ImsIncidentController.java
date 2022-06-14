@@ -403,6 +403,14 @@ public class ImsIncidentController {
 
 		return new ResponseEntity<>(imsIncidentTypeStretchBO.getList(), HttpStatus.OK);
 	}
+	
+	@GetMapping(value = "/incidentTypeStretchs/{incidentTypeId}")
+	@ApiOperation(value = "Get all stretchs associated to incident type", notes = "Get incident type stretchs")
+	public ResponseEntity<Object> getImsIncidentTypeStretchsByIncidentType(
+			@ApiParam(name = "incidentTypeId", type = "String", value = "Incident type id", example = "ImsIncidentType:34", required = true) @PathVariable String incidentTypeId) {
+
+		return new ResponseEntity<>(imsIncidentTypeStretchBO.getListByIncidenType(incidentTypeId), HttpStatus.OK);
+	}
 
 	@GetMapping(value = "/incidentTypeStretchs/{incidentTypeId}/{stretchId}")
 	@ApiOperation(value = "Get stretch associated to incident type", notes = "Get incident type stretch id")
