@@ -13,6 +13,8 @@ export default class UserService extends GenericModule {
 		this.module = module;
 		this.config = module.config;
 		
+		new MessageBox(MessageBox.WARN, null, null);
+		
 		this.userData = util.user.getUserData();
 		this.keepAliveInterval = undefined;
 	}
@@ -74,7 +76,6 @@ export default class UserService extends GenericModule {
 				});	
 			
 				let userData = util.user.getUserData();
-				let mainScreen = $$("mainscreen");
 				
 				if (userData) {
 					

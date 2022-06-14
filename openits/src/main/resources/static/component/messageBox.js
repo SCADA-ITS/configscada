@@ -12,13 +12,26 @@ export default class MessageBox {
 		this.onAccept = onAccept;
 		this.onCancel = onCancel;
 
-		this.uid = webix.uid();
+		this.uid = webix.uid();	 
+		
+		this.images = {
+			1: new Image(),
+			2: new Image(),
+			3: new Image(),
+			4: new Image()
+		};
+		
+		this.images[1].src = MessageBox.INFO.icon;
+		this.images[2].src = MessageBox.WARN.icon; 
+		this.images[3].src = MessageBox.ERROR.icon;
+		this.images[4].src = MessageBox.CONFIRM.icon;  
 	}
 
 	show() {
 
 		let self = this;
-
+		let image = this.images[self.type.id].src;
+		  
 		webix.ui({
 			id: "alert-" + self.uid,
 			view: "window",
@@ -69,7 +82,7 @@ export default class MessageBox {
 							{
 								width: 45,
 								css: { "border": "0px !important" },
-								template: `<div><img style='width: 40px; padding: 0px 15px 15px 0px;' src=${self.type.icon}></div>`
+								template: `<div><img style='width: 40px; padding: 0px 15px 15px 0px;' src='${image}'></div>`
 							},
 							{
 								rows: [
@@ -163,5 +176,10 @@ export default class MessageBox {
 
 			$$("alert-" + self.uid).close();
 		}
+	}
+	
+	getImages() {
+
+
 	}
 }
