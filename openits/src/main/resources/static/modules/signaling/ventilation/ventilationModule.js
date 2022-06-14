@@ -131,7 +131,17 @@ export default class VentilationModule extends GenericModule {
 			loadTree().then(function(res) {
 
 				drawComponents();
-				self.treeView.select(self.treeView.data[0].id);
+				let firstFolder = self.treeView.getFirstFolder();
+				
+				if (firstFolder) {
+
+					self.treeView.select(firstFolder.id);
+
+				} else {
+
+					self.treeView.select(self.treeView.data[0].id);
+				}
+				
 				self.treeView.enable();
 			});
 		}

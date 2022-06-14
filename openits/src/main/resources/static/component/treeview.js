@@ -970,6 +970,40 @@ export default class TreeView {
 		return firstItem;
 	}
 	
+		getFirstFolder() {
+		
+		let firstFolder = undefined;
+		
+		if (Array.isArray(this.data) && this.data.length > 0) {
+			
+			firstFolder = getData(webix.copy(this.data));
+			
+			function getData(data) {
+				
+				let folder = undefined;
+				
+				if (Array.isArray(data) && data.length > 0) {
+					
+					data.sort((a, b) => (a.value > b.value) ? 1 : ((b.value > a.value) ? -1 : 0));
+					
+					for (let i = 0; !folder && i < data.length; i++) {
+						
+						let d = data[i];
+						
+						if (d.props.folder === true) {							
+								
+							folder = d;						
+						} 
+					}
+				}
+				
+				return folder;
+			}
+		}
+		
+		return firstFolder;
+	}
+	
 	update(id, item) {
 		
 		let tree = $$("tree-" + this.uid);
