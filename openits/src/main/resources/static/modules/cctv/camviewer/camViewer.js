@@ -424,29 +424,45 @@ export default class CamViewer {
 					view: "button",
 					type: "icon",
 					icon: "mdi mdi-send",
-					tooltip: i18n.t("LBL_SEND_TO_VIDEO_WALL"),
-					
+					tooltip: i18n.t("LBL_SEND_TO_VIDEO_WALL"),					
 					on: {
 						onItemClick: function() {
 
-							let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_SEND_TO_VIDEO_WALL_CONFIRM_DESCRIPTION") + ": " + self.element.alias, onAccept, null);
+							let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_SEND_TO_VIDEO_WALL_CONFIRM_DESCRIPTION") + ": " + self.element.alias, onAccept, null);
 							ms.show();
-							
+
 							function onAccept() {
 
 								if (self.config.commands.lock) {
 
-									let body = {
-										commands: []
-									};
-
 									let sendMessageCmd = webix.copy(self.config.commands.lock);
 
 									sendMessageCmd.elementId = self.element.id;
-									body.commands.push(webix.copy(sendMessageCmd));
 
-									webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.restEndpoints.command, body);
-								}								
+									let sendMessageCmdCopy = webix.copy(sendMessageCmd);
+
+									util.element.sendCommand([sendMessageCmdCopy], function(res) {
+
+										if (res) {
+
+											(new MessageBox(MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null)).show();
+										}
+									});
+								}
+
+//								if (self.config.commands.lock) {
+//
+//									let body = {
+//										commands: []
+//									};
+//
+//									let sendMessageCmd = webix.copy(self.config.commands.lock);
+//
+//									sendMessageCmd.elementId = self.element.id;
+//									body.commands.push(webix.copy(sendMessageCmd));
+//
+//									webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.restEndpoints.command, body);
+//								}
 							}
 						}
 					}
@@ -790,41 +806,77 @@ export default class CamViewer {
 			}
 
 			function move(id) {
-
+				
 				if (self.config.commands.ptz && id) {
-
-					let body = {
-						commands: []
-					};
 
 					let sendMessageCmd = webix.copy(self.config.commands.ptz);
 
 					sendMessageCmd.elementId = self.element.id;
 					sendMessageCmd.commandElementValues[0].value = id;
 
-					body.commands.push(webix.copy(sendMessageCmd));
+					let sendMessageCmdCopy = webix.copy(sendMessageCmd);
 
-					webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.restEndpoints.command, body);
+					util.element.sendCommand([sendMessageCmdCopy], function(res) {
+
+						if (res) {
+
+							(new MessageBox(MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null)).show();
+						}
+					});
 				}
+
+//				if (self.config.commands.ptz && id) {
+//
+//					let body = {
+//						commands: []
+//					};
+//
+//					let sendMessageCmd = webix.copy(self.config.commands.ptz);
+//
+//					sendMessageCmd.elementId = self.element.id;
+//					sendMessageCmd.commandElementValues[0].value = id;
+//
+//					body.commands.push(webix.copy(sendMessageCmd));
+//
+//					webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.restEndpoints.command, body);
+//				}
 			}
 
 			function preset(id) {
 
 				if (self.config.commands.preset && id) {
 
-					let body = {
-						commands: []
-					};
-
 					let sendMessageCmd = webix.copy(self.config.commands.preset);
 
 					sendMessageCmd.elementId = self.element.id;
 					sendMessageCmd.commandElementValues[0].value = id;
 
-					body.commands.push(webix.copy(sendMessageCmd));
+					let sendMessageCmdCopy = webix.copy(sendMessageCmd);
 
-					webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.restEndpoints.command, body);
+					util.element.sendCommand([sendMessageCmdCopy], function(res) {
+
+						if (res) {
+
+							(new MessageBox(MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null)).show();
+						}
+					});
 				}
+				
+//				if (self.config.commands.preset && id) {
+//
+//					let body = {
+//						commands: []
+//					};
+//
+//					let sendMessageCmd = webix.copy(self.config.commands.preset);
+//
+//					sendMessageCmd.elementId = self.element.id;
+//					sendMessageCmd.commandElementValues[0].value = id;
+//
+//					body.commands.push(webix.copy(sendMessageCmd));
+//
+//					webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.restEndpoints.command, body);
+//				}
 			}
 
 			return viewCamControls;
