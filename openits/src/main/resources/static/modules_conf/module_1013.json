@@ -21,7 +21,7 @@
 		"incidentTypeStretchs": "incidents/incidentTypeStretchs/${incidentTypeId}/${stretchId}",
 		"incidentTypeStretchsList": "incidents/incidentTypeStretchs",
 		"incidentReportsSummary": "incidents/reports/summary",
-		"incidentReport": "incidents/reports/${id}"
+		"incidentReportSummary": "incidents/reports/${id}/summary"
 	},
 	"ws": {
 		"incidentReports": "/topic/incidentReport.>"

@@ -175,7 +175,7 @@ export default class IncidentWizardAction {
 				
 				if (action === StompSubscriptorService.ACTION_CREATE) {
 				
-					webix.ajax(appConfig.restUrl + util.fillTemplate(parent.config.restEndpoints.incidentReport, { id: be.id })).then(function(data) {
+					webix.ajax(appConfig.restUrl + util.fillTemplate(parent.config.restEndpoints.incidentReportSummary, { id: be.id })).then(function(data) {
 
 						if (data.json() != undefined) {
 						
