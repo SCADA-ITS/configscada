@@ -1417,6 +1417,26 @@ export let util = {
 
 	element: {
 
+		getElementTypeByCommandElementTypeId(commandElementTypeId) {
+			
+			const ELEMENT_TYPE = "ElementType";
+			let elementTypeArray = [];
+			let elementTypeId = undefined;
+			
+			if (commandElementTypeId) {
+				
+				let commandElementTypeArray = commandElementTypeId.split(":");
+				
+				if (commandElementTypeArray.length === 3) {
+					
+					elementTypeArray.push(ELEMENT_TYPE);
+					elementTypeArray.push(commandElementTypeArray[2]);
+					elementTypeId = elementTypeArray.join(":");
+				}
+			}
+			return elementTypeId;
+		},
+		
 		getElementTypeParamId(elementValueId) {
 
 			const ELEMENT_TYPE_PARAM = "ElementTypeParam";
