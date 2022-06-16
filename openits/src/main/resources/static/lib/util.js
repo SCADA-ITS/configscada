@@ -1361,7 +1361,7 @@ export let util = {
 
 			let dText = document.createElement("div");
 			dText.id = webix.uid();
-			dText.style.fontSize = fontSize;
+			dText.style.fontSize = fontSize + "px";
 
 			if (letterSpacing) {
 
@@ -1382,6 +1382,33 @@ export let util = {
 			return width;
 		},
 		
+		calculateFontSize(text, fontFamily, fontSize, letterSpacing, maxWidth) {
+
+			const CORRECTION_FACTORS = {
+				DECREASE_FONT: 0.9,
+				INCREASE_FONT: 1.1,
+				WIDTH: 0.8				
+			};
+			let correctFontSize = fontSize;
+			let initialTextWidth = this.calculateTextWidth(text, fontFamily, fontSize, letterSpacing);
+
+			while (initialTextWidth > maxWidth * CORRECTION_FACTORS.WIDTH) {
+
+				let newFontSize = Math.floor(correctFontSize * CORRECTION_FACTORS.DECREASE_FONT);
+				initialTextWidth = this.calculateTextWidth(text, fontFamily, newFontSize, letterSpacing);
+				correctFontSize = (newFontSize === 0) ? 1 : newFontSize;				
+			};
+						
+			while (initialTextWidth < maxWidth * CORRECTION_FACTORS.WIDTH) {
+
+				let newFontSize = Math.ceil(correctFontSize * CORRECTION_FACTORS.INCREASE_FONT);
+				initialTextWidth = this.calculateTextWidth(text, fontFamily, newFontSize, letterSpacing);
+				correctFontSize = (newFontSize === 0) ? 1 : newFontSize;
+			};
+
+			return correctFontSize;
+		},
+		
 		isExternal() {
 			
 			return (window.location.pathname.indexOf("external.html") !== -1);
@@ -1390,28 +1417,6 @@ export let util = {
 
 	element: {
 
-		getElementTypeByCommandElementTypeId(commandElementTypeId) {
-
-			const ELEMENT_TYPE = "ElementType";
-			let elementTypeArray = [];
-			let elementTypeId = undefined;
-
-			if (commandElementTypeId) {
-
-				let commandElementTypeArray = commandElementTypeId.split(":");
-
-				if (commandElementTypeArray.length === 3) {
-
-					elementTypeArray.push(ELEMENT_TYPE);
-					elementTypeArray.push(commandElementTypeArray[2]);
-
-					elementTypeId = elementTypeArray.join(":");
-				}
-			}
-
-			return elementTypeId;
-		},
-		
 		getElementTypeParamId(elementValueId) {
 
 			const ELEMENT_TYPE_PARAM = "ElementTypeParam";
@@ -2142,7 +2147,11 @@ export let util = {
 		},
 		cronDescription(cronExpression) {
 
-			let translate = prettyCron.toString(cronExpression, true);
+			let userData = util.user.getUserData();
+			let translate = cronstrue.toString(cronExpression, { locale: userData.locale.code.split("_")[0] });
+			
+			
+			//let translate = prettyCron.toString(cronExpression, true);
 
 			if (translate != undefined) {
 

@@ -45,26 +45,61 @@ class MeasureItem {
 				currentValue: undefined,
 				template: function(data) {
 
+					const STANDARD_FACTORS = {
+						FONT_FAMILY: "Roboto",
+						FONT_SIZE_VALUE: 26,
+						FONT_SIZE_UNIT: 14,
+						LETTER_SPACING: 0.2,
+						MARGIN_TOP_NORMAL: 14,
+						NEW_MARGIN_TOP: 24,
+						WIDTH_CORRECTION: 70,
+						IMG_WIDTH_CORRECTION: 30,
+						FACTOR_CORRECTION: 0.9
+					};
+					
 					let elementValue = self.elementValue;
 					let unit = "";
 					let valuesForPrint = util.element.getValuesForPrint(data, elementValue);
+					let newFontSize = undefined;
+					let fontSizeValue = STANDARD_FACTORS.FONT_SIZE_VALUE;
+					let fontSizeUnit = STANDARD_FACTORS.FONT_SIZE_UNIT;
+					let marginTop = STANDARD_FACTORS.MARGIN_TOP_NORMAL;
+
+					let standardWidth = (self.measureWidth - STANDARD_FACTORS.WIDTH_CORRECTION) * STANDARD_FACTORS.FACTOR_CORRECTION;
 
 					this.currentValue = valuesForPrint.value;
 
 					if (valuesForPrint.hasEnum === undefined) {
-				
+
 						unit = valuesForPrint.unit;
 					}
 
 					let valueHTML = (valuesForPrint.hasEnumImage != undefined) ? `<img style="width:40px" src="${valuesForPrint.value}">` : `<span title="${valuesForPrint.value}">${valuesForPrint.value}</span>`;
 					let res;
 
+					if (elementValue.elementTypeParam.showCompleteMeasure || self.parent.parent.config.forceAdjustMeasures) {
+
+						let textWidth = util.ui.calculateTextWidth(valuesForPrint.value, STANDARD_FACTORS.FONT_FAMILY, STANDARD_FACTORS.FONT_SIZE_VALUE, STANDARD_FACTORS.LETTER_SPACING);
+
+						if (textWidth > standardWidth) {
+
+							newFontSize = util.ui.calculateFontSize(valuesForPrint.value, STANDARD_FACTORS.FONT_FAMILY, STANDARD_FACTORS.FONT_SIZE_VALUE, STANDARD_FACTORS.LETTER_SPACING, standardWidth);
+						}
+					}
+
+					if (newFontSize != undefined) {
+
+						fontSizeValue = newFontSize;
+						fontSizeUnit = newFontSize;
+						let proportion = fontSizeValue / STANDARD_FACTORS.FONT_SIZE_VALUE;
+						marginTop = (proportion < 1) ? (STANDARD_FACTORS.MARGIN_TOP_NORMAL * (1+(1 - proportion))) : (STANDARD_FACTORS.MARGIN_TOP_NORMAL * proportion) ;
+					}
+
 					res = `<div class="measure-box" style="background: ${valuesForPrint.stateValueBackColor}">
 									<image class="image" src="img/${valuesForPrint.icon}" />
-									<div style="width: ${self.measureWidth - 70}px" class="value">${valueHTML}<span style="margin-left: 5px; font-size: 14px; font-weight: 100;">${unit}</span></div>
-									<div style="width: ${self.measureWidth - 70}px" class="desc"><span title="${valuesForPrint.elementTypeParamDescription}">${valuesForPrint.label}</span></div>
-									<img style="margin-left: ${self.measureWidth - 30}px; margin-top: 5px;" class="table-field-icons" src="img/state/${valuesForPrint.iconElementValueState}" 
-													title="${valuesForPrint.stateValueLabel}" onerror="this.onerror=null; this.style.display = 'none'"/>
+									<div style="width: ${self.measureWidth - STANDARD_FACTORS.WIDTH_CORRECTION}px; font-size: ${fontSizeValue}px !important; margin-top: ${marginTop}px" class="value">${valueHTML}<span style="margin-left: 5px; font-size:${fontSizeUnit}px; font-weight: 100;">${unit}</span></div>
+									<div style="width: ${self.measureWidth - STANDARD_FACTORS.WIDTH_CORRECTION}px" class="desc"><span title="${valuesForPrint.elementTypeParamDescription}">${valuesForPrint.label}</span></div>
+									<img style="margin-left: ${self.measureWidth - STANDARD_FACTORS.IMG_WIDTH_CORRECTION}px; margin-top: 5px;" class="table-field-icons" src="img/state/${valuesForPrint.iconElementValueState}" title="${valuesForPrint.stateValueLabel}" onerror="this.onerror=null; this.style.display = 'none'"/>
 							   </div>`;
 
 					return res;

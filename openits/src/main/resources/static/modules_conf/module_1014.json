@@ -9,6 +9,7 @@
 	},
 	"topic": "/topic/element",
 	"adapter": "ws.element.getList",
+	"forceAdjustMeasures" : false,
 	"restEndpoints": {
 		"element": "elements/${id}",
 		"alarm": "alarms/${id}",

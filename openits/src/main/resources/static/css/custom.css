@@ -2821,13 +2821,13 @@ p, input, textarea {
 
 .measure-box .value {
 	position: absolute;
-    margin-top: 14px;
+/*    margin-top: 14px;*/
     margin-left: 54px;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
     text-align: center;
-    font-size: 26px;
+/*    font-size: 26px;*/
     font-weight: 500;
     animation-name: measure-update;
   	animation-duration: 1s;
