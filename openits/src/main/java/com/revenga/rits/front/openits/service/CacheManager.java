@@ -70,7 +70,22 @@ public class CacheManager extends FrontManager {
 	
 	private void cacheVOEntities() {
 		
+		Instant timeRef = Instant.now();
+		
+		log.info("Caching VOEntities...");
+		
 		this.voEntities = voEntityService.getAll();
+		
+		if (!CollectionUtils.isEmpty(voEntities)) {
+			
+			log.info("Chached VOEntities. Items = " + this.voEntities.size() + " ("
+					+ Duration.between(timeRef, Instant.now()).toMillis() + " ms.)");
+		}
+		else {
+			
+			log.warn("Chached VOEntities without items (" + Duration.between(timeRef, Instant.now()).toMillis()
+					+ " ms.)");
+		}
 	}
 	
 	@Override

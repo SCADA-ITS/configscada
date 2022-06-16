@@ -1,6 +1,8 @@
 package com.revenga.rits.front.openits.adapter.impl;
 
 import java.io.IOException;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +25,7 @@ import com.revenga.rits.front.openitsdao.model.DataSource;
 import com.revenga.rits.front.openitsdao.model.DataSourceValue;
 import com.revenga.rits.front.openitsdao.service.DataSourceService;
 
+import jline.internal.Log;
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 
@@ -311,6 +314,7 @@ public class VODataSourceAdapter {
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> getList(Integer dataSourceId, Object[] params) {
 
+		Instant instantIni = Instant.now();
 		List<Map<String, Object>> list = null;
 		DataSource dataSource = null;
 
@@ -331,12 +335,16 @@ public class VODataSourceAdapter {
 				}
 			}
 		}
+		
+		log.debug(String.format("Query time multiple items in datasourceId %d (%d ms.)", dataSourceId,
+				Duration.between(instantIni, Instant.now()).toMillis()));
 
 		return list;
 	}
 
 	public Map<String, Object> get(Integer dataSourceId, Object[] params) {
 
+		Instant instantIni = Instant.now();
 		Map<String, Object> output = null;
 		DataSource dataSource = dataSourceService.getById(dataSourceId);
 
@@ -349,12 +357,16 @@ public class VODataSourceAdapter {
 				output = list.get(0);
 			}
 		}
+		
+		log.debug(String.format("Query time single item in datasourceId %d (%d ms.)", dataSourceId,
+				Duration.between(instantIni, Instant.now()).toMillis()));
 
 		return output;
 	}
 
 	public Map<String, Object> put(Integer dataSourceId, Map<String, Object> input) {
 
+		Instant instantIni = Instant.now();
 		Map<String, Object> output = null;
 		DataSource dataSource = dataSourceService.getById(dataSourceId);
 
@@ -367,12 +379,16 @@ public class VODataSourceAdapter {
 				output = list.get(0);
 			}
 		}
+		
+		log.debug(String.format("Mutation time single item in datasourceId %d (%d ms.)", dataSourceId,
+				Duration.between(instantIni, Instant.now()).toMillis()));
 
 		return output;
 	}
 	
 	public List<Map<String, Object>> putList(Integer dataSourceId, Map<String, Object> input) {
 
+		Instant instantIni = Instant.now();
 		DataSource dataSource = dataSourceService.getById(dataSourceId);
 		List<Map<String, Object>> list = null;
 
@@ -381,6 +397,9 @@ public class VODataSourceAdapter {
 			list = putGraphql(dataSource, input);	
 		}
 
+		log.debug(String.format("Mutation time multiple items in datasourceId %d (%d ms.)", dataSourceId,
+				Duration.between(instantIni, Instant.now()).toMillis()));
+		
 		return list;		
 	}
 

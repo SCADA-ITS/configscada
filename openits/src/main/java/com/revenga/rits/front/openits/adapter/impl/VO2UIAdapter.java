@@ -1,5 +1,7 @@
 package com.revenga.rits.front.openits.adapter.impl;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,7 +19,11 @@ import com.revenga.rits.front.openitsdao.model.VoEntity;
 import com.revenga.rits.front.openitsdao.model.VoEntityValue;
 import com.revenga.rits.front.openitsdao.service.VoEntityService;
 
+import jline.internal.Log;
+import lombok.extern.log4j.Log4j2;
+
 @Component
+@Log4j2
 public class VO2UIAdapter {
 	
 	@Autowired
@@ -31,6 +37,7 @@ public class VO2UIAdapter {
 	
 	public List<Map<String, Object>> convert(Integer datasourceId, List<Map<String, Object>> entities) {
 		
+		Instant instantIni = Instant.now();
 		String fieldId = getFieldIdFromDatasource(datasourceId);
 		
 		List<Map<String, Object>> entitiesUI = null;
@@ -47,24 +54,39 @@ public class VO2UIAdapter {
 				
 				List<VoEntity> listVoEntity = cacheManager.getVoEntities();
 				
-				if (CollectionUtils.isEmpty(listVoEntity)) {
+				if (!CollectionUtils.isEmpty(listVoEntity)) {
 					
-					listVoEntity = voEntityService.getAll();
-				}
-				
-				for (Map<String, Object> entity : entities) {
-					
-					entitiesUI.add(convert(fieldId, entity, listVoEntity));
+					for (Map<String, Object> entity : entities) {
+						
+						entitiesUI.add(convert(fieldId, entity, listVoEntity));
+					}
 				}
 			}
 		}
+		
+		log.debug(String.format("Convert time multiple items in datasourceId %d (%d ms.)", datasourceId,
+				Duration.between(instantIni, Instant.now()).toMillis()));
 		
 		return entitiesUI;
 	}
 	
 	public Map<String, Object> convert(Integer datasourceId, Map<String, Object> entity) {
 		
-		return convert(getFieldIdFromDatasource(datasourceId), entity, null);
+		Instant instantIni = Instant.now();
+		
+		Map<String, Object> entityUI = null;
+		
+		List<VoEntity> listVoEntity = cacheManager.getVoEntities();
+		
+		if (!CollectionUtils.isEmpty(listVoEntity)) {
+			
+			entityUI = convert(getFieldIdFromDatasource(datasourceId), entity, listVoEntity);
+		}
+		
+		log.debug(String.format("Convert time single item in datasourceId %d (%d ms.)", datasourceId,
+				Duration.between(instantIni, Instant.now()).toMillis()));
+		
+		return entityUI;
 	}
 	
 	public String getFieldIdFromDatasource(Integer datasourceId) {

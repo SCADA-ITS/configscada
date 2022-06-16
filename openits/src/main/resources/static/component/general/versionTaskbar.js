@@ -33,7 +33,8 @@ export default class VersionTaskbar {
 					width: 55,
 					on: {
 						
-						onAfterRender: function() {
+						onAfterRender: webix.once(function() {
+							
 							
 							let labelVersion = this;
 							
@@ -46,8 +47,8 @@ export default class VersionTaskbar {
 									labelVersion.setValue(`<span class='open-its-version'>${self.clientInfo.version}</span>`);
 									labelVersion.adjust();
 								}
-							});
-						}
+							});	
+						})
 					}
 				}
 			]
