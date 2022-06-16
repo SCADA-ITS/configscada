@@ -48,8 +48,8 @@ export default class IncidentReportTaskDetailSignallingSpath extends IncidentRep
 								if (!self.taskState.incidentTypeTask.rerun && (self.taskState.incidentTypeTask.auto || self.taskState.completedAt)) {
 
 									dtSignallingSpaths.disable();
-								}
-								else {
+
+								} else {
 
 									setTimeout(function() {
 
@@ -74,7 +74,7 @@ export default class IncidentReportTaskDetailSignallingSpath extends IncidentRep
 		viewSignallingSpaths.rows.push(getTableSignallingSpaths());
 
 		if (Array.isArray(self.taskState.elements) && self.taskState.elements.length > 0) {
-			
+
 			viewSignallingSpaths.rows.push({ view: "resizer" });
 			viewSignallingSpaths.rows.push({ id: "task-details-signalling-spaths-elements-" + self.index + "-" + self.uid });
 		}
@@ -338,20 +338,18 @@ export default class IncidentReportTaskDetailSignallingSpath extends IncidentRep
 
 					let signallingSpath = selectedSignallingSpath;
 
-					if (signallingSpath && Array.isArray(signallingSpath.elements) && signallingSpath.elements.length > 0) {
+					let dataView = new DataView(getMetadataViewData(), getDataViewData(), null);
 
-						let dataView = new DataView(getMetadataViewData(), getDataViewData(), null);
+					let viewDataView = {
 
-						let viewDataView = {
-
-							id: "task-details-signalling-spaths-elements-" + self.index + "-" + self.uid,
-							height: 90,
-							//							gravity: 0.35,
-							cols: [dataView.getView()]
-						}
-
-						webix.ui(viewDataView, $$("task-details-signalling-spaths-elements-" + self.index + "-" + self.uid));
+						id: "task-details-signalling-spaths-elements-" + self.index + "-" + self.uid,
+						height: 90,
+						//							gravity: 0.35,
+						cols: [dataView.getView()]
 					}
+
+					webix.ui(viewDataView, $$("task-details-signalling-spaths-elements-" + self.index + "-" + self.uid));
+
 
 					function getMetadataViewData() {
 
@@ -385,7 +383,7 @@ export default class IncidentReportTaskDetailSignallingSpath extends IncidentRep
 
 					function getDataViewData() {
 
-						let data;
+						let data = [];
 
 						if (Array.isArray(signallingSpath.elements) && signallingSpath.elements.length > 0) {
 
