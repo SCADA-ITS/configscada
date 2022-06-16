@@ -5,26 +5,37 @@ function load(i18n, onLoad) {
 			
 	let translations;
 	
-	webix.ajax().get(`${I18N_ENDPOINT_TRANSLATIONS}/${i18n.localeId}/${I18N_MODULE}`).then(function(dat){
+	webix.ajax().get(`${I18N_ENDPOINT_TRANSLATIONS}/${i18n.localeId}/${I18N_MODULE}`).then(
+		function(dat){
 		
-		if (dat) {
-						
-			translations = dat.json();
-			
-			if (translations != undefined && Array.isArray(translations)) {
+			if (dat) {
+							
+				translations = dat.json();
 				
-				translations.forEach(e => {
+				if (translations != undefined && Array.isArray(translations)) {
 					
-					i18n.labels[e.label] = e.translation;
-				});
+					translations.forEach(e => {
+						
+						i18n.labels[e.label] = e.translation;
+					});
+				}
+			}
+			
+			if (onLoad) {
+				
+				onLoad();
+			}
+		},
+		function(err) {
+			
+			console.log(err);
+			
+			if (onLoad) {
+				
+				onLoad();
 			}
 		}
-		
-		if (onLoad) {
-			
-			onLoad();
-		}
-	});
+	);
 	
 	webix.i18n.setLocale(i18n.localeCode);
 	webix.Date.startOnMonday = START_ON_MONDAY;

@@ -57,7 +57,8 @@ export default class SplashScreen {
 				
 						let icon = "<img src='img/loading.svg' align='center'>";
 		
-						return "<div class='splash-screen-inner'>" + icon + "<span class='splash-screen-inner-text'>" + i18n.t("LBL_PLEASE_WAIT") + "</span></div>";
+						//return "<div class='splash-screen-inner'>" + icon + "<span class='splash-screen-inner-text'>" + i18n.t("LBL_PLEASE_WAIT") + "</span></div>";
+						return "<div class='splash-screen-inner'>" + icon + "</div>";
 					},
 					on: {
 						onAfterRender: function() {

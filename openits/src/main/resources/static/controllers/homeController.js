@@ -22,7 +22,7 @@ window.sessionUID = webix.uid();
 
 document.getElementById("pagestyle").setAttribute("href", "./lib/webix/skins/material.css");
 
-window.i18n = new I18n(userData.locale);
+window.i18n = new I18n(userData.locale, initialize);
 
 window.splashScreen = new SplashScreen(null);
 
@@ -36,10 +36,10 @@ window.onload = function() {
 		}
 	});
 
-	webix.delay(function() {
-
-		initialize();
-	}, null, null, 1000);
+//	webix.delay(function() {
+//
+//		initialize();
+//	}, null, null, 1000);
 }
 
 function initialize() {
