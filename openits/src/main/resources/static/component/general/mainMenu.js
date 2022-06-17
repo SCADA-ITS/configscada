@@ -123,15 +123,14 @@ export default class MainMenu {
 								mainSubmenu.value = i18n.t(submenu.label);
 								mainSubmenu.moduleId = submenu.module.id;
 								mainSubmenu.icon = submenu.icon;	
+								mainMenu.submenu.push(mainSubmenu);
 							}
-						}
-						else {
+							
+						} else {
 							
 							mainSubmenu.$template = "Separator";
+							mainMenu.submenu.push(mainSubmenu);
 						}
-						
-						mainMenu.submenu.push(mainSubmenu);
-
 					});
 				}
 
