@@ -573,30 +573,19 @@ export default class PasSignalingContent {
 							if (selectedItems.length === onAirItems.length) {
 
 								let labelDescription = (onAirItems.length > 1) ? i18n.t("LBL_PAS_SWITCH_OFF_CONFIRM_OF_THE") + " " + onAirItems.length + " " + i18n.t("LBL_SELECTED_ZONES_DESCRIPTION") : i18n.t("LBL_PAS_SWITCH_OFF_CONFIRM_DESCRIPTION");
+								
+								let command = self.config.commands.SWITCH_OFF;
 
-								let ms = new MessageBox(MessageBox.CONFIRM, labelDescription, onAccept, null);
-								ms.show();
+								command.elementId = self.element.id;
+								command.commandElementValues[0].value = JSON.stringify(selectedItems.map(e => { return e.messageZoneId }));
+								
+								util.element.sendCommand([command], function(res) {
 
-								function onAccept() {
+									if (res) {
 
-									let command = self.config.commands.SWITCH_OFF;
-
-									command.elementId = self.element.id;
-									command.commandElementValues[0].value = JSON.stringify(selectedItems.map(e => { return e.messageZoneId }));
-
-									let body = {
-										commands: []
-									};
-									body.commands.push(command);
-
-									webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.restEndpoints.command, body).then(function(commandResponse) {
-
-										if (!commandResponse.json()) {
-
-											webix.message({ type: "error", text: i18n.t("LBL_ERROR_OPERATION") });
-										}
-									});
-								}
+										(new MessageBox(MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null)).show();
+									}
+								}, labelDescription);
 
 							} else {
 
