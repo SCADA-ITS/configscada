@@ -119,7 +119,7 @@ export default class AboutModule extends GenericModule {
 			let label = i18n.t("LBL_COMPONENTS_INFO");
 		
 			let table = {
-				fields: ["component=LBL_ALIAS", "version=", "date=LBL_DATE", "commit=LBL_COMMIT"],
+				fields: ["component=LBL_ALIAS", "version=", "date=LBL_DATE", "commit="],
 				pkField: "id",
 				data: [],
 				width: 800,
