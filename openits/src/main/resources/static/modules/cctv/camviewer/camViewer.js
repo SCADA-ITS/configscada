@@ -441,13 +441,7 @@ export default class CamViewer {
 
 									let sendMessageCmdCopy = webix.copy(sendMessageCmd);
 
-									util.element.sendCommand([sendMessageCmdCopy], function(res) {
-
-										if (res) {
-
-											(new MessageBox(MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null)).show();
-										}
-									});
+									util.element.sendCommand([sendMessageCmdCopy]);
 								}
 
 //								if (self.config.commands.lock) {
@@ -816,13 +810,7 @@ export default class CamViewer {
 
 					let sendMessageCmdCopy = webix.copy(sendMessageCmd);
 
-					util.element.sendCommand([sendMessageCmdCopy], function(res) {
-
-						if (res) {
-
-							(new MessageBox(MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null)).show();
-						}
-					});
+					util.element.sendCommand([sendMessageCmdCopy]);
 				}
 
 //				if (self.config.commands.ptz && id) {
@@ -853,13 +841,7 @@ export default class CamViewer {
 
 					let sendMessageCmdCopy = webix.copy(sendMessageCmd);
 
-					util.element.sendCommand([sendMessageCmdCopy], function(res) {
-
-						if (res) {
-
-							(new MessageBox(MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null)).show();
-						}
-					});
+					util.element.sendCommand([sendMessageCmdCopy]);
 				}
 				
 //				if (self.config.commands.preset && id) {
