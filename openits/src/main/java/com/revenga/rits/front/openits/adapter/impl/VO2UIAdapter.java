@@ -19,7 +19,6 @@ import com.revenga.rits.front.openitsdao.model.VoEntity;
 import com.revenga.rits.front.openitsdao.model.VoEntityValue;
 import com.revenga.rits.front.openitsdao.service.VoEntityService;
 
-import jline.internal.Log;
 import lombok.extern.log4j.Log4j2;
 
 @Component

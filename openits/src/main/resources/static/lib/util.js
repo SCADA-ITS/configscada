@@ -2167,12 +2167,8 @@ export let util = {
 		},
 		cronDescription(cronExpression) {
 
-			let userData = util.user.getUserData();
-			let translate = cronstrue.toString(cronExpression, { locale: userData.locale.code.split("_")[0] });
+			let translate = prettyCron.toString(cronExpression, true);
 			
-			
-			//let translate = prettyCron.toString(cronExpression, true);
-
 			if (translate != undefined) {
 
 				return translate;

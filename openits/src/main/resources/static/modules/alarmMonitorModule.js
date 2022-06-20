@@ -1470,31 +1470,35 @@ export default class AlarmMonitorModule extends GenericModule {
 			}
 
 			let updateStats = function() {
+				
+				setTimeout(function() {
+					
+					let alarmService = window.sm.getService(Services.ALARM_SERVICE);
 
-				let alarmService = window.sm.getService(Services.ALARM_SERVICE);
-
-				if (alarmService) {
-
-					let stats = alarmService.getData().stats;
-
-					if (stats) {
-
-						if (stats.activeAlarms) {
-
-							$$("action-panel-alarm-stat-active-" + self.uid).setValue(stats.activeAlarms);
-						}
-
-						if (stats.noRecognizedAlarms) {
-
-							$$("action-panel-alarm-stat-no-recognized-" + self.uid).setValue(stats.noRecognizedAlarms);
-						}
-
-						if (stats.filteredAlarms) {
-
-							$$("action-panel-alarm-stat-filtered-" + self.uid).setValue(stats.filteredAlarms);
+					if (alarmService) {
+	
+						let stats = alarmService.getData().stats;
+	
+						if (stats) {
+	
+							if (stats.activeAlarms) {
+	
+								$$("action-panel-alarm-stat-active-" + self.uid).setValue(stats.activeAlarms);
+							}
+	
+							if (stats.noRecognizedAlarms) {
+	
+								$$("action-panel-alarm-stat-no-recognized-" + self.uid).setValue(stats.noRecognizedAlarms);
+							}
+	
+							if (stats.filteredAlarms) {
+	
+								$$("action-panel-alarm-stat-filtered-" + self.uid).setValue(stats.filteredAlarms);
+							}
 						}
 					}
-				}
+
+				}, 1000);
 			};
 
 			let updateLevelStats = function() {
