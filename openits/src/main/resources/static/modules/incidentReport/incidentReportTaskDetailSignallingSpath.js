@@ -545,8 +545,13 @@ export default class IncidentReportTaskDetailSignallingSpath extends IncidentRep
 										}
 
 										if (Array.isArray(elementsToAdd) && elementsToAdd.length > 0) {
-
-											elements.push(...elementsToAdd);
+											
+											elementsToAdd = getElementsInLanes(elementsToAdd, signallingSpath.lanes);
+											
+											if (Array.isArray(elementsToAdd) && elementsToAdd.length > 0) {
+											
+												elements.push(...elementsToAdd);	
+											}
 										}
 									}
 								}
@@ -555,6 +560,26 @@ export default class IncidentReportTaskDetailSignallingSpath extends IncidentRep
 					}
 
 					return elements;
+				}
+				
+				function getElementsInLanes(elements, lanes) {
+					
+					let elementsFiltered = elements;
+					
+					if (Array.isArray(lanes) && Array.isArray(elementsFiltered) && elementsFiltered.length > 0) {
+						
+						if (lanes.length === 0) {
+						
+							elementsFiltered = elementsFiltered.filter(e => !isNaN(e.location.lane));	
+						}
+						else {
+							
+							elementsFiltered = elementsFiltered.filter(e => lanes.includes(e.location.lane));
+						}
+					}
+					
+					return elementsFiltered;
+					
 				}
 
 				return data;
