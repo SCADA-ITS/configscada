@@ -1,8 +1,12 @@
 import {util} from "../lib/util.js";
 
 const MODULE_TYPE_PARAM_PRIORITY = 1;
+const SLEEP_WAITING_FOR_SERVICES_MS = 1000;
+const MAX_TIME_WAITING_FOR_SERVICES_MS = 20000;
 
 var servicesCount = 0;
+var timeWaitingForServices = 0;
+
 
 function compareByPriority(a, b) {
 
@@ -20,6 +24,7 @@ function compareByPriority(a, b) {
 
 function load(service, onLoaded) {
 	
+	let intervalService = undefined;
 	let onLoadedCallback = onLoaded;
 
 	webix.ajax(appConfig.restUrl + "module_types/" + MODULE_TYPE_SERVICE + "/modules").then(function(data) {
@@ -44,27 +49,30 @@ function load(service, onLoaded) {
 				}
 			});
 			
-			webix.delay(function() {
+			timeWaitingForServices = 0;
+			
+			intervalService = setInterval(function() {
 
-				while (!runServices(service, onLoadedCallback));
+				if (runServices(service, onLoadedCallback)) {
 				
-			}, null, null, 1000);
+					clearInterval(intervalService);
+				}
+
+			}, SLEEP_WAITING_FOR_SERVICES_MS);
 		}
 	});
 }
 
 function drawService(service, module) {
 	
-	try {
-
-		const lazy = async _ => {
-
-			let jsFile = util.getContextPath() + "/" + module.jsFile;
+	let jsFile = util.getContextPath() + "/" + module.jsFile;
 			
-			//console.log("Loading " + module.name + " ...");
-			log.debug("Loading " + module.name + " ...");
-			const mod = await import(jsFile);
-
+	log.debug("Loading " + module.jsFile + " ...");
+	
+	import(jsFile)
+		.then(mod => {
+	
+			log.debug("Loaded " + module.jsFile);	
 			let lazyClass = new mod.default(module);
 	
 			if (lazyClass) {
@@ -77,15 +85,11 @@ function drawService(service, module) {
 								
 				service.services.push(serviceItem);
 			}
-		}
-
-		lazy();
-
-	} catch (error) {
-
-		//console.log(error);
-		log.error(error);
-	}
+		})
+		.catch((error) => {
+            
+			log.error(error);
+        });
 }
 
 function runServices(service, onLoaded) {
@@ -94,8 +98,21 @@ function runServices(service, onLoaded) {
 	
 	if (service.services.length < servicesCount) {
 		
-		return false;
+		log.debug("Waiting for load " + (servicesCount - service.services.length) + " services...");
+		
+		timeWaitingForServices += SLEEP_WAITING_FOR_SERVICES_MS;
+		
+		return (timeWaitingForServices > MAX_TIME_WAITING_FOR_SERVICES_MS);
 	}
+	
+	if (service.services.length < servicesCount && timeWaitingForServices > MAX_TIME_WAITING_FOR_SERVICES_MS) {
+	
+		log.error("Timeout loading services");
+		
+		return false;	
+	}
+	
+	log.debug("All services loaded in " + (timeWaitingForServices / 1000) + "s.");
 	
 	let toolbar = $$(MAIN_TOOLBAR_ICONS_ID);
 	
@@ -130,8 +147,7 @@ function runServices(service, onLoaded) {
 			
 			serviceItem.object.runOne(serviceItem.module.jsMethodCallbacks);
 			
-			//console.log(serviceItem.module.name + " loaded");
-			log.debug(serviceItem.module.name + " loaded");
+			log.debug(serviceItem.module.name + " is ready");
 		}
 	});
 	
