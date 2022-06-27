@@ -90,24 +90,24 @@ export default class ThresholdsConfigModule extends GenericModule {
 							}
 						}
 					});
-				}
 
-				if (self.moduleAction && self.moduleAction.id === self.config.moduleAction.fromOtherModule) {
+					if (self.moduleAction && self.moduleAction.id === self.config.moduleAction.fromOtherModule) {
 
-					for (let smId of self.args.selectedPks) {
+						for (let smId of self.args.selectedPks) {
 
-						let smToShow = self.stateMachines.find(sm => sm.id === smId);
+							let smToShow = self.stateMachines.find(sm => sm.id === smId);
 
-						if (smToShow) {
+							if (smToShow) {
 
-							stateMachinesArr.push(smToShow);
-							windowLabel = smToShow.labelAlias;
+								stateMachinesArr.push(smToShow);
+								windowLabel = smToShow.labelAlias;
+							}
 						}
+
+					} else {
+
+						stateMachinesArr = webix.copy(self.stateMachines);
 					}
-
-				} else {
-
-					stateMachinesArr = webix.copy(self.stateMachines);
 				}
 
 				load();
@@ -118,7 +118,7 @@ export default class ThresholdsConfigModule extends GenericModule {
 		function load() {
 
 			webix.ui(drawContent(), $$(self.uid));
-//			$$("loading-" + self.uid).hide();
+			//			$$("loading-" + self.uid).hide();
 
 			if (self.thresholdTable) {
 
@@ -130,44 +130,57 @@ export default class ThresholdsConfigModule extends GenericModule {
 				self.listView.selectByIndex(0);
 			}
 
-			let label = (windowLabel) ? i18n.t(windowLabel) : i18n.t("LBL_STATE_MACHINES"); 
-			util.ui.setTitle(self.args.containerId, label , null);
+			let label = (windowLabel) ? i18n.t(windowLabel) : i18n.t("LBL_STATE_MACHINES");
+			util.ui.setTitle(self.args.containerId, label, null);
 
 
 			function drawContent() {
 
 				let viewMain;
-				
-				viewMain = {
-					id: self.uid,
-					cols: [
-						{
-							hidden: (stateMachinesArr.length > 1) ? false : true,
-							header: function() {
 
-								return `<div>
+				if (Array.isArray(stateMachinesArr) && stateMachinesArr.length > 0) {
+
+					viewMain = {
+						id: self.uid,
+						cols: [
+							{
+								hidden: (stateMachinesArr.length > 1) ? false : true,
+								header: function() {
+
+									return `<div>
 											<span class='ico webix_icon mdi mdi-view-headline'></span>
 											<span>${i18n.t("LBL_STATE_MACHINES")}</span>
 										</div>`;
+								},
+								body: {
+									width: 350,
+									rows: [getList()]
+								}
 							},
-							body: {
-								width: 350,
-								rows: [getList()]
+							{
+								hidden: (stateMachinesArr.length > 1) ? false : true,
+								view: "resizer"
+							},
+							{
+								id: "table-" + self.uid,
+								rows: [getTable()]
+							},
+							{
+								id: "no-data-" + self.uid,
+								rows: [util.ui.getViewDrawLoading()]
 							}
-						},
-						{ 
-							hidden: (stateMachinesArr.length > 1) ? false : true,
-							view: "resizer" },
-						{
-							id: "table-" + self.uid,
-							rows: [getTable()]
-						},
-						{
-							id: "no-data-" + self.uid,
-							rows: [util.ui.getViewDrawLoading()]
-						}
-					]
-				};
+						]
+					};
+
+				} else {
+
+					viewMain = {
+						id: self.uid,
+						cols: [util.ui.getViewNoData()]
+					}
+				}
+
+
 
 				function getList() {
 
@@ -312,7 +325,7 @@ export default class ThresholdsConfigModule extends GenericModule {
 									isEpochMilli: false,
 									isPk: false,
 									label: "LBL_THRESHOLD",
-									needsTranslation: false,
+									needsTranslation: true,
 									parameterized: false,
 									position: 2,
 									required: true,
