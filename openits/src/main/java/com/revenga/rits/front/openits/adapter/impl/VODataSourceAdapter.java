@@ -277,6 +277,10 @@ public class VODataSourceAdapter {
 	public static final int DATA_SOURCE_UPDATE_INCIDENT_TYPE_STATE_TRANSITION = getPropertyInt("update_incident_type_state_transition");
 	public static final int DATA_SOURCE_DELETE_INCIDENT_TYPE_STATE_TRANSITION = getPropertyInt("delete_incident_type_state_transition");
 	
+	public static final int DATA_SOURCE_GET_THRESHOLD_BY_STATE_MACHINE_ID = getPropertyInt("get_threshold_by_state_machine_id");
+	public static final int DATA_SOURCE_GET_THRESHOLD_BY_STATE_MACHINE = getPropertyInt("get_threshold_by_state_machine");
+	public static final int DATA_SOURCE_UPDATE_THRESHOLD= getPropertyInt("update_threshold");
+	
 	private static int getPropertyInt(final String prop) {
 		
 		if (!MapUtils.isEmpty(props)) {

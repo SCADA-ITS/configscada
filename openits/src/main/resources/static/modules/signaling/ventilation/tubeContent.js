@@ -25,6 +25,8 @@ export default class TubeContent {
 
 		this.idStompSubscriptorTube = undefined;
 		this.idStompSubscriptorFans = undefined;
+		
+		this.smIds = new Set();
 	}
 
 	getView() {
@@ -144,6 +146,27 @@ export default class TubeContent {
 														fanOut.elementSubtypeLabelAlias = i18n.t(fan.elementSubtype.labelAlias);
 													}
 													self.tubeFans.push(fanOut);
+												});
+												
+												self.selectedTube.elementValues.forEach(elementValue => {
+													
+													let smElementTypeParam = self.parent.config.stateMachine.smElementTypeParams.find(e => e === elementValue.elementTypeParam.id); 
+													
+													if (smElementTypeParam && elementValue.value) {
+
+														let objValue = JSON.parse(elementValue.value);
+
+														if ((typeof (objValue) === 'object') && objValue.smConfigs && Array.isArray(objValue.smConfigs) && objValue.smConfigs.length > 0) {
+
+															for (let smId of objValue.smConfigs) {
+
+																if (smId.stateMachineId) {
+
+																	self.smIds.add(smId.stateMachineId);
+																}
+															}
+														}
+													}
 												});
 
 												webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.parent.config.restEndpoints.grid, { id: self.parent.config.gridId })).then(function(dataGrid) {
@@ -323,7 +346,59 @@ export default class TubeContent {
 											</div>`;
 								}
 							},
-							{ width: 24 }
+							{ width: 24 },
+							{
+								rows: [
+									{height: 5},
+									{
+										id: "view-content-header-button-" + self.uid,
+										view: "toolbar",
+										height: 70,
+										borderless: true,
+										css: "equip-viewer-header-actions",
+										hidden: (self.smIds.size > 0) ? false : true, 
+										elements: [
+											{},
+											{
+												view: "button",
+												width: 135,
+												//height:60,
+												label: i18n.t("LBL_VARIABLES"),
+												tooltip: i18n.t("LBL_VARIABLES"),
+												type: "iconTop",
+												icon: "mdi mdi-variable",												
+												on: {
+
+													onItemClick() {
+
+														let smStateMachineIds;
+														let smIdsArray = Array.from(self.smIds);
+
+														if (Array.isArray(smIdsArray) && smIdsArray.length > 0) {
+
+															smStateMachineIds = smIdsArray.map(id => {
+																return "SmStateMachine:" + id;
+															});
+														}
+
+														if (self.parent.config.stateMachine && self.parent.config.stateMachine.smModuleAction) {
+
+															let mod = util.module.getFromModuleAction(self.parent.config.stateMachine.smModuleAction);
+															let moduleAction = { id: self.parent.config.stateMachine.smModuleAction };
+															let args = { selectedPks: smStateMachineIds };
+
+															util.module.open(mod, moduleAction, VIEW_TYPE_WINDOW, null, args);
+														}
+													}
+												}
+											},
+											{ width: 5 }
+										]
+									},
+									{height:5}
+								]
+
+							}
 						]
 					}
 				]
