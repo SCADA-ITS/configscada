@@ -147,28 +147,31 @@ export default class TubeContent {
 													}
 													self.tubeFans.push(fanOut);
 												});
+																								
+												if (self.parent.config.stateMachine && self.parent.config.stateMachine.smElementTypeParams) {
 												
-												self.selectedTube.elementValues.forEach(elementValue => {
-													
-													let smElementTypeParam = self.parent.config.stateMachine.smElementTypeParams.find(e => e === elementValue.elementTypeParam.id); 
-													
-													if (smElementTypeParam && elementValue.value) {
+													self.selectedTube.elementValues.forEach(elementValue => {
 
-														let objValue = JSON.parse(elementValue.value);
+														let smElementTypeParam = self.parent.config.stateMachine.smElementTypeParams.find(e => e === elementValue.elementTypeParam.id);
 
-														if ((typeof (objValue) === 'object') && objValue.smConfigs && Array.isArray(objValue.smConfigs) && objValue.smConfigs.length > 0) {
+														if (smElementTypeParam && elementValue.value) {
 
-															for (let smId of objValue.smConfigs) {
+															let objValue = JSON.parse(elementValue.value);
 
-																if (smId.stateMachineId) {
+															if ((typeof (objValue) === 'object') && objValue.smConfigs && Array.isArray(objValue.smConfigs) && objValue.smConfigs.length > 0) {
 
-																	self.smIds.add(smId.stateMachineId);
+																for (let smId of objValue.smConfigs) {
+
+																	if (smId.stateMachineId) {
+
+																		self.smIds.add(smId.stateMachineId);
+																	}
 																}
 															}
 														}
-													}
-												});
-
+													});
+												}
+												
 												webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.parent.config.restEndpoints.grid, { id: self.parent.config.gridId })).then(function(dataGrid) {
 
 													if (dataGrid != null) {
