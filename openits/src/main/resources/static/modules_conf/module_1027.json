@@ -11,7 +11,7 @@
 	"equipmentViewer": 101401,
 	"stateMachine" : {
 		"smModuleAction": 103701,
-		"smElementTypeParams": ["ElementTypeParam:2000:1:2", "ElementTypeParam:2000:1:1"]		
+		"smElementTypeParams": ["ElementTypeParam:2000:1:1"]		
 	},
 	"restEndpoints": {
 		"elementsByIdType": "element_types/${id}/elementsWithChilds",
