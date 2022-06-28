@@ -229,6 +229,7 @@ export default class ThresholdsConfigModule extends GenericModule {
 
 							smThreshold.linked = smLinkedLabelAlias.join(", ");
 							smThreshold.value = itemValue;
+							smThreshold.labelAlias = i18n.t(smThreshold.labelAlias);
 						}
 
 						self.thresholdTable.add(itemSelected.smThresholds);
@@ -443,8 +444,10 @@ export default class ThresholdsConfigModule extends GenericModule {
 								}
 							}
 						});
+						
+						let data = [];
 
-						self.thresholdTable = new DataTable(null, null, metadata, null, events);
+						self.thresholdTable = new DataTable(null, null, metadata, data, events);
 
 						return self.thresholdTable.getView();
 					}
