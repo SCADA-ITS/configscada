@@ -207,9 +207,9 @@ export default class ThresholdsConfigModule extends GenericModule {
 						self.thresholdTable.clear();
 
 						let itemSelected = stateMachinesArr.find(sm => sm.id === ids[0]);
-						//let smThresholdsCopy = webix.copy(itemSelected.smThresholds);
+						let itemSelectedCopy = webix.copy(itemSelected);
 
-						for (let smThreshold of itemSelected.smThresholds) {
+						for (let smThreshold of itemSelectedCopy.smThresholds) {
 
 							let item = smThresholdsMap.get(smThreshold.id);
 							let itemValue = thresholdsValuesMap.get(smThreshold.id);
@@ -232,7 +232,7 @@ export default class ThresholdsConfigModule extends GenericModule {
 							smThreshold.labelAlias = i18n.t(smThreshold.labelAlias);
 						}
 
-						self.thresholdTable.add(itemSelected.smThresholds);
+						self.thresholdTable.add(itemSelectedCopy.smThresholds);
 
 						$$("table-" + self.uid).show();
 						$$("no-data-" + self.uid).hide();
