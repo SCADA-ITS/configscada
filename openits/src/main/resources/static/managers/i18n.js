@@ -100,6 +100,11 @@ export default class I18n {
 			let fields = undefined;
 
 			try {
+				
+				if (regEx.exec(label) == null) {
+	
+					return label;
+				}
 
 				if (values != undefined && Array.isArray(values)) {
 
@@ -151,58 +156,4 @@ export default class I18n {
 		return lblTranslated;
 
 	}
-
-//	t(label, values) {
-//
-//		let translation = undefined;
-//		let fields = undefined;
-//
-//		try {
-//
-//			if (values != undefined && Array.isArray(values)) {
-//
-//				fields = values.join();
-//			}
-//
-//			if (this.localeId != undefined && label != undefined && label != "") {
-//
-//				if (this.labels != undefined && !fields) {
-//
-//					translation = this.labels[label];
-//				}
-//
-//				if (translation == undefined) {
-//
-//					let translationUrl = `${I18N_ENDPOINT_TRANSLATIONS}/${this.localeId}/${I18N_MODULE}/${label}`;
-//
-//					if (fields) {
-//
-//						translationUrl = translationUrl + `/${fields}`;
-//					}
-//
-//					let translationResponse = webix.ajax().sync().get(translationUrl);
-//
-//					if (translationResponse && translationResponse.responseText) {
-//
-//						let translationJson = JSON.parse(translationResponse.responseText);
-//
-//						if (translationJson != undefined) {
-//
-//							translation = translationJson.translation;
-//
-//							if (!fields) {
-//
-//								this.labels[label] = translation;
-//							}
-//						}
-//					}
-//				}
-//			}
-//		}
-//		catch {
-//
-//		}
-//
-//		return (translation != undefined) ? translation : ((label != undefined) ? "¿¿" + label + "??" : "");
-//	}
 }
