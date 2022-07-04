@@ -2721,7 +2721,7 @@ export default class DataTable {
 										}
 										
 										//console.log (record);
-									} else {
+									} else if (gridData.action != 'DELETE'){
 
 										grid.add(dataItem);
 										rowsUpdated++;
