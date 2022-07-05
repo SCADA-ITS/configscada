@@ -347,7 +347,7 @@ export default class IncidentReportActionPanel {
 				width: 135,
 				label: (onlyAutoassignIncident) ? i18n.t("LBL_AUTOASSIGN") : i18n.t("LBL_INCIDENT_CHANGE_ASSIGNMENT"),
 				tooltip: i18n.t("LBL_INCIDENT_CHANGE_ASSIGNMENT_DESCRIPTION"),
-				disabled: !changeAssignIncident,
+				disabled: !changeAssignIncident || self.closed,  
 				type: "iconTop",
 				icon: "mdi mdi-account",
 				on: {
