@@ -54,6 +54,7 @@ export default class InputDialogBox {
 
 		let self = this;
 		let height;			
+		let unit = self.dataType.labelUnit ? i18n.t(self.dataType.labelUnit) : "";
 		let alertHeight = (self.dataType.id === DataType.ALPHANUMERIC || self.dataType.id === DataType.TIMESTAMP) ? ALERT_HEIGHT.ALPHA_OR_TIMESTAMP : ALERT_HEIGHT.NO_ALPHA_OR_TIMESTAMP;
 		let textareaHeight = TEXTAREA_HEIGHT;
 
@@ -212,7 +213,7 @@ export default class InputDialogBox {
 			function getIntegerBody() {
 
 				let integerBody;
-
+				
 				const r = /^-?[0-9]([0-9])*$/;
 
 				integerBody = {
@@ -274,9 +275,9 @@ export default class InputDialogBox {
 								}
 							},
 							{
-								width: 20,
+								width: 50,
 								view: "label",
-								label: "<span class='grid-title'>" + self.dataType.labelUnit ? i18n.t(self.dataType.labelUnit) : "" + "</span>",
+								label: "<span class='grid-title' style='padding-left:0px'>" + unit + "</span>",
 							},
 							{}
 						]
@@ -431,9 +432,9 @@ export default class InputDialogBox {
 							}
 						},
 						{
-							width: 20,
+							width: 50,
 							view: "label",
-							label: "<span class='grid-title'>" + self.dataType.labelUnit ? i18n.t(self.dataType.labelUnit) : "" + "</span>",
+							label: "<span class='grid-title' style='padding-left:0px'>" + unit + "</span>",
 						},
 						{}
 					]
