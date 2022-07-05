@@ -167,19 +167,30 @@ export default class TunnelContent {
 														
 														let command = self.parent.config.commands.SEND_VENTILATION_STOP;
 														command.elementId = self.tunnelId;
+														
+														util.element.sendCommand([command], function(res) {
 
-														let body = {
-															commands: []
-														};
-														body.commands.push(command);
+															if (res) {
 
-														webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.parent.config.restEndpoints.command, body).then(function(data) {
-
-															if (!data.json()) {
-
-																webix.message({ type: "error", text: i18n.t("LBL_ERROR_OPERATION") });
+																(new MessageBox(MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null)).show();
 															}
-														});														
+														});
+														
+//														let command = self.parent.config.commands.SEND_VENTILATION_STOP;
+//														command.elementId = self.tunnelId;
+//
+//														let body = {
+//															commands: []
+//														};
+//														body.commands.push(command);
+//
+//														webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.parent.config.restEndpoints.command, body).then(function(data) {
+//
+//															if (!data.json()) {
+//
+//																webix.message({ type: "error", text: i18n.t("LBL_ERROR_OPERATION") });
+//															}
+//														});														
 													};
 												}
 											}
@@ -205,19 +216,30 @@ export default class TunnelContent {
 
 														let command = self.parent.config.commands.SEND_VENTILATION_START;
 														command.elementId = self.tunnelId;
+														
+														util.element.sendCommand([command], function(res) {
 
-														let body = {
-															commands: []
-														};
-														body.commands.push(command);
+															if (res) {
 
-														webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.parent.config.restEndpoints.command, body).then(function(data) {
-
-															if (!data.json()) {
-
-																webix.message({ type: "error", text: i18n.t("LBL_ERROR_OPERATION") });
+																(new MessageBox(MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null)).show();
 															}
-														});														
+														});
+														
+//														let command = self.parent.config.commands.SEND_VENTILATION_START;
+//														command.elementId = self.tunnelId;
+//
+//														let body = {
+//															commands: []
+//														};
+//														body.commands.push(command);
+//
+//														webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.parent.config.restEndpoints.command, body).then(function(data) {
+//
+//															if (!data.json()) {
+//
+//																webix.message({ type: "error", text: i18n.t("LBL_ERROR_OPERATION") });
+//															}
+//														});														
 													};
 												}
 											}

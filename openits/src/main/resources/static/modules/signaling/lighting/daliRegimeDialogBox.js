@@ -1,3 +1,5 @@
+import {util} from "../../../lib/util.js";
+
 export default class DaliRegimeDialogBox {
 
 	constructor(dali, parent) {
@@ -54,18 +56,31 @@ export default class DaliRegimeDialogBox {
 										command.elementId = self.dali.id;
 										command.commandElementValues[0].value = self.proposedWindowRegimeValue;
 	
-										let body = {
-											commands: []
-										};
-										body.commands.push(command);
-			
-										webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.parent.config.restEndpoints.command, body).then(function(data) {
-	
-											if (!data.json()) {
-	
-												webix.message({ type: "error", text: i18n.t("LBL_ERROR_OPERATION") });
+										util.element.sendCommand([command], function(res) {
+
+											if (res) {
+
+												(new MessageBox(MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null)).show();
 											}
 										});
+										
+//										let command = self.parent.config.commands.SEND_DALI_REGIME;
+//
+//										command.elementId = self.dali.id;
+//										command.commandElementValues[0].value = self.proposedWindowRegimeValue;
+//										
+//										let body = {
+//											commands: []
+//										};
+//										body.commands.push(command);
+//			
+//										webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.parent.config.restEndpoints.command, body).then(function(data) {
+//	
+//											if (!data.json()) {
+//	
+//												webix.message({ type: "error", text: i18n.t("LBL_ERROR_OPERATION") });
+//											}
+//										});
 										
 										let parentWindow = this.getTopParentView();
 										parentWindow.close();
