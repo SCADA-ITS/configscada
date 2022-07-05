@@ -418,7 +418,8 @@ export default class TubeContent {
 
 				ventilationModeOptions.push({
 					id: option.id,
-					value: i18n.t(option.label)
+					value: i18n.t(option.label),
+					disableModeChange: option.disableModeChange
 				});
 			});
 
@@ -443,27 +444,38 @@ export default class TubeContent {
 				tooltip: true,
 				on: {
 					onChange(newv, oldv) {
-
+						
 						this.blockEvent();
 						this.setValue(oldv);
 						this.unblockEvent();
+							
+						let optionSelected = ventilationModeOptions.find(op => op.id === newv);							
 
-						let options = [];
+						if (optionSelected && optionSelected.disableModeChange) {
 
-						for (let modeOption of ventilationModeOptions) {
+							let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_VENTILATION_CHANGE_MODE_NOT_ALLOWED"), null, null);
+							ms.show();
+						
+						} else {											
 
-							let newSelection = modeOption.id === newv ? true : false;
+							let options = [];
 
-							options.push({
-								id: modeOption.id,
-								label: modeOption.value,
-								description: i18n.t("LBL_MODE_" + modeOption.value.toUpperCase() + "_VENTILATION_DESCRIPTION"),
-								default: newSelection
-							});
+							for (let modeOption of ventilationModeOptions) {
+
+								let newSelection = modeOption.id === newv ? true : false;
+
+								options.push({
+									id: modeOption.id,
+									label: modeOption.value,
+									description: i18n.t("LBL_MODE_" + modeOption.value.toUpperCase() + "_VENTILATION_DESCRIPTION"),
+									default: newSelection,
+									disabled: modeOption.disableModeChange 
+								});
+							}
+
+							let optionDialog = new OptionDialogBox(i18n.t("LBL_SELECT_ANY_OPTION"), options, changeMode, OptionDialogBox.MODE_TOGGLE);
+							optionDialog.show(oldv);
 						}
-
-						let optionDialog = new OptionDialogBox(i18n.t("LBL_SELECT_ANY_OPTION"), options, changeMode, OptionDialogBox.MODE_TOGGLE);
-						optionDialog.show(oldv);
 
 						function changeMode(newModeId, callbackCloseDialog) {
 
