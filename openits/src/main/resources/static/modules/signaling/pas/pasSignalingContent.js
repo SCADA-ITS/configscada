@@ -539,7 +539,7 @@ export default class PasSignalingContent {
 
 										(new MessageBox(MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null)).show();
 									}
-								}, i18n.t("LBL_PAS_EXECUTE_COMMAND"));
+								});
 							}
 
 							if (self.pasLibraries && self.pasLibraries.pasLibrary) {
