@@ -61,7 +61,6 @@ export default class I18n {
 
 		let self = this;
 		let lblTranslated = "";
-		const regEx = /LBL_[a-zA-Z0-9_]*/gm;
 		
 		if (txt != undefined && txt.trim().includes(" ") && !values) {
 
@@ -74,6 +73,7 @@ export default class I18n {
 
 		function translateText(txt) {
 
+			const regEx = /LBL_[a-zA-Z0-9_]*/gm;
 			let regExRes;
 			let items = [];
 			let txtRes = txt;
@@ -98,6 +98,7 @@ export default class I18n {
 
 			let translation = undefined;
 			let fields = undefined;
+			const regEx = /LBL_[a-zA-Z0-9_]*/gm;
 
 			try {
 				
