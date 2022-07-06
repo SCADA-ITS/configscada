@@ -139,6 +139,7 @@
 		}
 	},
 	"requiredPermissions": {
-		"commandEquipment": "SystemPermission:6"
+		"commandEquipment": "SystemPermission:6",
+		"editSmThresholds": "SystemPermission:18"
 	}
 }

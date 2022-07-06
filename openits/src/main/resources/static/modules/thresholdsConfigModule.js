@@ -283,8 +283,8 @@ export default class ThresholdsConfigModule extends GenericModule {
 
 						const defaultGridOptionValues = [
 							{ gridOption: { id: 1 }, value: "false" },
-							{ gridOption: { id: 2 }, value: "false" },
-							{ gridOption: { id: 3 }, value: "9" },
+							{ gridOption: { id: 2 }, value: "true" },
+							{ gridOption: { id: 3 }, value: "2" },
 							{ gridOption: { id: 4 }, value: "asc" },
 							{ gridOption: { id: 7 }, value: "true" },
 							{ gridOption: { id: 8 }, value: "false" },
