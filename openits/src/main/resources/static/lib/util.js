@@ -2115,7 +2115,7 @@ export let util = {
 			let label = i18n.t(elementValue.elementTypeParam.labelAlias);
 			let elementTypeParamDescription = elementValue.elementTypeParam.labelDescription ? i18n.t(elementValue.elementTypeParam.labelDescription) : i18n.t(elementValue.elementTypeParam.labelAlias);
 
-			let unit = i18n.t(elementValue.elementTypeParam.labelUnit);
+			let unit = (elementValue.elementTypeParam.labelUnit) ? i18n.t(elementValue.elementTypeParam.labelUnit) : "";
 			let iconElementValueState = stateValueId.replace(":", "_") + ".png";
 			
 			let res = {
@@ -2128,7 +2128,8 @@ export let util = {
 				stateValueLabel: stateValueLabel,
 				stateValueBackColor: stateValueBackColor,
 				unit: unit,
-				value: value
+				value: value,
+				elementValueState:stateValueId
 			};
 			
 			return res;
