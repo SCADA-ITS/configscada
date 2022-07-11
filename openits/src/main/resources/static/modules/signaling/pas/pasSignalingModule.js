@@ -7,7 +7,7 @@ import MessageBox from "../../../component/messageBox.js";
 
 const LIST_PANEL_WIDTH = 300;
 
-export default class VmsSignalingModule extends GenericModule {
+export default class PasSignalingModule extends GenericModule {
 
 	constructor(module, moduleAction, args) {
 
