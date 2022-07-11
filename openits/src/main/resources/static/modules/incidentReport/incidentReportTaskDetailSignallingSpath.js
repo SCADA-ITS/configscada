@@ -96,18 +96,18 @@ export default class IncidentReportTaskDetailSignallingSpath extends IncidentRep
 
 				if (Array.isArray(self.taskState.elements) && self.taskState.elements.length > 0) {
 
-					assignElementsToStretchs(self.taskState.elements);
+					assignElementsToStretchs();
 
 					stretchsInfo = stretchs;
 				}
 
-				function assignElementsToStretchs(elements) {
+				function assignElementsToStretchs() {
 
 					if (Array.isArray(stretchs)) {
 
 						stretchs.forEach(stretch => {
 
-							elements.forEach(element => {
+							self.taskState.elements.forEach(element => {
 
 								if (element.location.stretchs.findIndex(elementStretch => elementStretch.id === stretch.id) != -1) {
 
@@ -478,9 +478,7 @@ export default class IncidentReportTaskDetailSignallingSpath extends IncidentRep
 									let elementType = window.em.getByField(EntityType.ELEMENT_TYPE, "id", elementTypeId);
 
 									if (elementType) {
-
-										let elements = getElementsBetweenRange(signallingSpath);
-
+										
 										let commandElement = getCommandElement(signallingSpath);
 
 										if (commandElement) {
@@ -501,7 +499,7 @@ export default class IncidentReportTaskDetailSignallingSpath extends IncidentRep
 
 											let mapValue = webix.copy(signallingSpath);
 
-											mapValue.elements = elements;
+											mapValue.elements = signallingSpath.spathId ? getElementsBySpath(signallingSpath) : getElementsBetweenRange(signallingSpath);
 
 											self.mapSignallingSpaths.set(signallingSpath.id, mapValue);
 										}
@@ -512,6 +510,49 @@ export default class IncidentReportTaskDetailSignallingSpath extends IncidentRep
 
 						originalMapSignallingSpaths = new Map(JSON.parse(JSON.stringify(Array.from(self.mapSignallingSpaths))));
 					}
+				}
+				
+				function getElementsBySpath(signallingSpath) {
+					
+					let elements = [];
+					let elementsInSpath = [];
+					
+					if (signallingSpath && signallingSpath.spathId) {
+						
+						let spath = window.em.getByField(EntityType.SPATH, "id", signallingSpath.spathId);
+						
+						if (spath && Array.isArray(spath.spathStretchs)) {
+							
+							let stretchs = spath.spathStretchs.map(spathStretch => spathStretch.relStretch);
+							
+							if (Array.isArray(self.taskState.elements) && self.taskState.elements.length > 0 &&
+								Array.isArray(stretchs) && stretchs.length > 0) {
+
+								stretchs.forEach(stretch => {
+			
+									self.taskState.elements.forEach(element => {
+		
+										if (element.location.stretchs.findIndex(elementStretch => elementStretch.id === stretch.id) != -1) {
+		
+											elementsInSpath.push(element);
+										}
+									});
+								});
+							}
+						}
+					}
+					
+					if (Array.isArray(elementsInSpath) && elementsInSpath.length > 0) {
+					
+						let elementsToAdd = filterElements(elementsInSpath, signallingSpath);
+	
+						if (Array.isArray(elementsToAdd) && elementsToAdd.length > 0) {
+	
+							elements.push(elementsToAdd);
+						}	
+					}
+					
+					return elements;
 				}
 
 				function getElementsBetweenRange(signallingSpath) {
@@ -531,35 +572,44 @@ export default class IncidentReportTaskDetailSignallingSpath extends IncidentRep
 
 							stretchsFiltered.forEach(stretchFiltered => {
 
-								let elementsToAdd = stretchFiltered.elements;
+								let elementsToAdd = filterElements(stretchFiltered.elements, signallingSpath);
 
 								if (Array.isArray(elementsToAdd) && elementsToAdd.length > 0) {
 
-									elementsToAdd = elementsToAdd.filter(e => Array.isArray(e.commandElements) && (e.commandElements.findIndex(c => c.id === signallingSpath.command.commandElementTypeId) != -1));
-
-									if (Array.isArray(elementsToAdd) && elementsToAdd.length > 0) {
-
-										if (signallingSpath.elementSubtypeId) {
-
-											elementsToAdd = stretchFiltered.elements.filter(e => e.elementSubtype && e.elementSubtype.id === signallingSpath.elementSubtypeId);
-										}
-
-										if (Array.isArray(elementsToAdd) && elementsToAdd.length > 0) {
-											
-											elementsToAdd = getElementsInLanes(elementsToAdd, signallingSpath.lanes);
-											
-											if (Array.isArray(elementsToAdd) && elementsToAdd.length > 0) {
-											
-												elements.push(...elementsToAdd);	
-											}
-										}
-									}
+									elements.push(...elementsToAdd);
 								}
 							});
 						}
 					}
 
 					return elements;
+				}
+				
+				function filterElements(elements, signallingSpath) {
+					
+					let elementsToAdd;
+					
+					if (Array.isArray(elements) && elements.length > 0 && signallingSpath) {
+						
+						elementsToAdd = elements;
+
+						elementsToAdd = elementsToAdd.filter(e => Array.isArray(e.commandElements) && (e.commandElements.findIndex(c => c.id === signallingSpath.command.commandElementTypeId) != -1));
+
+						if (Array.isArray(elementsToAdd) && elementsToAdd.length > 0) {
+
+							if (signallingSpath.elementSubtypeId) {
+
+								elementsToAdd = elementsToAdd.filter(e => e.elementSubtype && e.elementSubtype.id === signallingSpath.elementSubtypeId);
+							}
+
+							if (Array.isArray(elementsToAdd) && elementsToAdd.length > 0) {
+								
+								elementsToAdd = getElementsInLanes(elementsToAdd, signallingSpath.lanes);
+							}
+						}
+					}
+					
+					return elementsToAdd;
 				}
 				
 				function getElementsInLanes(elements, lanes) {
@@ -579,7 +629,6 @@ export default class IncidentReportTaskDetailSignallingSpath extends IncidentRep
 					}
 					
 					return elementsFiltered;
-					
 				}
 
 				return data;

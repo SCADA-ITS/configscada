@@ -437,7 +437,7 @@ export default class IncidentTypeStateTask {
 				
 			function fillDialogEntity(dialogEntity, onFilledDialogEntity) {
 			
-				incidentTypeTaskTypes = window.em.getAll(EntityType.IMS_TASK_TYPES);
+				incidentTypeTaskTypes = window.em.getAll(EntityType.IMS_TASK_TYPE);
 		
 				if (Array.isArray(incidentTypeTaskTypes) && incidentTypeTaskTypes.length > 0) {
 					

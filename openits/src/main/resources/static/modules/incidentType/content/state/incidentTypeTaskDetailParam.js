@@ -25,7 +25,7 @@ export default class IncidentTypeTaskDetailParam {
 			rows: [{}]
 		}
 		
-		let taskType = window.em.getByField(EntityType.IMS_TASK_TYPES, "id", self.incidentTypeTask.taskType.id);
+		let taskType = window.em.getByField(EntityType.IMS_TASK_TYPE, "id", self.incidentTypeTask.taskType.id);
 		
 		if (taskType && Array.isArray(taskType.taskTypeParams)) {
 			

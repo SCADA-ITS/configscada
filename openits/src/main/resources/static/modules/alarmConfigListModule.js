@@ -546,8 +546,8 @@ export default class AlarmConfigListModule extends GenericGridModule {
 
 						if (Array.isArray(alarmConfigSelected) && alarmConfigSelected.length > 0) {
 
-							$$("no-data-" + self.uid).show();
-							$$("table-" + self.uid).hide();
+							//$$("no-data-" + self.uid).show();
+							//$$("table-" + self.uid).hide();
 
 							webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.alarmConfigId, { id: alarmConfigSelected[0].id })).then(function(alarmsConfigUpdatedResponse) {
 
@@ -580,8 +580,8 @@ export default class AlarmConfigListModule extends GenericGridModule {
 
 										self.dataTable.update(alarmConfigToTable);
 
-										$$("table-" + self.uid).show();
-										$$("no-data-" + self.uid).hide();
+										//$$("table-" + self.uid).show();
+										//$$("no-data-" + self.uid).hide();
 									}
 								}
 							});

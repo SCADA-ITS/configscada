@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.revenga.rits.front.openits.bo.LocationBO;
 import com.revenga.rits.front.openits.bo.RoadBO;
+import com.revenga.rits.front.openits.bo.SpathBO;
 import com.revenga.rits.front.openits.bo.StretchBO;
 
 import io.swagger.annotations.Api;
@@ -34,6 +35,9 @@ public class LocationController {
 	
 	@Autowired
 	StretchBO stretchBO;
+	
+	@Autowired
+	SpathBO spathBO;
 	
 	@Autowired
 	RoadBO roadBO;
@@ -164,5 +168,25 @@ public class LocationController {
 			required = true) @PathVariable String id) {
 		
 		return new ResponseEntity<>(stretchBO.getStretchByRoad(id), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/spaths")
+	@ApiOperation(value = "Get spaths", notes = "Get spaths")
+	public ResponseEntity<Object> getSpath() {
+		
+		return new ResponseEntity<>(spathBO.getList(), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/spath/{id}")
+	@ApiOperation(value = "Get spath by id", notes = "Get spath by id")
+	public ResponseEntity<Object> getSpath(
+			@ApiParam(
+			name = "id",
+			type = "String",
+			value = "Spath by id",
+			example = "Spath:1",
+			required = true) @PathVariable String id) {
+		
+		return new ResponseEntity<>(spathBO.getItem(id), HttpStatus.OK);
 	}
 }
