@@ -1,11 +1,11 @@
 import { util } from "../lib/util.js";
-import GenericModule from "../modules/genericModule.js";
+import GenericService from "./genericService.js";
 import AlarmControlPanel from "../component/general/alarmControlPanel.js";
 import Notification from "./notification.js";
 
 const LATEST_ALARMS_MAX = 10;
 
-export default class AlarmService extends GenericModule {
+export default class AlarmService extends GenericService {
 
 	constructor(module) {
 
@@ -120,6 +120,8 @@ export default class AlarmService extends GenericModule {
 				}
 				
 				self.alarms.data.stats.activeAlarms = activeAlarms;
+				
+				self.executeCallbacks(self.alarms.data);
 					
 				if (window.alarmControlPanel) {
 					
@@ -140,6 +142,8 @@ export default class AlarmService extends GenericModule {
 					function onMessage(data) {
 		
 						self.alarms.data.stats.activeAlarms = data.value;
+						
+						self.executeCallbacks(self.alarms.data);
 		
 						if (window.alarmControlPanel) {
 						
@@ -162,6 +166,8 @@ export default class AlarmService extends GenericModule {
 				}
 				
 				self.alarms.data.stats.noRecognizedAlarms = noRecognizedAlarms;
+				
+				self.executeCallbacks(self.alarms.data);
 					
 				if (window.alarmControlPanel) {
 				
@@ -187,6 +193,8 @@ export default class AlarmService extends GenericModule {
 					function onMessage(data) {
 		
 						self.alarms.data.stats.noRecognizedAlarms = data.value;
+						
+						self.executeCallbacks(self.alarms.data);
 		
 						if (window.alarmControlPanel) {
 						
@@ -214,6 +222,8 @@ export default class AlarmService extends GenericModule {
 				}
 				
 				self.alarms.data.stats.filteredAlarms = filteredAlarms;
+				
+				self.executeCallbacks(self.alarms.data);
 					
 				if (window.alarmControlPanel) {
 				
@@ -234,6 +244,8 @@ export default class AlarmService extends GenericModule {
 					function onMessage(data) {
 		
 						self.alarms.data.stats.filteredAlarms = data.value;
+						
+						self.executeCallbacks(self.alarms.data);
 		
 						if (window.alarmControlPanel) {
 						

@@ -52,6 +52,7 @@ export default class AlarmMonitorModule extends GenericModule {
 		
 		this.intervalAlarmMonitor = undefined;
 		this.queue = new Queue();
+		this.idCallbackStats = undefined;
 	}
 
 	loadData() {
@@ -106,6 +107,13 @@ export default class AlarmMonitorModule extends GenericModule {
 
 						loadDataCollections(flattenedData);
 					}
+					
+					let alarmService = window.sm.getService(Services.ALARM_SERVICE);
+
+					if (alarmService) {
+						
+						self.idCallbackStats = alarmService.register(updateStats);
+					}
 				}
 			}
 			
@@ -136,6 +144,13 @@ export default class AlarmMonitorModule extends GenericModule {
 					dataGrids[metadataRecognizedGrid.id] = new DataTable(metadataRecognizedGrid.id, null, metadataRecognizedGrid, [], null);
 					
 					load();
+					
+					let alarmService = window.sm.getService(Services.ALARM_SERVICE);
+
+					if (alarmService) {
+						
+						updateStats(alarmService.getData());
+					}
 				}
 				
 				function filterMetadata(metadata) {
@@ -220,8 +235,41 @@ export default class AlarmMonitorModule extends GenericModule {
 			
 						clearInterval(self.intervalAlarmMonitor);	
 					}
+					
+					if (self.idCallbackStats) {
+						
+						let alarmService = window.sm.getService(Services.ALARM_SERVICE);
+
+						if (alarmService) {
+							
+							alarmService.unregister(self.idCallbackStats);
+						}	
+					}
 				}
 			}
+		}
+		
+		function updateStats(data) {
+
+			if (data && data.stats) {
+				
+				let stats = data.stats;
+	
+				if (stats.activeAlarms) {
+
+					$$("action-panel-alarm-stat-active-" + self.uid).setValue(stats.activeAlarms);
+				}
+
+				if (stats.noRecognizedAlarms) {
+
+					$$("action-panel-alarm-stat-no-recognized-" + self.uid).setValue(stats.noRecognizedAlarms);
+				}
+
+				if (stats.filteredAlarms) {
+
+					$$("action-panel-alarm-stat-filtered-" + self.uid).setValue(stats.filteredAlarms);
+				}
+			}				
 		}
 		
 		function getSelection() {
@@ -1469,38 +1517,6 @@ export default class AlarmMonitorModule extends GenericModule {
 				timerMessages();
 			}
 
-			let updateStats = function() {
-				
-				setTimeout(function() {
-					
-					let alarmService = window.sm.getService(Services.ALARM_SERVICE);
-
-					if (alarmService) {
-	
-						let stats = alarmService.getData().stats;
-	
-						if (stats) {
-	
-							if (stats.activeAlarms) {
-	
-								$$("action-panel-alarm-stat-active-" + self.uid).setValue(stats.activeAlarms);
-							}
-	
-							if (stats.noRecognizedAlarms) {
-	
-								$$("action-panel-alarm-stat-no-recognized-" + self.uid).setValue(stats.noRecognizedAlarms);
-							}
-	
-							if (stats.filteredAlarms) {
-	
-								$$("action-panel-alarm-stat-filtered-" + self.uid).setValue(stats.filteredAlarms);
-							}
-						}
-					}
-
-				}, 1000);
-			};
-
 			let updateLevelStats = function() {
 
 				function updateLevelStatsCritical() {
@@ -1587,8 +1603,6 @@ export default class AlarmMonitorModule extends GenericModule {
 
 			if ($$("view-main-action-panel-" + self.uid)) {
 
-				updateStats();
-
 				updateLevelStats();
 			}
 			
@@ -1624,8 +1638,6 @@ export default class AlarmMonitorModule extends GenericModule {
 						updateDataTables(flattenedItem, changes);
 	
 						if ($$("view-main-action-panel-" + self.uid)) {
-	
-							updateStats();
 	
 							updateLevelStats();
 						}	
