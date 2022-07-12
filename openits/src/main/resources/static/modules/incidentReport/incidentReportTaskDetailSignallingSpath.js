@@ -627,7 +627,7 @@ export default class IncidentReportTaskDetailSignallingSpath extends IncidentRep
 
 						if (lanes.length === 0) {
 
-							elementsFiltered = elementsFiltered.filter(e => !isNaN(e.location.lane));
+							elementsFiltered = elementsFiltered.filter(e => isNaN(e.location.lane));
 						}
 						else {
 
