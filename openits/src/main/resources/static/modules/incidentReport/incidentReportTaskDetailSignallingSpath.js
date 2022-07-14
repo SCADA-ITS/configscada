@@ -9,12 +9,13 @@ const CHANGED_NO = "no"
 
 export default class IncidentReportTaskDetailSignallingSpath extends IncidentReportTaskDetail {
 
-	constructor(config, incidentReport, taskState, index, uid) {
+	constructor(config, incidentReport, taskState, index, uid, spaths) {
 
 		super(config, incidentReport, taskState, index, uid);
 
 		this.mapSignallingSpaths = new Map();
 		this.changed = false;
+		this.spaths = spaths;
 	}
 
 	getView() {
@@ -59,7 +60,9 @@ export default class IncidentReportTaskDetailSignallingSpath extends IncidentRep
 
 											signallingSpathIds.sort();
 
-											dtSignallingSpaths.select(signallingSpathIds[0]);
+											//dtSignallingSpaths.select(signallingSpathIds[0]);
+											
+											dtSignallingSpaths.selectByIndex(0); 
 										}
 
 									}, 100);
@@ -495,13 +498,18 @@ export default class IncidentReportTaskDetailSignallingSpath extends IncidentRep
 												elementSubtypeAlias: elementSubtype ? i18n.t(elementSubtype.labelAlias) : null
 											}
 
-											data.push(rowSpathSignallign);
+											
 
 											let mapValue = webix.copy(signallingSpath);
 
 											mapValue.elements = signallingSpath.spathId ? getElementsBySpath(signallingSpath) : getElementsBetweenRange(signallingSpath);
 
 											self.mapSignallingSpaths.set(signallingSpath.id, mapValue);
+											
+											if (Array.isArray(mapValue.elements) && mapValue.elements.length > 0) {
+												
+												data.push(rowSpathSignallign);
+											}
 										}
 									}
 								}
@@ -518,32 +526,37 @@ export default class IncidentReportTaskDetailSignallingSpath extends IncidentRep
 					let elementsInSpath = [];
 
 					if (signallingSpath && signallingSpath.spathId) {
+						
+						if (Array.isArray(self.spaths) && self.spaths.length > 0) {
+							
+							//let spath = window.em.getByField(EntityType.SPATH, "id", signallingSpath.spathId);
+							
+							let spath = self.spaths.find(e => e.id === signallingSpath.spathId);
 
-						let spath = window.em.getByField(EntityType.SPATH, "id", signallingSpath.spathId);
-
-						if (spath && Array.isArray(spath.spathStretchs)) {
-
-							let from = !isNaN(signallingSpath.from) ? signallingSpath.from : -999999;
-							let to = !isNaN(signallingSpath.to) ? signallingSpath.to : 999999;
-							let spathStretchs = spath.spathStretchs.filter(spathStretch => from <= spathStretch.position && spathStretch.position <= to);
-
-							if (spathStretchs && Array.isArray(spathStretchs)) {
-								
-								let stretchs = spathStretchs.map(spathStretch => spathStretch.relStretch);
-
-								if (Array.isArray(self.taskState.elements) && self.taskState.elements.length > 0 &&
-									Array.isArray(stretchs) && stretchs.length > 0) {
-
-									stretchs.forEach(stretch => {
-
-										self.taskState.elements.forEach(element => {
-
-											if (element.location.stretchs.findIndex(elementStretch => elementStretch.id === stretch.id) != -1) {
-
-												elementsInSpath.push(element);
-											}
+							if (spath && Array.isArray(spath.spathStretchs)) {
+	
+								let from = !isNaN(signallingSpath.from) ? signallingSpath.from : -999999;
+								let to = !isNaN(signallingSpath.to) ? signallingSpath.to : 999999;
+								let spathStretchs = spath.spathStretchs.filter(spathStretch => from <= spathStretch.position && spathStretch.position <= to);
+	
+								if (spathStretchs && Array.isArray(spathStretchs)) {
+									
+									let stretchs = spathStretchs.map(spathStretch => spathStretch.relStretch);
+	
+									if (Array.isArray(self.taskState.elements) && self.taskState.elements.length > 0 &&
+										Array.isArray(stretchs) && stretchs.length > 0) {
+	
+										stretchs.forEach(stretch => {
+	
+											self.taskState.elements.forEach(element => {
+	
+												if (element.location.stretchs.findIndex(elementStretch => elementStretch.id === stretch.id) != -1) {
+	
+													elementsInSpath.push(element);
+												}
+											});
 										});
-									});
+									}
 								}
 							}
 						}

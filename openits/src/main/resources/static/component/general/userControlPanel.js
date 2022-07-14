@@ -93,6 +93,7 @@ export default class UserControlPanel extends GenericControlPanel {
 							css: "control-panel-notification",
 							align: "center",
 							tooltip: i18n.t("LBL_NUMBER_ALARMS_NO_RECOGNIZED"),
+							hidden: true,
 							width: 350,
 							height: 50,
 							label: function() {
@@ -116,6 +117,7 @@ export default class UserControlPanel extends GenericControlPanel {
 							css: "control-panel-notification",
 							align: "center",
 							tooltip: i18n.t("LBL_NUMBER_INCIDENTS_PENDING"),
+							hidden: true,
 							width: 350,
 							height: 50,
 							label: function() {
@@ -139,6 +141,7 @@ export default class UserControlPanel extends GenericControlPanel {
 							css: "control-panel-notification",
 							align: "center",
 							tooltip: i18n.t("LBL_NUMBER_EVENTS_PENDING"),
+							hidden: true,
 							width: 350,
 							height: 50,
 							label: function() {
@@ -177,6 +180,7 @@ export default class UserControlPanel extends GenericControlPanel {
 							css: "control-panel-notification",
 							align: "center",
 							tooltip: i18n.t("LBL_SHOW_ALARMS_NOTIFIED"),
+							hidden: true,
 							width: 350,
 							height: 50,
 							label: function() {
@@ -210,6 +214,7 @@ export default class UserControlPanel extends GenericControlPanel {
 							css: "control-panel-notification",
 							align: "center",
 							tooltip: i18n.t("LBL_SHOW_INCIDENTS_NOTIFIED"),
+							hidden: true,
 							width: 350,
 							height: 50,
 							label: function() {
@@ -243,6 +248,7 @@ export default class UserControlPanel extends GenericControlPanel {
 							css: "control-panel-notification",
 							align: "center",
 							tooltip: i18n.t("LBL_SHOW_EVENTS_NOTIFIED"),
+							hidden: true,
 							width: 350,
 							height: 50,
 							label: function() {

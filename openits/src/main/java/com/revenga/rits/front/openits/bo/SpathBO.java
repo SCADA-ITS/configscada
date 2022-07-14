@@ -2,24 +2,21 @@ package com.revenga.rits.front.openits.bo;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 
-import org.apache.commons.collections4.CollectionUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.revenga.rits.front.openits.adapter.impl.GraphqlAdapter;
 import com.revenga.rits.front.openits.adapter.impl.VODataSourceAdapter;
 
 @Service
 public class SpathBO extends GenericBO {
 	
-	@PostConstruct
-	private void initialize() {
+	public List<Map<String, Object>> getSpaths(List<String> ids) {
 		
-		dataSourceList = VODataSourceAdapter.DATA_SOURCE_GET_SPATHS;
-		dataSourceItem = VODataSourceAdapter.DATA_SOURCE_GET_SPATH;
+		List<Map<String, Object>> spaths = voDataSourceAdapter
+				.getList(VODataSourceAdapter.DATA_SOURCE_GET_SPATHS, new Object[] { ids });
+		
+		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_SPATHS, spaths);
 	}
 }

@@ -15,6 +15,7 @@ export default class IncidentReportModule extends GenericModule {
 		this.currentSequenceOfState = undefined;
 
 		this.incidentReport = undefined;
+		this.spaths = undefined;
 		this.stretchsInfo = undefined;
 		this.stompClient = undefined;
 		this.idStompSubscriptor = undefined;
@@ -373,10 +374,104 @@ export default class IncidentReportModule extends GenericModule {
 				if (dat != null) {
 
 					self.incidentReport = dat.json();
+					
+					assignSpaths();
+					
 					self.update();
 				}
 
 			}, function(response) { util.ajax.handleError(response); });
+		}
+		
+		function assignSpaths() {
+			
+			let spathIds = [];
+			
+			if (self.incidentReport) {
+				
+				if (Array.isArray(self.incidentReport.sequenceOfStates) && self.incidentReport.sequenceOfStates.length > 0) {
+					
+					self.incidentReport.sequenceOfStates.forEach(sequenceOfState => {
+						
+						if (Array.isArray(sequenceOfState.taskStates) && sequenceOfState.taskStates.length > 0) {
+							
+							sequenceOfState.taskStates.forEach(taskState => {
+								
+								spathIds.push(...getSpathIds(taskState));	
+							});
+						}
+					});
+				}
+				
+				if (Array.isArray(self.incidentReport.taskStates) && self.incidentReport.taskStates.length > 0) {
+					
+					self.incidentReport.taskStates.forEach(taskState => {
+								
+						spathIds.push(...getSpathIds(taskState));	
+					});
+				}
+				
+				if (Array.isArray(spathIds) && spathIds.length > 0) {
+				
+					webix.ajax().headers(HEADER_POST).post(appConfig.restUrl + self.config.restEndpoints.spaths, JSON.stringify(spathIds)).then(function(data) {
+	
+						let responseSpaths = data.json();
+		
+						if (Array.isArray(responseSpaths) && responseSpaths.length > 0) {
+							
+							self.spaths = responseSpaths;
+						}
+					});	
+				}
+			}
+			
+			function getSpathIds(taskState) {
+				
+				let taskStateSpathIds = [];
+				
+				if (taskState && taskState.incidentTypeTask && taskState.incidentTypeTask.taskType && 
+					Array.isArray(taskState.incidentTypeTask.taskType.taskTypeParams) && taskState.incidentTypeTask.taskType.taskTypeParams.length > 0 &&
+					Array.isArray(taskState.incidentTypeTask.incidentTypeTaskValues) && taskState.incidentTypeTask.incidentTypeTaskValues.length > 0) {
+					
+					if (taskState.incidentTypeTask.taskType.taskTypeParams.find(taskTypeParam => taskTypeParam.paramType.id === "ParamType:1")) {
+						
+						let incidentTypeTaskValues = taskState.incidentTypeTask.incidentTypeTaskValues.filter(incidentTypeTaskValue => incidentTypeTaskValue.taskTypeParam.id === "ImsTaskTypeParam:1:1");
+						
+						if (Array.isArray(incidentTypeTaskValues) && incidentTypeTaskValues.length > 0) {
+							
+							incidentTypeTaskValues.forEach(incidentTypeTaskValue => {
+								
+								let signallingSpaths;
+								
+								if (incidentTypeTaskValue.value) {
+									
+									try {
+										
+										signallingSpaths = JSON.parse(incidentTypeTaskValue.value);
+										
+										if (Array.isArray(signallingSpaths)) {
+											
+											signallingSpaths.forEach(signallingSpath => {
+												
+												if (signallingSpath.spathId) {
+													
+													taskStateSpathIds.push(signallingSpath.spathId);
+												}
+											});
+										}
+									}
+									catch (error) {
+										
+									}
+									
+								}
+							});
+						}
+					}	
+				}
+				
+				return taskStateSpathIds;
+			}
 		}
 	}
 

@@ -101,7 +101,6 @@ public class VODataSourceAdapter {
 	public static final int DATA_SOURCE_GET_STRETCH_BY_ROAD = getPropertyInt("get_stretch_by_road");
 	public static final int DATA_SOURCE_GET_STRETCH_BY_LOCATION = getPropertyInt("get_stretch_by_location");
 	public static final int DATA_SOURCE_GET_SPATHS = getPropertyInt("get_spaths");
-	public static final int DATA_SOURCE_GET_SPATH = getPropertyInt("get_spath");
 	public static final int DATA_SOURCE_GET_PLANS = getPropertyInt("get_plans");
 	public static final int DATA_SOURCE_GET_PLANS_SUMMARY = getPropertyInt("get_plans_summary");
 	public static final int DATA_SOURCE_GET_PLANS_PLAN_LIBRARY = getPropertyInt("get_plans_plan_library");

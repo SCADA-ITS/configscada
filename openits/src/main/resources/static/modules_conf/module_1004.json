@@ -19,7 +19,8 @@
 		"locationsStretchs": "locations/stretchs",
 		"elementsStretchs": "elements/byStretchs",
 		"systemParamConfirmIncident" : "system_params/${id}",
-		"incidentReportSummary": "incidents/reports/${id}/summary"
+		"incidentReportSummary": "incidents/reports/${id}/summary",
+		"spaths": "locations/spaths"
 	},
 	"topic": "/topic/incidentReport",
 	"actionEndpoints": {

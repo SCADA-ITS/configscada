@@ -38,6 +38,8 @@ function assign(entitiesManager, em_type) {
 		}
 	}
 	
+	entitiesManager.statusEntities[EntityType[em_type].id] = EntitiesManager.ENTITY_STATE_LOADING;
+	
 	if (!EntityType[em_type].syncLoad) {
 		
 		webix.ajax().get(EntityType[em_type].endpoint).then(function(dat){
@@ -48,7 +50,7 @@ function assign(entitiesManager, em_type) {
 				
 				fill(response);
 				
-				
+				entitiesManager.statusEntities[EntityType[em_type].id] = EntitiesManager.ENTITY_STATE_LOADED;
 			}
 		});	
 	}
@@ -61,6 +63,8 @@ function assign(entitiesManager, em_type) {
 			let response = JSON.parse(dat.responseText);
 
 			fill(response);
+			
+			entitiesManager.statusEntities[EntityType[em_type].id] = EntitiesManager.ENTITY_STATE_LOADED;
 		}
 	}
 }
@@ -112,10 +116,16 @@ function scheduler(entitiesManager) {
 
 export default class EntitiesManager {
 
+	static get ENTITY_STATE_LOADING() { return 0 }
+	static get ENTITY_STATE_LOADED() { return 1 }
+	static get ACTION_DELETE() { return "DELETE" }
+	static get ACTION_BLOCK() { return "BLOCK" }
+
 	constructor() {
 
 		this.entities = {};
 		this.tempEntities = {};
+		this.statusEntities = {};
 		this.lastUpdateTempEntities = {};
 		load(this);
 		this.sched = scheduler(this);
@@ -142,6 +152,11 @@ export default class EntitiesManager {
 			    return obj.data;
 			});
 		}
+	}
+	
+	getState(em_type) {
+		
+		return this.statusEntities[em_type.id];
 	}
 
 	getByField(em_type, field, value) {

@@ -171,22 +171,16 @@ public class LocationController {
 	}
 	
 	@GetMapping(value = "/spaths")
-	@ApiOperation(value = "Get spaths", notes = "Get spaths")
-	public ResponseEntity<Object> getSpath() {
+	@ApiOperation(value = "Get all spaths", notes = "Get all spaths")
+	public ResponseEntity<Object> getSpaths() {
 		
-		return new ResponseEntity<>(spathBO.getList(), HttpStatus.OK);
+		return new ResponseEntity<>(spathBO.getSpaths(null), HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/spath/{id}")
-	@ApiOperation(value = "Get spath by id", notes = "Get spath by id")
-	public ResponseEntity<Object> getSpath(
-			@ApiParam(
-			name = "id",
-			type = "String",
-			value = "Spath by id",
-			example = "Spath:1",
-			required = true) @PathVariable String id) {
+	@PostMapping(value = "/spaths")
+	@ApiOperation(value = "Get selected spaths", notes = "Get selected spaths")
+	public ResponseEntity<Object> getSpaths(@RequestBody List<String> ids) {
 		
-		return new ResponseEntity<>(spathBO.getItem(id), HttpStatus.OK);
+		return new ResponseEntity<>(spathBO.getSpaths(ids), HttpStatus.OK);
 	}
 }

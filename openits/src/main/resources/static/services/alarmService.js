@@ -2,6 +2,7 @@ import { util } from "../lib/util.js";
 import GenericService from "./genericService.js";
 import AlarmControlPanel from "../component/general/alarmControlPanel.js";
 import Notification from "./notification.js";
+import EntitiesManager from "../managers/entitiesManager.js";
 
 const LATEST_ALARMS_MAX = 10;
 
@@ -100,12 +101,27 @@ export default class AlarmService extends GenericService {
 		
 		if (!util.ui.isExternal()) {
 			
-			if (self.config.notification.enabled) {
+			let hnd;
 			
-				loadNotifications();	
-			}
+			hnd = setInterval(function() {
+				
+				let entityState = window.em.getState(EntityType.ALARM_CONFIG);
+				
+				if (entityState === EntitiesManager.ENTITY_STATE_LOADED) {
+					
+					clearInterval(hnd);
+					
+					if (self.config.notification.enabled) {
 			
-			loadAlarms();	
+						loadNotifications();	
+					}
+					
+					loadAlarms();
+					
+					log.debug("Alarm service has loaded initial notifications and alarms")
+				}
+	
+			}, 100);
 		}
 		
 		function loadActiveAlarms() {
