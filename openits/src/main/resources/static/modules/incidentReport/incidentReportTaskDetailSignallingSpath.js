@@ -1,4 +1,5 @@
 import IncidentReportTaskDetail from "./incidentReportTaskDetail.js";
+import IncidentReportTaskDetailSignallingSpathInfo from "./incidentReportTaskDetailSignallingSpathInfo.js";
 import { util } from "../../lib/util.js";
 import DataTable from "../../component/datatable.js";
 import DataView from "../../component/dataView.js";
@@ -15,6 +16,7 @@ export default class IncidentReportTaskDetailSignallingSpath extends IncidentRep
 
 		this.mapSignallingSpaths = new Map();
 		this.changed = false;
+		this.currentStretchIds = [];
 		this.spaths = spaths;
 	}
 
@@ -284,10 +286,10 @@ export default class IncidentReportTaskDetailSignallingSpath extends IncidentRep
 						[
 							{
 								id: 1,
-								value: "LBL_EDIT",
-								icon: "mdi mdi-pencil",
+								value: "LBL_INFO",
+								icon: "mdi mdi-information-outline",
 								default_: true,
-								label: "LBL_EDIT",
+								label: "LBL_INFO",
 								showText: true,
 								position: 1,
 								multiselect: false,
@@ -295,12 +297,23 @@ export default class IncidentReportTaskDetailSignallingSpath extends IncidentRep
 							},
 							{
 								id: 2,
+								value: "LBL_EDIT",
+								icon: "mdi mdi-pencil",
+								default_: true,
+								label: "LBL_EDIT",
+								showText: true,
+								position: 2,
+								multiselect: false,
+								itemRequired: true
+							},
+							{
+								id: 3,
 								value: "LBL_UNDO",
 								icon: "mdi mdi-undo",
 								default_: false,
 								label: "LBL_UNDO",
 								showText: true,
-								position: 2,
+								position: 3,
 								multiselect: false,
 								itemRequired: false
 							}
@@ -319,10 +332,14 @@ export default class IncidentReportTaskDetailSignallingSpath extends IncidentRep
 				events[DataTable.EventTypes.ON_COMMAND_EXEC].push(
 					{
 						commandId: 1,
-						function: onEditCommand
+						function: onInfoCommand
 					},
 					{
 						commandId: 2,
+						function: onEditCommand
+					},
+					{
+						commandId: 3,
 						function: onUndoCommand
 					}
 				);
@@ -488,7 +505,7 @@ export default class IncidentReportTaskDetailSignallingSpath extends IncidentRep
 
 											let elementSubtype = signallingSpath.elementSubtypeId && elementType.elementSubtypes ? elementType.elementSubtypes.find(e => e.id === signallingSpath.elementSubtypeId) : null;
 
-											let rowSpathSignallign = {
+											let rowSpathSignalling = {
 
 												id: signallingSpath.id,
 												changed: CHANGED_NO,
@@ -508,7 +525,7 @@ export default class IncidentReportTaskDetailSignallingSpath extends IncidentRep
 											
 											if (Array.isArray(mapValue.elements) && mapValue.elements.length > 0) {
 												
-												data.push(rowSpathSignallign);
+												data.push(rowSpathSignalling);
 											}
 										}
 									}
@@ -542,6 +559,8 @@ export default class IncidentReportTaskDetailSignallingSpath extends IncidentRep
 								if (spathStretchs && Array.isArray(spathStretchs)) {
 									
 									let stretchs = spathStretchs.map(spathStretch => spathStretch.relStretch);
+									
+									self.currentStretchIds = stretchs.map(stretch => stretch.id);
 	
 									if (Array.isArray(self.taskState.elements) && self.taskState.elements.length > 0 &&
 										Array.isArray(stretchs) && stretchs.length > 0) {
@@ -589,6 +608,8 @@ export default class IncidentReportTaskDetailSignallingSpath extends IncidentRep
 						if (Array.isArray(stretchsFiltered) && stretchsFiltered.length > 0) {
 
 							elements = [];
+							
+							self.currentStretchIds = stretchsFiltered.map(stretch => stretch.id);
 
 							stretchsFiltered.forEach(stretchFiltered => {
 
@@ -731,10 +752,40 @@ export default class IncidentReportTaskDetailSignallingSpath extends IncidentRep
 					}
 				}
 			}
+			
+			function onInfoCommand() {
+				
+				let selectedItems = dtSignallingSpaths.getSelectedItems();
+				
+				if (Array.isArray(selectedItems) && selectedItems.length === 1) {
+					
+					let signallingSpathId = selectedItems[0].id;
+
+					if (self.mapSignallingSpaths.size > 0) {
+
+						let signallingSpath = self.mapSignallingSpaths.get(signallingSpathId);
+				
+						if (signallingSpath) {
+							
+							let commandElement = getCommandElement(signallingSpath);
+							
+							if (commandElement) {
+								
+								const incidentReportTaskDetailSignallingSpathInfo_width = 850;
+								const incidentReportTaskDetailSignallingSpathInfo_height = 500;
+								
+								let incidentReportTaskDetailSignallingSpathInfo = new IncidentReportTaskDetailSignallingSpathInfo(signallingSpath, commandElement, self.currentStretchIds, incidentReportTaskDetailSignallingSpathInfo_width);
+
+								util.ui.loadWindow(i18n.t("LBL_DETAILS") + ": " + signallingSpath.alias, incidentReportTaskDetailSignallingSpathInfo.getView(), incidentReportTaskDetailSignallingSpathInfo_height, incidentReportTaskDetailSignallingSpathInfo_width, true);	
+							}
+						}
+					}
+				}
+			}
 
 			function onEditCommand() {
 
-				let selectedItems = dtSignallingSpaths.getSelectedItems()
+				let selectedItems = dtSignallingSpaths.getSelectedItems();
 
 				if (Array.isArray(selectedItems) && selectedItems.length === 1) {
 
