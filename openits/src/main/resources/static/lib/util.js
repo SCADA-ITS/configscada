@@ -2016,6 +2016,7 @@ export let util = {
 			let stateValueId = StateValue.ONLINE;
 			let stateValueLabel = i18n.t("LBL_UNKNOWN");
 			let stateValueBackColor = "white";
+			const DEFAULT_PRECISION = 2;
 
 			if (data && data.elementValue) {
 
@@ -2063,7 +2064,7 @@ export let util = {
 
 				if (elementValue.elementTypeParam.dataType.id === DataType.DECIMAL) {
 
-					let precision = elementValue.elementTypeParam.precision ? elementValue.elementTypeParam.precision : 0;
+					let precision = elementValue.elementTypeParam.precision ? elementValue.elementTypeParam.precision : DEFAULT_PRECISION;
 
 					value = value.replace(",", ".");
 

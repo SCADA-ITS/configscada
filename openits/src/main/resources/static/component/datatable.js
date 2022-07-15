@@ -7,7 +7,7 @@ const EMPTY_ICON = "./img/grid/empty.png";
 const DataType = {
 	STRING: { value: 1, filter: "textFilter", sort: "string" },
 	INT: { value: 2, filter: "numberFilter", sort: "int" },
-	DECIMAL: { value: 3, filter: "numberFilter", sort: "decimal" },
+	DECIMAL: { value: 3, filter: "numberFilter", sort: "decimal", defaultPrecision: 2 },
 	DATE: { value: 4, filter: "dateRangeFilter", sort: "date" },
 	IMAGE: { value: 5, filter: "textFilter", sort: "string" }
 };
@@ -453,12 +453,11 @@ export default class DataTable {
 							}
 							else if (value != undefined) {
 								
-								if (field.precisionFilter && field.precisionFilter > 0 && field.gridFieldDataType.id === DataType.DECIMAL.value){
-									
-									let parseValue = (typeof(value) === DataType.STRING.sort) ? parseFloat(value) : value;
-										
-									value = parseValue.toFixed(field.precisionFilter);
+								if (field.gridFieldDataType.id === DataType.DECIMAL.value) {
 
+									let parseValue = (typeof (value) === DataType.STRING.sort) ? parseFloat(value) : value;
+									let precision = (field.precisionFilter) ? field.precisionFilter : DataType.DECIMAL.defaultPrecision;
+									value = parseValue.toFixed(precision);
 								}
 
 								if (state != undefined) {
