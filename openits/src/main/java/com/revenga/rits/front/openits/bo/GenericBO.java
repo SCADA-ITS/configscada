@@ -3,6 +3,7 @@ package com.revenga.rits.front.openits.bo;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.collections4.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,7 +41,7 @@ public abstract class GenericBO {
 	    
 		Boolean res = false;
 
-		if (map.size() == 1) {
+		if (!MapUtils.isEmpty(map) && map.size() == 1) {
 
 			for (Map.Entry<String, Object> entry : map.entrySet()) {
 

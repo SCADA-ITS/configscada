@@ -3,6 +3,7 @@ package com.revenga.rits.front.openits.bo;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.Collections;
 import java.util.Date;
@@ -41,9 +42,36 @@ public class SessionBO extends GenericBO {
 
 	private static final String HEADER_AUTHOTIZATION = "authorization";
 	private static final String DEFAULT_ACCOUNT_LOCKED_ISO_DATE = "2099-12-31T23:59:59.999Z";
-	private static final Integer DEFAULT_VALID_SESSION_SECS = 600;
+	private static final Integer DEFAULT_VALID_SESSION_SECS = 90;
+	
+	private static final String FIELD_AUDIT_LOGS = "auditLogs";
+	private static final String FIELD_AUDIT_LOG_TYPE_ID = "logTypeId";
+	private static final String FIELD_AUDIT_LOG_SUBTYPE_ID = "logSubtypeId";
+	private static final String FIELD_AUDIT_LOG_USER_ID = "userId";
+	private static final String FIELD_AUDIT_LOG_LEVEL = "level";
+	private static final String FIELD_AUDIT_LOG_AUDIT_LOG_VALUES = "auditLogValues";
+	private static final String FIELD_AUDIT_LOG_VALUE_LOG_TYPE_PARAM_ID = "logTypeParamId";
+	private static final String FIELD_AUDIT_LOG_VALUE_VALUE = "value";
+	
+	private static final String AUDIT_LOG_TYPE = "LogType:4";
+	private static final String AUDIT_LOG_SUBTYPE_LOGIN = "LogSubtype:38";
+	private static final String AUDIT_LOG_SUBTYPE_LOGOUT = "LogSubtype:39";
+	private static final String AUDIT_LOG_SUBTYPE_EXPIRED = "LogSubtype:40";
+	private static final String AUDIT_LOG_USERS_PARAM_SESSION = "LogTypeParam:4:1";
+	private static final String AUDIT_LOG_USERS_PARAM_COMMENT = "LogTypeParam:4:2";
 
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+	
+	@SuppressWarnings("unused")
+	private class AuditLogLevel {
+		
+		public static final String TRACE = "TRACE";
+		public static final String DEBUG = "DEBUG";
+		public static final String INFO = "INFO";
+		public static final String WARN = "WARN";
+		public static final String ERROR = "ERROR";
+		public static final String CRITICAL = "CRITICAL";
+	}
 
 	@Autowired
 	Environment env;
@@ -53,6 +81,9 @@ public class SessionBO extends GenericBO {
 
 	@Autowired
 	SystemParamBO systemParamBO;
+	
+	@Autowired
+	AuditLogBO auditLogBO;
 
 	private Map<Pair<String, String>, Integer> sessionLoginRetries;
 	private Map<String, UserSessionUI> sessions;
@@ -124,6 +155,8 @@ public class SessionBO extends GenericBO {
 						if (userSession.getAccess().equals(UserSessionUI.AUTHORIZED)) {
 
 							activate(userSession);
+							
+							sendAuditLog(userSession, AUDIT_LOG_SUBTYPE_LOGIN, AuditLogLevel.INFO, null);
 						}
 
 						break;
@@ -165,6 +198,9 @@ public class SessionBO extends GenericBO {
 
 			log.info("Session id " + httpSession.getId() + " logout by user "
 					+ userSession.getUser().get(UserSessionUI.USER_FIELD_USER) + " at " + sdf.format(new Date()));
+			
+			sendAuditLog(userSession, AUDIT_LOG_SUBTYPE_LOGOUT, AuditLogLevel.INFO, null);
+			
 		} else {
 
 			userSession = new UserSessionUI();
@@ -335,6 +371,8 @@ public class SessionBO extends GenericBO {
 							+ sdf.format(new Date(userSession.getValidUntil())) + " removed");
 
 					removeSessionLoginRetriesBySessionId(sessionToRemove);
+					
+					sendAuditLog(userSession, AUDIT_LOG_SUBTYPE_EXPIRED, AuditLogLevel.INFO, null);
 				}
 			});
 		}
@@ -496,5 +534,30 @@ public class SessionBO extends GenericBO {
 
 			log.info(strTrace);
 		}
+	}
+	
+	private Boolean sendAuditLog(UserSessionUI userSession, String auditLogSubtypeId, String level, String comments) {
+		
+		Map<String, Object> auditLog = new HashMap<>();
+		Map<String, Object> auditLogs = Map.of(FIELD_AUDIT_LOGS, Arrays.asList(auditLog));
+		
+		auditLog.put(FIELD_AUDIT_LOG_TYPE_ID, AUDIT_LOG_TYPE);
+		auditLog.put(FIELD_AUDIT_LOG_SUBTYPE_ID, auditLogSubtypeId);
+		auditLog.put(FIELD_AUDIT_LOG_USER_ID, userSession.getUser().get(UserSessionUI.USER_FIELD_ID));
+		auditLog.put(FIELD_AUDIT_LOG_LEVEL, level);
+		
+		Map<String, Object> logValueSession = Map.of(
+				FIELD_AUDIT_LOG_VALUE_LOG_TYPE_PARAM_ID, AUDIT_LOG_USERS_PARAM_SESSION,
+				FIELD_AUDIT_LOG_VALUE_VALUE, userSession.getSessionId());
+		
+		Map<String, Object> logValueComments = Map.of(
+				FIELD_AUDIT_LOG_VALUE_LOG_TYPE_PARAM_ID, AUDIT_LOG_USERS_PARAM_COMMENT,
+				FIELD_AUDIT_LOG_VALUE_VALUE, !StringUtils.isEmpty(comments) ? comments : "");
+		
+		List<Map<String, Object>> logValues = Arrays.asList(logValueSession, logValueComments);
+		
+		auditLog.put(FIELD_AUDIT_LOG_AUDIT_LOG_VALUES, logValues);
+		
+		return auditLogBO.send(auditLogs);
 	}
 }
