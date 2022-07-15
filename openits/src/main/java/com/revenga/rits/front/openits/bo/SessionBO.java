@@ -42,7 +42,7 @@ public class SessionBO extends GenericBO {
 
 	private static final String HEADER_AUTHOTIZATION = "authorization";
 	private static final String DEFAULT_ACCOUNT_LOCKED_ISO_DATE = "2099-12-31T23:59:59.999Z";
-	private static final Integer DEFAULT_VALID_SESSION_SECS = 90;
+	private static final Integer DEFAULT_VALID_SESSION_SECS = 600;
 	
 	private static final String FIELD_AUDIT_LOGS = "auditLogs";
 	private static final String FIELD_AUDIT_LOG_TYPE_ID = "logTypeId";
