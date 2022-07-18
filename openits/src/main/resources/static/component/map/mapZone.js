@@ -21,7 +21,7 @@ export default class MapZone {
 
 		for (let mapZone of self.mapZones) {
 
-			mapZone.alias = mapZone.label;
+			mapZone.alias = i18n.t(mapZone.label);
 			zones.push(mapZone);
 		}
 
