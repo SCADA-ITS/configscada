@@ -18,7 +18,8 @@
 	},
 	"topics": {
 		"pas" : "/topic/element.ElementType:5",
-		"zones" : "/topic/element.ElementType:16.>"
+		"zones" : "/topic/element.ElementType:16.>",
+		"zones" : "/topic/element.ElementType:96.>"
 	},
 	"adapters": {
 		"element": "ws.element.update"
@@ -35,11 +36,19 @@
 		"paramMessageTag": "ElementTypeParam:16:2:1004",
 		"paramOnAir": "ElementTypeParam:16:2:1"
 	},
+	"group": {
+		"type": "ElementType:96",
+		"paramGroupId": "ElementTypeParam:96:1:5",
+		"paramMessageId": "ElementTypeParam:96:2:1001",
+		"paramMessageDesc": "ElementTypeParam:96:2:1002",
+		"paramMessageTag": "ElementTypeParam:96:2:1004",
+		"paramOnAir": "ElementTypeParam:96:2:1"
+	},
 	"requiredPermissions": {
 		"commandEquipment": "SystemPermission:6"
 	},
 	"commands":{
-		"SEND_MESSAGE" :{
+		"SEND_MESSAGE_ZONES" :{
 			"commandElementTypeId":"CommandElementType:2:5",
 			"elementId": null,
 			"commandElementValues": [
@@ -53,12 +62,36 @@
 				}
 			]
 		},
-		"SWITCH_OFF" :{
+		"SWITCH_OFF_ZONES" :{
 			"commandElementTypeId":"CommandElementType:1:5",
 			"elementId": null,
 			"commandElementValues": [
 				{
 					"commandElementTypeParamId": "CommandElementTypeParam:1:5:1",
+					"value": null
+				}
+			]
+		},
+		"SEND_MESSAGE_GROUPS" :{
+			"commandElementTypeId":"CommandElementType:4:5",
+			"elementId": null,
+			"commandElementValues": [
+				{
+					"commandElementTypeParamId": "CommandElementTypeParam:4:5:1",
+					"value": null
+				},
+				{
+					"commandElementTypeParamId": "CommandElementTypeParam:4:5:2",
+					"value": null
+				}
+			]
+		},
+		"SWITCH_OFF_GROUPS" :{
+			"commandElementTypeId":"CommandElementType:3:5",
+			"elementId": null,
+			"commandElementValues": [
+				{
+					"commandElementTypeParamId": "CommandElementTypeParam:3:5:1",
 					"value": null
 				}
 			]

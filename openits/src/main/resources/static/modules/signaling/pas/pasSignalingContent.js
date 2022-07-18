@@ -6,6 +6,9 @@ import SoundPlayerDialogBox from "../../../component/soundPlayerDialogBox.js";
 import MessageBox from "../../../component/messageBox.js";
 
 export default class PasSignalingContent {
+	
+	static get ENTITY_TYPE_ZONE() { return 1 }
+	static get ENTITY_TYPE_GROUP() { return 2 }
 
 	constructor(config, element, selectedPks) {
 
@@ -17,7 +20,9 @@ export default class PasSignalingContent {
 		this.pasLibraries = undefined;
 
 		this.zones = undefined;
+		this.groups = undefined;
 		this.zonesDataTable = undefined;
+		this.groupsDataTable = undefined;
 
 		this.idStompSubscriptorPas = undefined;
 		this.idStompSubscriptorZones = undefined;
@@ -94,10 +99,20 @@ export default class PasSignalingContent {
 
 				if (self.element.childs) {
 
+					self.groups = self.element.childs.filter(element => element.elementType.id == self.config.group.type);
 					self.zones = self.element.childs.filter(element => element.elementType.id == self.config.zone.type);
 
 					webix.ui(drawContent(), $$("view-content-" + self.uid));
 
+					if (self.groupsDataTable) {
+
+						self.groupsDataTable.callbacks();
+						
+						if (Array.isArray(self.selectedPks) && self.selectedPks.length > 0) {
+							self.groupsDataTable.select(self.selectedPks);
+						}
+					}
+					
 					if (self.zonesDataTable) {
 
 						self.zonesDataTable.callbacks();
@@ -109,11 +124,17 @@ export default class PasSignalingContent {
 
 					$$("view-loading-" + self.uid).hide();
 
+					self.groups.forEach(element => {
+
+						updateChild(element);
+					});
+					
 					self.zones.forEach(element => {
 
-						updateZone(element);
+						updateChild(element);
 					});
 
+					$$("dt-" + self.groupsDataTable.uid).refresh();
 					$$("dt-" + self.zonesDataTable.uid).refresh();
 				}
 
@@ -121,20 +142,40 @@ export default class PasSignalingContent {
 			});
 		});
 
-		function updateZone(element) {
+		function updateChild(element) {
 
 			element.messageAlias = undefined;
 			element.messageAudio = undefined;
 			element.messageDesc = undefined;
+			
+			let messageChildId = undefined;
+			let messageTag = undefined;
+			let messageId = undefined;
+			let messageDesc = undefined;
+			
+			if (element.elementType.id === self.config.group.type) {
+				
+				messageChildId = element.elementValues.find(elementValue => elementValue.elementTypeParam.id == self.config.group.paramGroupId);
+				messageTag = element.elementValues.find(elementValue => elementValue.elementTypeParam.id == self.config.group.paramMessageTag);
+				messageId = element.elementValues.find(elementValue => elementValue.elementTypeParam.id == self.config.group.paramMessageId);
+				messageDesc = element.elementValues.find(elementValue => elementValue.elementTypeParam.id == self.config.group.paramMessageDesc);
+				
+				if (messageChildId && messageChildId.value != undefined) {
 
-			let messageZoneId = element.elementValues.find(elementValue => elementValue.elementTypeParam.id == self.config.zone.paramZoneId);
-			let messageTag = element.elementValues.find(elementValue => elementValue.elementTypeParam.id == self.config.zone.paramMessageTag);
-			let messageId = element.elementValues.find(elementValue => elementValue.elementTypeParam.id == self.config.zone.paramMessageId);
-			let messageDesc = element.elementValues.find(elementValue => elementValue.elementTypeParam.id == self.config.zone.paramMessageDesc);
+					element.messageGroupId = messageChildId.value;
+				}
+			}
+			else if (element.elementType.id === self.config.zone.type) {
+				
+				messageChildId = element.elementValues.find(elementValue => elementValue.elementTypeParam.id == self.config.zone.paramZoneId);
+				messageTag = element.elementValues.find(elementValue => elementValue.elementTypeParam.id == self.config.zone.paramMessageTag);
+				messageId = element.elementValues.find(elementValue => elementValue.elementTypeParam.id == self.config.zone.paramMessageId);
+				messageDesc = element.elementValues.find(elementValue => elementValue.elementTypeParam.id == self.config.zone.paramMessageDesc);
+				
+				if (messageChildId && messageChildId.value != undefined) {
 
-			if (messageZoneId && messageZoneId.value != undefined) {
-
-				element.messageZoneId = messageZoneId.value;
+					element.messageZoneId = messageChildId.value;
+				}
 			}
 
 			if (messageTag && messageTag.value != undefined) {
@@ -175,7 +216,6 @@ export default class PasSignalingContent {
 
 				element.messageDesc = messageDesc.value;
 			}
-
 		}
 
 
@@ -203,6 +243,18 @@ export default class PasSignalingContent {
 
 					self.idStompSubscriptorZones = stompSubscriptorService.subscribe(appConfig.stompUrl, self.config.topics.zones, onMessageZone, fields);
 				}
+				
+				if (self.groups && Array.isArray(self.groups) && self.groups.length > 0) {
+
+					let fields = [];
+					fields.push({
+						target: "id",
+						values: []
+					});
+					self.groups.forEach(element => fields[0].values.push(element.id));
+
+					self.idStompSubscriptorGroups = stompSubscriptorService.subscribe(appConfig.stompUrl, self.config.topics.groups, onMessageGroup, fields);
+				}
 			}
 		}
 
@@ -210,7 +262,7 @@ export default class PasSignalingContent {
 		function drawContent() {
 
 			let viewContent = {};
-
+			
 			viewContent = {
 				id: "view-content-" + self.uid,
 				rows: [
@@ -269,22 +321,53 @@ export default class PasSignalingContent {
 
 		function getViewBody() {
 
-			let viewBody = {};
+			let viewBodyTab = {
+				view: "tabview",
+				css: "secondary-tab",
+				animate: false,
+				borderless: true,
+				cells: function() {
+					
+					let items = [];
+					
+					if (Array.isArray(self.groups) && self.groups.length > 0) {
+						
+						items.push({
+							header: i18n.t("LBL_PAS_GROUPS"), 
+							body: getTable(self.groups, PasSignalingContent.ENTITY_TYPE_GROUP)
+						});
+					}
+					
+					if (Array.isArray(self.zones) && self.zones.length > 0) {
+						
+						items.push({
+							header: i18n.t("LBL_PAS_ZONES"), 
+							body: getTable(self.zones, PasSignalingContent.ENTITY_TYPE_ZONE)
+						});
+					}
+					
+					return items;
+				}(),
+				multiview: {
+					keepViews: true
+		        },
+				tabbar: {
+					tabMargin: 6
+				}
+			}
 
-			viewBody = {
+			let viewBody = {
 				cols: [
 					{ width: 6 },
-					{
-						css: { "box-sizing": "border-box" },
-						rows: getZonesTable()
-					},
+					viewBodyTab,
 					{ width: 6 }
 				]
 			};
 
-			function getZonesTable() {
+			function getTable(dat, entityType) {
 
-				let data = self.zones;
+				let data = dat;
+				let dt;
 
 				const defaultGridOptionValues = [
 					{ gridOption: { id: 2 }, value: "true" },
@@ -330,8 +413,8 @@ export default class PasSignalingContent {
 							filtered: false,
 							isEpochMilli: false,
 							isPk: false,
-							label: "LBL_PAS_ZONE_ALIAS",
-							labelTooltip: "LBL_PAS_ZONE_ALIAS",
+							label: entityType === PasSignalingContent.ENTITY_TYPE_ZONE ? "LBL_PAS_ZONE_ALIAS" : "LBL_PAS_GROUP_ALIAS",
+							labelTooltip: entityType === PasSignalingContent.ENTITY_TYPE_ZONE ? "LBL_PAS_ZONE_ALIAS" : "LBL_PAS_GROUP_ALIAS",
 							parameterized: false,
 							position: 2,
 							required: false,
@@ -350,8 +433,6 @@ export default class PasSignalingContent {
 							filtered: false,
 							isEpochMilli: false,
 							isPk: false,
-							// label: "LBL_PAS_ZONE_ON_AIR",
-							// labelTooltip: "LBL_PAS_ZONE_ON_AIR",
 							parameterized: false,
 							position: 3,
 							required: false,
@@ -401,8 +482,8 @@ export default class PasSignalingContent {
 							filtered: false,
 							isEpochMilli: false,
 							isPk: false,
-							label: "LBL_PAS_ZONE_MESSAGE_TAG",
-							labelTooltip: "LBL_PAS_ZONE_MESSAGE_TAG",
+							label: entityType === PasSignalingContent.ENTITY_TYPE_ZONE ? "LBL_PAS_ZONE_MESSAGE_TAG" : "LBL_PAS_GROUP_MESSAGE_TAG",
+							labelTooltip: entityType === PasSignalingContent.ENTITY_TYPE_ZONE ? "LBL_PAS_ZONE_MESSAGE_TAG" : "LBL_PAS_GROUP_MESSAGE_TAG",
 							parameterized: false,
 							position: 5,
 							required: false,
@@ -421,8 +502,8 @@ export default class PasSignalingContent {
 							filtered: false,
 							isEpochMilli: false,
 							isPk: false,
-							label: "LBL_PAS_ZONE_MESSAGE_ALIAS",
-							labelTooltip: "LBL_PAS_ZONE_MESSAGE_ALIAS",
+							label: entityType === PasSignalingContent.ENTITY_TYPE_ZONE ? "LBL_PAS_ZONE_MESSAGE_ALIAS" : "LBL_PAS_GROUP_MESSAGE_ALIAS",
+							labelTooltip: entityType === PasSignalingContent.ENTITY_TYPE_ZONE ? "LBL_PAS_ZONE_MESSAGE_ALIAS" : "LBL_PAS_GROUP_MESSAGE_ALIAS",
 							parameterized: false,
 							position: 6,
 							required: false,
@@ -441,8 +522,8 @@ export default class PasSignalingContent {
 							filtered: false,
 							isEpochMilli: false,
 							isPk: false,
-							label: "LBL_PAS_ZONE_MESSAGE_DESCRIPTION",
-							labelTooltip: "LBL_PAS_ZONE_MESSAGE_DESCRIPTION",
+							label: entityType === PasSignalingContent.ENTITY_TYPE_ZONE ? "LBL_PAS_ZONE_MESSAGE_DESCRIPTION" : "LBL_PAS_GROUP_MESSAGE_DESCRIPTION",
+							labelTooltip: entityType === PasSignalingContent.ENTITY_TYPE_ZONE ? "LBL_PAS_ZONE_MESSAGE_DESCRIPTION" : "LBL_PAS_GROUP_MESSAGE_DESCRIPTION",
 							parameterized: false,
 							position: 7,
 							required: false,
@@ -464,7 +545,7 @@ export default class PasSignalingContent {
 							parameterized: false,
 							position: 8,
 							required: false,
-							sourceField: "messageZoneId",
+							sourceField: entityType === PasSignalingContent.ENTITY_TYPE_ZONE ? "messageZoneId" : "messageGroupId",
 							visible: false,
 							widthPx: 1,
 							gridFieldDataType: {
@@ -521,16 +602,16 @@ export default class PasSignalingContent {
 					commandId: 1,
 					function: () => {
 
-						let selectedItems = self.zonesDataTable.getSelectedItems();
+						let selectedItems = dt.getSelectedItems();
 
 						if (Array.isArray(selectedItems) && selectedItems.length > 0) {
 
 							function callBack(message) {
 
-								let command = self.config.commands.SEND_MESSAGE;
+								let command = (entityType === PasSignalingContent.ENTITY_TYPE_ZONE) ? self.config.commands.SEND_MESSAGE_ZONES : self.config.commands.SEND_MESSAGE_GROUPS;
 
 								command.elementId = self.element.id;
-								command.commandElementValues[0].value = JSON.stringify(selectedItems.map(e => { return e.messageZoneId }));
+								command.commandElementValues[0].value = JSON.stringify(selectedItems.map(e => { return entityType === PasSignalingContent.ENTITY_TYPE_ZONE ? e.messageZoneId : e.messageGroupId }));
 								command.commandElementValues[1].value = JSON.stringify([message]);
 
 								util.element.sendCommand([command], function(res) {
@@ -544,8 +625,25 @@ export default class PasSignalingContent {
 
 							if (self.pasLibraries && self.pasLibraries.pasLibrary) {
 
-								let pasLibrary = new PasLibrary(self.pasLibraries.pasLibrary, callBack, selectedItems.length);
-								pasLibrary.show();
+								let pasLibrary = new PasLibrary(self.pasLibraries.pasLibrary, callBack);
+								
+								let label = i18n.t("LBL_PAS_LIBRARY_PLAYER_HEADER");
+								
+								if (selectedItems.length > 1) {
+									
+									label = i18n.t("LBL_PAS_LIBRARY_PLAYER_HEADER") + " - " + selectedItems.length + " ";
+									
+									if (entityType === PasSignalingContent.ENTITY_TYPE_GROUP) {
+										
+										label += i18n.t("LBL_SELECTED_GROUPS")
+									}
+									else if (entityType === PasSignalingContent.ENTITY_TYPE_ZONE) {
+										
+										label += i18n.t("LBL_SELECTED_ZONES")
+									}	
+								}
+								
+								util.ui.loadWindow(label, pasLibrary.getView(), 700, 600, true);
 
 							} else {
 
@@ -553,10 +651,6 @@ export default class PasSignalingContent {
 								ms.show();
 							}
 						}
-
-
-
-
 					}
 				});
 
@@ -564,7 +658,7 @@ export default class PasSignalingContent {
 					commandId: 2,
 					function: () => {
 
-						let selectedItems = self.zonesDataTable.getSelectedItems();
+						let selectedItems = dt.getSelectedItems();
 
 						if (Array.isArray(selectedItems) && selectedItems.length > 0) {
 
@@ -572,12 +666,26 @@ export default class PasSignalingContent {
 
 							if (selectedItems.length === onAirItems.length) {
 
-								let labelDescription = (onAirItems.length > 1) ? i18n.t("LBL_PAS_SWITCH_OFF_CONFIRM_OF_THE") + " " + onAirItems.length + " " + i18n.t("LBL_SELECTED_ZONES_DESCRIPTION") : i18n.t("LBL_PAS_SWITCH_OFF_CONFIRM_DESCRIPTION");
+								let labelDescription = i18n.t("LBL_PAS_SWITCH_OFF_CONFIRM_DESCRIPTION");
 								
-								let command = self.config.commands.SWITCH_OFF;
+								if (onAirItems.length > 1) {
+									
+									labelDescription = i18n.t("LBL_PAS_SWITCH_OFF_CONFIRM_OF_THE") + " " + onAirItems.length + " "; 
+									
+									if (entityType === PasSignalingContent.ENTITY_TYPE_ZONE) {
+								
+										labelDescription += i18n.t("LBL_SELECTED_ZONES_DESCRIPTION");	
+									}
+									else if (entityType === PasSignalingContent.ENTITY_TYPE_GROUP) {
+										
+										labelDescription += i18n.t("LBL_SELECTED_GROUPS_DESCRIPTION");
+									}	
+								}
+								
+								let command = (entityType === PasSignalingContent.ENTITY_TYPE_ZONE) ? self.config.commands.SWITCH_OFF_ZONES : self.config.commands.SWITCH_OFF_GROUPS;
 
 								command.elementId = self.element.id;
-								command.commandElementValues[0].value = JSON.stringify(selectedItems.map(e => { return e.messageZoneId }));
+								command.commandElementValues[0].value = JSON.stringify(selectedItems.map(e => { return entityType === PasSignalingContent.ENTITY_TYPE_ZONE ? e.messageZoneId : e.messageGroupId }));
 								
 								util.element.sendCommand([command], function(res) {
 
@@ -589,10 +697,18 @@ export default class PasSignalingContent {
 
 							} else {
 
-								let labelDescription = (selectedItems.length > 1) ? i18n.t("LBL_NOT_ALL_SELECTED_ZONES_ARE_PLAYING_DESCRIPTION") : i18n.t("LBL_SELECTED_ZONE_IS_NOT_PLAYING_DESCRIPTION");
+								let labelDescription;
+								
+								if (entityType === PasSignalingContent.ENTITY_TYPE_ZONE) {
+									
+									labelDescription = (selectedItems.length > 1) ? i18n.t("LBL_NOT_ALL_SELECTED_ZONES_ARE_PLAYING_DESCRIPTION") : i18n.t("LBL_SELECTED_ZONE_IS_NOT_PLAYING_DESCRIPTION");
+								}
+								else if (entityType === PasSignalingContent.ENTITY_TYPE_GROUP) {
+									
+									labelDescription = (selectedItems.length > 1) ? i18n.t("LBL_NOT_ALL_SELECTED_GROUPS_ARE_PLAYING_DESCRIPTION") : i18n.t("LBL_SELECTED_GROUP_IS_NOT_PLAYING_DESCRIPTION");
+								}
 
-								let ms = new MessageBox(MessageBox.WARN, labelDescription, null, null);
-								ms.show();
+								(new MessageBox(MessageBox.WARN, labelDescription, null, null)).show();
 							}
 						}
 					}
@@ -602,22 +718,31 @@ export default class PasSignalingContent {
 					commandId: 3,
 					function: () => {
 
-						if (!self.zonesDataTable.getSelectedItems()[0].messageAudio) {
+						if (!dt.getSelectedItems()[0].messageAudio) {
 
-							let ms = new MessageBox(MessageBox.WARN, i18n.t("LBL_PAS_ZONE_NOT_AUDIO_DESCRIPTION"), null, null);
+							let ms = new MessageBox(MessageBox.WARN, entityType === PasSignalingContent.ENTITY_TYPE_ZONE ? i18n.t("LBL_PAS_ZONE_NOT_AUDIO_DESCRIPTION") : i18n.t("LBL_PAS_GROUP_NOT_AUDIO_DESCRIPTION"), null, null);
 							ms.show();
 
 						} else {
 
-							let soundPlayerDialogBox = new SoundPlayerDialogBox(self.zonesDataTable.getSelectedItems()[0].messageAudio);
+							let soundPlayerDialogBox = new SoundPlayerDialogBox(dt.getSelectedItems()[0].messageAudio);
 							soundPlayerDialogBox.show();
 						}
 					}
 				});
+				
+				dt = new DataTable(null, null, metadata, data, events);
+				
+				if (entityType === PasSignalingContent.ENTITY_TYPE_ZONE) {
+					
+					self.zonesDataTable = dt;	
+				}
+				else if (entityType === PasSignalingContent.ENTITY_TYPE_GROUP) {
+					
+					self.groupsDataTable = dt;
+				}
 
-				self.zonesDataTable = new DataTable(null, null, metadata, data, events);
-
-				return self.zonesDataTable.getView();
+				return { css: "bordered-layout", rows: dt.getView() };
 			}
 			return viewBody;
 		}
@@ -644,9 +769,28 @@ export default class PasSignalingContent {
 
 					self.zones[zoneIndex] = eval("adapter." + self.config.adapters.element)(self.zones[zoneIndex], data);
 
-					updateZone(self.zones[zoneIndex]);
+					updateChild(self.zones[zoneIndex]);
 
 					self.zonesDataTable.update(self.zones[zoneIndex]);
+				}
+			}
+		}
+		
+		function onMessageGroup(data) {
+
+			if (data) {
+
+				let oldGroupData = self.groupsDataTable.getItem(data.id);
+
+				if (oldGroupData) {
+
+					var groupIndex = self.groups.findIndex(element => element.id == data.id);
+
+					self.groups[groupIndex] = eval("adapter." + self.config.adapters.element)(self.groups[groupIndex], data);
+
+					updateChild(self.groups[groupIndex]);
+
+					self.groupsDataTable.update(self.groups[groupIndex]);
 				}
 			}
 		}

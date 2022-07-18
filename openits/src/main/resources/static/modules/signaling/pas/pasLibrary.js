@@ -4,25 +4,16 @@ import MessageBox from "../../../component/messageBox.js";
 
 export default class PasLibrary {
 
-	constructor(pasLibrary, callBack, zones, orderEdit) {
+	constructor(pasLibrary, callBack, orderEdit) {
 
 		this.pasLibrary = pasLibrary;
 		this.callBack = callBack;
-		this.zones = zones;
 		this.orderEdit = orderEdit;
 
-		this.treeView;
-		this.selectedPasLibraryNode;
+		this.treeView = undefined;
+		this.selectedPasLibraryNode = undefined;
 
 		this.uid = webix.uid();
-	}
-
-	show() {
-
-		let self = this;
-		let label = (self.zones > 1) ? i18n.t("LBL_PAS_LIBRARY_PLAYER_HEADER") + " - " + self.zones + " " + i18n.t("LBL_SELECTED_ZONES") : i18n.t("LBL_PAS_LIBRARY_PLAYER_HEADER");
-
-		self.optionWindow = util.ui.loadWindow(label, this.getView(), 700, 600, true);
 	}
 
 	getView() {
@@ -41,7 +32,9 @@ export default class PasLibrary {
 
 		function getHeader() {
 
-			let header = {
+			let header;
+			
+			header = {
 
 				id: "viewHeader-" + self.uid,
 				cols: [
@@ -62,7 +55,7 @@ export default class PasLibrary {
 			};
 
 			return header;
-		};
+		}
 
 
 		function getTreeView() {
@@ -85,7 +78,9 @@ export default class PasLibrary {
 
 			function getTreeMetadata() {
 
-				let metadata = {
+				let metadata;
+				
+				metadata = {
 					id: 1,
 					label: "LBL_PAS_LIBRARIES",
 					treeOptionValues: [
@@ -137,9 +132,7 @@ export default class PasLibrary {
 					}
 				}
 
-				let data = util.tree.getNodes(nodeList, self.pasLibrary.pasLibraryHierarchies, { parentNodeId: "nodeParentId", childNodeId: "nodeChildId" }, true);
-
-				return data;
+				return util.tree.getNodes(nodeList, self.pasLibrary.pasLibraryHierarchies, { parentNodeId: "nodeParentId", childNodeId: "nodeChildId" }, true);
 			}
 
 			function getTreeEvents() {
@@ -230,7 +223,9 @@ export default class PasLibrary {
 					$$("button-accept" + self.uid).enable();
 				}
 
-				let player = {
+				let player;
+				
+				player = {
 					cols: [
 						{ width: 75 },
 						{
@@ -259,7 +254,9 @@ export default class PasLibrary {
 				$$("button-accept" + self.uid).disable();
 			}
 
-			let folderView = {
+			let folderView;
+			
+			folderView = {
 				id: "pass-library-message-" + self.uid,
 				rows: [
 					{ height: 83 },
@@ -280,7 +277,9 @@ export default class PasLibrary {
 
 			let label = (self.orderEdit) ? i18n.t("LBL_ACCEPT") : i18n.t("LBL_SEND");
 
-			let bottomView = {
+			let bottomView;
+			
+			bottomView = {
 				rows: [
 					{ height: 10 },
 					{
@@ -323,11 +322,11 @@ export default class PasLibrary {
 										let ms = new MessageBox(MessageBox.CONFIRM, textMessage, onAccept, null);
 										ms.show();
 
-										function onAccept(res) {
+										function onAccept() {
 
 											self.callBack(self.selectedPasLibraryNode.pasMessage.message);
 											parentWindow.close();
-										};
+										}
 									}
 								}
 							},
