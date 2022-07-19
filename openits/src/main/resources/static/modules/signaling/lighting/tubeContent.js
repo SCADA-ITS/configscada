@@ -327,15 +327,15 @@ export default class TubeContent {
 
 					let options = [];
 
-					for (let modeOption of lightingModeOptions) {
+					for (let modeOption of self.parent.config.lightingModeOptions) {
 
 						let newSelection = modeOption.id === newv ? true : false;
 
 						options.push({
 							id: modeOption.id,
-							label: modeOption.value,
+							label: i18n.t(modeOption.label),
 							icon: modeOption.icon,
-							description: i18n.t("LBL_MODE_" + modeOption.value.toUpperCase() + "_DESCRIPTION"),
+							description: i18n.t(modeOption.label + "_LIGHTING_DESCRIPTION"),
 							default: newSelection
 						});
 					}

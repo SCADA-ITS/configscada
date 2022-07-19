@@ -386,7 +386,7 @@ export default class PasSignalingContent {
 
 				let metadata = {
 					filter: true,
-					label: "LBL_PAS_ZONE",
+					label: entityType === PasSignalingContent.ENTITY_TYPE_ZONE ? "LBL_PAS_ZONE" : "LBL_PAS_GROUP",
 					visible: true,
 					gridOptionValues: defaultGridOptionValues,
 					gridFields: [

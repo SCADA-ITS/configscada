@@ -413,7 +413,7 @@ export default class TubeContent {
 		function getContentToolbar() {
 
 			let ventilationModeOptions = [];
-
+			
 			self.parent.config.ventilationModeOptions.forEach(option => {
 
 				ventilationModeOptions.push({
@@ -460,14 +460,14 @@ export default class TubeContent {
 
 							let options = [];
 
-							for (let modeOption of ventilationModeOptions) {
+							for (let modeOption of self.parent.config.ventilationModeOptions) {
 
 								let newSelection = modeOption.id === newv ? true : false;
 
 								options.push({
 									id: modeOption.id,
-									label: modeOption.value,
-									description: i18n.t("LBL_MODE_" + modeOption.value.toUpperCase() + "_VENTILATION_DESCRIPTION"),
+									label: i18n.t(modeOption.label),
+									description: i18n.t(modeOption.label + "_VENTILATION_DESCRIPTION"),
 									default: newSelection,
 									disabled: modeOption.disableModeChange 
 								});

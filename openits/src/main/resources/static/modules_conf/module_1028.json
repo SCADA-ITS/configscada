@@ -54,8 +54,8 @@
 		"tubeState": "ElementTypeParam:2000:2:8"
 	},
 	"lightingModeOptions" :[
-		{"id": "1", "label" : "LBL_MODE_AUTO", "disable" : true},
-		{"id": "0", "label" : "LBL_MODE_MANUAL", "disable" : false}
+		{"id": "1", "label" : "LBL_MODE_LIGHT_AUTO", "disable" : true},
+		{"id": "0", "label" : "LBL_MODE_LIGHT_MANUAL", "disable" : false}
 	],
 	"requiredPermissions": {
 		"commandEquipment": "SystemPermission:6"
