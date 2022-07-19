@@ -124,17 +124,17 @@ export default class PasSignalingOrderEdit {
 
 					if (elementValue.value) {
 
-						if (elementValue.commandElementTypeParam.id === self.config.commands.SEND_MESSAGE.commandElementValues[0].commandElementTypeParamId) {
+						if (elementValue.commandElementTypeParam.id === self.config.commands.SEND_MESSAGE_ZONES.commandElementValues[0].commandElementTypeParamId) {
 
 							arrayZonesId = JSON.parse(elementValue.value);
 						}
 
-						if (elementValue.commandElementTypeParam.id === self.config.commands.SWITCH_OFF.commandElementValues[0].commandElementTypeParamId) {
+						if (elementValue.commandElementTypeParam.id === self.config.commands.SWITCH_OFF_ZONES.commandElementValues[0].commandElementTypeParamId) {
 
 							arrayZonesId = JSON.parse(elementValue.value);
 						}
 
-						if (elementValue.commandElementTypeParam.id === self.config.commands.SEND_MESSAGE.commandElementValues[1].commandElementTypeParamId) {
+						if (elementValue.commandElementTypeParam.id === self.config.commands.SEND_MESSAGE_ZONES.commandElementValues[1].commandElementTypeParamId) {
 
 							arrayMessagesId = JSON.parse(elementValue.value);
 						}
@@ -600,7 +600,7 @@ export default class PasSignalingOrderEdit {
 
 								if (itemsNotClean) {
 
-									self.selectedCommand = self.config.commands.SEND_MESSAGE.commandElementTypeId;
+									self.selectedCommand = self.config.commands.SEND_MESSAGE_ZONES.commandElementTypeId;
 
 									for (let item of arrayItems) {
 
@@ -626,7 +626,7 @@ export default class PasSignalingOrderEdit {
 
 								if (itemsNotClean) {
 
-									self.selectedCommand = self.config.commands.SWITCH_OFF.commandElementTypeId;
+									self.selectedCommand = self.config.commands.SWITCH_OFF_ZONES.commandElementTypeId;
 
 									for (let item of arrayItems) {
 
@@ -652,11 +652,14 @@ export default class PasSignalingOrderEdit {
 						function: () => {
 
 							let selectedItems = self.zonesDataTableSent.getSelectedItems();
-							self.selectedCommand = self.config.commands.SEND_MESSAGE.commandElementTypeId;
+							self.selectedCommand = self.config.commands.SEND_MESSAGE_ZONES.commandElementTypeId;
 
 							if (self.pasLibraries && self.pasLibraries.pasLibrary) {
 
-								let pasLibrary = new PasLibrary(self.pasLibraries.pasLibrary, onAccept, selectedItems.length, true);
+								let pasLibrary = new PasLibrary(self.pasLibraries.pasLibrary, onAccept, true);
+								
+								util.ui.loadWindow(i18n.t("LBL_PAS_LIBRARY_PLAYER_HEADER"), pasLibrary.getView(), 700, 600, true);
+								
 								pasLibrary.show();
 
 							} else {
@@ -695,7 +698,7 @@ export default class PasSignalingOrderEdit {
 						function: () => {
 
 							let selectedItems = self.zonesDataTableStop.getSelectedItems();
-							self.selectedCommand = self.config.commands.SWITCH_OFF.commandElementTypeId;
+							self.selectedCommand = self.config.commands.SWITCH_OFF_ZONES.commandElementTypeId;
 
 							if (Array.isArray(selectedItems) && selectedItems.length > 0) {
 
@@ -797,7 +800,7 @@ export default class PasSignalingOrderEdit {
 						let elementId = self.element.id;
 
 						// SEND MESSAGE
-						if (selectedCommandElement.id === self.config.commands.SEND_MESSAGE.commandElementTypeId) {
+						if (selectedCommandElement.id === self.config.commands.SEND_MESSAGE_ZONES.commandElementTypeId) {
 
 							let zoneValue = [];
 							let messageValue = [];
@@ -833,7 +836,7 @@ export default class PasSignalingOrderEdit {
 						}
 
 						//STOP MESSAGE
-						if (selectedCommandElement.id === self.config.commands.SWITCH_OFF.commandElementTypeId) {
+						if (selectedCommandElement.id === self.config.commands.SWITCH_OFF_ZONES.commandElementTypeId) {
 
 							let zoneValue = [];
 
