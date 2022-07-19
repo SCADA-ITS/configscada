@@ -4,7 +4,7 @@
 	    "synoptic": 200002,
 	    "loadIncidentInMap": 200003
 	},
-	"defaultMap": 2,
+	"defaultMap": 1,
 	"restEndpoints": {
 		"map": "maps/${id}",
 		"synoptic": "synoptics/${id}",
