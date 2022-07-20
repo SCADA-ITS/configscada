@@ -406,7 +406,7 @@ export default class ThresholdsConfigModule extends GenericModule {
 									id: DataType.DECIMAL
 								};
 
-								let inputDialogBox = new InputDialogBox(i18n.t(configMeasuresSelected[0].labelAlias), i18n.t("LBL_ENTER_VALUE"), onAccept, false, configMeasuresSelected[0].value, dataType);
+								let inputDialogBox = new InputDialogBox(configMeasuresSelected[0].labelAlias, i18n.t("LBL_ENTER_VALUE"), onAccept, false, configMeasuresSelected[0].value, dataType);
 								inputDialogBox.show();
 
 								function onAccept(obj) {

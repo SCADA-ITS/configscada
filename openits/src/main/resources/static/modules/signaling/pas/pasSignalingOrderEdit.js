@@ -4,6 +4,9 @@ import DataTable from "../../../component/datatable.js";
 import MessageBox from "../../../component/messageBox.js";
 
 export default class PasSignalingOrderEdit {
+	
+	static get ENTITY_TYPE_ZONE() { return { id: 1, sent: { id: 1, label: "LBL_SENT_ZONE"}, stop: { id: 2, label: "LBL_STOP_ZONE" } } }
+	static get ENTITY_TYPE_GROUP() { return { id: 2, sent: { id: 3, label: "LBL_SENT_GROUP"}, stop: { id: 4, label: "LBL_STOP_GROUP" } } }
 
 	constructor(config, element, args) {
 
@@ -12,9 +15,12 @@ export default class PasSignalingOrderEdit {
 		this.args = args;
 		this.zonesDataTableSent = undefined;
 		this.zonesDataTableStop = undefined;
+		this.groupsDataTableSent = undefined;
+		this.groupsDataTableStop = undefined;
+		this.groups = undefined;
 		this.zones = undefined;
 		this.selectedCommand = undefined;
-		this.stopOption = false;
+		this.currentOption = PasSignalingOrderEdit.ENTITY_TYPE_ZONE.sent.id;
 
 		this.uid = webix.uid();
 	}
@@ -71,30 +77,49 @@ export default class PasSignalingOrderEdit {
 
 						if (self.element.childs) {
 
+							self.groups = self.element.childs.filter(element => element.elementType.id == self.config.group.type);
 							self.zones = self.element.childs.filter(element => element.elementType.id == self.config.zone.type);
 
 							webix.ui(drawContent(), $$("view-content-" + self.uid));
 
-							if (self.zonesDataTableSent && self.zonesDataTableStop) {
+							if (self.zonesDataTableSent) {
 
 								self.zonesDataTableSent.callbacks();
+							}
+							
+							if (self.zonesDataTableStop) {
+								
 								self.zonesDataTableStop.callbacks();
+							}
+							
+							if (self.groupsDataTableSent) {
+
+								self.groupsDataTableSent.callbacks();
+							}
+							
+							if (self.groupsDataTableStop) {
+								
+								self.groupsDataTableStop.callbacks();
 							}
 
 							$$("view-loading-" + self.uid).hide();
 
-							self.zones.forEach(element => {
+							self.zones.forEach(zone => {
 
-								updateZone(element);
+								update(zone, PasSignalingOrderEdit.ENTITY_TYPE_ZONE);
 							});
+							
+							self.groups.forEach(group => {
 
-							if (self.stopOption) {
-
-								$$("radioButtons-" + self.uid).setValue(2);
-							}
+								update(group, PasSignalingOrderEdit.ENTITY_TYPE_GROUP);
+							});
+						
+							$$("radioButtons-" + self.uid).setValue(self.currentOption);
 
 							$$("dt-" + self.zonesDataTableSent.uid).refresh();
 							$$("dt-" + self.zonesDataTableStop.uid).refresh();
+							$$("dt-" + self.groupsDataTableSent.uid).refresh();
+							$$("dt-" + self.groupsDataTableStop.uid).refresh();
 						}
 					}
 				});
@@ -102,39 +127,81 @@ export default class PasSignalingOrderEdit {
 		});
 
 
-		function updateZone(element) {
+		function update(element, entityType) {
 
 			let commandElementValues = self.args.data.commandElement.commandElementValues;
-			let arrayZonesId = [];
+			let arrayIds = [];
 			let arrayMessagesId = [];
 			let messageId = undefined;
 			let messageZoneId = undefined;
-			let zoneId = undefined;
-
-			messageZoneId = element.elementValues.find(elementValue => elementValue.elementTypeParam.id == self.config.zone.paramZoneId);
-
-			if (messageZoneId && messageZoneId.value != undefined) {
-
-				element.messageZoneId = messageZoneId.value;
+			let messageGroupId = undefined;
+			let entityId = undefined;
+			
+			if (self.args.data.commandElement.commandElementType.id === self.config.commands.SEND_MESSAGE_ZONES.commandElementTypeId) {
+				
+				self.currentOption = PasSignalingOrderEdit.ENTITY_TYPE_ZONE.sent.id;
 			}
+			else if (self.args.data.commandElement.commandElementType.id === self.config.commands.SWITCH_OFF_ZONES.commandElementTypeId) {
+				
+				self.currentOption = PasSignalingOrderEdit.ENTITY_TYPE_ZONE.stop.id;
+			}
+			else if (self.args.data.commandElement.commandElementType.id === self.config.commands.SEND_MESSAGE_GROUPS.commandElementTypeId) {
+				
+				self.currentOption = PasSignalingOrderEdit.ENTITY_TYPE_GROUP.sent.id;
+			}
+			else if (self.args.data.commandElement.commandElementType.id === self.config.commands.SWITCH_OFF_GROUPS.commandElementTypeId) {
+				
+				self.currentOption = PasSignalingOrderEdit.ENTITY_TYPE_GROUP.stop.id;
+			}
+			
+			if (entityType.id === PasSignalingOrderEdit.ENTITY_TYPE_ZONE.id) {
+				
+				messageZoneId = element.elementValues.find(elementValue => elementValue.elementTypeParam.id == self.config.zone.paramZoneId);
+				
+				if (messageZoneId && messageZoneId.value != undefined) {
 
+					element.messageZoneId = messageZoneId.value;
+				}	
+			}
+			else if (entityType.id === PasSignalingOrderEdit.ENTITY_TYPE_GROUP.id) {
+				
+				messageGroupId = element.elementValues.find(elementValue => elementValue.elementTypeParam.id == self.config.zone.paramGroupId);
+				
+				if (messageGroupId && messageGroupId.value != undefined) {
+
+					element.messageGroupId = messageGroupId.value;
+				}	
+			}
+			
+			let cmdSendMessage;
+			let cmdSwitchOff;
+			
+			if (entityType.id === PasSignalingOrderEdit.ENTITY_TYPE_ZONE.id) {
+				
+				cmdSendMessage = self.config.commands.SEND_MESSAGE_ZONES;
+				cmdSwitchOff = self.config.commands.SWITCH_OFF_ZONES;
+			}
+			else if (entityType.id === PasSignalingOrderEdit.ENTITY_TYPE_GROUP.id) {
+				
+				cmdSendMessage = self.config.commands.SEND_MESSAGE_GROUPS;
+				cmdSwitchOff = self.config.commands.SWITCH_OFF_GROUPS;
+			}
+			
 			if (commandElementValues) {
-
+				
 				for (let elementValue of commandElementValues) {
 
 					if (elementValue.value) {
 
-						if (elementValue.commandElementTypeParam.id === self.config.commands.SEND_MESSAGE_ZONES.commandElementValues[0].commandElementTypeParamId) {
+						if (elementValue.commandElementTypeParam.id === cmdSendMessage.commandElementValues[0].commandElementTypeParamId) {
 
-							arrayZonesId = JSON.parse(elementValue.value);
+							arrayIds = JSON.parse(elementValue.value);
 						}
+						else if (elementValue.commandElementTypeParam.id === cmdSwitchOff.commandElementValues[0].commandElementTypeParamId) {
 
-						if (elementValue.commandElementTypeParam.id === self.config.commands.SWITCH_OFF_ZONES.commandElementValues[0].commandElementTypeParamId) {
-
-							arrayZonesId = JSON.parse(elementValue.value);
+							arrayIds = JSON.parse(elementValue.value);
 						}
-
-						if (elementValue.commandElementTypeParam.id === self.config.commands.SEND_MESSAGE_ZONES.commandElementValues[1].commandElementTypeParamId) {
+						else if (elementValue.commandElementTypeParam.id === cmdSendMessage.commandElementValues[1].commandElementTypeParamId) {
 
 							arrayMessagesId = JSON.parse(elementValue.value);
 						}
@@ -142,11 +209,11 @@ export default class PasSignalingOrderEdit {
 				}
 			}
 
-			zoneId = arrayZonesId.find(zone => zone === element.id);
+			entityId = arrayIds.find(id => id === element.id);
 
-			if (zoneId) {
+			if (entityId) {
 
-				let index = arrayZonesId.indexOf(zoneId);
+				let index = arrayIds.indexOf(entityId);
 
 				messageId = (arrayMessagesId[index]) ? arrayMessagesId[index] : false;
 			}
@@ -174,7 +241,7 @@ export default class PasSignalingOrderEdit {
 				element.messageActionStop = i18n.t("LBL_PAS_STOP_MESSAGE");
 				element.onStop = "1";
 
-				self.stopOption = true;
+				self.stopOption = entityType.stop.id;
 			}
 		}
 
@@ -244,7 +311,8 @@ export default class PasSignalingOrderEdit {
 
 			function getViewBody() {
 
-				getZonesTable();
+				createTable(PasSignalingOrderEdit.ENTITY_TYPE_ZONE);
+				createTable(PasSignalingOrderEdit.ENTITY_TYPE_GROUP);
 
 				let viewBody = {};
 
@@ -264,8 +332,10 @@ export default class PasSignalingOrderEdit {
 											multiview: true,
 											css: { "padding-left": "15px" },
 											options: [
-												{ id: 1, value: i18n.t("LBL_PAS_SENT") },
-												{ id: 2, value: i18n.t("LBL_PAS_STOP") }
+												{ id: PasSignalingOrderEdit.ENTITY_TYPE_ZONE.sent.id, value: i18n.t(PasSignalingOrderEdit.ENTITY_TYPE_ZONE.sent.label) },
+												{ id: PasSignalingOrderEdit.ENTITY_TYPE_ZONE.stop.id, value: i18n.t(PasSignalingOrderEdit.ENTITY_TYPE_ZONE.stop.label) },
+												{ id: PasSignalingOrderEdit.ENTITY_TYPE_GROUP.sent.id, value: i18n.t(PasSignalingOrderEdit.ENTITY_TYPE_GROUP.sent.label) },
+												{ id: PasSignalingOrderEdit.ENTITY_TYPE_GROUP.stop.id, value: i18n.t(PasSignalingOrderEdit.ENTITY_TYPE_GROUP.stop.label) }
 											],
 											on: {
 												onChange: function(newv, oldv) {
@@ -279,8 +349,10 @@ export default class PasSignalingOrderEdit {
 											animate: false,
 											scroll: "auto",
 											cells: [
-												{ id: 1, rows: self.zonesDataTableSent.getView() },
-												{ id: 2, rows: self.zonesDataTableStop.getView() }
+												{ id: PasSignalingOrderEdit.ENTITY_TYPE_ZONE.sent.id, rows: self.zonesDataTableSent.getView() },
+												{ id: PasSignalingOrderEdit.ENTITY_TYPE_ZONE.stop.id, rows: self.zonesDataTableStop.getView() },
+												{ id: PasSignalingOrderEdit.ENTITY_TYPE_GROUP.sent.id, rows: self.groupsDataTableSent.getView() },
+												{ id: PasSignalingOrderEdit.ENTITY_TYPE_GROUP.stop.id, rows: self.groupsDataTableStop.getView() }
 											]
 										}
 									]
@@ -291,9 +363,9 @@ export default class PasSignalingOrderEdit {
 					]
 				};
 
-				function getZonesTable() {
+				function createTable(entityType) {
 
-					let data = self.zones;
+					let data = entityType.id === PasSignalingOrderEdit.ENTITY_TYPE_ZONE.id ? self.zones : self.groups;
 
 					const defaultGridOptionValues = [
 						{ gridOption: { id: 5 }, value: undefined },
@@ -309,7 +381,7 @@ export default class PasSignalingOrderEdit {
 
 					let metadata = {
 						filter: true,
-						label: "LBL_PAS_ZONE",
+						label: entityType.id === PasSignalingOrderEdit.ENTITY_TYPE_ZONE.id ? "LBL_PAS_ZONE" : "LBL_PAS_GROUP",
 						visible: true,
 						gridOptionValues: defaultGridOptionValues,
 						gridFields: [
@@ -336,8 +408,8 @@ export default class PasSignalingOrderEdit {
 								filtered: false,
 								isEpochMilli: false,
 								isPk: false,
-								label: "LBL_PAS_ZONE_ALIAS",
-								labelTooltip: "LBL_PAS_ZONE_ALIAS",
+								label: entityType.id === PasSignalingOrderEdit.ENTITY_TYPE_ZONE.id ? "LBL_PAS_ZONE_ALIAS" : "LBL_PAS_GROUP_ALIAS",
+								labelTooltip: entityType.id === PasSignalingOrderEdit.ENTITY_TYPE_ZONE.id ? "LBL_PAS_ZONE_ALIAS" : "LBL_PAS_GROUP_ALIAS",
 								parameterized: false,
 								position: 2,
 								required: false,
@@ -374,12 +446,12 @@ export default class PasSignalingOrderEdit {
 								filtered: false,
 								isEpochMilli: false,
 								isPk: false,
-								label: "LBL_PAS_ZONE_ID",
-								labelTooltip: "LBL_PAS_ZONE_ID",
+								label: entityType.id === PasSignalingOrderEdit.ENTITY_TYPE_ZONE.id ? "LBL_PAS_ZONE_ID" : "LBL_PAS_GROUP_ID",
+								labelTooltip: entityType.id === PasSignalingOrderEdit.ENTITY_TYPE_ZONE.id ? "LBL_PAS_ZONE_ID" : "LBL_PAS_GROUP_ID",
 								parameterized: false,
 								position: 5,
 								required: false,
-								sourceField: "messageZoneId",
+								sourceField: entityType.id === PasSignalingOrderEdit.ENTITY_TYPE_ZONE.id ? "messageZoneId" : "messageGroupId",
 								visible: false,
 								widthPx: 1,
 								gridFieldDataType: {
@@ -514,7 +586,7 @@ export default class PasSignalingOrderEdit {
 							id: 2,
 							default_: false,
 							icon: "mdi mdi-play-circle-outline",
-							label: "LBL_PAS_MESSAGE",
+							label: "LBL_PAS_ADD_MESSAGE",
 							multiselect: true,
 							position: 1,
 							showText: true,
@@ -588,10 +660,23 @@ export default class PasSignalingOrderEdit {
 						function: () => {
 
 							let radioButtonsValue = $$("radioButtons-" + self.uid).getValue();
-							let sent = (radioButtonsValue == 1);
-							let zoneDataTable = (sent) ? self.zonesDataTableSent : self.zonesDataTableStop;
-							let selectedItems = zoneDataTable.getSelectedItems();
-							let arrayItems = (Array.isArray(selectedItems) && selectedItems.length > 0) ? selectedItems : zoneDataTable.getAllItems();
+							
+							let sent;
+							let dataTable;
+							
+							if (entityType.id === PasSignalingOrderEdit.ENTITY_TYPE_ZONE.id) {
+								
+								sent = (radioButtonsValue == PasSignalingOrderEdit.ENTITY_TYPE_ZONE.sent.id);
+								dataTable = (sent) ? self.zonesDataTableSent : self.zonesDataTableStop;
+							} 
+							else if (entityType.id === PasSignalingOrderEdit.ENTITY_TYPE_GROUP.id) {
+								
+								sent = (radioButtonsValue == PasSignalingOrderEdit.ENTITY_TYPE_GROUP.sent.id);
+								dataTable = (sent) ? self.groupsDataTableSent : self.groupsDataTableStop;
+							}
+							
+							let selectedItems = dataTable.getSelectedItems();
+							let arrayItems = (Array.isArray(selectedItems) && selectedItems.length > 0) ? selectedItems : dataTable.getAllItems();
 							let itemsToUpdate = [];
 
 							if (sent) {
@@ -599,8 +684,15 @@ export default class PasSignalingOrderEdit {
 								let itemsNotClean = arrayItems.find(item => (item.onSent));
 
 								if (itemsNotClean) {
-
-									self.selectedCommand = self.config.commands.SEND_MESSAGE_ZONES.commandElementTypeId;
+									
+									if (entityType.id === PasSignalingOrderEdit.ENTITY_TYPE_ZONE.id) {
+									
+										self.selectedCommand = self.config.commands.SEND_MESSAGE_ZONES.commandElementTypeId;	
+									}
+									else if (entityType.id === PasSignalingOrderEdit.ENTITY_TYPE_GROUP.id) {
+										
+										self.selectedCommand = self.config.commands.SEND_MESSAGE_GROUPS.commandElementTypeId;
+									}
 
 									for (let item of arrayItems) {
 
@@ -617,7 +709,7 @@ export default class PasSignalingOrderEdit {
 										itemsToUpdate.push(it);
 									}
 
-									zoneDataTable.update(itemsToUpdate);
+									dataTable.update(itemsToUpdate);
 								}
 
 							} else {
@@ -626,7 +718,15 @@ export default class PasSignalingOrderEdit {
 
 								if (itemsNotClean) {
 
-									self.selectedCommand = self.config.commands.SWITCH_OFF_ZONES.commandElementTypeId;
+									if (entityType.id === PasSignalingOrderEdit.ENTITY_TYPE_ZONE.id) {
+										
+										self.selectedCommand = self.config.commands.SWITCH_OFF_ZONES.commandElementTypeId;	
+									}
+									else if (entityType.id === PasSignalingOrderEdit.ENTITY_TYPE_GROUP.id) {
+										
+										self.selectedCommand = self.config.commands.SWITCH_OFF_GROUPS.commandElementTypeId;
+									}
+									
 
 									for (let item of arrayItems) {
 
@@ -641,7 +741,7 @@ export default class PasSignalingOrderEdit {
 										itemsToUpdate.push(it);
 									}
 
-									zoneDataTable.update(itemsToUpdate);
+									dataTable.update(itemsToUpdate);
 								}
 							}
 						}
@@ -651,16 +751,25 @@ export default class PasSignalingOrderEdit {
 						commandId: 2,
 						function: () => {
 
-							let selectedItems = self.zonesDataTableSent.getSelectedItems();
-							self.selectedCommand = self.config.commands.SEND_MESSAGE_ZONES.commandElementTypeId;
+							let selectedItems;
+							
+							if (entityType.id === PasSignalingOrderEdit.ENTITY_TYPE_ZONE.id) {
+							
+								self.selectedCommand = self.config.commands.SEND_MESSAGE_ZONES.commandElementTypeId;
+								selectedItems = self.zonesDataTableSent.getSelectedItems();
+									
+							}
+							else if (entityType.id === PasSignalingOrderEdit.ENTITY_TYPE_GROUP.id) {
+								
+								self.selectedCommand = self.config.commands.SEND_MESSAGE_GROUPS.commandElementTypeId;
+								selectedItems = self.groupsDataTableSent.getSelectedItems();	
+							}
 
 							if (self.pasLibraries && self.pasLibraries.pasLibrary) {
 
 								let pasLibrary = new PasLibrary(self.pasLibraries.pasLibrary, onAccept, true);
 								
 								util.ui.loadWindow(i18n.t("LBL_PAS_LIBRARY_PLAYER_HEADER"), pasLibrary.getView(), 700, 600, true);
-								
-								pasLibrary.show();
 
 							} else {
 
@@ -687,8 +796,15 @@ export default class PasSignalingOrderEdit {
 
 									itemsToUpdate.push(it);
 								}
-
-								self.zonesDataTableSent.update(itemsToUpdate);
+								
+								if (entityType.id === PasSignalingOrderEdit.ENTITY_TYPE_ZONE.id) {
+								
+									self.zonesDataTableSent.update(itemsToUpdate);	
+								}
+								else if (entityType.id === PasSignalingOrderEdit.ENTITY_TYPE_GROUP.id){
+									
+									self.groupsDataTableSent.update(itemsToUpdate);
+								}
 							}
 						}
 					});
@@ -697,8 +813,18 @@ export default class PasSignalingOrderEdit {
 						commandId: 3,
 						function: () => {
 
-							let selectedItems = self.zonesDataTableStop.getSelectedItems();
-							self.selectedCommand = self.config.commands.SWITCH_OFF_ZONES.commandElementTypeId;
+							let selectedItems;
+							
+							if (entityType.id === PasSignalingOrderEdit.ENTITY_TYPE_ZONE.id) {
+								
+								selectedItems = self.zonesDataTableStop.getSelectedItems();
+								self.selectedCommand = self.config.commands.SWITCH_OFF_ZONES.commandElementTypeId;	
+							}
+							else if (entityType.id === PasSignalingOrderEdit.ENTITY_TYPE_GROUP.id){
+								
+								selectedItems = self.groupsDataTableStop.getSelectedItems();
+								self.selectedCommand = self.config.commands.SWITCH_OFF_GROUPS.commandElementTypeId;
+							}
 
 							if (Array.isArray(selectedItems) && selectedItems.length > 0) {
 
@@ -716,26 +842,35 @@ export default class PasSignalingOrderEdit {
 
 									itemsToUpdate.push(it);
 								}
-
-								self.zonesDataTableStop.update(itemsToUpdate);
-
+								
+								if (entityType.id === PasSignalingOrderEdit.ENTITY_TYPE_ZONE.id) {
+									
+									self.zonesDataTableStop.update(itemsToUpdate);
+								}
+								else if (entityType.id === PasSignalingOrderEdit.ENTITY_TYPE_GROUP.id){
+									
+									self.groupsDataTableStop.update(itemsToUpdate);
+								}
 							}
 						}
 					});
-
-					self.zonesDataTableSent = new DataTable(null, null, metadataSent, data, events);
-					self.zonesDataTableStop = new DataTable(null, null, metadataStop, data, events);
-
+					
+					if (entityType.id === PasSignalingOrderEdit.ENTITY_TYPE_ZONE.id) {
+									
+						self.zonesDataTableSent = new DataTable(null, null, metadataSent, data, events);
+						self.zonesDataTableStop = new DataTable(null, null, metadataStop, data, events);
+					}
+					else if (entityType.id === PasSignalingOrderEdit.ENTITY_TYPE_GROUP.id){
+						
+						self.groupsDataTableSent = new DataTable(null, null, metadataSent, data, events);
+						self.groupsDataTableStop = new DataTable(null, null, metadataStop, data, events);
+					}
 				}
 
 				return viewBody;
 			}
 
-
-
 			return view;
-
-
 		}
 	}
 
@@ -745,13 +880,30 @@ export default class PasSignalingOrderEdit {
 		let self = this;
 		let commandElement = undefined;
 		let radioButtonsValue = $$("radioButtons-" + self.uid).getValue();
-		let table = (radioButtonsValue == 1) ? self.zonesDataTableSent : self.zonesDataTableStop;
+		let table;
 		let toSent = [];
 		let toStop = [];
 
-		if (self.element) {
+		if (self.element && radioButtonsValue) {
+			
+			if (radioButtonsValue == PasSignalingOrderEdit.ENTITY_TYPE_ZONE.sent.id) {
+				
+				table = self.zonesDataTableSent;
+			}
+			else if (radioButtonsValue == PasSignalingOrderEdit.ENTITY_TYPE_ZONE.stop.id) {
+				
+				table = self.zonesDataTableStop;
+			}
+			else if (radioButtonsValue == PasSignalingOrderEdit.ENTITY_TYPE_GROUP.sent.id) {
+				
+				table = self.groupsDataTableSent;
+			}
+			else if (radioButtonsValue == PasSignalingOrderEdit.ENTITY_TYPE_GROUP.stop.id) {
+				
+				table = self.groupsDataTableStop;
+			}
 
-			if (Array.isArray(self.element.commandElements) && self.element.commandElements.length > 0) {
+			if (table && Array.isArray(self.element.commandElements) && self.element.commandElements.length > 0) {
 
 				let rows = table.getAllItems();
 
@@ -800,7 +952,8 @@ export default class PasSignalingOrderEdit {
 						let elementId = self.element.id;
 
 						// SEND MESSAGE
-						if (selectedCommandElement.id === self.config.commands.SEND_MESSAGE_ZONES.commandElementTypeId) {
+						if (selectedCommandElement.id === self.config.commands.SEND_MESSAGE_ZONES.commandElementTypeId ||
+							selectedCommandElement.id === self.config.commands.SEND_MESSAGE_GROUPS.commandElementTypeId) {
 
 							let zoneValue = [];
 							let messageValue = [];
@@ -836,7 +989,8 @@ export default class PasSignalingOrderEdit {
 						}
 
 						//STOP MESSAGE
-						if (selectedCommandElement.id === self.config.commands.SWITCH_OFF_ZONES.commandElementTypeId) {
+						if (selectedCommandElement.id === self.config.commands.SWITCH_OFF_ZONES.commandElementTypeId ||
+							selectedCommandElement.id === self.config.commands.SWITCH_OFF_GROUPS.commandElementTypeId) {
 
 							let zoneValue = [];
 
