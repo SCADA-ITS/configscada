@@ -1,6 +1,10 @@
-import EquipmentViewerInfoMeasure from "./equipmentViewerInfoMeasure.js";
 import { util } from "../../lib/util.js";
-import GraphicIcon from "../../component/graphicIcon/graphicIcon.js";
+import EquipmentViewerInfoMeasure from "./equipmentViewerInfoMeasure.js";
+import EquipmentViewerInfoIcon from "./equipmentViewerInfoIcon.js";
+import EquipmentViewerTable from "./equipmentViewerTable.js";
+
+const MEASURE_MARGINS = 40;
+const MEASURE_ITEM_WIDTH = 200;
 
 export default class EquipmentViewerInfo {
 
@@ -11,8 +15,13 @@ export default class EquipmentViewerInfo {
 		this.element = element;
 		this.equipmentViewer = equipmentViewer;
 		this.equipmentViewerInfoMeasure = undefined;
+		this.equipmentViewerTable = undefined;
 		this.graphicIconInstance = undefined;
-
+		this.equipmentViewerInfoIconFromMosaic = undefined;
+		this.equipmentViewerInfoIconFromTable = undefined;
+		this.parent.measureWidth = MEASURE_ITEM_WIDTH;
+		this.elementValuesForTable = [];
+		this.measuresGroups = undefined;
 		if (element) {
 
 			this.elementType = window.em.getByField(EntityType.ELEMENT_TYPE, "id", element.elementType.id);
@@ -23,367 +32,384 @@ export default class EquipmentViewerInfo {
 
 		let self = this;
 		let view = {};
-		let viewMeasures = util.ui.getViewNoData();
+		let viewMeasures = {};// util.ui.getViewNoData();
+		let viewInfoIcon = undefined;
+		let initViews = new Map();
+		let element = webix.copy(self.element);
 
-		if (!self.equipmentViewer.noShowMeasures) {
+		const TAB_MODE = {
+			MOSAIC: 1,
+			TABLE: 2
+		};
 
-			this.equipmentViewerInfoMeasure = new EquipmentViewerInfoMeasure(this.parent, this.element, this.equipmentViewer);
-			viewMeasures = this.equipmentViewerInfoMeasure.getView();
-			
-		} 
+		initViews.set(TAB_MODE.MOSAIC, false);
+		initViews.set(TAB_MODE.TABLE, false);
 
-		view = {
-			rows: [
-				getViewMain(),
-				viewMeasures,
-				{ height : 1 }
-			]
+		self.equipmentViewerInfoIcon = new EquipmentViewerInfoIcon(self.parent, element, self.equipmentViewer);
+		viewInfoIcon = self.equipmentViewerInfoIcon.getView();
+
+		if (self.equipmentViewer && self.equipmentViewer.equipViewerGrpMeasures && self.equipmentViewer.equipViewerGrpMeasures.length > 0) {
+
+			self.measuresGroups = getMeasuresGroupsFromConfig();
+
+		} else {
+
+			self.measuresGroups = getMeasuresGroupsFromElement();
 		}
 
-		function getViewMain() {
+		let measuresToShow = (self.measuresGroups.find(measuresGroup => measuresGroup.elementValues.length > 0) !== undefined);
 
-			let viewMain = {};
+		if (!self.equipmentViewer.noShowMeasures && Array.isArray(self.element.elementValues) && self.element.elementValues.length > 0 && measuresToShow) {
 
-			viewMain = {
-				cols: [
-					//{ width: 50 },
-					{},
-					getViewMainImage(),
-					{},
-					getViewMainInfo(),
-					{}
-					//{ width: 100 }
+			view = {
+				id: "view-main-info-multi-" + self.uid,
+				css: "bordered-layout",
+				rows: [
+					{
+						cols: [
+							{ height: 38 },
+							{
+								id: "segmented-" + self.uid,
+								view: "segmented",
+								css: "segment-custom-2",
+								width: 250,
+								borderless: true,
+								value: undefined,
+								options: [
+									{
+										id: "optionToRemove-" + self.uid
+									},
+									{
+										id: "segmented-show-mosaic-" + self.uid,
+										value: "<span class='ico webix_icon mdi mdi-collage'></span>",
+									},
+									{
+										id: "segmented-show-table-" + self.uid,
+										value: "<span class='ico webix_icon mdi mdi-format-list-bulleted-square'></span>",
+									}
+								],
+								tooltip: function(obj) {
+
+									if (obj.id === "segmented-show-mosaic-" + self.uid) {
+
+										return i18n.t("LBL_INFO_MEASURES_MOSAIC");
+									}
+									else if (obj.id === "segmented-show-table-" + self.uid) {
+
+										return i18n.t("LBL_TABLE_MEASURES");
+									}
+								},
+								on: {
+									onChange: function(newv, oldv) {
+
+										if (newv === "segmented-show-mosaic-" + self.uid) {
+
+											if (initViews.get(TAB_MODE.MOSAIC)) {
+
+												$$("view-main-mosaic-tab-" + self.uid).show();
+												$$("view-main-table-tab-" + self.uid).hide();
+
+											} else {
+
+												$$("view-main-mosaic-tab-" + self.uid).show();
+												$$("view-main-table-tab-" + self.uid).hide();
+												initViews.set(TAB_MODE.MOSAIC, true);
+												drawInitialTabMosaic();
+											}
+
+										} else if (newv === "segmented-show-table-" + self.uid) {
+
+											if (initViews.get(TAB_MODE.TABLE)) {
+
+												$$("view-main-table-tab-" + self.uid).show();
+												$$("view-main-mosaic-tab-" + self.uid).hide();
+
+											} else {
+
+												$$("view-main-table-tab-" + self.uid).show();
+												$$("view-main-mosaic-tab-" + self.uid).hide();
+												initViews.set(TAB_MODE.TABLE, true);
+												drawInitialTabTable();
+											}
+										}
+									}
+								}
+							}
+						]
+					},
+					{
+						id: "multiview-main-content-" + self.uid,
+						view: "multiview",
+						animate: false,
+						borderless: true,
+						keepViews: true,
+						cells: [
+							{
+								id: "view-main-mosaic-tab-" + self.uid
+							},
+							{
+								id: "view-main-table-tab-" + self.uid
+							}
+						]
+					}
 				]
 			};
 
-			function getViewMainImage() {
-
-				let viewMainImage = {};
-
-				if (self.equipmentViewer.graphicIcon) {
-
-					viewMainImage = getGraphicIcon();
-				}
-				else {
-
-					viewMainImage = getDefaultImage();
-				}
-
-				function getDefaultImage() {
-
-					let viewDefaultImage = {
-						width: 500,
-						rows: [
-							{ },
-							{},
-							{
-								id: "view-main-info-image-" + self.uid,
-								height: 200,
-								borderless: true,
-								template: function(data) {
-
-									if (self.elementType) {
-
-										let equipmentIcon = self.elementType.elementTypePhoto;
-
-										let color = util.element.getColor(self.element.elementTypeState);
-
-										if (data && data.elementTypeState) {
-
-											let elementTypeState = self.elementType.elementTypeStates.find(e => e.id === data.elementTypeState.id);
-
-											if (elementTypeState) {
-
-												color = util.element.getColor(elementTypeState);
-											}
-										}
-
-										let res = `<div class="equip-viewer-info-image">
-														<image class="image" src="img/${equipmentIcon}" onerror="this.onerror=null;this.src='img/not_found_50.png';" />
-														<div style="background: ${color}" class="shadow"></div>
-												   <div>`;
-
-										return res;
-									}
-								}
-							},
-							{}
-						]
-					};
-
-					return viewDefaultImage;
-
-				}
-
-				function getGraphicIcon() {
-
-					let viewGraphicIcon = {
-						id: "view-graphic-icon-" + self.uid,
-						width: self.parent.containerWidth * 0.45,
-						//height: self.parent.containerHeight * 0.45,
-						rows: [
-//							{ height: 20 },
-							{},
-							{
-								//id:  "view-main-info-image-" + self.uid,
-								height: 200,
-								borderless: true,
-								template: function() {
-
-									return `<div>
-												<svg id=${"view-main-info-image-svg-" + self.uid}></svg>
-											</div>`
-								},
-								on: {
-									onAfterRender: function() {
-
-										drawGraphicIcon(this.$width, this.$height);
-									}
-								}
-							},
-							{
-								id: "view-main-info-image-" + self.uid,
-								borderless: true,
-//								height: 40,
-								template: function(data) {
-
-									let color = util.element.getColor(self.element.elementTypeState);
-
-									if (data && data.elementTypeState) {
-
-										let elementTypeState = self.elementType.elementTypeStates.find(e => e.id === data.elementTypeState.id);
-
-										if (elementTypeState) {
-
-											color = util.element.getColor(elementTypeState);
-										}
-									}
-
-									return `<div class="equip-viewer-info-image" style="height: 40px;">
-												<div style="background: ${color}" class="shadow"></div>
-											</div>`
-								}
-							},
-							{},
-//							{ height: 20 }
-						]
-					};
-
-					function drawGraphicIcon(w, h) {
-
-						//let viewGraphicIconInstance = $$("view-graphic-icon-" + self.uid); 
-						let graphicIcon = webix.copy(self.equipmentViewer.graphicIcon);
-
-
-						if (graphicIcon) {
-
-							//let w = viewGraphicIconInstance.$width;
-							//let h = viewGraphicIconInstance.$height;
-
-							graphicIcon.width = w;
-							graphicIcon.height = h;
-
-							const lazy = async _ => {
-
-								//let jsFile = window.location.protocol + '//' + window.location.host + '/' + graphicIcon.jsDrawFile;
-								let jsFile = util.getContextPath() + '/' + graphicIcon.jsDrawFile;
-
-								const mod = await import(jsFile);
-
-								let layerElement = {
-									graphicIcon: graphicIcon
-								}
-
-								let s = Snap("#" + "view-main-info-image-svg-" + self.uid);
-								s.attr({ width: w, height: h });
-
-								let container = {
-									type: GraphicIcon.CONTAINER_TYPE_WEBIX_VIEW,
-									obj: s
-								}
-
-								self.graphicIconInstance = new mod.default(layerElement, self.element, container, null);
-
-								self.graphicIconInstance.load(function() {
-
-									self.graphicIconInstance.loadRender(function() {
-
-										if (self.element.elementTypeState) {
-
-											self.graphicIconInstance.updateState(self.element.elementTypeState);
-										}
-
-										if (Array.isArray(self.element.elementValues) && self.element.elementValues.length > 0) {
-
-											self.graphicIconInstance.updateValues(self.element.elementValues);
-										}
-
-										if (Array.isArray(self.element.alarms) && self.element.alarms.length > 0) {
-
-											self.graphicIconInstance.updateAlarms(self.element.alarms);
-										}
-									});
-								});
-							}
-
-							lazy();
-						}
-
-					}
-
-					return viewGraphicIcon;
-				}
-
-				return viewMainImage;
-			}
-
-			function getViewMainInfo() {
-
-				let viewMainInfo = {
-					width: 300,
-					rows: [
-						{ height: 20 },
-						{},
-						{
-							height: 70,
-							borderless: true,
-							template: function(data) {
-
-								let labelType = i18n.t("LBL_ELEMENT_TYPE");
-								let labelTypeValue = i18n.t(self.element.elementType.labelDescription ? self.element.elementType.labelDescription : self.element.elementType.labelAlias);
-
-								if (self.element.elementSubtype) {
-
-									labelType += " (" + i18n.t("LBL_ELEMENT_SUBTYPE") + ")";
-									labelTypeValue += " (" + i18n.t(self.element.elementSubtype.labelDescription ? self.element.elementSubtype.labelDescription : self.element.elementSubtype.labelAlias) + ")";
-								}
-
-								return `<div class="equip-viewer-info">
-											<span class="ico webix_icon mdi mdi-view-grid"></span>
-											<span class="title">${labelType}</span>
-											<span class="value">${labelTypeValue}</span>
-										</div>`;
-							}
-						},
-						{
-							height: 70,
-							borderless: true,
-							tooltip: {
-								template: function() {
-
-									if (self.element.location && Array.isArray(self.element.location.stretchs) && self.element.location.stretchs.length > 1) {
-
-										let tooltip = `<div class='title'>${self.element.location.alias}</div>`;
-
-										for (let stretch of self.element.location.stretchs) {
-											tooltip += `<div style="color: #35445f; padding-top: 5px">${stretch.alias} - ${stretch.road.alias}</div>`;
-										}
-
-										return tooltip;
-
-									} else {
-										return "";
-									}
-								},
-								css: "graphic-icon-tooltip"
-							},
-							template: function(data) {
-
-								if (self.element.location) {
-
-									if (Array.isArray(self.element.location.stretchs) && self.element.location.stretchs.length > 0) {
-
-										let ellipsis = (self.element.location.stretchs.length > 1) ? "..." : "";
-
-										return `<div class="equip-viewer-info">
-											<span class="ico webix_icon mdi mdi-map-marker"></span>
-											<span class="title">${i18n.t("LBL_ELEMENT_LOCATION")}</span>
-											<span class="value">${self.element.location.alias} - ${self.element.location.stretchs[0].alias} - ${self.element.location.stretchs[0].road.alias} ${ellipsis}</span>									
-										</div>`;
-									} else {
-										return `<div class="equip-viewer-info">
-											<span class="ico webix_icon mdi mdi-map-marker"></span>
-											<span class="title">${i18n.t("LBL_ELEMENT_LOCATION")}</span>
-											<span class="value">${self.element.location.alias}</span>									
-										</div>`;
-									}
-								} else {
-									return `<div class="equip-viewer-info">
-											<span class="ico webix_icon mdi mdi-map-marker"></span>
-											<span class="title">${i18n.t("LBL_ELEMENT_LOCATION")}</span>
-											<span class="value"> - </span>									
-										</div>`;
-								}
-							}
-						},
-						{
-							height: 70,
-							borderless: true,
-							template: function(data) {
-
-								return `<div class="equip-viewer-info">
-											<span class="ico webix_icon mdi mdi-view-headline"></span>
-											<span class="title">${i18n.t("LBL_ELEMENT_DESCRIPTION")}</span>
-											<span class="value">${self.element.description}</span>
-										</div>`;
-							}
-						},
-						{}
-					]
-				};
-
-				return viewMainInfo;
-			}
-
-			return viewMain;
+		} else {
+
+			view = {
+				id: "view-main-mosaic-tab-" + self.uid,
+				borderless: true,
+				rows: [
+					viewInfoIcon,
+					viewMeasures,
+					{ height: 1 }
+				]
+			};
 		}
 
 
+		function drawInitialTabMosaic() {
+
+			let viewTabMosaic;
+			element.elementTypeState = self.element.elementTypeState;
+
+			let equipmentViewerInfoIconForCarousel = new EquipmentViewerInfoIcon(self.parent, element, self.equipmentViewer);
+			let viewInfoIconForCarousel = equipmentViewerInfoIconForCarousel.getView();
+
+			if (!self.equipmentViewer.noShowMeasures) {
+
+				self.equipmentViewerInfoMeasure = new EquipmentViewerInfoMeasure(self.parent, element, self.equipmentViewer, self.measuresGroups);
+				viewMeasures = self.equipmentViewerInfoMeasure.getView();
+			}
+
+			viewTabMosaic = {
+				id: "view-main-mosaic-tab-" + self.uid,
+				borderless: true,
+				rows: [
+					viewInfoIconForCarousel,
+					viewMeasures,
+					{ height: 1 }
+				]
+			};
+
+			webix.ui(viewTabMosaic, $$("view-main-mosaic-tab-" + self.uid));
+		}
+
+		function drawInitialTabTable() {
+
+			let viewTabTable;
+			let viewTable;
+
+			element.elementTypeState = self.element.elementTypeState;
+			element.elementValues = self.element.elementValues;
+
+			self.equipmentViewerTable = new EquipmentViewerTable(self.parent, element, self.equipmentViewer, self.measuresGroups);
+			viewTable = self.equipmentViewerTable.getView();
+
+			self.parent.measureTable = self.equipmentViewerTable;
+
+			viewTabTable = {
+				id: "view-main-table-tab-" + self.uid,
+				borderless: true,
+				cols: [
+					viewTable
+				]
+			};
+
+			webix.ui(viewTabTable, $$("view-main-table-tab-" + self.uid));
+			self.equipmentViewerTable.measureTable.callbacks();
+		}
+
 		return view;
+
+		function getMeasuresGroupsFromConfig() {
+
+			let measureGroups = [];
+
+			self.equipmentViewer.equipViewerGrpMeasures.sort((a, b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));
+
+			self.equipmentViewer.equipViewerGrpMeasures.forEach(groupMeasure => {
+
+				let measureGroup = {
+					group: webix.copy(groupMeasure),
+					elementValues: []
+				};
+
+				if (groupMeasure.equipViewerMeasures && groupMeasure.equipViewerMeasures.length > 0) {
+
+					groupMeasure.equipViewerMeasures.sort((a, b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));
+
+					let elementValuesFiltered = [];
+
+					groupMeasure.equipViewerMeasures.forEach(equipViewerMeasure => {
+
+						let elementValueFiltered = self.element.elementValues.find(ev => ev.elementTypeParam && ev.elementTypeParam.id === equipViewerMeasure.voEntity.id);
+
+						if (elementValueFiltered) {
+
+							elementValuesFiltered.push(elementValueFiltered);
+						}
+					});
+
+					measureGroup.elementValues = webix.copy(elementValuesFiltered);
+
+				}
+
+				measureGroups.push(measureGroup);
+
+			});
+
+			return measureGroups;
+		}
+
+		function getMeasuresGroupsFromElement() {
+
+			let measureGroups = [];
+			let elementValues = self.element.elementValues;
+
+			if (Array.isArray(elementValues) && elementValues.length > 0) {
+
+				if (self.equipmentViewer && self.equipmentViewer.measureOnly) {
+
+					elementValues = elementValues.filter(e => e.elementTypeParam.paramType.id === self.parent.config.paramType.measure);
+				}
+
+				elementValues.sort((a, b) => (i18n.t(a.elementTypeParam.labelAlias) > i18n.t(b.elementTypeParam.labelAlias)) ? 1 : ((i18n.t(b.elementTypeParam.labelAlias) > i18n.t(a.elementTypeParam.labelAlias)) ? -1 : 0));
+
+				measureGroups.push({
+					group: { id: 1, label: i18n.t("LBL_MEASURES") },
+					elementValues: elementValues
+				});
+			}
+
+			return measureGroups;
+		}
+	}
+
+	setSegmented() {
+
+		let self = this;
+		let tabView = "segmented-show-mosaic-" + self.uid;
+
+		if (self.parent.config.tabMode && self.parent.config.tabMode.enabled && !self.equipmentViewer.noShowMeasures) {
+
+			let tabMode;
+			const TAB_MODE = {
+				MOSAIC: 1,
+				TABLE: 2
+			};
+
+			if (self.equipmentViewer.infoTabMode) {
+
+				tabMode = self.equipmentViewer.infoTabMode;
+
+			} else if (self.parent.config.tabMode.infoTabMode) {
+
+				tabMode = self.parent.config.tabMode.infoTabMode;
+			}
+
+			tabView = (tabMode === TAB_MODE.MOSAIC) ? "segmented-show-mosaic-" + self.uid : (tabMode === TAB_MODE.TABLE) ? "segmented-show-table-" + self.uid : "segmented-show-mosaic-" + self.uid;
+
+			if ($$("segmented-" + self.uid)) {
+
+				$$("segmented-" + self.uid).setValue(tabView);
+				$$("segmented-" + self.uid).removeOption("optionToRemove-" + self.uid);
+			}
+
+		} else {
+
+			if ($$("segmented-" + self.uid)) {
+
+				$$("segmented-" + self.uid).setValue(tabView);
+				$$("segmented-" + self.uid).removeOption("optionToRemove-" + self.uid);
+				$$("segmented-" + self.uid).hide();
+			}
+		}
 	}
 
 	updateMeasures(elementValues) {
+	
+		if (!this.equipmentViewerInfoMeasure || !this.equipmentViewerTable) {
 
+			for (let group of this.measuresGroups) {
+
+				let evToUpdate = group.elementValues.find(ev => ev.id === elementValues[0].id);
+
+				if (evToUpdate) {
+
+					evToUpdate.value = elementValues[0].value;
+					evToUpdate.elementValueState = elementValues[0].elementValueState;
+				}
+			}
+		}
+		
 		if (this.equipmentViewerInfoMeasure) {
 
 			this.equipmentViewerInfoMeasure.updateMeasure(elementValues);
+		}
+		
+		if (this.equipmentViewerTable) {
 
-			if (this.graphicIconInstance) {
+			this.equipmentViewerTable.updateMeasures(elementValues);
+		}
 
-				this.graphicIconInstance.updateValues(elementValues);
-			}
+		if (this.parent.graphicIconInstance) {
+
+			this.parent.graphicIconInstance.updateValues(elementValues);
+		}
+
+		if (this.parent.graphicIconInstanceFromTable) {
+
+			this.parent.graphicIconInstanceFromTable.updateValues(elementValues);
 		}
 	}
 
 	updateState(elementTypeState) {
 
-		let viewMainInfoImage = $$("view-main-info-image-" + this.uid);
+		if (elementTypeState != undefined) {
 
-		if (this.graphicIconInstance) {
+			let viewMainInfoImage = $$("view-main-info-image-" + this.uid);
+			let viewMainTableImage = $$("view-main-info-table-image-" + this.uid);
 
-			this.graphicIconInstance.updateState(elementTypeState);
+			if (this.parent.graphicIconInstance) {
+
+				this.parent.graphicIconInstance.updateState(elementTypeState);
+			}
+
+			if (this.parent.graphicIconInstanceFromTable) {
+
+				this.parent.graphicIconInstanceFromTable.updateState(elementTypeState);
+			}
+
+			if (viewMainInfoImage) {
+
+				viewMainInfoImage.setValues({ elementTypeState: elementTypeState });
+			}
+
+			if (viewMainTableImage) {
+
+				viewMainTableImage.setValues({ elementTypeState: elementTypeState });
+			}
 		}
-
-		viewMainInfoImage.setValues({ elementTypeState: elementTypeState });
 	}
 
 	// TODO: Update alarms
 	updateAlarms(alarms) {
 
-		if (this.graphicIconInstance) {
+		if (this.parent.graphicIconInstance) {
 
-			this.graphicIconInstance.updateAlarms(alarms);
+			this.parent.graphicIconInstance.updateAlarms(alarms);
 		}
 		else {
 
 			// TODO: Update any in equipment viewer???
 		}
-	}
-	
-	resizeMeasures() {
-		
-		this.equipmentViewerInfoMeasure.resizeCarousel();
-		
+
+		if (this.parent.graphicIconInstanceFromTable) {
+
+			this.parent.graphicIconInstanceFromTable.updateAlarms(alarms);
+		}
 	}
 
 	refresh() {
@@ -393,6 +419,4 @@ export default class EquipmentViewerInfo {
 			this.equipmentViewerInfoMeasure.refresh();
 		}
 	}
-
-
 }	

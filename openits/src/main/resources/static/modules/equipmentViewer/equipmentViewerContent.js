@@ -77,7 +77,7 @@ export default class EquipmentViewerContent {
 			function getViewHeaderBarState() {
 
 				let viewHeaderBarState;
-				
+
 				viewHeaderBarState = {
 					id: "view-main-content-header-bar-state-" + self.uid,
 					borderless: true,
@@ -149,7 +149,7 @@ export default class EquipmentViewerContent {
 											</div>`;
 
 									if (data.clockUpdate) {
-										
+
 										let timeService = window.sm.getService(Services.TIME_SERVICE);
 
 										res = `<image class="ims-incident-report-icon" src="img/${equipmentIcon}" onerror="this.onerror=null;this.src='img/not_found_50.png';"/>
@@ -193,17 +193,17 @@ export default class EquipmentViewerContent {
 
 				if ((self.equipmentViewer.equipViewerConfigs && self.equipmentViewer.equipViewerConfigs.length > 0) || self.element.elementValues) {
 
-					noProperties = false;
+					noProperties = (self.equipmentViewer.noShowProperties) ? true : false;
 				}
 
 				numberOfHeaderButtons = (noProperties) ? numberOfHeaderButtons : ++numberOfHeaderButtons;
 				numberOfHeaderButtons = !(self.equipmentViewer.showActions) || !isAllowedCommands ? numberOfHeaderButtons : ++numberOfHeaderButtons;
 				numberOfHeaderButtons = (self.element.tm && self.element.tm != undefined) ? ++numberOfHeaderButtons : numberOfHeaderButtons;
-						
+
 				toolbarButtonsWidth = numberOfHeaderButtons * 150;
 
 				let viewHeaderButtons;
-				
+
 				viewHeaderButtons = {
 					width: toolbarButtonsWidth,
 					rows: [
@@ -249,9 +249,9 @@ export default class EquipmentViewerContent {
 											if (commandsModule && commandsModuleActionId) {
 
 												let moduleAction = { id: commandsModuleActionId };
-						
+
 												let args = { selectedPks: [self.element.id] };
-						
+
 												util.module.open(commandsModule, moduleAction, VIEW_TYPE_WINDOW, null, args);
 											}
 										}
@@ -289,7 +289,7 @@ export default class EquipmentViewerContent {
 													positionTop = screenHeight / 2 - obj.data.features.height / 2;
 
 												}
-												
+
 												let features = "width=" + w + " ,height=" + h + ", top=" + positionTop + ", left=" + positionLeft + ", toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no";
 
 												window.open(obj.data.url, null, features);
@@ -297,7 +297,7 @@ export default class EquipmentViewerContent {
 										}
 									}
 								},
-								{ width: 5}
+								{ width: 5 }
 							]
 						},
 						{}
@@ -322,8 +322,8 @@ export default class EquipmentViewerContent {
 				borderless: true,
 				cells: [{ id: "tab2remove" + self.uid }],
 				multiview: {
-					keepViews:true
-		        },
+					keepViews: true
+				},
 				tabbar: {
 					tabMargin: 6
 				}
@@ -352,6 +352,7 @@ export default class EquipmentViewerContent {
 		let contentTabs = $$("view-main-content-tabs-" + self.uid);
 		let extraTabs = false;
 		let equipmentViewerInfoView = undefined;
+		let tabCount = 0;
 
 		if (contentTabs) {
 
@@ -361,7 +362,7 @@ export default class EquipmentViewerContent {
 
 				self.equipmentViewerInfo = new EquipmentViewerInfo(self.parent, self.element, self.equipmentViewer);
 				equipmentViewerInfoView = self.equipmentViewerInfo.getView();
-				
+
 				contentTabs.addView({
 					header: i18n.t("LBL_EQUIPMENT_VIEWER_INFO"),
 					body: {
@@ -369,7 +370,6 @@ export default class EquipmentViewerContent {
 						//height: 605,
 						css: "bordered-layout",
 						cols: [equipmentViewerInfoView]
-
 					}
 				});
 			}
@@ -378,6 +378,8 @@ export default class EquipmentViewerContent {
 			addTabs();
 
 			if (extraTabs) {
+
+				tabCount = self.equipmentViewer.equipViewerTabs.length;
 
 				self.equipmentViewer.equipViewerTabs.forEach(e => {
 
@@ -388,18 +390,17 @@ export default class EquipmentViewerContent {
 						addModule(module, e);
 					}
 				});
-	
+
 			} else {
 
 				contentTabs.removeView("tab2remove" + self.uid);				
 			}
-		
-//			if(self.equipmentViewerInfo){
-//				
-//				self.equipmentViewerInfo.resizeMeasures();		
-//			}
-			
-		
+
+			if (self.equipmentViewerInfo) {
+
+				self.equipmentViewerInfo.setSegmented();
+			}			
+
 			connectWS();
 
 			$$(self.uid).attachEvent("onDestruct", function() {
@@ -439,7 +440,7 @@ export default class EquipmentViewerContent {
 
 		function addModule(module, equipViewerTab) {
 
-			const CORRECTION_FACTOR = {WIDTH: 10, HEIGHT: 55};
+			const CORRECTION_FACTOR = { WIDTH: 10, HEIGHT: 55 };
 			let moduleAction = { id: equipViewerTab.moduleActionId };
 			let args = { selectedPks: [self.element.id], containerId: contentTabs.config.id, width: contentTabs.$width - CORRECTION_FACTOR.WIDTH, height: contentTabs.$height - CORRECTION_FACTOR.HEIGHT };
 
@@ -458,22 +459,29 @@ export default class EquipmentViewerContent {
 				contentTabs.getTabbar().hideOption("view-main-content-tab_body-" + moduleAction.id + "-" + self.uid);
 				contentTabs.getTabbar().setValue("view-main-content-tab_body-" + moduleAction.id + "-" + self.uid);
 				contentTabs.getTabbar().showOption("view-main-content-tab_body-" + moduleAction.id + "-" + self.uid);
-				contentTabs.removeView("tab2remove" + self.uid);	  
+				contentTabs.removeView("tab2remove" + self.uid);
 
-				if ($$("view-main-content-tab-info-" + self.uid) != undefined) {
+				if (!(--tabCount)) {
 
-					contentTabs.getTabbar().setValue("view-main-content-tab-info-" + self.uid);
-				}
+					if ($$("view-main-content-tab-info-" + self.uid) != undefined) {
 
-				// Select initial tab for modules if configured
-				if (equipViewerTab.id === self.equipmentViewer.initialTab) {
+						contentTabs.getTabbar().setValue("view-main-content-tab-info-" + self.uid);					
+					}
 
-					contentTabs.getTabbar().setValue("view-main-content-tab_body-" + moduleAction.id + "-" + self.uid);
+					// Select initial tab for modules if configured
+					if (self.equipmentViewer.initialTab) {
+
+						let initialTab = self.equipmentViewer.equipViewerTabs.find(tab => tab.id === self.equipmentViewer.initialTab);
+
+						if (initialTab) {
+
+							contentTabs.getTabbar().setValue("view-main-content-tab_body-" + initialTab.moduleActionId + "-" + self.uid);
+						}
+					}
 				}
 			}
 		}
-		
-		
+
 		function connectWS() {
 
 			let stompSubscriptorService = window.sm.getService(Services.STOMP_SUBSCRIPTOR_SERVICE);
@@ -486,17 +494,19 @@ export default class EquipmentViewerContent {
 			}
 
 			function onMessage(data) {
-				
+
 				let elementTypeParams = [];
-				
+
 				if (Array.isArray(self.element.elementValues) && self.element.elementValues.length > 0) {
-				
+
 					elementTypeParams = self.element.elementValues.map(elementValue => elementValue.elementTypeParam);
 				}
-				
+
 				let element = adapter.ws.element.get(data, elementTypeParams);
-									
+
 				if (element) {
+					
+					updateElement();
 
 					let elementHeader = $$("view-main-content-header-element-" + self.uid);
 
@@ -534,6 +544,28 @@ export default class EquipmentViewerContent {
 					if (self.equipmentViewerInfo && Array.isArray(element.elementValues) && element.elementValues.length > 0) {
 
 						self.equipmentViewerInfo.updateMeasures(element.elementValues);
+					}
+				}
+				
+				function updateElement() {
+
+					if (Array.isArray(element.elementValues) && element.elementValues.length > 0) {
+
+						let sameElement = self.element.elementValues.find(e => e.id === element.elementValues[0].id);
+
+						if (sameElement) {
+
+							if (sameElement.value && element.elementValues[0].value && (sameElement.value != element.elementValues[0].value)) {
+
+								sameElement.value = element.elementValues[0].value;
+								sameElement.elementValueState = element.elementValues[0].elementValueState;
+							}
+						}
+					}
+					
+					if(element.elementTypeState){
+						
+						self.element.elementTypeState = element.elementTypeState; 
 					}
 				}
 			}

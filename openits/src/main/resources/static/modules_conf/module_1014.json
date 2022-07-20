@@ -31,5 +31,9 @@
 		"online": "ElementValueState:2",
 		"alerted": "ElementValueState:3",
 		"offline": "ElementValueState:4"
+	},
+	"tabMode": {
+		"enabled": true,
+		"infoTabMode": 1
 	}
 }

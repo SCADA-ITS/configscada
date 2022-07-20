@@ -31,6 +31,12 @@ public class EquipViewer implements Serializable {
 	
 	@Column(name="initial_tab")
 	private Integer initialTab;
+	
+	@Column(name="info_tab_mode")
+	private Integer infoTabMode;
+	
+	@Column(name="no_show_properties")
+	private Boolean noShowProperties;
 
 	private String label;
 	
@@ -117,6 +123,22 @@ public class EquipViewer implements Serializable {
 		this.initialTab = initialTab;
 	}
 
+	public Integer getinfoTabMode() {
+		return this.infoTabMode;
+	}
+
+	public void setinfoTabMode(Integer infoTabMode) {
+		this.infoTabMode = infoTabMode;
+	}
+
+	public Boolean getNoShowProperties() {
+		return this.noShowProperties;
+	}
+
+	public void setNoShowProperties(Boolean noShowProperties) {
+		this.noShowProperties = noShowProperties;
+	}
+	
 	public String getLabel() {
 		return this.label;
 	}

@@ -140,7 +140,6 @@ export default class EquipmentViewerModule extends GenericModule {
 				if (container) {
 
 					util.ui.setTitle(container.config.id, i18n.t(self.element.elementType.labelDescription) + " - " + element.alias, element.alias);
-					//util.ui.setWindowTitle(container, i18n.t(self.element.elementType.labelDescription) + " - " + element.alias);
 				}
 				
 				view = drawMain(self.element);
@@ -366,7 +365,8 @@ export default class EquipmentViewerModule extends GenericModule {
 							
 						self.equipmentViewerContent.loadData();
 					}
-
+					
+					self.args.fromTable = false;
 				}
 			}
 			
