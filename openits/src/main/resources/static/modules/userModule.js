@@ -1015,7 +1015,11 @@ export default class UserModule extends GenericModule {
 	
 															webix.ajax().headers(CONTENT_TYPE_JSON).put(appConfig.restUrl + self.config.actionEndpoints.edit, body[0]).then(function(data) {
 																$$(self.args.containerId).close();
-																self.args.callbacks[0]();
+																
+																if(self.args.callbacks){
+																
+																	self.args.callbacks[0]();	
+																}																
 															});
 														}
 													} else {
