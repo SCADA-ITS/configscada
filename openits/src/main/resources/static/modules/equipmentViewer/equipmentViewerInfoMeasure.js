@@ -142,6 +142,8 @@ class MeasureGroup {
 
 		let self = this;
 		let viewCarousel = {};
+		let viewControls = {};
+		let viewMain = {};
 
 		if (this.measureItems) {
 
@@ -201,7 +203,6 @@ class MeasureGroup {
 				}
 
 				viewGridMeasures.rows[idxRow].cols.push({});
-
 				viewCarousel.cells.push(viewGridMeasures);
 			}
 		}
@@ -222,7 +223,43 @@ class MeasureGroup {
 			viewCarousel.cells.shift();
 		}
 
-		return viewCarousel;
+		let controlOptions = [];
+
+		for (let cell of viewCarousel.cells) {
+
+			if (cell.id) {
+
+				controlOptions.push({
+					id: cell.id,
+					value: ""
+				});
+			}
+		}
+
+		viewControls = {
+			view: "radio",
+			css: "equipment-control-radio",
+			keepViews: true,
+			animate: true,
+			options: controlOptions,
+			value: controlOptions[0].id,
+			on: {
+				onChange(newv) {
+
+					$$(newv).show();
+				}
+			}
+		};
+
+		viewMain = {
+			id: VIEW_INFO_MEASURE_MULTIVIEW_ITEM + "-" + this.id + "-" + this.uid,
+			rows: [
+				viewCarousel,
+				viewControls
+			]
+		};
+
+		return viewMain;
 	}
 }
 
@@ -244,7 +281,6 @@ export default class EquipmentViewerInfoMeasure {
 		let view = {};
 		let viewSegmented = {};
 		let viewMultiview = {};
-		let viewControls = {};
 		let measuresGroups;
 		let groupArr = [];
 
@@ -277,7 +313,6 @@ export default class EquipmentViewerInfoMeasure {
 
 			viewSegmented = getViewSegmented();
 			viewMultiview = getViewMultiview();
-			viewControls = getViewControls();
 
 			let firstSelected = false;
 
@@ -320,36 +355,8 @@ export default class EquipmentViewerInfoMeasure {
 
 					if (option && measureMultiview) {
 
-						measureMultiview.setValue(VIEW_INFO_MEASURE_CAROUSEL + "-" + option.measureGroupId + "-" + self.uid);
+						measureMultiview.setValue(VIEW_INFO_MEASURE_MULTIVIEW_ITEM + "-" + option.measureGroupId + "-" + self.uid);
 					}
-				}
-			};
-
-			let controlOptions = [];
-
-			if (viewMultiview.cells[0].cells) {
-
-				for (let cell of viewMultiview.cells[0].cells) {
-
-					controlOptions.push({
-						id: cell.id,
-						value: ""
-					});
-				}
-			}
-
-			viewControls.options = controlOptions;
-
-			if (Array.isArray(controlOptions) && controlOptions.length > 0) {
-
-				viewControls.value = controlOptions[0].id;
-			}
-
-			viewControls.on = {
-				onChange(newv, oldv) {
-
-					$$(newv).show();
-					$$(oldv).hide();
 				}
 			};
 		}
@@ -366,84 +373,14 @@ export default class EquipmentViewerInfoMeasure {
 								viewSegmented,
 								{ height: 1 },
 								viewMultiview,
-								{ height: 1 },
-								viewControls
+								{ height: 1 }
 							]
 						},
 						{ width: 1 }
 					]
 				},
-				//				{}
 			]
 		};
-
-		//		function getMeasuresGroupsFromConfig() {
-		//			
-		//			let measureGroups = [];
-		//			
-		//			self.equipmentViewer.equipViewerGrpMeasures.sort((a, b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));
-		//			
-		//			self.equipmentViewer.equipViewerGrpMeasures.forEach(groupMeasure => {
-		//				
-		//				let measureGroup = new MeasureGroup(self, groupMeasure.id, groupMeasure.label, self.parent.containerWidth);
-		//				
-		//				if (groupMeasure.equipViewerMeasures && groupMeasure.equipViewerMeasures.length > 0) {
-		//				
-		//					groupMeasure.equipViewerMeasures.sort((a, b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));
-		//					
-		//					groupMeasure.equipViewerMeasures.forEach(equipViewerMeasure => {
-		//					
-		//						if (self.element.elementValues) {
-		//						
-		//							let elementValue = self.element.elementValues.find(ev => 
-		//								
-		//								(ev.elementTypeParam && ev.elementTypeParam.id === equipViewerMeasure.voEntity.id)
-		//							);
-		//							
-		//							if (elementValue) {
-		//						
-		//								let measureItem = new MeasureItem(self, elementValue);
-		//						
-		//								measureGroup.addMeasureItem(measureItem);		
-		//							}
-		//						}
-		//					});
-		//				}
-		//				
-		//				measureGroups.push(measureGroup);
-		//			});
-		//			
-		//			return measureGroups;
-		//		}
-
-		function getMeasuresGroupsFromElement() {
-
-			let measureGroups = [];
-			let elementValues = self.element.elementValues;
-
-			if (Array.isArray(elementValues) && elementValues.length > 0) {
-
-				if (self.equipmentViewer && self.equipmentViewer.measureOnly) {
-
-					elementValues = elementValues.filter(e => e.elementTypeParam.paramType.id === self.parent.config.paramType.measure);
-				}
-
-				elementValues.sort((a, b) => (i18n.t(a.elementTypeParam.labelAlias) > i18n.t(b.elementTypeParam.labelAlias)) ? 1 : ((i18n.t(b.elementTypeParam.labelAlias) > i18n.t(a.elementTypeParam.labelAlias)) ? -1 : 0));
-
-				let measureGroup = new MeasureGroup(self, 1, i18n.t("LBL_MEASURES"), self.parent.containerWidth - MEASURE_MARGINS);
-
-				elementValues.forEach(elementValue => {
-
-					let measureItem = new MeasureItem(self, elementValue);
-
-					measureGroup.addMeasureItem(measureItem);
-				});
-
-				measureGroups.push(measureGroup);
-			}
-
-			return measureGroups;
-		}
 
 		function getViewSegmented() {
 
@@ -463,18 +400,6 @@ export default class EquipmentViewerInfoMeasure {
 				animate: false,
 				id: VIEW_INFO_MEASURE_MULTIVIEW + "-" + self.uid,
 				cells: []
-			};
-		}
-
-		function getViewControls() {
-
-			return {
-				view: "radio",
-				css: "equipment-control-radio",
-				value: 1,
-				keepViews: true,
-				animate: true,
-				options: []
 			};
 		}
 
