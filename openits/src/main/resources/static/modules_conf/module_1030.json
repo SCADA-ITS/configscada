@@ -1,7 +1,7 @@
 {
 	"moduleAction": {
 	    "pas": 103001,
-		"zone": 103002,
+		"child": 103002,
 		"commandEdit": 103003
 	},
 	"restEndpoints": {
@@ -16,6 +16,7 @@
 		"elementsByTypeSummary": "element_types/${id}/summary"
 		
 	},
+	"equipmentViewer": 101401,
 	"topics": {
 		"pas" : "/topic/element.ElementType:5",
 		"zones" : "/topic/element.ElementType:16.>",

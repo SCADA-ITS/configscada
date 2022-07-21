@@ -65,14 +65,16 @@ export default class EquipmentViewerInfo {
 				id: "view-main-info-multi-" + self.uid,
 				css: "bordered-layout",
 				rows: [
+					{ height: 5 },
 					{
+						height: 28,
 						cols: [
-							{ height: 38 },
+							{},
 							{
 								id: "segmented-" + self.uid,
 								view: "segmented",
 								css: "segment-custom-2",
-								width: 250,
+								width: 167,
 								borderless: true,
 								value: undefined,
 								options: [
@@ -134,7 +136,8 @@ export default class EquipmentViewerInfo {
 										}
 									}
 								}
-							}
+							},
+							{ width: 10 }
 						]
 					},
 					{

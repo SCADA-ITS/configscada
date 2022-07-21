@@ -86,7 +86,7 @@ export default class EquipmentViewerTable {
 
 			let metadata = {
 				filter: true,
-				label: "LBL_CONFIG_THRESHOLDS",
+				label: "LBL_MEASURES",
 				visible: true,
 				gridOptionValues: defaultGridOptionValues,
 				gridFields: [

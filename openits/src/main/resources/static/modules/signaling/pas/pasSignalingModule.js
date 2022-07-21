@@ -58,7 +58,7 @@ export default class PasSignalingModule extends GenericModule {
 	
 							load();
 	
-						} else if (self.moduleAction && self.moduleAction.id == self.config.moduleAction.zone) {
+						} else if (self.moduleAction && self.moduleAction.id == self.config.moduleAction.child) {
 	
 							webix.ajax().get(appConfig.restUrl + self.config.restEndpoints.elementsHierarchy).then(function(hierarchyResponse) {
 	
@@ -78,7 +78,7 @@ export default class PasSignalingModule extends GenericModule {
 	
 										if (self.args.selectedPks.includes(element.child.id)) {
 	
-											self.selectedChildElementsHierarchyMap.get(element.parent.id).push(element.child.id);
+											self.selectedChildElementsHierarchyMap.get(element.parent.id).push(element.child);
 										}
 									});
 	

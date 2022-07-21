@@ -10,12 +10,12 @@ export default class PasSignalingContent {
 	static get ENTITY_TYPE_ZONE() { return 1 }
 	static get ENTITY_TYPE_GROUP() { return 2 }
 
-	constructor(config, element, selectedPks) {
+	constructor(config, element, childs) {
 
 		this.config = config;
 		this.element = element;
 		this.uid = webix.uid();
-		this.selectedPks = selectedPks;
+		this.childs = childs;
 
 		this.pasLibraries = undefined;
 
@@ -103,13 +103,19 @@ export default class PasSignalingContent {
 					self.zones = self.element.childs.filter(element => element.elementType.id == self.config.zone.type);
 
 					webix.ui(drawContent(), $$("view-content-" + self.uid));
-
+					
 					if (self.groupsDataTable) {
 
 						self.groupsDataTable.callbacks();
 						
-						if (Array.isArray(self.selectedPks) && self.selectedPks.length > 0) {
-							self.groupsDataTable.select(self.selectedPks);
+						if (Array.isArray(self.childs) && self.childs.length > 0) {
+							
+							let childsSelected = self.childs.filter(child => child.elementType.id == self.config.group.type);
+							
+							if (childsSelected.length > 0) {
+								
+								self.groupsDataTable.select(childsSelected.map(e => e.id));
+							}
 						}
 					}
 					
@@ -117,8 +123,14 @@ export default class PasSignalingContent {
 
 						self.zonesDataTable.callbacks();
 						
-						if (Array.isArray(self.selectedPks) && self.selectedPks.length > 0) {
-							self.zonesDataTable.select(self.selectedPks);
+						if (Array.isArray(self.childs) && self.childs.length > 0) {
+							
+							let childsSelected = self.childs.filter(child => child.elementType.id == self.config.zone.type);
+							
+							if (childsSelected.length > 0) {
+								
+								self.zonesDataTable.select(childsSelected.map(e => e.id));
+							}
 						}
 					}
 
@@ -322,6 +334,7 @@ export default class PasSignalingContent {
 		function getViewBody() {
 
 			let viewBodyTab = {
+				id: "PasSignalingContent-tab-" + self.uid,
 				view: "tabview",
 				css: "secondary-tab",
 				animate: false,
@@ -332,18 +345,24 @@ export default class PasSignalingContent {
 					
 					if (Array.isArray(self.groups) && self.groups.length > 0) {
 						
-						items.push({
-							header: i18n.t("LBL_PAS_GROUPS"), 
-							body: getTable(self.groups, PasSignalingContent.ENTITY_TYPE_GROUP)
-						});
+						if (!self.childs || (Array.isArray(self.childs) && self.childs.length > 0 && self.childs.filter(child => child.elementType.id == self.config.group.type).length > 0)) {
+							
+							items.push({
+								header: i18n.t("LBL_PAS_GROUPS"), 
+								body: getTable(self.groups, PasSignalingContent.ENTITY_TYPE_GROUP)
+							});	
+						}
 					}
 					
 					if (Array.isArray(self.zones) && self.zones.length > 0) {
 						
-						items.push({
-							header: i18n.t("LBL_PAS_ZONES"), 
-							body: getTable(self.zones, PasSignalingContent.ENTITY_TYPE_ZONE)
-						});
+						if (!self.childs || (Array.isArray(self.childs) && self.childs.length > 0 && self.childs.filter(child => child.elementType.id == self.config.zone.type).length > 0)) {
+							
+							items.push({
+								header: i18n.t("LBL_PAS_ZONES"), 
+								body: getTable(self.zones, PasSignalingContent.ENTITY_TYPE_ZONE)
+							});
+						}
 					}
 					
 					return items;
@@ -565,6 +584,17 @@ export default class PasSignalingContent {
 							position: 1,
 							showText: false,
 							itemRequired: true
+						},
+						{
+							id: 4,
+							default_: true,
+							icon: "mdi mdi-information-outline",
+							label: "LBL_INFO",
+							multiselect: false,
+							position: 0,
+							showText: false,
+							itemRequired: true,
+							unselectAllAfter: true
 						}
 					]
 				};
@@ -593,6 +623,7 @@ export default class PasSignalingContent {
 							itemRequired: true
 						}
 					);
+						
 				}
 
 				let events = {};
@@ -731,6 +762,14 @@ export default class PasSignalingContent {
 					}
 				});
 				
+				events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
+					commandId: 4,
+					function: () => {
+
+						openEquipmentViewer();
+					}
+				});
+				
 				dt = new DataTable(null, null, metadata, data, events);
 				
 				if (entityType === PasSignalingContent.ENTITY_TYPE_ZONE) {
@@ -741,9 +780,33 @@ export default class PasSignalingContent {
 					
 					self.groupsDataTable = dt;
 				}
+				
+				function openEquipmentViewer() {
 
-				return { css: "bordered-layout", rows: dt.getView() };
+					let selectedItems = dt.getSelectedItems();
+		
+					if (Array.isArray(selectedItems) && selectedItems.length == 1) {
+		
+						let selectedItem = selectedItems[0];
+		
+						if (selectedItem) {
+		
+							let module = util.module.getFromModuleAction(self.config.equipmentViewer);
+		
+							if (module) {
+		
+								let moduleAction = { id: self.config.equipmentViewer };
+								let args = { selectedPks: [selectedItem.id] };
+		
+								util.module.open(module, moduleAction, VIEW_TYPE_WINDOW, null, args);
+							}
+						}
+					}
+				}
+
+				return { id: "PasSignalingContent-table-" + entityType + "-" + self.uid, css: "bordered-layout", rows: dt.getView() };
 			}
+			
 			return viewBody;
 		}
 
