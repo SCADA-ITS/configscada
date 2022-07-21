@@ -25,7 +25,7 @@ class MeasureItem {
 
 		this.parent = parent;
 		this.uid = parent.uid;
-		this.measureWidth = parent.parent.measureWidth;
+		this.measureWidth = parent.measureWidth;
 		this.elementValue = elementValue;
 	}
 
@@ -117,7 +117,7 @@ class MeasureGroup {
 
 		this.uid = parent.uid;
 		this.parent = parent;
-		this.measureWidth = parent.parent.measureWidth;
+		this.measureWidth = parent.measureWidth;
 		this.id = id;
 		this.label = label;
 		this.containerWidth = containerWidth;
