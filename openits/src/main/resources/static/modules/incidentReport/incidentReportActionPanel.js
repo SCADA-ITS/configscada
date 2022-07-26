@@ -75,162 +75,199 @@ export default class IncidentReportActionPanel {
 							rows: [
 								{ height: 20 },
 								{
-									id: "action-button-" + self.uid,
-									view: "button",
-									css: "action-button",
-									disabled: (function() {
-
-										if (!self.closed && self.incidentReport.confirm === true && sameUser) {
-
-											// Mandatory tasks with state must be completed in penultimate state
-											if (Array.isArray(self.incidentReport.taskStates) && self.incidentReport.taskStates.length && self.incidentReport.sequenceOfStates.length > 1) {
-
-												let penUltimateState = self.incidentReport.sequenceOfStates[self.incidentReport.sequenceOfStates.length - 2];
-
-												if (penUltimateState && penUltimateState.state && self.incidentReport.incidentState.id == penUltimateState.state.id) {
-
-													let tasksCompleted = self.incidentReport.taskStates.filter(e => e.completedAt && e.incidentTypeTask.mandatory === true);
-													let tasksMandatory = self.incidentReport.taskStates.filter(e => e.incidentTypeTask.mandatory === true);
-
-													if (tasksCompleted.length < tasksMandatory.length) {
-
-														return true;
+									height: 50,
+									cols: [
+										{
+											id: "backward-button-" + self.uid,
+											view: "button",
+											css: "action-button",
+											disabled: (function() {
+		
+												let disabled = false;
+												
+												disabled |= !sameUser;
+												disabled |= (self.incidentReport.sequenceOfStates.findIndex(e => e.state.id === self.incidentReport.incidentState.id) === 0);
+												
+												return disabled;
+											})(),
+											hidden: !self.incidentReport.confirm,
+											label: i18n.t("LBL_INCIDENT_ACTION_PREVIOUS"),
+											tooltip: "#label#",
+											on: {
+		
+												onItemClick() {
+		
+													if (self.incidentReport.confirm === true && sameUser) {
+	
+														let endpoint = util.fillTemplate(self.config.actionEndpoints.backward, {
+															id: self.incidentReport.id
+														});
+														
+														self.parent.restAction(endpoint);
 													}
 												}
 											}
-
-											if (Array.isArray(self.currentSequenceOfState.taskStates) && self.currentSequenceOfState.taskStates.length) {
-
-												let tasksCompleted = self.currentSequenceOfState.taskStates.filter(e => e.completedAt && e.incidentTypeTask.mandatory === true);
-												let tasksMandatory = self.currentSequenceOfState.taskStates.filter(e => e.incidentTypeTask.mandatory === true);
-
-												if (tasksCompleted.length < tasksMandatory.length) {
-
-													return true;
-												}
-											}
-
-										} else if (!self.closed && self.incidentReport.confirm !== true && self.confirmIncidentPermissions) {
-
-											if (sameUser || (onlyAutoassignIncident && sameRole) || self.assignAnotherPermissions) {
-
-												return false;
-											}
-
-											return true;
-
-										} else {
-
-											return true;
-										}
-
-									})(),
-									height: 50,
-									label: (function() {
-
-										let label = i18n.t("LBL_INCIDENT_ACTION_FINALIZE");
-										let positionCurrentState = self.incidentReport.sequenceOfStates.findIndex(seq => seq.state.id === self.incidentReport.incidentState.id)
-										let isLastState = self.incidentReport.sequenceOfStates.length > 1 && positionCurrentState >= self.incidentReport.sequenceOfStates.length - 2;
-
-										if (!self.closed) {
-
-											if (self.incidentReport.confirm === true) {
-
-												if (!isLastState) {
-
-													label = i18n.t("LBL_INCIDENT_ACTION_NEXT");
-												}
-											}
-											else {
-
-												label = i18n.t("LBL_INCIDENT_ACTION_CONFIRM");
-												drawCounterLabel = true;
-											}
-										}
-
-										return label;
-
-									})(),
-									tooltip: "#label#",
-									on: {
-
-										onItemClick() {
-
-											if (!self.closed) {
-
-												if (self.incidentReport.confirm === true) {
-
-													let ireportType = window.em.getByField(EntityType.IMS_INCIDENT_TYPE, "id", self.incidentReport.incidentType.id);
-
-													if (Array.isArray(ireportType.incidentTypeCauses) && ireportType.incidentTypeCauses.length > 0 && (!self.incidentReport.alarms || self.incidentReport.alarms.length === 0)) {
-
-														let comboCauseValue = $$("fieldCause-combo-" + self.uid).getValue();
-
-														if (comboCauseValue === "") {
-
-															let ms = new MessageBox(MessageBox.WARN, i18n.t("LBL_CAUSE_OF_INCIDENT_NOT_SELECTED_DESCRIPTION"), onAccept, null);
-															ms.show();
-
-															function onAccept() {
-
-																$$("tab-details-" + self.uid).show();
-															};
+										},
+										{ width: self.incidentReport.confirm ? MARGIN_ACTION_PANEL : 1 },
+										{
+											id: "action-button-" + self.uid,
+											view: "button",
+											css: "action-button",
+											disabled: (function() {
+		
+												if (!self.closed && self.incidentReport.confirm === true && sameUser) {
+		
+													// Mandatory tasks with state must be completed in penultimate state
+													if (Array.isArray(self.incidentReport.taskStates) && self.incidentReport.taskStates.length && self.incidentReport.sequenceOfStates.length > 1) {
+		
+														let penUltimateState = self.incidentReport.sequenceOfStates[self.incidentReport.sequenceOfStates.length - 2];
+		
+														if (penUltimateState && penUltimateState.state && self.incidentReport.incidentState.id == penUltimateState.state.id) {
+		
+															let tasksCompleted = self.incidentReport.taskStates.filter(e => e.completedAt && e.incidentTypeTask.mandatory === true);
+															let tasksMandatory = self.incidentReport.taskStates.filter(e => e.incidentTypeTask.mandatory === true);
+		
+															if (tasksCompleted.length < tasksMandatory.length) {
+		
+																return true;
+															}
 														}
 													}
-
-													let endpoint = util.fillTemplate(self.config.actionEndpoints.forward, {
-														id: self.incidentReport.id
-													});
-
+		
 													if (Array.isArray(self.currentSequenceOfState.taskStates) && self.currentSequenceOfState.taskStates.length) {
-
+		
 														let tasksCompleted = self.currentSequenceOfState.taskStates.filter(e => e.completedAt && e.incidentTypeTask.mandatory === true);
 														let tasksMandatory = self.currentSequenceOfState.taskStates.filter(e => e.incidentTypeTask.mandatory === true);
-
-														if (tasksCompleted.length === tasksMandatory.length) {
-
-															self.parent.restAction(endpoint);
+		
+														if (tasksCompleted.length < tasksMandatory.length) {
+		
+															return true;
 														}
-
-													} else {
-
-														self.parent.restAction(endpoint);
 													}
-
+		
+												} else if (!self.closed && self.incidentReport.confirm !== true && self.confirmIncidentPermissions) {
+		
+													if (sameUser || (onlyAutoassignIncident && sameRole) || self.assignAnotherPermissions) {
+		
+														return false;
+													}
+		
+													return true;
+		
 												} else {
-
-													if (sameUser) {
-
-														let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_CONFIRM_CONFIRM_DESCRIPTION"), onAccept, null);
-														ms.show();
-
-													} else {
-
-														let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_CONFIRM_CONFIRM_DESCRIPTION"), function() {
-
-															onAccept(true);
-
-														}, null);
-														ms.show();
+		
+													return true;
+												}
+		
+											})(),
+											label: (function() {
+		
+												let label = i18n.t("LBL_INCIDENT_ACTION_FINALIZE");
+												let positionCurrentState = self.incidentReport.sequenceOfStates.findIndex(seq => seq.state.id === self.incidentReport.incidentState.id)
+												let isLastState = self.incidentReport.sequenceOfStates.length > 1 && positionCurrentState >= self.incidentReport.sequenceOfStates.length - 2;
+		
+												if (!self.closed) {
+		
+													if (self.incidentReport.confirm === true) {
+		
+														if (!isLastState) {
+		
+															label = i18n.t("LBL_INCIDENT_ACTION_NEXT");
+														}
 													}
-
-													function onAccept(changeUser) {
-
-														let userId = (changeUser) ? self.userData.id : null;
-
-														let body = {
-															id: self.incidentReport.id,
-															userId: userId
-														};
-
-														let endpoint = util.fillTemplate(self.config.actionEndpoints.confirm, body);
-														self.parent.restAction(endpoint);
+													else {
+		
+														label = i18n.t("LBL_INCIDENT_ACTION_CONFIRM");
+														drawCounterLabel = true;
+													}
+												}
+		
+												return label;
+		
+											})(),
+											tooltip: "#label#",
+											on: {
+		
+												onItemClick() {
+		
+													if (!self.closed) {
+		
+														if (self.incidentReport.confirm === true) {
+		
+															let ireportType = window.em.getByField(EntityType.IMS_INCIDENT_TYPE, "id", self.incidentReport.incidentType.id);
+		
+															if (Array.isArray(ireportType.incidentTypeCauses) && ireportType.incidentTypeCauses.length > 0 && (!self.incidentReport.alarms || self.incidentReport.alarms.length === 0)) {
+		
+																let comboCauseValue = $$("fieldCause-combo-" + self.uid).getValue();
+		
+																if (comboCauseValue === "") {
+		
+																	let ms = new MessageBox(MessageBox.WARN, i18n.t("LBL_CAUSE_OF_INCIDENT_NOT_SELECTED_DESCRIPTION"), onAccept, null);
+																	ms.show();
+		
+																	function onAccept() {
+		
+																		$$("tab-details-" + self.uid).show();
+																	};
+																}
+															}
+		
+															let endpoint = util.fillTemplate(self.config.actionEndpoints.forward, {
+																id: self.incidentReport.id
+															});
+		
+															if (Array.isArray(self.currentSequenceOfState.taskStates) && self.currentSequenceOfState.taskStates.length) {
+		
+																let tasksCompleted = self.currentSequenceOfState.taskStates.filter(e => e.completedAt && e.incidentTypeTask.mandatory === true);
+																let tasksMandatory = self.currentSequenceOfState.taskStates.filter(e => e.incidentTypeTask.mandatory === true);
+		
+																if (tasksCompleted.length === tasksMandatory.length) {
+		
+																	self.parent.restAction(endpoint);
+																}
+		
+															} else {
+		
+																self.parent.restAction(endpoint);
+															}
+		
+														} else {
+		
+															if (sameUser) {
+		
+																let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_CONFIRM_CONFIRM_DESCRIPTION"), onAccept, null);
+																ms.show();
+		
+															} else {
+		
+																let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_CONFIRM_CONFIRM_DESCRIPTION"), function() {
+		
+																	onAccept(true);
+		
+																}, null);
+																ms.show();
+															}
+		
+															function onAccept(changeUser) {
+		
+																let userId = (changeUser) ? self.userData.id : null;
+		
+																let body = {
+																	id: self.incidentReport.id,
+																	userId: userId
+																};
+		
+																let endpoint = util.fillTemplate(self.config.actionEndpoints.confirm, body);
+																self.parent.restAction(endpoint);
+															}
+														}
 													}
 												}
 											}
 										}
-									}
+									]
 								},
+								
 								{ height: 20 }
 							]
 						},

@@ -25,7 +25,7 @@ import com.revenga.rits.front.openitsdao.model.DataSource;
 import com.revenga.rits.front.openitsdao.model.DataSourceValue;
 import com.revenga.rits.front.openitsdao.service.DataSourceService;
 
-import jline.internal.Log;
+import javassist.NotFoundException;
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 
@@ -33,9 +33,9 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 public class VODataSourceAdapter {
 
-	protected static final String FILE_DATASOURCES_CONSTANTS = "datasources.properties";
+	protected static final String FILE_CONFIG_PROPERTIES = "config.properties";
 	
-	private static Map<String, String> props = ConfigProperty.getInstance().getProperties(FILE_DATASOURCES_CONSTANTS);
+	private static Map<String, String> props = ConfigProperty.getInstance().getProperties(FILE_CONFIG_PROPERTIES);
 	
 	public static final int DATA_SOURCE_GET_ALARMS = getPropertyInt("get_alarms");
 	public static final int DATA_SOURCE_GET_ALARMS_ARRAY = getPropertyInt("get_alarms_array");
@@ -228,6 +228,7 @@ public class VODataSourceAdapter {
 	
 	public static final int DATA_SOURCE_SEND_CONFIRM_INCIDENT_REPORT = getPropertyInt("send_confirm_incident_report");
 	public static final int DATA_SOURCE_SEND_FORWARD_INCIDENT_REPORT = getPropertyInt("send_forward_incident_report");
+	public static final int DATA_SOURCE_SEND_BACKWARD_INCIDENT_REPORT = getPropertyInt("send_backward_incident_report");
 	public static final int DATA_SOURCE_SEND_CANCEL_INCIDENT_REPORT = getPropertyInt("send_cancel_incident_report");
 	public static final int DATA_SOURCE_SEND_ASSING_USER_INCIDENT_REPORT = getPropertyInt("send_assign_user_incident_report");
 	public static final int DATA_SOURCE_SEND_FINALIZE_TASK_INCIDENT_REPORT = getPropertyInt("send_finalize_task_incident_report");
@@ -323,26 +324,38 @@ public class VODataSourceAdapter {
 		List<Map<String, Object>> list = null;
 		DataSource dataSource = null;
 
-		if (dataSourceId != null) {
-
-			if (params == null) {
-				
-				list = (List<Map<String, Object>>) cacheManager.getEntitiesCached(dataSourceId);
-			}
+		try {
 			
-			if (list == null) {
+			if (dataSourceId != null) {
+
+				if (params == null) {
+					
+					list = (List<Map<String, Object>>) cacheManager.getEntitiesCached(dataSourceId);
+				}
 				
-				dataSource = dataSourceService.getById(dataSourceId);
-				
-				if (dataSource != null && dataSource.getDataSourceType().getId().equals(DATA_SOURCE_TYPE_GRAPHQL_QUERY)) {
-				
-					list = getListFromGraphql(dataSource, params);
+				if (list == null) {
+					
+					dataSource = dataSourceService.getById(dataSourceId);
+					
+					if (dataSource != null && dataSource.getDataSourceType().getId().equals(DATA_SOURCE_TYPE_GRAPHQL_QUERY)) {
+					
+						list = getListFromGraphql(dataSource, params);
+					}
 				}
 			}
+			else {
+				
+				throw new NotFoundException("Datasource not found. Check config.properties");
+			}
+			
+			log.debug(String.format("Query time multiple items in datasourceId %d (%d ms.)", dataSourceId,
+					Duration.between(instantIni, Instant.now()).toMillis()));
+			
+		} catch (NotFoundException e) {
+			
+			log.error(e.getMessage());
+			log.debug(ExceptionUtils.getStackTrace(e));
 		}
-		
-		log.debug(String.format("Query time multiple items in datasourceId %d (%d ms.)", dataSourceId,
-				Duration.between(instantIni, Instant.now()).toMillis()));
 
 		return list;
 	}
@@ -353,18 +366,29 @@ public class VODataSourceAdapter {
 		Map<String, Object> output = null;
 		DataSource dataSource = dataSourceService.getById(dataSourceId);
 
-		if (dataSource != null && dataSource.getDataSourceType().getId().equals(DATA_SOURCE_TYPE_GRAPHQL_QUERY)) {
+		try {
+			if (dataSource != null && dataSource.getDataSourceType().getId().equals(DATA_SOURCE_TYPE_GRAPHQL_QUERY)) {
 
-			List<Map<String, Object>> list = getListFromGraphql(dataSource, params);
+				List<Map<String, Object>> list = getListFromGraphql(dataSource, params);
 
-			if (!CollectionUtils.isEmpty(list)) {
+				if (!CollectionUtils.isEmpty(list)) {
 
-				output = list.get(0);
+					output = list.get(0);
+				}
 			}
+			else {
+				
+				throw new NotFoundException("Datasource not found. Check config.properties");
+			}
+			
+			log.debug(String.format("Query time single item in datasourceId %d (%d ms.)", dataSourceId,
+					Duration.between(instantIni, Instant.now()).toMillis()));
+			
+		} catch (NotFoundException e) {
+			
+			log.error(e.getMessage());
+			log.debug(ExceptionUtils.getStackTrace(e));
 		}
-		
-		log.debug(String.format("Query time single item in datasourceId %d (%d ms.)", dataSourceId,
-				Duration.between(instantIni, Instant.now()).toMillis()));
 
 		return output;
 	}
@@ -375,18 +399,30 @@ public class VODataSourceAdapter {
 		Map<String, Object> output = null;
 		DataSource dataSource = dataSourceService.getById(dataSourceId);
 
-		if (dataSource != null && dataSource.getDataSourceType().getId().equals(DATA_SOURCE_TYPE_GRAPHQL_MUTATION)) {
+		try {
+			
+			if (dataSource != null && dataSource.getDataSourceType().getId().equals(DATA_SOURCE_TYPE_GRAPHQL_MUTATION)) {
 
-			List<Map<String, Object>> list = putGraphql(dataSource, input);
+				List<Map<String, Object>> list = putGraphql(dataSource, input);
 
-			if (!CollectionUtils.isEmpty(list)) {
+				if (!CollectionUtils.isEmpty(list)) {
 
-				output = list.get(0);
+					output = list.get(0);
+				}
 			}
+			else {
+			
+				throw new NotFoundException("Datasource not found. Check config.properties");
+			}
+			
+			log.debug(String.format("Mutation time single item in datasourceId %d (%d ms.)", dataSourceId,
+					Duration.between(instantIni, Instant.now()).toMillis()));
+			
+		} catch (NotFoundException e) {
+			
+			log.error(e.getMessage());
+			log.debug(ExceptionUtils.getStackTrace(e));
 		}
-		
-		log.debug(String.format("Mutation time single item in datasourceId %d (%d ms.)", dataSourceId,
-				Duration.between(instantIni, Instant.now()).toMillis()));
 
 		return output;
 	}
@@ -397,13 +433,25 @@ public class VODataSourceAdapter {
 		DataSource dataSource = dataSourceService.getById(dataSourceId);
 		List<Map<String, Object>> list = null;
 
-		if (dataSource != null && dataSource.getDataSourceType().getId().equals(DATA_SOURCE_TYPE_GRAPHQL_MUTATION)) {
+		try {
+			
+			if (dataSource != null && dataSource.getDataSourceType().getId().equals(DATA_SOURCE_TYPE_GRAPHQL_MUTATION)) {
 
-			list = putGraphql(dataSource, input);	
+				list = putGraphql(dataSource, input);	
+			}
+			else {
+				
+				throw new NotFoundException("Datasource not found. Check config.properties");
+			}
+
+			log.debug(String.format("Mutation time multiple items in datasourceId %d (%d ms.)", dataSourceId,
+					Duration.between(instantIni, Instant.now()).toMillis()));
+			
+		} catch (NotFoundException e) {
+			
+			log.error(e.getMessage());
+			log.debug(ExceptionUtils.getStackTrace(e));
 		}
-
-		log.debug(String.format("Mutation time multiple items in datasourceId %d (%d ms.)", dataSourceId,
-				Duration.between(instantIni, Instant.now()).toMillis()));
 		
 		return list;		
 	}

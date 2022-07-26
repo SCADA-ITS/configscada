@@ -25,9 +25,9 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 public abstract class FrontManager {
 	
-	protected static final String FILE_DATASOURCES_CONSTANTS = "datasources.properties";
+	protected static final String FILE_CONFIG_PROPERTIES = "config.properties";
 	
-	protected static Map<String, String> props = ConfigProperty.getInstance().getProperties(FILE_DATASOURCES_CONSTANTS);
+	protected static Map<String, String> props = ConfigProperty.getInstance().getProperties(FILE_CONFIG_PROPERTIES);
 
 	protected Scheduler scheduler;
 	protected boolean enabled;

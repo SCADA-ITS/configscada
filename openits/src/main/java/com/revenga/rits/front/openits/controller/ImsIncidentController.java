@@ -139,6 +139,14 @@ public class ImsIncidentController {
 
 		return new ResponseEntity<>(imsIncidentReportBO.forward(id), HttpStatus.OK);
 	}
+	
+	@PostMapping(value = "/reports/{id}/backward")
+	@ApiOperation(value = "Backward Incident Report", notes = "Backward Incident Report")
+	public ResponseEntity<Boolean> backwardIncidentReport(
+			@ApiParam(name = "id", type = "String", value = "Incident report id", example = "ImsIncidentReport:1", required = true) @PathVariable String id) {
+
+		return new ResponseEntity<>(imsIncidentReportBO.backward(id), HttpStatus.OK);
+	}
 
 	@PostMapping(value = "/reports/{id}/cancel")
 	@ApiOperation(value = "Cancel Incident Report", notes = "Cancel Incident Report")

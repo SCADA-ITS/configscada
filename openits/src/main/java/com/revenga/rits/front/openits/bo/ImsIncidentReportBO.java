@@ -17,6 +17,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import com.revenga.rits.front.openits.adapter.impl.GraphqlAdapter;
 import com.revenga.rits.front.openits.adapter.impl.VODataSourceAdapter;
 import com.revenga.rits.front.openits.model.UserSessionUI;
+import com.revenga.rits.front.openits.util.ConfigProperty;
 
 @Service
 public class ImsIncidentReportBO extends GenericBO {
@@ -29,6 +30,10 @@ public class ImsIncidentReportBO extends GenericBO {
 
 	@Autowired
 	UserBO userBO;
+	
+	private static final String FILE_CONFIG_PROPERTIES = "config.properties";
+	
+	private static Map<String, String> props = ConfigProperty.getInstance().getProperties(FILE_CONFIG_PROPERTIES);
 
 	static final String FIELD_INCIDENT_REPORT_LOGS = "incidentReportLogs";
 	static final String FIELD_INCIDENT_REPORT_ID = "incidentReportId";
@@ -43,20 +48,20 @@ public class ImsIncidentReportBO extends GenericBO {
 	static final String FIELD_ID = "id";
 
 	static final String VALUE_DEFAULT_LEVEL = "INFO";
-	static final String LOG_TYPE_PARAM_STATE = "LogTypeParam:1:1";
-	static final String LOG_TYPE_PARAM_ARG_1 = "LogTypeParam:1:2";
-
-	static final String LOG_SUBTYPE_INCIDENT_REPORT_CREATED = "LogSubtype:7";
-	static final String LOG_SUBTYPE_INCIDENT_REPORT_CONFIRMED = "LogSubtype:8";
-	static final String LOG_SUBTYPE_INCIDENT_REPORT_FORWARDED = "LogSubtype:9";
-	static final String LOG_SUBTYPE_INCIDENT_REPORT_CANDELED = "LogSubtype:10";
-	static final String LOG_SUBTYPE_ASSIGNED_USER = "LogSubtype:11";
-	static final String LOG_SUBTYPE_ASSIGNED_CAUSE = "LogSubtype:12";
-	static final String LOG_SUBTYPE_FINALIZED_TASK = "LogSubtype:13";
-	static final String LOG_SUBTYPE_EXECUTED_TASK_PLAN = "LogSubtype:14";
-	static final String LOG_SUBTYPE_ATTACHED_DOCUMENT = "LogSubtype:15";
-	static final String LOG_SUBTYPE_DELETED_DOCUMENT = "LogSubtype:16";
-	static final String LOG_SUBTYPE_INCIDENT_REPORT_CHANGED = "LogSubtype:18";
+	static final String LOG_TYPE_PARAM_STATE = props.get("log_type_param_state");
+	static final String LOG_TYPE_PARAM_ARG_1 = props.get("log_type_param_arg_1");
+	
+	static final String LOG_SUBTYPE_INCIDENT_REPORT_CREATED = props.get("log_subtype_incident_report_created");
+	static final String LOG_SUBTYPE_INCIDENT_REPORT_CONFIRMED = props.get("log_subtype_incident_report_confirmed");
+	static final String LOG_SUBTYPE_INCIDENT_REPORT_CHANGE_STATE = props.get("log_subtype_incident_report_change_state");
+	static final String LOG_SUBTYPE_INCIDENT_REPORT_CANCELED = props.get("log_subtype_incident_report_canceled");
+	static final String LOG_SUBTYPE_ASSIGNED_USER = props.get("log_subtype_assigned_user");
+	static final String LOG_SUBTYPE_ASSIGNED_CAUSE = props.get("log_subtype_assigned_cause");
+	static final String LOG_SUBTYPE_FINALIZED_TASK = props.get("log_subtype_finalized_task");
+	static final String LOG_SUBTYPE_EXECUTED_TASK_PLAN = props.get("log_subtype_executed_task_plan");
+	static final String LOG_SUBTYPE_ATTACHED_DOCUMENT = props.get("log_subtype_attached_document");
+	static final String LOG_SUBTYPE_DELETED_DOCUMENT = props.get("log_subtype_deleted_document");
+	static final String LOG_SUBTYPE_INCIDENT_REPORT_CHANGED = props.get("log_subtype_incident_report_changed");
 
 	static final String FIELD_INCIDENT_STATE = "incidentState";
 	static final String FIELD_LABEL_ALIAS = "labelAlias";
@@ -408,6 +413,101 @@ public class ImsIncidentReportBO extends GenericBO {
 		}
 		return null;
 	}
+	
+	@SuppressWarnings("unchecked")
+	private Object getPreviousStateLabelAlias(final Map<String, Object> incidentReport) {
+
+		Object previousStateLabelAlias = null;
+		
+		if (incidentReport != null && incidentReport.containsKey(FIELD_SEQUENCE_OF_STATES)
+				&& incidentReport.containsKey(FIELD_INCIDENT_STATE)) {
+
+			Object objIncidentState = incidentReport.get(FIELD_INCIDENT_STATE);
+
+			if (objIncidentState instanceof Map) {
+
+				Map<String, Object> incidentState = (Map<String, Object>) objIncidentState;
+
+				Object objIncidentStateId = incidentState.get(FIELD_ID);
+
+				if (objIncidentStateId != null) {
+
+					Object objSequenceOfStates = incidentReport.get(FIELD_SEQUENCE_OF_STATES);
+
+					if (objSequenceOfStates instanceof List) {
+
+						List<?> sequenceOfStates = (List<?>) objSequenceOfStates;
+
+						if (!sequenceOfStates.isEmpty()) {
+
+							// Current state not is the first
+
+							Object objFirstSequenceOfState = sequenceOfStates.get(0);
+
+							if (objFirstSequenceOfState instanceof Map) {
+
+								Map<String, Object> firstSequenceOfState = (Map<String, Object>) objFirstSequenceOfState;
+
+								if (firstSequenceOfState.containsKey(FIELD_STATE)) {
+
+									Object objFirstState = firstSequenceOfState.get(FIELD_STATE);
+
+									if (objFirstState instanceof Map) {
+
+										Map<String, Object> firstState = (Map<String, Object>) objFirstState;
+
+										Object objFirstStateId = firstState.get(FIELD_ID);
+
+										if (objFirstStateId != null && !objFirstStateId.equals(objIncidentStateId)) {
+
+											for (int i = 0; i < sequenceOfStates.size() && previousStateLabelAlias == null; i++) {
+												
+												Object objSequenceOfState = sequenceOfStates.get(i); 
+
+												if (objSequenceOfState instanceof Map) {
+
+													Map<String, Object> sequenceOfState = (Map<String, Object>) objSequenceOfState;
+
+													if (sequenceOfState.containsKey(FIELD_STATE)) {
+
+														Object objState = sequenceOfState.get(FIELD_STATE);
+
+														if (objState instanceof Map) {
+
+															Map<String, Object> state = (Map<String, Object>) objState;
+
+															Object objStateId = state.get(FIELD_ID);
+
+															if (objStateId != null && objStateId.equals(objIncidentStateId) && i > 0) {
+																
+																Object objPrevSequenceOfState = sequenceOfStates.get(i - 1);
+																
+																if (objPrevSequenceOfState instanceof Map) {
+
+																	Object previousState = ((Map<String, Object>) objPrevSequenceOfState).get(FIELD_STATE);
+
+																	if (previousState instanceof Map) {
+
+																		previousStateLabelAlias = ((Map<String, Object>) previousState).get(FIELD_LABEL_ALIAS);
+																	}
+																}
+															}
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		return previousStateLabelAlias;
+	}
 
 	@SuppressWarnings("unchecked")
 	private Object getCauseAlias(final Map<String, Object> incidentReport, final String incidentTypeCauseId) {
@@ -641,8 +741,35 @@ public class ImsIncidentReportBO extends GenericBO {
 
 			if (Boolean.TRUE.equals(res)) {
 
-				res = addLog(incidentReport, id, LOG_SUBTYPE_INCIDENT_REPORT_FORWARDED,
+				res = addLog(incidentReport, id, LOG_SUBTYPE_INCIDENT_REPORT_CHANGE_STATE,
 						getNextStateLabelAlias(incidentReport), null);
+			}
+		}
+
+		return res;
+	}
+	
+	public Boolean backward(String id) {
+
+		Boolean res = false;
+
+		Map<String, Object> incidentReport = voDataSourceAdapter
+				.get(VODataSourceAdapter.DATA_SOURCE_GET_INCIDENT_REPORT, new Object[] { id });
+
+		if (incidentReport != null) {
+			Map<String, Object> input = new HashMap<>();
+
+			input.put(FIELD_INCIDENT_REPORT_ID, id);
+
+			Map<String, Object> incidentReportRes = voDataSourceAdapter
+					.put(VODataSourceAdapter.DATA_SOURCE_SEND_BACKWARD_INCIDENT_REPORT, input);
+
+			res = checkMapIsBoolean(incidentReportRes);
+
+			if (Boolean.TRUE.equals(res)) {
+
+				res = addLog(incidentReport, id, LOG_SUBTYPE_INCIDENT_REPORT_CHANGE_STATE,
+						getPreviousStateLabelAlias(incidentReport), null);
 			}
 		}
 
@@ -678,7 +805,7 @@ public class ImsIncidentReportBO extends GenericBO {
 
 			if (Boolean.TRUE.equals(res)) {
 
-				addLog(incidentReport, id, LOG_SUBTYPE_INCIDENT_REPORT_CANDELED, LBL_IMS_INCIDENT_STATE_CANCELED, null);
+				addLog(incidentReport, id, LOG_SUBTYPE_INCIDENT_REPORT_CANCELED, LBL_IMS_INCIDENT_STATE_CANCELED, null);
 			}
 		}
 

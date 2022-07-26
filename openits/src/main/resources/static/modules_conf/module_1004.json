@@ -27,6 +27,7 @@
 		"cancel": "incidents/reports/${id}/cancel/${userId}",
 		"confirm": "incidents/reports/${id}/confirm/${userId}",
 		"forward": "incidents/reports/${id}/forward",
+		"backward": "incidents/reports/${id}/backward",
 		"finalizeTask": "incidents/reports/${id}/finalize_task/${taskId}",
 		"assignUserIncidentReport": "incidents/reports/${id}/user/${userId}",
 		"addLogIncidentReport": "incidents/add_log_incident_report",
