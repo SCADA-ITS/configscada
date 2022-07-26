@@ -1,6 +1,8 @@
 package com.revenga.rits.front.openits.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.persistence.Entity;
@@ -36,9 +38,9 @@ public class UserSessionUI implements Serializable {
 	public static final Integer SECURE_TOKEN_LENGTH = 20;
 	
 	private Map<String, Object> user;
+	private List<EntityChangedUI> entitiesChanged = new ArrayList<>();
 	private String sessionId;
 	private Long loginSince;
 	private String access;
 	private Long validUntil;
 }
-

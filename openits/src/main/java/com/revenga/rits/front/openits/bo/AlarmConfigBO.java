@@ -11,12 +11,18 @@ import org.springframework.stereotype.Service;
 
 import com.revenga.rits.front.openits.adapter.impl.GraphqlAdapter;
 import com.revenga.rits.front.openits.adapter.impl.VODataSourceAdapter;
+import com.revenga.rits.front.openits.model.EntityChangedUI;
 
 @Service
 public class AlarmConfigBO extends GenericBO {
 
 	@Autowired
 	GraphqlAdapter graphqlAdapter;
+	
+	@Autowired 
+	SessionBO sessionBO;
+	
+	public static final int ENTITY_TYPE_ALARM_CONFIG = getPropertyInt("entityType.alarmConfig");
 
 	@PostConstruct
 	private void initialize() {
@@ -57,6 +63,9 @@ public class AlarmConfigBO extends GenericBO {
 
 		Map<String, Object> createdAlarmConfig = voDataSourceAdapter
 				.put(VODataSourceAdapter.DATA_SOURCE_CREATE_ALARM_CONFIG, (Map<String, Object>) input);
+		
+		sessionBO.addEntityChanged(ENTITY_TYPE_ALARM_CONFIG, (String) createdAlarmConfig.get("id"), EntityChangedUI.ENTITY_CREATED,
+				this.getItem((String) createdAlarmConfig.get("id")));
 
 		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_CREATE_ALARM_CONFIG, createdAlarmConfig);
 	}
@@ -66,6 +75,9 @@ public class AlarmConfigBO extends GenericBO {
 
 		Map<String, Object> updatedAlarmConfig = voDataSourceAdapter
 				.put(VODataSourceAdapter.DATA_SOURCE_UPDATE_ALARM_CONFIG, (Map<String, Object>) input);
+		
+		sessionBO.addEntityChanged(ENTITY_TYPE_ALARM_CONFIG, (String) updatedAlarmConfig.get("id"), EntityChangedUI.ENTITY_UPDATED,
+				this.getItem((String) updatedAlarmConfig.get("id")));
 
 		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_UPDATE_ALARM_CONFIG, updatedAlarmConfig);
 	}
@@ -78,6 +90,9 @@ public class AlarmConfigBO extends GenericBO {
 
 		Map<String, Object> deletedAlarmConfig = voDataSourceAdapter
 				.put(VODataSourceAdapter.DATA_SOURCE_DELETE_ALARM_CONFIG, input);
+		
+		sessionBO.addEntityChanged(ENTITY_TYPE_ALARM_CONFIG, (String) deletedAlarmConfig.get("id"), EntityChangedUI.ENTITY_DELETED,
+				this.getItem((String) deletedAlarmConfig.get("id")));
 
 		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_DELETE_ALARM_CONFIG, deletedAlarmConfig);
 	}

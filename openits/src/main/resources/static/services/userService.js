@@ -3,6 +3,7 @@ import GenericModule from "../modules/genericModule.js";
 import UserControlPanel  from "../component/general/userControlPanel.js";
 import MessageBox  from "../component/messageBox.js";
 import SubscriptorService from "./subscriptorService.js";
+import EntitiesManager from "../managers/entitiesManager.js";
 
 export default class UserService extends GenericModule {
 	
@@ -89,7 +90,9 @@ export default class UserService extends GenericModule {
 									
 									if (sessionData.access === LOGIN_MESSAGE.AUTHORIZED.id) {
 										
-										webix.storage.session.put(SESSION_STORAGE_SESSION_DATA, sessionData);	
+										webix.storage.session.put(SESSION_STORAGE_SESSION_DATA, sessionData);
+										
+										changeEntity(sessionData.entitiesChanged);
 									}
 									else {
 										
@@ -175,6 +178,33 @@ export default class UserService extends GenericModule {
 			      
 			    	subscriptorService.sendMessage(SubscriptorService.TYPE_SESSION_LOGOUT, "Main closed");
 			    });	
+			}
+		}
+		
+		function changeEntity(entitiesChanged) {
+			
+			if (Array.isArray(entitiesChanged) && entitiesChanged.length > 0) {
+				
+				entitiesChanged.forEach(entitiesChange => {
+					
+					let entityType = window.em.getEntityTypeById(entitiesChange.entityTypeId);
+					
+					if (entityType) {
+						
+						if (entitiesChange.operation === EntitiesManager.ACTION_CREATED) {
+						
+							window.em.add(entityType, entitiesChange.id, entitiesChange.entity);
+						}
+						else if (entitiesChange.operation === EntitiesManager.ACTION_UPDATED) {
+							
+							window.em.update(entityType, entitiesChange.id, entitiesChange.entity);
+						}
+						else if (entitiesChange.operation === EntitiesManager.ACTION_DELETED) {
+							
+							window.em.delete(entityType, entitiesChange.id);
+						}	
+					}
+				});
 			}
 		}
 	}

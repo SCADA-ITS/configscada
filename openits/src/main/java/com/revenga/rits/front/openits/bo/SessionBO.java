@@ -21,6 +21,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.SerializationUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
@@ -31,6 +32,7 @@ import org.springframework.stereotype.Service;
 
 import com.revenga.rits.front.openits.adapter.impl.GraphqlTypeAdapter;
 import com.revenga.rits.front.openits.adapter.impl.VODataSourceAdapter;
+import com.revenga.rits.front.openits.model.EntityChangedUI;
 import com.revenga.rits.front.openits.model.UserSessionUI;
 import com.revenga.rits.front.openits.service.CacheManager;
 
@@ -122,7 +124,7 @@ public class SessionBO extends GenericBO {
 
 		log.debug("/login: " + userSession);
 
-		return userSession;
+		return getUserSessionWithoutChanges(userSession);
 	}
 
 	public UserSessionUI login(String userName, String password, HttpSession httpSession) {
@@ -174,7 +176,7 @@ public class SessionBO extends GenericBO {
 			}
 		}
 
-		return userSession;
+		return getUserSessionWithoutChanges(userSession);
 	}
 
 	public UserSessionUI keepAlive(HttpSession httpSession) {
@@ -184,8 +186,12 @@ public class SessionBO extends GenericBO {
 		userSession = keepAlive(httpSession.getId());
 
 		log.debug("/keepAlive: " + httpSession.getId() + " => " + userSession);
-
-		return userSession;
+		
+		UserSessionUI userSessionCloned = SerializationUtils.clone(userSession);
+		
+		userSession.getEntitiesChanged().clear();
+		
+		return userSessionCloned;
 	}
 
 	public UserSessionUI logout(HttpSession httpSession) {
@@ -219,13 +225,13 @@ public class SessionBO extends GenericBO {
 	}
 	
 	public List<UserSessionUI> getUserSessions() {
-
-		return this.sessions.values().stream().collect(Collectors.toList());
+		
+		return this.sessions.values().stream().map(this::getUserSessionWithoutChanges).collect(Collectors.toList());
 	}
 
 	public UserSessionUI getUserSession(String sessionId) {
 
-		return this.sessions.get(sessionId);
+		return getUserSessionWithoutChanges(this.sessions.get(sessionId));
 	}
 
 	public List<UserSessionUI> getUserSessions(Map<String, Object> user) {
@@ -234,13 +240,23 @@ public class SessionBO extends GenericBO {
 
 		synchronized (sessions) {
 
-			userSessionsList = this.sessions.values().stream().filter(
+			userSessionsList = this.sessions.values().stream().map(this::getUserSessionWithoutChanges).filter(
 					e -> e.getUser().get(UserSessionUI.USER_FIELD_ID).equals(user.get(UserSessionUI.USER_FIELD_ID)))
 					.collect(Collectors.toList());
 
 		}
 
 		return userSessionsList;
+	}
+	
+	public void addEntityChanged(int entityTypeId, String id, int operation, Map<String, Object> entity) {
+		
+		synchronized (sessions) {
+			
+			EntityChangedUI entityChanged = new EntityChangedUI(entityTypeId, id, operation, Instant.now().toEpochMilli(), entity);
+			
+			this.sessions.values().forEach(userSession -> userSession.getEntitiesChanged().add(entityChanged));
+		}
 	}
 
 	public void updateUser(Map<String, Object> user) {
@@ -559,5 +575,14 @@ public class SessionBO extends GenericBO {
 		auditLog.put(FIELD_AUDIT_LOG_AUDIT_LOG_VALUES, logValues);
 		
 		return auditLogBO.send(auditLogs);
+	}
+	
+	private UserSessionUI getUserSessionWithoutChanges(UserSessionUI userSession) {
+
+		UserSessionUI userSessionCloned = SerializationUtils.clone(userSession);
+		
+		userSessionCloned.setEntitiesChanged(null);
+		
+		return userSessionCloned;
 	}
 }

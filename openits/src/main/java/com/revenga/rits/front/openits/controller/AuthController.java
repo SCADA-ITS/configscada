@@ -26,14 +26,12 @@ import com.revenga.rits.front.openits.model.UserSessionUI;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import lombok.extern.log4j.Log4j2;
 
 @RestController
 @CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT,
 		RequestMethod.DELETE })
 @RequestMapping(value = "/api/v1/auth", produces = { "application/json", "application/xml" })
 @Api(value = "Auth", tags = { "AUTH" })
-@Log4j2
 public class AuthController {
 	
 	@Autowired

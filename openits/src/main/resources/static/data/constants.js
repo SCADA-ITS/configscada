@@ -86,9 +86,6 @@ const VIEW_TYPE_WINDOW = 2;
 const VIEW_TYPE_CUSTOM = 3;
 const VIEW_TYPE_EXTERNAL = 4;
 
-const ENTITY_TYPE_MODE_PERMANENT = 1;
-const ENTITY_TYPE_MODE_TEMPORARY = 2;
-
 // Params for windowed ui
 const WindowParam = Object.freeze({
 	HAS_MIN_BUTTON: 1,
@@ -142,26 +139,26 @@ const ENTITIES_MANAGER_SCHEDULER_SECS = 600;
 
 // Type of entities to load
 const EntityType = Object.freeze({
-	ELEMENT_TYPE: { id: 1, mode: ENTITY_TYPE_MODE_PERMANENT, syncLoad: false, endpoint: appConfig.restUrl + "element_types", load: true },
-	ELEMENT_TYPE_STATE: { id: 2, mode: ENTITY_TYPE_MODE_PERMANENT, syncLoad: false, endpoint: appConfig.restUrl + "element_type_states", load: true },
-	ALARM_TYPE: { id: 3, mode: ENTITY_TYPE_MODE_PERMANENT, syncLoad: false, endpoint: appConfig.restUrl + "alarms/alarm_types", load: true },
-	ALARM_LEVEL: { id: 4, mode: ENTITY_TYPE_MODE_PERMANENT, syncLoad: false, endpoint: appConfig.restUrl + "alarms/alarm_levels", load: true },
-	ALARM_CONFIG: { id: 5, mode: ENTITY_TYPE_MODE_PERMANENT, syncLoad: false, endpoint: appConfig.restUrl + "alarms/alarm_configs", load: true },
-	MODULE: { id: 6, mode: ENTITY_TYPE_MODE_PERMANENT, syncLoad: true, endpoint: appConfig.restUrl + "modules", load: true },
-	ELEMENT: { id: 7, mode: ENTITY_TYPE_MODE_PERMANENT, syncLoad: false, endpoint: appConfig.restUrl + "elements", load: true },
-	LOG_TYPE: { id: 8, mode: ENTITY_TYPE_MODE_PERMANENT, syncLoad: false, endpoint: appConfig.restUrl + "log_types", load: true },
-	USER: { id: 9, mode: ENTITY_TYPE_MODE_PERMANENT, syncLoad: true, endpoint: appConfig.restUrl + "users/with_role", load: true },
-	PLAN_SCHEDULE_STATE: { id: 11, mode: ENTITY_TYPE_MODE_PERMANENT, syncLoad: false, endpoint: appConfig.restUrl + "plans/plan_schedule_state_types", load: true },
-	IMS_INCIDENT_GROUP: {id: 12, mode: ENTITY_TYPE_MODE_PERMANENT, syncLoad: false, endpoint: appConfig.restUrl + "incidents/imsIncidentGroups", load: true },
-	IMS_INCIDENT_TYPE: {id: 13, mode: ENTITY_TYPE_MODE_PERMANENT, syncLoad: false, endpoint: appConfig.restUrl + "incidents/imsIncidentTypes", load: true },
-	IMS_INCIDENT_LEVEL: {id: 14, mode: ENTITY_TYPE_MODE_PERMANENT, syncLoad: false, endpoint: appConfig.restUrl + "incidents/incidentLevels", load: true },
-	STRETCH: {id: 15, mode: ENTITY_TYPE_MODE_PERMANENT,syncLoad: false, endpoint: appConfig.restUrl + "locations/stretchs", load: true },
-	ELEMENT_VALUE_STATE: { id: 16, mode: ENTITY_TYPE_MODE_PERMANENT, syncLoad: false, endpoint: appConfig.restUrl + "element_type_states/element_values_states", load: true },
-	PLAN_STATE_TYPE: { id: 17, mode: ENTITY_TYPE_MODE_PERMANENT, syncLoad: false, endpoint: appConfig.restUrl + "plans/plan_state_types", load: true },
-	PLAN_ORDER_TYPE: { id: 18, mode: ENTITY_TYPE_MODE_PERMANENT, syncLoad: false, endpoint: appConfig.restUrl + "plans/plan_order_types", load: true },
-	PLAN_ORDER_STATE_TYPE: { id: 19, mode: ENTITY_TYPE_MODE_PERMANENT, syncLoad: false, endpoint: appConfig.restUrl + "plans/plan_order_state_types", load: true },
-	COMMAND_ELEMENT_TYPE: { id: 20, mode: ENTITY_TYPE_MODE_PERMANENT, syncLoad: false, endpoint: appConfig.restUrl + "plans/plan_order_state_types", load: true },
-	IMS_TASK_TYPE: { id: 21, mode: ENTITY_TYPE_MODE_PERMANENT, syncLoad: false, endpoint: appConfig.restUrl + "incidents/taskTypes", load: true }
+	ELEMENT_TYPE: { id: 1, syncLoad: false, endpoint: appConfig.restUrl + "element_types", load: true },
+	ELEMENT_TYPE_STATE: { id: 2, syncLoad: false, endpoint: appConfig.restUrl + "element_type_states", load: true },
+	ALARM_TYPE: { id: 3, syncLoad: false, endpoint: appConfig.restUrl + "alarms/alarm_types", load: true },
+	ALARM_LEVEL: { id: 4, syncLoad: false, endpoint: appConfig.restUrl + "alarms/alarm_levels", load: true },
+	ALARM_CONFIG: { id: 5, syncLoad: false, endpoint: appConfig.restUrl + "alarms/alarm_configs", load: true },
+	MODULE: { id: 6, syncLoad: true, endpoint: appConfig.restUrl + "modules", load: true },
+	ELEMENT: { id: 7, syncLoad: false, endpoint: appConfig.restUrl + "elements", load: true },
+	LOG_TYPE: { id: 8, syncLoad: false, endpoint: appConfig.restUrl + "log_types", load: true },
+	USER: { id: 9, syncLoad: true, endpoint: appConfig.restUrl + "users/with_role", load: true },
+	PLAN_SCHEDULE_STATE: { id: 11, syncLoad: false, endpoint: appConfig.restUrl + "plans/plan_schedule_state_types", load: true },
+	IMS_INCIDENT_GROUP: {id: 12, syncLoad: false, endpoint: appConfig.restUrl + "incidents/imsIncidentGroups", load: true },
+	IMS_INCIDENT_TYPE: {id: 13, syncLoad: false, endpoint: appConfig.restUrl + "incidents/imsIncidentTypes", load: true },
+	IMS_INCIDENT_LEVEL: {id: 14, syncLoad: false, endpoint: appConfig.restUrl + "incidents/incidentLevels", load: true },
+	STRETCH: {id: 15,syncLoad: false, endpoint: appConfig.restUrl + "locations/stretchs", load: true },
+	ELEMENT_VALUE_STATE: { id: 16, syncLoad: false, endpoint: appConfig.restUrl + "element_type_states/element_values_states", load: true },
+	PLAN_STATE_TYPE: { id: 17, syncLoad: false, endpoint: appConfig.restUrl + "plans/plan_state_types", load: true },
+	PLAN_ORDER_TYPE: { id: 18, syncLoad: false, endpoint: appConfig.restUrl + "plans/plan_order_types", load: true },
+	PLAN_ORDER_STATE_TYPE: { id: 19, syncLoad: false, endpoint: appConfig.restUrl + "plans/plan_order_state_types", load: true },
+	COMMAND_ELEMENT_TYPE: { id: 20, syncLoad: false, endpoint: appConfig.restUrl + "plans/plan_order_state_types", load: true },
+	IMS_TASK_TYPE: { id: 21, syncLoad: false, endpoint: appConfig.restUrl + "incidents/taskTypes", load: true }
 });
 
 
