@@ -67,7 +67,7 @@
 		</dependency>
 		
 		<dependency>
-			<groupId>com.revenga.rits.front</groupId>
+			<groupId>com.revenga.rits.lib</groupId>
 			<artifactId>encrypt</artifactId>
 			<version>${encrypt.version}</version>
 		</dependency>
