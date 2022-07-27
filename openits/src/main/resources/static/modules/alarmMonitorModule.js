@@ -53,6 +53,7 @@ export default class AlarmMonitorModule extends GenericModule {
 		this.intervalAlarmMonitor = undefined;
 		this.queue = new Queue();
 		this.idCallbackStats = undefined;
+//		this.editAlarmConfigsPermission = util.module.isAllowedPermission(this.config.requiredPermissions.edit);
 	}
 
 	loadData() {
@@ -218,7 +219,11 @@ export default class AlarmMonitorModule extends GenericModule {
 						$$(self.uid).show();
 						
 						$$("loading-switcher-" + self.uid).hide();
-						$$("switcher-views-" + self.uid).show();
+						
+						if ($$("switcher-views-" + self.uid)) {
+
+							$$("switcher-views-" + self.uid).show();
+						}						
 					}
 				}
 				
@@ -951,61 +956,60 @@ export default class AlarmMonitorModule extends GenericModule {
 						borderless: true
 					}
 					
-					let alarmTypeSwitcher = {
-							
-						view: "segmented",
-						css: "segment-custom-2",
-						value: "alarm-type-switcher-show-all-" + self.uid,
-						width: 250,
-						options: [
-							{
-								id: "alarm-type-switcher-show-all-" + self.uid,
-								value: i18n.t("LBL_ALL")
-							},
-							{
-								id: "alarm-type-switcher-show-auto-" + self.uid,
-								value: i18n.t("LBL_AUTO")
-							},
-							{
-								id: "alarm-type-switcher-show-manual-" + self.uid,
-								value: i18n.t("LBL_MANUAL")
-							}
-						],
-						tooltip: function(obj) {
-	
-							if (obj.id === "alarm-type-switcher-show-all-" + self.uid) {
-	
-								return i18n.t("LBL_SHOW_ALL_ALARM_TYPES");
-							}
-							else if (obj.id === "alarm-type-switcher-show-auto-" + self.uid) {
-	
-								return i18n.t("LBL_SHOW_ALARM_TYPE_AUTO");
-							}
-							else if (obj.id === "alarm-type-switcher-show-manual-" + self.uid) {
-	
-								return i18n.t("LBL_SHOW_ALARM_TYPE_MANUAL");
-							}
-						},
-						on: {
-							onChange(newv, oldv) {
-	
-								if (newv === "alarm-type-switcher-show-all-" + self.uid) {
-	
-									self.filterAlarmType = undefined;
-								}
-								else if (newv === "alarm-type-switcher-show-auto-" + self.uid) {
-	
-									self.filterAlarmType = ALARM_TYPE_AUTO;
-								}
-								else if (newv === "alarm-type-switcher-show-manual-" + self.uid) {
-	
-									self.filterAlarmType = ALARM_TYPE_MANUAL;
-								}
-								
-								onSelectAlarmType();
-							}
-						}
-					};
+//					let alarmTypeSwitcher = {						
+//						view: "segmented",
+//						css: "segment-custom-2",
+//						value: "alarm-type-switcher-show-all-" + self.uid,
+//						width: 250,
+//						options: [
+//							{
+//								id: "alarm-type-switcher-show-all-" + self.uid,
+//								value: i18n.t("LBL_ALL")
+//							},
+//							{
+//								id: "alarm-type-switcher-show-auto-" + self.uid,
+//								value: i18n.t("LBL_AUTO")
+//							},
+//							{
+//								id: "alarm-type-switcher-show-manual-" + self.uid,
+//								value: i18n.t("LBL_MANUAL")
+//							}
+//						],
+//						tooltip: function(obj) {
+//	
+//							if (obj.id === "alarm-type-switcher-show-all-" + self.uid) {
+//	
+//								return i18n.t("LBL_SHOW_ALL_ALARM_TYPES");
+//							}
+//							else if (obj.id === "alarm-type-switcher-show-auto-" + self.uid) {
+//	
+//								return i18n.t("LBL_SHOW_ALARM_TYPE_AUTO");
+//							}
+//							else if (obj.id === "alarm-type-switcher-show-manual-" + self.uid) {
+//	
+//								return i18n.t("LBL_SHOW_ALARM_TYPE_MANUAL");
+//							}
+//						},
+//						on: {
+//							onChange(newv, oldv) {
+//	
+//								if (newv === "alarm-type-switcher-show-all-" + self.uid) {
+//	
+//									self.filterAlarmType = undefined;
+//								}
+//								else if (newv === "alarm-type-switcher-show-auto-" + self.uid) {
+//	
+//									self.filterAlarmType = ALARM_TYPE_AUTO;
+//								}
+//								else if (newv === "alarm-type-switcher-show-manual-" + self.uid) {
+//	
+//									self.filterAlarmType = ALARM_TYPE_MANUAL;
+//								}
+//								
+//								onSelectAlarmType();
+//							}
+//						}
+//					};
 					
 					let actionPanelSwitcher = {
 						view: "segmented",
@@ -1093,7 +1097,7 @@ export default class AlarmMonitorModule extends GenericModule {
 						}
 					}
 
-					viewContentToolbar.elements.push(alarmTypeSwitcher);
+//					viewContentToolbar.elements.push(alarmTypeSwitcher);
 					viewContentToolbar.elements.push({});
 
 					if (self.moduleAction != null && self.args.selectedPks && self.args.selectedPks.length > 1) {
@@ -1418,6 +1422,7 @@ export default class AlarmMonitorModule extends GenericModule {
 									tooltip: i18n.t("LBL_ALARMS_MONITOR_CONFIG_DESCRIPTION"),
 									type: "iconTop",
 									icon: "mdi mdi-cog",
+//									hidden: !self.editAlarmConfigsPermission,
 									on: {
 
 										onItemClick() {

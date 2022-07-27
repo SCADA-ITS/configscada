@@ -17,6 +17,8 @@ export default class AlarmModule extends GenericModule {
 		this.stompClient = undefined;
 		this.requestReport = true;
 		this.config = module.config;
+		
+//		this.editAlarmConfigsPermission = util.module.isAllowedPermission(this.config.requiredPermissions.edit);
 
 	}
 
@@ -986,7 +988,7 @@ export default class AlarmModule extends GenericModule {
 										{ height: 24 },
 										{
 											view: "label",
-											label: i18n.t("LBL_ALARM_CONFIG_ALIAS"),
+											label: i18n.t("LBL_DESCRIPTION"),
 											align: "left",
 											height: 20
 										},
@@ -1032,36 +1034,66 @@ export default class AlarmModule extends GenericModule {
 										},
 										{ height: 24 },
 										{
-											id: "label-alarm-" + self.uid,
-											view: "label",
-											label: `<span id="labelAlarm" class="form-text-font" ${ellipsis}>${labelAlarm}</span>`,
-											align: "left",
-											height: 20,
-											tooltip: function(obj) {
+											cols: [
+												{
+													id: "label-alarm-" + self.uid,
+													view: "label",
+													label: `<span id="labelAlarm" class="form-text-font" ${ellipsis}>${labelAlarm}</span>`,
+													align: "left",
+													height: 20,
+													tooltip: function(obj) {
 
-												let textWidth;
-												let nodeValue = $$("label-alarm-" + self.uid).getNode().querySelector("#labelAlarm");
-												let allowedSpace = $$("label-alarm-" + self.uid).getNode().clientWidth;
+														let textWidth;
+														let nodeValue = $$("label-alarm-" + self.uid).getNode().querySelector("#labelAlarm");
+														let allowedSpace = $$("label-alarm-" + self.uid).getNode().clientWidth;
 
-												if (nodeValue != null) {
+														if (nodeValue != null) {
 
-													let elementStyle = window.getComputedStyle(nodeValue);
-													let fontSize = elementStyle.getPropertyValue('font-size');
-													let fontFamily = elementStyle.getPropertyValue('font-family');
-													let letterSpacing = elementStyle.getPropertyValue('letter-spacing');
+															let elementStyle = window.getComputedStyle(nodeValue);
+															let fontSize = elementStyle.getPropertyValue('font-size');
+															let fontFamily = elementStyle.getPropertyValue('font-family');
+															let letterSpacing = elementStyle.getPropertyValue('letter-spacing');
 
-													textWidth = util.ui.calculateTextWidth(labelAlarm, fontFamily, fontSize, letterSpacing);
-												}
+															textWidth = util.ui.calculateTextWidth(labelAlarm, fontFamily, fontSize, letterSpacing);
+														}
 
-												if (textWidth > allowedSpace * 0.95) {
+														if (textWidth > allowedSpace * 0.95) {
 
-													return labelAlarm;
+															return labelAlarm;
 
-												} else {
+														} else {
 
-													return "";
-												}
-											},
+															return "";
+														}
+													}
+												},
+												{
+													width: 20,
+													borderless: true,
+													css: { "padding": "1px 5px 1px 0px;" },
+//													hidden: !self.editAlarmConfigsPermission,
+													template: `<span class="alarm-config-button ico webix_icon mdi mdi-pencil"></span>`,
+													on: {
+														onAfterRender: function() {
+
+															let alarmConfigButton = this.getNode().querySelector(".alarm-config-button");
+
+															if (alarmConfigButton) {
+
+																alarmConfigButton.addEventListener("click", function() {
+
+																	let moduleActionId = self.config.action.alarmConfig;
+																	let mod = util.module.getFromModuleAction(moduleActionId);
+																	let moduleAction = { id: moduleActionId };
+																	let args = { selectedPks: [self.alarmConfig.id] };
+
+																	util.module.open(mod, moduleAction, VIEW_TYPE_WINDOW, null, args);
+																});
+															}
+														}
+													}
+												},
+											]
 										},
 										{ height: 24 },
 										{
@@ -1106,13 +1138,13 @@ export default class AlarmModule extends GenericModule {
 											align: "left",
 											height: 27
 										},
-										{ height: 24 },
-										{
-											view: "label",
-											label: i18n.t("LBL_ALARM_TYPE"),
-											align: "left",
-											height: 27
-										},
+//										{ height: 24 },
+//										{
+//											view: "label",
+//											label: i18n.t("LBL_ALARM_TYPE"),
+//											align: "left",
+//											height: 27
+//										},
 										{ height: 24 },
 										{
 											view: "label",
@@ -1127,8 +1159,8 @@ export default class AlarmModule extends GenericModule {
 									rows: [
 										{ height: 24 },
 										getAlarmLevelIcon(this.alarmLevelId),
-										{ height: 24 },
-										getAlarmTypeIcon(this.alarmConfig.alarmType.id),
+										//{ height: 24 },
+										//getAlarmTypeIcon(this.alarmConfig.alarmType.id),
 										{ height: 24 },
 										getAlarmDeactivationIcon(this.alarm)
 									]

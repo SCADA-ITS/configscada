@@ -27,5 +27,11 @@
 		"critical": [ "AlarmLevel:5", "AlarmLevel:6" ],
 		"warn": [ "AlarmLevel:3", "AlarmLevel:4" ],
 		"info": [ "AlarmLevel:1", "AlarmLevel:2" ] 
+	},
+	"requiredPermissions": {
+		"edit": "SystemPermission:19"		
+	},
+	"action": {
+		"alarmConfig": 103501
 	}
 }

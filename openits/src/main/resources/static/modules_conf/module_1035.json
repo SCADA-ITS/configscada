@@ -1,11 +1,15 @@
 {
 	"moduleAction": {
-		"edit": 103501
+		"edit": 103501,
+		"add": 103502,
+		"delete": 103503
 	},
 	"restEndpoints": {
 	 	"thresholdOperations": "thresholdOperations",
 	 	"updateAlarmConfig": "alarms/updateAlarmConfig",
-		"alarmConfig": "alarms/alarm_configs/${id}"
+		"alarmConfig": "alarms/alarm_configs/${id}",
+		"deleteAlarmConfig": "alarms/deleteAlarmConfig/${id}",
+		"elementTypeStates": "element_types/${id}/elementTypeStates"
 	 },
 	 "levels": {
 		"critical": [ "AlarmLevel:5", "AlarmLevel:6" ],
