@@ -5,13 +5,13 @@
 	"elementTypeVentilation": "ElementType:2001",
 	"elementTypeLighting": "ElementType:2002",
 	"ventilationModeOptions" :[
-		{"id": "1", "label" : "LBL_AUTO"},
-		{"id": "2", "label" : "LBL_AUTO_MAINTENANCE"},
-		{"id": "0", "label" : "LBL_MANUAL"}
+		{"id": "1", "label" : "LBL_MODE_VENT_AUTO"},
+		{"id": "2", "label" : "LBL_MODE_VENT_AUTO_MAINTENANCE"},
+		{"id": "0", "label" : "LBL_MODE_VENT_MANUAL"}
 	],
 	"lightingModeOptions" :[
-		{"id": "1", "label" : "LBL_MODE_AUTO"},
-		{"id": "0", "label" : "LBL_MODE_MANUAL"}
+		{"id": "1", "label" : "LBL_MODE_LIGHT_AUTO"},
+		{"id": "0", "label" : "LBL_MODE_LIGHT_MANUAL"}
 	],
 	"restEndpoints": {
 		"elementByIdWithoutChilds": "elements/${id}/withoutChilds",
