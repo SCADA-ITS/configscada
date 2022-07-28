@@ -39,7 +39,8 @@ export default class IncidentWizardAction {
 							incidentTypeId: parent.incidentData.incidentTypeId,
 							locationId: parent.incidentData.locationId,
 							affectionStretchIds: parent.incidentData.affectionStretchsSelected.map(e => e.id),
-							userId: parent.incidentData.userId
+							userId: parent.incidentData.userId,
+							roadImpactId: parent.incidentData.roadImpact ? parent.incidentData.roadImpact.id : undefined
 						};
 			
 						webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + parent.config.actionEndpoints.create, body).then(function(data) {
@@ -251,6 +252,7 @@ export default class IncidentWizardAction {
 		let summaryIncidentType = $$("summary-incident-type-" + parent.uid);
 		let summaryLocation = $$("summary-location-" + parent.uid);
 		let summaryStretch = $$("summary-stretch-" + parent.uid);
+		let summaryRoadImpact = $$("summary-road-impact-" + parent.uid);
 		let summaryUser = $$("summary-user-" + parent.uid);
 		let summaryLevel = $$("summary-level-" + parent.uid);
 
@@ -268,6 +270,27 @@ export default class IncidentWizardAction {
 			else {
 				parent.incidentData.stretchId = undefined;
 				parent.incidentData.stretch = undefined;
+			}
+			
+			parent.incidentData.roadImpacts = undefined;
+			parent.incidentData.roadImpact = undefined;
+			
+			if (parent.incidentData.stretchId && parent.incidentData.incidentTypeId) {
+				
+				let incidentType = window.em.getByField(EntityType.IMS_INCIDENT_TYPE, "id", parent.incidentData.incidentTypeId);
+				
+				if (incidentType) {
+					
+					if (Array.isArray(incidentType.incidentTypeStretchs) && incidentType.incidentTypeStretchs.length > 0) {
+						
+						let incidentTypeStretch = incidentType.incidentTypeStretchs.find(e => e.stretch.id === parent.incidentData.stretchId);
+						
+						if (incidentTypeStretch && Array.isArray(incidentTypeStretch.roadImpacts)) {
+				
+							parent.incidentData.roadImpacts = incidentTypeStretch.roadImpacts;	
+						}
+					}
+				}
 			}
 
 			let locationsSelected = parent.dtLocations.getSelectedItems();
@@ -548,7 +571,12 @@ export default class IncidentWizardAction {
 	
 						summaryStretch.setValues({ affectionStretchs: parent.incidentData.affectionStretchsSelected });
 					}
+					
+					if (summaryRoadImpact) {
 	
+						summaryRoadImpact.setValues({ roadImpact: parent.incidentData.roadImpact });
+					}
+					
 					if (summaryUser) {
 	
 						summaryUser.setValues({ user: parent.incidentData.user });
@@ -596,6 +624,8 @@ export default class IncidentWizardAction {
 			parent.incidentData.stretch = undefined;
 			parent.incidentData.locationId = undefined;
 			parent.incidentData.location = undefined;
+			parent.incidentData.roadImpacts = undefined;
+			parent.incidentData.roadImpact = undefined;
 
 			parent.dtLocations.clear();
 			

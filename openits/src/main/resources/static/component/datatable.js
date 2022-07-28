@@ -2241,6 +2241,7 @@ export default class DataTable {
 				else {
 
 					args.selectedPks = selectedPks;
+					args.selectedRows = this.getSelectedItems();
 					
 					if (!self.command_exec_callback(gridCommand)) {
 					
@@ -2302,7 +2303,7 @@ export default class DataTable {
 
 				if (self.events && self.events[DataTable.EventTypes.ON_ITEM_DBL_CLIC]) {
 
-					eval(self.events[DataTable.EventTypes.ON_ITEM_DBL_CLIC])(self.getSelectedIds());
+					eval(self.events[DataTable.EventTypes.ON_ITEM_DBL_CLIC])(self.getSelectedIds(), self.getSelectedItems());
 				}
 				else {
 
@@ -2331,7 +2332,7 @@ export default class DataTable {
 
 				grid.attachEvent("onSelectChange", function() {
 
-					eval(self.events[DataTable.EventTypes.ON_SELECT_ROW])(self.getSelectedIds());
+					eval(self.events[DataTable.EventTypes.ON_SELECT_ROW])(self.getSelectedIds(), self.getSelectedItems());
 				});
 			}
 
@@ -2623,7 +2624,7 @@ export default class DataTable {
 			
 			if (cmdCallback) {
 			
-				cmdCallback.function(this.getSelectedIds());
+				cmdCallback.function(this.getSelectedIds(), self.getSelectedItems());
 			}
 		}															
 				

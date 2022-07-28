@@ -91,70 +91,50 @@ export default class IncidentWizardDrawStepIncidentType extends IncidentWizardDr
 							type: "bottom",
 							hide: false
 						});
-
-						let restUrl;
-						if (parent.incidentData.stretchId) {
-							restUrl = appConfig.restUrl + util.fillTemplate(parent.config.restEndpoints.incidentTypesByStretch, { id: parent.incidentData.stretchId });
-						} else {
-							restUrl = appConfig.restUrl + parent.config.restEndpoints.incidentTypes;
-						}
-
-						webix.ajax().get(restUrl).then(function(dat) {
-
-							let dataIncidentTypes;
+						
+						let incidentTypesByGroupFiltered = window.em.getAll(EntityType.IMS_INCIDENT_TYPE);
+						
+						if (Array.isArray(incidentTypesByGroupFiltered) && incidentTypesByGroupFiltered.length > 0) {
 							
-							if (dat != null) {
-
-								let incidentTypesByStretch = dat.json();
-
-								if (Array.isArray(incidentTypesByStretch) && incidentTypesByStretch.length > 0) {
-
-									let incidentTypes = window.em.getAll(EntityType.IMS_INCIDENT_TYPE);
-
-									let incidentTypesByGroup = incidentTypes.filter(e => e.incidentGroup.id === data[0]);
-
-									if (Array.isArray(incidentTypesByGroup) && incidentTypesByGroup.length > 0) {
-
-										let incidentTypesByGroupFiltered = incidentTypesByGroup.filter(itByGroup => {
-
-											return (incidentTypesByStretch.find(itByStretch => itByStretch.id === itByGroup.id) != undefined);
-										});
-
-										dataIncidentTypes = incidentTypesByGroupFiltered.map(e => {
-
-											return {
-												id: e.id,
-												alias: e.alias,
-												description: e.description,
-												userId: e.defaultUser.id,
-												user: e.defaultUser.name,
-												levelId: e.incidentLevel.id,
-												levelLabelAlias: i18n.t(e.incidentLevel.labelAlias),
-												levelIcon: e.incidentLevel.icon,
-												levelColor: e.incidentLevel.color
-											}
-										});
+							incidentTypesByGroupFiltered = incidentTypesByGroupFiltered.filter(e => e.incidentGroup.id === data[0]);
+							
+							if (Array.isArray(incidentTypesByGroupFiltered) && incidentTypesByGroupFiltered.length > 0) {
+								
+								let dataIncidentTypes = incidentTypesByGroupFiltered.map(e => {
+		
+									let incidentTypeMapped = {};
+									
+									incidentTypeMapped[IncidentWizardModule.FIELD_INCIDENT_TYPE_ID] = e.id;
+									incidentTypeMapped[IncidentWizardModule.FIELD_INCIDENT_TYPE_ALIAS] = e.alias;
+									incidentTypeMapped[IncidentWizardModule.FIELD_INCIDENT_TYPE_DESCRIPTION] = e.description;
+									incidentTypeMapped[IncidentWizardModule.FIELD_INCIDENT_USER_ID] = e.defaultUser.id;
+									incidentTypeMapped[IncidentWizardModule.FIELD_INCIDENT_USER] = e.defaultUser.name;
+									incidentTypeMapped[IncidentWizardModule.FIELD_INCIDENT_LEVEL_ID] = e.incidentLevel.id;
+									incidentTypeMapped[IncidentWizardModule.FIELD_INCIDENT_LEVEL_LABEL_ALIAS] = i18n.t(e.incidentLevel.labelAlias);
+									incidentTypeMapped[IncidentWizardModule.FIELD_INCIDENT_LEVEL_ICON] = e.incidentLevel.icon;
+									incidentTypeMapped[IncidentWizardModule.FIELD_INCIDENT_LEVEL_COLOR] = e.incidentLevel.color;
+									
+									return incidentTypeMapped;
+								});
+												
+								$$("view-incident-types-" + parent.uid).hideProgress();
+								parent.incidentWizardAction.validateStep(parent.incidentWizardAction.getCurrentStep(), onValidateStep);
+								
+								function onValidateStep(valid) {
+							
+									if (Array.isArray(dataIncidentTypes) && dataIncidentTypes.length > 0) {
+									
+										parent.dtIncidentTypes.add(dataIncidentTypes);
+										parent.dtIncidentTypes.selectByIndex(0);	
 									}
-								}
-							}
-
-							$$("view-incident-types-" + parent.uid).hideProgress();
-							parent.incidentWizardAction.validateStep(parent.incidentWizardAction.getCurrentStep(), onValidateStep);
-							
-							function onValidateStep(valid) {
-								
-								if (Array.isArray(dataIncidentTypes) && dataIncidentTypes.length > 0) {
-								
-									parent.dtIncidentTypes.add(dataIncidentTypes);
-									parent.dtIncidentTypes.selectByIndex(0);	
-								}
-	
-								if (callbackEnable) {
-	
-									callbackEnable(true);
+		
+									if (callbackEnable) {
+		
+										callbackEnable(true);
+									}	
 								}	
 							}
-						});
+						}
 					}				
 				};
 

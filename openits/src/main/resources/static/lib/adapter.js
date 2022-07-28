@@ -329,6 +329,7 @@ export let adapter = {
 									dataItem.locationAlias = incidentReport.location.alias;
 									dataItem.incidentStateLabelAlias = incidentReport.incidentState.labelAlias;
 									dataItem.currentUserName = incidentReport.currentUser.name;
+									dataItem.currentUserId = incidentReport.currentUser.id;
 
 									gridData.data.push(dataItem);
 

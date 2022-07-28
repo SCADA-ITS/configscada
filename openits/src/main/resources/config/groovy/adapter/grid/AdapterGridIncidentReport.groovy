@@ -25,7 +25,7 @@ class AdapterGridIncidentReport extends AdapterGrid{
 	static final String FIELD_OBJECT_LOCATION = "location";
 	static final String FIELD_OBJECT_AFFECTION_STRETCH = "affectionStretch";
 	static final String FIELD_OBJECT_INCIDENT_LEVEL = "incidentLevel";
-	static final String FIELD_OBJECT_CURREN_USER = "currentUser";
+	static final String FIELD_OBJECT_CURRENT_USER = "currentUser";
 	static final String FIELD_OBJECT_INCIDENT_STATE = "incidentState";
 
 	static final String FIELD_INCIDENT_LEVEL_ID = "incidentLevelId";
@@ -42,7 +42,8 @@ class AdapterGridIncidentReport extends AdapterGrid{
 	static final String FIELD_INCIDENT_STATE_LABEL_ALIAS = "incidentStateLabelAlias";
 	static final String FIELD_INCIDENT_LEVEL_LABEL_ALIAS = "incidentLevelLabelAlias";
 
-	static final String FIELD_CURREN_USER_NAME = "currentUserName";
+	static final String FIELD_CURRENT_USER_NAME = "currentUserName";
+	static final String FIELD_CURRENT_USER_ID = "currentUserId";
 
 	public AdapterGridIncidentReport(CacheManager cacheManager, VO2UIAdapter vo2uiAdapter, org.apache.logging.log4j.Logger log) {
 		
@@ -184,17 +185,18 @@ class AdapterGridIncidentReport extends AdapterGrid{
 
 	void flattenCurrentUser(Map<String, Object> dataRow) {
 
-		if (dataRow.containsKey(FIELD_OBJECT_CURREN_USER)) {
+		if (dataRow.containsKey(FIELD_OBJECT_CURRENT_USER)) {
 
-			Object obj = dataRow.get(FIELD_OBJECT_CURREN_USER);
+			Object obj = dataRow.get(FIELD_OBJECT_CURRENT_USER);
 
 			if (obj instanceof Map) {
 
 				Map<String, Object> map = (Map<String, Object>) obj;
 
-				dataRow.put(FIELD_CURREN_USER_NAME, map.get(FIELD_LABEL_NAME));
+				dataRow.put(FIELD_CURRENT_USER_ID, map.get(FIELD_ID));
+				dataRow.put(FIELD_CURRENT_USER_NAME, map.get(FIELD_LABEL_NAME));
 			}
-			dataRow.remove(FIELD_OBJECT_CURREN_USER);
+			dataRow.remove(FIELD_OBJECT_CURRENT_USER);
 		}
 	}
 }

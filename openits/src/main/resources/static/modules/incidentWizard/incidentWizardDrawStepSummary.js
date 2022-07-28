@@ -127,6 +127,93 @@ export default class IncidentWizardDrawStepSummary extends IncidentWizardDrawSte
 																}
 															},
 															{
+																id: "summary-road-impact-" + parent.uid,
+																height: 50,
+																borderless: true,
+																template: function(obj) {
+
+																	let roadImpact = obj.roadImpact;
+																	
+																	let summaryRoadImpact = `<div>
+																								<span class="ico webix_icon mdi mdi-selection"></span>
+																								<span class="field">${i18n.t("LBL_INCIDENT_ROAD_IMPACT")}</span>
+																							</div>`;
+																			
+																			
+																	if (Array.isArray(parent.incidentData.roadImpacts) && parent.incidentData.roadImpacts.length > 0) {
+																		
+																		summaryRoadImpact += `<div class="value" style="max-width: ${maxWidthLabels}px;">${roadImpact && roadImpact.alias ? roadImpact.alias : ''}
+																								<span title='${i18n.t('LBL_EDIT')}' class='change-road-impact-button webix_icon mdi mdi-pencil'></span>
+																							</div>`;
+																	}
+																	else {
+																		
+																		summaryRoadImpact += `<div class="value" style="max-width: ${maxWidthLabels}px;">${i18n.t("LBL_UNAVAILABLE")}</div>`;
+																	}
+																	
+																	return summaryRoadImpact;
+																},
+																on: {
+																	onAfterRender: function() {
+
+																		let changeRoadImpactButton = this.getNode().querySelector(".change-road-impact-button");
+
+																		if (changeRoadImpactButton) {
+
+																			changeRoadImpactButton.addEventListener("click", function() {
+
+																				let dialogRoadImpacts = webix.copy(SearchDialogBox.CUSTOM);
+																				let label = i18n.t("LBL_ROAD_IMPACTS");
+													
+																				dialogRoadImpacts.data = [];
+													
+																				dialogRoadImpacts.pkField = "id"
+																				dialogRoadImpacts.showEmptyRowCol = SearchDialogBox.ID_NOT_SELECTED;
+																				dialogRoadImpacts.fields = ["alias=LBL_ALIAS", "description=LBL_DESCRIPTION"];
+													
+																				if (Array.isArray(parent.incidentData.roadImpacts) && parent.incidentData.roadImpacts.length > 0) {
+													
+																					parent.incidentData.roadImpacts.forEach(p => {
+													
+																						dialogRoadImpacts.data.push({
+																							id: p.id,
+																							alias: p.alias,
+																							description: p.description
+																						})
+																					});
+																				}
+													
+																				let s = new SearchDialogBox(label, dialogRoadImpacts, function(items) {
+													
+																					if (Array.isArray(items) && items.length === 1) {
+																						
+																						let roadImpact = items[0];
+																						
+																						if (roadImpact.id === SearchDialogBox.ID_NOT_SELECTED) {
+																							
+																							parent.incidentData.roadImpact = undefined;
+																							$$("summary-road-impact-" + parent.uid).setValues({
+																								roadImpact: undefined
+																							});
+																						}
+																						else {
+																							
+																							parent.incidentData.roadImpact = roadImpact;
+																							
+																							$$("summary-road-impact-" + parent.uid).setValues({
+																								roadImpact: roadImpact
+																							});	
+																						}
+																					}
+																				});
+													
+																				s.show();
+																			});
+																		}
+																	}
+																}
+															},
+															{
 																id: "summary-location-" + parent.uid,
 																height: 50,
 																borderless: true,
@@ -158,7 +245,7 @@ export default class IncidentWizardDrawStepSummary extends IncidentWizardDrawSte
 
 																	if (parent.assignAnotherPermissions) {
 																					
-																		summaryUser += `<div class="value" style="max-width: ${maxWidthLabels}px;">${user}<span title='${i18n.t('LBL_CMD_ASSIGN')}' class='changeuser-button webix_icon mdi mdi-account-arrow-left'></span></div>`;
+																		summaryUser += `<div class="value" style="max-width: ${maxWidthLabels}px;">${user}<span title='${i18n.t('LBL_CMD_ASSIGN')}' class='changeuser-button webix_icon mdi mdi-pencil'></span></div>`;
 
 																	} else {
 

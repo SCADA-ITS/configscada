@@ -66,7 +66,9 @@ export default class IncidentWizardModule extends GenericModule {
 			incidentLevelColor: undefined,
 			userId: undefined,
 			user: undefined,
-			stretchs: undefined
+			stretchs: undefined,
+			roadImpacts: undefined,
+			roadImpact: undefined,
 		}
 	}
 

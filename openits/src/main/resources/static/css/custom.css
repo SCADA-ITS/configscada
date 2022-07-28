@@ -4227,12 +4227,14 @@ audio {
 	margin-bottom: 10px !important;
 }
 
+.change-road-impact-button
 .changeuser-button {
 	font-size: 21px;
 	position: absolute;
     margin: -3px 0px 0px 15px;	
 }
 
+.change-road-impact-button:hover
 .changeuser-button:hover {
 	background-color: #F4F5F9;
 	border-radius: 50%;

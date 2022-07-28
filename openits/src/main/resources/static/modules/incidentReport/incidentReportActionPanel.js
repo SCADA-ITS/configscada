@@ -392,7 +392,13 @@ export default class IncidentReportActionPanel {
 					onItemClick() {
 
 						let moduleAction = { id: self.parent.module.config.moduleAction.assign };
-						let args = { selectedPks: [self.incidentReport.id] };
+						let args = { 
+							selectedPks: [self.incidentReport.id],
+							selectedRows: [{
+								id: self.incidentReport.id,
+								currentUserId: self.incidentReport.currentUser.id 
+							}] 
+						};
 
 						util.module.open(self.parent.module, moduleAction, null, null, args);
 					}
@@ -973,7 +979,7 @@ export default class IncidentReportActionPanel {
 				});
 
 				self.parent.restAction(endpoint);
-			};
+			}
 		}
 
 

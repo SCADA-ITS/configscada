@@ -73,7 +73,6 @@ export default class IncidentReportModule extends GenericModule {
 
 	}
 	
-
 	actionConfirm() {
 
 		let self = this;
@@ -82,61 +81,48 @@ export default class IncidentReportModule extends GenericModule {
 		let sameRoleCounter = 0;
 		let sameUserCounter = 0;
 
-		if (Array.isArray(this.args.selectedPks) && this.args.selectedPks.length > 0) {
+		if (Array.isArray(this.args.selectedRows) && this.args.selectedRows.length > 0) {
 
-			let pendingRequest = this.args.selectedPks.length;
+			self.args.selectedRows.forEach(e => {
+				
+				if (!e.confirm) {
 
-			self.args.selectedPks.forEach(e => {
-
-				webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.incidentReportSummary, { id: e })).then(function(dat) {
-
-					if (dat != null) {
-
-						incidentReport = dat.json();
-
-						if (!incidentReport.confirm) {
-
-							currentUser = window.em.getByField(EntityType.USER, "id", incidentReport.currentUser.id);
-							currentUserRole = currentUser.role.id;
-							sameUser =(self.userData.id === currentUser.id);
-							sameRole = (self.userData.role.id === currentUserRole);
-							incidentReportsToConfirm.push(incidentReport.id);
-							sameRoleCounter = (sameRole) ? ++sameRoleCounter : sameRoleCounter;
-							sameUserCounter = (sameUser) ? ++sameUserCounter : sameUserCounter;							
-						}
-					}
-
-					if (--pendingRequest == 0) {
-
-						if (incidentReportsToConfirm.length > 0) {
-
-							if (sameUserCounter === incidentReportsToConfirm.length) {
-
-								let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_CONFIRM_CONFIRM_DESCRIPTION"), onAccept, null);
-								ms.show();
-
-							} else if ((self.autoAssignPermissions && !self.assignAnotherPermissions) && (sameRoleCounter === incidentReportsToConfirm.length) || self.assignAnotherPermissions) {
-
-								let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_CONFIRM_CONFIRM_DESCRIPTION"), function() {
-
-									onAccept(true);
-								}, null);
-								ms.show();
-
-							} else {
-
-								let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_INCIDENT_CONFIRM_NOT_POSSIBLE_TO_CONFIRM_DESCRIPTION"), null, null);
-								ms.show();
-							}
-
-						} else {
-
-							let ms = new MessageBox(MessageBox.WARN, i18n.t("LBL_INCIDENT_CONFIRM_NOTHING_TO_CONFIRM_DESCRIPTION"), null, null);
-							ms.show();
-						}
-					}
-				});
+					currentUser = window.em.getByField(EntityType.USER, "id", e.currentUserId);
+					currentUserRole = currentUser.role.id;
+					sameUser =(self.userData.id === currentUser.id);
+					sameRole = (self.userData.role.id === currentUserRole);
+					incidentReportsToConfirm.push(e.id);
+					sameRoleCounter = (sameRole) ? ++sameRoleCounter : sameRoleCounter;
+					sameUserCounter = (sameUser) ? ++sameUserCounter : sameUserCounter;							
+				}
 			});
+			
+			if (incidentReportsToConfirm.length > 0) {
+
+				if (sameUserCounter === incidentReportsToConfirm.length) {
+
+					let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_CONFIRM_CONFIRM_DESCRIPTION"), onAccept, null);
+					ms.show();
+
+				} else if ((self.autoAssignPermissions && !self.assignAnotherPermissions) && (sameRoleCounter === incidentReportsToConfirm.length) || self.assignAnotherPermissions) {
+
+					let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_CONFIRM_CONFIRM_DESCRIPTION"), function() {
+
+						onAccept(true);
+					}, null);
+					ms.show();
+
+				} else {
+
+					let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_INCIDENT_CONFIRM_NOT_POSSIBLE_TO_CONFIRM_DESCRIPTION"), null, null);
+					ms.show();
+				}
+
+			} else {
+
+				let ms = new MessageBox(MessageBox.WARN, i18n.t("LBL_INCIDENT_CONFIRM_NOTHING_TO_CONFIRM_DESCRIPTION"), null, null);
+				ms.show();
+			}
 		}
 
 		function onAccept(changeUser) {
@@ -158,80 +144,64 @@ export default class IncidentReportModule extends GenericModule {
 			});
 		}
 	}
-
+	
 	actionCancel() {
 
 		let self = this;
 		let incidentReportsToDelete = [];
-		let currentUser, sameUser, currentUserRole, sameRole, incidentReport = undefined;
+		let currentUser, sameUser, currentUserRole, sameRole;
 		let sameRoleCounter = 0;
 		let sameUserCounter = 0;
 		let incidentConfirmed = 0;
 
-		if (Array.isArray(this.args.selectedPks) && this.args.selectedPks.length > 0) {
+		if (Array.isArray(this.args.selectedRows) && this.args.selectedRows.length > 0) {
 
-			let pendingRequest = this.args.selectedPks.length;
-
-			self.args.selectedPks.forEach(e => {
+			self.args.selectedRows.forEach(e => {
 				
-				webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.incidentReportSummary, { id: e })).then(function(dat) {
-
-					if (dat != null) {
-
-						incidentReport = dat.json();
-
-						if (incidentReport) {
-
-							currentUser = window.em.getByField(EntityType.USER, "id", incidentReport.currentUser.id);
-							currentUserRole = currentUser.role.id;
-							sameUser = (self.userData.id === currentUser.id);
-							sameRole = (self.userData.role.id === currentUserRole);
-							sameRoleCounter = (sameRole) ? ++sameRoleCounter : sameRoleCounter;
-							sameUserCounter = (sameUser) ? ++sameUserCounter : sameUserCounter;
-							incidentConfirmed = (incidentReport.confirm) ? ++incidentConfirmed : incidentConfirmed;				
-							incidentReportsToDelete.push(incidentReport.id);
-						} 
-					}
-
-					if (--pendingRequest == 0) {
-
-						if (incidentReportsToDelete.length > 0) {
-
-							if (sameUserCounter === incidentReportsToDelete.length) {
-
-								let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_CONFIRM_CANCEL_DESCRIPTION"), onAccept, null);
-								ms.show();
-
-							} else if ((self.autoAssignPermissions || self.assignAnotherPermissions) && (incidentConfirmed === 0)) {
-
-								if (((self.autoAssignPermissions && !self.assignAnotherPermissions) && (sameRoleCounter === incidentReportsToDelete.length)) || self.assignAnotherPermissions) {
-
-									let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_CONFIRM_CANCEL_DESCRIPTION"), function() {
-
-										onAccept(true);
-									}, null);
-									ms.show();
-
-								} else {
-
-									let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_INCIDENT_CONFIRM_NOT_POSSIBLE_TO_CANCEL_DESCRIPTION"), null, null);
-									ms.show();
-								}
-
-							} else {
-
-								let ms = new MessageBox(MessageBox.WARN, i18n.t("LBL_INCIDENT_CONFIRM_NOT_POSSIBLE_TO_CANCEL_DESCRIPTION"), null, null);
-								ms.show();
-							}
-
-						} else {
-
-							let ms = new MessageBox(MessageBox.WARN, i18n.t("LBL_INCIDENT_CONFIRM_NOTHING_TO_CANCEL_DESCRIPTION"), null, null);
-							ms.show();
-						}
-					}
-				});
+				currentUser = window.em.getByField(EntityType.USER, "id", e.currentUserId);
+				currentUserRole = currentUser.role.id;
+				sameUser = (self.userData.id === currentUser.id);
+				sameRole = (self.userData.role.id === currentUserRole);
+				sameRoleCounter = (sameRole) ? ++sameRoleCounter : sameRoleCounter;
+				sameUserCounter = (sameUser) ? ++sameUserCounter : sameUserCounter;
+				incidentConfirmed = (e.confirm) ? ++incidentConfirmed : incidentConfirmed;				
+				incidentReportsToDelete.push(e.id);
 			});
+				
+			if (incidentReportsToDelete.length > 0) {
+
+				if (sameUserCounter === incidentReportsToDelete.length) {
+
+					let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_CONFIRM_CANCEL_DESCRIPTION"), onAccept, null);
+					ms.show();
+
+				} else if ((self.autoAssignPermissions || self.assignAnotherPermissions) && (incidentConfirmed === 0)) {
+
+					if (((self.autoAssignPermissions && !self.assignAnotherPermissions) && (sameRoleCounter === incidentReportsToDelete.length)) || self.assignAnotherPermissions) {
+
+						let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_CONFIRM_CANCEL_DESCRIPTION"), function() {
+
+							onAccept(true);
+						}, null);
+						ms.show();
+
+					} else {
+
+						let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_INCIDENT_CONFIRM_NOT_POSSIBLE_TO_CANCEL_DESCRIPTION"), null, null);
+						ms.show();
+					}
+
+				} else {
+
+					let ms = new MessageBox(MessageBox.WARN, i18n.t("LBL_INCIDENT_CONFIRM_NOT_POSSIBLE_TO_CANCEL_DESCRIPTION"), null, null);
+					ms.show();
+				}
+
+			} else {
+
+				let ms = new MessageBox(MessageBox.WARN, i18n.t("LBL_INCIDENT_CONFIRM_NOTHING_TO_CANCEL_DESCRIPTION"), null, null);
+				ms.show();
+			}
 		}
 
 		function onAccept(changeUser) {
@@ -253,12 +223,12 @@ export default class IncidentReportModule extends GenericModule {
 			});
 		}
 	}
-
+	
 	actionAssign() {
 
 		let self = this;
 
-		if (Array.isArray(this.args.selectedPks) && this.args.selectedPks.length > 0) {
+		if (Array.isArray(this.args.selectedRows) && this.args.selectedRows.length > 0) {
 
 			if (self.autoAssignPermissions || self.assignAnotherPermissions) {
 
@@ -285,42 +255,27 @@ export default class IncidentReportModule extends GenericModule {
 			function onAccept(data) {
 
 				let incidentReportsToAssign = 0;
-				let pendingRequest = self.args.selectedPks.length;
 
-				self.args.selectedPks.forEach(e => {
+				self.args.selectedRows.forEach(e => {
+					
+					let currentUser = window.em.getByField(EntityType.USER, "id", e.currentUserId);
+					let currentUserRole = currentUser.role.id;
 
-					webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.incidentReportSummary, { id: e })).then(function(dat) {
+					if ((currentUserRole === self.userData.role.id) || self.assignAnotherPermissions) {
 
-						if (dat != null) {
+						incidentReportsToAssign++;
+					}
+				 });
 
-							let incident = dat.json();
+				if (incidentReportsToAssign === self.args.selectedRows.length)  {
 
-							if (incident) {
+					changeUser(data);
 
-								let currentUser = window.em.getByField(EntityType.USER, "id", incident.currentUser.id);
-								let currentUserRole = currentUser.role.id;
+				} else {
 
-								if ((currentUserRole === self.userData.role.id) || self.assignAnotherPermissions) {
-
-									incidentReportsToAssign++;
-								}
-							}
-						}
-
-						if (--pendingRequest == 0) {
-
-							if (incidentReportsToAssign === self.args.selectedPks.length)  {
-
-								changeUser(data);
-
-							} else {
-
-								let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_INCIDENT_CONFIRM_NOT_POSSIBLE_TO_ASSIGN_DESCRIPTION"), null, null);
-								ms.show();																	
-							}
-						}
-					});
-				});
+					let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_INCIDENT_CONFIRM_NOT_POSSIBLE_TO_ASSIGN_DESCRIPTION"), null, null);
+					ms.show();																	
+				}
 			}
 			
 			function changeUser(data) {
@@ -329,10 +284,10 @@ export default class IncidentReportModule extends GenericModule {
 
 				if (userId != SYSTEM_PROFILES.USER) {
 
-					self.args.selectedPks.forEach(incident => {
+					self.args.selectedRows.forEach(e => {
 
 						let body = {
-							id: incident,
+							id: e.id,
 							userId: userId
 						};
 
@@ -733,7 +688,6 @@ export default class IncidentReportModule extends GenericModule {
 		
 		if (!this.idStompSubscriptor) {
 			
-			let url = appConfig.stompUrl;
 			let topic = this.config.topic + "." + this.incidentReportId;
 	
 			let stompSubscriptorService = window.sm.getService(Services.STOMP_SUBSCRIPTOR_SERVICE);
@@ -746,8 +700,6 @@ export default class IncidentReportModule extends GenericModule {
 
 		function on_message(be, action, timestamp) {
 
-			//var data = JSON.parse(JSON.parse(message.body));
-			
 			let data = {
 				basicElementsVO: [be],
 				action: action,
@@ -791,19 +743,6 @@ export default class IncidentReportModule extends GenericModule {
 	}
 
 	disconnect_ws() {
-
-//		if (this.disconnectStomp) {
-//
-//			if (this.stompClient && this.stompClient.connected) {
-//
-//				util.stomp.disconnect(this.stompClient);
-//				this.stompClient = undefined;
-//			}
-//		}
-//		else {
-//
-//			this.disconnectStomp = true;
-//		}
 
 		if (this.idStompSubscriptor) {
 			
