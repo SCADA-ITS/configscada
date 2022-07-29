@@ -7,6 +7,12 @@
 		"alarmConfigId": "alarms/alarm_configs/${id}"
 	},
 	"action": {
-		"edit": 103501
+		"edit": 103501,
+		"add": 103502,
+		"delete": 103503
+	},
+	"requiredPermissions": {
+		"edit": "SystemPermission:19"		
 	}
+	
 }

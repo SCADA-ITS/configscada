@@ -18,7 +18,7 @@ export default class AlarmConfigListModule extends GenericGridModule {
 		this.listView = undefined;
 		this.uid = webix.uid();
 
-//		this.editAlarmConfigsPermission = util.module.isAllowedPermission(this.config.requiredPermissions.edit);
+		this.editAlarmConfigsPermission = util.module.isAllowedPermission(this.config.requiredPermissions.edit);
 	}
 
 
@@ -145,7 +145,7 @@ export default class AlarmConfigListModule extends GenericGridModule {
 
 									alarmConfigToTable.push({
 										id: alarmConfigSelected.id,
-										labelAlias: (alarmConfigSelected.alias) ? alarmConfigSelected.alias : i18n.t(alarmConfigSelected.labelAlias),
+										labelAlias: (alarmConfigSelected.labelAlias) ? i18n.t(alarmConfigSelected.labelAlias) : alarmConfigSelected.alias,
 										alarmLevelLabelAlias: i18n.t(alarmConfigSelected.alarmLevel.labelAlias),
 										measures: (alarmConfigSelected.alarmConfigMeasures && alarmConfigSelected.alarmConfigMeasures[0].alarmMeasureOperation) ? true : false,
 										alarmLevelId: alarmConfigSelected.alarmLevel.id
@@ -187,7 +187,7 @@ export default class AlarmConfigListModule extends GenericGridModule {
 					{ gridOption: { id: 15 }, value: "false" },
 					{ gridOption: { id: 16 }, value: "img/grid/alarmConfig.png" },
 					{ gridOption: { id: 17 }, value: "true" },
-					{ gridOption: { id: 20 }, value: "false" }
+					{ gridOption: { id: 20 }, value: "true" }
 				];
 
 				let metadata = {
@@ -369,14 +369,14 @@ export default class AlarmConfigListModule extends GenericGridModule {
 							id: 6,
 							enabled: true,
 							extended: false,
-							filtered: false,
+							filtered: true,
 							groupingSummary: false,
 							isEpochMilli: false,
 							isPk: false,
 							label: "LBL_ALARM_LEVEL_LABEL_ALIAS",
 							labelTooltip: "LBL_ALARM_LEVEL_LABEL_ALIAS",
 							needsTranslation: true,
-							parameterized: false,
+							parameterized: true,
 							position: 5,
 							required: true,
 							sourceField: "alarmLevelLabelAlias",
@@ -470,7 +470,7 @@ export default class AlarmConfigListModule extends GenericGridModule {
 
 										alarmConfigToTable.push({
 											id: alarmConfigToUpdate.id,
-											labelAlias: (alarmConfigToUpdate.alias) ? alarmConfigToUpdate.alias : i18n.t(alarmConfigToUpdate.labelAlias),
+											labelAlias: (alarmConfigToUpdate.labelAlias) ? i18n.t(alarmConfigToUpdate.labelAlias) : alarmConfigToUpdate.alias,
 											alarmLevelLabelAlias: i18n.t(alarmConfigToUpdate.alarmLevel.labelAlias),
 											measures: (alarmConfigToUpdate.alarmConfigMeasures && alarmConfigToUpdate.alarmConfigMeasures[0].alarmMeasureOperation) ? true : false,
 											alarmLevelId: alarmConfigToUpdate.alarmLevel.id
@@ -485,7 +485,7 @@ export default class AlarmConfigListModule extends GenericGridModule {
 					}
 				};
 
-//				if (self.editAlarmConfigsPermission) {
+				if (self.editAlarmConfigsPermission) {
 
 					metadata.gridCommands.push(
 						{
@@ -498,7 +498,7 @@ export default class AlarmConfigListModule extends GenericGridModule {
 							position: 2,
 							multiselect: false,
 							itemRequired: true,
-							moduleAction: { id: 103501 }
+							moduleAction: { id: self.config.action.edit }
 						},
 						{
 							id: 2,
@@ -509,8 +509,7 @@ export default class AlarmConfigListModule extends GenericGridModule {
 							showText: false,
 							position: 1,
 							multiselect: false,
-							itemRequired: false,
-							moduleAction: { id: 103502 }
+							itemRequired: false
 						},
 						{
 							id: 3,
@@ -522,14 +521,37 @@ export default class AlarmConfigListModule extends GenericGridModule {
 							position: 3,
 							multiselect: true,
 							itemRequired: true,
-							moduleAction: { id: 103503 }
+							moduleAction: { id: self.config.action.delete }
 						}
 					);
-//				}
+				}
+
+				let events = {};
+
+				events[DataTable.EventTypes.ON_COMMAND_EXEC] = [];
+
+				events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
+					commandId: 2,
+					function: () => {
+						let itemSelected = self.listView.getSelectedItems();
+						let mod = util.module.getFromModuleAction(self.config.action.add);
+
+						let moduleAction = {
+							id: self.config.action.add
+						};
+
+						let args = {
+							elementType: itemSelected[0],
+							callbacks: [metadata.refreshCallback]
+						};
+
+						util.module.open(mod, moduleAction, VIEW_TYPE_WINDOW, null, args);
+					}
+				});
 
 				let data = [];
 
-				self.dataTable = new DataTable(null, null, metadata, data, null);
+				self.dataTable = new DataTable(null, null, metadata, data, events);
 
 				return self.dataTable.getView();
 			}

@@ -18,7 +18,7 @@ export default class AlarmModule extends GenericModule {
 		this.requestReport = true;
 		this.config = module.config;
 		
-//		this.editAlarmConfigsPermission = util.module.isAllowedPermission(this.config.requiredPermissions.edit);
+		this.editAlarmConfigsPermission = util.module.isAllowedPermission(this.config.requiredPermissions.edit);
 
 	}
 
@@ -722,18 +722,16 @@ export default class AlarmModule extends GenericModule {
 			return view;
 		};
 
-		const getAlarmDeactivationIcon = (alarm) => {
+		const getAlarmDeactivationIcon = () => {
 
 			const NO_DEACTIVATION = "LBL_ACTIVE" ;
-			const YES_DEACTIVATION = "LBL_DEACTIVE" ;
+			const YES_DEACTIVATION = "LBL_ICON_ALARM_INACTIVE" ;
 			
-			let deactivation = alarm.deactivation !== undefined && alarm.deactivation !== null ? true : false ;
+			let deactivation = this.alarm.deactivation !== undefined && this.alarm.deactivation !== null ? true : false ;
 			let icon = deactivation ? "./img/grid/alarm_inactive.png" : "./img/grid/alarm_active.png";
 			let vlabel = deactivation ? YES_DEACTIVATION : NO_DEACTIVATION ;
-			let user = alarm.deactivationUser !== undefined && alarm.deactivationUser !== null ? alarm.deactivationUser : null ;
-			let userName = user !== null ? window.em.getByField(EntityType.USER, "id", user.id).name : "" ;
-			let userLabel = userName + " " + new Date(this.alarm.recognized).toLocaleString(i18n.getLocale(), FORMAT_NUMERIC_DATES);
-
+			let deactivationDateLabel = deactivation ? new Date(this.alarm.deactivation).toLocaleString(i18n.getLocale(), FORMAT_NUMERIC_DATES): "";
+			
 			let view;
 			
 			view = {
@@ -753,13 +751,13 @@ export default class AlarmModule extends GenericModule {
 					{
 						width: 230,
 						view: "label",
-						label: user !== null ? `<span class="alarm-view-user_label">${userLabel}</span>` : "",
+						label: `<span class="alarm-view-user_label">${deactivationDateLabel}</span>`,
 						align: "left",
-						hidden: user !== null ? false : true,
 						height: 27
 					}
 				]
 			};
+			
 			return view;
 		};
 
@@ -860,54 +858,54 @@ export default class AlarmModule extends GenericModule {
 		}
 
 
-		function paintFieldDesactivationComments(alarm) {
-
-			const LABEL_PREFIX = "LBL_";
-			let deactivationComments = {};
-
-			let label = alarm.deactivationComments ? (alarm.deactivationComments.startsWith(LABEL_PREFIX) ? i18n.t(alarm.deactivationComments) : alarm.deactivationComments) : undefined;
-
-			deactivationComments = {
-				css: "alarm-borders-bottom",
-				hidden: !label,
-				rows: [
-					{ height: 5 },
-					{
-						cols: [
-							{ width: 42 },
-							{
-								height: 55,
-								width: 626,
-								scroll: "auto",
-								css: "alarm-view-rectangle-back",
-								template: `<div class="alarm-view-comments">${label}</div>`
-							},
-							{ width: 42 }
-						]
-					},
-					{ height: 5 }
-				]
-			};
-
-			return deactivationComments;
-		}
-
+//		function paintFieldDesactivationComments(alarm) {
+//
+//			const LABEL_PREFIX = "LBL_";
+//			let deactivationComments = {};
+//
+//			let label = alarm.deactivationComments ? (alarm.deactivationComments.startsWith(LABEL_PREFIX) ? i18n.t(alarm.deactivationComments) : alarm.deactivationComments) : undefined;
+//
+//			deactivationComments = {
+//				css: "alarm-borders-bottom",
+//				hidden: !label,
+//				rows: [
+//					{ height: 5 },
+//					{
+//						cols: [
+//							{ width: 42 },
+//							{
+//								height: 55,
+//								width: 626,
+//								scroll: "auto",
+//								css: "alarm-view-rectangle-back",
+//								template: `<div class="alarm-view-comments">${label}</div>`
+//							},
+//							{ width: 42 }
+//						]
+//					},
+//					{ height: 5 }
+//				]
+//			};
+//
+//			return deactivationComments;
+//		}
+//
 
 		function windowHeight(alarm) {
 
 			let customHeight = undefined;
 			const CUSTOM_HEIGHT = {
 				WITHOUT_COMMENTS: 520,
-				WITH_ONE_COMMENT: 585,
-				WITH_TWO_COMMENTS: 645,
+				WITH_ONE_COMMENT: 575,
+				WITH_TWO_COMMENTS: 620,
 				CORRECT_FACTOR: 50
 			};
 
-			if (alarm.recognizedComments && alarm.deactivationComments) {
+			if (alarm.recognizedComments && alarm.deactivation) {
 
 				customHeight = CUSTOM_HEIGHT.WITH_TWO_COMMENTS;
 
-			} else if (alarm.recognizedComments || alarm.deactivationComments) {
+			} else if (alarm.recognizedComments || alarm.deactivation) {
 
 				customHeight = CUSTOM_HEIGHT.WITH_ONE_COMMENT;
 
@@ -988,6 +986,17 @@ export default class AlarmModule extends GenericModule {
 										{ height: 24 },
 										{
 											view: "label",
+											label: i18n.t("LBL_ALARM_DEACTIVATION"),
+											align: "left",
+											hidden: (this.alarm.deactivation !== undefined && this.alarm.deactivation !== null) ? false : true,
+											height: 20
+										},
+										{ 
+											height: 24,
+											hidden: (this.alarm.deactivation !== undefined && this.alarm.deactivation !== null) ? false : true
+										},
+										{
+											view: "label",
 											label: i18n.t("LBL_DESCRIPTION"),
 											align: "left",
 											height: 20
@@ -1034,6 +1043,17 @@ export default class AlarmModule extends GenericModule {
 										},
 										{ height: 24 },
 										{
+											view: "label",
+											label: `<span class="form-text-font">${new Date(this.alarm.deactivation).toLocaleString(i18n.getLocale(), FORMAT_NUMERIC_DATES)}</span>`,
+											align: "left",
+											hidden: (this.alarm.deactivation !== undefined && this.alarm.deactivation !== null) ? false : true,
+											height: 20
+										},
+										{ 
+											height: 24,
+											hidden: (this.alarm.deactivation !== undefined && this.alarm.deactivation !== null) ? false : true
+										 },
+										{
 											cols: [
 												{
 													id: "label-alarm-" + self.uid,
@@ -1068,31 +1088,26 @@ export default class AlarmModule extends GenericModule {
 													}
 												},
 												{
+													view: "icon",
 													width: 20,
-													borderless: true,
-													css: { "padding": "1px 5px 1px 0px;" },
-//													hidden: !self.editAlarmConfigsPermission,
-													template: `<span class="alarm-config-button ico webix_icon mdi mdi-pencil"></span>`,
+													height: 20,
+													css: "alarm-module-window-edit-button",
+													icon: "mdi mdi-pencil",
+													value: i18n.t("LBL_EDIT_ALARM_CONFIG"),
+													hidden: !self.editAlarmConfigsPermission,
+													tooltip: true,
 													on: {
-														onAfterRender: function() {
+														onItemClick: function() {
 
-															let alarmConfigButton = this.getNode().querySelector(".alarm-config-button");
+															let moduleActionId = self.config.action.alarmConfig;
+															let mod = util.module.getFromModuleAction(moduleActionId);
+															let moduleAction = { id: moduleActionId };
+															let args = { selectedPks: [self.alarmConfig.id] };
 
-															if (alarmConfigButton) {
-
-																alarmConfigButton.addEventListener("click", function() {
-
-																	let moduleActionId = self.config.action.alarmConfig;
-																	let mod = util.module.getFromModuleAction(moduleActionId);
-																	let moduleAction = { id: moduleActionId };
-																	let args = { selectedPks: [self.alarmConfig.id] };
-
-																	util.module.open(mod, moduleAction, VIEW_TYPE_WINDOW, null, args);
-																});
-															}
+															util.module.open(mod, moduleAction, VIEW_TYPE_WINDOW, null, args);
 														}
 													}
-												},
+												}
 											]
 										},
 										{ height: 24 },
@@ -1138,13 +1153,6 @@ export default class AlarmModule extends GenericModule {
 											align: "left",
 											height: 27
 										},
-//										{ height: 24 },
-//										{
-//											view: "label",
-//											label: i18n.t("LBL_ALARM_TYPE"),
-//											align: "left",
-//											height: 27
-//										},
 										{ height: 24 },
 										{
 											view: "label",
@@ -1159,15 +1167,13 @@ export default class AlarmModule extends GenericModule {
 									rows: [
 										{ height: 24 },
 										getAlarmLevelIcon(this.alarmLevelId),
-										//{ height: 24 },
-										//getAlarmTypeIcon(this.alarmConfig.alarmType.id),
 										{ height: 24 },
-										getAlarmDeactivationIcon(this.alarm)
+										getAlarmDeactivationIcon()
 									]
 								}
 							]
 						},
-						paintFieldDesactivationComments(this.alarm),
+						//paintFieldDesactivationComments(this.alarm),
 						{ height: 20 },
 						{
 							cols: [

@@ -99,7 +99,7 @@ export default class AlarmConfigModule extends GenericModule {
 								self.tableMeasures.callbacks();
 							}
 
-							let titleLabel = (alarmConfigData.alias) ? alarmConfigData.alias : i18n.t(alarmConfigData.labelAlias);
+							let titleLabel = (alarmConfigData.labelAlias) ? i18n.t(alarmConfigData.labelAlias) : alarmConfigData.alias;
 
 							util.ui.setTitle(self.args.containerId, i18n.t(alarmConfigData.elementType.labelAlias) + " - " + titleLabel);
 							setValuesForm();
@@ -109,6 +109,21 @@ export default class AlarmConfigModule extends GenericModule {
 			});
 
 		} else if (self.moduleAction.id === self.config.moduleAction.add) {
+
+			alarmConfigsByElementTypeWithState = alarmConfigs.filter(alarmConf => (alarmConf.elementType.id === self.args.elementType.id) && (Array.isArray(alarmConf.alarmConfigStates) && alarmConf.alarmConfigStates.length > 0));
+			alarmConfigStatesByElementType = self.args.elementType.elementTypeStates;
+
+			alarmConfigsByElementTypeWithState.forEach(aConfig => {
+
+				for (let ac of aConfig.alarmConfigStates) {
+
+					usedStatesList.push({
+						id: ac.elementTypeState.id,
+						alias: (aConfig.labelAlias) ? i18n.t(aConfig.labelAlias) : aConfig.alias,
+						alarmConfigId: aConfig.id
+					});
+				}
+			});
 
 			webix.ui(drawContent(), $$(self.uid));
 
@@ -121,6 +136,7 @@ export default class AlarmConfigModule extends GenericModule {
 			}
 
 			util.ui.setTitle(self.args.containerId, i18n.t("LBL_ADD_NEW_ALARM_CONFIG"));
+			setValuesForm();
 
 		} else if (self.moduleAction.id === self.config.moduleAction.delete) {
 
@@ -162,7 +178,7 @@ export default class AlarmConfigModule extends GenericModule {
 
 				} else if (self.moduleAction.id === self.config.moduleAction.add) {
 
-					label = "LBL_ADD_ALARM_CONFIG";
+					label = "LBL_ADD_NEW_ALARM_CONFIG";
 					description = "LBL_ADD_ALARM_CONFIG_DESCRIPTION";
 				}
 
@@ -245,23 +261,8 @@ export default class AlarmConfigModule extends GenericModule {
 										rows: [
 											{},
 											{ view: "text", id: "label_alias-" + self.uid, name: "labelAlias", required: true, label: i18n.t("LBL_ALIAS"), labelWidth: 275 },
-											{
-												cols: [
-													{ view: "text", id: "element_type_id-" + self.uid, name: "elementTypeId", hidden: true },
-													{
-														view: "text", id: "element_type-" + self.uid, name: "elementTypeLabelAlias", required: true, label: i18n.t("LBL_ELEMENT_TYPE"), labelWidth: 275, disabled: true
-													},
-													{
-														view: "icon", icon: "wxi-search", disabled: false, hidden: (self.moduleAction.id === self.config.moduleAction.edit) ? true : false,
-														on: {
-															onItemClick: function() {
-
-																getWindowElementTypesSelected();
-															}
-														}
-													},
-												]
-											},
+											{ view: "text", id: "element_type_id-" + self.uid, name: "elementTypeId", hidden: true },
+											{ view: "text", id: "element_type-" + self.uid, name: "elementTypeLabelAlias", required: true, label: i18n.t("LBL_ELEMENT_TYPE"), labelWidth: 275, disabled: true },
 											{
 												cols: [
 													{
@@ -271,7 +272,6 @@ export default class AlarmConfigModule extends GenericModule {
 														label: i18n.t("LBL_ALARM_LEVEL"),
 														labelWidth: 275,
 														options: alarmLevelOptionsArr,
-														disabled: true,
 														required: true,
 														on: {
 															onChange: function(newv) {
@@ -333,105 +333,6 @@ export default class AlarmConfigModule extends GenericModule {
 							"alarmLevelId": webix.rules.isNotEmpty
 						}
 					};
-
-
-					function getWindowElementTypesSelected() {
-
-						let dialogEntity = webix.copy(SearchDialogBox.CUSTOM);
-
-						dialogEntity.data = [];
-
-						dialogEntity.pkField = "id"
-						dialogEntity.fields = ["elementType=LBL_EQUIPMENT_TYPE"];
-						dialogEntity.height = 600;
-						dialogEntity.width = 800;
-						dialogEntity.sortFieldId = 2;
-
-						let elementType = window.em.getAll(EntityType.ELEMENT_TYPE);
-
-						if (Array.isArray(elementType) && elementType.length > 0) {
-
-							elementType.forEach(el => {
-
-								dialogEntity.data.push({
-									id: el.id,
-									elementType: i18n.t(el.labelAlias)
-								})
-							});
-						}
-
-						let s = new SearchDialogBox(i18n.t("LBL_SELECT_EQUIPMENT"), dialogEntity, onAccept);
-						s.show();
-
-						function onAccept(selectedIds) {
-
-							if (selectedIds && Array.isArray(selectedIds) && selectedIds.length > 0) {
-
-								if ($$("element_type_id-" + self.uid) && $$("element_type-" + self.uid) && $$("alarm_level-" + self.uid)) {
-
-									$$("element_type_id-" + self.uid).setValue(selectedIds[0].id);
-									$$("element_type-" + self.uid).setValue(selectedIds[0].elementType);
-									$$("alarm_level-" + self.uid).enable();
-
-									webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.elementTypeStates, { id: selectedIds[0].id })).then(function(elementTypeStatesResponse) {
-
-										if (elementTypeStatesResponse != null) {
-
-											let elementTypeStates = elementTypeStatesResponse.json();
-											let dbListData = [];
-
-											alarmConfigsByElementTypeWithState = alarmConfigs.filter(alarmConf => (alarmConf.elementType.id === selectedIds[0].id) && (Array.isArray(alarmConf.alarmConfigStates) && alarmConf.alarmConfigStates.length > 0));
-
-											alarmConfigsByElementTypeWithState.forEach(aConfig => {
-
-												for (let ac of aConfig.alarmConfigStates) {
-
-													usedStatesList.push({
-														id: ac.elementTypeState.id,
-														alias: (aConfig.labelAlias) ? i18n.t(aConfig.labelAlias) : aConfig.alias,
-														alarmConfigId: aConfig.id
-													});
-												}
-											});
-
-											if (Array.isArray(usedStatesList) && usedStatesList.length > 0) {
-
-												for (let usedState of usedStatesList) {
-
-													let used = elementTypeStates.find(state => state.id === usedState.id);
-
-													if (used) {
-
-														used.disabled = true;
-														used.usedIn = usedState.alias;
-													}
-												}
-											}
-
-											for (let acState of elementTypeStates) {
-
-												let disabled = (acState.disabled) ? true : false;
-												let acUsed = (acState.usedIn) ? " " + "(" + acState.usedIn + ")" : "";
-
-												dbListData.push({
-													id: acState.id,
-													value: i18n.t(acState.labelAlias) + acUsed,
-													disabled: disabled
-												});
-											}
-
-											dbListData.sort((a, b) => (a.value > b.value) ? 1 : ((b.value > a.value) ? -1 : 0));
-
-											if ($$("view-dbllist-" + self.uid)) {
-
-												$$("view-dbllist-" + self.uid).data_setter(dbListData);
-											}
-										}
-									});
-								}
-							}
-						}
-					}
 
 					return form;
 				}
@@ -1082,36 +983,37 @@ export default class AlarmConfigModule extends GenericModule {
 					let dbList;
 					let dbListData = [];
 					let dbListSelected = [];
+					let elemenTypeId = (self.moduleAction.id === self.config.moduleAction.edit) ? self.args.selectedPks[0] : self.args.elementType.id;
 
-					if (self.moduleAction.id === self.config.moduleAction.edit) {
+					if (Array.isArray(usedStatesList) && usedStatesList.length > 0) {
 
-						if (Array.isArray(usedStatesList) && usedStatesList.length > 0) {
+						for (let usedState of usedStatesList) {
 
-							for (let usedState of usedStatesList) {
+							let used = alarmConfigStatesByElementType.find(state => state.id === usedState.id);
 
-								let used = alarmConfigStatesByElementType.find(state => state.id === usedState.id);
+							if (used) {
 
-								if (used) {
-
-									used.disabled = true;
-									used.usedIn = (usedState.alarmConfigId === self.args.selectedPks[0]) ? "" : usedState.alias;
-								}
+								used.disabled = true;
+								used.usedIn = (usedState.alarmConfigId === elemenTypeId) ? "" : usedState.alias;
 							}
 						}
+					}
 
-						for (let acState of alarmConfigStatesByElementType) {
+					for (let acState of alarmConfigStatesByElementType) {
 
-							let disabled = (acState.disabled) ? true : false;
-							let acUsed = (acState.usedIn) ? " " + "(" + acState.usedIn + ")" : "";
+						let disabled = (acState.disabled) ? true : false;
+						let acUsed = (acState.usedIn) ? " " + "(" + acState.usedIn + ")" : "";
 
-							dbListData.push({
-								id: acState.id,
-								value: i18n.t(acState.labelAlias) + acUsed,
-								disabled: disabled
-							});
-						}
+						dbListData.push({
+							id: acState.id,
+							value: `<div title="${i18n.t(acState.labelAlias)}  ${acUsed}"><span>${i18n.t(acState.labelAlias)}  ${acUsed}</span></div>`, 
+							disabled: disabled
+						});
+					}
 
-						dbListData.sort((a, b) => (a.value > b.value) ? 1 : ((b.value > a.value) ? -1 : 0));
+					dbListData.sort((a, b) => (a.value > b.value) ? 1 : ((b.value > a.value) ? -1 : 0));
+
+					if (self.moduleAction.id === self.config.moduleAction.edit) {
 
 						if (Array.isArray(alarmConfigData.alarmConfigStates) && alarmConfigData.alarmConfigStates.length > 0) {
 
@@ -1231,6 +1133,7 @@ export default class AlarmConfigModule extends GenericModule {
 														alarmConfig: {
 															id: alarmConfigData.id,
 															alias: formValues.labelAlias,
+															labelAlias: formValues.labelAlias,
 															alarmTypeId: ALARM_TYPE_ID,
 															alarmLevelId: formValues.alarmLevelId,
 															mine: alarmConfigData.mine,
@@ -1397,19 +1300,29 @@ export default class AlarmConfigModule extends GenericModule {
 
 			if (form) {
 
-				form.setValues({
-					labelAlias: (alarmConfigData.alias) ? alarmConfigData.alias : i18n.t(alarmConfigData.labelAlias),
-					elementTypeId: alarmConfigData.elementType.id,
-					elementTypeLabelAlias: i18n.t(alarmConfigData.elementType.labelAlias),
-					treatment: (alarmConfigData.treatment) ? true : false
-				});
+				if (alarmConfigData) {
 
-				let alarmLevel = alarmLevelOptionsArr.find(alarmLvl => alarmLvl.id === alarmConfigData.alarmLevel.id);
-				alarmLevelSelect.enable();
+					form.setValues({
+						labelAlias:  (alarmConfigData.labelAlias) ? i18n.t(alarmConfigData.labelAlias) : alarmConfigData.alias,
+						elementTypeId: alarmConfigData.elementType.id,
+						elementTypeLabelAlias: i18n.t(alarmConfigData.elementType.labelAlias),
+						treatment: (alarmConfigData.treatment) ? true : false
+					});
 
-				if (alarmLevel) {
+					let alarmLevel = alarmLevelOptionsArr.find(alarmLvl => alarmLvl.id === alarmConfigData.alarmLevel.id);
+					alarmLevelSelect.enable();
 
-					alarmLevelSelect.setValue(alarmLevel.id);
+					if (alarmLevel) {
+
+						alarmLevelSelect.setValue(alarmLevel.id);
+					}
+
+				} else {
+
+					form.setValues({
+						elementTypeId: self.args.elementType.id,
+						elementTypeLabelAlias: i18n.t(self.args.elementType.labelAlias),
+					});
 				}
 			}
 		}
