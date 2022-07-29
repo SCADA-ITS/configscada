@@ -1375,12 +1375,21 @@ p, input, textarea {
 	height: 24px;
 }
 
+.grid-icon-plan {
+	margin-top: 5px;	
+}
+
 .grid-title {
 	vertical-align: top;
     padding-left: 15px;
     font-size: 16px;
     position: fixed;
     padding-top: 3px;
+}
+
+.grid-title-plan {
+	position:initial;
+	color: #475466;
 }
 
 .grid-button-text .webix_button {

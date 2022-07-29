@@ -76,9 +76,9 @@ export default class PlanLibraryOrder {
 						rows: [
 							{
 								cols: [
-									{
+									{ 
 										view: "label",
-										label: "<img src='" + self.planOrder.planOrderType.icon + "' class='grid-icon'/><span class='grid-title'>" + i18n.t(self.planOrder.planOrderType.labelAlias) + " - " + self.planOrder.alias + "</span>",
+										label: "<img src='" + self.planOrder.planOrderType.icon + "' class='grid-icon grid-icon-plan'/><span class='grid-title grid-title-plan'>" + i18n.t(self.planOrder.planOrderType.labelAlias) + " - " + self.planOrder.alias + "</span>",
 										autowidth: true
 									},
 									{ width: 5 },

@@ -51,25 +51,20 @@ export default class PlanLibraryContent {
 						onItemClick: function() {
 
 							let planAlias = self.plan.alias;
-							let planDescription = self.plan.description;
 
 							(new InputDialogBox(i18n.t("LBL_PLAN_NAME"), i18n.t("LBL_ENTER_NEW_PLAN_NAME"), function(newAlias) {
 
-								(new InputDialogBox(i18n.t("LBL_PLAN_DESCRIPTION"), i18n.t("LBL_ENTER_NEW_PLAN_NAME"), function(newDescription) {
+								if (planAlias != newAlias) {
 
-									if (planAlias != newAlias || planDescription != newDescription) {
-
-										let updatedPlan = {
-											id: self.plan.id,
-											alias: newAlias,
-											description: newDescription,
-											planModeType: self.plan.planModeType
-										}
-
-										self.planLibraryPlan.update(updatedPlan);
+									let updatedPlan = {
+										id: self.plan.id,
+										alias: newAlias,
+										description: self.plan.description,
+										planModeType: self.plan.planModeType
 									}
 
-								}, false, planDescription)).show();
+									self.planLibraryPlan.update(updatedPlan);
+								}
 
 							}, true, planAlias)).show();
 						}
@@ -96,16 +91,9 @@ export default class PlanLibraryContent {
 										view: "label",
 										css: "alarm-view-header-details-text",
 										autowidth: true,
-										label: function() {
-											
-											let title = self.plan.alias;
+										label: function() {									
 											 
-											if (self.plan.description) {
-												
-												title += " - " + self.plan.description;
-											}
-											 
-											return `<span class="alarm-view-header-details-text">${title}</span>`;
+											return `<span class="alarm-view-header-details-text">${self.plan.alias}</span>`;
 										}(),
 										align: "left",
 									},
