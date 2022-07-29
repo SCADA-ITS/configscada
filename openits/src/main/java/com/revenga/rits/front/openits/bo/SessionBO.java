@@ -189,6 +189,11 @@ public class SessionBO extends GenericBO {
 		
 		UserSessionUI userSessionCloned = SerializationUtils.clone(userSession);
 		
+		if (!userSessionCloned.getServerAvailable().booleanValue()) {
+			
+			userSessionCloned.setAccess(UserSessionUI.SERVER_NOT_AVAILABLE);
+		}
+		
 		userSession.getEntitiesChanged().clear();
 		
 		return userSessionCloned;
@@ -218,15 +223,76 @@ public class SessionBO extends GenericBO {
 
 		return userSession;
 	}
+	
+	public void maintenanceServer(Boolean available) {
+		
+		if (!MapUtils.isEmpty(this.sessions)) {
 
-	public void maintenance() {
+			synchronized (this.sessions) {
+				
+				this.sessions.values().forEach(userSession -> {
+					
+					if (!userSession.getServerAvailable().equals(available)) {
+						
+						userSession.setServerAvailable(available);
+					}
+				});
+			}
+		}
+	}
 
-		maintenanceSessions();
+	public void maintenanceSessions() {
+
+		Set<String> sessionsToRemove = new HashSet<>();
+
+		if (!MapUtils.isEmpty(this.sessions)) {
+
+			synchronized (this.sessions) {
+				
+				for (Map.Entry<String, UserSessionUI> entry : this.sessions.entrySet()) {
+
+					String httpSessionId = entry.getKey();
+					UserSessionUI userSession = entry.getValue();
+
+					if (httpSessionId != null && userSession != null && userSession.getValidUntil() != null
+							&& userSession.getValidUntil() < Instant.now().toEpochMilli()) {
+
+						sessionsToRemove.add(httpSessionId);
+					}
+				}
+			} 
+
+			sessionsToRemove.forEach(sessionToRemove -> {
+
+				UserSessionUI userSession = this.sessions.get(sessionToRemove);
+
+				if (userSession != null) {
+
+					this.sessions.remove(sessionToRemove);
+
+					log.info("Session id " + sessionsToRemove + " logged by user "
+							+ userSession.getUser().get(UserSessionUI.USER_FIELD_USER) + " since "
+							+ sdf.format(new Date(userSession.getLoginSince())) + " expired at "
+							+ sdf.format(new Date(userSession.getValidUntil())) + " removed");
+
+					removeSessionLoginRetriesBySessionId(sessionToRemove);
+					
+					sendAuditLog(userSession, AUDIT_LOG_SUBTYPE_EXPIRED, AuditLogLevel.INFO, null);
+				}
+			});
+		}
 	}
 	
 	public List<UserSessionUI> getUserSessions() {
 		
-		return this.sessions.values().stream().map(this::getUserSessionWithoutChanges).collect(Collectors.toList());
+		List<UserSessionUI> userSessions = null;
+		
+		synchronized (this.sessions) {
+			
+			userSessions = this.sessions.values().stream().map(this::getUserSessionWithoutChanges).collect(Collectors.toList());
+		}
+		
+		return userSessions;
 	}
 
 	public UserSessionUI getUserSession(String sessionId) {
@@ -355,44 +421,7 @@ public class SessionBO extends GenericBO {
 		}
 	}
 
-	private void maintenanceSessions() {
-
-		Set<String> sessionsToRemove = new HashSet<>();
-
-		if (!MapUtils.isEmpty(this.sessions)) {
-
-			for (Map.Entry<String, UserSessionUI> entry : this.sessions.entrySet()) {
-
-				String httpSessionId = entry.getKey();
-				UserSessionUI userSession = entry.getValue();
-
-				if (httpSessionId != null && userSession != null && userSession.getValidUntil() != null
-						&& userSession.getValidUntil() < Instant.now().toEpochMilli()) {
-
-					sessionsToRemove.add(httpSessionId);
-				}
-			}
-
-			sessionsToRemove.forEach(sessionToRemove -> {
-
-				UserSessionUI userSession = this.sessions.get(sessionToRemove);
-
-				if (userSession != null) {
-
-					this.sessions.remove(sessionToRemove);
-
-					log.info("Session id " + sessionsToRemove + " logged by user "
-							+ userSession.getUser().get(UserSessionUI.USER_FIELD_USER) + " since "
-							+ sdf.format(new Date(userSession.getLoginSince())) + " expired at "
-							+ sdf.format(new Date(userSession.getValidUntil())) + " removed");
-
-					removeSessionLoginRetriesBySessionId(sessionToRemove);
-					
-					sendAuditLog(userSession, AUDIT_LOG_SUBTYPE_EXPIRED, AuditLogLevel.INFO, null);
-				}
-			});
-		}
-	}
+	
 
 	private void removeSessionLoginRetriesBySessionId(String sessionId) {
 
@@ -582,6 +611,11 @@ public class SessionBO extends GenericBO {
 		UserSessionUI userSessionCloned = SerializationUtils.clone(userSession);
 		
 		userSessionCloned.setEntitiesChanged(null);
+		
+		if (!userSession.getServerAvailable().booleanValue()) {
+			
+			userSessionCloned.setAccess(UserSessionUI.SERVER_NOT_AVAILABLE);
+		}
 		
 		return userSessionCloned;
 	}

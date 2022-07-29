@@ -182,6 +182,15 @@ public class ImsIncidentController {
 
 		return new ResponseEntity<>(imsIncidentReportBO.assignCause(id, causeId), HttpStatus.OK);
 	}
+	
+	@PostMapping(value = "/reports/{id}/road_impact/{roadImpactId}")
+	@ApiOperation(value = "Change road impact Incident Report", notes = "Change road impact Incident Report")
+	public ResponseEntity<Object> changeRoadImpactIncidentReport(
+			@ApiParam(name = "id", type = "String", value = "Incident report id", example = "ImsIncidentReport:1", required = true) @PathVariable String id,
+			@ApiParam(name = "causeId", type = "String", value = "Cause id", example = "RoadImpact:1", required = true) @PathVariable String roadImpactId) {
+
+		return new ResponseEntity<>(imsIncidentReportBO.changeRoadImpact(id, roadImpactId), HttpStatus.OK);
+	}
 
 	@PostMapping(value = "/reports/{id}/finalize_task/{taskId}")
 	@ApiOperation(value = "Finalize task Incident Report", notes = "Finalize task Incident Report")

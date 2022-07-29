@@ -45,6 +45,7 @@ export default class IncidentReportTabInfo {
 					fieldLocation: self.incidentReport.location.alias !== undefined && self.incidentReport.location.alias !== null ? self.incidentReport.location.alias : "-",
 					fieldStretchs: stretchs,
 					fieldStretch: self.incidentReport.affectionStretch.alias !== undefined && self.incidentReport.affectionStretch.alias !== null ? self.incidentReport.affectionStretch.alias : "-",
+					fieldRoadImpact: self.incidentReport.roadImpact && self.incidentReport.roadImpact.alias ? self.incidentReport.roadImpact.alias : "-",
 					fieldUser: self.incidentReport.currentUser.name !== undefined && self.incidentReport.currentUser.name !== null ? self.incidentReport.currentUser.name : "-",
 					fieldGenerateAt: self.incidentReport.generatedAt !== undefined && self.incidentReport.generatedAt !== null ? util.toLocaleString(self.incidentReport.generatedAt / 1000) : "-",
 					fieldLastUpdated: self.incidentReport.lastUpdate !== undefined && self.incidentReport.lastUpdate !== null ? util.toLocaleString(self.incidentReport.lastUpdate / 1000) : "-",

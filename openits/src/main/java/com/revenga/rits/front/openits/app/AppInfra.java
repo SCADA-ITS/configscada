@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 
 import com.revenga.rits.front.openits.service.CacheManager;
+import com.revenga.rits.front.openits.service.ServerManager;
 import com.revenga.rits.front.openits.service.SessionManager;
 
 import lombok.Getter;
@@ -50,6 +51,9 @@ public class AppInfra {
 	@Autowired
 	SessionManager sessionManager;
 	
+	@Autowired
+	ServerManager serverManager;
+	
 		
 	public static boolean isDebugging() {
 	    for (String arg : ManagementFactory.getRuntimeMXBean().getInputArguments()) {
@@ -74,8 +78,8 @@ public class AppInfra {
 		initShutdownHook();
 		
 		entitiesManager.start();
-		
 		sessionManager.start();
+		serverManager.start();
 	}
 	
 	private void initShutdownHook() {

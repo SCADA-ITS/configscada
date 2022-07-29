@@ -140,16 +140,16 @@ export default class IncidentWizardDrawStepSummary extends IncidentWizardDrawSte
 																							</div>`;
 																			
 																			
-																	if (Array.isArray(parent.incidentData.roadImpacts) && parent.incidentData.roadImpacts.length > 0) {
+//																	if (Array.isArray(parent.incidentData.roadImpacts) && parent.incidentData.roadImpacts.length > 0) {
 																		
 																		summaryRoadImpact += `<div class="value" style="max-width: ${maxWidthLabels}px;">${roadImpact && roadImpact.alias ? roadImpact.alias : ''}
 																								<span title='${i18n.t('LBL_EDIT')}' class='change-road-impact-button webix_icon mdi mdi-pencil'></span>
 																							</div>`;
-																	}
-																	else {
-																		
-																		summaryRoadImpact += `<div class="value" style="max-width: ${maxWidthLabels}px;">${i18n.t("LBL_UNAVAILABLE")}</div>`;
-																	}
+//																	}
+//																	else {
+//																		
+//																		summaryRoadImpact += `<div class="value" style="max-width: ${maxWidthLabels}px;">${i18n.t("LBL_UNAVAILABLE")}</div>`;
+//																	}
 																	
 																	return summaryRoadImpact;
 																},
@@ -170,44 +170,67 @@ export default class IncidentWizardDrawStepSummary extends IncidentWizardDrawSte
 																				dialogRoadImpacts.pkField = "id"
 																				dialogRoadImpacts.showEmptyRowCol = SearchDialogBox.ID_NOT_SELECTED;
 																				dialogRoadImpacts.fields = ["alias=LBL_ALIAS", "description=LBL_DESCRIPTION"];
+																				dialogRoadImpacts.sortFieldId = 1;
+																				
+																				if (parent.incidentData.stretchId && parent.incidentData.incidentTypeId) {
+																					
+																					webix.ajax().get(appConfig.restUrl + util.fillTemplate(parent.config.restEndpoints.incidentType, { id: parent.incidentData.incidentTypeId })).then(function(incidentTypeResponse) {
+
+																						if (incidentTypeResponse != null) {
+																		
+																							let incidentType = incidentTypeResponse.json();
+				
+																							if (incidentType) {
+																								
+																								if (Array.isArray(incidentType.incidentTypeStretchs) && incidentType.incidentTypeStretchs.length > 0) {
+																									
+																									let incidentTypeStretch = incidentType.incidentTypeStretchs.find(e => e.stretch.id === parent.incidentData.stretchId);
+																									
+																									if (incidentTypeStretch && Array.isArray(incidentTypeStretch.roadImpacts)) {
+																							
+																										if (Array.isArray(incidentTypeStretch.roadImpacts) && incidentTypeStretch.roadImpacts.length > 0) {
 													
-																				if (Array.isArray(parent.incidentData.roadImpacts) && parent.incidentData.roadImpacts.length > 0) {
-													
-																					parent.incidentData.roadImpacts.forEach(p => {
-													
-																						dialogRoadImpacts.data.push({
-																							id: p.id,
-																							alias: p.alias,
-																							description: p.description
-																						})
+																											incidentTypeStretch.roadImpacts.forEach(p => {
+																			
+																												dialogRoadImpacts.data.push({
+																													id: p.id,
+																													alias: p.alias,
+																													description: p.description
+																												})
+																											});
+																										}
+																			
+																										let s = new SearchDialogBox(label, dialogRoadImpacts, function(items) {
+																			
+																											if (Array.isArray(items) && items.length === 1) {
+																												
+																												let roadImpact = items[0];
+																												
+																												if (roadImpact.id === SearchDialogBox.ID_NOT_SELECTED) {
+																													
+																													parent.incidentData.roadImpact = undefined;
+																													$$("summary-road-impact-" + parent.uid).setValues({
+																														roadImpact: undefined
+																													});
+																												}
+																												else {
+																													
+																													parent.incidentData.roadImpact = roadImpact;
+																													
+																													$$("summary-road-impact-" + parent.uid).setValues({
+																														roadImpact: roadImpact
+																													});	
+																												}
+																											}
+																										});
+																			
+																										s.show();	
+																									}
+																								}
+																							}
+																						}
 																					});
 																				}
-													
-																				let s = new SearchDialogBox(label, dialogRoadImpacts, function(items) {
-													
-																					if (Array.isArray(items) && items.length === 1) {
-																						
-																						let roadImpact = items[0];
-																						
-																						if (roadImpact.id === SearchDialogBox.ID_NOT_SELECTED) {
-																							
-																							parent.incidentData.roadImpact = undefined;
-																							$$("summary-road-impact-" + parent.uid).setValues({
-																								roadImpact: undefined
-																							});
-																						}
-																						else {
-																							
-																							parent.incidentData.roadImpact = roadImpact;
-																							
-																							$$("summary-road-impact-" + parent.uid).setValues({
-																								roadImpact: roadImpact
-																							});	
-																						}
-																					}
-																				});
-													
-																				s.show();
 																			});
 																		}
 																	}

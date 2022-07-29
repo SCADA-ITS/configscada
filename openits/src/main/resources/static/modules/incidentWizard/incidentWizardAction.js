@@ -272,26 +272,7 @@ export default class IncidentWizardAction {
 				parent.incidentData.stretch = undefined;
 			}
 			
-			parent.incidentData.roadImpacts = undefined;
 			parent.incidentData.roadImpact = undefined;
-			
-			if (parent.incidentData.stretchId && parent.incidentData.incidentTypeId) {
-				
-				let incidentType = window.em.getByField(EntityType.IMS_INCIDENT_TYPE, "id", parent.incidentData.incidentTypeId);
-				
-				if (incidentType) {
-					
-					if (Array.isArray(incidentType.incidentTypeStretchs) && incidentType.incidentTypeStretchs.length > 0) {
-						
-						let incidentTypeStretch = incidentType.incidentTypeStretchs.find(e => e.stretch.id === parent.incidentData.stretchId);
-						
-						if (incidentTypeStretch && Array.isArray(incidentTypeStretch.roadImpacts)) {
-				
-							parent.incidentData.roadImpacts = incidentTypeStretch.roadImpacts;	
-						}
-					}
-				}
-			}
 
 			let locationsSelected = parent.dtLocations.getSelectedItems();
 

@@ -19,6 +19,8 @@ public class ServerBO extends GenericBO {
 	
 	private static final String FIELD_GET_SERVER_TIME = "getServerTime";
 	
+	public static final String FIELD_MAIN= "main";
+	public static final String FIELD_UPDATED_AT= "updatedAt";
 	private static final String FIELD_RELATIVE_PATH= "relativePath";
 	private static final String FIELD_EXTENSION= "extension";
 	
@@ -43,17 +45,20 @@ public class ServerBO extends GenericBO {
 		
 		Map<String, Object> serverTimeObj = vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_SERVER_TIME, serverTime);
 		
-		Object objServerEpochTime = serverTimeObj.get(FIELD_GET_SERVER_TIME);
+		if (serverTimeObj != null) {
+		
+			Object objServerEpochTime = serverTimeObj.get(FIELD_GET_SERVER_TIME);
+			
+			if (objServerEpochTime instanceof Long) {
 				
-		if (objServerEpochTime instanceof Long) {
-			
-			long serverEpochTime = (long) objServerEpochTime;
-			
-			long timeLatency = Duration.between(timeRef, Instant.now()).toMillis();
-			
-			serverTimeUI = new ServerTimeUI(serverEpochTime + timeLatency);
-			
-			serverTimeUI.setServerTime(true);
+				long serverEpochTime = (long) objServerEpochTime;
+				
+				long timeLatency = Duration.between(timeRef, Instant.now()).toMillis();
+				
+				serverTimeUI = new ServerTimeUI(serverEpochTime + timeLatency);
+				
+				serverTimeUI.setServerTime(true);
+			}
 		}
 		
 		return serverTimeUI;

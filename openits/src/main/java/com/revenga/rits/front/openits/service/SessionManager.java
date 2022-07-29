@@ -58,6 +58,6 @@ public class SessionManager extends FrontManager {
 	
 	public void maintenance() {
 		
-		sessionBO.maintenance();
+		sessionBO.maintenanceSessions();
 	}	
 }

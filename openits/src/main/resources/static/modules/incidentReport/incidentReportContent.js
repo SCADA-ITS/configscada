@@ -75,7 +75,8 @@ export default class IncidentReportContent {
 		// TAB TASK OF STATE
 		if (self.incidentReport.confirm && self.incidentReport.incidentState && !self.incidentReport.incidentState.finalState) {
 
-			tasks = self.currentSequenceOfState.taskStates;
+			tasks = filterTasksByRoadImpact(self.currentSequenceOfState.taskStates);
+			
 			if (Array.isArray(tasks) && tasks.length) {
 
 				if (!self.incidentReportTabTaskBoard) {
@@ -104,7 +105,7 @@ export default class IncidentReportContent {
 		// TAB TASK OF INCIDENT
 		if (self.incidentReport.incidentState && !self.incidentReport.incidentState.finalState) {
 
-			tasks = self.incidentReport.taskStates;
+			tasks = filterTasksByRoadImpact(self.incidentReport.taskStates);
 			if (Array.isArray(tasks) && tasks.length) {
 
 				if (!self.incidentReportTabTaskBoardIncident) {
@@ -165,6 +166,19 @@ export default class IncidentReportContent {
 			]
 
 		};
+		
+		function filterTasksByRoadImpact(t) {
+			
+			let filteredTasks = undefined;
+			let roadImpact = self.incidentReport.roadImpact;
+			
+			if (Array.isArray(t)) {
+				
+				filteredTasks = t.filter(e => !e.incidentTypeTask.roadImpact || (roadImpact && e.incidentTypeTask.roadImpact.id === roadImpact.id));	
+			}
+			
+			return filteredTasks;
+		}
 
 		return viewContent;
 	}

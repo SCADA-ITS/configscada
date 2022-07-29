@@ -18,6 +18,7 @@
 		"stretchsByLocation": "locations/${id}/stretchs",
 		"incidentTypesByStretch": "incidents/stretch/${id}",
 		"incidentTypes": "incidents/imsIncidentTypes",
+		"incidentType": "incidents/imsIncidentType/${id}",
 		"incidentTypeStretchs": "incidents/incidentTypeStretchs/${incidentTypeId}/${stretchId}",
 		"incidentTypeStretchsList": "incidents/incidentTypeStretchs",
 		"incidentReportsSummary": "incidents/reports/summary",

@@ -4,6 +4,7 @@ import IncidentReportChangeType from "./incidentReportChangeType.js";
 import FileManager from "../../component/fileManager.js";
 import DataTable from "../../component/datatable.js";
 import MessageBox from "../../component/messageBox.js";
+import SearchDialogBox from "../../component/searchDialogBox.js";
 
 const MARGIN_ACTION_PANEL = 15;
 const TOOLBARS_ALLOWED = 3;
@@ -124,8 +125,8 @@ export default class IncidentReportActionPanel {
 		
 														if (penUltimateState && penUltimateState.state && self.incidentReport.incidentState.id == penUltimateState.state.id) {
 		
-															let tasksCompleted = self.incidentReport.taskStates.filter(e => e.completedAt && e.incidentTypeTask.mandatory === true);
-															let tasksMandatory = self.incidentReport.taskStates.filter(e => e.incidentTypeTask.mandatory === true);
+															let tasksCompleted = filterTasksByRoadImpact(self.incidentReport.taskStates.filter(e => e.completedAt && e.incidentTypeTask.mandatory === true));
+															let tasksMandatory = filterTasksByRoadImpact(self.incidentReport.taskStates.filter(e => e.incidentTypeTask.mandatory === true));
 		
 															if (tasksCompleted.length < tasksMandatory.length) {
 		
@@ -136,8 +137,8 @@ export default class IncidentReportActionPanel {
 		
 													if (Array.isArray(self.currentSequenceOfState.taskStates) && self.currentSequenceOfState.taskStates.length) {
 		
-														let tasksCompleted = self.currentSequenceOfState.taskStates.filter(e => e.completedAt && e.incidentTypeTask.mandatory === true);
-														let tasksMandatory = self.currentSequenceOfState.taskStates.filter(e => e.incidentTypeTask.mandatory === true);
+														let tasksCompleted = filterTasksByRoadImpact(self.currentSequenceOfState.taskStates.filter(e => e.completedAt && e.incidentTypeTask.mandatory === true));
+														let tasksMandatory = filterTasksByRoadImpact(self.currentSequenceOfState.taskStates.filter(e => e.incidentTypeTask.mandatory === true));
 		
 														if (tasksCompleted.length < tasksMandatory.length) {
 		
@@ -218,8 +219,8 @@ export default class IncidentReportActionPanel {
 		
 															if (Array.isArray(self.currentSequenceOfState.taskStates) && self.currentSequenceOfState.taskStates.length) {
 		
-																let tasksCompleted = self.currentSequenceOfState.taskStates.filter(e => e.completedAt && e.incidentTypeTask.mandatory === true);
-																let tasksMandatory = self.currentSequenceOfState.taskStates.filter(e => e.incidentTypeTask.mandatory === true);
+																let tasksCompleted = filterTasksByRoadImpact(self.currentSequenceOfState.taskStates.filter(e => e.completedAt && e.incidentTypeTask.mandatory === true));
+																let tasksMandatory = filterTasksByRoadImpact(self.currentSequenceOfState.taskStates.filter(e => e.incidentTypeTask.mandatory === true));
 		
 																if (tasksCompleted.length === tasksMandatory.length) {
 		
@@ -367,6 +368,23 @@ export default class IncidentReportActionPanel {
 				}
 			]
 		};
+		
+		function getRoadImpacts() {
+		
+			let roadImpacts;
+			
+			if (self.incidentReport && self.incidentReport.incidentType && Array.isArray(self.incidentReport.incidentType.incidentTypeStretchs)) {
+				
+				let incidentTypeStretch = self.incidentReport.incidentType.incidentTypeStretchs.find(e => e.stretch.id === self.incidentReport.affectionStretch.id);
+				
+				if (incidentTypeStretch) {
+					
+					roadImpacts = incidentTypeStretch.roadImpacts;  
+				}
+			}
+			
+			return roadImpacts;
+		}
 
 		function drawActionsButtons() {
 
@@ -378,6 +396,7 @@ export default class IncidentReportActionPanel {
 			let changeUserButton = {};
 			let showAlarmsButton = {};
 			let changeIncidentButton = {};
+			let changeRoadImpactButton = {};
 
 			changeUserButton = {
 				view: "button",
@@ -495,8 +514,33 @@ export default class IncidentReportActionPanel {
 				buttonsArray.push(changeIncidentButton);
 				numberOfButtonsToDraw++;
 			}
-
+			
 			actionsButtons.rows.push({ height: 10 });
+			
+			let roadImpacts = getRoadImpacts();
+			
+			if (Array.isArray(roadImpacts) && roadImpacts.length > 0) {
+				
+				changeRoadImpactButton = {
+					view: "button",
+					width: 135,
+					disabled: !(Array.isArray(roadImpacts) && roadImpacts.length > 0) ? true : false,
+					label: i18n.t("LBL_ROAD_IMPACT_CHANGE"),
+					tooltip: i18n.t("LBL_ROAD_IMPACT_CHANGE_DESCRIPTION"),
+					type: "iconTop",
+					icon: "mdi mdi-selection",
+					on: {
+
+						onItemClick() {
+
+							changeRoadImpact();
+						}
+					}
+				};
+
+				buttonsArray.push(changeRoadImpactButton);
+				numberOfButtonsToDraw++;
+			}
 
 			let elements = [];
 			let buttonsInToolbar = 0;
@@ -951,6 +995,19 @@ export default class IncidentReportActionPanel {
 				}
 			}
 		}
+		
+		function filterTasksByRoadImpact(tasks) {
+			
+			let filteredTasks = undefined;
+			let roadImpact = self.incidentReport.roadImpact;
+			
+			if (Array.isArray(tasks)) {
+				
+				filteredTasks = tasks.filter(e => !e.incidentTypeTask.roadImpact || (roadImpact && e.incidentTypeTask.roadImpact.id === roadImpact.id));
+			}
+			
+			return filteredTasks;
+		}
 
 		function cancelIncidentReport() {
 
@@ -1013,6 +1070,64 @@ export default class IncidentReportActionPanel {
 					};
 				}
 			}
+		}
+		
+		function changeRoadImpact() {
+			
+			let dialogRoadImpacts = webix.copy(SearchDialogBox.CUSTOM);
+			let label = i18n.t("LBL_ROAD_IMPACTS");
+			let roadImpacts = getRoadImpacts();
+			
+			dialogRoadImpacts.data = [];
+			dialogRoadImpacts.pkField = "id"
+			
+			if (self.incidentReport.roadImpact) {
+				
+				roadImpacts = roadImpacts.filter(e => self.incidentReport.roadImpact && self.incidentReport.roadImpact.id != e.id);
+				dialogRoadImpacts.showEmptyRowCol = SearchDialogBox.ID_NOT_SELECTED;
+			}
+			
+			dialogRoadImpacts.fields = ["alias=LBL_ALIAS", "description=LBL_DESCRIPTION"];
+			dialogRoadImpacts.sortFieldId = 1;
+			
+			if (Array.isArray(roadImpacts) && roadImpacts.length > 0) {
+				
+				roadImpacts.forEach(e => {
+
+					dialogRoadImpacts.data.push({
+						id: e.id,
+						alias: e.alias,
+						description: e.description
+					})
+				});
+			}
+
+			let s = new SearchDialogBox(label, dialogRoadImpacts, function(items) {
+
+				if (Array.isArray(items) && items.length === 1) {
+					
+					let roadImpact = items[0];
+					let roadImpactId = undefined;
+					
+					if (roadImpact.id != SearchDialogBox.ID_NOT_SELECTED && 
+						((self.incidentReport.roadImpact && self.incidentReport.roadImpact.id != roadImpact.id) || 
+							!self.incidentReport.roadImpact)) {
+						
+						roadImpactId = roadImpact.id
+					}
+					
+					let body = {
+						id: self.incidentReport.id,
+						roadImpactId: roadImpactId
+					};
+
+					let endpoint = util.fillTemplate(self.config.actionEndpoints.changeRoadImpactIncidentReport, body);
+
+					webix.ajax().post(appConfig.restUrl + endpoint).then(undefined, function(response) { util.ajax.handleError(response); });
+				}
+			});
+
+			s.show();
 		}
 
 		function getLowerButtonsViewArray() {

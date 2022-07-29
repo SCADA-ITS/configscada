@@ -26,6 +26,7 @@ public class UserSessionUI implements Serializable {
 	public static final String DENY_OTHERS = "DENY_OTHERS";
 	public static final String LOGOUT = "LOGOUT";
 	public static final String UNAUTHORIZED = "UNAUTHORIZED";
+	public static final String SERVER_NOT_AVAILABLE = "SERVER_NOT_AVAILABLE";
 	
 	public static final String USER_FIELD_ID = "id";
 	public static final String USER_FIELD_USER = "name";
@@ -43,4 +44,5 @@ public class UserSessionUI implements Serializable {
 	private Long loginSince;
 	private String access;
 	private Long validUntil;
+	private Boolean serverAvailable = true;
 }

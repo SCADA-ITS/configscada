@@ -564,7 +564,7 @@ export default class IncidentReportModule extends GenericModule {
 		function getViewHeader() {
 
 			let viewHeader;
-
+			
 			viewHeader = {
 
 				id: "viewHeader-" + self.uid,
@@ -585,12 +585,29 @@ export default class IncidentReportModule extends GenericModule {
 							if (incidentIcon == undefined) {
 								incidentIcon = "undefined.png";
 							}
+							
+							let stretchTemplate = undefined;
+													
+							if (self.incidentReport.affectionStretch) {
+								
+								stretchTemplate = `<span title='${i18n.t("LBL_INCIDENT_STRETCH")}' class='ims-incident-badge' style='border: 1px solid rgb(71, 84, 102); padding-left: 20px'><span class="ico webix_icon mdi mdi-road"></span>  ${self.incidentReport.affectionStretch.alias}</span>`;
+							}
+							
+							let roadImpactTemplate = undefined;
+													
+							if (self.incidentReport.roadImpact) {
+								
+								roadImpactTemplate = `<span title='${i18n.t("LBL_INCIDENT_ROAD_IMPACT")}' class='ims-incident-badge' style='border: 1px solid rgb(71, 84, 102); padding-left: 20px; font-style: italic;'><span class="ico webix_icon mdi mdi-selection"></span>  ${self.incidentReport.roadImpact.alias}</span>`;
+							}
+							
 							return `<image class="ims-incident-report-icon" src="img/incident_type/${incidentIcon}" />
 									<div class="ims-incident-report-title">
 										${self.incidentReport.incidentType.alias} ${self.incidentReport.incidentType.description}
 									</div>
 									<div class="ims-incident-report-title">
-										<span class="ims-incident-badge" style="background: ${self.incidentReport.incidentLevel.color}; color: white;">${i18n.t(self.incidentReport.incidentLevel.labelAlias)}</span>
+										<span class="ims-incident-badge" style="border: ${"1px solid " + self.incidentReport.incidentLevel.color}; background: ${self.incidentReport.incidentLevel.color}; color: white;">${i18n.t(self.incidentReport.incidentLevel.labelAlias)}</span>
+										${stretchTemplate ? stretchTemplate : ''}
+										${roadImpactTemplate ? roadImpactTemplate : ''}
 									</div>`;
 						}
 					}

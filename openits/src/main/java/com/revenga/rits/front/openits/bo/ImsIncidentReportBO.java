@@ -46,6 +46,7 @@ public class ImsIncidentReportBO extends GenericBO {
 	static final String FIELD_ALIAS = "alias";
 	static final String FIELD_DESCRIPTION = "description";
 	static final String FIELD_ID = "id";
+	static final String FIELD_ROAD_IMPACT = "roadImpact";
 
 	static final String VALUE_DEFAULT_LEVEL = "INFO";
 	static final String LOG_TYPE_PARAM_STATE = props.get("log_type_param_state");
@@ -57,11 +58,13 @@ public class ImsIncidentReportBO extends GenericBO {
 	static final String LOG_SUBTYPE_INCIDENT_REPORT_CANCELED = props.get("log_subtype_incident_report_canceled");
 	static final String LOG_SUBTYPE_ASSIGNED_USER = props.get("log_subtype_assigned_user");
 	static final String LOG_SUBTYPE_ASSIGNED_CAUSE = props.get("log_subtype_assigned_cause");
+	static final String LOG_SUBTYPE_CHANGE_ROAD_IMPACT = props.get("log_subtype_change_road_impact");
 	static final String LOG_SUBTYPE_FINALIZED_TASK = props.get("log_subtype_finalized_task");
 	static final String LOG_SUBTYPE_EXECUTED_TASK_PLAN = props.get("log_subtype_executed_task_plan");
 	static final String LOG_SUBTYPE_ATTACHED_DOCUMENT = props.get("log_subtype_attached_document");
 	static final String LOG_SUBTYPE_DELETED_DOCUMENT = props.get("log_subtype_deleted_document");
 	static final String LOG_SUBTYPE_INCIDENT_REPORT_CHANGED = props.get("log_subtype_incident_report_changed");
+	
 
 	static final String FIELD_INCIDENT_STATE = "incidentState";
 	static final String FIELD_LABEL_ALIAS = "labelAlias";
@@ -83,6 +86,7 @@ public class ImsIncidentReportBO extends GenericBO {
 	static final String LBL_IMS_INCIDENT_STATE_CANCELED = "LBL_IMS_INCIDENT_STATE_CANCELED";
 
 	static final String FIELD_IMS_INCIDENT_TYPE_CAUSE_ID = "incidentTypeCauseId";
+	static final String FIELD_IMS_INCIDENT_TYPE_ROAD_IMPACT_ID = "roadImpactId";
 	static final String FIELD_IMS_INCIDENT_TYPE_CAUSES = "incidentTypeCauses";
 
 	static final String FIELD_LOCATION_ID = "locationId";
@@ -558,6 +562,24 @@ public class ImsIncidentReportBO extends GenericBO {
 
 		return null;
 	}
+	
+	@SuppressWarnings("unchecked")
+	private Object getRoadImpactAlias(final Map<String, Object> incidentReport, final String roadImpactId) {
+
+		if (incidentReport != null && roadImpactId != null && incidentReport.containsKey(FIELD_ROAD_IMPACT)) {
+
+			Object objRoadImpact = incidentReport.get(FIELD_ROAD_IMPACT);
+
+			if (objRoadImpact instanceof Map) {
+
+				Map<String, Object> roadImpact = (Map<String, Object>) objRoadImpact;
+
+				return roadImpact.get(FIELD_ALIAS);
+			}
+		}
+
+		return null;
+	}
 
 	private Boolean addLog(final Map<String, Object> incidentReport, final String incidentReportId,
 			final String logSubtypeId, final Object stateLabel, final Object arg1) {
@@ -871,6 +893,7 @@ public class ImsIncidentReportBO extends GenericBO {
 
 						if (objIncidentTypeTaskValue instanceof Map) {
 
+							@SuppressWarnings("unchecked")
 							Map<String, Object> incidentTypeTaskValue = (Map<String, Object>) objIncidentTypeTaskValue;
 
 							if (incidentTypeTaskValue.containsKey(FIELD_VALUE)) {
@@ -980,6 +1003,31 @@ public class ImsIncidentReportBO extends GenericBO {
 
 			addLog(incidentReport, id, LOG_SUBTYPE_ASSIGNED_CAUSE, null, getCauseAlias(incidentReport, causeId));
 		}
+		return res;
+	}
+	
+	public Boolean changeRoadImpact(String id, String roadImpactId) {
+
+		Boolean res = false;
+
+		Map<String, Object> input = new HashMap<>();
+
+		input.put(FIELD_INCIDENT_REPORT_ID, id);
+		input.put(FIELD_IMS_INCIDENT_TYPE_ROAD_IMPACT_ID, roadImpactId);
+
+		Map<String, Object> incidentReport = voDataSourceAdapter
+				.put(VODataSourceAdapter.DATA_SOURCE_SEND_CHANGE_ROAD_IMPACT_INCIDENT_REPORT, input);
+
+		res = checkMapIsBoolean(incidentReport);
+		
+		if (Boolean.TRUE.equals(res)) {
+
+			incidentReport = voDataSourceAdapter.get(VODataSourceAdapter.DATA_SOURCE_GET_INCIDENT_REPORT,
+					new Object[] { id });
+
+			addLog(incidentReport, id, LOG_SUBTYPE_CHANGE_ROAD_IMPACT, null, getRoadImpactAlias(incidentReport, roadImpactId));
+		}
+
 		return res;
 	}
 
