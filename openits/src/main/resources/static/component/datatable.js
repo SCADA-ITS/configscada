@@ -2241,7 +2241,7 @@ export default class DataTable {
 				else {
 
 					args.selectedPks = selectedPks;
-					args.selectedRows = this.getSelectedItems();
+					args.selectedRows = self.getSelectedItems();
 					
 					if (!self.command_exec_callback(gridCommand)) {
 					
@@ -2624,7 +2624,7 @@ export default class DataTable {
 			
 			if (cmdCallback) {
 			
-				cmdCallback.function(this.getSelectedIds(), self.getSelectedItems());
+				cmdCallback.function(this.getSelectedIds(), this.getSelectedItems());
 			}
 		}															
 				
