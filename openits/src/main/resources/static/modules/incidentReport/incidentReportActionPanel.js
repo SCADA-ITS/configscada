@@ -373,14 +373,9 @@ export default class IncidentReportActionPanel {
 		
 			let roadImpacts;
 			
-			if (self.incidentReport && self.incidentReport.incidentType && Array.isArray(self.incidentReport.incidentType.incidentTypeStretchs)) {
-				
-				let incidentTypeStretch = self.incidentReport.incidentType.incidentTypeStretchs.find(e => e.stretch.id === self.incidentReport.affectionStretch.id);
-				
-				if (incidentTypeStretch) {
+			if (self.incidentReport && self.incidentReport.roadImpacts && Array.isArray(self.incidentReport.roadImpacts)) {
 					
-					roadImpacts = incidentTypeStretch.roadImpacts;  
-				}
+					roadImpacts = self.incidentReport.roadImpacts;  	
 			}
 			
 			return roadImpacts;
