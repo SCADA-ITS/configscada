@@ -187,7 +187,7 @@ export default class IncidentReportTabTaskBoard {
 						required: true,
 						sourceField: "status",
 						visible: true,
-						widthPx: 35,
+						widthPx: 30,
 						gridFieldDataType: {
 							id: 1,
 							name: "string"
@@ -220,11 +220,11 @@ export default class IncidentReportTabTaskBoard {
 						isPk: false,
 						needsTranslation: false,
 						parameterized: false,
-						position: 3,
+						position: 4,
 						required: true,
 						sourceField: "position",
 						visible: true,
-						widthPx: 45,
+						widthPx: 30,
 						gridFieldDataType: {
 							id: 2,
 							name: "int"
@@ -239,7 +239,7 @@ export default class IncidentReportTabTaskBoard {
 						labelTooltip: "LBL_TASK",
 						needsTranslation: false,
 						parameterized: false,
-						position: 4,
+						position: 5,
 						required: true,
 						sourceField: "alias",
 						visible: true,
@@ -258,11 +258,11 @@ export default class IncidentReportTabTaskBoard {
 						labelTooltip: "LBL_AUTOMATISM",
 						needsTranslation: false,
 						parameterized: false,
-						position: 5,
+						position: 6,
 						required: true,
 						sourceField: "automatism",
 						visible: true,
-						widthPx: 45,
+						widthPx: 30,
 						gridFieldDataType: {
 							id: 1,
 							name: "string"
@@ -291,11 +291,11 @@ export default class IncidentReportTabTaskBoard {
 						labelTooltip: "LBL_TYPE",
 						needsTranslation: false,
 						parameterized: false,
-						position: 6,
+						position: 7,
 						required: true,
 						sourceField: "type",
 						visible: true,
-						widthPx: 45,
+						widthPx: 30,
 						gridFieldDataType: {
 							id: 1,
 							name: "string"
@@ -331,11 +331,11 @@ export default class IncidentReportTabTaskBoard {
 						labelTooltip: "LBL_REQUIRED",
 						needsTranslation: false,
 						parameterized: false,
-						position: 7,
+						position: 3,
 						required: true,
 						sourceField: "required",
 						visible: true,
-						widthPx: 45,
+						widthPx: 30,
 						gridFieldDataType: {
 							id: 1,
 							name: "string"

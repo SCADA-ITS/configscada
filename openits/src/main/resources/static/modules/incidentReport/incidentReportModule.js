@@ -23,10 +23,10 @@ export default class IncidentReportModule extends GenericModule {
 		this.closed = false;
 		this.config = module.config;
 		this.incidentReportContent = undefined;
-		
+
 		this.userData = util.user.getUserData();
 		this.isUpdating = false;
-		
+
 		this.autoAssignPermissions = util.module.isAllowedPermission(this.config.requiredPermissions.autoassign);
 		this.assignAnotherPermissions = util.module.isAllowedPermission(this.config.requiredPermissions.assignAnother);
 		this.confirmIncidentPermissions = util.module.isAllowedPermission(this.config.requiredPermissions.confirmIncident);
@@ -65,14 +65,14 @@ export default class IncidentReportModule extends GenericModule {
 		else if (this.moduleAction.id === this.config.moduleAction.cancel) {
 
 			this.actionCancel();
-		} 
+		}
 		else if (this.moduleAction.id === this.config.moduleAction.assign) {
-			
+
 			this.actionAssign();
 		}
 
 	}
-	
+
 	actionConfirm() {
 
 		let self = this;
@@ -84,19 +84,19 @@ export default class IncidentReportModule extends GenericModule {
 		if (Array.isArray(this.args.selectedRows) && this.args.selectedRows.length > 0) {
 
 			self.args.selectedRows.forEach(e => {
-				
+
 				if (!e.confirm) {
 
 					currentUser = window.em.getByField(EntityType.USER, "id", e.currentUserId);
 					currentUserRole = currentUser.role.id;
-					sameUser =(self.userData.id === currentUser.id);
+					sameUser = (self.userData.id === currentUser.id);
 					sameRole = (self.userData.role.id === currentUserRole);
 					incidentReportsToConfirm.push(e.id);
 					sameRoleCounter = (sameRole) ? ++sameRoleCounter : sameRoleCounter;
-					sameUserCounter = (sameUser) ? ++sameUserCounter : sameUserCounter;							
+					sameUserCounter = (sameUser) ? ++sameUserCounter : sameUserCounter;
 				}
 			});
-			
+
 			if (incidentReportsToConfirm.length > 0) {
 
 				if (sameUserCounter === incidentReportsToConfirm.length) {
@@ -144,7 +144,7 @@ export default class IncidentReportModule extends GenericModule {
 			});
 		}
 	}
-	
+
 	actionCancel() {
 
 		let self = this;
@@ -157,17 +157,17 @@ export default class IncidentReportModule extends GenericModule {
 		if (Array.isArray(this.args.selectedRows) && this.args.selectedRows.length > 0) {
 
 			self.args.selectedRows.forEach(e => {
-				
+
 				currentUser = window.em.getByField(EntityType.USER, "id", e.currentUserId);
 				currentUserRole = currentUser.role.id;
 				sameUser = (self.userData.id === currentUser.id);
 				sameRole = (self.userData.role.id === currentUserRole);
 				sameRoleCounter = (sameRole) ? ++sameRoleCounter : sameRoleCounter;
 				sameUserCounter = (sameUser) ? ++sameUserCounter : sameUserCounter;
-				incidentConfirmed = (e.confirm) ? ++incidentConfirmed : incidentConfirmed;				
+				incidentConfirmed = (e.confirm) ? ++incidentConfirmed : incidentConfirmed;
 				incidentReportsToDelete.push(e.id);
 			});
-				
+
 			if (incidentReportsToDelete.length > 0) {
 
 				if (sameUserCounter === incidentReportsToDelete.length) {
@@ -223,7 +223,7 @@ export default class IncidentReportModule extends GenericModule {
 			});
 		}
 	}
-	
+
 	actionAssign() {
 
 		let self = this;
@@ -251,13 +251,13 @@ export default class IncidentReportModule extends GenericModule {
 				ms.show();
 
 			}
-			
+
 			function onAccept(data) {
 
 				let incidentReportsToAssign = 0;
 
 				self.args.selectedRows.forEach(e => {
-					
+
 					let currentUser = window.em.getByField(EntityType.USER, "id", e.currentUserId);
 					let currentUserRole = currentUser.role.id;
 
@@ -265,21 +265,21 @@ export default class IncidentReportModule extends GenericModule {
 
 						incidentReportsToAssign++;
 					}
-				 });
+				});
 
-				if (incidentReportsToAssign === self.args.selectedRows.length)  {
+				if (incidentReportsToAssign === self.args.selectedRows.length) {
 
 					changeUser(data);
 
 				} else {
 
 					let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_INCIDENT_CONFIRM_NOT_POSSIBLE_TO_ASSIGN_DESCRIPTION"), null, null);
-					ms.show();																	
+					ms.show();
 				}
 			}
-			
+
 			function changeUser(data) {
-			
+
 				let userId = (data) ? data[0].id : self.userData.id;
 
 				if (userId != SYSTEM_PROFILES.USER) {
@@ -304,10 +304,10 @@ export default class IncidentReportModule extends GenericModule {
 			}
 		}
 	}
-	
+
 	request() {
 
-		let self = this;	
+		let self = this;
 		let mainContent = $$("main-content-" + self.uid);
 		let loadingViewBlur = $$("loading-blur-" + self.uid);
 
@@ -321,110 +321,113 @@ export default class IncidentReportModule extends GenericModule {
 		if (this.moduleAction.id === this.config.moduleAction.edit) {
 
 			log.debug("request incident report = " + self.incidentReportId);
-			
+
 			webix.ajax().get(appConfig.restUrl + util.fillTemplate(this.config.restEndpoints.incidentReport, { id: self.incidentReportId })).then(function(dat) {
-				
+
 				log.debug("response incident report = " + self.incidentReportId);
 
 				if (dat != null) {
 
 					self.incidentReport = dat.json();
-					
+
 					assignSpaths();
-					
-					self.update();
+
 				}
 
 			}, function(response) { util.ajax.handleError(response); });
 		}
-		
+
 		function assignSpaths() {
-			
+
 			let spathIds = [];
-			
+
 			if (self.incidentReport) {
-				
+
 				if (Array.isArray(self.incidentReport.sequenceOfStates) && self.incidentReport.sequenceOfStates.length > 0) {
-					
+
 					self.incidentReport.sequenceOfStates.forEach(sequenceOfState => {
-						
+
 						if (Array.isArray(sequenceOfState.taskStates) && sequenceOfState.taskStates.length > 0) {
-							
+
 							sequenceOfState.taskStates.forEach(taskState => {
-								
-								spathIds.push(...getSpathIds(taskState));	
+
+								spathIds.push(...getSpathIds(taskState));
 							});
 						}
 					});
 				}
-				
+
 				if (Array.isArray(self.incidentReport.taskStates) && self.incidentReport.taskStates.length > 0) {
-					
+
 					self.incidentReport.taskStates.forEach(taskState => {
-								
-						spathIds.push(...getSpathIds(taskState));	
+
+						spathIds.push(...getSpathIds(taskState));
 					});
 				}
-				
+
 				if (Array.isArray(spathIds) && spathIds.length > 0) {
-				
+
 					webix.ajax().headers(HEADER_POST).post(appConfig.restUrl + self.config.restEndpoints.spaths, JSON.stringify(spathIds)).then(function(data) {
-	
+
 						let responseSpaths = data.json();
-		
+
 						if (Array.isArray(responseSpaths) && responseSpaths.length > 0) {
-							
+
 							self.spaths = responseSpaths;
 						}
-					});	
+						
+						self.update();
+					});
+				} else {
+					self.update();
 				}
 			}
-			
+
 			function getSpathIds(taskState) {
-				
+
 				let taskStateSpathIds = [];
-				
-				if (taskState && taskState.incidentTypeTask && taskState.incidentTypeTask.taskType && 
+
+				if (taskState && taskState.incidentTypeTask && taskState.incidentTypeTask.taskType &&
 					Array.isArray(taskState.incidentTypeTask.taskType.taskTypeParams) && taskState.incidentTypeTask.taskType.taskTypeParams.length > 0 &&
 					Array.isArray(taskState.incidentTypeTask.incidentTypeTaskValues) && taskState.incidentTypeTask.incidentTypeTaskValues.length > 0) {
-					
+
 					if (taskState.incidentTypeTask.taskType.taskTypeParams.find(taskTypeParam => taskTypeParam.paramType.id === "ParamType:1")) {
-						
+
 						let incidentTypeTaskValues = taskState.incidentTypeTask.incidentTypeTaskValues.filter(incidentTypeTaskValue => incidentTypeTaskValue.taskTypeParam.id === "ImsTaskTypeParam:1:1");
-						
+
 						if (Array.isArray(incidentTypeTaskValues) && incidentTypeTaskValues.length > 0) {
-							
+
 							incidentTypeTaskValues.forEach(incidentTypeTaskValue => {
-								
+
 								let signallingSpaths;
-								
+
 								if (incidentTypeTaskValue.value) {
-									
+
 									try {
-										
+
 										signallingSpaths = JSON.parse(incidentTypeTaskValue.value);
-										
+
 										if (Array.isArray(signallingSpaths)) {
-											
+
 											signallingSpaths.forEach(signallingSpath => {
-												
+
 												if (signallingSpath.spathId) {
-													
+
 													taskStateSpathIds.push(signallingSpath.spathId);
 												}
 											});
 										}
 									}
 									catch (error) {
-										
+
 									}
-									
+
 								}
 							});
 						}
-					}	
+					}
 				}
-				
+
 				return taskStateSpathIds;
 			}
 		}
@@ -433,7 +436,7 @@ export default class IncidentReportModule extends GenericModule {
 	update() {
 
 		this.isUpdating = true;
-		
+
 		if (this.incidentReport) {
 
 			this.currentSequenceOfState = this.incidentReport.sequenceOfStates.find(e => {
@@ -471,9 +474,9 @@ export default class IncidentReportModule extends GenericModule {
 			$$("loading-" + this.uid).hide();
 			$$(this.uid).show();
 			log.debug("loading hide");
-			
+
 			this.isUpdating = false;
-			
+
 			if (this.moduleAction.id === this.config.moduleAction.edit && !this.stompClient) {
 
 				this.callbacks();
@@ -481,11 +484,11 @@ export default class IncidentReportModule extends GenericModule {
 
 			if (this.closed) {
 
-				let ms = new MessageBox (MessageBox.WARN, i18n.t("LBL_INCIDENT_CANCEL_OR_DELETE_DESCRIPTION"), null, null);
+				let ms = new MessageBox(MessageBox.WARN, i18n.t("LBL_INCIDENT_CANCEL_OR_DELETE_DESCRIPTION"), null, null);
 				ms.show();
 			}
 		}
-		
+
 		self.isUpdating = false;
 	}
 
@@ -505,10 +508,10 @@ export default class IncidentReportModule extends GenericModule {
 			view.attachEvent("onDestruct", function() {
 
 				if (!self.isUpdating) {
-					
-					self.disconnect_ws();	
+
+					self.disconnect_ws();
 				}
-				
+
 			});
 		}
 	}
@@ -517,8 +520,8 @@ export default class IncidentReportModule extends GenericModule {
 
 		let self = this;
 		this.dtTasks = undefined;
-		
-		let	loadingBlurHeight = util.module.getWindowParamValue(self.module, WindowParam.HEIGHT, 773) - 50;
+
+		let loadingBlurHeight = util.module.getWindowParamValue(self.module, WindowParam.HEIGHT, 773) - 50;
 		let loadingBlurWidth = util.module.getWindowParamValue(self.module, WindowParam.WIDTH, 1689);
 
 		let incidentReportActionPanel = new IncidentReportActionPanel(self);
@@ -556,7 +559,7 @@ export default class IncidentReportModule extends GenericModule {
 					hidden: true,
 					width: loadingBlurWidth,
 					height: loadingBlurHeight,
-					cols: [util.ui.getViewDrawLoading()]				
+					cols: [util.ui.getViewDrawLoading()]
 				}
 			]
 		};
@@ -564,7 +567,7 @@ export default class IncidentReportModule extends GenericModule {
 		function getViewHeader() {
 
 			let viewHeader;
-			
+
 			viewHeader = {
 
 				id: "viewHeader-" + self.uid,
@@ -585,21 +588,21 @@ export default class IncidentReportModule extends GenericModule {
 							if (incidentIcon == undefined) {
 								incidentIcon = "undefined.png";
 							}
-							
+
 							let stretchTemplate = undefined;
-													
+
 							if (self.incidentReport.affectionStretch) {
-								
+
 								stretchTemplate = `<span title='${i18n.t("LBL_INCIDENT_STRETCH")}' class='ims-incident-badge' style='border: 1px solid rgb(71, 84, 102); padding-left: 20px'><span class="ico webix_icon mdi mdi-road"></span>  ${self.incidentReport.affectionStretch.alias}</span>`;
 							}
-							
+
 							let roadImpactTemplate = undefined;
-													
+
 							if (self.incidentReport.roadImpact) {
-								
+
 								roadImpactTemplate = `<span title='${i18n.t("LBL_INCIDENT_ROAD_IMPACT")}' class='ims-incident-badge' style='border: 1px solid rgb(71, 84, 102); padding-left: 20px; font-style: italic;'><span class="ico webix_icon mdi mdi-selection"></span>  ${self.incidentReport.roadImpact.alias}</span>`;
 							}
-							
+
 							return `<image class="ims-incident-report-icon" src="img/incident_type/${incidentIcon}" />
 									<div class="ims-incident-report-title">
 										${self.incidentReport.incidentType.alias} ${self.incidentReport.incidentType.description}
@@ -702,17 +705,17 @@ export default class IncidentReportModule extends GenericModule {
 	connect_ws() {
 
 		let self = this;
-		
+
 		if (!this.idStompSubscriptor) {
-			
+
 			let topic = this.config.topic + "." + this.incidentReportId;
-	
+
 			let stompSubscriptorService = window.sm.getService(Services.STOMP_SUBSCRIPTOR_SERVICE);
-		
+
 			if (stompSubscriptorService) {
-	
+
 				this.idStompSubscriptor = stompSubscriptorService.subscribe(appConfig.stompUrl, topic, on_message);
-			}	
+			}
 		}
 
 		function on_message(be, action, timestamp) {
@@ -722,9 +725,9 @@ export default class IncidentReportModule extends GenericModule {
 				action: action,
 				timestamp: timestamp
 			}
-			
+
 			self.disconnectStomp = false;
-			
+
 			log.debug(JSON.stringify(data));
 
 			if (action === StompSubscriptorService.ACTION_UPDATE) {
@@ -743,17 +746,17 @@ export default class IncidentReportModule extends GenericModule {
 					self.closed = true;
 					self.update();
 				}
-			} 
+			}
 			else if (action === StompSubscriptorService.ACTION_BLOCK) {
 
 				let mainContent = $$("main-content-" + self.uid);
 				let loadingViewBlur = $$("loading-blur-" + self.uid);
-				
+
 				if (loadingViewBlur && mainContent) {
-					
+
 					loadingViewBlur.show();
 					webix.html.addCss(mainContent.$view, "main-screen-locked-firefox");
-					log.debug("loading...");	
+					log.debug("loading...");
 				}
 			}
 		}
@@ -762,11 +765,11 @@ export default class IncidentReportModule extends GenericModule {
 	disconnect_ws() {
 
 		if (this.idStompSubscriptor) {
-			
+
 			let stompSubscriptorService = window.sm.getService(Services.STOMP_SUBSCRIPTOR_SERVICE);
-	
+
 			if (stompSubscriptorService) {
-	
+
 				stompSubscriptorService.unsubscribe(this.idStompSubscriptor);
 			}
 		}
