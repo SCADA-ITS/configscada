@@ -33,13 +33,10 @@ export default class IncidentWizardAction {
 
 				checkNewIncident(
 
-					onAccept
-					,
+					onAccept,
 					function onError() {
 
 						$$("loading-" + self.parent.uid).hide();
-						$$(self.parent.uid).show();
-
 						let message = `${i18n.t("LBL_INCIDENT_REPORT_MORE_THAN_ONE_INCIDENT_OF_TYPE")} ${parent.incidentData.incidentType} ${i18n.t("LBL_INCIDENT_REPORT_IS_ALLOWED_IN_STRETCH")} ${parent.incidentData.stretch}`;
 
 						(new MessageBox(MessageBox.CONFIRM, message,
@@ -47,12 +44,16 @@ export default class IncidentWizardAction {
 
 								onAccept();
 							}
-							, null)).show();
+							, function() {
+								$$("loading-" + self.parent.uid).hide();
+								$$(self.parent.uid).show();
+
+							})).show();
 					}
 				);
 			}
 		)).show();
-		
+
 		function onAccept() {
 
 			let body = {
@@ -122,7 +123,7 @@ export default class IncidentWizardAction {
 
 										if (incidentTypeStretch && !incidentTypeStretch.multiInstance) {
 
-											let existIncidentReportInSameStretch = incidentReportsSummary.find(e=>
+											let existIncidentReportInSameStretch = incidentReportsSummary.find(e =>
 												!e.incidentState.finalState &&
 												e.affectionStretch.id === incidentTypeStretch.stretch.id &&
 												e.incidentType.id === incidentTypeStretch.incidentType.id);
