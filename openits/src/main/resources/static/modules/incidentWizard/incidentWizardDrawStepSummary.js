@@ -1,4 +1,4 @@
-import {util} from "../../lib/util.js";
+import { util } from "../../lib/util.js";
 import IncidentWizardDrawStep from "./incidentWizardDrawStep.js";
 import SearchDialogBox from "../../component/searchDialogBox.js";
 import MessageBox from "../../component/messageBox.js";
@@ -9,14 +9,14 @@ export default class IncidentWizardDrawStepSummary extends IncidentWizardDrawSte
 
 		super(parent, step);
 	}
-	
+
 	getView() {
-		
+
 		let parent = this.parent;
 		let step = this.step;
-		
+
 		let viewStepSummary;
-			
+
 		viewStepSummary = {
 
 			rows: [
@@ -39,7 +39,7 @@ export default class IncidentWizardDrawStepSummary extends IncidentWizardDrawSte
 				}
 			]
 		};
-		
+
 		function getViewSummary() {
 
 			let viewSummary = {};
@@ -74,13 +74,13 @@ export default class IncidentWizardDrawStepSummary extends IncidentWizardDrawSte
 												template: function(obj) {
 
 													let message = '';
-																										
+
 													if (Array.isArray(obj.affectionStretchs) && obj.affectionStretchs.length > 1) {
-														
+
 														message = i18n.t("LBL_INCIDENTS_TO_CREATE_PER_AFFECTION_STRETCH") + ": " + obj.affectionStretchs.length;
-															
+
 													}
-													
+
 													return `<div><span class="summary">${message}</span></div>`
 												}
 											},
@@ -114,14 +114,14 @@ export default class IncidentWizardDrawStepSummary extends IncidentWizardDrawSte
 																height: 50,
 																borderless: true,
 																template: function(obj) {
-																	
+
 																	let lblAffectionStretchs = '';
-																	
+
 																	if (Array.isArray(obj.affectionStretchs)) {
-																		
+
 																		lblAffectionStretchs = obj.affectionStretchs.map(e => e.alias).join(',');
 																	}
-																	
+
 																	return `<div><span class="ico webix_icon mdi mdi-road"></span><span class="field">${obj.affectionStretchs.length > 1 ? i18n.t("LBL_INCIDENT_AFFECTION_STRETCHS") : i18n.t("LBL_INCIDENT_STRETCH")}</span></div>
 																		   <div class="value" style="max-width: ${maxWidthLabels}px;">${lblAffectionStretchs}</div>`
 																}
@@ -133,24 +133,24 @@ export default class IncidentWizardDrawStepSummary extends IncidentWizardDrawSte
 																template: function(obj) {
 
 																	let roadImpact = obj.roadImpact;
-																	
+
 																	let summaryRoadImpact = `<div>
 																								<span class="ico webix_icon mdi mdi-selection"></span>
 																								<span class="field">${i18n.t("LBL_INCIDENT_ROAD_IMPACT")}</span>
 																							</div>`;
-																			
-																			
-//																	if (Array.isArray(parent.incidentData.roadImpacts) && parent.incidentData.roadImpacts.length > 0) {
-																		
-																		summaryRoadImpact += `<div class="value" style="max-width: ${maxWidthLabels}px;">${roadImpact && roadImpact.alias ? roadImpact.alias : ''}
+
+
+																	//																	if (Array.isArray(parent.incidentData.roadImpacts) && parent.incidentData.roadImpacts.length > 0) {
+
+																	summaryRoadImpact += `<div class="value" style="max-width: ${maxWidthLabels}px;">${roadImpact && roadImpact.alias ? roadImpact.alias : ''}
 																								<span title='${i18n.t('LBL_EDIT')}' class='change-road-impact-button webix_icon mdi mdi-pencil'></span>
 																							</div>`;
-//																	}
-//																	else {
-//																		
-//																		summaryRoadImpact += `<div class="value" style="max-width: ${maxWidthLabels}px;">${i18n.t("LBL_UNAVAILABLE")}</div>`;
-//																	}
-																	
+																	//																	}
+																	//																	else {
+																	//																		
+																	//																		summaryRoadImpact += `<div class="value" style="max-width: ${maxWidthLabels}px;">${i18n.t("LBL_UNAVAILABLE")}</div>`;
+																	//																	}
+
 																	return summaryRoadImpact;
 																},
 																on: {
@@ -164,72 +164,65 @@ export default class IncidentWizardDrawStepSummary extends IncidentWizardDrawSte
 
 																				let dialogRoadImpacts = webix.copy(SearchDialogBox.CUSTOM);
 																				let label = i18n.t("LBL_ROAD_IMPACTS");
-													
+
 																				dialogRoadImpacts.data = [];
-													
+
 																				dialogRoadImpacts.pkField = "id"
 																				dialogRoadImpacts.showEmptyRowCol = SearchDialogBox.ID_NOT_SELECTED;
 																				dialogRoadImpacts.fields = ["alias=LBL_ALIAS", "description=LBL_DESCRIPTION"];
 																				dialogRoadImpacts.sortFieldId = 1;
-																				
-																				if (parent.incidentData.stretchId && parent.incidentData.incidentTypeId) {
-																					
-																					webix.ajax().get(appConfig.restUrl + util.fillTemplate(parent.config.restEndpoints.incidentType, { id: parent.incidentData.incidentTypeId })).then(function(incidentTypeResponse) {
 
-																						if (incidentTypeResponse != null) {
-																		
-																							let incidentType = incidentTypeResponse.json();
-				
-																							if (incidentType) {
-																								
-																								if (Array.isArray(incidentType.incidentTypeStretchs) && incidentType.incidentTypeStretchs.length > 0) {
-																									
-																									let incidentTypeStretch = incidentType.incidentTypeStretchs.find(e => e.stretch.id === parent.incidentData.stretchId);
-																									
-																									if (incidentTypeStretch && Array.isArray(incidentTypeStretch.roadImpacts)) {
-																							
-																										if (Array.isArray(incidentTypeStretch.roadImpacts) && incidentTypeStretch.roadImpacts.length > 0) {
-													
-																											incidentTypeStretch.roadImpacts.forEach(p => {
-																			
-																												dialogRoadImpacts.data.push({
-																													id: p.id,
-																													alias: p.alias,
-																													description: p.description
-																												})
-																											});
-																										}
-																			
-																										let s = new SearchDialogBox(label, dialogRoadImpacts, function(items) {
-																			
-																											if (Array.isArray(items) && items.length === 1) {
-																												
-																												let roadImpact = items[0];
-																												
-																												if (roadImpact.id === SearchDialogBox.ID_NOT_SELECTED) {
-																													
-																													parent.incidentData.roadImpact = undefined;
-																													$$("summary-road-impact-" + parent.uid).setValues({
-																														roadImpact: undefined
-																													});
-																												}
-																												else {
-																													
-																													parent.incidentData.roadImpact = roadImpact;
-																													
-																													$$("summary-road-impact-" + parent.uid).setValues({
-																														roadImpact: roadImpact
-																													});	
-																												}
+																				if (parent.incidentData.stretchId && parent.incidentData.incidentTypeId) {
+
+																					webix.ajax().get(appConfig.restUrl + util.fillTemplate(parent.config.restEndpoints.incidentTypeStretchs, { incidentTypeId: parent.incidentData.incidentTypeId, stretchId: parent.incidentData.stretchId })).then(
+
+																						function(responseIncidentTypeStretchs) {
+
+																							if (responseIncidentTypeStretchs != null) {
+
+																								let incidentTypeStretch = responseIncidentTypeStretchs.json();
+
+																								if (incidentTypeStretch && Array.isArray(incidentTypeStretch.roadImpacts) && incidentTypeStretch.roadImpacts.length > 0) {
+
+																									incidentTypeStretch.roadImpacts.forEach(p => {
+
+																										dialogRoadImpacts.data.push({
+																											id: p.id,
+																											alias: p.alias,
+																											description: p.description
+																										})
+																									});
+
+																									let s = new SearchDialogBox(label, dialogRoadImpacts, function(items) {
+
+																										if (Array.isArray(items) && items.length === 1) {
+
+																											let roadImpact = items[0];
+
+																											if (roadImpact.id === SearchDialogBox.ID_NOT_SELECTED) {
+
+																												parent.incidentData.roadImpact = undefined;
+																												$$("summary-road-impact-" + parent.uid).setValues({
+																													roadImpact: undefined
+																												});
 																											}
-																										});
-																			
-																										s.show();	
-																									}
+																											else {
+
+																												parent.incidentData.roadImpact = roadImpact;
+
+																												$$("summary-road-impact-" + parent.uid).setValues({
+																													roadImpact: roadImpact
+																												});
+																											}
+																										}
+																									});
+																									s.show();
+																								} else {
+																									
+																									(new MessageBox(MessageBox.INFO, i18n.t("LBL_ROAD_IMPACT_NOT_AVAILABLE"), null, null)).show();
 																								}
 																							}
-																						}
-																					});
+																						});
 																				}
 																			});
 																		}
@@ -251,8 +244,8 @@ export default class IncidentWizardDrawStepSummary extends IncidentWizardDrawSte
 																borderless: true,
 																template: function(obj) {
 
-																	let user = obj.user ? obj.user : "";																	
-																	
+																	let user = obj.user ? obj.user : "";
+
 																	if ((parent.autoAssignPermissions || parent.assignAnotherPermissions) && !obj.userUpdate) {
 
 																		let userData = util.user.getUserData();
@@ -260,19 +253,19 @@ export default class IncidentWizardDrawStepSummary extends IncidentWizardDrawSte
 																		parent.incidentData.user = userData.name;
 																		parent.incidentData.userId = userData.id;
 																	}
-																	
+
 																	let summaryUser = `<div>
 																							<span class="ico webix_icon mdi mdi-account"></span>
 																							<span class="field">${i18n.t("LBL_INCIDENT_USER_ASSIGNED")}</span>
 																						</div>`;
 
 																	if (parent.assignAnotherPermissions) {
-																					
+
 																		summaryUser += `<div class="value" style="max-width: ${maxWidthLabels}px;">${user}<span title='${i18n.t('LBL_CMD_ASSIGN')}' class='changeuser-button webix_icon mdi mdi-pencil'></span></div>`;
 
 																	} else {
 
-																		summaryUser += `<div class="value" style="max-width: ${maxWidthLabels}px;">${user}</div>`;																		
+																		summaryUser += `<div class="value" style="max-width: ${maxWidthLabels}px;">${user}</div>`;
 																	}
 
 																	return summaryUser;
@@ -287,8 +280,8 @@ export default class IncidentWizardDrawStepSummary extends IncidentWizardDrawSte
 
 																			changeUserButton.addEventListener("click", function() {
 
-																				let s = new SearchDialogBox(i18n.t("LBL_SELECT_USER"), SearchDialogBox.USERS, function(obj){
-																					
+																				let s = new SearchDialogBox(i18n.t("LBL_SELECT_USER"), SearchDialogBox.USERS, function(obj) {
+
 																					if (obj[0].id != SYSTEM_PROFILES.USER) {
 
 																						$$("summary-user-" + parent.uid).setValues({
@@ -300,12 +293,12 @@ export default class IncidentWizardDrawStepSummary extends IncidentWizardDrawSte
 																						parent.incidentData.userId = obj[0].id;
 
 																					} else {
-																						
+
 																						let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_NOT_ALLOWED_TO_ASSIGN_SYSTEM_USER_DESCRIPTION"), null, null);
 																						ms.show();
 																					}
 																				});
-																				
+
 																				s.show();
 																			});
 																		}
