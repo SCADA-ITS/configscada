@@ -36,7 +36,6 @@ export default class IncidentWizardAction {
 					onAccept,
 					function onError() {
 
-						$$("loading-" + self.parent.uid).hide();
 						let message = `${i18n.t("LBL_INCIDENT_REPORT_MORE_THAN_ONE_INCIDENT_OF_TYPE")} ${parent.incidentData.incidentType} ${i18n.t("LBL_INCIDENT_REPORT_IS_ALLOWED_IN_STRETCH")} ${parent.incidentData.stretch}`;
 
 						(new MessageBox(MessageBox.CONFIRM, message,
