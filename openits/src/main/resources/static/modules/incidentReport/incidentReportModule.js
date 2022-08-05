@@ -367,7 +367,7 @@ export default class IncidentReportModule extends GenericModule {
 
 				if (Array.isArray(spathIds) && spathIds.length > 0) {
 
-					webix.ajax().headers(HEADER_POST).post(appConfig.restUrl + self.config.restEndpoints.spaths, JSON.stringify(spathIds)).then(function(data) {
+					webix.ajax().headers(HEADER_POST).post(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.spaths, { stretchId: self.incidentReport.affectionStretch.id }), JSON.stringify(spathIds)).then(function(data) {
 
 						let responseSpaths = data.json();
 

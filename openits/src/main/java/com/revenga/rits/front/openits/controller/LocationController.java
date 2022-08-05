@@ -174,13 +174,26 @@ public class LocationController {
 	@ApiOperation(value = "Get all spaths", notes = "Get all spaths")
 	public ResponseEntity<Object> getSpaths() {
 		
-		return new ResponseEntity<>(spathBO.getSpaths(null), HttpStatus.OK);
+		return new ResponseEntity<>(spathBO.getSpaths(null, null), HttpStatus.OK);
 	}
 	
 	@PostMapping(value = "/spaths")
 	@ApiOperation(value = "Get selected spaths", notes = "Get selected spaths")
 	public ResponseEntity<Object> getSpaths(@RequestBody List<String> ids) {
 		
-		return new ResponseEntity<>(spathBO.getSpaths(ids), HttpStatus.OK);
+		return new ResponseEntity<>(spathBO.getSpaths(ids, null), HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/spaths/{stretchId}")
+	@ApiOperation(value = "Get selected spaths", notes = "Get selected spaths")
+	public ResponseEntity<Object> getStretchSpaths(@RequestBody List<String> ids,
+			@ApiParam(
+			name = "stretchId",
+			type = "String",
+			value = "Element type id",
+			example = "Stretch:1",
+			required = true) @PathVariable String stretchId) {
+		
+		return new ResponseEntity<>(spathBO.getSpaths(ids, stretchId), HttpStatus.OK);
 	}
 }

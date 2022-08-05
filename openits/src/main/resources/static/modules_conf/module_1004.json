@@ -20,7 +20,7 @@
 		"elementsStretchs": "elements/byStretchs",
 		"systemParamConfirmIncident" : "system_params/${id}",
 		"incidentReportSummary": "incidents/reports/${id}/summary",
-		"spaths": "locations/spaths"
+		"spaths": "locations/spaths/${stretchId}"
 	},
 	"topic": "/topic/incidentReport",
 	"actionEndpoints": {
