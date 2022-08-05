@@ -740,6 +740,8 @@ export default class IncidentWizardAction {
 
 							let strechs = dat.json();
 
+							parent.listViewStrechs.clear();
+							parent.incidentData.stretchIds = undefined;
 							if (Array.isArray(strechs) && strechs.length > 0) {
 
 								strechs = strechs.filter(e => {
@@ -755,8 +757,6 @@ export default class IncidentWizardAction {
 										description: e.description
 									}
 								});
-
-								parent.listViewStrechs.clear();
 
 								parent.listViewStrechs.add(dataStrechs);
 
