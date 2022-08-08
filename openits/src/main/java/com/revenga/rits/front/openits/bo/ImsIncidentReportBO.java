@@ -30,9 +30,9 @@ public class ImsIncidentReportBO extends GenericBO {
 
 	@Autowired
 	UserBO userBO;
-	
+
 	private static final String FILE_CONFIG_PROPERTIES = "config.properties";
-	
+
 	private static Map<String, String> props = ConfigProperty.getInstance().getProperties(FILE_CONFIG_PROPERTIES);
 
 	static final String FIELD_INCIDENT_REPORT_LOGS = "incidentReportLogs";
@@ -46,15 +46,16 @@ public class ImsIncidentReportBO extends GenericBO {
 	static final String FIELD_ALIAS = "alias";
 	static final String FIELD_DESCRIPTION = "description";
 	static final String FIELD_ID = "id";
-	static final String FIELD_ROAD_IMPACT = "roadImpact";
+	static final String FIELD_ROAD_IMPACTS = "roadImpacts";
 
 	static final String VALUE_DEFAULT_LEVEL = "INFO";
 	static final String LOG_TYPE_PARAM_STATE = props.get("log_type_param_state");
 	static final String LOG_TYPE_PARAM_ARG_1 = props.get("log_type_param_arg_1");
-	
+
 	static final String LOG_SUBTYPE_INCIDENT_REPORT_CREATED = props.get("log_subtype_incident_report_created");
 	static final String LOG_SUBTYPE_INCIDENT_REPORT_CONFIRMED = props.get("log_subtype_incident_report_confirmed");
-	static final String LOG_SUBTYPE_INCIDENT_REPORT_CHANGE_STATE = props.get("log_subtype_incident_report_change_state");
+	static final String LOG_SUBTYPE_INCIDENT_REPORT_CHANGE_STATE = props
+			.get("log_subtype_incident_report_change_state");
 	static final String LOG_SUBTYPE_INCIDENT_REPORT_CANCELED = props.get("log_subtype_incident_report_canceled");
 	static final String LOG_SUBTYPE_ASSIGNED_USER = props.get("log_subtype_assigned_user");
 	static final String LOG_SUBTYPE_ASSIGNED_CAUSE = props.get("log_subtype_assigned_cause");
@@ -64,7 +65,6 @@ public class ImsIncidentReportBO extends GenericBO {
 	static final String LOG_SUBTYPE_ATTACHED_DOCUMENT = props.get("log_subtype_attached_document");
 	static final String LOG_SUBTYPE_DELETED_DOCUMENT = props.get("log_subtype_deleted_document");
 	static final String LOG_SUBTYPE_INCIDENT_REPORT_CHANGED = props.get("log_subtype_incident_report_changed");
-	
 
 	static final String FIELD_INCIDENT_STATE = "incidentState";
 	static final String FIELD_LABEL_ALIAS = "labelAlias";
@@ -417,12 +417,12 @@ public class ImsIncidentReportBO extends GenericBO {
 		}
 		return null;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	private Object getPreviousStateLabelAlias(final Map<String, Object> incidentReport) {
 
 		Object previousStateLabelAlias = null;
-		
+
 		if (incidentReport != null && incidentReport.containsKey(FIELD_SEQUENCE_OF_STATES)
 				&& incidentReport.containsKey(FIELD_INCIDENT_STATE)) {
 
@@ -464,9 +464,10 @@ public class ImsIncidentReportBO extends GenericBO {
 
 										if (objFirstStateId != null && !objFirstStateId.equals(objIncidentStateId)) {
 
-											for (int i = 0; i < sequenceOfStates.size() && previousStateLabelAlias == null; i++) {
-												
-												Object objSequenceOfState = sequenceOfStates.get(i); 
+											for (int i = 0; i < sequenceOfStates.size()
+													&& previousStateLabelAlias == null; i++) {
+
+												Object objSequenceOfState = sequenceOfStates.get(i);
 
 												if (objSequenceOfState instanceof Map) {
 
@@ -482,17 +483,21 @@ public class ImsIncidentReportBO extends GenericBO {
 
 															Object objStateId = state.get(FIELD_ID);
 
-															if (objStateId != null && objStateId.equals(objIncidentStateId) && i > 0) {
-																
-																Object objPrevSequenceOfState = sequenceOfStates.get(i - 1);
-																
+															if (objStateId != null
+																	&& objStateId.equals(objIncidentStateId) && i > 0) {
+
+																Object objPrevSequenceOfState = sequenceOfStates
+																		.get(i - 1);
+
 																if (objPrevSequenceOfState instanceof Map) {
 
-																	Object previousState = ((Map<String, Object>) objPrevSequenceOfState).get(FIELD_STATE);
+																	Object previousState = ((Map<String, Object>) objPrevSequenceOfState)
+																			.get(FIELD_STATE);
 
 																	if (previousState instanceof Map) {
 
-																		previousStateLabelAlias = ((Map<String, Object>) previousState).get(FIELD_LABEL_ALIAS);
+																		previousStateLabelAlias = ((Map<String, Object>) previousState)
+																				.get(FIELD_LABEL_ALIAS);
 																	}
 																}
 															}
@@ -509,7 +514,7 @@ public class ImsIncidentReportBO extends GenericBO {
 				}
 			}
 		}
-		
+
 		return previousStateLabelAlias;
 	}
 
@@ -562,19 +567,33 @@ public class ImsIncidentReportBO extends GenericBO {
 
 		return null;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	private Object getRoadImpactAlias(final Map<String, Object> incidentReport, final String roadImpactId) {
 
-		if (incidentReport != null && roadImpactId != null && incidentReport.containsKey(FIELD_ROAD_IMPACT)) {
+		if (incidentReport != null && roadImpactId != null && incidentReport.containsKey(FIELD_ROAD_IMPACTS)) {
 
-			Object objRoadImpact = incidentReport.get(FIELD_ROAD_IMPACT);
+			Object objRoadImpacts = incidentReport.get(FIELD_ROAD_IMPACTS);
 
-			if (objRoadImpact instanceof Map) {
+			if (objRoadImpacts instanceof List) {
 
-				Map<String, Object> roadImpact = (Map<String, Object>) objRoadImpact;
+				List<?> roadImpacts = (List<?>) objRoadImpacts;
 
-				return roadImpact.get(FIELD_ALIAS);
+				for (Object objRoadImpact : roadImpacts) {
+
+					if (objRoadImpact instanceof Map) {
+
+						Map<String, Object> roadImpact = (Map<String, Object>) objRoadImpact;
+						Object objRoadImpactId = roadImpact.get(FIELD_ID);
+
+						if (objRoadImpactId != null && objRoadImpactId.equals(roadImpactId)) {
+
+							return roadImpact.get(FIELD_ALIAS);
+
+						}
+					}
+				}
+
 			}
 		}
 
@@ -714,8 +733,7 @@ public class ImsIncidentReportBO extends GenericBO {
 
 		return confirm(id, null);
 	}
-	
-	
+
 	public Boolean confirm(String id, String userId) {
 
 		Boolean res = false;
@@ -723,9 +741,9 @@ public class ImsIncidentReportBO extends GenericBO {
 		Map<String, Object> input = new HashMap<>();
 
 		input.put(FIELD_INCIDENT_REPORT_ID, id);
-		
+
 		if (!StringUtils.isEmpty(userId)) {
-		
+
 			input.put(FIELD_USER_ID, userId);
 		}
 
@@ -770,7 +788,7 @@ public class ImsIncidentReportBO extends GenericBO {
 
 		return res;
 	}
-	
+
 	public Boolean backward(String id) {
 
 		Boolean res = false;
@@ -797,9 +815,9 @@ public class ImsIncidentReportBO extends GenericBO {
 
 		return res;
 	}
-	
+
 	public Boolean cancel(String id) {
-		
+
 		return cancel(id, null);
 	}
 
@@ -814,9 +832,9 @@ public class ImsIncidentReportBO extends GenericBO {
 			Map<String, Object> input = new HashMap<>();
 
 			input.put(FIELD_INCIDENT_REPORT_ID, id);
-			
+
 			if (!StringUtils.isEmpty(userId)) {
-			
+
 				input.put(FIELD_USER_ID, userId);
 			}
 
@@ -1005,7 +1023,7 @@ public class ImsIncidentReportBO extends GenericBO {
 		}
 		return res;
 	}
-	
+
 	public Boolean changeRoadImpact(String id, String roadImpactId) {
 
 		Boolean res = false;
@@ -1019,13 +1037,14 @@ public class ImsIncidentReportBO extends GenericBO {
 				.put(VODataSourceAdapter.DATA_SOURCE_SEND_CHANGE_ROAD_IMPACT_INCIDENT_REPORT, input);
 
 		res = checkMapIsBoolean(incidentReport);
-		
+
 		if (Boolean.TRUE.equals(res)) {
 
 			incidentReport = voDataSourceAdapter.get(VODataSourceAdapter.DATA_SOURCE_GET_INCIDENT_REPORT,
 					new Object[] { id });
 
-			addLog(incidentReport, id, LOG_SUBTYPE_CHANGE_ROAD_IMPACT, null, getRoadImpactAlias(incidentReport, roadImpactId));
+			addLog(incidentReport, id, LOG_SUBTYPE_CHANGE_ROAD_IMPACT, null,
+					getRoadImpactAlias(incidentReport, roadImpactId));
 		}
 
 		return res;

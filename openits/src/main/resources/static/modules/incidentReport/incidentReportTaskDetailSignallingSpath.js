@@ -774,7 +774,7 @@ export default class IncidentReportTaskDetailSignallingSpath extends IncidentRep
 								const incidentReportTaskDetailSignallingSpathInfo_width = 850;
 								const incidentReportTaskDetailSignallingSpathInfo_height = 500;
 								
-								let incidentReportTaskDetailSignallingSpathInfo = new IncidentReportTaskDetailSignallingSpathInfo(signallingSpath, commandElement, self.currentStretchIds, incidentReportTaskDetailSignallingSpathInfo_width);
+								let incidentReportTaskDetailSignallingSpathInfo = new IncidentReportTaskDetailSignallingSpathInfo(signallingSpath, commandElement, self.currentStretchIds, incidentReportTaskDetailSignallingSpathInfo_width, self.spaths);
 
 								util.ui.loadWindow(i18n.t("LBL_DETAILS") + ": " + signallingSpath.alias, incidentReportTaskDetailSignallingSpathInfo.getView(), incidentReportTaskDetailSignallingSpathInfo_height, incidentReportTaskDetailSignallingSpathInfo_width, true);	
 							}
