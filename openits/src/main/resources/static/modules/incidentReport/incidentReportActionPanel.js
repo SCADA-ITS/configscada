@@ -1087,6 +1087,8 @@ export default class IncidentReportActionPanel {
 			
 			if (Array.isArray(roadImpacts) && roadImpacts.length > 0) {
 				
+				roadImpacts.sort((a, b) => (a.alias > b.alias) ? 1 : ((b.alias > a.alias) ? -1 : 0));
+				
 				roadImpacts.forEach(e => {
 
 					dialogRoadImpacts.data.push({

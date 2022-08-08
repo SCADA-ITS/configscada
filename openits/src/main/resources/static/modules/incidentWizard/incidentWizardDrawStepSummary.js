@@ -184,6 +184,8 @@ export default class IncidentWizardDrawStepSummary extends IncidentWizardDrawSte
 
 																								if (incidentTypeStretch && Array.isArray(incidentTypeStretch.roadImpacts) && incidentTypeStretch.roadImpacts.length > 0) {
 
+																									incidentTypeStretch.roadImpacts.sort((a, b) => (a.alias > b.alias) ? 1 : ((b.alias > a.alias) ? -1 : 0));
+
 																									incidentTypeStretch.roadImpacts.forEach(p => {
 
 																										dialogRoadImpacts.data.push({
