@@ -120,8 +120,10 @@ export default class IncidentReportChangeLocation {
 				function getViewStretchs() {
 
 					let viewStretchs = {};
+					let stretchData = [];
 
 					if (Array.isArray(stretchs) && stretchs.length > 0) {
+
 
 						stretchs = stretchs.filter(e => {
 							return (self.config.stretchTypes.indexOf(e.stretchType.id) !== -1);
@@ -129,7 +131,7 @@ export default class IncidentReportChangeLocation {
 
 						stretchs.sort((a, b) => (a.alias > b.alias) ? 1 : ((b.alias > a.alias) ? -1 : 0));
 
-						let stretchData = stretchs.map(e => {
+						stretchData = stretchs.map(e => {
 
 							return {
 								id: e.id,
@@ -137,106 +139,107 @@ export default class IncidentReportChangeLocation {
 								description: e.description
 							};
 						});
+					}
+					
+					let options = {};
+					let events = {};
 
-						let options = {};
-						let events = {};
+					options[ListView.Options.ICON] = false;
+					options[ListView.Options.ROW_HEIGHT] = 41;
 
-						options[ListView.Options.ICON] = false;
-						options[ListView.Options.ROW_HEIGHT] = 41;
+					events[ListView.EventTypes.ON_SELECT_ROW] = function(data, callbackEnable) {
 
-						events[ListView.EventTypes.ON_SELECT_ROW] = function(data, callbackEnable) {
+						self.selectedStretchId = data;
 
-							self.selectedStretchId = data;
+						if (callbackEnable) {
+
+							callbackEnable(false);
+						}
+
+						webix.extend($$("view-locations-" + self.uid), webix.ProgressBar);
+
+						$$("view-locations-" + self.uid).showProgress({
+							type: "bottom",
+							hide: false
+						});
+
+						if (self.dtLocations) {
+
+							self.dtLocations.clear();
+						}
+
+
+						webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.locationsByStretch, { id: data })).then(function(dat) {
+
+							if (dat != null) {
+
+								let locations = dat.json();
+
+								if (Array.isArray(locations) && locations.length > 0) {
+
+									locations = locations.filter(e => {
+										return (self.config.locationTypes.indexOf(e.locationType.id) !== -1)
+									});
+
+									locations.sort((a, b) => (a.alias > b.alias) ? 1 : ((b.alias > a.alias) ? -1 : 0));
+									let dataLocations = locations.map(e => {
+
+										return {
+											id: e.id,
+											alias: e.alias
+										}
+									});
+
+									self.dtLocations.add(dataLocations);
+									self.selectedLocationId = undefined;
+
+									if (self.incidentReport && self.incidentReport.location && self.incidentReport.location.id) {
+
+										self.dtLocations.select(self.incidentReport.location.id);
+									}
+								}
+
+								$$("view-locations-" + self.uid).hideProgress();
+							}
 
 							if (callbackEnable) {
 
-								callbackEnable(false);
+								callbackEnable(true);
 							}
 
-							webix.extend($$("view-locations-" + self.uid), webix.ProgressBar);
+							checkButtonAccept();
+						});
+					};
 
-							$$("view-locations-" + self.uid).showProgress({
-								type: "bottom",
-								hide: false
-							});
+					self.listViewStrechs = new ListView(stretchData, options, events);
 
-							if (self.dtLocations) {
-
-								self.dtLocations.clear();
-							}
-
-
-							webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.locationsByStretch, { id: data })).then(function(dat) {
-
-								if (dat != null) {
-
-									let locations = dat.json();
-
-									if (Array.isArray(locations) && locations.length > 0) {
-
-										locations = locations.filter(e => {
-											return (self.config.locationTypes.indexOf(e.locationType.id) !== -1)
-										});
-
-										locations.sort((a, b) => (a.alias > b.alias) ? 1 : ((b.alias > a.alias) ? -1 : 0));
-										let dataLocations = locations.map(e => {
-
-											return {
-												id: e.id,
-												alias: e.alias
-											}
-										});
-
-										self.dtLocations.add(dataLocations);
-										self.selectedLocationId = undefined;
-
-										if (self.incidentReport && self.incidentReport.location && self.incidentReport.location.id) {
-
-											self.dtLocations.select(self.incidentReport.location.id);
-										}
+					viewStretchs = {
+						id: "view-stretchs-" + self.uid,
+						width: 250,
+						rows: [
+							{
+								view: "label",
+								borderless: true,
+								height: 23,
+								css: "headers",
+								label: i18n.t("LBL_STRETCHS")
+							},
+							{
+								cols: [
+									{
+										css: { "border": "1px solid #dadee0 !important", "box-sizing": "border-box" },
+										rows: [
+											{ height: 1, borderless: true },
+											self.listViewStrechs.getView(),
+											{ height: 2, borderless: true }
+										]
 									}
+								]
+							},
+							{ height: 1, borderless: true }
+						]
+					};
 
-									$$("view-locations-" + self.uid).hideProgress();
-								}
-
-								if (callbackEnable) {
-
-									callbackEnable(true);
-								}
-
-								checkButtonAccept();
-							});
-						};
-
-						self.listViewStrechs = new ListView(stretchData, options, events);
-
-						viewStretchs = {
-							id: "view-stretchs-" + self.uid,
-							width: 250,
-							rows: [
-								{
-									view: "label",
-									borderless: true,
-									height: 23,
-									css: "headers",
-									label: i18n.t("LBL_STRETCHS")
-								},
-								{
-									cols: [
-										{
-											css: { "border": "1px solid #dadee0 !important", "box-sizing": "border-box" },
-											rows: [
-												{ height: 1, borderless: true },
-												self.listViewStrechs.getView(),
-												{ height: 2, borderless: true }
-											]
-										}
-									]
-								},
-								{ height: 1, borderless: true }
-							]
-						};
-					}
 
 					return viewStretchs;
 				}

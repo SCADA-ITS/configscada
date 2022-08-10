@@ -739,9 +739,13 @@ export default class IncidentWizardAction {
 						if (dat != null) {
 
 							let strechs = dat.json();
+							parent.incidentData.stretchIds = [];
+							
+							if (parent.listViewStrechs) {
 
-							parent.listViewStrechs.clear();
-							parent.incidentData.stretchIds = undefined;
+								parent.listViewStrechs.clear();
+							}
+
 							if (Array.isArray(strechs) && strechs.length > 0) {
 
 								strechs = strechs.filter(e => {
@@ -759,7 +763,6 @@ export default class IncidentWizardAction {
 								});
 
 								parent.listViewStrechs.add(dataStrechs);
-
 								parent.incidentData.stretchIds = strechs.map(e => { return e.id });
 							}
 
