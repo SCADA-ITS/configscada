@@ -2,6 +2,8 @@ import { util } from "../../lib/util.js";
 import DataTable from "../../component/datatable.js";
 import EquipmentViewerInfoIcon from "./equipmentViewerInfoIcon.js";
 
+const DEFAULT_PRECISION = 2;
+
 export default class EquipmentViewerTable {
 
 	constructor(parent, element, equipmentViewer, measuresGroups) {
@@ -58,7 +60,13 @@ export default class EquipmentViewerTable {
 					]
 				},
 				{ height: 10 }
-			]
+			],
+			on: {
+				onDestruct: function(){
+					
+					self.parent.args.fromTable = false;
+				}
+			}
 		};
 
 		if (self.measureTable) {
@@ -371,8 +379,19 @@ export default class EquipmentViewerTable {
 
 				if (dataToUpdate && ((dataToUpdate.value != ev.value) || (dataToUpdate.elementValueState != ev.elementValueState.id))) {
 
-					dataToUpdate.value = ev.value;
+					if (ev.elementTypeParam.dataType.id === DataType.DECIMAL) {
 
+						let precision = ev.elementTypeParam.precision ? ev.elementTypeParam.precision : DEFAULT_PRECISION;
+						let val = ev.value.replace(",", ".");
+						let parseValue = (typeof (val) === "string") ? parseFloat(val) : val;
+
+						dataToUpdate.value = parseValue.toFixed(precision);
+
+					} else {
+
+						dataToUpdate.value = ev.value;						
+					}
+					
 					if (ev.elementValueState) {
 
 						let iconElementValueState = ev.elementValueState.id.replace(":", "_") + ".png";
