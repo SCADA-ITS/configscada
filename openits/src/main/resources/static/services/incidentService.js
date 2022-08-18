@@ -256,6 +256,19 @@ export default class IncidentService extends GenericModule {
 							}
 						}
 					}
+					else {
+						
+						if (action === StompSubscriptorService.ACTION_DELETE) {
+							
+							let incidentNotification = {
+								
+								id: webix.uid(),
+								notificationId: be.id	
+							}
+							
+							actionDelete(incidentNotification);
+						}
+					}
 				});
 				
 				function actionCreate(incidentNotification) {
