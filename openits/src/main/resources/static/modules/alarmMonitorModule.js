@@ -54,6 +54,10 @@ export default class AlarmMonitorModule extends GenericModule {
 		this.queue = new Queue();
 		this.idCallbackStats = undefined;
 		this.editAlarmConfigsPermission = util.module.isAllowedPermission(this.config.requiredPermissions.edit);
+		
+		this.alarmStatActive = undefined;
+		this.alarmStatNoRecognized = undefined;
+		this.alarmStatFiltered = undefined;
 	}
 
 	loadData() {
@@ -260,19 +264,19 @@ export default class AlarmMonitorModule extends GenericModule {
 				
 				let stats = data.stats;
 	
-				if (stats.activeAlarms) {
+				if (stats.activeAlarms && self.alarmStatActive) {
 
-					$$("action-panel-alarm-stat-active-" + self.uid).setValue(stats.activeAlarms);
+					self.alarmStatActive.setValue(stats.activeAlarms);
 				}
 
-				if (stats.noRecognizedAlarms) {
+				if (stats.noRecognizedAlarms && self.alarmStatNoRecognized) {
 
-					$$("action-panel-alarm-stat-no-recognized-" + self.uid).setValue(stats.noRecognizedAlarms);
+					self.alarmStatNoRecognized.setValue(stats.noRecognizedAlarms);
 				}
 
-				if (stats.filteredAlarms) {
+				if (stats.filteredAlarms && self.alarmStatFiltered) {
 
-					$$("action-panel-alarm-stat-filtered-" + self.uid).setValue(stats.filteredAlarms);
+					self.alarmStatFiltered.setValue(stats.filteredAlarms);
 				}
 			}				
 		}
@@ -1437,6 +1441,10 @@ export default class AlarmMonitorModule extends GenericModule {
 			}
 
 			webix.ui(viewMain, $$(self.uid));
+			
+			self.alarmStatActive = $$("action-panel-alarm-stat-active-" + self.uid);
+			self.alarmStatNoRecognized = $$("action-panel-alarm-stat-no-recognized-" + self.uid);
+			self.alarmStatFiltered = $$("action-panel-alarm-stat-filtered-" + self.uid); 
 		}
 
 		function connectWS() {

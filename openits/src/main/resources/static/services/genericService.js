@@ -48,7 +48,13 @@ export default class GenericService extends GenericModule {
 			
 			this.mapCallbacks.forEach(callback => {
 				
-				callback(data);
+				try {
+					
+					callback(data);	
+				}
+				catch {
+					
+				}
 			});
 		}
 	}

@@ -159,12 +159,12 @@ export default class AlarmService extends GenericService {
 		
 						self.alarms.data.stats.activeAlarms = data.value;
 						
-						self.executeCallbacks(self.alarms.data);
-		
 						if (window.alarmControlPanel) {
 						
 							window.alarmControlPanel.updateData();	
 						}
+						
+						self.executeCallbacks(self.alarms.data);
 					}
 				}
 			});

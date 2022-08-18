@@ -1386,7 +1386,7 @@ export default class DataTable {
 
 				items.forEach(dat => {
 
-					if (dataTable.find(function(e) { return e.id === dat.id; }), true) {
+					if (!dataTable.find(function(e) { return e.id === dat.id; }, true)) {
 
 						dataTable.add(dat);
 						anyChange = true;
@@ -1395,7 +1395,7 @@ export default class DataTable {
 			}
 			else if (!Array.isArray(items)) {
 
-				if (dataTable.find(function(e) { return e.id === items.id; }), true) {
+				if (!dataTable.find(function(e) { return e.id === items.id; }, true)) {
 
 					dataTable.add(items);
 					anyChange = true;

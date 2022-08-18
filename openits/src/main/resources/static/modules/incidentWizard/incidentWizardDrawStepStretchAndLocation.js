@@ -9,10 +9,7 @@ export default class IncidentWizardDrawStepStretchAndLocation extends IncidentWi
 	constructor(parent, step) {
 
 		super(parent, step);
-
-		this.stretchs = undefined;
 	}
-
 
 	getView() {
 
@@ -25,7 +22,6 @@ export default class IncidentWizardDrawStepStretchAndLocation extends IncidentWi
 		return view;
 	}
 
-
 	loadData(onReady) {
 
 		let self = this;
@@ -33,79 +29,49 @@ export default class IncidentWizardDrawStepStretchAndLocation extends IncidentWi
 		let step = this.step;
 		let viewStepStretchAndLocation;
 
-		webix.ajax().get(appConfig.restUrl + self.parent.config.restEndpoints.locationsStretchs).then(function(stretchsResponse) {
-
-			if (stretchsResponse != null) {
-
-				self.stretchs = stretchsResponse.json();
-
-				viewStepStretchAndLocation = {
-					rows: [
+		viewStepStretchAndLocation = {
+			rows: [
+				{
+					cols: [
+						{ width: 45 },
 						{
-							cols: [
-								{ width: 45 },
+							rows: [
+								{ height: 15 },
 								{
-									rows: [
-										{ height: 15 },
+									view: "label",
+									label: `<span class="ico webix_icon mdi mdi-numeric-${step.position}-box" style="font-size: 30px;"></span><span class="content-wizard-label">${i18n.t(step.stepLabel)}</span>`
+								},
+								{ height: 17 },
+								{
+									cols: [
+										getViewStretchs(),
+										{ width: 25 },
 										{
-											view: "label",
-											label: `<span class="ico webix_icon mdi mdi-numeric-${step.position}-box" style="font-size: 30px;"></span><span class="content-wizard-label">${i18n.t(step.stepLabel)}</span>`
-										},
-										{ height: 17 },
-										{
-											cols: [
-												getViewStretchs(),
-												{ width: 25 },
-												{
-													rows: [
-														getViewLocations(),
-													]
-												}
+											rows: [
+												getViewLocations()
 											]
 										}
 									]
-								},
-								{ width: 45 }
+								}
 							]
-						}
+						},
+						{ width: 45 }
 					]
-				};
+				}
+			]
+		};
 
-				webix.ui(viewStepStretchAndLocation, $$("drawStepStretchAndLocation-" + parent.uid));
-			}
+		webix.ui(viewStepStretchAndLocation, $$("drawStepStretchAndLocation-" + parent.uid));
+		
+		if (onReady) {
 
-			if (onReady) {
-
-				onReady();
-			}
-		});
-
-
+			onReady();
+		}
 
 		function getViewStretchs() {
 
 			let viewStretchs = {};
-			let stretchs = self.stretchs;
 			let stretchData = [];
-
-			if (Array.isArray(stretchs) && stretchs.length > 0) {
-
-				stretchs = stretchs.filter(e => {
-					return (parent.config.stretchTypes.indexOf(e.stretchType.id) !== -1)
-				});
-
-				stretchs.sort((a, b) => (a.alias > b.alias) ? 1 : ((b.alias > a.alias) ? -1 : 0));
-
-				stretchData = stretchs.map(e => {
-
-					return {
-						id: e.id,
-						alias: e.alias,
-						description: e.description
-					};
-				});
-			}
-			
 			let options = {};
 			let events = {};
 

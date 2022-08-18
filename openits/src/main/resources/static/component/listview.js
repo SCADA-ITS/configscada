@@ -9,12 +9,6 @@ const DefaultOptionValues = {
 	9: 1
 };
 
-const DrawMode = {
-	DEFAULT: 1,
-	COMPACT: 2,
-	IMAGE: 3
-};
-
 const HeightCompact = {
 	ICON_HEIGHT: 25,
 	ROW_HEIGHT: 45	
@@ -67,18 +61,16 @@ export default class ListView {
 									});
 								}
 							}
-						},
-						//{ width: 4 }
+						}
 					]
 				},
 				getList()
-				//{ height: 6 }
 			]
 		};
 
 		function getList() {
 
-			let list;
+			let listView;
 			let height;
 
 			if (mode === ListView.DrawMode.DEFAULT) {
@@ -106,89 +98,90 @@ export default class ListView {
 				}
 				
 				self.data = [...headerData, ...mainData];
-				
-				list = {
-					view: "list",
-					id: "list-" + self.uid,
-					select: getOptions(ListView.Options.SELECTED),
-					tooltip: 
-						function(obj) {
+			}
+			
+			listView = {
+				view: "list",
+				id: "list-" + self.uid,
+				select: getOptions(ListView.Options.SELECTED),
+				tooltip: 
+					function(obj) {
 
-							if (mode === ListView.DrawMode.COMPACT || mode === ListView.DrawMode.IMAGE) {
+						if (mode === ListView.DrawMode.COMPACT || mode === ListView.DrawMode.IMAGE) {
 
-								return obj.description;
+							return obj.description;
+
+						} else {
+
+							let textAliasWidth;
+							let textDescriptionWidth;
+							let list = $$("list-" + self.uid);
+							let nodeAlias = list.getNode().querySelector(".list-first-line");
+							let nodeDescription = list.getNode().querySelector(".list-second-line");
+							let listWidth = nodeAlias.clientWidth;
+
+							if (nodeAlias) {
+
+								let elementStyle = window.getComputedStyle(nodeAlias);
+								let fontSize = elementStyle.getPropertyValue('font-size');
+								let fontFamily = elementStyle.getPropertyValue('font-family');
+								let letterSpacing = elementStyle.getPropertyValue('letter-spacing');
+
+								textAliasWidth = util.ui.calculateTextWidth(obj.alias, fontFamily, fontSize, letterSpacing);
+							}
+
+							if (nodeDescription) {
+
+								let elementStyle = window.getComputedStyle(nodeDescription);
+								let fontSize = elementStyle.getPropertyValue('font-size');
+								let fontFamily = elementStyle.getPropertyValue('font-family');
+								let letterSpacing = elementStyle.getPropertyValue('letter-spacing');
+
+								textDescriptionWidth = util.ui.calculateTextWidth(obj.description, fontFamily, fontSize, letterSpacing);
+							}
+
+							if (textAliasWidth > listWidth * 0.9 || textDescriptionWidth > listWidth * 0.9) {
+
+								return `${obj.alias}:<br>${obj.description}`;
 
 							} else {
 
-								let textAliasWidth;
-								let textDescriptionWidth;
-								let list = $$("list-" + self.uid);
-								let nodeAlias = list.getNode().querySelector(".list-first-line");
-								let nodeDescription = list.getNode().querySelector(".list-second-line");
-								let listWidth = nodeAlias.clientWidth;
-
-								if (nodeAlias) {
-
-									let elementStyle = window.getComputedStyle(nodeAlias);
-									let fontSize = elementStyle.getPropertyValue('font-size');
-									let fontFamily = elementStyle.getPropertyValue('font-family');
-									let letterSpacing = elementStyle.getPropertyValue('letter-spacing');
-
-									textAliasWidth = util.ui.calculateTextWidth(obj.alias, fontFamily, fontSize, letterSpacing);
-								}
-
-								if (nodeDescription) {
-
-									let elementStyle = window.getComputedStyle(nodeDescription);
-									let fontSize = elementStyle.getPropertyValue('font-size');
-									let fontFamily = elementStyle.getPropertyValue('font-family');
-									let letterSpacing = elementStyle.getPropertyValue('letter-spacing');
-
-									textDescriptionWidth = util.ui.calculateTextWidth(obj.description, fontFamily, fontSize, letterSpacing);
-								}
-
-								if (textAliasWidth > listWidth * 0.9 || textDescriptionWidth > listWidth * 0.9) {
-
-									return `${obj.alias}:<br>${obj.description}`;
-
-								} else {
-
-									return "";
-								}
-							}
-						},
-					type: {
-
-						template: function(obj) {
-
-							return drawElements(obj);
-
-						},
-						height: height
-					},
-					data: self.data,
-					on: {
-						onAfterSelect: function() {
-							
-							let currentContext = this;
-							
-							if (self.events && self.events[ListView.EventTypes.ON_SELECT_ROW]) {
-
-								eval(self.events[ListView.EventTypes.ON_SELECT_ROW])(this.getSelectedId(true), function(value) {
-									
-									self.enable(value, currentContext);
-								});
+								return "";
 							}
 						}
-					}
-				};
-			}
+					},
+				type: {
 
-			if(getOptions(ListView.Options.SELECTED) === false){
-				list.css = "list-not-selected"
+					template: function(obj) {
+
+						return drawElements(obj);
+
+					},
+					height: height
+				},
+				data: self.data,
+				on: {
+					onAfterSelect: function() {
+						
+						let currentContext = this;
+						
+						if (self.events && self.events[ListView.EventTypes.ON_SELECT_ROW]) {
+
+							eval(self.events[ListView.EventTypes.ON_SELECT_ROW])(this.getSelectedId(true), function(value) {
+								
+								self.enable(value, currentContext);
+							});
+						}
+					}
 				}
+			};
+
+			if (getOptions(ListView.Options.SELECTED) === false) {
+				
+				list.css = "list-not-selected"
+			}
 	
-			return list;
+			return listView;
 		}
 
 
@@ -295,12 +288,10 @@ export default class ListView {
 			if (value) {
 
 				webix.html.removeCss($$("list-" + this.uid).$view, "listview-disabled");
-				//list.enable();
 			} 
 			else {
 
 				webix.html.addCss($$("list-" + this.uid).$view, "listview-disabled");	
-				//list.disable();
 			}	
 		}
 	}
@@ -379,7 +370,7 @@ export default class ListView {
 
 			items.forEach(dat => {
 
-				if (list.find(function(e) { return e.id === dat.id; }), true) {
+				if (!list.find(function(e) { return e.id === dat.id; }, true)) {
 
 					list.add(dat);
 				}
@@ -387,7 +378,7 @@ export default class ListView {
 		}
 		else if (!Array.isArray(items)) {
 
-			if (dataTable.find(function(e) { return e.id === items.id; }), true) {
+			if (!dataTable.find(function(e) { return e.id === items.id; }, true)) {
 
 				dataTable.add(items);
 			}

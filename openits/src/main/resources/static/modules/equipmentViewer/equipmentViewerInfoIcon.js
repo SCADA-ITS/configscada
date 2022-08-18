@@ -75,7 +75,9 @@ export default class EquipmentViewerInfoIcon {
 
 			function getDefaultImage() {
 
-				let viewDefaultImage = {
+				let viewDefaultImage;
+				
+				viewDefaultImage = {
 					width: 400,
 					rows: [
 						{},
@@ -101,12 +103,10 @@ export default class EquipmentViewerInfoIcon {
 										}
 									}
 
-									let res = `<div class="equip-viewer-info-image">
+									return `<div class="equip-viewer-info-image">
 														<image class="image" src="img/${equipmentIcon}" onerror="this.onerror=null;this.src='img/not_found_50.png';" />
 														<div style="background: ${color}" class="shadow"></div>
 												   <div>`;
-
-									return res;
 								}
 							}
 						},
@@ -130,7 +130,9 @@ export default class EquipmentViewerInfoIcon {
 							borderless: true,
 							template: function() {
 
-								let template = (self.fromTable) ? `<div><svg id=${"view-main-info-image-svg-table-" + self.uid}></svg></div>` : `<div><svg id=${"view-main-info-image-svg-" + self.uid}></svg></div>`;
+								let template;
+								
+								template = (self.fromTable) ? `<div><svg id=${"view-main-info-image-svg-table-" + self.uid}></svg></div>` : `<div><svg id=${"view-main-info-image-svg-" + self.uid}></svg></div>`;
 
 								return template;
 							},
@@ -250,9 +252,11 @@ export default class EquipmentViewerInfoIcon {
 
 		function getViewMainInfo() {
 
-			let addRow = (self.fromTable) ? { height: 15 } : {};
+			let addRow = (self.fromTable) ? { height: 45 } : {};
 
-			let viewMainInfo = {
+			let viewMainInfo;
+			
+			viewMainInfo = {
 				width: 300,
 				rows: [
 					addRow,
