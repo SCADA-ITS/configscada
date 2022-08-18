@@ -194,6 +194,7 @@ export default class AlarmConfigModule extends GenericModule {
 						{
 							view: "label",
 							height: 75,
+							width: 450,
 							id: "label-bottom-" + self.uid,
 							template: "<span>" + i18n.t(label) + "</span> <br> <span style='font-size: 13px'>" + i18n.t(description) + "</span>",
 							css: "global-header-label"
@@ -1006,7 +1007,7 @@ export default class AlarmConfigModule extends GenericModule {
 
 						dbListData.push({
 							id: acState.id,
-							value: `<div title="${i18n.t(acState.labelAlias)}  ${acUsed}"><span>${i18n.t(acState.labelAlias)}  ${acUsed}</span></div>`, 
+							value: `<div title="${i18n.t(acState.labelAlias)}  ${acUsed}"><span>${i18n.t(acState.labelAlias)}  ${acUsed}</span></div>`,
 							disabled: disabled
 						});
 					}
@@ -1058,7 +1059,27 @@ export default class AlarmConfigModule extends GenericModule {
 										labelLeft: i18n.t("LBL_AVAILABLE"),
 										labelRight: i18n.t("LBL_SELECTED"),
 										data: dbListData,
-										value: dbListSelected
+										value: dbListSelected,
+										on: {
+											onChange: function() {
+
+												this.blockEvent();
+
+												let selectedItemsArr = this.getValue().split(",");
+
+												for (let selectedItem of selectedItemsArr) {
+
+													let itemToDisable = dbListData.find(item => item.id === selectedItem && item.disabled);
+
+													if (itemToDisable) {
+
+														this.select(selectedItem, false);
+													}
+												}
+
+												this.unblockEvent();
+											}
+										}
 									},
 									{ height: 10 }
 								]
@@ -1303,7 +1324,7 @@ export default class AlarmConfigModule extends GenericModule {
 				if (alarmConfigData) {
 
 					form.setValues({
-						labelAlias:  (alarmConfigData.labelAlias) ? i18n.t(alarmConfigData.labelAlias) : alarmConfigData.alias,
+						labelAlias: (alarmConfigData.labelAlias) ? i18n.t(alarmConfigData.labelAlias) : alarmConfigData.alias,
 						elementTypeId: alarmConfigData.elementType.id,
 						elementTypeLabelAlias: i18n.t(alarmConfigData.elementType.labelAlias),
 						treatment: (alarmConfigData.treatment) ? true : false

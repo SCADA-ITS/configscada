@@ -3,7 +3,7 @@ import GenericGridModule from "./genericGridModule.js";
 import DataTable from "../component/datatable.js";
 import ListView from "../component/listview.js";
 
-const MODULE_TYPE_GENERIC_PARAM_GRID_ID = 3;
+const DATA_GRID_ID = 1002;
 
 export default class AlarmConfigListModule extends GenericGridModule {
 
@@ -105,8 +105,6 @@ export default class AlarmConfigListModule extends GenericGridModule {
 			function getList() {
 
 				let elementTypes = window.em.getAll(EntityType.ELEMENT_TYPE);
-				//let elementTypesFiltered = elementTypes.filter(e => e.visible === true && e.grid);
-
 				let elementTypesFiltered = webix.copy(elementTypes.filter(e => e.visible === true && e.grid));
 
 				elementTypesFiltered.forEach(item => {
@@ -157,6 +155,16 @@ export default class AlarmConfigListModule extends GenericGridModule {
 
 								self.dataTable.clear();
 								self.dataTable.add(alarmConfigToTable);
+
+								if ($$("table-" + self.uid)) {
+
+									let tableTitle = $$("table-" + self.uid).getNode().querySelector('.grid-title');
+
+									if (tableTitle) {
+
+										tableTitle.textContent = i18n.t("LBL_ALARM_CONFIGS_TITLE") + ": " + i18n.t(alarmsConfigSelected[0].elementType.labelAlias);
+									}
+								}
 							}
 						}
 					});
@@ -550,8 +558,9 @@ export default class AlarmConfigListModule extends GenericGridModule {
 				});
 
 				let data = [];
+				
 
-				self.dataTable = new DataTable(null, null, metadata, data, events);
+				self.dataTable = new DataTable(DATA_GRID_ID, null, metadata, data, events);
 
 				return self.dataTable.getView();
 			}

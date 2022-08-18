@@ -23,7 +23,6 @@ export default class VentilationModule extends GenericModule {
 		this.selectedTubeId = undefined;
 		this.selectedFansIds = undefined;
 		this.commandEquipmentPermission = util.module.isAllowedPermission(this.config.requiredPermissions.commandEquipment);
-		this.editSmThresholds = util.module.isAllowedPermission(this.config.requiredPermissions.editSmThresholds);
 	}
 
 	loadData() {

@@ -18,6 +18,7 @@ export default class ThresholdsConfigModule extends GenericModule {
 		this.stateMachines = undefined;
 		this.thresholdTable = undefined;
 		this.listView = undefined;
+		this.editSmThresholds = util.module.isAllowedPermission(this.config.requiredPermissions.editSmThresholds);
 
 		this.uid = webix.uid();
 	}
@@ -378,20 +379,23 @@ export default class ThresholdsConfigModule extends GenericModule {
 									}
 								}
 							],
-							gridCommands: [
-								{
-									id: 1,
-									value: "LBL_EDIT",
-									icon: "mdi mdi-pencil",
-									default_: true,
-									label: "LBL_CMD_EDIT",
-									showText: true,
-									position: 1,
-									multiselect: false,
-									itemRequired: true
-								}
-							]
+							gridCommands: []
 						};
+						
+						if (self.editSmThresholds) {
+
+							metadata.gridCommands.push({
+								id: 1,
+								value: "LBL_EDIT",
+								icon: "mdi mdi-pencil",
+								default_: true,
+								label: "LBL_CMD_EDIT",
+								showText: true,
+								position: 1,
+								multiselect: false,
+								itemRequired: true
+							});
+						}
 
 						let events = {};
 						events[DataTable.EventTypes.ON_COMMAND_EXEC] = [];

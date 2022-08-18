@@ -236,21 +236,24 @@ export default class EquipmentModule extends GenericModule {
 						if (switcherValue === "switcher-element-hierarchy-" + self.uid) {
 
 							let elementSelected = self.treeView.getSelected();
-							let elementSelectedId = elementSelected[0].id_;
-							let element = window.em.getByField(EntityType.ELEMENT, "id", elementSelectedId);
 
-							if (element && !element.defaultModuleAction) {
+							if (Array.isArray(elementSelected) && elementSelected.length > 0) {
 
-								let elementType = window.em.getByField(EntityType.ELEMENT_TYPE, "id", element.elementType.id);
+								let elementSelectedId = elementSelected[0].id_;
+								let element = window.em.getByField(EntityType.ELEMENT, "id", elementSelectedId);
 
-								if (elementType && !elementType.defaultModuleAction) {
+								if (element && !element.defaultModuleAction) {
 
-									self.callbackSelectedItemTree(elementSelected);
+									let elementType = window.em.getByField(EntityType.ELEMENT_TYPE, "id", element.elementType.id);
+
+									if (elementType && !elementType.defaultModuleAction) {
+
+										self.callbackSelectedItemTree(elementSelected);
+									}
 								}
 							}
 						}	
-					}
-					
+					}	
 				}
 			}
 

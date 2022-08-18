@@ -8,5 +8,8 @@
 		"stateMachineIds" : "smThreshold/stateMachineIds",
 		"stateMachineById" : "smThreshold/stateMachineIds/${id}",
 		"stateMachineIdThresholds" :"smThreshold/${id}"
+	},
+	"requiredPermissions": {
+		"editSmThresholds": "SystemPermission:18"
 	}
 }

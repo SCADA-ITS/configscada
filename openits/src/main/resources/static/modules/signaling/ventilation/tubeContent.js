@@ -148,7 +148,7 @@ export default class TubeContent {
 													self.tubeFans.push(fanOut);
 												});
 																								
-												if (self.parent.config.stateMachine && self.parent.config.stateMachine.smElementTypeParams && self.parent.editSmThresholds) {
+												if (self.parent.config.stateMachine && self.parent.config.stateMachine.smElementTypeParams) {
 												
 													self.selectedTube.elementValues.forEach(elementValue => {
 

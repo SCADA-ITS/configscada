@@ -834,7 +834,7 @@ export default class AlarmModule extends GenericModule {
 			let label = alarm.recognizedComments ? (alarm.recognizedComments.startsWith(LABEL_PREFIX) ? i18n.t(alarm.recognizedComments) : alarm.recognizedComments) : undefined;
 
 			recognizedComments = {
-				css: "alarm-borders",
+				css: { "box-sizing": "border-box", "border-left ": "1px solid #e2e2e2", "border-right": "1px solid #e2e2e2" },
 				hidden: !label,
 				rows: [
 					{ height: 5 },
@@ -857,97 +857,21 @@ export default class AlarmModule extends GenericModule {
 			return recognizedComments;
 		}
 
-
-//		function paintFieldDesactivationComments(alarm) {
-//
-//			const LABEL_PREFIX = "LBL_";
-//			let deactivationComments = {};
-//
-//			let label = alarm.deactivationComments ? (alarm.deactivationComments.startsWith(LABEL_PREFIX) ? i18n.t(alarm.deactivationComments) : alarm.deactivationComments) : undefined;
-//
-//			deactivationComments = {
-//				css: "alarm-borders-bottom",
-//				hidden: !label,
-//				rows: [
-//					{ height: 5 },
-//					{
-//						cols: [
-//							{ width: 42 },
-//							{
-//								height: 55,
-//								width: 626,
-//								scroll: "auto",
-//								css: "alarm-view-rectangle-back",
-//								template: `<div class="alarm-view-comments">${label}</div>`
-//							},
-//							{ width: 42 }
-//						]
-//					},
-//					{ height: 5 }
-//				]
-//			};
-//
-//			return deactivationComments;
-//		}
-//
-
-		function windowHeight(alarm) {
-
-			let customHeight = undefined;
-			const CUSTOM_HEIGHT = {
-				WITHOUT_COMMENTS: 520,
-				WITH_ONE_COMMENT: 575,
-				WITH_TWO_COMMENTS: 620,
-				CORRECT_FACTOR: 50
-			};
-
-			if (alarm.recognizedComments && alarm.deactivation) {
-
-				customHeight = CUSTOM_HEIGHT.WITH_TWO_COMMENTS;
-
-			} else if (alarm.recognizedComments || alarm.deactivation) {
-
-				customHeight = CUSTOM_HEIGHT.WITH_ONE_COMMENT;
-
-			} else {
-
-				customHeight = CUSTOM_HEIGHT.WITHOUT_COMMENTS;
-			}
-
-			alarmWindow.config.height = customHeight + CUSTOM_HEIGHT.CORRECT_FACTOR;
-			return customHeight;
-		}
-
-
-		function cssClassToBottom(alarm) {
-
-			if (alarm.deactivationComments) {
-
-				return "alarm-borders";
-
-			} else {
-
-				return "alarm-borders-bottom";
-			}
-		}
-
-
-		let labelAlarm = (this.alarmConfig.labelDescription) ? i18n.t(this.alarmConfig.labelDescription) : this.alarmConfigLabelAlias;
-		
+		let labelAlarm = this.alarmConfigLabelAlias;
 		let container = $$(self.args.containerId);
 		let ellipsis = undefined;
 		
-			if (container) {
+		if (container) {
 
-				ellipsis = `style='display: inline-block; max-width: ${container.$width * 0.5}px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis'`;
-			}
-
+			ellipsis = `style='display: inline-block; max-width: ${container.$width * 0.5}px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis'`;
+		}
+			
 		let viewMain = {
 			id: this.uid,
 			cols: [
+				{width: 1},
 				{
 					width: 744,
-					height: windowHeight(this.alarm),
 					rows: [
 						{
 							cols: [
@@ -967,10 +891,9 @@ export default class AlarmModule extends GenericModule {
 								},
 								{}
 							]
-						}
-						,
+						},
 						{
-							css: "alarm-borders-top",
+							css: { "box-sizing": "border-box", "border-top": "1px solid #e2e2e2", "border-left ": "1px solid #e2e2e2", "border-right": "1px solid #e2e2e2" },
 							cols: [
 								{ width: 42 },
 								{
@@ -1139,7 +1062,7 @@ export default class AlarmModule extends GenericModule {
 						},
 						paintFieldRecognizedComments(this.alarm),
 						{
-							css: cssClassToBottom(this.alarm),
+							css: { "box-sizing": "border-box", "border-bottom": "1px solid #e2e2e2", "border-left ": "1px solid #e2e2e2", "border-right": "1px solid #e2e2e2" },
 							height: 155,
 							cols: [
 								{ width: 42 },
@@ -1173,11 +1096,10 @@ export default class AlarmModule extends GenericModule {
 								}
 							]
 						},
-						//paintFieldDesactivationComments(this.alarm),
 						{ height: 20 },
 						{
 							cols: [
-								{ width: 600 },
+								{},
 								{
 									view: "button",
 									css: "dialog-cancel",
@@ -1191,12 +1113,12 @@ export default class AlarmModule extends GenericModule {
 											$$(alarmWindow).close();
 										}
 									}
-								},
-								{}
+								}
 							]
 						}
 					]
-				}
+				},
+				{width: 1}
 			]
 		};
 
