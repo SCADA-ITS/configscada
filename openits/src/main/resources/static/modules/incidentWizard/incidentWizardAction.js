@@ -349,7 +349,7 @@ export default class IncidentWizardAction {
 
 						if (Array.isArray(affectedStretchs) && affectedStretchs.length > 1) {
 
-							let message = i18n.t("LBL_STRETCH_SELECTED_FOR_LOCATION") + " " + parent.incidentData.stretch + ". " + i18n.t("LBL_CHANGE_STRECH_FOR_SELECTED_LOCATION_QUESTION");
+							let message = i18n.t("LBL_STRETCH_SELECTED_FOR_LOCATION") + " " + parent.incidentData.stretch + ". " + i18n.t("LBL_CHANGE_STRETCH_FOR_SELECTED_LOCATION_QUESTION");
 
 							(new MessageBox(MessageBox.CONFIRM, message,
 
@@ -367,12 +367,12 @@ export default class IncidentWizardAction {
 									});
 
 									dialogEntity.pkField = "id"
-									dialogEntity.fields = ["alias=LBL_STRECH"];
+									dialogEntity.fields = ["alias=LBL_INCIDENT_STRETCH"];
 									dialogEntity.height = 600;
 									dialogEntity.width = 800;
 									dialogEntity.sortFieldId = 1;
 
-									let s = new SearchDialogBox(i18n.t("LBL_SELECT_STRECH"), dialogEntity,
+									let s = new SearchDialogBox(i18n.t("LBL_SELECT_STRETCH"), dialogEntity,
 
 										function(selectedIds) {
 

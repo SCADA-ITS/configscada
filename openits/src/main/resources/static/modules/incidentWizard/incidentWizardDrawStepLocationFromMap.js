@@ -2,12 +2,14 @@ import IncidentWizardDrawStep from "./incidentWizardDrawStep.js";
 import { util } from "../../lib/util.js";
 import MessageBox from "../../component/messageBox.js";
 import MapLayer  from "../../component/map/mapLayer.js";
+import SearchDialogBox from "../../component/searchDialogBox.js";
 
 const POINTER_HAND = 'pointer'
 const POINTER_DEFAULT = ''
 const TREE_PANEL_WIDTH = 275;
 const PICTOGRAM_INCIDENT_TYPE_PATH = "incident_type";
 const PICTOGRAM_INCIDENT_TYPE_UNKNOWN = "incident_type/undefined.png";
+const DEFAULT_ZOOM = 5;
 
 export default class IncidentWizardDrawStepLocationFromMap extends IncidentWizardDrawStep {
 
@@ -17,7 +19,9 @@ export default class IncidentWizardDrawStepLocationFromMap extends IncidentWizar
 		this.uid = webix.uid();
 		
 		this.selectedArea = parent.args.selectedArea;
+		this.marks = [];
 		this.olMap = undefined;
+		this.incidentTypeIdSelected = undefined;
 	}
 	
 	getView() {
@@ -129,34 +133,264 @@ export default class IncidentWizardDrawStepLocationFromMap extends IncidentWizar
 			let viewMap;
 			
 			viewMap = {
-				view: "template",
-				css: { "background": "#9e9e9e" },
+				view: "abslayout",
 				id: "view-map-" + self.parent.uid,
-				template: function() {
-								
-					let t;
-					let h = $$("view-map-" + self.parent.uid).$height;
-					
-					t = `<div>
-							<div id="map-${self.parent.uid}" style="height: ${h}px; width: 100%">
-						 </div>`;
-					
-					return t;
-				},
-				on: {
-				
-					onViewResize: function() {
-						
-						if (self.olMap) {
+				cells: [
+					{
+						view: "template",
+						relative: true,
+						css: { "background": "#9e9e9e" },
+						template: function() {
+										
+							let t;
+							let h = $$("view-map-" + self.parent.uid).$height;
 							
-							self.olMap.updateSize();	
-						}
-					}	
-				}
+							t = `<div>
+									<div id="map-${self.parent.uid}" style="height: ${h}px; width: 100%">
+								 </div>`;
+							
+							return t;
+						},
+						on: {
+						
+							onViewResize: function() {
+								
+								if (self.olMap) {
+									
+									self.olMap.updateSize();	
+								}
+							}	
+						}		
+					},
+					getToolbarMain()
+				]
 			};
-			
+
 			return viewMap;
 		}
+		
+		function getToolbarMain() {
+			
+			let viewToolbarMain = {
+				
+				view: "toolbar",
+				id: "map-toolbar-main-" + self.parent.uid,
+				css: "syn-toolbar-zoom",
+				borderless: true,
+				top: 10, 
+				left: 10,
+				height: 100,
+				cols: [
+					{ width: 1 }
+				]
+			};
+			
+			let viewButtonsZoom = {
+				rows: [
+					{},
+					{
+						view: "button",
+						type: "icon",
+						icon:"mdi mdi-plus-thick",
+						tooltip: i18n.t("LBL_ZOOM_IN"),
+						css: "button-zoom",
+						width: 30, height: 30,
+						on: {
+							onItemClick: function() {
+								
+								zoom(self.olMap.getView().getZoom() + 1);
+							}
+						}		
+					}, 
+					{
+						view: "button",
+						type: "icon",
+						icon:"mdi mdi-minus-thick",
+						tooltip: i18n.t("LBL_ZOOM_OUT"),
+						css: "button-zoom",
+						width: 30, height: 30,
+						on: {
+							onItemClick: function() {
+								
+								zoom(self.olMap.getView().getZoom() - 1);
+							}
+						}		
+					},
+					{}
+				]
+			};
+			
+			let viewButtonResetZoom = {
+				rows: [
+					{},
+					{
+						view: "button",
+						type: "icon",
+						icon:"mdi mdi-restore",
+						tooltip: i18n.t("LBL_RESET"),
+						css: "button",
+						width: 40, height: 40,
+						on: {
+							onItemClick: function() {
+
+								self.olMap.getView().animate({
+									center: ol.proj.fromLonLat([((self.selectedArea.startCoordinates[0] + self.selectedArea.endCoordinates[0]) / 2), 
+													((self.selectedArea.startCoordinates[1] + self.selectedArea.endCoordinates[1]) / 2)]),
+									zoom: DEFAULT_ZOOM,
+									duration: 1000
+								});
+							}
+						}
+					},
+					{}
+				]
+			};
+			
+			let viewButtonSearch = {
+				rows: [
+					{},
+					{
+						view: "button",
+						type: "icon",
+						icon:"mdi mdi-magnify",
+						tooltip: i18n.t("LBL_SEARCH"),
+						css: "button",
+						width: 40, height: 40,
+						on: {
+							onItemClick: function() {
+								
+								searchLocation();
+							}
+						}
+					},
+					{}	
+				]
+				
+			};
+						
+			viewToolbarMain.cols.push(viewButtonsZoom);
+			viewToolbarMain.cols.push(viewButtonResetZoom);
+			viewToolbarMain.cols.push(viewButtonSearch);
+			
+			function searchLocation() {
+				
+				let incidentTypeStretchs;
+				let incidentTypeLocations;
+				
+				if (self.incidentTypeIdSelected) {
+					
+					incidentTypeStretchs = incidentTypesStretchs.get(self.incidentTypeIdSelected);
+					incidentTypeLocations = incidentTypesLocations.get(self.incidentTypeIdSelected);
+					
+					if (Array.isArray(incidentTypeStretchs) && incidentTypeStretchs.length > 0 &&
+					    Array.isArray(incidentTypeLocations) && incidentTypeLocations.length > 0) {
+						
+						let dialogPlanEntity = webix.copy(SearchDialogBox.CALLBACK);				
+						dialogPlanEntity.fillDialogEntity = fillDialogEntity;
+						dialogPlanEntity.dataType = SearchDialogBox.DIALOG_DATA_TYPE_TREE;
+						dialogPlanEntity.height = 600;
+						dialogPlanEntity.width = 800;
+						dialogPlanEntity.data = {};
+						
+						let s = new SearchDialogBox(i18n.t("LBL_SELECT_LOCATION"), dialogPlanEntity, onAccept);
+						s.show();	
+					}
+					else {
+					
+						(new MessageBox(MessageBox.WARN, i18n.t("LBL_NO_LOCATIONS_AVAILABLE_SELECTED_INCIDENT_TYPE"))).show();	
+					}
+				}
+				else {
+					
+					(new MessageBox(MessageBox.WARN, i18n.t("LBL_INCIDENT_TYPE_NOT_SELECTED"))).show();
+				}
+				
+				function fillDialogEntity(dialogEntity, onFilledDialogEntity) {
+							
+					let itemsTree = [];
+					let itemRelationships = [];
+					
+					incidentTypeStretchs.forEach(stretch => {
+						
+						itemsTree.push({
+							id: stretch.id,
+							label: stretch.alias,
+							folder: true
+						});	
+					});
+					
+					incidentTypeLocations.forEach(location => {
+						
+						itemsTree.push({
+							id: location.id,
+							label: location.alias,
+							folder: false
+						});
+						
+						if (Array.isArray(location.stretchs) && location.stretchs.length > 0) {
+							
+							location.stretchs.forEach(stretch => {
+							
+								itemRelationships.push({
+									id: itemRelationships.length + 1,
+									nodeParentId: stretch.id,
+									nodeChildId: location.id
+								});		
+							});
+						}
+					});
+
+					dialogEntity.data.nodes = itemsTree;
+					dialogEntity.data.relationships = itemRelationships;
+					dialogEntity.data.nodeParentId = "nodeParentId";
+					dialogEntity.data.nodeChildId = "nodeChildId";
+					
+					onFilledDialogEntity(dialogEntity);			
+				}
+				
+				function onAccept(selection) {
+	
+					if (Array.isArray(selection) && selection.length > 0 && Array.isArray(self.marks)) {
+						
+						self.parent.mapLocationSelected = undefined;
+						
+						self.marks.forEach(mark => {
+							
+							let markSelected = (mark.get("location") && mark.get("location").id === selection[0].id_);
+							
+							const iconStyle = new ol.style.Style({
+								image: new ol.style.Icon({
+							    	src: markSelected ? 'img/marker-selected.png' : 'img/marker.png',
+									scale: 0.8
+							  	})
+							}); 
+							
+							mark.setStyle(iconStyle);
+							
+							if (markSelected) {
+							
+								self.parent.mapLocationSelected = mark.get('location');	
+							}
+						});
+
+						self.parent.incidentWizardAction.validateStep(self.parent.incidentWizardAction.getCurrentStep());
+						
+					}				
+				}
+			}
+			
+			return viewToolbarMain;
+		}
+		
+		function zoom(level) {
+			
+			self.olMap.getView().animate({
+				zoom: level,
+			  	duration: 250
+			});
+		}
+		
+		
 		
 		function loadLocations(onReadyLocations) {
 			
@@ -397,13 +631,13 @@ export default class IncidentWizardDrawStepLocationFromMap extends IncidentWizar
 																	
 							self.olMap = createMap();
 							
-							let incidentTypeId = indidentTypeLayersSelected[0]; 
+							self.incidentTypeIdSelected = indidentTypeLayersSelected[0]; 
 							
-							drawLocations(incidentTypeId);
+							drawLocations(self.incidentTypeIdSelected);
 							
-							self.parent.mapIncidentTypeSelected = window.em.getByField(EntityType.IMS_INCIDENT_TYPE, "id", incidentTypeId);
+							self.parent.mapIncidentTypeSelected = window.em.getByField(EntityType.IMS_INCIDENT_TYPE, "id", self.incidentTypeIdSelected);
 							
-							let stretchsByIncident = incidentTypesStretchs.get(incidentTypeId);
+							let stretchsByIncident = incidentTypesStretchs.get(self.incidentTypeIdSelected);
 							
 							if (Array.isArray(stretchsByIncident)) {
 								
@@ -449,7 +683,7 @@ export default class IncidentWizardDrawStepLocationFromMap extends IncidentWizar
 							
 							return ext;			
 						}(),
-						zoom: 5,
+						zoom: DEFAULT_ZOOM,
 					})
 				}; 
 				
@@ -465,8 +699,7 @@ export default class IncidentWizardDrawStepLocationFromMap extends IncidentWizar
 					
 			function drawLocations(incidentTypeId) {
 				
-				let marks = [];
-				let locationsLayer;
+				self.marks = [];
 				
 				let tooltipDiv = document.createElement("div");
 				tooltipDiv.setAttribute("id", "tooltip-location");
@@ -498,21 +731,21 @@ export default class IncidentWizardDrawStepLocationFromMap extends IncidentWizar
 								image: new ol.style.Icon({
 							    	src: 'img/marker.png',
 									scale: 0.8
-							  	}),
+							  	})
 							});
 							
 							mark.setStyle(iconStyle);
-							marks.push(mark);
+							self.marks.push(mark);
 						}
 					});
 				}
 				
-				if (marks.length > 0) {
+				if (self.marks.length > 0) {
 					
 					// SE CREA LA CAPA CON EL ARRAY DE MARCADORES Y SE AÑADE AL MAPA
-					locationsLayer = new ol.layer.Vector({
+					let locationsLayer = new ol.layer.Vector({
 						source: new ol.source.Vector({
-							features: marks
+							features: self.marks
 						})
 					});
 		
@@ -532,12 +765,28 @@ export default class IncidentWizardDrawStepLocationFromMap extends IncidentWizar
 						let mark = evt.selected[0];
 						
 						if (mark) {
+							
+							// Unselect current
+							if (self.parent.mapLocationSelected) {
+								
+								let currentMarkSelected = self.marks.find(m => m.get("location") && m.get("location").id === self.parent.mapLocationSelected.id);
+								
+								if (currentMarkSelected) {
+									
+									currentMarkSelected.setStyle(new ol.style.Style({
+										image: new ol.style.Icon({
+									    	src: 'img/marker.png',
+											scale: 0.8
+									  	})
+									}));
+								}
+							}
 		
 							const iconStyle = new ol.style.Style({
 								image: new ol.style.Icon({
 							    	src: 'img/marker-selected.png',
 									scale: 0.8
-							  	}),
+							  	})
 							});
 							
 							mark.setStyle(iconStyle);
