@@ -26,6 +26,9 @@ const REQUIRED_INCIDENT_PERMISSIONS = {
 const PICTOGRAM_INCIDENT_TYPE_PATH = "incident_type";
 const PICTOGRAM_INCIDENT_TYPE_UNKNOWN = "incident_type/undefined.png";
 
+const POINTER_HAND = 'pointer'
+const POINTER_DEFAULT = ''
+
 export default class OpenMap extends GenericMap {
 
 	constructor(metadata, data, events, w, h, options) {
@@ -452,6 +455,8 @@ export default class OpenMap extends GenericMap {
 							
 							graphicIcon.hide();
 							
+							removeLine(graphicIcon);
+							
 							zIndexOverlay(graphicIcon, ZINDEX_BACK);
 						});
 					}	
@@ -466,11 +471,15 @@ export default class OpenMap extends GenericMap {
 							
 							if (self.isElementLayerVisible(graphicIcon)) {
 							
+								addLine(graphicIcon);
+								
 								graphicIcon.show();
 								
 								zIndexOverlay(graphicIcon, ZINDEX_FRONT);	
 							}
 							else {
+								
+								removeLine(graphicIcon);
 								
 								graphicIcon.hide();
 								
@@ -490,6 +499,8 @@ export default class OpenMap extends GenericMap {
 					
 					if (self.isElementLayerVisible(newZoomLevelGraphicIcon)) {
 						
+						addLine(newZoomLevelGraphicIcon);
+						
 						newZoomLevelGraphicIcon.show();
 						
 						zIndexOverlay(newZoomLevelGraphicIcon, ZINDEX_FRONT);
@@ -500,6 +511,8 @@ export default class OpenMap extends GenericMap {
 						}	
 					}
 					else {
+						
+						removeLine(newZoomLevelGraphicIcon);
 						
 						newZoomLevelGraphicIcon.hide();
 						
@@ -610,6 +623,8 @@ export default class OpenMap extends GenericMap {
 					layerElem.graphicIcon = layerElementZoom.graphicIcon;
 					layerElem.longitude = layerElementZoom.longitude;
 					layerElem.latitude = layerElementZoom.latitude;
+					layerElem.longitude2 = layerElementZoom.longitude2;
+					layerElem.latitude2 = layerElementZoom.latitude2;
 					layerElem.horizontalFlip = layerElementZoom.horizontalFlip;
 					layerElem.rotate = layerElementZoom.rotate;
 					layerElem.tooltip = layerElementZoom.tooltip;
@@ -779,23 +794,39 @@ export default class OpenMap extends GenericMap {
 						
 						graphicIcons.forEach(graphicIcon => {
 							
-							let olOverlay = new ol.Overlay({
-								id: graphicIcon.container.obj.node.id.replace("svg", "ol-overlay"),
-								position: ol.proj.fromLonLat([graphicIcon.layerElement.longitude, graphicIcon.layerElement.latitude]),
-								positioning: 'center-center',
-								element: graphicIcon.container.obj.node,
-								stopEvent: false
-							});
+							let positionOverlay;
 							
-							self.olMap.addOverlay(olOverlay);
+							if (graphicIcon.layerElement.longitude && graphicIcon.layerElement.latitude) {
 							
-							let olOverlayDiv = graphicIcon.container.obj.node.parentNode;
-							
-							if (olOverlayDiv) {
-							
-								if (graphicIcon.layerElement.layerElementZoom) {
+								if (graphicIcon.layerElement.longitude2 && graphicIcon.layerElement.latitude2) {
 								
-									olOverlayDiv.style.zIndex = self.maxZoomLevel - graphicIcon.layerElement.layerElementZoom.zoomLower;
+									positionOverlay = ol.proj.fromLonLat([graphicIcon.layerElement.longitude2, graphicIcon.layerElement.latitude2]);
+									
+									addLine(graphicIcon);
+								}
+								else {
+									
+									positionOverlay = ol.proj.fromLonLat([graphicIcon.layerElement.longitude, graphicIcon.layerElement.latitude]);
+								}
+								
+								let olOverlay = new ol.Overlay({
+									id: graphicIcon.container.obj.node.id.replace("svg", "ol-overlay"),
+									position: positionOverlay,
+									positioning: 'center-center',
+									element: graphicIcon.container.obj.node,
+									stopEvent: false
+								});
+								
+								self.olMap.addOverlay(olOverlay);
+								
+								let olOverlayDiv = graphicIcon.container.obj.node.parentNode;
+								
+								if (olOverlayDiv) {
+								
+									if (graphicIcon.layerElement.layerElementZoom) {
+									
+										olOverlayDiv.style.zIndex = self.maxZoomLevel - graphicIcon.layerElement.layerElementZoom.zoomLower;
+									}
 								}
 							}
 						});
@@ -817,6 +848,128 @@ export default class OpenMap extends GenericMap {
 				refreshVisibleGraphicIcons();
 			}
 			 
+		}
+		
+		function removeLine(graphicIcon) {
+			
+			if (graphicIcon.vectorLineLayer) {
+				
+				self.olMap.removeLayer(graphicIcon.vectorLineLayer);
+			}
+			
+			if (graphicIcon.vectorPointLayer) {
+				
+				self.olMap.removeLayer(graphicIcon.vectorPointLayer);
+			}
+		}
+		
+		function addLine(graphicIcon) {
+			
+			if (graphicIcon.layerElement.longitude && graphicIcon.layerElement.latitude) {
+				
+				removeLine(graphicIcon);
+							
+				if (graphicIcon.layerElement.longitude2 && graphicIcon.layerElement.latitude2) {
+			
+					let points = [
+						[graphicIcon.layerElement.longitude, graphicIcon.layerElement.latitude],
+						[graphicIcon.layerElement.longitude2, graphicIcon.layerElement.latitude2],
+					];
+					
+					drawPoint(points[0]);
+					
+					for (let i = 0; i < points.length; i++) {
+						
+					    points[i] = ol.proj.transform(points[i], 'EPSG:4326', 'EPSG:3857');
+					}
+					
+					let featureLine = new ol.Feature({
+					    geometry: new ol.geom.LineString(points)
+					});
+					
+					let vectorLine = new ol.source.Vector({});
+					vectorLine.addFeature(featureLine);
+					
+					let vectorLineLayer = new ol.layer.Vector({
+					    source: vectorLine,
+					    style: new ol.style.Style({
+					        fill: new ol.style.Fill({ color: '#475466', weight: 4 }),
+					        stroke: new ol.style.Stroke({ color: '#475466', width: 2, lineDash: [.1, 5] })
+					    })
+					});
+					
+					self.olMap.addLayer(vectorLineLayer);
+					
+					graphicIcon.vectorLineLayer = vectorLineLayer;		
+				}
+			}
+			
+			
+			function drawPoint(point) {
+			
+				let tooltipDiv = document.createElement("div");
+				tooltipDiv.setAttribute("id", "tooltip-point-map");
+				tooltipDiv.setAttribute("class", "graphic-icon-tooltip-simple");
+				tooltipDiv.setAttribute("display", "none");
+				tooltipDiv.setAttribute("style", "position: relative; display: none;");
+				document.body.appendChild(tooltipDiv);
+			
+				let mark = new ol.Feature({
+					isPoint: true,
+					graphicIcon: graphicIcon,
+					geometry: new ol.geom.Point(
+						ol.proj.fromLonLat(point)
+					),
+				});
+	
+				mark.setStyle(new ol.style.Style({
+					image: new ol.style.Circle({
+						radius: 2,
+						fill: new ol.style.Fill({
+							color: '#475466'
+						}),
+						stroke: new ol.style.Stroke({
+							color: '#475466',
+							radius: 4,
+							width: 4
+						})
+					})
+				}));
+				
+				let vectorPointLayer = new ol.layer.Vector({
+					source: new ol.source.Vector({
+						features: [mark]
+					})
+				});
+	
+				self.olMap.addLayer(vectorPointLayer);
+				
+				let tooltip = new ol.Overlay({
+				  	element: tooltipDiv,
+					offset: [15, 15]
+				});
+				
+				self.olMap.addOverlay(tooltip);
+				
+				self.olMap.on("pointermove", function (evt) {
+				    
+					let feature = this.forEachFeatureAtPixel(evt.pixel, function(f) {
+						
+						if (f.get('isPoint')) {
+							
+							tooltip.setPosition(f.getGeometry().getCoordinates());
+						    tooltip.getElement().innerHTML = `<div>${f.get('graphicIcon').element.alias}</div>`;
+		
+					        return f;	
+						}
+				    });
+
+					this.getTargetElement().style.cursor = (feature ? POINTER_HAND : POINTER_DEFAULT);
+					tooltip.getElement().style.display = (feature ? "block" : "none");
+				});
+				
+				graphicIcon.vectorPointLayer = vectorPointLayer;
+			}
 		}
 				
 		function addGraphicIcon(layerElement, graphicIcon) {

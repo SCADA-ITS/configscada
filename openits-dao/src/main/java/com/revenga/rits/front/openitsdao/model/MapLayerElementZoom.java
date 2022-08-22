@@ -41,6 +41,12 @@ public class MapLayerElementZoom implements Serializable {
 
 	private Float longitude;
 	
+	@Column(name="latitude_2")
+	private Float latitude2;
+
+	@Column(name="longitude_2")
+	private Float longitude2;
+	
 	private Integer rotate;
 	
 	@Column(name="show_text")
@@ -122,6 +128,22 @@ public class MapLayerElementZoom implements Serializable {
 
 	public void setLongitude(Float longitude) {
 		this.longitude = longitude;
+	}
+	
+	public Float getLatitude2() {
+		return latitude2;
+	}
+
+	public void setLatitude2(Float latitude2) {
+		this.latitude2 = latitude2;
+	}
+
+	public Float getLongitude2() {
+		return longitude2;
+	}
+
+	public void setLongitude2(Float longitude2) {
+		this.longitude2 = longitude2;
 	}
 
 	public Integer getRotate() {

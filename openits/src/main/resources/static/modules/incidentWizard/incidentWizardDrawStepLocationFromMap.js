@@ -705,7 +705,7 @@ export default class IncidentWizardDrawStepLocationFromMap extends IncidentWizar
 				tooltipDiv.setAttribute("id", "tooltip-location");
 				tooltipDiv.setAttribute("class", "graphic-icon-tooltip-simple");
 				tooltipDiv.setAttribute("display", "none");
-				tooltipDiv.setAttribute("style", "position: absolute; display: none;");
+				tooltipDiv.setAttribute("style", "position: relative; display: none;");
 				document.body.appendChild(tooltipDiv);
 				
 				let locationsByIncidentType = incidentTypesLocations.get(incidentTypeId);
@@ -807,7 +807,7 @@ export default class IncidentWizardDrawStepLocationFromMap extends IncidentWizar
 						offset: [15, 15]
 					});
 					
-					tooltip.setMap(self.olMap);
+					self.olMap.addOverlay(tooltip);
 					
 					
 					// change mouse cursor when over marker

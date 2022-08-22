@@ -3255,6 +3255,7 @@ p, input, textarea {
 }
 
 .graphic-icon-tooltip-simple{
+	color: var(--blue-text-default);
 	background: cornsilk;
 	border: 1px solid black;
 	border-radius: 5px;

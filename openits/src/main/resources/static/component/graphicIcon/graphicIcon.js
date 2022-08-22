@@ -31,6 +31,7 @@ export default class GraphicIcon {
 		this.alarms = undefined;
 		this.container = container;
 		this.events = events;
+		this.lastUpdated = window.sm.getService(Services.TIME_SERVICE).getEpoch();
 		
 		if (container && container.obj && container.obj.node) {
 			
@@ -162,12 +163,13 @@ export default class GraphicIcon {
 				
 				let elementTypeStateColor = util.element.getColor(elementTypeState);
 			
-				tooltip.innerHTML = `<div class="title">${i18n.t(elementType.labelAlias)}</div>
+				tooltip.innerHTML = `<div class="title">${self.element.alias}</div>
 									<image class="icon" src="img/${elementType.elementTypePhoto}" onerror="this.onerror=null;this.src='img/not_found_50.png';"/>
 									<div class="state">
 										<span class="badge" style="background: ${elementTypeStateColor} ">${i18n.t(elementTypeState.labelAlias)}</span>
+										<span style="padding-left: 15px">${util.toLocaleString(self.lastUpdated / 1000)}</span>
 									</div>
-									<div class="text">${self.element.alias}</div>`;
+									<div class="text_title">${i18n.t(elementType.labelDescription ? elementType.labelDescription : elementType.labelAlias) + " (" + elementType.alias + ")"}</div>`;
 									
 				tooltip.style.display = "block";
 				tooltip.style.left = e.pageX + 10 + 'px';
@@ -376,17 +378,20 @@ export default class GraphicIcon {
 	
 	updateState(elementTypeState) {
 		
-		this.elementTypeState = elementTypeState; 
+		this.elementTypeState = elementTypeState;
+		this.lastUpdated = window.sm.getService(Services.TIME_SERVICE).getEpoch(); 
 	}
 	
 	updateValues(elementValues) {
 		
 		this.elementValues = elementValues;
+		this.lastUpdated = window.sm.getService(Services.TIME_SERVICE).getEpoch();
 	}
 	
 	updateAlarms(alarms) {
 		
 		this.alarms = alarms;
+		this.lastUpdated = window.sm.getService(Services.TIME_SERVICE).getEpoch();
 	}
 
 	show() {
