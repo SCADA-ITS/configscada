@@ -199,6 +199,7 @@ export default class EquipmentViewerContent {
 				numberOfHeaderButtons = (noProperties) ? numberOfHeaderButtons : ++numberOfHeaderButtons;
 				numberOfHeaderButtons = !(self.equipmentViewer.showActions) || !isAllowedCommands ? numberOfHeaderButtons : ++numberOfHeaderButtons;
 				numberOfHeaderButtons = (self.element.tm && self.element.tm != undefined) ? ++numberOfHeaderButtons : numberOfHeaderButtons;
+				numberOfHeaderButtons = (self.element.doc && self.element.doc != undefined) ? ++numberOfHeaderButtons : numberOfHeaderButtons;
 
 				toolbarButtonsWidth = numberOfHeaderButtons * 150;
 
@@ -297,6 +298,26 @@ export default class EquipmentViewerContent {
 										}
 									}
 								},
+								{
+									view: "button",
+									width: 135,
+									label: i18n.t("LBL_EQUIPMENT_DOC"),
+									tooltip: i18n.t("LBL_EQUIPMENT_DOC"),
+									type: "iconTop",
+									icon: "mdi mdi-file-download",
+									hidden: (self.element.doc && self.element.doc != undefined) ? false : true,
+									on: {
+										onItemClick: function() {
+											
+											let element = document.createElement('a');
+											element.setAttribute('href', self.element.doc);
+											element.setAttribute('download', self.element.doc);
+											document.body.appendChild(element);
+											element.click();
+											document.body.removeChild(element);
+										}
+									},
+								},
 								{ width: 5 }
 							]
 						},
@@ -393,13 +414,13 @@ export default class EquipmentViewerContent {
 
 			} else {
 
-				contentTabs.removeView("tab2remove" + self.uid);				
+				contentTabs.removeView("tab2remove" + self.uid);
 			}
 
 			if (self.equipmentViewerInfo) {
 
 				self.equipmentViewerInfo.setSegmented();
-			}			
+			}
 
 			connectWS();
 
@@ -465,7 +486,7 @@ export default class EquipmentViewerContent {
 
 					if ($$("view-main-content-tab-info-" + self.uid) != undefined) {
 
-						contentTabs.getTabbar().setValue("view-main-content-tab-info-" + self.uid);					
+						contentTabs.getTabbar().setValue("view-main-content-tab-info-" + self.uid);
 					}
 
 					// Select initial tab for modules if configured
@@ -505,7 +526,7 @@ export default class EquipmentViewerContent {
 				let element = adapter.ws.element.get(data, elementTypeParams);
 
 				if (element) {
-					
+
 					updateElement();
 
 					let elementHeader = $$("view-main-content-header-element-" + self.uid);
@@ -546,7 +567,7 @@ export default class EquipmentViewerContent {
 						self.equipmentViewerInfo.updateMeasures(element.elementValues);
 					}
 				}
-				
+
 				function updateElement() {
 
 					if (Array.isArray(element.elementValues) && element.elementValues.length > 0) {
@@ -562,10 +583,10 @@ export default class EquipmentViewerContent {
 							}
 						}
 					}
-					
-					if(element.elementTypeState){
-						
-						self.element.elementTypeState = element.elementTypeState; 
+
+					if (element.elementTypeState) {
+
+						self.element.elementTypeState = element.elementTypeState;
 					}
 				}
 			}
