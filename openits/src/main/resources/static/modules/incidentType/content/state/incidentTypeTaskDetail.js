@@ -69,7 +69,7 @@ export default class IncidentTypeTaskDetail {
 								cols: [
 									{
 										view: "label",
-										label: "<img src='" + self.incidentTypeTask.taskType.icon + "' class='grid-icon'/><span class='grid-title'>" + i18n.t(self.incidentTypeTask.taskType.labelAlias) + " - " + self.incidentTypeTask.alias + "</span>",
+										label: "<img src='" + self.incidentTypeTask.taskType.icon + "' class='grid-icon grid-icon-plan'/><span class='grid-title grid-title-plan'>" + i18n.t(self.incidentTypeTask.taskType.labelAlias) + " - " + self.incidentTypeTask.alias + "</span>",
 										autowidth: true
 									},
 									{ width: 5 },

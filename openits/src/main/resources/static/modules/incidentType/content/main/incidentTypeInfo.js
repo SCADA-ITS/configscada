@@ -153,7 +153,34 @@ export default class IncidentTypeStretch {
 							{
 								rows: [
 									{ height: 20 },
-									{ view: "text", id: "incident-type-info-form-name-" + self.uid, name: "name", required: true, label: i18n.t("LBL_ALIAS"), labelWidth: FORM_LABEL_WIDTH, value: self.incidentType.alias },
+									{
+										cols: [
+											{ view: "text", id: "incident-type-info-form-name-" + self.uid, name: "name", required: true, label: i18n.t("LBL_ALIAS"), labelWidth: FORM_LABEL_WIDTH, value: self.incidentType.alias, gravity: 3 },
+											{
+												gravity: 1,
+												cols: [
+													{width: 50},
+													{
+														view: "text",
+														id: "incident-type-info-form-img-" + self.uid,
+														name: "img",
+														required: false,
+														readonly: true,
+														//label: `<img src='./${self.config.resources.incidentType + "/" + self.incidentType.icon}' class="grid-icon" onerror="this.onerror=null;this.src='./img/grid/default.png' /><span class="grid-title"> </span>`, 
+														label: `<img style="padding-top: 3px" src="${"./" + self.config.resources.incidentType + "/" + self.incidentType.icon}" class="grid-icon" onerror="this.onerror=null;this.src='${"./" + self.config.resources.incidentType + "/" + self.config.resources.defaultIncidentType}'" /><span class="grid-title">${""}</span>`,
+														labelWidth: 35,
+														value: self.incidentType.icon
+													},
+													{
+														view: "icon", icon: "wxi-search",
+														on: {
+															onItemClick: searchImage
+														}
+													}
+												]
+											},
+										]
+									},
 									{ height: 20 },
 									{ view: "text", id: "incident-type-info-form-description-" + self.uid, name: "description", required: false, label: i18n.t("LBL_DESCRIPTION"), labelWidth: FORM_LABEL_WIDTH, value: self.incidentType.description },
 									{ height: 20 },
@@ -194,27 +221,6 @@ export default class IncidentTypeStretch {
 													}
 												}
 											}		
-										]
-									},
-									{ height: 20 },
-									{
-										cols: [
-											{ 
-												view: "text", 
-												id: "incident-type-info-form-img-" + self.uid, 
-												name: "img", 
-												required: false,
-												readonly: true,
-												//label: `<img src='./${self.config.resources.incidentType + "/" + self.incidentType.icon}' class="grid-icon" onerror="this.onerror=null;this.src='./img/grid/default.png' /><span class="grid-title"> </span>`, 
-												label: `<img style="padding-top: 3px" src="${"./" + self.config.resources.incidentType + "/" + self.incidentType.icon}" class="grid-icon" onerror="this.onerror=null;this.src='${"./" + self.config.resources.incidentType + "/" + self.config.resources.defaultIncidentType}'" /><span class="grid-title">${""}</span>`,
-												labelWidth: FORM_LABEL_WIDTH, 
-												value: self.incidentType.icon 
-											},
-											{
-												view: "icon", icon: "wxi-search",
-												on: {
-													onItemClick: searchImage												}
-											}
 										]
 									},
 									{ height: 20 }
