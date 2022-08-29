@@ -4,28 +4,57 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.PostConstruct;
-
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import com.revenga.rits.front.openits.adapter.impl.GraphqlTypeAdapter;
 import com.revenga.rits.front.openits.adapter.impl.VODataSourceAdapter;
+import com.revenga.rits.front.openits.model.UserSessionUI;
+import com.revenga.rits.lib.encrypt.util.AES;
+
+import lombok.extern.log4j.Log4j2;
 
 @Service
+@Log4j2
 public class UserBO extends GenericBO {
-		
+
+	private static final String AUTH_ENCRYPTED_PASSWORD = "auth.encryptedPassword";
+	private static final String FIELD_USER = "user";
+	
 	@Autowired
 	GraphqlTypeAdapter graphqlTypeAdapter;
 	
 	@Autowired
 	SessionBO sessionBO;
 	
-	@PostConstruct
-	private void initialize() {
+	@Autowired
+	private Environment env;
+	
+	@Override
+	public List<Map<String, Object>> getList() {
 		
-		dataSourceList = VODataSourceAdapter.DATA_SOURCE_GET_USERS;
-		dataSourceItem = VODataSourceAdapter.DATA_SOURCE_GET_USER;
+		List<Map<String, Object>> list = voDataSourceAdapter.getList(VODataSourceAdapter.DATA_SOURCE_GET_USERS, null);
+		
+		if (Boolean.parseBoolean(env.getProperty(AUTH_ENCRYPTED_PASSWORD)) && !CollectionUtils.isEmpty(list)) {
+			
+			list.forEach(this::decryptPasswordField);
+		}
+
+		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_USERS, list);
+	}
+	
+	@Override
+	public Map<String, Object> getItem(String id) {
+		
+		Map<String, Object> obj = voDataSourceAdapter.get(VODataSourceAdapter.DATA_SOURCE_GET_USER,
+				new Object[] { id });
+
+		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_USER,
+				Boolean.parseBoolean(env.getProperty(AUTH_ENCRYPTED_PASSWORD)) ? decryptPasswordField(obj) : obj);
 	}
 	
 	public List<Map<String, Object>> getListWithRole() {
@@ -39,6 +68,11 @@ public class UserBO extends GenericBO {
 	@SuppressWarnings("unchecked")
 	public Map<String, Object> createUser(Object input) {
 		
+		if (Boolean.parseBoolean(env.getProperty(AUTH_ENCRYPTED_PASSWORD))) {
+			
+			encryptPasswordField((Map<String, Object>) ((Map<String, Object>) input).get(FIELD_USER));
+		}
+		
 		Map<String, Object> createdUser = voDataSourceAdapter.put(VODataSourceAdapter.DATA_SOURCE_CREATE_USER, (Map<String, Object>) input);
 		
 		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_CREATE_USER, createdUser);
@@ -47,6 +81,11 @@ public class UserBO extends GenericBO {
 	@SuppressWarnings("unchecked")
 	public Map<String, Object> updateUser(Object input) {
 			
+		if (Boolean.parseBoolean(env.getProperty(AUTH_ENCRYPTED_PASSWORD))) {
+			
+			encryptPasswordField((Map<String, Object>) ((Map<String, Object>) input).get(FIELD_USER));
+		}
+		
 		Map<String, Object> updatedUser = voDataSourceAdapter.put(VODataSourceAdapter.DATA_SOURCE_UPDATE_USER, (Map<String, Object>) input);
 		
 		Map<String, Object> updatedUserConverted = vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_UPDATE_USER, updatedUser); 
@@ -54,6 +93,46 @@ public class UserBO extends GenericBO {
 		sessionBO.updateUser(updatedUserConverted);
 		
 		return updatedUserConverted;
+	}
+	
+	private Map<String, Object> encryptPasswordField(Map<String, Object> userMap) {
+		
+		try {
+
+			String password = (String) userMap.get(UserSessionUI.USER_FIELD_PASSWORD);
+			
+			if (!StringUtils.isEmpty(password)) {
+				
+				userMap.put(UserSessionUI.USER_FIELD_PASSWORD, AES.encrypt(password));
+			}
+			
+		} catch (Exception e) {
+			
+			log.error(e.getMessage());
+			log.debug(ExceptionUtils.getStackTrace(e));
+		}
+		
+		return userMap;
+	}
+	
+	private Map<String, Object> decryptPasswordField(Map<String, Object> userMap) {
+		
+		try {
+
+			String password = (String) userMap.get(UserSessionUI.USER_FIELD_PASSWORD);
+			
+			if (!StringUtils.isEmpty(password)) {
+				
+				userMap.put(UserSessionUI.USER_FIELD_PASSWORD, AES.decrypt(password));
+			}
+			
+		} catch (Exception e) {
+			
+			log.error(e.getMessage());
+			log.debug(ExceptionUtils.getStackTrace(e));
+		}
+		
+		return userMap;
 	}
 	
 	public Map<String, Object> deleteUser(String id) {

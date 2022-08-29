@@ -3,14 +3,24 @@ import GenericModule from "../modules/genericModule.js";
 
 const DATASOURCE_PARAM_URL = 0;
 const DATASOURCE_PARAM_TOPIC = 1;
+const BROKER_TYPE = {
+	1: {
+		name: 'activemq',
+		wildcard: '.>'
+	},
+	2: {
+		name: 'rabbitmq',
+		wildcard: '.#'
+	}
+};
 
 function stompConnect(url, topic, onConnected, onMessage) {
 
 	var client = new StompJs.Client({
 		brokerURL: url,
 		connectHeaders: {
-			login: "user",
-			passcode: "user"
+			login: "guest",
+			passcode: "guest"
 		},
 		reconnectDelay: 5000,
 		heartbeatIncoming: 4000,
@@ -64,7 +74,7 @@ class Subscriptor {
 		this.stompClient = undefined;
 		this.url = dataSource.dataSourceValues[DATASOURCE_PARAM_URL].value;
 		this.topic = dataSource.dataSourceValues[DATASOURCE_PARAM_TOPIC].value;
-
+		
 		this.clients = [];
 	}
 
@@ -218,10 +228,22 @@ export default class StompSubscriptorService extends GenericModule {
 	subscribe(url, topic, callback, fields) {
 
 		let id = undefined;
+		let topicBroker = topic; 
+		
+		if (appConfig.brokerId) {
+			
+			let topicWildCard = BROKER_TYPE[appConfig.brokerId].wildcard;
+			
+			if (topicWildCard) {
+				
+				topicBroker = topic.replace('.>', topicWildCard)
+			}
+		}
+		
 		let dataSource = {
 			dataSourceValues: [
 				{ value: url ? url : appConfig.stompUrl },
-				{ value: topic }
+				{ value: topicBroker }
 			]
 		};
 		
