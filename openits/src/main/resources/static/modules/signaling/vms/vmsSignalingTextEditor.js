@@ -306,15 +306,33 @@ export default class VmsSignalingTextEditor extends VmsSignalingZoneEditor {
 									name: (alternance ? "alt-" : "main-") + lineData.id,
 									validate: function(value) {
 										
-										let ratioLetter = parseFloat(DEFAULT_INPUT_FONT_SIZE) / parseFloat(self.config.fontInfo["font-size"]);
+										let res = true;
 										
-										console.log("Input value is " + value);
-										let textWidth = util.ui.calculateTextWidth(value, self.config.fontInfo["font-family"], DEFAULT_INPUT_FONT_SIZE + "px",  (parseFloat(self.config.fontInfo["letter-spacing"]) * ratioLetter) + "px");
-										
-										console.log("Input width is " + inputWidth + "px.")
-										console.log("Text width is " + textWidth + "px.")
+										if (self.config.maxCharsPerLine && !isNaN(self.config.maxCharsPerLine)) {
 											
-										return inputWidth > textWidth;
+											res = value.length <= self.config.maxCharsPerLine; 
+										}
+										else {
+											
+											let ratioLetter = parseFloat(DEFAULT_INPUT_FONT_SIZE) / parseFloat(self.config.fontInfo["font-size"]);
+										
+											if (value.length > 0) {
+												
+												log.debug("Input value is " + value);	
+											}
+																						
+											let textWidth = util.ui.calculateTextWidth(value, self.config.fontInfo["font-family"], DEFAULT_INPUT_FONT_SIZE + "px",  (parseFloat(self.config.fontInfo["letter-spacing"]) * ratioLetter) + "px");
+											
+											if (value.length > 0) {
+												
+												log.debug("Input width is " + inputWidth + "px.");
+												log.debug("Text width is " + textWidth + "px.");
+											}
+											
+											res = inputWidth > textWidth;	
+										}
+											
+										return res;
 									},
 									label: i18n.t("LBL_LINE") + lineData.id,
 									labelWidth: 150,
