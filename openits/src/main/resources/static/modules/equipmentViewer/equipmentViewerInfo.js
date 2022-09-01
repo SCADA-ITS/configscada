@@ -2,6 +2,7 @@ import { util } from "../../lib/util.js";
 import EquipmentViewerInfoMeasure from "./equipmentViewerInfoMeasure.js";
 import EquipmentViewerInfoIcon from "./equipmentViewerInfoIcon.js";
 import EquipmentViewerTable from "./equipmentViewerTable.js";
+import EquipmentViewerChart from "./equipmentViewerChart.js";
 
 const MEASURE_MARGINS = 40;
 const MEASURE_ITEM_WIDTH = 200;
@@ -16,6 +17,7 @@ export default class EquipmentViewerInfo {
 		this.equipmentViewer = equipmentViewer;
 		this.equipmentViewerInfoMeasure = undefined;
 		this.equipmentViewerTable = undefined;
+		this.equipmentViewerChart = undefined;
 		this.graphicIconInstance = undefined;
 		this.equipmentViewerInfoIconFromMosaic = undefined;
 		this.equipmentViewerInfoIconFromTable = undefined;
@@ -39,11 +41,13 @@ export default class EquipmentViewerInfo {
 
 		const TAB_MODE = {
 			MOSAIC: 1,
-			TABLE: 2
+			TABLE: 2,
+			CHART: 3
 		};
 
 		initViews.set(TAB_MODE.MOSAIC, false);
 		initViews.set(TAB_MODE.TABLE, false);
+		initViews.set(TAB_MODE.CHART, false);
 
 		self.equipmentViewerInfoIcon = new EquipmentViewerInfoIcon(self.parent, element, self.equipmentViewer);
 		viewInfoIcon = self.equipmentViewerInfoIcon.getView();
@@ -61,20 +65,24 @@ export default class EquipmentViewerInfo {
 
 		if (!self.equipmentViewer.noShowMeasures && Array.isArray(self.element.elementValues) && self.element.elementValues.length > 0 && measuresToShow) {
 
+			if (self.equipmentViewer.showChart) {
+
+				self.equipmentViewerChart = new EquipmentViewerChart(self.parent, self.element, self.equipmentViewer, self.measuresGroups);
+				self.equipmentViewerChart.initMeasuresMaintenance();
+			}
+
 			view = {
 				id: "view-main-info-multi-" + self.uid,
 				css: "bordered-layout",
 				rows: [
-					{ height: 5 },
 					{
-						height: 28,
 						cols: [
-							{},
+							{ height: 38 },
 							{
 								id: "segmented-" + self.uid,
 								view: "segmented",
 								css: "segment-custom-2",
-								width: 167,
+								width: 250,
 								borderless: true,
 								value: undefined,
 								options: [
@@ -83,11 +91,15 @@ export default class EquipmentViewerInfo {
 									},
 									{
 										id: "segmented-show-mosaic-" + self.uid,
-										value: "<span class='ico webix_icon mdi mdi-collage'></span>",
+										value: "<span class='ico webix_icon mdi mdi-collage'></span>"
 									},
 									{
 										id: "segmented-show-table-" + self.uid,
-										value: "<span class='ico webix_icon mdi mdi-format-list-bulleted-square'></span>",
+										value: "<span class='ico webix_icon mdi mdi-format-list-bulleted-square'></span>"
+									},
+									{
+										id: "segmented-show-chart-" + self.uid,
+										value: "<span class='ico webix_icon mdi mdi-chart-areaspline-variant'></span>"
 									}
 								],
 								tooltip: function(obj) {
@@ -99,6 +111,10 @@ export default class EquipmentViewerInfo {
 									else if (obj.id === "segmented-show-table-" + self.uid) {
 
 										return i18n.t("LBL_TABLE_MEASURES");
+
+									} else if (obj.id === "segmented-show-chart-" + self.uid) {
+
+										return i18n.t("LBL_CHART_TAB");
 									}
 								},
 								on: {
@@ -110,11 +126,13 @@ export default class EquipmentViewerInfo {
 
 												$$("view-main-mosaic-tab-" + self.uid).show();
 												$$("view-main-table-tab-" + self.uid).hide();
+												$$("view-main-chart-tab-" + self.uid).hide();
 
 											} else {
 
 												$$("view-main-mosaic-tab-" + self.uid).show();
 												$$("view-main-table-tab-" + self.uid).hide();
+												$$("view-main-chart-tab-" + self.uid).hide();
 												initViews.set(TAB_MODE.MOSAIC, true);
 												drawInitialTabMosaic();
 											}
@@ -125,19 +143,37 @@ export default class EquipmentViewerInfo {
 
 												$$("view-main-table-tab-" + self.uid).show();
 												$$("view-main-mosaic-tab-" + self.uid).hide();
+												$$("view-main-chart-tab-" + self.uid).hide();
 
 											} else {
 
 												$$("view-main-table-tab-" + self.uid).show();
 												$$("view-main-mosaic-tab-" + self.uid).hide();
+												$$("view-main-chart-tab-" + self.uid).hide();
 												initViews.set(TAB_MODE.TABLE, true);
 												drawInitialTabTable();
+											}
+
+										} else if (newv === "segmented-show-chart-" + self.uid) {
+
+											if (initViews.get(TAB_MODE.CHART)) {
+
+												$$("view-main-chart-tab-" + self.uid).show();
+												$$("view-main-table-tab-" + self.uid).hide();
+												$$("view-main-mosaic-tab-" + self.uid).hide();
+
+											} else {
+
+												initViews.set(TAB_MODE.CHART, true);
+												drawInitialTabChart();
+												$$("view-main-table-tab-" + self.uid).hide();
+												$$("view-main-mosaic-tab-" + self.uid).hide();
+												$$("view-main-chart-tab-" + self.uid).show();
 											}
 										}
 									}
 								}
-							},
-							{ width: 10 }
+							}
 						]
 					},
 					{
@@ -152,6 +188,9 @@ export default class EquipmentViewerInfo {
 							},
 							{
 								id: "view-main-table-tab-" + self.uid
+							},
+							{
+								id: "view-main-chart-tab-" + self.uid
 							}
 						]
 					}
@@ -224,6 +263,23 @@ export default class EquipmentViewerInfo {
 			self.equipmentViewerTable.measureTable.callbacks();
 		}
 
+		function drawInitialTabChart() {
+
+			let viewTabChart;
+			let viewChart;
+
+			viewChart = self.equipmentViewerChart.getView();
+
+			viewTabChart = {
+				id: "view-main-chart-tab-" + self.uid,
+				borderless: true,
+				cols: [viewChart]
+			};
+
+			webix.ui(viewTabChart, $$("view-main-chart-tab-" + self.uid));
+			self.equipmentViewerChart.selectByIndex(0);
+		}
+
 		return view;
 
 		function getMeasuresGroupsFromConfig() {
@@ -256,11 +312,9 @@ export default class EquipmentViewerInfo {
 					});
 
 					measureGroup.elementValues = webix.copy(elementValuesFiltered);
-
 				}
 
 				measureGroups.push(measureGroup);
-
 			});
 
 			return measureGroups;
@@ -300,7 +354,8 @@ export default class EquipmentViewerInfo {
 			let tabMode;
 			const TAB_MODE = {
 				MOSAIC: 1,
-				TABLE: 2
+				TABLE: 2,
+				CHART: 3
 			};
 
 			if (self.equipmentViewer.infoTabMode) {
@@ -316,8 +371,13 @@ export default class EquipmentViewerInfo {
 
 			if ($$("segmented-" + self.uid)) {
 
-				$$("segmented-" + self.uid).setValue(tabView);
 				$$("segmented-" + self.uid).removeOption("optionToRemove-" + self.uid);
+				$$("segmented-" + self.uid).setValue(tabView);
+
+				if (!self.equipmentViewer.showChart) {
+
+					$$("segmented-" + self.uid).hideOption("segmented-show-chart-" + self.uid);
+				}
 			}
 
 		} else {
@@ -332,8 +392,8 @@ export default class EquipmentViewerInfo {
 	}
 
 	updateMeasures(elementValues) {
-	
-		if (!this.equipmentViewerInfoMeasure || !this.equipmentViewerTable) {
+
+		if (!this.equipmentViewerInfoMeasure || !this.equipmentViewerTable || !this.equipmentViewerChart) {
 
 			for (let group of this.measuresGroups) {
 
@@ -346,15 +406,20 @@ export default class EquipmentViewerInfo {
 				}
 			}
 		}
-		
+
 		if (this.equipmentViewerInfoMeasure) {
 
 			this.equipmentViewerInfoMeasure.updateMeasure(elementValues);
 		}
-		
+
 		if (this.equipmentViewerTable) {
 
 			this.equipmentViewerTable.updateMeasures(elementValues);
+		}
+
+		if (this.equipmentViewerChart) {
+
+			this.equipmentViewerChart.updateMeasure(elementValues);
 		}
 
 		if (this.parent.graphicIconInstance) {

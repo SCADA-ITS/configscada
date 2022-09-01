@@ -35,6 +35,15 @@ public class EquipViewer implements Serializable {
 	@Column(name="info_tab_mode")
 	private Integer infoTabMode;
 	
+	@Column(name="show_chart")
+	private Boolean showChart;
+	
+	@Column(name="chart_interval_min")
+	private Integer chartIntervalMin;
+	
+	@Column(name="chart_interval_time_min")
+	private Integer chartIntervalTimeMin;
+	
 	@Column(name="no_show_properties")
 	private Boolean noShowProperties;
 
@@ -131,6 +140,30 @@ public class EquipViewer implements Serializable {
 		this.infoTabMode = infoTabMode;
 	}
 
+	public Boolean getshowChart() {
+		return this.showChart;
+	}
+
+	public void setshowChart(Boolean showChart) {
+		this.showChart= showChart;
+	}
+
+	public Integer getchartIntervalMin() {
+		return this.chartIntervalMin;
+	}
+
+	public void setchartIntervalMin(Integer chartIntervalMin) {
+		this.chartIntervalMin = chartIntervalMin;
+	}
+	
+	public Integer getchartIntervalTimeMin() {
+		return this.chartIntervalTimeMin;
+	}
+
+	public void setgetchartIntervalTimeMin(Integer chartIntervalTimeMin) {
+		this.chartIntervalTimeMin = chartIntervalTimeMin;
+	}		
+	
 	public Boolean getNoShowProperties() {
 		return this.noShowProperties;
 	}
