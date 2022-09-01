@@ -5,6 +5,8 @@ import InputDialogBox from "../component/inputDialogBox.js";
 import MessageBox from "../component/messageBox.js";
 import SearchDialogBox from "../component/searchDialogBox.js";
 
+const NO_VALUE = -1;
+
 export default class AlarmConfigModule extends GenericModule {
 
 	constructor(module, moduleAction, args) {
@@ -56,11 +58,10 @@ export default class AlarmConfigModule extends GenericModule {
 		let alarmConfigData;
 		let alarmConfigStatesByElementType;
 		let alarmLevelOptionsArr = [];
+		let elementTypeStateOptionsArr = [];
 		let alarmConfigs = window.em.getAll(EntityType.ALARM_CONFIG);
 		let alarmConfigsByElementTypeWithState = [];
 		let usedStatesList = [];
-
-		const ALARM_TYPE_ID = "AlarmType:1";
 
 		if (self.moduleAction.id === self.config.moduleAction.edit) {
 
@@ -248,8 +249,25 @@ export default class AlarmConfigModule extends GenericModule {
 					});
 
 					alarmLevelOptionsArr.sort((a, b) => (a.value > b.value) ? 1 : ((b.value > a.value) ? -1 : 0));
+					
+					elementTypeStateOptionsArr = alarmConfigStatesByElementType.map(e => {
+						
+						return {
+							id: e.id,
+							value: i18n.t(e.labelAlias)
+						}
+					});
+					
+					elementTypeStateOptionsArr.push({
+						id: NO_VALUE,
+						value: "" 
+					});
 
-					let form = {
+					elementTypeStateOptionsArr.sort((a, b) => (a.value > b.value) ? 1 : ((b.value > a.value) ? -1 : 0));
+
+					let form;
+					
+					form = {
 						id: "form-" + self.uid,
 						view: "form",
 						css: "user-role-form",
@@ -320,6 +338,15 @@ export default class AlarmConfigModule extends GenericModule {
 												labelWidth: 275,
 												value: false
 											},
+											{
+												view: "richselect",
+												id: "element_type_state-" + self.uid,
+												name: "elementTypeStateId",
+												label: i18n.t("LBL_ELEMENT_TYPE_STATE_WITH_ALARM"),
+												labelWidth: 275,
+												options: elementTypeStateOptionsArr,
+												required: false
+											},
 											{}
 										]
 									},
@@ -331,7 +358,8 @@ export default class AlarmConfigModule extends GenericModule {
 							"labelAlias": webix.rules.isNotEmpty,
 							"elementTypeId": webix.rules.isNotEmpty,
 							"elementTypeLabelAlias": webix.rules.isNotEmpty,
-							"alarmLevelId": webix.rules.isNotEmpty
+							"alarmLevelId": webix.rules.isNotEmpty,
+							"elementTypeStateId": webix.rules.isNotEmpty
 						}
 					};
 
@@ -1153,12 +1181,12 @@ export default class AlarmConfigModule extends GenericModule {
 													let body = {
 														alarmConfig: {
 															id: alarmConfigData.id,
-															alias: formValues.labelAlias,
-															labelAlias: formValues.labelAlias,
-															alarmTypeId: ALARM_TYPE_ID,
+															labelAlias: !i18n.isTranslatable(formValues.labelAlias) ? formValues.labelAlias : undefined,
+															alarmTypeId: self.config.defaultAlarmType,
 															alarmLevelId: formValues.alarmLevelId,
 															mine: alarmConfigData.mine,
 															treatment: (formValues.treatment) ? true : false,
+															elementTypeStateId: formValues.elementTypeStateId !== -1 ? formValues.elementTypeStateId : undefined, 
 															alarmConfigMeasures: [],
 															alarmConfigStates: []
 														}
@@ -1190,6 +1218,11 @@ export default class AlarmConfigModule extends GenericModule {
 																stateId: value
 															});
 														}
+														
+														if (Array.isArray(alarmConfigStatesArr) && alarmConfigStatesArr.length > 0) {
+															
+															body.alarmConfig.elementTypeStateId = undefined;
+														}
 
 														body.alarmConfig.alarmConfigStates = alarmConfigStatesArr;
 													}
@@ -1215,8 +1248,9 @@ export default class AlarmConfigModule extends GenericModule {
 															alias: formValues.labelAlias,
 															labelAlias: formValues.labelAlias,
 															elementTypeId: formValues.elementTypeId,
+															elementTypeStateId: formValues.elementTypeStateId !== -1 ? formValues.elementTypeStateId : undefined, 
 															alarmLevelId: formValues.alarmLevelId,
-															alarmTypeId: ALARM_TYPE_ID,
+															alarmTypeId: self.config.defaultAlarmType,
 															mine: true,
 															treatment: (formValues.treatment) ? true : false,
 															alarmConfigMeasures: []
@@ -1248,6 +1282,11 @@ export default class AlarmConfigModule extends GenericModule {
 																elementTypeId: formValues.elementTypeId,
 																stateId: value
 															});
+														}
+														
+														if (Array.isArray(alarmConfigStatesArr) && alarmConfigStatesArr.length > 0) {
+															
+															body.alarmConfig.elementTypeStateId = undefined;
 														}
 
 														body.alarmConfig.alarmConfigStates = alarmConfigStatesArr;
@@ -1318,31 +1357,56 @@ export default class AlarmConfigModule extends GenericModule {
 
 			let form = $$("form-" + self.uid);
 			let alarmLevelSelect = $$("alarm_level-" + self.uid);
+			let elementTypeStateSelect = $$("element_type_state-" + self.uid);
+			let labelAliasSelect = $$("label_alias-" + self.uid);
 
 			if (form) {
 
 				if (alarmConfigData) {
 
 					form.setValues({
-						labelAlias: (alarmConfigData.labelAlias) ? i18n.t(alarmConfigData.labelAlias) : alarmConfigData.alias,
+						labelAlias: i18n.t(alarmConfigData.labelAlias),
 						elementTypeId: alarmConfigData.elementType.id,
 						elementTypeLabelAlias: i18n.t(alarmConfigData.elementType.labelAlias),
-						treatment: (alarmConfigData.treatment) ? true : false
+						treatment: (alarmConfigData.treatment) ? true : false,
+						changeEquipmentState: (alarmConfigData.elementTypeState) ? true : false, 
 					});
 
-					let alarmLevel = alarmLevelOptionsArr.find(alarmLvl => alarmLvl.id === alarmConfigData.alarmLevel.id);
+					let alarmLevel = alarmLevelOptionsArr.find(alarmLvl => alarmConfigData.alarmLevel && alarmLvl.id === alarmConfigData.alarmLevel.id);
 					alarmLevelSelect.enable();
 
 					if (alarmLevel) {
 
 						alarmLevelSelect.setValue(alarmLevel.id);
 					}
+					
+					let elementTypeState = elementTypeStateOptionsArr.find(e => alarmConfigData.elementTypeState && e.id === alarmConfigData.elementTypeState.id);
+					elementTypeStateSelect.enable();
+					
+					if (elementTypeState) {
+
+						elementTypeStateSelect.setValue(elementTypeState.id);
+					}
+					else {
+						
+						elementTypeStateSelect.setValue(NO_VALUE);
+					}
+					
+					if (i18n.isTranslatable(alarmConfigData.labelAlias)) {
+						
+						labelAliasSelect.disable();
+					}
 
 				} else {
+					
+					let defaultElementTypeStateId = self.args.elementType.id.replace("ElementType", "ElementTypeState") + ":" + self.config.defaultElementTypeStateAlarmId; 
+					
+					let elementTypeState = alarmConfigStatesByElementType.find(e => e.id === defaultElementTypeStateId);
 
 					form.setValues({
 						elementTypeId: self.args.elementType.id,
 						elementTypeLabelAlias: i18n.t(self.args.elementType.labelAlias),
+						elementTypeStateId: elementTypeState ? elementTypeState : NO_VALUE
 					});
 				}
 			}

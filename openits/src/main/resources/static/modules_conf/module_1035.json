@@ -20,5 +20,7 @@
 		"alarmTypeAuto": [ "AlarmType:1", "AlarmType:2", "AlarmType:3" ],
 		"alarmTypeManual": [ "AlarmType:4" ]
 	},
-	"paramTypeMeasure": "ParamType:2"
+	"paramTypeMeasure": "ParamType:2",
+	"defaultAlarmType": "AlarmType:1",
+	"defaultElementTypeStateAlarmId": 3
 }

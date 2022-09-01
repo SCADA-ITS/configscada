@@ -135,27 +135,35 @@ class AdapterGridElement extends AdapterGrid{
 
 											String valueStr = (String) elementValue.get(FIELD_VALUE);
 											
-											Object value = null;
+											Object value = valueStr;
 											
-											if (dataTypeId.equals(DATA_TYPE_INTEGER)) {
+											try {
+											
+												if (dataTypeId.equals(DATA_TYPE_INTEGER)) {
 												
-												value = Integer.parseInt(valueStr);
+													value = Integer.parseInt(valueStr);
+												}
+												else if (dataTypeId.equals(DATA_TYPE_ALPHANUMERIC)) {
+													
+													value = valueStr;
+												}
+												else if (dataTypeId.equals(DATA_TYPE_DECIMAL)) {
+													
+													value = Float.parseFloat(valueStr);
+												}
+												else if (dataTypeId.equals(DATA_TYPE_TIMESTAMP)) {
+													
+													value = Long.parseLong(valueStr);
+												}
+												else if (dataTypeId.equals(DATA_TYPE_BOOLEAN)) {
+													
+													value = Boolean.parseBoolean(valueStr);
+												}
 											}
-											else if (dataTypeId.equals(DATA_TYPE_ALPHANUMERIC)) {
-												
-												value = valueStr;
-											}
-											else if (dataTypeId.equals(DATA_TYPE_DECIMAL)) {
-												
-												value = Float.parseFloat(valueStr);
-											}
-											else if (dataTypeId.equals(DATA_TYPE_TIMESTAMP)) {
-												
-												value = Long.parseLong(valueStr);
-											}
-											else if (dataTypeId.equals(DATA_TYPE_BOOLEAN)) {
-												
-												value = Boolean.parseBoolean(valueStr);
+											catch (Exception e) {
+											
+												log.error(e.getMessage());
+												log.debug(ExceptionUtils.getStackTrace(e));
 											}
 											
 											if (elementValueStateObj instanceof Map) {

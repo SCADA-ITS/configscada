@@ -4,6 +4,7 @@ import DataTable from "../component/datatable.js";
 import ListView from "../component/listview.js";
 
 const DATA_GRID_ID = 1002;
+const ELEMENT_TYPE_STATE_ALARM = 3;
 
 export default class AlarmConfigListModule extends GenericGridModule {
 
@@ -134,6 +135,8 @@ export default class AlarmConfigListModule extends GenericGridModule {
 						if (alarmsConfigSelectedResponse != null) {
 
 							let alarmsConfigSelected = alarmsConfigSelectedResponse.json();
+							
+							self.dataTable.clear();
 
 							if (Array.isArray(alarmsConfigSelected) && alarmsConfigSelected.length > 0) {
 
@@ -150,10 +153,6 @@ export default class AlarmConfigListModule extends GenericGridModule {
 									});
 								}
 
-								$$("table-" + self.uid).show();
-								$$("no-data-" + self.uid).hide();
-
-								self.dataTable.clear();
 								self.dataTable.add(alarmConfigToTable);
 
 								if ($$("table-" + self.uid)) {
@@ -166,6 +165,9 @@ export default class AlarmConfigListModule extends GenericGridModule {
 									}
 								}
 							}
+							
+							$$("table-" + self.uid).show();
+							$$("no-data-" + self.uid).hide();
 						}
 					});
 				}

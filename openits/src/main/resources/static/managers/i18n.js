@@ -56,6 +56,20 @@ export default class I18n {
 		
 		return this.localeCode;
 	}
+	
+	isTranslatable(txt) {
+		
+		const regEx = /LBL_[a-zA-Z0-9_]*/gm;
+		let regExRes;
+		let labels = [];
+
+		while ((regExRes = regEx.exec(txt)) !== null) {
+
+			labels.push(regExRes[0]);
+		}
+		
+		return (Array.isArray(labels) && labels.length > 0);
+	}
 
 	t(txt, values) {
 
