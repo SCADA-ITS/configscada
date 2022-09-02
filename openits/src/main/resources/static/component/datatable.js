@@ -1,6 +1,7 @@
 import { util } from "../lib/util.js";
 import { adapter } from "../lib/adapter.js";
 import MessageBox from "./messageBox.js";
+import OptionDialogBox from "./optionDialogBox.js";
 
 const EMPTY_ICON = "./img/grid/empty.png"; 
 
@@ -332,7 +333,6 @@ export default class DataTable {
 								if (data[field.sourceField]) {
 									
 									if (field.gridFieldDataType.id === DataType.DATE.value) {
-	
 										
 										return data[field.sourceField].toLocaleString(i18n.getLocale(), FORMAT_STRING_DATES);
 	
@@ -348,8 +348,15 @@ export default class DataTable {
 	
 											return data[field.sourceField];
 										}
-									}
-									else {
+
+									} else if (field.replacementFunction) {
+
+										if (eval("util.datatable." + field.replacementFunction)) {
+
+											return eval("util.datatable." + field.replacementFunction)(data[field.sourceField]);
+										}
+
+									} else {
 
 										return (data[field.sourceField].value != undefined) ? data[field.sourceField].value : data[field.sourceField]; 	
 										
@@ -950,12 +957,9 @@ export default class DataTable {
 			}
 
 			if(resultPrintExport){
-				
-			toolbar.elements.push({ id: "tb_btn-print-" + this.uid, view: "icon", icon: "mdi mdi-printer", value: i18n.t("LBL_TABLE_PRINT"), tooltip: true });
-			toolbar.elements.push({ id: "tb_btn-export-pdf-" + this.uid, view: "icon", icon: "mdi mdi-file-pdf-box", value: i18n.t("LBL_TABLE_EXPORT_PDF"), tooltip: true });
-			toolbar.elements.push({ id: "tb_btn-export-xls-" + this.uid, view: "icon", icon: "mdi mdi-file-excel", value: i18n.t("LBL_TABLE_EXPORT_XLS"), tooltip: true });	
-			}
 			
+				toolbar.elements.push({ id: "tb_btn-export-" + this.uid, view: "icon", icon: "mdi mdi-file-export", value: i18n.t("LBL_TABLE_EXPORT"), tooltip: true });		
+			}			
 
 			if (resultSegmented) {
 
@@ -2027,9 +2031,7 @@ export default class DataTable {
 		this.select_all_callback();
 		//this.unselect_all_callback();
 		this.refresh_callback();
-		this.print_callback();
-		this.export_pdf_callback();
-		this.export_xls_callback();
+		this.exportCallback();
 		//this.change_view("hide");
 		this.main_toolbar_callback();
 		this.showMainToolbar();
@@ -2534,78 +2536,144 @@ export default class DataTable {
 			}, null, null, millis);
 		}
 	}
+	
+	exportCallback() {
 
-	print_callback() {
+		let self = this;
+		let exportButton = $$("tb_btn-export-" + self.uid);
+		let grid = $$("dt-" + self.uid);
+		let gridFields = self.metadata.gridFields;
 
-		let printButton = $$("tb_btn-print-" + this.uid);
-		let grid = $$("dt-" + this.uid);
+		const FORMAT = {
+			PDF: 1,
+			XLS: 2
+		};
 
-		if (!webix.isUndefined(grid) && !webix.isUndefined(printButton)) {
+		if (!webix.isUndefined(grid) && !webix.isUndefined(exportButton)) {
 
-			printButton.attachEvent("onItemClick", function(id, e) {
+			exportButton.attachEvent("onItemClick", function() {
 
-				let ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_NOT_IMPLEMENTED_DESCRIPTION"), null, null);
-				ms.show();
-				
-//				webix.alert({
-//					title: i18n.t("LBL_NOT_IMPLEMENTED"),
-//					text: i18n.t("LBL_NOT_IMPLEMENTED_DESCRIPTION"),
-//					type: "alert-error",
-//					width: 500
-//				});
-			});
-		}
-	}
+				let options = [
+					{
+						id: FORMAT.PDF,
+						label: i18n.t("LBL_TABLE_EXPORT_PDF"),
+						icon: "mdi mdi-file-pdf-box",
+						description: i18n.t("LBL_TABLE_EXPORT_PDF_DESCRIPTION"),
+					},
+					{
+						id: FORMAT.XLS,
+						label: i18n.t("LBL_TABLE_EXPORT_XLS"),
+						icon: "mdi mdi-file-excel",
+						description: i18n.t("LBL_TABLE_EXPORT_XLS_DESCRIPTION"),
+					}
+				];
 
-	export_pdf_callback() {
+				let optionDialogBox = new OptionDialogBox(i18n.t("LBL_SELECT_EXPORT_FORMAT"), options, selectOption, OptionDialogBox.MODE_TOGGLE);
+				optionDialogBox.show();
 
-		let metadata = this.metadata;
-		let pdfButton = $$("tb_btn-export-pdf-" + this.uid);
-		let grid = $$("dt-" + this.uid);
+				function selectOption(obj, callbackCloseDialog) {
 
-		if (!webix.isUndefined(grid) && !webix.isUndefined(pdfButton)) {
+					let columns = [];
+					let dataToPrint = [];
 
-			webix.extend(grid, webix.ProgressBar);
+					for (let gridField of gridFields) {
 
-			pdfButton.attachEvent("onItemClick", function(id, e) {
+						if (gridField.visible) {
 
-				grid.showProgress({
-					hide: true, type: "bottom"
-				});
+							columns.push({
+								id: gridField.sourceField,
+								header: (gridField.label) ? i18n.t(gridField.label) : "",
+								width: gridField.widthPx,
+								icons: gridField.gridFieldIcons,
+								replacementFunction: gridField.replacementFunction,
+								adjust: "data",
+								dataType: gridField.gridFieldDataType
+							});
+						}
+					}
 
-				webix.delay(function() {
+					grid.eachRow(function(row) {
 
-					webix.toPDF(grid, {
-						filename: i18n.t(metadata.label),
-						docHeader: i18n.t(metadata.label),
-						orientation: "landscape",
-						display: "image"
+						let dat = grid.getItem(row);
+						let newData = {};
+
+						for (let col of columns) {
+
+							let value = dat[col.id];
+
+							if (col.replacementFunction) {
+
+								if (eval("util.datatable." + col.replacementFunction)) {
+
+									value = eval("util.datatable." + col.replacementFunction)(dat[col.id]);
+								}
+
+							} else if (col.dataType && col.dataType.id === DataType.DATE.value && value != undefined && value != null) {
+
+								value = dat[col.id].toLocaleString(i18n.getLocale(), FORMAT_NUMERIC_DATES);
+							}
+
+							if (Array.isArray(col.icons) && col.icons.length > 0) {
+
+								let dataWithIcon = col.icons.find(e => e.value == value);
+
+								if (dataWithIcon) {
+
+									value = i18n.t(dataWithIcon.labelValue); //`<img class="table-field-icons" src="${dataWithIcon.icon}">`;
+								}
+							}
+
+							newData[col.id] = (value != undefined) ? value : "-";
+						}
+
+						dataToPrint.push(newData)
 					});
 
-					grid.hideProgress();
-				}, null, null, 1);
-			});
-		}
-	}
 
-	export_xls_callback() {
+					let tableToPrint = {
+						rows: [
+							{
+								id: "toolbar-print-" + self.uid,
+								view: "toolbar",
+								elements: [
+									{
+										id: "button-print-" + self.uid,
+										view: "button",
+										type: "icon",
+										icon: "mdi mdi-printer",
+										css: "grid-button-text",
+										width: 120,
+										label: i18n.t("LBL_TABLE_PRINT"),
+										on: {
+											onAfterRender: function() {
 
-		let xlsButton = $$("tb_btn-export-xls-" + this.uid);
-		let grid = $$("dt-" + this.uid);
+												if (obj == FORMAT.PDF) {
 
-		if (!webix.isUndefined(grid) && !webix.isUndefined(xlsButton)) {
+													webix.toPDF($$("dt-print-" + self.uid), { orientation: "landscape", autowidth: true });
 
-			xlsButton.attachEvent("onItemClick", function(id, e) {
+												} else if (obj == FORMAT.XLS) {
 
-				let ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_NOT_IMPLEMENTED_DESCRIPTION"), null, null);
-				ms.show();
-				
-//				webix.alert({
-//					title: i18n.t("LBL_NOT_IMPLEMENTED"),
-//					text: i18n.t("LBL_NOT_IMPLEMENTED_DESCRIPTION"),
-//					type: "alert-error",
-//					width: 500
-//				});
+													webix.toExcel($$("dt-print-" + self.uid), { orientation: "landscape", autowidth: true });
+												}
+
+												this.getTopParentView().close();
+												callbackCloseDialog(true);
+											}
+										}
+									}
+								]
+							},
+							{
+								view: "datatable",
+								id: "dt-print-" + self.uid,
+								columns: columns,
+								data: dataToPrint
+							}
+						]
+					};
+
+					util.ui.loadWindow("Título", tableToPrint, 1, 1, true);
+				}
 			});
 		}
 	}

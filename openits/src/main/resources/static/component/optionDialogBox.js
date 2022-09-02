@@ -131,9 +131,7 @@ export default class OptionDialogBox {
 
 												} else {
 
-													let res = self.onChange(selectionId, function(close) {
-
-														console.log(res)
+													self.onChange(selectionId, function(close) {
 
 														if (close === undefined || close === true) {
 															$$(self.optionWindow).close();
