@@ -76,6 +76,22 @@ public class ElementBO extends GenericBO {
 
 		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_HIERARCHIES, elements);
 	}
+	
+	public List<Map<String, Object>> getElementTrees(String userId) {
+
+		List<Map<String, Object>> elements = voDataSourceAdapter
+				.getList(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENT_TREES_BY_USER, new Object[] { userId });
+
+		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENT_TREES_BY_USER, elements);
+	}
+	
+	public Map<String, Object> getElementTree(String id) {
+
+		Map<String, Object> element = voDataSourceAdapter
+				.get(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENT_TREE, new Object[] { id });
+
+		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENT_TREE, element);
+	}
 
 	@SuppressWarnings("unchecked")
 	public Map<String, Object> createElement(Object input) {

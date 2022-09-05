@@ -125,6 +125,32 @@ public class ElementController {
 		return new ResponseEntity<>(elementBO.getHierarchies(), HttpStatus.OK);
 	}
 	
+	@GetMapping(value = "/trees/{userId}")
+	@ApiOperation(value = "Get element trees by user id", notes = "Get element trees by user id")
+	public ResponseEntity<Object> getElementTrees(
+			@ApiParam(
+			name = "userId",
+			type = "String",
+			value = "User id",
+			example = "User:1",
+			required = true) @PathVariable String userId) {
+		
+		return new ResponseEntity<>(elementBO.getElementTrees(userId), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/tree/{id}")
+	@ApiOperation(value = "Get element tree by id", notes = "Get element tree by id")
+	public ResponseEntity<Object> getElementTree(
+			@ApiParam(
+			name = "id",
+			type = "String",
+			value = "id",
+			example = "ElementTree:1",
+			required = true) @PathVariable String id) {
+		
+		return new ResponseEntity<>(elementBO.getElementTree(id), HttpStatus.OK);
+	}
+	
 	@PostMapping(value = "/createElement")
 	@ApiOperation(value = "Create Element", notes = "Create Element")
 	public ResponseEntity<Object> createElement(@RequestBody Object element) {

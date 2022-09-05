@@ -240,6 +240,9 @@ public class VODataSourceAdapter {
 	
 	public static final int DATA_SOURCE_GET_SYSTEM_PARAMS = getPropertyInt("get_system_params");
 	public static final int DATA_SOURCE_GET_HIERARCHIES = getPropertyInt("get_hierarchies");
+	
+	public static final int DATA_SOURCE_GET_ELEMENT_TREES_BY_USER = getPropertyInt("get_element_trees_by_user");
+	public static final int DATA_SOURCE_GET_ELEMENT_TREE = getPropertyInt("get_element_tree");
 
 	public static final int DATA_SOURCE_SEND_EXECUTE_PLAN = getPropertyInt("send_execute_plan");
 
