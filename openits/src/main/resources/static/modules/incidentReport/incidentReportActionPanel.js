@@ -88,7 +88,8 @@ export default class IncidentReportActionPanel {
 												
 												disabled |= !sameUser;
 												disabled |= (self.incidentReport.sequenceOfStates.findIndex(e => e.state.id === self.incidentReport.incidentState.id) === 0);
-												
+												disabled |= self.closed; 
+		
 												return disabled;
 											})(),
 											hidden: !self.incidentReport.confirm,
