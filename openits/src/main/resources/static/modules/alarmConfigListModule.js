@@ -202,7 +202,7 @@ export default class AlarmConfigListModule extends GenericGridModule {
 
 				let metadata = {
 					filter: true,
-					label: "LBL_INCIDENT_REPORT_ALARMS",
+					label: "LBL_ALARMS",
 					visible: true,
 					gridOptionValues: defaultGridOptionValues,
 					gridFields: [

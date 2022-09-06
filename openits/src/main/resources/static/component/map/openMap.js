@@ -350,7 +350,7 @@ export default class OpenMap extends GenericMap {
 				
 					let coor = ol.proj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326');
 	
-					console.log("(LON, LAT) => " + coor.join());
+					log.debug("USER CLIC (LON,LAT) => " + coor.join());
 		
 					evt.preventDefault();
 				});	
@@ -426,7 +426,7 @@ export default class OpenMap extends GenericMap {
 			self.mouseOverSvg = false;
 			
 			if (self.currentZoomLevel != Math.round(newZoom)) {
-				console.log('zoom end, new zoom: ' + newZoom);
+				log.debug('zoom end, new zoom: ' + newZoom);
 				self.currentZoomLevel = Math.round(newZoom);
 				
 				refreshVisibleGraphicIcons();
@@ -616,30 +616,54 @@ export default class OpenMap extends GenericMap {
 					obj: s
 				};
 				
-				if (layerElementZoom) {
+				let element = self.data.find(e => e.id === layerElem.elementId);
+				
+				if (element) {
 					
-					layerElem.layerElementZoom = layerElementZoom;
+					if (element.location && element.location.lat && element.location.lon) {
+						
+						if (layerElem.latitude && layerElem.longitude && (layerElem.latitude != element.location.lat || layerElem.longitude != element.location.lon)) {
+							
+							layerElem.latitude2 = layerElem.latitude;
+							layerElem.longitude2 = layerElem.longitude;
+						}
+						
+						layerElem.latitude = element.location.lat;
+						layerElem.longitude = element.location.lon;
+					}
 					
-					layerElem.graphicIcon = layerElementZoom.graphicIcon;
-					layerElem.longitude = layerElementZoom.longitude;
-					layerElem.latitude = layerElementZoom.latitude;
-					layerElem.longitude2 = layerElementZoom.longitude2;
-					layerElem.latitude2 = layerElementZoom.latitude2;
-					layerElem.horizontalFlip = layerElementZoom.horizontalFlip;
-					layerElem.rotate = layerElementZoom.rotate;
-					layerElem.tooltip = layerElementZoom.tooltip;
-					layerElem.showText = layerElementZoom.showText;
-					layerElem.textColor = layerElementZoom.textColor;
+					if (layerElem.longitude && layerElem.latitude) {
+						
+						if (layerElementZoom) {
+					
+							layerElem.layerElementZoom = layerElementZoom;
+							
+							layerElem.graphicIcon = layerElementZoom.graphicIcon;
+							//layerElem.longitude = layerElementZoom.longitude;
+							//layerElem.latitude = layerElementZoom.latitude;
+							layerElem.longitude2 = layerElementZoom.longitude;
+							layerElem.latitude2 = layerElementZoom.latitude;
+							layerElem.horizontalFlip = layerElementZoom.horizontalFlip;
+							layerElem.rotate = layerElementZoom.rotate;
+							layerElem.tooltip = layerElementZoom.tooltip;
+							layerElem.showText = layerElementZoom.showText;
+							layerElem.textColor = layerElementZoom.textColor;
+						}
+														
+						createGraphicIcon(layerElem,
+										element,
+										container,
+										function(graphicIconInstance) {
+					
+											onLoadGraphicIcon(layerElem, graphicIconInstance);
+										}
+						);	
+					}
+					else {
+						
+						log.warn(element.alias + " without coordinates");
+					}
 				}
-												
-				createGraphicIcon(layerElem,
-								self.data.find(element => element.id === layerElem.elementId),
-								container,
-								function(graphicIconInstance) {
-			
-									onLoadGraphicIcon(layerElem, graphicIconInstance);
-								}
-				);
 				
 				function createSvgIcon() {
 					
@@ -778,7 +802,7 @@ export default class OpenMap extends GenericMap {
 						}
 						catch (error) {
 							
-							console.log(error);
+							log.error(error);
 						}
 					});
 				}
@@ -1118,7 +1142,7 @@ export default class OpenMap extends GenericMap {
 			}
 			catch (error) {
 				
-				console.log(error);
+				log.error(error);
 			}
 			
 			function onDblClic() {
