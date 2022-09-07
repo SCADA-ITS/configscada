@@ -146,12 +146,12 @@ export default class PasSignalingContent {
 						updateChild(element);
 					});
 
-					if ($$("dt-" + self.groupsDataTable.uid)) {
+					if (self.groupsDataTable && $$("dt-" + self.groupsDataTable.uid)) {
 						
 						$$("dt-" + self.groupsDataTable.uid).refresh();	
 					}
 					
-					if ($$("dt-" + self.zonesDataTable.uid)) {
+					if (self.zonesDataTable && $$("dt-" + self.zonesDataTable.uid)) {
 						
 						$$("dt-" + self.zonesDataTable.uid).refresh();	
 					}

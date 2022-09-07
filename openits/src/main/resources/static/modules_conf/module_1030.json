@@ -20,7 +20,7 @@
 	"topics": {
 		"pas" : "/topic/element.ElementType:5",
 		"zones" : "/topic/element.ElementType:16.>",
-		"zones" : "/topic/element.ElementType:96.>"
+		"groups" : "/topic/element.ElementType:96.>"
 	},
 	"adapters": {
 		"element": "ws.element.update"
