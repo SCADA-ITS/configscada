@@ -146,8 +146,15 @@ export default class PasSignalingContent {
 						updateChild(element);
 					});
 
-					$$("dt-" + self.groupsDataTable.uid).refresh();
-					$$("dt-" + self.zonesDataTable.uid).refresh();
+					if ($$("dt-" + self.groupsDataTable.uid)) {
+						
+						$$("dt-" + self.groupsDataTable.uid).refresh();	
+					}
+					
+					if ($$("dt-" + self.zonesDataTable.uid)) {
+						
+						$$("dt-" + self.zonesDataTable.uid).refresh();	
+					}
 				}
 
 				connectWS();

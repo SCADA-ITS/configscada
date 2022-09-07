@@ -864,37 +864,32 @@ export default class IncidentReportActionPanel {
 				}
 			}
 		}
-
-
+	
 		function showOperationalPlan() {
-			let h = document.documentElement.clientHeight - 200;
-			let w = document.documentElement.clientWidth - 500;
+			
+			let h = document.documentElement.clientHeight - 50;
+			let w = document.documentElement.clientWidth - 50;
+			
 			const img = new Image();
 
 			img.onload = function() {
 
-				h = this.height + 50;
-				w = this.width;
-
-				let body = {
-					rows: [
-						{
-							template: function() {
-
-								return `<div><img style="max-width:100%;width:auto;height:auto;" src="${img.src}"></div> `
-							}
-						}
-					]
-				};
-
-				util.ui.loadWindow(
-					i18n.t("LBL_OPERATION_PLAN"),
-					body,
-					h,
-					w
-				);
+				h = this.height + 50  < h ? this.height + 50 : h;
+				w = this.width < w ? this.width : w;
+			
+				let operationalPlanWindow = window.open("", "operationalPlanWindow", "location=no, directories=no, fullscreen=no, " +
+			    												 "menubar=no, status=no, toolbar=no, width=" + 
+			        											 w + ", height=" + h + ", scrollbars=no");
+			        											 
+				operationalPlanWindow.document.writeln(`<html>
+			    											<body style='margin: 0 0 0 0;'>
+		    													<img src='${img.src}'/>;
+			    											</body>
+			    										</html>`);
+			    										
+			    operationalPlanWindow.document.title = i18n.t("LBL_OPERATION_PLAN");
 			};
-
+	
 			img.src = self.incidentReport.operationalPlanUrl;
 		}
 
