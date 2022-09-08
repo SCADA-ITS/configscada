@@ -326,27 +326,31 @@ export default class AlarmService extends GenericService {
 		
 		function createNotification(alarm) {
 			
+			let notification = undefined;
 			let timeService = window.sm.getService(Services.TIME_SERVICE);
 			let element = window.em.getByField(EntityType.ELEMENT, "id", alarm.targetElement.id);
 			let alarmConfig = window.em.getByField(EntityType.ALARM_CONFIG, "id", alarm.alarmConfig.id);
 			
-			//let date = alarm.deactivation ? alarm.deactivation / 1000 : alarm.activation / 1000;
-					
-			return {
-				id: webix.uid(),
-				notificationId: alarm.id,
-				level: alarmConfig.alarmLevel.alias.replace("LEVEL_", ""),
-				notification: alarmConfig.alarmLevel.notification,
-				color: alarmConfig.alarmLevel.color ? alarmConfig.alarmLevel.color : "rgb(230, 0, 0)",
-				sound: alarmConfig.alarmLevel.sound ? alarmConfig.alarmLevel.sound : undefined, 
-				img: element.elementType.elementTypePhoto ? "img/" + element.elementType.elementTypePhoto : undefined,
-				recognized: alarm.recognized,
-				created: alarm.activation,
-				updated: timeService.getEpoch(),
-				removed: alarm.deactivation,
-				alias: i18n.t(alarmConfig.labelAlias),
-				description: element.alias
-			};
+			if (timeService && element && alarmConfig) {
+
+				notification = {
+					id: webix.uid(),
+					notificationId: alarm.id,
+					level: alarmConfig.alarmLevel.alias.replace("LEVEL_", ""),
+					notification: alarmConfig.alarmLevel.notification,
+					color: alarmConfig.alarmLevel.color ? alarmConfig.alarmLevel.color : "rgb(230, 0, 0)",
+					sound: alarmConfig.alarmLevel.sound ? alarmConfig.alarmLevel.sound : undefined, 
+					img: element.elementType.elementTypePhoto ? "img/" + element.elementType.elementTypePhoto : undefined,
+					recognized: alarm.recognized,
+					created: alarm.activation,
+					updated: timeService.getEpoch(),
+					removed: alarm.deactivation,
+					alias: i18n.t(alarmConfig.labelAlias),
+					description: element.alias
+				};
+			}
+			
+			return notification;
 		}
 		
 		function loadAlarms() {
