@@ -15,6 +15,7 @@
 		"locationsByStretch": "locations/locations/stretch/${id}",
 		"stretchsByIncidentType": "locations/stretchs/incidentType/${id}",
 		"incidentTypesByStretch": "incidents/stretch/${id}",
+		"incidentTypeStretchs": "incidents/incidentTypeStretchs/${incidentTypeId}/${stretchId}",
 		"incidentTypes": "incidents/imsIncidentTypes",
 		"locationsStretchs": "locations/stretchs",
 		"elementsStretchs": "elements/byStretchs",
@@ -33,7 +34,7 @@
 		"addLogIncidentReport": "incidents/add_log_incident_report",
 		"deleteLogIncidentReport": "incidents/delete_log_incident_report/${id}",
 		"assignCauseIncidentReport": "incidents/reports/${id}/cause/${causeId}",
-		"changeIncident": "incidents/reports/${id}/location/${locationId}/affection_stretch/${stretchId}/type/${incidentTypeId}",
+		"changeIncident": "incidents/reports/${id}/location/${locationId}/affection_stretch/${stretchId}/type/${incidentTypeId}/road_impact/${roadImpactId}",
 		"executeTaskPlan": "/incidents/reports/${id}/execute_task_plan/${taskPlanId}",
 		"changeRoadImpactIncidentReport": "incidents/reports/${id}/road_impact/${roadImpactId}"
 	},

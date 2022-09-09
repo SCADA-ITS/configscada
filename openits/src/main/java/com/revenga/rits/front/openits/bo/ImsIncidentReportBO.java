@@ -74,6 +74,7 @@ public class ImsIncidentReportBO extends GenericBO {
 	static final String FIELD_INCIDENT_TASK_PLAN_ID = "incidentTaskPlanId";
 	static final String FIELD_INCIDENT_TYPE = "incidentType";
 	static final String FIELD_INCIDENT_TYPE_ID = "incidentTypeId";
+	static final String FIELD_ROAD_IMPACT_ID = "roadImpactId";
 
 	static final String FIELD_SEQUENCE_OF_STATES = "sequenceOfStates";
 	static final String FIELD_STATE = "state";
@@ -1050,7 +1051,7 @@ public class ImsIncidentReportBO extends GenericBO {
 		return res;
 	}
 
-	public Object changeIncidentReport(String id, String locationId, String stretchId, String incidentTypeId) {
+	public Object changeIncidentReport(String id, String locationId, String stretchId, String incidentTypeId, String roadImpactId) {
 
 		Boolean res = false;
 
@@ -1060,6 +1061,7 @@ public class ImsIncidentReportBO extends GenericBO {
 		input.put(FIELD_LOCATION_ID, locationId);
 		input.put(FIELD_AFFECTION_STRETCH_ID, stretchId);
 		input.put(FIELD_INCIDENT_TYPE_ID, incidentTypeId);
+		input.put(FIELD_ROAD_IMPACT_ID, roadImpactId);
 
 		Map<String, Object> incidentReport = voDataSourceAdapter
 				.put(VODataSourceAdapter.DATA_SOURCE_SEND_CHANGE_INCIDENT_REPORT, input);

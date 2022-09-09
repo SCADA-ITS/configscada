@@ -211,7 +211,7 @@ public class ImsIncidentController {
 		return new ResponseEntity<>(imsIncidentReportBO.executeTaskPlan(id, taskPlanId), HttpStatus.OK);
 	}
 
-	@PostMapping(value = "/reports/{id}/location/{locationId}/affection_stretch/{stretchId}/type/{incidentTypeId}")
+	@PostMapping(value = "/reports/{id}/location/{locationId}/affection_stretch/{stretchId}/type/{incidentTypeId}/road_impact/{roadImpactId}")
 	@ApiOperation(value = "Change location Incident Report", notes = "Change location in Incident Report")
 	public ResponseEntity<Object> changeIncidentReport(
 			@ApiParam(
@@ -237,9 +237,15 @@ public class ImsIncidentController {
 					type = "String",
 					value = "",
 					example = "ImsIncidentType:1",
-					required = true) @PathVariable String incidentTypeId){
+					required = true) @PathVariable String incidentTypeId,
+			@ApiParam(
+					name = "incidentTypeId",
+					type = "String",
+					value = "",
+					example = "RoadImpact:1",
+					required = true) @PathVariable String roadImpactId){
 		
-		return new ResponseEntity<>(imsIncidentReportBO.changeIncidentReport(id, locationId, stretchId, incidentTypeId), HttpStatus.OK);
+		return new ResponseEntity<>(imsIncidentReportBO.changeIncidentReport(id, locationId, stretchId, incidentTypeId, roadImpactId), HttpStatus.OK);
 	}
 
 	@GetMapping(value = "/incidentStates")

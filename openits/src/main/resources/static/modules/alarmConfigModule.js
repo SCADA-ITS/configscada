@@ -3,7 +3,6 @@ import GenericModule from "./genericModule.js";
 import DataTable from "../component/datatable.js";
 import InputDialogBox from "../component/inputDialogBox.js";
 import MessageBox from "../component/messageBox.js";
-import SearchDialogBox from "../component/searchDialogBox.js";
 
 const NO_VALUE = -1;
 
@@ -601,7 +600,8 @@ export default class AlarmConfigModule extends GenericModule {
 
 						let paramWindowBody;
 						let newThreshold = measures ? false : true;
-						let labelAlias = (alarmConfigData && alarmConfigData.elementType.labelAlias) ? i18n.t(alarmConfigData.elementType.labelAlias) : i18n.t("LBL_NEW_THRESHOLD");
+						//let labelAlias = (alarmConfigData && alarmConfigData.elementType.labelAlias) ? i18n.t(alarmConfigData.elementType.labelAlias) : i18n.t("LBL_NEW_THRESHOLD");
+						let windowTitle = (alarmConfigData && alarmConfigData.elementType.labelAlias) ? i18n.t("LBL_EDIT_THRESHOLD") : i18n.t("LBL_NEW_THRESHOLD");
 
 						paramWindowBody = {
 							cols: [
@@ -614,11 +614,13 @@ export default class AlarmConfigModule extends GenericModule {
 											elementsConfig: { labelAlign: "left" },
 											css: "global-form condition-dialog-box",
 											elements: [
-												{ view: "template", template: labelAlias, type: "section" },
+												//{ view: "template", template: labelAlias, type: "section" },
+												{ height: 20 },
 												getElementTypeParamRow(),
 												getThresholdOperationRow(),
 												getThresholdVal1Row(),
-												getThresholdVal2Row()
+												getThresholdVal2Row(),
+												{ height: 20 }
 											]
 										},
 										getToolbarActions()
@@ -628,7 +630,7 @@ export default class AlarmConfigModule extends GenericModule {
 							]
 						};
 
-						self.paramWindow = util.ui.loadWindow(i18n.t("LBL_ALARM_CONFIG_THRESHOLDS"), paramWindowBody, 360, 755, true);
+						self.paramWindow = util.ui.loadWindow(windowTitle, paramWindowBody, 360, 755, true);
 
 						function getElementTypeParamRow() {
 
@@ -682,16 +684,19 @@ export default class AlarmConfigModule extends GenericModule {
 
 							elementTypeParamRow = {
 								cols: [
-									{
-										view: "label",
-										label: i18n.t("LBL_ALARM_CONFIG_THRESHOLD"),
-										width: 326,
-										css: "parameter-window"
-									},
+//									{
+//										view: "label",
+//										label: i18n.t("LBL_ALARM_CONFIG_THRESHOLD"),
+//										width: 326,
+//										css: "parameter-window"
+//									},
 									{
 										id: "change-condition-element-type-param-row-" + self.uid,
-										width: 290,
 										view: "richselect",
+										label: i18n.t("LBL_PARAM"),
+										labelWidth: 326,
+										required: true,
+										width: 616,
 										value: measures ? { id: measures.elementTypeParam.id, value: measures.parameter } : "",
 										disabled: (measures ? true : false) || (paramOptions.length === 0),
 										options: paramOptions,
@@ -761,15 +766,18 @@ export default class AlarmConfigModule extends GenericModule {
 
 							thresholdOperationRow = {
 								cols: [
-									{
-										view: "label",
-										label: i18n.t("LBL_THRESHOLD_OPERATION"),
-										width: 326,
-										css: "parameter-window"
-									},
+//									{
+//										view: "label",
+//										label: i18n.t("LBL_THRESHOLD_OPERATION"),
+//										width: 326,
+//										css: "parameter-window"
+//									},
 									{
 										id: "change-condition-threshold-operation-row-" + self.uid,
-										width: 290,
+										label: i18n.t("LBL_THRESHOLD_OPERATION"),
+										labelWidth: 326,
+										required: true,
+										width: 616,
 										view: "richselect",
 										value: measures ? measures.operation : "",
 										options: operationOptions,
@@ -931,9 +939,9 @@ export default class AlarmConfigModule extends GenericModule {
 														let paramValue = $$("change-condition-element-type-param-row-" + self.uid).getValue();
 														let operation = $$("change-condition-threshold-operation-row-" + self.uid).getValue();
 
-														if (paramValue != "" && val1 != "" && operation != "") {
+														if (paramValue != "" && operation != "") {
 
-
+															val1 = (val1 === undefined) ? "" : val1;
 															let val2 = $$("value2" + self.uid).getValue();
 															let threshold = undefined;
 															let parameter = undefined;
@@ -1182,6 +1190,7 @@ export default class AlarmConfigModule extends GenericModule {
 														alarmConfig: {
 															id: alarmConfigData.id,
 															labelAlias: !i18n.isTranslatable(formValues.labelAlias) ? formValues.labelAlias : undefined,
+															elementTypeId: formValues.elementTypeId,
 															alarmTypeId: self.config.defaultAlarmType,
 															alarmLevelId: formValues.alarmLevelId,
 															mine: alarmConfigData.mine,

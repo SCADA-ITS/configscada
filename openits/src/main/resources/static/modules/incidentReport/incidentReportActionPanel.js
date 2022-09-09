@@ -1043,6 +1043,25 @@ export default class IncidentReportActionPanel {
 			}
 		}
 
+		function acceptChangeIncident(selectedIncidentTypeId, selectedStretchId, selectedLocationId, selectedRoadImpactId) {
+				
+			(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_CHANGE_CONFIRM_DESCRIPTION"), onAccept, null)).show();
+
+			function onAccept(res) {
+
+				let body = {
+					id: self.incidentReport.id,
+					incidentTypeId: selectedIncidentTypeId,
+					stretchId: selectedStretchId,
+					locationId: selectedLocationId,
+					roadImpactId: selectedRoadImpactId
+				};
+
+				let endpoint = util.fillTemplate(self.config.actionEndpoints.changeIncident, body);
+
+				webix.ajax().post(appConfig.restUrl + endpoint).then(undefined, function(response) { util.ajax.handleError(response); });
+			}
+		}
 
 		function changeIncident() {
 
@@ -1053,25 +1072,66 @@ export default class IncidentReportActionPanel {
 
 				let changeLocation = new IncidentReportChangeLocation(self.config, self.incidentReport, selectedIncidentTypeId, onAcceptChangeLocation);
 				changeLocation.show();
-
+				
 				function onAcceptChangeLocation(selectedStretchId, selectedLocationId) {
+					
+					let selectedRoadImpactId = undefined;
+					
+					webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.incidentTypeStretchs, { incidentTypeId: selectedIncidentTypeId, stretchId: selectedStretchId })).then(
 
-					let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_CHANGE_CONFIRM_DESCRIPTION"), onAccept, null);
-					ms.show();
+						function(responseIncidentTypeStretchs) {
+	
+							if (responseIncidentTypeStretchs != null) {
+	
+								let incidentTypeStretch = responseIncidentTypeStretchs.json();
+	
+								if (incidentTypeStretch && Array.isArray(incidentTypeStretch.roadImpacts) && incidentTypeStretch.roadImpacts.length > 0) {
+									
+									let dialogRoadImpacts = webix.copy(SearchDialogBox.CUSTOM);
+									let label = i18n.t("LBL_ROAD_IMPACTS");
 
-					function onAccept(res) {
+									dialogRoadImpacts.data = [];
 
-						let body = {
-							id: self.incidentReport.id,
-							locationId: selectedLocationId,
-							stretchId: selectedStretchId,
-							incidentTypeId: selectedIncidentTypeId
-						};
-
-						let endpoint = util.fillTemplate(self.config.actionEndpoints.changeIncident, body);
-
-						webix.ajax().post(appConfig.restUrl + endpoint).then(undefined, function(response) { util.ajax.handleError(response); });
-					};
+									dialogRoadImpacts.pkField = "id"
+									dialogRoadImpacts.showEmptyRowCol = SearchDialogBox.ID_NOT_SELECTED;
+									dialogRoadImpacts.fields = ["alias=LBL_ALIAS", "description=LBL_DESCRIPTION"];
+									dialogRoadImpacts.sortFieldId = 1;
+	
+									incidentTypeStretch.roadImpacts.sort((a, b) => (a.alias > b.alias) ? 1 : ((b.alias > a.alias) ? -1 : 0));
+	
+									incidentTypeStretch.roadImpacts.forEach(p => {
+	
+										dialogRoadImpacts.data.push({
+											id: p.id,
+											alias: p.alias,
+											description: p.description
+										})
+									});
+	
+									let s = new SearchDialogBox(label, dialogRoadImpacts, function(items) {
+	
+										if (Array.isArray(items) && items.length === 1) {
+	
+											let roadImpact = items[0];
+	
+											if (roadImpact.id !== SearchDialogBox.ID_NOT_SELECTED) {
+	
+												selectedRoadImpactId = roadImpact.id;
+											}
+											
+											acceptChangeIncident(selectedIncidentTypeId, selectedStretchId, selectedLocationId, selectedRoadImpactId);
+										}
+									});
+									
+									s.show();
+									
+								} else {
+									
+									acceptChangeIncident(selectedIncidentTypeId, selectedStretchId, selectedLocationId);
+								}
+							}
+						}
+					);				
 				}
 			}
 		}
