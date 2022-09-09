@@ -285,16 +285,16 @@ export default class Notification {
 						on: {
 							onItemClick() {
 
-								let incidentIds = getSelectedItems().map(e => { return e.notificationId });
+								let incidents = getSelectedItems().map(e => { return { id: e.notificationId, currentUserId: e.userId }});
 
-								if (Array.isArray(incidentIds) && incidentIds.length > 0) {
+								if (Array.isArray(incidents) && incidents.length > 0) {
 
 									let moduleActionId = self.config.confirmIncidents;
 									let module = util.module.getFromModuleAction(moduleActionId);
 
 									if (module) {
 
-										let args = { selectedPks: incidentIds };
+										let args = { selectedRows: incidents };
 										let moduleAction = { id: moduleActionId };
 
 										util.module.open(module, moduleAction, VIEW_TYPE_WINDOW, null, args);
