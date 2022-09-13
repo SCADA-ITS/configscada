@@ -94,7 +94,7 @@ export default class AlarmConfigListModule extends GenericGridModule {
 					{ view: "resizer" },
 					{
 						id: "table-" + self.uid,
-						rows: getTable(),
+						rows: getTable()
 					},
 					{
 						id: "no-data-" + self.uid,
@@ -149,7 +149,10 @@ export default class AlarmConfigListModule extends GenericGridModule {
 										labelAlias: (alarmConfigSelected.labelAlias) ? i18n.t(alarmConfigSelected.labelAlias) : alarmConfigSelected.alias,
 										alarmLevelLabelAlias: i18n.t(alarmConfigSelected.alarmLevel.labelAlias),
 										measures: (alarmConfigSelected.alarmConfigMeasures && alarmConfigSelected.alarmConfigMeasures[0].alarmMeasureOperation) ? true : false,
-										alarmLevelId: alarmConfigSelected.alarmLevel.id
+										alarmLevelId: alarmConfigSelected.alarmLevel.id,
+										elementSubtype: (alarmConfigSelected.elementSubtype && alarmConfigSelected.elementSubtype.labelAlias) ? i18n.t(alarmConfigSelected.elementSubtype.labelAlias) : "",
+										elementSubtypeId: (alarmConfigSelected.elementSubtype && alarmConfigSelected.elementSubtype.id) ? i18n.t(alarmConfigSelected.elementSubtype.id) : ""
+										
 									});
 								}
 
@@ -339,6 +342,29 @@ export default class AlarmConfigListModule extends GenericGridModule {
 							}
 						},
 						{
+							id: 7,
+							enabled: true,
+							extended: false,
+							filtered: true,
+							groupingSummary: false,
+							isEpochMilli: false,
+							isPk: false,
+							label: "LBL_ELEMENT_SUBTYPE",
+							labelTooltip: "LBL_ELEMENT_SUBTYPE",
+							needsTranslation: true,
+							parameterized: true,
+							position: 4,
+							required: true,
+							sourceField: "elementSubtype",
+							visible: true,
+							widthPx: 500,
+							gridFieldDataType: {
+								id: 1,
+								description: "string",
+								name: "string"
+							}
+						},
+						{
 							id: 5,
 							enabled: true,
 							extended: false,
@@ -350,7 +376,7 @@ export default class AlarmConfigListModule extends GenericGridModule {
 							labelTooltip: "LBL_ALARM_CONFIG_THRESHOLDS",
 							needsTranslation: false,
 							parameterized: false,
-							position: 4,
+							position: 5,
 							required: true,
 							sourceField: "measures",
 							visible: true,
@@ -387,7 +413,7 @@ export default class AlarmConfigListModule extends GenericGridModule {
 							labelTooltip: "LBL_ALARM_LEVEL_LABEL_ALIAS",
 							needsTranslation: true,
 							parameterized: true,
-							position: 5,
+							position: 6,
 							required: true,
 							sourceField: "alarmLevelLabelAlias",
 							visible: true,
@@ -483,7 +509,9 @@ export default class AlarmConfigListModule extends GenericGridModule {
 											labelAlias: (alarmConfigToUpdate.labelAlias) ? i18n.t(alarmConfigToUpdate.labelAlias) : alarmConfigToUpdate.alias,
 											alarmLevelLabelAlias: i18n.t(alarmConfigToUpdate.alarmLevel.labelAlias),
 											measures: (alarmConfigToUpdate.alarmConfigMeasures && alarmConfigToUpdate.alarmConfigMeasures[0].alarmMeasureOperation) ? true : false,
-											alarmLevelId: alarmConfigToUpdate.alarmLevel.id
+											alarmLevelId: alarmConfigToUpdate.alarmLevel.id,
+											elementSubtype: (alarmConfigToUpdate.elementSubtype && alarmConfigToUpdate.elementSubtype.labelAlias) ? i18n.t(alarmConfigToUpdate.elementSubtype.labelAlias) : "",
+											elementSubtypeId: (alarmConfigToUpdate.elementSubtype && alarmConfigToUpdate.elementSubtype.id) ? i18n.t(alarmConfigToUpdate.elementSubtype.id) : ""
 										});
 									}
 
@@ -561,7 +589,6 @@ export default class AlarmConfigListModule extends GenericGridModule {
 
 				let data = [];
 				
-
 				self.dataTable = new DataTable(DATA_GRID_ID, null, metadata, data, events);
 
 				return self.dataTable.getView();

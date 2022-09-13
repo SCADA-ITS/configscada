@@ -56,8 +56,10 @@ export default class AlarmConfigModule extends GenericModule {
 		let self = this;
 		let alarmConfigData;
 		let alarmConfigStatesByElementType;
+		let elementType;
 		let alarmLevelOptionsArr = [];
 		let elementTypeStateOptionsArr = [];
+		let elementSubtypesArr = [];
 		let alarmConfigs = window.em.getAll(EntityType.ALARM_CONFIG);
 		let alarmConfigsByElementTypeWithState = [];
 		let usedStatesList = [];
@@ -76,6 +78,7 @@ export default class AlarmConfigModule extends GenericModule {
 
 							alarmConfigsByElementTypeWithState = alarmConfigs.filter(alarmConf => (alarmConf.elementType.id === alarmConfigData.elementType.id) && (Array.isArray(alarmConf.alarmConfigStates) && alarmConf.alarmConfigStates.length > 0));
 							alarmConfigStatesByElementType = elementTypeStatesResponse.json();
+							elementType = window.em.getByField(EntityType.ELEMENT_TYPE, "id", alarmConfigData.elementType.id);
 
 							alarmConfigsByElementTypeWithState.forEach(aConfig => {
 
@@ -112,6 +115,7 @@ export default class AlarmConfigModule extends GenericModule {
 
 			alarmConfigsByElementTypeWithState = alarmConfigs.filter(alarmConf => (alarmConf.elementType.id === self.args.elementType.id) && (Array.isArray(alarmConf.alarmConfigStates) && alarmConf.alarmConfigStates.length > 0));
 			alarmConfigStatesByElementType = self.args.elementType.elementTypeStates;
+			elementType = window.em.getByField(EntityType.ELEMENT_TYPE, "id", self.args.elementType.id);
 
 			alarmConfigsByElementTypeWithState.forEach(aConfig => {
 
@@ -263,6 +267,17 @@ export default class AlarmConfigModule extends GenericModule {
 					});
 
 					elementTypeStateOptionsArr.sort((a, b) => (a.value > b.value) ? 1 : ((b.value > a.value) ? -1 : 0));
+					
+					if(Array.isArray(elementType.elementSubtypes) && elementType.elementSubtypes.length >0){
+						
+						elementSubtypesArr = elementType.elementSubtypes.map(e => {
+							
+							return {
+								id: e.id,
+								value: i18n.t(e.labelAlias)
+							}
+						});
+					}
 
 					let form;
 					
@@ -281,6 +296,16 @@ export default class AlarmConfigModule extends GenericModule {
 											{ view: "text", id: "label_alias-" + self.uid, name: "labelAlias", required: true, label: i18n.t("LBL_ALIAS"), labelWidth: 275 },
 											{ view: "text", id: "element_type_id-" + self.uid, name: "elementTypeId", hidden: true },
 											{ view: "text", id: "element_type-" + self.uid, name: "elementTypeLabelAlias", required: true, label: i18n.t("LBL_ELEMENT_TYPE"), labelWidth: 275, disabled: true },
+											{
+												view: "richselect",
+												id: "element_type_subtype-" + self.uid,
+												name: "elementSubtypeId",
+												label: i18n.t("LBL_ELEMENT_SUBTYPE"),
+												labelWidth: 275,
+												options: elementSubtypesArr,
+												hidden: (Array.isArray(elementType.elementSubtypes) && elementType.elementSubtypes.length >0) ? false : true,
+												required: false
+											},
 											{
 												cols: [
 													{
@@ -330,14 +355,6 @@ export default class AlarmConfigModule extends GenericModule {
 												]
 											},
 											{
-												view: "checkbox",
-												id: "treatment-" + self.uid,
-												name: "treatment",
-												label: i18n.t("LBL_TREATMENT_REQUIRED"),
-												labelWidth: 275,
-												value: false
-											},
-											{
 												view: "richselect",
 												id: "element_type_state-" + self.uid,
 												name: "elementTypeStateId",
@@ -345,6 +362,14 @@ export default class AlarmConfigModule extends GenericModule {
 												labelWidth: 275,
 												options: elementTypeStateOptionsArr,
 												required: false
+											},
+											{
+												view: "checkbox",
+												id: "treatment-" + self.uid,
+												name: "treatment",
+												label: i18n.t("LBL_TREATMENT_REQUIRED"),
+												labelWidth: 275,
+												value: false
 											},
 											{}
 										]
@@ -1197,7 +1222,8 @@ export default class AlarmConfigModule extends GenericModule {
 															treatment: (formValues.treatment) ? true : false,
 															elementTypeStateId: formValues.elementTypeStateId !== -1 ? formValues.elementTypeStateId : undefined, 
 															alarmConfigMeasures: [],
-															alarmConfigStates: []
+															alarmConfigStates: [],
+															elementSubtypeId: formValues.elementSubtypeId
 														}
 													};
 
@@ -1262,7 +1288,8 @@ export default class AlarmConfigModule extends GenericModule {
 															alarmTypeId: self.config.defaultAlarmType,
 															mine: true,
 															treatment: (formValues.treatment) ? true : false,
-															alarmConfigMeasures: []
+															alarmConfigMeasures: [],
+															elementSubtypeId: formValues.elementSubtypeId
 														}
 													}
 
@@ -1368,6 +1395,7 @@ export default class AlarmConfigModule extends GenericModule {
 			let alarmLevelSelect = $$("alarm_level-" + self.uid);
 			let elementTypeStateSelect = $$("element_type_state-" + self.uid);
 			let labelAliasSelect = $$("label_alias-" + self.uid);
+			let elementSubtype = $$("element_type_subtype-" + self.uid);
 
 			if (form) {
 
@@ -1404,6 +1432,16 @@ export default class AlarmConfigModule extends GenericModule {
 					if (i18n.isTranslatable(alarmConfigData.labelAlias)) {
 						
 						labelAliasSelect.disable();
+					}
+					
+					if(Array.isArray(elementType.elementSubtypes) && elementType.elementSubtypes.length > 0 && Array.isArray(self.args.selectedRows) && self.args.selectedRows.length > 0){
+						
+						let subtype = elementType.elementSubtypes.find(subtype => subtype.id === alarmConfigData.elementSubtype.id); 
+						
+						if (subtype){
+
+							elementSubtype.setValue(subtype.id);
+						}
 					}
 
 				} else {
