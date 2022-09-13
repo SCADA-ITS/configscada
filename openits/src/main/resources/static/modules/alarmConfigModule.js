@@ -277,6 +277,17 @@ export default class AlarmConfigModule extends GenericModule {
 								value: i18n.t(e.labelAlias)
 							}
 						});
+						
+						if (Array.isArray(elementSubtypesArr) && elementSubtypesArr.length > 0) {
+							
+							elementSubtypesArr.push({
+								
+								id: NO_VALUE,
+								value: ""
+							});
+							
+							elementSubtypesArr.sort((a, b) => (a.value > b.value) ? 1 : ((b.value > a.value) ? -1 : 0));
+						}
 					}
 
 					let form;
@@ -1220,10 +1231,10 @@ export default class AlarmConfigModule extends GenericModule {
 															alarmLevelId: formValues.alarmLevelId,
 															mine: alarmConfigData.mine,
 															treatment: (formValues.treatment) ? true : false,
-															elementTypeStateId: formValues.elementTypeStateId !== -1 ? formValues.elementTypeStateId : undefined, 
+															elementTypeStateId: formValues.elementTypeStateId != NO_VALUE ? formValues.elementTypeStateId : undefined, 
 															alarmConfigMeasures: [],
 															alarmConfigStates: [],
-															elementSubtypeId: formValues.elementSubtypeId
+															elementSubtypeId: formValues.elementSubtypeId != NO_VALUE ? formValues.elementSubtypeId : undefined
 														}
 													};
 
@@ -1283,13 +1294,13 @@ export default class AlarmConfigModule extends GenericModule {
 															alias: formValues.labelAlias,
 															labelAlias: formValues.labelAlias,
 															elementTypeId: formValues.elementTypeId,
-															elementTypeStateId: formValues.elementTypeStateId !== -1 ? formValues.elementTypeStateId : undefined, 
+															elementTypeStateId: formValues.elementTypeStateId != NO_VALUE ? formValues.elementTypeStateId : undefined, 
 															alarmLevelId: formValues.alarmLevelId,
 															alarmTypeId: self.config.defaultAlarmType,
 															mine: true,
 															treatment: (formValues.treatment) ? true : false,
 															alarmConfigMeasures: [],
-															elementSubtypeId: formValues.elementSubtypeId
+															elementSubtypeId: formValues.elementSubtypeId !== NO_VALUE ? formValues.elementSubtypeId : undefined
 														}
 													}
 
