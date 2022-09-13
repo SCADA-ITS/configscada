@@ -99,7 +99,7 @@ export default class IncidentReportTabInfo {
 										view: "icon",
 										id: "fieldCause-edit-" + self.uid,
 										icon: "mdi mdi-pencil",
-										hidden: !self.incidentReport.confirm,
+										hidden: !self.incidentReport.confirm || self.parent.closed,
 										on: {
 											onItemClick: function() {
 												$$("fieldCause-combo-" + self.uid).show();
