@@ -2650,7 +2650,15 @@ export default class DataTable {
 													
 													let header = (self.metadata && self.metadata.label) ? i18n.t(self.metadata.label) : "";
 
-													webix.toPDF($$("dt-print-" + self.uid), { orientation: "landscape", autowidth: true, docHeader: header });
+													webix.toPDF($$("dt-print-" + self.uid), {
+														orientation: "landscape",
+														autowidth: true,
+														docHeader: {
+															text: header,
+															textAlign: "left",
+															fontSize: 15
+														}
+													});
 
 												} else if (obj == FORMAT.XLS) {
 
