@@ -2582,7 +2582,7 @@ export default class DataTable {
 
 							columns.push({
 								id: gridField.sourceField,
-								header: (gridField.label) ? i18n.t(gridField.label) : "",
+								header: (gridField.label) ? i18n.t(gridField.label) : gridField.sourceField,
 								width: gridField.widthPx,
 								icons: gridField.gridFieldIcons,
 								replacementFunction: gridField.replacementFunction,
@@ -2643,13 +2643,14 @@ export default class DataTable {
 										icon: "mdi mdi-printer",
 										css: "grid-button-text",
 										width: 120,
-										label: i18n.t("LBL_TABLE_PRINT"),
 										on: {
 											onAfterRender: function() {
 
 												if (obj == FORMAT.PDF) {
+													
+													let header = (self.metadata && self.metadata.label) ? i18n.t(self.metadata.label) : "";
 
-													webix.toPDF($$("dt-print-" + self.uid), { orientation: "landscape", autowidth: true });
+													webix.toPDF($$("dt-print-" + self.uid), { orientation: "landscape", autowidth: true, docHeader: header });
 
 												} else if (obj == FORMAT.XLS) {
 
@@ -2672,7 +2673,7 @@ export default class DataTable {
 						]
 					};
 
-					util.ui.loadWindow("Título", tableToPrint, 1, 1, true);
+					util.ui.loadWindow("", tableToPrint, 1, 1, true);
 				}
 			});
 		}
