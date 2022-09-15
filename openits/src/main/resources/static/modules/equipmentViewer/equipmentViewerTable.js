@@ -377,7 +377,7 @@ export default class EquipmentViewerTable {
 
 				let dataToUpdate = self.data.find(dat => dat.id === ev.id);
 
-				if (dataToUpdate && ((dataToUpdate.value != ev.value) || (dataToUpdate.elementValueState != ev.elementValueState.id))) {
+				if (dataToUpdate && ((dataToUpdate.value != ev.value) || (ev.elementValueState && dataToUpdate.elementValueState != ev.elementValueState.id))) {
 
 					if (ev.elementTypeParam.dataType.id === DataType.DECIMAL) {
 
@@ -387,7 +387,14 @@ export default class EquipmentViewerTable {
 
 						dataToUpdate.value = parseValue.toFixed(precision);
 
-					} else {
+					} 
+					else if (ev.elementTypeParam.dataType.id === DataType.TIMESTAMP) {
+
+						let parseValue = (typeof(ev.value) === "string") ? parseInt(ev.value) : ev.value;
+
+						dataToUpdate.value = util.toLocaleString(parseValue / 1000);
+					}
+					else {
 
 						dataToUpdate.value = ev.value;						
 					}
