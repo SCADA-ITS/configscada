@@ -656,27 +656,29 @@ export default class DataTable {
 	convertDate(data) {
 
 		if (data && Array.isArray(data)) {
-			for (let posField = 0; posField < this.metadata.gridFields.length; posField++) {
+			
+			if (Array.isArray(this.metadata.gridFields) && this.metadata.gridFields.length > 0) {
+			
+				this.metadata.gridFields.forEach(field => {
+					
+					if (field.isEpochMilli) {
 
-				let field = this.metadata.gridFields[posField];
-
-				if (field.isEpochMilli) {
-
-					data.forEach(item => {
-
-						if(field.sourceField != undefined){
-						
-						}
-						if (item[field.sourceField]) {
-						
-							item[field.sourceField] = new Date(item[field.sourceField]);	
-						}
-						else {
+						data.forEach(item => {
+	
+							if(field.sourceField != undefined){
 							
-							item[field.sourceField] = null;
-						}
-					});
-				}
+								if (item[field.sourceField]) {
+									
+									item[field.sourceField] = typeof(item[field.sourceField]) === 'object' ? new Date(parseInt(item[field.sourceField].value)) : new Date(parseInt(item[field.sourceField]));
+								}
+								else {
+									
+									item[field.sourceField] = null;
+								}
+							}
+						});
+					}
+				});
 			}
 		}
 	}
