@@ -10,7 +10,8 @@ const TreeOptions = {
 	EXPAND_ALL: 6,
 	CHECK_ALL: 7,
 	ROOT_NODE: 8,
-	NO_SHOW_EMPTY_FOLDERS: 9
+	NO_SHOW_EMPTY_FOLDERS: 9,
+	UNCHECKED_IDS_: 10
 };
 
 const DefOptionValues = { 2: false, 3: true, 4: false, 5: true, 6: false, 7: false, 8: false, 9: false };
@@ -440,11 +441,32 @@ export default class TreeView {
 						}
 						
 						let checkAll = self.getTreeOptions(TreeOptions.CHECK_ALL);
+						let uncheckedIds_ = self.getTreeOptions(TreeOptions.UNCHECKED_IDS_);
 						let multiselect = self.getTreeOptions(TreeOptions.MULTISELECT);
 						
-						if (checkAll && multiselect) {
+						if (multiselect) {
 							
-							this.checkAll();
+							if (checkAll) {
+								
+								this.checkAll();
+								
+								if (Array.isArray(uncheckedIds_) && uncheckedIds_.length > 0) {
+									
+									uncheckedIds_.forEach(id_ => {
+										
+										let items = self.getItemsById_(id_);
+										
+										if (Array.isArray(items) && items.length > 0) {
+										
+											items.forEach(item => this.uncheckItem(item.id));	
+										}
+									});
+								}
+							}
+							else {
+								
+								this.uncheckAll();
+							}
 						}
 					},
 					onAfterSelect: function(id) {

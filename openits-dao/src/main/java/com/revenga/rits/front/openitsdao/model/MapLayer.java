@@ -35,6 +35,8 @@ public class MapLayer implements Serializable {
 	private String name;
 
 	private Boolean visible;
+	
+	private Boolean active;
 
 	//bi-directional many-to-one association to MapLayerElement
 	@OneToMany(mappedBy="mapLayer")
@@ -103,6 +105,14 @@ public class MapLayer implements Serializable {
 
 	public void setVisible(Boolean visible) {
 		this.visible = visible;
+	}
+	
+	public Boolean getActive() {
+		return this.active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active= active;
 	}
 
 	public List<MapLayerElement> getMapLayerElements() {

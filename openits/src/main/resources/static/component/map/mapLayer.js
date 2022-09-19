@@ -1,19 +1,28 @@
 import { util } from "../../lib/util.js";
 import TreeView from "../treeview.js";
 
-const DEFAULT_TREE_OPTIONS = [
-	{ treeOption: { id: 2}, value: true },	// multiselect
-	{ treeOption: { id: 3}, value: true }, 	// sorted
-	{ treeOption: { id: 4}, value: true }, 	// cmd_buttons
-	{ treeOption: { id: 5}, value: true }, 	// search
-	{ treeOption: { id: 6}, value: true },	// expand_all
-	{ treeOption: { id: 7}, value: true }	// check_all
-];
+//const DEFAULT_TREE_OPTIONS = [
+//	{ treeOption: { id: 2}, value: true },	// multiselect
+//	{ treeOption: { id: 3}, value: true }, 	// sorted
+//	{ treeOption: { id: 4}, value: true }, 	// cmd_buttons
+//	{ treeOption: { id: 5}, value: true }, 	// search
+//	{ treeOption: { id: 6}, value: true },	// expand_all
+//	{ treeOption: { id: 7}, value: true }	// check_all
+//];
 	
 export default class MapLayer {
 	
 	static get TYPE_ELEMENT() { return { id: "ELEMENT_ROOT", label: i18n.t("LBL_EQUIPMENTS"), image: "tree_equipment.png", prefix: "ELEMENT_"} }
 	static get TYPE_INCIDENT() { return { id: "INCIDENT_ROOT", label: i18n.t("LBL_INCIDENTS"), image: "tree_incident.png", prefix: "INCIDENT_"} }
+	
+	static get DEFAULT_TREE_OPTIONS() { return [
+													{ treeOption: { id: 2}, value: true },	// multiselect
+													{ treeOption: { id: 3}, value: true }, 	// sorted
+													{ treeOption: { id: 4}, value: true }, 	// cmd_buttons
+													{ treeOption: { id: 5}, value: true }, 	// search
+													{ treeOption: { id: 6}, value: true },	// expand_all
+													{ treeOption: { id: 7}, value: true }	// check_all
+												] }
 
 	constructor(data, onLayersSelectedChange, treeOptions) {
 
@@ -21,7 +30,7 @@ export default class MapLayer {
 		
 		this.data = data;
 		this.onLayersSelectedChange = onLayersSelectedChange;
-		this.treeOptions = treeOptions ? treeOptions : DEFAULT_TREE_OPTIONS;
+		this.treeOptions = treeOptions ? treeOptions : MapLayer.DEFAULT_TREE_OPTIONS;
 
 		this.treeWindow = undefined;
 	}

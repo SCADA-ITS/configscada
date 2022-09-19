@@ -221,6 +221,10 @@ export default class OpenMap extends GenericMap {
 					});
 				}
 				
+				let customTreeOptions = webix.copy(MapLayer.DEFAULT_TREE_OPTIONS);
+				
+				customTreeOptions.push({ treeOption: { id: 10 }, value: getIdsToUncheck() });
+				
 				self.mapLayer = new MapLayer(dataMapLayer, function(layersId) {
 					
 					let elementLayerIds = [];
@@ -249,7 +253,7 @@ export default class OpenMap extends GenericMap {
 							self.mapIncident.showIncidentTypes(incidentTypes);
 						}	
 					}
-				});
+				}, customTreeOptions);
 				
 				cells.push(self.mapLayer.getView());
 			}
@@ -1562,6 +1566,24 @@ export default class OpenMap extends GenericMap {
 
 			    webix.ui(contextMenuView);
 			}
+		}
+		
+		function getIdsToUncheck() {
+			
+			let idsToUncheck;
+			let layers = self.metadata.layers;
+			
+			if (Array.isArray(layers) && layers.length > 0) {
+				
+				let layersToUncheck = layers.filter(layer => layer.active === false);
+				
+				if (Array.isArray(layersToUncheck) && layersToUncheck.length > 0) {
+
+					idsToUncheck = layersToUncheck.map(layer => { return MapLayer.TYPE_ELEMENT.prefix + layer.id });
+				}	
+			}
+			
+			return idsToUncheck;
 		}
 		
 		function getPanelActions() {

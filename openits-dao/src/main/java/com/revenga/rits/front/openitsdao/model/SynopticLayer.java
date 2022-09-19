@@ -35,6 +35,8 @@ public class SynopticLayer implements Serializable {
 	private String name;
 
 	private Boolean visible;
+	
+	private Boolean active;
 
 	//bi-directional many-to-one association to SynopticLayerElement
 	@OneToMany(mappedBy="synopticLayer")
@@ -105,6 +107,14 @@ public class SynopticLayer implements Serializable {
 		this.visible = visible;
 	}
 
+	public Boolean getActive() {
+		return this.active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active= active;
+	}
+	
 	public List<SynopticLayerElement> getSynopticLayerElements() {
 		return this.synopticLayerElements;
 	}
