@@ -187,6 +187,13 @@ export default class TaskManagerService extends GenericModule {
 			params.args = JSON.stringify(genericModule.args);
 		}
 		
+		let sessionData = util.user.getSessionData();
+		
+		if (sessionData) {
+			
+			params.sessionData = JSON.stringify(sessionData);
+		}
+		
 		let searchParams = new URLSearchParams(params);
 		
 		let features = `toolbar=no,
@@ -194,6 +201,7 @@ export default class TaskManagerService extends GenericModule {
 		    			location=no,
 		    			statusbar=no,
 		    			menubar=no,
+		    			noreferrer=yes,
 		    			resizable=0,
 		    			width=${w},
 		    			height=${h},
@@ -202,16 +210,16 @@ export default class TaskManagerService extends GenericModule {
 		
 		let browser = window.open("./external.html?" + searchParams.toString(), (new Date()).getTime(), features);
 		
-		if (browser) {
+		//if (browser) {
 			
-			browser.focus();
+			//browser.focus();
 			this.remove(id);
 			
 			if (win) {
 				
 				win.close();					
 			}				
-		}
+		//}
 	}
 	
 	remove(id) {

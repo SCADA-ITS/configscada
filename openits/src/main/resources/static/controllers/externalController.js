@@ -6,7 +6,7 @@ import ServiceManager from "../managers/serviceManager.js";
 
 window.onload = function() {
 	
-	var userData = util.user.getUserData();
+	var userData = getUserData();
 
 	if (userData) {
 		
@@ -17,13 +17,38 @@ window.onload = function() {
 		window.location = "#";
 	}
 	
+	function getUserData() {
+		
+		let uData = util.user.getUserData();
+
+		if (!uData) {
+			
+			const queryString = window.location.search;
+			const urlParams = new URLSearchParams(queryString);
+			
+			let sessionData = urlParams.get('sessionData') ? JSON.parse(urlParams.get('sessionData')) : undefined;
+			
+			if (sessionData) {
+				
+				uData = sessionData.user;
+				
+				webix.storage.session.put(SESSION_STORAGE_SESSION_DATA, sessionData);
+			}
+		}
+		
+		return uData;
+	}
+	
 	function initialize() {
 		
 		document.getElementById("pagestyle").setAttribute("href", "./lib/webix/skins/material.css");
 		
 		const queryString = window.location.search;
-		console.log(queryString);
+		//console.log(queryString);
 		const urlParams = new URLSearchParams(queryString);
+		
+		let newURL = location.href.split("?")[0];
+		window.history.pushState('object', document.title, newURL);
 				
 		let containerHeight = urlParams.get('height') ? parseInt(urlParams.get('height')) : 1024;
 		let containerWidth = urlParams.get('width') ? parseInt(urlParams.get('width')) : 768;
@@ -82,7 +107,7 @@ window.onload = function() {
 		};
 		
 		webix.ui(main_screen);
-		
+			
 		window.i18n = new I18n(userData.locale, onLoadI18n);
 		
 		window.isExternal = true;
@@ -120,7 +145,8 @@ window.onload = function() {
 						
 						if (windowParamValue) {
 						
-							document.title = i18n.t(windowParamValue.value);	
+							document.title = i18n.t(windowParamValue.value);
+
 						}
 					}
 					
