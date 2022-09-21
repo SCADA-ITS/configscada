@@ -4,6 +4,7 @@ export default class MessageBox {
 	static get WARN() { return { id: 2, color: "#fdbf4c", icon: "./img/warn.png", title: "LBL_WARN" } }
 	static get ERROR() { return { id: 3, color: "#ff5c4c", icon: "./img/error.png", title: "LBL_ERROR" } }
 	static get CONFIRM() { return { id: 4, color: "#3498db", icon: "./img/question.png", title: "LBL_CONFIRM" } }
+	static get CONFIRM_WARN() { return { id: 5, color: "#fdbf4c", icon: "./img/warn.png", title: "LBL_WARN" } }
 	
 	constructor(type, message, onAccept, onCancel) {
 
@@ -18,13 +19,15 @@ export default class MessageBox {
 			1: new Image(),
 			2: new Image(),
 			3: new Image(),
-			4: new Image()
+			4: new Image(),
+			5: new Image()
 		};
 		
 		this.images[1].src = MessageBox.INFO.icon;
 		this.images[2].src = MessageBox.WARN.icon; 
 		this.images[3].src = MessageBox.ERROR.icon;
 		this.images[4].src = MessageBox.CONFIRM.icon;  
+		this.images[5].src = MessageBox.WARN.icon;   
 	}
 
 	show() {
@@ -58,7 +61,7 @@ export default class MessageBox {
 								align: 'right',
 								click: function() {
 
-									if (self.type.id != MessageBox.CONFIRM.id) {
+									if (self.type.id != MessageBox.CONFIRM.id && self.type.id != MessageBox.CONFIRM_WARN.id) {
 
 										execute(self.onAccept);
 
@@ -115,7 +118,7 @@ export default class MessageBox {
 				css: "dialog-input-custom messagebox"
 			};
 
-			if (self.type.id != MessageBox.CONFIRM.id) {
+			if (self.type.id != MessageBox.CONFIRM.id && self.type.id != MessageBox.CONFIRM_WARN.id) {
 
 				buttons = [
 					{},
