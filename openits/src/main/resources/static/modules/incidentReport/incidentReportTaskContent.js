@@ -165,10 +165,12 @@ export default class IncidentReportTaskContent {
 							}
 
 						})(),
+						type: (self.taskState.incidentTypeTask.incidentTaskConfirmWarning) ? "icon" : "standard",
+						icon: (self.taskState.incidentTypeTask.incidentTaskConfirmWarning) ? "mdi mdi-exclamation-thick" : "",
 						height: 41,
 						width: 130,
 						disabled: !self.incidentReport.confirm || !sameUser,
-						hidden: !self.taskState.incidentTypeTask.rerun && (self.taskState.incidentTypeTask.auto || self.taskState.completedAt),
+						hidden: !self.taskState.incidentTypeTask.rerun && (self.taskState.incidentTypeTask.auto || self.taskState.completedAt),						
 						label: (function() {
 
 							let labelButton = (self.taskState.incidentTypeTask.incidentTaskFinalizeButton) ? i18n.t(self.taskState.incidentTypeTask.incidentTaskFinalizeButton) : i18n.t("LBL_INCIDENT_END_TASK");
