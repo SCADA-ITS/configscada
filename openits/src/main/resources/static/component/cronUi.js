@@ -1649,7 +1649,7 @@ export default class CronUi {
 			let resume = {
 				css: "cronui-resume",
 				id: "resume" + self.uid,
-				height: 150,
+				height: 75,
 				rows: [
 					{ height: 15 },
 					{

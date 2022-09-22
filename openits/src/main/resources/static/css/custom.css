@@ -1,3 +1,7 @@
+/* Components */
+@import url(./css_components/dialogBox.css);
+@import url(./css_components/cronUi.css);
+@import url(./css_components/equipmentMeasures.css);
 
 :root {
   --blue-strong: rgb(15, 23, 36);
@@ -52,6 +56,9 @@
 
   --white-text-default: white;
   --white-text-not-sel: rgba(255 255 255 / 0.83);
+
+  --global-grey: rgb(218, 222, 224);
+  --soft-grey-background: rgb(247, 249, 252);
 }
 
 /* Disable text selection hightlighting */
@@ -231,69 +238,6 @@ p, input, textarea {
 
 .webix_modal {
 	opacity: 0.2;
-}
-
-.dialog-general-custom {
-	background-color: #f7f9fc;
-	margin-top: 0px !important; 
-	margin-left: 0px !important;
-	width: 600px !important;
-}
-
-.dialog-header-custom .webix_el_box {
-	width: 600px !important;
-	color: #475466;
-	font-size: 16px;
-	padding-top: 10px;
-}
-
-.dialog-description-custom .webix_el_box {
-	font-size: 14px;
-	font-weight: 300;
-	color: #475466;
-	line-height: 20px !important;
-}
-
-.dialog-button .webix_el_box .webix_button {
-	color: #92abcf;
-	background-color: #33425e;
-	width: 100px;
-	height: 30px;
-	border-radius: 4px;
-	border-width: 0px;
-}
-
-.dialog-button .webix_el_box .webix_button:hover {
-	color: white;
-	background-color: #33425e;
-}
-
-.dialog-input-custom .webix_header {
-	box-shadow: inset 0 4px #1CA1C1;
-}
-
-.dialog-input-custom .webix_secondary .webix_button {
-    color: var(--blue-soft);
-    border-radius: 4px;
-    border-width: 0px;
-    background: var(--blue-mid);
-}
-
-.dialog-input-custom .webix_secondary .webix_button:hover {
-    opacity: 0.9 !important;
-}
-
-.dialog-input-text .webix_template {
-	padding: 20px 20px 5px;	
-}
-
-.dialog-input-labeltext .webix_el_box {
-	text-align: right;
-	color: #475466 !important;
-}
-
-.inputdialogbox-counter .webix_inp_counter_value {
-	width: 70px !important;
 }
 
 .webix_modal_cover {
@@ -2352,10 +2296,6 @@ p, input, textarea {
 }
 */
 
-.cronui-tab {
-	width: 120px !important;
-}
-
 .webix_accordionitem .webix_accordionitem_header {
 	background-color: var(--blue-soft-opacity-1);
 }
@@ -3264,37 +3204,6 @@ p, input, textarea {
 	font-size: 14px;
 }
 
-.cronui-resume{
-	width: 778px !important;
-	height: 75px !important;
-	border: 1px solid #dadee0;
-	border-bottom: none;	
-}
-
-.cronui-current-resume{
-	width: 778px !important;
-	height: 75px !important;
-	border: 1px solid #dadee0;
-	border-top: none;	
-}
-
-.cronui-description > div {
-	max-width: 365px;
-	font-size: 14px !important; 
-	color: #475466;
-	overflow: hidden; 
-	white-space: nowrap; 
-	text-overflow: ellipsis;
-}
-
-.cronui-checks > div > label{
-	padding-right: 0px;
-}
-
-.cron-expression > div{
-	border: 1px solid #dadee0;
-}
-
 .auxiliary-tab .webix_el_tabbar {
 	height: 32px !important;
 	box-shadow: none !important;
@@ -4087,7 +3996,7 @@ audio {
 .audio-player {
 	border-width: 0px !important;
 	margin: 0px !important;
-	background-color: #f7f9fc;
+	background-color: var(--soft-grey-background);
 }
 
 .audio-disable {
@@ -4150,16 +4059,6 @@ audio {
 	background-color: #9e9e9e;
 }
 
-.messagebox {
-	border: 0px;
-}
-
-.messagebox .webix_template {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
 .new-log-window .webix_inp_label,  .new-log-window .webix_template {
 	color: #475466 !important;
 	font-size: 14px;
@@ -4175,49 +4074,6 @@ audio {
 	pointer-events: none;
 	background-color:rgba(244,245,249);
 	opacity: 0.4;
-}
-
-.equipment-measures-values {
-    animation-name: measure-update;
-  	animation-duration: 1s;
-}
-
-.equipment-measures-combo .webix_el_box {
-	padding: 3px 0px !important;
-}
-
-.equipment-measures-combo .webix_inp_static {
-	width: 100% !important;
-}
-
-.equipment-measures-pager {
-	border: none !important;
-}
-
-.equipment-measures-pager .webix_el_box .webix_button {
-	color: var(--blue-mid2-opacity-5);
-}
-
-.equipment-measures-info-icon {
-	margin-left: 1px !important;	
-}
-
-.equipment-measures-info-icon .webix_button {
-	border: 1px solid #CCD7E6;	
-}
-
-.equipment-measures-info-icon .webix_icon_btn {
-	margin: auto;
-	color: var(--blue-soft-opacity-9) !important;
-	vertical-align: initial;
-} 
-
-.equipment-measures-info-label {
-	font-size: 13px !important;
-	font-weight: 500;
-	text-decoration: underline;
-	cursor: pointer;
-	color: var(--blue-mid2) !important;	
 }
 
 .command-icon-datatable-disable .webix_icon_button .webix_icon {

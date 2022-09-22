@@ -119,11 +119,11 @@ export default class ConfirmTempDialogBox {
 						view: "label",
 						label: i18n.t("LBL_CONFIRM_IN") + " " + self.timeSec + " " + i18n.t("LBL_SECONDS"),// self.message,
 						align: "center",
-						css: "dialog-header-custom"
+						css: "confirm-temp-dialog-box-header"
 
 					},
 					{
-						css: "dialog-description-custom",
+						css: "confirm-temp-dialog-box-description",
 						cols: [
 							{
 								//id: "temp-count-" + self.uid,

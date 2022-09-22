@@ -1,7 +1,7 @@
 /* Global */
 
 .dialog-general-custom {
-	background-color: #f7f9fc;
+	background-color: var(--soft-grey-background);
 	margin-top: 0px !important; 
 	margin-left: 0px !important;
 	width: 600px !important;
@@ -26,10 +26,10 @@
 }
 
 .dialog-input-custom .webix_secondary .webix_button {
-    color: var(--color-soft);
+    color: var(--blue-soft);
     border-radius: 4px;
     border-width: 0px;
-    background: var(--color-mid);
+    background: var(--blue-mid);
 }
 
 .dialog-input-custom .webix_secondary .webix_button:hover {
@@ -40,7 +40,7 @@
 
 .confirm-temp-dialog-box-header .webix_el_box {
 	width: 600px !important;
-	color: var(--color-headers);
+	color: var(--blue-headers);
 	font-size: 16px;
 	padding-top: 10px;
 }
@@ -48,7 +48,7 @@
 .confirm-temp-dialog-box-description .webix_el_box {
 	font-size: 14px;
 	font-weight: 300;
-	color: var(--color-headers);
+	color: var(--blue-headers);
 	line-height: 20px !important;
 }
 
@@ -60,7 +60,7 @@
 
 .dialog-input-labeltext .webix_el_box {
 	text-align: right;
-	color: var(--color-headers) !important;
+	color: var(--blue-headers) !important;
 }
 
 .inputdialogbox-counter .webix_inp_counter_value {

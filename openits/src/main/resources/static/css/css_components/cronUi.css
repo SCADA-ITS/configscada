@@ -13,7 +13,7 @@
 .cronui-description > div {
 	max-width: 365px;
 	font-size: 14px !important; 
-	color: var(--color-headers);
+	color: var(--blue-headers);
 	overflow: hidden; 
 	white-space: nowrap; 
 	text-overflow: ellipsis;
