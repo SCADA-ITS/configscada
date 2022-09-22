@@ -56,7 +56,7 @@
 
 .rows .webix_cell.webix_row_select {
   color: #2e3436;
-  background-color: var(--color-soft-opacity-4) !important;
+  background-color: var(--blue-soft-opacity-4) !important;
 }
 
 .sel_label {
