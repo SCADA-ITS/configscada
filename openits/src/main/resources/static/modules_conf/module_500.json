@@ -8,7 +8,9 @@
 	"restEndpoints":{
 		"hierarchy": "elements/hierarchy",
 		"elements": "elements/withStates",
-		"elementId": "elements/${id}"
+		"elementId": "elements/${id}",
+		"elementsTreeByUser": "elements/trees/${id}"
 	},
-	"treeElements": true
+	"treeElements": true,
+	"treeCustom": false
 }
