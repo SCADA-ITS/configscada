@@ -29,7 +29,7 @@
 	background: transparent;
 	font-size: 14px;
 	font-weight: 500;
-	color: #94A1B3;
+	color: var(--strong-grey);
 }
 
 .grid-button-text .webix_button:hover {
@@ -43,7 +43,7 @@
 
 .grid-button-text .webix_button .webix_icon_btn {
 	font-size: 17px;
-	color: #94A1B3;
+	color: var(--strong-grey);
 }
 
 .rows .webix_cell {
@@ -80,14 +80,14 @@
 }
 
 .command-icon-datatable-disable .webix_icon_button .webix_icon {
-	color: var(--color-headers-not-sel) !important;
+	color: var(--blue-headers-not-sel) !important;
 }
 
 .command-label-datatable-disable .webix_button {
-	color: var(--color-soft-opacity-9) !important;
+	color: var(--blue-soft-opacity-9) !important;
 	background: white !important;	
 }
 
 .command-label-datatable-disable .webix_button .webix_icon_btn {
-	color: var(--color-headers-not-sel) !important;	
+	color: var(--blue-headers-not-sel) !important;	
 }

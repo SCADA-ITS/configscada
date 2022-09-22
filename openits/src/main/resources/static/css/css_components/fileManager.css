@@ -21,7 +21,7 @@
 }
 
 .file-manager-second-line {
-	color: var(--color-mid);
+	color: var(--blue-mid);
 	display: block;
 	letter-spacing: 0.2px;
 	line-height: 20px;

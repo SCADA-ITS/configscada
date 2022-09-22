@@ -454,10 +454,10 @@ export default class FileManager {
 											
 											let imageDefault = "./img/extensions/default.png";
 											
-											html = `<image class="list-photo" src="${'./img/extensions/' + file.fileExtension + '.png'}" onerror="this.onerror=null;this.src='${imageDefault}';" />`;
+											html = `<image class="file-manager-photo" src="${'./img/extensions/' + file.fileExtension + '.png'}" onerror="this.onerror=null;this.src='${imageDefault}';" />`;
 											html += `<div class="text" style="margin-top: 0px">
-												  		<span class="list-first-line">${file.fileName ? file.fileName : '-'} </span>
-												  		<span class="list-second-line">${file.alias ? file.alias : '-'} </span>
+												  		<span class="file-manager-first-line">${file.fileName ? file.fileName : '-'} </span>
+												  		<span class="file-manager-second-line">${file.alias ? file.alias : '-'} </span>
 													</div>`;	
 										}
 										

@@ -21,7 +21,7 @@
 }
 
 .list-second-line {
-	color: var(--color-mid);
+	color: var(--blue-mid);
 	display: block;
 	letter-spacing: 0.2px;
 	line-height: 20px;
@@ -37,10 +37,10 @@
 .listview-disabled {
 	cursor: not-allowed;
 	pointer-events: none;
-	background-color:rgba(244,245,249);
+	background-color: var(--soft-grey);
 	opacity: 0.4;
 }
 
-.list-not-selected .webix_list_item{
+.list-not-selected .webix_list_item {
 	cursor: default !important;
 }
