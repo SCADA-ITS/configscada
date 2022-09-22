@@ -1,0 +1,33 @@
+.cronui-resume {
+	box-sizing: border-box;
+	border: 1px solid var(--global-grey);
+	border-bottom: none;	
+}
+
+.cronui-current-resume {
+	box-sizing: border-box;
+	border: 1px solid var(--global-grey);
+	border-top: none;	
+}
+
+.cronui-description > div {
+	max-width: 365px;
+	font-size: 14px !important; 
+	color: var(--color-headers);
+	overflow: hidden; 
+	white-space: nowrap; 
+	text-overflow: ellipsis;
+}
+
+.cronui-checks > div > label {
+	padding-right: 0px;
+}
+
+.cron-expression > div {
+	border: 1px solid var(--global-grey);
+}
+
+.cronui-tab {
+	width: 120px !important;
+}
+

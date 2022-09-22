@@ -1,0 +1,61 @@
+.invert-mode {
+	background-color: var(--color-backcolor) !important;
+	color: var(--color-headers) !important;
+	box-sizing: border-box;
+	border: none;
+}
+
+.invert-mode .webix_menu-x.menu-custom .webix_list_item {
+	color: var(--color-headers) !important;	
+}
+
+.invert-mode .webix_menu-x.menu-custom .webix_list_item:hover {
+	background-color: var(--color-mid-opacity-5);
+}
+
+.invert-mode .webix_secondary .webix_button {
+	background-color: var(--color-backcolor);
+	color: var(--color-headers) !important;	
+	border: 1px solid var(--color-headers) !important;
+} 
+
+.invert-mode .webix_secondary .webix_button:hover {
+	background-color: var(--color-mid-opacity-5) !important;
+}
+
+.invert-mode .webix_secondary .webix_button .webix_icon {
+	color: var(--color-headers) !important;	
+}
+
+.invert-mode .webix_secondary .webix_button .webix_img_btn_text {
+	color: var(--color-headers) !important;	
+}
+
+.invert-mode .webix_secondary .webix_button .webix_icon_btn {
+	color: var(--color-headers) !important;	
+}
+
+.invert-mode .section-title-divider {
+	border-top: 1px solid var(--color-headers) !important;	
+} 
+
+.invert-main-screen {
+	background: none;
+}
+
+.invert-templates {
+	color: var(--color-headers) !important;
+}
+
+.invert-templates .webix_icon_button .webix_icon {
+	color: var(--color-headers) !important;
+}
+
+.invert-component {
+ 	background-color: var(--color-backcolor) !important;
+}
+
+.invert-border {
+	border: 1px solid var(--color-headers) !important;
+}
+

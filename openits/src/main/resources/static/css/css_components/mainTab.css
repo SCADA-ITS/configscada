@@ -1,0 +1,54 @@
+.main-tab  {
+	border-width: 1px;
+}
+
+.main-tab .webix_all_tabs .webix_item_tab {
+	color: var(--color-mid);
+	font-weight: 100;
+	border-top-left-radius: 0px;
+	border-top-right-radius: 0px;
+}
+
+.main-tab .webix_all_tabs .webix_tab_filler {
+    border: none;
+    background-color: var(--color-mid-opacity-7);
+}
+
+.main-tab .webix_all_tabs .webix_item_tab.webix_selected {
+    color: var(--color-headers);
+    font-weight: 500;
+    background-color: var(--color-mid-opacity-2);
+    box-shadow: inset 0 -2px var(--color-strong);
+}
+ 
+.main-tab .webix_item_tab:not(.webix_selected) {
+	color: var(--color-strong);
+    font-weight: 500;
+    background-color: var(--color-mid-opacity-7);
+}   
+ 
+.main-tab .webix_item_tab:not(.webix_selected):hover {
+	color: rgb(71, 84, 102, 0.8);
+	background-color: var(--color-mid-opacity-2);
+}
+
+.main-tab .webix_all_tabs .webix_tab_more_icon .webix_icon {
+	color: #babdb6;
+}
+
+.main-tab .tab-text {
+	padding-left: 27px;
+	padding-top: 3px;
+	display: inline-block;
+	width: 200px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	font-size: 14px;
+}
+
+.main-tab .tab-icon {
+	position: absolute;
+	height: 22px;
+	width: 22px;
+}

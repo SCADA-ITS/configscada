@@ -1,0 +1,93 @@
+.table-field-icons {
+	vertical-align: -3px;
+	width: 20px;
+	height: 20px;
+}
+
+.table-badge {
+	font-size: 14px;
+	font-weight: 500;
+	padding: 4px 12px;
+	border-radius: 8px;
+}
+
+.table-row-text {
+	overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    width: -moz-available;
+    width: -webkit-fill-available;
+    width: fill-available;
+}
+
+.grid-button-text .webix_button {
+	display: inline-block;
+	width: 120px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	background: transparent;
+	font-size: 14px;
+	font-weight: 500;
+	color: #94A1B3;
+}
+
+.grid-button-text .webix_button:hover {
+	background: rgba(231 233 242 / 0.4) !important;
+	border-radius: 10px; 
+}
+
+.grid-button-text .webix_button:focus {
+	background: transparent;
+}
+
+.grid-button-text .webix_button .webix_icon_btn {
+	font-size: 17px;
+	color: #94A1B3;
+}
+
+.rows .webix_cell {
+	height: 34px !important;
+}
+
+.rows .webix_cell:nth-child(2n) {
+  background-color: var(--datatable-odd-rows);
+}
+
+.rows .webix_cell.webix_row_select {
+  color: #2e3436;
+  background-color: var(--color-soft-opacity-4) !important;
+}
+
+.sel_label {
+	font-size: 13px !important;
+	font-weight: 500 !important;
+	color: #4f4f4f !important;
+	text-align: right;
+	padding-top: 9px;
+}
+
+.sel_label_text {
+	font-weight: 100 !important;
+}
+
+.filter_icon_selected .webix_icon.wxi-filter {
+	color:rgba(255 152 0 / 0.8);
+}
+
+.details_icon_selected .webix_icon.wxi-columns {
+	color: rgba(255 152 0 / 0.8);
+}
+
+.command-icon-datatable-disable .webix_icon_button .webix_icon {
+	color: var(--color-headers-not-sel) !important;
+}
+
+.command-label-datatable-disable .webix_button {
+	color: var(--color-soft-opacity-9) !important;
+	background: white !important;	
+}
+
+.command-label-datatable-disable .webix_button .webix_icon_btn {
+	color: var(--color-headers-not-sel) !important;	
+}

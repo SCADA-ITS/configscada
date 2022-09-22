@@ -1,0 +1,26 @@
+.ol-control button {
+	width: 26px !important;
+	height: 24px !important;
+	background: #2d7cbe;
+	border-radius: 10% !important;
+	margin: 4px 9px;
+	padding-bottom: 2px;
+}
+
+.ol-control button:hover{
+	background: #1C507B;
+	cursor: pointer;
+	
+}
+
+.ol-control button:focus {
+	background-color: #2d7cbe;
+}
+
+.ol-control button:active {
+	background-color: #2d7cbe;	
+}
+
+.ol-control {
+	background-color: transparent !important;
+}

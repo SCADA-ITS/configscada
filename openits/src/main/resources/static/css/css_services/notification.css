@@ -1,0 +1,524 @@
+.notification-alarm-window-list {
+    background: transparent;
+}
+
+.notification-alarm-window-list .webix_list_item {
+	height: 50px !important;
+	margin-top: 5px;
+}
+
+.notification-alarm-window-list .webix_list_item.webix_selected {
+	box-shadow: none;
+	background-color: rgba(255 0 0 / 0.2) ;
+}
+
+.notification-alarm-window-list .state-enabled {
+	border-left: 3px solid #ef2929;
+	float: left;
+	margin-top: 5px;
+	height: 36px;
+}
+
+.notification-alarm-window-list .state-disabled {
+	border-left: 3px solid var(--color-soft);
+	float:left;
+	margin-top: 5px;
+	height: 36px;
+}
+
+.notification-alarm-window-list .image {
+	width:36px;
+	height:36px;
+	float:left;
+	padding-top: 5px;
+}
+
+.notification-alarm-window-list .level {
+	width: 20px;
+    height: 20px;
+    line-height: 22px;
+    float: left;
+    margin-top: 12px;
+    font-size: 12px;
+    font-weight: 500;
+    color: white;
+    text-align: center;
+}
+
+.notification-alarm-window-list .sound {
+	width: 20px;
+    height: 20px;
+    line-height: 22px;
+    float: left;
+    margin-top: 12px;
+    font-size: 24px;
+    font-weight: 500;
+    text-align: center;
+    padding-left: 5px;
+}
+
+.notification-alarm-window-list .first-line {
+	font-size:14px;
+	font-weight: 500;
+	letter-spacing:0.2px;
+	line-height:15px;
+	display:block;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	padding-left: 10px;
+	margin-top: 5px;
+}
+
+.notification-alarm-window-list .second-line {
+	font-size:14px;
+	letter-spacing:0.2px;
+	line-height:15px;
+	display:block;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	padding-top: 5px;
+	padding-left: 10px;
+	margin-top: 5px;
+}
+
+.notification-incident-window-list {
+    background: transparent;
+}
+
+.notification-incident-window-list .webix_list_item {
+	height: 50px !important;
+	margin-top: 5px;
+}
+
+.notification-incident-window-list .webix_list_item.webix_selected {
+	box-shadow: none;
+	background-color: rgba(91 13 169 / 0.2) ;
+}
+
+.notification-incident-window-list .state-enabled { 
+	border-left: 3px solid rgb(91, 13, 169);
+	float: left;
+	margin-top: 5px;
+	height: 36px;
+}
+
+.notification-incident-window-list .state-disabled {
+	border-left: 3px solid var(--color-soft);
+	float:left;
+	margin-top: 5px;
+	height: 36px;
+}
+
+.notification-incident-window-list .image {
+	width:36px;
+	height:36px;
+	float:left;
+	padding-top: 5px;
+}
+
+.notification-incident-window-list .level {
+	width: 20px;
+    height: 20px;
+    line-height: 22px;
+    float: left;
+    margin-top: 12px;
+    font-size: 12px;
+    font-weight: 500;
+    color: white;
+    text-align: center;
+}
+
+.notification-incident-window-list .sound {
+	width: 20px;
+    height: 20px;
+    line-height: 22px;
+    float: left;
+    margin-top: 12px;
+    font-size: 24px;
+    font-weight: 500;
+    text-align: center;
+    padding-left: 5px;
+}
+
+.notification-incident-window-list .first-line {
+	font-size:14px;
+	font-weight: 500;
+	letter-spacing:0.2px;
+	line-height:15px;
+	display:block;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	padding-left: 10px;
+	margin-top: 5px;
+}
+.notification-incident-window-list .second-line {
+	font-size:14px;
+	letter-spacing:0.2px;
+	line-height:15px;
+	display:block;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	padding-top: 5px;
+	padding-left: 10px;
+	margin-top: 5px;
+}
+
+.notification-event-window-list {
+    background: transparent;
+}
+
+.notification-event-window-list .webix_list_item {
+	height: 50px !important;
+	margin-top: 5px;
+}
+
+.notification-event-window-list .webix_list_item.webix_selected {
+	box-shadow: none;
+	background-color: rgba(255 153 0 / 0.2) ;
+}
+
+.notification-event-window-list .state-enabled {
+	border-left: 3px solid rgb(255, 153, 0);
+	float: left;
+	margin-top: 5px;
+	height: 36px;
+}
+
+.notification-event-window-list .state-disabled {
+	border-left: 3px solid var(--color-soft);
+	float:left;
+	margin-top: 5px;
+	height: 36px;
+}
+
+.notification-event-window-list .image {
+	width:36px;
+	height:36px;
+	float:left;
+	padding-top: 5px;
+}
+
+.notification-event-window-list .level {
+	width: 20px;
+    height: 20px;
+    line-height: 22px;
+    float: left;
+    margin-top: 12px;
+    font-size: 12px;
+    font-weight: 500;
+    color: white;
+    text-align: center;
+}
+
+.notification-event-window-list .sound {
+	width: 20px;
+    height: 20px;
+    line-height: 22px;
+    float: left;
+    margin-top: 12px;
+    font-size: 24px;
+    font-weight: 500;
+    text-align: center;
+    padding-left: 5px;
+}
+
+.notification-event-window-list .first-line {
+	font-size:14px;
+	font-weight: 500;
+	letter-spacing:0.2px;
+	line-height:15px;
+	display:block;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	padding-left: 10px;
+	margin-top: 5px;
+}
+
+.notification-event-window-list .second-line {
+	font-size:14px;
+	letter-spacing:0.2px;
+	line-height:15px;
+	display:block;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	padding-top: 5px;
+	padding-left: 10px;
+	margin-top: 5px;
+}
+
+.notification-alarm-window {
+	border-color: red;
+	box-shadow: 0 1.5rem 2.8rem !important;
+	animation: zoomIn;
+    animation-duration: 0.2s;
+}
+
+.notification-alarm-window-head {
+    height: 32px !important;
+    -webkit-animation: notification-alarm-window-head-animation 1s infinite;  /* Safari 4+ */
+	-moz-animation: notification-alarm-window-head-animation 1s infinite;  /* Fx 5+ */
+	-o-animation: notification-alarm-window-head-animation 1s infinite;  /* Opera 12+ */
+	animation: notification-alarm-window-head-animation 1s infinite;
+}
+
+@-webkit-keyframes notification-alarm-window-head-animation {
+  0%, 49% {
+    background-color: rgb(240, 0, 0);
+  }
+  50%, 100% {
+    background-color: rgb(204, 0, 0);
+  }
+}
+
+.notification-alarm-window-head .webix_view.webix_el_label {
+	font-weight: 600;
+    font-size: 14px;
+    color: white;
+    text-align: center;
+    letter-spacing: 2px;
+    padding: 6px 0px 0px 38px;
+}
+
+.notification-alarm-window-head .webix_view.webix_el_icon {
+	margin-top: 0px !important;
+}
+
+.notification-alarm-window-head .webix_icon_button .webix_icon {
+    color: white;
+    padding: 0px 0px 10px;
+}
+
+.notification-alarm-window-head .webix_icon_button:hover:before {
+	background-color: rgba(255 0 0 / 0.4);
+	opacity: 1;
+	transform: scale(0.70);
+	margin-top: -6px;
+	margin-left: 2px;
+}
+
+.notification-incident-window {
+	border-color: rgb(91, 13, 169);
+	box-shadow: 0 1.5rem 2.8rem !important;
+	animation: zoomIn;
+    animation-duration: 0.2s;
+}
+
+.notification-incident-window-head {
+    height: 32px !important;
+    -webkit-animation: notification-incident-window-head-animation 1s infinite;  /* Safari 4+ */
+	-moz-animation: notification-incident-window-head-animation 1s infinite;  /* Fx 5+ */
+	-o-animation: notification-incident-window-head-animation 1s infinite;  /* Opera 12+ */
+	animation: notification-incident-window-head-animation 1s infinite;
+}
+
+@-webkit-keyframes notification-incident-window-head-animation {
+  0%, 49% {
+    background-color: rgb(91, 13, 169);
+  }
+  50%, 100% {
+    background-color: rgb(137, 43, 231);
+  }
+}
+
+.notification-incident-window-head .webix_view.webix_el_label {
+	font-weight: 600;
+    font-size: 14px;
+    color: white;
+    text-align: center;
+    letter-spacing: 2px;
+    padding: 6px 0px 0px 38px;
+}
+
+.notification-incident-window-head .webix_view.webix_el_icon {
+	margin-top: 0px !important;
+}
+
+.notification-incident-window-head .webix_icon_button .webix_icon {
+    color: white;
+    padding: 0px 0px 10px;
+}
+
+.notification-incident-window-head .webix_icon_button:hover:before {
+	background-color: rgba(91 13 169 / 0.4);
+	opacity: 1;
+	transform: scale(0.70);
+	margin-top: -6px;
+	margin-left: 2px;
+}
+
+.notification-event-window {
+	border-color: rgb(255, 153, 0);
+	box-shadow: 0 1.5rem 2.8rem !important;
+	animation: zoomIn;
+    animation-duration: 0.2s;
+}
+
+.notification-event-window-head {
+    height: 32px !important;
+    -webkit-animation: notification-event-window-head-animation 1s infinite;  /* Safari 4+ */
+	-moz-animation: notification-event-window-head-animation 1s infinite;  /* Fx 5+ */
+	-o-animation: notification-event-window-head-animation 1s infinite;  /* Opera 12+ */
+	animation: notification-event-window-head-animation 1s infinite;
+}
+
+@-webkit-keyframes notification-event-window-head-animation {
+  0%, 49% {
+    background-color: rgb(255, 153, 0);
+  }
+  50%, 100% {
+    background-color: rgb(255, 218, 162);
+  }
+}
+
+.notification-event-window-head .webix_view.webix_el_label {
+	font-weight: 600;
+    font-size: 14px;
+    color: white;
+    text-align: center;
+    letter-spacing: 2px;
+    padding: 6px 0px 0px 38px;
+}
+
+.notification-event-window-head .webix_view.webix_el_icon {
+	margin-top: 0px !important;
+}
+
+.notification-event-window-head .webix_icon_button .webix_icon {
+    color: white;
+    padding: 0px 0px 10px;
+}
+
+.notification-event-window-head .webix_icon_button:hover:before {
+	background-color: rgba(255 153 0 / 0.4);
+	opacity: 1;
+	transform: scale(0.70);
+	margin-top: -6px;
+	margin-left: 2px;
+}
+
+.notification-icon {
+	width: 36px;
+    height: 36px;
+    float: left;
+    padding-left: 15px;
+}
+
+.notification-title {
+    padding-left: 5px;
+    padding-top: 10px;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 2px;
+}
+
+.notification-template {
+    background: transparent;
+    border: none;
+    color: #FFFFFF;
+    font-size: 13px;
+}
+
+.notification-template .webix_template {
+    padding-top: 4px;
+}
+
+.notification-template .webix_badge {
+	background-color: #ff8839;
+	/*right: 10px;*/
+}
+
+.notification-panel {
+	background-color: rgb(0, 0, 0, 0.30); 
+}
+
+.notification-center-transparent {
+	background-color: transparent;
+}
+
+.notification-center-head {
+	background-color: #1CA1C1;
+    font-size: 18px;
+	-webkit-animation: notif-animation 1s infinite;  /* Safari 4+ */
+	-moz-animation: notif-animation 1s infinite;  /* Fx 5+ */
+	-o-animation: notif-animation 1s infinite;  /* Opera 12+ */
+	animation: notif-animation 1s infinite; 
+}
+
+@-webkit-keyframes notif-animation {
+  0%, 49% {
+    background-color: #1CA1C1;
+  }
+  50%, 100% {
+    background-color: red;
+  }
+}
+
+@-webkit-keyframes icon-red-animation {
+  0%, 49% {
+    background-color: transparent;
+  }
+  50%, 100% {
+    background-color: #ef2929;
+  }
+}
+
+.notification-center-title {
+	font-weight: 600;
+    font-size: 16px;
+    color: white;
+    text-align: center;
+    letter-spacing: 2px;
+    padding: 6px 0px 0px 38px;
+}
+
+.notification-center-alarm-txt {
+	position: absolute;
+    font-size: 12px;
+    color: white;
+    text-align: center;
+    width: 83px;
+}
+
+.notification-center-alarm-value {
+	width: 85px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+    float: right;
+    border-radius: 20px;
+    margin-top: 5px;
+    margin-right: 10px;
+    padding: 7px 0px;
+}
+
+.notification-center-alarm-value-1 {
+    background-color: rgb(164, 0, 0, 0.4);
+    color: white;
+}
+
+.notification-center-alarm-value-2 {
+    background-color: rgb(117, 80, 123, 0.4);
+    color: white;
+}
+
+.notification-center-alarm-value-3 {
+    background-color: rgb(196, 160, 0, 0.4);
+    color: white;
+}
+
+.notification-center-close-btn .webix_icon_button .webix_icon:before {
+    color: #e1e5ea;
+}
+
+.notification-center-tab-option {
+	padding-left: 4px; 
+	font-size: 13px;
+}
+
+

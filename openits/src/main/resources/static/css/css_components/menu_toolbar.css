@@ -1,0 +1,96 @@
+/* menu horizontal */
+
+.webix_menu-x.menu-custom .webix_list_item {
+	padding-top: 3px;
+	background-color: transparent;
+	color: var(--color-soft);
+	margin-top: -6px;
+	border-right: 0px;
+} 
+
+.webix_menu-x.menu-custom .webix_list_item .webix_submenu_icon {
+	display: none
+}
+
+.webix_menu-x.menu-custom .webix_list_item:hover {
+	border-radius: 5px;
+	background-color: var(--color-mid);
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* menu vertical */
+
+.webix_menu.menu-custom {
+  	background-color: rgb(211 222 238);
+  	box-shadow: 0 1.5rem 1.8rem;
+}
+
+.webix_menu.menu-custom .webix_list_item {
+  	background-color: var(--color-soft-opacity-2);
+  	color: var(--color-strong);
+}
+
+.webix_menu.menu-custom .webix_list_item:hover {
+  	background-color: var(--color-mid-opacity-5);
+}
+
+.webix_menu.menu-custom .webix_context_separator .sep_line {
+	background-color: var(--color-soft-opacity-6);
+}
+
+/* Toolbar */
+
+.logo-project {
+	width: 165px; 
+	margin-top: 7px; 
+	margin-left: 10px;
+}
+
+.head-color {
+	background: var(--color-strong);
+}
+
+.main-toolbar {
+	border: 0px;
+	height: 44px;	
+}
+
+.main-toolbar .webix_icon_button .webix_icon {
+    color: white !important;
+}
+
+.main-toolbar .webix_icon_button:hover:before {
+	background-color: var(--color-mid);
+	opacity: 1;
+	transform: scale(1);
+}
+
+.main-toolbar .webix_el_label .webix_el_box {
+	color: white !important;
+}
+
+.menu-toolbar {
+	margin-top: -2px !important;
+	height: 34px !important;
+	border: 0px;
+}
+
+.submenu-icon {
+    padding: 6px;
+    background: transparent;
+    width: 20px;
+}
+
+.submenu-text {
+    overflow: hidden;
+    white-space:nowrap;
+    display:inline-block;
+    margin-left: 6px;
+}
+
+/* Footer */
+
+.main-footer {
+	background: var(--color-strong);
+}

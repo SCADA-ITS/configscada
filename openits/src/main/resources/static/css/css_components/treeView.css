@@ -1,0 +1,32 @@
+.tree-view-multi .webix_tree_open, 
+.tree-view-multi .webix_tree_close,
+.tree-view-single .webix_tree_open, 
+.tree-view-single .webix_tree_close {
+	font-size: 32px;
+} 
+
+.tree-view-multi .webix_tree_checkbox {
+    margin: 0px 5px 10px;
+}
+
+.tree-view-single .webix_tree_item {
+ 	height: 32px; 
+}
+
+
+.tree-view-multi .webix_tree_item img,
+.tree-view-single .webix_tree_item img {
+    vertical-align: -3px;
+    width: 24px;
+    height: 24px;
+}
+
+.tree-view-multi .webix_tree_item span,
+.tree-view-single .webix_tree_item span {
+	vertical-align: 4px;
+	font-size: 14px;
+}
+
+.tree-view-single .webix_tree_item.webix_selected div {
+	background: var(--color-soft-opacity-1) !important;
+}
