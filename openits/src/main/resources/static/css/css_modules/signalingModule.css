@@ -30,7 +30,7 @@
 }
 
 .keyboard-text-editor .webix_icon_btn {
-	color: var(--color-headers) !important;
+	color: var(--blue-headers) !important;
 	margin: 0px 0px 0px 1px;
 }
 
@@ -38,7 +38,7 @@
 	border: 1px solid #dee6f1;
 	width: 285px;
 	height: 175px;
-	background-color: white;
+	background-color: var(--white-text-default);
 	display: flex;
 	justify-content: space-evenly;
 	flex-wrap: wrap;
@@ -53,7 +53,7 @@
 	font-style: normal;
 	line-height: normal;
 	letter-spacing: normal;
-	color: var(--color-headers);	
+	color: var(--blue-headers);	
 }
 
 .special-character {
@@ -68,25 +68,25 @@
 	transform: scale(1.75, 1.75);
 }
 
-.button-cta .webix_button{
+.button-cta .webix_button {
 	width: 130px !important;
 	height: 35px;
     border-radius: 2px;
     background: #ff9800 !important;
     font-size: 14px;
     font-weight: 500;
-    color: white !important;
+    color: var(--white-text-default) !important;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-.button-cta .webix_button:hover{
+.button-cta .webix_button:hover {
     background: #ffdaa2 !important;
 }
 
-.button-cta .webix_button .webix_icon_btn{
-	color: white;
+.button-cta .webix_button .webix_icon_btn {
+	color: var(--white-text-default);
 }
 
 .toolbar-vms-priority .webix_el_checkbox .webix_label_right {	
@@ -105,7 +105,7 @@
 .ventilation-description-box {
     height:50px;
 	border-radius: 4px;
-    color: var(--color-mid2);
+    color: var(--blue-mid2);
     background: rgba(198 211 231 / 0.3);
 	font-size: 12px;
 	font-weight: 300;
@@ -117,7 +117,7 @@
 	font-size: 12px;
 	background: transparent !important;
     font-weight: 500;
-    color: var(--color-mid2);
+    color: var(--blue-mid2);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -128,13 +128,13 @@ audio {
 	width: 100%;
 	display: block;
 	margin: 0 auto; 
-	}
+}
 	
 .audio-description {
 	width: 560px !important;
 	height: 85px !important;
 	font-size: 14px;
-	color: var(--color-headers); 
+	color: var(--blue-headers); 
 	padding: 5px 0px;
 }
 
@@ -153,7 +153,7 @@ audio {
 .audio-player {
 	border-width: 0px !important;
 	margin: 0px !important;
-	background-color: #f7f9fc;
+	background-color: var(--soft-grey-background);
 }
 
 .audio-disable {
@@ -169,7 +169,7 @@ audio {
 	height: 630px !important;
 }
 
-.button-ventilation-action .webix_button{
+.button-ventilation-action .webix_button {
 	width: 130px !important;
 	height: 35px;
     border-radius: 2px;
@@ -183,11 +183,11 @@ audio {
 	border: 1px solid #567eba;
 }
 
-.button-ventilation-action .webix_button:hover{
+.button-ventilation-action .webix_button:hover {
     background: rgb(185, 185, 185) !important;
 }
 
-.button-ventilation-action .webix_button .webix_icon_btn{
+.button-ventilation-action .webix_button .webix_icon_btn {
     color: #567eba !important;
 }
 

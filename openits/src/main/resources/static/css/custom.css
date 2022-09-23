@@ -24,7 +24,13 @@
 @import url(./css_modules/camViewer.css);
 @import url(./css_modules/equipmentModule.css);
 @import url(./css_modules/equipmentViewerModule.css);
+
 @import url(./css_modules/incidentReportModule.css);
+@import url(./css_modules/planExecutorModule.css);
+@import url(./css_modules/planScheduleModule.css);
+@import url(./css_modules/signalingModule.css);
+@import url(./css_modules/welcomeScreenModule.css);
+@import url(./css_modules/wizards.css);
 
 
 :root {
@@ -79,6 +85,8 @@
   --blue-text-default: rgb(71, 84, 102);
 
   --white-text-default: white;
+  --white-background-default : white;
+  --welcome-screen: rgb(158 158 158);
   --white-text-not-sel: rgba(255 255 255 / 0.83);
 
   --global-grey: rgb(218, 222, 224);
@@ -687,20 +695,6 @@ p, input, textarea {
 .grid-title-plan {
 	position:initial;
 	color: #475466;
-}
-
-.welcome-screen-inner{
-	width:100%;
-	height:100%;
-	text-align: center;
-	background: linear-gradient(315deg, #9e9e9e, #ffffff);
-}
-
-.welcome-screen-inner .webix_icon, 
-.welcome-screen-inner img{
-	position: relative;
-	top: 50%;
-	margin-top: -70px;
 }
 
 .empty-app-inner{
@@ -1541,58 +1535,6 @@ p, input, textarea {
 	color: #475268ff;
 }
 
-.headers .webix_el_box{
-    font-size: 13px;
-    font-weight: 500;
-    color: white;
-    background-color: var(--blue-mid-opacity-7);
-    text-align: center;
-}
-
-.header-wizard-first-line{
-	font-size:16px;
-	letter-spacing:0.2px;
-	color: white;
-	font-weight:500;
-	line-height:20px;
-	display:block;
-	white-space: nowrap;
-	overflow: hidden;
-	padding-left: 10px;
-    padding-top: 7px;
-}
-
-.header-wizard-second-line{
-	color: white;
-	display:block;
-	letter-spacing:0.2px;
-	line-height:20px;
-	font-size: 13px;
-	font-weight: 300;
-	white-space: nowrap;
-	overflow: hidden;
-	padding-left: 10px;
-}
-
-.header-wizard-step{
-	color: white;
-	display:block;
-	text-align: right;
-	letter-spacing:0.2px;
-	line-height:20px;
-	font-size: 13px;
-	font-weight: 300;
-	white-space: nowrap;
-	overflow: hidden;
-	padding-right: 10px;
-	padding-top: 17px;
-}
-
-.content-wizard-label{
-	vertical-align: 9px;
-	padding-left: 20px;	
-}
-
 .form-text-font {
 	font-weight: normal;
 	overflow: hidden;
@@ -1713,41 +1655,6 @@ p, input, textarea {
 	box-sizing: border-box;
 }
 
-.global-text {
-	margin: 6px 0px;
-	font-size: 14px;
-	padding-bottom: 6px;
-	padding-top: 2px;
-	font-family: Roboto;
-}
-
-.global-text .webix_inp_label{
-	margin: 6px 0px;
-	padding-bottom: 6px;
-	font-size: 14px;
-	padding-bottom: 12px;
-	font-family: Roboto;
-}
-
-.global-text-badge {
-	font-size: 14px;
-	font-weight: 500;
-	padding: 2px 12px;
-	border-radius: 8px;
-}
-
-.plan-form{
-	height: max-content !important;
-	box-sizing: border-box;
-	border: 1px solid var(--blue-mid-opacity-3) !important;
-	margin: 6px 0px 16px;
-}
-
-.plan-form .webix_inp_label {
-	color: #475466 !important;
-	font-size: 13px ;
-}
-
 .webix_nav_panel {
 	position: relative;
 	bottom: 35px;
@@ -1830,79 +1737,6 @@ p, input, textarea {
 	color: var(--mid-grey);
 }
 
-.planExecutor-button-play .webix_button {
-
-	display: inline-flex;
-	width: 120px;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	background: transparent;
-	font-size: 15px;
-	font-weight: 500;
-	color: green;
-}
-
-.planExecutor-button-play .webix_button .webix_icon_btn {
-	font-size: 30px;
-	color: green;
-}
-
-.planExecutor-button-play button:disabled{
-	color: var(--strong-grey) !important;
-	background: transparent !important;
-}
-
-.planExecutor-button-pause .webix_button {
-
-	display: inline-flex;
-	width: 120px;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	background: transparent;
-	font-size: 15px;
-	font-weight: 500;
-	color: blue;
-}
-
-.planExecutor-button-pause .webix_button .webix_icon_btn {
-	font-size: 30px;
-	color: blue;
-}
-
-.planExecutor-button-pause button:disabled{
-	color: var(--strong-grey) !important;
-	background: transparent !important;
-}
-
-.planExecutor-button-stop .webix_button {
-
-	display: inline-flex;
-	width: 120px;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	background: transparent;
-	font-size: 15px;
-	font-weight: 500;
-	color: red;
-}
-
-.planExecutor-button-stop .webix_button .webix_icon_btn {
-	font-size: 30px;
-	color: red;
-}
-
-.planExecutor-button-stop button:disabled{
-	color: var(--strong-grey) !important;
-	background: transparent !important;
-}
-
-.alarm-radio-options .webix_radio_option {
-	margin: 40px 0px !important;
-}
-
 .webix_menu-x.dt-submenu .webix_list_item {
 	background-color: transparent !important;
 	color: #94a1b3 !important; 
@@ -1976,22 +1810,6 @@ p, input, textarea {
 	border: 1px solid var(--blue-headers-not-sel);
 }
 
-.toolbar-vms-priority .webix_el_checkbox .webix_label_right{
-	
-	display: block;
-	font-size: 12px;
-}
-
-.toolbar-vms-priority .webix_el_richselect .webix_inp_static, .webix_el_datepicker .webix_inp_static, .webix_el_colorpicker .webix_inp_static, .webix_el_dbldatepicker .webix_inp_static {
-	
-	font-size: 12px;
-}
-
-.toolbar-vms-priority-options .webix_list_item{
-	
-	font-size: 12px;
-}
-
 .expand-collapse-btn .webix_button {
 
 	display: inline-block;
@@ -2028,27 +1846,6 @@ p, input, textarea {
 	border: 1px solid var(--blue-headers-not-sel);
 }
 
-.button-cta .webix_button{
-	width: 130px !important;
-	height: 35px;
-    border-radius: 2px;
-    background: #ff9800 !important;
-    font-size: 14px;
-    font-weight: 500;
-    color: white !important;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.button-cta .webix_button:hover{
-    background: #ffdaa2 !important;
-}
-
-.button-cta .webix_button .webix_icon_btn{
-	color: white;
-}
-
 .webix_dataview_item {
 	
 	border: none;
@@ -2069,57 +1866,6 @@ p, input, textarea {
     border-radius: var(--radius);
   }
 */
-
-.button-ventilation-action .webix_button{
-	width: 130px !important;
-	height: 35px;
-    border-radius: 2px;
-    background: transparent !important;
-    font-size: 14px;
-    font-weight: 500;
-    color: #567eba !important;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-	border: 1px solid #567eba;
-}
-
-.button-ventilation-action .webix_button:hover{
-    background: rgb(185, 185, 185) !important;
-}
-
-.button-ventilation-action .webix_button .webix_icon_btn{
-    color: #567eba !important;
-}
-
-.ventilation-description-box {
-    height:50px;
-	border-radius: 4px;
-    color: var(--blue-mid2);
-    background: rgba(198 211 231 / 0.3);
-	font-size: 12px;
-	font-weight: 300;
-	padding: 4px;
-}
-
-.button-icon-transparent .webix_button{
-	font-family: Roboto;
-	font-size: 12px;
-	background: transparent !important;
-    font-weight: 500;
-    color: var(--blue-mid2);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-	text-align: right;
-}
-
-.label-default .webix_el_box {
-	font-size: 11px !important;
-	font-weight: 300;
-	line-height: 30px !important;
-
-}
 
 .label-list-equipments .webix_el_box {
 	height: 43px !important;
@@ -2164,109 +1910,4 @@ p, input, textarea {
 	color: var(--blue-headers);
 }
 
-.player-body {
-	height: 630px !important;
-}
-
-audio { 
-	width: 100%;
-	display: block;
-	margin: 0 auto; 
-	}
-	
-.audio-description {
-	width: 560px !important;
-	height: 85px !important;
-	font-size: 14px;
-	color: #475466; 
-	padding: 5px 0px;
-}
-
-.audio-description .webix_el_box {
-	width: 100% !important;
-	height: 100% !important;
-	padding: 0px !important;
-	line-height: 20px !important; 
-}
-
-.audio-description .webix_el_box .webix_inp_textarea {
-	width: 552px !important;
-	height: 100% !important;
-}
-
-.audio-player {
-	border-width: 0px !important;
-	margin: 0px !important;
-	background-color: var(--soft-grey-background);
-}
-
-.audio-disable {
-	cursor: not-allowed;
-}
-
-.audio-disable > div > audio {
-	pointer-events: none;
-    opacity: 0.4;
-}
-
-.keyboard-text-editor {
-	margin: 0px 5px !important;
-	border-radius: 12px;
-}
-
-.keyboard-text-editor .webix_icon_btn {
-	color: #475466 !important;
-	margin: 0px 0px 0px 1px;
-}
-
-.special-characters-list {
-	border: 1px solid #dee6f1;
-	width: 285px;
-	height: 175px;
-	background-color: white;
-	display: flex;
-	justify-content: space-evenly;
-	flex-wrap: wrap;
-	overflow: auto;
-}
-
-.special-character-title {
-	font-family: Roboto;
-	font-size: 14px;
-	font-weight: 500;
-	font-stretch: normal;
-	font-style: normal;
-	line-height: normal;
-	letter-spacing: normal;
-	color: #475466;	
-}
-
-.special-character {
-	height: 25px;
-	padding-top: 10px;
-	margin: 15px;
-	text-align: center;
-}
-
-.special-character:hover {
-	background-color: #dee6f1;
-	transform: scale(1.75, 1.75);
-}
-
-.tube-order-edit-radio-options .webix_radio_option {
-	margin-bottom: 10px !important;
-}
-
-.change-road-impact-button
-.changeuser-button {
-	font-size: 21px;
-	position: absolute;
-    margin: -3px 0px 0px 15px;	
-}
-
-.change-road-impact-button:hover
-.changeuser-button:hover {
-	background-color: var(--soft-grey);
-	border-radius: 50%;
-}
 

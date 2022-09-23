@@ -16,7 +16,7 @@
 }
 
 .planExecutor-button-play button:disabled {
-	color: #94A1B3 !important;
+	color: var(--strong-grey) !important;
 	background: transparent !important;
 }
 
@@ -38,7 +38,7 @@
 }
 
 .planExecutor-button-pause button:disabled {
-	color: #94A1B3 !important;
+	color: var(--strong-grey) !important;
 	background: transparent !important;
 }
 
@@ -60,6 +60,6 @@
 }
 
 .planExecutor-button-stop button:disabled {
-	color: #94A1B3 !important;
+	color: var(--strong-grey) !important;
 	background: transparent !important;
 }

@@ -1,15 +1,15 @@
 .headers .webix_el_box {
     font-size: 13px;
     font-weight: 500;
-    color: white;
-    background-color: var(--color-mid-opacity-7);
+    color: var(--white-text-default);
+    background-color: var(--blue-mid-opacity-7);
     text-align: center;
 }
 
 .header-wizard-first-line {
 	font-size:16px;
 	letter-spacing:0.2px;
-	color: white;
+	color: var(--white-text-default);
 	font-weight:500;
 	line-height:20px;
 	display:block;
@@ -20,7 +20,7 @@
 }
 
 .header-wizard-second-line {
-	color: white;
+	color: var(--white-text-default);
 	display:block;
 	letter-spacing:0.2px;
 	line-height:20px;
@@ -32,7 +32,7 @@
 }
 
 .header-wizard-step {
-	color: white;
+	color: var(--white-text-default);
 	display:block;
 	text-align: right;
 	letter-spacing:0.2px;
@@ -59,7 +59,7 @@
 
 .change-road-impact-button:hover
 .changeuser-button:hover {
-	background-color: #F4F5F9;
+	background-color: var(--soft-grey);
 	border-radius: 50%;
 }
 
