@@ -19,7 +19,12 @@
 		"createPlanOrder": "plans/createPlanOrder",
 		"updatePlanOrder": "plans/updatePlanOrder",
 		"deletePlanOrder": "plans/deletePlanOrder/${id}",
-		"elementByIdsCommands": "elements/commands"
+		"elementByIdsCommands": "elements/commands",
+		"serverResources": "server/resources"
+	},
+	"resources": {
+		"planScripts": "plan-manager/groovy/",
+		"planExtension": "groovy"
 	},
 	"requiredPermissions": {
 		"signalling": "SystemPermission:5",
