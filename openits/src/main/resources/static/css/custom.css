@@ -15,6 +15,14 @@
 @import url(./css_components/taskbar.css);
 @import url(./css_components/treeView.css);
 
+/* Libraries */
+@import url(./css_libraries/ol.css);
+@import url(./css_libraries/util.css);
+
+/* Modules */
+@import url(./css_modules/alarmModules.css);
+@import url(./css_modules/camViewer.css);
+
 
 :root {
   --blue-strong: rgb(15, 23, 36);
@@ -201,11 +209,6 @@ p, input, textarea {
 	    box-shadow: unset;
 	    border-width: 0px !important;
 	}
-}
-
-.main-screen-locked-firefox {
-	
-	filter: blur(4px);
 }
 
 .notification-alarm-window-list {
@@ -769,41 +772,6 @@ p, input, textarea {
 	border: none;
 }
 
-.default-window {
-	border-color: var(--blue-strong);
-	box-shadow: 0 1.5rem 2.8rem !important;
-	animation: zoomIn;
-    animation-duration: 0.2s;
-}
-
-.window-head-title-wo-buttons {
-
-	font-weight: 600;
-    font-size: 14px;
-    color: white;
-    text-align: center;
-    letter-spacing: 2px;
-	padding: 6px 0px 0px 20px;
-}
-
-.window-head-title-w-buttons {
-	
-    font-weight: 600;
-    font-size: 14px;
-    color: white;
-    text-align: center;
-    letter-spacing: 2px;
-    padding: 6px 0px 0px 85px;
-}
-
-.window-head-title-wo-buttons .webix_el_box,
-.window-head-title-w-buttons .webix_el_box {
-    color: white !important;
-    text-align: center !important;
-	margin-top: -10px !important;	
-}
-
-
 .user-template{
     background: transparent;
     border: none;
@@ -1319,28 +1287,6 @@ p, input, textarea {
     text-overflow: ellipsis;
 }
 
-.panel-action .stats-header .webix_el_label .webix_el_box{
-	font-size: 10px;
-	margin-left: -1px;
-    text-align: center;
-    background: rgb(146 171 207 / 0.8);
-    color: #fff;
-}
-
-.panel-action .stats-content .webix_el_label .webix_el_box{
-	font-size: 30px;
-    text-align: center;
-    background: #e9eef5;
-    color: #1bcec8;
-}
-
-.panel-action .stats-badge-content .webix_toolbar {
-	
-	font-size: 14px;
-	font-weight: 500;
-	border-radius: 8px;
-}
-
 .action-button .webix_button{
 	
 	width: 100% !important;
@@ -1733,27 +1679,6 @@ p, input, textarea {
     width: fill-available;
 }
 
-.alarm-view-rectangle-back {
-	/*margin: 10px 25px 22px 14px;*/
-	border: none;
-	/*padding: 6px 0 6px 6px;*/
-	border-radius: 4px;
-	background-color: rgba(198, 211, 231, 0.3);
-}
-
-.alarm-view-comments {
-	font-family: Roboto;
-	font-size: 12px;
-	font-weight: 300;
-	font-stretch: normal;
-	font-style: normal;
-	line-height: 1.17;
-	letter-spacing: normal;
-	/*color: #475269;*/
-	color:var(--blue-mid);
-	padding: 7px 5px;
-}
-
 .alarm-view-header-details-text {
 	font-family: Roboto;
 	font-size: 14px;
@@ -1764,17 +1689,6 @@ p, input, textarea {
 	letter-spacing: normal;
 	/*color: #92abcf;*/
 	/*color: var(--blue-strong);*/
-	color: #475466;
-}
-
-.alarm-view-user_label {
-	font-family: Roboto;
-	font-size: 12px;
-	font-weight: 300;
-	font-stretch: normal;
-	font-style: normal;
-	line-height: normal;
-	letter-spacing: normal;
 	color: #475466;
 }
 
@@ -2153,41 +2067,6 @@ p, input, textarea {
 	color: var(--mid-grey);
 }
 
-.ol-control button {
-	width: 26px !important;
-	height: 24px !important;
-	background: #2d7cbe;
-	border-radius: 10% !important;
-	margin: 4px 9px;
-	padding-bottom: 2px;
-}
-
-.ol-control button:hover{
-	background: #1C507B;
-	cursor: pointer;
-	
-}
-
-.ol-control button:focus {
-	background-color: #2d7cbe;
-}
-
-.ol-control button:active {
-	background-color: #2d7cbe;	
-}
-
-.ol-control {
-	background-color: transparent !important;
-}
-
-.alarm-multiview {
-	width: 837px !important;
-	height: 350px !important;
-	border: 1px solid var(--blue-mid-opacity-3) !important;
-	font-size: 13px;
-	padding: 10px 0px;
-}
-
 .planExecutor-button-play .webix_button {
 
 	display: inline-flex;
@@ -2472,13 +2351,6 @@ p, input, textarea {
 	text-align: right;
 }
 
-.label-window-alarms .webix_el_box {
-	font-size: 13px !important;
-	text-decoration: underline;
-	cursor: pointer;
-	color: var(--blue-mid2) !important;	
-}
-
 .label-default .webix_el_box {
 	font-size: 11px !important;
 	font-weight: 300;
@@ -2493,253 +2365,6 @@ p, input, textarea {
 	font-weight: lighter;
 	color: var(--blue-text-default);
 	font-size: 16px;
-}
-
-.cam-viewer-button-small .webix_button {
-
-	display: inline-block;
-	white-space: nowrap;
-	overflow: hidden;
-	background: transparent;
-}
-
-.cam-viewer-button-small .webix_button:hover {
-	background-color: transparent;
-}
-
-.cam-viewer-button-small .webix_button:focus {
-	background-color: transparent;
-}
-
-.cam-viewer-button-small .webix_button .webix_icon_btn {
-	color: white;
-	border: 1px white solid; 
-	border-radius: 5px;
-	background-color: transparent;
-}
-
-.cam-viewer-button-small .webix_button .webix_icon_btn:hover {
-	color: var(--blue-mid);
-	border: 1px var(--blue-mid) solid;
-	border-radius: 5px;
-	background-color: white; 
-}
-
-/**/
-
-.cam-viewer-button-pressed-small .webix_button {
-
-	display: inline-block;
-	white-space: nowrap;
-	overflow: hidden;
-	background: transparent;
-}
-
-.cam-viewer-button-pressed-small .webix_button:hover {
-	background-color: transparent;
-}
-
-.cam-viewer-button-pressed-small .webix_button:focus {
-	background-color: transparent;
-}
-
-.cam-viewer-button-pressed-small .webix_button .webix_icon_btn {
-	color: var(--blue-mid);
-	border: 1px var(--blue-mid) solid; 
-	border-radius: 5px;
-	background-color: white;
-}
-
-/**/
-
-.cam-viewer-button .webix_button {
-
-	display: inline-block;
-	white-space: nowrap;
-	overflow: hidden;
-	background: transparent;
-}
-
-.cam-viewer-button .webix_button:hover {
-	background-color: transparent;
-}
-
-.cam-viewer-button .webix_button:focus {
-	background-color: transparent;
-}
-
-.cam-viewer-button .webix_button .webix_icon_btn {
-	color: white;
-	border: 1px white solid; 
-	border-radius: 5px;
-	background-color: transparent;
-	font-size: 30px;
-	width: 30px;
-}
-
-.cam-viewer-button .webix_button .webix_icon_btn:hover {
-	color: var(--blue-mid);
-	border: 1px var(--blue-mid) solid;
-	border-radius: 5px;
-	background-color: white; 
-}
-
-/**/
-
-.cam-viewer-button-pressed .webix_button {
-
-	display: inline-block;
-	white-space: nowrap;
-	overflow: hidden;
-	background: transparent;
-}
-
-.cam-viewer-button-pressed .webix_button:hover {
-	background-color: transparent;
-}
-
-.cam-viewer-button-pressed .webix_button:focus {
-	background-color: transparent;
-}
-
-.cam-viewer-button-pressed .webix_button .webix_icon_btn {
-	color: var(--blue-mid);
-	border: 1px var(--blue-mid) solid; 
-	border-radius: 5px;
-	background-color: white;
-	font-size: 30px;
-	width: 30px;
-}
-
-/**/
-
-.cam-viewer-controls-small .webix_button {
-
-	display: inline-block;
-	white-space: nowrap;
-	overflow: hidden;
-	background: transparent;
-}
-
-.cam-viewer-controls-small .webix_button:hover {
-	color: white;
-	background-color: transparent;
-	border-radius: 20px;
-	background-color: rgba(255 255 255 / 0.2);
-}
-
-.cam-viewer-controls-small .webix_button:focus {
-	background-color: transparent;
-}
-
-.cam-viewer-controls-small .webix_button .webix_icon_btn {
-	color: #eeeeec;
-	font-size: 15px;
-}
-
-.cam-viewer-controls-small .webix_button .webix_icon_btn:hover {
-	color: white;
-}
-
-/*** ****/
-
-.cam-viewer-controls .webix_button {
-
-	display: inline-block;
-	white-space: nowrap;
-	overflow: hidden;
-	background: transparent;
-}
-
-.cam-viewer-controls .webix_button:hover {
-	color: white;
-	background-color: transparent;
-	border-radius: 40px;
-	background-color: rgba(255 255 255 / 0.2);
-}
-
-.cam-viewer-controls .webix_button:focus {
-	background-color: transparent;
-}
-
-.cam-viewer-controls .webix_button .webix_icon_btn {
-	color: #eeeeec;
-	padding-right: 15px;
-	padding-top: 10px;
-	font-size: 40px;
-}
-
-.cam-viewer-controls .webix_button .webix_icon_btn:hover {
-	color: white;
-}
-
-/**/
-
-.cam-viewer-controls-preset-small .webix_button {
-
-	display: inline-block;
-	white-space: nowrap;
-	overflow: hidden;
-	border-radius: 5px;
-	color: #eeeeec;
-	background: rgba(255 255 255 / 0.15);
-	font-size: 10px;
-}
-
-.cam-viewer-controls-preset-small .webix_button:hover {
-	color: #eeeeec;
-	background-color: rgba(255 255 255 / 0.5);
-}
-
-.cam-viewer-controls-preset-small .webix_button:focus {
-	background-color: transparent;
-}
-
-.cam-viewer-controls-preset .webix_button {
-
-	display: inline-block;
-	white-space: nowrap;
-	overflow: hidden;
-	border-radius: 10px;
-	color: #eeeeec;
-	background: rgba(255 255 255 / 0.1);
-	font-size: 20px;
-	height: 35px;
-}
-
-.cam-viewer-controls-preset .webix_button:hover {
-	color: #eeeeec;
-	background-color: rgba(255 255 255 / 0.5);
-}
-
-.cam-viewer-controls-preset .webix_button:focus {
-	background-color: transparent;
-}
-
-.cam-viewer-name-small {
-	
-	height: 20px;
-}
-
-.cam-viewer-name-small .webix_el_box {
-	
-	color: white;
-	font-size: 10px;
-	text-decoration: underline;
-	cursor: pointer;
-}
-
-.cam-viewer-name {
-	
-	height: 30px;
-}
-
-.cam-viewer-name .webix_el_box{
-	
-	color: white;
-	font-size: 20px;
-	text-decoration: underline;
-	cursor: pointer;
 }
 
 .dbllist .webix_view .webix_list {
@@ -2865,13 +2490,6 @@ audio {
 	transform: scale(1.75, 1.75);
 }
 
-.camviewer-matrix .webix_template{
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	background-color: #9e9e9e;
-}
-
 .new-log-window .webix_inp_label,  .new-log-window .webix_template {
 	color: #475466 !important;
 	font-size: 14px;
@@ -2899,25 +2517,9 @@ audio {
 	border-radius: 50%;
 }
 
-.parameter-window {
-	text-align: left;
-	line-height: 32px;
-	padding-left: 75px 
-}
-
-.parameter-window .webix_el_box {
-	color: #475466;
-	font-size: 13px; 
-}
-
 .equipment-control-radio .webix_el_group {
 	display:flex;	
 	justify-content: center;
-}
-
-.alarm-module-window-edit-button .webix_icon{
-	font-size: 20px;
-	
 }
 
 .equipment-carousel .webix_view {

@@ -14,17 +14,17 @@
 }
 
 .cam-viewer-button-small .webix_button .webix_icon_btn {
-	color: white;
-	border: 1px white solid; 
+	color: var(--white-text-default);
+	border: 1px var(--white-text-default) solid; 
 	border-radius: 5px;
 	background-color: transparent;
 }
 
 .cam-viewer-button-small .webix_button .webix_icon_btn:hover {
-	color: var(--color-mid);
-	border: 1px var(--color-mid) solid;
+	color: var(--blue-mid);
+	border: 1px var(--blue-mid) solid;
 	border-radius: 5px;
-	background-color: white; 
+	background-color: var(--white-text-default); 
 }
 
 .cam-viewer-button-pressed-small .webix_button {
@@ -43,10 +43,10 @@
 }
 
 .cam-viewer-button-pressed-small .webix_button .webix_icon_btn {
-	color: var(--color-mid);
-	border: 1px var(--color-mid) solid; 
+	color: var(--blue-mid);
+	border: 1px var(--blue-mid) solid; 
 	border-radius: 5px;
-	background-color: white;
+	background-color: var(--white-text-default);
 }
 
 .cam-viewer-button .webix_button {
@@ -65,8 +65,8 @@
 }
 
 .cam-viewer-button .webix_button .webix_icon_btn {
-	color: white;
-	border: 1px white solid; 
+	color: var(--white-text-default);
+	border: 1px var(--white-text-default) solid; 
 	border-radius: 5px;
 	background-color: transparent;
 	font-size: 30px;
@@ -74,10 +74,10 @@
 }
 
 .cam-viewer-button .webix_button .webix_icon_btn:hover {
-	color: var(--color-mid);
-	border: 1px var(--color-mid) solid;
+	color: var(--blue-mid);
+	border: 1px var(--blue-mid) solid;
 	border-radius: 5px;
-	background-color: white; 
+	background-color: var(--white-text-default); 
 }
 
 .cam-viewer-button-pressed .webix_button {
@@ -96,10 +96,10 @@
 }
 
 .cam-viewer-button-pressed .webix_button .webix_icon_btn {
-	color: var(--color-mid);
-	border: 1px var(--color-mid) solid; 
+	color: var(--blue-mid);
+	border: 1px var(--blue-mid) solid; 
 	border-radius: 5px;
-	background-color: white;
+	background-color: var(--white-text-default);
 	font-size: 30px;
 	width: 30px;
 }
@@ -112,7 +112,7 @@
 }
 
 .cam-viewer-controls-small .webix_button:hover {
-	color: white;
+	color: var(--white-text-default);
 	background-color: transparent;
 	border-radius: 20px;
 	background-color: rgba(255 255 255 / 0.2);
@@ -128,7 +128,7 @@
 }
 
 .cam-viewer-controls-small .webix_button .webix_icon_btn:hover {
-	color: white;
+	color: var(--white-text-default);
 }
 
 .cam-viewer-controls .webix_button {
@@ -139,7 +139,7 @@
 }
 
 .cam-viewer-controls .webix_button:hover {
-	color: white;
+	color: var(--white-text-default);
 	background-color: transparent;
 	border-radius: 40px;
 	background-color: rgba(255 255 255 / 0.2);
@@ -157,7 +157,7 @@
 }
 
 .cam-viewer-controls .webix_button .webix_icon_btn:hover {
-	color: white;
+	color: var(--white-text-default);
 }
 
 .cam-viewer-controls-preset-small .webix_button {
@@ -204,7 +204,7 @@
 }
 
 .cam-viewer-name-small .webix_el_box {
-	color: white;
+	color: var(--white-text-default);
 	font-size: 10px;
 	text-decoration: underline;
 	cursor: pointer;
@@ -215,13 +215,13 @@
 }
 
 .cam-viewer-name .webix_el_box{
-	color: white;
+	color: var(--white-text-default);
 	font-size: 20px;
 	text-decoration: underline;
 	cursor: pointer;
 }
 
-.camviewer-matrix .webix_template{
+.camviewer-matrix .webix_template {
 	display: flex;
 	justify-content: center;
 	align-items: center;
