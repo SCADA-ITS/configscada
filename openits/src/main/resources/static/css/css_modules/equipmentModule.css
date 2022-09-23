@@ -1,5 +1,5 @@
 .equipment-carousel .webix_view {
-	background-color: #f4f7fa;
+	background-color: var(--soft-grey);
 	width: max-content !important;		
 	margin: 6px 0px;
 }
@@ -13,8 +13,8 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	color: var(--color-mid);
-	box-shadow: 0px 2px var(--color-strong);
+	color: var(--blue-mid);
+	box-shadow: 0px 2px var(--blue-strong);
 	font-size: 13px;
 }
 
@@ -28,12 +28,12 @@
 }
 
 .carousel-list .webix_list_item:hover {
-	box-shadow: 0px 2px var(--color-strong);
+	box-shadow: 0px 2px var(--blue-strong);
 }
 
 .carousel-list .webix_list_item.webix_selected {
 	background-color: transparent !important;
-	box-shadow: 0px 2px var(--color-strong);
+	box-shadow: 0px 2px var(--blue-strong);
 	border: none;
 } 
 

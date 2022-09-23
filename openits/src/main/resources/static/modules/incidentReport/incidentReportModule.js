@@ -314,7 +314,7 @@ export default class IncidentReportModule extends GenericModule {
 		if (loadingViewBlur && mainContent) {
 
 			loadingViewBlur.show();
-			webix.html.addCss(mainContent.$view, "main-screen-locked-firefox");
+			webix.html.addCss(mainContent.$view, "blur-screen");
 			log.debug("loading...");
 		}
 
@@ -755,7 +755,7 @@ export default class IncidentReportModule extends GenericModule {
 				if (loadingViewBlur && mainContent) {
 
 					loadingViewBlur.show();
-					webix.html.addCss(mainContent.$view, "main-screen-locked-firefox");
+					webix.html.addCss(mainContent.$view, "blur-screen");
 					log.debug("loading...");
 				}
 			}

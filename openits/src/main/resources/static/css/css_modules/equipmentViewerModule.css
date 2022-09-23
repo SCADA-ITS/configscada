@@ -2,10 +2,10 @@
 	border-radius: 6px;
     box-shadow: 2px 4px 4px 0 rgb(213 215 218 / 75%);
     border: solid 1px #c3c5c7;
-    background-color: var(--white);
+    background-color: var(--white-text-default);
     margin-right: 4px;
     height: 85px;
-    color: var(--color-text-default);
+    color: var(--blue-text-default);
 }
 
 .measure-box .image {
@@ -53,7 +53,7 @@
     font-weight: 500;
     border-radius: 8px;
     padding: 6px 12px;
-    color: white;
+    color: var(--white-text-default);
 }
 
 .equip-viewer-header .clock-ico {
@@ -88,18 +88,18 @@
 }
 
 .equip-viewer-header-actions .webix_secondary .webix_button:hover {
-	background: var(--color-soft-opacity-4);
+	background: var(--blue-soft-opacity-4);
 }
 
 .equip-viewer-header-actions .webix_secondary .webix_button .webix_icon {
 	left: 48%;
-	color: var(--color-text-default);
+	color: var(--blue-text-default);
 	font-size: 26px;
 }
 
 .equip-viewer-header-actions .webix_secondary .webix_button .webix_img_btn_text {
 	font-size: 13px;
-	color: var(--color-text-default);
+	color: var(--blue-text-default);
 	bottom: 9px;
 	white-space: nowrap;
     overflow: hidden;
@@ -117,7 +117,7 @@
 
 .equip-viewer-info {	
 	font-size: 14px;
-	color: var(--color-mid);
+	color: var(--blue-mid);
 }
 
 .equip-viewer-info .ico {
@@ -129,7 +129,7 @@
     margin-left: 30px;
     font-size: 13px;
     font-weight: 500;
-    color: var(--color-mid-opacity-7);
+    color: var(--blue-mid-opacity-7);
 }
 
 .equip-viewer-info .value {
@@ -159,15 +159,16 @@
 }
 
 @-webkit-keyframes measure-update {
-	0% { color: var(--color-text-default) }
+	0% { color: var(--blue-text-default) }
   	65% { color: rgb(76, 175, 80) }
-  	100% { color: var(--color-text-default) }
+  	100% { color: var(--blue-text-default) }
 }
+
 .segment-custom-1 .webix_segment_0,
 .segment-custom-1 .webix_segment_1,
 .segment-custom-1 .webix_segment_N {
   	background: transparent;
-  	color: #babdb6;
+  	color: var(--mid-grey);
 	margin-right: 30px;
 	font-size: 13px;
 	max-width: 150px;
@@ -179,15 +180,15 @@
 .segment-custom-1 .webix_segment_1:hover, 
 .segment-custom-1 .webix_segment_N:hover {
 	background: transparent;
-	box-shadow: 0px 2px var(--color-strong);
+	box-shadow: 0px 2px var(--blue-strong);
 }
 
 .segment-custom-1 .webix_segment_0.webix_selected,
 .segment-custom-1 .webix_segment_1.webix_selected,
 .segment-custom-1 .webix_segment_N.webix_selected {
   	background: transparent;
-  	color: var(--color-mid);
-	box-shadow: 0px 2px var(--color-strong);
+  	color: var(--blue-mid);
+	box-shadow: 0px 2px var(--blue-strong);
 	margin-right: 30px;
 	font-size: 13px;
 	max-width: 150px;
@@ -199,5 +200,5 @@
 .segment-custom-1 .webix_segment_1.webix_selected:hover, 
 .segment-custom-1 .webix_segment_N.webix_selected:hover {
 	background: transparent;
-	color: var(--color-mid) !important;
+	color: var(--blue-mid) !important;
 }
