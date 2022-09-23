@@ -28,5 +28,5 @@
 }
 
 .tree-view-single .webix_tree_item.webix_selected div {
-	background: var(--color-soft-opacity-1) !important;
+	background: var(--blue-soft-opacity-1) !important;
 }
