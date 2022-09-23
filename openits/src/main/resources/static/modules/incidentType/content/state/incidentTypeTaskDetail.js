@@ -155,7 +155,7 @@ export default class IncidentTypeTaskDetail {
 					header: i18n.t("LBL_CONFIG"),
 					body: {
 						id: "incident-type-state-task-detail-content-config-" + self.uid,
-						css: "bordered-layout"	
+						css: "bordered-layout-without-border-top"	
 					}
 				}
 				
@@ -171,7 +171,7 @@ export default class IncidentTypeTaskDetail {
 					header: i18n.t("LBL_PARAMS"),
 					body: {
 						id: "incident-type-state-task-detail-content-params-" + self.uid,
-						css: "bordered-layout"	
+						css: "bordered-layout-without-border-top"	
 					}
 				}
 				
@@ -187,7 +187,7 @@ export default class IncidentTypeTaskDetail {
 					header: i18n.t("LBL_PLANS"),
 					body: {
 						id: "incident-type-state-task-detail-content-plans-" + self.uid,
-						css: "bordered-layout"	
+						css: "bordered-layout-without-border-top"	
 					}
 				}
 				

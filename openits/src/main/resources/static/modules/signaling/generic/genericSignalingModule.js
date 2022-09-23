@@ -99,8 +99,8 @@ export default class GenericSignalingModule extends GenericModule {
 								},
 								{
 									view: "label",
-									css: "alarm-view-header-details-text",
-									label: `<span class="alarm-view-header-details-text">${self.element.alias}</span>`,
+									css: "view-header-details-text",
+									label: `<span class="view-header-details-text">${self.element.alias}</span>`,
 									align: "left",
 									height: 50
 								},

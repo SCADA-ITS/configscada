@@ -82,7 +82,7 @@ export default class IncidentReportTabTaskBoard {
 		let tabTasksBoard = {
 			id: "tab-task-board-" + self.index + "-" + self.uid,
 			borderless: true,
-			css: "bordered-layout",
+			css: "bordered-layout-without-border-top",
 			rows: [
 				{ height: 10 },
 				{

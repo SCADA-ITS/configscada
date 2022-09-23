@@ -295,7 +295,7 @@ export default class AlarmConfigModule extends GenericModule {
 					form = {
 						id: "form-" + self.uid,
 						view: "form",
-						css: "user-role-form",
+						css: "bordered-layout-without-border-top",
 						elementsConfig: { labelAlign: "left" },
 						elements: [
 							{
@@ -648,7 +648,7 @@ export default class AlarmConfigModule extends GenericModule {
 										{
 											view: "form",
 											elementsConfig: { labelAlign: "left" },
-											css: "global-form condition-dialog-box",
+											css: "global-form global-box-sizing",
 											elements: [
 												//{ view: "template", template: labelAlias, type: "section" },
 												{ height: 20 },

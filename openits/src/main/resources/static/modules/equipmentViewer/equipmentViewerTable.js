@@ -47,13 +47,13 @@ export default class EquipmentViewerTable {
 					cols: [
 						{ width: 10 },
 						{
-							css: { "border": "1px solid #dadee0", "box-sizing": "border-box" },
+							css: "bordered-layout-with-border-top",
 							rows: [getImage()]
 
 						},
 						{ width: 10 },
 						{
-							css: { "border": "1px solid #dadee0", "box-sizing": "border-box" },
+							css: "bordered-layout-with-border-top",
 							rows: getTable()
 						},
 						{ width: 10 }

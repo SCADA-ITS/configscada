@@ -42,7 +42,7 @@
 .time-template {
     background: transparent;
     border: none;
-    color: white !important;
+    color: var(--white-text-default) !important;
     font-size: 13px;
     font-weight: 500;
 }

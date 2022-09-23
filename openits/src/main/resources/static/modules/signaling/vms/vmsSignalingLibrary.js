@@ -206,14 +206,14 @@ export default class VmsSignalingLibrary {
 						if (vmsItemLib.signaling) {
 
 							self.composer.update(JSON.parse(vmsItemLib.signaling));
-							lblSelected.setValue(`<span class="alarm-view-header-details-text">${vmsItemLib.name}</span>`);
+							lblSelected.setValue(`<span class="view-header-details-text">${vmsItemLib.name}</span>`);
 
 							self.undoJsonData = JSON.parse(vmsItemLib.signaling);
 						}
 						else {
 
 							self.composer.clear();
-							lblSelected.setValue(`<span class="alarm-view-header-details-text">${vmsItemLib.name + " (" + i18n.t("LBL_NO_CONFIG") + ")"}</span>`);
+							lblSelected.setValue(`<span class="view-header-details-text">${vmsItemLib.name + " (" + i18n.t("LBL_NO_CONFIG") + ")"}</span>`);
 
 							self.undoJsonData = self.composer.getJsonDataClear();
 						}
@@ -228,11 +228,11 @@ export default class VmsSignalingLibrary {
 					
 					if (folder.value) {
 
-						lblSelected.setValue(`<span class="alarm-view-header-details-text">${folder.value}</span>`);
+						lblSelected.setValue(`<span class="view-header-details-text">${folder.value}</span>`);
 
 					} else {
 
-						lblSelected.setValue(`<span class="alarm-view-header-details-text">${folder.value + " (" + i18n.t("LBL_NO_CONFIG") + ")"}</span>`);
+						lblSelected.setValue(`<span class="view-header-details-text">${folder.value + " (" + i18n.t("LBL_NO_CONFIG") + ")"}</span>`);
 					}
 						
 					if (viewComposer && headerMain && tbMain && btnSelect && viewOptionDialog) {
@@ -453,7 +453,7 @@ export default class VmsSignalingLibrary {
 						{
 							id: "label-lib-selected-" + self.uid,
 							view: "label",
-							label: `<span class="alarm-view-header-details-text">${i18n.t("LBL_NO_SELECTED")}</span>`,
+							label: `<span class="view-header-details-text">${i18n.t("LBL_NO_SELECTED")}</span>`,
 							align: "left",
 							height: 50
 						},

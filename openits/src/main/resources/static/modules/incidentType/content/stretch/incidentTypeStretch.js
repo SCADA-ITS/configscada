@@ -36,7 +36,7 @@ export default class IncidentTypeStretch {
 			
 			viewMain = {
 				id: "incident-type-stretch-" + self.uid,
-				css: "bordered-layout",
+				css: "bordered-layout-without-border-top",
 				rows: [
 					{ height: 10 },
 					{

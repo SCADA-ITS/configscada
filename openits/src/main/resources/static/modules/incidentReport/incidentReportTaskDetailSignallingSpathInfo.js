@@ -31,7 +31,7 @@ export default class IncidentReportTaskDetailSignallingSpathInfo {
 		]
 
 		let rowInfo = {
-			css: "alarm-borders-top",
+			css: "spath-info-borders",
 			cols: [
 				{ width: margin_width },
 				{
@@ -111,8 +111,8 @@ export default class IncidentReportTaskDetailSignallingSpathInfo {
 								},
 								{
 									view: "label",
-									css: "alarm-view-header-details-text",
-									label: `<span class="alarm-view-header-details-text">${i18n.t("LBL_DETAILS_DESCRIPTION")}</span>`,
+									css: "view-header-details-text",
+									label: `<span class="view-header-details-text">${i18n.t("LBL_DETAILS_DESCRIPTION")}</span>`,
 									align: "left",
 									height: 50
 								},

@@ -22,7 +22,7 @@ export default class IncidentTypeTaskDetailConfig {
 		
 		viewTaskConfig= {
 			id: "incident-type-state-task-detail-content-config-" + self.uid,
-			css: "bordered-layout",
+			css: "bordered-layout-without-border-top",
 			rows: []
 		}
 		

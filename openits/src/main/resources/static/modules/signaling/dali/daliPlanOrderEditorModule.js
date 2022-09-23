@@ -117,7 +117,7 @@ export default class DaliPlanOrderEditorModulue extends GenericModule {
 								{
 									id: "elements-selected-label" + self.uid,
 									view: "label",
-									css: "alarm-view-header-details-text",
+									css: "view-header-details-text",
 									label: self.element.alias,
 									align: "left",
 									height: 50
@@ -191,7 +191,7 @@ export default class DaliPlanOrderEditorModulue extends GenericModule {
 									{
 										id: "label-lighting-" + self.uid,
 										view: "label",
-										css: "alarm-view-header-details-text",
+										css: "view-header-details-text",
 										width: 250,
 										label: i18n.t("LBL_REGIME"),
 									},

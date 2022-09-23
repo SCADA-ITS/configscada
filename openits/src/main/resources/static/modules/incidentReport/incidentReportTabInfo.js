@@ -204,7 +204,7 @@ export default class IncidentReportTabInfo {
 		let tabDetails = {
 			id: "tab-details-" + self.uid,
 			borderless: true,
-			css: "ims-incident-report-tab-details bordered-layout",
+			css: "ims-incident-report-tab-details bordered-layout-without-border-top",
 			rows: [
 				{ height: 40 },
 				{

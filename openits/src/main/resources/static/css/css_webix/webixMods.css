@@ -1,5 +1,5 @@
 .webix_layout_space {
-    background: linear-gradient(180deg, var(--color-mid), transparent);
+    background: linear-gradient(180deg, var(--blue-mid), transparent);
 }
 
 .webix_modal {
@@ -11,47 +11,47 @@
 }
 
 .webix_alert .webix_popup_title {	
-	box-shadow: inset 0 4px var(--color-strong);
+	box-shadow: inset 0 4px var(--blue-strong);
 }
 
 .webix_modal_box {
-	background: rgb(247 249 252);
+	background: var(--soft-grey-background);
 	box-shadow: 0 0.5rem 1.5rem !important;
 }
 
 .webix_modal_box .webix_popup_button {
     margin-top: 8px;
-    color: var(--color-soft);
+    color: var(--blue-soft);
     border-radius: 4px;
     border-width: 0px;
-    background: var(--color-mid);
+    background: var(--blue-mid);
 }
 
 .webix_modal_box .webix_popup_button:hover {
     border-radius: 4px;
 	border-width: 0px;
-	background: var(--color-mid-opacity-9) !important;
-	color: white;
+	background: var(--blue-mid-opacity-9) !important;
+	color: var(--white-text-default);
 }
 
 .webix_pager_item_selected {
 	color: rgb(71, 84, 102, 0.8) !important;
-	background-color: var(--color-mid-opacity-2) !important;
+	background-color: var(--blue-mid-opacity-2) !important;
 }
 
 .webix_pager_item_selected:hover {
-	color:var(--color-soft) !important;
+	color:var(--blue-soft) !important;
 	background-color: rgb(71, 84, 102, 0.8)  !important;
 	transition: 0.5s;
 }
 
 .webix_pager_item {
-	color:var(--color-soft) !important;
+	color:var(--blue-soft) !important;
 }
 
 .webix_pager_item:hover {
-	color:var(--color-soft) !important;
-	background-color: var(--color-mid-opacity-2) !important;
+	color:var(--blue-soft) !important;
+	background-color: var(--blue-mid-opacity-2) !important;
 	transition: 0.5s;
 }
 
@@ -60,20 +60,20 @@
 }
 
 .webix_list_item.webix_selected {
-    box-shadow: inset 2px 0 var(--color-strong);
-    background-color: var(--color-soft-opacity-4);
+    box-shadow: inset 2px 0 var(--blue-strong);
+    background-color: var(--blue-soft-opacity-4);
 }
 
 .webix_dtable .webix_select_mark > div.webix_row_select {
-    box-shadow: inset 2px 0 var(--color-strong);
+    box-shadow: inset 2px 0 var(--blue-strong);
 }
 
 .webix_dtable .webix_ss_header td.webix_last_row {
-    border-bottom: 1px solid var(--color-strong);
+    border-bottom: 1px solid var(--blue-strong);
 }
 
 .webix_dtable div.webix_ss_vscroll_header {
-    border-bottom-color: var(--color-strong);
+    border-bottom-color: var(--blue-strong);
 }
 
 .webix_template {
@@ -82,48 +82,48 @@
 }
 
 .webix_accordionitem .webix_accordionitem_header {
-	background-color: var(--color-soft-opacity-1);
+	background-color: var(--blue-soft-opacity-1);
 }
 
 .webix_accordionitem_label {
     font-weight: lighter;
-    color: var(--color-text-default);
+    color: var(--blue-text-default);
 }
 
 .webix_accordionitem .webix_accordionitem_header .webix_accordionitem_button{
-	color: var(--color-text-default);
+	color: var(--blue-text-default);
 }
 
 .webix_accordionitem .webix_accordionitem_header:hover,
 .webix_accordionitem .webix_accordionitem_header:focus {
-	background-color: var(--color-soft-opacity-2);
-	color: var(--color-text-default);
+	background-color: var(--blue-soft-opacity-2);
+	color: var(--blue-text-default);
 }
 
 .webix_accordionitem.horizontal.collapsed .webix_accordionitem_header, .webix_accordionitem.collapsed .webix_accordionitem_header {
-	background: var(--color-soft-opacity-1);
-	color: var(--color-text-default);
+	background: var(--blue-soft-opacity-1);
+	color: var(--blue-text-default);
 }
 
 .webix_accordionitem.horizontal.collapsed .webix_accordionitem_header .webix_accordionitem_button, .webix_accordionitem.collapsed .webix_accordionitem_header .webix_accordionitem_button {
-	color: var(--color-text-default);
+	color: var(--blue-text-default);
 }
 
 .webix_accordionitem.horizontal.collapsed .webix_accordionitem_header:hover,
 .webix_accordionitem.collapsed .webix_accordionitem_header:hover,
 .webix_accordionitem.horizontal.collapsed .webix_accordionitem_header:focus,
 .webix_accordionitem.collapsed .webix_accordionitem_header:focus {
-  background-color: var(--color-soft-opacity-2);
-  color: var(--color-text-default);
+  background-color: var(--blue-soft-opacity-2);
+  color: var(--blue-text-default);
 }
 
 .webix_accordionitem.horizontal.collapsed .webix_accordionitem_header .webix_accordionitem_label .webix_icon, 
 .webix_accordionitem.collapsed .webix_accordionitem_header .webix_accordionitem_label .webix_icon {
-    color: var(--color-text-default);
+    color: var(--blue-text-default);
 }
 
 .webix_view.webix_control .webix_disabled_box .webix_button {
-    color: white;
+    color: var(--white-text-default);
     text-shadow: none;
     opacity: 0.6;
 }
@@ -155,8 +155,8 @@
 }
 
 .webix_dataview_item.webix_selected {
-    color: var(--color-headers);
-    background: var(--color-soft-opacity-4);
+    color: var(--blue-headers);
+    background: var(--blue-soft-opacity-4);
 }
 
 .webix_ss_header, .webix_ss_header TD, .webix_ss_vscroll_header, .webix_dd_drag_column {
@@ -173,9 +173,9 @@
 }
 
 .webix_view {
-	color: var(--color-text-default);
+	color: var(--blue-text-default);
 }
 
 .webix_toolbar .webix_el_label .webix_el_box {
-	color: var(--color-text-default);
+	color: var(--blue-text-default);
 }

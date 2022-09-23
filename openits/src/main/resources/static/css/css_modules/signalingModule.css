@@ -197,3 +197,38 @@ audio {
 	line-height: 30px !important;
 
 }
+
+.expand-collapse-btn .webix_button {
+	display: inline-block;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	border: 1px;
+	border-radius: 5px;
+	background: transparent;
+	font-size: 11px;
+	color: var(--blue-headers);
+	border: 1px solid var(--blue-headers-not-sel);
+	height: 25px !important;
+	line-height: 0px !important;
+}
+
+.expand-collapse-btn .webix_button:hover {
+	background: var(--blue-headers-not-sel) !important;
+	border-radius: 5px; 
+	color: var(--blue-headers);
+}
+
+.expand-collapse-btn .webix_button:focus {
+	background: transparent;
+}
+
+.expand-collapse-btn .webix_button .webix_icon_btn {
+	font-size: 11px;
+	color: var(--blue-headers);
+}
+
+.expand-collapse-btn .webix_disabled_box .webix_button.webix_img_btn {
+	color: #9098a2;
+	border: 1px solid var(--blue-headers-not-sel);
+}

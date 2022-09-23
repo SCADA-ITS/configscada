@@ -26,7 +26,7 @@ export default class IncidentTypeTaskDetailPlan {
 		
 		let viewTaskPlans = {
 			id: "incident-type-state-task-detail-content-plans-" + self.uid,
-			css: "bordered-layout",
+			css: "bordered-layout-without-border-top",
 			cols: [
 				getViewDatatableStretchs(),
 				{

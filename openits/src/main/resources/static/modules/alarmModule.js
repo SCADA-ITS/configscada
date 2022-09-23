@@ -521,7 +521,6 @@ export default class AlarmModule extends GenericModule {
 				height: 545,
 				cols: [
 					{
-						css: {"background-color": "white"},
 						rows: [
 							{
 								id: "custom_window" + self.uid,
@@ -884,8 +883,8 @@ export default class AlarmModule extends GenericModule {
 								},
 								{
 									view: "label",
-									css: "alarm-view-header-details-text",
-									label: `<span class="alarm-view-header-details-text">${i18n.t("LBL_DETAILS_DESCRIPTION")}</span>`,
+									css: "view-header-details-text",
+									label: `<span class="view-header-details-text">${i18n.t("LBL_DETAILS_DESCRIPTION")}</span>`,
 									align: "left",
 									height: 50
 								},

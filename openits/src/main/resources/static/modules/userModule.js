@@ -12,29 +12,17 @@ export default class UserModule extends GenericModule {
 		super(module, moduleAction, args);
 
 		this.uid = webix.uid();
-
 		this.config = module.config;
-
 		this.moduleAction = moduleAction;
-
 		this.args = args;
-
 		this.form = {};
-
 		this.data = null;
-
 		this.dtPermissions = null;
-
 		this.oldUser = null;
-
 		this.newUser = null;
-
 		this.userPermissions = [];
-
 		this.rolPermissions = [];
-
 		this.userSystem = false;
-		
 		this.userData = util.user.getUserData();
 	}
 
@@ -67,7 +55,6 @@ export default class UserModule extends GenericModule {
 				css: "custom_window",
 				cols: [
 					{
-						css: { "background-color": "white" },
 						rows: [
 							{ height: 6 },
 							{
@@ -535,7 +522,7 @@ export default class UserModule extends GenericModule {
 					let form = {
 						id: "form-" + self.uid,
 						view: "form",
-						css: "user-role-form",
+						css: "bordered-layout-without-border-top",
 						elementsConfig: { labelAlign: "left" },
 						elements: [
 							{
@@ -669,7 +656,7 @@ export default class UserModule extends GenericModule {
 					 
 					dataTable = {
 						id: "dt-" + self.uid,
-						css: "user-role-form user-role-dt",
+						css: "bordered-layout-without-border-top",
 						rows: getTable()
 					};
 

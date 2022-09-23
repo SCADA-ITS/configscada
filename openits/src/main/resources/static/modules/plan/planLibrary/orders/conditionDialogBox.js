@@ -86,7 +86,7 @@ export default class ConditionDialogBox {
 					{
 						view: "form",
 						elementsConfig: { labelAlign: "left" },
-						css: "global-form condition-dialog-box",
+						css: "global-form global-box-sizing",
 						elements: [
 							getElemenRow(),
 							{ view: "template", template: i18n.t("LBL_STATE"), type: "section" },

@@ -155,7 +155,7 @@ export default class IncidentTypeModule extends GenericModule {
 								{
 									view: "label",
 									id: "label-plan-lib-selected-" + self.uid,
-									css: "alarm-view-header-details-text",
+									css: "view-header-details-text",
 									align: "left"
 								},
 								{}

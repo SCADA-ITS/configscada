@@ -89,11 +89,11 @@ export default class PlanLibraryContent {
 									{ width: 5 },
 									{
 										view: "label",
-										css: "alarm-view-header-details-text",
+										css: "view-header-details-text",
 										autowidth: true,
 										label: function() {									
 											 
-											return `<span class="alarm-view-header-details-text">${self.plan.alias}</span>`;
+											return `<span class="view-header-details-text">${self.plan.alias}</span>`;
 										}(),
 										align: "left",
 									},

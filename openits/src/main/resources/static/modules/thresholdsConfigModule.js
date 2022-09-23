@@ -33,7 +33,6 @@ export default class ThresholdsConfigModule extends GenericModule {
 			css: "custom_window",
 			cols: [
 				{
-					css: { "background-color": "white" },
 					rows: [
 						{ height: 6 },
 						{
@@ -250,7 +249,6 @@ export default class ThresholdsConfigModule extends GenericModule {
 
 					header = {
 						id: "viewHeader-" + self.uid,
-						css: { "background-color": "white" },
 						cols: [
 							{
 								view: "label",

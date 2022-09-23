@@ -156,7 +156,7 @@ export default class PlanLibraryModule extends GenericModule {
 								{
 									view: "label",
 									id: "label-plan-lib-selected-" + self.uid,
-									css: "alarm-view-header-details-text",
+									css: "view-header-details-text",
 									align: "left"
 								},
 								{}
@@ -268,7 +268,7 @@ export default class PlanLibraryModule extends GenericModule {
 						$$("plan-lib-resizer-" + self.uid).show();
 						$$("view-option-dialog-" + self.uid).show();
 	
-						$$("label-plan-lib-selected-" + self.uid).setValue(`<span class="alarm-view-header-details-text">${folder.value}</span>`);	
+						$$("label-plan-lib-selected-" + self.uid).setValue(`<span class="view-header-details-text">${folder.value}</span>`);	
 					}
 				}
 

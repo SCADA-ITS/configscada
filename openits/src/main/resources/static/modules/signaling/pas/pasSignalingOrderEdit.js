@@ -275,7 +275,7 @@ export default class PasSignalingOrderEdit {
 								{
 									id: "elements-selected-label" + self.uid,
 									view: "label",
-									css: "alarm-view-header-details-text",
+									css: "view-header-details-text",
 									label: self.element.alias,
 									align: "left",
 									height: 50
@@ -295,8 +295,8 @@ export default class PasSignalingOrderEdit {
 								},
 								{
 									view: "label",
-									css: "alarm-view-header-details-text",
-									label: `<span class="alarm-view-header-details-text">${i18n.t("LBL_SIGNALING")}</span>`,
+									css: "view-header-details-text",
+									label: `<span class="view-header-details-text">${i18n.t("LBL_SIGNALING")}</span>`,
 									align: "left",
 									height: 50
 								}

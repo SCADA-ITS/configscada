@@ -4,7 +4,7 @@
 .segment-custom-2 .webix_segment_1,
 .segment-custom-2 .webix_segment_N {
   	background: transparent;
-  	color: #babdb6;
+  	color: var(--mid-grey);
 	font-size: 13px;
 	overflow: hidden; 
 	white-space: nowrap;
@@ -15,15 +15,15 @@
 .segment-custom-2 .webix_segment_1:hover, 
 .segment-custom-2 .webix_segment_N:hover {
 	background: transparent;
-	box-shadow: 0px 2px var(--color-strong);
+	box-shadow: 0px 2px var(--blue-strong);
 }
 
 .segment-custom-2 .webix_segment_0.webix_selected,
 .segment-custom-2 .webix_segment_1.webix_selected,
 .segment-custom-2 .webix_segment_N.webix_selected {
   	background: transparent;
-  	color: var(--color-mid);
-	box-shadow: 0px 2px var(--color-strong);
+  	color: var(--blue-mid);
+	box-shadow: 0px 2px var(--blue-strong);
 	font-size: 13px;
 }
 
@@ -31,14 +31,14 @@
 .segment-custom-2 .webix_segment_1.webix_selected:hover, 
 .segment-custom-2 .webix_segment_N.webix_selected:hover {
 	background: transparent;
-	color: var(--color-mid) !important;
+	color: var(--blue-mid) !important;
 }
 
 /* Tabs */ 
 
 .secondary-tab  {
 	border-width: 0px;
-	border-color: var(--color-soft-opacity-2) !important;
+	border-color: var(--blue-soft-opacity-2) !important;
 	margin-top: -2px !important;
 }
 
@@ -50,7 +50,7 @@
 }
 
 .secondary-tab .webix_all_tabs .webix_item_tab {
-	color: var(--color-mid) !important;
+	color: var(--blue-mid) !important;
 	font-weight: 500;
 	font-size: 13px;
 	border-top-left-radius: 8px !important;
@@ -65,20 +65,20 @@
 
 .secondary-tab .webix_all_tabs .webix_item_tab.webix_selected {
 	width: 180px !important;
-    background-color: var(--color-headers) !important;
-    color: white !important;
+    background-color: var(--blue-headers) !important;
+    color: var(--white-text-default) !important;
     box-shadow: none;
 }
  
 .secondary-tab .webix_item_tab:not(.webix_selected) {
 	width: 180px !important;
-    background-color: var(--color-mid-opacity-4) !important;
+    background-color: var(--blue-mid-opacity-4) !important;
     color: var(--white-text-not-sel) !important;
 }
 
 .secondary-tab .webix_item_tab:not(.webix_selected):hover {
 	color: var(--white-text-default) !important;
-	background-color: var(--color-headers) !important;
+	background-color: var(--blue-headers) !important;
 }
 
 .auxiliary-tab .webix_el_tabbar {
@@ -103,24 +103,24 @@
 }
 
 .auxiliary-tab .webix_all_tabs .webix_item_tab.webix_selected {
-	color: var(--color-mid) !important;
-	box-shadow: inset 0 -3px var(--color-strong) !important;
+	color: var(--blue-mid) !important;
+	box-shadow: inset 0 -3px var(--blue-strong) !important;
 	background-color: transparent !important;
 }
  
 .auxiliary-tab .webix_item_tab:not(.webix_selected) {   
-	color: #babdb6 !important;
+	color: var(--mid-grey) !important;
 	background-color: transparent !important;
 }
 
 .auxiliary-tab .webix_item_tab:not(.webix_selected):hover {
-	color: #babdb6 !important;
-	box-shadow: inset 0 -3px var(--color-strong);
+	color: var(--mid-grey) !important;
+	box-shadow: inset 0 -3px var(--blue-strong);
 	background-color: transparent !important;
 }
 
 .auxiliary-tab .webix_all_tabs .webix_tab_more_icon {
-	box-shadow: inset 0 -3px white;
+	box-shadow: inset 0 -3px var(--white-text-default);
 }
 
 .auxiliary-tab .webix_all_tabs .webix_tab_more_icon:hover {
@@ -128,7 +128,7 @@
 }
 
 .auxiliary-tab .webix_all_tabs .webix_tab_more_icon .webix_icon {
-	color: #babdb6;
+	color: var(--mid-grey);
 }
 
 /* Bordered layout */
@@ -154,7 +154,7 @@
 	font-style: normal;
 	line-height: normal;
 	letter-spacing: normal;
-	color: var(--color-headers);
+	color: var(--blue-headers);
 }
 
 .grid-icon {
@@ -178,11 +178,11 @@
 
 .grid-title-plan {
 	position:initial;
-	color: var(--color-headers);
+	color: var(--blue-headers);
 }
 
 .global-header {
-	background: var(--color-mid2-opacity-1);
+	background: var(--blue-mid2-opacity-1);
 }
 
 .global-header .icon {
@@ -233,7 +233,7 @@
 	position: relative;
     top: 46%;
     font-size: 30px;
-    color: var(--color-mid);
+    color: var(--blue-mid);
     padding-left: 16px;
 }
 
@@ -320,13 +320,13 @@
 }
 
 .progressbar li.current {
-    color: var(--color-headers);
+    color: var(--blue-headers);
     font-weight: 500;  
 }
 
 .progressbar li.current:before {
     border-color: trasparent;
-    background: var(--color-headers);
+    background: var(--blue-headers);
 }
 
 .progressbar li.current + li:after {
@@ -338,17 +338,17 @@
 
 .panel-action {
 	height: 100% !important;
-	background-color: var(--color-soft-opacity-0-7);
+	background-color: var(--blue-soft-opacity-0-7);
 }
 
 .panel-action .section {
-	background-color: var(--color-soft-opacity-1);
+	background-color: var(--blue-soft-opacity-1);
 	height: 23px !important;
 }
 
 .panel-action .section-text {
 	background-color: transparent;
-    color: var(--color-mid2-opacity-9);
+    color: var(--blue-mid2-opacity-9);
     margin-left: 15px;
     font-weight: 500;
 }
@@ -365,13 +365,13 @@
 	position: fixed;
     font-size: 22px;
     padding-left: 7px;
-    color: var(--color-mid2);
+    color: var(--blue-mid2);
     margin-top: 1px;
 }
 
 .panel-action .section-info .field {
 	padding-left: 42px;
-    color: var(--color-mid2-opacity-9);
+    color: var(--blue-mid2-opacity-9);
     font-size: 12px;
     font-weight: 500;
 }
@@ -382,7 +382,7 @@
     position: absolute;
     margin-left: 43px;
     margin-top: 7px;
-    color: var(--color-mid2);
+    color: var(--blue-mid2);
 }
 
 .panel-action .tb-buttons {
@@ -408,20 +408,20 @@
 
 .panel-action .tb-buttons .webix_secondary .webix_button:hover,
 .panel-action .tb-actions .webix_secondary .webix_button:hover {	
-	background: var(--color-soft-opacity-2);
+	background: var(--blue-soft-opacity-2);
 }
 
 .panel-action .tb-buttons .webix_secondary .webix_button .webix_icon,
 .panel-action .tb-actions .webix_secondary .webix_button .webix_icon {
 	left: 45%;
-	color: var(--color-mid2);
+	color: var(--blue-mid2);
 	font-size: 34px;
 }
 
 .panel-action .tb-buttons .webix_secondary .webix_button .webix_img_btn_text,
 .panel-action .tb-actions .webix_secondary .webix_button .webix_img_btn_text {
 	font-size: 13px;
-	color: var(--color-mid2);
+	color: var(--blue-mid2);
 	bottom: 9px;
 	white-space: nowrap;
     overflow: hidden;
@@ -435,14 +435,14 @@
     border-radius: 4px;
     border-width: 0px;
     background: #ff9800 !important;
-    color: white;
+    color: var(--white-text-default);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
 .action-button .webix_icon_btn {	
-    color: white !important;
+    color: var(--white-text-default) !important;
 }
 
 .action-button .webix_button:hover {	
@@ -454,14 +454,14 @@
     border-radius: 4px;
     border-width: 0px;
     background: #ddd !important;
-    color: white;
+    color: var(--white-text-default);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
 .action-button-dis .webix_icon_btn {	
-    color: white !important;
+    color: var(--white-text-default) !important;
 }
 
 .action-aux-button .webix_button {	
@@ -469,14 +469,14 @@
     border-radius: 4px;
     border-width: 0px;
     background: rgba(3 169 244 / 1) !important;
-    color: white;
+    color: var(--white-text-default);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
 .action-aux-button .webix_icon_btn {	
-    color: white !important;
+    color: var(--white-text-default) !important;
 }
 
 .action-aux-button .webix_button:hover {	
@@ -488,14 +488,14 @@
     border-radius: 4px;
     border-width: 0px;
     background: #ddd !important;
-    color: white;
+    color: var(--white-text-default);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
 .action-aux-button-dis .webix_icon_btn {	
-    color: white !important;
+    color: var(--white-text-default) !important;
 }
 
 /* Dialog buttons */
@@ -507,7 +507,7 @@
     background: rgb(78, 154, 6) !important;
     font-size: 16px;
     font-weight: 500;
-    color: white !important;
+    color: var(--white-text-default) !important;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -518,7 +518,7 @@
 }
 
 .dialog-accept .webix_button .webix_icon_btn {
-	color: white;
+	color: var(--white-text-default);
 }
 
 .dialog-cancel .webix_button {
@@ -528,7 +528,7 @@
     background: rgb(204, 0, 0) !important;
     font-size: 16px;
     font-weight: 500;
-    color: white !important;
+    color: var(--white-text-default) !important;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -545,7 +545,7 @@
     background: rgb(144, 142, 142) !important;
     font-size: 16px;
     font-weight: 500;
-    color: white;
+    color: var(--white-text-default);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -562,7 +562,7 @@
     background: rgb(255 152 0) !important;
     font-size: 16px;
     font-weight: 500;
-    color: white;
+    color: var(--white-text-default);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -586,14 +586,14 @@
 }
 	
 .global-form {
-	border: 1px solid var(--color-mid-opacity-3) !important;
+	border: 1px solid var(--blue-mid-opacity-3) !important;
 	margin: 6px 0px;
 	font-size: 13px;
 	padding-bottom: 12px;
 }
 
 .global-form .webix_inp_label{
-	color:  var(--color-headers) !important;
+	color:  var(--blue-headers) !important;
 	font-size: 13px ;
 	padding-left: 75px ;
 }
@@ -617,12 +617,12 @@
 
 .dbllist .dbllist_button {
 	background-color: transparent;
-	border: 1px solid var(--color-headers-not-sel);
+	border: 1px solid var(--blue-headers-not-sel);
 	border-radius: 5px;
 }
 
 .dbllist .dbllist_button:hover {
-	background-color: var(--color-headers-not-sel);  
+	background-color: var(--blue-headers-not-sel);  
 }
 
 .dbllist .dbllist_button:active, .dbllist .dbllist_button:focus {
@@ -630,7 +630,7 @@
 }
 
 .dbllist .dbllist_button .webix_icon {
-	color: var(--color-headers);
+	color: var(--blue-headers);
 }
 
 /* Submenu */
@@ -644,8 +644,8 @@
 }
 
 .webix_menu-x.dt-submenu .webix_list_item:hover {
-	background-color: #F4F5F9 !important;
-	color: var(--color-headers) !important;
+	background-color: var(--soft-grey) !important;
+	color: var(--blue-headers) !important;
 	border-radius: 50%;
 	background-size: 85% 85% !important;
 }
@@ -678,7 +678,7 @@
 .ims-incident-report-state-first-line {
 	font-size:14px;
 	letter-spacing:0.2px;
-	color: white;
+	color: var(--white-text-default);
 	line-height:15px;
 	white-space: nowrap;
 	text-overflow: ellipsis;
@@ -690,7 +690,7 @@
 .ims-incident-report-state-second-line {
 	font-size:14px;
 	letter-spacing:0.2px;
-	color: white;
+	color: var(--white-text-default);
 	line-height:15px;
 	white-space: nowrap;
 	text-overflow: ellipsis;
@@ -750,16 +750,16 @@
 	border-radius: 5px;
 	background: transparent;
 	font-size: 14px;
-	color: var(--color-headers);
-	border: 1px solid var(--color-headers-not-sel);
+	color: var(--blue-headers);
+	border: 1px solid var(--blue-headers-not-sel);
 	width: 125px !important;
 	height: 35px !important;
 }
 
 .toolbar-button-text .webix_button:hover {
-	background: var(--color-headers-not-sel) !important;
+	background: var(--blue-headers-not-sel) !important;
 	border-radius: 5px; 
-	color: var(--color-headers);
+	color: var(--blue-headers);
 }
 
 .toolbar-button-text .webix_button:focus {
@@ -768,12 +768,12 @@
 
 .toolbar-button-text .webix_button .webix_icon_btn {
 	font-size: 20px;
-	color: var(--color-headers);
+	color: var(--blue-headers);
 }
 
 .toolbar-button-text .webix_disabled_box .webix_button.webix_img_btn {
 	color: #9098a2 !important;
-	border: 1px solid var(--color-headers-not-sel);
+	border: 1px solid var(--blue-headers-not-sel);
 }
 
 .global-box-sizing {

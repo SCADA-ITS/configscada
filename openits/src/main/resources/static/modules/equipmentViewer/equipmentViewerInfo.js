@@ -73,7 +73,7 @@ export default class EquipmentViewerInfo {
 
 			view = {
 				id: "view-main-info-multi-" + self.uid,
-				css: "bordered-layout",
+				css: "bordered-layout-without-border-top",
 				rows: [
 					{
 						cols: [

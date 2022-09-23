@@ -145,7 +145,7 @@ export default class TubePlanOrderEditorModule extends GenericModule {
 									{
 										id: "elements-selected-label" + self.uid,
 										view: "label",
-										css: "alarm-view-header-details-text",
+										css: "view-header-details-text",
 										label: self.element.alias,
 										align: "left",
 										height: 50

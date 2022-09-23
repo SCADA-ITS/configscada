@@ -30,7 +30,7 @@ export default class IncidentTypeMain {
 			
 			viewMain = {
 				id: "incident-type-main-" + self.uid,
-				css: "bordered-layout",
+				css: "bordered-layout-without-border-top",
 				rows: [
 					
 					getViewIncidentTypeInfo()

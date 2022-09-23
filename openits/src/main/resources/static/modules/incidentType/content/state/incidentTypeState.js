@@ -37,7 +37,7 @@ export default class IncidentTypeState {
 			
 			viewState = {
 				id: "incident-type-state-" + self.uid,
-				css: "bordered-layout",
+				css: "bordered-layout-without-border-top",
 				rows: [
 					{ height: 10 },
 					{

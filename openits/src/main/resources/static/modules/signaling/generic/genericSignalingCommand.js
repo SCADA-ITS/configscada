@@ -98,8 +98,8 @@ export default class GenericSignalingCommand {
 								},
 								{
 									view: "label",
-									css: "alarm-view-header-details-text",
-									label: `<span class="alarm-view-header-details-text">${i18n.t("LBL_INFO")}</span>`,
+									css: "view-header-details-text",
+									label: `<span class="view-header-details-text">${i18n.t("LBL_INFO")}</span>`,
 									align: "left",
 									height: 50
 								},
@@ -149,8 +149,8 @@ export default class GenericSignalingCommand {
 									},
 									{
 										view: "label",
-										css: "alarm-view-header-details-text",
-										label: `<span class="alarm-view-header-details-text">${i18n.t("LBL_PARAMS")}</span>`,
+										css: "view-header-details-text",
+										label: `<span class="view-header-details-text">${i18n.t("LBL_PARAMS")}</span>`,
 										align: "left",
 										height: 50
 									},

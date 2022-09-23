@@ -101,8 +101,8 @@ export default class VmsSignalingTextEditor extends VmsSignalingZoneEditor {
 									},
 									{
 										view: "label",
-										css: "alarm-view-header-details-text",
-										label: `<span class="alarm-view-header-details-text">${i18n.t("LBL_SIGNALING_MODE")}</span>`,
+										css: "view-header-details-text",
+										label: `<span class="view-header-details-text">${i18n.t("LBL_SIGNALING_MODE")}</span>`,
 										align: "left",
 										height: 50
 									},
@@ -184,8 +184,8 @@ export default class VmsSignalingTextEditor extends VmsSignalingZoneEditor {
 										},
 										{
 											view: "label",
-											css: "alarm-view-header-details-text",
-											label: `<span class="alarm-view-header-details-text">${i18n.t("LBL_SIGNALING_TEXT_ALIGN")}</span>`,
+											css: "view-header-details-text",
+											label: `<span class="view-header-details-text">${i18n.t("LBL_SIGNALING_TEXT_ALIGN")}</span>`,
 											align: "left",
 											height: 50
 										},
@@ -241,7 +241,7 @@ export default class VmsSignalingTextEditor extends VmsSignalingZoneEditor {
 					header: !alternance ? i18n.t("LBL_VMS_MAIN") : i18n.t("LBL_VMS_ALTERNANCE"),
 					body: {
 						id: (!alternance ? "view-signalling-text-editor-main-" : "view-signalling-text-editor-alt-") + self.uid,
-						css: "bordered-layout",
+						css: "bordered-layout-without-border-top",
 						rows: [
 							{
 								cols: [

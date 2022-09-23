@@ -102,7 +102,7 @@ export default class VmsSignalingContent {
 					{
 						id: "elements-selected-label" + self.uid,
 						view: "label",
-						css: "alarm-view-header-details-text",
+						css: "view-header-details-text",
 						label: function() {
 							
 							let label = self.element.alias;
@@ -112,7 +112,7 @@ export default class VmsSignalingContent {
 								label += " " + i18n.t("LBL_AND").toLowerCase() + " " + (self.selectedElements.length - 1) + " " + i18n.t("LBL_MORE_SELECTED") + " ...";
 							}
 							 
-							return `<span class="alarm-view-header-details-text">${label}</span>`;
+							return `<span class="view-header-details-text">${label}</span>`;
 						}(),
 						align: "left",
 						height: 50
@@ -866,7 +866,7 @@ export default class VmsSignalingContent {
 											label += " " + i18n.t("LBL_AND").toLowerCase() + " " + (selectedElements.length - 1) + " " + i18n.t("LBL_MORE_SELECTED") + " ...";
 										}
 							 
-										return `<span class="alarm-view-header-details-text">${label}</span>`;											
+										return `<span class="view-header-details-text">${label}</span>`;											
 										}();
 									
 									$$("elements-selected-label" + self.uid).refresh();	

@@ -126,7 +126,7 @@ export default class IncidentTypeStretchDetail {
 						},
 						{
 							view: "label",
-							css: "alarm-view-header-details-text",
+							css: "view-header-details-text",
 							label: `<span style="font-size: 14px">${self.incidentTypeStretch.stretch.alias}</span>`,
 							align: "left",
 						},

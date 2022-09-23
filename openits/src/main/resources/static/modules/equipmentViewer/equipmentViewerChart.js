@@ -41,7 +41,7 @@ export default class EquipmentViewerChart {
 					cols: [
 						{ width: 10 },
 						{
-							css: "bordered-layout",
+							css: "bordered-layout-without-border-top",
 							rows: [util.ui.getViewNoData()]
 						},
 						{ width: 10 }
@@ -153,13 +153,13 @@ export default class EquipmentViewerChart {
 						cols: [
 							{ width: 10 },
 							{
-								css: "bordered-layout",
+								css: "bordered-layout-with-border-top",
 								rows: [getChartList()]
 							},
 							{ width: 10 },
 							{
 								id: "content-chart-" + self.uid,
-								css: "bordered-layout",
+								css: "bordered-layout-with-border-top",
 								hidden: true,
 								rows: [getChart()]
 							},

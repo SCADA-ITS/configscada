@@ -21,7 +21,7 @@ export default class IncidentTypeTaskDetailParam {
 		let viewTaskParams = {
 				
 			id: "incident-type-state-task-detail-content-params-" + self.uid,
-			css: "bordered-layout",
+			css: "bordered-layout-without-border-top",
 			rows: [{}]
 		}
 		

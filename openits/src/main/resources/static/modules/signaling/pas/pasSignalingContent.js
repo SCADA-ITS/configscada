@@ -811,7 +811,7 @@ export default class PasSignalingContent {
 					}
 				}
 
-				return { id: "PasSignalingContent-table-" + entityType + "-" + self.uid, css: "bordered-layout", rows: dt.getView() };
+				return { id: "PasSignalingContent-table-" + entityType + "-" + self.uid, css: "bordered-layout-without-border-top", rows: dt.getView() };
 			}
 			
 			return viewBody;
