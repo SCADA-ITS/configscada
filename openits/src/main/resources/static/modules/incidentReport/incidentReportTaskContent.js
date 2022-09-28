@@ -134,11 +134,17 @@ export default class IncidentReportTaskContent {
 			}
 
 			self.incidentReportTaskDetailInfo = new IncidentReportTaskDetailInfo(self.config, self.incidentReport, self.taskState, self.index, self.uid);
-
+			let incidentReportTaskDetailInfoView = self.incidentReportTaskDetailInfo.getView();
+			 
 			viewBody.cells.push({
 				header: i18n.t("LBL_INFO"),
-				body: self.incidentReportTaskDetailInfo.getView()
+				body: incidentReportTaskDetailInfoView
 			});
+			
+			if (self.taskState.incidentTypeTask && self.taskState.incidentTypeTask.onChange) {
+
+				viewBody.value = incidentReportTaskDetailInfoView.id;
+			}
 
 			return viewBody;
 		}
@@ -198,7 +204,7 @@ export default class IncidentReportTaskContent {
 
 								let messageBoxType = (self.taskState.incidentTypeTask.incidentTaskConfirmWarning) ? MessageBox.CONFIRM_WARN : MessageBox.CONFIRM;
 
-								let ms = new MessageBox(messageBoxType, i18n.t(label), onAccept, null);
+								let ms = new MessageBox(messageBoxType, i18n.t(label), null, onAccept, null);
 								ms.show();
 
 								function onAccept() {
