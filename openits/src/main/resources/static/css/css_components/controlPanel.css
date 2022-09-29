@@ -15,7 +15,7 @@
 
 .control-panel-main .section-title-divider {
 	display: block;
-    border-top: 1px solid var(--blue-soft);
+    border-top: 1px solid var(--blue-soft) !important;
     -webkit-box-flex: 1;
     flex-grow: 1;
     margin-top: 12px;
@@ -61,14 +61,14 @@
 	margin-left: 10px;
     margin-top: 10px;
     font-size: 15px;
-    color: rgb(17, 236, 229);
+    color: var(--blue-soft);
 }
 
 .control-panel-main .box-info .box-separator {
-	background-color: var(--control-panel-background);
-    border-left: 1px solid var(--blue-soft) !important;
+	background-color: var(--blue-headers);
     margin-top: 10px !important;
     height: 50px !important;
+	width: 2px !important; 
 }
 
 .control-panel-main .box-info .box-component {
@@ -78,7 +78,7 @@
 
 .control-panel-main .box-info .box-component .box-value {
 	text-align: center;
-	color: rgb(17, 236, 229);
+	color: var(--blue-soft);
 	display: block;
 	font-size: 35px;
 	margin-top: 5px;
@@ -123,9 +123,9 @@
 
 .control-panel-main .user-avatar {	
 	background-color: transparent;
-    width: 250px !important;
-    height: 250px !important;
-    margin-left: 75px !important;
+    width: 150px !important;
+    height: 150px !important;
+    margin-left: 122px !important;
     margin-top: 20px !important;
 }
 

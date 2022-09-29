@@ -55,11 +55,12 @@ export default class AlarmService extends GenericService {
 	getView() {
 
 		let views = [];
+		let cssStyleInvertAlarm = (window.lightMode) ? "alarm-template light-templates" : "alarm-template";
 
 		let iconAlarm = {
 			id: "icon-alarm-service",
 			view: "icon",
-			css: "alarm-template",
+			css: cssStyleInvertAlarm,
 			badge: 0,
 			icon: "mdi mdi-bell",
 			value: "Alert",

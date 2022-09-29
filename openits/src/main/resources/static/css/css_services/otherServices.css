@@ -14,6 +14,7 @@
 .user-template .webix_badge {
 	min-width: 12px;
 	height: 12px;
+	top: 1px;
 	-webkit-animation: icon-red-animation 1s infinite;  /* Safari 4+ */
 	-moz-animation: icon-red-animation 1s infinite;  /* Fx 5+ */
 	-o-animation: icon-red-animation 1s infinite;  /* Opera 12+ */
@@ -35,6 +36,7 @@
 
 .alarm-template .webix_badge {
 	background-color: #f57900;
+	top: 1px;
 }
 
 /* TimeService */
@@ -42,7 +44,7 @@
 .time-template {
     background: transparent;
     border: none;
-    color: var(--white-text-default) !important;
+    color: var(--blue-soft) !important;
     font-size: 13px;
     font-weight: 500;
 }

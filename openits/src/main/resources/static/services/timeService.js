@@ -27,8 +27,9 @@ export default class TimeService extends GenericModule {
 	getView() {
 
 		let views = [];
+		let cssStyleInvertTimer = (window.lightMode) ? "time-template light-templates" : "time-template";
 		
-		views.push({ view: "template", id: "time-service", width: 95, css: "time-template" });
+		views.push({ view: "template", id: "time-service", width: 95, css: cssStyleInvertTimer });
 		
 		return views;
 	}

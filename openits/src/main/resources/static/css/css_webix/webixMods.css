@@ -177,5 +177,9 @@
 }
 
 .webix_toolbar .webix_el_label .webix_el_box {
-	color: var(--blue-text-default);
+	color: var(--blue-headers-soft);
+}
+
+.webix_menu .webix_context_separator {
+	background-color: var(--blue-soft-opacity-4);
 }

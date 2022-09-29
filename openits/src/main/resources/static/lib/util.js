@@ -1412,6 +1412,191 @@ export let util = {
 		isExternal() {
 			
 			return (window.location.pathname.indexOf("external.html") !== -1);
+		},
+		
+		changeColorTheme(theme) {
+
+			let color;
+
+			switch (theme) {
+
+				case "red":
+					color = "#FE0E0E";
+					console.log("Apply theme red");
+					break;
+				case "brown":
+					color = "#FE860E";
+					console.log("Apply theme brown");
+					break;
+				case "lime":
+					color = "#86FE0E";
+					console.log("Apply theme lime");
+					break;
+				case "green":
+					color = "#0EFE0E";
+					console.log("Apply theme green");
+					break;
+				case "springgreen":
+					color = "#0EFE86";
+					console.log("Apply theme spring green");
+					break;
+				case "aqua":
+					color = "#0EFEFE";
+					console.log("Apply theme aqua");
+					break;
+				case "blue":
+					color = "#0E0EFE";
+					console.log("Apply theme blue");
+					break;
+				case "purple":
+					color = "#860EFE";
+					console.log("Apply theme purple");
+					break;
+				case "pink":
+					color = "#FE0EFE";
+					console.log("Apply theme pink");
+					break;
+				case "deeppink":
+					color = "#FE0E86";
+					console.log("Apply theme deep pink");
+					break;
+				case "yellow":
+					color = "#FEFE0E";
+					console.log("Apply theme yellow");
+					break;
+				default:
+					color = undefined;
+					console.log("Apply default theme");
+			}
+
+			if (color) {
+
+				const COLORS = {
+					STRONG: {
+						S: "41%",
+						L: "15%"
+					},
+					MID: {
+						S: "30%",
+						L: "28%"
+					},
+					MID2: {
+						S: "42%",
+						L: "53%"
+					},
+					SOFT: {
+						S: "39%",
+						L: "69%"
+					},
+					DEFAULT: {
+						S: "18%",
+						L: "34%"
+					},
+					GLOBAL: {
+						S: "9%",
+						L: "87%"
+					},
+					WELCOME: {
+						S: "5%",
+						L: "62%"
+					},
+					DT_HEADERS: {
+						S: "29%",
+						L: "97%"
+					},
+					DT_ODD_ROWS: {
+						S: "33%",
+						L: "97%"
+					},
+					DT_ICONS: {
+						S: "17%",
+						L: "64%"
+					},
+					DT_ICONS_HOVER: {
+						S: "18%",
+						L: "34%"
+					},
+					CP_BACKGROUND: {
+						S: "37%",
+						L: "22%"
+					},
+					BACKCOLOR: {
+						S: "27%",
+						L: "89%"
+					},
+					HEADER_SOFT: {
+						S: "18%",
+						L: "34%"
+					}
+				};
+
+				color = color.replace(/#/g, '');
+
+				if (color.length === 3) {
+
+					color = color.split('').map(function(color) {
+
+						return color + color;
+					}).join('');
+				}
+
+				let result = /^([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})[\da-z]{0,0}$/i.exec(color);
+
+				if (!result) {
+
+					return null;
+				}
+
+				let r = parseInt(result[1], 16);
+				let g = parseInt(result[2], 16);
+				let b = parseInt(result[3], 16);
+
+				r /= 255, g /= 255, b /= 255;
+
+				let max = Math.max(r, g, b),
+					min = Math.min(r, g, b);
+
+				let h, s, l = (max + min) / 2;
+
+				if (max == min) {
+
+					h = s = 0;
+
+				} else {
+
+					let d = max - min;
+
+					s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+
+					switch (max) {
+						case r:
+							h = (g - b) / d + (g < b ? 6 : 0);
+							break;
+						case g:
+							h = (b - r) / d + 2;
+							break;
+						case b:
+							h = (r - g) / d + 4;
+							break;
+					}
+
+					h /= 6;
+				}
+
+				s = s * 100;
+				s = Math.round(s);
+				l = l * 100;
+				l = Math.round(l);
+				h = Math.round(360 * h);
+
+				let hsl = { h: h, s: s, l: l };
+				let sheet = document.getElementById('customCss').sheet;
+				let newRule = '[theme="' + hsl.h + '"]{ --blue-strong:hsl(' + hsl.h + ' ' + COLORS.STRONG.S + ' ' + COLORS.STRONG.L + ') ;  --blue-strong-opacity-1: hsla(' + hsl.h + ' ' + COLORS.STRONG.S + ' ' + COLORS.STRONG.L + ' / 0.1) ; --blue-strong-opacity-2: hsla(' + hsl.h + ' ' + COLORS.STRONG.S + ' ' + COLORS.STRONG.L + ' / 0.2); --blue-strong-opacity-3: hsla(' + hsl.h + ' ' + COLORS.STRONG.S + ' ' + COLORS.STRONG.L + ' / 0.3); --blue-strong-opacity-4: hsla(' + hsl.h + ' ' + COLORS.STRONG.S + ' ' + COLORS.STRONG.L + ' / 0.4); --blue-strong-opacity-5: hsla(' + hsl.h + ' ' + COLORS.STRONG.S + ' ' + COLORS.STRONG.L + ' / 0.5); --blue-strong-opacity-6: hsla(' + hsl.h + ' ' + COLORS.STRONG.S + ' ' + COLORS.STRONG.L + ' / 0.6); --blue-strong-opacity-7: hsla(' + hsl.h + ' ' + COLORS.STRONG.S + ' ' + COLORS.STRONG.L + ' / 0.7); --blue-strong-opacity-8: hsla(' + hsl.h + ' ' + COLORS.STRONG.S + ' ' + COLORS.STRONG.L + ' / 0.8); --blue-strong-opacity-9: hsla(' + hsl.h + ' ' + COLORS.STRONG.S + ' ' + COLORS.STRONG.L + ' / 0.9); --blue-mid: hsl(' + hsl.h + " " + COLORS.MID.S + " " + COLORS.MID.L + '); --blue-mid-opacity-1: hsla(' + hsl.h + " " + COLORS.MID.S + " " + COLORS.MID.L + '/ 0.1); --blue-mid-opacity-2: hsla(' + hsl.h + " " + COLORS.MID.S + " " + COLORS.MID.L + '/ 0.2); --blue-mid-opacity-3: hsla(' + hsl.h + " " + COLORS.MID.S + " " + COLORS.MID.L + ' / 0.3); --blue-mid-opacity-4: hsla(' + hsl.h + " " + COLORS.MID.S + " " + COLORS.MID.L + ' / 0.4); --blue-mid-opacity-5: hsla(' + hsl.h + " " + COLORS.MID.S + " " + COLORS.MID.L + ' / 0.5); --blue-mid-opacity-6: hsla(' + hsl.h + " " + COLORS.MID.S + " " + COLORS.MID.L + ' / 0.6); --blue-mid-opacity-7: hsla(' + hsl.h + " " + COLORS.MID.S + " " + COLORS.MID.L + ' / 0.7); --blue-mid-opacity-8: hsla(' + hsl.h + " " + COLORS.MID.S + " " + COLORS.MID.L + ' / 0.8); --blue-mid-opacity-9: hsla(' + hsl.h + " " + COLORS.MID.S + " " + COLORS.MID.L + ' / 0.9); --blue-mid2: hsl(' + hsl.h + " " + COLORS.MID2.S + " " + COLORS.MID2.L + '); --blue-mid2-opacity-1: hsla(' + hsl.h + " " + COLORS.MID2.S + " " + COLORS.MID2.L + '/ 0.1); --blue-mid2-opacity-2: hsla(' + hsl.h + " " + COLORS.MID2.S + " " + COLORS.MID2.L + ' / 0.2); --blue-mid2-opacity-3: hsla(' + hsl.h + " " + COLORS.MID2.S + " " + COLORS.MID2.L + ' / 0.3); --blue-mid2-opacity-4: hsla(' + hsl.h + " " + COLORS.MID2.S + " " + COLORS.MID2.L + ' / 0.4); --blue-mid2-opacity-5: hsla(' + hsl.h + " " + COLORS.MID2.S + " " + COLORS.MID2.L + ' / 0.5); --blue-mid2-opacity-6: hsla(' + hsl.h + " " + COLORS.MID2.S + " " + COLORS.MID2.L + ' / 0.6); --blue-mid2-opacity-7: hsla(' + hsl.h + " " + COLORS.MID2.S + " " + COLORS.MID2.L + ' / 0.7); --blue-mid2-opacity-8: hsla(' + hsl.h + " " + COLORS.MID2.S + " " + COLORS.MID2.L + ' / 0.8); --blue-mid2-opacity-9: hsla(' + hsl.h + " " + COLORS.MID2.S + " " + COLORS.MID2.L + ' / 0.9); --blue-soft: hsl(' + hsl.h + " " + COLORS.SOFT.S + " " + COLORS.SOFT.L + '); --blue-soft-opacity-0-7: hsla(' + hsl.h + " " + COLORS.SOFT.S + " " + COLORS.SOFT.L + ' / 0.07); --blue-soft-opacity-1: hsla(' + hsl.h + " " + COLORS.SOFT.S + " " + COLORS.SOFT.L + ' / 0.1); --blue-soft-opacity-2: hsla(' + hsl.h + " " + COLORS.SOFT.S + " " + COLORS.SOFT.L + ' / 0.2); --blue-soft-opacity-3: hsla(' + hsl.h + " " + COLORS.SOFT.S + " " + COLORS.SOFT.L + ' / 0.3); --blue-soft-opacity-4: hsla(' + hsl.h + " " + COLORS.SOFT.S + " " + COLORS.SOFT.L + ' / 0.4); --blue-soft-opacity-5: hsla(' + hsl.h + " " + COLORS.SOFT.S + " " + COLORS.SOFT.L + ' / 0.5); --blue-soft-opacity-6: hsla(' + hsl.h + " " + COLORS.SOFT.S + " " + COLORS.SOFT.L + ' / 0.6); --blue-soft-opacity-7: hsla(' + hsl.h + " " + COLORS.SOFT.S + " " + COLORS.SOFT.L + ' / 0.7); --blue-soft-opacity-8: hsla(' + hsl.h + " " + COLORS.SOFT.S + " " + COLORS.SOFT.L + ' / 0.8); --blue-soft-opacity-9: hsla(' + hsl.h + " " + COLORS.SOFT.S + " " + COLORS.SOFT.L + ' / 0.9); --blue-text-default: hsl(' + hsl.h + " " + COLORS.DEFAULT.S + " " + COLORS.DEFAULT.L + '); --blue-headers: hsl(' + hsl.h + " " + COLORS.DEFAULT.S + " " + COLORS.DEFAULT.L + '); --blue-headers-not-sel: hsla(' + hsl.h + " " + COLORS.SOFT.S + " " + COLORS.SOFT.L + ' / 0.3); --white-text-default: white; --white-background-default: white; --white-text-not-sel: rgba(255 255 255 / 0.83); --global-grey: hsl(' + hsl.h + " " + COLORS.GLOBAL.S + " " + COLORS.GLOBAL.L + '); --welcome-screen: hsl(' + hsl.h + " " + COLORS.WELCOME.S + " " + COLORS.WELCOME.L + '); --datatable-headers: hsl(' + hsl.h + " " + COLORS.DT_HEADERS.S + " " + COLORS.DT_HEADERS.L + '); --datatable-odd-rows: hsl(' + hsl.h + " " + COLORS.DT_ODD_ROWS.S + " " + COLORS.DT_ODD_ROWS.L + '); --datatable-icon: hsl(' + hsl.h + " " + COLORS.DT_ICONS.S + " " + COLORS.DT_ICONS.L + '); --datatable-icon-hover: hsl(' + hsl.h + " " + COLORS.DT_ICONS_HOVER.S + " " + COLORS.DT_ICONS_HOVER.L + '); --control-panel-background: hsl(' + hsl.h + " " + COLORS.CP_BACKGROUND.S + " " + COLORS.CP_BACKGROUND.L + '); --blue-backcolor: hsl(' + hsl.h + " " + COLORS.BACKCOLOR.S + " " + COLORS.BACKCOLOR.L + '); --blue-headers-soft: hsl(' + hsl.h + " " + COLORS.HEADER_SOFT.S + " " + COLORS.HEADER_SOFT.L + '/ 0.8) }';
+				let css_rules_num = sheet.cssRules.length;
+
+				sheet.insertRule(newRule, css_rules_num);
+				document.documentElement.setAttribute('theme', hsl.h);
+			}
 		}
 	},
 
@@ -2529,18 +2714,20 @@ export let util = {
 		return func(...Object.values(templateVars));
 	},
 
-	generateAvatar(text) {
+	generateAvatar(text, size, fontSize) {
 
 		const canvas = document.createElement("canvas");
 		const context = canvas.getContext("2d");
 	
-		canvas.width = 250;
-		canvas.height = 250;
-
+		canvas.width = (size) ? size : 250;
+		canvas.height = (size)? size : 250;
+		let fSize = (fontSize) ? fontSize : 140;
+		
 		// Get color
 		let hashValue = this.getHash(text);
 		let color;
 		let mod = Math.abs(hashValue) % 10;
+		
 		switch (mod) {
 
 			case 0:
@@ -2586,7 +2773,7 @@ export let util = {
 		context.fillRect(0, 0, canvas.width, canvas.height);
 	
 		// Draw text
-		context.font = "500 140px Roboto, sans-serif";
+		context.font = "500 " + fSize + "px Roboto, sans-serif";
 		context.fillStyle = color + 'a0';
 		context.textAlign = "center";
 		context.textBaseline = "middle";

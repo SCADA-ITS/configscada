@@ -1,0 +1,65 @@
+.light-mode {
+	background-color: var(--blue-backcolor) !important;
+	color: var(--blue-headers-soft) !important;
+	box-sizing: border-box;
+	border: none;
+}
+
+.light-mode .webix_menu-x.menu-custom .webix_list_item {
+	color: var(--blue-headers-soft) !important;	
+}
+
+.light-mode .webix_menu-x.menu-custom .webix_list_item:hover {
+	background-color: var(--blue-mid-opacity-5);
+}
+
+.light-mode .webix_secondary .webix_button {
+	background-color: var(--blue-mid-opacity-2);
+	color: var(--blue-headers-soft) !important;	
+} 
+
+.light-mode .webix_secondary .webix_button:hover {
+	background-color: var(--blue-mid-opacity-5) !important;
+}
+
+.light-mode .webix_secondary .webix_button .webix_icon {
+	color: var(--blue-headers-soft) !important;	
+}
+
+.light-mode .webix_secondary .webix_button .webix_img_btn_text {
+	color: var(--blue-headers-soft) !important;	
+}
+
+.light-mode .webix_secondary .webix_button .webix_icon_btn {
+	color: var(--blue-headers-soft) !important;	
+}
+
+.light-mode .section-title-divider {
+	border-top: 1px solid var(--blue-headers-soft) !important;	
+} 
+
+.light-main-screen {
+	background: none;
+}
+
+.light-templates {
+	color: var(--blue-headers-soft) !important;
+	font-weight: 500;
+}
+
+.light-templates .webix_icon_button .webix_icon {
+	color: var(--blue-headers-soft) !important;
+}
+
+.light-templates .webix_icon_button:hover:before {
+	background-color: var(--blue-mid-opacity-5);
+}
+
+.light-component {
+ 	background-color: var(--blue-backcolor) !important;
+}
+
+.light-box-separator {
+	background-color: var(--blue-headers-soft) !important;
+	width: 2px !important;
+}

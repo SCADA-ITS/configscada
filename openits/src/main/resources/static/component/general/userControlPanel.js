@@ -73,7 +73,13 @@ export default class UserControlPanel extends GenericControlPanel {
 		let panelWidth = 400;
 		let sessionData = webix.storage.session.get(SESSION_STORAGE_SESSION_DATA);
 		let userData = undefined;
-		
+		let cssLightMode = (window.lightMode) ? true : false;
+		let cssStyleLightButtonToolbar = (cssLightMode) ? "control-panel-button-toolbar light-mode" : "control-panel-button-toolbar";
+		let cssStyleLightCPNotification = (cssLightMode) ? "control-panel-notification light-mode" : "control-panel-notification";
+		let cssStyleControlPanel = (cssLightMode) ? "control-panel-main light-mode" : "control-panel-main";
+		let cssStyleCPMainToolbar = (cssLightMode) ? "control-panel-main-toolbar light-mode" : "control-panel-main-toolbar";
+		let lightMode = (cssLightMode) ? "light-templates" : "";
+				
 		if (sessionData && sessionData.user) {
 			
 			userData = sessionData.user;	
@@ -81,7 +87,7 @@ export default class UserControlPanel extends GenericControlPanel {
 		
 		let pendingTasksView = {
 			view: "toolbar",
-			css: "control-panel-button-toolbar",
+			css: cssStyleLightButtonToolbar,
 			height: 150,
 			elements: [
 				{},
@@ -90,7 +96,7 @@ export default class UserControlPanel extends GenericControlPanel {
 						{
 							view: "label",
 							id: "user-control-panel-alarms",
-							css: "control-panel-notification",
+							css: cssStyleLightCPNotification,
 							align: "center",
 							tooltip: i18n.t("LBL_NUMBER_ALARMS_NO_RECOGNIZED"),
 							hidden: true,
@@ -99,8 +105,8 @@ export default class UserControlPanel extends GenericControlPanel {
 							label: function() {
 								
 								return `<div>
-											<span class="icon ico webix_icon mdi mdi-bell"></span>
-											<span class="value-alarm">${i18n.t("LBL_WO_ALARMS_PENDING")}</span>
+											<span class="icon ico webix_icon mdi mdi-bell ${lightMode}"></span>
+											<span class="value-alarm ${lightMode}">${i18n.t("LBL_WO_ALARMS_PENDING")}</span>
 										</div>`
 							}(),
 							on: {
@@ -114,7 +120,7 @@ export default class UserControlPanel extends GenericControlPanel {
 						{
 							view: "label",
 							id: "user-control-panel-incident",
-							css: "control-panel-notification",
+							css: cssStyleLightCPNotification,
 							align: "center",
 							tooltip: i18n.t("LBL_NUMBER_INCIDENTS_PENDING"),
 							hidden: true,
@@ -123,8 +129,8 @@ export default class UserControlPanel extends GenericControlPanel {
 							label: function() {
 
 								return `<div>
-											<span class="icon ico webix_icon mdi mdi-map-marker-alert"></span>
-											<span class="value-incident">${i18n.t("LBL_WO_PENDING_INCIDENTS")}</span>
+											<span class="icon ico webix_icon mdi mdi-map-marker-alert ${lightMode}"></span>
+											<span class="value-incident ${lightMode}">${i18n.t("LBL_WO_PENDING_INCIDENTS")}</span>
 										</div>`
 							}(),
 							on: {
@@ -138,7 +144,7 @@ export default class UserControlPanel extends GenericControlPanel {
 						{
 							view: "label",
 							id: "user-control-panel-event",
-							css: "control-panel-notification",
+							css: cssStyleLightCPNotification,
 							align: "center",
 							tooltip: i18n.t("LBL_NUMBER_EVENTS_PENDING"),
 							hidden: true,
@@ -148,7 +154,7 @@ export default class UserControlPanel extends GenericControlPanel {
 
 								return `<div>
 											<span class="icon ico webix_icon mdi mdi-map-marker-alert"></span>
-											<span class="value-event">${i18n.t("LBL_WO_PENDING_EVENTS")}</span>
+											<span class="value-event ${lightMode}">${i18n.t("LBL_WO_PENDING_EVENTS")}</span>
 										</div>`
 							}(),
 							on: {
@@ -168,7 +174,7 @@ export default class UserControlPanel extends GenericControlPanel {
 		
 		let notificationsView = {
 			view: "toolbar",
-			css: "control-panel-button-toolbar",
+			css: cssStyleLightButtonToolbar,
 			height: 150,
 			elements: [
 				{},
@@ -177,7 +183,7 @@ export default class UserControlPanel extends GenericControlPanel {
 						{
 							view: "label",
 							id: "user-control-panel-notif-alarms",
-							css: "control-panel-notification",
+							css: cssStyleLightCPNotification,
 							align: "center",
 							tooltip: i18n.t("LBL_SHOW_ALARMS_NOTIFIED"),
 							hidden: true,
@@ -186,7 +192,7 @@ export default class UserControlPanel extends GenericControlPanel {
 							label: function() {
 								
 								return `<div>
-											<span class="icon ico webix_icon mdi mdi-bell"></span>
+											<span class="icon ico webix_icon mdi mdi-bell ${lightMode}"></span>
 											<span class="value-alarm">${i18n.t("LBL_WO_NOTIFIED_ALARMS")}</span>
 										</div>`
 							}(),
@@ -211,7 +217,7 @@ export default class UserControlPanel extends GenericControlPanel {
 						{
 							view: "label",
 							id: "user-control-panel-notif-incidents",
-							css: "control-panel-notification",
+							css: cssStyleLightCPNotification,
 							align: "center",
 							tooltip: i18n.t("LBL_SHOW_INCIDENTS_NOTIFIED"),
 							hidden: true,
@@ -245,7 +251,7 @@ export default class UserControlPanel extends GenericControlPanel {
 						{
 							view: "label",
 							id: "user-control-panel-notif-events",
-							css: "control-panel-notification",
+							css: cssStyleLightCPNotification,
 							align: "center",
 							tooltip: i18n.t("LBL_SHOW_EVENTS_NOTIFIED"),
 							hidden: true,
@@ -287,9 +293,9 @@ export default class UserControlPanel extends GenericControlPanel {
 			view: "popup",
 			id: "userControlPanel",
 			move: true,
-			css: "control-panel-main",
+			css: cssStyleControlPanel,
 			hidden: true,
-			height: document.documentElement.clientHeight - 147,
+			height: document.documentElement.clientHeight - 146,
 			width: panelWidth,
 			body: {
 				rows: [
@@ -299,19 +305,19 @@ export default class UserControlPanel extends GenericControlPanel {
 						css: "user-avatar",
 						template: function() {
 
-							return `<img src="${util.generateAvatar(userData.name)}"/>`;
+							return `<img src="${util.generateAvatar(userData.name, 150, 110)}"/>`;
 						},
 						borderless: true
 
 					},
 					{
 						view: "label",
-						label: `<span class="user-fullname">${userData.fullName}</span>`,
+						label: `<span class="user-fullname ${lightMode}">${userData.fullName}</span>`,
 						borderless: true
 					},
 					{
 						view: "label",
-						label: `<span class="user-email">${userData.email}</span>`,
+						label: `<span class="user-email ${lightMode}">${userData.email}</span>`,
 						borderless: true
 					},
 					{ height: 20 },
@@ -326,7 +332,7 @@ export default class UserControlPanel extends GenericControlPanel {
 								css: "section-title",
 								template: function() {
 									return `<div>
-												<h2 class="section-title-text">${i18n.t("LBL_NOTIFICATIONS")}</h2>
+												<h2 class="section-title-text ${lightMode}">${i18n.t("LBL_NOTIFICATIONS")}</h2>
 											</div>`;
 								}
 							},
@@ -335,7 +341,7 @@ export default class UserControlPanel extends GenericControlPanel {
 								borderless: true,
 								css: "section-title",
 								template: function() {
-									return `<div class="section-title-divider"></div>`;
+									return `<div class="section-title-divider ${lightMode}"></div>`;
 								}
 							},
 							{ width: 12 },
@@ -355,7 +361,7 @@ export default class UserControlPanel extends GenericControlPanel {
 								css: "section-title",
 								template: function() {
 									return `<div>
-												<h2 class="section-title-text">${i18n.t("LBL_PENDING_TASKS")}</h2>
+												<h2 class="section-title-text ${lightMode}">${i18n.t("LBL_PENDING_TASKS")}</h2>
 											</div>`;
 								}
 							},
@@ -364,7 +370,7 @@ export default class UserControlPanel extends GenericControlPanel {
 								borderless: true,
 								css: "section-title",
 								template: function() {
-									return `<div class="section-title-divider"></div>`;
+									return `<div class="section-title-divider ${lightMode}"></div>`;
 								}
 							},
 							{ width: 12 },
@@ -375,7 +381,7 @@ export default class UserControlPanel extends GenericControlPanel {
 					{},
 					{
 						view: "toolbar",
-						css: "control-panel-main-toolbar",
+						css: cssStyleCPMainToolbar,
 						height: 75,
 						elements: [
 							{},
@@ -437,12 +443,12 @@ export default class UserControlPanel extends GenericControlPanel {
 			},
 			position: function(state) {
 				state.left = document.documentElement.clientWidth - panelWidth - 20;
-				state.top = 88;
+				state.top = 89;
 			},
 			on: {
 				onBeforeShow: function() {
 
-					this.config.height = document.documentElement.clientHeight - 137;
+					this.config.height = document.documentElement.clientHeight - 139;
 					this.adjust();
 				}
 			}
@@ -453,6 +459,7 @@ export default class UserControlPanel extends GenericControlPanel {
 		
 		let self = this;
 		let pendingTasks = false;
+		let lightMode = (window.lightMode) ? "light-templates" : "";
 		
 		updateDataAlarms();
 		updateDataIncidents();
@@ -514,16 +521,16 @@ export default class UserControlPanel extends GenericControlPanel {
 				let label = notifications > 0 ? notifications + " " + i18n.t("LBL_ALARMS_NOTIFIED") : i18n.t("LBL_WO_NOTIFIED_ALARMS"); 
 													
 				return `<div>
-							<span class="icon ico webix_icon mdi mdi-bell"></span>
-							<span class="value-alarm">${label}</span>
+							<span class="icon ico webix_icon mdi mdi-bell ${lightMode}"></span>
+							<span class="value-alarm ${lightMode}">${label}</span>
 						</div>`
 			}
 			
 			function getLabelPending(notifications) {
 				
 				return `<div>
-					<span class="icon ico webix_icon mdi mdi-bell"></span>
-					<span class="value-alarm">${notifications > 0 ? notifications + " " +  i18n.t("LBL_ALARMS_NO_RECOGNIZED") : i18n.t("LBL_WO_ALARMS_PENDING")}</span>
+					<span class="icon ico webix_icon mdi mdi-bell ${lightMode}"></span>
+					<span class="value-alarm ${lightMode}">${notifications > 0 ? notifications + " " +  i18n.t("LBL_ALARMS_NO_RECOGNIZED") : i18n.t("LBL_WO_ALARMS_PENDING")}</span>
 				</div>`
 			}
 		}
@@ -577,16 +584,16 @@ export default class UserControlPanel extends GenericControlPanel {
 				let label = notifications > 0 ? notifications + " " + i18n.t("LBL_INCIDENTS_NOTIFIED") : i18n.t("LBL_WO_NOTIFIED_INCIDENTS"); 
 													
 				return `<div>
-							<span class="icon ico webix_icon mdi mdi-map-marker-alert"></span>
-							<span class="value-incident">${label}</span>
+							<span class="icon ico webix_icon mdi mdi-map-marker-alert ${lightMode}"></span>
+							<span class="value-incident ${lightMode}">${label}</span>
 						</div>`
 			}
 			
 			function getLabelPending(incidentPendingToConfirm) {
 				
 				return `<div>
-					<span class="icon ico webix_icon mdi mdi-map-marker-alert"></span>
-					<span class="value-incident">${incidentPendingToConfirm > 0 ? incidentPendingToConfirm + " " + i18n.t("LBL_INCIDENTS_NO_CONFIRMED") : i18n.t("LBL_WO_PENDING_INCIDENTS")}</span>
+					<span class="icon ico webix_icon mdi mdi-map-marker-alert ${lightMode}"></span>
+					<span class="value-incident ${lightMode}">${incidentPendingToConfirm > 0 ? incidentPendingToConfirm + " " + i18n.t("LBL_INCIDENTS_NO_CONFIRMED") : i18n.t("LBL_WO_PENDING_INCIDENTS")}</span>
 				</div>`
 			}
 		}
@@ -637,16 +644,16 @@ export default class UserControlPanel extends GenericControlPanel {
 				let label = notifications > 0 ? notifications + " " + i18n.t("LBL_EVENTS_NOTIFIED") : i18n.t("LBL_WO_NOTIFIED_EVENTS"); 
 													
 				return `<div>
-							<span class="icon ico webix_icon mdi mdi-alert"></span>
-							<span class="value-event">${label}</span>
+							<span class="icon ico webix_icon mdi mdi-alert ${lightMode}"></span>
+							<span class="value-event ${lightMode}">${label}</span>
 						</div>`
 			}
 			
 			function getLabelPending(eventPendingToConfirm) {
 				
 				return `<div>
-					<span class="icon ico webix_icon mdi mdi-map-marker-alert"></span>
-					<span class="value-event">${eventPendingToConfirm > 0 ? eventPendingToConfirm + " " +  i18n.t("LBL_EVENTS_NO_CONFIRMED") : i18n.t("LBL_WO_PENDING_EVENTS")}</span>
+					<span class="icon ico webix_icon mdi mdi-map-marker-alert ${lightMode}"></span>
+					<span class="value-event ${lightMode}">${eventPendingToConfirm > 0 ? eventPendingToConfirm + " " +  i18n.t("LBL_EVENTS_NO_CONFIRMED") : i18n.t("LBL_WO_PENDING_EVENTS")}</span>
 				</div>`
 			}
 		}

@@ -31,6 +31,7 @@ export default class UserService extends GenericModule {
 	getView() {
 
 		let views = [];
+		let cssStyleInvertUser = (window.lightMode) ? "user-template light-templates" : "user-template";
 		
 		let labelUser = { 
 			id: "label-user-service",
@@ -43,7 +44,7 @@ export default class UserService extends GenericModule {
 		let iconUser = { 
 			id: "icon-user-service", 
 			view: "icon", 
-			css: "user-template",
+			css: cssStyleInvertUser,
 			badge: "",
 			icon: "mdi mdi-account-circle", 
 			value:"User",

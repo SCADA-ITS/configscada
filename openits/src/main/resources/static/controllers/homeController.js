@@ -64,13 +64,33 @@ function initialize() {
 
 	util.module.checkSystemPermissions(window.em.getAll(EntityType.MODULE), userData);
 	
+	if (userData.theme) {
+
+		util.ui.changeColorTheme(userData.theme);
+	}	
+	
 	var mainTab = new MainTab();
 	var mainToolbar = new MainToolbar();
 	var menuToolbar = new MenuToolbar(onLoad);
 	var versionTaskbar = new VersionTaskbar();
 	
 	function onLoad() {
-	
+		
+		let cssLightMode = false;
+		let cssStyleHeader = "head-color main-toolbar";
+		let cssStyleMainScreen = "";
+
+		try {
+
+			window.lightMode = (APP_LIGTH_MODE) ? true : false;
+			cssLightMode = (window.lightMode) ? true : false;
+			cssStyleHeader = (cssLightMode) ? "light-mode" : "head-color main-toolbar";
+			cssStyleMainScreen = (cssLightMode) ? "light-main-screen" : "";
+
+		} catch {
+
+		}
+		
 		let main_footer = {
 			view: "toolbar",
 			css: "main-footer",
@@ -97,10 +117,11 @@ function initialize() {
 			],
 			borderless: 0
 		};
-	
+		
 		let main_screen = {
 			type: "space",
 			id: "mainScreen",
+			css: cssStyleMainScreen,
 			cols: [
 				{ width: 0.1 },
 				{
@@ -108,7 +129,7 @@ function initialize() {
 					rows: [
 						{
 							height: 80,
-							css: "head-color",
+							css: cssStyleHeader,
 							cols: [
 								{
 									rows: [
@@ -126,7 +147,7 @@ function initialize() {
 											id: MAIN_TOOLBAR_ICONS_ID,
 											view: "toolbar",
 											//height: 42,
-											css: "head-color main-toolbar",
+											css: cssStyleHeader,
 											//padding: 3,
 											elements: [{}]
 										},									

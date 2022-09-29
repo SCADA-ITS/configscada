@@ -10,13 +10,13 @@ export default class MainToolbar {
 	getView() {
 
 		let view;
-		
+		let cssStyleHeader = (window.lightMode) ? "light-mode" : "head-color main-toolbar";
+
 		view = {
 			id: MAIN_TOOLBAR_ID,
 			view: "toolbar",
 			height: 46,
-			css: "head-color main-toolbar",
-			//padding: 3,
+			css: cssStyleHeader,
 			elements: [
 				{
 					view: "label",

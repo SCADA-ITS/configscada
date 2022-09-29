@@ -32,7 +32,14 @@ export default class AlarmControlPanel extends GenericControlPanel {
 
 		let self = this;
 		let panelWidth = 400;
-
+		let cssLightMode = (window.lightMode) ? true : false;
+		let cssStyleBox = (cssLightMode) ? "box-info light-mode" : "box-info";
+		let cssStyleBoxComponent = (cssLightMode) ? "box-component light-component" : "box-component";
+		let cssStyleBoxSeparator = (cssLightMode) ? "box-separator light-box-separator" : "box-separator";
+		let cssStyleLightButtonToolbar = (cssLightMode) ? "control-panel-button-toolbar light-mode" : "control-panel-button-toolbar";
+		let cssStyleControlPanel = (cssLightMode) ? "control-panel-main light-mode" : "control-panel-main";
+		let lightMode = (cssLightMode) ? "light-templates" : "";
+		
 		let recent_alarms = {
 			cols: [
 				{ width: 20 },
@@ -76,7 +83,7 @@ export default class AlarmControlPanel extends GenericControlPanel {
 
 		let alarm_actions = {
 			view: "toolbar",
-			css: "control-panel-button-toolbar",
+			css: cssStyleLightButtonToolbar,
 			height: 50,
 			elements: [
 				{},
@@ -117,16 +124,16 @@ export default class AlarmControlPanel extends GenericControlPanel {
 			],
 			borderless: true
 		};
-
+		
 		let box_stats = {
-			css: "box-info",
+			css: cssStyleBox,
 			rows: [
 				{
 					view: "template",
-					css: "box-component",
+					css: cssStyleBoxComponent,
 					height: 33,
 					template: function() {
-						return `<div class="box-title"><span>${i18n.t("LBL_ALARMS_STATS")}</span></div>`;
+						return `<div class="box-title ${lightMode}"><span>${i18n.t("LBL_ALARMS_STATS")}</span></div>`;
 					}
 				},
 				{
@@ -137,25 +144,25 @@ export default class AlarmControlPanel extends GenericControlPanel {
 								{
 									view: "template",
 									id: "alarm-control-panel-box-active",
-									css: "box-component",
+									css: cssStyleBoxComponent,
 									height: 50,
 									template: function() {
-										return `<span class="box-value">${9999}</span>`;
+										return `<span class="box-value ${lightMode}">${9999}</span>`;
 									}
 								},
 								{
 									view: "template",
-									css: "box-component",
+									css: cssStyleBoxComponent,
 									height: 20,
 									template: function() {
-										return `<span class="box-description">${i18n.t("LBL_ALARMS_STATS_ACTIVE")}</span>`;
+										return `<span class="box-description ${lightMode}">${i18n.t("LBL_ALARMS_STATS_ACTIVE")}</span>`;
 									}
 								}
 							]
 						},
 						{
 							view: "template",
-							css: "box-separator",
+							css: cssStyleBoxSeparator,
 							width: 5,
 							borderless: true,
 							template: function() {
@@ -168,25 +175,25 @@ export default class AlarmControlPanel extends GenericControlPanel {
 								{
 									view: "template",
 									id: "alarm-control-panel-box-no-recognized",
-									css: "box-component",
+									css: cssStyleBoxComponent,
 									height: 50,
 									template: function() {
-										return `<span class="box-value">${9999}</span>`;
+										return `<span class="box-value ${lightMode}">${9999}</span>`;
 									}
 								},
 								{
 									view: "template",
-									css: "box-component",
+									css: cssStyleBoxComponent,
 									height: 20,
 									template: function() {
-										return `<span class="box-description">${i18n.t("LBL_ALARMS_STATS_NO_RECOGNIZED")}</span>`;
+										return `<span class="box-description ${lightMode}">${i18n.t("LBL_ALARMS_STATS_NO_RECOGNIZED")}</span>`;
 									}
 								}
 							]
 						},
 						{
 							view: "template",
-							css: "box-separator",
+							css: cssStyleBoxSeparator,
 							width: 5,
 							borderless: true,
 							template: function() {
@@ -199,18 +206,18 @@ export default class AlarmControlPanel extends GenericControlPanel {
 								{
 									view: "template",
 									id: "alarm-control-panel-box-filtered",
-									css: "box-component",
+									css: cssStyleBoxComponent,
 									height: 50,
 									template: function() {
-										return `<span class="box-value">${9999}</span>`;
+										return `<span class="box-value ${lightMode}">${9999}</span>`;
 									}
 								},
 								{
 									view: "template",
-									css: "box-component",
+									css: cssStyleBoxComponent,
 									height: 20,
 									template: function() {
-										return `<span class="box-description">${i18n.t("LBL_ALARMS_STATS_FILTERED")}</span>`;
+										return `<span class="box-description ${lightMode}">${i18n.t("LBL_ALARMS_STATS_FILTERED")}</span>`;
 									}
 								}
 							]
@@ -225,8 +232,8 @@ export default class AlarmControlPanel extends GenericControlPanel {
 			view: "popup",
 			id: "alarmControlPanel",
 			move: true,
-			css: "control-panel-main",
-			hidden: true,
+			css: cssStyleControlPanel,
+			//hidden: true,
 			height: document.documentElement.clientHeight - 147,
 			width: panelWidth,
 			body: {
@@ -261,7 +268,7 @@ export default class AlarmControlPanel extends GenericControlPanel {
 								css: "section-title",
 								template: function() {
 									return `<div>
-												<h2 class="section-title-text">${i18n.t("LBL_RECENT_ALARMS")}</h2>
+												<h2 class="section-title-text ${lightMode}">${i18n.t("LBL_RECENT_ALARMS")}</h2>
 											</div>`;
 								}
 							},
@@ -283,12 +290,12 @@ export default class AlarmControlPanel extends GenericControlPanel {
 			},
 			position: function(state) {
 				state.left = document.documentElement.clientWidth - panelWidth - 20;
-				state.top = 88;
+				state.top = 89;
 			},
 			on: {
 				onBeforeShow: function() {
 
-					this.config.height = document.documentElement.clientHeight - 137;
+					this.config.height = document.documentElement.clientHeight - 139;
 					this.adjust();
 					self.updateData();
 				}
@@ -299,6 +306,7 @@ export default class AlarmControlPanel extends GenericControlPanel {
 	updateData() {
 
 		let alarmService = window.sm.getService(Services.ALARM_SERVICE);
+		let lightMode = (window.lightMode) ? "light-mode" : "";
 
 		if (alarmService) {
 
@@ -309,7 +317,7 @@ export default class AlarmControlPanel extends GenericControlPanel {
 
 				if (stats.activeAlarms > -1) {
 
-					$$("alarm-control-panel-box-active").setHTML(`<span class="box-value">${stats.activeAlarms}</span>`);
+					$$("alarm-control-panel-box-active").setHTML(`<span class="box-value ${lightMode}">${stats.activeAlarms}</span>`);
 					$$("alarm-control-panel-box-active").refresh();
 
 					$$("icon-alarm-service").data.badge = stats.activeAlarms;
@@ -318,13 +326,13 @@ export default class AlarmControlPanel extends GenericControlPanel {
 
 				if (stats.noRecognizedAlarms > -1) {
 
-					$$("alarm-control-panel-box-no-recognized").setHTML(`<span class="box-value">${stats.noRecognizedAlarms}</span>`);
+					$$("alarm-control-panel-box-no-recognized").setHTML(`<span class="box-value ${lightMode}">${stats.noRecognizedAlarms}</span>`);
 					$$("alarm-control-panel-box-no-recognized").refresh();
 				}
 
 				if (stats.filteredAlarms > -1) {
 
-					$$("alarm-control-panel-box-filtered").setHTML(`<span class="box-value">${stats.filteredAlarms}</span>`);
+					$$("alarm-control-panel-box-filtered").setHTML(`<span class="box-value ${lightMode}">${stats.filteredAlarms}</span>`);
 					$$("alarm-control-panel-box-filtered").refresh();
 				}
 			}

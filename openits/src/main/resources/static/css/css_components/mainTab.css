@@ -17,7 +17,7 @@
 .main-tab .webix_all_tabs .webix_item_tab.webix_selected {
     color: var(--blue-headers);
     font-weight: 500;
-    background-color: var(--blue-mid-opacity-2);
+    background-color: var(--blue-mid-opacity-1);
     box-shadow: inset 0 -2px var(--blue-strong);
 }
  
@@ -29,7 +29,7 @@
  
 .main-tab .webix_item_tab:not(.webix_selected):hover {
 	color: rgb(71, 84, 102, 0.8);
-	background-color: var(--blue-mid-opacity-2);
+	background-color: var(--blue-mid-opacity-1);
 }
 
 .main-tab .webix_all_tabs .webix_tab_more_icon .webix_icon {

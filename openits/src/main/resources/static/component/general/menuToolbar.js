@@ -21,10 +21,11 @@ export default class MenuToolbar {
 	getView() {
 
 		let view;
+		let cssStyleHeader = (window.lightMode) ? "light-mode" : "head-color main-toolbar";
 		
 		view = {
 			id: MENU_TOOLBAR_ID,
-			css: "head-color menu-toolbar",
+			css: cssStyleHeader,
 			view: "toolbar",
 			height: 32,
 			elements: [

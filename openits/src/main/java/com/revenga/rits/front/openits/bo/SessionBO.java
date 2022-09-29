@@ -142,6 +142,8 @@ public class SessionBO extends GenericBO {
 
 		if (!CollectionUtils.isEmpty(users)) {
 
+			 users = vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_USERS_WITH_ROLE, users);
+
 			for (Map<String, Object> user : users) {
 
 				String usr = user.get(UserSessionUI.USER_FIELD_USER).toString();
