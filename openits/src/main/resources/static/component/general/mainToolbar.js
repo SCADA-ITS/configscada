@@ -20,12 +20,12 @@ export default class MainToolbar {
 			elements: [
 				{
 					view: "label",
-					label: "<img class='logo-project' src='./img/logo-project.svg'>",
-					width: 175
-				},
+					label: "<img class='logo-project' src='./img/logo-project.svg'>"
+					//width: 300
+				}
 				//this.mainMenu.getView(),
 				//{ view: "template", css: "head-color main-toolbar", role: "placeholder", borderless: 1, minWidth: 500 }
-				{}			
+				//{}			
 			]
 		};
 

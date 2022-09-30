@@ -42,7 +42,8 @@
 /* Toolbar */
 
 .logo-project {
-	width: 165px; 
+	/*width: 165px;*/
+	height: 75%; 
 	margin-top: 7px; 
 	margin-left: 10px;
 }

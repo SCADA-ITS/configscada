@@ -30,10 +30,19 @@
 	vertical-align: middle;
 }
 
+.project-logo {
+	width: 190px !important; 
+	background-color: rgb(255, 255, 255, 0);
+	border: none;
+}
+
+.project-logo .webix_template  {
+	display: flex;
+	align-items: center;
+}
+
 .project-logo .webix_template > img {
 	width:100%;
-	height: 100%;
-	vertical-align: middle;
 }
 
 .form {
