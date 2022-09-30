@@ -764,6 +764,11 @@ export default class Synoptic extends GenericMap {
 							webix.ui(getPanelActions(), $$("syn-window-actions-" + self.uid));
 							
 							loadContextMenu();
+							
+							if (self.options[Synoptic.Options.SELECTED_ELEMENT_ID]) {
+								
+								select(self.options[Synoptic.Options.SELECTED_ELEMENT_ID]);
+							}
 						}
 					}
 					
@@ -1015,6 +1020,13 @@ Object.defineProperty(Synoptic, 'Options', {
 
 Object.defineProperty(Synoptic.Options, "DEBUG_MODE", {
     value: 1,
+    writable : false,
+    enumerable : true,
+    configurable : false
+});
+
+Object.defineProperty(Synoptic.Options, "SELECTED_ELEMENT_ID", {
+    value: 2,
     writable : false,
     enumerable : true,
     configurable : false

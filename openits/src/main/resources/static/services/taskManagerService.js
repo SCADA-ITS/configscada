@@ -207,8 +207,10 @@ export default class TaskManagerService extends GenericModule {
 		    			height=${h},
 		    			left=${positionLeft},
 		    			top=${positionTop}`;
+		    			
+		//let browser = window.open("./external.html?" + searchParams.toString(), (new Date()).getTime(), features);
+		let browser = window.open("./external.html?" + searchParams.toString(), "_blank", features);
 		
-		let browser = window.open("./external.html?" + searchParams.toString(), (new Date()).getTime(), features);
 		
 		//if (browser) {
 			

@@ -9,34 +9,19 @@ export default class MapContextMenu {
 		this.allPks = allPks;
 		this.selectedPksCallback = selectedPksCallback;
 		this.cmdCallbacks = cmdCallbacks;
-        
-        let ctxMenuData = [];
-
-		initialize();
-		
-		this.ctxMenuData = ctxMenuData;
-		
-		function initialize() {
-			
-			if(commands){
-				commands.forEach(cmd => {
-					if(cmd.context === undefined || cmd.context){
-						ctxMenuData.push({ commandId: cmd.id, value: i18n.t(cmd.label), icon: cmd.icon, default: cmd.default_ });
-					}
-				});
-			}	
-		} 
     }
 
     getView() {
 	
         let self = this;
 
-        let view = {
+        let view;
+        
+        view = {
             view: "contextmenu",
             id: "ctx_menu-" + self.uid,
             width: 300,
-            data: self.ctxMenuData,
+            data: [],
             template: (obj) => {
 
                 if (!obj.default) {
@@ -48,6 +33,12 @@ export default class MapContextMenu {
 
             },
             on: {
+				onBeforeShow: function() {
+					
+					this.clearAll();
+					this.define("data", getData());
+					this.refresh();
+				},
                 onMenuItemClick: function(id) {
                     
                     let command = self.commands.find(e => {
@@ -62,6 +53,24 @@ export default class MapContextMenu {
             }
             
         };
+        
+        function getData() {
+	
+			let data = [];
+	
+			if (Array.isArray(self.commands)) {
+				
+				self.commands.forEach(cmd => {
+				
+					if (cmd.context === undefined || cmd.context) {
+						
+						data.push({ commandId: cmd.id, value: i18n.t(cmd.label), icon: cmd.icon, default: cmd.default_ });
+					}
+				});
+			}
+			
+			return data;
+		}
 		
         return view;
     }

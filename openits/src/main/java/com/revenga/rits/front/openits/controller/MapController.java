@@ -49,4 +49,18 @@ public class MapController {
 		
 		return new ResponseEntity<>(mapBO.getMap(id), HttpStatus.OK);
 	}
+	
+	@GetMapping(value = "/element/{id}")
+	@ApiOperation(value = "Get maps by element id", notes = "Get maps by element id")
+	public ResponseEntity<List<MapUI>> getMapsByElement(
+			@ApiParam(
+					name = "id",
+					type = "String",
+					value = "element identifier",
+					example = "1",
+					required = true) @PathVariable String id) {
+
+		
+		return new ResponseEntity<>(mapBO.getMapsByElement(id), HttpStatus.OK);
+	}
 }

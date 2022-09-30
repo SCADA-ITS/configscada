@@ -382,10 +382,10 @@ export default class EquipmentViewerTable {
 					if (ev.elementTypeParam.dataType.id === DataType.DECIMAL) {
 
 						let precision = ev.elementTypeParam.precision ? ev.elementTypeParam.precision : DEFAULT_PRECISION;
-						let val = ev.value.replace(",", ".");
+						let val = ev.value ? ev.value.replace(",", ".") : ev.value;
 						let parseValue = (typeof (val) === "string") ? parseFloat(val) : val;
 
-						dataToUpdate.value = parseValue.toFixed(precision);
+						dataToUpdate.value = parseValue ? parseValue.toFixed(precision) : parseValue;
 
 					} 
 					else if (ev.elementTypeParam.dataType.id === DataType.TIMESTAMP) {

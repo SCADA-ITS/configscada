@@ -49,4 +49,18 @@ public class SynopticController {
 		
 		return new ResponseEntity<>(synopticBO.getSynoptic(id), HttpStatus.OK);
 	}
+	
+	@GetMapping(value = "/element/{id}")
+	@ApiOperation(value = "Get synoptics by element id", notes = "Get synoptics by element id")
+	public ResponseEntity<List<SynopticUI>> getSynopticsByElement(
+			@ApiParam(
+					name = "id",
+					type = "String",
+					value = "element identifier",
+					example = "Element:9:1",
+					required = true) @PathVariable String id) {
+
+		
+		return new ResponseEntity<>(synopticBO.getSynopticsByElement(id), HttpStatus.OK);
+	}
 }

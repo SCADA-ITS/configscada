@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,6 +66,30 @@ public class MapBO extends GenericBO {
 		}
 		
 		return mapUI;
+	}
+	
+	public List<MapUI> getMapsByElement(String elementId) {
+		
+		List<MapUI> mapUIs = getMaps();
+		List<MapUI> filteredMapUIs = null;
+		
+		if (!CollectionUtils.isEmpty(mapUIs)) {
+		
+			filteredMapUIs = mapUIs.stream().filter(map -> { 
+				
+				List<MapLayer> mapLayers = map.getMap().getMapLayers();
+				
+				if (!CollectionUtils.isEmpty(mapLayers)) {
+					
+					return mapLayers.stream().anyMatch(layer -> layer.getMapLayerElements().stream().anyMatch(element -> element.getElementId().equals(elementId)));
+				}
+				
+				return false;
+				
+			}).collect(Collectors.toList());
+		}
+		
+		return filteredMapUIs;
 	}
 	
 	private List<Map<String, Object>> getData(com.revenga.rits.front.openitsdao.model.Map map) {

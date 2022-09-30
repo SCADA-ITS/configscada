@@ -55,6 +55,16 @@
 	background-color: var(--blue-mid-opacity-5);
 }
 
+.light-templates input {
+    background: transparent;
+    border: 1px solid var(--blue-headers-soft);
+    color: var(--blue-headers-soft) !important;
+}
+
+.light-templates input:focus {
+    border: 1px solid var(--blue-mid-opacity-5);
+}
+
 .light-component {
  	background-color: var(--blue-backcolor) !important;
 }

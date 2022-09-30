@@ -1,0 +1,18 @@
+/* SearchBox */
+
+.searchbox-template {
+    background: transparent;
+    font-size: 13px;
+    color: var(--blue-soft) !important;
+}
+
+.searchbox-template input {
+    background: transparent;
+    border: 1px solid var(--blue-soft);
+    color: var(--blue-soft) !important;
+}
+
+.searchbox-template input:focus {
+    border: 1px solid var(--blue-soft);
+}
+

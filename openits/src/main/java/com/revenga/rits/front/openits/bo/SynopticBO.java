@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,6 +64,30 @@ public class SynopticBO extends GenericBO {
 		}
 		
 		return synopticUI;
+	}
+	
+	public List<SynopticUI> getSynopticsByElement(String elementId) {
+		
+		List<SynopticUI> synopticUIs = getSynoptics();
+		List<SynopticUI> filteredSynopticUIs = null;
+		
+		if (!CollectionUtils.isEmpty(synopticUIs)) {
+		
+			filteredSynopticUIs = synopticUIs.stream().filter(synoptic -> { 
+				
+				List<SynopticLayer> synopticLayers = synoptic.getSynoptic().getSynopticLayers();
+				
+				if (!CollectionUtils.isEmpty(synopticLayers)) {
+					
+					return synopticLayers.stream().anyMatch(layer -> layer.getSynopticLayerElements().stream().anyMatch(element -> element.getElementId().equals(elementId)));
+				}
+				
+				return false;
+				
+			}).collect(Collectors.toList());
+		}
+		
+		return filteredSynopticUIs;
 	}
 	
 	private List<Map<String, Object>> getData(Synoptic synoptic) {

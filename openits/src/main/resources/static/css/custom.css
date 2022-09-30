@@ -11,6 +11,7 @@
 @import url(./css_components/map.css);
 @import url(./css_components/menu_toolbar.css);
 @import url(./css_components/optionButtonList.css);
+@import url(./css_components/searchBox.css);
 @import url(./css_components/splashScreen.css);
 @import url(./css_components/taskbar.css);
 @import url(./css_components/treeView.css);
@@ -28,6 +29,7 @@
 @import url(./css_modules/incidentReportModule.css);
 @import url(./css_modules/planExecutorModule.css);
 @import url(./css_modules/planScheduleModule.css);
+@import url(./css_modules/searchModule.css);
 @import url(./css_modules/signalingModule.css);
 @import url(./css_modules/welcomeScreenModule.css);
 @import url(./css_modules/wizards.css);

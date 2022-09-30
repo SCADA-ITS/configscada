@@ -140,7 +140,7 @@ function initialize() {
 									]
 								},
 								{
-									width: 400,
+									//width: 400,
 									rows: [
 										{},
 										{

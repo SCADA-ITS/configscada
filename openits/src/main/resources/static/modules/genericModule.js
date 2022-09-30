@@ -117,4 +117,24 @@ export default class GenericModule {
 	destroy() {
 		
 	}
+	
+	refresh() {
+		
+		let container = $$(this.args.containerId);
+		
+		if (container) {
+			
+			if (this.args.containerId.includes("tab_body")) {
+				
+				let tabId = this.args.containerId.replace("tab_body", "tab");
+				
+				let tabUndockActionDom = document.getElementById(tabId + '_action');
+			
+				if (tabUndockActionDom) {
+					
+					tabUndockActionDom.innerHTML = `<span id='${tabId}_action' style='float: right; padding-top: 2px'><a href='#' onclick='window.sm.getService(Services.TASK_MANAGER_SERVICE).undock(${JSON.stringify(tabId)}, ${JSON.stringify(this)})'><img id='${tabId}-externalize' title='${i18n.t("LBL_VIEW_IN_WINDOW")}' src='./img/externalize_button.png'></a></span>`;
+				}
+			}
+		}
+	}
 }

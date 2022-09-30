@@ -32,13 +32,22 @@ export default class UserService extends GenericModule {
 
 		let views = [];
 		let cssStyleInvertUser = (window.lightMode) ? "user-template light-templates" : "user-template";
+		let calculatedWidth;
+		let webixToolbarElem = document.querySelector('.webix_toolbar');
+		
+		if (webixToolbarElem) {
+			
+			let webixToolbarStyle = getComputedStyle(webixToolbarElem);
+			
+			calculatedWidth = util.ui.calculateTextWidth(this.userData.name, webixToolbarStyle.fontFamily, webixToolbarStyle.fontSize);	
+		}
 		
 		let labelUser = { 
 			id: "label-user-service",
 			view: "label", 
 			label: this.userData.name, 
 			align: "right", 
-			maxWidth: 350 
+			maxWidth: calculatedWidth ? calculatedWidth + 15 : 350 
 		};
 				
 		let iconUser = { 

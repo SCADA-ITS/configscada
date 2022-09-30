@@ -1,9 +1,13 @@
 import GenericModule from "../modules/genericModule.js";
 import OpenMap from "../component/map/openMap.js";
+import SearchDialogBox from "../component/searchDialogBox.js";
 import Synoptic from "../component/map/synoptic.js";
 import { util } from "../lib/util.js";
+import MessageBox from "../component/messageBox.js";
 
 const DEBUG_MODE = false;
+const IDX_PROMISE_MAPS_ELEMENT = 0;
+const IDX_PROMISE_SYNOPTICS_ELEMENT = 1;
 
 export default class MapLauncherModule extends GenericModule {
 
@@ -24,16 +28,20 @@ export default class MapLauncherModule extends GenericModule {
 	loadData() {
 
 		let self = this;
-		
+		let container = $$(self.args.containerId);
 		$$("loading-" + this.uid).show();
 		$$(this.uid).hide();
 
 		if (Array.isArray(self.args.selectedPks) && self.args.selectedPks.length > 0) {
 			
-			if(self.moduleAction.id === self.config.moduleAction.loadIncidentInMap) {
+			if (self.moduleAction.id === self.config.moduleAction.loadIncidentInMap) {
 				
 				loadFromIncident();
 			}
+			else if (self.moduleAction.id === self.config.moduleAction.element) {
+				
+				loadFromElementDialog();
+			}				
 			else {
 				
 				loadFromElement();
@@ -54,24 +62,103 @@ export default class MapLauncherModule extends GenericModule {
 							let mapId = (incident.incidentType.map) ? incident.incidentType.map : self.config.defaultMap;
 
 							incident.map = mapId;
-							loadMap(mapId, onLoadMapIncident);							
+							loadMap(mapId, onLoadMapIncident, null, incident);							
 						}
 					}					
 				});
+			}
+			
+			function loadFromElementDialog() {
 				
-				function onLoadMapIncident(map, container, label) {
+				let element = window.em.getByField(EntityType.ELEMENT, "id", self.args.selectedPks[0]);
 				
-					if (incident && map) {
+				if (container) {
+					
+					container.hide();
+				}
+				
+				if (element) {
+										
+					let promises = [];
+		
+					promises.push(webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.mapsElement, { id: element.id })));
+					promises.push(webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.synopticsElement, { id: element.id })));
+		
+					webix.promise.all(promises).then(function(responses) {
 						
-						$$("loading-" + self.uid).hide();
-						$$(self.uid).show();
+						if (Array.isArray(responses) && responses.length === 2) {
+							
+							let maps = responses[IDX_PROMISE_MAPS_ELEMENT] ? responses[IDX_PROMISE_MAPS_ELEMENT].json() : undefined;
+							let synoptics = responses[IDX_PROMISE_SYNOPTICS_ELEMENT] ? responses[IDX_PROMISE_SYNOPTICS_ELEMENT].json() : undefined;
+							let mapSynList = [];
+							
+							if (maps) {
+								
+								mapSynList.push(...maps.map(e => {
+									
+									return {
+										id: [IDX_PROMISE_MAPS_ELEMENT, e.metadata.id].join(":"),
+										label: i18n.t(e.metadata.label),
+										type: i18n.t("LBL_MAP")
+									};
+								}));
+							}
+							
+							if (synoptics) {
+								
+								mapSynList.push(...synoptics.map(e => {
+									
+									return {
+										id: [IDX_PROMISE_SYNOPTICS_ELEMENT, e.metadata.id].join(":"),
+										label: i18n.t(e.metadata.label),
+										type: i18n.t("LBL_SYNOPTIC")
+									};
+								}));
+							}
+							
+							if (Array.isArray(mapSynList) && mapSynList.length === 1) {
+							
+								load(mapSynList[0], element);	
+							}
+							else if (Array.isArray(mapSynList) && mapSynList.length > 1) {
+								
+								let dialogEntity = webix.copy(SearchDialogBox.CUSTOM);
+	
+								dialogEntity.data = mapSynList;
+								
+								dialogEntity.pkField = "id"
+								dialogEntity.fields = ["label=LBL_MAP","type=LBL_TYPE"];
+								dialogEntity.height = 600;
+								dialogEntity.width = 800;
+								dialogEntity.sortFieldId = 1;
+									
+								(new SearchDialogBox(i18n.t("LBL_SELECT_PARAM"), dialogEntity, onAccept)).show();	
+							}
+							else {
+								
+								(new MessageBox(MessageBox.WARN, i18n.t("LBL_MAP_NOT_AVAILABLE_FOR") + ": " + element.alias)).show();
+								
+								if (container) {
+									
+									container.close();
+								}
+							}
+						}
+					});	
+				}
+				
+				function onAccept(selected) {
+
+					if (element && Array.isArray(selected) && selected.length > 0) {
+					
+						load(selected[0], element);	
+					}
+					else {
 						
-						webix.ui(map.getView(function() { map.selectIncident(incident.id) }), $$(self.uid));
-																		
 						if (container) {
 							
-							util.ui.setTitle(container.config.id, i18n.t(label));
-						}	
+							container.close();
+						}
 					}
 				}
 			}
@@ -82,32 +169,73 @@ export default class MapLauncherModule extends GenericModule {
 
 				if (self.moduleAction.id === self.config.moduleAction.map) {
 					
-					loadMap(element.map, onLoadMapElement);
+					loadMap(element.map, onLoadMapElement, element);
 
 				} else if (self.moduleAction.id === self.config.moduleAction.synoptic) {
 
 					loadSynoptic(element);
 				}
-				
-				function onLoadMapElement(map, container, label) {
-				
-					if (element && map) {
-						
-						$$("loading-" + self.uid).hide();
-						$$(self.uid).show();
+			}
+		}
 		
-						webix.ui(map.getView(function() { map.select(element.id) }), $$(self.uid));
-																		
-						if (container) {
+		function onLoadMapElement(map, container, label, element) {
+				
+			if (element && map) {
+				
+				$$("loading-" + self.uid).hide();
+				$$(self.uid).show();
+
+				webix.ui(map.getView(function() { map.select(element.id) }), $$(self.uid));
+																
+				if (container) {
+					
+					util.ui.setTitle(container.config.id, i18n.t(label));
+				}	
+			}
+		}
+		
+		function onLoadMapIncident(map, container, label, incident) {
+				
+			if (incident && map) {
+				
+				$$("loading-" + self.uid).hide();
+				$$(self.uid).show();
+				
+				webix.ui(map.getView(function() { map.selectIncident(incident.id) }), $$(self.uid));
+																
+				if (container) {
+					
+					util.ui.setTitle(container.config.id, i18n.t(label));
+				}	
+			}
+		}
+		
+		function load(mapSyn, element) {
+			
+			if (mapSyn && mapSyn.id && mapSyn.id.split(":").length == 2) {
+				
+				let type = mapSyn.id.split(":")[0];
+				let id = mapSyn.id.split(":")[1];
+				
+				if (container) {
 							
-							util.ui.setTitle(container.config.id, i18n.t(label));
-						}	
-					}
+					container.show();
+				}
+				
+				if (type == IDX_PROMISE_MAPS_ELEMENT) {
+				
+					loadMap(id, onLoadMapElement, element);
+				}
+				else if (type == IDX_PROMISE_SYNOPTICS_ELEMENT) {
+					
+					element.synoptic = id;
+					
+					loadSynoptic(element);
 				}
 			}
 		}
 		
-		function loadMap(mapId, onLoad) {
+		function loadMap(mapId, onLoad, element, incident) {
 			
 			webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.map, { id: mapId })).then(function(response) {
 
@@ -135,7 +263,15 @@ export default class MapLauncherModule extends GenericModule {
 
 						let map = new OpenMap(responseJson.metadata, responseJson.data, events, w, h, options);
 						
-						onLoad(map, container, responseJson.metadata.label);
+						if (element) {
+							
+							onLoad(map, container, responseJson.metadata.label + " - " + element.alias + " - " + i18n.t(element.elementType.labelAlias), element);	
+						}
+						else if (incident) {
+							
+							onLoad(map, container, responseJson.metadata.label + " - " + incident.incidentType.description + " - " + incident.incidentType.alias + " - " + util.toLocaleString(incident.generatedAt / 1000) + " - " + incident.affectionStretch.alias, incident);
+						}
+
 					}
 				}
 			});
@@ -160,6 +296,7 @@ export default class MapLauncherModule extends GenericModule {
 							let options = {};
 
 							options[Synoptic.Options.DEBUG_MODE] = DEBUG_MODE;
+							options[Synoptic.Options.SELECTED_ELEMENT_ID] = element.id;
 							
 							let w = self.args.width;
 							let h = self.args.height;
@@ -182,7 +319,7 @@ export default class MapLauncherModule extends GenericModule {
 								
 								if (container) {
 									
-									util.ui.setTitle(container.config.id, i18n.t(responseJson.metadata.label));
+									util.ui.setTitle(container.config.id, i18n.t(responseJson.metadata.label) + " - " + element.alias);
 								}
 							}
 						}

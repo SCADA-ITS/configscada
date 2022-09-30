@@ -538,7 +538,7 @@ export default class SearchDialogBox {
 				on: {
 					onItemClick() {
 
-						if (self.dialogEntity.messageType && self.onAccept) {
+						if (self.onAccept) {
 
 							self.onAccept();
 						}

@@ -2,21 +2,24 @@ package com.revenga.rits.front.webapp;
 
 import org.junit.Test;
 
-import com.revenga.rits.front.openits.util.AES;
+import com.revenga.rits.lib.encrypt.util.AES;
 
 public class WebappApplicationTests {
 	
 	@Test
 	public void test() {
 		
-		final String secretKey = "ssshhhhhhhhhhh!!!!";
+		try {
+			String originalString = "hola que tal";
+			String encryptedString = AES.encrypt(originalString) ;
+			String decryptedString = AES.decrypt(encryptedString) ;
 
-		String originalString = "howtodoinjava.com";
-		String encryptedString = AES.encrypt(originalString, secretKey) ;
-		String decryptedString = AES.decrypt(encryptedString, secretKey) ;
-
-		System.out.println(originalString);
-		System.out.println(encryptedString);
-		System.out.println(decryptedString);
+			System.out.println(originalString);
+			System.out.println(encryptedString);
+			System.out.println(decryptedString);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

@@ -322,7 +322,7 @@ export let util = {
 					header: `<div id='${tab_id}' style='float: left; width: 250px;'>
 								<img class='tab-icon' style='height:22px; width:22px' src='${icon}'/>
 								<span id='${tab_id}_title' class='tab-text'>${tabLabel}</span>
-								<span style='float: right; padding-top: 2px'><a href='#' onclick='window.sm.getService(Services.TASK_MANAGER_SERVICE).undock(${JSON.stringify(tab_id)}, ${JSON.stringify(genericModule)})'><img id='${tab_id}-externalize' title='${i18n.t("LBL_VIEW_IN_WINDOW")}' src='./img/externalize_button.png'></a></span>
+								<span id='${tab_id}_action' style='float: right; padding-top: 2px'><a href='#' onclick='window.sm.getService(Services.TASK_MANAGER_SERVICE).undock(${JSON.stringify(tab_id)}, ${JSON.stringify(genericModule)})'><img id='${tab_id}-externalize' title='${i18n.t("LBL_VIEW_IN_WINDOW")}' src='./img/externalize_button.png'></a></span>
 							</div>`,
 					body: {
 						autoheight: true,
@@ -1676,134 +1676,6 @@ export let util = {
 			return color;
 		},
 		
-//		sendCommand(commands, onResponse) {
-//			
-//			let showCommentDialog = false;
-//			let auditLogs = [];
-//			
-//			if (Array.isArray(commands) && commands.length > 0) {
-//				
-//				auditLogs = util.element.getAuditLogs(commands);
-//				
-//				showCommentDialog = (commands.find(command => {
-//				
-//					let res = false;
-//					let element = window.em.getByField(EntityType.ELEMENT, "id", command.elementId);
-//				
-//					if (element) {
-//					
-//						let commandElementType = util.element.getCommandElementType(element, command.commandElementTypeId);
-//				
-//						if (commandElementType && LogLevel[commandElementType.logLevel]) {
-//						
-//							res = (commandElementType.logComment === "true")
-//						}
-//					}
-//					
-//					return res;
-//					
-//				}) != null);
-//				
-//				if (Array.isArray(auditLogs) && auditLogs.length > 0 && showCommentDialog) {
-//					
-//					(new InputDialogBox(i18n.t("LBL_SEND_COMMAND_COMMENT_DIALOG"), i18n.t("LBL_SEND_COMMAND_COMMENT"), function(comment) {
-//
-//						auditLogs = auditLogs.map(auditLog => {
-//							
-//							let newAuditLog = webix.copy(auditLog);
-//							
-//							if (Array.isArray(newAuditLog.auditLogValues) && newAuditLog.auditLogValues.length > 0) {
-//								
-//								let auditLogValueComment = newAuditLog.auditLogValues.find(e => e.logTypeParamId == LogType.LOG_TYPE_COMMANDS.params.COMMENT);
-//								
-//								if (auditLogValueComment) {
-//									
-//									auditLogValueComment.value = auditLogValueComment.value === "" ? comment : undefined;
-//								}
-//							}
-//							
-//							return newAuditLog;
-//						});
-//						
-//						send();		
-//
-//					}, false)).show();
-//				}
-//				else {
-//					
-//					send();
-//				}
-//			}
-//			
-//			function send() {
-//				
-//				if (Array.isArray(auditLogs) && auditLogs.length > 0) {
-//						
-//					webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + ENDPOINT_SEND_AUDIT_LOG, { auditLogs: auditLogs }).then(
-//						function(okSendAuditLog) {
-//							
-//							callSendCommand();						
-//						},
-//						function(errSendAuditLog) {
-//						
-//							if (onResponse) {
-//								
-//								onResponse(false);	
-//							}
-//							
-//						}
-//					);	
-//				}
-//				else {
-//				
-//					callSendCommand();	
-//				}
-//				
-//				function callSendCommand() {
-//					
-//					webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + ENDPOINT_SEND_COMMAND_SYNC, { commands: commands }).then(
-//						function(responseCommandElementErrors) {
-//							
-//							if (responseCommandElementErrors) {
-//								
-//								let commandElementErrors = responseCommandElementErrors.json();
-//								
-//								if (Array.isArray(commandElementErrors) && commandElementErrors.length > 0) {
-//									
-//									util.element.printCommandElementErrors(commandElementErrors);
-//									
-//									if (onResponse) {
-//										
-//										onResponse(false);	
-//									}
-//									
-//								}
-//								else {
-//									
-//									if (onResponse) {
-//										
-//										onResponse(true);
-//									}
-//								}
-//								
-//							}
-//						},
-//						function(errSendCommand) {
-//							
-//							if (onResponse) {
-//								
-//								onResponse(false);
-//							}
-//						}
-//					);
-//					
-//					
-//				}
-//			}
-//			
-//			
-//		},
-		
 		sendCommand(commands, onResponse, confirmMessage) {
 			
 			let showCommentDialog = false;
@@ -2115,6 +1987,140 @@ export let util = {
 			
 			
 			return aLogs;
+		},
+			
+		/**
+		 *
+		 * Calculate and classify commands in element(sub)Types
+		 * 
+	 	 * @param elementIds {array} Array of element ids 
+	 	 * @param defaultSignalingModuleAction {number} id of defaultModuleAction for signalling
+	 	 * @param elementTypeCommands {array} Referenced array of classified commands by (sub)type
+	 	 * @param mapElements {map} Referenced map of classified elements for (sub)type
+	 	 * @param mapCommandModule {map} Referenced map of classified commands for (sub)type
+	 	 * @param useDefaultModule {boolean} Referenced boolean to use default module
+	 	 * @return
+	 	 */
+		calculateElementTypeCommands(elementIds, defaultSignalingModuleAction, elementTypeCommands, mapElements, mapCommandModule, useDefaultModule) {
+			
+			if (!elementTypeCommands) {
+				
+				elementTypeCommands = [];
+			}
+			
+			if (!mapElements) {
+				
+				mapElements = new Map();
+			}
+			
+			if (!mapCommandModule) {
+				
+				mapCommandModule = new Map();
+			}
+			
+			if (useDefaultModule === undefined) {
+				
+				useDefaultModule = false;
+			}
+			
+			if (Array.isArray(elementIds) && elementIds.length > 0) {
+
+				self.mapElements = new Map();
+				self.mapCommandModule = new Map();
+
+				elementIds.forEach(id => {
+
+					let element = window.em.getByField(EntityType.ELEMENT, "id", id);
+
+					if (element && element.elementType) {
+
+						let elementType = window.em.getByField(EntityType.ELEMENT_TYPE, "id", element.elementType.id);
+
+						if (elementType) {
+
+							if (element.elementSubtype && element.elementSubtype.id &&
+								elementType.elementSubtypes && elementType.elementSubtypes.length > 0) {
+
+								let elementSubtype = elementType.elementSubtypes.find(e => e.id === element.elementSubtype.id);
+
+								if (elementSubtype) {
+									
+									let commandModule = defaultSignalingModuleAction;
+									let alias = "";
+									
+									if (element.elementSubtype.commandModule) {
+										
+										commandModule = element.elementSubtype.commandModule; 
+									}
+									else if (element.elementType.commandModule) {
+										
+										commandModule = element.elementType.commandModule;
+									}
+									
+									if (commandModule == defaultSignalingModuleAction) {
+										
+										alias = "(*) ";
+									}
+									
+									let listElement = mapElements.get(element.elementSubtype.id);
+
+									if (!listElement) {
+
+										listElement = [];
+
+										mapElements.set(element.elementSubtype.id, listElement);
+										mapCommandModule.set(element.elementSubtype.id, commandModule);
+
+										elementTypeCommands.push({
+											id: element.elementSubtype.id,
+											alias: alias + i18n.t(elementType.labelAlias) + ' - ' + i18n.t(elementSubtype.labelAlias),
+											description: i18n.t(elementSubtype.labelDescription),
+											image: elementType.elementTypePhoto
+										});
+									}
+									
+									listElement.push(id);
+								}
+
+							} else {
+
+								let listElement = mapElements.get(element.elementType.id);
+
+								if (!listElement) {
+
+									let alias = undefined;
+									let commandModule = undefined;
+
+									if (element.elementType.commandModule) {
+
+										alias = i18n.t(elementType.labelAlias);
+										commandModule = element.elementType.commandModule;
+
+									} else {
+										alias = "(*) " + i18n.t(elementType.labelAlias);
+										commandModule = defaultSignalingModuleAction;
+										useDefaultModule = true;
+									}
+
+									listElement = [];
+
+									mapElements.set(element.elementType.id, listElement);
+									mapCommandModule.set(element.elementType.id, commandModule);
+
+									elementTypeCommands.push({
+										id: element.elementType.id,
+										alias: alias,
+										description: i18n.t(elementType.labelDescription),
+										image: elementType.elementTypePhoto
+									});
+								}
+								
+								listElement.push(id);
+							}
+						}
+					}
+				});
+			}
 		},
 		
 		getCommandElementType(element, commandElementTypeId) {
@@ -2780,5 +2786,13 @@ export let util = {
 		context.fillText(textValue, canvas.width / 2, canvas.height / 2);
 	
 		return canvas.toDataURL("image/png");
+	},
+	
+	getStringNormalized(str) {
+				
+		if (str) {
+			
+			return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+		}
 	}
 };
