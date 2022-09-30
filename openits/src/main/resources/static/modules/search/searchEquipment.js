@@ -259,17 +259,24 @@ export default class SearchEquipment {
 		
 		function filterResults() {
 			
-			return elementsData.filter(e => {
-				
-				let alias = e.alias ? util.getStringNormalized(e.alias) : undefined;
-				let description = e.description ? util.getStringNormalized(e.description) : undefined;
-				let elementTypeLabelAlias = e.elementType.labelAlias ? util.getStringNormalized(i18n.t(e.elementType.labelAlias)) : undefined; 
+			let filteredResults = [];
 			
-
-				return 	(alias && alias.includes(self.text)) ||
-						(description && description.includes(self.text)) ||
-						(elementTypeLabelAlias && elementTypeLabelAlias.includes(self.text));
-			});
+			if (Array.isArray(elementsData)) {
+				
+				filteredResults = elementsData.filter(e => {
+				
+					let alias = e.alias ? util.getStringNormalized(e.alias) : undefined;
+					let description = e.description ? util.getStringNormalized(e.description) : undefined;
+					let elementTypeLabelAlias = e.elementType.labelAlias ? util.getStringNormalized(i18n.t(e.elementType.labelAlias)) : undefined; 
+				
+	
+					return 	(alias && alias.includes(self.text)) ||
+							(description && description.includes(self.text)) ||
+							(elementTypeLabelAlias && elementTypeLabelAlias.includes(self.text));
+				});	
+			}
+			
+			return filteredResults;
 		}
 	}
 }

@@ -16,3 +16,15 @@
     border: 1px solid var(--blue-soft);
 }
 
+
+.webix_menu-x.dt-submenu_searchbox .webix_list_item {
+	background-color: transparent !important;
+	color: #94a1b3 !important; 
+	width: 34px !important;	
+	height: 34px !important;
+	padding: 0px 0px 0px 10px;
+}
+
+.webix_menu-x.dt-submenu_searchbox .webix_list_item:hover {
+	background-color: transparent !important;
+}

@@ -267,7 +267,11 @@ export default class SearchAlarm {
 		
 		function filterResults() {
 			
-			return alarms.filter(e => {
+			let filteredResults = [];
+			
+			if (Array.isArray(alarms)) {
+				
+				filteredResults = alarms.filter(e => {
 					
 					let alias = e.alarmConfig.labelAlias ? util.getStringNormalized(i18n.t(e.alarmConfig.labelAlias)) : undefined;
 					let element = window.em.getByField(EntityType.ELEMENT, "id", e.targetElement.id);
@@ -283,8 +287,11 @@ export default class SearchAlarm {
 					return 	(alias && alias.toLowerCase().includes(self.text)) ||
 							(elementAlias && elementAlias.toLowerCase().includes(self.text)) ||
 							(elementTypeLabelAlias && elementTypeLabelAlias.toLowerCase().includes(self.text));
-					
-			});
+						
+				});	
+			}
+			
+			return filteredResults;
 		}
 	}
 }

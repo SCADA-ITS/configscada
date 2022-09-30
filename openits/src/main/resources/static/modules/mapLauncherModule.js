@@ -74,7 +74,7 @@ export default class MapLauncherModule extends GenericModule {
 				
 				if (container) {
 					
-					container.hide();
+					//container.hide();
 				}
 				
 				if (element) {
@@ -219,7 +219,7 @@ export default class MapLauncherModule extends GenericModule {
 				
 				if (container) {
 							
-					container.show();
+					//container.show();
 				}
 				
 				if (type == IDX_PROMISE_MAPS_ELEMENT) {

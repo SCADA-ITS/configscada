@@ -8,6 +8,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,7 @@ import com.revenga.rits.front.openits.model.SynopticUI;
 import com.revenga.rits.front.openitsdao.model.Synoptic;
 import com.revenga.rits.front.openitsdao.model.SynopticLayer;
 import com.revenga.rits.front.openitsdao.model.SynopticLayerElement;
+import com.revenga.rits.front.openitsdao.service.SynopticLayerElementService;
 import com.revenga.rits.front.openitsdao.service.SynopticService;
 
 @Service
@@ -23,6 +25,9 @@ public class SynopticBO extends GenericBO {
 	
 	@Autowired
 	SynopticService synopticService;
+	
+	@Autowired
+	SynopticLayerElementService synopticLayerElementService;
 	
 	public List<SynopticUI> getSynoptics() {
 		
@@ -68,26 +73,45 @@ public class SynopticBO extends GenericBO {
 	
 	public List<SynopticUI> getSynopticsByElement(String elementId) {
 		
-		List<SynopticUI> synopticUIs = getSynoptics();
-		List<SynopticUI> filteredSynopticUIs = null;
+		List<SynopticUI> synopticUIs = new ArrayList<>();
+		List<SynopticLayerElement> synopticLayerElements = synopticLayerElementService.getAll();
+		List<Synoptic> synopticList = synopticService.getAll();
 		
-		if (!CollectionUtils.isEmpty(synopticUIs)) {
 		
-			filteredSynopticUIs = synopticUIs.stream().filter(synoptic -> { 
+		if (!CollectionUtils.isEmpty(synopticLayerElements) && !CollectionUtils.isEmpty(synopticList)) {
+			
+			Set<Integer> synopticIds = new HashSet<>();
+			
+			List<SynopticLayerElement> synopticLayerElementsFiltered = synopticLayerElements.stream()
+					.filter(layer -> StringUtils.equals(layer.getElementId(), elementId)).collect(Collectors.toList());
+			
+			if (!CollectionUtils.isEmpty(synopticLayerElementsFiltered)) {
 				
-				List<SynopticLayer> synopticLayers = synoptic.getSynoptic().getSynopticLayers();
-				
-				if (!CollectionUtils.isEmpty(synopticLayers)) {
+				synopticLayerElementsFiltered.forEach(synopticLayerElement -> {
 					
-					return synopticLayers.stream().anyMatch(layer -> layer.getSynopticLayerElements().stream().anyMatch(element -> element.getElementId().equals(elementId)));
+					if (synopticLayerElement.getSynopticLayer() != null && synopticLayerElement.getSynopticLayer().getSynoptic() != null) {
+						
+						synopticIds.add(synopticLayerElement.getSynopticLayer().getSynoptic().getId());
+					}
+				});
+			}
+			
+			synopticIds.forEach(synopticId -> {
+				
+				Synoptic synoptic = synopticList.stream().filter(e -> e.getId().equals(synopticId)).findFirst().orElse(null);
+				
+				if (synoptic != null) {
+					
+					SynopticUI synopticUI = new SynopticUI();
+					
+					synopticUI.setSynoptic(synoptic);
+					
+					synopticUIs.add(synopticUI);
 				}
-				
-				return false;
-				
-			}).collect(Collectors.toList());
+			});
 		}
 		
-		return filteredSynopticUIs;
+		return synopticUIs;
 	}
 	
 	private List<Map<String, Object>> getData(Synoptic synoptic) {

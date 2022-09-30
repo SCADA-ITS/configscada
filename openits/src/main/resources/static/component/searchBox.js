@@ -58,7 +58,7 @@ export default class SearchBox {
 				autowidth: true,
 				openAction: "click",
 				width: 34,
-				css: "dt-submenu",
+				css: "dt-submenu_searchbox",
 				subMenuPos: "down",
 				data: [
 					{ value: "", icon: "mdi mdi-menu-down", submenu: getMenuSearchTypes() }

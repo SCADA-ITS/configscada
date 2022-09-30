@@ -8,13 +8,18 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.revenga.rits.front.openits.adapter.impl.VODataSourceAdapter;
 import com.revenga.rits.front.openits.model.MapUI;
+import com.revenga.rits.front.openits.model.SynopticUI;
 import com.revenga.rits.front.openitsdao.model.MapLayer;
 import com.revenga.rits.front.openitsdao.model.MapLayerElement;
+import com.revenga.rits.front.openitsdao.model.Synoptic;
+import com.revenga.rits.front.openitsdao.model.SynopticLayerElement;
+import com.revenga.rits.front.openitsdao.service.MapLayerElementService;
 import com.revenga.rits.front.openitsdao.service.MapService;
 
 @Service
@@ -22,6 +27,9 @@ public class MapBO extends GenericBO {
 		
 	@Autowired
 	MapService mapService;
+	
+	@Autowired
+	MapLayerElementService mapLayerElementService;
 	
 	@Autowired
 	LocationBO locationBO;
@@ -70,26 +78,45 @@ public class MapBO extends GenericBO {
 	
 	public List<MapUI> getMapsByElement(String elementId) {
 		
-		List<MapUI> mapUIs = getMaps();
-		List<MapUI> filteredMapUIs = null;
+		List<MapUI> mapUIs = new ArrayList<>();
+		List<MapLayerElement> mapLayerElements = mapLayerElementService.getAll();
+		List<com.revenga.rits.front.openitsdao.model.Map> mapList = mapService.getAll();
 		
-		if (!CollectionUtils.isEmpty(mapUIs)) {
 		
-			filteredMapUIs = mapUIs.stream().filter(map -> { 
+		if (!CollectionUtils.isEmpty(mapLayerElements) && !CollectionUtils.isEmpty(mapList)) {
+			
+			Set<Integer> mapIds = new HashSet<>();
+			
+			List<MapLayerElement> mapLayerElementsFiltered = mapLayerElements.stream()
+					.filter(layer -> StringUtils.equals(layer.getElementId(), elementId)).collect(Collectors.toList());
+			
+			if (!CollectionUtils.isEmpty(mapLayerElementsFiltered)) {
 				
-				List<MapLayer> mapLayers = map.getMap().getMapLayers();
-				
-				if (!CollectionUtils.isEmpty(mapLayers)) {
+				mapLayerElementsFiltered.forEach(mapLayerElement -> {
 					
-					return mapLayers.stream().anyMatch(layer -> layer.getMapLayerElements().stream().anyMatch(element -> element.getElementId().equals(elementId)));
+					if (mapLayerElement.getMapLayer() != null && mapLayerElement.getMapLayer().getMap() != null) {
+						
+						mapIds.add(mapLayerElement.getMapLayer().getMap().getId());
+					}
+				});
+			}
+			
+			mapIds.forEach(mapId -> {
+				
+				com.revenga.rits.front.openitsdao.model.Map map = mapList.stream().filter(e -> e.getId().equals(mapId)).findFirst().orElse(null);
+				
+				if (map != null) {
+					
+					MapUI mapUI = new MapUI();
+					
+					mapUI.setMap(map);
+					
+					mapUIs.add(mapUI);
 				}
-				
-				return false;
-				
-			}).collect(Collectors.toList());
+			});
 		}
 		
-		return filteredMapUIs;
+		return mapUIs;
 	}
 	
 	private List<Map<String, Object>> getData(com.revenga.rits.front.openitsdao.model.Map map) {

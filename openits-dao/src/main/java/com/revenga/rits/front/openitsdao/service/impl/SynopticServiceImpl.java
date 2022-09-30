@@ -20,7 +20,7 @@ public class SynopticServiceImpl implements SynopticService {
 
 		return synopticRepository.findAll();
 	}
-
+	
 	@Override
 	public Synoptic getById(Integer id) {
 		

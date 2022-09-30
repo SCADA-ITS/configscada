@@ -237,19 +237,24 @@ export default class SearchIncident {
 		
 		function filterResults() {
 			
-			return incidents.filter(e => {
-					
-					let alias = e.incidentType.alias ? util.getStringNormalized(e.incidentType.alias) : undefined;
-					let description = e.incidentType.description ? util.getStringNormalized(e.incidentType.description) : undefined;
-					let affectionStretch = e.affectionStretch.alias ? util.getStringNormalized(e.affectionStretch.alias) : undefined;
-					
-					return 	(alias && alias.toLowerCase().includes(self.text)) ||
-							(description && description.toLowerCase().includes(self.text)) ||
-							(affectionStretch && affectionStretch.toLowerCase().includes(self.text));
-					
-			});
+			let filteredResults = [];
+			
+			if (Array.isArray(incidents)) {
+			
+				filteredResults = incidents.filter(e => {
+						
+						let alias = e.incidentType.alias ? util.getStringNormalized(e.incidentType.alias) : undefined;
+						let description = e.incidentType.description ? util.getStringNormalized(e.incidentType.description) : undefined;
+						let affectionStretch = e.affectionStretch.alias ? util.getStringNormalized(e.affectionStretch.alias) : undefined;
+						
+						return 	(alias && alias.toLowerCase().includes(self.text)) ||
+								(description && description.toLowerCase().includes(self.text)) ||
+								(affectionStretch && affectionStretch.toLowerCase().includes(self.text));
+						
+				});
+			}
+			
+			return filteredResults;
 		}
-		
 	}	
-	
 }
