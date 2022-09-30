@@ -428,7 +428,7 @@ export default class CamViewer {
 					on: {
 						onItemClick: function() {
 
-							let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_SEND_TO_VIDEO_WALL_CONFIRM_DESCRIPTION") + ": " + self.element.alias, onAccept, null);
+							let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_SEND_TO_VIDEO_WALL_CONFIRM_DESCRIPTION") + ": " + self.element.alias, null, onAccept, null);
 							ms.show();
 
 							function onAccept() {

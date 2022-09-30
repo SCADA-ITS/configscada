@@ -42,7 +42,7 @@ export default class AlarmFiltered {
 
 						if (counter === arrAlarms.length) {
 
-							let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_ALARM_REMOVE_FILTER_CONFIRM_DESCRIPTION"), onAccept, null);
+							let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_ALARM_REMOVE_FILTER_CONFIRM_DESCRIPTION"), null, onAccept, null);
 							ms.show();
 
 							function onAccept() {

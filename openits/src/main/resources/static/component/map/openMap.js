@@ -1804,7 +1804,7 @@ export default class OpenMap extends GenericMap {
 			}
 			else {
 
-				let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_LAYER_NOT_VISIBLE_FOR_ELEMENT_DESCRIPTION"), null, null);
+				let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_LAYER_NOT_VISIBLE_FOR_ELEMENT_DESCRIPTION"), null, null, null);
 				ms.show();
 			}
 		}

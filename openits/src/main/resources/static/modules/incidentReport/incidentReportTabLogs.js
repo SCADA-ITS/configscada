@@ -445,7 +445,7 @@ export default class IncidentReportTabLog {
 
 					if (!control) {
 
-						let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_LOG_DELETE_CONFIRM_DESCRIPTION"), onAccept, null);
+						let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_LOG_DELETE_CONFIRM_DESCRIPTION"), null, onAccept, null);
 						ms.show();
 						
 						function onAccept() {
@@ -462,7 +462,7 @@ export default class IncidentReportTabLog {
 
 					} else {
 						
-						let ms = new MessageBox (MessageBox.WARN, i18n.t("LBL_INCIDENT_LOG_SUBTYPE_ERROR_DESCRIPTION"), null, null);
+						let ms = new MessageBox (MessageBox.WARN, i18n.t("LBL_INCIDENT_LOG_SUBTYPE_ERROR_DESCRIPTION"), null, null, null);
 						ms.show();
 					}
 				}

@@ -595,7 +595,7 @@ export default class AlarmConfigModule extends GenericModule {
 
 							if (elementTypeValue === "" || elementTypeValue === undefined) {
 
-								let ms = new MessageBox(MessageBox.WARN, i18n.t("LBL_ELEMENT_TYPE_REQUIRED"), null, null);
+								let ms = new MessageBox(MessageBox.WARN, i18n.t("LBL_ELEMENT_TYPE_REQUIRED"), null, null, null);
 								ms.show();
 
 							} else {
@@ -1032,7 +1032,7 @@ export default class AlarmConfigModule extends GenericModule {
 
 														} else {
 
-															let ms = new MessageBox(MessageBox.WARN, i18n.t("LBL_PLAN_LIBRARY_REQUIRED_PARAMS"), null, null);
+															let ms = new MessageBox(MessageBox.WARN, i18n.t("LBL_PLAN_LIBRARY_REQUIRED_PARAMS"), null, null, null);
 															ms.show();
 														}
 													}
@@ -1205,7 +1205,7 @@ export default class AlarmConfigModule extends GenericModule {
 
 											if (validation) {
 
-												let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_ALARM_CONFIG_SAVE"), onAccept, null);
+												let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_ALARM_CONFIG_SAVE"), null, onAccept, null);
 												ms.show();
 
 											} else {
@@ -1374,7 +1374,7 @@ export default class AlarmConfigModule extends GenericModule {
 
 			if (self.args.selectedPks != undefined && self.args.selectedPks[0] && self.args.selectedPks.length > 0) {
 
-				let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_QUESTION_DELETE_ALARM_CONFIG_DESCRIPTION"), onAccept, null);
+				let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_QUESTION_DELETE_ALARM_CONFIG_DESCRIPTION"), null, onAccept, null);
 				ms.show();
 
 				function onAccept() {

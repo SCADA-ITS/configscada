@@ -32,7 +32,7 @@ export default class PasSignalingModule extends GenericModule {
 			
 			$$(self.args.containerId).close();
 			
-			let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_MULTISELECTION_NOT_ALLOWED_IN_PAS_MODULE"), null, null);
+			let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_MULTISELECTION_NOT_ALLOWED_IN_PAS_MODULE"), null, null, null);
 			ms.show();
 		
 		} else {
@@ -108,7 +108,7 @@ export default class PasSignalingModule extends GenericModule {
 	
 							container.close();
 	
-							let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_NO_PAS_AVAILABLE_DESCRIPTION"), null, null);
+							let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_NO_PAS_AVAILABLE_DESCRIPTION"), null, null, null);
 							ms.show();
 						}
 					}

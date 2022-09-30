@@ -407,7 +407,7 @@ export default class PlanLibrarySignalingOrder extends PlanLibraryOrder {
 
 													} else {
 
-														let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_MODULE_NOT_FOUND"), null, null);
+														let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_MODULE_NOT_FOUND"), null, null, null);
 														ms.show();
 													}
 												}
@@ -415,7 +415,7 @@ export default class PlanLibrarySignalingOrder extends PlanLibraryOrder {
 											
 										} else {
 											
-											let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_ELEMENTS_OF_DIFFERENT_SUBTYPE"), null, null);
+											let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_ELEMENTS_OF_DIFFERENT_SUBTYPE"), null, null, null);
 											ms.show();																					
 										}
 									}

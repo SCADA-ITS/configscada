@@ -36,7 +36,7 @@ export default class RoleModule extends GenericModule {
 
 		if (this.roleSystem && this.moduleAction.id === this.config.moduleAction.edit) {
 
-			let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_NOT_ALLOWED_TO_SELECT_SYSTEM_ROLE_DESCRIPTION"), null, null);
+			let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_NOT_ALLOWED_TO_SELECT_SYSTEM_ROLE_DESCRIPTION"), null, null, null);
 			ms.show();
 
 		} else if (this.moduleAction.id === this.config.moduleAction.add || this.moduleAction.id === this.config.moduleAction.edit) {
@@ -170,12 +170,12 @@ export default class RoleModule extends GenericModule {
 
 				if (systemRole) {
 
-					let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_NOT_ALLOWED_TO_SELECT_SYSTEM_ROLE_DESCRIPTION"), null, null);
+					let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_NOT_ALLOWED_TO_SELECT_SYSTEM_ROLE_DESCRIPTION"), null, null, null);
 					ms.show();
 
 				} else {
 
-					let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_QUESTION_DELETE_ROLE_DESCRIPTION"), onAccept, null);
+					let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_QUESTION_DELETE_ROLE_DESCRIPTION"), null, onAccept, null);
 					ms.show();
 
 					function onAccept() {
@@ -495,7 +495,7 @@ export default class RoleModule extends GenericModule {
 
 						if (samePermission || repeatPermission) {
 
-							let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_PERMISSION_IS_ALREADY_IN_USE_DESCRIPTION"), null, null);
+							let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_PERMISSION_IS_ALREADY_IN_USE_DESCRIPTION"), null, null, null);
 							ms.show();
 
 							return false;
@@ -539,7 +539,7 @@ export default class RoleModule extends GenericModule {
 									click:
 										function() {
 											
-											let msgboxAccept = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_QUESTION_SAVE_ROLE_DESCRIPTION"), onAccept, null);
+											let msgboxAccept = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_QUESTION_SAVE_ROLE_DESCRIPTION"), null, onAccept, null);
 											msgboxAccept.show();
 						
 											function onAccept() {
@@ -581,7 +581,7 @@ export default class RoleModule extends GenericModule {
 													
 												} else {
 	
-													let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_REQUIRED_FIELDS_NOT_COMPLETED_DESCRIPTION"), null, null);
+													let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_REQUIRED_FIELDS_NOT_COMPLETED_DESCRIPTION"), null, null, null);
 													ms.show();
 												}	
 											}

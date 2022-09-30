@@ -119,7 +119,7 @@ export default class IncidentReportTabInfo {
 										on: {
 											onItemClick: function() {
 
-												let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_IMS_CAUSE_CONFIRM_DESCRIPTION"), onAccept, null);
+												let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_IMS_CAUSE_CONFIRM_DESCRIPTION"), null, onAccept, null);
 												ms.show();
 
 												function onAccept() {

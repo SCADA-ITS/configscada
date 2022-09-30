@@ -55,7 +55,7 @@ export default class IncidentTypeStretch {
 											on: {
 												onItemClick() {
 													
-													(new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_SAVE_INCIDENT_TYPE_CHANGES_DESCRIPTION"), onAccept, null)).show();
+													(new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_SAVE_INCIDENT_TYPE_CHANGES_DESCRIPTION"), null, onAccept, null)).show();
 													
 													function onAccept() {
 													

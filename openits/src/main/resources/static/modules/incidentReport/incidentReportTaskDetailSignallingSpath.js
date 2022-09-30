@@ -892,7 +892,7 @@ export default class IncidentReportTaskDetailSignallingSpath extends IncidentRep
 
 							} else {
 
-								let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_MODULE_NOT_FOUND"), null, null);
+								let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_MODULE_NOT_FOUND"), null, null, null);
 								ms.show();
 							}
 						}
@@ -904,7 +904,7 @@ export default class IncidentReportTaskDetailSignallingSpath extends IncidentRep
 
 				if (self.changed) {
 
-					(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_ARE_YOU_SURE_UNDO_COMMANDS"), function() {
+					(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_ARE_YOU_SURE_UNDO_COMMANDS"), null, function() {
 
 						self.mapSignallingSpaths = new Map(JSON.parse(JSON.stringify(Array.from(originalMapSignallingSpaths))));
 

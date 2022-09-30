@@ -2251,7 +2251,7 @@ export default class DataTable {
 				// Multiselect not allowed with 2 o more selected
 				if (selectedPks.length > 1 && gridCommand.multiselect === false) {
 
-					let ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_COMMAND_NOT_COMPATIBLE_MULTISELECT_DESCRIPTION"), null, null);
+					let ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_COMMAND_NOT_COMPATIBLE_MULTISELECT_DESCRIPTION"), null, null, null);
 					ms.show();
 					
 //					webix.alert({
@@ -2289,7 +2289,7 @@ export default class DataTable {
 				// Required one or more selected
 				if (gridCommand.itemRequired) {
 					
-					let ms = new MessageBox (MessageBox.WARN,i18n.t("LBL_COMMAND_NO_ROWS_SELECTED_DESCRIPTION"), null, null);
+					let ms = new MessageBox (MessageBox.WARN,i18n.t("LBL_COMMAND_NO_ROWS_SELECTED_DESCRIPTION"), null, null, null);
 					ms.show();
 					
 //					webix.alert({

@@ -233,7 +233,7 @@ export default class FileManager {
 								
 								if (file) {
 									
-									let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_FILE_CONFIRM_DELETE_DESCRIPTION"), onAccept, null);
+									let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_FILE_CONFIRM_DELETE_DESCRIPTION"), null, onAccept, null);
 									ms.show();
 									
 									function onAccept(){

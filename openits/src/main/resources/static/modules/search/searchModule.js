@@ -239,7 +239,7 @@ export default class SearchModule extends GenericModule {
 				}
 				else {
 					
-					(new MessageBox(MessageBox.WARN, i18n.t("LBL_NOT_AVAILABLE") + " moduleAction = " + moduleActionid, null, null)).show();
+					(new MessageBox(MessageBox.WARN, i18n.t("LBL_NOT_AVAILABLE") + " moduleAction = " + moduleActionid, null, null, null)).show();
 				}
 			}
 			

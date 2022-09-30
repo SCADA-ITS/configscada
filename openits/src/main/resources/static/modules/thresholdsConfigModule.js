@@ -413,7 +413,7 @@ export default class ThresholdsConfigModule extends GenericModule {
 
 								function onAccept(obj) {
 
-									let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_SAVE_NEW_THRESHOLD_VALUE"),
+									let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_SAVE_NEW_THRESHOLD_VALUE"), null,
 										function() {
 
 											if (configMeasuresSelected[0].value != obj.toString()) {

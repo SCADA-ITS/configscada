@@ -33,7 +33,7 @@ export default class PlanModule extends GenericModule {
 		
 				if (self.args.confirm === true){
 	
-					let ms = new MessageBox (MessageBox.CONFIRM,  self.args.confirmDescription ? i18n.t(self.args.confirmDescription) :i18n.t("LBL_PLAN_CONFIRM_EXECUTE_DESCRIPTION"), onAccept, null);
+					let ms = new MessageBox (MessageBox.CONFIRM,  self.args.confirmDescription ? i18n.t(self.args.confirmDescription) :i18n.t("LBL_PLAN_CONFIRM_EXECUTE_DESCRIPTION"), null, onAccept, null);
 					ms.show();
 					
 					function onAccept() {

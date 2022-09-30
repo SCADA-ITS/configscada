@@ -360,7 +360,7 @@ export default class VmsSignalingQueue {
 						
 					if (res) {
 						
-						(new MessageBox (MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null)).show();
+						(new MessageBox (MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null, null)).show();
 					}
 				}, true);
 			}
@@ -441,7 +441,7 @@ export default class VmsSignalingQueue {
 															
 															if (res) {
 																
-																(new MessageBox (MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null)).show();
+																(new MessageBox (MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null, null)).show();
 															}
 														}, true);	
 													}

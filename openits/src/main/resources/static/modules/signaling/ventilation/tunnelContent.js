@@ -160,7 +160,7 @@ export default class TunnelContent {
 											on: {
 												onItemClick() {
 
-													let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_SEND_VENTILATION_STOP_CONFIRM_DESCRIPTION"), onAccept, null);
+													let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_SEND_VENTILATION_STOP_CONFIRM_DESCRIPTION"), null, onAccept, null);
 													ms.show();
 													
 													function onAccept() {
@@ -172,7 +172,7 @@ export default class TunnelContent {
 
 															if (res) {
 
-																(new MessageBox(MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null)).show();
+																(new MessageBox(MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null, null)).show();
 															}
 														});
 														
@@ -209,7 +209,7 @@ export default class TunnelContent {
 											on: {
 												onItemClick() {
 													
-													let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_SEND_VENTILATION_START_CONFIRM_DESCRIPTION"), onAccept, null);
+													let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_SEND_VENTILATION_START_CONFIRM_DESCRIPTION"), null, onAccept, null);
 													ms.show();
 													
 													function onAccept() {
@@ -221,7 +221,7 @@ export default class TunnelContent {
 
 															if (res) {
 
-																(new MessageBox(MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null)).show();
+																(new MessageBox(MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null, null)).show();
 															}
 														});
 														

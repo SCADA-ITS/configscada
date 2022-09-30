@@ -12,14 +12,14 @@ export default class GenericModule {
 
 		if (moduleAction &&	!util.module.isAllowedModuleAction(window.em.getAll(EntityType.MODULE), moduleAction.id)) {
 			
-			let ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_THE_MODULE_ACTION_IS_NOT_ALLOWED"), null, null);
+			let ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_THE_MODULE_ACTION_IS_NOT_ALLOWED"), null, null, null);
 			ms.show();
 			
 			throw new Error("Module action not allowed");
 
 		} else if (!util.module.isAllowedModule(window.em.getAll(EntityType.MODULE), module.id)) {
 
-			let ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_THE_MODULE_ACTION_IS_NOT_ALLOWED"), null, null);
+			let ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_THE_MODULE_ACTION_IS_NOT_ALLOWED"), null, null, null);
 			ms.show();
 
 			throw new Error("Module not allowed");
@@ -47,7 +47,7 @@ export default class GenericModule {
 		}
 		else {
 			
-			let ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_MODULE_OPEN_ERROR_NO_MODULE_ACTION"), null, null);
+			let ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_MODULE_OPEN_ERROR_NO_MODULE_ACTION"), null, null, null);
 			ms.show();
 			
 		}
@@ -65,7 +65,7 @@ export default class GenericModule {
 		}
 		else {
 			
-			let ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_MODULE_OPEN_ERROR_NO_MODULE_ACTION_OR_IDS"), null, null);
+			let ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_MODULE_OPEN_ERROR_NO_MODULE_ACTION_OR_IDS"), null, null, null);
 			ms.show();
 
 		}

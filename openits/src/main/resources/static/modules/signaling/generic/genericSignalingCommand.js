@@ -234,7 +234,7 @@ export default class GenericSignalingCommand {
 							commandId: 2,
 							function: function() {
 
-								let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_ARE_YOU_SURE_UNDO_COMMAND_PARAMS"), onAccept, null);
+								let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_ARE_YOU_SURE_UNDO_COMMAND_PARAMS"), null, onAccept, null);
 								ms.show();
 								
 								function onAccept() {
@@ -466,7 +466,7 @@ export default class GenericSignalingCommand {
 																				
 									} else {
 
-//										let ms = new MessageBox (MessageBox.CONFIRM, (i18n.t("LBL_SEND_SIGNALING_CONFIRM_DESCRIPTION") + (self.selectedElementIds.length > 1 ? " " + self.selectedElementIds.length + " " + i18n.t("LBL_EQUIPMENT_SELECTED") : "")), onAccept, null);
+//										let ms = new MessageBox (MessageBox.CONFIRM, (i18n.t("LBL_SEND_SIGNALING_CONFIRM_DESCRIPTION") + (self.selectedElementIds.length > 1 ? " " + self.selectedElementIds.length + " " + i18n.t("LBL_EQUIPMENT_SELECTED") : "")), null, onAccept, null);
 //										ms.show();
 //									
 //										function onAccept() {
@@ -503,7 +503,7 @@ export default class GenericSignalingCommand {
 												
 								if (res) {
 								
-									(new MessageBox (MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null)).show();	
+									(new MessageBox (MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null, null)).show();	
 								}
 							}, message);
 						}

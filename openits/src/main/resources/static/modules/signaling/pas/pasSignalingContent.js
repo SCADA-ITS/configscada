@@ -656,7 +656,7 @@ export default class PasSignalingContent {
 
 									if (res) {
 
-										(new MessageBox(MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null)).show();
+										(new MessageBox(MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null, null)).show();
 									}
 								});
 							}
@@ -685,7 +685,7 @@ export default class PasSignalingContent {
 
 							} else {
 
-								let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_NOT_FOUND_PAS_LIBRARY_TEXT"), null, null);
+								let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_NOT_FOUND_PAS_LIBRARY_TEXT"), null, null, null);
 								ms.show();
 							}
 						}
@@ -729,7 +729,7 @@ export default class PasSignalingContent {
 
 									if (res) {
 
-										(new MessageBox(MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null)).show();
+										(new MessageBox(MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null, null)).show();
 									}
 								}, labelDescription);
 
@@ -746,7 +746,7 @@ export default class PasSignalingContent {
 									labelDescription = (selectedItems.length > 1) ? i18n.t("LBL_NOT_ALL_SELECTED_GROUPS_ARE_PLAYING_DESCRIPTION") : i18n.t("LBL_SELECTED_GROUP_IS_NOT_PLAYING_DESCRIPTION");
 								}
 
-								(new MessageBox(MessageBox.WARN, labelDescription, null, null)).show();
+								(new MessageBox(MessageBox.WARN, labelDescription, null, null, null)).show();
 							}
 						}
 					}
@@ -758,7 +758,7 @@ export default class PasSignalingContent {
 
 						if (!dt.getSelectedItems()[0].messageAudio) {
 
-							let ms = new MessageBox(MessageBox.WARN, entityType === PasSignalingContent.ENTITY_TYPE_ZONE ? i18n.t("LBL_PAS_ZONE_NOT_AUDIO_DESCRIPTION") : i18n.t("LBL_PAS_GROUP_NOT_AUDIO_DESCRIPTION"), null, null);
+							let ms = new MessageBox(MessageBox.WARN, entityType === PasSignalingContent.ENTITY_TYPE_ZONE ? i18n.t("LBL_PAS_ZONE_NOT_AUDIO_DESCRIPTION") : i18n.t("LBL_PAS_GROUP_NOT_AUDIO_DESCRIPTION"), null, null, null);
 							ms.show();
 
 						} else {

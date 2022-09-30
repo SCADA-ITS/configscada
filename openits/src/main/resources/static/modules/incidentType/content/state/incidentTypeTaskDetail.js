@@ -105,7 +105,7 @@ export default class IncidentTypeTaskDetail {
 							on: {
 								onItemClick() {
 									
-									(new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_SAVE_TASK_CHANGES_DESCRIPTION"), onAccept, null)).show();
+									(new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_SAVE_TASK_CHANGES_DESCRIPTION"), null, onAccept, null)).show();
 									
 									function onAccept() {
 									

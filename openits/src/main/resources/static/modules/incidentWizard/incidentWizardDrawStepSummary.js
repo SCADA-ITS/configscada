@@ -221,7 +221,7 @@ export default class IncidentWizardDrawStepSummary extends IncidentWizardDrawSte
 																									s.show();
 																								} else {
 																									
-																									(new MessageBox(MessageBox.INFO, i18n.t("LBL_ROAD_IMPACT_NOT_AVAILABLE"), null, null)).show();
+																									(new MessageBox(MessageBox.INFO, i18n.t("LBL_ROAD_IMPACT_NOT_AVAILABLE"), null, null, null)).show();
 																								}
 																							}
 																						});
@@ -296,7 +296,7 @@ export default class IncidentWizardDrawStepSummary extends IncidentWizardDrawSte
 
 																					} else {
 
-																						let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_NOT_ALLOWED_TO_ASSIGN_SYSTEM_USER_DESCRIPTION"), null, null);
+																						let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_NOT_ALLOWED_TO_ASSIGN_SYSTEM_USER_DESCRIPTION"), null, null, null);
 																						ms.show();
 																					}
 																				});

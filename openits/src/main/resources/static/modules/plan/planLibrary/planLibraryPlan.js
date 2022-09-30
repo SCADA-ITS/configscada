@@ -486,7 +486,7 @@ export default class PlanLibraryPlan {
 		
 			if (Array.isArray(planOrderIds) && planOrderIds.length > 0) {
 				
-				let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_DIALOG_DELETE_SELECT_ORDERS_DESCRIPTION"), onAccept, null);
+				let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_DIALOG_DELETE_SELECT_ORDERS_DESCRIPTION"), null, onAccept, null);
 				ms.show();
 				
 				function onAccept() {
@@ -531,7 +531,7 @@ export default class PlanLibraryPlan {
 					
 					if (allowMoveUp || allowMoveDown) {
 						
-						let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_DIALOG_MOVE_SELECTED_ORDER_DESCRIPTION"), onAccept, null);
+						let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_DIALOG_MOVE_SELECTED_ORDER_DESCRIPTION"), null, onAccept, null);
 						ms.show();
 						
 						function onAccept() {
@@ -585,14 +585,14 @@ export default class PlanLibraryPlan {
 											}
 											else {
 												
-												let ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_ERROR_UPDATING_PLAN_ORDER_DESCRIPTION"), null, null);
+												let ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_ERROR_UPDATING_PLAN_ORDER_DESCRIPTION"), null, null, null);
 												ms.show();
 											}
 										});	
 									}
 									else {
 										
-										let ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_ERROR_UPDATING_PLAN_ORDER_DESCRIPTION"), null, null);
+										let ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_ERROR_UPDATING_PLAN_ORDER_DESCRIPTION"), null, null, null);
 										ms.show();
 									}
 								});
@@ -601,7 +601,7 @@ export default class PlanLibraryPlan {
 						
 					} else {
 						
-						let ms = new MessageBox (MessageBox.WARN, i18n.t("LBL_CAN_NOT_MOVE_SELECTED_ORDER_DESCRIPTION"), null, null);
+						let ms = new MessageBox (MessageBox.WARN, i18n.t("LBL_CAN_NOT_MOVE_SELECTED_ORDER_DESCRIPTION"), null, null, null);
 						ms.show();
 					}
 				} 

@@ -500,7 +500,7 @@ export default class IncidentTypeStateTask {
 			
 			if (Array.isArray(incidentTypeTaskIds) && incidentTypeTaskIds.length > 0) {
 				
-				let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_DIALOG_DELETE_SELECT_TASK_TYPES_DESCRIPTION"), onAccept, null);
+				let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_DIALOG_DELETE_SELECT_TASK_TYPES_DESCRIPTION"), null, onAccept, null);
 				ms.show();
 				
 				function onAccept() {

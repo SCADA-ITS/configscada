@@ -208,7 +208,7 @@ export default class IncidentReportTaskDetailParam extends IncidentReportTaskDet
 					commandId: 2,
 					function: function() {
 						
-						let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_ARE_YOU_SURE_UNDO_TASK_PARAMS"), onAccept, null);
+						let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_ARE_YOU_SURE_UNDO_TASK_PARAMS"), null, onAccept, null);
 						ms.show();
 						
 						function onAccept() {

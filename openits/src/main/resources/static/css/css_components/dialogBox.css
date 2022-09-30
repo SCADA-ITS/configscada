@@ -79,3 +79,7 @@
 	align-items: center;
 }
 
+.message-box-label .webix_inp_label {
+	color: var(--blue-headers);
+	font-weight: 400;
+}

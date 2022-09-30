@@ -126,7 +126,7 @@ export default class OptionDialogBox {
 
 												if (selectionId === oldSelection) {
 
-													let ms = new MessageBox(MessageBox.WARN, i18n.t("LBL_SAME_MODE_SELECTED_DESCRIPTION"), null, null);
+													let ms = new MessageBox(MessageBox.WARN, i18n.t("LBL_SAME_MODE_SELECTED_DESCRIPTION"), null, null, null);
 													ms.show();
 
 												} else {
@@ -148,7 +148,7 @@ export default class OptionDialogBox {
 
 									if (selectionId === oldSelection) {
 
-										let ms = new MessageBox(MessageBox.WARN, i18n.t("LBL_SAME_MODE_SELECTED_DESCRIPTION"), null, null);
+										let ms = new MessageBox(MessageBox.WARN, i18n.t("LBL_SAME_MODE_SELECTED_DESCRIPTION"), null, null, null);
 										ms.show();
 
 									} else {

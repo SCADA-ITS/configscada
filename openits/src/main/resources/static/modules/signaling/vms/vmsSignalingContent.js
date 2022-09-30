@@ -149,7 +149,7 @@ export default class VmsSignalingContent {
 	
 							if (self.composer) {
 								
-								let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_DIALOG_NEW_VMS_CONFIG_DESCRIPTION"), onAccept, null);
+								let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_DIALOG_NEW_VMS_CONFIG_DESCRIPTION"), null, onAccept, null);
 								ms.show();
 								
 								function onAccept() {
@@ -208,7 +208,7 @@ export default class VmsSignalingContent {
 	
 							if (self.composer) {
 								
-								let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_DIALOG_UNDO_CHANGES_DESCRIPTION"), onAccept, null);
+								let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_DIALOG_UNDO_CHANGES_DESCRIPTION"), null, onAccept, null);
 								ms.show();
 								
 								function onAccept() {
@@ -918,7 +918,7 @@ export default class VmsSignalingContent {
 
 									title += " (" + self.selectedElements.length + " " + i18n.t("LBL_SELECTED") + ")";
 
-									let ms = new MessageBox(MessageBox.CONFIRM, title, onAccept, null);
+									let ms = new MessageBox(MessageBox.CONFIRM, title, null, onAccept, null);
 									ms.show();
 
 									function onAccept() {
@@ -1008,7 +1008,7 @@ export default class VmsSignalingContent {
 
 												if (res) {
 
-													(new MessageBox(MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null)).show();
+													(new MessageBox(MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null, null)).show();
 												}
 											});
 										}

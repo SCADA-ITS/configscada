@@ -203,8 +203,9 @@ export default class IncidentReportTaskContent {
 								}
 
 								let messageBoxType = (self.taskState.incidentTypeTask.incidentTaskConfirmWarning) ? MessageBox.CONFIRM_WARN : MessageBox.CONFIRM;
+								let textMultiline = (self.taskState.incidentTypeTask.incidentTaskWarningText) ? self.taskState.incidentTypeTask.incidentTaskWarningText : null; 
 
-								let ms = new MessageBox(messageBoxType, i18n.t(label), onAccept, null);
+								let ms = new MessageBox(messageBoxType, i18n.t(label), textMultiline, onAccept, null);
 								ms.show();
 
 								function onAccept() {

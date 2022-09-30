@@ -126,6 +126,7 @@
     color: var(--white-text-default);
     text-shadow: none;
     opacity: 0.6;
+	background: var(--blue-headers-not-sel);
 }
 
 .webix_nav_panel {

@@ -483,7 +483,7 @@ export let util = {
 					// Multiselect not allowed with 2 o more selected
 					if (processPks.length > 1 && command.multiselect === false) {
 
-						let ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_COMMAND_NOT_COMPATIBLE_MULTISELECT_DESCRIPTION"), null, null);
+						let ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_COMMAND_NOT_COMPATIBLE_MULTISELECT_DESCRIPTION"), null, null, null);
 						ms.show();
 				
 					}
@@ -498,7 +498,7 @@ export let util = {
 					// Required one or more selected
 					if (command.itemRequired) {
 						
-						let ms = new MessageBox (MessageBox.WARN, i18n.t("LBL_COMMAND_NO_ROWS_SELECTED_DESCRIPTION"), null, null);
+						let ms = new MessageBox (MessageBox.WARN, i18n.t("LBL_COMMAND_NO_ROWS_SELECTED_DESCRIPTION"), null, null, null);
 						ms.show();
 
 					}
@@ -1066,7 +1066,7 @@ export let util = {
 
 		notImplementedMessage() {
 
-			let ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_NOT IMPLEMENTED_DESCRIPTION"), null, null);
+			let ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_NOT IMPLEMENTED_DESCRIPTION"), null, null, null);
 			ms.show();
 
 		},
@@ -1733,7 +1733,7 @@ export let util = {
 					
 					if (confirmMessage) {
 				
-						(new MessageBox (MessageBox.CONFIRM, confirmMessage, send, null)).show();
+						(new MessageBox (MessageBox.CONFIRM, confirmMessage, null, send, null)).show();
 					}
 					else {
 						
@@ -1819,7 +1819,7 @@ export let util = {
 				
 				if (confirm) {
 					
-					(new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_ARE_YOU_SURE_DEQUEUE_COMMAND"), doAction, null)).show();
+					(new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_ARE_YOU_SURE_DEQUEUE_COMMAND"), null, doAction, null)).show();
 				}
 				else {
 					
@@ -1880,7 +1880,7 @@ export let util = {
 				
 				if (confirm) {
 				
-					(new MessageBox (MessageBox.CONFIRM, active ? i18n.t("LBL_ARE_YOU_SURE_ENABLE_PRIORITY") : i18n.t("LBL_ARE_YOU_SURE_DISABLE_PRIORITY"), doAction, null)).show();
+					(new MessageBox (MessageBox.CONFIRM, active ? i18n.t("LBL_ARE_YOU_SURE_ENABLE_PRIORITY") : i18n.t("LBL_ARE_YOU_SURE_DISABLE_PRIORITY"), null, doAction, null)).show();
 				}
 				else {
 					

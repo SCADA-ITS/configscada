@@ -111,7 +111,7 @@ export default class PlanLibraryGenericOrder extends PlanLibraryOrder {
 					commandId: 2,
 					function: function() {
 						
-						let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_ARE_YOU_SURE_UNDO_ALL_VALUES"), onAccept, null);
+						let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_ARE_YOU_SURE_UNDO_ALL_VALUES"), null, onAccept, null);
 						ms.show();
 						
 						function onAccept() {

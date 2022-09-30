@@ -118,7 +118,7 @@ export default class PlanLibraryOrder {
 							on: {
 								onItemClick() {
 									
-									let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_SAVE_ORDER_CHANGES_DESCRIPTION"), onAccept, null);
+									let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_SAVE_ORDER_CHANGES_DESCRIPTION"), null, onAccept, null);
 									ms.show();
 									
 									function onAccept() {
@@ -219,7 +219,7 @@ export default class PlanLibraryOrder {
 
 		} else {
 
-			let ms = new MessageBox (MessageBox.WARN, i18n.t("LBL_PLAN_LIBRARY_REQUIRED_PARAMS"), null, null);
+			let ms = new MessageBox (MessageBox.WARN, i18n.t("LBL_PLAN_LIBRARY_REQUIRED_PARAMS"), null, null, null);
 			ms.show();
 		}
 	}

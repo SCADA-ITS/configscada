@@ -548,7 +548,7 @@ export default class IncidentTypeModule extends GenericModule {
 				
 					let incidentTypeId = selectedIds[0];
 					
-					(new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_DELETE_INCIDENT_TYPE"), 
+					(new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_DELETE_INCIDENT_TYPE"), null,
 						function() {
 							
 							webix.ajax().headers(CONTENT_TYPE_JSON).del(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.deleteIncidentType, { id: incidentTypeId })).then(

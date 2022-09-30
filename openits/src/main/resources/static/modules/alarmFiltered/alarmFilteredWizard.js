@@ -765,7 +765,7 @@ export default class AlarmFilteredWizard {
 
 									} else {
 
-										let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_ALARM_FILTERED_SELECTED_NOT_CONFIGURED_FOR_EQUIPMENT"), null, null);
+										let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_ALARM_FILTERED_SELECTED_NOT_CONFIGURED_FOR_EQUIPMENT"), null, null, null);
 										ms.show();
 									}
 
@@ -776,7 +776,7 @@ export default class AlarmFilteredWizard {
 
 								function saveFilteredAlarm() {
 
-									let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_ALARM_CREATE_ALARMS_FILTER_CONFIRM_DESCRIPTION"), onAccept, null);
+									let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_ALARM_CREATE_ALARMS_FILTER_CONFIRM_DESCRIPTION"), null, onAccept, null);
 									ms.show();
 
 									function onAccept() {
@@ -786,7 +786,7 @@ export default class AlarmFilteredWizard {
 
 										if ((self.parent.config.minAddToCurrentDate * 60000) > (selectedTime - currentTime)) {
 
-											let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_ALARM_FILTERED_LESS_THAN_MINIMUM_ESTABLISHED"), null, null);
+											let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_ALARM_FILTERED_LESS_THAN_MINIMUM_ESTABLISHED"), null, null, null);
 											ms.show();
 
 										} else {

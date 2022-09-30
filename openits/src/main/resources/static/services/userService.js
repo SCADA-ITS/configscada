@@ -14,7 +14,7 @@ export default class UserService extends GenericModule {
 		this.module = module;
 		this.config = module.config;
 		
-		new MessageBox(MessageBox.WARN, null, null);
+		new MessageBox(MessageBox.WARN, null, null, null);
 		
 		this.userData = util.user.getUserData();
 		this.keepAliveInterval = undefined;
@@ -118,7 +118,7 @@ export default class UserService extends GenericModule {
 										util.ui.clearScreen();
 										util.user.closeSession();
 										
-										(new MessageBox(MessageBox.WARN, i18n.t(labelMsg),  
+										(new MessageBox(MessageBox.WARN, i18n.t(labelMsg), null,
 											function onAccept() {
 												
 												util.user.redirectLogin();
@@ -139,7 +139,7 @@ export default class UserService extends GenericModule {
 								util.ui.clearScreen();
 								util.user.closeSession();
 								
-								(new MessageBox(MessageBox.WARN, i18n.t("LBL_SESSION_WITHOUT_COMM"),  
+								(new MessageBox(MessageBox.WARN, i18n.t("LBL_SESSION_WITHOUT_COMM"), null,  
 									function onAccept() {
 										
 										
@@ -170,7 +170,7 @@ export default class UserService extends GenericModule {
 									
 									function onResponse(userSession) {
 										
-										(new MessageBox(MessageBox.WARN, i18n.t("LBL_SESSION_CLOSED_BY_EXCEED_IDLE_TIME"),  
+										(new MessageBox(MessageBox.WARN, i18n.t("LBL_SESSION_CLOSED_BY_EXCEED_IDLE_TIME"), null,  
 											function onAccept() {
 
 												util.user.redirectLogin();	

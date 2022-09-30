@@ -127,7 +127,7 @@ export default class PlanLibraryChangeParamConfigOrder extends PlanLibraryOrder 
 					commandId: 3,
 					function: function() {
 						
-						let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_ARE_YOU_SURE_REMOVE_CHANGE_PARAM_CONFIG"), onAccept, null);
+						let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_ARE_YOU_SURE_REMOVE_CHANGE_PARAM_CONFIG"), null, onAccept, null);
 						ms.show();
 						
 						function onAccept() {

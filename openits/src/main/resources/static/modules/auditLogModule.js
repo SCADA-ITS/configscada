@@ -32,7 +32,7 @@ export default class AuditLogModule extends GenericModule {
 
 				if(self.args.confirm == undefined || self.args.confirm){
 					
-					let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_AUDIT_LOG_REZOGNIZE_CONFIRM_DESCRIPTION"), onAccept, null);
+					let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_AUDIT_LOG_REZOGNIZE_CONFIRM_DESCRIPTION"), null, onAccept, null);
 					ms.show();
 				}
 				else {

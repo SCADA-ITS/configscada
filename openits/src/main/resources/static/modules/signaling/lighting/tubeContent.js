@@ -346,7 +346,7 @@ export default class TubeContent {
 
 					function changeMode(newModeId, callbackCloseDialog) {
 
-						let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_LIGHTING_CHANGE_OPTION_CONFIRM_DESCRIPTION"), onAccept, null);
+						let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_LIGHTING_CHANGE_OPTION_CONFIRM_DESCRIPTION"), null, onAccept, null);
 						ms.show();
 
 						function onAccept() {
@@ -360,7 +360,7 @@ export default class TubeContent {
 
 								if (res) {
 
-									(new MessageBox(MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null)).show();
+									(new MessageBox(MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null, null)).show();
 								}
 
 							});
@@ -543,7 +543,7 @@ export default class TubeContent {
 
 							if (!command.commandElementValues[0].value || command.commandElementValues[0].value === 0) {
 
-								let ms = new MessageBox(MessageBox.WARN, i18n.t("LBL_NO_REGIME_SELECTED_DESCRIPTION"), null, null);
+								let ms = new MessageBox(MessageBox.WARN, i18n.t("LBL_NO_REGIME_SELECTED_DESCRIPTION"), null, null, null);
 								ms.show();
 
 							} else {
@@ -552,7 +552,7 @@ export default class TubeContent {
 
 									if (res) {
 
-										(new MessageBox(MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null)).show();
+										(new MessageBox(MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null, null)).show();
 									}
 								}, i18n.t("LBL_SEND_LIGHTING_REGIME_CONFIRM_DESCRIPTION"));
 							}
@@ -1077,7 +1077,7 @@ export default class TubeContent {
 
 				function changeRegime(newRegimeId, callbackCloseDialog) {
 
-					let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_LIGHTING_CHANGE_OPTION_CONFIRM_DESCRIPTION"), onAccept, null);
+					let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_LIGHTING_CHANGE_OPTION_CONFIRM_DESCRIPTION"), null, onAccept, null);
 					ms.show();
 
 					function onAccept() {
@@ -1093,7 +1093,7 @@ export default class TubeContent {
 
 							if (res) {
 
-								(new MessageBox(MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null)).show();
+								(new MessageBox(MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null, null)).show();
 							}
 						});
 					}
@@ -1126,7 +1126,7 @@ export default class TubeContent {
 						hidden: (self.selectedTable === "action-panel-switcher-dali" + self.parent.uid) || !self.tubeCircuitsDataTable || !self.parent.commandEquipmentPermission,
 						click: function() {
 
-							let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_LIGHTING_CHANGE_STATUS_CONFIRM_DESCRIPTION"), onAccept, null);
+							let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_LIGHTING_CHANGE_STATUS_CONFIRM_DESCRIPTION"), null, onAccept, null);
 							ms.show();
 
 							function onAccept() {
@@ -1166,7 +1166,7 @@ export default class TubeContent {
 
 										responseSend = 0;
 
-										(new MessageBox(MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null)).show();
+										(new MessageBox(MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null, null)).show();
 									}
 								}
 

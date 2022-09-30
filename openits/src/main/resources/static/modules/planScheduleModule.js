@@ -132,7 +132,7 @@ export default class PlanScheduleModule extends GenericModule {
 
 				let planScheduleList = self.args.selectedPks;
 
-				let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_PLANSCHEDULE_CONFIRM_ENABLE_DESCRIPTION"), onAccept, null);
+				let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_PLANSCHEDULE_CONFIRM_ENABLE_DESCRIPTION"), null, onAccept, null);
 				ms.show();
 				
 				function onAccept() {
@@ -148,7 +148,7 @@ export default class PlanScheduleModule extends GenericModule {
 
 				let planScheduleList = self.args.selectedPks;
 
-				let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_PLANSCHEDULE_CONFIRM_DISABLE_DESCRIPTION"), onAccept, null);
+				let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_PLANSCHEDULE_CONFIRM_DISABLE_DESCRIPTION"), null, onAccept, null);
 				ms.show();
 				
 				function onAccept() {
@@ -164,7 +164,7 @@ export default class PlanScheduleModule extends GenericModule {
 
 				let planScheduleList = self.args.selectedPks;
 
-				let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_PLANSCHEDULE_CONFIRM_DELETE_DESCRIPTION"), onAccept, null);
+				let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_PLANSCHEDULE_CONFIRM_DELETE_DESCRIPTION"), null, onAccept, null);
 				ms.show();
 				
 				function onAccept() {
@@ -577,7 +577,7 @@ export default class PlanScheduleModule extends GenericModule {
 
 											} else {
 												
-												let ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_REQUIRED_FIELDS_NOT_COMPLETED_DESCRIPTION"), null, null);
+												let ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_REQUIRED_FIELDS_NOT_COMPLETED_DESCRIPTION"), null, null, null);
 												ms.show();
 
 											}

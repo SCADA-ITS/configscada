@@ -375,7 +375,7 @@ export default class IncidentTypeStretch {
 						
 						if (Array.isArray(incidentTypeStretchIds) && incidentTypeStretchIds.length === 1) {
 							
-							(new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_DELETE_INCIDENT_TYPE_STRETCH"), 
+							(new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_DELETE_INCIDENT_TYPE_STRETCH"), null,
 								function() {
 									
 									let incidentTypeStretchId = incidentTypeStretchIds[0];

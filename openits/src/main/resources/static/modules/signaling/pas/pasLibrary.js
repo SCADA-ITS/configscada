@@ -319,7 +319,7 @@ export default class PasLibrary {
 
 										let textMessage = (self.orderEdit) ? i18n.t("LBL_PAS_LIBRARY_ADD_CONFIRM_DESCRIPTION") : i18n.t("LBL_PAS_LIBRARY_SEND_CONFIRM_DESCRIPTION");
 
-										let ms = new MessageBox(MessageBox.CONFIRM, textMessage, onAccept, null);
+										let ms = new MessageBox(MessageBox.CONFIRM, textMessage, null, onAccept, null);
 										ms.show();
 
 										function onAccept() {

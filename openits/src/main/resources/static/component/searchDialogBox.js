@@ -67,7 +67,7 @@ export default class SearchDialogBox {
 				}
 				else {
 					
-					let m = new MessageBox(MessageBox.ERROR, i18n.t("LBL_WRONG_SELECTION"), null, null);
+					let m = new MessageBox(MessageBox.ERROR, i18n.t("LBL_WRONG_SELECTION"), null, null, null);
 					m.show();					
 				}
 			}

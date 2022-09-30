@@ -325,7 +325,7 @@ export default class IncidentReportTaskDetailPlan extends IncidentReportTaskDeta
 
 					let selectedItem = selectedItems[0];
 
-					let ms = new MessageBox(MessageBox.CONFIRM, selectedItem.status != PLAN_EXECUTED ? i18n.t("LBL_INCIDENT_TASK_PLAN_EXECUTE_CONFIRM_DESCRIPTION") : i18n.t("LBL_INCIDENT_TASK_PLAN_EXECUTE_AGAIN_CONFIRM_DESCRIPTION"), onAccept, null);
+					let ms = new MessageBox(MessageBox.CONFIRM, selectedItem.status != PLAN_EXECUTED ? i18n.t("LBL_INCIDENT_TASK_PLAN_EXECUTE_CONFIRM_DESCRIPTION") : i18n.t("LBL_INCIDENT_TASK_PLAN_EXECUTE_AGAIN_CONFIRM_DESCRIPTION"), null, onAccept, null);
 					ms.show();
 
 					function onAccept() {

@@ -163,7 +163,7 @@ export default class AlarmModule extends GenericModule {
 						}
 						else {
 							
-							let ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_DEACTIVATE_ALARMS_ERROR_SELECTED_AUTO_ALARMS_NOT_COMPATIBLE"), null, null);
+							let ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_DEACTIVATE_ALARMS_ERROR_SELECTED_AUTO_ALARMS_NOT_COMPATIBLE"), null, null, null);
 							ms.show();
 												
 						}
@@ -498,7 +498,7 @@ export default class AlarmModule extends GenericModule {
 		
 													} else {
 														
-														let ms = new MessageBox (MessageBox.WARN, i18n.t("LBL_COMMAND_NO_ROWS_SELECTED_DESCRIPTION"), null, null);
+														let ms = new MessageBox (MessageBox.WARN, i18n.t("LBL_COMMAND_NO_ROWS_SELECTED_DESCRIPTION"), null, null, null);
 														ms.show();
 		
 													}

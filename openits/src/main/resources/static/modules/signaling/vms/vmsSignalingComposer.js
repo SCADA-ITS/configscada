@@ -233,7 +233,7 @@ export default class VmsSignalingComposer {
 
 							} else {
 
-								let ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_UNKNOWN_ZONE_TYPE_DESCRIPTION") + " " + zoneConfig.type, null, null);
+								let ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_UNKNOWN_ZONE_TYPE_DESCRIPTION") + " " + zoneConfig.type, null, null, null);
 								ms.show();
 							}
 
@@ -292,7 +292,7 @@ export default class VmsSignalingComposer {
 							}
 							else {
 
-								let ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_NO_PICTOGRAMS_ASSOCIATED_TO_ZONE_DESCRIPTION") + " " + zoneConfig.vms_group_id, null, null);
+								let ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_NO_PICTOGRAMS_ASSOCIATED_TO_ZONE_DESCRIPTION") + " " + zoneConfig.vms_group_id, null, null, null);
 								ms.show();
 							}
 						}

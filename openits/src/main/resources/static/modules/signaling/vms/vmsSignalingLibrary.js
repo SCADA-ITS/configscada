@@ -370,12 +370,12 @@ export default class VmsSignalingLibrary {
 
 					if (selected.id === "root") {
 
-						let ms = new MessageBox (MessageBox.WARN, i18n.t("LBL_ROOT_CANNOT_BE_DELETED_DESCRIPTION"), null, null);
+						let ms = new MessageBox (MessageBox.WARN, i18n.t("LBL_ROOT_CANNOT_BE_DELETED_DESCRIPTION"), null, null, null);
 						ms.show();
 
 					} else {
 
-						let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_DIALOG_DELETE_VMS_SIGNALING_DESCRIPTION"), onAccept, null);
+						let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_DIALOG_DELETE_VMS_SIGNALING_DESCRIPTION"), null, onAccept, null);
 						ms.show();
 						
 						function onAccept() {
@@ -493,7 +493,7 @@ export default class VmsSignalingLibrary {
 		
 								if (self.composer) {
 									
-									let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_DIALOG_SAVE_CHANGES_DESCRIPTION"), onAccept, null);
+									let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_DIALOG_SAVE_CHANGES_DESCRIPTION"), null, onAccept, null);
 									ms.show();
 									
 									function onAccept() {
@@ -558,7 +558,7 @@ export default class VmsSignalingLibrary {
 		
 								if (self.composer) {
 									
-									let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_DIALOG_UNDO_CHANGES_DESCRIPTION"), onAccept, null);
+									let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_DIALOG_UNDO_CHANGES_DESCRIPTION"), null, onAccept, null);
 									ms.show();
 									
 									function onAccept() {

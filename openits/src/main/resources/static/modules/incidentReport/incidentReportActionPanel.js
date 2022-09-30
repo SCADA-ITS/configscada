@@ -204,7 +204,7 @@ export default class IncidentReportActionPanel {
 		
 																if (comboCauseValue === "") {
 		
-																	let ms = new MessageBox(MessageBox.WARN, i18n.t("LBL_CAUSE_OF_INCIDENT_NOT_SELECTED_DESCRIPTION"), onAccept, null);
+																	let ms = new MessageBox(MessageBox.WARN, i18n.t("LBL_CAUSE_OF_INCIDENT_NOT_SELECTED_DESCRIPTION"), null, onAccept, null);
 																	ms.show();
 		
 																	function onAccept() {
@@ -237,12 +237,12 @@ export default class IncidentReportActionPanel {
 		
 															if (sameUser) {
 		
-																let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_CONFIRM_CONFIRM_DESCRIPTION"), onAccept, null);
+																let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_CONFIRM_CONFIRM_DESCRIPTION"), null, onAccept, null);
 																ms.show();
 		
 															} else {
 		
-																let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_CONFIRM_CONFIRM_DESCRIPTION"), function() {
+																let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_CONFIRM_CONFIRM_DESCRIPTION"), null, function() {
 		
 																	onAccept(true);
 		
@@ -1017,12 +1017,12 @@ export default class IncidentReportActionPanel {
 
 			if (sameUser) {
 
-				let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_CONFIRM_CANCEL_DESCRIPTION"), onAccept, null);
+				let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_CONFIRM_CANCEL_DESCRIPTION"), null, onAccept, null);
 				ms.show();
 
 			} else {
 
-				let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_CONFIRM_CANCEL_DESCRIPTION"), function() {
+				let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_CONFIRM_CANCEL_DESCRIPTION"), null, function() {
 
 					onAccept(true);
 
@@ -1045,7 +1045,7 @@ export default class IncidentReportActionPanel {
 
 		function acceptChangeIncident(selectedIncidentTypeId, selectedStretchId, selectedLocationId, selectedRoadImpactId) {
 				
-			(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_CHANGE_CONFIRM_DESCRIPTION"), onAccept, null)).show();
+			(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_CHANGE_CONFIRM_DESCRIPTION"), null, onAccept, null)).show();
 
 			function onAccept(res) {
 

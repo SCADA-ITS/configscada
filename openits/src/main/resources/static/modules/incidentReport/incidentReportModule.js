@@ -101,12 +101,12 @@ export default class IncidentReportModule extends GenericModule {
 
 				if (sameUserCounter === incidentReportsToConfirm.length) {
 
-					let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_CONFIRM_CONFIRM_DESCRIPTION"), onAccept, null);
+					let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_CONFIRM_CONFIRM_DESCRIPTION"), null, onAccept, null);
 					ms.show();
 
 				} else if ((self.autoAssignPermissions && !self.assignAnotherPermissions) && (sameRoleCounter === incidentReportsToConfirm.length) || self.assignAnotherPermissions) {
 
-					let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_CONFIRM_CONFIRM_DESCRIPTION"), function() {
+					let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_CONFIRM_CONFIRM_DESCRIPTION"), null, function() {
 
 						onAccept(true);
 					}, null);
@@ -114,13 +114,13 @@ export default class IncidentReportModule extends GenericModule {
 
 				} else {
 
-					let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_INCIDENT_CONFIRM_NOT_POSSIBLE_TO_CONFIRM_DESCRIPTION"), null, null);
+					let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_INCIDENT_CONFIRM_NOT_POSSIBLE_TO_CONFIRM_DESCRIPTION"), null, null, null);
 					ms.show();
 				}
 
 			} else {
 
-				let ms = new MessageBox(MessageBox.WARN, i18n.t("LBL_INCIDENT_CONFIRM_NOTHING_TO_CONFIRM_DESCRIPTION"), null, null);
+				let ms = new MessageBox(MessageBox.WARN, i18n.t("LBL_INCIDENT_CONFIRM_NOTHING_TO_CONFIRM_DESCRIPTION"), null, null, null);
 				ms.show();
 			}
 		}
@@ -172,14 +172,14 @@ export default class IncidentReportModule extends GenericModule {
 
 				if (sameUserCounter === incidentReportsToDelete.length) {
 
-					let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_CONFIRM_CANCEL_DESCRIPTION"), onAccept, null);
+					let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_CONFIRM_CANCEL_DESCRIPTION"), null, onAccept, null);
 					ms.show();
 
 				} else if ((self.autoAssignPermissions || self.assignAnotherPermissions) && (incidentConfirmed === 0)) {
 
 					if (((self.autoAssignPermissions && !self.assignAnotherPermissions) && (sameRoleCounter === incidentReportsToDelete.length)) || self.assignAnotherPermissions) {
 
-						let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_CONFIRM_CANCEL_DESCRIPTION"), function() {
+						let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_CONFIRM_CANCEL_DESCRIPTION"), null, function() {
 
 							onAccept(true);
 						}, null);
@@ -187,19 +187,19 @@ export default class IncidentReportModule extends GenericModule {
 
 					} else {
 
-						let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_INCIDENT_CONFIRM_NOT_POSSIBLE_TO_CANCEL_DESCRIPTION"), null, null);
+						let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_INCIDENT_CONFIRM_NOT_POSSIBLE_TO_CANCEL_DESCRIPTION"), null, null, null);
 						ms.show();
 					}
 
 				} else {
 
-					let ms = new MessageBox(MessageBox.WARN, i18n.t("LBL_INCIDENT_CONFIRM_NOT_POSSIBLE_TO_CANCEL_DESCRIPTION"), null, null);
+					let ms = new MessageBox(MessageBox.WARN, i18n.t("LBL_INCIDENT_CONFIRM_NOT_POSSIBLE_TO_CANCEL_DESCRIPTION"), null, null, null);
 					ms.show();
 				}
 
 			} else {
 
-				let ms = new MessageBox(MessageBox.WARN, i18n.t("LBL_INCIDENT_CONFIRM_NOTHING_TO_CANCEL_DESCRIPTION"), null, null);
+				let ms = new MessageBox(MessageBox.WARN, i18n.t("LBL_INCIDENT_CONFIRM_NOTHING_TO_CANCEL_DESCRIPTION"), null, null, null);
 				ms.show();
 			}
 		}
@@ -236,7 +236,7 @@ export default class IncidentReportModule extends GenericModule {
 
 				if (onlyAutoassignIncident) {
 
-					let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_AUTOASSIGN_CONFIRM_DESCRIPTION"), onAccept, null);
+					let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_AUTOASSIGN_CONFIRM_DESCRIPTION"), null, onAccept, null);
 					ms.show();
 
 				} else {
@@ -247,7 +247,7 @@ export default class IncidentReportModule extends GenericModule {
 
 			} else {
 
-				let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_USER_WITHOUT_PERMISSION_TO_ASSIGN_INCIDENTS_DESCRIPTION"), null, null);
+				let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_USER_WITHOUT_PERMISSION_TO_ASSIGN_INCIDENTS_DESCRIPTION"), null, null, null);
 				ms.show();
 
 			}
@@ -273,7 +273,7 @@ export default class IncidentReportModule extends GenericModule {
 
 				} else {
 
-					let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_INCIDENT_CONFIRM_NOT_POSSIBLE_TO_ASSIGN_DESCRIPTION"), null, null);
+					let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_INCIDENT_CONFIRM_NOT_POSSIBLE_TO_ASSIGN_DESCRIPTION"), null, null, null);
 					ms.show();
 				}
 			}
@@ -297,7 +297,7 @@ export default class IncidentReportModule extends GenericModule {
 
 				} else {
 
-					let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_NOT_ALLOWED_TO_ASSIGN_SYSTEM_USER_DESCRIPTION"), null, null);
+					let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_NOT_ALLOWED_TO_ASSIGN_SYSTEM_USER_DESCRIPTION"), null, null, null);
 					ms.show();
 				}
 
@@ -484,7 +484,7 @@ export default class IncidentReportModule extends GenericModule {
 
 			if (this.closed) {
 
-				let ms = new MessageBox(MessageBox.WARN, i18n.t("LBL_INCIDENT_CANCEL_OR_DELETE_DESCRIPTION"), null, null);
+				let ms = new MessageBox(MessageBox.WARN, i18n.t("LBL_INCIDENT_CANCEL_OR_DELETE_DESCRIPTION"), null, null, null);
 				ms.show();
 			}
 		}

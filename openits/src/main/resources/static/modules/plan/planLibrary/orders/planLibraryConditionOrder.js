@@ -172,7 +172,7 @@ export default class PlanLibraryConditionOrder extends PlanLibraryOrder {
 					commandId: 5,
 					function: function() {
 						
-						let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_ARE_YOU_SURE_REMOVE_CONDITION"), onAccept, null);
+						let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_ARE_YOU_SURE_REMOVE_CONDITION"), null, onAccept, null);
 						ms.show();
 						
 						function onAccept() {
@@ -476,7 +476,7 @@ export default class PlanLibraryConditionOrder extends PlanLibraryOrder {
 
 				} else {
 
-					let ms = new MessageBox (MessageBox.WARN, i18n.t("LBL_PLAN_LIBRARY_CONDITION_ORDER_NO_POSIBLE_CHANGE_ORDER_DESCRIPTION"), null, null);
+					let ms = new MessageBox (MessageBox.WARN, i18n.t("LBL_PLAN_LIBRARY_CONDITION_ORDER_NO_POSIBLE_CHANGE_ORDER_DESCRIPTION"), null, null, null);
 					ms.show();
 				}
 			}

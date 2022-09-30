@@ -44,7 +44,7 @@ export default class UserModule extends GenericModule {
 			(this.moduleAction.id === this.config.moduleAction.edit ||
 				this.moduleAction.id === this.config.moduleAction.changePassword)) {
 
-			let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_NOT_ALLOWED_TO_SELECT_SYSTEM_USER_DESCRIPTION"), null, null);
+			let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_NOT_ALLOWED_TO_SELECT_SYSTEM_USER_DESCRIPTION"), null, null, null);
 			ms.show();
 
 		} else if (this.moduleAction.id === this.config.moduleAction.add ||
@@ -206,12 +206,12 @@ export default class UserModule extends GenericModule {
 
 				if (changesNotAllowed) {
 
-					let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_NOT_ALLOWED_TO_SELECT_SYSTEM_USER_DESCRIPTION"), null, null);
+					let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_NOT_ALLOWED_TO_SELECT_SYSTEM_USER_DESCRIPTION"), null, null, null);
 					ms.show();
 
 				} else {
 
-					let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_QUESTION_DELETE_USER_DESCRIPTION"), onAccept, null);
+					let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_QUESTION_DELETE_USER_DESCRIPTION"), null, onAccept, null);
 					ms.show();
 
 					function onAccept() {
@@ -243,7 +243,7 @@ export default class UserModule extends GenericModule {
 
 				if (changesNotAllowed) {
 
-					let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_NOT_ALLOWED_TO_SELECT_SYSTEM_USER_DESCRIPTION"), null, null);
+					let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_NOT_ALLOWED_TO_SELECT_SYSTEM_USER_DESCRIPTION"), null, null, null);
 					ms.show();
 
 				} else {
@@ -296,7 +296,7 @@ export default class UserModule extends GenericModule {
 							}
 							else {
 
-								let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_QUESTION_UNLOCK_USER_DESCRIPTION"), onAccept, null);
+								let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_QUESTION_UNLOCK_USER_DESCRIPTION"), null, onAccept, null);
 								ms.show();
 
 								function onAccept() {
@@ -307,7 +307,7 @@ export default class UserModule extends GenericModule {
 						}
 						else {
 
-							let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_SELECTION_OF_LOCKED_AND_UNLOCKED_USERS_DESCRIPTION"), null, null);
+							let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_SELECTION_OF_LOCKED_AND_UNLOCKED_USERS_DESCRIPTION"), null, null, null);
 							ms.show();
 						}
 
@@ -621,7 +621,7 @@ export default class UserModule extends GenericModule {
 
 							if (selection[0].id === SYSTEM_PROFILES.ROLE) {
 
-								let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_NOT_ALLOWED_TO SELECT_SYSTEM_ROLE_DESCRIPTION"), null, null);
+								let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_NOT_ALLOWED_TO SELECT_SYSTEM_ROLE_DESCRIPTION"), null, null, null);
 								ms.show();
 
 								return false;
@@ -832,7 +832,7 @@ export default class UserModule extends GenericModule {
 
 								if (permInherited) {
 
-									let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_PERMISSION_INHERITED_FROM_A_ROLE_DESCRIPTION"), null, null);
+									let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_PERMISSION_INHERITED_FROM_A_ROLE_DESCRIPTION"), null, null, null);
 									ms.show();
 
 								} else {
@@ -887,7 +887,7 @@ export default class UserModule extends GenericModule {
 
 						if (repeatRolePermission || repeatUserPermission) {
 
-							let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_PERMISSION_IS_ALREADY_IN_USE_DESCRIPTION"), null, null);
+							let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_PERMISSION_IS_ALREADY_IN_USE_DESCRIPTION"), null, null, null);
 							ms.show();
 
 							return false;
@@ -933,7 +933,7 @@ export default class UserModule extends GenericModule {
 									click:
 										function() {
 											
-											let msgboxAccept = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_QUESTION_SAVE_USER_DESCRIPTION"), onAccept, null);
+											let msgboxAccept = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_QUESTION_SAVE_USER_DESCRIPTION"), null, onAccept, null);
 											msgboxAccept.show();
 						
 											function onAccept() {
@@ -1011,14 +1011,14 @@ export default class UserModule extends GenericModule {
 														}
 													} else {
 	
-														let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_REQUIRED_FIELDS_NOT_COMPLETED_DESCRIPTION"), null, null);
+														let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_REQUIRED_FIELDS_NOT_COMPLETED_DESCRIPTION"), null, null, null);
 														ms.show();
 	
 													}
 													
 												} else {
 	
-													let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_PASSWORD_AND_CONFIRM_PASSWORD_MUST_BE_THE_SAME_DESCRIPTION"), null, null);
+													let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_PASSWORD_AND_CONFIRM_PASSWORD_MUST_BE_THE_SAME_DESCRIPTION"), null, null, null);
 													ms.show();
 												}
 											}

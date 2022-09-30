@@ -23,7 +23,7 @@ export default class IncidentWizardAction {
 			confirmMsg = i18n.t("LBL_INCIDENTS_TO_CREATE") + ": " + parent.incidentData.affectionStretchsSelected.length + " " + i18n.t("LBL_ARE_YOU_CONTINUE");
 		}
 
-		(new MessageBox(MessageBox.CONFIRM, confirmMsg,
+		(new MessageBox(MessageBox.CONFIRM, confirmMsg, null,
 
 			// onAccept
 			function() {
@@ -38,7 +38,7 @@ export default class IncidentWizardAction {
 
 						let message = `${i18n.t("LBL_INCIDENT_REPORT_MORE_THAN_ONE_INCIDENT_OF_TYPE")} ${parent.incidentData.incidentType} ${i18n.t("LBL_INCIDENT_REPORT_IS_ALLOWED_IN_STRETCH")} ${parent.incidentData.stretch}`;
 
-						(new MessageBox(MessageBox.CONFIRM, message,
+						(new MessageBox(MessageBox.CONFIRM, message, null,
 							function() {
 
 								onAccept();
@@ -70,12 +70,12 @@ export default class IncidentWizardAction {
 
 					function onResponse(msg) {
 
-						showMessage(new MessageBox(MessageBox.INFO, msg, null, null));
+						showMessage(new MessageBox(MessageBox.INFO, msg, null, null, null));
 					},
 
 					function onTimeout(msg) {
 
-						showMessage(new MessageBox(MessageBox.WARN, msg, null, null));
+						showMessage(new MessageBox(MessageBox.WARN, msg, null, null, null));
 					}
 				);
 
@@ -309,7 +309,7 @@ export default class IncidentWizardAction {
 
 							let message = affectedStretchs.length + " " + i18n.t("LBL_STRETCHS_AVAILABLE_FOR_LOCATION") + " " + parent.incidentData.location + ": " + affectedStretchs.map(e => e.alias).join(",");
 
-							(new MessageBox(MessageBox.INFO, message, null, null)).show();
+							(new MessageBox(MessageBox.INFO, message, null, null, null)).show();
 						}
 					}
 				);
@@ -351,7 +351,7 @@ export default class IncidentWizardAction {
 
 							let message = i18n.t("LBL_STRETCH_SELECTED_FOR_LOCATION") + " " + parent.incidentData.stretch + ". " + i18n.t("LBL_CHANGE_STRETCH_FOR_SELECTED_LOCATION_QUESTION");
 
-							(new MessageBox(MessageBox.CONFIRM, message,
+							(new MessageBox(MessageBox.CONFIRM, message, null,
 
 								// onAccept	
 								function() {

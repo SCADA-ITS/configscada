@@ -452,13 +452,13 @@ export default class PlanLibraryModule extends GenericModule {
 
 				if (selected.id === "root") {
 
-					let ms = new MessageBox (MessageBox.WARN, i18n.t("LBL_ROOT_CANNOT_BE_DELETED_DESCRIPTION"), null, null);
+					let ms = new MessageBox (MessageBox.WARN, i18n.t("LBL_ROOT_CANNOT_BE_DELETED_DESCRIPTION"), null, null, null);
 					ms.show();
 					
 				}
 				else {
 
-					let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_DIALOG_DELETE_PLAN_DESCRIPTION"), onAccept, null);
+					let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_DIALOG_DELETE_PLAN_DESCRIPTION"), null, onAccept, null);
 					ms.show();
 					
 					function onAccept() {

@@ -564,7 +564,7 @@ export default class VmsSignalingTextEditor extends VmsSignalingZoneEditor {
 								}
 								else {
 									
-									let ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_VMS_MAX_CHARS_EXCEEDED_DESCRIPTION"), null, null);
+									let ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_VMS_MAX_CHARS_EXCEEDED_DESCRIPTION"), null, null, null);
 									ms.show();
 								}
 							}

@@ -70,7 +70,7 @@ export default class VmsSignalingModule extends GenericModule {
 						
 						container.close();
 						
-						let ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_NO_VMS_AVAILABLE_DESCRIPTION"), null, null);
+						let ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_NO_VMS_AVAILABLE_DESCRIPTION"), null, null, null);
 						ms.show();
 					}
 				}

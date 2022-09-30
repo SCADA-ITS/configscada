@@ -453,7 +453,7 @@ export default class TubeContent {
 
 						if (optionSelected && optionSelected.disableModeChange) {
 
-							let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_VENTILATION_CHANGE_MODE_NOT_ALLOWED"), null, null);
+							let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_VENTILATION_CHANGE_MODE_NOT_ALLOWED"), null, null, null);
 							ms.show();
 						
 						} else {											
@@ -479,7 +479,7 @@ export default class TubeContent {
 
 						function changeMode(newModeId, callbackCloseDialog) {
 
-							let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_VENTILATION_CHANGE_MODE_CONFIRM_DESCRIPTION"), onAccept, null);
+							let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_VENTILATION_CHANGE_MODE_CONFIRM_DESCRIPTION"), null, onAccept, null);
 							ms.show();
 
 							function onAccept() {
@@ -494,7 +494,7 @@ export default class TubeContent {
 
 									if (res) {
 
-										(new MessageBox(MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null)).show();
+										(new MessageBox(MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null, null)).show();
 									}
 								});
 							}
@@ -844,7 +844,7 @@ export default class TubeContent {
 
 									if (!command.commandElementValues[0].value || command.commandElementValues[0].value === 0) {
 
-										let ms = new MessageBox(MessageBox.WARN, i18n.t("LBL_NO_REGIME_SELECTED_DESCRIPTION"), null, null);
+										let ms = new MessageBox(MessageBox.WARN, i18n.t("LBL_NO_REGIME_SELECTED_DESCRIPTION"), null, null, null);
 										ms.show();
 
 									} else {
@@ -853,7 +853,7 @@ export default class TubeContent {
 
 											if (res) {
 
-												(new MessageBox(MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null)).show();
+												(new MessageBox(MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null, null)).show();
 											}
 										}, i18n.t("LBL_SEND_VENTILATION_REGIME_CONFIRM_DESCRIPTION"));
 									}
@@ -1078,14 +1078,14 @@ export default class TubeContent {
 														}
 													}
 												} else {
-													let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_FAN_COMMAND_NOT_ALLOWED_WITH_THIS_STATE"), null, null);
+													let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_FAN_COMMAND_NOT_ALLOWED_WITH_THIS_STATE"), null, null, null);
 													ms.show();
 												}
 											});
 
 											if (differentSubtype) {
 
-												let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_ELEMENTS_OF_DIFFERENT_SUBTYPE"), null, null);
+												let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_ELEMENTS_OF_DIFFERENT_SUBTYPE"), null, null, null);
 												ms.show();
 
 											} else if (argsCommand) {
@@ -1223,7 +1223,7 @@ export default class TubeContent {
 								click: function() {
 
 									let responseSend = 0;
-									let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_VENTILATION_CHANGE_STATUS_CONFIRM_DESCRIPTION"), onAccept, null);
+									let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_VENTILATION_CHANGE_STATUS_CONFIRM_DESCRIPTION"), null, onAccept, null);
 									ms.show();
 
 									function onAccept() {
@@ -1310,7 +1310,7 @@ export default class TubeContent {
 
 														responseSend = 0;
 
-														(new MessageBox(MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null)).show();
+														(new MessageBox(MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null, null)).show();
 													}
 												});
 											}

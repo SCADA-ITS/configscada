@@ -159,7 +159,7 @@ export default class Notification {
 								}
 								else {
 
-									(new MessageBox(MessageBox.ERROR, i18n.t("LBL_NO_SELECTED_ALARMS"), null, null)).show();
+									(new MessageBox(MessageBox.ERROR, i18n.t("LBL_NO_SELECTED_ALARMS"), null, null, null)).show();
 								}
 							}
 						}
@@ -182,7 +182,7 @@ export default class Notification {
 
 								if (Array.isArray(alarms) && alarms.length > 0) {
 
-									(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_ARE_YOU_SURE_SNOOZE_SELECTED_ALARMS"),
+									(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_ARE_YOU_SURE_SNOOZE_SELECTED_ALARMS"), null,
 
 										// onAccept
 										function() {
@@ -212,7 +212,7 @@ export default class Notification {
 								}
 								else {
 
-									(new MessageBox(MessageBox.ERROR, i18n.t("LBL_NO_SELECTED_ALARMS"), null, null)).show();
+									(new MessageBox(MessageBox.ERROR, i18n.t("LBL_NO_SELECTED_ALARMS"), null, null, null)).show();
 								}
 							}
 						}
@@ -237,34 +237,36 @@ export default class Notification {
 
 									if (Array.isArray(alarmRecognizedSelected) && alarmRecognizedSelected.length > 0) {
 
-										(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_ARE_YOU_SURE_CLEAN_SELECTED_ALARMS"), function() {
+										(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_ARE_YOU_SURE_CLEAN_SELECTED_ALARMS"), null,
+											function() {
 
-											self.removeRecognized(alarmRecognizedSelected);
+												self.removeRecognized(alarmRecognizedSelected);
 
-											if (window.userControlPanel) {
+												if (window.userControlPanel) {
 
-												window.userControlPanel.updateData();
-											}
+													window.userControlPanel.updateData();
+												}
 
-										})).show();
+											})).show();
 
 									} else {
 
-										(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_ARE_YOU_SURE_CLEAN_ALL_CONFIRMED_ALARMS"), function() {
+										(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_ARE_YOU_SURE_CLEAN_ALL_CONFIRMED_ALARMS"), null,
+											function() {
 
-											self.removeRecognized();
+												self.removeRecognized();
 
-											if (window.userControlPanel) {
+												if (window.userControlPanel) {
 
-												window.userControlPanel.updateData();
-											}
+													window.userControlPanel.updateData();
+												}
 
-										})).show();
+											})).show();
 									}
 
 								} else {
 
-									(new MessageBox(MessageBox.ERROR, i18n.t("LBL_NO_RECOGNIZED_ELEMENTS"), null, null)).show();
+									(new MessageBox(MessageBox.ERROR, i18n.t("LBL_NO_RECOGNIZED_ELEMENTS"), null, null, null)).show();
 								}
 							}
 						}
@@ -302,7 +304,7 @@ export default class Notification {
 								}
 								else {
 
-									(new MessageBox(MessageBox.ERROR, i18n.t("LBL_NO_SELECTED_INCIDENTS"), null, null)).show();
+									(new MessageBox(MessageBox.ERROR, i18n.t("LBL_NO_SELECTED_INCIDENTS"), null, null, null)).show();
 								}
 							}
 						}
@@ -325,7 +327,7 @@ export default class Notification {
 
 								if (Array.isArray(incidents) && incidents.length > 0) {
 
-									(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_ARE_YOU_SURE_SNOOZE_SELECTED_INCIDENTS"),
+									(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_ARE_YOU_SURE_SNOOZE_SELECTED_INCIDENTS"), null,
 
 										// onAccept
 										function() {
@@ -355,7 +357,7 @@ export default class Notification {
 								}
 								else {
 
-									(new MessageBox(MessageBox.ERROR, i18n.t("LBL_NO_SELECTED_INCIDENTS"), null, null)).show();
+									(new MessageBox(MessageBox.ERROR, i18n.t("LBL_NO_SELECTED_INCIDENTS"), null, null, null)).show();
 								}
 							}
 						}
@@ -380,34 +382,36 @@ export default class Notification {
 
 									if (Array.isArray(incidentRecognizedSelected) && incidentRecognizedSelected.length > 0) {
 
-										(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_ARE_YOU_SURE_CLEAN_SELECTED_INCIDENTS"), function() {
+										(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_ARE_YOU_SURE_CLEAN_SELECTED_INCIDENTS"), null,
+											function() {
 
-											self.removeRecognized(incidentRecognizedSelected);
+												self.removeRecognized(incidentRecognizedSelected);
 
-											if (window.userControlPanel) {
+												if (window.userControlPanel) {
 
-												window.userControlPanel.updateData();
-											}
+													window.userControlPanel.updateData();
+												}
 
-										})).show();
+											})).show();
 									}
 									else {
 
-										(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_ARE_YOU_SURE_CLEAN_ALL_CONFIRMED_INCIDENTS"), function() {
+										(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_ARE_YOU_SURE_CLEAN_ALL_CONFIRMED_INCIDENTS"), null,
+											function() {
 
-											self.removeRecognized();
+												self.removeRecognized();
 
-											if (window.userControlPanel) {
+												if (window.userControlPanel) {
 
-												window.userControlPanel.updateData();
-											}
+													window.userControlPanel.updateData();
+												}
 
-										})).show();
+											})).show();
 									}
 
 								} else {
 
-									(new MessageBox(MessageBox.ERROR, i18n.t("LBL_NO_INCIDENTS_RECOGNIZED"), null, null)).show();
+									(new MessageBox(MessageBox.ERROR, i18n.t("LBL_NO_INCIDENTS_RECOGNIZED"), null, null, null)).show();
 								}
 							}
 						}
@@ -441,7 +445,7 @@ export default class Notification {
 										let args = { selectedPks: eventIds, confirm: false };
 										let moduleAction = { id: moduleActionId };
 
-										(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_ARE_YOU_SURE_RECOGNIZE_SELECTED_EVENT"),
+										(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_ARE_YOU_SURE_RECOGNIZE_SELECTED_EVENT"), null,
 
 											function() {
 
@@ -473,7 +477,7 @@ export default class Notification {
 								}
 								else {
 
-									(new MessageBox(MessageBox.ERROR, i18n.t("LBL_NO_SELECTED_EVENTS"), null, null)).show();
+									(new MessageBox(MessageBox.ERROR, i18n.t("LBL_NO_SELECTED_EVENTS"), null, null, null)).show();
 								}
 							}
 						}
@@ -496,7 +500,7 @@ export default class Notification {
 
 								if (Array.isArray(events) && events.length > 0) {
 
-									(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_ARE_YOU_SURE_SNOOZE_SELECTED_EVENTS"),
+									(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_ARE_YOU_SURE_SNOOZE_SELECTED_EVENTS"), null,
 
 										// onAccept
 										function() {
@@ -526,7 +530,7 @@ export default class Notification {
 								}
 								else {
 
-									(new MessageBox(MessageBox.ERROR, i18n.t("LBL_NO_SELECTED_EVENTS"), null, null)).show();
+									(new MessageBox(MessageBox.ERROR, i18n.t("LBL_NO_SELECTED_EVENTS"), null, null, null)).show();
 								}
 							}
 						}
@@ -688,7 +692,7 @@ export default class Notification {
 							}
 							else {
 
-								(new MessageBox(MessageBox.ERROR, i18n.t("LBL_COMMAND_NOT_COMPATIBLE_MULTISELECT"), null, null)).show();
+								(new MessageBox(MessageBox.ERROR, i18n.t("LBL_COMMAND_NOT_COMPATIBLE_MULTISELECT"), null, null, null)).show();
 							}
 						}
 					}
