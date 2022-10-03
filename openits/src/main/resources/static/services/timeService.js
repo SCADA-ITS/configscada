@@ -50,8 +50,16 @@ export default class TimeService extends GenericModule {
 		let diffCliSrvMs = 0;
 		let requestTraceCount = 0;
 		
+		update();
+		
 		self.timer = setInterval(function() {
 
+			update();
+				
+		}, 999);
+		
+		function update() {
+			
 			if (!waitingResponse) {
 				
 				if (timeElapsedMs === -1 || timeElapsedMs > 60000) {
@@ -115,8 +123,7 @@ export default class TimeService extends GenericModule {
 					updateLabel(Math.round(self.serverTimeMs / 1000));
 				}
 			}
-				
-		}, 999);
+		}
 		
 		function updateLabel(utcSeconds) {
 

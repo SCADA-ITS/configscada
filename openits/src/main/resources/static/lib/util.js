@@ -1422,51 +1422,47 @@ export let util = {
 
 				case "red":
 					color = "#FE0E0E";
-					console.log("Apply theme red");
+					log.debug("Apply theme red");
 					break;
 				case "brown":
 					color = "#FE860E";
-					console.log("Apply theme brown");
+					log.debug("Apply theme brown");
 					break;
 				case "lime":
 					color = "#86FE0E";
-					console.log("Apply theme lime");
+					log.debug("Apply theme lime");
 					break;
 				case "green":
 					color = "#0EFE0E";
-					console.log("Apply theme green");
+					log.debug("Apply theme green");
 					break;
 				case "springgreen":
 					color = "#0EFE86";
-					console.log("Apply theme spring green");
+					log.debug("Apply theme spring green");
 					break;
 				case "aqua":
 					color = "#0EFEFE";
-					console.log("Apply theme aqua");
-					break;
-				case "blue":
-					color = "#0E0EFE";
-					console.log("Apply theme blue");
+					log.debug("Apply theme aqua");
 					break;
 				case "purple":
 					color = "#860EFE";
-					console.log("Apply theme purple");
+					log.debug("Apply theme purple");
 					break;
 				case "pink":
 					color = "#FE0EFE";
-					console.log("Apply theme pink");
+					log.debug("Apply theme pink");
 					break;
 				case "deeppink":
 					color = "#FE0E86";
-					console.log("Apply theme deep pink");
+					log.debug("Apply theme deep pink");
 					break;
 				case "yellow":
 					color = "#FEFE0E";
-					console.log("Apply theme yellow");
+					log.debug("Apply theme yellow");
 					break;
 				default:
 					color = undefined;
-					console.log("Apply default theme");
+					log.debug("Apply theme blue (default)");
 			}
 
 			if (color) {
@@ -1991,13 +1987,13 @@ export let util = {
 			
 		/**
 		 *
-		 * Calculate and classify commands in element(sub)Types
+		 * Calculate and classify commands by element(sub)Types
 		 * 
 	 	 * @param elementIds {array} Array of element ids 
 	 	 * @param defaultSignalingModuleAction {number} id of defaultModuleAction for signalling
 	 	 * @param elementTypeCommands {array} Referenced array of classified commands by (sub)type
-	 	 * @param mapElements {map} Referenced map of classified elements for (sub)type
-	 	 * @param mapCommandModule {map} Referenced map of classified commands for (sub)type
+	 	 * @param mapElements {map} Referenced map of classified elements by (sub)type
+	 	 * @param mapCommandModule {map} Referenced map of classified commands by (sub)type
 	 	 * @param useDefaultModule {boolean} Referenced boolean to use default module
 	 	 * @return
 	 	 */
@@ -2074,8 +2070,20 @@ export let util = {
 										elementTypeCommands.push({
 											id: element.elementSubtype.id,
 											alias: alias + i18n.t(elementType.labelAlias) + ' - ' + i18n.t(elementSubtype.labelAlias),
+											aliasCtx: i18n.t(elementSubtype.labelAlias),
 											description: i18n.t(elementSubtype.labelDescription),
-											image: elementType.elementTypePhoto
+											image: elementType.elementTypePhoto,
+											commandElements: function() {
+												
+												let cmds = [];
+												
+												if (Array.isArray(element.commandElements) && element.commandElements.length > 0) {
+													
+													cmds = element.commandElements;
+												}
+												
+												return cmds;
+											}()
 										});
 									}
 									
@@ -2110,8 +2118,20 @@ export let util = {
 									elementTypeCommands.push({
 										id: element.elementType.id,
 										alias: alias,
+										aliasCtx: i18n.t(elementType.labelAlias),
 										description: i18n.t(elementType.labelDescription),
-										image: elementType.elementTypePhoto
+										image: elementType.elementTypePhoto,
+										commandElements: function() {
+											
+											let cmds = [];
+											
+											if (Array.isArray(element.commandElements) && element.commandElements.length > 0) {
+												
+												cmds = element.commandElements;
+											}
+											
+											return cmds;
+										}()
 									});
 								}
 								
@@ -2121,6 +2141,8 @@ export let util = {
 					}
 				});
 			}
+			
+			return elementTypeCommands;
 		},
 		
 		getCommandElementType(element, commandElementTypeId) {

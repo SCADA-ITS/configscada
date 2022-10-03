@@ -58,10 +58,14 @@ export default class SearchBox {
 				autowidth: true,
 				openAction: "click",
 				width: 34,
-				css: "dt-submenu_searchbox",
+				css: self.isToolbar ? "dt-submenu_searchbox-tb" : "dt-submenu_searchbox",
 				subMenuPos: "down",
 				data: [
-					{ value: "", icon: "mdi mdi-menu-down", submenu: getMenuSearchTypes() }
+					{ 
+						config: { css: self.isToolbar ? "dt-submenu_searchbox-tb" : "dt-submenu_searchbox" },
+						value: "", 
+						icon: "mdi mdi-menu-down", 
+						submenu: getMenuSearchTypes() }
 				],
 				on: {
 					onMenuItemClick: function(id) {
@@ -94,6 +98,11 @@ export default class SearchBox {
 				}
 			};
 			
+			if (self.isToolbar) {
+				
+				//viewMenuChangeSearchType.css = "dt-submenu_searchbox";
+			}
+			
 			function getMenuSearchTypes() {
 				
 				return Object.keys(SearchBox.TYPE).map(key => {
@@ -124,7 +133,7 @@ export default class SearchBox {
 			
 			function getMenuTemplate(type) {
 				
-				return `<div id="${'search-menu-type-' + self.uid + "-" + type.id}"><span ${(type.id != self.type.id) ? 'style="color: transparent"' : ''} class="webix_icon mdi mdi-check"></span>  ${i18n.t(type.label)}</div>`;
+				return `<div id="${'search-menu-type-' + self.uid + "-" + type.id}"><span ${(type.id != self.type.id) ? 'style="color: transparent"' : 'style="color: var(--blue-text-default)"'} class="webix_icon mdi mdi-check"></span>  ${i18n.t(type.label)}</div>`;
 			}
 			
 			return viewMenuChangeSearchType;

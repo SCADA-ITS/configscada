@@ -1,5 +1,6 @@
 package com.revenga.rits.front.openits.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,6 +78,13 @@ public class ElementController {
 	public ResponseEntity<Object> getElementsCommands(@RequestBody List<String> ids) {
 		
 		return new ResponseEntity<>(elementBO.getElementsCommands(ids), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/withCommands")
+	@ApiOperation(value = "Get all elements with commands", notes = "Get all elements with commands")
+	public ResponseEntity<Object> getAllElementsCommands() {
+		
+		return new ResponseEntity<>(elementBO.getElementsCommands(new ArrayList<>()), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/{id}")

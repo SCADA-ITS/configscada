@@ -150,6 +150,13 @@ export default class SearchEquipment {
 									
 									cols: [
 										{
+											id: "element-row-selected-" + element.id + "-" + self.uid,
+											view: "template",
+											borderless: true,
+											width : 32,
+											template: `<span style='font-size: 30px; color: transparent' class='mdi mdi-menu-right'></span>`
+										},
+										{
 											view: "template",
 											borderless: true,
 											width : 32,
@@ -183,6 +190,10 @@ export default class SearchEquipment {
 										
 														self.openModule(self.config.types.element.default, { selectedPks: [element.id] });	
 													}
+												},
+												onAfterRender: function() {
+													
+													selectRow(this.getNode(), element);
 												}
 											}
 										},
@@ -203,6 +214,27 @@ export default class SearchEquipment {
 			if ($$("results-elements-" + self.uid)) {
 					
 				webix.ui(viewResultsEquipments, $$("results-elements-" + self.uid));	
+			}
+		}
+		
+		function selectRow(object, element) {
+			
+			let rowSelected =$$("element-row-selected-" + element.id + "-" + self.uid);
+												
+			if (rowSelected) {
+				
+				object.addEventListener("mouseover", function() {
+																				
+					rowSelected.define("template", `<span style='font-size: 30px; color: var(--blue-text-default)' class='mdi mdi-menu-right'></span>`);
+					rowSelected.refresh();
+					 
+				});	
+				
+				object.addEventListener("mouseout", function() { 
+					
+					rowSelected.define("template", `<span style='font-size: 30px; color: transparent' class='mdi mdi-menu-right'></span>`);
+					rowSelected.refresh();
+				});	
 			}
 		}
 		
@@ -230,6 +262,10 @@ export default class SearchEquipment {
 									
 									self.openModule(self.config.types.element.view, { selectedPks: [element.id] });	
 								}
+							},
+							onAfterRender: function() {
+								
+								selectRow(this.getNode(), element);
 							}
 						}
 					},
@@ -247,6 +283,10 @@ export default class SearchEquipment {
 									
 									self.openModule(self.config.types.element.map, { selectedPks: [element.id] });	
 								}
+							},
+							onAfterRender: function() {
+								
+								selectRow(this.getNode(), element);
 							}
 						}
 					},

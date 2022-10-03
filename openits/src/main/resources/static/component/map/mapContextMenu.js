@@ -1,4 +1,5 @@
 import { util } from "../../lib/util.js";
+import MessageBox from "../messageBox.js";
 
 export default class MapContextMenu {
 	
@@ -21,16 +22,18 @@ export default class MapContextMenu {
             view: "contextmenu",
             id: "ctx_menu-" + self.uid,
             width: 300,
+            submenuConfig:{
+        		width: 300,
+        		template: function(obj) {
+	
+					return getMenuItem(obj);
+				} 
+        	},
             data: [],
-            template: (obj) => {
-
-                if (!obj.default) {
-                    return `<span class = 'webix_icon ${obj.icon}'></span> ${obj.value}`;
-                }
-                else {
-                    return `<span class = 'webix_icon ${obj.icon}'></span> <span style='font-weight: 500;'>${obj.value}</span>`;
-                }
-
+            template: function(obj) {
+	
+				return getMenuItem(obj); 
+				
             },
             on: {
 				onBeforeShow: function() {
@@ -41,18 +44,79 @@ export default class MapContextMenu {
 				},
                 onMenuItemClick: function(id) {
                     
-                    let command = self.commands.find(e => {
-                        return e.id === this.getItem(id).commandId
-                    });
+                    let item = this.getItem(id);
                     
-                    if (command) {
-                    
-						util.module.executeCommand(command, self.allPks, self.selectedPksCallback, self.cmdCallbacks);
-                    }
-                }
+                    if (item && item.commandId) {
+	
+						let command = self.commands.find(e => {
+	                        return e.id === item.commandId
+	                    });
+	                    
+	                    if (command) {
+	                    
+							util.module.executeCommand(command, self.allPks, self.selectedPksCallback, self.cmdCallbacks);
+	                    }
+					}
+					else {
+						
+						item = this.getMenuItem(id);
+						
+						if (item && item.commandElementId) {
+							
+							let commands = getCommands(item.commandElementId);
+							
+							if (Array.isArray(commands) && commands.length > 0) {
+								
+								util.element.sendCommand(commands, function(res) {
+
+									if (res) {
+
+										(new MessageBox(MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null, null)).show();
+									}
+								}, 
+								item.elementTypeLabelAlias + " - " + i18n.t("LBL_SEND_SIGNALING_CONFIRM") + " => " + item.value);	
+							}
+						}
+					}
+	            }
             }
-            
         };
+        
+        function getMenuItem(obj) {
+	
+			if (obj.icon) {
+					
+				if (!obj.default) {
+                    return `<span class = 'webix_icon ${obj.icon}'></span> ${obj.value}`;
+                }
+                else {
+                    return `<span class = 'webix_icon ${obj.icon}'></span> <span style='font-weight: 500;'>${obj.value}</span>`;
+                }	
+			}
+			else {
+				
+				return `<img style='position: absolute; height:16px; width:16px;margin-top: 6px;' src='img/${obj.img}' onerror='this.onerror=null;this.src="img/grid/empty.png"'> <span style='position: absolute;margin-left: 25px;'>${obj.value}</span>`
+			}
+		}
+        
+        function getCommands(commandElementId) {
+	
+			let commands = [];
+			let selectedPks = self.selectedPksCallback();
+				
+			if (Array.isArray(selectedPks) && selectedPks.length > 0) {
+				
+				selectedPks.forEach(elementId => {
+					
+					commands.push({
+						elementId: elementId,
+						commandElementTypeId: commandElementId
+					});
+				});
+			}
+			
+			return commands;
+		}
         
         function getData() {
 	
@@ -67,6 +131,61 @@ export default class MapContextMenu {
 						data.push({ commandId: cmd.id, value: i18n.t(cmd.label), icon: cmd.icon, default: cmd.default_ });
 					}
 				});
+			}
+			
+			if (self.selectedPksCallback) {
+				
+				let selectedPks = self.selectedPksCallback();
+				
+				if (Array.isArray(selectedPks) && selectedPks.length > 0) {
+					
+					let elementTypeCommands = util.element.calculateElementTypeCommands(selectedPks);
+			
+					if (Array.isArray(elementTypeCommands) && elementTypeCommands.length > 0) {
+						
+						elementTypeCommands.sort((a, b) => (a.alias > b.alias) ? 1 : ((b.alias > a.alias) ? -1 : 0));
+						
+						data.push({ $template:"Separator" });
+						
+						elementTypeCommands.forEach(elementTypeCommand => {
+							
+							let elementTypeCommandMenu = {
+		
+								value: elementTypeCommand.aliasCtx, 
+								img: elementTypeCommand.image,
+								submenu: function() {
+									
+									let cmds = [];
+									
+									if (Array.isArray(elementTypeCommand.commandElements) && elementTypeCommand.commandElements.length > 0) {
+										
+										elementTypeCommand.commandElements.sort((a, b) => (i18n.t(a.labelAlias) > i18n.t(b.labelAlias)) ? 1 : ((i18n.t(b.labelAlias) > i18n.t(a.labelAlias)) ? -1 : 0));
+										
+										elementTypeCommand.commandElements.forEach(cmd => {
+											
+											if (!cmd.commandElementTypeParams) {
+												
+												cmds.push({
+													value: i18n.t(cmd.labelAlias),
+													img: cmd.image,
+													commandElementId: cmd.id,
+													elementTypeLabelAlias: elementTypeCommand.aliasCtx
+												})	
+											}
+										});
+									}
+									
+									return cmds; 
+								}()
+							}
+							
+							if (elementTypeCommandMenu.submenu.length > 0) {
+								
+								data.push(elementTypeCommandMenu);	
+							}
+						});
+					} 
+				}
 			}
 			
 			return data;

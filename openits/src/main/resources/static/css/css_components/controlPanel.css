@@ -160,7 +160,8 @@
 .control-panel-list .first-line {
 	font-size:14px;
 	letter-spacing:0.2px;
-	color: rgb(198, 211, 231);
+	color: var(--blue-soft);
+	font-weight: 500;
 	line-height:15px;
 	display:block;
 	white-space: nowrap;

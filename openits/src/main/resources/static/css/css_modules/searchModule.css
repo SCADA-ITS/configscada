@@ -14,7 +14,7 @@
 }
 
 .label-search-result .webix_el_box {
-  	color: var(--blue-mid2) !important;
+  	color: var(--blue-text-default) !important;
 	/*font-size: 15px;*/
     cursor: pointer;
     overflow: hidden;
@@ -32,7 +32,7 @@
 	font-style: italic;
 	font-weight: 100;
 	cursor: pointer;
-	color: var(--blue-mid2) !important;
+	color: var(--blue-text-default) !important;
 	text-decoration: underline;
 	overflow: hidden;
     text-overflow: ellipsis;
@@ -62,16 +62,16 @@
     font-size: 15px;
     width: 100% !important;
     background: transparent;
-    color: var(--blue-mid2-opacity-7);
+    color: var(--blue-text-default);
 }
 
 .search-links-toolbar .webix_secondary .webix_button:hover {
-	box-shadow: 0 2.1rem 0.5rem var(--blue-mid2-opacity-7) !important;
+	box-shadow: 0 2.1rem 0.5rem var(--blue-mid2) !important;
 }
 
 .search-links-toolbar .webix_secondary .webix_button .webix_icon_btn {
 	font-size: 16px;
-	color: var(--blue-mid2-opacity-7);
+	color: var(--blue-text-default);
 }
 
 @keyframes blinker {

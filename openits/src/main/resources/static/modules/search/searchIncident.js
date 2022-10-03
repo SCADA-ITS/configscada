@@ -107,6 +107,13 @@ export default class SearchIncident {
 									
 									cols: [
 										{
+											id: "incident-row-selected-" + incident.id + "-" + self.uid,
+											view: "template",
+											borderless: true,
+											width : 32,
+											template: `<span style='font-size: 30px; color: transparent' class='mdi mdi-menu-right'></span>`
+										},
+										{
 											view: "template",
 											width : 32,
 											borderless: true,
@@ -143,6 +150,10 @@ export default class SearchIncident {
 									
 														self.openModule(self.config.types.incident.default, { selectedPks: [incident.id] });	
 													}
+												},
+												onAfterRender: function() {
+													
+													selectRow(this.getNode(), incident);
 												}
 											}
 										},
@@ -163,6 +174,27 @@ export default class SearchIncident {
 			if ($$("results-incidents-" + self.uid)) {
 				
 				webix.ui(viewResultsIncidents, $$("results-incidents-" + self.uid));	
+			}
+		}
+		
+		function selectRow(object, incident) {
+			
+			let rowSelected =$$("incident-row-selected-" + incident.id + "-" + self.uid);
+												
+			if (rowSelected) {
+				
+				object.addEventListener("mouseover", function() {
+																				
+					rowSelected.define("template", `<span style='font-size: 30px; color: var(--blue-text-default)' class='mdi mdi-menu-right'></span>`);
+					rowSelected.refresh();
+					 
+				});	
+				
+				object.addEventListener("mouseout", function() { 
+					
+					rowSelected.define("template", `<span style='font-size: 30px; color: transparent' class='mdi mdi-menu-right'></span>`);
+					rowSelected.refresh();
+				});	
 			}
 		}
 		
@@ -190,6 +222,10 @@ export default class SearchIncident {
 									
 									self.openModule(self.config.types.incident.view, { selectedPks: [incident.id] });	
 								}
+							},
+							onAfterRender: function() {
+								
+								selectRow(this.getNode(), incident);
 							}
 						}
 					},
@@ -208,6 +244,10 @@ export default class SearchIncident {
 									
 									self.openModule(self.config.types.incident.confirm, { selectedPks: [incident.id] });	
 								}
+							},
+							onAfterRender: function() {
+								
+								selectRow(this.getNode(), incident);
 							}
 						} 
 					},
@@ -225,6 +265,10 @@ export default class SearchIncident {
 									
 									self.openModule(self.config.types.incident.map, { selectedPks: [incident.id] });	
 								}
+							},
+							onAfterRender: function() {
+								
+								selectRow(this.getNode(), incident);
 							}
 						} 
 					},

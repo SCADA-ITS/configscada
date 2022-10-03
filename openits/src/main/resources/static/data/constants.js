@@ -145,7 +145,7 @@ const EntityType = Object.freeze({
 	ALARM_LEVEL: { id: 4, syncLoad: false, endpoint: appConfig.restUrl + "alarms/alarm_levels", load: true },
 	ALARM_CONFIG: { id: 5, syncLoad: false, endpoint: appConfig.restUrl + "alarms/alarm_configs", load: true },
 	MODULE: { id: 6, syncLoad: true, endpoint: appConfig.restUrl + "modules", load: true },
-	ELEMENT: { id: 7, syncLoad: false, endpoint: appConfig.restUrl + "elements", load: true },
+	ELEMENT: { id: 7, syncLoad: false, endpoint: appConfig.restUrl + "elements/withCommands", load: true },
 	LOG_TYPE: { id: 8, syncLoad: false, endpoint: appConfig.restUrl + "log_types", load: true },
 	USER: { id: 9, syncLoad: true, endpoint: appConfig.restUrl + "users/with_role", load: true },
 	PLAN_SCHEDULE_STATE: { id: 11, syncLoad: false, endpoint: appConfig.restUrl + "plans/plan_schedule_state_types", load: true },

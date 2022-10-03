@@ -107,6 +107,13 @@ export default class SearchAlarm {
 									
 									cols: [
 										{
+											id: "alarm-row-selected-" + alarm.id + "-" + self.uid,
+											view: "template",
+											borderless: true,
+											width : 32,
+											template: `<span style='font-size: 30px; color: transparent' class='mdi mdi-menu-right'></span>`
+										},
+										{
 											view: "template",
 											width : 32,
 											borderless: true,
@@ -156,6 +163,10 @@ export default class SearchAlarm {
 									
 														self.openModule(self.config.types.alarm.default, { selectedPks: [alarm.id] });	
 													}
+												},
+												onAfterRender: function() {
+													
+													selectRow(this.getNode(), alarm);
 												}
 											}
 										},
@@ -176,6 +187,27 @@ export default class SearchAlarm {
 			if ($$("results-alarms-" + self.uid)) {
 				
 				webix.ui(viewResultsAlarms, $$("results-alarms-" + self.uid));	
+			}
+		}
+		
+		function selectRow(object, alarm) {
+			
+			let rowSelected =$$("alarm-row-selected-" + alarm.id + "-" + self.uid);
+												
+			if (rowSelected) {
+				
+				object.addEventListener("mouseover", function() {
+																				
+					rowSelected.define("template", `<span style='font-size: 30px; color: var(--blue-text-default)' class='mdi mdi-menu-right'></span>`);
+					rowSelected.refresh();
+					 
+				});	
+				
+				object.addEventListener("mouseout", function() { 
+					
+					rowSelected.define("template", `<span style='font-size: 30px; color: transparent' class='mdi mdi-menu-right'></span>`);
+					rowSelected.refresh();
+				});	
 			}
 		}
 		
@@ -203,6 +235,10 @@ export default class SearchAlarm {
 									
 									self.openModule(self.config.types.alarm.view, { selectedPks: [alarm.id] });	
 								}
+							},
+							onAfterRender: function() {
+								
+								selectRow(this.getNode(), alarm);
 							}
 						} 
 					},
@@ -221,6 +257,10 @@ export default class SearchAlarm {
 									
 									self.openModule(self.config.types.alarm.recognize, { selectedPks: [alarm.id] });	
 								}
+							},
+							onAfterRender: function() {
+								
+								selectRow(this.getNode(), alarm);
 							}
 						} 
 					},
@@ -238,6 +278,10 @@ export default class SearchAlarm {
 									
 									self.openModule(self.config.types.alarm.equipment, { selectedPks: [alarm.id] });	
 								}
+							},
+							onAfterRender: function() {
+								
+								selectRow(this.getNode(), alarm);
 							}
 						} 
 					},
@@ -255,6 +299,10 @@ export default class SearchAlarm {
 									
 									self.openModule(self.config.types.alarm.map, { selectedPks: [alarm.targetElement.id] });	
 								}
+							},
+							onAfterRender: function() {
+								
+								selectRow(this.getNode(), alarm);
 							}
 						} 
 					},
