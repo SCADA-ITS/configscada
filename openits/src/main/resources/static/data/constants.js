@@ -79,6 +79,7 @@ const REQUIRED_PERMISSIONS = {
 	EDIT_INCIDENT: "SystemPermission:20"
 };
 
+const DEFAULT_SIGNALLING_MODULE_ACTION = 101901;
 
 // Browser Session Storage constants
 const SESSION_STORAGE_SESSION_DATA = "session.data";

@@ -2073,6 +2073,7 @@ export let util = {
 											aliasCtx: i18n.t(elementSubtype.labelAlias),
 											description: i18n.t(elementSubtype.labelDescription),
 											image: elementType.elementTypePhoto,
+											defaultSignallingModule: !commandModule || commandModule == DEFAULT_SIGNALLING_MODULE_ACTION,
 											commandElements: function() {
 												
 												let cmds = [];
@@ -2121,6 +2122,7 @@ export let util = {
 										aliasCtx: i18n.t(elementType.labelAlias),
 										description: i18n.t(elementType.labelDescription),
 										image: elementType.elementTypePhoto,
+										defaultSignallingModule: !commandModule || commandModule == DEFAULT_SIGNALLING_MODULE_ACTION,
 										commandElements: function() {
 											
 											let cmds = [];
