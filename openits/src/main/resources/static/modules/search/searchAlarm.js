@@ -115,7 +115,7 @@ export default class SearchAlarm {
 										},
 										{
 											view: "template",
-											width : 32,
+											width : 36,
 											borderless: true,
 											template: function() {
 											
@@ -129,7 +129,7 @@ export default class SearchAlarm {
 										{
 											view: "template",
 											borderless: true,
-											width : 32,
+											width : 36,
 											template: function() {
 											
 												let img = self.config.types.alarm.levels.info.img;
@@ -224,7 +224,8 @@ export default class SearchAlarm {
 					{ 
 						view: "button", 
 						width: 120, 
-						type:"icon", 
+						type:"icon",
+						hidden: !self.config.types.alarm.view,
 						icon:"mdi mdi-share", 
 						label: i18n.t("LBL_SEARCH_LINK_VIEW"), 
 						tooltip: i18n.t("LBL_SEARCH_LINK_VIEW_DESCRIPTION"),
@@ -244,9 +245,10 @@ export default class SearchAlarm {
 					},
 					{ 
 						view: "button", 
-						hidden: alarm.recognized ? true : false, 
 						width: 120, 
-						type:"icon", 
+						type:"icon",
+						hidden: !self.config.types.alarm.recognize,
+						disabled: (alarm.recognized ? true : false),
 						icon:"mdi mdi-check", 
 						label: i18n.t("LBL_SEARCH_LINK_RECOGNIZE"), 
 						tooltip: i18n.t("LBL_SEARCH_LINK_RECOGNIZE_DESCRIPTION"),
@@ -267,7 +269,8 @@ export default class SearchAlarm {
 					{ 
 						view: "button", 
 						width: 120, 
-						type:"icon", 
+						type:"icon",
+						hidden: !self.config.types.alarm.equipment, 
 						icon:"mdi mdi-engine", 
 						label: i18n.t("LBL_SEARCH_LINK_EQUIPMENT_VIEWER"), 
 						tooltip: i18n.t("LBL_SEARCH_LINK_EQUIPMENT_VIEWER_DESCRIPTION"),
@@ -288,10 +291,11 @@ export default class SearchAlarm {
 					{ 
 						view: "button", 
 						width: 120, 
-						type:"icon", 
+						type:"icon",
+						hidden: !self.config.types.alarm.map,
 						icon:"mdi mdi-map-marker", 
-						label: i18n.t("LBL_SEARCH_LINK_MAP"), 
-						tooltip: i18n.t("LBL_SEARCH_LINK_MAP_DESCRIPTION"),
+						label: i18n.t("LBL_SEARCH_LINK_LOCATE"), 
+						tooltip: i18n.t("LBL_SEARCH_LINK_LOCATE_DESCRIPTION"),
 						on: {
 							onItemClick: function() {
 

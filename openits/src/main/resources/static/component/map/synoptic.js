@@ -236,20 +236,25 @@ export default class Synoptic extends GenericMap {
 					
 					graphicIcons[0].select();
 					
-					if (self.panZoomTrigger) {
-						
-						let currentZoom = self.panZoomTrigger.getZoom();
-						
-						self.panZoomTrigger.zoom(1);
-						
-						self.panZoomTrigger.pan({
-							x: (self.panZoomTrigger.getSizes().width / 2) - graphicIcons[0].layerElement.x,
-							y: (self.panZoomTrigger.getSizes().height / 2) - graphicIcons[0].layerElement.y
-						});
-						
-						self.panZoomTrigger.zoom(currentZoom);
-					}
+					//goTo(graphicIcons[0]);
 				}
+			}
+		}
+		
+		function goTo(graphicIcon) {
+			
+			if (self.panZoomTrigger) {
+				
+				let currentZoom = self.panZoomTrigger.getZoom();
+				
+				self.panZoomTrigger.zoom(1);
+				
+				self.panZoomTrigger.pan({
+					x: (self.panZoomTrigger.getSizes().width / 2) - graphicIcon.layerElement.x,
+					y: (self.panZoomTrigger.getSizes().height / 2) - graphicIcon.layerElement.y
+				});
+				
+				self.panZoomTrigger.zoom(currentZoom);
 			}
 		}
 		

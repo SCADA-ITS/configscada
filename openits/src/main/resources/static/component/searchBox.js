@@ -1,11 +1,13 @@
+import { util } from "../lib/util.js";
+
 export default class SearchBox {
 
 	static get TYPE() { 
 		return {
-			ALL: { id: 1, placeHolder: "LBL_SEARCHBOX_SEARCH_ALL", label: "LBL_ALL" },
-			ELEMENT: { id: 2, placeHolder: "LBL_SEARCHBOX_SEARCH_ELEMENT", label: "LBL_ELEMENT" },
-			ALARM: { id: 3, placeHolder: "LBL_SEARCHBOX_SEARCH_ALARM", label: "LBL_ALARM" },
-			INCIDENT: { id: 4, placeHolder: "LBL_SEARCHBOX_SEARCH_INCIDENT", label: "LBL_INCIDENT" }
+			ALL: { id: 1, placeHolder: "LBL_SEARCHBOX_SEARCH_ALL", label: "LBL_ALL", enabled: true },
+			ELEMENT: { id: 2, placeHolder: "LBL_SEARCHBOX_SEARCH_ELEMENT", label: "LBL_ELEMENT", enabled: true },
+			ALARM: { id: 3, placeHolder: "LBL_SEARCHBOX_SEARCH_ALARM", label: "LBL_ALARM", enabled: true },
+			INCIDENT: { id: 4, placeHolder: "LBL_SEARCHBOX_SEARCH_INCIDENT", label: "LBL_INCIDENT", enabled: util.module.isAllowedPermission(REQUIRED_PERMISSIONS.INCIDENT_VIEW) }
 		} 
 	}
 
@@ -28,24 +30,42 @@ export default class SearchBox {
 			borderless: true,
 			cols: [
 				{
-					view: "search",
-					css: self.isToolbar ? cssStyleInvertUser : undefined,
 					id: "search-" + self.uid,
+					view: "search",
+					icon: undefined,
+					css: self.isToolbar ? cssStyleInvertUser : undefined,
 					placeholder: i18n.t(self.type.placeHolder),
 					on: {
-						onEnter: function() {
-							
-							if (this.getValue() && this.getValue().trim().length > 0 && self.onValidate) {
-								
-								self.onValidate(this.getValue().trim(), self.type);
-							}
-							
-							this.setValue("");
-						}
+						onEnter: search
+					}
+				},
+				{
+					view: "icon",
+					icon: "wxi-search",
+					on: {
+						onItemClick: search
 					}
 				},
 				getViewMenuChangeSearchType()
 			]
+		}
+		
+		function search() {
+			
+			let searchView = $$("search-" + self.uid);
+			
+			if (searchView) {
+				
+				let text = searchView.getValue(); 
+				
+				if (text && text.trim().length > 0 && self.onValidate) {
+				
+					self.onValidate(text.trim(), self.type);
+				}
+				
+				searchView.setValue("");
+				searchView.focus();
+			}
 		}
 		
 		function getViewMenuChangeSearchType() {
@@ -98,21 +118,22 @@ export default class SearchBox {
 				}
 			};
 			
-			if (self.isToolbar) {
-				
-				//viewMenuChangeSearchType.css = "dt-submenu_searchbox";
-			}
-			
 			function getMenuSearchTypes() {
-				
-				return Object.keys(SearchBox.TYPE).map(key => {
-				
+
+				let types = [];
+								
+				Object.keys(SearchBox.TYPE).forEach(key => {
+							
 					let type = webix.copy(SearchBox.TYPE[key]);
 					
-					type.value = getMenuTemplate(type);
-					
-					return type;
+					if (type.enabled !== false) {
+						
+						type.value = getMenuTemplate(type);
+						types.push(type);
+					}
 				});
+				
+				return types;
 			}
 			
 			function refreshMenuItemSelected() {
@@ -127,7 +148,6 @@ export default class SearchBox {
 						
 						typeElem.innerHTML = getMenuTemplate(type); 	
 					}
-					 	
 				});
 			}
 			

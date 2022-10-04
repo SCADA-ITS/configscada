@@ -115,7 +115,7 @@ export default class SearchIncident {
 										},
 										{
 											view: "template",
-											width : 32,
+											width : 36,
 											borderless: true,
 											template: function() {
 											
@@ -129,7 +129,7 @@ export default class SearchIncident {
 										{
 											view: "template",
 											borderless: true,
-											width : 32,
+											width : 36,
 											template: function() {
 												
 												let cssCircle = `width: 26px; height: 26px; -webkit-border-radius: 13px; -moz-border-radius: 13px; border-radius: 13px; margin: 5px 0px 0px 5px; background: ${incident.incidentLevel.color ? incident.incidentLevel.color + 'A0' : 'transparent'};`;
@@ -212,6 +212,7 @@ export default class SearchIncident {
 						view: "button", 
 						width: 120, 
 						type:"icon", 
+						hidden: !self.config.types.incident.view,
 						icon:"mdi mdi-share", 
 						label: i18n.t("LBL_SEARCH_LINK_VIEW"), 
 						tooltip: i18n.t("LBL_SEARCH_LINK_VIEW_DESCRIPTION"),
@@ -231,9 +232,10 @@ export default class SearchIncident {
 					},
 					{ 
 						view: "button", 
-						hidden: incident.confirm, 
 						width: 120, 
-						type:"icon", 
+						type:"icon",
+						hidden: !self.config.types.incident.confirm,
+						disabled: (incident.confirm ? true : false), 
 						icon:"mdi mdi-check", 
 						label: i18n.t("LBL_SEARCH_LINK_CONFIRM"), 
 						tooltip: i18n.t("LBL_SEARCH_LINK_CONFIRM_DESCRIPTION"),
@@ -254,10 +256,11 @@ export default class SearchIncident {
 					{ 
 						view: "button", 
 						width: 120, 
-						type:"icon", 
+						type:"icon",
+						hidden: !self.config.types.incident.map, 
 						icon:"mdi mdi-map-marker", 
-						label: i18n.t("LBL_SEARCH_LINK_MAP"), 
-						tooltip: i18n.t("LBL_SEARCH_LINK_MAP_DESCRIPTION"),
+						label: i18n.t("LBL_SEARCH_LINK_LOCATE"), 
+						tooltip: i18n.t("LBL_SEARCH_LINK_LOCATE_DESCRIPTION"),
 						on: {
 							onItemClick: function() {
 

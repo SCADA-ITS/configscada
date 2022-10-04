@@ -159,7 +159,7 @@ export default class SearchEquipment {
 										{
 											view: "template",
 											borderless: true,
-											width : 32,
+											width : 36,
 											template: function() {
 												
 												let cssCircle = `width: 26px; height: 26px; -webkit-border-radius: 13px; -moz-border-radius: 13px; border-radius: 13px; margin: 5px 0px 0px 5px; background: ${util.element.getColor(element.elementTypeState) + 'A0'};`;
@@ -171,7 +171,7 @@ export default class SearchEquipment {
 										{
 											view: "template",
 											borderless: true,
-											width : 32,
+											width : 36,
 											template: function() {
 											
 												return `<div title="${i18n.t(element.elementType.labelAlias)}"><img style='display:block; height:32px; width:auto; margin:auto; padding:1px;' src='${"img/" + element.elementType.elementTypePhoto}' onerror='this.onerror=null;this.src="./img/not_found_50.png"'></div>`;		
@@ -251,7 +251,8 @@ export default class SearchEquipment {
 					{ 
 						view: "button", 
 						width: 120, 
-						type:"icon", 
+						type:"icon",
+						hidden: !self.config.types.element.view, 
 						icon:"mdi mdi-share", 
 						label: i18n.t("LBL_SEARCH_LINK_VIEW"), 
 						tooltip: i18n.t("LBL_SEARCH_LINK_VIEW_DESCRIPTION"),
@@ -272,10 +273,11 @@ export default class SearchEquipment {
 					{ 
 						view: "button", 
 						width: 120, 
-						type:"icon", 
+						type:"icon",
+						hidden: !self.config.types.element.map, 
 						icon:"mdi mdi-map-marker", 
-						label: i18n.t("LBL_SEARCH_LINK_MAP"), 
-						tooltip: i18n.t("LBL_SEARCH_LINK_MAP_DESCRIPTION"),
+						label: i18n.t("LBL_SEARCH_LINK_LOCATE"), 
+						tooltip: i18n.t("LBL_SEARCH_LINK_LOCATE_DESCRIPTION"),
 						on: {
 							onItemClick: function() {
 

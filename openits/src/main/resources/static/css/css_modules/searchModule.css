@@ -69,6 +69,15 @@
 	box-shadow: 0 2.1rem 0.5rem var(--blue-mid2) !important;
 }
 
+.search-links-toolbar .webix_secondary .webix_button:disabled {
+	background: transparent !important;
+}
+
+.search-links-toolbar .webix_view.webix_control .webix_disabled_box .webix_button {
+	color: var(--blue-text-default);
+	opacity: 0.4;
+}
+
 .search-links-toolbar .webix_secondary .webix_button .webix_icon_btn {
 	font-size: 16px;
 	color: var(--blue-text-default);

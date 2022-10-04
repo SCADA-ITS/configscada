@@ -159,47 +159,52 @@ export default class MapContextMenu {
 			
 					if (Array.isArray(elementTypeCommands) && elementTypeCommands.length > 0) {
 						
-						elementTypeCommands.sort((a, b) => (a.alias > b.alias) ? 1 : ((b.alias > a.alias) ? -1 : 0));
+						elementTypeCommands = elementTypeCommands.filter(e => e.defaultSignallingModule);
 						
-						data.push({ $template:"Separator" });
+						if (Array.isArray(elementTypeCommands) && elementTypeCommands.length > 0) {
+							
+							elementTypeCommands.sort((a, b) => (a.alias > b.alias) ? 1 : ((b.alias > a.alias) ? -1 : 0));
 						
-						elementTypeCommands.forEach(elementTypeCommand => {
+							data.push({ $template:"Separator" });
 							
-							let elementTypeCommandMenu = {
-		
-								value: elementTypeCommand.aliasCtx + " ( " + mapElementTypesCount.get(elementTypeCommand.id) + " )", 
-								img: elementTypeCommand.image,
-								submenu: function() {
-									
-									let cmds = [];
-									
-									if (Array.isArray(elementTypeCommand.commandElements) && elementTypeCommand.commandElements.length > 0) {
-										
-										elementTypeCommand.commandElements.sort((a, b) => (i18n.t(a.labelAlias) > i18n.t(b.labelAlias)) ? 1 : ((i18n.t(b.labelAlias) > i18n.t(a.labelAlias)) ? -1 : 0));
-										
-										elementTypeCommand.commandElements.forEach(cmd => {
-											
-											if (!cmd.commandElementTypeParams) {
-												
-												cmds.push({
-													value: i18n.t(cmd.labelAlias),
-													img: cmd.image,
-													commandElementId: cmd.id,
-													elementTypeLabelAlias: elementTypeCommand.aliasCtx
-												});
-											}
-										});
-									}
-									
-									return cmds; 
-								}()
-							}
-							
-							if (elementTypeCommandMenu.submenu.length > 0) {
+							elementTypeCommands.forEach(elementTypeCommand => {
 								
-								data.push(elementTypeCommandMenu);	
-							}
-						});
+								let elementTypeCommandMenu = {
+			
+									value: elementTypeCommand.aliasCtx + " ( " + mapElementTypesCount.get(elementTypeCommand.id) + " )", 
+									img: elementTypeCommand.image,
+									submenu: function() {
+										
+										let cmds = [];
+										
+										if (Array.isArray(elementTypeCommand.commandElements) && elementTypeCommand.commandElements.length > 0) {
+											
+											elementTypeCommand.commandElements.sort((a, b) => (i18n.t(a.labelAlias) > i18n.t(b.labelAlias)) ? 1 : ((i18n.t(b.labelAlias) > i18n.t(a.labelAlias)) ? -1 : 0));
+											
+											elementTypeCommand.commandElements.forEach(cmd => {
+												
+												if (!cmd.commandElementTypeParams) {
+													
+													cmds.push({
+														value: i18n.t(cmd.labelAlias),
+														img: cmd.image,
+														commandElementId: cmd.id,
+														elementTypeLabelAlias: elementTypeCommand.aliasCtx
+													});
+												}
+											});
+										}
+										
+										return cmds; 
+									}()
+								}
+								
+								if (elementTypeCommandMenu.submenu.length > 0) {
+									
+									data.push(elementTypeCommandMenu);	
+								}
+							});
+						}
 					} 
 				}
 			}
