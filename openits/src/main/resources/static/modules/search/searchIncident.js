@@ -58,14 +58,12 @@ export default class SearchIncident {
 										icon: "mdi mdi-menu-down",
 										width: 30,
 										collapse: false,
-										tooltip: i18n.t("LBL_COLLAPSE"),
 										on: {
 											onItemClick: function() {
 												
 												this.collapse = !this.collapse;
 												
 												this.define("icon", this.collapse ? "mdi mdi-menu-right" : "mdi mdi-menu-down");
-												this.define("tooltip", this.collapse ? i18n.t("LBL_EXPAND") : i18n.t("LBL_COLLAPSE"));
 												this.refresh();
 												
 												if ($$("results-incidents-rows-" + self.uid)) {
