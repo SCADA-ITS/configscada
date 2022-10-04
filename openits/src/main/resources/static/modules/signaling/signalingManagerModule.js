@@ -35,12 +35,6 @@ export default class SignalingManagerModule extends GenericModule {
 				
 				loadCommandEquipments();
 			}
-			else if (self.moduleAction.id === self.config.moduleAction.getEquipmentsTypeCommands) {
-				
-			}
-			else if (self.moduleAction.id === self.config.moduleAction.sendCommandEquipments) {
-				
-			}
 		}
 		
 		function loadCommandEquipments() {

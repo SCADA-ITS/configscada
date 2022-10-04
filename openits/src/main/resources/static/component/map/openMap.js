@@ -18,11 +18,6 @@ const MIN_ZOOM_LEVEL = 1;
 const ZINDEX_BACK = 9998;
 const ZINDEX_FRONT = 9999;
 
-const REQUIRED_INCIDENT_PERMISSIONS = {
-	VIEW: "SystemPermission:12",
-	CREATE: "SystemPermission:9"
-}; 
-
 const PICTOGRAM_INCIDENT_TYPE_PATH = "incident_type";
 const PICTOGRAM_INCIDENT_TYPE_UNKNOWN = "incident_type/undefined.png";
 
@@ -57,8 +52,8 @@ export default class OpenMap extends GenericMap {
 		this.mapZone = undefined;
 		this.mapIncident = undefined;
 		
-		this.viewIncidentPermission = util.module.isAllowedPermission(REQUIRED_INCIDENT_PERMISSIONS.VIEW);
-		this.createIncidentPermission = util.module.isAllowedPermission(REQUIRED_INCIDENT_PERMISSIONS.CREATE);
+		this.viewIncidentPermission = util.module.isAllowedPermission(REQUIRED_PERMISSIONS.INCIDENT_VIEW);
+		this.createIncidentPermission = util.module.isAllowedPermission(REQUIRED_PERMISSIONS.CREATE_INCIDENT_REPORT);
 		
 		this.afterRenderCallback = undefined;
 		

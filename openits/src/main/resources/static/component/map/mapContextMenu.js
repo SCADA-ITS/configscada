@@ -10,6 +10,7 @@ export default class MapContextMenu {
 		this.allPks = allPks;
 		this.selectedPksCallback = selectedPksCallback;
 		this.cmdCallbacks = cmdCallbacks;
+		this.sendCommandPermission = util.module.isAllowedPermission(REQUIRED_PERMISSIONS.SEND_COMMAND);
     }
 
     getView() {
@@ -121,6 +122,7 @@ export default class MapContextMenu {
         function getData() {
 	
 			let data = [];
+			let mapElementTypesCount = new Map();
 	
 			if (Array.isArray(self.commands)) {
 				
@@ -133,11 +135,25 @@ export default class MapContextMenu {
 				});
 			}
 			
-			if (self.selectedPksCallback) {
+			if (self.sendCommandPermission && self.selectedPksCallback) {
 				
 				let selectedPks = self.selectedPksCallback();
 				
 				if (Array.isArray(selectedPks) && selectedPks.length > 0) {
+					
+					selectedPks.forEach(elementId => {
+						
+						let element = window.em.getByField(EntityType.ELEMENT, "id", elementId);
+						
+						if (element && element.elementType) {
+							
+							let elementTypeId = element.elementSubtype ? element.elementSubtype.id : element.elementType.id;
+							
+							let count = mapElementTypesCount.get(elementTypeId);
+							
+							mapElementTypesCount.set(elementTypeId, count ? ++count : 1);
+						}
+					});
 					
 					let elementTypeCommands = util.element.calculateElementTypeCommands(selectedPks);
 			
@@ -151,7 +167,7 @@ export default class MapContextMenu {
 							
 							let elementTypeCommandMenu = {
 		
-								value: elementTypeCommand.aliasCtx, 
+								value: elementTypeCommand.aliasCtx + " ( " + mapElementTypesCount.get(elementTypeCommand.id) + " )", 
 								img: elementTypeCommand.image,
 								submenu: function() {
 									
@@ -170,7 +186,7 @@ export default class MapContextMenu {
 													img: cmd.image,
 													commandElementId: cmd.id,
 													elementTypeLabelAlias: elementTypeCommand.aliasCtx
-												})	
+												});
 											}
 										});
 									}

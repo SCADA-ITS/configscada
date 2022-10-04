@@ -56,6 +56,30 @@ const LOGIN_MESSAGE = {
 	EXCEED_TIME: { id: "EXCEED_TIME", label: "LBL_SESSION_CLOSED_BY_EXCEED_IDLE_TIME" }
 }
 
+const REQUIRED_PERMISSIONS = {
+	LOGIN: "SystemPermission:1",
+	EDIT_USER: "SystemPermission:2",
+	EDIT_ROL: "SystemPermission:3",
+	EDIT_PLAN: "SystemPermission:4",
+	EXECUTE_PLAN: "SystemPermission:5",
+	SEND_COMMAND: "SystemPermission:6",
+	RECOGNIZE_ALARM: "SystemPermission:7",
+	EDIT_INCIDENT_REPORT: "SystemPermission:8",
+	CREATE_INCIDENT_REPORT: "SystemPermission:9",
+	CONFIRM_INCIDENT_REPORT: "SystemPermission:10",
+	CANCEL_INCIDENT_REPORT: "SystemPermission:11",
+	INCIDENT_VIEW: "SystemPermission:12",
+	EDIT_MANUAL_VMS: "SystemPermission:13",
+	EDIT_LIBRARY_VMS: "SystemPermission:14",
+	AUTOASSIGN_INCIDENT_REPORT: "SystemPermission:15",
+	ASSING_INCIDENT_REPORT_ANOTHER_USER: "SystemPermission:16",
+	HELP_MENU: "SystemPermission:17",
+	EDIT_SMTHRESHOLDS: "SystemPermission:18",
+	EDIT_ALARM_CONFIG: "SystemPermission:19",
+	EDIT_INCIDENT: "SystemPermission:20"
+};
+
+
 // Browser Session Storage constants
 const SESSION_STORAGE_SESSION_DATA = "session.data";
 
