@@ -159,7 +159,7 @@ export default class MapContextMenu {
 			
 					if (Array.isArray(elementTypeCommands) && elementTypeCommands.length > 0) {
 						
-						elementTypeCommands = elementTypeCommands.filter(e => e.defaultSignallingModule);
+						//elementTypeCommands = elementTypeCommands.filter(e => e.defaultSignallingModule);
 						
 						if (Array.isArray(elementTypeCommands) && elementTypeCommands.length > 0) {
 							
@@ -177,7 +177,7 @@ export default class MapContextMenu {
 										
 										let cmds = [];
 										
-										if (Array.isArray(elementTypeCommand.commandElements) && elementTypeCommand.commandElements.length > 0) {
+										if ((IS_TRUE(elementTypeCommand.elementType.showCtxMenuCommands) || elementTypeCommand.elementType.showCtxMenuCommands === undefined) && Array.isArray(elementTypeCommand.commandElements) && elementTypeCommand.commandElements.length > 0) {
 											
 											elementTypeCommand.commandElements.sort((a, b) => (i18n.t(a.labelAlias) > i18n.t(b.labelAlias)) ? 1 : ((i18n.t(b.labelAlias) > i18n.t(a.labelAlias)) ? -1 : 0));
 											

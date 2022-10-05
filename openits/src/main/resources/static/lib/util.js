@@ -2069,6 +2069,7 @@ export let util = {
 
 										elementTypeCommands.push({
 											id: element.elementSubtype.id,
+											elementType: element.elementType, 
 											alias: alias + i18n.t(elementType.labelAlias) + ' - ' + i18n.t(elementSubtype.labelAlias),
 											aliasCtx: i18n.t(elementSubtype.labelAlias),
 											description: i18n.t(elementSubtype.labelDescription),
@@ -2118,6 +2119,7 @@ export let util = {
 
 									elementTypeCommands.push({
 										id: element.elementType.id,
+										elementType: element.elementType,
 										alias: alias,
 										aliasCtx: i18n.t(elementType.labelAlias),
 										description: i18n.t(elementType.labelDescription),
