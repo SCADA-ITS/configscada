@@ -263,6 +263,16 @@ export default class DataTable {
 
 								value = obj[field.sourceField].value;
 								state = obj[field.sourceField].state;
+								
+								if (Array.isArray(field.gridFieldReplacements) && field.gridFieldReplacements.length > 0) {
+	
+									let gridFieldReplacement = field.gridFieldReplacements.find(e => e.value == value);
+
+									if (gridFieldReplacement) {
+
+										value = field.needsTranslation ? i18n.t(gridFieldReplacement.label) : gridFieldReplacement.label;
+									}
+								}
 							}
 							else {
 								
@@ -631,8 +641,8 @@ export default class DataTable {
 			for (let posField = 0; posField < this.metadata.gridFields.length; posField++) {
 
 				let field = this.metadata.gridFields[posField];
-
-				if (field.needsTranslation) {
+				
+				if (field.needsTranslation && (!Array.isArray(field.gridFieldReplacements) || field.gridFieldReplacements.length === 0)) {
 
 					data.forEach(item => {
 
@@ -648,7 +658,7 @@ export default class DataTable {
 							}
 						}
 					});
-				}
+				}	
 			}
 		}
 	}
