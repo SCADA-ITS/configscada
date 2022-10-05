@@ -97,48 +97,53 @@ export default class MainMenu {
 
 			self.menus.forEach(menu => {
 
-				var mainMenu = {};
+				if (menu.enabled !== false) {
+					
+					var mainMenu = {};
 
-				mainMenu.id = menu.id;
-				mainMenu.value = i18n.t(menu.label);
-				mainMenu.config = { css: "menu-custom" };
-
-				var submenus = menu.menuItems;
-
-				if (Array.isArray(submenus)) {
-
-					submenus.sort((a, b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));
-
-					mainMenu.submenu = [];
-
-					submenus.forEach(submenu => {
-
-						var mainSubmenu = {};
-						
-						if (submenu.module) {
+					mainMenu.id = menu.id;
+					mainMenu.value = i18n.t(menu.label);
+					mainMenu.config = { css: "menu-custom" };
+	
+					var submenus = menu.menuItems;
+	
+					if (Array.isArray(submenus)) {
+	
+						submenus.sort((a, b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));
+	
+						mainMenu.submenu = [];
+	
+						submenus.forEach(submenu => {
 							
-							if (util.module.isAllowedModule(window.em.getAll(EntityType.MODULE), submenu.module.id)) {
+							if (submenu.enabled !== false) {
 								
-								mainSubmenu.id = mainMenu.id + "." + submenu.id;
-								mainSubmenu.value = i18n.t(submenu.label);
-								mainSubmenu.moduleId = submenu.module.id;
-								mainSubmenu.icon = submenu.icon;	
-								mainMenu.submenu.push(mainSubmenu);
+								var mainSubmenu = {};
+							
+								if (submenu.module) {
+									
+									if (util.module.isAllowedModule(window.em.getAll(EntityType.MODULE), submenu.module.id)) {
+										
+										mainSubmenu.id = mainMenu.id + "." + submenu.id;
+										mainSubmenu.value = i18n.t(submenu.label);
+										mainSubmenu.moduleId = submenu.module.id;
+										mainSubmenu.icon = submenu.icon;	
+										mainMenu.submenu.push(mainSubmenu);
+									}
+									
+								} else {
+									
+									mainSubmenu.$template = "Separator";
+									mainMenu.submenu.push(mainSubmenu);
+								}	
 							}
-							
-						} else {
-							
-							mainSubmenu.$template = "Separator";
-							mainMenu.submenu.push(mainSubmenu);
-						}
-					});
+						});
+					}
+	
+					if (mainMenu.submenu.length > 0) {
+	
+						menuResponse.push(mainMenu);
+					}	
 				}
-
-				if (mainMenu.submenu.length > 0) {
-
-					menuResponse.push(mainMenu);
-				}
-
 			});
 		}
 
