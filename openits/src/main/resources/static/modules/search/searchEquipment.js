@@ -172,7 +172,7 @@ export default class SearchEquipment {
 											width : 36,
 											template: function() {
 											
-												return `<div title="${i18n.t(element.elementType.labelAlias)}"><img style='display:block; height:32px; width:auto; margin:auto; padding:1px;' src='${"img/" + element.elementType.elementTypePhoto}' onerror='this.onerror=null;this.src="./img/not_found_50.png"'></div>`;		
+												return `<div title="${i18n.t(element.elementType.labelAlias)}"><img style='display:block; height:32px; width:auto; margin:auto; padding:1px;' src='${"img/" + element.elementType.elementTypePhoto}' onerror='this.onerror=null;this.src="${NO_IMAGE}"'></div>`;		
 											}
 										},
 										{ width : 15 },

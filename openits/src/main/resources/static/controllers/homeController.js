@@ -156,9 +156,18 @@ function initialize() {
 								}
 							]
 						},
-						
 						//{ view: "template", css: "head-color", role: "placeholder", borderless: 1, "height": 10 },
 						mainTab.getView(),
+						{
+							view: "template",
+							id: MAIN_BACKGROUND_IMAGE_ID,
+							template: function(data) {
+								
+								let logo = "<img src='img/open_its_full.png' align='center'>";
+				
+								return `<div class='welcome-screen-inner'>${logo}</div>`;
+							}  
+						},	
 						/*{ view: "template", role: "placeholder", borderless: 1, "height": 10 },*/
 						main_footer
 					],

@@ -2262,13 +2262,7 @@ export let util = {
 				stateValueBackColor = stateValue.color ? stateValue.color : "white";
 			}
 
-			let icon = undefined;
-
-			if (!elementValue.elementTypeParam.image) {
-
-				icon = "not_found_50.png";
-			}
-
+			let icon = elementValue.elementTypeParam.image ? elementValue.elementTypeParam.image : undefined;
 			let value = '-';
 			let hasEnum = undefined;
 			let hasEnumImage = undefined;

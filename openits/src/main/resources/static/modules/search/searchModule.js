@@ -258,21 +258,21 @@ export default class SearchModule extends GenericModule {
 					self.searchBox.disable();
 				}
 				
-				if (self.type.id === SearchBox.TYPE.ELEMENT.id || self.type.id === SearchBox.TYPE.ALL.id) {
+				if (SearchBox.TYPE.ELEMENT.enabled !== false && (self.type.id === SearchBox.TYPE.ELEMENT.id || self.type.id === SearchBox.TYPE.ALL.id)) {
 					
 					let searchEquipment = new SearchEquipment(self, openModule);
 					
 					searchEquipment.drawResults(function() { onReady(SearchBox.TYPE.ELEMENT) });
 				}
 				
-				if (self.type.id === SearchBox.TYPE.ALARM.id || self.type.id === SearchBox.TYPE.ALL.id) {
+				if (SearchBox.TYPE.ALARM.enabled !== false && (self.type.id === SearchBox.TYPE.ALARM.id || self.type.id === SearchBox.TYPE.ALL.id)) {
 					
 					let searchAlarm = new SearchAlarm(self, openModule);
 					
 					searchAlarm.drawResults(function() { onReady(SearchBox.TYPE.ALARM) });
 				}
 				
-				if (self.type.id === SearchBox.TYPE.INCIDENT.id || self.type.id === SearchBox.TYPE.ALL.id) {
+				if (SearchBox.TYPE.INCIDENT.enabled !== false && (self.type.id === SearchBox.TYPE.INCIDENT.id || self.type.id === SearchBox.TYPE.ALL.id)) {
 					
 					let searchIncident = new SearchIncident(self, openModule);
 					
@@ -335,17 +335,17 @@ export default class SearchModule extends GenericModule {
 		
 					readyTypes = {};
 					
-					if (self.type.id === SearchBox.TYPE.ELEMENT.id || self.type.id === SearchBox.TYPE.ALL.id) {
+					if (SearchBox.TYPE.ELEMENT.enabled !== false && (self.type.id === SearchBox.TYPE.ELEMENT.id || self.type.id === SearchBox.TYPE.ALL.id)) {
 						
 						readyTypes[SearchBox.TYPE.ELEMENT.id] = false;	
 					}
 					
-					if (self.type.id === SearchBox.TYPE.ALARM.id || self.type.id === SearchBox.TYPE.ALL.id) {
+					if (SearchBox.TYPE.ALARM.enabled !== false && (self.type.id === SearchBox.TYPE.ALARM.id || self.type.id === SearchBox.TYPE.ALL.id)) {
 					
 						readyTypes[SearchBox.TYPE.ALARM.id] = false;	
 					}
 					
-					if (self.type.id === SearchBox.TYPE.INCIDENT.id || self.type.id === SearchBox.TYPE.ALL.id) {
+					if (SearchBox.TYPE.INCIDENT.enabled !== false && (self.type.id === SearchBox.TYPE.INCIDENT.id || self.type.id === SearchBox.TYPE.ALL.id)) {
 						
 						readyTypes[SearchBox.TYPE.INCIDENT.id] = false;	
 					}

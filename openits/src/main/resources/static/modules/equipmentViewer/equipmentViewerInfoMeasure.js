@@ -51,9 +51,10 @@ class MeasureItem {
 						FONT_SIZE_UNIT: 14,
 						LETTER_SPACING: 0.2,
 						MARGIN_TOP_NORMAL: 14,
+						MARGIN_LEFT_NORMAL: 52,
 						NEW_MARGIN_TOP: 24,
 						WIDTH_CORRECTION: 70,
-						IMG_WIDTH_CORRECTION: 30,
+						IMG_WIDTH_CORRECTION: 35,
 						FACTOR_CORRECTION: 0.9
 					};
 
@@ -95,12 +96,32 @@ class MeasureItem {
 						marginTop = (proportion < 1) ? (STANDARD_FACTORS.MARGIN_TOP_NORMAL * (1 + (1 - proportion))) : (STANDARD_FACTORS.MARGIN_TOP_NORMAL * proportion);
 					}
 
+					let divImage = "";
+					let divMeasure = "";
+					let divMeasureDesc = "";
+					let divIconMeasureState = "";
+					
+					if (valuesForPrint.icon) {
+						
+						divImage = `<image class="image" src="img/${valuesForPrint.icon}" onerror="this.onerror=null;this.src="${NO_IMAGE}" />'`;
+						divMeasure = `<div style="margin-left: ${STANDARD_FACTORS.MARGIN_LEFT_NORMAL}px; width: ${self.measureWidth - STANDARD_FACTORS.WIDTH_CORRECTION}px; font-size: ${fontSizeValue}px !important; margin-top: ${marginTop}px" class="value">${valueHTML}<span style="margin-left: 5px; font-size:${fontSizeUnit}px; font-weight: 100;">${unit}</span></div>`;
+						divMeasureDesc = `<div style="margin-left: ${STANDARD_FACTORS.MARGIN_LEFT_NORMAL}px; width: ${self.measureWidth - STANDARD_FACTORS.WIDTH_CORRECTION}px" class="desc"><span title="${valuesForPrint.elementTypeParamDescription}">${valuesForPrint.label}</span></div>`;
+					}
+					else {
+						
+						divMeasure = `<div style="margin-left: ${STANDARD_FACTORS.MARGIN_LEFT_NORMAL - STANDARD_FACTORS.IMG_WIDTH_CORRECTION}px; width: ${self.measureWidth - STANDARD_FACTORS.IMG_WIDTH_CORRECTION}px; font-size: ${fontSizeValue}px !important; margin-top: ${marginTop}px" class="value">${valueHTML}<span style="margin-left: 5px; font-size:${fontSizeUnit}px; font-weight: 100;">${unit}</span></div>`;
+						divMeasureDesc = `<div style="margin-left: ${STANDARD_FACTORS.MARGIN_LEFT_NORMAL - STANDARD_FACTORS.IMG_WIDTH_CORRECTION}px; width: ${self.measureWidth - STANDARD_FACTORS.IMG_WIDTH_CORRECTION}px" class="desc"><span title="${valuesForPrint.elementTypeParamDescription}">${valuesForPrint.label}</span></div>`;
+					}
+					
+					divIconMeasureState = `<img style="margin-left: ${self.measureWidth - STANDARD_FACTORS.IMG_WIDTH_CORRECTION}px; margin-top: 5px;" class="table-field-icons" src="img/state/${valuesForPrint.iconElementValueState}" title="${valuesForPrint.stateValueLabel}" onerror="this.onerror=null; this.style.display = 'none'"/>`;
+					
+
 					res = `<div class="measure-box" style="background: ${valuesForPrint.stateValueBackColor}">
-									<image class="image" src="img/${valuesForPrint.icon}" />
-									<div style="width: ${self.measureWidth - STANDARD_FACTORS.WIDTH_CORRECTION}px; font-size: ${fontSizeValue}px !important; margin-top: ${marginTop}px" class="value">${valueHTML}<span style="margin-left: 5px; font-size:${fontSizeUnit}px; font-weight: 100;">${unit}</span></div>
-									<div style="width: ${self.measureWidth - STANDARD_FACTORS.WIDTH_CORRECTION}px" class="desc"><span title="${valuesForPrint.elementTypeParamDescription}">${valuesForPrint.label}</span></div>
-									<img style="margin-left: ${self.measureWidth - STANDARD_FACTORS.IMG_WIDTH_CORRECTION}px; margin-top: 5px;" class="table-field-icons" src="img/state/${valuesForPrint.iconElementValueState}" title="${valuesForPrint.stateValueLabel}" onerror="this.onerror=null; this.style.display = 'none'"/>
-							   </div>`;
+								${divImage} 
+								${divMeasure}
+								${divMeasureDesc}
+								${divIconMeasureState}
+						   </div>`;
 
 					return res;
 				}

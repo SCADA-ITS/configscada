@@ -4,7 +4,9 @@ const MAIN_SCREEN = "mainScreen";
 const MAIN_TAB_ID = "tabs";
 const MAIN_TOOLBAR_ID = "mainToolbar";
 const MAIN_TOOLBAR_ICONS_ID = "mainToolbarIcons";
+const MAIN_BACKGROUND_IMAGE_ID = "mainBackgroundImage";
 const TASKBAR_ID = "taskbar";
+const NO_IMAGE = "img/undefined.png";
 
 const IS_TRUE = function(str) {
 	

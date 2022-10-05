@@ -214,7 +214,7 @@ export default class ListView {
 
 				if (getOptions(ListView.Options.ICON)) {
 
-					html = `<image class="list-photo" src="img/${image}" onerror="this.onerror=null;this.src='img/not_found_50.png';" />`;
+					html = `<image class="list-photo" src="img/${image}" onerror="this.onerror=null;this.src='${NO_IMAGE}';" />`;
 				}
 
 				if (getOptions(ListView.Options.ROW_HEIGHT) < DefaultOptionValues[ListView.Options.ROW_HEIGHT]) {
@@ -229,7 +229,7 @@ export default class ListView {
 
 			} else if (mode === ListView.DrawMode.COMPACT) {
 
-				html = `<image style="width:${HeightCompact.ICON_HEIGHT}px; height:${HeightCompact.ICON_HEIGHT}px; float: left; padding-top: 7px" src="img/${image}" onerror="this.onerror=null;this.src='img/not_found_50.png';" />`;
+				html = `<image style="width:${HeightCompact.ICON_HEIGHT}px; height:${HeightCompact.ICON_HEIGHT}px; float: left; padding-top: 7px" src="img/${image}" onerror="this.onerror=null;this.src='${NO_IMAGE}';" />`;
 
 				html += `<div class="text">
 								<span class="list-first-line">${obj.alias} </span>
@@ -239,7 +239,7 @@ export default class ListView {
 
 				let heightIcon = getOptions(ListView.Options.ICON_HEIGHT);
 
-				html = `<image style="width:${heightIcon}px; height:${heightIcon}px; display: block; padding-top: 7px; margin: 0 auto" src="img/${image}" onerror="this.onerror=null;this.src='img/not_found_50.png';" />`;
+				html = `<image style="width:${heightIcon}px; height:${heightIcon}px; display: block; padding-top: 7px; margin: 0 auto" src="img/${image}" onerror="this.onerror=null;this.src='${NO_IMAGE}';" />`;
 
 				html += `<div class="text" style="margin-top: 5px">
 								 <span class="list-first-line" style="text-align: center; padding-left: 0px">${obj.alias}</span>

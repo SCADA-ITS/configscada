@@ -149,6 +149,11 @@ export default class EquipmentModule extends GenericModule {
 
 			} else {
 
+				if ($$("switcher-views-" + self.uid)) {
+					
+					$$("switcher-views-" + self.uid).hide();
+				}
+				
 				rowsviewMainListEquipments.push(getViewListEquipments());
 			}
 

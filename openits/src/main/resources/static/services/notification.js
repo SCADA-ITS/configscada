@@ -716,7 +716,7 @@ export default class Notification {
 				let widthImg = obj.img ? 36 : 10;
 
 				html = `<div class="${!obj.recognized ? 'state-enabled' : 'state-disabled'}"></div>
-						<image class="image" style="width: ${widthImg}px; padding-left: 5px; padding-right: 5px;" src="${obj.img}" onerror="this.onerror=null;this.src='img/undefined.png';" />
+						<image class="image" style="width: ${widthImg}px; padding-left: 5px; padding-right: 5px;" src="${obj.img}" onerror="this.onerror=null;this.src='${NO_IMAGE}';" />
 						<div class="level" style="width: ${widthLevel}px; background-color: ${obj.color}">${obj.level}</div>
 						<div class="sound"><span style="${obj.recognized ? 'color:rgb(146, 171, 207);' : ''}" class="${obj.sound && !obj.snooze ? "mdi mdi-volume-high" : "mdi mdi-volume-off"}"></span></div>
 						<div class="text">
