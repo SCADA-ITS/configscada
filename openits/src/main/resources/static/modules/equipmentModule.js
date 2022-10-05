@@ -141,7 +141,8 @@ export default class EquipmentModule extends GenericModule {
 				]
 			});
 
-			if (self.elementHierarchies || self.treeCustom) {
+			if ((Array.isArray(self.elementHierarchies) && self.elementHierarchies.length > 0) || 
+				(Array.isArray(self.treeCustom) && self.treeCustom.length > 0)) {
 
 				rowsviewMainListEquipments.push(getSwitcherViews());
 				rowsviewMainListEquipments.push({ height: 1, borderless: false });
