@@ -47,7 +47,7 @@ export default class MapContextMenu {
                     
                     let item = this.getItem(id);
                     
-                    if (item && item.commandId) {
+                    if (item && item.commandId !== undefined && item.commandId !== null ) {
 	
 						let command = self.commands.find(e => {
 	                        return e.id === item.commandId
