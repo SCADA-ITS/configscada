@@ -290,7 +290,7 @@ export default class DataTable {
 								
 								} else if (field.gridFieldDataType && field.gridFieldDataType.id === DataType.IMAGE.value) {
 									
-									return `<div><img style='display:block; height:32px; width:auto; margin:auto; padding:1px;' src='${obj[field.sourceField]}'></div>`;
+									return `<div><img class="table-field-icons" src='img/${obj[field.sourceField]}'></div>`;
 
 								} else {
 									
@@ -528,7 +528,8 @@ export default class DataTable {
 
 							if (value === '') {
 								
-								if (field.gridFieldIcons != undefined && field.gridFieldIcons.length > 0) {
+								if ((field.gridFieldIcons != undefined && field.gridFieldIcons.length > 0) ||
+									(field.gridFieldDataType && field.gridFieldDataType.id === DataType.IMAGE.value)) {
 									
 									return `<img class="table-field-icons" src="${EMPTY_ICON}" />`;
 								}

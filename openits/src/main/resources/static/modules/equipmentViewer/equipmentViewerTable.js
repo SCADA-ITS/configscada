@@ -129,29 +129,41 @@ export default class EquipmentViewerTable {
 						sourceField: "icon",
 						visible: true,
 						widthPx: 35,
-						gridFieldIcons: [
-							{
-								id: 1,
-								avatar: false,
-								badgeColor: false,
-								enabled: true,
-								icon: function() {
-
-									let icon;
-
-									for (let dat of self.data) {
-
-										icon = (dat.icon != "not_found_50.png") ? "./img/grid/" + dat.icon + ".png" : "./img/grid/empty.png";
-									}
-
-									return icon;
-								}(),
-								showValue: false,
-								value: "not_found_50.png"
-							}],
+//						gridFieldIcons: function() {
+//							
+//							let gridFieldIcons = [];
+//							
+//							if (self.element.elementType) {
+//								
+//								let elementType = window.em.getByField(EntityType.ELEMENT_TYPE, "id", self.element.elementType.id);
+//								
+//								if (elementType && Array.isArray(elementType.elementTypeParams)) {
+//									
+//									elementType.elementTypeParams.forEach(elementTypeParam => {
+//										
+//										if (elementTypeParam.image) {
+//											
+//											let gridFieldIcon = {
+//												id: webix.uid(),
+//												avatar: false,
+//												badgeColor: false,
+//												enabled: true,
+//												icon: "./img/" + elementTypeParam.image,
+//												showValue: false,
+//												value: elementTypeParam.image
+//											};
+//											
+//											gridFieldIcons.push(gridFieldIcon);
+//										}
+//									});
+//								}
+//							}
+//							
+//							return gridFieldIcons;
+//						}(),
 						gridFieldDataType: {
-							id: 1,
-							name: "string"
+							id: 5,
+							name: "image"
 						}
 					},
 					{

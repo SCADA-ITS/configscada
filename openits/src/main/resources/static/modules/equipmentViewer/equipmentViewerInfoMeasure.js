@@ -103,7 +103,7 @@ class MeasureItem {
 					
 					if (valuesForPrint.icon) {
 						
-						divImage = `<image class="image" src="img/${valuesForPrint.icon}" onerror="this.onerror=null;this.src="${NO_IMAGE}" />'`;
+						divImage = `<image class="image" src="img/${valuesForPrint.icon}" onerror="this.onerror=null;this.src="${NO_IMAGE}"/>`;
 						divMeasure = `<div style="margin-left: ${STANDARD_FACTORS.MARGIN_LEFT_NORMAL}px; width: ${self.measureWidth - STANDARD_FACTORS.WIDTH_CORRECTION}px; font-size: ${fontSizeValue}px !important; margin-top: ${marginTop}px" class="value">${valueHTML}<span style="margin-left: 5px; font-size:${fontSizeUnit}px; font-weight: 100;">${unit}</span></div>`;
 						divMeasureDesc = `<div style="margin-left: ${STANDARD_FACTORS.MARGIN_LEFT_NORMAL}px; width: ${self.measureWidth - STANDARD_FACTORS.WIDTH_CORRECTION}px" class="desc"><span title="${valuesForPrint.elementTypeParamDescription}">${valuesForPrint.label}</span></div>`;
 					}
