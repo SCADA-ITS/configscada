@@ -230,14 +230,14 @@ export default class CamViewer {
 					viewButtonFullScreen.width = SIZE_MULTI;
 					viewButtonFullScreen.css = "cam-viewer-button";
 					viewButtons.cols.push(viewButtonFullScreen);
-
-					let viewButtonExpandCam = getButtonExpandCam();
-
-					viewButtonExpandCam.height = SIZE_MULTI;
-					viewButtonExpandCam.width = SIZE_MULTI;
-					viewButtonExpandCam.css = "cam-viewer-button";
-					viewButtons.cols.push(viewButtonExpandCam);
 				}
+				
+				let viewButtonExpandCam = getButtonExpandCam();
+
+				viewButtonExpandCam.height = SIZE_MULTI;
+				viewButtonExpandCam.width = SIZE_MULTI;
+				viewButtonExpandCam.css = "cam-viewer-button";
+				viewButtons.cols.push(viewButtonExpandCam);
 
 				if (self.config.commands.lock && Array.isArray(self.element.commandElements) &&
 					self.element.commandElements.find(e => e.id == self.config.commands.lock.commandElementTypeId) && self.commandEquipmentPermission) {
