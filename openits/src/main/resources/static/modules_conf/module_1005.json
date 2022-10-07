@@ -12,12 +12,15 @@
 		"alarms": "alarms",
 		"tree": "trees/${id}",
 		"grid": "grids/${id}",
-		"elementsHierarchy": "elements/hierarchy"
+		"elementsHierarchy": "elements/hierarchy",
+		"elementsTreeByUser": "elements/trees/${id}",
+		"elements": "elements/withStates"
 	},
 	"topic": "/topic/alarm.>",
 	"gridNoRecognized": 1004,
 	"gridRecognized": 1005,
-	"treeElements": false,
+	"treeElements": true,
+	"treeCustom": true,
 	"levels": {
 		"critical": [ "AlarmLevel:5", "AlarmLevel:6" ],
 		"warn": [ "AlarmLevel:3", "AlarmLevel:4" ],

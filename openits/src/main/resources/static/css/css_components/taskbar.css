@@ -1,3 +1,13 @@
+/* Footer */
+
+.main-footer {
+/*	background: var(--blue-strong); */
+/*	background: var(--blue-strong-opacity-1);*/ 
+/*	background: var(--blue-mid2-opacity-1);*/ 
+/*	background: var(--blue-mid-opacity-1);*/
+	background: var(--blue-backcolor);
+}
+
 .taskbar {
     background: transparent !important;
     border-width: 0px !important;
@@ -36,7 +46,7 @@
 }
 
 .taskbar-min .webix_el_box {
-	border-right: 1px solid var(--blue-text-default);
+	border-right: 1px solid var(--blue-soft);
 }
 
 .taskbar-min button {
@@ -49,7 +59,12 @@
 }
 
 .taskbar-icon .webix_el_box {
-	border-bottom: 3px solid #b3d9ff;
+/*	border-bottom: 3px solid #b3d9ff;*/
+ 	border-bottom: 3px solid var(--blue-soft);
+}
+
+.taskbar-icon.active .webix_el_box {
+	border-bottom: 3px solid var(--blue-headers-soft);
 }
 
 .taskbar-icon.active .webix_el_box, .toolbar-icon:hover .webix_el_box {
@@ -58,7 +73,8 @@
 
 .taskbar-icon button {
 	border: none;
-    background: transparent !important;
+/*  background: transparent !important;*/
+	background: var(--blue-soft-opacity-1) !important;
 }
 
 .taskbar-icon img, 
@@ -76,9 +92,9 @@
 }
 
 .taskbar-icon-tooltip {
-	color: var(--white-text-default);
-	background: var(--blue-strong-opacity-8);
-	border: 1px solid var(--blue-strong-opacity-8);
+	color: var(--blue-headers);
+	background: var(--blue-backcolor-opacity);
+	border: 1px solid var(--blue-soft);
 	border-radius: 5px;
 	padding: 10px;
 	font-family: Roboto, sans-serif;
@@ -103,7 +119,8 @@
 	margin-top: 12px;
 	font-weight: 100;
 	font-size: 13px;
-	color: #607D8B;
+/*	color: #607D8B;*/
+	color: var(--blue-headers-soft);
 	margin-right: 10px;
 }
 

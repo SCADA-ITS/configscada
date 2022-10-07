@@ -89,9 +89,3 @@
     display:inline-block;
     margin-left: 6px;
 }
-
-/* Footer */
-
-.main-footer {
-	background: var(--blue-strong);
-}

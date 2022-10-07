@@ -117,6 +117,7 @@
   --datatable-icon-hover: rgb(71 84 102);
 
   --blue-backcolor: rgb(220, 227, 235);
+  --blue-backcolor-opacity: rgb(220 227 235 / 0.9);
 }
 
 /* Disable text selection hightlighting */
