@@ -63,8 +63,8 @@ export default class IncidentReportTaskDetailSignallingSpath extends IncidentRep
 											signallingSpathIds.sort();
 
 											//dtSignallingSpaths.select(signallingSpathIds[0]);
-											
-											dtSignallingSpaths.selectByIndex(0); 
+
+											dtSignallingSpaths.selectByIndex(0);
 										}
 
 									}, 100);
@@ -515,16 +515,25 @@ export default class IncidentReportTaskDetailSignallingSpath extends IncidentRep
 												elementSubtypeAlias: elementSubtype ? i18n.t(elementSubtype.labelAlias) : null
 											}
 
-											
-
 											let mapValue = webix.copy(signallingSpath);
 
-											mapValue.elements = signallingSpath.spathId ? getElementsBySpath(signallingSpath) : getElementsBetweenRange(signallingSpath);
+											if (signallingSpath.spathId) {
+												
+												mapValue.elements = getElementsBySpath(signallingSpath);
+												
+											} else if (Array.isArray(self.incidentReport.spath) && self.incidentReport.spath.length > 0) {
+												
+												mapValue.elements = getElementsBetweenRange(signallingSpath);
+												
+											} else {
+												
+												mapValue.elements = getElementsByStretch(signallingSpath);
+											}
 
 											self.mapSignallingSpaths.set(signallingSpath.id, mapValue);
-											
+
 											if (Array.isArray(mapValue.elements) && mapValue.elements.length > 0) {
-												
+
 												data.push(rowSpathSignalling);
 											}
 										}
@@ -543,34 +552,34 @@ export default class IncidentReportTaskDetailSignallingSpath extends IncidentRep
 					let elementsInSpath = [];
 
 					if (signallingSpath && signallingSpath.spathId) {
-						
+
 						if (Array.isArray(self.spaths) && self.spaths.length > 0) {
-							
+
 							//let spath = window.em.getByField(EntityType.SPATH, "id", signallingSpath.spathId);
-							
+
 							let spath = self.spaths.find(e => e.id === signallingSpath.spathId);
 
 							if (spath && Array.isArray(spath.spathStretchs)) {
-	
+
 								let from = !isNaN(signallingSpath.from) ? signallingSpath.from : -999999;
 								let to = !isNaN(signallingSpath.to) ? signallingSpath.to : 999999;
 								let spathStretchs = spath.spathStretchs.filter(spathStretch => from <= spathStretch.position && spathStretch.position <= to);
-	
+
 								if (spathStretchs && Array.isArray(spathStretchs)) {
-									
+
 									let stretchs = spathStretchs.map(spathStretch => spathStretch.relStretch);
-									
+
 									self.currentStretchIds = stretchs.map(stretch => stretch.id);
-	
+
 									if (Array.isArray(self.taskState.elements) && self.taskState.elements.length > 0 &&
 										Array.isArray(stretchs) && stretchs.length > 0) {
-	
+
 										stretchs.forEach(stretch => {
-	
+
 											self.taskState.elements.forEach(element => {
-	
+
 												if (element.location.stretchs.findIndex(elementStretch => elementStretch.id === stretch.id) != -1) {
-	
+
 													elementsInSpath.push(element);
 												}
 											});
@@ -608,7 +617,7 @@ export default class IncidentReportTaskDetailSignallingSpath extends IncidentRep
 						if (Array.isArray(stretchsFiltered) && stretchsFiltered.length > 0) {
 
 							elements = [];
-							
+
 							self.currentStretchIds = stretchsFiltered.map(stretch => stretch.id);
 
 							stretchsFiltered.forEach(stretchFiltered => {
@@ -621,6 +630,35 @@ export default class IncidentReportTaskDetailSignallingSpath extends IncidentRep
 								}
 							});
 						}
+					}
+
+					return elements;
+				}
+
+				function getElementsByStretch(signallingStretch) {
+
+					let elements = undefined;
+
+					if (signallingStretch && Array.isArray(self.taskState.elements) && self.taskState.elements.length > 0) {
+
+						let elementsToAdd = [];
+
+
+						let from = !isNaN(signallingStretch.from) ? signallingStretch.from : -999999;
+						let to = !isNaN(signallingStretch.to) ? signallingStretch.to : 999999;
+
+						self.taskState.elements.forEach(element => {
+
+							if (element.location.stretchs.findIndex(stretch => stretch.id === self.incidentReport.affectionStretch.id &&
+								(stretch.position === null ||
+									stretch.position === undefined || (from <= stretch.position && stretch.position <= to))) != -1) {
+
+								elementsToAdd.push(element);
+							}
+						});
+
+						elements = filterElements(elementsToAdd, signallingStretch);
+
 					}
 
 					return elements;
@@ -752,31 +790,31 @@ export default class IncidentReportTaskDetailSignallingSpath extends IncidentRep
 					}
 				}
 			}
-			
+
 			function onInfoCommand() {
-				
+
 				let selectedItems = dtSignallingSpaths.getSelectedItems();
-				
+
 				if (Array.isArray(selectedItems) && selectedItems.length === 1) {
-					
+
 					let signallingSpathId = selectedItems[0].id;
 
 					if (self.mapSignallingSpaths.size > 0) {
 
 						let signallingSpath = self.mapSignallingSpaths.get(signallingSpathId);
-				
+
 						if (signallingSpath) {
-							
+
 							let commandElement = getCommandElement(signallingSpath);
-							
+
 							if (commandElement) {
-								
+
 								const incidentReportTaskDetailSignallingSpathInfo_width = 850;
 								const incidentReportTaskDetailSignallingSpathInfo_height = 500;
-								
+
 								let incidentReportTaskDetailSignallingSpathInfo = new IncidentReportTaskDetailSignallingSpathInfo(signallingSpath, commandElement, self.currentStretchIds, incidentReportTaskDetailSignallingSpathInfo_width, self.spaths);
 
-								util.ui.loadWindow(i18n.t("LBL_DETAILS") + ": " + signallingSpath.alias, incidentReportTaskDetailSignallingSpathInfo.getView(), incidentReportTaskDetailSignallingSpathInfo_height, incidentReportTaskDetailSignallingSpathInfo_width, true);	
+								util.ui.loadWindow(i18n.t("LBL_DETAILS") + ": " + signallingSpath.alias, incidentReportTaskDetailSignallingSpathInfo.getView(), incidentReportTaskDetailSignallingSpathInfo_height, incidentReportTaskDetailSignallingSpathInfo_width, true);
 							}
 						}
 					}
