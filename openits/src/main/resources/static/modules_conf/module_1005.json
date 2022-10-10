@@ -32,7 +32,8 @@
 		"newAlarm": 100807,
 		"alarmFiltered": 1015,
 		"newIncident":101303,
-		"alarmConfig": 1002
+		"alarmConfig": 1002,
+		"locate": 200004
 	},
 	"requiredPermissions": {
 		"edit": "SystemPermission:19"		

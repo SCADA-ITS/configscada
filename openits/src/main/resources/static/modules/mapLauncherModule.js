@@ -38,10 +38,14 @@ export default class MapLauncherModule extends GenericModule {
 				
 				loadFromIncident();
 			}
+			else if (self.moduleAction.id === self.config.moduleAction.loadAlarmInMap) {
+
+				loadFromAlarm();
+			}				
 			else if (self.moduleAction.id === self.config.moduleAction.element) {
 				
 				loadFromElementDialog();
-			}				
+			}
 			else {
 				
 				loadFromElement();
@@ -68,9 +72,37 @@ export default class MapLauncherModule extends GenericModule {
 				});
 			}
 			
-			function loadFromElementDialog() {
+			function loadFromAlarm() {
+
+				let alarm;
+
+				webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.alarm, { id: self.args.selectedPks[0] })).then(function(alarmResponse) {
+
+					if (alarmResponse != null) {
+
+						alarm = alarmResponse.json();
+
+						if (alarm.targetElement && alarm.targetElement.id) {
+
+							loadFromElementDialog(alarm.targetElement.id);
+
+						} else {
+
+							(new MessageBox(MessageBox.WARN, i18n.t("LBL_MAP_NOT_AVAILABLE_FOR_THIS_ALARM"))).show();
+
+							if (container) {
+
+								container.close();
+							}
+						}
+					}
+				});
+			}
+			
+			function loadFromElementDialog(fromAlarmElementId) {
 				
-				let element = window.em.getByField(EntityType.ELEMENT, "id", self.args.selectedPks[0]);
+				let elementId = (fromAlarmElementId) ? fromAlarmElementId : self.args.selectedPks[0];
+				let element = window.em.getByField(EntityType.ELEMENT, "id", elementId);
 				
 				if (container) {
 					
