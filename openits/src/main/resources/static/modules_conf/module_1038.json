@@ -17,8 +17,14 @@
 			"default": 101402,
 			"view": 100801,
 			"recognize": 100802,
-			"equipment": 101402,
-			"map": 200004,
+			"equipment": {
+				"moduleActionId": 101402,
+				"viewTypeId": 1
+			},
+			"map": {
+				"moduleActionId": 200004,
+				"viewTypeId": 1
+			},
 			"levels": {
 				"critical": { "img": "img/grid/critical.png", "values":  [ "AlarmLevel:5", "AlarmLevel:6" ] },
 				"warn": { "img": "img/grid/warn.png", "values":  [ "AlarmLevel:3", "AlarmLevel:4" ] },

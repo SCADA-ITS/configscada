@@ -396,46 +396,55 @@ export let util = {
 		open(module, moduleAction, viewTypeId, drawCallback, args, instanceCallback) {
 
 			let instance = undefined;
+			let modAction = moduleAction;
+			let viewType = (moduleAction != null && moduleAction.id && moduleAction.id.viewTypeId) ? moduleAction.id.viewTypeId : viewTypeId;
 
+			if(moduleAction != null && moduleAction.id && moduleAction.id.moduleActionId){
+				
+				modAction = {
+					id: moduleAction.id.moduleActionId
+				};
+			}
+			
 			try {
 
 				const lazy = async _ => {
 
 					let jsFile = util.getContextPath() + "/" + module.jsFile;
 					
-					if (args && viewTypeId) {
+					if (args && viewType) {
 						
-						args.viewTypeId = viewTypeId;	
+						args.viewTypeId = viewType;	
 					}
 
 					const mod = await import(jsFile);
 
-					if ((viewTypeId === VIEW_TYPE_CUSTOM || viewTypeId === VIEW_TYPE_EXTERNAL) && drawCallback) {
+					if ((viewType === VIEW_TYPE_CUSTOM || viewType === VIEW_TYPE_EXTERNAL) && drawCallback) {
 
-						instance = util.module.loadInCustom(module, moduleAction, mod, args, drawCallback);
+						instance = util.module.loadInCustom(module, modAction, mod, args, drawCallback);
 					}
-					else if (!viewTypeId && module.viewType) {
+					else if (!viewType && module.viewType) {
 
 						if (module.viewType.id === VIEW_TYPE_TAB ||
-							viewTypeId === VIEW_TYPE_TAB) {
+							viewType === VIEW_TYPE_TAB) {
 
-							instance = util.module.loadInTab(module, moduleAction, mod, args);
+							instance = util.module.loadInTab(module, modAction, mod, args);
 						}
 						else if (module.viewType.id === VIEW_TYPE_WINDOW ||
-							viewTypeId === VIEW_TYPE_WINDOW) {
+							viewType === VIEW_TYPE_WINDOW) {
 
-							instance = util.module.loadInWindow(module, moduleAction, mod, args);
+							instance = util.module.loadInWindow(module, modAction, mod, args);
 						}
 					}
 					else {
 
-						if (viewTypeId === VIEW_TYPE_TAB) {
+						if (viewType === VIEW_TYPE_TAB) {
 
-							instance = util.module.loadInTab(module, moduleAction, mod, args);
+							instance = util.module.loadInTab(module, modAction, mod, args);
 						}
-						else if (viewTypeId === VIEW_TYPE_WINDOW) {
+						else if (viewType === VIEW_TYPE_WINDOW) {
 
-							instance = util.module.loadInWindow(module, moduleAction, mod, args);
+							instance = util.module.loadInWindow(module, modAction, mod, args);
 						}
 					}
 
@@ -604,6 +613,7 @@ export let util = {
 
 		getFromModuleAction(moduleActionId) {
 
+			let modActionId = (typeof (moduleActionId) === 'object') ? moduleActionId.moduleActionId : moduleActionId;
 			let modules = window.em.getAll(EntityType.MODULE);
 
 			if (Array.isArray(modules) && modules.length > 0) {
@@ -612,14 +622,14 @@ export let util = {
 
 					if (Array.isArray(module.moduleActions) && module.moduleActions.length > 0) {
 
-						return (module.moduleActions.findIndex(moduleAction => moduleAction.id === moduleActionId) !== -1);
+						return (module.moduleActions.findIndex(moduleAction => moduleAction.id === modActionId) !== -1);
 					}
 
 					return false;
 				});
 			}
 		},
-
+		
 		checkSystemPermissions(modules, userData) {
 
 			let systemPermissionId = [];
