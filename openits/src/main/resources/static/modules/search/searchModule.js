@@ -227,20 +227,23 @@ export default class SearchModule extends GenericModule {
 				drawResults();	
 			}
 			
-			function openModule(moduleActionid, args) {
-				
-				let module = util.module.getFromModuleAction(moduleActionid);
+			function openModule(moduleActionId, args) {
 
-				if (module) {
+				let moduleAction = { id: moduleActionId };
+				util.module.openFromJSONConfig(moduleAction, VIEW_TYPE_WINDOW, null, args);
 
-					let moduleAction = { id: moduleActionid };
-
-					util.module.open(module, moduleAction, VIEW_TYPE_WINDOW, null, args);
-				}
-				else {
-					
-					(new MessageBox(MessageBox.WARN, i18n.t("LBL_NOT_AVAILABLE") + " moduleAction = " + moduleActionid, null, null, null)).show();
-				}
+				//				let module = util.module.getFromModuleAction(moduleActionId);
+				//
+				//				if (module) {
+				//
+				//					let moduleAction = { id: moduleActionId };
+				//
+				//					util.module.open(module, moduleAction, VIEW_TYPE_WINDOW, null, args);
+				//				}
+				//				else {
+				//					
+				//					(new MessageBox(MessageBox.WARN, i18n.t("LBL_NOT_AVAILABLE") + " moduleAction = " + moduleActionId, null, null, null)).show();
+				//				}
 			}
 			
 			function drawResults() {

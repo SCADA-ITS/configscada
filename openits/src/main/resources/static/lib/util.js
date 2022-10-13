@@ -396,55 +396,46 @@ export let util = {
 		open(module, moduleAction, viewTypeId, drawCallback, args, instanceCallback) {
 
 			let instance = undefined;
-			let modAction = moduleAction;
-			let viewType = (moduleAction != null && moduleAction.id && moduleAction.id.viewTypeId) ? moduleAction.id.viewTypeId : viewTypeId;
 
-			if(moduleAction != null && moduleAction.id && moduleAction.id.moduleActionId){
-				
-				modAction = {
-					id: moduleAction.id.moduleActionId
-				};
-			}
-			
 			try {
 
 				const lazy = async _ => {
 
 					let jsFile = util.getContextPath() + "/" + module.jsFile;
 					
-					if (args && viewType) {
+					if (args && viewTypeId) {
 						
-						args.viewTypeId = viewType;	
+						args.viewTypeId = viewTypeId;	
 					}
 
 					const mod = await import(jsFile);
 
-					if ((viewType === VIEW_TYPE_CUSTOM || viewType === VIEW_TYPE_EXTERNAL) && drawCallback) {
+					if ((viewTypeId === VIEW_TYPE_CUSTOM || viewTypeId === VIEW_TYPE_EXTERNAL) && drawCallback) {
 
-						instance = util.module.loadInCustom(module, modAction, mod, args, drawCallback);
+						instance = util.module.loadInCustom(module, moduleAction, mod, args, drawCallback);
 					}
-					else if (!viewType && module.viewType) {
+					else if (!viewTypeId && module.viewType) {
 
 						if (module.viewType.id === VIEW_TYPE_TAB ||
-							viewType === VIEW_TYPE_TAB) {
+							viewTypeId === VIEW_TYPE_TAB) {
 
-							instance = util.module.loadInTab(module, modAction, mod, args);
+							instance = util.module.loadInTab(module, moduleAction, mod, args);
 						}
 						else if (module.viewType.id === VIEW_TYPE_WINDOW ||
-							viewType === VIEW_TYPE_WINDOW) {
+							viewTypeId === VIEW_TYPE_WINDOW) {
 
-							instance = util.module.loadInWindow(module, modAction, mod, args);
+							instance = util.module.loadInWindow(module, moduleAction, mod, args);
 						}
 					}
 					else {
 
-						if (viewType === VIEW_TYPE_TAB) {
+						if (viewTypeId === VIEW_TYPE_TAB) {
 
-							instance = util.module.loadInTab(module, modAction, mod, args);
+							instance = util.module.loadInTab(module, moduleAction, mod, args);
 						}
-						else if (viewType === VIEW_TYPE_WINDOW) {
+						else if (viewTypeId === VIEW_TYPE_WINDOW) {
 
-							instance = util.module.loadInWindow(module, modAction, mod, args);
+							instance = util.module.loadInWindow(module, moduleAction, mod, args);
 						}
 					}
 
@@ -613,7 +604,6 @@ export let util = {
 
 		getFromModuleAction(moduleActionId) {
 
-			let modActionId = (typeof (moduleActionId) === 'object') ? moduleActionId.moduleActionId : moduleActionId;
 			let modules = window.em.getAll(EntityType.MODULE);
 
 			if (Array.isArray(modules) && modules.length > 0) {
@@ -622,7 +612,7 @@ export let util = {
 
 					if (Array.isArray(module.moduleActions) && module.moduleActions.length > 0) {
 
-						return (module.moduleActions.findIndex(moduleAction => moduleAction.id === modActionId) !== -1);
+						return (module.moduleActions.findIndex(moduleAction => moduleAction.id === moduleActionId) !== -1);
 					}
 
 					return false;
@@ -779,6 +769,52 @@ export let util = {
 			}
 
 			return permissionsOK;
+		},
+		
+		openFromJSONConfig(moduleAction, viewTypeId, drawCallback, args, instanceCallback) {
+
+			let moduleActionIdFromJSON;
+			let viewTypeIdFromJSON = viewTypeId;
+			let modAction = null;
+			let moduleAux;
+
+			if ((typeof (moduleAction) === 'object')) {
+
+				if (moduleAction.id) {
+
+					if (typeof (moduleAction.id) === 'object') {
+
+						moduleActionIdFromJSON = moduleAction.id.moduleActionId;
+						viewTypeIdFromJSON = (moduleAction.id.viewTypeId) ? moduleAction.id.viewTypeId : viewTypeId;
+
+					} else {
+
+						moduleActionIdFromJSON = moduleAction.id;
+					}
+
+				} else {
+
+					moduleActionIdFromJSON = moduleAction.moduleActionId;
+					viewTypeIdFromJSON = (moduleAction.viewTypeId) ? moduleAction.viewTypeId : viewTypeId;
+				}
+
+			} else {
+
+				moduleActionIdFromJSON = moduleAction;
+			}
+
+			modAction = { id: moduleActionIdFromJSON };
+			moduleAux = this.getFromModuleAction(moduleActionIdFromJSON);
+
+			if (moduleAux) {
+
+				this.open(moduleAux, modAction, viewTypeIdFromJSON, drawCallback, args, instanceCallback);
+
+			} else {
+
+				(new MessageBox(MessageBox.WARN, i18n.t("LBL_NOT_AVAILABLE") + " moduleAction = " + moduleActionid, null, null, null)).show();
+			}
+
 		}
 	},
 
