@@ -227,23 +227,9 @@ export default class SearchModule extends GenericModule {
 				drawResults();	
 			}
 			
-			function openModule(moduleActionId, args) {
+			function openModule(moduleActionCfg, args) {
 
-				let moduleAction = { id: moduleActionId };
-				util.module.openFromJSONConfig(moduleAction, VIEW_TYPE_WINDOW, null, args);
-
-				//				let module = util.module.getFromModuleAction(moduleActionId);
-				//
-				//				if (module) {
-				//
-				//					let moduleAction = { id: moduleActionId };
-				//
-				//					util.module.open(module, moduleAction, VIEW_TYPE_WINDOW, null, args);
-				//				}
-				//				else {
-				//					
-				//					(new MessageBox(MessageBox.WARN, i18n.t("LBL_NOT_AVAILABLE") + " moduleAction = " + moduleActionId, null, null, null)).show();
-				//				}
+				util.module.openFromJSONConfig(moduleActionCfg, null, args);
 			}
 			
 			function drawResults() {

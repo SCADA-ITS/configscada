@@ -1,9 +1,10 @@
 import { util } from "../lib/util.js";
+import EntitiesManager from "../managers/entitiesManager.js";
 import MessageBox from "../component/messageBox.js";
 
 export default class GenericModule {
 
-	constructor(module, moduleAction, args) {
+	constructor(module, moduleAction, args, entitiesRequired) {
 
 		if (this.constructor == GenericModule) {
 
@@ -25,11 +26,37 @@ export default class GenericModule {
 			throw new Error("Module not allowed");
 		}
 
-
+		this.waitingForEntities = false;
 		this.module = module;
 		this.moduleAction = moduleAction;
 		this.args = args;
 		this.uid = webix.uid();
+		
+		// Sleep for required entities
+		if (Array.isArray(entitiesRequired) && entitiesRequired.length > 0) {
+		
+			this.waitingForEntities = true;	
+			let hnd;
+			let self = this;
+			
+			hnd = setInterval(function() {
+				
+				let allEntitiesLoaded = true;
+				
+				for (let i = 0; allEntitiesLoaded && i < entitiesRequired.length; i++) {
+						
+					allEntitiesLoaded &= (window.em.getState(entitiesRequired[i]) === EntitiesManager.ENTITY_STATE_LOADED);
+				}
+				
+				if (allEntitiesLoaded) {
+					
+					clearInterval(hnd);
+					
+					self.waitingForEntities = false;
+				}
+	
+			}, 100);
+		}
 	}
 
 	getView() {

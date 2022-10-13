@@ -130,6 +130,8 @@ export default class TaskManagerService extends GenericModule {
 		
 		const CONTAINER_MARGIN = 20;
 		let win = undefined;
+		let w;
+		let h;
 		
 		if (id) {
 			
@@ -138,12 +140,8 @@ export default class TaskManagerService extends GenericModule {
 			
 		let screenWidth = window.screen.availWidth;
 		let screenHeight = window.screen.availHeight;
-		let w = screenWidth;
-		let h = screenHeight;
 		let positionLeft = 0;
 		let positionTop = 0;
-		let labelWindowParam  = genericModule.module.windowValues ? genericModule.module.windowValues.find(e => e.windowParam.id === WindowParam.LABEL) : undefined;
-		let label = labelWindowParam ? labelWindowParam.value : 'LBL_UNDEFINED';
 		let isMaximizedWindowParam  = genericModule.module.windowValues ? genericModule.module.windowValues.find(e => e.windowParam.id === WindowParam.IS_MAXIMIZED) : undefined;
 		let isMaximized = false;
 		
@@ -184,14 +182,17 @@ export default class TaskManagerService extends GenericModule {
 		
 		if (genericModule.args && Object.keys(genericModule.args).length > 0 && Object.getPrototypeOf(genericModule.args) === Object.prototype) {
 			
-			params.args = JSON.stringify(genericModule.args);
+			let genericModuleArgs = webix.copy(genericModule.args);
+
+			removeCallbacks(genericModuleArgs);
+			params.args = JSON.stringify(genericModuleArgs);
 		}
 		
 		let sessionData = util.user.getSessionData();
 		
 		if (sessionData) {
 			
-			params.sessionData = JSON.stringify(sessionData);
+			params.sessionId = sessionData.sessionId;
 		}
 		
 		let searchParams = new URLSearchParams(params);
@@ -208,20 +209,53 @@ export default class TaskManagerService extends GenericModule {
 		    			left=${positionLeft},
 		    			top=${positionTop}`;
 		    			
-		//let browser = window.open("./external.html?" + searchParams.toString(), (new Date()).getTime(), features);
-		let browser = window.open("./external.html?" + searchParams.toString(), "_blank", features);
+		window.open("./external.html?" + searchParams.toString(), "_blank", features);
 		
+		this.remove(id);
 		
-		//if (browser) {
+		if (win) {
 			
-			//browser.focus();
-			this.remove(id);
+			win.close();					
+		}				
+		
+		function removeCallbacks(obj) {
 			
-			if (win) {
+			if (obj) {
 				
-				win.close();					
-			}				
-		//}
+				if (typeof(obj) === 'object') {
+					
+					let keys = Object.keys(obj);
+
+					if (Array.isArray(keys) && keys.length > 0) {
+	
+						keys.forEach(key => {
+							
+							if (obj[key]) {
+							
+								if (typeof(obj[key]) === 'function') {
+									
+									obj[key] = undefined;
+								}
+								else if (Array.isArray(obj[key])) {
+									
+									obj[key] = obj[key].filter(e => removeCallbacks(e));
+								}
+								else {
+									
+									removeCallbacks(obj[key]);
+								}
+							}
+						});
+					}	
+				}			
+				else if (typeof(obj) === 'function') {
+					
+					obj = undefined;
+				}
+			}
+			
+			return obj;
+		}
 	}
 	
 	remove(id) {

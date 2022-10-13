@@ -20,22 +20,43 @@ window.onload = function() {
 	function getUserData() {
 		
 		let uData = util.user.getUserData();
-
+		
 		if (!uData) {
 			
 			const queryString = window.location.search;
 			const urlParams = new URLSearchParams(queryString);
+			const sessionId = urlParams.get('sessionId');
 			
-			let sessionData = urlParams.get('sessionData') ? JSON.parse(urlParams.get('sessionData')) : undefined;
-			
-			if (sessionData) {
+			let userSessionResponse = webix.ajax().sync().get(`${appConfig.restUrl}auth/session/${sessionId}`);
+							
+			if (userSessionResponse) {
 				
-				uData = sessionData.user;
+				let sessionData = JSON.parse(userSessionResponse.responseText);
 				
-				webix.storage.session.put(SESSION_STORAGE_SESSION_DATA, sessionData);
+				if (sessionData) {
+					
+					uData = sessionData.user;
+				
+					webix.storage.session.put(SESSION_STORAGE_SESSION_DATA, sessionData);
+				}
 			}
 		}
-		
+
+//		if (!uData) {
+//			
+//			const queryString = window.location.search;
+//			const urlParams = new URLSearchParams(queryString);
+//			
+//			let sessionData = urlParams.get('sessionData') ? JSON.parse(urlParams.get('sessionData')) : undefined;
+//			
+//			if (sessionData) {
+//				
+//				uData = sessionData.user;
+//				
+//				webix.storage.session.put(SESSION_STORAGE_SESSION_DATA, sessionData);
+//			}
+//		}
+//		
 		return uData;
 	}
 	

@@ -103,4 +103,13 @@ public class AuthController {
 		
 		return new ResponseEntity<>(sessions, sessions != null ? HttpStatus.OK : HttpStatus.FORBIDDEN);
 	}
+	
+	@GetMapping(value = "/session/{sessionId}")
+	@ApiOperation(value = "sessions", notes = "Get list of active sessions")
+	public ResponseEntity<UserSessionUI> getUserSession(@ApiParam(name = "sessionId", type = "String", value = "sessionId", example = "1234", required = true) @PathVariable String sessionId) {
+		
+		UserSessionUI session = sessionBO.getUserSession(sessionId);
+		
+		return new ResponseEntity<>(session, session != null ? HttpStatus.OK : HttpStatus.FORBIDDEN);
+	}
 }

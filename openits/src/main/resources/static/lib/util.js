@@ -40,16 +40,38 @@ export let util = {
 			if (drawCallback) {
 
 				lazyClass = new mod.default(module, moduleAction, args);
+				
+				if (!lazyClass.waitingForEntities) {
+				
+					callMethods();
+				}
+				else {
+					
+					let hnd;
+				
+					hnd = setInterval(function() {
+						
+						if (!lazyClass.waitingForEntities) {
+						
+							clearInterval(hnd);
+							callMethods();
+						}
+							
+					}, 100);	
+				}
 
-				if (module.jsMethodDraw) {
+				function callMethods() {
+					
+					if (module.jsMethodDraw) {
 
-					viewModule = lazyClass.runOne(module.jsMethodDraw);
-
-					if (viewModule) {
-
-						drawCallback(viewModule);
+						viewModule = lazyClass.runOne(module.jsMethodDraw);
+	
+						if (viewModule) {
+	
+							drawCallback(viewModule);
+						}
 					}
-
+					
 					if (module.jsMethodCallbacks) {
 
 						lazyClass.runOne(module.jsMethodCallbacks);
@@ -104,154 +126,181 @@ export let util = {
 			args.containerId = winId;
 
 			lazyClass = new mod.default(module, moduleAction, args);
-
-			viewModule = lazyClass.runOne(module.jsMethodDraw)
-
-
-			if (viewModule) {
+			
+			if (!lazyClass.waitingForEntities) {
 				
-				let noExternalizableModuleAction = undefined;
-				let modAction = undefined;
+				callMethods();
+			}
+			else {
 				
-				if(moduleAction){
-				
-					modAction = module.moduleActions.find(mod => mod.id === moduleAction.id);	
-				}
-				
-				if(modAction) {
+				let hnd;
+			
+				hnd = setInterval(function() {
 					
-					noExternalizableModuleAction = (modAction.noExternalizable) ? true: false;
-				}
-				
-				let hideIconDock = !taskManagerService || !externalizable || window.isExternal || noExternalizableModuleAction;
-				let hideIconExternalize = !taskManagerService || !externalizable || noExternalizableModuleAction;
-				let hideIconMinimize = !taskManagerService || !externalizable || window.isExternal || noExternalizableModuleAction;
-
-				let head = {
-					view: "toolbar",
-					css: "active-window-head",
-					//height: 35,
-					cols: [
-						{
-							id: winId + "-label",
-							css: "window-head-title " + ((!taskManagerService || !externalizable || window.isExternal || noExternalizableModuleAction) ? "window-head-title-wo-buttons" : "window-head-title-w-buttons"), 
-							view: "label",
-							//css: "notification-center-title", 
-							label: label ? i18n.t(label): ""
-						},
-						{
-							view: "icon",
-							hidden: hideIconDock,
-							icon: "mdi mdi-dock-window",
-							tooltip: i18n.t("LBL_WINDOW_DOCK"),
-							on: {
-								onItemClick: function(id) {
-																		
-									if (taskManagerService) {
-								
-										taskManagerService.dock(winId, lazyClass);
-									}
-								}
-							}
-						},
-						{
-							view: "icon",
-							hidden: hideIconExternalize,
-							icon: "mdi mdi-monitor",
-							tooltip: i18n.t("LBL_WINDOW_EXTERNALIZE"),
-							on: {
-								onItemClick: function(id) {
-									
-									if (taskManagerService) {
-								
-										taskManagerService.externalize(winId, lazyClass);
-									}
-								}
-							}
-						},
-						{
-							view: "icon",
-							hidden: hideIconMinimize,
-							icon: "mdi mdi-window-minimize",
-							tooltip: i18n.t("LBL_WINDOW_MINIMIZE"),
-							on: {
-								onItemClick: function(id) {
-									
-									if (taskManagerService) {
-								
-										taskManagerService.minimize(winId);
-									}
-								}
-							}
-						},
-						{
-							view: "icon",
-							icon: "mdi mdi-close",
-							tooltip: i18n.t("LBL_WINDOW_CLOSE"),
-							on: {
-								onItemClick: function(id) {
-									$$(winId).close();
-								}
-							}
-						}
-					],
-					borderless: 1
-				};
-
-				webix.ui({
-					view: "window",
-					id: winId,
-					move: true,
-					modal: modal,
-					toFront: true,
-					css: "default-window",
-					head: head,
-					height: height,
-					width: width,
-					body: {
-						rows: [
-							viewModule
-						]
-					},
-					on: {
-						onBeforeShow: function() {
-
-							window.wm.add(winId);
-
-							if (taskManagerService) {
-								
-								taskManagerService.add(winId, lazyClass);
-							}
-						},
-						onDestruct: function() {
-
-							window.wm.delete(winId);
-							
-							if (taskManagerService) {
-								
-								taskManagerService.remove(winId);
-							}
-						}
+					if (!lazyClass.waitingForEntities) {
+					
+						clearInterval(hnd);
+						callMethods();
 					}
-				});
+						
+				}, 100);	
+			}		
+			
+			function callMethods() {
+				
+				viewModule = lazyClass.runOne(module.jsMethodDraw)
+
+
+				if (viewModule) {
+					
+					let noExternalizableModuleAction = undefined;
+					let modAction = undefined;
+					
+					if(moduleAction){
+					
+						modAction = module.moduleActions.find(mod => mod.id === moduleAction.id);	
+					}
+					
+					if(modAction) {
+						
+						noExternalizableModuleAction = (modAction.noExternalizable) ? true: false;
+					}
+					
+					let hideIconDock = !taskManagerService || !externalizable || window.isExternal || noExternalizableModuleAction;
+					let hideIconExternalize = !taskManagerService || !externalizable || noExternalizableModuleAction;
+					let hideIconMinimize = !taskManagerService || !externalizable || window.isExternal || noExternalizableModuleAction;
+	
+					let head = {
+						view: "toolbar",
+						css: "active-window-head",
+						//height: 35,
+						cols: [
+							{
+								id: winId + "-label",
+								css: "window-head-title " + ((!taskManagerService || !externalizable || window.isExternal || noExternalizableModuleAction) ? "window-head-title-wo-buttons" : "window-head-title-w-buttons"), 
+								view: "label",
+								//css: "notification-center-title", 
+								label: label ? i18n.t(label): ""
+							},
+							{
+								view: "icon",
+								hidden: hideIconDock,
+								icon: "mdi mdi-dock-window",
+								tooltip: i18n.t("LBL_WINDOW_DOCK"),
+								on: {
+									onItemClick: function(id) {
+																			
+										if (taskManagerService) {
+									
+											taskManagerService.dock(winId, lazyClass);
+										}
+									}
+								}
+							},
+							{
+								view: "icon",
+								hidden: hideIconExternalize,
+								icon: "mdi mdi-monitor",
+								tooltip: i18n.t("LBL_WINDOW_EXTERNALIZE"),
+								on: {
+									onItemClick: function(id) {
+										
+										if (taskManagerService) {
+									
+											taskManagerService.externalize(winId, lazyClass);
+										}
+									}
+								}
+							},
+							{
+								view: "icon",
+								hidden: hideIconMinimize,
+								icon: "mdi mdi-window-minimize",
+								tooltip: i18n.t("LBL_WINDOW_MINIMIZE"),
+								on: {
+									onItemClick: function(id) {
+										
+										if (taskManagerService) {
+									
+											taskManagerService.minimize(winId);
+										}
+									}
+								}
+							},
+							{
+								view: "icon",
+								icon: "mdi mdi-close",
+								tooltip: i18n.t("LBL_WINDOW_CLOSE"),
+								on: {
+									onItemClick: function(id) {
+										$$(winId).close();
+									}
+								}
+							}
+						],
+						borderless: 1
+					};
+	
+					webix.ui({
+						view: "window",
+						id: winId,
+						move: true,
+						modal: modal,
+						toFront: true,
+						css: "default-window",
+						head: head,
+						height: height,
+						width: width,
+						body: {
+							rows: [
+								viewModule
+							]
+						},
+						on: {
+							onBeforeShow: function() {
+	
+								window.wm.add(winId);
+	
+								if (taskManagerService) {
+									
+									taskManagerService.add(winId, lazyClass);
+								}
+							},
+							onDestruct: function() {
+	
+								window.wm.delete(winId);
+								
+								if (taskManagerService) {
+									
+									taskManagerService.remove(winId);
+								}
+							}
+						}
+					});
+				}
+	
+				if ($$(winId)) {
+	
+					$$(winId).show();
+				}
+	
+				if (module.jsMethodCallbacks && module.jsMethodCallbacks !== "DEPRECATED" && lazyClass) {
+	
+					lazyClass.runOne(module.jsMethodCallbacks)
+				}
+	
+				util.ui.centerWindow(winId);	
 			}
-
-			if ($$(winId)) {
-
-				$$(winId).show();
-			}
-
-			if (module.jsMethodCallbacks && module.jsMethodCallbacks !== "DEPRECATED" && lazyClass) {
-
-				lazyClass.runOne(module.jsMethodCallbacks)
-			}
-
-			util.ui.centerWindow(winId);
 
 			return lazyClass;
 		},
 
 		loadInTab(module, moduleAction, mod, args) {
+			
+			if (window.isExternal) {
+				
+				return this.loadInWindow(module, moduleAction, mod, args);
+			}
 
 			let viewModule;
 			let allowMultipleInstances = true;
@@ -299,65 +348,89 @@ export let util = {
 			args.containerId = tab_id.replace("tab", "tab_body");
 
 			lazyClass = new mod.default(module, moduleAction, args);
-
-			viewModule = lazyClass.runOne(module.jsMethodDraw);
-
-			if (viewModule) {
-				
-				let genericModule = {
-					module: module,
-					moduleAction: moduleAction,
-					args: args
-				}
-
-				$$(MAIN_TAB_ID).addView({
-
-					id: tab_id,
-//					header: `<div style='float: left; width: 250px;'>
-//								<img class='tab-icon' src='${icon}'/>
-//								<span class='tab-text'>${i18n.t(label)}</span>
-//								<span style='float: right; padding-top: 2px'><a href='#' onclick='window.extenalizeTab(${JSON.stringify(tab_id)}, ${module ? JSON.stringify(module) : undefined }, ${moduleAction ? JSON.stringify(moduleAction) : undefined}, ${args ? JSON.stringify(args) : undefined})'><img id='${tab_id}-externalize' title='${i18n.t("LBL_VIEW_IN_WINDOW")}' src='./img/externalize_button.png'></a></span>
-//							</div>`,
-					tabId: tab_id,
-					header: `<div id='${tab_id}' style='float: left; width: 250px;'>
-								<img class='tab-icon' style='height:22px; width:22px' src='${icon}'/>
-								<span id='${tab_id}_title' class='tab-text'>${tabLabel}</span>
-								<span id='${tab_id}_action' style='float: right; padding-top: 2px'><a href='#' onclick='window.sm.getService(Services.TASK_MANAGER_SERVICE).undock(${JSON.stringify(tab_id)}, ${JSON.stringify(genericModule)})'><img id='${tab_id}-externalize' title='${i18n.t("LBL_VIEW_IN_WINDOW")}' src='./img/externalize_button.png'></a></span>
-							</div>`,
-					body: {
-						autoheight: true,
-						id: tab_id.replace("tab", "tab_body"),
-						autowidth: true,
-						cols: [
-							{
-								rows: [
-									/*{ view: "template", role: "placeholder", borderless: 1, "height": 10 },*/
-									viewModule
-								]
-							}
-						]
-					}
-				});
-				
-				let closeButtons = $$(MAIN_TAB_ID).getNode().getElementsByClassName('webix_tab_close');
 			
-				if (closeButtons) {
+			if (!lazyClass.waitingForEntities) {
+				
+				callMethods();
+			}
+			else {
+				
+				let hnd;
+			
+				hnd = setInterval(function() {
 					
-					let closeButtonsArray = Array.from(closeButtons);
+					if (!lazyClass.waitingForEntities) {
 					
-					closeButtonsArray.forEach(closeButton => {
+						clearInterval(hnd);
+						callMethods();
+					}
 						
-						closeButton.title = i18n.t("LBL_TAB_CLOSE");
+				}, 100);	
+			}
+			
+			function callMethods() {
+				
+				viewModule = lazyClass.runOne(module.jsMethodDraw);
+
+				if (viewModule) {
+					
+					let genericModule = {
+						module: module,
+						moduleAction: moduleAction,
+						args: args
+					}
+	
+					$$(MAIN_TAB_ID).addView({
+	
+						id: tab_id,
+	//					header: `<div style='float: left; width: 250px;'>
+	//								<img class='tab-icon' src='${icon}'/>
+	//								<span class='tab-text'>${i18n.t(label)}</span>
+	//								<span style='float: right; padding-top: 2px'><a href='#' onclick='window.extenalizeTab(${JSON.stringify(tab_id)}, ${module ? JSON.stringify(module) : undefined }, ${moduleAction ? JSON.stringify(moduleAction) : undefined}, ${args ? JSON.stringify(args) : undefined})'><img id='${tab_id}-externalize' title='${i18n.t("LBL_VIEW_IN_WINDOW")}' src='./img/externalize_button.png'></a></span>
+	//							</div>`,
+						tabId: tab_id,
+						header: `<div id='${tab_id}' style='float: left; width: 250px;'>
+									<img class='tab-icon' style='height:22px; width:22px' src='${icon}'/>
+									<span id='${tab_id}_title' class='tab-text'>${tabLabel}</span>
+									<span id='${tab_id}_action' style='float: right; padding-top: 2px'><a href='#' onclick='window.sm.getService(Services.TASK_MANAGER_SERVICE).undock(${JSON.stringify(tab_id)}, ${JSON.stringify(genericModule)})'><img id='${tab_id}-externalize' title='${i18n.t("LBL_VIEW_IN_WINDOW")}' src='./img/externalize_button.png'></a></span>
+								</div>`,
+						body: {
+							autoheight: true,
+							id: tab_id.replace("tab", "tab_body"),
+							autowidth: true,
+							cols: [
+								{
+									rows: [
+										/*{ view: "template", role: "placeholder", borderless: 1, "height": 10 },*/
+										viewModule
+									]
+								}
+							]
+						}
 					});
+					
+					let closeButtons = $$(MAIN_TAB_ID).getNode().getElementsByClassName('webix_tab_close');
+				
+					if (closeButtons) {
+						
+						let closeButtonsArray = Array.from(closeButtons);
+						
+						closeButtonsArray.forEach(closeButton => {
+							
+							closeButton.title = i18n.t("LBL_TAB_CLOSE");
+						});
+					}
+	
+					$$(MAIN_TAB_ID).getTabbar().setValue(tab_id.replace("tab", "tab_body"));
 				}
-
-				$$(MAIN_TAB_ID).getTabbar().setValue(tab_id.replace("tab", "tab_body"));
+	
+				if (module.jsMethodCallbacks && module.jsMethodCallbacks !== "DEPRECATED" && lazyClass) {
+	
+					lazyClass.runOne(module.jsMethodCallbacks)
+				}	
 			}
 
-			if (module.jsMethodCallbacks && module.jsMethodCallbacks !== "DEPRECATED" && lazyClass) {
-
-				lazyClass.runOne(module.jsMethodCallbacks)
-			}
+			
 
 			return lazyClass;
 		},
@@ -771,50 +844,37 @@ export let util = {
 			return permissionsOK;
 		},
 		
-		openFromJSONConfig(moduleAction, viewTypeId, drawCallback, args, instanceCallback) {
+		openFromJSONConfig(moduleActionCfg, drawCallback, args, instanceCallback) {
 
-			let moduleActionIdFromJSON;
-			let viewTypeIdFromJSON = viewTypeId;
-			let modAction = null;
-			let moduleAux;
+			let moduleActionId = undefined;
+			let viewTypeId = undefined;
+			let modAction = undefined;
+			let moduleAux = undefined;
 
-			if (typeof (moduleAction) === 'object') {
+			if (typeof (moduleActionCfg) === 'object') {
 
-				if (moduleAction.id) {
+				moduleActionId = moduleActionCfg.moduleActionId;
+				viewTypeId = moduleActionCfg.viewTypeId;
+			} 
+			else if (!isNaN(moduleActionCfg)) {
 
-					if (typeof (moduleAction.id) === 'object') {
-
-						moduleActionIdFromJSON = moduleAction.id.moduleActionId;
-						viewTypeIdFromJSON = (moduleAction.id.viewTypeId) ? moduleAction.id.viewTypeId : viewTypeId;
-
-					} else {
-
-						moduleActionIdFromJSON = moduleAction.id;
-					}
-
+				moduleActionId = moduleActionCfg;
+			}
+			
+			if (moduleActionId) {
+				
+				modAction = { id: moduleActionId };
+				moduleAux = this.getFromModuleAction(moduleActionId);
+	
+				if (moduleAux) {
+	
+					this.open(moduleAux, modAction, viewTypeId, drawCallback, args, instanceCallback);
+	
 				} else {
-
-					moduleActionIdFromJSON = moduleAction.moduleActionId;
-					viewTypeIdFromJSON = (moduleAction.viewTypeId) ? moduleAction.viewTypeId : viewTypeId;
-				}
-
-			} else {
-
-				moduleActionIdFromJSON = moduleAction;
+	
+					(new MessageBox(MessageBox.WARN, i18n.t("LBL_NOT_AVAILABLE") + " moduleAction = " + moduleActionIdFromJSON, null, null, null)).show();
+				}	
 			}
-
-			modAction = { id: moduleActionIdFromJSON };
-			moduleAux = this.getFromModuleAction(moduleActionIdFromJSON);
-
-			if (moduleAux) {
-
-				this.open(moduleAux, modAction, viewTypeIdFromJSON, drawCallback, args, instanceCallback);
-
-			} else {
-
-				(new MessageBox(MessageBox.WARN, i18n.t("LBL_NOT_AVAILABLE") + " moduleAction = " + moduleActionIdFromJSON, null, null, null)).show();
-			}
-
 		}
 	},
 

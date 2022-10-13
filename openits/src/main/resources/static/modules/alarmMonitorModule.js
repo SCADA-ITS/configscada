@@ -22,9 +22,9 @@ const TOPIC_ELEMENTS = "/topic/element.>";
 export default class AlarmMonitorModule extends GenericModule {
 
 	constructor(module, moduleAction, args) {
-
-		super(module, moduleAction, args);
-
+		
+		super(module, moduleAction, args, [EntityType.ALARM_CONFIG]);
+			
 		this.uid = webix.uid();
 		this.idStompSubscriptor = undefined;
 		this.idStompSubscriptorTreeState = undefined;
@@ -62,7 +62,7 @@ export default class AlarmMonitorModule extends GenericModule {
 		
 		this.alarmStatActive = undefined;
 		this.alarmStatNoRecognized = undefined;
-		this.alarmStatFiltered = undefined;
+		this.alarmStatFiltered = undefined;	
 	}
 
 	loadData() {
