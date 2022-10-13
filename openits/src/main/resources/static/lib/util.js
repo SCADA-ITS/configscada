@@ -778,7 +778,7 @@ export let util = {
 			let modAction = null;
 			let moduleAux;
 
-			if ((typeof (moduleAction) === 'object')) {
+			if (typeof (moduleAction) === 'object') {
 
 				if (moduleAction.id) {
 
@@ -812,7 +812,7 @@ export let util = {
 
 			} else {
 
-				(new MessageBox(MessageBox.WARN, i18n.t("LBL_NOT_AVAILABLE") + " moduleAction = " + moduleActionid, null, null, null)).show();
+				(new MessageBox(MessageBox.WARN, i18n.t("LBL_NOT_AVAILABLE") + " moduleAction = " + moduleActionIdFromJSON, null, null, null)).show();
 			}
 
 		}
