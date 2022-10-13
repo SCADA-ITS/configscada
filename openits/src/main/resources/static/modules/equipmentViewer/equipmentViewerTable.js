@@ -388,38 +388,49 @@ export default class EquipmentViewerTable {
 			for (let ev of elementValue) {
 
 				let dataToUpdate = self.data.find(dat => dat.id === ev.id);
-
+				
 				if (dataToUpdate && ((dataToUpdate.value != ev.value) || (ev.elementValueState && dataToUpdate.elementValueState != ev.elementValueState.id))) {
 
-					if (ev.elementTypeParam.dataType.id === DataType.DECIMAL) {
+					let valuesForPrint = util.element.getValuesForPrint(null, ev);
 
-						let precision = ev.elementTypeParam.precision ? ev.elementTypeParam.precision : DEFAULT_PRECISION;
-						let val = ev.value ? ev.value.replace(",", ".") : ev.value;
-						let parseValue = (typeof (val) === "string") ? parseFloat(val) : val;
-
-						dataToUpdate.value = parseValue ? parseValue.toFixed(precision) : parseValue;
-
-					} 
-					else if (ev.elementTypeParam.dataType.id === DataType.TIMESTAMP) {
-
-						let parseValue = (typeof(ev.value) === "string") ? parseInt(ev.value) : ev.value;
-
-						dataToUpdate.value = util.toLocaleString(parseValue / 1000);
-					}
-					else {
-
-						dataToUpdate.value = ev.value;						
-					}
-					
-					if (ev.elementValueState) {
-
-						let iconElementValueState = ev.elementValueState.id.replace(":", "_") + ".png";
-						dataToUpdate.iconElementValueState = iconElementValueState;
-						dataToUpdate.elementValueState = ev.elementValueState.id;
-					}
+					dataToUpdate.value = valuesForPrint.value;
+					dataToUpdate.iconElementValueState = valuesForPrint.iconElementValueState;
+					dataToUpdate.elementValueState = valuesForPrint.elementValueState;
 
 					self.measureTable.update(dataToUpdate);
 				}
+
+//				if (dataToUpdate && ((dataToUpdate.value != ev.value) || (ev.elementValueState && dataToUpdate.elementValueState != ev.elementValueState.id))) {
+//
+//					if (ev.elementTypeParam.dataType.id === DataType.DECIMAL) {
+//
+//						let precision = ev.elementTypeParam.precision ? ev.elementTypeParam.precision : DEFAULT_PRECISION;
+//						let val = ev.value ? ev.value.replace(",", ".") : ev.value;
+//						let parseValue = (typeof (val) === "string") ? parseFloat(val) : val;
+//
+//						dataToUpdate.value = parseValue ? parseValue.toFixed(precision) : parseValue;
+//
+//					} 
+//					else if (ev.elementTypeParam.dataType.id === DataType.TIMESTAMP) {
+//
+//						let parseValue = (typeof(ev.value) === "string") ? parseInt(ev.value) : ev.value;
+//
+//						dataToUpdate.value = util.toLocaleString(parseValue / 1000);
+//					}
+//					else {
+//
+//						dataToUpdate.value = ev.value;						
+//					}
+//					
+//					if (ev.elementValueState) {
+//
+//						let iconElementValueState = ev.elementValueState.id.replace(":", "_") + ".png";
+//						dataToUpdate.iconElementValueState = iconElementValueState;
+//						dataToUpdate.elementValueState = ev.elementValueState.id;
+//					}
+//
+//					self.measureTable.update(dataToUpdate);
+//				}
 			}
 		}
 	}
