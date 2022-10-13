@@ -158,7 +158,21 @@ export default class GraphicIcon {
 			
 			let elementType = window.em.getByField(EntityType.ELEMENT_TYPE, "id", self.element.elementType.id);
 			let elementTypeState = window.em.getByField(EntityType.ELEMENT_TYPE_STATE, "id", self.elementTypeState.id);
-							
+			
+			
+			let label = i18n.t(elementType.labelDescription ? elementType.labelDescription : self.element.elementType.labelAlias);
+
+			
+			if (elementType && self.element.elementSubtype && self.element.elementSubtype.id) {
+			
+				let elementSubtype = elementType.elementSubtypes.find(item => item.id === self.element.elementSubtype.id);
+				
+				if(elementSubtype){
+					label += " (" + i18n.t(elementSubtype.labelDescription ? elementSubtype.labelDescription : elementSubtype.labelAlias) + ")";
+				}
+			
+			}
+			
 			if (elementType && elementTypeState) {
 				
 				let elementTypeStateColor = util.element.getColor(elementTypeState);
@@ -169,7 +183,7 @@ export default class GraphicIcon {
 										<span class="badge" style="background: ${elementTypeStateColor} ">${i18n.t(elementTypeState.labelAlias)}</span>
 										<span style="padding-left: 15px">${util.toLocaleString(self.lastUpdated / 1000)}</span>
 									</div>
-									<div class="text_title">${i18n.t(elementType.labelDescription ? elementType.labelDescription : elementType.labelAlias) + " (" + elementType.alias + ")"}</div>`;
+									<div class="text_title">${label}</div>`;
 									
 				tooltip.style.display = "block";
 				tooltip.style.left = e.pageX + 10 + 'px';
