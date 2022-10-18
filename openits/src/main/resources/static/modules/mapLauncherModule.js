@@ -92,7 +92,19 @@ export default class MapLauncherModule extends GenericModule {
 
 							if (container) {
 
-								container.close();
+								if (self.args.viewTypeId === VIEW_TYPE_WINDOW) {
+
+									container.close();
+
+								} else {
+
+									let view = $$(MAIN_TAB_ID);
+
+									if (view) {
+
+										view.removeView(self.args.containerId);
+									}
+								}
 							}
 						}
 					}
@@ -171,8 +183,20 @@ export default class MapLauncherModule extends GenericModule {
 								(new MessageBox(MessageBox.WARN, i18n.t("LBL_MAP_NOT_AVAILABLE_FOR") + ": " + element.alias)).show();
 								
 								if (container) {
-									
-									container.close();
+
+									if (self.args.viewTypeId === VIEW_TYPE_WINDOW) {
+
+										container.close();
+
+									} else {
+
+										let view = $$(MAIN_TAB_ID);
+										 
+										if (view) {
+
+											view.removeView(self.args.containerId);
+										}
+									}
 								}
 							}
 						}
@@ -182,14 +206,26 @@ export default class MapLauncherModule extends GenericModule {
 				function onAccept(selected) {
 
 					if (element && Array.isArray(selected) && selected.length > 0) {
-					
-						load(selected[0], element);	
+
+						load(selected[0], element);
 					}
 					else {
-						
+
 						if (container) {
-							
-							container.close();
+
+							if (self.args.viewTypeId === VIEW_TYPE_WINDOW) {
+
+								container.close();
+
+							} else {
+
+								let view = $$(MAIN_TAB_ID);
+
+								if (view) {
+
+									view.removeView(self.args.containerId);
+								}
+							}
 						}
 					}
 				}
