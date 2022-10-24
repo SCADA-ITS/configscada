@@ -471,6 +471,10 @@ export default class CamViewer {
 
 			const CTRL_ROWS = 5;
 			const CTRL_COLS = 3;
+			const SPEED_CONFIGS = "ElementTypeParam:2:1:12";
+			const SPEED_TYPE_PARAM = "CommandElementTypeParam:3:2:2";
+			const SIZE_CORRECTOR_FACTOR = 0.5;
+			const MAX_SPEED_CONFIGS = 2;
 
 			let sizeCorrection = (camContainer.clientWidth / h) * 0.6;
 
@@ -514,7 +518,59 @@ export default class CamViewer {
 
 			let btnWidth = Math.floor((h / 2) / CTRL_ROWS) * sizeCorrection;
 			let btnHeight = btnWidth;
+			let cssStyle;
+			let cssStyleExtraZoomButton;
+			
+			let speedConfigsValues = undefined;
+			let showExtendsControls = false;
+			let showCounterControl = false;
+			let speedConfigs = self.element.elementValues.find(e => e.elementTypeParam.id === SPEED_CONFIGS);						
 
+			try {
+
+				speedConfigsValues = JSON.parse(speedConfigs.value);
+
+			} catch {
+
+			}
+			
+			if (Array.isArray(speedConfigsValues) && speedConfigsValues.length > 0) {
+
+				if (speedConfigsValues.length === MAX_SPEED_CONFIGS) {
+
+					showExtendsControls = true;
+					
+				} else if (speedConfigsValues.length > MAX_SPEED_CONFIGS) {
+
+					showExtendsControls = true;
+					showCounterControl = true;
+				}
+				
+				if (speedConfigsValues[0].position) {
+
+					speedConfigsValues.sort((a, b) => (a.position > b.position) ? 1 : (b.position > a.position) ? -1 : 0);
+				}
+			}			
+
+			if (self.mode === CamViewer.MODE_SINGLE && !showExtendsControls) {
+
+				cssStyle = "cam-viewer-controls";
+
+			} else if (self.mode === CamViewer.MODE_SINGLE && showExtendsControls) {
+
+				cssStyle = "cam-viewer-controls cam-viewer-extends-controls";
+				cssStyleExtraZoomButton = "cam-viewer-controls extra-zoom-button";
+
+			} else if (self.mode === CamViewer.MODE_MULTI && showExtendsControls) {
+
+				cssStyle = "cam-viewer-controls-small cam-viewer-extends-controls-small";
+				cssStyleExtraZoomButton = "cam-viewer-controls-small extra-zoom-button-small";
+
+			} else {
+
+				cssStyle = "cam-viewer-controls-small";
+			}
+			
 			let viewCamControls = {
 				id: "cam-controls-" + self.uid,
 				top: top,
@@ -523,7 +579,7 @@ export default class CamViewer {
 				rows: [
 				//	{ height : top },
 					{
-						height: camContainer.clientHeight * 0.7,
+						height: camContainer.clientHeight * 0.8,
 						cols: [
 							{ width: 1 },
 							{
@@ -532,33 +588,36 @@ export default class CamViewer {
 								rows: [
 									{
 										cols: [
-											{ width: btnWidth, height: btnHeight },
+											(showExtendsControls) ? {} : { width: btnWidth, height: btnHeight },
 											getBtnUp(),
-											{ width: btnWidth, height: btnHeight }
+											(showExtendsControls) ? {} : { width: btnWidth, height: btnHeight }
 										]
 									},
 									{
 										cols: [
+											{},
 											getBtnLeft(),
-											Array.isArray(presets) && presets.length > 0 && presets.find(e => e.default) ? getBtnDefaultPreset() : {},
-											getBtnRight()
+											getBtnDefaultPreset(),
+											getBtnRight(),
+											{}
 										]
 									},
 									{
 										cols: [
-											{ width: btnWidth, height: btnHeight },
+											(showExtendsControls) ? {} : { width: btnWidth, height: btnHeight },
 											getBtnDown(),
-											{ width: btnWidth, height: btnHeight }
+											(showExtendsControls) ? {} : { width: btnWidth, height: btnHeight }
 										]
 									},
 									{
 										cols: [
 											getBtnZoomOut(),
-											{ width: btnWidth, height: btnHeight },
+											(showExtendsControls) ? {} : { width: btnWidth, height: btnHeight },
 											getBtnZoomIn()
 										]
 									},
-									getBtnPresets()
+									getBtnPresets(),
+									getSpeedCounter()									
 								]
 							},
 							{ width: 1 }
@@ -573,22 +632,132 @@ export default class CamViewer {
 				let viewBtnUp;
 
 				viewBtnUp = {
+					rows: [
+						{
+							view: "button",
+							css: cssStyle,
+							width: (showExtendsControls) ? btnWidth * SIZE_CORRECTOR_FACTOR : btnWidth,
+							height:(showExtendsControls) ? btnHeight * SIZE_CORRECTOR_FACTOR : btnHeight,
+							disabled: !self.tilt,
+							type: "icon",
+							icon: "mdi mdi-chevron-double-up",
+							tooltip: function() {
 
-					view: "button",
-					css: self.mode === CamViewer.MODE_SINGLE ? "cam-viewer-controls" : "cam-viewer-controls-small",
-					width: btnWidth,
-					height: btnHeight,
-					disabled: !self.tilt,
-					type: "icon",
-					icon: "mdi mdi-chevron-up",
-					tooltip: i18n.t("LBL_CAM_MOVE_UP"),
-					on: {
-						onItemClick: function() {
+								let tooltip = i18n.t("LBL_CAM_MOVE_UP");
 
-							move(self.config.ptzValue.up);
+								if (showCounterControl) {
+
+									if ($$("speed-counter-" + self.uid)) {
+
+										let counterValue = $$("speed-counter-" + self.uid).getValue();
+										tooltip += " " + i18n.t(speedConfigsValues[counterValue].label);
+									}
+
+								} else {
+
+									tooltip += " " + i18n.t(speedConfigsValues[1].label);
+								}
+
+								return tooltip;
+							},
+							hidden: !showExtendsControls,
+							on: {
+								onItemClick: function() {
+							
+									let command;
+
+									if (showExtendsControls && showCounterControl) {
+
+										if ($$("speed-counter-" + self.uid)) {
+
+											let counterValue = $$("speed-counter-" + self.uid).getValue();
+											command = {
+												id: self.config.ptzValue.up,
+												speedId: speedConfigsValues[counterValue].id.toString()
+											};
+
+											move(command);
+										}
+
+									} else if (showExtendsControls && !showCounterControl) {
+
+										command = {
+											id: self.config.ptzValue.up,
+											speedId: speedConfigsValues[1].id.toString()
+										};
+
+										move(command);
+
+									} else {
+
+										move(self.config.ptzValue.up);
+									}	
+								}
+							}
+						},
+						{
+							view: "button",
+							css: cssStyle,
+							width: (showExtendsControls) ? btnWidth * SIZE_CORRECTOR_FACTOR : btnWidth,
+							height: (showExtendsControls) ? btnHeight * SIZE_CORRECTOR_FACTOR : btnHeight,
+							disabled: !self.tilt,
+							type: "icon",
+							icon: "mdi mdi-chevron-up",
+							tooltip: function() {
+
+								let tooltip = i18n.t("LBL_CAM_MOVE_UP");
+
+								if (showExtendsControls && showCounterControl) {
+
+									if ($$("speed-counter-" + self.uid)) {
+
+										let counterValue = $$("speed-counter-" + self.uid).getValue();
+										tooltip += " " + i18n.t(speedConfigsValues[counterValue - 1].label);
+									}
+
+								} else if (showExtendsControls && !showCounterControl) {
+
+									tooltip += " " + i18n.t(speedConfigsValues[0].label);
+								}
+
+								return tooltip;
+							},
+							on: {
+								onItemClick: function() {
+
+									let command;
+
+									if (showExtendsControls && showCounterControl) {
+
+										if ($$("speed-counter-" + self.uid)) {
+
+											let counterValue = $$("speed-counter-" + self.uid).getValue();
+											command = {
+												id: self.config.ptzValue.up,
+												speedId: speedConfigsValues[counterValue - 1].id.toString()
+											};
+
+											move(command);
+										}
+
+									} else if (showExtendsControls && !showCounterControl) {
+
+										command = {
+											id: self.config.ptzValue.up,
+											speedId: speedConfigsValues[0].id.toString()
+										};
+
+										move(command);
+
+									} else {
+
+										move(self.config.ptzValue.up);
+									}
+								}
+							}
 						}
-					}
-				}
+					]
+				};
 
 				return viewBtnUp;
 			}
@@ -598,22 +767,132 @@ export default class CamViewer {
 				let viewBtnDown;
 
 				viewBtnDown = {
+					rows: [
+						{
+							view: "button",
+							css: cssStyle,
+							width: (showExtendsControls) ? btnWidth * SIZE_CORRECTOR_FACTOR : btnWidth,
+							height: (showExtendsControls) ? btnHeight * SIZE_CORRECTOR_FACTOR : btnHeight,
+							disabled: !self.tilt,
+							type: "icon",
+							icon: "mdi mdi-chevron-down",
+							tooltip: function() {
 
-					view: "button",
-					css: self.mode === CamViewer.MODE_SINGLE ? "cam-viewer-controls" : "cam-viewer-controls-small",
-					width: btnWidth,
-					height: btnHeight,
-					disabled: !self.tilt,
-					type: "icon",
-					icon: "mdi mdi-chevron-down",
-					tooltip: i18n.t("LBL_CAM_MOVE_DOWN"),
-					on: {
-						onItemClick: function() {
+								let tooltip = i18n.t("LBL_CAM_MOVE_DOWN");
 
-							move(self.config.ptzValue.down);
+								if (showExtendsControls && showCounterControl) {
+
+									if ($$("speed-counter-" + self.uid)) {
+
+										let counterValue = $$("speed-counter-" + self.uid).getValue();
+										tooltip += " " + i18n.t(speedConfigsValues[counterValue - 1].label);
+									}
+
+								} else if (showExtendsControls && !showCounterControl) {
+
+									tooltip += " " + i18n.t(speedConfigsValues[0].label);
+								}
+
+								return tooltip;
+							},							
+							on: {
+								onItemClick: function() {
+									
+									let command;
+
+									if (showExtendsControls && showCounterControl) {
+
+										if ($$("speed-counter-" + self.uid)) {
+
+											let counterValue = $$("speed-counter-" + self.uid).getValue();
+											command = {
+												id: self.config.ptzValue.down,
+												speedId: speedConfigsValues[counterValue - 1].id.toString()
+											};
+
+											move(command);
+										}
+
+									} else if (showExtendsControls && !showCounterControl) {
+
+										command = {
+											id: self.config.ptzValue.down,
+											speedId: speedConfigsValues[0].id.toString()
+										};
+
+										move(command);
+
+									} else {
+
+										move(self.config.ptzValue.down);
+									}
+								}
+							}
+						},
+						{
+							view: "button",
+							css: cssStyle,
+							width: (showExtendsControls) ? btnWidth * SIZE_CORRECTOR_FACTOR : btnWidth,
+							height: (showExtendsControls) ? btnHeight * SIZE_CORRECTOR_FACTOR : btnHeight,
+							disabled: !self.tilt,
+							type: "icon",
+							icon: "mdi mdi-chevron-double-down",
+							tooltip: function() {
+
+								let tooltip = i18n.t("LBL_CAM_MOVE_DOWN");
+
+								if (showCounterControl) {
+
+									if ($$("speed-counter-" + self.uid)) {
+
+										let counterValue = $$("speed-counter-" + self.uid).getValue();
+										tooltip += " " + i18n.t(speedConfigsValues[counterValue].label);
+									}
+
+								} else {
+
+									tooltip += " " + i18n.t(speedConfigsValues[1].label);
+								}
+
+								return tooltip;
+							},
+							hidden: !showExtendsControls,
+							on: {
+								onItemClick: function() {
+									
+									let command;
+
+									if (showExtendsControls && showCounterControl) {
+
+										if ($$("speed-counter-" + self.uid)) {
+
+											let counterValue = $$("speed-counter-" + self.uid).getValue();
+											command = {
+												id: self.config.ptzValue.down,
+												speedId: speedConfigsValues[counterValue].id.toString()
+											};
+
+											move(command);
+										}
+
+									} else if (showExtendsControls && !showCounterControl) {
+
+										command = {
+											id: self.config.ptzValue.down,
+											speedId: speedConfigsValues[1].id.toString()
+										};
+
+										move(command);
+
+									} else {
+
+										move(self.config.ptzValue.down);
+									}
+								}
+							}
 						}
-					}
-				}
+					]
+				};
 
 				return viewBtnDown;
 			}
@@ -623,22 +902,132 @@ export default class CamViewer {
 				let viewBtnLeft;
 
 				viewBtnLeft = {
+					cols: [
+						{
+							view: "button",
+							css: cssStyle,
+							width: (showExtendsControls) ? btnWidth * SIZE_CORRECTOR_FACTOR : btnWidth,
+							height: (showExtendsControls) ? btnHeight * SIZE_CORRECTOR_FACTOR : btnHeight,
+							disabled: !self.pan,
+							type: "icon",
+							icon: "mdi mdi-chevron-double-left",
+							tooltip: function() {
 
-					view: "button",
-					css: self.mode === CamViewer.MODE_SINGLE ? "cam-viewer-controls" : "cam-viewer-controls-small",
-					width: btnWidth,
-					height: btnHeight,
-					disabled: !self.pan,
-					type: "icon",
-					icon: "mdi mdi-chevron-left",
-					tooltip: i18n.t("LBL_CAM_MOVE_LEFT"),
-					on: {
-						onItemClick: function() {
+								let tooltip = i18n.t("LBL_CAM_MOVE_LEFT");
 
-							move(self.config.ptzValue.left);
+								if (showCounterControl) {
+
+									if ($$("speed-counter-" + self.uid)) {
+
+										let counterValue = $$("speed-counter-" + self.uid).getValue();
+										tooltip += " " + i18n.t(speedConfigsValues[counterValue].label);
+									}
+
+								} else {
+
+									tooltip += " " + i18n.t(speedConfigsValues[1].label);
+								}
+
+								return tooltip;
+							},
+							hidden: !showExtendsControls,
+							on: {
+								onItemClick: function() {
+
+									let command;
+
+									if (showExtendsControls && showCounterControl) {
+
+										if ($$("speed-counter-" + self.uid)) {
+
+											let counterValue = $$("speed-counter-" + self.uid).getValue();
+											command = {
+												id: self.config.ptzValue.left,
+												speedId: speedConfigsValues[counterValue].id.toString()
+											};
+
+											move(command);
+										}
+
+									} else if (showExtendsControls && !showCounterControl) {
+
+										command = {
+											id: self.config.ptzValue.left,
+											speedId: speedConfigsValues[1].id.toString()
+										};
+
+										move(command);
+
+									} else {
+
+										move(self.config.ptzValue.left);
+									}
+								}
+							}
+						},
+						{
+							view: "button",
+							css: cssStyle,
+							width: (showExtendsControls) ? btnWidth * SIZE_CORRECTOR_FACTOR : btnWidth,
+							height: (showExtendsControls) ? btnHeight * SIZE_CORRECTOR_FACTOR : btnHeight,
+							disabled: !self.pan,
+							type: "icon",
+							icon: "mdi mdi-chevron-left",
+							tooltip: function() {
+
+								let tooltip = i18n.t("LBL_CAM_MOVE_LEFT");
+
+								if (showExtendsControls && showCounterControl) {
+
+									if ($$("speed-counter-" + self.uid)) {
+
+										let counterValue = $$("speed-counter-" + self.uid).getValue();
+										tooltip += " " + i18n.t(speedConfigsValues[counterValue - 1].label);
+									}
+
+								} else if (showExtendsControls && !showCounterControl) {
+
+									tooltip += " " + i18n.t(speedConfigsValues[0].label);
+								}
+
+								return tooltip;
+							},
+							on: {
+								onItemClick: function() {
+									
+									let command;
+
+									if (showExtendsControls && showCounterControl) {
+
+										if ($$("speed-counter-" + self.uid)) {
+
+											let counterValue = $$("speed-counter-" + self.uid).getValue();
+											command = {
+												id: self.config.ptzValue.left,
+												speedId: speedConfigsValues[counterValue - 1].id.toString()
+											};
+
+											move(command);
+										}
+
+									} else if (showExtendsControls && !showCounterControl) {
+
+										command = {
+											id: self.config.ptzValue.left,
+											speedId: speedConfigsValues[0].id.toString()
+										};
+
+										move(command);
+
+									} else {
+
+										move(self.config.ptzValue.left);
+									}
+								}
+							}
 						}
-					}
-				}
+					]
+				};
 
 				return viewBtnLeft;
 			}
@@ -648,21 +1037,131 @@ export default class CamViewer {
 				let viewBtnRight;
 
 				viewBtnRight = {
+					cols: [
+						{
+							view: "button",
+							css: cssStyle,
+							width: (showExtendsControls) ? btnWidth * SIZE_CORRECTOR_FACTOR : btnWidth,
+							height: (showExtendsControls) ? btnHeight * SIZE_CORRECTOR_FACTOR : btnHeight,
+							disabled: !self.pan,
+							type: "icon",
+							icon: "mdi mdi-chevron-right",
+							tooltip: function() {
 
-					view: "button",
-					css: self.mode === CamViewer.MODE_SINGLE ? "cam-viewer-controls" : "cam-viewer-controls-small",
-					width: btnWidth,
-					height: btnHeight,
-					disabled: !self.pan,
-					type: "icon",
-					icon: "mdi mdi-chevron-right",
-					tooltip: i18n.t("LBL_CAM_MOVE_RIGHT"),
-					on: {
-						onItemClick: function() {
+								let tooltip = i18n.t("LBL_CAM_MOVE_RIGHT");
 
-							move(self.config.ptzValue.right);
+								if (showExtendsControls && showCounterControl) {
+
+									if ($$("speed-counter-" + self.uid)) {
+
+										let counterValue = $$("speed-counter-" + self.uid).getValue();
+										tooltip += " " + i18n.t(speedConfigsValues[counterValue - 1].label);
+									}
+
+								} else if (showExtendsControls && !showCounterControl) {
+
+									tooltip += " " + i18n.t(speedConfigsValues[0].label);
+								}
+
+								return tooltip;
+							},
+							on: {
+								onItemClick: function() {
+
+									let command;
+									
+									if (showExtendsControls && showCounterControl) {
+
+										if ($$("speed-counter-" + self.uid)) {
+
+											let counterValue = $$("speed-counter-" + self.uid).getValue();
+											command = {
+												id: self.config.ptzValue.right,
+												speedId: speedConfigsValues[counterValue - 1].id.toString()
+											};
+
+											move(command);
+										}
+
+									} else if (showExtendsControls && !showCounterControl) {
+
+										command = {
+											id: self.config.ptzValue.right,
+											speedId: speedConfigsValues[0].id.toString()
+										};
+
+										move(command);
+
+									} else {
+
+										move(self.config.ptzValue.right);
+									}
+								}
+							}
+						},
+						{
+							view: "button",
+							css: cssStyle,
+							width: (showExtendsControls) ? btnWidth * SIZE_CORRECTOR_FACTOR : btnWidth,
+							height: (showExtendsControls) ? btnHeight * SIZE_CORRECTOR_FACTOR : btnHeight,
+							disabled: !self.pan,
+							type: "icon",
+							icon: "mdi mdi-chevron-double-right",
+							tooltip: function() {
+
+								let tooltip = i18n.t("LBL_CAM_MOVE_RIGHT");
+
+								if (showCounterControl) {
+
+									if ($$("speed-counter-" + self.uid)) {
+
+										let counterValue = $$("speed-counter-" + self.uid).getValue();
+										tooltip += " " + i18n.t(speedConfigsValues[counterValue].label);
+									}
+
+								} else {
+
+									tooltip += " " + i18n.t(speedConfigsValues[1].label);
+								}
+
+								return tooltip;
+							},
+							hidden: !showExtendsControls,
+							on: {
+								onItemClick: function() {
+									
+									let command;
+
+									if (showExtendsControls && showCounterControl) {
+
+										if ($$("speed-counter-" + self.uid)) {
+
+											let counterValue = $$("speed-counter-" + self.uid).getValue();
+											command = {
+												id: self.config.ptzValue.right,
+												speedId: speedConfigsValues[counterValue].id.toString()
+											};
+
+											move(command);
+										}
+
+									} else if (showExtendsControls && !showCounterControl) {
+
+										command = {
+											id: self.config.ptzValue.right,
+											speedId: speedConfigsValues[1].id.toString()
+										};
+
+										move(command);
+
+									} else {
+
+										move(self.config.ptzValue.right);
+									}
+								}
+							}
 						}
-					}
+					]
 				};
 
 				return viewBtnRight;
@@ -672,21 +1171,27 @@ export default class CamViewer {
 
 				let viewBtnStop;
 
-				viewBtnStop = {
+				if (Array.isArray(presets) && presets.length > 0 && presets.find(e => e.default)) {
 
-					view: "button",
-					css: self.mode === CamViewer.MODE_SINGLE ? "cam-viewer-controls" : "cam-viewer-controls-small",
-					width: btnWidth,
-					height: btnHeight,
-					type: "icon",
-					icon: "mdi mdi-circle-medium",
-					tooltip: i18n.t("LBL_DEFAULT_PRESET"),
-					on: {
-						onItemClick: function() {
-							preset(presets.find(e => e.default).id);
+					viewBtnStop = {
+						view: "button",
+						css: cssStyle,
+						width: (showExtendsControls) ? btnWidth * SIZE_CORRECTOR_FACTOR : btnWidth,
+						height: (showExtendsControls) ? btnHeight * SIZE_CORRECTOR_FACTOR : btnHeight,
+						type: "icon",
+						icon: "mdi mdi-circle-medium",
+						tooltip: i18n.t("LBL_DEFAULT_PRESET"),
+						on: {
+							onItemClick: function() {
+								preset(presets.find(e => e.default).id);
+							}
 						}
-					}
-				};
+					};
+					
+				} else {
+
+					viewBtnStop = (showExtendsControls) ? { width: btnWidth * SIZE_CORRECTOR_FACTOR, height: btnHeight * SIZE_CORRECTOR_FACTOR } : { width: btnWidth, height: btnHeight };
+				}
 
 				return viewBtnStop;
 			}
@@ -696,21 +1201,137 @@ export default class CamViewer {
 				let viewBtnZoomOut;
 
 				viewBtnZoomOut = {
+					cols: [
+						{
+							view: "button",
+							css: self.mode === CamViewer.MODE_SINGLE ? "cam-viewer-controls" : "cam-viewer-controls-small",
+							width: btnWidth,
+							height: btnHeight,
+							disabled: !self.zoom,
+							type: "icon",
+							icon: "mdi mdi-magnify-minus-outline",
+							tooltip: function() {
 
-					view: "button",
-					css: self.mode === CamViewer.MODE_SINGLE ? "cam-viewer-controls" : "cam-viewer-controls-small",
-					width: btnWidth,
-					height: btnHeight,
-					disabled: !self.zoom,
-					type: "icon",
-					icon: "mdi mdi-magnify-minus-outline",
-					tooltip: i18n.t("LBL_CAM_ZOOM_OUT"),
-					on: {
-						onItemClick: function() {
+								let tooltip = i18n.t("LBL_CAM_ZOOM_OUT");
 
-							move(self.config.ptzValue.zoomOut);
+								if (showExtendsControls && showCounterControl) {
+
+									if ($$("speed-counter-" + self.uid)) {
+
+										let counterValue = $$("speed-counter-" + self.uid).getValue();
+										tooltip += " " + i18n.t(speedConfigsValues[counterValue - 1].label);
+									}
+
+								} else if (showExtendsControls && !showCounterControl) {
+
+									tooltip += " " + i18n.t(speedConfigsValues[0].label);
+
+								}
+
+								return tooltip;
+							},
+							on: {
+								onItemClick: function() {
+
+									let command;
+
+									if (showExtendsControls && showCounterControl) {
+
+										if ($$("speed-counter-" + self.uid)) {
+
+											let counterValue = $$("speed-counter-" + self.uid).getValue();
+											command = {
+												id: self.config.ptzValue.zoomOut,
+												speedId: speedConfigsValues[counterValue - 1].id.toString()
+											};
+
+											move(command);
+										}
+
+									} else if (showExtendsControls && !showCounterControl) {
+
+										command = {
+											id: self.config.ptzValue.zoomOut,
+											speedId: speedConfigsValues[0].id.toString()
+										};
+
+										move(command);
+
+									} else {
+
+										move(self.config.ptzValue.zoomOut);
+									}
+								}
+							}
+						},
+						{
+							hidden: !showExtendsControls,
+							rows: [
+								{ width: btnWidth * 0.25, height: btnHeight * 0.25 },
+								{
+									view: "button",
+									css: cssStyleExtraZoomButton,
+									width: btnWidth / 2,
+									height: btnHeight / 2,
+									disabled: !self.zoom,
+									type: "icon",
+									icon: "mdi mdi-magnify-minus",
+									tooltip: function() {
+
+										let tooltip = i18n.t("LBL_CAM_ZOOM_OUT");
+
+										if (showCounterControl) {
+
+											if ($$("speed-counter-" + self.uid)) {
+
+												let counterValue = $$("speed-counter-" + self.uid).getValue();
+												tooltip += " " + i18n.t(speedConfigsValues[counterValue].label);
+											}
+
+										} else {
+
+											tooltip += " " + i18n.t(speedConfigsValues[1].label);
+										}
+
+										return tooltip;
+									},
+									on: {
+										onItemClick: function() {
+
+											let command;
+
+											if (showExtendsControls && showCounterControl) {
+
+												if ($$("speed-counter-" + self.uid)) {
+
+													let counterValue = $$("speed-counter-" + self.uid).getValue();
+													command = {
+														id: self.config.ptzValue.zoomOut,
+														speedId: speedConfigsValues[counterValue].id.toString()
+													};
+
+													move(command);
+												}
+
+											} else if (showExtendsControls && !showCounterControl) {
+
+												command = {
+													id: self.config.ptzValue.zoomOut,
+													speedId: speedConfigsValues[1].id.toString()
+												};
+
+												move(command);
+
+											} else {
+
+												move(self.config.ptzValue.zoomOut);
+											}
+										}
+									}
+								}
+							]
 						}
-					}
+					]
 				};
 
 				return viewBtnZoomOut;
@@ -721,21 +1342,136 @@ export default class CamViewer {
 				let viewBtnZoomIn;
 
 				viewBtnZoomIn = {
+					cols: [
+												{
+							hidden: !showExtendsControls,
+							rows: [
+								{ width: btnWidth * 0.25, height: btnHeight * 0.25 },
+								{
+									view: "button",
+									css: cssStyleExtraZoomButton,
+									width: btnWidth / 2,
+									height: btnHeight / 2,
+									disabled: !self.zoom,
+									type: "icon",
+									icon: "mdi mdi-magnify-plus mdi-rotate-90",
+									tooltip: function() {
 
-					view: "button",
-					css: self.mode === CamViewer.MODE_SINGLE ? "cam-viewer-controls" : "cam-viewer-controls-small",
-					width: btnWidth,
-					height: btnHeight,
-					disabled: !self.zoom,
-					type: "icon",
-					icon: "mdi mdi-magnify-plus-outline",
-					tooltip: i18n.t("LBL_CAM_ZOOM_IN"),
-					on: {
-						onItemClick: function() {
+										let tooltip = i18n.t("LBL_CAM_ZOOM_IN");
 
-							move(self.config.ptzValue.zoomIn);
+										if (showCounterControl) {
+
+											if ($$("speed-counter-" + self.uid)) {
+
+												let counterValue = $$("speed-counter-" + self.uid).getValue();
+												tooltip += " " + i18n.t(speedConfigsValues[counterValue].label);
+											}
+
+										} else {
+
+											tooltip += " " + i18n.t(speedConfigsValues[1].label);
+										}
+
+										return tooltip;
+									},
+									on: {
+										onItemClick: function() {
+
+											let command;
+
+											if (showExtendsControls && showCounterControl) {
+
+												if ($$("speed-counter-" + self.uid)) {
+
+													let counterValue = $$("speed-counter-" + self.uid).getValue();
+													command = {
+														id: self.config.ptzValue.zoomIn,
+														speedId: speedConfigsValues[counterValue].id.toString()
+													};
+
+													move(command);
+												}
+
+											} else if (showExtendsControls && !showCounterControl) {
+
+												command = {
+													id: self.config.ptzValue.zoomIn,
+													speedId: speedConfigsValues[1].id.toString()
+												};
+
+												move(command);
+
+											} else {
+
+												move(self.config.ptzValue.zoomIn);
+											}
+										}
+									}
+								}
+							]
+						},
+						{
+							view: "button",
+							css: self.mode === CamViewer.MODE_SINGLE ? "cam-viewer-controls" : "cam-viewer-controls-small",
+							width: btnWidth,
+							height: btnHeight,
+							disabled: !self.zoom,
+							type: "icon",
+							icon: "mdi mdi-magnify-plus-outline mdi-rotate-90",
+							tooltip: function() {
+
+								let tooltip = i18n.t("LBL_CAM_ZOOM_IN");
+
+								if (showExtendsControls && showCounterControl) {
+
+									if ($$("speed-counter-" + self.uid)) {
+
+										let counterValue = $$("speed-counter-" + self.uid).getValue();
+										tooltip += " " + i18n.t(speedConfigsValues[counterValue - 1].label);
+									}
+
+								} else if(showExtendsControls && !showCounterControl) {
+
+									tooltip += " " + i18n.t(speedConfigsValues[0].label);
+								}
+
+								return tooltip;
+							},	
+							on: {
+								onItemClick: function() {
+
+									let command;
+
+									if (showExtendsControls && showCounterControl) {
+
+										if ($$("speed-counter-" + self.uid)) {
+
+											let counterValue = $$("speed-counter-" + self.uid).getValue();
+											command = {
+												id: self.config.ptzValue.zoomIn,
+												speedId: speedConfigsValues[counterValue - 1].id.toString()
+											};
+
+											move(command);
+										}
+
+									} else if (showExtendsControls && !showCounterControl) {
+
+										command = {
+											id: self.config.ptzValue.zoomIn,
+											speedId: speedConfigsValues[0].id.toString()
+										};
+
+										move(command);
+
+									} else {
+
+										move(self.config.ptzValue.zoomIn);
+									}
+								}
+							}
 						}
-					}
+					]
 				};
 
 				return viewBtnZoomIn;
@@ -798,18 +1534,74 @@ export default class CamViewer {
 
 				return viewBtnPresets;
 			}
+			
+			function getSpeedCounter() {
+
+				let speedCounter = {};
+
+				if (showCounterControl) {
+
+					speedCounter = {
+						id: "speed-counter-" + self.uid,
+						view: "counter",
+						height: btnHeight,
+						step: 1,
+						css: (self.mode === CamViewer.MODE_SINGLE) ? "cam-viewer-counter" : "cam-viewer-counter-small",
+						min: 1,
+						max: speedConfigsValues.length - 1,
+						tooltip: function() {
+
+							let tooltip;
+							let counterValue = $$("speed-counter-" + self.uid).getValue();
+							let doubleIconsLabel = i18n.t(speedConfigsValues[counterValue].label);
+							let simpleIconsLabel = i18n.t(speedConfigsValues[counterValue-1].label);
+														 
+							tooltip = `<div>
+										<span>${i18n.t("LBL_SENSIBILITY")}</span><br>
+										<span class='mdi mdi-chevron-double-up'>${i18n.t("LBL_CAM_MOVE_UP") + " " + doubleIconsLabel}</span><br>
+										<span class='mdi mdi-chevron-up'>${i18n.t("LBL_CAM_MOVE_UP") + " " + simpleIconsLabel}</span><br>
+										<span class='mdi mdi-chevron-double-right'>${i18n.t("LBL_CAM_MOVE_RIGHT") + " " + doubleIconsLabel}</span><br>
+										<span class='mdi mdi-chevron-right'>${i18n.t("LBL_CAM_MOVE_RIGHT") + " " + simpleIconsLabel}</span><br>
+										<span class='mdi mdi-chevron-double-down'>${i18n.t("LBL_CAM_MOVE_DOWN") + " " + doubleIconsLabel}</span><br>
+										<span class='mdi mdi-chevron-down'>${i18n.t("LBL_CAM_MOVE_DOWN") + " " + simpleIconsLabel}</span><br>
+										<span class='mdi mdi-chevron-double-left'>${i18n.t("LBL_CAM_MOVE_LEFT") + " " + doubleIconsLabel}</span><br>
+										<span class='mdi mdi-chevron-left'>${i18n.t("LBL_CAM_MOVE_LEFT") + " " + simpleIconsLabel}</span><br>
+										<span class='mdi mdi-magnify-minus'>${i18n.t("LBL_CAM_ZOOM_OUT") + " " + doubleIconsLabel}</span><br>
+										<span class='mdi mdi-magnify-minus-outline'>${i18n.t("LBL_CAM_ZOOM_OUT") + " " + simpleIconsLabel}</span><br>
+										<span class='mdi mdi-magnify-plus'>${i18n.t("LBL_CAM_ZOOM_IN") + " " + doubleIconsLabel}</span><br>
+										<span class='mdi mdi-magnify-plus-outline'>${i18n.t("LBL_CAM_ZOOM_IN") + " " + simpleIconsLabel}</span>
+										</div>`; 
+
+							return tooltip;
+						}
+					};
+				}
+
+				return speedCounter;
+			}
 
 			function move(id) {
 				
 				if (self.config.commands.ptz && id) {
 
 					let sendMessageCmd = webix.copy(self.config.commands.ptz);
-
 					sendMessageCmd.elementId = self.element.id;
-					sendMessageCmd.commandElementValues[0].value = id;
+
+					if (typeof (id) === "object") {
+
+						sendMessageCmd.commandElementValues[0].value = id.id;
+						sendMessageCmd.commandElementValues.push({
+							commandElementTypeParamId: SPEED_TYPE_PARAM,
+							value: id.speedId
+						});
+
+					} else {
+
+						sendMessageCmd.commandElementValues[0].value = id;
+					}
 
 					let sendMessageCmdCopy = webix.copy(sendMessageCmd);
-
+console.log(sendMessageCmdCopy)
 					util.element.sendCommand([sendMessageCmdCopy]);
 				}
 

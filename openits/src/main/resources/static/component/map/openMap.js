@@ -470,7 +470,7 @@ export default class OpenMap extends GenericMap {
 							
 							if (self.isElementLayerVisible(graphicIcon)) {
 							
-								addLine(graphicIcon);
+								//addLine(graphicIcon);
 								
 								graphicIcon.show();
 								
@@ -887,9 +887,9 @@ export default class OpenMap extends GenericMap {
 		}
 		
 		function addLine(graphicIcon) {
-			
+						
 			if (graphicIcon.layerElement.longitude && graphicIcon.layerElement.latitude) {
-				
+
 				removeLine(graphicIcon);
 							
 				if (graphicIcon.layerElement.longitude2 && graphicIcon.layerElement.latitude2) {
