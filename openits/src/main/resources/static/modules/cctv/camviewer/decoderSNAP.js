@@ -13,7 +13,7 @@ export default class DecoderSNAP extends Decoder {
 		this.config = this.config.camConf.decoders[Decoder.SNAP];
 		this.img = undefined;
 		this.fps = this.config.defaultFps ? this.config.defaultFps : DEFAULT_FPS;
-		this.timeCheckStreamMs = Math.floor(1000 / this.fps);
+	
 		this.timeoutConnectMs = this.config.timeoutConnectMs ? this.config.timeoutConnectMs : DEFAULT_TIMEOUT_CONNECT_MS;
 		this.initTimeElapsedWOConn = 0;
 		this.timeElapsedWOConn = 0;
@@ -25,6 +25,7 @@ export default class DecoderSNAP extends Decoder {
 			this.fps = elementValueFps.value;
 		}
 		
+		this.timeCheckStreamMs = Math.floor(1000 / this.fps);
 		this.running = false;
 		this.loading = false;
 		this.error = false;
@@ -181,12 +182,8 @@ export default class DecoderSNAP extends Decoder {
 					
 					self.timeElapsedWOConn = Date.now() - self.initTimeElapsedWOConn;
 					
-					if (self.timeElapsedWOConn < self.timeoutConnectMs) {
-						
-						self.img.src = self.img.src;
-					}
-					else {
-						
+					if (self.timeElapsedWOConn > self.timeoutConnectMs) {
+							
 						self.img.src = Decoder.NO_VIDEO_IMAGE;
 					}
 				}
