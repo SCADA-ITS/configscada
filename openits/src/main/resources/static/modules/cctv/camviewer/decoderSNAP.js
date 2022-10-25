@@ -207,11 +207,12 @@ export default class DecoderSNAP extends Decoder {
 				newUrl += "?rnd=";
 			}
 			
-			let timeService = window.sm.getService(Services.TIME_SERVICE);
-			let date = timeService.getEpoch();
+			/*let timeService = window.sm.getService(Services.TIME_SERVICE);
+			//let date = timeService.getEpoch();
 			
-			newUrl += date;
-		
+			newUrl += date;*/
+			newUrl += Math.random();
+			
 			return newUrl;
 		}			
 	}
