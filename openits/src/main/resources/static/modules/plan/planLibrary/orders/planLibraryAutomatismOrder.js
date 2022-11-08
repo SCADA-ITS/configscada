@@ -1,3 +1,4 @@
+import {util} from "../../../../lib/util.js";
 import PlanLibraryOrder from "./planLibraryOrder.js";
 import SearchDialogBox from "../../../../component/searchDialogBox.js";
 
@@ -11,7 +12,14 @@ export default class PlanLibraryAutomatismOrder extends PlanLibraryOrder {
 		super(config, uid, plan, planOrder, onUpdate);
 
 		this.planOrderAutomatism = undefined;
+		this.planOrderPermission = true;
+		this.config = config;
+		
+		if (this.planOrder && this.planOrder.planOrderType && this.planOrder.planOrderType.planOrderPermission) {
 
+			this.planOrderPermission = util.module.isAllowedPermission(this.config.requiredPermissions.poAutomatism);
+		}		
+		
 		if (this.planOrder && this.planOrder.planOrderValues && Array.isArray(this.planOrder.planOrderValues) && this.planOrder.planOrderValues.length > 0) {
 
 			this.planOrderAutomatism = webix.copy(this.planOrder.planOrderValues);
@@ -64,7 +72,7 @@ export default class PlanLibraryAutomatismOrder extends PlanLibraryOrder {
 				cols: [
 					{ view: "text", id: "groovy-path-row-" + self.uid, value: scriptValue, required: true, label: i18n.t("LBL_SCRIPT"), disabled: true, labelWidth: 275 },
 					{
-						view: "icon", icon: "wxi-search", disabled: false,
+						view: "icon", icon: "wxi-search", disabled: !self.planOrderPermission,
 						on: {
 							onItemClick: function() {
 
@@ -103,7 +111,7 @@ export default class PlanLibraryAutomatismOrder extends PlanLibraryOrder {
 			
 			textarea = {
 				cols: [
-					{ view: "textarea", id: "params-textarea-row-" + self.uid, value: textareaValue, label: i18n.t("LBL_DESCRIPTION"), labelWidth: 275 }
+					{ view: "textarea", id: "params-textarea-row-" + self.uid, value: textareaValue, label: i18n.t("LBL_PLAN_ORDER_TYPE_PARAM_AUTOMATISM_PARAMS"), labelWidth: 275 , disabled: !self.planOrderPermission }
 				]
 			};
 

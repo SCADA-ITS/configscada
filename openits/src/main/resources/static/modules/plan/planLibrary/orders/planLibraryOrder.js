@@ -23,7 +23,8 @@ export default class PlanLibraryOrder {
 		
 		let self = this;
 		let editPermission = util.module.isAllowedPermission(self.config.requiredPermissions.edit);	
-
+		let planOrderPermission = (self.planOrderPermission === undefined || self.planOrderPermission) ? true : false;
+		
 		let view = {
 			id: "plan-order-lib-plan-" + self.uid,
 			rows: [
@@ -39,7 +40,7 @@ export default class PlanLibraryOrder {
 			let viewHeader;
 			let pencilIcon = {};
 
-			if (editPermission) {
+			if (editPermission && planOrderPermission) {
 
 				pencilIcon = {
 					view: "icon",
@@ -101,7 +102,7 @@ export default class PlanLibraryOrder {
 
 			let viewActions = { height: 45 };
 
-			if (editPermission) {
+			if (editPermission && planOrderPermission) {
 
 				viewActions = {
 					view: "toolbar",

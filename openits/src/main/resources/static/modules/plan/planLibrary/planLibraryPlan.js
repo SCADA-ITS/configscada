@@ -451,29 +451,44 @@ export default class PlanLibraryPlan {
 
 					if (planOrderType) {
 
-						try {
+						let poPermission = true;
 
-							const lazy = async _ => {
-								
-								let jsFile = util.getContextPath() + "/" + planOrderType.jsFile;	
-		
-								const mod = await import(jsFile);
-								
-								let planLibraryOrder = new mod.default(self.config, self.uid, self.plan, undefined, self.onUpdate);
-								
-								let planOrderToCreate = {
-									planOrderType: webix.copy(planOrderType),
-									planOrderOrder: getNextPosition()
+						if (planOrderType.planOrderPermission) {
+
+							poPermission = util.module.isAllowedPermission(planOrderType.planOrderPermission);
+						}
+
+						if (poPermission) {
+
+							try {
+
+								const lazy = async _ => {
+
+									let jsFile = util.getContextPath() + "/" + planOrderType.jsFile;
+
+									const mod = await import(jsFile);
+
+									let planLibraryOrder = new mod.default(self.config, self.uid, self.plan, undefined, self.onUpdate);
+
+									let planOrderToCreate = {
+										planOrderType: webix.copy(planOrderType),
+										planOrderOrder: getNextPosition()
+									}
+
+									planLibraryOrder.createPlanOrder(planOrderToCreate);
 								}
-								
-								planLibraryOrder.createPlanOrder(planOrderToCreate);
+
+								lazy();
+
+							} catch (error) {
+
+								console.log(error);
 							}
-			
-							lazy();
-			
-						} catch (error) {
-			
-							console.log(error);
+							
+						} else {
+
+							let ms = new MessageBox	(MessageBox.ERROR, i18n.t("LBL_THE_MODULE_ACTION_IS_NOT_ALLOWED"), null, null, null);
+							ms.show();
 						}
 					}
 				}
@@ -483,128 +498,204 @@ export default class PlanLibraryPlan {
 		}
 		
 		function deletePlanOrders(planOrderIds) {
-		
+
 			if (Array.isArray(planOrderIds) && planOrderIds.length > 0) {
-				
-				let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_DIALOG_DELETE_SELECT_ORDERS_DESCRIPTION"), null, onAccept, null);
-				ms.show();
-				
-				function onAccept() {
-					
-					let deleteOrders = 0;
-				
-					planOrderIds.forEach(planOrderId => {
-					
-						self.planLibraryPersist.deletePlanOrder(planOrderId).then(function(response) {
-						
-							if (++deleteOrders == planOrderIds.length) {
-								
-								self.onUpdate(self.plan);
+
+				let userWithPermission = true;
+				let planOrderTypesSelected = [];
+				let planOrders = webix.copy(self.plan.planOrders);
+
+				planOrderIds.forEach(id => {
+
+					let planOrderData = planOrders.find(po => po.id === id);
+
+					if (planOrderData) {
+
+						planOrderTypesSelected.push(planOrderData.planOrderType.id);
+					}
+				});
+
+				if (Array.isArray(planOrderTypesSelected) && planOrderTypesSelected.length > 0) {
+
+					let planOrderTypes = window.em.getAll(EntityType.PLAN_ORDER_TYPE);
+
+					let planOrderTypesWithPermission = planOrderTypes.filter(e => e.planOrderPermission);
+
+					if (Array.isArray(planOrderTypesWithPermission) && planOrderTypesWithPermission.length > 0) {
+
+						for (let i = 0; userWithPermission && i < planOrderTypesSelected.length; i++) {
+
+							let withPermission = planOrderTypesWithPermission.find(po => po.id === planOrderTypesSelected[i]);
+
+							if (withPermission) {
+
+								userWithPermission = util.module.isAllowedPermission(withPermission.planOrderPermission);
 							}
+						}
+					}
+				}
+
+				if (userWithPermission) {
+
+					let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_DIALOG_DELETE_SELECT_ORDERS_DESCRIPTION"), null, onAccept, null);
+					ms.show();
+
+					function onAccept() {
+
+						let deleteOrders = 0;
+
+						planOrderIds.forEach(planOrderId => {
+
+							self.planLibraryPersist.deletePlanOrder(planOrderId).then(function(response) {
+
+								if (++deleteOrders == planOrderIds.length) {
+
+									self.onUpdate(self.plan);
+								}
+							});
 						});
-					});					
-				};
+					};
+
+				} else {
+
+					let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_THE_MODULE_ACTION_IS_NOT_ALLOWED"), null, null, null);
+					ms.show();
+				}
 			}
 		}		
 		
 		function movePlanOrder(planOrderId, movePlanOrderType) {
-			
+
 			let planOrders = webix.copy(self.plan.planOrders);
 
 			if (Array.isArray(planOrders) && planOrders.length > 0) {
-				
-				planOrders.sort((a, b) => (a.planOrderOrder > b.planOrderOrder) ? 1 : ((b.planOrderOrder > a.planOrderOrder) ? -1 : 0));
-				
-				let idxSelectedPlanOrder = planOrders.findIndex(e => e.id === planOrderId);
-				
-				if (idxSelectedPlanOrder > -1) {
-					
-					let selectedPlanOrder = planOrders[idxSelectedPlanOrder];
-					let previousPlanOrder = (idxSelectedPlanOrder > 0) ? planOrders[idxSelectedPlanOrder - 1] : undefined;
-					let nextPlanOrder = idxSelectedPlanOrder < (planOrders.length -1) ? planOrders[idxSelectedPlanOrder + 1] : undefined; 
-					
-					let selectedPlanOrderUpdated = undefined;
-					let otherPlanOrderUpdated = undefined;
-					
-					let allowMoveUp = (movePlanOrderType === MOVE_PLAN_ORDER_POSITION_UP && previousPlanOrder);
-					let allowMoveDown = (movePlanOrderType === MOVE_PLAN_ORDER_POSITION_DOWN && nextPlanOrder);
-					
-					if (allowMoveUp || allowMoveDown) {
-						
-						let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_DIALOG_MOVE_SELECTED_ORDER_DESCRIPTION"), null, onAccept, null);
-						ms.show();
-						
-						function onAccept() {
-							
-							if (movePlanOrderType === MOVE_PLAN_ORDER_POSITION_UP && previousPlanOrder) {
-						
-								selectedPlanOrderUpdated = {
-									
-									id: selectedPlanOrder.id,
-									planOrderOrder: previousPlanOrder.planOrderOrder,
-									planOrderTypeId: selectedPlanOrder.planOrderType.id
+
+				let userWithPermission = true;
+				let planOrderTypesSelected;
+
+				let planOrderData = planOrders.find(po => po.id === planOrderId);
+
+				if (planOrderData) {
+
+					planOrderTypesSelected = planOrderData.planOrderType.id;
+				}
+
+				if (planOrderTypesSelected) {
+
+					let planOrderTypes = window.em.getAll(EntityType.PLAN_ORDER_TYPE);
+
+					let planOrderTypesWithPermission = planOrderTypes.filter(e => e.planOrderPermission);
+
+					if (Array.isArray(planOrderTypesWithPermission) && planOrderTypesWithPermission.length > 0) {
+
+						let withPermission = planOrderTypesWithPermission.find(po => po.id === planOrderTypesSelected);
+
+						if (withPermission) {
+
+							userWithPermission = util.module.isAllowedPermission(withPermission.planOrderPermission);
+						}
+					}
+				}
+
+				if (userWithPermission) {
+
+					planOrders.sort((a, b) => (a.planOrderOrder > b.planOrderOrder) ? 1 : ((b.planOrderOrder > a.planOrderOrder) ? -1 : 0));
+
+					let idxSelectedPlanOrder = planOrders.findIndex(e => e.id === planOrderId);
+
+					if (idxSelectedPlanOrder > -1) {
+
+						let selectedPlanOrder = planOrders[idxSelectedPlanOrder];
+						let previousPlanOrder = (idxSelectedPlanOrder > 0) ? planOrders[idxSelectedPlanOrder - 1] : undefined;
+						let nextPlanOrder = idxSelectedPlanOrder < (planOrders.length - 1) ? planOrders[idxSelectedPlanOrder + 1] : undefined;
+
+						let selectedPlanOrderUpdated = undefined;
+						let otherPlanOrderUpdated = undefined;
+
+						let allowMoveUp = (movePlanOrderType === MOVE_PLAN_ORDER_POSITION_UP && previousPlanOrder);
+						let allowMoveDown = (movePlanOrderType === MOVE_PLAN_ORDER_POSITION_DOWN && nextPlanOrder);
+
+						if (allowMoveUp || allowMoveDown) {
+
+							let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_DIALOG_MOVE_SELECTED_ORDER_DESCRIPTION"), null, onAccept, null);
+							ms.show();
+
+							function onAccept() {
+
+								if (movePlanOrderType === MOVE_PLAN_ORDER_POSITION_UP && previousPlanOrder) {
+
+									selectedPlanOrderUpdated = {
+
+										id: selectedPlanOrder.id,
+										planOrderOrder: previousPlanOrder.planOrderOrder,
+										planOrderTypeId: selectedPlanOrder.planOrderType.id
+									}
+
+									otherPlanOrderUpdated = {
+
+										id: previousPlanOrder.id,
+										planOrderOrder: selectedPlanOrder.planOrderOrder,
+										planOrderTypeId: previousPlanOrder.planOrderType.id
+									}
 								}
-								
-								otherPlanOrderUpdated = {
-									
-									id: previousPlanOrder.id,
-									planOrderOrder: selectedPlanOrder.planOrderOrder,
-									planOrderTypeId: previousPlanOrder.planOrderType.id
+								else if (movePlanOrderType === MOVE_PLAN_ORDER_POSITION_DOWN && nextPlanOrder) {
+
+									selectedPlanOrderUpdated = {
+
+										id: selectedPlanOrder.id,
+										planOrderOrder: nextPlanOrder.planOrderOrder,
+										planOrderTypeId: selectedPlanOrder.planOrderType.id
+									}
+
+									otherPlanOrderUpdated = {
+
+										id: nextPlanOrder.id,
+										planOrderOrder: selectedPlanOrder.planOrderOrder,
+										planOrderTypeId: nextPlanOrder.planOrderType.id
+									}
 								}
-							} 	
-							else if (movePlanOrderType === MOVE_PLAN_ORDER_POSITION_DOWN && nextPlanOrder) {
-								
-								selectedPlanOrderUpdated = {
-									
-									id: selectedPlanOrder.id,
-									planOrderOrder: nextPlanOrder.planOrderOrder,
-									planOrderTypeId: selectedPlanOrder.planOrderType.id
-								}
-								
-								otherPlanOrderUpdated = {
-									
-									id: nextPlanOrder.id,
-									planOrderOrder: selectedPlanOrder.planOrderOrder,
-									planOrderTypeId: nextPlanOrder.planOrderType.id
-								}
-							}
-							
-							if (selectedPlanOrderUpdated && otherPlanOrderUpdated) {
-								
-								self.planLibraryPersist.updatePlanOrder(selectedPlanOrderUpdated)
-								.then(function(updatedSelPlanOrder) {
-									
-									if (updatedSelPlanOrder) {
-										
-										self.planLibraryPersist.updatePlanOrder(otherPlanOrderUpdated)
-										.then(function(updatedOtherPlanOrder) {
-										
-											if (updatedOtherPlanOrder) {
-												
-												self.onUpdate(self.plan, updatedSelPlanOrder);	
+
+								if (selectedPlanOrderUpdated && otherPlanOrderUpdated) {
+
+									self.planLibraryPersist.updatePlanOrder(selectedPlanOrderUpdated)
+										.then(function(updatedSelPlanOrder) {
+
+											if (updatedSelPlanOrder) {
+
+												self.planLibraryPersist.updatePlanOrder(otherPlanOrderUpdated)
+													.then(function(updatedOtherPlanOrder) {
+
+														if (updatedOtherPlanOrder) {
+
+															self.onUpdate(self.plan, updatedSelPlanOrder);
+														}
+														else {
+
+															let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_ERROR_UPDATING_PLAN_ORDER_DESCRIPTION"), null, null, null);
+															ms.show();
+														}
+													});
 											}
 											else {
-												
-												let ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_ERROR_UPDATING_PLAN_ORDER_DESCRIPTION"), null, null, null);
+
+												let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_ERROR_UPDATING_PLAN_ORDER_DESCRIPTION"), null, null, null);
 												ms.show();
 											}
-										});	
-									}
-									else {
-										
-										let ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_ERROR_UPDATING_PLAN_ORDER_DESCRIPTION"), null, null, null);
-										ms.show();
-									}
-								});
-							}							
-						};
-						
-					} else {
-						
-						let ms = new MessageBox (MessageBox.WARN, i18n.t("LBL_CAN_NOT_MOVE_SELECTED_ORDER_DESCRIPTION"), null, null, null);
-						ms.show();
+										});
+								}
+							};
+
+						} else {
+
+							let ms = new MessageBox(MessageBox.WARN, i18n.t("LBL_CAN_NOT_MOVE_SELECTED_ORDER_DESCRIPTION"), null, null, null);
+							ms.show();
+						}
 					}
-				} 
+				} else {
+
+					let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_THE_MODULE_ACTION_IS_NOT_ALLOWED"), null, null, null);
+					ms.show();
+				}
 			}
 		}
 		
