@@ -24,7 +24,8 @@ const SYSTEM_PERMISSION_LOGIN = 1;
 
 const SYSTEM_PROFILES = {
 	USER: "User:1000",
-	ROLE: "Role:1000"
+	ROLE: "Role:1000",
+	ROOT: "User:2000"
 };
 
 const FORMAT_NUMERIC_DATES = {

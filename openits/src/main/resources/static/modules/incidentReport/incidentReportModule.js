@@ -236,12 +236,39 @@ export default class IncidentReportModule extends GenericModule {
 
 				if (onlyAutoassignIncident) {
 
-					let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_AUTOASSIGN_CONFIRM_DESCRIPTION"), null, onAccept, null);
+					let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_AUTOASSIGN_CONFIRM_DESCRIPTION"), null, onAcceptAutoAssign, null);
 					ms.show();
 
 				} else {
+					
+					let dialogEntity = webix.copy(SearchDialogBox.CUSTOM);
+					
+					dialogEntity.data = [];
 
-					let s = new SearchDialogBox(i18n.t("LBL_SELECT_USER"), SearchDialogBox.USERS, onAccept);
+					dialogEntity.pkField = "id"
+					dialogEntity.fields = ["name=LBL_USER", "fullName=LBL_FULL_NAME"];
+					dialogEntity.height = 600;
+					dialogEntity.width = 800;
+					dialogEntity.sortFieldId = 2;
+
+					let users = window.em.getAll(EntityType.USER);
+
+					if (Array.isArray(users) && users.length > 0) {
+
+						users.forEach(user => {
+
+							if (user.id != SYSTEM_PROFILES.USER && user.id != SYSTEM_PROFILES.ROOT) {
+
+								dialogEntity.data.push({
+									id: user.id,
+									name: user.name,
+									fullName: user.fullName
+								});
+							}
+						});
+					}
+
+					let s = new SearchDialogBox(i18n.t("LBL_SELECT_USER"), dialogEntity, onAcceptAssign);
 					s.show();
 				}
 
@@ -252,7 +279,36 @@ export default class IncidentReportModule extends GenericModule {
 
 			}
 
-			function onAccept(data) {
+			function onAcceptAssign(data) {
+
+				if (Array.isArray(data) && data.length > 0) {
+
+					let incidentReportsToAssign = 0;
+
+					self.args.selectedRows.forEach(e => {
+
+						let currentUser = window.em.getByField(EntityType.USER, "id", e.currentUserId);
+						let currentUserRole = currentUser.role.id;
+
+						if ((currentUserRole === self.userData.role.id) || self.assignAnotherPermissions) {
+
+							incidentReportsToAssign++;
+						}
+					});
+
+					if (incidentReportsToAssign === self.args.selectedRows.length) {
+
+						changeUser(data);
+
+					} else {
+
+						let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_INCIDENT_CONFIRM_NOT_POSSIBLE_TO_ASSIGN_DESCRIPTION"), null, null, null);
+						ms.show();
+					}
+				}
+			}
+
+			function onAcceptAutoAssign() {
 
 				let incidentReportsToAssign = 0;
 
@@ -269,7 +325,7 @@ export default class IncidentReportModule extends GenericModule {
 
 				if (incidentReportsToAssign === self.args.selectedRows.length) {
 
-					changeUser(data);
+					changeUser();
 
 				} else {
 
@@ -277,12 +333,12 @@ export default class IncidentReportModule extends GenericModule {
 					ms.show();
 				}
 			}
-
+			
 			function changeUser(data) {
 
 				let userId = (data) ? data[0].id : self.userData.id;
 
-				if (userId != SYSTEM_PROFILES.USER) {
+				if (userId != SYSTEM_PROFILES.USER && userId != SYSTEM_PROFILES.ROOT) {
 
 					self.args.selectedRows.forEach(e => {
 
