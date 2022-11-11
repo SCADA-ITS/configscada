@@ -28,8 +28,7 @@
 	},
 	"requiredPermissions": {
 		"signalling": "SystemPermission:5",
-		"edit": "SystemPermission:4",
-		"poAutomatism": "SystemPermission:21"
+		"edit": "SystemPermission:4"
 	 }
 	
 }

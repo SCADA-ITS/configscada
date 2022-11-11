@@ -23,7 +23,12 @@ export default class PlanLibraryOrder {
 		
 		let self = this;
 		let editPermission = util.module.isAllowedPermission(self.config.requiredPermissions.edit);	
-		let planOrderPermission = (self.planOrderPermission === undefined || self.planOrderPermission) ? true : false;
+		let planOrderPermission = true;
+		
+		if (self.planOrder && self.planOrder.planOrderType && self.planOrder.planOrderType.planOrderPermission) {
+
+			planOrderPermission = util.module.isAllowedPermission(self.planOrder.planOrderType.planOrderPermission);
+		}
 		
 		let view = {
 			id: "plan-order-lib-plan-" + self.uid,
@@ -40,12 +45,13 @@ export default class PlanLibraryOrder {
 			let viewHeader;
 			let pencilIcon = {};
 
-			if (editPermission && planOrderPermission) {
+			if (editPermission) {
 
 				pencilIcon = {
 					view: "icon",
 					icon: "mdi mdi-pencil",
 					tooltip: i18n.t("LBL_EDIT_PLAN_ORDER_NAME"),
+					disabled: (!planOrderPermission) ? true : false,
 					on: {
 						onItemClick: function() {
 
@@ -102,7 +108,7 @@ export default class PlanLibraryOrder {
 
 			let viewActions = { height: 45 };
 
-			if (editPermission && planOrderPermission) {
+			if (editPermission) {
 
 				viewActions = {
 					view: "toolbar",
@@ -116,6 +122,7 @@ export default class PlanLibraryOrder {
 							width: 130,
 							height: 35,
 							label: i18n.t("LBL_SAVE"),
+							disabled: (!planOrderPermission) ? true : false,
 							on: {
 								onItemClick() {
 									

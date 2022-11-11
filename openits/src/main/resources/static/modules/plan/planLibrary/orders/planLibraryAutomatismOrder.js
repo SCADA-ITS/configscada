@@ -17,7 +17,7 @@ export default class PlanLibraryAutomatismOrder extends PlanLibraryOrder {
 		
 		if (this.planOrder && this.planOrder.planOrderType && this.planOrder.planOrderType.planOrderPermission) {
 
-			this.planOrderPermission = util.module.isAllowedPermission(this.config.requiredPermissions.poAutomatism);
+			this.planOrderPermission = util.module.isAllowedPermission(this.planOrder.planOrderType.planOrderPermission);
 		}		
 		
 		if (this.planOrder && this.planOrder.planOrderValues && Array.isArray(this.planOrder.planOrderValues) && this.planOrder.planOrderValues.length > 0) {
