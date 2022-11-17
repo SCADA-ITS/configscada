@@ -22,6 +22,9 @@
 		},
 		"auditLogs": {
 			"id": 1006
+		},
+		"signalingQueues": {
+			"id": 1039
 		}
 	},
 	"keepAliveSecs": 60

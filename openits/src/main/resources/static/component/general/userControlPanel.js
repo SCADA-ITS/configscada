@@ -164,6 +164,30 @@ export default class UserControlPanel extends GenericControlPanel {
 									self.hide();
 								}
 							}
+						},
+												{
+							view: "label",
+							id: "user-control-panel-conflicts",
+							css: cssStyleLightCPNotification,
+							align: "center",
+							tooltip: i18n.t("LBL_CONFLICTS"),
+							hidden: true,
+							width: 350,
+							height: 50,
+							label: function() {
+
+								return `<div>
+											<span class="icon ico webix_icon mdi mdi-alert-circle"></span>
+											<span class="value-event ${lightMode}">${i18n.t("LBL_WO_PENDING_CONFLICTS")}</span>
+										</div>`
+							}(),
+							on: {
+								onItemClick: function(id) {
+	
+									self.openModule(self.config.module.signalingQueues.id);
+									self.hide();
+								}
+							}
 						}
 					]
 				},
@@ -464,6 +488,7 @@ export default class UserControlPanel extends GenericControlPanel {
 		updateDataAlarms();
 		updateDataIncidents();
 		updateDataEvents();
+		updateDataConflicts();
 		
 		if (pendingTasks) {
 
@@ -654,6 +679,40 @@ export default class UserControlPanel extends GenericControlPanel {
 				return `<div>
 					<span class="icon ico webix_icon mdi mdi-map-marker-alert ${lightMode}"></span>
 					<span class="value-event ${lightMode}">${eventPendingToConfirm > 0 ? eventPendingToConfirm + " " +  i18n.t("LBL_EVENTS_NO_CONFIRMED") : i18n.t("LBL_WO_PENDING_EVENTS")}</span>
+				</div>`
+			}
+		}
+		
+		function updateDataConflicts() {
+
+			let alarmService = window.sm.getService(Services.ALARM_SERVICE);
+
+			if (alarmService) {
+
+				let stats = alarmService.getDataConflicts().stats;
+
+				if (stats) {
+
+					if (stats.conflicts > 0) {
+
+						$$("user-control-panel-conflicts").show();
+						$$("user-control-panel-conflicts").config.label = getLabelPending(stats);
+						$$("user-control-panel-conflicts").refresh();
+
+						pendingTasks |= true;
+
+					} else {
+
+						$$("user-control-panel-conflicts").hide();
+					}
+				}
+			}
+
+			function getLabelPending(conflictsPendingToConfirm) {
+
+				return `<div>
+					<span class="icon ico webix_icon mdi mdi-alert-circle ${lightMode}"></span>
+					<span class="value-event ${lightMode}">${conflictsPendingToConfirm.conflicts > 0 ? conflictsPendingToConfirm.conflicts + " " + i18n.t("LBL_CONFLICTS_NO_CONFIRMED") : i18n.t("LBL_WO_PENDING_CONFLICTS")}</span>
 				</div>`
 			}
 		}

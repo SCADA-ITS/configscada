@@ -261,16 +261,23 @@ export default class DataTable {
 
 							if (typeof obj[field.sourceField] === 'object' && field.gridFieldDataType && field.gridFieldDataType.id !== DataType.DATE.value) {
 
-								value = obj[field.sourceField].value;
-								state = obj[field.sourceField].state;
-								
-								if (Array.isArray(field.gridFieldReplacements) && field.gridFieldReplacements.length > 0) {
-	
-									let gridFieldReplacement = field.gridFieldReplacements.find(e => e.value == value);
+								if (obj[field.sourceField].template) {
 
-									if (gridFieldReplacement) {
+									value = eval(obj[field.sourceField].template)();
 
-										value = field.needsTranslation ? i18n.t(gridFieldReplacement.label) : gridFieldReplacement.label;
+								} else {
+
+									value = obj[field.sourceField].value;
+									state = obj[field.sourceField].state;
+
+									if (Array.isArray(field.gridFieldReplacements) && field.gridFieldReplacements.length > 0) {
+
+										let gridFieldReplacement = field.gridFieldReplacements.find(e => e.value == value);
+
+										if (gridFieldReplacement) {
+
+											value = field.needsTranslation ? i18n.t(gridFieldReplacement.label) : gridFieldReplacement.label;
+										}
 									}
 								}
 							}
@@ -386,7 +393,12 @@ export default class DataTable {
 											return eval("util.datatable." + field.replacementFunction)(data[field.sourceField]);
 										}
 
-									} else {
+									} 
+									else if (data[field.sourceField].tooltip) {
+
+										return eval(data[field.sourceField].tooltip)();
+									} 
+									else {
 
 										return (data[field.sourceField].value != undefined) ? data[field.sourceField].value : data[field.sourceField]; 	
 										

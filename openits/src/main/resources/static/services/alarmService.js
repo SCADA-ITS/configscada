@@ -28,8 +28,18 @@ export default class AlarmService extends GenericService {
 				notifications: []
 			}
 		};
+		
+		this.conflicts = {
+			data: {
+				stats: {
+					conflicts: 0
+				} 
+			}
+		};
+
 		this.notification = undefined;
 		this.idStompSubscriptor = undefined;
+		this.idStompSubscriptorConflicts = undefined;
 	}
 	
 	destroy() {
@@ -39,6 +49,11 @@ export default class AlarmService extends GenericService {
 		if (stompSubscriptorService && self.idStompSubscriptor) {
 
 			stompSubscriptorService.unsubscribe(self.idStompSubscriptor);
+		}
+		
+		if (stompSubscriptorService && self.idStompSubscriptorConflicts) {
+
+			stompSubscriptorService.unsubscribe(self.idStompSubscriptorConflicts);
 		}
 	}
 	
@@ -50,6 +65,11 @@ export default class AlarmService extends GenericService {
 	getData() {
 		
 		return this.alarms.data;
+	}
+	
+	getDataConflicts(){
+		
+		return this.conflicts.data;
 	}
 
 	getView() {
@@ -99,6 +119,7 @@ export default class AlarmService extends GenericService {
 		loadActiveAlarms();
 		loadNoRecognizedAlarms();
 		loadFilteredAlarms();
+		loadActiveConflicts();
 		
 		if (!util.ui.isExternal()) {
 			
@@ -270,6 +291,52 @@ export default class AlarmService extends GenericService {
 						}
 					}
 				}
+			});
+		}
+		
+		function loadActiveConflicts() {
+
+			webix.ajax(appConfig.restUrl + self.config.rest.active_conflicts).then(function(data) {
+
+				let activeConflicts = 0;
+
+				if (data.json() != undefined) {
+
+					activeConflicts = data.json().value;
+				}
+
+				self.conflicts.data.stats.conflicts = activeConflicts;
+				self.executeCallbacks(self.conflicts.data);
+
+				if (window.userControlPanel) {
+
+					window.userControlPanel.updateData();
+				}
+
+				connectWS();
+
+				function connectWS() {
+
+					let stopmSubscriptorConflictsService = window.sm.getService(Services.STOMP_SUBSCRIPTOR_SERVICE);
+
+					if (stopmSubscriptorConflictsService) {
+
+						self.idStompSubscriptorConflicts = stopmSubscriptorConflictsService.subscribe(appConfig.stompUrl, self.config.ws.active_conflicts, onMessage);
+					}
+
+					function onMessage(data) {
+
+						self.conflicts.data.stats.conflicts = data.value;
+
+						if (window.userControlPanel) {
+
+							window.userControlPanel.updateData();
+						}
+
+						self.executeCallbacks(self.conflicts.data);
+					}
+				}
+
 			});
 		}
 		
