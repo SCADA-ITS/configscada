@@ -1804,7 +1804,7 @@ export default class DataTable {
 					}
 					else {
 						
-						if (datatable.getFilter(gridField.sourceField).config.value.start) {
+						if (datatable.getFilter(gridField.sourceField).config && datatable.getFilter(gridField.sourceField).config.value.start) {
 							
 							filteredValue.start = datatable.getFilter(gridField.sourceField).config.value.start;
 							filteredValue.end = datatable.getFilter(gridField.sourceField).config.value.end;
