@@ -284,20 +284,23 @@ export default class IncidentWizardDrawStepSummary extends IncidentWizardDrawSte
 
 																				let s = new SearchDialogBox(i18n.t("LBL_SELECT_USER"), SearchDialogBox.USERS, function(obj) {
 
-																					if (obj[0].id != SYSTEM_PROFILES.USER) {
+																					if (Array.isArray(obj) && obj.length > 0) {
 
-																						$$("summary-user-" + parent.uid).setValues({
-																							user: obj[0].name,
-																							userUpdate: true
-																						});
+																						if (obj[0] && obj[0].id != SYSTEM_PROFILES.USER) {
 
-																						parent.incidentData.user = obj[0].name;
-																						parent.incidentData.userId = obj[0].id;
+																							$$("summary-user-" + parent.uid).setValues({
+																								user: obj[0].name,
+																								userUpdate: true
+																							});
 
-																					} else {
+																							parent.incidentData.user = obj[0].name;
+																							parent.incidentData.userId = obj[0].id;
 
-																						let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_NOT_ALLOWED_TO_ASSIGN_SYSTEM_USER_DESCRIPTION"), null, null, null);
-																						ms.show();
+																						} else {
+
+																							let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_NOT_ALLOWED_TO_ASSIGN_SYSTEM_USER_DESCRIPTION"), null, null, null);
+																							ms.show();
+																						}
 																					}
 																				});
 
