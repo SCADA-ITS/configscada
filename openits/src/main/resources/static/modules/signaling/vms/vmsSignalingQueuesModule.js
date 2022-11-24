@@ -725,6 +725,8 @@ export default class VmsSignalingQueuesModule extends GenericModule {
 						setTimeout(function() {
 
 							let datatable = $$("dt-" + self.dataTable.uid);
+							let dataToUpdateCopy = webix.copy(self.dataToUpdate);
+							self.dataToUpdate = [];
 
 							if (datatable) {
 
@@ -735,7 +737,7 @@ export default class VmsSignalingQueuesModule extends GenericModule {
 								});
 							}
 
-							webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.restEndpoints.element, JSON.stringify(self.dataToUpdate)).then(function(elementsResponse) {
+							webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.restEndpoints.element, JSON.stringify(dataToUpdateCopy)).then(function(elementsResponse) {
 
 								if (elementsResponse != null) {
 
@@ -802,13 +804,13 @@ export default class VmsSignalingQueuesModule extends GenericModule {
 												let activeCellNodeHTML = datatable.getItemNode({ row: row, column: "enable" });
 												let iconConflictHTML = conflictCellNodeHTML.querySelector(".table-field-icons");
 												let iconActiveHTML = activeCellNodeHTML.querySelector(".table-field-icons");
-												let dataToUpdate = datatable.config.data.find(dat => dat.id === row);
+												let itemToUpdate = datatable.config.data.find(dat => dat.id === row);												
 
 												if (rowToUpdate.conflict != "" && iconConflictHTML === null) {
 
-													if (dataToUpdate) {
+													if (itemToUpdate) {
 
-														dataToUpdate.conflict = i18n.t("LBL_CONFLICT");
+														itemToUpdate.conflict = i18n.t("LBL_CONFLICT");
 													}
 
 													let icon = "./img/grid/critical.png";
@@ -820,18 +822,18 @@ export default class VmsSignalingQueuesModule extends GenericModule {
 
 												} else if (rowToUpdate.conflict === "" && iconConflictHTML) {
 
-													if (dataToUpdate) {
+													if (itemToUpdate) {
 
-														dataToUpdate.conflict = "";
+														itemToUpdate.conflict = "";
 													}
 
 													iconConflictHTML.src = "./img/grid/empty.png";
 												}
 
-												if (dataToUpdate) {
+												if (itemToUpdate) {
 
-													dataToUpdate.position = rowToUpdate.position;
-													dataToUpdate.state = rowToUpdate.state;
+													itemToUpdate.position = rowToUpdate.position;
+													itemToUpdate.state = rowToUpdate.state;
 												}
 
 												if ((rowToUpdate.enable === i18n.t("LBL_QUEUE_ITEM_ACTIVE") && iconActiveHTML === null) || (rowToUpdate.enable === "" && iconActiveHTML)) {
@@ -849,8 +851,6 @@ export default class VmsSignalingQueuesModule extends GenericModule {
 
 									datatable.hideProgress();
 								}
-
-								self.dataToUpdate = [];
 							});
 						}, UPDATE_INTERVAL_MILLIS);
 					}
