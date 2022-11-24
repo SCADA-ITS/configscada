@@ -1,10 +1,11 @@
 import { util } from "../../lib/util.js";
 import GenericModule from "../genericModule.js";
-import MessageBox from "../../component/messageBox.js"
-import SearchBox from "../../component/searchBox.js"
-import SearchEquipment from "./searchEquipment.js"
-import SearchAlarm from "./searchAlarm.js"
-import SearchIncident from "./searchIncident.js"
+import MessageBox from "../../component/messageBox.js";
+import SearchBox from "../../component/searchBox.js";
+import SearchEquipment from "./searchEquipment.js";
+import SearchAlarm from "./searchAlarm.js";
+import SearchIncident from "./searchIncident.js";
+import SearchPlan from "./searchPlan.js";
 
 export default class SearchModule extends GenericModule {
 
@@ -13,10 +14,55 @@ export default class SearchModule extends GenericModule {
 		super(module, moduleAction, args);
 
 		this.config = module.config;
-		this.type = SearchBox.TYPE.ALL;
 		this.text = undefined;
 		this.searchBox = undefined;
+		this.type = (args.type) ? args.type : SearchBox.TYPE.ALL;
+		this.onlySelectedType = false;
+		this.searchBoxOptions = [];
 		
+		if (this.type.id != SearchBox.TYPE.ALL.id) {
+
+			this.onlySelectedType = this.type;
+		}
+
+		if (this.config.searchOptions) {
+
+			let searchOptions = this.config.searchOptions;
+			let options = Object.keys(this.config.searchOptions);
+
+			if (Array.isArray(options) && options.length > 0) {
+
+				let searchBoxTypes = webix.copy(SearchBox.TYPE);
+
+				options.forEach(op => {
+
+					if (searchOptions[op]) {
+
+						let type = searchBoxTypes[op];
+
+						if (type) {
+
+							this.searchBoxOptions.push(type);
+						}
+					}
+				});
+			}
+
+		} else {
+
+			let searchBoxTypes = webix.copy(SearchBox.TYPE);
+			let options = Object.keys(searchBoxTypes);
+
+			options.forEach(op => {
+
+				let type = searchBoxTypes[op];
+
+				if (type && type.id != SearchBox.TYPE.ALL.id) {
+
+					this.searchBoxOptions.push(type);
+				}
+			});
+		}
 	}
 
 	loadData() {
@@ -160,27 +206,36 @@ export default class SearchModule extends GenericModule {
 						view:"scrollview",
 						borderless: true,
 						body: function() {
-							
+
 							let body = { rows: [] };
-						
-							if (self.type.id === SearchBox.TYPE.ELEMENT.id || self.type.id === SearchBox.TYPE.ALL.id) {
-								
-								body.rows.push({ id: "results-elements-" + self.uid, hidden: true });
-							}
-							
-							if (self.type.id === SearchBox.TYPE.ALARM.id || self.type.id === SearchBox.TYPE.ALL.id) {
-								
-								body.rows.push({ id: "results-alarms-" + self.uid, hidden: true });
-							}
-							
-							if (self.type.id === SearchBox.TYPE.INCIDENT.id || self.type.id === SearchBox.TYPE.ALL.id) {
-								
-								body.rows.push({ id: "results-incidents-" + self.uid, hidden: true });
-							}
-							
+							body.rows.push({ id: "results-elements-" + self.uid, hidden: true });
+							body.rows.push({ id: "results-alarms-" + self.uid, hidden: true });
+							body.rows.push({ id: "results-incidents-" + self.uid, hidden: true });
+							body.rows.push({ id: "results-plans-" + self.uid, hidden: true });
+
+							//							if (self.type.id === SearchBox.TYPE.ELEMENT.id || self.type.id === SearchBox.TYPE.ALL.id) {
+							//								
+							//								body.rows.push({ id: "results-elements-" + self.uid, hidden: true });
+							//							}
+							//							
+							//							if (self.type.id === SearchBox.TYPE.ALARM.id || self.type.id === SearchBox.TYPE.ALL.id) {
+							//								
+							//								body.rows.push({ id: "results-alarms-" + self.uid, hidden: true });
+							//							}
+							//							
+							//							if (self.type.id === SearchBox.TYPE.INCIDENT.id || self.type.id === SearchBox.TYPE.ALL.id) {
+							//								
+							//								body.rows.push({ id: "results-incidents-" + self.uid, hidden: true });
+							//							}
+							//							
+							//							if (self.type.id === SearchBox.TYPE.PLAN.id || self.type.id === SearchBox.TYPE.ALL.id) {
+							//
+							//								body.rows.push({ id: "results-plans-" + self.uid, hidden: true });
+							//							}
+
 							body.rows.push({ height: 50 });
-							
-							return body;	
+
+							return body;
 						}()
 	    			}
 				]				
@@ -194,8 +249,18 @@ export default class SearchModule extends GenericModule {
 		
 		function drawSearchInput() {
 			
-			self.searchBox = new SearchBox(onValidate, self.args.type);
-			
+			let types = [];
+
+			if (Array.isArray(self.searchBoxOptions) && self.searchBoxOptions.length >0) {
+				
+				for(let option of self.searchBoxOptions){
+					
+					types.push(option.id);					
+				}
+			}
+
+			self.searchBox = new SearchBox(onValidate, types);
+
 			return self.searchBox.getView();
 		}
 		
@@ -205,12 +270,14 @@ export default class SearchModule extends GenericModule {
 				
 				self.text = util.getStringNormalized(searchText);
 				self.type = searchType;
+				self.onlySelectedType = (self.type.id != SearchBox.TYPE.ALL.id) ? self.type : false;
 				
 				let searchLabel = $$("search-label-" + self.uid);
 				
 				if (searchLabel) {
 					
 					self.args.text = self.text;
+					self.args.type = searchType;
 					
 					self.refresh();
 					
@@ -247,42 +314,53 @@ export default class SearchModule extends GenericModule {
 					self.searchBox.disable();
 				}
 				
-				if (SearchBox.TYPE.ELEMENT.enabled !== false && (self.type.id === SearchBox.TYPE.ELEMENT.id || self.type.id === SearchBox.TYPE.ALL.id)) {
-					
+				if (SearchBox.TYPE.ELEMENT.enabled !== false &&
+					self.searchBoxOptions.find(e => e.id === SearchBox.TYPE.ELEMENT.id &&
+						(!self.onlySelectedType || (self.onlySelectedType && self.onlySelectedType.id === SearchBox.TYPE.ELEMENT.id)))) {
+
 					let searchEquipment = new SearchEquipment(self, openModule);
-					
 					searchEquipment.drawResults(function() { onReady(SearchBox.TYPE.ELEMENT) });
 				}
-				
-				if (SearchBox.TYPE.ALARM.enabled !== false && (self.type.id === SearchBox.TYPE.ALARM.id || self.type.id === SearchBox.TYPE.ALL.id)) {
+
+				if (SearchBox.TYPE.ALARM.enabled !== false &&
+					self.searchBoxOptions.find(e => e.id === SearchBox.TYPE.ALARM.id &&
+						(!self.onlySelectedType || (self.onlySelectedType && self.onlySelectedType.id === SearchBox.TYPE.ALARM.id)))) {
 					
 					let searchAlarm = new SearchAlarm(self, openModule);
-					
 					searchAlarm.drawResults(function() { onReady(SearchBox.TYPE.ALARM) });
 				}
-				
-				if (SearchBox.TYPE.INCIDENT.enabled !== false && (self.type.id === SearchBox.TYPE.INCIDENT.id || self.type.id === SearchBox.TYPE.ALL.id)) {
+
+				if (SearchBox.TYPE.INCIDENT.enabled !== false &&
+					self.searchBoxOptions.find(e => e.id === SearchBox.TYPE.INCIDENT.id &&
+						(!self.onlySelectedType || (self.onlySelectedType && self.onlySelectedType.id === SearchBox.TYPE.INCIDENT.id)))) {
 					
 					let searchIncident = new SearchIncident(self, openModule);
-					
 					searchIncident.drawResults(function() { onReady(SearchBox.TYPE.INCIDENT) });
+				}
+
+				if (SearchBox.TYPE.PLAN.enabled !== false &&
+					self.searchBoxOptions.find(e => e.id === SearchBox.TYPE.PLAN.id &&
+						(!self.onlySelectedType || (self.onlySelectedType && self.onlySelectedType.id === SearchBox.TYPE.PLAN.id)))) {
+
+					let searchPlan = new SearchPlan(self, openModule);
+					searchPlan.drawResults(function() { onReady(SearchBox.TYPE.PLAN) });
 				}
 				
 				function onReady(type) {
 			
 					let allReady = true;
 					let keyTypes = Object.keys(readyTypes);
-		
+
 					if (Array.isArray(keyTypes) && keyTypes.length > 0) {
-						
+
 						readyTypes[type.id] = true;
-		
+
 						keyTypes.forEach(keyType => {
-							
+
 							allReady &= readyTypes[keyType];
-						});	
+						});
 					}
-					
+
 					let searchLabel = $$("search-label-" + self.uid);
 				
 					if (searchLabel) {
@@ -318,25 +396,43 @@ export default class SearchModule extends GenericModule {
 						
 						$$("results-incidents-" + self.uid).hide();
 					}
+					
+					if ($$("results-plans-" + self.uid)) {
+						
+						$$("results-plans-" + self.uid).hide();
+					}
 				}
 				
 				function initReadyTypes() {
 		
 					readyTypes = {};
-					
-					if (SearchBox.TYPE.ELEMENT.enabled !== false && (self.type.id === SearchBox.TYPE.ELEMENT.id || self.type.id === SearchBox.TYPE.ALL.id)) {
-						
+									
+					if (SearchBox.TYPE.ELEMENT.enabled !== false &&
+						self.searchBoxOptions.find(e => e.id === SearchBox.TYPE.ELEMENT.id &&
+							(!self.onlySelectedType || (self.onlySelectedType && self.onlySelectedType.id === SearchBox.TYPE.ELEMENT.id)))) {
+								
 						readyTypes[SearchBox.TYPE.ELEMENT.id] = false;	
 					}
 					
-					if (SearchBox.TYPE.ALARM.enabled !== false && (self.type.id === SearchBox.TYPE.ALARM.id || self.type.id === SearchBox.TYPE.ALL.id)) {
-					
+					if (SearchBox.TYPE.ALARM.enabled !== false &&
+						self.searchBoxOptions.find(e => e.id === SearchBox.TYPE.ALARM.id &&
+							(!self.onlySelectedType || (self.onlySelectedType && self.onlySelectedType.id === SearchBox.TYPE.ALARM.id)))) {
+								
 						readyTypes[SearchBox.TYPE.ALARM.id] = false;	
 					}
 					
-					if (SearchBox.TYPE.INCIDENT.enabled !== false && (self.type.id === SearchBox.TYPE.INCIDENT.id || self.type.id === SearchBox.TYPE.ALL.id)) {
-						
+					if (SearchBox.TYPE.INCIDENT.enabled !== false &&
+						self.searchBoxOptions.find(e => e.id === SearchBox.TYPE.INCIDENT.id &&
+							(!self.onlySelectedType || (self.onlySelectedType && self.onlySelectedType.id === SearchBox.TYPE.INCIDENT.id)))) {
+							
 						readyTypes[SearchBox.TYPE.INCIDENT.id] = false;	
+					}
+
+					if (SearchBox.TYPE.PLAN.enabled !== false &&
+						self.searchBoxOptions.find(e => e.id === SearchBox.TYPE.PLAN.id &&
+							(!self.onlySelectedType || (self.onlySelectedType && self.onlySelectedType.id === SearchBox.TYPE.PLAN.id)))) {
+								
+						readyTypes[SearchBox.TYPE.PLAN.id] = false;	
 					}
 				}
 			}

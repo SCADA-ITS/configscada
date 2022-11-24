@@ -1,11 +1,13 @@
 {
-	"moduleAction":{
+	"moduleAction": {
 		"search": 103801
 	},
 	"restEndpoints": {
 		"elements": "elements/withStates",
 		"alarms": "alarms",
-		"incidents": "incidents/reports"
+		"incidents": "incidents/reports",
+		"plans": "plans",
+		"plansOrder": "plans/plan_orders/${id}"
 	},
 	"types": {
 		"element": {
@@ -40,6 +42,54 @@
 			"map": 200003,
 			"confirmed": "img/grid/confirmed.png",
 			"notConfirmed": "img/grid/not_confirmed.png"
+		},
+		"plan": {
+			"default": 102901,
+			"planOrder": 102902,
+			"planExecutor": 102501,
+			"planStateTypes": {
+				"PlanStateType:0": {
+					"color": "#989898"
+				},
+				"PlanStateType:1": {
+					"color": "#FF2222"
+				},
+				"PlanStateType:2": {
+					"color": "#FFCC00"
+				},
+				"PlanStateType:3": {
+					"color": "#11B900"
+				},
+				"PlanStateType:4": {
+					"color": "#FF8927"
+				},
+				"PlanStateType:5": {
+					"color": "#6495ed"
+				},
+				"PlanStateType:6": {
+					"color": "#000000"
+				}
+			},
+			"planOrderStateTypes": {
+				"PlanOrderStateType:0": {
+					"color": "#989898"
+				},
+				"PlanOrderStateType:1": {
+					"color": "#FFCC00"
+				},
+				"PlanOrderStateType:2": {
+					"color": "#11B900"
+				},
+				"PlanOrderStateType:3": {
+					"color": "#FF8927"
+				}
+			}
 		}
+	},
+	"searchOptions": {
+		"ELEMENT": true,
+		"ALARM": true,
+		"INCIDENT": true,
+		"PLAN": true
 	}
 }

@@ -4,7 +4,7 @@ import { util } from "../../../lib/util.js";
 
 export default class PlanLibraryContent {
 
-	constructor(config, uid, plan, onUpdate) {
+	constructor(config, uid, plan, onUpdate, selectedPlanOrder) {
 		
 		this.config = config;
 		this.plan = plan;
@@ -12,7 +12,7 @@ export default class PlanLibraryContent {
 		this.onUpdate = onUpdate;
 		
 		this.planLibraryPlan = undefined;
-		this.selectedPlanOrder = undefined;
+		this.selectedPlanOrder = (selectedPlanOrder && selectedPlanOrder.id) ? selectedPlanOrder : undefined;
 		this.currentHeight = undefined;
 	}
 	
@@ -135,11 +135,18 @@ export default class PlanLibraryContent {
 			
 			function drawPlanLibraryPlan() {
 
-				if (!self.selectedPlanOrder && Array.isArray(self.plan.planOrders) && self.plan.planOrders.length > 0) {
-					
+				if (Array.isArray(self.plan.planOrders) && self.plan.planOrders.length > 0) {
+
 					self.plan.planOrders.sort((a, b) => (a.planOrderOrder > b.planOrderOrder) ? 1 : ((b.planOrderOrder > a.planOrderOrder) ? -1 : 0));
-					
-					self.selectedPlanOrder = self.plan.planOrders[0]; 	
+
+					if (self.selectedPlanOrder) {
+
+						self.selectedPlanOrder = self.plan.planOrders.find(e => e.id === self.selectedPlanOrder.id);
+
+					} else {
+
+						self.selectedPlanOrder = self.plan.planOrders[0];
+					}
 				}
 				
 				self.planLibraryPlan = new PlanLibraryPlan(self.config, self.uid, self.plan, self.selectedPlanOrder, onSelectPlanOrder, onUpdate);

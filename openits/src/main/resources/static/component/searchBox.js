@@ -7,22 +7,54 @@ export default class SearchBox {
 			ALL: { id: 1, placeHolder: "LBL_SEARCHBOX_SEARCH_ALL", label: "LBL_ALL", enabled: true },
 			ELEMENT: { id: 2, placeHolder: "LBL_SEARCHBOX_SEARCH_ELEMENT", label: "LBL_ELEMENT", enabled: true },
 			ALARM: { id: 3, placeHolder: "LBL_SEARCHBOX_SEARCH_ALARM", label: "LBL_ALARM", enabled: true },
-			INCIDENT: { id: 4, placeHolder: "LBL_SEARCHBOX_SEARCH_INCIDENT", label: "LBL_INCIDENT", enabled: util.module.isAllowedPermission(REQUIRED_PERMISSIONS.INCIDENT_VIEW) }
+			INCIDENT: { id: 4, placeHolder: "LBL_SEARCHBOX_SEARCH_INCIDENT", label: "LBL_INCIDENT", enabled: util.module.isAllowedPermission(REQUIRED_PERMISSIONS.INCIDENT_VIEW) },
+			PLAN: { id: 5, placeHolder: "LBL_SEARCHBOX_SEARCH_PLAN", label: "LBL_PLAN", enabled: true }
 		} 
 	}
 
-	constructor(onValidate, type, isToolbar) {
+	constructor(onValidate, types, isToolbar) {
 		
-		this.onValidate = onValidate;
-		this.type = type ? type : SearchBox.TYPE.ALL;
+		this.onValidate = onValidate;		
 		this.uid = webix.uid();	 
 		this.isToolbar = isToolbar;
+		this.typeSelected = SearchBox.TYPE.ALL;
+		this.types = [];
+
+		if (Array.isArray(types)) {
+
+			this.types = types;
+			
+			if (types.length === 1) {
+
+				let searchBoxTypes = webix.copy(SearchBox.TYPE);
+				let options = Object.keys(searchBoxTypes);
+
+				options.forEach(op => {
+
+					let type = searchBoxTypes[op];
+
+					if (type && type.id === types[0]) {
+
+						this.typeSelected = type;
+					}
+				});					
+				
+			} else {
+				
+				this.types.unshift(SearchBox.TYPE.ALL.id);
+			}			
+
+		} else {
+
+			this.types = types ? types : SearchBox.TYPE.ALL;
+		}
 	}
 	
 	getView() {
 		
 		let self = this;
 		let view;
+		let filteredTypes = [];
 		let cssStyleInvertUser = (window.lightMode) ? "searchbox-template light-templates" : "searchbox-template";
 		
 		view = {
@@ -34,7 +66,7 @@ export default class SearchBox {
 					view: "search",
 					icon: undefined,
 					css: self.isToolbar ? cssStyleInvertUser : undefined,
-					placeholder: i18n.t(self.type.placeHolder),
+//					placeholder: i18n.t(self.typeSelected.placeHolder),
 					on: {
 						onEnter: search
 					}
@@ -60,7 +92,7 @@ export default class SearchBox {
 				
 				if (text && text.trim().length > 0 && self.onValidate) {
 				
-					self.onValidate(text.trim(), self.type);
+					self.onValidate(text.trim(), self.typeSelected);
 				}
 				
 				searchView.setValue("");
@@ -90,25 +122,25 @@ export default class SearchBox {
 				on: {
 					onMenuItemClick: function(id) {
 						
-						let newType;
+						let newType = filteredTypes.find(t=> t.id == id);
 						
-						Object.keys(SearchBox.TYPE).forEach(key => {
-							
-							if (SearchBox.TYPE[key].id == id) {
-								
-								newType = SearchBox.TYPE[key];
-							}
-						});
+//						Object.keys(SearchBox.TYPE).forEach(key => {
+//							
+//							if (SearchBox.TYPE[key].id == id) {
+//								
+//								newType = SearchBox.TYPE[key];
+//							}
+//						});
 						
 						if (newType) {
 							
-							self.type = newType;
+							self.typeSelected = newType;
 							
 							let searchView = $$("search-" + self.uid);
 						
 							if (searchView) {
 								
-								searchView.define("placeholder", i18n.t(self.type.placeHolder));
+								searchView.define("placeholder", i18n.t(self.typeSelected.placeHolder));
 								searchView.refresh();
 								
 								refreshMenuItemSelected();
@@ -120,27 +152,31 @@ export default class SearchBox {
 			
 			function getMenuSearchTypes() {
 
-				let types = [];
-								
 				Object.keys(SearchBox.TYPE).forEach(key => {
-							
+
+					let showType = true;
 					let type = webix.copy(SearchBox.TYPE[key]);
-					
-					if (type.enabled !== false) {
-						
+
+					if (Array.isArray(self.types) && self.types.length > 0) {
+
+						showType = self.types.find(t => t === type.id);
+					}
+
+					if (type.enabled !== false && showType) {
+
 						type.value = getMenuTemplate(type);
-						types.push(type);
+						filteredTypes.push(type);
 					}
 				});
-				
-				return types;
+
+				return filteredTypes;
 			}
 			
 			function refreshMenuItemSelected() {
 				
-				let menuSearchTypes = getMenuSearchTypes();
+				//let menuSearchTypes = getMenuSearchTypes();
 				
-				menuSearchTypes.forEach(type => {
+				filteredTypes.forEach(type => {
 				
 					let typeElem = document.getElementById('search-menu-type-' + self.uid + "-" + type.id); 
 
@@ -152,8 +188,15 @@ export default class SearchBox {
 			}
 			
 			function getMenuTemplate(type) {
+				 			
+				let select = 'style="color: transparent"';
+
+				if (self.typeSelected && self.typeSelected.id) {
+
+					select = (type.id != self.typeSelected.id) ? 'style="color: transparent"' : 'style="color: var(--blue-text-default)"';
+				}
 				
-				return `<div id="${'search-menu-type-' + self.uid + "-" + type.id}"><span ${(type.id != self.type.id) ? 'style="color: transparent"' : 'style="color: var(--blue-text-default)"'} class="webix_icon mdi mdi-check"></span>  ${i18n.t(type.label)}</div>`;
+				return `<div id="${'search-menu-type-' + self.uid + "-" + type.id}"><span ${select} class="webix_icon mdi mdi-check"></span>  ${i18n.t(type.label)}</div>`;
 			}
 			
 			return viewMenuChangeSearchType;

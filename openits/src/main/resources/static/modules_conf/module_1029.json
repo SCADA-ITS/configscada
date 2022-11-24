@@ -2,7 +2,8 @@
 	"moduleAction": {
 	    "planExecutor": 102501,
 	    "edit": 102901,
-	    "defaultPlanOrderEdit": 101902
+	    "defaultPlanOrderEdit": 101902,
+		"fromSearch": 102902
 	},	
 	"restEndpoints": {
 		"elementType": "element_types/${id}",

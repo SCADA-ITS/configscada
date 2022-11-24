@@ -247,7 +247,17 @@ export default class PlanLibraryModule extends GenericModule {
 
 							if (plan) {
 
-								let planLibraryContent = new PlanLibraryContent(self.config, self.uid, plan, onUpdate);
+								let selectedPlanOrderPks;
+								
+								if (self.moduleAction && self.moduleAction.id === self.config.moduleAction.fromSearch) {
+
+									if (self.args && self.args.selectedPlanOrderPks && self.args.selectedPlanOrderPks.id) {
+
+										selectedPlanOrderPks = self.args.selectedPlanOrderPks;
+									}
+								}
+								
+								let planLibraryContent = new PlanLibraryContent(self.config, self.uid, plan, onUpdate, selectedPlanOrderPks);
 
 								webix.ui(planLibraryContent.getView(), $$("plan-lib-content-" + self.uid));
 
@@ -651,7 +661,8 @@ export default class PlanLibraryModule extends GenericModule {
 
 			if (self.treeView) {
 
-				if (self.moduleAction && self.moduleAction.id === self.config.moduleAction.edit) {
+				if (self.moduleAction && self.moduleAction.id === self.config.moduleAction.edit ||
+				self.moduleAction && self.moduleAction.id === self.config.moduleAction.fromSearch) {
 
 					let planId = self.args.selectedPks[0];
 					let node = self.planHierarchies.find(hierarchy => hierarchy.child.plan && hierarchy.child.plan.id === planId);
