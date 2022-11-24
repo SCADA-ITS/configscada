@@ -801,10 +801,54 @@ export default class UserModule extends GenericModule {
 						events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
 							commandId: 1,
 							function: () => {
+								
+								let dialogEntity = webix.copy(SearchDialogBox.CUSTOM);
 
-								let dialogBox = new SearchDialogBox(i18n.t("LBL_SELECT_PERMISSION"), SearchDialogBox.PERMISSIONS, userPermissionsToAdd);
+								dialogEntity.data = [];
 
-								dialogBox.show();
+								dialogEntity.pkField = "id"
+								dialogEntity.fields = ["labelAlias=LBL_LABEL_PERMISSION", "labelDescription=LBL_LABEL_PERMISSION_DESCRIPTION"];
+								dialogEntity.height = 600;
+								dialogEntity.width = 800;
+								dialogEntity.sortFieldId = 2;
+
+								webix.ajax().get(appConfig.restUrl + self.config.restEndpoints.permissions).then(function(systemPermissionsResponse) {
+
+									if (systemPermissionsResponse != null) {
+
+										let systemPermissions = systemPermissionsResponse.json();
+
+										if (Array.isArray(systemPermissions) && systemPermissions.length > 0) {
+
+											let systemPermissionsCopy = webix.copy(systemPermissions);
+
+											systemPermissionsCopy.forEach(permission => {
+
+												let withPermission = data.find(p => p.id === permission.id);
+
+												if (!withPermission) {
+
+													dialogEntity.data.push({
+														id: permission.id,
+														labelAlias: i18n.t(permission.labelAlias),
+														labelDescription: i18n.t(permission.labelDescription)
+													});
+												}
+											});
+
+											if (Array.isArray(dialogEntity.data) && dialogEntity.data.length > 0) {
+
+												let dialogBox = new SearchDialogBox(i18n.t("LBL_SELECT_PERMISSION"), dialogEntity, userPermissionsToAdd);
+												dialogBox.show();
+
+											} else {
+
+												let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_USER_WITH_ALL_PERMISSIONS_ASIGNED"), null, null, null);
+												ms.show();
+											}
+										}
+									}
+								});
 							}
 						});
 
@@ -864,40 +908,44 @@ export default class UserModule extends GenericModule {
 
 					function userPermissionsToAdd(selection) {
 
-						let userPermissions = self.userPermissions;
-						let rolPermissions = self.rolPermissions;
-						let repeatRolePermission = undefined;
-						let roles = undefined;
+						if (Array.isArray(selection) && selection.length > 0) {
 
-						if (rolPermissions.length > 0 && rolPermissions[0].rolePermissions) {
+							let userPermissions = self.userPermissions;
+							let rolPermissions = self.rolPermissions;
+							let repeatRolePermission = undefined;
+							let roles = undefined;
 
-							roles = rolPermissions[0].rolePermissions;
-						} else if (rolPermissions.length > 0) {
+							if (rolPermissions.length > 0 && rolPermissions[0].rolePermissions) {
 
-							roles = rolPermissions;
-						}
+								roles = rolPermissions[0].rolePermissions;
+							} else if (rolPermissions.length > 0) {
 
-						let repeatUserPermission = userPermissions.find(e => e.id === selection[0].id);
+								roles = rolPermissions;
+							}
 
-						if (roles != undefined) {
+							let repeatUserPermission = userPermissions.find(e => e.id === selection[0].id);
 
-							repeatRolePermission = roles.find(e => e.id === selection[0].id);
-						}
+							if (roles != undefined) {
+
+								repeatRolePermission = roles.find(e => e.id === selection[0].id);
+							}
 
 
-						if (repeatRolePermission || repeatUserPermission) {
+							if (repeatRolePermission || repeatUserPermission) {
 
-							let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_PERMISSION_IS_ALREADY_IN_USE_DESCRIPTION"), null, null, null);
-							ms.show();
+								let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_PERMISSION_IS_ALREADY_IN_USE_DESCRIPTION"), null, null, null);
+								ms.show();
 
-							return false;
+								return false;
 
-						} else {
+							} else {
 
-							self.dtPermissions.add(selection);
-							self.userPermissions.push(selection[0]);
+								self.dtPermissions.add(selection);
+								self.userPermissions.push(selection[0]);
+							}
 						}
 					}
+					
 					return dataTable;
 				}
 			};

@@ -10,6 +10,7 @@
 		"remove": "users/deleteRole/${id}"
 	},
 	"restEndpoints": {
-		"user": "users/role/${id}"
+		"user": "users/role/${id}",
+		"permissions": "users/systemPermissions"
 	}
 }

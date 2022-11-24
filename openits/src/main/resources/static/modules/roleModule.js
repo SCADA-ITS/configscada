@@ -447,9 +447,53 @@ export default class RoleModule extends GenericModule {
 							commandId: 1,
 							function: () => {
 
-								let dialogBox = new SearchDialogBox(i18n.t("LBL_SELECT_PERMISSION"), SearchDialogBox.PERMISSIONS, getPermissions);
+								let dialogEntity = webix.copy(SearchDialogBox.CUSTOM);
 
-								dialogBox.show();
+								dialogEntity.data = [];
+
+								dialogEntity.pkField = "id"
+								dialogEntity.fields = ["labelAlias=LBL_LABEL_PERMISSION", "labelDescription=LBL_LABEL_PERMISSION_DESCRIPTION"];
+								dialogEntity.height = 600;
+								dialogEntity.width = 800;
+								dialogEntity.sortFieldId = 2;
+
+								webix.ajax().get(appConfig.restUrl + self.config.restEndpoints.permissions).then(function(systemPermissionsResponse) {
+
+									if (systemPermissionsResponse != null) {
+
+										let systemPermissions = systemPermissionsResponse.json();
+
+										if (Array.isArray(systemPermissions) && systemPermissions.length > 0) {
+
+											let systemPermissionsCopy = webix.copy(systemPermissions);
+
+											systemPermissionsCopy.forEach(permission => {
+
+												let withPermission = data.find(p => p.id === permission.id);
+
+												if (!withPermission) {
+
+													dialogEntity.data.push({
+														id: permission.id,
+														labelAlias: i18n.t(permission.labelAlias),
+														labelDescription: i18n.t(permission.labelDescription)
+													});
+												}
+											});
+
+											if (Array.isArray(dialogEntity.data) && dialogEntity.data.length > 0) {
+
+												let dialogBox = new SearchDialogBox(i18n.t("LBL_SELECT_PERMISSION"), dialogEntity, getPermissions);
+												dialogBox.show();
+
+											} else {
+
+												let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_ROLE_WITH_ALL_PERMISSIONS_ASIGNED"), null, null, null);
+												ms.show();
+											}
+										}
+									}
+								});
 							}
 						});
 
@@ -490,22 +534,26 @@ export default class RoleModule extends GenericModule {
 
 					function getPermissions(selection) {
 
-						let repeatPermission = self.selectPermissions.find(e => e === selection[0].id);
-						let samePermission = self.rolPermissions.find(e => e === selection[0].id);
+						if (Array.isArray(selection) && selection.length > 0) {
 
-						if (samePermission || repeatPermission) {
+							let repeatPermission = self.selectPermissions.find(e => e === selection[0].id);
+							let samePermission = self.rolPermissions.find(e => e === selection[0].id);
 
-							let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_PERMISSION_IS_ALREADY_IN_USE_DESCRIPTION"), null, null, null);
-							ms.show();
+							if (samePermission || repeatPermission) {
 
-							return false;
+								let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_PERMISSION_IS_ALREADY_IN_USE_DESCRIPTION"), null, null, null);
+								ms.show();
 
-						} else {
+								return false;
 
-							self.dtPermissions.add(selection);
-							self.selectPermissions.push(selection[0].id);
+							} else {
+
+								self.dtPermissions.add(selection);
+								self.selectPermissions.push(selection[0].id);
+							}
 						}
 					}
+					
 					return dataTable;
 				}
 			};

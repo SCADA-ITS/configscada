@@ -13,6 +13,7 @@
 	},
 	"restEndpoints": {
 		"user": "users/${id}",
-		"userRole": "users/role/${id}"
+		"userRole": "users/role/${id}",
+		"permissions": "users/systemPermissions"
 	}
 }
