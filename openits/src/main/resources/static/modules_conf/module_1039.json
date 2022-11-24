@@ -1,9 +1,6 @@
 {
 	"elementTypeId": "ElementType:71",
 	"commands":{
-		"reset" :{
-			"commandElementTypeId":"CommandElementType:1:71"
-		},
 		"sendMessage" :{
 			"commandElementTypeId":"CommandElementType:2:71",
 			"elementId": null,
@@ -20,7 +17,7 @@
 	},
 	"restEndpoints": {
 		"elementsQueuesByElementTypeId": "element_types/${id}/elements",
-		"element": "elements/${id}"
+		"element": "elements"
 	},
 	"actionEndpoints": {
 		"remove": "elements/delete_command_element"

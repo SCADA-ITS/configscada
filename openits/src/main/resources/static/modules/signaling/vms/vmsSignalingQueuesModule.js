@@ -7,6 +7,7 @@ import GraphicIcon from "../../../component/graphicIcon/graphicIcon.js";
 const QUEUE_COLOR_ACTIVE = "#009688";
 const QUEUE_COLOR_NO_ACTIVE = "#f44336";
 const QUEUE_COLOR_UNAVAILABLE = "#475466";
+const UPDATE_INTERVAL_MILLIS = 1000;
 
 export default class VmsSignalingQueuesModule extends GenericModule {
 
@@ -27,7 +28,7 @@ export default class VmsSignalingQueuesModule extends GenericModule {
 
 		this.initialPanelLoad = new Map();
 
-		this.dataCounter = 0;
+		this.dataToUpdate = [];
 	}
 
 
@@ -215,7 +216,7 @@ export default class VmsSignalingQueuesModule extends GenericModule {
 						origin: (commandElement.source) ? commandElement.source : "-",
 						position: commandPosition,
 						elementId: element.id,
-						enable: (commandElement.enable) ? i18n.t("LBL_QUEUE_ITEM_ACTIVE") : i18n.t("LBL_QUEUE_ITEM_INACTIVE")
+						enable: (commandElement.enable) ? i18n.t("LBL_QUEUE_ITEM_ACTIVE") : ""
 					});
 				}
 			}
@@ -255,7 +256,7 @@ export default class VmsSignalingQueuesModule extends GenericModule {
 				{ gridOption: { id: 15 }, value: "false" },
 				{ gridOption: { id: 16 }, value: "img/grid/queue-menu.png" },
 				{ gridOption: { id: 17 }, value: "true" },
-				{ gridOption: { id: 20 }, value: "true" }
+				{ gridOption: { id: 20 }, value: "false" }
 			];
 
 			let metadata = {
@@ -350,16 +351,6 @@ export default class VmsSignalingQueuesModule extends GenericModule {
 								showValue: false,
 								value: i18n.t("LBL_QUEUE_ITEM_ACTIVE"),
 								labelValue: "LBL_QUEUE_ITEM_ACTIVE"
-							},
-							{
-								id: 2,
-								avatar: false,
-								badgeColor: false,
-								enabled: true,
-								icon: "./img/grid/empty.png",
-								showValue: false,
-								value: i18n.t("LBL_QUEUE_ITEM_INACTIVE"),
-								labelValue: "LBL_QUEUE_ITEM_INACTIVE"
 							}
 						]
 					},
@@ -722,81 +713,147 @@ export default class VmsSignalingQueuesModule extends GenericModule {
 
 				if (data && data.id) {
 
-					let datatable = $$("dt-" + self.dataTable.uid);
+					let sameId = self.dataToUpdate.find(e => e === data.id);
+					
+					if (!sameId) {
 
-					if (datatable) {
-
-						webix.extend(datatable, webix.ProgressBar);
-						datatable.showProgress({
-
-							hide: false, type: "bottom"
-						});
+						self.dataToUpdate.push(data.id);
 					}
 
-					webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.elementsQueuesByElementTypeId, { id: self.config.elementTypeId })).then(function(elementTypeResponse) {
+					if (self.dataToUpdate.length === 1 && !sameId) {
 
-						if (elementTypeResponse != null) {
+						setTimeout(function() {
 
-							let elementTypes = elementTypeResponse.json();
-							let element;
-							let queuesToAdd = [];
-							let queuesToDelete = [];
-							let queuesToUpdate = [];
+							let datatable = $$("dt-" + self.dataTable.uid);
 
-							if (Array.isArray(elementTypes) && elementTypes.length > 0) {
+							if (datatable) {
 
-								element = elementTypes.find(e => e.id === data.id);
+								webix.extend(datatable, webix.ProgressBar);
+								datatable.showProgress({
+
+									hide: false, type: "bottom"
+								});
 							}
 
-							let oldQueuesOfElement = self.data.filter(queue => queue.elementId === data.id);
-							let newQueuesOfElement = load(element);
+							webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.restEndpoints.element, JSON.stringify(self.dataToUpdate)).then(function(elementsResponse) {
 
-							oldQueuesOfElement.forEach(queue => {
+								if (elementsResponse != null) {
 
-								let q = newQueuesOfElement.find(q => q.id === queue.id);
+									let elements = elementsResponse.json();
 
-								if (!q) {
+									if (Array.isArray(elements) && elements.length > 0) {
 
-									queuesToDelete.push(queue);
-									self.data.splice(self.data.indexOf(queue), 1);
+										let queuesToAdd = [];
+										let queuesToDelete = [];
+										let queuesToUpdate = [];
 
-								} else {
+										elements.forEach(element => {
 
-									queue.endDate = new Date(queue.endDate);
-									queue.initialDate = new Date(queue.initialDate);
-									queuesToUpdate.push(q);
+											let oldQueuesOfElement = self.data.filter(queue => queue.elementId === element.id);
+											let newQueuesOfElement = load(element);
+
+											oldQueuesOfElement.forEach(queue => {
+
+												let q = newQueuesOfElement.find(q => q.id === queue.id);
+
+												if (!q) {
+
+													queuesToDelete.push(queue);
+													self.data.splice(self.data.indexOf(queue), 1);
+
+												} else {
+
+													queue.endDate = new Date(queue.endDate);
+													queue.initialDate = new Date(queue.initialDate);
+													queuesToUpdate.push(q);
+												}
+											});
+
+											newQueuesOfElement.forEach(queue => {
+
+												let q = oldQueuesOfElement.find(q => q.id === queue.id);
+
+												if (!q) {
+
+													self.data.push(queue);
+													queue.endDate = new Date(queue.endDate);
+													queue.initialDate = new Date(queue.initialDate);
+													queuesToAdd.push(queue);
+
+												} else {
+
+													queue.endDate = new Date(queue.endDate);
+													queue.initialDate = new Date(queue.initialDate);
+													queuesToUpdate.push(queue);
+												}
+											});
+										});
+
+										self.dataTable.delete(queuesToDelete);
+										self.dataTable.add(queuesToAdd);
+
+										datatable.eachRow(function(row) {
+
+											let rowToUpdate = queuesToUpdate.find(q => q.id === row);
+
+											if (rowToUpdate) {
+										
+												let conflictCellNodeHTML = datatable.getItemNode({ row: row, column: "conflict" });
+												let activeCellNodeHTML = datatable.getItemNode({ row: row, column: "enable" });
+												let iconConflictHTML = conflictCellNodeHTML.querySelector(".table-field-icons");
+												let iconActiveHTML = activeCellNodeHTML.querySelector(".table-field-icons");
+												let dataToUpdate = datatable.config.data.find(dat => dat.id === row);
+
+												if (rowToUpdate.conflict != "" && iconConflictHTML === null) {
+
+													if (dataToUpdate) {
+
+														dataToUpdate.conflict = i18n.t("LBL_CONFLICT");
+													}
+
+													let icon = "./img/grid/critical.png";
+													let imgHTML = document.createElement("img");
+													imgHTML.setAttribute("src", icon);
+													imgHTML.setAttribute("class", "table-field-icons");
+													imgHTML.setAttribute("style", "margin-left: -10px");
+													conflictCellNodeHTML.appendChild(imgHTML);
+
+												} else if (rowToUpdate.conflict === "" && iconConflictHTML) {
+
+													if (dataToUpdate) {
+
+														dataToUpdate.conflict = "";
+													}
+
+													iconConflictHTML.src = "./img/grid/empty.png";
+												}
+
+												if (dataToUpdate) {
+
+													dataToUpdate.position = rowToUpdate.position;
+													dataToUpdate.state = rowToUpdate.state;
+												}
+
+												if ((rowToUpdate.enable === i18n.t("LBL_QUEUE_ITEM_ACTIVE") && iconActiveHTML === null) || (rowToUpdate.enable === "" && iconActiveHTML)) {
+
+													self.dataTable.update(rowToUpdate);
+												}
+
+												datatable.refresh();
+											}
+										});
+									}
 								}
-							});
 
-							newQueuesOfElement.forEach(queue => {
+								if (datatable) {
 
-								let q = oldQueuesOfElement.find(q => q.id === queue.id);
-
-								if (!q) {
-
-									self.data.push(queue);
-									queue.endDate = new Date(queue.endDate);
-									queue.initialDate = new Date(queue.initialDate);
-									queuesToAdd.push(queue);
-
-								} else {
-
-									queue.endDate = new Date(queue.endDate);
-									queue.initialDate = new Date(queue.initialDate);
-									queuesToUpdate.push(queue);
+									datatable.hideProgress();
 								}
+
+								self.dataToUpdate = [];
 							});
-
-							self.dataTable.delete(queuesToDelete);
-							self.dataTable.add(queuesToAdd);
-							self.dataTable.update(queuesToUpdate);
-						}
-
-						if (datatable) {
-
-							datatable.hideProgress();
-						}
-					});
+						}, UPDATE_INTERVAL_MILLIS);
+					}
 				}
 			}
 		}
