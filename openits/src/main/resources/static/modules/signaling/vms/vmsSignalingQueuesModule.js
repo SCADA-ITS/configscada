@@ -29,6 +29,8 @@ export default class VmsSignalingQueuesModule extends GenericModule {
 		this.initialPanelLoad = new Map();
 
 		this.dataToUpdate = [];
+
+		this.timerIsRunnig = false;
 	}
 
 
@@ -714,28 +716,21 @@ export default class VmsSignalingQueuesModule extends GenericModule {
 				if (data && data.id) {
 
 					let sameId = self.dataToUpdate.find(e => e === data.id);
-					
+
 					if (!sameId) {
 
 						self.dataToUpdate.push(data.id);
 					}
 
-					if (self.dataToUpdate.length === 1 && !sameId) {
+					if (self.dataToUpdate.length === 1 && !sameId && !self.timerIsRunnig) {
+
+						self.timerIsRunnig = true;
 
 						setTimeout(function() {
 
 							let datatable = $$("dt-" + self.dataTable.uid);
 							let dataToUpdateCopy = webix.copy(self.dataToUpdate);
 							self.dataToUpdate = [];
-
-							if (datatable) {
-
-								webix.extend(datatable, webix.ProgressBar);
-								datatable.showProgress({
-
-									hide: false, type: "bottom"
-								});
-							}
 
 							webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.restEndpoints.element, JSON.stringify(dataToUpdateCopy)).then(function(elementsResponse) {
 
@@ -799,12 +794,22 @@ export default class VmsSignalingQueuesModule extends GenericModule {
 											let rowToUpdate = queuesToUpdate.find(q => q.id === row);
 
 											if (rowToUpdate) {
-										
+
+												let iconConflictHTML = null;
+												let iconActiveHTML = null;
 												let conflictCellNodeHTML = datatable.getItemNode({ row: row, column: "conflict" });
 												let activeCellNodeHTML = datatable.getItemNode({ row: row, column: "enable" });
-												let iconConflictHTML = conflictCellNodeHTML.querySelector(".table-field-icons");
-												let iconActiveHTML = activeCellNodeHTML.querySelector(".table-field-icons");
-												let itemToUpdate = datatable.config.data.find(dat => dat.id === row);												
+												let itemToUpdate = datatable.config.data.find(dat => dat.id === row);
+
+												if (conflictCellNodeHTML) {
+
+													iconConflictHTML = conflictCellNodeHTML.querySelector(".table-field-icons");
+												}
+
+												if (activeCellNodeHTML) {
+
+													iconActiveHTML = activeCellNodeHTML.querySelector(".table-field-icons");
+												}
 
 												if (rowToUpdate.conflict != "" && iconConflictHTML === null) {
 
@@ -813,21 +818,12 @@ export default class VmsSignalingQueuesModule extends GenericModule {
 														itemToUpdate.conflict = i18n.t("LBL_CONFLICT");
 													}
 
-													let icon = "./img/grid/critical.png";
-													let imgHTML = document.createElement("img");
-													imgHTML.setAttribute("src", icon);
-													imgHTML.setAttribute("class", "table-field-icons");
-													imgHTML.setAttribute("style", "margin-left: -10px");
-													conflictCellNodeHTML.appendChild(imgHTML);
-
 												} else if (rowToUpdate.conflict === "" && iconConflictHTML) {
 
 													if (itemToUpdate) {
 
 														itemToUpdate.conflict = "";
 													}
-
-													iconConflictHTML.src = "./img/grid/empty.png";
 												}
 
 												if (itemToUpdate) {
@@ -840,18 +836,20 @@ export default class VmsSignalingQueuesModule extends GenericModule {
 
 													self.dataTable.update(rowToUpdate);
 												}
-
-												datatable.refresh();
 											}
 										});
 									}
 								}
 
-								if (datatable) {
+								self.timerIsRunnig = false;
 
-									datatable.hideProgress();
+								if (datatable) {
+									
+									datatable.hide();
+									datatable.show();
 								}
 							});
+
 						}, UPDATE_INTERVAL_MILLIS);
 					}
 				}

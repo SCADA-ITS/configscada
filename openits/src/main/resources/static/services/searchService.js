@@ -21,17 +21,35 @@ export default class SearchService extends GenericModule {
 		let self = this;
 		let views = [];
 		let viewSearch;
+		let types = undefined;
+		let allFalse = false;
+		let searchBoxView = {height: 1};
+		
+		if (self.module.config.searchOptions) {
+
+			types = typesForShow();
+
+			if (Array.isArray(types) && types.length === 0) {
+
+				allFalse = true;
+			}
+		}
 			
-		let searchBox = new SearchBox(onValidate, undefined, true);
+		let searchBox = new SearchBox(onValidate, types, true);
+
+		if (!allFalse) {
+
+			searchBoxView = searchBox.getView() 
+		}
 		
 		viewSearch = {
 			width: 300,
-			rows: [
-				searchBox.getView()		
-			]
+			rows: [searchBoxView]
 		};
-		
-		views.push(viewSearch);
+
+			views.push(viewSearch);
+
+
 		
 		function onValidate(text, type) {
 					
@@ -48,6 +66,33 @@ export default class SearchService extends GenericModule {
 
 				util.module.open(mod, moduleAction, null, null, args);
 			}
+		}
+		
+		function typesForShow() {
+
+			let searchBoxOptions = [];
+			let searchOptions = self.module.config.searchOptions;
+			let options = Object.keys(self.module.config.searchOptions);
+
+			if (Array.isArray(options) && options.length > 0) {
+
+				let searchBoxTypes = webix.copy(SearchBox.TYPE);
+
+				options.forEach(op => {
+
+					if (searchOptions[op]) {
+
+						let type = searchBoxTypes[op];
+
+						if (type) {
+
+							searchBoxOptions.push(type.id);
+						}
+					}
+				});
+			}
+
+			return searchBoxOptions;
 		}
 		
 		return views;
