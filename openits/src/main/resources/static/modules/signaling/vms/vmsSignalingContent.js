@@ -40,8 +40,13 @@ export default class VmsSignalingContent {
 			this.selectedCommand = this.currentCommandElement.commandElementType;
 		}
 		else {
-			
+
 			this.selectedCommand = element.commandElements.find(e => e.id == config.commands.sendMessage.commandElementTypeId);
+
+			if (this.selectedCommand === undefined) {
+
+				this.selectedCommand = element.commandElements[0];
+			}
 		}
 		
 		this.uid = webix.uid();
@@ -338,8 +343,14 @@ export default class VmsSignalingContent {
 							if (tabView) {
 								
 								setTimeout(function() {
-								
-									let tabSelected = "view-generic-signaling-command-body-" + self.config.commands.sendMessage.commandElementTypeId + "-" + self.uid;
+									
+									let tabSelected = undefined;
+									let tabbarOptions = tabView.getTabbar().config.options;
+
+									if (Array.isArray(tabbarOptions) && tabbarOptions.length > 0) {
+
+										tabSelected = tabbarOptions[0].id;
+									}
 							
 									if (self.isEditAction) {
 										
@@ -364,9 +375,12 @@ export default class VmsSignalingContent {
 				let viewSignalling = undefined;
 				let commandElementSendMessage = self.element.commandElements.find(e => e.id === self.config.commands.sendMessage.commandElementTypeId);
 				
-				viewSignalling = getViewSendMessage();
-				
-				signallingTabs.cells.push(viewSignalling);
+				if (commandElementSendMessage) {
+
+					viewSignalling = getViewSendMessage();
+
+					signallingTabs.cells.push(viewSignalling);
+				}
 				
 				self.element.commandElements.forEach(cmdElement => {
 					
@@ -978,7 +992,11 @@ export default class VmsSignalingContent {
 													}
 												}
 
-												self.composer.clear();
+												if (self.composer) {
+
+													self.composer.clear();
+												}
+												
 												self.hasMessage = false;
 											}
 
@@ -1108,7 +1126,7 @@ export default class VmsSignalingContent {
 			
 			let priorities = self.element.elementType.priorities;
 
-			if (Array.isArray(priorities) && self.selectedCommand.pmQueueCompatibility && !self.onEdit) {
+			if (Array.isArray(priorities) && self.selectedCommand && self.selectedCommand.pmQueueCompatibility && !self.onEdit) {
 				
 				let data = [];
 				
