@@ -74,7 +74,7 @@ export default class IncidentReportTaskDetailPlan extends IncidentReportTaskDeta
 				let metadata;
 
 				const defaultGridOptionValues = [
-					{ gridOption: { id: 1 }, value: "false" },
+					{ gridOption: { id: 1 }, value: "true" },
 					{ gridOption: { id: 2 }, value: "false" },
 					{ gridOption: { id: 3 }, value: "2" },
 					{ gridOption: { id: 4 }, value: "asc" },
@@ -247,7 +247,7 @@ export default class IncidentReportTaskDetailPlan extends IncidentReportTaskDeta
 							label: "LBL_EXECUTE_PLAN",
 							showText: true,
 							position: 1,
-							multiselect: false,
+							multiselect: true,
 							itemRequired: true
 						},
 						{
@@ -321,53 +321,74 @@ export default class IncidentReportTaskDetailPlan extends IncidentReportTaskDeta
 
 				let selectedItems = self.dtPlans.getSelectedItems();
 
-				if (Array.isArray(selectedItems) && selectedItems.length === 1) {
+				if (Array.isArray(selectedItems) && selectedItems.length > 0) {			
 
-					let selectedItem = selectedItems[0];
+					let messageLabel = (selectedItems.length === 1) ? i18n.t("LBL_INCIDENT_TASK_PLAN_EXECUTE_CONFIRM_DESCRIPTION") : i18n.t("LBL_INCIDENT_TASK_PLANS_EXECUTE_CONFIRM_DESCRIPTION");
+					let somePlanExecute = selectedItems.filter(plan => plan.status === PLAN_EXECUTED);
 
-					let ms = new MessageBox(MessageBox.CONFIRM, selectedItem.status != PLAN_EXECUTED ? i18n.t("LBL_INCIDENT_TASK_PLAN_EXECUTE_CONFIRM_DESCRIPTION") : i18n.t("LBL_INCIDENT_TASK_PLAN_EXECUTE_AGAIN_CONFIRM_DESCRIPTION"), null, onAccept, null);
+					if (Array.isArray(somePlanExecute) && somePlanExecute.length > 0) {
+
+						if (selectedItems.length === somePlanExecute.length) {
+
+							messageLabel = (somePlanExecute.length === 1) ? i18n.t("LBL_INCIDENT_TASK_PLAN_EXECUTE_AGAIN_CONFIRM_DESCRIPTION") : i18n.t("LBL_INCIDENT_TASK_PLANS_EXECUTE_AGAIN_CONFIRM_DESCRIPTION")
+
+						} else {
+
+							if (somePlanExecute.length === 1) {
+
+								messageLabel = somePlanExecute.length + " " + i18n.t("LBL_INCIDENT_TASK_PLAN_HAS_BEEN_EXECUTED") + ", " + i18n.t("LBL_INCIDENT_TASK_PLAN_EXECUTE_AGAIN_WITH_REST_PLANS_SELECTED_CONFIRM_DESCRIPTION");
+
+							} else {
+
+								messageLabel = somePlanExecute.length + " " + i18n.t("LBL_INCIDENT_TASK_PLANS_HAS_BEEN_EXECUTED") + ", " + i18n.t("LBL_INCIDENT_TASK_PLANS_EXECUTE_AGAIN_WITH_REST_PLANS_SELECTED_CONFIRM_DESCRIPTION");
+							}
+						}
+					}
+
+					let ms = new MessageBox(MessageBox.CONFIRM, messageLabel, null, onAccept, null);
 					ms.show();
 
 					function onAccept() {
 
+						selectedItems.forEach(selectedItem => {
 
-						let planId = selectedItem.id;
-						let incidentTaskPlanId = selectedItem.incidentTaskPlanId;
+							let planId = selectedItem.id;
+							let incidentTaskPlanId = selectedItem.incidentTaskPlanId;
 
-						let endpoint = util.fillTemplate(self.config.actionEndpoints.executeTaskPlan, {
-							id: self.incidentReport.id,
-							taskPlanId: incidentTaskPlanId
-						});
+							let endpoint = util.fillTemplate(self.config.actionEndpoints.executeTaskPlan, {
+								id: self.incidentReport.id,
+								taskPlanId: incidentTaskPlanId
+							});
 
-						console.log("Incident report action => " + endpoint);
+							console.log("Incident report action => " + endpoint);
 
-						if (self.config.moduleAction.executePlanFromIncident) {
+							if (self.config.moduleAction.executePlanFromIncident) {
 
-							let module = util.module.getFromModuleAction(self.config.moduleAction.executePlanFromIncident);
+								let module = util.module.getFromModuleAction(self.config.moduleAction.executePlanFromIncident);
 
-							if (module) {
+								if (module) {
 
-								let moduleAction = { id: self.config.moduleAction.executePlanFromIncident };
-								let args = { selectedPks: [planId] };
+									let moduleAction = { id: self.config.moduleAction.executePlanFromIncident };
+									let args = { selectedPks: [planId] };
 
-								util.module.open(module, moduleAction, VIEW_TYPE_WINDOW, null, args, onLoadedModule);
+									util.module.open(module, moduleAction, VIEW_TYPE_WINDOW, null, args, onLoadedModule);
 
-								function onLoadedModule() {
+									function onLoadedModule() {
 
-									setTimeout(function() {
+										setTimeout(function() {
 
-										webix.ajax().post(appConfig.restUrl + endpoint).then(undefined, function(response) { util.ajax.handleError(response); });
+											webix.ajax().post(appConfig.restUrl + endpoint).then(undefined, function(response) { util.ajax.handleError(response); });
 
-									}, (self.config.executeTaskPlanDelaySecs ? self.config.executeTaskPlanDelaySecs : DEFAULT_EXECUTE_TASK_PLAN_DELAY_SECS) * 1000);
-
+										}, (self.config.executeTaskPlanDelaySecs ? self.config.executeTaskPlanDelaySecs : DEFAULT_EXECUTE_TASK_PLAN_DELAY_SECS) * 1000);
+									}
 								}
+
+							} else {
+
+								webix.ajax().post(appConfig.restUrl + endpoint).then(undefined, function(response) { util.ajax.handleError(response); });
 							}
 
-						} else {
-
-							webix.ajax().post(appConfig.restUrl + endpoint).then(undefined, function(response) { util.ajax.handleError(response); });
-						}
-
+						});
 					}
 				}
 			}
