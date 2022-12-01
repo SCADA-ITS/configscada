@@ -30,7 +30,7 @@ export default class VmsSignalingQueuesModule extends GenericModule {
 
 		this.dataToUpdate = [];
 
-		this.timerIsRunnig = false;
+		this.setTimeOut = false;
 	}
 
 
@@ -164,7 +164,11 @@ export default class VmsSignalingQueuesModule extends GenericModule {
 
 										config.graphicIconInstance = graphicIconInstance;
 										let svgHTML = $$("table-" + self.uid).getNode().querySelector('#vms-composer-svg-' + svgId);
-										self.initialPanelLoad.set(svgId, svgHTML.outerHTML);
+										
+										if (svgHTML && svgHTML.outerHTML) {
+
+											self.initialPanelLoad.set(svgId, svgHTML.outerHTML);
+										}										
 									});
 								}
 
@@ -722,15 +726,21 @@ export default class VmsSignalingQueuesModule extends GenericModule {
 						self.dataToUpdate.push(data.id);
 					}
 
-					if (self.dataToUpdate.length === 1 && !sameId && !self.timerIsRunnig) {
+					if (self.dataToUpdate.length === 1 && !sameId && !self.setTimeOut) {
 
-						self.timerIsRunnig = true;
+						self.setTimeOut = true;
 
 						setTimeout(function() {
 
 							let datatable = $$("dt-" + self.dataTable.uid);
 							let dataToUpdateCopy = webix.copy(self.dataToUpdate);
 							self.dataToUpdate = [];
+
+							webix.extend(datatable, webix.ProgressBar);
+
+							datatable.showProgress({
+								hide: false, type: "bottom"
+							});
 
 							webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.restEndpoints.element, JSON.stringify(dataToUpdateCopy)).then(function(elementsResponse) {
 
@@ -786,8 +796,15 @@ export default class VmsSignalingQueuesModule extends GenericModule {
 											});
 										});
 
-										self.dataTable.delete(queuesToDelete);
-										self.dataTable.add(queuesToAdd);
+										if (Array.isArray(queuesToDelete) && queuesToDelete.length > 0) {
+
+											self.dataTable.delete(queuesToDelete);
+										}
+
+										if (Array.isArray(queuesToAdd) && queuesToAdd.length > 0) {
+
+											self.dataTable.add(queuesToAdd);
+										}
 
 										datatable.eachRow(function(row) {
 
@@ -841,13 +858,14 @@ export default class VmsSignalingQueuesModule extends GenericModule {
 									}
 								}
 
-								self.timerIsRunnig = false;
-
 								if (datatable) {
-									
+
 									datatable.hide();
 									datatable.show();
 								}
+
+								datatable.hideProgress();
+								self.setTimeOut = false;
 							});
 
 						}, UPDATE_INTERVAL_MILLIS);
