@@ -232,3 +232,29 @@ audio {
 	color: #9098a2;
 	border: 1px solid var(--blue-headers-not-sel);
 }
+
+.signaling-monitor-text-panel {
+	text-align: center;
+	padding-top: 20px;
+}
+
+.signaling-monitor-text-panel-alias .webix_el_box {
+	font-size: 17px;
+	font-weight: 500;
+	padding-top: 10px;
+    text-decoration: underline;
+    cursor: pointer;
+    color: var(--blue-mid2) !important;
+}
+
+.signaling-monitor-text-panel-pk .webix_el_box{
+	font-size: 13px;
+}
+
+.signaling-monitor-text-panel-priority .webix_el_box{
+	font-weight: bold;	
+}
+
+.signaling-monitor-text-panel-icon {
+	text-align: center;
+}

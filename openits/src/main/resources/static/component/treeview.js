@@ -892,6 +892,11 @@ export default class TreeView {
 			if (sourceData) {
 				
 				getChilds(sourceData);	
+				
+			} else if (!sourceData && fromFolder.id === "root") {
+
+				fromFolder.data = self.data;
+				getChilds(fromFolder);	
 			}
 		}
 		

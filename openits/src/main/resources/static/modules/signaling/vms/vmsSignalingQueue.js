@@ -426,7 +426,7 @@ export default class VmsSignalingQueue {
 													</div>`;
 										}
 									},
-									{ height : 5 },
+									//{ height : 5 },
 									{
 										cols: [
 											{
@@ -450,12 +450,26 @@ export default class VmsSignalingQueue {
 											{ width: 15 }
 										]
 									},
+									{ height: 2 },
+									{
+										id: "queue-element-option-conflict-" + priority.id + "-" + commandElement.id + "-" + self.uid,
+										css: { "margin-left": "1px !important" },
+										view: "template",
+										borderless: true,
+										height: 30,
+										template: function() {
+
+											let icon = (commandElement.conflict) ? "mdi mdi-alert-circle" : "";
+
+											return `<div class="signaling-monitor-text-panel-icon">
+																	<span title="${i18n.t("LBL_CONFLICT")}"class="ico webix_icon ${icon}"></span>
+																	</div>`
+										}
+									},
 									{}
 								]
 							},
-							{
-								width: 5
-							}
+							{ width: 5 }
 						]
 					};
 					
