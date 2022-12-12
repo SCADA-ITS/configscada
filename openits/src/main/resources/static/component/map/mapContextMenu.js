@@ -64,7 +64,7 @@ export default class MapContextMenu {
 						
 						if (item && item.commandElementId) {
 							
-							let commands = getCommands(item.commandElementId);
+							let commands = getCommands(item);
 							
 							if (Array.isArray(commands) && commands.length > 0) {
 								
@@ -100,20 +100,31 @@ export default class MapContextMenu {
 			}
 		}
         
-        function getCommands(commandElementId) {
+        function getCommands(item) {
 	
 			let commands = [];
-			let selectedPks = self.selectedPksCallback();
+			
+			if (item) {
 				
-			if (Array.isArray(selectedPks) && selectedPks.length > 0) {
-				
-				selectedPks.forEach(elementId => {
+				let elementTypeId = item.elementTypeId;
+				let commandElementId = item.commandElementId;
+				let selectedPks = self.selectedPksCallback();
 					
-					commands.push({
-						elementId: elementId,
-						commandElementTypeId: commandElementId
+				if (Array.isArray(selectedPks) && selectedPks.length > 0) {
+					
+					selectedPks.forEach(elementId => {
+						
+						let element = window.em.getByField(EntityType.ELEMENT, "id", elementId);
+						
+						if (element.elementType.id === elementTypeId) {
+							
+							commands.push({
+								elementId: elementId,
+								commandElementTypeId: commandElementId
+							});	
+						}
 					});
-				});
+				}	
 			}
 			
 			return commands;
@@ -189,7 +200,8 @@ export default class MapContextMenu {
 														value: i18n.t(cmd.labelAlias),
 														img: cmd.image,
 														commandElementId: cmd.id,
-														elementTypeLabelAlias: elementTypeCommand.aliasCtx
+														elementTypeLabelAlias: elementTypeCommand.aliasCtx,
+														elementTypeId: elementTypeCommand.elementType.id
 													});
 												}
 											});
