@@ -350,10 +350,10 @@ export default class IncidentReportTaskDetailPlan extends IncidentReportTaskDeta
 
 					function onAccept() {
 
-						selectedItems.forEach(selectedItem => {
+						for (let i = 0; i < selectedItems.length; i++) {
 
-							let planId = selectedItem.id;
-							let incidentTaskPlanId = selectedItem.incidentTaskPlanId;
+							let planId = selectedItems[i].id;
+							let incidentTaskPlanId = selectedItems[i].incidentTaskPlanId;
 
 							let endpoint = util.fillTemplate(self.config.actionEndpoints.executeTaskPlan, {
 								id: self.incidentReport.id,
@@ -373,7 +373,18 @@ export default class IncidentReportTaskDetailPlan extends IncidentReportTaskDeta
 
 									util.module.open(module, moduleAction, VIEW_TYPE_WINDOW, null, args, onLoadedModule);
 
-									function onLoadedModule() {
+									function onLoadedModule(instance) {
+
+										if (instance.args && instance.args.containerId) {
+
+											let win = $$(instance.args.containerId);
+
+											if (win && win.config.view === "window") {
+
+												let px = 16 * i;												
+												util.ui.centerWindow(win, px);
+											}
+										}
 
 										setTimeout(function() {
 
@@ -387,8 +398,7 @@ export default class IncidentReportTaskDetailPlan extends IncidentReportTaskDeta
 
 								webix.ajax().post(appConfig.restUrl + endpoint).then(undefined, function(response) { util.ajax.handleError(response); });
 							}
-
-						});
+						}
 					}
 				}
 			}

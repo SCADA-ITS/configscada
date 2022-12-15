@@ -1359,14 +1359,15 @@ export let util = {
 			}
 		},
 
-		centerWindow(winId) {
+		centerWindow(winId, px) {
 
 			let win = $$(winId);
+			let offset = (px) ? px : 0;
 
 			if (win && win.config.view === "window") {
 
-				let x = (document.documentElement.clientWidth / 2) - (win.config.width / 2);
-				let y = (document.documentElement.clientHeight / 2) - (win.config.height / 2);
+				let x = (document.documentElement.clientWidth / 2) - ((win.config.width / 2) - offset);
+				let y = (document.documentElement.clientHeight / 2) - ((win.config.height / 2) - offset);
 
 				win.setPosition(Math.floor(x), Math.floor(y));
 			}

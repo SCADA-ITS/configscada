@@ -279,7 +279,8 @@ export default class PlanExecutor extends GenericModule {
 						self.ordersDataTable.select(ids);
 					}
 
-					if (stompData.planStateType && stompData.planStateType.id && self.config.resetTimer.includes(stompData.planStateType.id)) {
+					if (stompData.planStateType && stompData.planStateType.id && self.config.resetTimer.includes(stompData.planStateType.id) && self.data.planOrders) {
+						
 						self.data.planOrders.forEach(order => {
 
 							order.orderExecutedAt = undefined;
