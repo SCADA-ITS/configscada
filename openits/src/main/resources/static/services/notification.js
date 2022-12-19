@@ -705,7 +705,7 @@ export default class Notification {
 
 				let firstLine = obj.alias;
 
-				if (!obj.recognized && obj.countdownRecognize && obj.countdownRecognize.value >= 0) {
+				if (!obj.recognized && obj.countdownRecognize && obj.countdownRecognize.value > 0) {
 
 					firstLine += i18n.t(" (LBL_SECS_TO_RECOGNIZED_ITEM: " + obj.countdownRecognize.value + " LBL_SEC_AB)");
 				}
