@@ -26,6 +26,7 @@ export default class IncidentReportModule extends GenericModule {
 
 		this.userData = util.user.getUserData();
 		this.isUpdating = false;
+		this.camerasChecked = false;
 
 		this.autoAssignPermissions = util.module.isAllowedPermission(this.config.requiredPermissions.autoassign);
 		this.assignAnotherPermissions = util.module.isAllowedPermission(this.config.requiredPermissions.assignAnother);

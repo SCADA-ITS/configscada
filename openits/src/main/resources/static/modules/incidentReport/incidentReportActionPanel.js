@@ -234,33 +234,43 @@ export default class IncidentReportActionPanel {
 															}
 		
 														} else {
-		
-															if (sameUser) {
-		
-																let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_CONFIRM_CONFIRM_DESCRIPTION"), null, onAccept, null);
+			
+															let needCheckCameras = (self.incidentReport.scenario && self.incidentReport.scenario.id && self.config.action && self.config.action.cctvScenario && (self.incidentReport.alarms !== undefined && self.incidentReport.alarms.length > 0)) ? true : false;
+
+															if (needCheckCameras && !self.parent.camerasChecked) {
+
+																let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_CONFIRM_NEED_CHECK_CAMERAS_DESCRIPTION"), null, viewCameras, null);
 																ms.show();
-		
+
 															} else {
-		
-																let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_CONFIRM_CONFIRM_DESCRIPTION"), null, function() {
-		
-																	onAccept(true);
-		
-																}, null);
-																ms.show();
-															}
-		
-															function onAccept(changeUser) {
-		
-																let userId = (changeUser) ? self.userData.id : null;
-		
-																let body = {
-																	id: self.incidentReport.id,
-																	userId: userId
-																};
-		
-																let endpoint = util.fillTemplate(self.config.actionEndpoints.confirm, body);
-																self.parent.restAction(endpoint);
+
+																if (sameUser) {
+
+																	let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_CONFIRM_CONFIRM_DESCRIPTION"), null, onAccept, null);
+																	ms.show();
+
+																} else {
+
+																	let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_CONFIRM_CONFIRM_DESCRIPTION"), null, function() {
+
+																		onAccept(true);
+
+																	}, null);
+																	ms.show();
+																}
+
+																function onAccept(changeUser) {
+
+																	let userId = (changeUser) ? self.userData.id : null;
+
+																	let body = {
+																		id: self.incidentReport.id,
+																		userId: userId
+																	};
+
+																	let endpoint = util.fillTemplate(self.config.actionEndpoints.confirm, body);
+																	self.parent.restAction(endpoint);
+																}
 															}
 														}
 													}
@@ -338,7 +348,17 @@ export default class IncidentReportActionPanel {
 
 								onItemClick() {
 
-									cancelIncidentReport();
+									let needCheckCameras = (!self.incidentReport.confirm && self.incidentReport.scenario && self.incidentReport.scenario.id && self.config.action && self.config.action.cctvScenario && (self.incidentReport.alarms !== undefined && self.incidentReport.alarms.length > 0)) ? true : false;
+
+									if (needCheckCameras && !self.parent.camerasChecked) {
+
+										let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_CANCEL_NEED_CHECK_CAMERAS_DESCRIPTION"), null, viewCameras, null);
+										ms.show();
+
+									} else {
+
+										cancelIncidentReport();
+									}
 								}
 							}
 						},
@@ -607,6 +627,8 @@ export default class IncidentReportActionPanel {
 
 		function viewCameras() {
 
+			self.parent.camerasChecked = true;
+			
 			if (self.config && self.config.action && self.config.action.cctvScenario &&
 				self.incidentReport.scenario && self.incidentReport.scenario.id) {
 
