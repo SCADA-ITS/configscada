@@ -66,7 +66,7 @@ export default class SearchBox {
 					view: "search",
 					icon: undefined,
 					css: self.isToolbar ? cssStyleInvertUser : undefined,
-//					placeholder: i18n.t(self.typeSelected.placeHolder),
+					placeholder: i18n.t(self.typeSelected.placeHolder),
 					on: {
 						onEnter: search
 					}

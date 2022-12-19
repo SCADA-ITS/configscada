@@ -55,11 +55,6 @@ export default class SearchPlan {
 
 					drawViewResultsPlans();
 				}
-
-				if (onReady) {
-
-					onReady();
-				}
 			}
 		});
 
@@ -268,6 +263,11 @@ export default class SearchPlan {
 			if ($$("results-plans-" + self.uid)) {
 
 				webix.ui(viewResultsPlans, $$("results-plans-" + self.uid));
+				
+				if (onReady) {
+
+					onReady();
+				}
 			}
 		}
 
@@ -337,6 +337,7 @@ export default class SearchPlan {
 						icon: "mdi mdi-check",
 						label: i18n.t("LBL_SEARCH_LINK_EXECUTE"),
 						tooltip: i18n.t("LBL_SEARCH_LINK_EXECUTE_DESCRIPTION"),
+						hidden: (plan.isOrder) ? true : false,
 						on: {
 							onItemClick: function() {
 

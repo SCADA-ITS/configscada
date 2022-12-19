@@ -24,11 +24,6 @@ export default class SearchIncident {
 				incidents = filterResults();
 				
 				drawViewResultsIncidents();
-				
-				if (onReady) {
-					
-					onReady();
-				}
 			}
 		});
 		
@@ -172,6 +167,11 @@ export default class SearchIncident {
 			if ($$("results-incidents-" + self.uid)) {
 				
 				webix.ui(viewResultsIncidents, $$("results-incidents-" + self.uid));	
+				
+				if (onReady) {
+
+					onReady();
+				}
 			}
 		}
 		

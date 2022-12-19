@@ -46,12 +46,7 @@ export default class SearchEquipment {
 							});
 						}
 						
-						drawViewResultsElements();
-						
-						if (onReady) {
-			
-							onReady();
-						}
+						drawViewResultsElements();					
 					}
 				});	
 			}
@@ -212,6 +207,11 @@ export default class SearchEquipment {
 			if ($$("results-elements-" + self.uid)) {
 					
 				webix.ui(viewResultsEquipments, $$("results-elements-" + self.uid));	
+				
+				if (onReady) {
+
+					onReady();
+				}
 			}
 		}
 		

@@ -24,11 +24,6 @@ export default class SearchAlarm {
 				alarms = filterResults();
 				
 				drawViewResultsAlarms();
-				
-				if (onReady) {
-					
-					onReady();
-				}
 			}
 		});
 		
@@ -185,6 +180,11 @@ export default class SearchAlarm {
 			if ($$("results-alarms-" + self.uid)) {
 				
 				webix.ui(viewResultsAlarms, $$("results-alarms-" + self.uid));	
+				
+				if (onReady) {
+
+					onReady();
+				}
 			}
 		}
 		
