@@ -17,11 +17,14 @@
 		},
 		"alarm": {
 			"default": 101402,
-			"view": 100801,
+			"view": {
+				"moduleActionId": 100801,
+				"viewTypeId": 2
+			},
 			"recognize": 100802,
 			"equipment": {
 				"moduleActionId": 101402,
-				"viewTypeId": 1
+				"viewTypeId": 2
 			},
 			"map": {
 				"moduleActionId": 200004,

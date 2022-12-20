@@ -146,7 +146,11 @@ export default class SearchPlan {
 									
 									let desc = (plan.description) ? " - " +  plan.description : "";
 									lbl = plan.alias + desc;
-									color = self.config.types.plan.planStateTypes[plan.planStateType.id].color;
+									
+									if (plan.planStateType) {
+										
+										color = self.config.types.plan.planStateTypes[plan.planStateType.id].color;	
+									}
 
 									rowResult = drawRow();
 
@@ -162,12 +166,20 @@ export default class SearchPlan {
 
 										img = plan.order.planOrderType.icon;
 										planTitle = i18n.t(plan.order.planOrderType.labelAlias);
-										stateTitle = i18n.t(plan.order.planOrderStateType.labelAlias);
+										
+										if (plan.order.planOrderStateType) {
+											
+											stateTitle = i18n.t(plan.order.planOrderStateType.labelAlias);	
+										}
+										
 									}
 
 									let desc = (plan.planDescription) ? " - " + plan.planDescription : "";
 									lbl += plan.order.alias + " - " + plan.planAlias + desc;
-									color = self.config.types.plan.planOrderStateTypes[plan.order.planOrderStateType.id].color;
+									
+									if (plan.order.planOrderStateType) {
+										color = self.config.types.plan.planOrderStateTypes[plan.order.planOrderStateType.id].color;
+									}
 									rowResult = drawRow();
 								}
 
@@ -370,8 +382,8 @@ export default class SearchPlan {
 
 					let alias = e.alias ? util.getStringNormalized(e.alias) : undefined;
 					let description = e.description ? util.getStringNormalized(e.description) : undefined;
-					let planStateTypeAlias = e.planStateType.alias ? util.getStringNormalized(e.planStateType.alias) : undefined;
-					let planStateTypeLabelAlias = e.planStateType.labelAlias ? util.getStringNormalized(i18n.t(e.planStateType.labelAlias)) : undefined;
+					let planStateTypeAlias = (e.planStateType && e.planStateType.alias) ? util.getStringNormalized(e.planStateType.alias) : undefined;
+					let planStateTypeLabelAlias = (e.planStateType && e.planStateType.labelAlias) ? util.getStringNormalized(i18n.t(e.planStateType.labelAlias)) : undefined;
 
 					let filteredPlanOrders = [];
 

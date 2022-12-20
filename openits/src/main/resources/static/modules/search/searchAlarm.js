@@ -323,10 +323,13 @@ export default class SearchAlarm {
 				
 				filteredResults = alarms.filter(e => {
 					
+					let timeService = window.sm.getService(Services.TIME_SERVICE);
+					
 					let alias = e.alarmConfig.labelAlias ? util.getStringNormalized(i18n.t(e.alarmConfig.labelAlias)) : undefined;
 					let element = window.em.getByField(EntityType.ELEMENT, "id", e.targetElement.id);
 					let elementAlias;
 					let elementTypeLabelAlias;
+					let inhibited = e.filteredUntil && (e.filteredUntil > timeService.getEpoch());
 					
 					if (element) {
 						
@@ -334,9 +337,9 @@ export default class SearchAlarm {
 						elementTypeLabelAlias = element.elementType.labelAlias ? util.getStringNormalized(element.elementType.labelAlias) : undefined;	
 					}
 					
-					return 	(alias && alias.toLowerCase().includes(self.text)) ||
-							(elementAlias && elementAlias.toLowerCase().includes(self.text)) ||
-							(elementTypeLabelAlias && elementTypeLabelAlias.toLowerCase().includes(self.text));
+					return !inhibited && ((alias && alias.toLowerCase().includes(self.text)) ||
+						(elementAlias && elementAlias.toLowerCase().includes(self.text)) ||
+						(elementTypeLabelAlias && elementTypeLabelAlias.toLowerCase().includes(self.text)));
 						
 				});	
 			}

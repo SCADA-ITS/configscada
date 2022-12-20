@@ -124,8 +124,16 @@ export default class CalendarDialogBox {
 									
 									let dates = self.getSelectedDates();
 									
-									self.onAccept(dates);
-									
+									// Prevent z-index disorder. Bug preventing inputboxes contained in tabs from being selected
+									setTimeout(function() {
+								
+										if (self.onAccept) {
+						
+											self.onAccept(dates);
+										}						
+						
+									}, 1);
+						
 									window.close();
 								}
 							},
