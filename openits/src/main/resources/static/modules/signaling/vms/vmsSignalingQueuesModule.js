@@ -31,6 +31,13 @@ export default class VmsSignalingQueuesModule extends GenericModule {
 		this.dataToUpdate = [];
 
 		this.setTimeOut = false;
+		
+		let vmsSignalingModule = window.em.getByField(EntityType.MODULE, "id", this.config.action.vmsSignalingModule);
+
+		if (vmsSignalingModule) {
+
+			this.vmsSignalingModuleConfig = vmsSignalingModule.config;
+		}
 	}
 
 
@@ -155,8 +162,19 @@ export default class VmsSignalingQueuesModule extends GenericModule {
 								if (self.initialPanelLoad.has(svgId)) {
 
 									divHTML = self.initialPanelLoad.get(svgId);
+									let config = self.config;
 
-								} else {
+									drawGraphicIcon(svgId, element, commandElement, priority, function(graphicIconInstance) {
+
+										config.graphicIconInstance = graphicIconInstance;
+										let svgHTML = $$("table-" + self.uid).getNode().querySelector('#vms-composer-svg-' + svgId);
+
+										if (svgHTML && svgHTML.outerHTML) {
+
+											self.initialPanelLoad.set(svgId, svgHTML.outerHTML);
+										}});
+
+									} else {
 
 									let config = self.config;
 
@@ -164,11 +182,11 @@ export default class VmsSignalingQueuesModule extends GenericModule {
 
 										config.graphicIconInstance = graphicIconInstance;
 										let svgHTML = $$("table-" + self.uid).getNode().querySelector('#vms-composer-svg-' + svgId);
-										
+
 										if (svgHTML && svgHTML.outerHTML) {
 
 											self.initialPanelLoad.set(svgId, svgHTML.outerHTML);
-										}										
+										}
 									});
 								}
 
@@ -193,7 +211,7 @@ export default class VmsSignalingQueuesModule extends GenericModule {
 						};
 					}
 
-					if (commandElement.commandElementType.id === self.config.commands.switchOff.commandElementTypeId) {
+					if (commandElement.commandElementType.id === self.vmsSignalingModuleConfig.commands.switchOff.commandElementTypeId) {
 
 						panel = {
 							template: function() {
@@ -613,7 +631,7 @@ export default class VmsSignalingQueuesModule extends GenericModule {
 
 		function drawGraphicIcon(svgId, element, commandElement, priority, onAfterRender) {
 
-			let property = self.config.properties.find(e => e.id === element.elementSubtype.id);
+			let property = self.vmsSignalingModuleConfig.properties.find(e => e.id === element.elementSubtype.id);
 			let graphicIcon = undefined;
 
 			if ((graphicIcon = property.graphicIcon) != null) {
@@ -668,7 +686,7 @@ export default class VmsSignalingQueuesModule extends GenericModule {
 								if (commandElement && Array.isArray(commandElement.commandElementValues) &&
 									commandElement.commandElementValues.length > 0) {
 
-									let commandElementValue = commandElement.commandElementValues.find(e => e.commandElementTypeParam.id === self.config.commands.sendMessage.commandElementValues[0].commandElementTypeParamId);
+									let commandElementValue = commandElement.commandElementValues.find(e => e.commandElementTypeParam.id === self.vmsSignalingModuleConfig.commands.sendMessage.commandElementValues[0].commandElementTypeParamId);
 
 									if (commandElementValue) {
 
@@ -679,7 +697,7 @@ export default class VmsSignalingQueuesModule extends GenericModule {
 								let elementValueJsonData = {
 
 									elementTypeParam: {
-										id: self.config.vms.jsonData
+										id: self.vmsSignalingModuleConfig.vms.jsonData
 									},
 									value: JSON.stringify(jsonValue)
 								}
@@ -708,7 +726,7 @@ export default class VmsSignalingQueuesModule extends GenericModule {
 
 					self.elementsIds.forEach(elementId => {
 
-						let topic = self.config.topics.elementQueue + "." + elementId;
+						let topic = self.vmsSignalingModuleConfig.topics.elementQueue + "." + elementId;
 						let subscriptorId = stompSubscriptorService.subscribe(appConfig.stompUrl, topic, onMessage);
 						self.idStompSubscriptor.push(subscriptorId);
 					});

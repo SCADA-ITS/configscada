@@ -3,7 +3,6 @@ import GenericModule from "../../genericModule.js";
 import TreeView from "../../../component/treeview.js";
 import GraphicIcon from "../../../component/graphicIcon/graphicIcon.js";
 import MessageBox from "../../../component/messageBox.js";
-//import VmsSignaligMonitorContent from "./vmsSignalingMonitorContent.js";
 
 const MODULE_PARAM_HIERARCHIES = 10;
 const QUEUE_COLOR_ACTIVE = "#009688";
@@ -27,10 +26,17 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 		this.treeViewsArr = [];
 		this.scrollViewsArr = [];
 		this.scrollView = undefined;
-		this.vmsSignalingMonitorContent = undefined;
+		this.elementsWithQueues = [];
+		this.virtualTree = undefined;
 
 		this.uid = webix.uid();
 
+		let vmsSignalingModule = window.em.getByField(EntityType.MODULE, "id", this.config.action.vmsSignalingModule);
+
+		if (vmsSignalingModule) {
+
+			this.vmsSignalingModuleConfig = vmsSignalingModule.config;
+		}
 	}
 
 	getView() {
@@ -66,66 +72,64 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 	loadData() {
 
 		let self = this;
-		let elementTreeHierarchies = self.module.moduleValues.find(e => e.moduleParam.id === MODULE_PARAM_HIERARCHIES);
+		let userData = util.user.getUserData();
 
-		if (elementTreeHierarchies) {
+		webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.elementsTreeByRoadHierarchies, { id: userData.id })).then(function(elementsTreeResponse) {
 
-			let userData = util.user.getUserData();
+			if (elementsTreeResponse != null) {
 
-			webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.elementsTreeByRoadHierarchies, { id: userData.id })).then(function(elementsTreeResponse) {
+				let trees = elementsTreeResponse.json();
+				let elementTreeHierarchiesValues;
+				let elementTreeHierarchies = self.module.moduleValues.find(e => e.moduleParam.id === MODULE_PARAM_HIERARCHIES);
 
-				if (elementsTreeResponse != null) {
+				if (Array.isArray(trees) && trees.length > 0) {
 
-					let trees = elementsTreeResponse.json();
-					let elementTreeHierarchiesValues;
+					try {
 
-					if (Array.isArray(trees) && trees.length > 0) {
+						elementTreeHierarchiesValues = JSON.parse(elementTreeHierarchies.value);
 
-						try {
+					} catch { }
 
-							elementTreeHierarchiesValues = JSON.parse(elementTreeHierarchies.value);
+					elementTreeHierarchiesValues.forEach(value => {
 
-						} catch { }
+						let elementTree = trees.find(tree => tree.id === "ElementTree:" + value);
 
-						elementTreeHierarchiesValues.forEach(value => {
+						if (elementTree) {
 
-							let elementTree = trees.find(tree => tree.id === "ElementTree:" + value);
-
-							if (elementTree) {
-
-								self.elementsTree.push(elementTree);
-							}
-						});
-					}
-
-					if (Array.isArray(self.elementsTree) && self.elementsTree.length > 0) {
-
-						webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.restEndpoints.elementsWithStates, JSON.stringify([])).then(function(elementsResponse) {
-
-							if (elementsResponse != null) {
-
-								self.elements = elementsResponse.json();
-								webix.ui(drawContent(), $$(self.uid));
-							}
-						});
-
-					} else {
-
-						let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_NO_ITEMS_TO_SHOW"), null, null, null);
-						ms.show();
-
-						$$(MAIN_TAB_ID).getTabbar().removeOption(self.args.containerId);
-					}
+							self.elementsTree.push(elementTree);
+						}
+					});
 				}
-			});
 
-		} else {
+				webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.elementsQueuesByElementTypeId, { id: self.config.elementTypeId })).then(function(elementTypeElementsResponse) {
 
-			let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_NO_ITEMS_TO_SHOW"), null, null, null);
-			ms.show();
+					if (elementTypeElementsResponse != null) {
 
-			$$(MAIN_TAB_ID).getTabbar().removeOption(self.args.containerId);
-		}
+						self.elements = elementTypeElementsResponse.json();
+						self.elementsWithQueues = self.elements.filter(element => element.queue && Array.isArray(element.queue.commandElements) && element.queue.commandElements.length > 0);
+						let withTreeConfig = (Array.isArray(self.elementsTree) && self.elementsTree.length > 0) ? true : false;
+
+						if (withTreeConfig || (Array.isArray(self.elementsWithQueues) && self.elementsWithQueues.length > 0)) {
+
+							webix.ui(drawContent(), $$(self.uid));
+
+							if (!withTreeConfig) {
+
+								$$("loading-switcher-" + self.uid).hide();
+								self.virtualTree.select("root");
+							}
+						} else {
+
+							let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_NO_ITEMS_TO_SHOW"), null, null, null);
+							ms.show();
+
+							$$(MAIN_TAB_ID).getTabbar().removeOption(self.args.containerId);
+						}
+					}
+				});
+			}
+		});
+
 
 		function drawContent() {
 
@@ -145,6 +149,10 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 				treeEquipments.push(getSwitcherViews());
 				treeEquipments.push({ height: 1, borderless: false });
 				treeEquipments.push(getSwitcherButtons());
+
+			} else {
+
+				treeEquipments.push(getVmsTree());
 			}
 
 			viewMain = {
@@ -194,29 +202,7 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 							}
 						]
 					}
-				],
-				//				on: {
-				//					onAfterExpand: function() {
-				//
-				//						onExpandCollapse();
-				//					},
-				//					onAfterCollapse: function() {
-				//
-				//						onExpandCollapse();
-				//					},
-				//					onDestruct: function() {
-				//
-				//						let stompSubscriptorService = window.sm.getService(Services.STOMP_SUBSCRIPTOR_SERVICE);
-				//
-				//						if (stompSubscriptorService) {
-				//
-				//							if (self.idStompSubscriptor) {
-				//
-				//								stompSubscriptorService.unsubscribe(self.idStompSubscriptor);
-				//							}
-				//						}
-				//					}
-				//				}
+				]
 			};
 
 			function getSwitcherViews() {
@@ -457,15 +443,6 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 
 																$$("treeview-" + newTreeId).show();
 																$$("resizer-" + self.uid).disable();
-
-//																$$("view-main-list-equipments-" + self.uid).config.header = webix.template(function() {
-//
-//																	return `<div>
-//																			  <span class='ico webix_icon mdi mdi-view-headline'></span>
-//																			  <span>${i18n.t("LBL_EQUIPMENT_TREE")}</span>
-//																		</div>`;
-//																});
-
 																$$("view-main-list-equipments-" + self.uid).refresh();
 
 																let itemSelected = treeView.getSelected();
@@ -560,6 +537,74 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 				return switcherButtonsView;
 			}
 
+			function getVmsTree() {
+
+				let events = {};
+
+				events[TreeView.EventTypes.ON_SELECT_ITEM] = function(item) {
+
+					self.callbackSelectedItemTree([item]);
+				};
+
+				events[TreeView.EventTypes.ON_SELECT_FOLDER] = function(item) {
+
+					self.callbackSelectedFolderTree(item);
+				};
+
+				let metadata = {
+					id: -1,
+					label: "LBL_EQUIPMENT_HIERARCHY",
+					treeOptionValues: [
+						{ value: false, treeOption: { id: 2 } },
+						{ value: true, treeOption: { id: 3 } },
+						{ value: true, treeOption: { id: 4 } },
+						{ value: true, treeOption: { id: 5 } },
+						{ value: true, treeOption: { id: 6 } },
+						{ value: true, treeOption: { id: 8 } }
+					]
+				};
+
+				let data = [];
+				let items = [];
+				let relationships = [];
+
+				self.elementsWithQueues.forEach(item => {
+
+					let relationship = {};
+					let elementSubType = items.find(e => e.id === item.elementSubtype.id);
+
+					if (elementSubType) {
+
+						relationship.parentNodeId = elementSubType.id;
+
+					} else {
+
+						items.push({
+							id: item.elementSubtype.id,
+							label: i18n.t(item.elementSubtype.labelAlias)
+						});
+
+						relationship.parentNodeId = item.elementSubtype.id;
+					}
+
+					items.push({
+						id: item.id,
+						label: item.alias,
+						image: item.elementType.elementTypePhoto,
+						stateColor: util.element.getColor({ id: item.elementTypeState.id }),
+						stateLabel: i18n.t(item.elementTypeState.labelAlias),
+					});
+
+					relationship.childNodeId = item.id;
+					relationships.push(relationship);
+				});
+
+				data = util.tree.getNodes(items, relationships, { parentNodeId: "parentNodeId", childNodeId: "childNodeId" }, false);
+				self.virtualTree = new TreeView(metadata, data, events);
+
+				return self.virtualTree.getView();
+			}
+
 			return viewMain;
 		}
 	}
@@ -568,7 +613,7 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 
 		let self = this;
 		let elementId = undefined;
-		let modAction = self.config.action.vmsSignalingModule;
+		let modAction = self.config.action.vmsSignalingModuleElements;
 		let equipmentSelected = [];
 
 		$$("loadingContent-" + self.uid).show();
@@ -651,12 +696,19 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 				rootSelected = true;
 				treeData = [];
 
-				for (let treeView of self.treeViewsArr) {
+				if (Array.isArray(self.treeViewsArr) && self.treeViewsArr.length > 0) {
 
-					if (treeView.dataMap.has(self.treeViewsArr[0].getFirstFolder().id_)) {
+					for (let treeView of self.treeViewsArr) {
 
-						foldersArr = treeView.getChilds(item, 1);
+						if (treeView.dataMap.has(self.treeViewsArr[0].getFirstFolder().id_)) {
+
+							foldersArr = treeView.getChilds(item, 1);
+						}
 					}
+
+				} else if (self.virtualTree && self.virtualTree.dataMap.has(self.virtualTree.getFirstFolder().id_)) {
+
+					foldersArr = self.virtualTree.getChilds(item, 1);
 				}
 
 				getData(foldersArr);
@@ -678,27 +730,30 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 
 			} else {
 
-				for (let i = 0; !treeData && i < self.treeViewsArr.length; i++) {
+				if (Array.isArray(self.treeViewsArr) && self.treeViewsArr.length > 0) {
 
-					let treeView = self.treeViewsArr[i].data.find(tree => tree.id === item.id);
+					for (let i = 0; !treeData && i < self.treeViewsArr.length; i++) {
+
+						let treeView = self.treeViewsArr[i].data.find(tree => tree.id === item.id);
+
+						if (treeView) {
+
+							treeData = self.treeViewsArr[i].getChilds(item, 2);
+						}
+					}
+
+				} else if (self.virtualTree) {
+
+					let treeView = self.virtualTree.data.find(tree => tree.id === item.id);
 
 					if (treeView) {
 
-						treeData = self.treeViewsArr[i].getChilds(item, 2);
+						treeData = self.virtualTree.getChilds(item, 2);
 					}
 				}
 			}
 
 			if (Array.isArray(treeData) && treeData.length > 0) {
-
-				//				let args = {
-				//					selectedPk: item,
-				//					rootSelected: rootSelected,
-				//					foldersArr: foldersArr
-				//				};
-				//
-				//				let vmsSignaligMonitorContent = new VmsSignaligMonitorContent(self, treeData, args);
-				//				vmsSignaligMonitorContent.getView();
 
 				webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.elementsQueuesByElementTypeId, { id: self.config.elementTypeId })).then(function(elementTypeElementsResponse) {
 
@@ -751,111 +806,41 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 				function getWindowPanels() {
 
 					let windowPanelArr = [];
-
 					let elementsArr = Array.from(elementsSet);
 
-					if (Array.isArray(elementsArr) && elementsArr.length > 0) {
+					if (rootSelected) {
 
-						if (rootSelected) {
+						for (let folder of foldersArr) {
 
-							for (let folder of foldersArr) {
+							let elements = [];
+							let idHTML = folder.id_.replace(":", "");
 
-								let elements = [];
-								let idHTML = folder.id_.replace(":", "");
+							folder.data.forEach(dat => {
 
-								folder.data.forEach(dat => {
+								let el = elementsArr.find(e => e.id === dat.id_);
 
-									let el = elementsArr.find(e => e.id === dat.id_);
+								if (el) {
 
-									if (el) {
-
-										elements.push(el);
-									}
-								});
-
-								let windowPanel = {
-									rows: [
-										{ height: 15 },
-										{
-											css: { "background-color": "white !important" },
-											cols: [
-												{ width: 15 },
-												{
-													width: 600,
-													height: 650,
-													header: function() {
-
-														return `<div>
-																	<span class='ico webix_icon mdi mdi-view-headline'></span>
-																	<span id='${idHTML}' class="aliaspush" style='text-decoration: underline; cursor: pointer; color: var(--blue-mid2) !important;'>${i18n.t(folder.value)}</span>
-																</div>`;
-													},
-													body: {
-														view: "scrollview",
-														scroll: "y",
-														width: 600,
-														css: { "box-sizing": "border-box" },
-														body: {
-															rows: getPanels(elements)
-														}
-													},
-													onClick: {
-														aliaspush: function() {
-
-															let elementsIdsArr = [];
-
-															elementsArr.forEach(e => {
-
-																elementsIdsArr.push(e.id);
-															});
-
-															let modAction = self.config.action.vmsSignalingModuleEdit;
-															let module = util.module.getFromModuleAction(modAction);
-
-															if (module) {
-
-																let args = {
-																	selectedPks: elementsIdsArr
-																};
-
-																util.module.open(module, null, VIEW_TYPE_WINDOW, null, args);
-															}
-
-															return false;
-														}
-													}
-												},
-												{ width: 15 }
-											]
-										},
-										{}
-									]
-								};
-
-								windowPanelArr.push(windowPanel);
-							}
-
-						} else {
-
-							let idHTML = item.id_.replace(":", "");
+									elements.push(el);
+								}
+							});
 
 							let windowPanel = {
 								rows: [
 									{ height: 15 },
 									{
-										css: { "background-color": "white !important", "box-sizing": "border-box" },
+										css: { "background-color": "white !important" },
 										cols: [
 											{ width: 15 },
 											{
-												id: "window-panel-" + idHTML + "-" + self.uid,
 												width: 600,
 												height: 650,
 												header: function() {
 
 													return `<div>
-															<span class='ico webix_icon mdi mdi-view-headline'></span>
-															<span id=${idHTML} style='text-decoration: underline; cursor: pointer; color: var(--blue-mid2) !important;' class="aliaspush">${i18n.t(item.value)}</span>
-															</div>`;
+																	<span class='ico webix_icon mdi mdi-view-headline'></span>
+																	<span id='${idHTML}' class="aliaspush" style='text-decoration: underline; cursor: pointer; color: var(--blue-mid2) !important;'>${i18n.t(folder.value)}</span>
+																</div>`;
 												},
 												body: {
 													view: "scrollview",
@@ -863,7 +848,7 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 													width: 600,
 													css: { "box-sizing": "border-box" },
 													body: {
-														rows: getPanels(elementsArr)
+														rows: getPanels(elements)
 													}
 												},
 												onClick: {
@@ -871,7 +856,7 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 
 														let elementsIdsArr = [];
 
-														elementsArr.forEach(e => {
+														elements.forEach(e => {
 
 															elementsIdsArr.push(e.id);
 														});
@@ -893,7 +878,7 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 												}
 											},
 											{ width: 15 }
-										],
+										]
 									},
 									{}
 								]
@@ -901,8 +886,73 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 
 							windowPanelArr.push(windowPanel);
 						}
-					}
 
+					} else {
+
+						let idHTML = item.id_.replace(":", "");
+
+						let windowPanel = {
+							rows: [
+								{ height: 15 },
+								{
+									css: { "background-color": "white !important", "box-sizing": "border-box" },
+									cols: [
+										{ width: 15 },
+										{
+											id: "window-panel-" + idHTML + "-" + self.uid,
+											width: 600,
+											height: 650,
+											header: function() {
+
+												return `<div>
+															<span class='ico webix_icon mdi mdi-view-headline'></span>
+															<span id=${idHTML} style='text-decoration: underline; cursor: pointer; color: var(--blue-mid2) !important;' class="aliaspush">${i18n.t(item.value)}</span>
+															</div>`;
+											},
+											body: {
+												view: "scrollview",
+												scroll: "y",
+												width: 600,
+												css: { "box-sizing": "border-box" },
+												body: {
+													rows: getPanels(elementsArr)
+												}
+											},
+											onClick: {
+												aliaspush: function() {
+
+													let elementsIdsArr = [];
+
+													elementsArr.forEach(e => {
+
+														elementsIdsArr.push(e.id);
+													});
+
+													let modAction = self.config.action.vmsSignalingModuleEdit;
+													let module = util.module.getFromModuleAction(modAction);
+
+													if (module) {
+
+														let args = {
+															selectedPks: elementsIdsArr
+														};
+
+														util.module.open(module, null, VIEW_TYPE_WINDOW, null, args);
+													}
+
+													return false;
+												}
+											}
+										},
+										{ width: 15 }
+									],
+								},
+								{}
+							]
+						};
+
+						windowPanelArr.push(windowPanel);
+					}
 
 					function getPanels(elements) {
 
@@ -1091,7 +1141,7 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 
 							function drawGraphicIcon(svgId, element, commandElement, priority, onAfterRender) {
 
-								let property = self.config.properties.find(e => e.id === element.elementSubtype.id);
+								let property = self.vmsSignalingModuleConfig.properties.find(e => e.id === element.elementSubtype.id);
 								let graphicIcon = undefined;
 								let svgContainer = $$("svg-container-" + self.uid + "-" + svgId);
 
@@ -1143,7 +1193,7 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 												if (commandElement && Array.isArray(commandElement.commandElementValues) &&
 													commandElement.commandElementValues.length > 0) {
 
-													let commandElementValue = commandElement.commandElementValues.find(e => e.commandElementTypeParam.id === self.config.commands.sendMessage.commandElementValues[0].commandElementTypeParamId);
+													let commandElementValue = commandElement.commandElementValues.find(e => e.commandElementTypeParam.id === self.vmsSignalingModuleConfig.commands.sendMessage.commandElementValues[0].commandElementTypeParamId);
 
 													if (commandElementValue) {
 
@@ -1158,7 +1208,7 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 												let elementValueJsonData = {
 
 													elementTypeParam: {
-														id: self.config.vms.jsonData
+														id: self.vmsSignalingModuleConfig.vms.jsonData
 													},
 													value: JSON.stringify(jsonValue)
 												}
