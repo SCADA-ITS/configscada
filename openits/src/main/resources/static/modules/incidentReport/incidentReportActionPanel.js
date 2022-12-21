@@ -235,7 +235,7 @@ export default class IncidentReportActionPanel {
 		
 														} else {
 			
-															let needCheckCameras = (self.incidentReport.scenario && self.incidentReport.scenario.id && self.config.action && self.config.action.cctvScenario && (self.incidentReport.alarms !== undefined && self.incidentReport.alarms.length > 0)) ? true : false;
+															let needCheckCameras = (self.incidentReport.scenario && self.incidentReport.scenario.id && self.config.action && self.config.action.cctvScenario) ? true : false;
 
 															if (needCheckCameras && !self.parent.camerasChecked) {
 
@@ -348,7 +348,7 @@ export default class IncidentReportActionPanel {
 
 								onItemClick() {
 
-									let needCheckCameras = (!self.incidentReport.confirm && self.incidentReport.scenario && self.incidentReport.scenario.id && self.config.action && self.config.action.cctvScenario && (self.incidentReport.alarms !== undefined && self.incidentReport.alarms.length > 0)) ? true : false;
+									let needCheckCameras = (!self.incidentReport.confirm && self.incidentReport.scenario && self.incidentReport.scenario.id && self.config.action && self.config.action.cctvScenario) ? true : false;
 
 									if (needCheckCameras && !self.parent.camerasChecked) {
 
