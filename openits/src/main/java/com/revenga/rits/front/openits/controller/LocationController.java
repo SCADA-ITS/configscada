@@ -142,6 +142,18 @@ public class LocationController {
 		return new ResponseEntity<>(stretchBO.getListByIncidentType(id), HttpStatus.OK);
 	}
 	
+	@GetMapping(value = "/stretchs/stretchByStretchs/{id}")
+	@ApiOperation(value = "Get stretchs by stretchs stretch", notes = "Get stretch by stretchs stretch")
+	public ResponseEntity<Object> getStretchStretchsByStretch(
+			@ApiParam(
+			name = "id",
+			type = "String",
+			value = "Stretchs by stretchs stretch",
+			example = "Stretch:1",
+			required = true) @PathVariable String id) {
+		
+		return new ResponseEntity<>(stretchBO.getStretchStretchsByStretch(id), HttpStatus.OK);
+	}	
 	
 	
 	@GetMapping(value = "/stretch/{id}")

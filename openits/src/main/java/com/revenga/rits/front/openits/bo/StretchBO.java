@@ -101,4 +101,11 @@ public class StretchBO extends GenericBO {
 		
 		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_STRETCH_BY_ROAD, stretchs);
 	}
+	
+	public List<Map<String, Object>> getStretchStretchsByStretch(String stretchId) {
+		
+		List<Map<String, Object>> stretchs = voDataSourceAdapter.getList(VODataSourceAdapter.DATA_SOURCE_GET_STRETCH_BY_STRETCHS_STRETCH, new Object[] { stretchId });
+		
+		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_STRETCH_BY_STRETCHS_STRETCH, stretchs);
+	}
 }

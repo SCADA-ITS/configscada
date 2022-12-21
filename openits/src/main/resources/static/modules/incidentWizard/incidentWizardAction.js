@@ -119,26 +119,97 @@ export default class IncidentWizardAction {
 									if (responseIncidentTypeStretchs != null) {
 
 										let incidentTypeStretch = responseIncidentTypeStretchs.json();
+										
+										if (incidentTypeStretch && incidentTypeStretch.checkStretchStretch) {
 
-										if (incidentTypeStretch && !incidentTypeStretch.multiInstance) {
+											webix.ajax().get(appConfig.restUrl + util.fillTemplate(parent.config.restEndpoints.stretchByStretchs, { id: incidentTypeStretch.stretch.id })).then(function(stretchByStretchsResponse) {
 
-											let existIncidentReportInSameStretch = incidentReportsSummary.find(e =>
-												!e.incidentState.finalState &&
-												e.affectionStretch.id === incidentTypeStretch.stretch.id &&
-												e.incidentType.id === incidentTypeStretch.incidentType.id);
+												if (stretchByStretchsResponse != null) {
 
-											if (existIncidentReportInSameStretch) {
+													let stretchByStretchs = stretchByStretchsResponse.json();
 
-												onError();
+													if (Array.isArray(stretchByStretchs) && stretchByStretchs.length > 0) {
+
+														let sameIncidentType = incidentReportsSummary.filter(incidentReport => incidentReport.incidentType.id === parent.incidentData.incidentTypeId);
+
+														if (Array.isArray(sameIncidentType) && sameIncidentType.length > 0) {
+
+															checkSameStretchStretch();
+
+														} else {
+
+															checkSameStretch();
+														}
+														
+														function checkSameStretchStretch() {
+
+															let incidentReportInSameStretchByStretch = undefined;
+															let stretchByStretchsAlias = undefined;
+
+															for (let i = 0; !incidentReportInSameStretchByStretch && i < stretchByStretchs.length; i++) {
+
+																for (let j = 0; !incidentReportInSameStretchByStretch && j < stretchByStretchs[i].stretchs.length; j++) {
+
+																	incidentReportInSameStretchByStretch = (sameIncidentType.find(incident => (incident.affectionStretch.id === stretchByStretchs[i].stretchs[j].id)));
+
+																	if (incidentReportInSameStretchByStretch) {
+
+																		stretchByStretchsAlias = stretchByStretchs[i].alias;
+																	}
+																}
+															}
+
+															if (incidentReportInSameStretchByStretch) {
+
+																let message = i18n.t("LBL_THERE_IS_ALREADY_INCIDENT_TYPE") + " " + parent.incidentData.incidentType + " " + i18n.t("LBL_IN_STRETCH") + " " + incidentReportInSameStretchByStretch.affectionStretch.alias + " " + i18n.t("LBL_INCLUDED_IN_SUPER_STRETCH") + " " + stretchByStretchsAlias;
+
+																(new MessageBox(MessageBox.ERROR, message, null, function() {
+
+																	$$("loading-" + self.parent.uid).hide();
+																	$$(self.parent.uid).show();
+
+																})).show();
+
+															} else {
+
+																checkSameStretch();
+															}
+														}
+														
+													} else {
+
+														checkSameStretch();
+													}
+												}
+											});
+											
+										} else {
+
+											checkSameStretch();
+										}
+
+										function checkSameStretch() {
+
+											if (incidentTypeStretch && !incidentTypeStretch.multiInstance) {
+
+												let existIncidentReportInSameStretch = incidentReportsSummary.find(e =>
+													!e.incidentState.finalState &&
+													e.affectionStretch.id === incidentTypeStretch.stretch.id &&
+													e.incidentType.id === incidentTypeStretch.incidentType.id);
+
+												if (existIncidentReportInSameStretch) {
+
+													onError();
+												}
+												else {
+
+													onSuccess();
+												}
 											}
 											else {
 
 												onSuccess();
 											}
-										}
-										else {
-
-											onSuccess();
 										}
 									}
 								}

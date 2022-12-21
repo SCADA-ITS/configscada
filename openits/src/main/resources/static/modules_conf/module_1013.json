@@ -21,6 +21,7 @@
 		"incidentType": "incidents/imsIncidentType/${id}",
 		"incidentTypeStretchs": "incidents/incidentTypeStretchs/${incidentTypeId}/${stretchId}",
 		"incidentTypeStretchsList": "incidents/incidentTypeStretchs",
+		"stretchByStretchs": "locations/stretchs/stretchByStretchs/${id}",
 		"incidentReportsSummary": "incidents/reports/summary",
 		"incidentReportSummary": "incidents/reports/${id}/summary"
 	},
