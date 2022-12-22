@@ -196,7 +196,9 @@ export default class IncidentService extends GenericModule {
 							 i18n.t("LBL_AFFECTION_STRETCH") + ": " + incidentReport.affectionStretch.alias + " " + 
 							 i18n.t("LBL_LOCATION") + ": " + incidentReport.location.alias + " " +
 							 i18n.t("LBL_USER") + ": " + incidentReport.currentUser.name,
-				userId: incidentReport.currentUser.id		
+				userId: incidentReport.currentUser.id,
+				cameraChecked: false,
+				scenario: incidentReport.scenario 		
 			}
 			
 			if (incidentReport.incidentType.autoConfirmIncident) {

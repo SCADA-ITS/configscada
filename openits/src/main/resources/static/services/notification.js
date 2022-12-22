@@ -286,23 +286,71 @@ export default class Notification {
 						tooltip: i18n.t("LBL_CONFIRM_INCIDENT"),
 						on: {
 							onItemClick() {
-
-								let incidents = getSelectedItems().map(e => { return { id: e.notificationId, currentUserId: e.userId }});
+								
+								let incidents = getSelectedItems().map(e => { return { id: e.notificationId, currentUserId: e.userId, cameraChecked: e.cameraChecked } });
 
 								if (Array.isArray(incidents) && incidents.length > 0) {
 
-									let moduleActionId = self.config.confirmIncidents;
-									let module = util.module.getFromModuleAction(moduleActionId);
+									let notCameraCheckedIncident = incidents.find(incident => incident.cameraChecked === false);
 
-									if (module) {
+									if (notCameraCheckedIncident) {
 
-										let args = { selectedRows: incidents };
-										let moduleAction = { id: moduleActionId };
+										let incidentCamerasToCheck = self.notifications.find(notification => notification.notificationId === notCameraCheckedIncident.id);
 
-										util.module.open(module, moduleAction, VIEW_TYPE_WINDOW, null, args);
+										if (incidentCamerasToCheck) {
+
+											let needCheckCameras = (incidentCamerasToCheck.scenario.id && self.config.cctvScenario) ? true : false;
+
+											if (needCheckCameras) {
+
+												let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_CONFIRM_NEED_CHECK_CAMERAS_DESCRIPTION"), null, viewCameras, null);
+												ms.show();
+												
+												function viewCameras() {
+
+													incidentCamerasToCheck.cameraChecked = true;
+													let module = util.module.getFromModuleAction(self.config.cctvScenario);
+
+													if (module) {
+
+														let moduleAction = { id: self.config.cctvScenario };
+
+														let args = { selectedPks: [incidentCamerasToCheck.scenario.id] };
+
+														util.module.open(module, moduleAction, VIEW_TYPE_WINDOW, null, args);
+													}
+												}
+												
+											} else {
+
+												let moduleActionId = self.config.confirmIncidents;
+												let module = util.module.getFromModuleAction(moduleActionId);
+
+												if (module) {
+
+													let args = { selectedRows: incidents };
+													let moduleAction = { id: moduleActionId };
+
+													util.module.open(module, moduleAction, VIEW_TYPE_WINDOW, null, args);
+												}
+											}
+										}
+
+									} else {
+
+										let moduleActionId = self.config.confirmIncidents;
+										let module = util.module.getFromModuleAction(moduleActionId);
+
+										if (module) {
+
+											let args = { selectedRows: incidents };
+											let moduleAction = { id: moduleActionId };
+
+											util.module.open(module, moduleAction, VIEW_TYPE_WINDOW, null, args);
+										}
 									}
-								}
-								else {
+
+								} else {
 
 									(new MessageBox(MessageBox.ERROR, i18n.t("LBL_NO_SELECTED_INCIDENTS"), null, null, null)).show();
 								}

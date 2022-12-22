@@ -22,6 +22,7 @@
 		"maxInactiveNotifications": 10,
 		"confirmIncidents": 100402,
 		"viewIncidentPermission": "SystemPermission:12",
-		"dblClickModuleAction": 100401
+		"dblClickModuleAction": 100401,
+		"cctvScenario": 102002
 	}
 }
