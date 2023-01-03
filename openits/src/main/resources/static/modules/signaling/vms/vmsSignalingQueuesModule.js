@@ -31,7 +31,7 @@ export default class VmsSignalingQueuesModule extends GenericModule {
 		this.dataToUpdate = [];
 
 		this.setTimeOut = false;
-		
+
 		let vmsSignalingModule = window.em.getByField(EntityType.MODULE, "id", this.config.action.vmsSignalingModule);
 
 		if (vmsSignalingModule) {
@@ -162,24 +162,14 @@ export default class VmsSignalingQueuesModule extends GenericModule {
 								if (self.initialPanelLoad.has(svgId)) {
 
 									divHTML = self.initialPanelLoad.get(svgId);
-									let config = self.config;
 
-									drawGraphicIcon(svgId, element, commandElement, priority, function(graphicIconInstance) {
-
-										config.graphicIconInstance = graphicIconInstance;
-										let svgHTML = $$("table-" + self.uid).getNode().querySelector('#vms-composer-svg-' + svgId);
-
-										if (svgHTML && svgHTML.outerHTML) {
-
-											self.initialPanelLoad.set(svgId, svgHTML.outerHTML);
-										}});
-
-									} else {
+								} else {
 
 									let config = self.config;
 
 									drawGraphicIcon(svgId, element, commandElement, priority, function(graphicIconInstance) {
 
+										graphicIconInstance.stop();
 										config.graphicIconInstance = graphicIconInstance;
 										let svgHTML = $$("table-" + self.uid).getNode().querySelector('#vms-composer-svg-' + svgId);
 
@@ -199,15 +189,7 @@ export default class VmsSignalingQueuesModule extends GenericModule {
 								return `<div style='transform: scale(3)'>
 										${svgHTML.outerHTML}
 										</div>`;
-							},
-							//							onDestruct: function() {
-							//
-							//								if (this.config.graphicIconInstance) {
-							//
-							//									this.config.graphicIconInstance.stop();
-							//								}
-							//							}
-
+							}
 						};
 					}
 

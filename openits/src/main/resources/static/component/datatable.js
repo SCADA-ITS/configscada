@@ -655,7 +655,7 @@ export default class DataTable {
 
 				let field = this.metadata.gridFields[posField];
 				
-				if (field.needsTranslation && (!Array.isArray(field.gridFieldReplacements) || field.gridFieldReplacements.length === 0)) {
+				if (field.needsTranslation && (!Array.isArray(field.gridFieldReplacements) || field.gridFieldReplacements.length === 0) && !field.replacementFunction) {
 
 					data.forEach(item => {
 
