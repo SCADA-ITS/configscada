@@ -233,7 +233,10 @@ export default class DataTable {
 									val2 = b[field.sourceField] ? b[field.sourceField] : 0;
 								}
 
-								return (val1 > val2) ? 1 : ((val2 > val1) ? -1 : 0);
+								let val1Parse = (field.gridFieldDataType.id === DataType.INT.value) ? parseInt(val1) : parseFloat(val1);
+								let val2Parse = (field.gridFieldDataType.id === DataType.INT.value) ? parseInt(val2) : parseFloat(val2);
+
+								return (val1Parse > val2Parse) ? 1 : ((val2Parse > val1Parse) ? -1 : 0);
 							};
 						}
 						else if (field.gridFieldDataType.id === DataType.DATE.value) {
