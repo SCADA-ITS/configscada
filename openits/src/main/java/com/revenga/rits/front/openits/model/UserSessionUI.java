@@ -27,6 +27,7 @@ public class UserSessionUI implements Serializable {
 	public static final String LOGOUT = "LOGOUT";
 	public static final String UNAUTHORIZED = "UNAUTHORIZED";
 	public static final String SERVER_NOT_AVAILABLE = "SERVER_NOT_AVAILABLE";
+	public static final String MAX_SESSIONS = "MAX_SESSIONS";
 	
 	public static final String USER_FIELD_ID = "id";
 	public static final String USER_FIELD_USER = "name";

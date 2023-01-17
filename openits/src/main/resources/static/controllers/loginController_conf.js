@@ -92,6 +92,18 @@ export const CONFIG = {
 				"es-CL": "Multi-sesión no permitida"
 			},
 			{
+				"label": "LBL_SERVER_NOT_AVAILABLE",
+				"en-US": "Server not available",
+				"es-ES": "Servidor no disponible",
+				"es-CL": "Servidor no disponible"
+			},
+			{
+				"label": "LBL_MAX_SESSIONS",
+				"en-US": "Sessions number exceeded",
+				"es-ES": "Sesiones de usuario excedidas",
+				"es-CL": "Sesiones de usuario excedidas"
+			},
+			{
 				"label": "LBL_UNKNOWN_ACCESS_ERROR",
 				"en-US": "Unknown access error",
 				"es-ES": "Error de acceso desconocido",

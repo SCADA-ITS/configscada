@@ -64,6 +64,10 @@ public class SessionBO extends GenericBO {
 	private static final String AUDIT_LOG_SUBTYPE_EXPIRED = "LogSubtype:40";
 	private static final String AUDIT_LOG_USERS_PARAM_SESSION = "LogTypeParam:4:1";
 	private static final String AUDIT_LOG_USERS_PARAM_COMMENT = "LogTypeParam:4:2";
+	
+	private static final Integer DEFAULT_MAX_SESSIONS = 0;
+	private static final Integer DEFAULT_LOGIN_RETRIES = 3;
+	private static final Integer DEFAULT_ACCOUNT_LOCKED_TIME_MINUTES = 60;
 
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 	
@@ -105,6 +109,7 @@ public class SessionBO extends GenericBO {
 		String user = "";
 		String password = "";
 		UserSessionUI userSession = null;
+		UserSessionUI userSessionReturned = null;
 
 		if (headers.containsKey(HEADER_AUTHOTIZATION)) {
 
@@ -123,75 +128,87 @@ public class SessionBO extends GenericBO {
 			}
 
 			userSession = login(user, password, httpSession);
+			
+			log.debug("/login: " + userSession);
+			
+			userSessionReturned = getUserSessionWithoutChanges(userSession);
 		}
-
-		log.debug("/login: " + userSession);
-
-		return getUserSessionWithoutChanges(userSession);
+		
+		return userSessionReturned != null ? userSessionReturned : null;
 	}
 
 	public UserSessionUI login(String userName, String password, HttpSession httpSession) {
+		
+		Integer maxSessions = (Integer) systemParamBO.getSystemValue(SystemParamBO.SYSTEM_PARAM_MAX_SESSIONS,
+				DEFAULT_MAX_SESSIONS);
 
 		UserSessionUI userSession = new UserSessionUI();
 
 		userSession.setSessionId(httpSession.getId());
 		userSession.setAccess(UserSessionUI.UNAUTHORIZED);
+		
+		if (sessions.size() < maxSessions || maxSessions == null || maxSessions <= 0) {
+			
+			List<Map<String, Object>> users = voDataSourceAdapter
+					.getList(VODataSourceAdapter.DATA_SOURCE_GET_USERS_WITH_ROLE, null);
 
-		List<Map<String, Object>> users = voDataSourceAdapter
-				.getList(VODataSourceAdapter.DATA_SOURCE_GET_USERS_WITH_ROLE, null);
+			if (!CollectionUtils.isEmpty(users)) {
 
-		if (!CollectionUtils.isEmpty(users)) {
+				 users = vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_USERS_WITH_ROLE, users);
 
-			 users = vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_USERS_WITH_ROLE, users);
+				for (Map<String, Object> user : users) {
 
-			for (Map<String, Object> user : users) {
+					String usr = user.get(UserSessionUI.USER_FIELD_USER).toString();
+					String pwd = user.get(UserSessionUI.USER_FIELD_PASSWORD).toString();
 
-				String usr = user.get(UserSessionUI.USER_FIELD_USER).toString();
-				String pwd = user.get(UserSessionUI.USER_FIELD_PASSWORD).toString();
-
-				if (userName.equalsIgnoreCase(usr)) {
-					
-					if (Boolean.parseBoolean(env.getProperty(AUTH_ENCRYPTED_PASSWORD))) {
+					if (userName.equalsIgnoreCase(usr)) {
 						
-						try {
+						if (Boolean.parseBoolean(env.getProperty(AUTH_ENCRYPTED_PASSWORD))) {
 							
-							password = AES.encrypt(password);
-							
-						} catch (Exception e) {
-							
-							log.error(e.getMessage());
-							log.debug(ExceptionUtils.getStackTrace(e));
-						}
-					}
-
-					if (password.equals(pwd)) {
-						
-						user.put(UserSessionUI.USER_FIELD_PASSWORD, null);
-
-						userSession.setUser(user);
-
-						setAccess(user, userSession);
-
-						if (userSession.getAccess().equals(UserSessionUI.AUTHORIZED)) {
-
-							activate(userSession);
-							
-							sendAuditLog(userSession, AUDIT_LOG_SUBTYPE_LOGIN, AuditLogLevel.INFO, null);
+							try {
+								
+								password = AES.encrypt(password);
+								
+							} catch (Exception e) {
+								
+								log.error(e.getMessage());
+								log.debug(ExceptionUtils.getStackTrace(e));
+							}
 						}
 
-						break;
-					} else {
+						if (password.equals(pwd)) {
+							
+							user.put(UserSessionUI.USER_FIELD_PASSWORD, null);
 
-						if (allowLoginRetry(user, httpSession.getId())) {
+							userSession.setUser(user);
 
-							userSession.setAccess(UserSessionUI.WRONG_USER_PASSWORD);
+							setAccess(user, userSession);
+
+							if (userSession.getAccess().equals(UserSessionUI.AUTHORIZED)) {
+
+								activate(userSession);
+								
+								sendAuditLog(userSession, AUDIT_LOG_SUBTYPE_LOGIN, AuditLogLevel.INFO, null);
+							}
+
+							break;
 						} else {
 
-							userSession.setAccess(UserSessionUI.DENY_LOCKED);
+							if (allowLoginRetry(user, httpSession.getId())) {
+
+								userSession.setAccess(UserSessionUI.WRONG_USER_PASSWORD);
+							} else {
+
+								userSession.setAccess(UserSessionUI.DENY_LOCKED);
+							}
 						}
 					}
 				}
 			}
+		}
+		else {
+			
+			userSession.setAccess(UserSessionUI.MAX_SESSIONS);
 		}
 
 		return getUserSessionWithoutChanges(userSession);
@@ -506,8 +523,8 @@ public class SessionBO extends GenericBO {
 	private boolean allowLoginRetry(Map<String, Object> user, String sessionId) {
 
 		boolean allowed = true;
-		Integer userLoginRetries = Integer
-				.valueOf((String) systemParamBO.getSystemValue(SystemParamBO.SYSTEM_PARAM_USER_LOGIN_RETRIES));
+		Integer userLoginRetries = (Integer) systemParamBO.getSystemValue(SystemParamBO.SYSTEM_PARAM_USER_LOGIN_RETRIES,
+				DEFAULT_LOGIN_RETRIES);
 
 		String userName = (String) user.get(UserSessionUI.USER_FIELD_USER);
 
@@ -534,8 +551,9 @@ public class SessionBO extends GenericBO {
 
 							long dateLocked = Date.from(Instant.parse(DEFAULT_ACCOUNT_LOCKED_ISO_DATE)).getTime();
 
-							Integer minutesToLockAccount = Integer.valueOf((String) systemParamBO
-									.getSystemValue(SystemParamBO.SYSTEM_PARAM_DEFAULT_ACCOUNT_LOCKED_TIME_MINUTES));
+							Integer minutesToLockAccount = (Integer) systemParamBO.getSystemValue(
+									SystemParamBO.SYSTEM_PARAM_DEFAULT_ACCOUNT_LOCKED_TIME_MINUTES,
+									DEFAULT_ACCOUNT_LOCKED_TIME_MINUTES);
 
 							dateLocked = (minutesToLockAccount != null
 									? (Instant.now().toEpochMilli() + minutesToLockAccount * 60000)

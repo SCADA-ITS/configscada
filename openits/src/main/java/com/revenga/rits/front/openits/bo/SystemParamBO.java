@@ -22,6 +22,7 @@ public class SystemParamBO extends GenericBO {
 	
 	public static final String SYSTEM_PARAM_USER_LOGIN_RETRIES = "SystemParam:2";
 	public static final String SYSTEM_PARAM_DEFAULT_ACCOUNT_LOCKED_TIME_MINUTES = "SystemParam:4";
+	public static final String SYSTEM_PARAM_MAX_SESSIONS = "SystemParam:16";
 	
 	private static final String FIELD_VALUE = "value";
 	
@@ -63,5 +64,19 @@ public class SystemParamBO extends GenericBO {
 		}
 		
 		return null;
+	}
+	
+	public Object getSystemValue(String id, Object defaultValue) {
+		
+		Object obj = defaultValue;
+		
+		Map<String, Object> systemParam = getItem(id);
+		
+		if (systemParam != null && systemParam.get(FIELD_VALUE) != null) {
+				
+			obj = systemParam.get(FIELD_VALUE);
+		}
+		
+		return obj;
 	}
 }
