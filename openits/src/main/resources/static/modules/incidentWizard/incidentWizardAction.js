@@ -159,7 +159,7 @@ export default class IncidentWizardAction {
 																}
 															}
 
-															if (incidentReportInSameStretchByStretch) {
+															if (incidentReportInSameStretchByStretch && incidentReportInSameStretchByStretch.incidentState && !incidentReportInSameStretchByStretch.incidentState.finalState) {
 
 																let message = i18n.t("LBL_THERE_IS_ALREADY_INCIDENT_TYPE") + " " + parent.incidentData.incidentType + " " + i18n.t("LBL_IN_STRETCH") + " " + incidentReportInSameStretchByStretch.affectionStretch.alias + " " + i18n.t("LBL_INCLUDED_IN_SUPER_STRETCH") + " " + stretchByStretchsAlias;
 
