@@ -139,8 +139,8 @@ public class SessionBO extends GenericBO {
 
 	public UserSessionUI login(String userName, String password, HttpSession httpSession) {
 		
-		Integer maxSessions = (Integer) systemParamBO.getSystemValue(SystemParamBO.SYSTEM_PARAM_MAX_SESSIONS,
-				DEFAULT_MAX_SESSIONS);
+		Integer maxSessions = Integer.valueOf(String.valueOf(systemParamBO.getSystemValue(SystemParamBO.SYSTEM_PARAM_MAX_SESSIONS,
+				DEFAULT_MAX_SESSIONS)));
 
 		UserSessionUI userSession = new UserSessionUI();
 
@@ -523,8 +523,8 @@ public class SessionBO extends GenericBO {
 	private boolean allowLoginRetry(Map<String, Object> user, String sessionId) {
 
 		boolean allowed = true;
-		Integer userLoginRetries = (Integer) systemParamBO.getSystemValue(SystemParamBO.SYSTEM_PARAM_USER_LOGIN_RETRIES,
-				DEFAULT_LOGIN_RETRIES);
+		Integer userLoginRetries = Integer.valueOf(String.valueOf(systemParamBO.getSystemValue(SystemParamBO.SYSTEM_PARAM_USER_LOGIN_RETRIES,
+				DEFAULT_LOGIN_RETRIES)));
 
 		String userName = (String) user.get(UserSessionUI.USER_FIELD_USER);
 
@@ -551,9 +551,9 @@ public class SessionBO extends GenericBO {
 
 							long dateLocked = Date.from(Instant.parse(DEFAULT_ACCOUNT_LOCKED_ISO_DATE)).getTime();
 
-							Integer minutesToLockAccount = (Integer) systemParamBO.getSystemValue(
+							Integer minutesToLockAccount = Integer.valueOf(String.valueOf(systemParamBO.getSystemValue(
 									SystemParamBO.SYSTEM_PARAM_DEFAULT_ACCOUNT_LOCKED_TIME_MINUTES,
-									DEFAULT_ACCOUNT_LOCKED_TIME_MINUTES);
+									DEFAULT_ACCOUNT_LOCKED_TIME_MINUTES)));
 
 							dateLocked = (minutesToLockAccount != null
 									? (Instant.now().toEpochMilli() + minutesToLockAccount * 60000)
