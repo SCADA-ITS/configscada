@@ -161,32 +161,31 @@ export default class VentilationModule extends GenericModule {
 					self.nodes.push({
 						id: e.id,
 						label: e.alias,
-						description: e.description,
-						props: {
-							folder: "false",
-							translate: "false"
-						}
+						folder: true
 					});
-	
-					if(e.childs){
-						
+
+					if (e.childs) {
+
 						e.childs.forEach(c => {
-					
-							self.nodes.push({
-								id: c.id,
-								label: c.alias,
-								description: c.description,
-								props: {
-									folder: "false",
-									translate: "false"
-								}
-							});
-			
-							self.hierarchy.push({
-								id: self.hierarchy.length,
-								parentId: e.id,
-								childId: c.id
-							});
+
+							if (c.id.startsWith(self.config.elementTypeChild)) {
+								
+								self.nodes.push({
+									id: c.id,
+									label: c.alias,
+									description: c.description,
+									props: {
+										folder: false,
+										translate: "false"
+									}
+								});
+
+								self.hierarchy.push({
+									id: self.hierarchy.length,
+									parentId: e.id,
+									childId: c.id
+								});
+							}
 						});
 					}
 				}

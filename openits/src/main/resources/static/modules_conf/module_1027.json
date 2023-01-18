@@ -34,6 +34,7 @@
 	"elementTypeTunnel": "ElementType:2001",
 	"elementTypeTube": "ElementType:2000",
 	"elementTypeFan": "ElementType:9",
+	"elementTypeChild": "Element:2000",
 	"viewEquipmentMeasures": {
 		"enabled": true,
 		"options": {
