@@ -153,43 +153,42 @@ export default class LightingnModule extends GenericModule {
 
 			let data = await webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.elementsByIdType, { id: self.config.elementType }));
 			
-			self.tunnels = data.json();
+			self.tunnels = data.json();	
 			self.nodes = [];
 			self.hierarchy = [];
 
-			self.tunnels.forEach(e => {
-				
-				if(!enabledTunnelIds || (enabledTunnelIds.includes(e.id))){
+			self.tunnels.forEach(el => {
+
+				if (!enabledTunnelIds || (enabledTunnelIds.includes(el.id))) {
 
 					self.nodes.push({
-						id: e.id,
-						label: e.alias,
-						description: e.description,
-						props: {
-							folder: "false",
-							translate: "false"
-						}
+						id: el.id,
+						label: el.alias,
+						folder: true
 					});
-	
-					if(e.childs){
-						
-						e.childs.forEach(c => {
-					
-							self.nodes.push({
-								id: c.id,
-								label: c.alias,
-								description: c.description,
-								props: {
-									folder: "false",
-									translate: "false"
-								}
-							});
-			
-							self.hierarchy.push({
-								id: self.hierarchy.length,
-								parentId: e.id,
-								childId: c.id
-							});
+
+					if (el.childs) {
+
+						el.childs.forEach(c => {
+
+							if (c.id.startsWith(self.config.elementTypeChild)) {
+
+								self.nodes.push({
+									id: c.id,
+									label: c.alias,
+									description: c.description,
+									props: {
+										folder: false,
+										translate: "false"
+									}
+								});
+
+								self.hierarchy.push({
+									id: self.hierarchy.length,
+									parentId: el.id,
+									childId: c.id
+								});
+							}
 						});
 					}
 				}
@@ -217,7 +216,7 @@ export default class LightingnModule extends GenericModule {
 			}
 	
 			function getTreeData() {
-				
+					
 				let data = util.tree.getNodes(self.nodes, self.hierarchy, { parentNodeId: "parentId", childNodeId: "childId" }, false);
 				
 				return data;

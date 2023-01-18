@@ -33,6 +33,7 @@
 	"elementTypeTube" :"ElementType:2000",
 	"elementTypeIdCircuit": "ElementType:84",
 	"elementTypeIdDali": "ElementType:85",
+	"elementTypeChild": "Element:2000",
 	"viewEquipmentMeasures": {
 		"enabled": true,
 		"options": {
