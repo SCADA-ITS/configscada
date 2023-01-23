@@ -176,13 +176,6 @@ export default class AlarmMonitorModule extends GenericModule {
 					dataGrids[metadataRecognizedGrid.id] = new DataTable(metadataRecognizedGrid.id, null, metadataRecognizedGrid, [], null);
 					
 					load();
-					
-					let alarmService = window.sm.getService(Services.ALARM_SERVICE);
-
-					if (alarmService) {
-						
-						updateStats(alarmService.getData());
-					}
 				}
 				
 				function filterMetadata(metadata) {
@@ -259,6 +252,13 @@ export default class AlarmMonitorModule extends GenericModule {
 								if ($$("switcher-views-" + self.uid)) {
 
 									$$("switcher-views-" + self.uid).show();
+								}
+								
+								let alarmService = window.sm.getService(Services.ALARM_SERVICE);
+
+								if (alarmService) {
+									
+									updateStats(alarmService.getData());
 								}
 							}
 						});
@@ -803,16 +803,6 @@ export default class AlarmMonitorModule extends GenericModule {
 							}
 						}
 					});
-
-					//					itemsTree = elements.map(e => {
-					//
-					//						return {
-					//
-					//							id: e.id,
-					//							label: e.alias + " (" + i18n.t(e.elementType.labelAlias) + ")",
-					//							image: e.elementType.elementTypePhoto
-					//						}
-					//					});
 				}
 
 				if (Array.isArray(hierarchies) && hierarchies.length > 0) {
@@ -1160,107 +1150,6 @@ export default class AlarmMonitorModule extends GenericModule {
 				};
 
 				return switcherButtonsView;
-
-				//				let view;
-				//				
-				//				view = {
-				//					css: { "background-color": "var(--blue-soft-opacity-1)" },
-				//					height: 50,
-				//					cols: [
-				//						{ width: 10 },
-				//						{
-				//							rows: [
-				//								{ height: 5 },
-				//								{
-				//									view: "segmented",
-				//									css: "segment-custom-2",
-				//									value: "switcher-element-types-" + self.uid,
-				//									options: [
-				//											{
-				//												id: "switcher-element-types-" + self.uid,
-				//												value: `<div>
-				//															<span class='ico webix_icon mdi mdi-format-list-bulleted'></span>
-				//															<span>${i18n.t("LBL_LIST")}</span>
-				//														</div>`,
-				//											},
-				//											{
-				//												id: "switcher-element-hierarchy-" + self.uid,
-				//												value: `<div>
-				//															<span class='ico webix_icon mdi mdi-family-tree'></span>
-				//															<span>${i18n.t("LBL_TREE")}</span>
-				//														</div>`,
-				//											}
-				//									],
-				//									tooltip: function(obj) {
-				//				
-				//										if (obj.id === "switcher-element-types-" + self.uid) {
-				//				
-				//											return i18n.t("LBL_SELECTION_BY_TYPE");
-				//										}
-				//										else if (obj.id === "switcher-element-hierarchy-" + self.uid) {
-				//				
-				//											return i18n.t("LBL_SELECTION_BY_HIERARCHY");
-				//										}
-				//									},
-				//									on: {
-				//										onChange(newv, oldv) {
-				//				
-				//											//console.log("init change => " + newv);
-				//											$$("loading-switcher-" + self.uid).show();
-				//											$$("switcher-views-" + self.uid).hide();
-				//												
-				//											webix.delay(function() {
-				//												
-				//												$$("loading-switcher-" + self.uid).hide();
-				//												$$("switcher-views-" + self.uid).show();
-				//													
-				//												if (newv === "switcher-element-types-" + self.uid) {
-				//					
-				//													$$("listview-" + self.listView.uid).show();
-				//													$$("treeview-" + self.treeView. uid).hide();
-				//													
-				//													$$("view-main-list-equipments-" + self.uid).config.header = webix.template(function() {
-				//									
-				//														return `<div>
-				//																	<span class='ico webix_icon mdi mdi-view-headline'></span>
-				//																	<span>${i18n.t("LBL_EQUIPMENT_TYPES")}</span>
-				//																</div>`;
-				//													});
-				//													$$("view-main-list-equipments-" + self.uid).refresh();
-				//													
-				//													initListView();
-				//												}
-				//												else if (newv === "switcher-element-hierarchy-" + self.uid) {
-				//									
-				//													$$("listview-" + self.listView.uid).hide();
-				//													$$("treeview-" + self.treeView. uid).show();
-				//													
-				//													$$("view-main-list-equipments-" + self.uid).config.header = webix.template(function() {
-				//									
-				//														return `<div>
-				//																	<span class='ico webix_icon mdi mdi-view-headline'></span>
-				//																	<span>${i18n.t("LBL_EQUIPMENT_TREE")}</span>
-				//																</div>`;
-				//													});
-				//													$$("view-main-list-equipments-" + self.uid).refresh();
-				//													 					
-				//													initTreeView();
-				//												}
-				//												
-				//												//console.log("end change => " + newv);
-				//											});
-				//										}
-				//									}
-				//								},
-				//								{ height: 5 }	
-				//							]
-				//							
-				//						},
-				//						{ width: 10 }
-				//					]
-				//					
-				//				};
-				//				return view;
 			}
 
 			function getViewContent() {

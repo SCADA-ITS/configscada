@@ -1,0 +1,11 @@
+{
+  id
+  labelAlias
+  labelDescription
+  smThresholds {
+    id
+    labelAlias
+    labelDescription
+    value
+  }
+}

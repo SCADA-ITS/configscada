@@ -1,0 +1,15 @@
+{
+  id
+  alarmConfig {
+    id
+    alias
+    alarmType {
+      id
+    }
+  }
+  filteredUntil
+  disagree
+  element {
+    id
+  }
+}

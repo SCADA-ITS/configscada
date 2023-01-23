@@ -49,7 +49,7 @@ public class GraphqlAdapter {
 			
 			StringBuilder sb = new StringBuilder();
 			
-			if (!StringUtils.isAllEmpty(method, content)) {
+			if (!StringUtils.isEmpty(method)) {
 			
 				sb.append("{\"query\":\"query{");
 				
@@ -63,7 +63,12 @@ public class GraphqlAdapter {
 					}
 				}
 
-				sb.append(content);
+				if (!StringUtils.isEmpty(content)) {
+				
+					String strContent = content.replaceAll("[\r\n]+", " ");
+					sb.append(strContent);
+				}
+				
 				sb.append("}\"}");
 				
 				String body = sb.toString();
@@ -97,14 +102,21 @@ public class GraphqlAdapter {
 			
 			StringBuilder sb = new StringBuilder();
 			
-			if (!StringUtils.isAllEmpty(method, content)) {
-			
+			if (!StringUtils.isEmpty(method)) {
+
 				sb.append("{\"query\":\"mutation  ");
 				
 				sb.append(String.format("%s(%s)", method, paramTypesGraphQL));
 				sb.append(String.format("{ %s(%s)  ", method, paramsGraphQL));
-				sb.append(String.format(" %s}\"", content));
 				
+				if (!StringUtils.isEmpty(content)) {
+				
+					String strContent = content.replaceAll("[\r\n]+", " ");
+					
+					sb.append(String.format(" %s", strContent));
+				}
+				 
+				sb.append("}\"");
 				sb.append(String.format(",\"variables\":%s", variablesGraphQL));
 				sb.append(String.format(",\"operationName\":\"%s\"}", method));
 

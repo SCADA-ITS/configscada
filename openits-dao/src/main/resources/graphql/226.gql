@@ -1,0 +1,33 @@
+{
+  id
+  labelAlias
+  elementTreeNodes {
+    id
+    labelAlias
+    position
+    element {
+      id
+      alias
+    }
+  }
+  elementTreeNodeHierarchies {
+    parent {
+      id
+      labelAlias
+      position
+      element {
+        id
+        alias
+      }
+    }
+    child {
+      id
+      labelAlias
+      position
+      element {
+        id
+        alias
+      }
+    }
+  }
+}

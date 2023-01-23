@@ -1,0 +1,17 @@
+{
+  id
+  parent {
+    id
+    alias
+    elementType {
+      id
+    }
+  }
+  child {
+    id
+    alias
+    elementType {
+      id
+    }
+  }
+}

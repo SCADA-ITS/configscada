@@ -1,0 +1,19 @@
+{
+  id
+  alias
+  description
+  labelAlias
+  labelDescription
+  planOrderTypeLabel
+  planOrderTypeParams {
+    id
+    labelAlias
+    dataType {
+      id
+      labelAlias
+    }
+    labelUnit
+    threshold1
+    threshold2
+  }
+}

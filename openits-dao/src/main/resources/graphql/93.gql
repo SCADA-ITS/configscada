@@ -1,0 +1,25 @@
+{
+  id
+  alias
+  description
+  alarmType {
+    id
+  }
+  alarmLevel {
+    id
+  }
+  element {
+    id
+  }
+  elementType {
+    id
+  }
+  mine
+  treatment
+  alarmConfigMeasures {
+    id
+  }
+  alarmTargetElements {
+    id
+  }
+}

@@ -1,0 +1,36 @@
+{
+  id
+  generatedAt
+  validForMin
+  confirm
+  incidentType {
+    id
+    alias
+    description
+    autoConfirmIncident
+  }
+  affectionStretch {
+    id
+    alias
+    description
+  }
+  location {
+    id
+    alias
+    description
+  }
+  incidentState {
+    id
+    labelAlias
+    finalState
+  }
+  incidentLevel {
+    id
+    priority
+    labelAlias
+  }
+  currentUser {
+    id
+    name
+  }
+}

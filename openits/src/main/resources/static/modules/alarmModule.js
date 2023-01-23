@@ -60,21 +60,155 @@ export default class AlarmModule extends GenericModule {
 
 			let recog = function(alarmsId) {
 				
-				(new InputDialogBox(i18n.t("LBL_DIALOG_RECOGNIZE_ALARMS"), i18n.t("LBL_ARE_YOU_SURE_RECOGNIZE"), function(comments) {
+//				(new InputDialogBox(i18n.t("LBL_DIALOG_RECOGNIZE_ALARMS"), i18n.t("LBL_ARE_YOU_SURE_RECOGNIZE"), function(comments) {
+//					
+//					let body = {
+//						alarmIds: alarmsId,
+//						recognizedComments: comments,
+//						userId: self.userData.id
+//					};
+//
+//					webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.actionEndpoints.recognize, body).then(function(data) {
+//						console.log(data);
+//					});
+//					
+//				})).show();
+
+				showDialogRecognize(function(data) {
 					
 					let body = {
 						alarmIds: alarmsId,
-						recognizedComments: comments,
+						recognizedComments: data.comments,
+						disagree: data.disagree,
 						userId: self.userData.id
 					};
-
-					webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.actionEndpoints.recognize, body).then(function(data) {
-						console.log(data);
-					});
 					
-				})).show();
-								
+					webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.actionEndpoints.recognize, body).then(
+						function(data) {
+							console.log(data);
+						}
+					);
+				});
 			};
+			
+			function showDialogRecognize(onAccept) {
+				
+				let body = {
+					width: 600,
+					height: 250,
+					css: "dialog-input-custom",
+					rows: [
+						{
+							template: i18n.t("LBL_ARE_YOU_SURE_RECOGNIZE"),
+							height: 40,
+							borderless: true,
+							css: "dialog-input-text"
+						},
+						{
+							view: "form",
+							borderless: true,
+							rows: [
+								{ height: 1 },
+								{
+									cols: [
+										{ width: 1 },
+										{
+											view: "textarea",
+											id: "input-dialog-" + self.uid,
+											name: "input-dialog-" + self.uid,
+											height: 70,
+											scroll: "auto",
+											value: "",
+											on: {
+												onAfterRender: function() {
+					
+													this.focus();
+					
+													if (this.getValue()) {
+					
+														this.getInputNode().setSelectionRange(0, this.getValue().length);
+													}
+												}
+											}
+										},	
+										{ width: 1 }
+									]
+								},
+								{ height: 1 },
+								{
+									cols: [
+										{ width: 1 },
+										{
+										    view: "checkbox", 
+										    id: "chk-disagree-" + self.uid,
+										    css: { "margin-left": "-75px !important"},
+										    labelRight: i18n.t("LBL_DISAGREE"),
+										    tooltip: i18n.t("LBL_CHECK_TO_DISAGREE_THIS_ALARM"), 
+										    value: false
+										},
+										{ width: 1 }
+									]
+								},
+								{ height: 1 }
+							]
+						},
+						{},
+						{
+							height: 41,
+							cols: [
+								{ width: 20 },
+								{
+									view: "button",
+									css: "dialog-cancel",
+									width: 130,
+									height: 35,
+									label: i18n.t("LBL_CANCEL"),
+									value: i18n.t("LBL_CANCEL"),
+									click: function() {
+		
+										const window = this.getTopParentView();
+										window.close();
+									}
+								},
+								{},
+								{
+									view: "button",
+									id: "button-accept-" + self.uid,
+									css: "dialog-accept",
+									width: 130,
+									height: 35,
+									label: i18n.t("LBL_ACCEPT"),
+									value: i18n.t("LBL_ACCEPT"),
+									click: function() {
+		
+										const window = this.getTopParentView();
+										const txtDialogReconize = $$("input-dialog-" + self.uid);
+										const chkDisagree = $$("chk-disagree-" + self.uid);
+	
+										let data = {
+											comments: txtDialogReconize.getValue(),
+											disagree: (chkDisagree.getValue() === 1)
+										};
+										
+										// Prevent z-index disorder. Bug preventing inputboxes contained in tabs from being selected
+										setTimeout(function() {
+									
+											onAccept(data);						
+			
+										}, 1);
+										
+										window.close();
+									}
+								},
+								{ width: 20 }
+							]
+						},
+						{ height: 15 }
+					]
+				};
+				
+				util.ui.loadWindow(i18n.t("LBL_DIALOG_RECOGNIZE_ALARMS"), body, 400, 600, true);
+			}
 			
 			function recognizeAll() {
 				
@@ -683,10 +817,11 @@ export default class AlarmModule extends GenericModule {
 
 			const NO_RECOGNIZED = "LBL_NO";
 			const YES_RECOGNIZED = "LBL_YES";
+			const DISAGREE = "LBL_DISAGREE";
 
 			let recognize = alarm.recognized !== undefined && alarm.recognized !== null ? true : false;
 			let icon = recognize ? "./img/grid/bell_recognized.png" : "./img/grid/bell_no_recognized.png";
-			let vlabel = recognize ? YES_RECOGNIZED : NO_RECOGNIZED;
+			let vlabel = (recognize ? YES_RECOGNIZED : NO_RECOGNIZED) + (alarm.disagree ? " " + DISAGREE : "");
 			let user = alarm.recognizedUser !== undefined && alarm.recognizedUser !== null ? alarm.recognizedUser : null;
 			let userName = user !== null ? window.em.getByField(EntityType.USER, "id", user.id).name : "";
 			let userLabel = userName + " " + new Date(this.alarm.recognized).toLocaleString(i18n.getLocale(), FORMAT_NUMERIC_DATES);

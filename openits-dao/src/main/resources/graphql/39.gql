@@ -1,0 +1,26 @@
+{
+  id
+  alarmConfig {
+    id
+    alias
+    labelAlias
+    alarmType {
+      id
+    }
+  }
+  filteredUntil
+  disagree
+  element {
+    id
+    alias
+  }
+  alarm {
+    id
+  }
+  alarmDisabled
+  comment
+  user {
+    id
+    name
+  }
+}

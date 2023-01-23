@@ -681,21 +681,30 @@ export default class Synoptic extends GenericMap {
 		function loadGraphicIcons() {
 
 			let layers = self.metadata.layers;
+			let container = { type: GraphicIcon.CONTAINER_TYPE_SNAP, obj: self.s }
 			
 			layers.forEach(layer => {
 				
 				layer.layerElements.forEach(layerElement => {
 					
-					createGraphicIcon(layerElement,
-						self.data.find(element => element.id === layerElement.elementId),
-						{ type: GraphicIcon.CONTAINER_TYPE_SNAP, obj: self.s },
-						function(graphicIconInstance) {
-
-							onLoadGraphicIcon(layerElement.elementId, graphicIconInstance);
-						});	
-
+					if (layerElement.elementId) {
 						
-					self.layerElements++;
+						let element = self.data.find(element => element.id === layerElement.elementId);
+						
+						if (element) {
+						
+							createGraphicIcon(layerElement,
+								element,
+								container,
+								function(graphicIconInstance) {
+
+									onLoadGraphicIcon(layerElement.elementId, graphicIconInstance);
+								}
+							);	
+		
+							self.layerElements++;	
+						}
+					}
 				});
 			});
 		}
