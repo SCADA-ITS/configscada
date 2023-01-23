@@ -204,7 +204,7 @@ export default class DataTable {
 						col.width = field.widthPx;
 					}
 
-					col.sort = DataType.STRING.sort;
+					//col.sort = DataType.STRING.sort;
 
 					if (field.gridFieldDataType) {
 
@@ -242,6 +242,63 @@ export default class DataTable {
 						else if (field.gridFieldDataType.id === DataType.DATE.value) {
 
 							col.sort = DataType.DATE.sort;
+						}
+						else {
+							
+							col.sort = function(a, b) {
+
+								let val1 = "";
+								let val2 = "";
+								
+								if (typeof a[field.sourceField] === 'object' && a[field.sourceField].value !== undefined) {
+									
+									if (field && Array.isArray(field.gridFieldReplacements) && field.gridFieldReplacements.length > 0) {
+										
+										let fieldReplacementA = field.gridFieldReplacements.find(f => f.value == a[field.sourceField].value);
+										
+										if (fieldReplacementA) {
+											
+											val1 = i18n.t(fieldReplacementA.label);
+										}
+										
+									}
+									else {
+										
+										val1 = a[field.sourceField].value ? a[field.sourceField].value : "";
+									}
+								}
+								else {
+	
+									val1 = a[field.sourceField] ? a[field.sourceField] : "";
+								}
+								
+								if (typeof b[field.sourceField] === 'object' && b[field.sourceField].value !== undefined) {
+									
+									if (field && Array.isArray(field.gridFieldReplacements) && field.gridFieldReplacements.length > 0) {
+										
+										let fieldReplacementB = field.gridFieldReplacements.find(f => f.value == b[field.sourceField].value);
+										
+										if (fieldReplacementB) {
+											
+											val2 = i18n.t(fieldReplacementB.label);
+										}
+										
+									}
+									else {
+										
+										val2 = b[field.sourceField].value ? b[field.sourceField].value : "";
+									}
+								}
+								else {
+	
+									val2 = b[field.sourceField] ? b[field.sourceField] : "";
+								}
+								
+								val1 = val1.toLowerCase();
+								val2 = val2.toLowerCase();
+								
+								return (val1 > val2) ? 1 : ((val2 > val1) ? -1 : 0);
+							}
 						}
 					}
 
@@ -294,10 +351,10 @@ export default class DataTable {
 									}
 								}
 								
-								if (field.gridFieldDataType && field.gridFieldDataType.id === DataType.DATE.value && value === "") {
+								if (field.gridFieldDataType && field.gridFieldDataType.id === DataType.DATE.value && value === "" && obj[field.sourceField] && typeof(obj[field.sourceField]) === 'object'){
 
 									value = obj[field.sourceField].toLocaleString(i18n.getLocale(), FORMAT_NUMERIC_DATES);
-								
+
 								} else if (field.gridFieldDataType && field.gridFieldDataType.id === DataType.IMAGE.value) {
 									
 									return `<div><img class="table-field-icons" src='img/${obj[field.sourceField]}'></div>`;
@@ -555,7 +612,7 @@ export default class DataTable {
 							}
 							else {
 
-								return `<span class="table-row-text">${value}</span>`;
+								return `<span class="table-row-text">${value !== undefined ? value : "-"}</span>`;
 							}
 
 						}
@@ -695,11 +752,27 @@ export default class DataTable {
 							
 								if (item[field.sourceField]) {
 									
-									item[field.sourceField] = typeof(item[field.sourceField]) === 'object' ? new Date(parseInt(item[field.sourceField].value)) : new Date(parseInt(item[field.sourceField]));
-								}
-								else {
+									if (typeof(item[field.sourceField]) === 'object') {
+										
+										if (item[field.sourceField].value && !isNaN(item[field.sourceField].value)) {
 									
-									item[field.sourceField] = null;
+											item[field.sourceField]	= new Date(parseInt(item[field.sourceField].value));
+										}
+										else {
+											
+											if(!(item[field.sourceField] instanceof Date)){
+												
+												item[field.sourceField] = undefined;	
+											}											
+										}
+									}
+									else {
+										
+										if (item[field.sourceField] && !isNaN(item[field.sourceField])) {
+											
+											item[field.sourceField]	= new Date(parseInt(item[field.sourceField]));
+										}
+									}
 								}
 							}
 						});
@@ -1907,8 +1980,32 @@ export default class DataTable {
 								res |= (row[col.id].toLocaleString(i18n.getLocale(), FORMAT_NUMERIC_DATES).indexOf(value) !== -1);
 							}
 							else {
-		
-								res |= (String(row[col.id]).toLowerCase().indexOf(value) !== -1);
+
+								if (typeof (row[col.id]) === 'object' && row[col.id].value !== undefined) {
+
+									if (row[col.id].value === true || row[col.id].value === false) {
+
+										let field = self.metadata.gridFields.find(f => f.sourceField === col.id);
+
+										if (field && Array.isArray(field.gridFieldReplacements) && field.gridFieldReplacements.length > 0) {
+
+											let replaceValue = field.gridFieldReplacements.find(replacement => replacement.value == row[col.id].value);
+
+											if(replaceValue){
+												
+												res |= (String(replaceValue.label).toLowerCase().indexOf(value) !== -1);
+											}
+										}
+
+									} else {
+
+										res |= (String(row[col.id].value).toLowerCase().indexOf(value) !== -1);
+									}
+
+								} else {
+
+									res |= (String(row[col.id]).toLowerCase().indexOf(value) !== -1);
+								}
 							}
 						}
 					});
@@ -2834,14 +2931,8 @@ export default class DataTable {
 										if (keys != undefined && Array.isArray(keys) && keys.length > 0) {
 
 											keys.forEach(key => {
-
-												if (dataItem[key] != undefined) {
-
-													record[key] = dataItem[key];
-												} else {
-
-													record[key] = "";
-												}
+												
+												record[key] = dataItem[key];
 											});
 										}
 										

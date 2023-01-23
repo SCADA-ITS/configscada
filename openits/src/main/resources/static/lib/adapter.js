@@ -34,41 +34,94 @@ export let adapter = {
 
 					data.basicElementsVO.forEach(element => {
 
-						let dataItem = {};
+						let elem = window.em.getByField(EntityType.ELEMENT, "id", element.id);
 
-						dataItem.id = element.id;
+						if (elem) {
 
-						if (element.elementTypeState != undefined) {
+							let elementType = window.em.getByField(EntityType.ELEMENT_TYPE, "id", elem.elementType.id);
 
-							dataItem.state = element.elementTypeState.id;
+							if (elementType) {
+
+								let dataItem = {};
+
+								dataItem.id = element.id;
+
+								if (element.elementTypeState != undefined) {
+
+									dataItem.state = element.elementTypeState.id;
+								}
+
+								if (element.elementValues != undefined && Array.isArray(element.elementValues) && element.elementValues.length > 0) {
+
+									element.elementValues.forEach(elementValue => {
+
+										let elementTypeParamId = adapter.getElementTypeParamId(elementValue.id);
+
+										if (Array.isArray(elementType.elementTypeParams) && elementType.elementTypeParams.length > 0) {
+
+											let elementTypeParam = elementType.elementTypeParams.find(e => e.id == elementTypeParamId);
+
+											if (elementTypeParam) {
+
+												let dataTypeId = elementTypeParam.dataType.id;
+
+												dataItem[elementTypeParamId] = {};
+
+												if (elementValue.elementValueState != undefined) {
+
+													dataItem[elementTypeParamId].state = elementValue.elementValueState.id;
+												}
+
+												dataItem[elementTypeParamId].value = undefined;
+
+												if (dataTypeId === DataType.INTEGER || dataTypeId === DataType.TIMESTAMP) {
+
+													if (elementValue.value !== undefined) {
+
+														dataItem[elementTypeParamId].value = parseInt(elementValue.value);
+													}
+												}
+												else if (dataTypeId === DataType.ALPHANUMERIC) {
+
+													if (elementValue.value !== undefined) {
+
+														dataItem[elementTypeParamId].value = elementValue.value;
+													}
+												}
+												else if (dataTypeId === DataType.DECIMAL) {
+
+													if (elementValue.value !== undefined) {
+
+														dataItem[elementTypeParamId].value = parseFloat(elementValue.value);
+													}
+												}
+												else if (dataTypeId === DataType.BOOLEAN) {
+
+													if (elementValue.value !== undefined) {
+
+														dataItem[elementTypeParamId].value = IS_TRUE(elementValue.value);
+													}
+												}
+
+
+												//                                                              if (elementValue.value != undefined) {
+												//                   
+												//                                                                    dataItem[elementTypeParamId].value = elementValue.value;
+												//                                                              }
+												//                                                              else {
+												//                   
+												//                                                                    dataItem[elementTypeParamId].value = "";
+												//                                                              }          
+											}
+										}
+									});
+								}
+
+								gridData.data.push(dataItem);
+							}
+
+
 						}
-
-						if (element.elementValues != undefined && Array.isArray(element.elementValues) && element.elementValues.length > 0) {
-
-							element.elementValues.forEach(elementValue => {
-
-								let elementTypeParamId = adapter.getElementTypeParamId(elementValue.id);
-
-								dataItem[elementTypeParamId] = {};
-
-								if (elementValue.elementValueState != undefined) {
-
-									dataItem[elementTypeParamId].state = elementValue.elementValueState.id;
-								}
-
-								if (elementValue.value != undefined) {
-
-									dataItem[elementTypeParamId].value = elementValue.value;
-								}
-								else {
-
-									dataItem[elementTypeParamId].value = "";
-								}
-
-							});
-						}
-
-						gridData.data.push(dataItem);
 					});
 				}
 
