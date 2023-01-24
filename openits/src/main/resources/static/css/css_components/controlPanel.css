@@ -143,6 +143,18 @@
 	margin-top: 5px;
 }
 
+.alarm-state-hover:hover {
+	background: var(--blue-soft);
+}
+
+.alarm-state-hover:hover .first-line {
+	color: var(--blue-text-default);
+}
+
+.alarm-state-hover:hover .second-line {
+	color: var(--blue-text-default);
+}
+
 .control-panel-list .alarm-state-active {
 	display:inline-block;
 	border-left: 3px solid #ef2929;

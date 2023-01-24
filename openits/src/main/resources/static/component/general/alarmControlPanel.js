@@ -58,7 +58,7 @@ export default class AlarmControlPanel extends GenericControlPanel {
 							if (obj.removed) {
 
 								return `<div class="${stateAlarm}"></div>
-										<div class="text">
+										<div class="text alarm-state-hover">
 									  		<span class="first-line" style="text-decoration:line-through;">${obj.alias} </span>
 									  		<span class="second-line">${util.toLocaleString(obj.updated / 1000)} : ${obj.description}</span>
 										</div>`;
@@ -66,7 +66,7 @@ export default class AlarmControlPanel extends GenericControlPanel {
 							else {
 
 								return `<div class="${stateAlarm}"></div>
-										<div class="text">
+										<div class="text alarm-state-hover">
 									  		<span class="first-line">${obj.alias} </span>
 									  		<span class="second-line">${util.toLocaleString(obj.updated / 1000)} : ${obj.description}</span>
 										</div>`;
@@ -74,6 +74,21 @@ export default class AlarmControlPanel extends GenericControlPanel {
 
 						},
 						height: 66
+					},
+					on: {
+						onItemClick: function(obj){
+							
+							let itemSelected = this.getItem(obj);						
+							
+							if (itemSelected && itemSelected.notificationId) {
+
+								let args = {
+									selectedPks: [itemSelected.notificationId]
+								};
+
+								self.doAction(self.config.module.equipmentViewer.id, self.config.module.equipmentViewer.action.view, args);
+							}							
+						}
 					}
 				},
 				{ width: 20 }

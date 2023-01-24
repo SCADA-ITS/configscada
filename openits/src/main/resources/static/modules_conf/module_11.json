@@ -8,6 +8,12 @@
 			"action": {
 				"recognizeAll": 100802
 			}
+		},
+		"equipmentViewer":{
+			"id": 1014,
+			"action": {
+				"view": 101402
+			}
 		}
 	},
 	"rest": {
