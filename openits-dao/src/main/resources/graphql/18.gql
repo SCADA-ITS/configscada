@@ -8,6 +8,9 @@
     alias
     changedAt
     planOrderOrder
+    planOrderType {
+     id
+    }
     planOrderStateType {
       id
       alias

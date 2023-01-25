@@ -26,30 +26,18 @@ export default class SearchPlan {
 
 				if (Array.isArray(planOrdersArr) && planOrdersArr.length > 0) {
 
-					let responseCounter = 0;
-
 					planOrdersArr.forEach(order => {
 
-						webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.plansOrder, { id: order.order.id })).then(function(planOrderResponse) {
+						let planOrder = planOrdersArr.find(po => po.order.id === order.order.id);
+						let planOrderType = window.em.getByField(EntityType.PLAN_ORDER_TYPE, "id", order.order.planOrderType.id);
 
-							if (planOrderResponse != null) {
+						if (planOrder) {
 
-								let planOrderComplete = planOrderResponse.json();
-								let planOrder = planOrdersArr.find(po => po.order.id === planOrderComplete.id);
-								let planOrderType = window.em.getByField(EntityType.PLAN_ORDER_TYPE, "id", planOrderComplete.planOrderType.id);
-
-								if (planOrder) {
-
-									planOrder.order.planOrderType = planOrderType;
-								}
-
-								if (++responseCounter === planOrdersArr.length) {
-
-									drawViewResultsPlans();
-								}
-							}
-						});
+							planOrder.order.planOrderType = planOrderType;
+						}
 					});
+
+					drawViewResultsPlans();
 
 				} else {
 
