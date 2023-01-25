@@ -853,19 +853,22 @@ export default class Synoptic extends GenericMap {
 						
 						let graphicIcons = getGraphicIcons(layerElement.elementId);
 						
-						graphicIcons.forEach(graphicIcon => {
+						if (Array.isArray(graphicIcons)) {
 							
-							// Visible
-							if (layersId.indexOf(layer.id) !== -1) {
+							graphicIcons.forEach(graphicIcon => {
 							
-								graphicIcon.show();
-							}
-							// No visible
-							else {
+								// Visible
+								if (layersId.indexOf(layer.id) !== -1) {
 								
-								graphicIcon.hide();
-							}	
-						});
+									graphicIcon.show();
+								}
+								// No visible
+								else {
+									
+									graphicIcon.hide();
+								}	
+							});	
+						}
 					});	
 				});
 			}
