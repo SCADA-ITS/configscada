@@ -156,6 +156,7 @@
       }
       priority {
         id
+        defaultPriority
       }
       startTime
       endTime

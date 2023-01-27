@@ -47,5 +47,6 @@
     labelAlias
     labelDescription
     priority
+    defaultPriority
   }
 }
