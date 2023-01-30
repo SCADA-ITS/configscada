@@ -157,5 +157,13 @@ export default class GraphicIconCustom extends GraphicIcon {
 			this.graphicIconCustomType.render(this.elementInfo);
 		}
 	}
+	
+	getConfiguration(){
+		
+		if(this.graphicIconCustomType.getConfiguration){
+			
+			return this.graphicIconCustomType.getConfiguration();
+		}
+	}
 }
 

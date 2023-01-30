@@ -177,6 +177,21 @@ export default class VmsSignalingQueuesModule extends GenericModule {
 
 											self.initialPanelLoad.set(svgId, svgHTML.outerHTML);
 										}
+
+										if (graphicIconInstance.getConfiguration) {
+
+											let animated = graphicIconInstance.getConfiguration();
+
+											if (animated.isAnimated) {
+
+												let datatable = $$("dt-" + self.dataTable.uid);
+												let itemToUpdate = datatable.config.data.find(dat => dat.id === commandElement.id);
+
+												itemToUpdate.animated = i18n.t("LBL_QUEUE_ITEM_ANIMATED");
+												
+												datatable.render(commandElement.id, itemToUpdate, "update");
+											}
+										}
 									});
 								}
 
@@ -222,7 +237,8 @@ export default class VmsSignalingQueuesModule extends GenericModule {
 						origin: (commandElement.source) ? commandElement.source : "-",
 						position: commandPosition,
 						elementId: element.id,
-						enable: (commandElement.enable) ? i18n.t("LBL_QUEUE_ITEM_ACTIVE") : ""
+						enable: (commandElement.enable) ? i18n.t("LBL_QUEUE_ITEM_ACTIVE") : "",
+						animated: ""
 					});
 				}
 			}
@@ -407,6 +423,39 @@ export default class VmsSignalingQueuesModule extends GenericModule {
 						}
 					},
 					{
+						id: 12,
+						enabled: true,
+						extended: false,
+						filtered: true,
+						groupingSummary: false,
+						isEpochMilli: false,
+						isPk: false,
+						needsTranslation: false,
+						parameterized: true,
+						position: 6,
+						required: true,
+						sourceField: "animated",
+						visible: true,
+						widthPx: 35,
+						gridFieldDataType: {
+							id: 1,
+							description: "string",
+							name: "string"
+						},
+						gridFieldIcons: [
+							{
+								id: 1,
+								avatar: false,
+								badgeColor: false,
+								enabled: true,
+								icon: "./img/grid/alternate.png",
+								showValue: false,
+								value: i18n.t("LBL_QUEUE_ITEM_ANIMATED"),
+								labelValue: "LBL_QUEUE_ITEM_ANIMATED"
+							}
+						]
+					},
+					{
 						id: 6,
 						enabled: true,
 						extended: false,
@@ -418,7 +467,7 @@ export default class VmsSignalingQueuesModule extends GenericModule {
 						labelTooltip: "LBL_MESSAGE_TEXT",
 						needsTranslation: false,
 						parameterized: false,
-						position: 6,
+						position: 7,
 						required: true,
 						sourceField: "message",
 						visible: true,
@@ -441,7 +490,7 @@ export default class VmsSignalingQueuesModule extends GenericModule {
 						labelTooltip: "LBL_SINCE",
 						needsTranslation: false,
 						parameterized: true,
-						position: 7,
+						position: 8,
 						required: true,
 						sourceField: "initialDate",
 						visible: true,
@@ -464,7 +513,7 @@ export default class VmsSignalingQueuesModule extends GenericModule {
 						labelTooltip: "LBL_UNTIL",
 						needsTranslation: false,
 						parameterized: true,
-						position: 8,
+						position: 9,
 						required: true,
 						sourceField: "endDate",
 						visible: true,
@@ -487,7 +536,7 @@ export default class VmsSignalingQueuesModule extends GenericModule {
 						labelTooltip: "LBL_PRIORITY_TYPE",
 						needsTranslation: false,
 						parameterized: true,
-						position: 9,
+						position: 10,
 						required: true,
 						sourceField: "priorityType",
 						visible: true,
@@ -510,7 +559,7 @@ export default class VmsSignalingQueuesModule extends GenericModule {
 						labelTooltip: "LBL_ORIGIN",
 						needsTranslation: false,
 						parameterized: true,
-						position: 10,
+						position: 11,
 						required: true,
 						sourceField: "origin",
 						visible: true,
@@ -533,7 +582,7 @@ export default class VmsSignalingQueuesModule extends GenericModule {
 						labelTooltip: "LBL_POSITION",
 						needsTranslation: false,
 						parameterized: true,
-						position: 11,
+						position: 12,
 						required: true,
 						sourceField: "position",
 						visible: true,
