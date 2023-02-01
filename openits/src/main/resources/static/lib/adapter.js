@@ -49,6 +49,16 @@ export let adapter = {
 								if (element.elementTypeState != undefined) {
 
 									dataItem.state = element.elementTypeState.id;
+									
+									if (Array.isArray(elementType.elementTypeStates) && elementType.elementTypeStates.length > 0) {
+										
+										let elementTypeState = elementType.elementTypeStates.find(e => e.id == element.elementTypeState.id);
+										
+										if (elementTypeState) {
+										
+											dataItem.stateLabel = elementTypeState.labelAlias;		
+										}
+									}
 								}
 
 								if (element.elementValues != undefined && Array.isArray(element.elementValues) && element.elementValues.length > 0) {
