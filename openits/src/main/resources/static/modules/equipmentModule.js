@@ -7,6 +7,7 @@ import OptionDialogBox from "../component/optionDialogBox.js";
 
 const MODULE_TYPE_GENERIC_MULTI_GRID_PARAM_ENTITY_TYPE = 7;
 const TOPIC_ELEMENTS = "/topic/element.>";
+const MODULE_PARAM_CONFIG = 8;
 
 export default class EquipmentModule extends GenericModule {
 
@@ -20,7 +21,7 @@ export default class EquipmentModule extends GenericModule {
 		this.treeView = undefined;
 		this.elementHierarchies = undefined;
 		this.idStompSubscriptor = undefined;
-		this.treeCustom = undefined;
+		this.treeCustom = [];
 		this.idStompSubscriptor = undefined;
 		this.itemsTree = [];
 		this.elements = [];
@@ -72,11 +73,16 @@ export default class EquipmentModule extends GenericModule {
 				if (onlyTreeElements) {
 
 					self.elementHierarchies = (responses[0] != null) && responses[0].json() ? responses[0].json() : [];
-					self.treeCustom = (responses[1] != null) && responses[1].json() ? responses[1].json() : [];
+					//self.treeCustom = (responses[1] != null) && responses[1].json() ? responses[1].json() : [];
+
+					let responseTreeCustoms = (responses[1] != null) && responses[1].json() ? responses[1].json() : [];
+					doOnLoadTreeCustoms(responseTreeCustoms);
 
 				} else {
 
-					self.treeCustom = (responses[0] != null) && responses[0].json() ? responses[0].json() : [];
+					//self.treeCustom = (responses[0] != null) && responses[0].json() ? responses[0].json() : [];
+					let responseTreeCustoms = (responses[0] != null) && responses[0].json() ? responses[0].json() : [];
+					doOnLoadTreeCustoms(responseTreeCustoms);
 				}
 
 				loadElements();
@@ -85,6 +91,34 @@ export default class EquipmentModule extends GenericModule {
 		} else {
 
 			loadElements();
+		}
+		
+		function doOnLoadTreeCustoms(responseTreeCustoms) {
+
+			if (Array.isArray(responseTreeCustoms) && responseTreeCustoms.length > 0) {
+
+				let elementTreeHierarchiesValues;
+				let elementTreeConfig = self.module.moduleValues.find(e => e.moduleParam.id === MODULE_PARAM_CONFIG);
+
+				try {
+
+					elementTreeHierarchiesValues = JSON.parse(elementTreeConfig.value);
+
+				} catch { }
+
+				if (elementTreeHierarchiesValues && Array.isArray(elementTreeHierarchiesValues.treeCustom) && elementTreeHierarchiesValues.treeCustom.length > 0) {
+
+					elementTreeHierarchiesValues.treeCustom.forEach(value => {
+
+						let elementTree = responseTreeCustoms.find(tree => tree.id === "ElementTree:" + value);
+
+						if (elementTree) {
+
+							self.treeCustom.push(elementTree);
+						}
+					});
+				}
+			}
 		}
 
 		function loadElements() {

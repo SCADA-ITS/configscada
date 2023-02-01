@@ -116,7 +116,15 @@ class AdapterGridPlanSchedule extends AdapterGrid{
 
 				dataRow.put(FIELD_PLAN_SCHEDULE_STATE_TYPE_LABEL_ALIAS, map.get(FIELD_LABEL_ALIAS));
 			}
+			else {
+			
+				dataRow.put(FIELD_PLAN_SCHEDULE_STATE_TYPE_LABEL_ALIAS, "LBL_UNKNOWN");
+			}
 			dataRow.remove(FIELD_OBJECT_PLAN_SCHEDULE_STATE_TYPE);
+		}
+		else {
+		
+			dataRow.put(FIELD_PLAN_SCHEDULE_STATE_TYPE_LABEL_ALIAS, "LBL_UNKNOWN");
 		}
 	}
 

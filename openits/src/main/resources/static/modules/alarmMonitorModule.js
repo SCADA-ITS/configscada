@@ -19,6 +19,8 @@ const TIME_SLEEP_PROCESS_MESSAGES_MS = 100;
 
 const TOPIC_ELEMENTS = "/topic/element.>";
 
+const MODULE_PARAM_CONFIG = 8;
+
 export default class AlarmMonitorModule extends GenericModule {
 
 	constructor(module, moduleAction, args) {
@@ -42,7 +44,7 @@ export default class AlarmMonitorModule extends GenericModule {
 		this.elements = undefined;
 		this.treeElements = undefined;
 		this.elementHierarchies = undefined;
-		this.treeCustom = undefined;
+		this.treeCustom = [];
 		this.treeViewsArr = [];
 		
 		this.dtNoRecognized = undefined;
@@ -154,7 +156,33 @@ export default class AlarmMonitorModule extends GenericModule {
 
 				if (responseTreeCustoms) {
 
-					self.treeCustom = responseTreeCustoms.json();
+//					self.treeCustom = responseTreeCustoms.json();
+					
+					let trees = responseTreeCustoms.json();
+					let elementTreeHierarchiesValues;
+					let elementTreeConfig = self.module.moduleValues.find(e => e.moduleParam.id === MODULE_PARAM_CONFIG);
+
+					if (Array.isArray(trees) && trees.length > 0) {
+
+						try {
+
+							elementTreeHierarchiesValues = JSON.parse(elementTreeConfig.value);
+
+						} catch { }
+
+						if (elementTreeHierarchiesValues && Array.isArray(elementTreeHierarchiesValues.treeCustom) && elementTreeHierarchiesValues.treeCustom.length > 0) {
+
+							elementTreeHierarchiesValues.treeCustom.forEach(value => {
+
+								let elementTree = trees.find(tree => tree.id === "ElementTree:" + value);
+
+								if (elementTree) {
+
+									self.treeCustom.push(elementTree);
+								}
+							});
+						}
+					}
 				}
 			}
 						

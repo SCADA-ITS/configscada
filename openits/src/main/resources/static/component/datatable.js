@@ -1377,8 +1377,14 @@ export default class DataTable {
 
 				dataTable.filter(function(obj) {
 
-					return obj[gridField.sourceField].toString().indexOf(value) != -1;
-
+					let res = false;
+					
+					if (obj[gridField.sourceField]) {
+						
+						res = (obj[gridField.sourceField].toString().indexOf(value) != -1);
+					}
+					
+					return res;
 				});
 			}
 		} else {
@@ -1398,7 +1404,14 @@ export default class DataTable {
 
 					dataTable.filter(function(obj) {
 
-						return obj[gridField.sourceField].toString().indexOf(resultFilter) != -1;
+						let res = false;
+					
+						if (obj[gridField.sourceField]) {
+							
+							res = (obj[gridField.sourceField].toString().indexOf(resultFilter) != -1);
+						}
+						
+						return res;
 					});
 				}
 			}
