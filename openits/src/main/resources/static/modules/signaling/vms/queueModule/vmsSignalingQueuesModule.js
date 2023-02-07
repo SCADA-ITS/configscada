@@ -1,8 +1,8 @@
-import { util } from "../../../lib/util.js";
-import GenericModule from "../../genericModule.js";
-import DataTable from "../../../component/datatable.js";
-import MessageBox from "../../../component/messageBox.js";
-import GraphicIcon from "../../../component/graphicIcon/graphicIcon.js";
+import { util } from "../../../../lib/util.js";
+import GenericModule from "../../../genericModule.js";
+import DataTable from "../../../../component/datatable.js";
+import MessageBox from "../../../../component/messageBox.js";
+import GraphicIcon from "../../../../component/graphicIcon/graphicIcon.js";
 
 const QUEUE_COLOR_ACTIVE = "#009688";
 const QUEUE_COLOR_NO_ACTIVE = "#f44336";
