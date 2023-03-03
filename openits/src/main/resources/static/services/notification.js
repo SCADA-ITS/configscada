@@ -299,7 +299,7 @@ export default class Notification {
 
 										if (incidentCamerasToCheck) {
 
-											let needCheckCameras = (incidentCamerasToCheck.scenario.id && self.config.cctvScenario) ? true : false;
+											let needCheckCameras = (incidentCamerasToCheck.scenario && incidentCamerasToCheck.scenario.id && self.config.cctvScenario) ? true : false;
 
 											if (needCheckCameras) {
 
