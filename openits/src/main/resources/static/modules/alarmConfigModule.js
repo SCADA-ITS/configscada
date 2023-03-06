@@ -1372,16 +1372,42 @@ export default class AlarmConfigModule extends GenericModule {
 
 		function deleteAlarmConfig() {
 
+			
 			if (self.args.selectedPks != undefined && self.args.selectedPks[0] && self.args.selectedPks.length > 0) {
+				
+				let activeAlarms = [];
+				let promises = [];
+				
+				self.args.selectedPks.forEach(e => {
 
-				let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_QUESTION_DELETE_ALARM_CONFIG_DESCRIPTION"), null, onAccept, null);
-				ms.show();
+					promises.push(webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.alarmsByAlarmConfig, { alarmConfigId: e })));
+				});
+				
+				webix.promise.all(promises).then(function(responses) {
+					
+					responses.forEach(response => {
+						
+						let alarms = response.json();
+							
+						if (Array.isArray(alarms) && alarms.length > 0) {
+							
+							activeAlarms.push(...alarms);
+						}
+					});
+					
+					let message = i18n.t("LBL_QUESTION_DELETE_ALARM_CONFIG_DESCRIPTION") + ((Array.isArray(activeAlarms) && activeAlarms.length > 0) ? i18n.t("LBL_ALARMS_ACTIVE_OF_ALARM_CONFIG") + ": " + activeAlarms.length : ""); 
+						
+					let ms = new MessageBox(MessageBox.CONFIRM, message, null, onAccept, null);
+	
+					ms.show();
+				});
+
 
 				function onAccept() {
 
 					let itemsReponse = 0;
 					self.args.selectedPks.forEach(e => {
-
+						
 						webix.ajax().del(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.deleteAlarmConfig, { id: e })).then(function(deleteResponse) {
 
 							if (deleteResponse != null) {

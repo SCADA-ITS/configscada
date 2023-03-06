@@ -88,6 +88,19 @@ public class AlarmController {
 		return new ResponseEntity<>(alarmBO.getAlarmsBySource(sourceElementId), HttpStatus.OK);
 	}
 	
+	@GetMapping(value = "/by_alarm_config/{alarmConfigId}")
+	@ApiOperation(value = "Get all alarms by Alarm config", notes = "Get all alarms by Alarm config")
+	public ResponseEntity<Object> getAlarmsByAlarmConfig(
+			@ApiParam(
+				name = "AlarmConfigId",
+				type = "String",
+				value = "Alarm config id",
+				example = "AlarmConfig:1",
+				required = true) @PathVariable String alarmConfigId) {
+		
+		return new ResponseEntity<>(alarmBO.getAlarmsByAlarmConfig(alarmConfigId), HttpStatus.OK);
+	}
+	
 	@GetMapping(value = "/{sourceElementId}/{alarmTypeId}")
 	@ApiOperation(value = "Get all alarms by Element Source and Alarm Type", notes = "Get all alarms by Element Source and Alarm Type")
 	public ResponseEntity<Object> getAlarmsBySourceAndAlarmType(

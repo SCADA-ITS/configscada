@@ -9,7 +9,8 @@
 	 	"updateAlarmConfig": "alarms/updateAlarmConfig",
 		"alarmConfig": "alarms/alarm_configs/${id}",
 		"deleteAlarmConfig": "alarms/deleteAlarmConfig/${id}",
-		"elementTypeStates": "element_types/${id}/elementTypeStates"
+		"elementTypeStates": "element_types/${id}/elementTypeStates",
+		"alarmsByAlarmConfig": "alarms/by_alarm_config/${alarmConfigId}"
 	 },
 	 "levels": {
 		"critical": [ "AlarmLevel:5", "AlarmLevel:6" ],
