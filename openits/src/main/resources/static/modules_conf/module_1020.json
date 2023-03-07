@@ -84,6 +84,11 @@
 				"decoder": "snap"
 			},
 			{
+				"brand": "HIKVISION",
+				"model": "DS-2DF8242IX-AELW",
+				"decoder": "snap"
+			},
+			{
 				"brand": "VIVOTEK",
 				"model": "SD8364E",
 				"decoder": "mjpeg"
