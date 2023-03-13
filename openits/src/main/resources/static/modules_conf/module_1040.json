@@ -3,8 +3,13 @@
 	"restEndpoints": {
 		"elementsTreeByRoadHierarchies": "elements/trees/${id}",
 		"elementsWithStates": "elements/withStates",
-		"elementsQueuesByElementTypeId": "element_types/${id}/elements",
+		"elementsByElementTypeId": "element_types/${id}/elements",
 		"elementById": "elements/${id}"
+	},
+	"topic": {
+	
+		"element": "/topic/element",
+		"elementQueue": "/topic/pm_queue"
 	},
 	"action": {
 		"vmsSignalingModuleElements" : 102601,

@@ -1,4 +1,5 @@
 import { util } from "../../../../lib/util.js";
+import { adapter } from "../../../../lib/adapter.js";
 import GenericModule from "../../../genericModule.js";
 import TreeView from "../../../../component/treeview.js";
 import GraphicIcon from "../../../../component/graphicIcon/graphicIcon.js";
@@ -7,7 +8,7 @@ const MODULE_PARAM_CONFIG = 8;
 const QUEUE_COLOR_ACTIVE = "#009688";
 const QUEUE_COLOR_NO_ACTIVE = "#f44336";
 const MAX_EPOCH_TIME = 4102444799000;
-const TOPIC_ELEMENTS = "/topic/element.>";
+//const TOPIC_ELEMENTS = "/topic/element.>";
 
 export default class VmsSignalingMonitorModule extends GenericModule {
 
@@ -29,8 +30,9 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 		this.virtualTree = undefined;
 		this.elementsMap = new Map();
 		this.graphicIconInstanceMap = new Map();
-		this.idStompSubscriptorQueues = [];
-		this.idStompSubscriptorElementTypes = [];
+		//this.idStompSubscriptorQueues = [];
+		//this.idStompSubscriptorElementTypes = [];
+		this.idStompSubscriptorElements = undefined;
 		this.setTimeOut = undefined;
 
 		this.uid = webix.uid();
@@ -67,7 +69,19 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 						{ height: 6 }
 					]
 				}
-			]
+			],
+			on: {
+				
+				onDestruct: function() {
+
+					let stompSubscriptorService = window.sm.getService(Services.STOMP_SUBSCRIPTOR_SERVICE);
+	
+					if (stompSubscriptorService && self.idStompSubscriptorElements) {
+	
+						stompSubscriptorService.unsubscribe(self.idStompSubscriptorElements);
+					}
+				}	
+			}
 		}
 
 		return view;
@@ -149,11 +163,11 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 
 						webix.ui(drawContent(), $$(self.uid));
 
-						if (!self.withTreeConfig) {
-
-							$$("loading-switcher-" + self.uid).hide();
-							self.virtualTree.select("root");
-						}
+//						if (!self.withTreeConfig) {
+//
+//							$$("loading-switcher-" + self.uid).hide();
+//							self.virtualTree.select("root");
+//						}
 
 						connectWS();
 					}
@@ -277,7 +291,7 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 				};
 
 				if (Array.isArray(elements) && elements.length > 0) {
-
+					
 					itemsTree = elements.map(el => {
 
 						let elementTreeNode = {};
@@ -295,6 +309,8 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 							let element = self.elements.find(e => e.id === el.element.id);
 
 							if (element) {
+								
+								element.position = el.position;
 
 								elementTreeNode = {
 									id: element.id,
@@ -652,134 +668,226 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 
 			return viewMain;
 		}
-
-
+		
 		function connectWS() {
-
+			
 			let stompSubscriptorService = window.sm.getService(Services.STOMP_SUBSCRIPTOR_SERVICE);
 
 			if (stompSubscriptorService) {
+				
+				let topic = self.config.topic.element + ".>";
+				
+				let fields = [{
+					target: "id",
+					values: self.elements.map(e => e.id)
+				}];
+				
+				self.idStompSubscriptorElements = stompSubscriptorService.subscribe(appConfig.stompUrl, topic, onMessage, fields);
+			}
+			
+			function onMessage(data) {
+				
+				let elementInMap;
+				
+				if (data && data.id) {
+					
+					if (self.elementsMap && self.elementsMap.has(data.id)) {
+					
+						elementInMap = self.elementsMap.get(data.id);
+						
+						if (elementInMap) {
+							
+							updateGraphicIcon();
+						
+							updateTree();	
+						}
+					}
+				}
+				function updateGraphicIcon() {
+						
+					let elementTypeParams = [];
+					let elementAux = self.elementsMap.get(elementInMap.id);
+					
+					if (elementAux && Array.isArray(elementAux.elementValues) && elementAux.elementValues.length > 0) {
+						
+						elementTypeParams = elementAux.elementValues.map(elementValue => elementValue.elementTypeParam);
+					}
+					
+					let element = adapter.ws.element.get(data, elementTypeParams);
+				
+					if (element) {
+						
+						let graphicIcon = self.graphicIconInstanceMap.get(elementInMap.id);
+						
+						if (element.elementTypeState) {
+									
+							if (graphicIcon) {
+								
+								graphicIcon.updateState(element.elementTypeState);	
+							}
+							
+							elementInMap.elementTypeState = element.elementTypeState;
+						}
+						
+						if (Array.isArray(element.elementValues) && element.elementValues.length > 0) {
+							
+							if (graphicIcon) {
+								
+								graphicIcon.updateValues(element.elementValues);
+							}
+							
+							element.elementValues.forEach(ev => {
+							
+								let elementValue = elementInMap.elementValues.find(e => e.id === ev.id);
+								
+								if (elementValue) {
+									
+									elementValue.value = ev.value;
+								}	
+							});
+						}
+					}
+				}
+				
+				function updateTree() {
+					
+					if (Array.isArray(self.treeViewsArr)) {
+						
+						for (let treeView of self.treeViewsArr) {
 
-				if (Array.isArray(self.elements) && self.elements.length > 0) {
-
-					self.elements.forEach(element => {
-
-						let topic = self.vmsSignalingModuleConfig.topics.elementQueue + "." + element.id;
-						let subscriptorId = stompSubscriptorService.subscribe(appConfig.stompUrl, topic, onMessage);
-						self.idStompSubscriptorQueues.push(subscriptorId);
-					});
-
-					let fields = [];
-					fields.push({
-						target: "id",
-						values: []
-					});
-
-					self.elements.forEach(element => fields[0].values.push(element.id));
-					self.idStompSubscriptorElementTypes = stompSubscriptorService.subscribe(appConfig.stompUrl, TOPIC_ELEMENTS, onMessage, fields);
+							let items = treeView.getItemsById_(elementInMap.id);
+	
+							if (Array.isArray(items) && items.length > 0) {
+	
+								items.forEach(item => {
+	
+									let color = util.element.getColor(elementInMap.elementTypeState);
+	
+									if (color != item.props.stateColor) {
+	
+										let newItem = webix.copy(item);
+	
+										newItem.props.stateColor = color;
+										newItem.props.stateLabel = i18n.t(elementInMap.elementTypeState.labelAlias);
+	
+										treeView.update(newItem.id, newItem);
+									}
+								});
+							}
+						}	
+					}
+					
 				}
 			}
+		}
 
-			function onMessage(data) {
 
-				if (data && data.id) {
-
-					let sameId = self.dataToUpdate.find(e => e === data.id);
-
-					if (!sameId) {
-
-						self.dataToUpdate.push(data.id);
-					}
-
-					if (self.dataToUpdate.length === 1 && !self.setTimeOut) {
-
-						self.setTimeOut = true;
-
-						setTimeout(function() {
-
-							let dataToUpdateCopy = webix.copy(self.dataToUpdate);
-							self.dataToUpdate = [];
-
-							webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.restEndpoints.element, JSON.stringify(dataToUpdateCopy)).then(function(elementsResponse) {
-
-								if (elementsResponse != null) {
-
-									let elements = elementsResponse.json();
-									let elementDataArr = [];
-
-									elements.forEach(element => {
-
-										let elementCopy = webix.copy(element);
-										let idHTML;
-
-										for (let treeView of self.treeViewsArr) {
-
-											if (treeView.dataMap.has(elementCopy.id)) {
-
-												let item = {
-													id: treeView.dataMap.get(elementCopy.id)[0]
-												};
-
-												let parent = treeView.getParent(item);
-
-												if (parent) {
-
-													idHTML = parent.id_.replaceAll(":", "");
-												}
-											}
-										}
-
-										elementDataArr = self.getDataPanels([elementCopy]);
-
-										elementDataArr.forEach(elementData => {									
-
-											let color;
-											let windowScrollview = $$("scrollview-" + idHTML + "-" + self.uid);
-
-											if (elementData.state) {
-
-												let newElementTypeState = window.em.getByField(EntityType.ELEMENT_TYPE_STATE, "id", elementData.state);
-												color = util.element.getColor(newElementTypeState);
-											}
-
-//											if (elementData.priority && elementData.priority.enable) {
+//		function connectWS() {
 //
-//												color = (elementData.command && elementData.command.enable) ? QUEUE_COLOR_ACTIVE : QUEUE_COLOR_NO_ACTIVE;
+//			let stompSubscriptorService = window.sm.getService(Services.STOMP_SUBSCRIPTOR_SERVICE);
+//
+//			if (stompSubscriptorService) {
+//
+//				if (Array.isArray(self.elements) && self.elements.length > 0) {
+//
+//					self.elements.forEach(element => {
+//
+//						let topic = self.vmsSignalingModuleConfig.topics.elementQueue + "." + element.id;
+//						let subscriptorId = stompSubscriptorService.subscribe(appConfig.stompUrl, topic, onMessage);
+//						self.idStompSubscriptorQueues.push(subscriptorId);
+//					});
+//
+//					let fields = [];
+//					fields.push({
+//						target: "id",
+//						values: []
+//					});
+//
+//					self.elements.forEach(element => fields[0].values.push(element.id));
+//					self.idStompSubscriptorElementTypes = stompSubscriptorService.subscribe(appConfig.stompUrl, TOPIC_ELEMENTS, onMessage, fields);
+//				}
+//			}
+//
+//			function onMessage(data) {
+//
+//				if (data && data.id) {
+//
+//					let sameId = self.dataToUpdate.find(e => e === data.id);
+//
+//					if (!sameId) {
+//
+//						self.dataToUpdate.push(data.id);
+//					}
+//
+//					if (self.dataToUpdate.length === 1 && !self.setTimeOut) {
+//
+//						self.setTimeOut = true;
+//
+//						setTimeout(function() {
+//
+//							let dataToUpdateCopy = webix.copy(self.dataToUpdate);
+//							self.dataToUpdate = [];
+//
+//							webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.restEndpoints.element, JSON.stringify(dataToUpdateCopy)).then(function(elementsResponse) {
+//
+//								if (elementsResponse != null) {
+//
+//									let elements = elementsResponse.json();
+//									let elementDataArr = [];
+//
+//									elements.forEach(element => {
+//
+//										let elementCopy = webix.copy(element);
+//										let idHTML;
+//
+//										for (let treeView of self.treeViewsArr) {
+//
+//											if (treeView.dataMap.has(elementCopy.id)) {
+//
+//												let item = {
+//													id: treeView.dataMap.get(elementCopy.id)[0]
+//												};
+//
+//												let parent = treeView.getParent(item);
+//
+//												if (parent) {
+//
+//													idHTML = parent.id_.replaceAll(":", "");
+//												}
 //											}
-
-											if (self.elementsMap.has(elementCopy.id)) {
-
-												let elementGraphicIcontMap = self.graphicIconInstanceMap.get(elementCopy.id);
-
-												elementGraphicIcontMap.updateState({
-													color: color
-												});
-
-												let jsonValue = [];
-												
-												if (elementData.command && elementData.command.value) {
-
-													jsonValue = JSON.parse(elementData.command.value);
-
-												} else {
-
-													try {
-
-														jsonValue = JSON.parse([{ "zone": 1, "graphics": [] }, { "zone": 2, "alternance_ms": 5000, "align": "center", "texts": [{ "id": 1, "value": "APAGAR" }, { "id": 2, "value": "APAGAR" }, { "id": 3, "value": "APAGAR" }] }]);
-
-													} catch (error) { }
-
-												}
+//										}
 //
-//												if (elementData.command && elementData.command.commandElementValues && Array.isArray(elementData.command.commandElementValues) &&
-//													elementData.command.commandElementValues.length > 0) {
+//										elementDataArr = self.getDataPanels([elementCopy]);
 //
-//													let commandElementValue = elementData.command.commandElementValues.find(e => e.commandElementTypeParam.id === self.vmsSignalingModuleConfig.commands.sendMessage.commandElementValues[0].commandElementTypeParamId);
+//										elementDataArr.forEach(elementData => {									
 //
-//													if (commandElementValue) {
+//											let color;
+//											let windowScrollview = $$("scrollview-" + idHTML + "-" + self.uid);
 //
-//														jsonValue = JSON.parse(commandElementValue.value);
-//													}
+//											if (elementData.state) {
+//
+//												let newElementTypeState = window.em.getByField(EntityType.ELEMENT_TYPE_STATE, "id", elementData.state);
+//												color = util.element.getColor(newElementTypeState);
+//											}
+//
+////											if (elementData.priority && elementData.priority.enable) {
+////
+////												color = (elementData.command && elementData.command.enable) ? QUEUE_COLOR_ACTIVE : QUEUE_COLOR_NO_ACTIVE;
+////											}
+//
+//											if (self.elementsMap.has(elementCopy.id)) {
+//
+//												let elementGraphicIcontMap = self.graphicIconInstanceMap.get(elementCopy.id);
+//
+//												elementGraphicIcontMap.updateState({
+//													color: color
+//												});
+//
+//												let jsonValue = [];
+//												
+//												if (elementData.command && elementData.command.value) {
+//
+//													jsonValue = JSON.parse(elementData.command.value);
 //
 //												} else {
 //
@@ -790,87 +898,107 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 //													} catch (error) { }
 //
 //												}
-
-												let elementValueJsonData = {
-
-													elementTypeParam: {
-														id: self.vmsSignalingModuleConfig.vms.jsonData
-													},
-													value: JSON.stringify(jsonValue)
-												}
-
-												elementGraphicIcontMap.updateValues([elementValueJsonData]);
-											}
-
-											if (windowScrollview) {
-
-												//let labelPriority = $$("label-priority-" + self.uid + "-" + elementData.id);
-												let conflictTemplate = $$("conflict-template-" + self.uid + "-" + elementData.id);
-//												let dateTemplate = $$("date-template-" + self.uid + "-" + elementData.id);
-
-//												if (labelPriority) {
+////
+////												if (elementData.command && elementData.command.commandElementValues && Array.isArray(elementData.command.commandElementValues) &&
+////													elementData.command.commandElementValues.length > 0) {
+////
+////													let commandElementValue = elementData.command.commandElementValues.find(e => e.commandElementTypeParam.id === self.vmsSignalingModuleConfig.commands.sendMessage.commandElementValues[0].commandElementTypeParamId);
+////
+////													if (commandElementValue) {
+////
+////														jsonValue = JSON.parse(commandElementValue.value);
+////													}
+////
+////												} else {
+////
+////													try {
+////
+////														jsonValue = JSON.parse([{ "zone": 1, "graphics": [] }, { "zone": 2, "alternance_ms": 5000, "align": "center", "texts": [{ "id": 1, "value": "APAGAR" }, { "id": 2, "value": "APAGAR" }, { "id": 3, "value": "APAGAR" }] }]);
+////
+////													} catch (error) { }
+////
+////												}
 //
-//													let newLabel = (elementData.priority && elementData.priority.labelAlias) ? i18n.t(elementData.priority.labelAlias) : "-";
-//													labelPriority.setValue(newLabel);
+//												let elementValueJsonData = {
+//
+//													elementTypeParam: {
+//														id: self.vmsSignalingModuleConfig.vms.jsonData
+//													},
+//													value: JSON.stringify(jsonValue)
 //												}
-
-												if (conflictTemplate) {
-
-													let showIcon = (elementData.conflict) ? elementData.conflict : {};
-													conflictTemplate.setValues(showIcon);
-												}
-												
-//												if (dateTemplate) {
 //
-//													dateTemplate.setValues({
-//														validSince: elementData.validSince,
-//														validUntil: elementData.validUntil
+//												elementGraphicIcontMap.updateValues([elementValueJsonData]);
+//											}
+//
+//											if (windowScrollview) {
+//
+//												//let labelPriority = $$("label-priority-" + self.uid + "-" + elementData.id);
+//												let conflictTemplate = $$("conflict-template-" + self.uid + "-" + elementData.id);
+////												let dateTemplate = $$("date-template-" + self.uid + "-" + elementData.id);
+//
+////												if (labelPriority) {
+////
+////													let newLabel = (elementData.priority && elementData.priority.labelAlias) ? i18n.t(elementData.priority.labelAlias) : "-";
+////													labelPriority.setValue(newLabel);
+////												}
+//
+//												if (conflictTemplate) {
+//
+//													let showIcon = (elementData.conflict) ? elementData.conflict : {};
+//													conflictTemplate.setValues(showIcon);
+//												}
+//												
+////												if (dateTemplate) {
+////
+////													dateTemplate.setValues({
+////														validSince: elementData.validSince,
+////														validUntil: elementData.validUntil
+////													});
+////												}
+//											}
+//										});
+//
+//										let items;
+//
+//										if (elementCopy.elementTypeState) {
+//
+//											for (let treeView of self.treeViewsArr) {
+//
+//												items = treeView.getItemsById_(elementCopy.id);
+//
+//												if (Array.isArray(items) && items.length > 0) {
+//
+//													items.forEach(item => {
+//
+//														let newElementTypeState = window.em.getByField(EntityType.ELEMENT_TYPE_STATE, "id", elementCopy.elementTypeState.id);
+//														let color = util.element.getColor(newElementTypeState);
+//
+//														if (color != item.props.stateColor) {
+//
+//															let newItem = webix.copy(item);
+//
+//															newItem.props.stateColor = color;
+//															newItem.props.stateLabel = i18n.t(newElementTypeState.labelAlias);
+//
+//															treeView.update(newItem.id, newItem);
+//														}
 //													});
 //												}
-											}
-										});
-
-										let items;
-
-										if (elementCopy.elementTypeState) {
-
-											for (let treeView of self.treeViewsArr) {
-
-												items = treeView.getItemsById_(elementCopy.id);
-
-												if (Array.isArray(items) && items.length > 0) {
-
-													items.forEach(item => {
-
-														let newElementTypeState = window.em.getByField(EntityType.ELEMENT_TYPE_STATE, "id", elementCopy.elementTypeState.id);
-														let color = util.element.getColor(newElementTypeState);
-
-														if (color != item.props.stateColor) {
-
-															let newItem = webix.copy(item);
-
-															newItem.props.stateColor = color;
-															newItem.props.stateLabel = i18n.t(newElementTypeState.labelAlias);
-
-															treeView.update(newItem.id, newItem);
-														}
-													});
-												}
-											}
-										}
-
-										self.elementsMap.set(elementCopy.id, elementCopy);
-									});
-
-									self.setTimeOut = false;
-								}
-							});
-
-						}, 1000);
-					}
-				}
-			}
-		}
+//											}
+//										}
+//
+//										self.elementsMap.set(elementCopy.id, elementCopy);
+//									});
+//
+//									self.setTimeOut = false;
+//								}
+//							});
+//
+//						}, 1000);
+//					}
+//				}
+//			}
+//		}
 	}
 
 	callbackSelectedItemTree(item) {
@@ -1051,6 +1179,10 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 
 					let windowPanelArr = [];
 					let elementsArr = Array.from(elementsSet);
+					
+					elementsArr.sort((a, b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));
+					
+					self.graphicIconInstanceMap.clear();
 
 					if (rootSelected) {
 
@@ -1067,6 +1199,8 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 									elements.push(el);
 								}
 							});
+							
+							elements.sort((a, b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));
 
 							let windowPanel = {
 								rows: [
@@ -1076,8 +1210,8 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 										cols: [
 											{ width: 15 },
 											{
-												width: 600,
-												height: 650,
+												//width: 600,
+												//height: 650,
 												header: function() {
 
 													return `<div>
@@ -1113,7 +1247,7 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 											{ width: 15 }
 										]
 									},
-									{}
+									{ height: 15 }
 								]
 							};
 
@@ -1134,7 +1268,7 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 										{
 											id: "window-panel-" + idHTML + "-" + self.uid,
 											width: 600,
-											height: 650,
+											//height: 650,
 											header: function() {
 
 												return `<div>
@@ -1170,7 +1304,7 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 										{ width: 15 }
 									],
 								},
-								{}
+								{ height: 15 }
 							]
 						};
 
@@ -1200,10 +1334,11 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 									height: 150,
 									cols: [
 										{
-											height: 149,
+											//height: 149,
 											width: 150,
 											gravity: 1,
 											rows: [
+												{},
 												{
 													view: "label",
 													label: el.element.alias,
@@ -1232,6 +1367,7 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 													align: "center",
 													css: "signaling-monitor-text-panel-pk",
 												},
+												{}
 //												{
 //													id: "label-priority-" + self.uid + "-" + el.id,
 //													view: "label",
@@ -1239,25 +1375,26 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 //													align: "center",
 //													css: "signaling-monitor-text-panel-priority",
 //												},
-												{
-													id: "conflict-template-" + self.uid + "-" + el.id,
-													view: "template",
-													css: { "border-top": "0px", "border-left": "0px", "border-right": "0px", "border-bottom": "0px" },
-													template: function(obj) {
-
-														let conflict = (obj === true) ? obj : (el.command && el.command.conflict) ? el.command.conflict : false;
-														let icon = (conflict) ? "mdi mdi-alert-circle" : "";
-
-														return `<div class="signaling-monitor-text-panel-icon">
-																	<span title="${i18n.t("LBL_CONFLICT")}"class="ico webix_icon ${icon}"></span>
-																	</div>`
-													}
-												}
+//												{
+//													id: "conflict-template-" + self.uid + "-" + el.id,
+//													view: "template",
+//													css: { "border-top": "0px", "border-left": "0px", "border-right": "0px", "border-bottom": "0px" },
+//													template: function(obj) {
+//
+//														let conflict = (obj === true) ? obj : (el.command && el.command.conflict) ? el.command.conflict : false;
+//														let icon = (conflict) ? "mdi mdi-alert-circle" : "";
+//
+//														return `<div class="signaling-monitor-text-panel-icon">
+//																	<span title="${i18n.t("LBL_CONFLICT")}"class="ico webix_icon ${icon}"></span>
+//																	</div>`
+//													}
+//												}
 											]
 										},
 										{
 											gravity: 2,
 											rows: [
+												{},
 												{
 													id: "svg-container-" + self.uid + "-" + el.id,
 													height: 125,
@@ -1296,6 +1433,7 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 														}
 													}
 												},
+												{}
 //												{
 //													id: "date-template-" + self.uid + "-" + el.id,
 //													borderless: true,

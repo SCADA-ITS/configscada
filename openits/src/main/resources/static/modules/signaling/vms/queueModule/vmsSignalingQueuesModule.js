@@ -66,18 +66,22 @@ export default class VmsSignalingQueuesModule extends GenericModule {
 					]
 				}
 			],
-			onDestruct: function() {
+			on: {
+				
+				onDestruct: function() {
 
-				let stompSubscriptorService = window.sm.getService(Services.STOMP_SUBSCRIPTOR_SERVICE);
-
-				if (stompSubscriptorService && Array.isArray(self.idStompSubscriptor) && self.idStompSubscriptor.length > 0) {
-
-					for (let subscriptorId of self.idStompSubscriptor) {
-
-						stompSubscriptorService.unsubscribe(subscriptorId);
+					let stompSubscriptorService = window.sm.getService(Services.STOMP_SUBSCRIPTOR_SERVICE);
+	
+					if (stompSubscriptorService && Array.isArray(self.idStompSubscriptor) && self.idStompSubscriptor.length > 0) {
+	
+						for (let subscriptorId of self.idStompSubscriptor) {
+	
+							stompSubscriptorService.unsubscribe(subscriptorId);
+						}
 					}
-				}
+				}	
 			}
+			
 		}
 
 		return view;

@@ -2,6 +2,7 @@ import GenericModule from "../modules/genericModule.js";
 import DataTable from "../component/datatable.js";
 
 const MODULE_TYPE_GENERIC_PARAM_GRID_ID = 3;
+const MODULE_TYPE_GENERIC_PARAM_GRID_PARAM_ID = 11;
 
 export default class GenericGridModule extends GenericModule {
 	
@@ -53,47 +54,71 @@ export default class GenericGridModule extends GenericModule {
 		let self = this;
 		let genericGridContainer = $$(this.uid);
 		let viewsToRemove = [];
+		let dataGridId = undefined;
+		let dataGridParamValue = undefined;
+		
 		genericGridContainer.getChildViews().forEach(view => {
 	
 			viewsToRemove.push(view.config.id);
 		});
 		
-		//let dataGridId = window.app.module.getParamValue(this.module, MODULE_TYPE_GENERIC_PARAM_GRID_ID);
-		let dataGridId = this.module.moduleValues.find(e => e.moduleParam.id === MODULE_TYPE_GENERIC_PARAM_GRID_ID).value;	
+		let dataGrid = self.module.moduleValues.find(e => e.moduleParam.id === MODULE_TYPE_GENERIC_PARAM_GRID_ID);
 		
-		webix.ajax().get(appConfig.restUrl + "grids/" + dataGridId).then(function(dat){
-				
-			if (dat != null) {
-	
-				let metadata = dat.json().metadata;
-				let data = dat.json().data;
-				let dataTable = new DataTable(dataGridId, null, metadata, data);
-				let newTable = dataTable.getView();
-	
-				newTable.forEach(newView => {
-	
-					genericGridContainer.addView(newView);
-				});
-	
-				
-				dataTable.callbacks();
-				
-				viewsToRemove.forEach(viewId => {
-	
-					if (viewId.indexOf("dt-") !== -1) {
-						let ctx = viewId.replace("dt-", "ctx_menu-");
+		if (dataGrid && !isNaN(dataGrid.value)) {
 			
-						if (!webix.isUndefined($$(ctx))) {
+			dataGridId = dataGrid.value;	
 			
-							$$(ctx).destructor();
-						}
-					}
-			
-					genericGridContainer.removeView(viewId);
-				});
+			let dataGridParam = self.module.moduleValues.find(e => e.moduleParam.id === MODULE_TYPE_GENERIC_PARAM_GRID_PARAM_ID);
+
+			if (dataGridParam) {
 				
-				$$(self.uid).hideProgress();
+				dataGridParamValue = dataGridParam.value;
 			}
-		}, function(response) { util.ajax.handleError(response); });
+			
+			let endpoint = appConfig.restUrl + "grids/" + dataGridId + (dataGridParamValue ? ("/" + dataGridParamValue) : "");
+		
+			webix.ajax().get(endpoint).then(
+				function(dat) {
+					
+					if (dat != null) {
+			
+						let metadata = dat.json().metadata;
+						let data = dat.json().data;
+						let dataTable = new DataTable(dataGridId, dataGridParamValue, metadata, data);
+						let newTable = dataTable.getView();
+			
+						newTable.forEach(newView => {
+			
+							genericGridContainer.addView(newView);
+						});
+			
+						
+						dataTable.callbacks();
+						
+						viewsToRemove.forEach(viewId => {
+			
+							if (viewId.indexOf("dt-") !== -1) {
+								let ctx = viewId.replace("dt-", "ctx_menu-");
+					
+								if (!webix.isUndefined($$(ctx))) {
+					
+									$$(ctx).destructor();
+								}
+							}
+					
+							genericGridContainer.removeView(viewId);
+						});
+						
+						$$(self.uid).hideProgress();
+					}
+				}, 
+				function(response) { 
+					
+					util.ajax.handleError(response); 
+				}
+			);
+		}
+		
+		
 	}
 }

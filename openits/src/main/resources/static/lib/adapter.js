@@ -293,8 +293,8 @@ export let adapter = {
 						let itemOutput = {};
 
 						let targetElement = window.em.getByField(EntityType.ELEMENT, "id", e.targetElement.id);
-						let alarmConfig = window.em.getByField(EntityType.ALARM_CONFIG, "id", e.alarmConfig.id);
-						let alarmLevel = window.em.getByField(EntityType.ALARM_LEVEL, "id", alarmConfig.alarmLevel.id);
+						let alarmConfig = e.alarmConfig ? window.em.getByField(EntityType.ALARM_CONFIG, "id", e.alarmConfig.id) : undefined;
+						let alarmLevel = (alarmConfig && alarmConfig.alarmLevel) ? window.em.getByField(EntityType.ALARM_LEVEL, "id", alarmConfig.alarmLevel.id) : undefined;
 
 						itemOutput.id = e.id;
 
@@ -304,11 +304,21 @@ export let adapter = {
 						}
 
 						itemOutput.idStr = e.id;
-						itemOutput.alarmConfigId = e.alarmConfig.id;
-						itemOutput.alarmConfigLabelAlias = i18n.t(alarmConfig.labelAlias);
-						itemOutput.alarmLevelId = alarmLevel.id;
-						itemOutput.alarmLevelAlias = alarmLevel.alias;
-						itemOutput.alarmLevelLabelAlias = i18n.t(alarmLevel.labelAlias);
+						
+						if (alarmConfig) {
+						
+							itemOutput.alarmConfigId = alarmConfig.id;
+							itemOutput.alarmConfigLabelAlias = i18n.t(alarmConfig.labelAlias);
+							
+							itemOutput.alarmType = alarmConfig.alarmType ? alarmConfig.alarmType.id : undefined;	
+						}
+						
+						if (alarmLevel) {
+						
+							itemOutput.alarmLevelId = alarmLevel.id;
+							itemOutput.alarmLevelAlias = alarmLevel.alias;
+							itemOutput.alarmLevelLabelAlias = i18n.t(alarmLevel.labelAlias);	
+						}
 
 						if (e.filteredUntil) {
 
@@ -339,10 +349,6 @@ export let adapter = {
 
 							itemOutput.isActive = String(true);
 						}
-
-
-						itemOutput.alarmType = alarmConfig.alarmType.id;
-
 
 						listOutput.push(itemOutput);
 					});
