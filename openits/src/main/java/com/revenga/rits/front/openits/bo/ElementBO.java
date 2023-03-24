@@ -6,12 +6,23 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.revenga.rits.front.openits.adapter.impl.GraphqlAdapter;
 import com.revenga.rits.front.openits.adapter.impl.VODataSourceAdapter;
+import com.revenga.rits.front.openits.model.EntityChangedUI;
 
 @Service
 public class ElementBO extends GenericBO {
+
+	@Autowired
+	GraphqlAdapter graphqlAdapter;
+	
+	@Autowired 
+	SessionBO sessionBO;
+	
+	public static final int ENTITY_TYPE_ELEMENT = getPropertyInt("entityType.element");
 
 	@PostConstruct
 	private void initialize() {
@@ -98,6 +109,9 @@ public class ElementBO extends GenericBO {
 
 		Map<String, Object> createdElement = voDataSourceAdapter.put(VODataSourceAdapter.DATA_SOURCE_CREATE_ELEMENT,
 				(Map<String, Object>) input);
+		
+		sessionBO.addEntityChanged(ENTITY_TYPE_ELEMENT, (String) createdElement.get("id"), EntityChangedUI.ENTITY_CREATED,
+				this.getItem((String) createdElement.get("id")));
 
 		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_CREATE_ELEMENT, createdElement);
 	}
@@ -107,6 +121,9 @@ public class ElementBO extends GenericBO {
 
 		Map<String, Object> updatedElement = voDataSourceAdapter.put(VODataSourceAdapter.DATA_SOURCE_UPDATE_ELEMENT,
 				(Map<String, Object>) input);
+		
+		sessionBO.addEntityChanged(ENTITY_TYPE_ELEMENT, (String) updatedElement.get("id"), EntityChangedUI.ENTITY_UPDATED,
+				this.getItem((String) updatedElement.get("id")));
 
 		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_UPDATE_ELEMENT, updatedElement);
 	}
@@ -119,6 +136,9 @@ public class ElementBO extends GenericBO {
 
 		Map<String, Object> clonedElement = voDataSourceAdapter.put(VODataSourceAdapter.DATA_SOURCE_CLONE_ELEMENT,
 				input);
+		
+		sessionBO.addEntityChanged(ENTITY_TYPE_ELEMENT, (String) clonedElement.get("id"), EntityChangedUI.ENTITY_CREATED,
+				this.getItem((String) clonedElement.get("id")));
 
 		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_CLONE_ELEMENT, clonedElement);
 	}
@@ -131,6 +151,9 @@ public class ElementBO extends GenericBO {
 
 		Map<String, Object> deletedElement = voDataSourceAdapter.put(VODataSourceAdapter.DATA_SOURCE_DELETE_ELEMENT,
 				input);
+		
+		sessionBO.addEntityChanged(ENTITY_TYPE_ELEMENT, (String) deletedElement.get("id"), EntityChangedUI.ENTITY_DELETED,
+				this.getItem((String) deletedElement.get("id")));
 
 		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_DELETE_ELEMENT, deletedElement);
 	}

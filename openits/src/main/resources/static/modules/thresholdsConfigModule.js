@@ -353,8 +353,8 @@ export default class ThresholdsConfigModule extends GenericModule {
 									visible: true,
 									widthPx: 150,
 									gridFieldDataType: {
-										id: 1,
-										name: "string"
+										id: 3,
+										name: "decimal"
 									}
 								},
 								{

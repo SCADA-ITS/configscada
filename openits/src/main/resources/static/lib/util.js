@@ -1748,6 +1748,32 @@ export let util = {
 
 			return elementTypeParamId;
 		},
+		
+		getElementValueId(elementTypeParamId, elementId) {
+			
+			const ELEMENT_VALUE = "ElementValue";
+			let elementValueArray = [];
+			let elementValueId = undefined;
+
+			if (elementTypeParamId && elementId) {
+
+				let elementTypeParamArray = elementTypeParamId.split(":");
+				let elementArray = elementId.split(":");
+
+				if (elementTypeParamArray.length === 4 && elementArray.length === 3) {
+
+					elementValueArray.push(ELEMENT_VALUE);
+					elementValueArray.push(elementTypeParamArray[1]);
+					elementValueArray.push(elementArray[2]);
+					elementValueArray.push(elementTypeParamArray[3]);
+					elementValueArray.push(elementTypeParamArray[2]);
+
+					elementValueId = elementValueArray.join(":");
+				}
+			}
+
+			return elementValueId;
+		},
 
 		getColor(elementTypeState) {
 

@@ -52,7 +52,7 @@ public class FileBO {
 		}
 		else {
 			
-			log.error("Resources directory " + baseDir.getAbsolutePath() + " not found. Create it and reset app");
+			log.warn("Resources directory " + baseDir.getAbsolutePath() + " not found. Create it and reset app");
 		}
 	}
 	

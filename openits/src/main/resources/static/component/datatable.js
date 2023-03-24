@@ -215,28 +215,38 @@ export default class DataTable {
 								let val1 = 0;
 								let val2 = 0;
 								
-								if (typeof a[field.sourceField] === 'object') {
-
-									val1 = a[field.sourceField].value ? a[field.sourceField].value : 0;
+								if (!isNaN(a) || !isNaN(b)) {
+									
+									val1 = !isNaN(a) ? a : 0;
+									val2 = !isNaN(b) ? b : 0;
+									
+									return (val1 > val2) ? 1 : ((val2 > val1) ? -1 : 0);
 								}
 								else {
-
-									val1 = a[field.sourceField] ? a[field.sourceField] : 0;
+									
+									if (typeof a[field.sourceField] === 'object') {
+	
+										val1 = a[field.sourceField].value ? a[field.sourceField].value : 0;
+									}
+									else {
+	
+										val1 = a[field.sourceField] ? a[field.sourceField] : 0;
+									}
+	
+									if (typeof b[field.sourceField] === 'object') {
+	
+										val2 = b[field.sourceField].value ? b[field.sourceField].value : 0;
+									}
+									else {
+	
+										val2 = b[field.sourceField] ? b[field.sourceField] : 0;
+									}
+	
+									let val1Parse = (field.gridFieldDataType.id === DataType.INT.value) ? parseInt(val1) : parseFloat(val1);
+									let val2Parse = (field.gridFieldDataType.id === DataType.INT.value) ? parseInt(val2) : parseFloat(val2);
+									
+									return (val1Parse > val2Parse) ? 1 : ((val2Parse > val1Parse) ? -1 : 0);	
 								}
-
-								if (typeof b[field.sourceField] === 'object') {
-
-									val2 = b[field.sourceField].value ? b[field.sourceField].value : 0;
-								}
-								else {
-
-									val2 = b[field.sourceField] ? b[field.sourceField] : 0;
-								}
-
-								let val1Parse = (field.gridFieldDataType.id === DataType.INT.value) ? parseInt(val1) : parseFloat(val1);
-								let val2Parse = (field.gridFieldDataType.id === DataType.INT.value) ? parseInt(val2) : parseFloat(val2);
-
-								return (val1Parse > val2Parse) ? 1 : ((val2Parse > val1Parse) ? -1 : 0);
 							};
 						}
 						else if (field.gridFieldDataType.id === DataType.DATE.value) {
@@ -250,54 +260,156 @@ export default class DataTable {
 								let val1 = "";
 								let val2 = "";
 								
-								if (typeof a[field.sourceField] === 'object' && a[field.sourceField].value !== undefined) {
+								if (a) {
+								
+									if (typeof a === 'string') {
 									
-									if (field && Array.isArray(field.gridFieldReplacements) && field.gridFieldReplacements.length > 0) {
+										val1 = a;
+									}
+									else if (typeof a === 'object' && typeof a[field.sourceField] === 'object') {
 										
-										let fieldReplacementA = field.gridFieldReplacements.find(f => f.value == a[field.sourceField].value);
-										
-										if (fieldReplacementA) {
-											
-											val1 = i18n.t(fieldReplacementA.label);
-										}
-										
+										val1 = a[field.sourceField].value ?? "";
 									}
 									else {
 										
-										val1 = a[field.sourceField].value ? a[field.sourceField].value : "";
-									}
-								}
-								else {
-	
-									val1 = a[field.sourceField] ? a[field.sourceField] : "";
+										val1 = a[field.sourceField] ?? "";
+									}	
 								}
 								
-								if (typeof b[field.sourceField] === 'object' && b[field.sourceField].value !== undefined) {
+								if (b) {
 									
-									if (field && Array.isArray(field.gridFieldReplacements) && field.gridFieldReplacements.length > 0) {
+									if (typeof b === 'string') {
+									
+										val2 = b;
+									}
+									else if (typeof b === 'object' && typeof b[field.sourceField] === 'object') {
 										
-										let fieldReplacementB = field.gridFieldReplacements.find(f => f.value == b[field.sourceField].value);
-										
-										if (fieldReplacementB) {
-											
-											val2 = i18n.t(fieldReplacementB.label);
-										}
-										
+										val2 = b[field.sourceField].value ?? "";
 									}
 									else {
 										
-										val2 = b[field.sourceField].value ? b[field.sourceField].value : "";
-									}
-								}
-								else {
-	
-									val2 = b[field.sourceField] ? b[field.sourceField] : "";
+										val2 = b[field.sourceField] ?? "";
+									}	
 								}
 								
-								val1 = val1.toLowerCase();
-								val2 = val2.toLowerCase();
+								
+								if (field && Array.isArray(field.gridFieldReplacements) && field.gridFieldReplacements.length > 0) {
+								
+									if (val1) {
+									
+										let fieldReplacement1 = field.gridFieldReplacements.find(f => f.value == val1);
+										
+										if (fieldReplacement1 && fieldReplacement1.label) {
+										
+											val1 = i18n.t(fieldReplacement1.label) ?? "";	
+										}
+									} 	
+									
+									if (val2) {
+									
+										let fieldReplacement2 = field.gridFieldReplacements.find(f => f.value == val1);
+										
+										if (fieldReplacement2 && fieldReplacement2.label) {
+										
+											val2 = i18n.t(fieldReplacement2.label) ?? "";	
+										}
+									}
+								}
+								
+								val1 = val1.toString().toLowerCase();
+								val2 = val2.toString().toLowerCase();
 								
 								return (val1 > val2) ? 1 : ((val2 > val1) ? -1 : 0);
+								
+//								if (typeof a === 'string' && a !== undefined) {
+//									
+//									if (field && Array.isArray(field.gridFieldReplacements) && field.gridFieldReplacements.length > 0) {
+//											
+//										let fieldReplacementA = field.gridFieldReplacements.find(f => f.value == a);
+//										
+//										if (fieldReplacementA) {
+//											
+//											val1 = i18n.t(fieldReplacementA.label);
+//										}
+//									}
+//									else {
+//										
+//										val1 = a ?? "";
+//									}
+//								}
+//								else {
+//									
+//									if (typeof a[field.sourceField] === 'object' && a[field.sourceField].value !== undefined) {
+//									
+//										if (field && Array.isArray(field.gridFieldReplacements) && field.gridFieldReplacements.length > 0) {
+//											
+//											let fieldReplacementA = field.gridFieldReplacements.find(f => f.value == a[field.sourceField].value);
+//											
+//											if (fieldReplacementA) {
+//												
+//												val1 = i18n.t(fieldReplacementA.label);
+//											}
+//											
+//										}
+//										else {
+//											
+//											val1 = a[field.sourceField].value ? a[field.sourceField].value : "";
+//										}
+//									}
+//									else {
+//		
+//										val1 = a[field.sourceField] ? a[field.sourceField] : "";
+//									}	
+//								}
+//								
+//								
+//								if (typeof b === 'string' && b !== undefined) {
+//									
+//									if (field && Array.isArray(field.gridFieldReplacements) && field.gridFieldReplacements.length > 0) {
+//											
+//										let fieldReplacementB = field.gridFieldReplacements.find(f => f.value == b);
+//
+//										if (fieldReplacementB) {
+//											
+//											val2 = i18n.t(fieldReplacementB.label);
+//										}
+//										
+//									}
+//									else {
+//										
+//										val2 = b ?? "";
+//									}
+//								}
+//								else {
+//									
+//									if (typeof b[field.sourceField] === 'object' && b[field.sourceField].value !== undefined) {
+//									
+//										if (field && Array.isArray(field.gridFieldReplacements) && field.gridFieldReplacements.length > 0) {
+//											
+//											let fieldReplacementB = field.gridFieldReplacements.find(f => f.value == b[field.sourceField].value);
+//											
+//											if (fieldReplacementB) {
+//												
+//												val2 = i18n.t(fieldReplacementB.label);
+//											}
+//											
+//										}
+//										else {
+//											
+//											val2 = b[field.sourceField].value ? b[field.sourceField].value : "";
+//										}
+//									}
+//									else {
+//		
+//										val2 = b[field.sourceField] ? b[field.sourceField] : "";
+//									}	
+//								}
+//								
+//								
+//								val1 = val1.toString().toLowerCase();
+//								val2 = val2.toString().toLowerCase();
+//								
+//								return (val1 > val2) ? 1 : ((val2 > val1) ? -1 : 0);
 							}
 						}
 					}

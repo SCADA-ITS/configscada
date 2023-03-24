@@ -136,41 +136,47 @@ export default class AlarmConfigListModule extends GenericGridModule {
 
 							let alarmsConfigSelected = alarmsConfigSelectedResponse.json();
 							
-							self.dataTable.clear();
-
-							if (Array.isArray(alarmsConfigSelected) && alarmsConfigSelected.length > 0) {
-
-								let alarmConfigToTable = [];
-
-								for (let alarmConfigSelected of alarmsConfigSelected) {
-
-									alarmConfigToTable.push({
-										id: alarmConfigSelected.id,
-										labelAlias: (alarmConfigSelected.labelAlias) ? i18n.t(alarmConfigSelected.labelAlias) : alarmConfigSelected.alias,
-										alarmLevelLabelAlias: i18n.t(alarmConfigSelected.alarmLevel.labelAlias),
-										measures: (alarmConfigSelected.alarmConfigMeasures && alarmConfigSelected.alarmConfigMeasures[0].alarmMeasureOperation) ? true : false,
-										alarmLevelId: alarmConfigSelected.alarmLevel.id,
-										elementSubtype: (alarmConfigSelected.elementSubtype && alarmConfigSelected.elementSubtype.labelAlias) ? i18n.t(alarmConfigSelected.elementSubtype.labelAlias) : "",
-										elementSubtypeId: (alarmConfigSelected.elementSubtype && alarmConfigSelected.elementSubtype.id) ? i18n.t(alarmConfigSelected.elementSubtype.id) : ""
-										
-									});
-								}
-
-								self.dataTable.add(alarmConfigToTable);
-
-								if ($$("table-" + self.uid)) {
-
-									let tableTitle = $$("table-" + self.uid).getNode().querySelector('.grid-title');
-
-									if (tableTitle) {
-
-										tableTitle.textContent = i18n.t("LBL_ALARM_CONFIGS_TITLE") + ": " + i18n.t(alarmsConfigSelected[0].elementType.labelAlias);
+							if (self.dataTable) {
+							
+								self.dataTable.clear();
+	
+								if (Array.isArray(alarmsConfigSelected) && alarmsConfigSelected.length > 0) {
+	
+									let alarmConfigToTable = [];
+	
+									for (let alarmConfigSelected of alarmsConfigSelected) {
+	
+										alarmConfigToTable.push({
+											id: alarmConfigSelected.id,
+											labelAlias: (alarmConfigSelected.labelAlias) ? i18n.t(alarmConfigSelected.labelAlias) : alarmConfigSelected.alias,
+											alarmLevelLabelAlias: i18n.t(alarmConfigSelected.alarmLevel.labelAlias),
+											measures: (alarmConfigSelected.alarmConfigMeasures && alarmConfigSelected.alarmConfigMeasures[0].alarmMeasureOperation) ? true : false,
+											alarmLevelId: alarmConfigSelected.alarmLevel.id,
+											elementSubtype: (alarmConfigSelected.elementSubtype && alarmConfigSelected.elementSubtype.labelAlias) ? i18n.t(alarmConfigSelected.elementSubtype.labelAlias) : "",
+											elementSubtypeId: (alarmConfigSelected.elementSubtype && alarmConfigSelected.elementSubtype.id) ? i18n.t(alarmConfigSelected.elementSubtype.id) : ""
+											
+										});
+									}
+	
+									self.dataTable.add(alarmConfigToTable);
+	
+									if ($$("table-" + self.uid)) {
+	
+										let tableTitle = $$("table-" + self.uid).getNode().querySelector('.grid-title');
+	
+										if (tableTitle) {
+	
+											tableTitle.textContent = i18n.t("LBL_ALARM_CONFIGS_TITLE") + ": " + i18n.t(alarmsConfigSelected[0].elementType.labelAlias);
+										}
 									}
 								}
-							}
+								
+								self.dataTable.sortDatatable();
+								
+								$$("table-" + self.uid).show();
+								$$("no-data-" + self.uid).hide();
 							
-							$$("table-" + self.uid).show();
-							$$("no-data-" + self.uid).hide();
+							}
 						}
 					});
 				}

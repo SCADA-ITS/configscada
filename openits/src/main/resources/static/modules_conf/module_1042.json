@@ -1,0 +1,43 @@
+{
+	"moduleAction": {
+		"add": 104201,
+		"edit": 104202,
+		"delete": 104203,
+		"assignPanels": 104204,
+		"unassignPanels": 104205,
+		"viewPanel": 104206
+	},
+	"restEndpoints": {
+		"element": "elements/${id}",
+		"elementWithParents": "elements/${id}/withParents",
+		"elementsByType": "element_types/${id}/elements",
+		"createElement": "elements/createElement",
+		"updateElement": "elements/updateElement",
+		"deleteElement": "elements/deleteElement/${id}"
+	},
+	"travelTime": {
+		"elementTypeId": "ElementType:6",
+		"params": {
+			"direction": "ElementTypeParam:6:1:1",
+			"pkIni": "ElementTypeParam:6:1:2",
+			"pkEnd": "ElementTypeParam:6:1:3",
+			"message": "ElementTypeParam:6:1:4",
+			"panels": "ElementTypeParam:6:1:5"
+		}
+	},
+	"section": {
+		"elementTypeId": "ElementType:4",
+		"params": {
+			"pk": "ElementTypeParam:4:1:10"
+		}
+	},
+	"vms": {
+		"elementTypeId": "ElementType:71",
+		"params": {
+			"travelTimeEnabled": "ElementTypeParam:71:2:10"
+		},
+		"action": {
+			"vmsSignalingModule": 102601
+		}
+	}
+}

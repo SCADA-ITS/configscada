@@ -267,7 +267,7 @@ export default class VmsSignalingQueuesModule extends GenericModule {
 			const defaultGridOptionValues = [
 				{ gridOption: { id: 1 }, value: "true" },
 				{ gridOption: { id: 2 }, value: "true" },
-				{ gridOption: { id: 3 }, value: 4 },
+				{ gridOption: { id: 3 }, value: 3 },
 				{ gridOption: { id: 4 }, value: "asc" },
 				{ gridOption: { id: 5 }, value: undefined },
 				{ gridOption: { id: 6 }, value: undefined },
