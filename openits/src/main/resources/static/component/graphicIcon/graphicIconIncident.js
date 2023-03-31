@@ -317,7 +317,7 @@ export default class GraphicIconIncident {
 					s.node.addEventListener("mousewheel", function() {
 						
 						eval(self.events[GraphicIconIncident.EventTypes.ON_MOUSE_WHEEL])();	
-					}, false);
+					}, {passive: true});
 				}
 			}
 			

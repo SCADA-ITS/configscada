@@ -974,22 +974,22 @@ export default class OpenMap extends GenericMap {
 				
 				self.olMap.addOverlay(tooltip);
 				
-				self.olMap.on("pointermove", function (evt) {
-				    
-					let feature = this.forEachFeatureAtPixel(evt.pixel, function(f) {
-						
-						if (f.get('isPoint')) {
-							
-							tooltip.setPosition(f.getGeometry().getCoordinates());
-						    tooltip.getElement().innerHTML = `<div>${f.get('graphicIcon').element.alias}</div>`;
-		
-					        return f;	
-						}
-				    });
-
-					this.getTargetElement().style.cursor = (feature ? POINTER_HAND : POINTER_DEFAULT);
-					tooltip.getElement().style.display = (feature ? "block" : "none");
-				});
+//				self.olMap.on("pointermove", function (evt) {
+//				    
+//					let feature = this.forEachFeatureAtPixel(evt.pixel, function(f) {
+//						
+//						if (f.get('isPoint')) {
+//							
+//							tooltip.setPosition(f.getGeometry().getCoordinates());
+//						    tooltip.getElement().innerHTML = `<div>${f.get('graphicIcon').element.alias}</div>`;
+//		
+//					        return f;	
+//						}
+//				    });
+//
+//					this.getTargetElement().style.cursor = (feature ? POINTER_HAND : POINTER_DEFAULT);
+//					tooltip.getElement().style.display = (feature ? "block" : "none");
+//				});
 				
 				graphicIcon.vectorPointLayer = vectorPointLayer;
 			}

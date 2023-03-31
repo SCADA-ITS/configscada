@@ -331,7 +331,7 @@ export default class GraphicIcon {
 					s.node.addEventListener("mousewheel", function() {
 						
 						eval(self.events[GraphicIcon.EventTypes.ON_MOUSE_WHEEL])();	
-					}, false);
+					}, {passive: true});
 					
 					
 				}
