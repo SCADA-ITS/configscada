@@ -1216,7 +1216,7 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 
 													return `<div>
 																	<span class='ico webix_icon mdi mdi-view-headline'></span>
-																	<span id='${idHTML}'>${i18n.t(folder.value)}</span>
+																	<span id='${idHTML}'>${folder.value}</span>
 																</div>`;
 												},
 												body: {
@@ -1273,7 +1273,7 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 
 												return `<div>
 															<span class='ico webix_icon mdi mdi-view-headline'></span>
-															<span id='${idHTML}'>${i18n.t(item.value)}</span>
+															<span id='${idHTML}'>${item.value}</span>
 															</div>`;
 											},
 											body: {

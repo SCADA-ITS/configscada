@@ -34,7 +34,8 @@
 	"vms": {
 		"elementTypeId": "ElementType:71",
 		"params": {
-			"travelTimeEnabled": "ElementTypeParam:71:2:10"
+			"travelTimeEnabled": "ElementTypeParam:71:2:10",
+			"travelTimeConfigurable": "ElementTypeParam:71:1:9"
 		},
 		"action": {
 			"vmsSignalingModule": 102601

@@ -65,11 +65,11 @@ export default class TravelTimeConfigAssignPanel {
 							
 								if (Array.isArray(e.elementValues)) {
 								
-									let elementValueTravelTimeEnabled = e.elementValues.find(ev => ev.elementTypeParam.id === self.config.vms.params.travelTimeEnabled);
+									let elementValueTravelTimeConfigurable = e.elementValues.find(ev => ev.elementTypeParam.id === self.config.vms.params.travelTimeConfigurable);
 									
-									if (elementValueTravelTimeEnabled) {
+									if (elementValueTravelTimeConfigurable) {
 									
-										isTravelTimeEnabled &= IS_TRUE(elementValueTravelTimeEnabled.value);	
+										isTravelTimeEnabled &= IS_TRUE(elementValueTravelTimeConfigurable.value);	
 									}
 									else {
 										
