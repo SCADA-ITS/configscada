@@ -113,7 +113,7 @@ public class ModuleBO extends GenericBO {
 		
 		if (is == null) {
 		
-			is = this.getClass().getClassLoader().getResourceAsStream(STATIC_FOLDER + File.separator + File.separator + MODULES_CONF_FOLDER + File.separator + String.format(MODULE_FILE_TEMPLATE, moduleId));
+			is = this.getClass().getClassLoader().getResourceAsStream(STATIC_FOLDER + File.separator + MODULES_CONF_FOLDER + File.separator + String.format(MODULE_FILE_TEMPLATE, moduleId));
 		}
 		
 		if (is != null) {

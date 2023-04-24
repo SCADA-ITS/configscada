@@ -1,8 +1,11 @@
 package com.revenga.rits.front.openits.util;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
@@ -70,26 +73,28 @@ public class GroovyManager {
 				if (pair != null) {
 					
 					Long lastModified = pair.getRight();
-					BasicFileAttributes basicFileAttributes = Files.readAttributes(
-							Paths.get(FileUtils.fileFromUri(getClass().getClassLoader().getResource(groovyFile).toURI())
-									.getAbsolutePath()),
-							BasicFileAttributes.class);
+					groovyObject = pair.getLeft();
 					
-					Long newLastModified = basicFileAttributes.lastModifiedTime().toMillis();
+					File file = FileUtils.fileFromUri(getClass().getClassLoader().getResource(groovyFile).toURI());
 					
-					if (lastModified < newLastModified) {
+					if (file != null) {
 						
-						Calendar cal = Calendar.getInstance();
+						BasicFileAttributes basicFileAttributes = Files.readAttributes(
+								Paths.get(file.getAbsolutePath()),
+								BasicFileAttributes.class);
 						
-						cal.setTimeInMillis(newLastModified);
+						Long newLastModified = basicFileAttributes.lastModifiedTime().toMillis();
 						
-						log.debug("Groovy file " + groovyFile + " changes at " + cal.getTime().toString());
-				
-						groovyObject = loadGroovy(groovyFile);	
-					}
-					else {
-						
-						groovyObject = pair.getLeft();
+						if (lastModified < newLastModified) {
+							
+							Calendar cal = Calendar.getInstance();
+							
+							cal.setTimeInMillis(newLastModified);
+							
+							log.debug("Groovy file " + groovyFile + " changes at " + cal.getTime().toString());
+					
+							groovyObject = loadGroovy(groovyFile);	
+						}
 					}
 				}
 			}
@@ -113,8 +118,13 @@ public class GroovyManager {
 		
 		try (GroovyClassLoader classLoader = new GroovyClassLoader()) {
 			
-			Class<?> groovy = classLoader
-					.parseClass(FileUtils.fileFromUri(getClass().getClassLoader().getResource(groovyFile).toURI()));
+			//String strGroovy = Files.readString(Paths.get(getClass().getClassLoader().getResource(groovyFile).toURI()));
+			
+			InputStream is = getClass().getClassLoader().getResourceAsStream(groovyFile);
+			
+			String strGroovy = new String(is.readAllBytes(), StandardCharsets.UTF_8);
+			
+			Class<?> groovy = classLoader.parseClass(strGroovy); 
 
 			groovyObject = (GroovyObject) groovy.getDeclaredConstructor(CacheManager.class, VO2UIAdapter.class, org.apache.logging.log4j.Logger.class)
 					.newInstance(cacheManager, vo2uiAdapter, log);
@@ -125,7 +135,7 @@ public class GroovyManager {
 			}
 			
 		} catch (IOException | IllegalArgumentException | SecurityException | InstantiationException
-				| IllegalAccessException | InvocationTargetException | NoSuchMethodException | CompilationFailedException | URISyntaxException e) {
+				| IllegalAccessException | InvocationTargetException | NoSuchMethodException | CompilationFailedException e) {
 
 			log.error(e.getMessage());
 			log.debug(ExceptionUtils.getStackTrace(e));
