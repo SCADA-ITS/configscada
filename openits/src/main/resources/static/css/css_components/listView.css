@@ -44,3 +44,12 @@
 .list-not-selected .webix_list_item {
 	cursor: default !important;
 }
+
+.list-color {
+    display: block;
+    border-radius: 50%;
+    width: 15px;
+    height: 15px;
+    float: left;
+	margin-top: 12px;	
+}

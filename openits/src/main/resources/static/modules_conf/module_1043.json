@@ -1,0 +1,7 @@
+{
+	"defaultUpdateTime": 10,
+	"restEndpoints": {
+		"processesInfo": "server/processes_info"
+	}
+	
+}

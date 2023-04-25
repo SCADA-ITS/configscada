@@ -207,7 +207,7 @@ export default class ListView {
 
 			let html = "";
 			let image = obj.image || obj.elementTypePhoto;
-
+			
 			if (mode === ListView.DrawMode.DEFAULT || mode === undefined || mode === null) {
 
 				let marginTop = 0;
@@ -228,8 +228,14 @@ export default class ListView {
 									</div>`;
 
 			} else if (mode === ListView.DrawMode.COMPACT) {
+				
 
 				html = `<image style="width:${HeightCompact.ICON_HEIGHT}px; height:${HeightCompact.ICON_HEIGHT}px; float: left; padding-top: 7px" src="img/${image}" onerror="this.onerror=null;this.src='${NO_IMAGE}';" />`;
+				
+				if (obj.color) {
+
+					html = `<div class="list-color" style="background:${obj.color}"></div>`
+				}
 
 				html += `<div class="text">
 								<span class="list-first-line">${obj.alias} </span>
