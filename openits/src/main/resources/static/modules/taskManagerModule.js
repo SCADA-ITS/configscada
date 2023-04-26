@@ -3,6 +3,8 @@ import GenericModule from "../modules/genericModule.js";
 import ListView from "../component/listview.js";
 import DataTable from "../component/datatable.js";
 
+const MB_CORRECTION_FACTOR = 1 / (1024 * 1024);
+
 export default class TaskManagerModule extends GenericModule {
 
 	constructor(module, moduleAction, args) {
@@ -64,7 +66,6 @@ export default class TaskManagerModule extends GenericModule {
 			if (response != null) {
 
 				self.processes = response.json();
-				console.log(self.processes)
 
 				let timeToInit = new Date();
 				let initHour = timeToInit.getHours().toString();
@@ -80,9 +81,9 @@ export default class TaskManagerModule extends GenericModule {
 							time: initTime,
 							cpuLoad: p.cpuLoad.toFixed(2),
 							cpuAverage: p.cpuAverage.toFixed(2),
-							heapUsed: p.heapUsed,
-							heapMax: p.heapMax,
-							heapSize: p.heapSize,
+							heapUsed: (p.heapUsed * MB_CORRECTION_FACTOR).toFixed(2),
+							heapMax: (p.heapMax * MB_CORRECTION_FACTOR).toFixed(2),
+							heapSize: (p.heapSize * MB_CORRECTION_FACTOR).toFixed(2),
 							numRestarts: p.numRestarts
 						}]
 					);
@@ -91,11 +92,23 @@ export default class TaskManagerModule extends GenericModule {
 				for (let option of optionsArr) {
 
 					let d = {};
-					d["time"] = initTime;
+					d["xValue"] = initTime;
 
 					for (let p of self.processes) {
 
-						d["pid" + p.pid] = p[option];
+						let newData = p[option];
+
+						if (option === "cpuLoad" || option === "cpuAverage") {
+
+							newData = newData.toFixed(2);
+						}
+
+						if (option === "heapMax" || option === "heapSize" || option === "heapUsed") {
+
+							newData = (newData * MB_CORRECTION_FACTOR).toFixed(2);
+						}
+
+						d["pid" + p.pid] = newData;
 					}
 
 					self.optionMap.set(option, [d]);
@@ -208,11 +221,11 @@ export default class TaskManagerModule extends GenericModule {
 					}];
 
 					let options = [
-						{ id: "cpuLoad", value: "cpuLoad" },
-						{ id: "cpuAverage", value: "cpuAverage" },
-						{ id: "heapUsed", value: "heapUsed" },
-						{ id: "heapSize", value: "heapSize" },
-						{ id: "heapMax", value: "heapMax" },
+						{ id: "cpuLoad", value: "cpuLoad (%)" },
+						{ id: "cpuAverage", value: "cpuAverage (%)" },
+						{ id: "heapUsed", value: "heapUsed (MB)" },
+						{ id: "heapSize", value: "heapSize (MB)" },
+						{ id: "heapMax", value: "heapMax (MB)" },
 						{ id: "numRestarts", value: "Restarts" }
 					];
 
@@ -228,7 +241,7 @@ export default class TaskManagerModule extends GenericModule {
 							let mainArr = p.main.split(' ')[0];
 							let processName = mainArr.slice(0, -4);
 							let pid = p.pid;
-							let color = (Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, '0');//Math.floor(Math.random()*16777215).toString(16);
+							let color = (Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, '0');
 
 							listElements.push({
 								id: pid,
@@ -253,7 +266,7 @@ export default class TaskManagerModule extends GenericModule {
 										width: 2
 									},
 									tooltip: {
-										template: processName + " - " + '#pid' + pid + '#' + "%"
+										template: processName + " - " + '#pid' + pid + '#',
 									}
 								}
 							);
@@ -262,10 +275,9 @@ export default class TaskManagerModule extends GenericModule {
 						dataSet.push(data);
 					}
 
-					//					console.log(data, dataSet, dataSeries)
-
 					chart = {
 						id: "chart-view-" + self.uid,
+						css: { "border": " 1px solid #dadee0", "box-sizing": " border-box" },
 						cols: [
 							{
 								width: 300,
@@ -279,6 +291,7 @@ export default class TaskManagerModule extends GenericModule {
 											onChange: function(obj) {
 
 												$$("chart-" + self.uid).clearAll();
+
 												let selectedItemId = self.list.getSelectedItems()[0].id;
 
 												if (self.dataMap.has(selectedItemId)) {
@@ -296,8 +309,21 @@ export default class TaskManagerModule extends GenericModule {
 													});
 
 													$$("chart-" + self.uid).define("data", newData);
-													$$("chart-" + self.uid).refresh();
 												}
+
+												if (selectedItemId === -1 && !self.firstCharge) {
+
+													let newData = [];
+
+													if (self.optionMap.has(obj)) {
+
+														newData = self.optionMap.get(obj);
+													}
+
+													$$("chart-" + self.uid).define("data", newData);
+												}
+
+												$$("chart-" + self.uid).refresh();
 											}
 										}
 									},
@@ -322,15 +348,9 @@ export default class TaskManagerModule extends GenericModule {
 								xAxis: {
 									template: "#xValue#"
 								},
-								yAxis: {
-									title: "%",
-									template: function(obj) {
-
-										return (obj % 1 ? "" : obj)
-									}
-								},
+								yAxis: {},
 								series: dataSeries,
-								data: dataSet						
+								data: dataSet
 							}
 						]
 					};
@@ -345,12 +365,12 @@ export default class TaskManagerModule extends GenericModule {
 
 							let optionSelected = $$("richselect-" + self.uid).getValue();
 							let processSelected = self.list.getSelectedItems()[0];
+							let newData = [];
 
 							if (self.dataMap.has(processSelected.id)) {
 
 								$$("chart-" + self.uid).clearAll();
 
-								let newData = [];
 								let dataSerie = self.dataMap.get(processSelected.id);
 
 								dataSerie.forEach(dat => {
@@ -361,28 +381,22 @@ export default class TaskManagerModule extends GenericModule {
 
 									newData.push(d);
 								});
-
-								$$("chart-" + self.uid).define("data", newData);
-								$$("chart-" + self.uid).refresh();
 							}
 
 							if (processSelected.id === -1 && !self.firstCharge) {
 
 								$$("chart-" + self.uid).clearAll();
 
-								let newData = [];
 								let selectedOption = $$("richselect-" + self.uid).getValue();
 
 								if (self.optionMap.has(selectedOption)) {
 
 									newData = self.optionMap.get(selectedOption);
 								}
-
-								$$("chart-" + self.uid).define("data", newData);
-								$$("chart-" + self.uid).refresh();
-
-
 							}
+
+							$$("chart-" + self.uid).define("data", newData);
+							$$("chart-" + self.uid).refresh();
 						}
 
 						let listOptions = {};
@@ -433,9 +447,9 @@ export default class TaskManagerModule extends GenericModule {
 										status: status,
 										cpuLoad: p.cpuLoad,
 										cpuAv: p.cpuAverage,
-										heapUsed: p.heapUsed,
-										heapSize: p.heapSize,
-										heapMax: p.heapMax,
+										heapUsed: p.heapUsed * MB_CORRECTION_FACTOR,
+										heapSize: p.heapSize * MB_CORRECTION_FACTOR,
+										heapMax: p.heapMax * MB_CORRECTION_FACTOR,
 										restarts: p.numRestarts,
 										since: p.updatedAt,
 										commandLine: p.commandLine
@@ -622,8 +636,8 @@ export default class TaskManagerModule extends GenericModule {
 									visible: true,
 									widthPx: 150,
 									gridFieldDataType: {
-										id: 2,
-										name: "int"
+										id: 3,
+										name: "decimal"
 									}
 								},
 								{
@@ -642,8 +656,8 @@ export default class TaskManagerModule extends GenericModule {
 									visible: true,
 									widthPx: 150,
 									gridFieldDataType: {
-										id: 2,
-										name: "int"
+										id: 3,
+										name: "decimal"
 									}
 								},
 								{
@@ -662,8 +676,8 @@ export default class TaskManagerModule extends GenericModule {
 									visible: true,
 									widthPx: 150,
 									gridFieldDataType: {
-										id: 2,
-										name: "int"
+										id: 3,
+										name: "decimal"
 									}
 								},
 								{
@@ -831,26 +845,28 @@ export default class TaskManagerModule extends GenericModule {
 										time: initTime,
 										cpuLoad: p.cpuLoad.toFixed(2),
 										cpuAverage: p.cpuAverage.toFixed(2),
-										heapUsed: p.heapUsed,
-										heapMax: p.heapMax,
-										heapSize: p.heapSize,
+										heapUsed: (p.heapUsed * MB_CORRECTION_FACTOR).toFixed(2),
+										heapMax: (p.heapMax * MB_CORRECTION_FACTOR).toFixed(2),
+										heapSize: (p.heapSize * MB_CORRECTION_FACTOR).toFixed(2),
 										numRestarts: p.numRestarts
 									});
 								}
 
 								let status = (Math.floor(dat) - Math.floor(p.updatedAt) > 15000) ? "LBL_DOWN" : "LBL_UP";
+								let mainArr = p.main.split(' ')[0];
+								let processName = mainArr.slice(0, -4);
 
 								data.push(
 									{
 										id: pid,
 										pid: pid,
-										process: p.main,
+										process: processName,
 										status: status,
 										cpuLoad: p.cpuLoad,
 										cpuAv: p.cpuAverage,
-										heapUsed: p.heapUsed,
-										heapSize: p.heapSize,
-										heapMax: p.heapMax,
+										heapUsed: p.heapUsed * MB_CORRECTION_FACTOR,
+										heapSize: p.heapSize * MB_CORRECTION_FACTOR,
+										heapMax: p.heapMax * MB_CORRECTION_FACTOR,
 										restarts: p.numRestarts,
 										since: new Date(p.updatedAt),
 										commandLine: p.commandLine
@@ -861,7 +877,19 @@ export default class TaskManagerModule extends GenericModule {
 
 								if (processSelected[0].id === -1) {
 
-									dataChart['pid' + pid] = p.cpuLoad.toFixed(2);
+									let newData = p[optionSelected];
+
+									if (optionSelected === "cpuLoad" || optionSelected === "cpuAverage") {
+
+										newData = newData.toFixed(2);
+									}
+
+									if (optionSelected === "heapMax" || optionSelected === "heapSize" || optionSelected === "heapUsed") {
+
+										newData = (newData * MB_CORRECTION_FACTOR).toFixed(2);
+									}
+
+									dataChart['pid' + pid] = newData;
 									dataChart['xValue'] = initTime;
 								}
 							}
@@ -873,11 +901,23 @@ export default class TaskManagerModule extends GenericModule {
 								if (self.optionMap.has(option)) {
 
 									let d = {};
-									d["time"] = initTime;
+									d["xValue"] = initTime;
 
 									for (let p of self.processes) {
 
-										d["pid" + p.pid] = p[option];
+										let newData = p[option];
+
+										if (option === "cpuLoad" || option === "cpuAverage") {
+
+											newData = newData.toFixed(2);
+										}
+
+										if (option === "heapMax" || option === "heapSize" || option === "heapUsed") {
+
+											newData = (newData * MB_CORRECTION_FACTOR).toFixed(2);
+										}
+
+										d["pid" + p.pid] = newData;
 									}
 
 									self.optionMap.get(option).push(d);
@@ -890,14 +930,25 @@ export default class TaskManagerModule extends GenericModule {
 
 								if (updatedProcess) {
 
-									dataChart['pid' + updatedProcess.pid] = updatedProcess[optionSelected].toFixed(2);
-									dataChart['xValue'] = initTime;
+									let newData = updatedProcess[optionSelected];
 
+									if (optionSelected === "cpuLoad" || optionSelected === "cpuAverage") {
+
+										newData = newData.toFixed(2);
+									}
+
+									if (optionSelected === "heapMax" || optionSelected === "heapSize" || optionSelected === "heapUsed") {
+
+										newData = (newData * MB_CORRECTION_FACTOR).toFixed(2);
+									}
+
+									dataChart['pid' + updatedProcess.pid] = newData;
+									dataChart['xValue'] = initTime;
 								}
 							}
 
-							dataSet.push(dataChart);
 							$$("chart-" + self.uid).add(dataChart);
+							$$("chart-" + self.uid).refres();
 						}
 					}
 				});
