@@ -82,4 +82,17 @@ public class ServerBO extends GenericBO {
 
 		return resourceList;
 	}
+	
+	public Boolean stopProcesses(Object pids) {
+		
+		Boolean res = false;
+		
+		@SuppressWarnings("unchecked")
+		Map<String, Object> stopProcesses = voDataSourceAdapter.put(VODataSourceAdapter.DATA_SOURCE_STOP_PROCESSES,
+				(Map<String, Object>) pids);
+
+		res = checkMapIsBoolean(stopProcesses);
+
+		return res;
+	}
 }

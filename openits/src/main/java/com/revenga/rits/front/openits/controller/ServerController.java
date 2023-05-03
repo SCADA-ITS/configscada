@@ -53,4 +53,12 @@ public class ServerController {
 		
 		return new ResponseEntity<>(serverBO.getResources(resource), HttpStatus.OK);
 	}
+	
+	@PostMapping(value = "/stop")
+	@ApiOperation(value = "Stop server processes", notes = "Stop server processes")
+	public ResponseEntity<Boolean> stopProcesses(
+			@RequestBody Object pids) {
+		
+		return new ResponseEntity<>(serverBO.stopProcesses(pids), HttpStatus.OK);
+	}
 }

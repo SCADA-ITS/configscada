@@ -260,6 +260,8 @@ public class VODataSourceAdapter {
 	public static final int DATA_SOURCE_GET_PROCESSES_INFO = getPropertyInt("get_processes_info");
 	public static final int DATA_SOURCE_GET_SERVER_TIME = getPropertyInt("get_server_time");
 	public static final int DATA_SOURCE_GET_SERVER_RESOURCES = getPropertyInt("get_server_resources");
+	public static final int DATA_SOURCE_STOP_PROCESSES = getPropertyInt("stop_processes");
+	
 	
 	public static final int DATA_SOURCE_CREATE_INCIDENT_TYPE = getPropertyInt("create_incident_type");
 	public static final int DATA_SOURCE_UPDATE_INCIDENT_TYPE = getPropertyInt("update_incident_type");
