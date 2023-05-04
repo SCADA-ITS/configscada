@@ -1,7 +1,17 @@
 {
 	"defaultUpdateTime": 10,
+	"defaultStatusTime": 15,
+	"moduleActions":{
+		"restart": 104301
+	},
+	"permissions": {
+		"showProcesses": "SystemPermission:23",
+		"restartProcesses": "SystemPermission:24"
+	},
 	"restEndpoints": {
 		"processesInfo": "server/processes_info"
+	},
+	"actionEndpoints": {
+		"stop": "server/stop"
 	}
-	
 }

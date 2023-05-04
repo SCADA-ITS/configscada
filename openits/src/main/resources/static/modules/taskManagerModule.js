@@ -2,6 +2,7 @@ import { util } from "../lib/util.js";
 import GenericModule from "../modules/genericModule.js";
 import ListView from "../component/listview.js";
 import DataTable from "../component/datatable.js";
+import MessageBox from "../component/messageBox.js";
 
 const MB_CORRECTION_FACTOR = 1 / (1024 * 1024);
 
@@ -71,12 +72,28 @@ export default class TaskManagerModule extends GenericModule {
 				let initHour = timeToInit.getHours().toString();
 				let initMinute = timeToInit.getMinutes().toString();
 				let initTime = initHour.padStart(2, "0") + ":" + initMinute.padStart(2, "0");
-				let optionsArr = ["cpuLoad", "cpuAverage", "heapUsed", "heapSize", "heapMax", "numRestarts"];
+				let optionsArr = ["cpuLoad", "cpuAverage", "heapUsed", "heapSize", "heapMax"];
 
 				for (let p of self.processes) {
 
+					let hashId = Math.abs(util.getHash(p.commandLine));
+					let nameProcess = p.main;
+					let jarExtIdx = nameProcess.indexOf(".jar");
+
+					if (jarExtIdx > -1) {
+
+						nameProcess = nameProcess.substring(0, jarExtIdx);
+
+						let fileSeparatorIdx = nameProcess.lastIndexOf("/");
+
+						if (fileSeparatorIdx > -1) {
+
+							nameProcess = nameProcess.substring(fileSeparatorIdx + 1);
+						}
+					}
+
 					self.dataMap.set(
-						p.pid,
+						hashId,
 						[{
 							time: initTime,
 							cpuLoad: p.cpuLoad.toFixed(2),
@@ -97,7 +114,7 @@ export default class TaskManagerModule extends GenericModule {
 					for (let p of self.processes) {
 
 						let newData = p[option];
-
+						let hashId = Math.abs(util.getHash(p.commandLine));
 						if (option === "cpuLoad" || option === "cpuAverage") {
 
 							newData = newData.toFixed(2);
@@ -108,7 +125,7 @@ export default class TaskManagerModule extends GenericModule {
 							newData = (newData * MB_CORRECTION_FACTOR).toFixed(2);
 						}
 
-						d["pid" + p.pid] = newData;
+						d["pid" + hashId] = newData;
 					}
 
 					self.optionMap.set(option, [d]);
@@ -225,8 +242,7 @@ export default class TaskManagerModule extends GenericModule {
 						{ id: "cpuAverage", value: "cpuAverage (%)" },
 						{ id: "heapUsed", value: "heapUsed (MB)" },
 						{ id: "heapSize", value: "heapSize (MB)" },
-						{ id: "heapMax", value: "heapMax (MB)" },
-						{ id: "numRestarts", value: "Restarts" }
+						{ id: "heapMax", value: "heapMax (MB)" }
 					];
 
 					if (Array.isArray(self.processes) && self.processes.length > 0) {
@@ -235,38 +251,52 @@ export default class TaskManagerModule extends GenericModule {
 						let initHour = timeToInit.getHours().toString();
 						let initMinute = timeToInit.getMinutes().toString();
 						let initTime = initHour.padStart(2, "0") + ":" + initMinute.padStart(2, "0");
+						let LINES_COLORS = ["#FE0E0E", "#FE860E", "#5D6A6E ", "#2236CA", "#0EFE86", "#229FCA", "#860EFE", "#FE0EFE", "#FE0E86", "#FEFE0E"];
 
-						for (let p of self.processes) {
+						for (let i = 0; i < self.processes.length; i++) {
 
-							let mainArr = p.main.split(' ')[0];
-							let processName = mainArr.slice(0, -4);
-							let pid = p.pid;
-							let color = (Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, '0');
+							let nameProcess = self.processes[i].main;
+							let jarExtIdx = nameProcess.indexOf(".jar");
+
+							if (jarExtIdx > -1) {
+
+								nameProcess = nameProcess.substring(0, jarExtIdx);
+
+								let fileSeparatorIdx = nameProcess.lastIndexOf("/");
+
+								if (fileSeparatorIdx > -1) {
+
+									nameProcess = nameProcess.substring(fileSeparatorIdx + 1);
+								}
+							}
+
+							let hashId = Math.abs(util.getHash(self.processes[i].commandLine));
+							let color = LINES_COLORS[i];
 
 							listElements.push({
-								id: pid,
-								alias: processName,
-								description: p.main,
-								color: '#' + color
+								id: hashId,
+								alias: nameProcess,
+								description: self.processes[i].main,
+								color: color,
+								commandLine: self.processes[i].commandLine
 							});
 
-							data['pid' + pid] = p.cpuLoad.toFixed(2);
+							data['pid' + hashId] = self.processes[i].cpuLoad.toFixed(2);
 							data['xValue'] = initTime;
 
 							dataSeries.push(
 								{
-									id: pid + self.uid,
-									value: '#pid' + pid + '#',
+									id: hashId + self.uid,
+									value: '#pid' + hashId + '#',
 									item: {
-										borderColor: "#" + color,
-										color: "#ffffff"
+										radius: 0
 									},
 									line: {
-										color: "#" + color,
+										color: color,
 										width: 2
 									},
 									tooltip: {
-										template: processName + " - " + '#pid' + pid + '#',
+										template: nameProcess + " - " + '#pid' + hashId + '#',
 									}
 								}
 							);
@@ -333,13 +363,12 @@ export default class TaskManagerModule extends GenericModule {
 							{
 								id: "chart-" + self.uid,
 								view: "chart",
-								type: "line",
+								type: "spline",
 								value: "#yValue#",
 								cellWidth: 50,
 								dynamic: true,
 								item: {
-									borderColor: "#1293f8",
-									color: "#ffffff"
+									radius: 0
 								},
 								line: {
 									color: "#1293f8",
@@ -434,16 +463,29 @@ export default class TaskManagerModule extends GenericModule {
 
 							for (let p of self.processes) {
 
-								let mainArr = p.main.split(' ')[0];
-								let processName = mainArr.slice(0, -4);
+								let hashId = Math.abs(util.getHash(p.commandLine));
+								let nameProcess = p.main;
+								let jarExtIdx = nameProcess.indexOf(".jar");
 
-								let status = (Math.floor(dat) - Math.floor(p.updatedAt) > 15000) ? "LBL_DOWN" : "LBL_UP";
+								if (jarExtIdx > -1) {
+
+									nameProcess = nameProcess.substring(0, jarExtIdx);
+
+									let fileSeparatorIdx = nameProcess.lastIndexOf("/");
+
+									if (fileSeparatorIdx > -1) {
+
+										nameProcess = nameProcess.substring(fileSeparatorIdx + 1);
+									}
+								}
+
+								let status = (Math.floor(dat) - Math.floor(p.updatedAt) > (self.config.defaultStatusTime * 1000)) ? "LBL_DOWN" : "LBL_UP";
 
 								data.push(
 									{
-										id: p.pid,
+										id: hashId,
 										pid: p.pid,
-										process: processName,
+										process: nameProcess,
 										status: status,
 										cpuLoad: p.cpuLoad.toFixed(2),
 										cpuAv: p.cpuAverage.toFixed(2),
@@ -451,7 +493,7 @@ export default class TaskManagerModule extends GenericModule {
 										heapSize: (p.heapSize * MB_CORRECTION_FACTOR).toFixed(2),
 										heapMax: (p.heapMax * MB_CORRECTION_FACTOR).toFixed(2),
 										restarts: p.numRestarts,
-										since: p.updatedAt,
+										since: p.createdAt,
 										commandLine: p.commandLine
 									}
 								);
@@ -459,7 +501,7 @@ export default class TaskManagerModule extends GenericModule {
 						}
 
 						const defaultGridOptionValues = [
-							{ gridOption: { id: 1 }, value: "false" },
+							{ gridOption: { id: 1 }, value: "true" },
 							{ gridOption: { id: 2 }, value: "true" },
 							{ gridOption: { id: 4 }, value: "asc" },
 							{ gridOption: { id: 7 }, value: "true" },
@@ -491,7 +533,7 @@ export default class TaskManagerModule extends GenericModule {
 									parameterized: false,
 									position: 1,
 									required: true,
-									sourceField: "pid",
+									sourceField: "id",
 									visible: false,
 									gridFieldDataType: {
 										id: 1,
@@ -586,8 +628,8 @@ export default class TaskManagerModule extends GenericModule {
 									filtered: false,
 									isEpochMilli: false,
 									isPk: false,
-									label: "LBL_CPU_LOAD",
-									labelTooltip: "LBL_CPU_LOAD",
+									label: "cpuLoad (%)",
+									labelTooltip: "cpuLoad (%)",
 									needsTranslation: false,
 									parameterized: false,
 									position: 4,
@@ -606,8 +648,8 @@ export default class TaskManagerModule extends GenericModule {
 									filtered: false,
 									isEpochMilli: false,
 									isPk: false,
-									label: "LBL_CPU_AVERAGE",
-									labelTooltip: "LBL_CPU_AVERAGE",
+									label: "cpuAverage (%)",
+									labelTooltip: "cpuAverage (%)",
 									needsTranslation: false,
 									parameterized: false,
 									position: 5,
@@ -626,8 +668,8 @@ export default class TaskManagerModule extends GenericModule {
 									filtered: false,
 									isEpochMilli: false,
 									isPk: false,
-									label: "LBL_HEAP_USED",
-									labelTooltip: "LBL_HEAP_USED",
+									label: "heapUsed (MB)",
+									labelTooltip: "heapUsed (MB)",
 									needsTranslation: false,
 									parameterized: false,
 									position: 6,
@@ -646,8 +688,8 @@ export default class TaskManagerModule extends GenericModule {
 									filtered: false,
 									isEpochMilli: false,
 									isPk: false,
-									label: "LBL_HEAP_SIZE",
-									labelTooltip: "LBL_HEAP_SIZE",
+									label: "heapSize (MB)",
+									labelTooltip: "heapSize (MB)",
 									needsTranslation: false,
 									parameterized: false,
 									position: 7,
@@ -666,8 +708,8 @@ export default class TaskManagerModule extends GenericModule {
 									filtered: false,
 									isEpochMilli: false,
 									isPk: false,
-									label: "LBL_HEAP_MAX",
-									labelTooltip: "LBL_HEAP_MAX",
+									label: "heapMax (MB)",
+									labelTooltip: "heapMax (MB)",
 									needsTranslation: false,
 									parameterized: false,
 									position: 8,
@@ -747,10 +789,11 @@ export default class TaskManagerModule extends GenericModule {
 									default_: true,
 									icon: "mdi mdi-close-octagon",
 									label: "LBL_RESTART_PROCESS",
-									multiselect: false,
+									multiselect: true,
 									position: 1,
 									showText: true,
-									itemRequired: true
+									itemRequired: true,
+									moduleAction: { id: self.config.moduleActions.restart }
 								}
 							]
 						};
@@ -759,9 +802,31 @@ export default class TaskManagerModule extends GenericModule {
 						events[DataTable.EventTypes.ON_COMMAND_EXEC] = [];
 						events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
 							commandId: 1,
-							function: (id) => {
+							function: (ids) => {
 
-								let selectedItems = self.table.getSelectedItems();
+								let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_RESTART_PROCESSES_CONFIRM_DESCRIPTION"), null, onAccept, null);
+								ms.show();
+
+								function onAccept() {
+
+									let selectedItems = self.table.getSelectedItems();
+									let idsArr = [];
+
+									for (let selectedItem of selectedItems) {
+
+										idsArr.push(selectedItem.pid);
+									}
+
+									let body = {
+
+										pids: idsArr
+									};
+
+									webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.actionEndpoints.stop, body).then((response) => {
+
+										console.log(response.json());
+									});
+								}
 							}
 						});
 
@@ -837,11 +902,11 @@ export default class TaskManagerModule extends GenericModule {
 
 							for (let p of self.processes) {
 
-								let pid = p.pid;
+								let hashId = Math.abs(util.getHash(p.commandLine));
 
-								if (self.dataMap.has(pid)) {
+								if (self.dataMap.has(hashId)) {
 
-									self.dataMap.get(pid).push({
+									self.dataMap.get(hashId).push({
 										time: initTime,
 										cpuLoad: p.cpuLoad.toFixed(2),
 										cpuAverage: p.cpuAverage.toFixed(2),
@@ -852,15 +917,27 @@ export default class TaskManagerModule extends GenericModule {
 									});
 								}
 
-								let status = (Math.floor(dat) - Math.floor(p.updatedAt) > 15000) ? "LBL_DOWN" : "LBL_UP";
-								let mainArr = p.main.split(' ')[0];
-								let processName = mainArr.slice(0, -4);
+								let status = (Math.floor(dat) - Math.floor(p.updatedAt) > (self.config.defaultStatusTime * 1000)) ? "LBL_DOWN" : "LBL_UP";
+								let nameProcess = p.main;
+								let jarExtIdx = nameProcess.indexOf(".jar");
+
+								if (jarExtIdx > -1) {
+
+									nameProcess = p.main.substring(0, jarExtIdx);
+
+									let fileSeparatorIdx = nameProcess.lastIndexOf("/");
+
+									if (fileSeparatorIdx > -1) {
+
+										nameProcess = nameProcess.substring(fileSeparatorIdx + 1);
+									}
+								}
 
 								data.push(
 									{
-										id: pid,
-										pid: pid,
-										process: processName,
+										id: hashId,
+										pid: p.pid,
+										process: nameProcess,
 										status: status,
 										cpuLoad: p.cpuLoad.toFixed(2),
 										cpuAv: p.cpuAverage.toFixed(2),
@@ -868,7 +945,7 @@ export default class TaskManagerModule extends GenericModule {
 										heapSize: (p.heapSize * MB_CORRECTION_FACTOR).toFixed(2),
 										heapMax: (p.heapMax * MB_CORRECTION_FACTOR).toFixed(2),
 										restarts: p.numRestarts,
-										since: new Date(p.updatedAt),
+										since: new Date(p.createdAt),
 										commandLine: p.commandLine
 									}
 								);
@@ -889,12 +966,12 @@ export default class TaskManagerModule extends GenericModule {
 										newData = (newData * MB_CORRECTION_FACTOR).toFixed(2);
 									}
 
-									dataChart['pid' + pid] = newData;
+									dataChart['pid' + hashId] = newData;
 									dataChart['xValue'] = initTime;
 								}
 							}
 
-							let optionsArr = ["cpuLoad", "cpuAverage", "heapUsed", "heapSize", "heapMax", "numRestarts"];
+							let optionsArr = ["cpuLoad", "cpuAverage", "heapUsed", "heapSize", "heapMax"];
 
 							for (let option of optionsArr) {
 
@@ -906,6 +983,8 @@ export default class TaskManagerModule extends GenericModule {
 									for (let p of self.processes) {
 
 										let newData = p[option];
+										let hashId = Math.abs(util.getHash(p.commandLine));
+
 
 										if (option === "cpuLoad" || option === "cpuAverage") {
 
@@ -917,7 +996,7 @@ export default class TaskManagerModule extends GenericModule {
 											newData = (newData * MB_CORRECTION_FACTOR).toFixed(2);
 										}
 
-										d["pid" + p.pid] = newData;
+										d["pid" + hashId] = newData;
 									}
 
 									self.optionMap.get(option).push(d);
@@ -926,11 +1005,12 @@ export default class TaskManagerModule extends GenericModule {
 
 							if (processSelected[0].id != -1) {
 
-								let updatedProcess = self.processes.find(e => e.pid === processSelected[0].id);
+								let updatedProcess = self.processes.find(e => e.commandLine === processSelected[0].commandLine);
 
 								if (updatedProcess) {
 
 									let newData = updatedProcess[optionSelected];
+									let hashId = Math.abs(util.getHash(updatedProcess.commandLine));
 
 									if (optionSelected === "cpuLoad" || optionSelected === "cpuAverage") {
 
@@ -942,13 +1022,13 @@ export default class TaskManagerModule extends GenericModule {
 										newData = (newData * MB_CORRECTION_FACTOR).toFixed(2);
 									}
 
-									dataChart['pid' + updatedProcess.pid] = newData;
+									dataChart['pid' + hashId] = newData;
 									dataChart['xValue'] = initTime;
 								}
 							}
 
 							$$("chart-" + self.uid).add(dataChart);
-							$$("chart-" + self.uid).refres();
+							$$("chart-" + self.uid).refresh();
 						}
 					}
 				});
