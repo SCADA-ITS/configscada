@@ -508,7 +508,7 @@ export default class IncidentReportActionPanel {
 				numberOfButtonsToDraw++;
 			}
 
-			if (!self.incidentReport.confirm) {
+			if (!self.incidentReport.confirm && !self.closed) {
 
 				changeIncidentButton = {
 					view: "button",

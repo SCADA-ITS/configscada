@@ -198,7 +198,9 @@ export default class IncidentService extends GenericModule {
 							 i18n.t("LBL_USER") + ": " + incidentReport.currentUser.name,
 				userId: incidentReport.currentUser.id,
 				cameraChecked: false,
-				scenario: incidentReport.scenario 		
+				scenario: incidentReport.scenario,
+				cancelWithoutConfirm: (!incidentReport.confirm && incidentReport.incidentState.finalState) ? true : false
+					
 			}
 			
 			if (incidentReport.incidentType.autoConfirmIncident) {
@@ -308,7 +310,7 @@ export default class IncidentService extends GenericModule {
 						
 							incidentNotification.id = self.incidents.data.notifications[idx].id;
 							
-							if (incidentNotification.recognized) {
+							if (incidentNotification.recognized || incidentNotification.cancelWithoutConfirm) {
 							
 								self.notification.recognize(incidentNotification);
 								

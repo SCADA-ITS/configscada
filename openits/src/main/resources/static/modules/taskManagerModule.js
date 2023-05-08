@@ -5,6 +5,7 @@ import DataTable from "../component/datatable.js";
 import MessageBox from "../component/messageBox.js";
 
 const MB_CORRECTION_FACTOR = 1 / (1024 * 1024);
+const LINES_COLORS = ["#FF0000", "#0000FF", "#008000", "#FFFF00", "#800080", "#FFA500", "#A52A2A", "#C0C0C0", "#EE82EE", "#87CEFA"];
 
 export default class TaskManagerModule extends GenericModule {
 
@@ -251,7 +252,6 @@ export default class TaskManagerModule extends GenericModule {
 						let initHour = timeToInit.getHours().toString();
 						let initMinute = timeToInit.getMinutes().toString();
 						let initTime = initHour.padStart(2, "0") + ":" + initMinute.padStart(2, "0");
-						let LINES_COLORS = ["#FE0E0E", "#FE860E", "#5D6A6E ", "#2236CA", "#0EFE86", "#229FCA", "#860EFE", "#FE0EFE", "#FE0E86", "#FEFE0E"];
 
 						for (let i = 0; i < self.processes.length; i++) {
 
@@ -558,7 +558,32 @@ export default class TaskManagerModule extends GenericModule {
 									gridFieldDataType: {
 										id: 1,
 										name: "string"
-									}
+									},
+									gridFieldBalloons: (function() {
+
+										let fieldBallons = [];
+
+										if (Array.isArray(self.processes) && self.processes.length > 0) {
+
+											for (let i = 0; i < self.processes.length; i++) {
+
+												fieldBallons.push({
+
+													id: self.processes[i].pid,
+													color: LINES_COLORS[i],
+													value: self.processes[i].pid
+												});
+											}
+										}
+
+										return fieldBallons;
+									})(),
+									gridFieldIcons: [
+										{
+											id: 1,
+											badgeColor: true
+										}
+									]
 								},
 								{
 									id: 2,
