@@ -1,23 +1,33 @@
-import GenericModule from "../modules/genericModule.js";
 import { util } from "../lib/util.js";
+import GenericModule from "../modules/genericModule.js";
 
-export default class ExternalApp extends GenericModule{
-	
-	constructor(module, moduleAction, args){
+export default class ExternalApp extends GenericModule {
+
+	constructor(module, moduleAction, args) {
 
 		super(module, moduleAction, args);
-//        this.module = module;
-//		this.args = args;
-//		this.uid = webix.uid();
-    }
+		//        this.module = module;
+		//		this.args = args;
+		//		this.uid = webix.uid();
+	}
 
 	getView() {
 
-		let view = {
-			view:"iframe", 
-			src: util.module.getParamValue(this.module, PARAM_MODULE_TYPE_GENERIC_EXTERNAL_APP_WINDOW_URL) 
-		};
-			
-		return view;
+		let url = util.module.getParamValue(this.module, PARAM_MODULE_TYPE_GENERIC_EXTERNAL_APP_WINDOW_URL);
+		let externalWebTab = util.module.getParamValue(this.module, MODULE_PARAM_EXTERNAL_WEB_TAB);
+
+		if (IS_TRUE(externalWebTab)) {
+
+			window.open(url, "_blank");
+
+		} else {
+
+			let view = {
+				view: "iframe",
+				src: url
+			};
+
+			return view;
+		}
 	}
 }
