@@ -271,7 +271,7 @@ export default class TaskManagerModule extends GenericModule {
 							}
 
 							let hashId = Math.abs(util.getHash(self.processes[i].commandLine));
-							let color = LINES_COLORS[i];
+							let color = LINES_COLORS[i % LINES_COLORS.length];
 
 							listElements.push({
 								id: hashId,
@@ -570,7 +570,7 @@ export default class TaskManagerModule extends GenericModule {
 												fieldBallons.push({
 
 													id: self.processes[i].pid,
-													color: LINES_COLORS[i],
+													color: LINES_COLORS[i % LINES_COLORS.length],
 													value: self.processes[i].pid
 												});
 											}
@@ -847,10 +847,7 @@ export default class TaskManagerModule extends GenericModule {
 										pids: idsArr
 									};
 
-									webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.actionEndpoints.stop, body).then((response) => {
-
-										console.log(response.json());
-									});
+									webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.actionEndpoints.stop, body);
 								}
 							}
 						});
@@ -1009,7 +1006,6 @@ export default class TaskManagerModule extends GenericModule {
 
 										let newData = p[option];
 										let hashId = Math.abs(util.getHash(p.commandLine));
-
 
 										if (option === "cpuLoad" || option === "cpuAverage") {
 
