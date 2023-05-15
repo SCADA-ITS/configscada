@@ -2,7 +2,6 @@ import GenericModule from "../modules/genericModule.js";
 import OpenMap from "../component/map/openMap.js";
 import { util } from "../lib/util.js";
 
-const PARAM_MODULE_TYPE_GENERIC_MAP_WINDOW_MAP_ID = 6;
 const MAP_REST_ENDPOINT = "maps/${id}";
 const DEBUG_MODE = true;
 
@@ -23,7 +22,7 @@ export default class MapModule extends GenericModule {
 		$$("loading-" + this.uid).show();
 		$$(this.uid).hide();
 
-		let mapId = this.module.moduleValues.find(e => e.moduleParam.id === PARAM_MODULE_TYPE_GENERIC_MAP_WINDOW_MAP_ID).value;	
+		let mapId = this.module.moduleValues.find(e => e.moduleParam.id === MODULE_PARAM_MAP_ID).value;	
 		
 		webix.ajax().get(appConfig.restUrl + util.fillTemplate(MAP_REST_ENDPOINT, { id: mapId })).then(function(response) {
 						

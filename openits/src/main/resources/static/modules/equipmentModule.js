@@ -5,9 +5,7 @@ import ListView from "../component/listview.js";
 import TreeView from "../component/treeview.js";
 import OptionDialogBox from "../component/optionDialogBox.js";
 
-const MODULE_TYPE_GENERIC_MULTI_GRID_PARAM_ENTITY_TYPE = 7;
 const TOPIC_ELEMENTS = "/topic/element.>";
-const MODULE_PARAM_CONFIG = 8;
 
 export default class EquipmentModule extends GenericModule {
 
@@ -31,7 +29,7 @@ export default class EquipmentModule extends GenericModule {
 	loadData() {
 
 		let self = this;
-		let entity = this.module.moduleValues.find(e => e.moduleParam.id === MODULE_TYPE_GENERIC_MULTI_GRID_PARAM_ENTITY_TYPE).value;
+		let entity = this.module.moduleValues.find(e => e.moduleParam.id === MODULE_PARAM_ENTITY_TYPE).value;
 		let jsonEquipmentTypesWithGridAssigned = window.em.getAll(EntityType[entity]);
 		let jsonEquipmentTypesWithGridAssignedCopy = undefined;
 
@@ -98,7 +96,7 @@ export default class EquipmentModule extends GenericModule {
 			if (Array.isArray(responseTreeCustoms) && responseTreeCustoms.length > 0) {
 
 				let elementTreeHierarchiesValues;
-				let elementTreeConfig = self.module.moduleValues.find(e => e.moduleParam.id === MODULE_PARAM_CONFIG);
+				let elementTreeConfig = self.module.moduleValues.find(e => e.moduleParam.id === MODULE_PARAM_TYPE_CUSTOM_WINDOW_CONFIG);
 
 				try {
 

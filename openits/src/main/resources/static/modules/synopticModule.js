@@ -2,7 +2,6 @@ import GenericModule from "../modules/genericModule.js";
 import Synoptic from "../component/map/synoptic.js";
 import { util } from "../lib/util.js";
 
-const PARAM_MODULE_TYPE_GENERIC_SYNOPTIC_WINDOW_SYNOPTIC_ID = 4;
 const SYNOPTIC_REST_ENDPOINT = "synoptics/${id}";
 const DEBUG_MODE = false;
 
@@ -23,7 +22,7 @@ export default class SynopticModule extends GenericModule {
 		$$("loading-" + this.uid).show();
 		$$(this.uid).hide();
 
-		let synopticId = this.module.moduleValues.find(e => e.moduleParam.id === PARAM_MODULE_TYPE_GENERIC_SYNOPTIC_WINDOW_SYNOPTIC_ID).value;	
+		let synopticId = this.module.moduleValues.find(e => e.moduleParam.id === MODULE_PARAM_SYNOPTIC_ID).value;	
 		
 		webix.ajax().get(appConfig.restUrl + util.fillTemplate(SYNOPTIC_REST_ENDPOINT, { id: synopticId })).then(function(response) {
 						

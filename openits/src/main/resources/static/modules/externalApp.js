@@ -13,8 +13,8 @@ export default class ExternalApp extends GenericModule {
 
 	getView() {
 
-		let url = util.module.getParamValue(this.module, PARAM_MODULE_TYPE_GENERIC_EXTERNAL_APP_WINDOW_URL);
-		let externalWebTab = util.module.getParamValue(this.module, MODULE_PARAM_EXTERNAL_WEB_TAB);
+		let url = util.module.getParamValue(this.module, MODULE_PARAM_TYPE_GENERIC_EXTERNAL_APP_WINDOW_URL);
+		let externalWebTab = util.module.getParamValue(this.module, MODULE_PARAM_TYPE_GENERIC_EXTERNAL_APP_WINDOW_EXTERNAL_WEB_APP);
 
 		if (IS_TRUE(externalWebTab)) {
 

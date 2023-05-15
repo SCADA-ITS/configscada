@@ -68,6 +68,8 @@ export default class TaskManagerModule extends GenericModule {
 			if (response != null) {
 
 				self.processes = response.json();
+				
+				self.processes.sort((a, b) => (a.commandLine > b.commandLine) ? 1 : ((b.commandLine > a.commandLine) ? -1 : 0));
 
 				let timeToInit = new Date();
 				let initHour = timeToInit.getHours().toString();
@@ -78,20 +80,6 @@ export default class TaskManagerModule extends GenericModule {
 				for (let p of self.processes) {
 
 					let hashId = Math.abs(util.getHash(p.commandLine));
-					let nameProcess = p.main;
-					let jarExtIdx = nameProcess.indexOf(".jar");
-
-					if (jarExtIdx > -1) {
-
-						nameProcess = nameProcess.substring(0, jarExtIdx);
-
-						let fileSeparatorIdx = nameProcess.lastIndexOf("/");
-
-						if (fileSeparatorIdx > -1) {
-
-							nameProcess = nameProcess.substring(fileSeparatorIdx + 1);
-						}
-					}
 
 					self.dataMap.set(
 						hashId,
@@ -148,6 +136,26 @@ export default class TaskManagerModule extends GenericModule {
 				initMaintenance();
 			}
 		});
+		
+		function getProcessName(commandLine) {
+
+			let nameProcess = commandLine;
+			let jarExtIdx = nameProcess.indexOf(".jar");
+
+			if (jarExtIdx > -1) {
+
+				nameProcess = nameProcess.substring(0, jarExtIdx);
+
+				let fileSeparatorIdx = nameProcess.lastIndexOf("/");
+
+				if (fileSeparatorIdx > -1) {
+
+					nameProcess = nameProcess.substring(fileSeparatorIdx + 1);
+				}
+			}
+			
+			return nameProcess;
+		}
 
 
 		function drawComponents() {
@@ -255,21 +263,7 @@ export default class TaskManagerModule extends GenericModule {
 
 						for (let i = 0; i < self.processes.length; i++) {
 
-							let nameProcess = self.processes[i].main;
-							let jarExtIdx = nameProcess.indexOf(".jar");
-
-							if (jarExtIdx > -1) {
-
-								nameProcess = nameProcess.substring(0, jarExtIdx);
-
-								let fileSeparatorIdx = nameProcess.lastIndexOf("/");
-
-								if (fileSeparatorIdx > -1) {
-
-									nameProcess = nameProcess.substring(fileSeparatorIdx + 1);
-								}
-							}
-
+							let nameProcess = getProcessName(self.processes[i].main);
 							let hashId = Math.abs(util.getHash(self.processes[i].commandLine));
 							let color = LINES_COLORS[i % LINES_COLORS.length];
 
@@ -464,21 +458,9 @@ export default class TaskManagerModule extends GenericModule {
 							for (let p of self.processes) {
 
 								let hashId = Math.abs(util.getHash(p.commandLine));
-								let nameProcess = p.main;
-								let jarExtIdx = nameProcess.indexOf(".jar");
-
-								if (jarExtIdx > -1) {
-
-									nameProcess = nameProcess.substring(0, jarExtIdx);
-
-									let fileSeparatorIdx = nameProcess.lastIndexOf("/");
-
-									if (fileSeparatorIdx > -1) {
-
-										nameProcess = nameProcess.substring(fileSeparatorIdx + 1);
-									}
-								}
-
+								
+								let nameProcess = getProcessName(p.main);
+								
 								let status = (Math.floor(dat) - Math.floor(p.updatedAt) > (self.config.defaultStatusTime * 1000)) ? "LBL_DOWN" : "LBL_UP";
 
 								data.push(
@@ -541,20 +523,40 @@ export default class TaskManagerModule extends GenericModule {
 									}
 								},
 								{
-									id: 1,
+									id: 2,
 									extended: false,
 									filtered: false,
 									isEpochMilli: false,
-									isPk: true,
+									isPk: false,
 									label: "LBL_PID",
 									labelTooltip: "LBL_PID",
 									needsTranslation: false,
 									parameterized: false,
-									position: 1,
+									position: 2,
 									required: true,
 									sourceField: "pid",
 									visible: true,
 									widthPx: 95,
+									gridFieldDataType: {
+										id: 2,
+										name: "int"
+									}
+								},
+								{
+									id: 3,
+									extended: false,
+									filtered: false,
+									isEpochMilli: false,
+									isPk: false,
+									label: "LBL_PROCESSES",
+									labelTooltip: "LBL_PROCESSES",
+									needsTranslation: false,
+									parameterized: false,
+									position: 3,
+									required: true,
+									sourceField: "process",
+									visible: true,
+									widthPx: 250,
 									gridFieldDataType: {
 										id: 1,
 										name: "string"
@@ -569,9 +571,9 @@ export default class TaskManagerModule extends GenericModule {
 
 												fieldBallons.push({
 
-													id: self.processes[i].pid,
+													id: getProcessName(self.processes[i].commandLine),
 													color: LINES_COLORS[i % LINES_COLORS.length],
-													value: self.processes[i].pid
+													value: getProcessName(self.processes[i].commandLine)
 												});
 											}
 										}
@@ -586,27 +588,7 @@ export default class TaskManagerModule extends GenericModule {
 									]
 								},
 								{
-									id: 2,
-									extended: false,
-									filtered: false,
-									isEpochMilli: false,
-									isPk: true,
-									label: "LBL_PROCESSES",
-									labelTooltip: "LBL_PROCESSES",
-									needsTranslation: false,
-									parameterized: false,
-									position: 2,
-									required: true,
-									sourceField: "process",
-									visible: true,
-									widthPx: 250,
-									gridFieldDataType: {
-										id: 1,
-										name: "string"
-									}
-								},
-								{
-									id: 3,
+									id: 4,
 									extended: false,
 									filtered: false,
 									isEpochMilli: false,
@@ -615,7 +597,7 @@ export default class TaskManagerModule extends GenericModule {
 									labelTooltip: "LBL_STATUS",
 									needsTranslation: true,
 									parameterized: false,
-									position: 3,
+									position: 4,
 									required: true,
 									sourceField: "status",
 									visible: true,
@@ -648,7 +630,7 @@ export default class TaskManagerModule extends GenericModule {
 									}
 								},
 								{
-									id: 4,
+									id: 5,
 									extended: false,
 									filtered: false,
 									isEpochMilli: false,
@@ -657,31 +639,11 @@ export default class TaskManagerModule extends GenericModule {
 									labelTooltip: "cpuLoad (%)",
 									needsTranslation: false,
 									parameterized: false,
-									position: 4,
+									position: 5,
 									required: true,
 									sourceField: "cpuLoad",
 									widthPx: 150,
 									visible: true,
-									gridFieldDataType: {
-										id: 3,
-										name: "decimal"
-									}
-								},
-								{
-									id: 5,
-									extended: false,
-									filtered: false,
-									isEpochMilli: false,
-									isPk: false,
-									label: "cpuAverage (%)",
-									labelTooltip: "cpuAverage (%)",
-									needsTranslation: false,
-									parameterized: false,
-									position: 5,
-									required: true,
-									sourceField: "cpuAv",
-									visible: true,
-									widthPx: 150,
 									gridFieldDataType: {
 										id: 3,
 										name: "decimal"
@@ -693,13 +655,13 @@ export default class TaskManagerModule extends GenericModule {
 									filtered: false,
 									isEpochMilli: false,
 									isPk: false,
-									label: "heapUsed (MB)",
-									labelTooltip: "heapUsed (MB)",
+									label: "cpuAverage (%)",
+									labelTooltip: "cpuAverage (%)",
 									needsTranslation: false,
 									parameterized: false,
 									position: 6,
 									required: true,
-									sourceField: "heapUsed",
+									sourceField: "cpuAv",
 									visible: true,
 									widthPx: 150,
 									gridFieldDataType: {
@@ -713,13 +675,13 @@ export default class TaskManagerModule extends GenericModule {
 									filtered: false,
 									isEpochMilli: false,
 									isPk: false,
-									label: "heapSize (MB)",
-									labelTooltip: "heapSize (MB)",
+									label: "heapUsed (MB)",
+									labelTooltip: "heapUsed (MB)",
 									needsTranslation: false,
 									parameterized: false,
 									position: 7,
 									required: true,
-									sourceField: "heapSize",
+									sourceField: "heapUsed",
 									visible: true,
 									widthPx: 150,
 									gridFieldDataType: {
@@ -733,13 +695,13 @@ export default class TaskManagerModule extends GenericModule {
 									filtered: false,
 									isEpochMilli: false,
 									isPk: false,
-									label: "heapMax (MB)",
-									labelTooltip: "heapMax (MB)",
+									label: "heapSize (MB)",
+									labelTooltip: "heapSize (MB)",
 									needsTranslation: false,
 									parameterized: false,
 									position: 8,
 									required: true,
-									sourceField: "heapMax",
+									sourceField: "heapSize",
 									visible: true,
 									widthPx: 150,
 									gridFieldDataType: {
@@ -753,11 +715,31 @@ export default class TaskManagerModule extends GenericModule {
 									filtered: false,
 									isEpochMilli: false,
 									isPk: false,
+									label: "heapMax (MB)",
+									labelTooltip: "heapMax (MB)",
+									needsTranslation: false,
+									parameterized: false,
+									position: 9,
+									required: true,
+									sourceField: "heapMax",
+									visible: true,
+									widthPx: 150,
+									gridFieldDataType: {
+										id: 3,
+										name: "decimal"
+									}
+								},
+								{
+									id: 10,
+									extended: false,
+									filtered: false,
+									isEpochMilli: false,
+									isPk: false,
 									label: "LBL_RESTARTS",
 									labelTooltip: "LBL_RESTARTS",
 									needsTranslation: false,
 									parameterized: false,
-									position: 9,
+									position: 10,
 									required: true,
 									sourceField: "restarts",
 									visible: true,
@@ -768,7 +750,7 @@ export default class TaskManagerModule extends GenericModule {
 									}
 								},
 								{
-									id: 10,
+									id: 11,
 									extended: false,
 									filtered: false,
 									isEpochMilli: true,
@@ -777,7 +759,7 @@ export default class TaskManagerModule extends GenericModule {
 									labelTooltip: "LBL_SINCE",
 									needsTranslation: false,
 									parameterized: false,
-									position: 9,
+									position: 11,
 									required: true,
 									sourceField: "since",
 									visible: true,
@@ -788,7 +770,7 @@ export default class TaskManagerModule extends GenericModule {
 									}
 								},
 								{
-									id: 11,
+									id: 12,
 									extended: false,
 									filtered: false,
 									isEpochMilli: false,
@@ -797,7 +779,7 @@ export default class TaskManagerModule extends GenericModule {
 									labelTooltip: "LBL_COMMAND_LINE",
 									needsTranslation: false,
 									parameterized: false,
-									position: 11,
+									position: 12,
 									required: true,
 									sourceField: "commandLine",
 									visible: true,
@@ -908,6 +890,8 @@ export default class TaskManagerModule extends GenericModule {
 					if (response != null) {
 
 						self.processes = response.json();
+						
+						self.processes.sort((a, b) => (a.commandLine > b.commandLine) ? 1 : ((b.commandLine > a.commandLine) ? -1 : 0));
 
 						let optionSelected = $$("richselect-" + self.uid).getValue();
 						let processSelected = self.list.getSelectedItems();
@@ -940,20 +924,8 @@ export default class TaskManagerModule extends GenericModule {
 								}
 
 								let status = (Math.floor(dat) - Math.floor(p.updatedAt) > (self.config.defaultStatusTime * 1000)) ? "LBL_DOWN" : "LBL_UP";
-								let nameProcess = p.main;
-								let jarExtIdx = nameProcess.indexOf(".jar");
-
-								if (jarExtIdx > -1) {
-
-									nameProcess = p.main.substring(0, jarExtIdx);
-
-									let fileSeparatorIdx = nameProcess.lastIndexOf("/");
-
-									if (fileSeparatorIdx > -1) {
-
-										nameProcess = nameProcess.substring(fileSeparatorIdx + 1);
-									}
-								}
+								
+								let nameProcess = getProcessName(p.main);
 
 								data.push(
 									{
