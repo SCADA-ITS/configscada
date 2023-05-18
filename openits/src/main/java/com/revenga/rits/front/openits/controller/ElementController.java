@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.revenga.rits.front.openits.bo.ElementBO;
+import com.revenga.rits.front.openits.model.ElementHistoryDTO;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -259,5 +260,19 @@ public class ElementController {
 				required = true) @PathVariable String priorityId) {
 		
  		return new ResponseEntity<>(elementBO.disablePriority(elementId, priorityId), HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/history/states")
+	@ApiOperation(value = "Get historical equipments states", notes = "Get historical equipments states")
+	public ResponseEntity<Object> getHistoryElementStates(@RequestBody ElementHistoryDTO elementHistory) {
+		
+		return new ResponseEntity<>(elementBO.getHistoryElementStates(elementHistory), HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/history/measures")
+	@ApiOperation(value = "Get historical equipments measures", notes = "Get historical equipments measures")
+	public ResponseEntity<Object> getHistoryMeasures(@RequestBody ElementHistoryDTO elementHistory) {
+		
+		return new ResponseEntity<>(elementBO.getHistoryElementValues(elementHistory), HttpStatus.OK);
 	}
 }

@@ -1,17 +1,22 @@
 package com.revenga.rits.front.openits.bo;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import com.revenga.rits.front.openits.adapter.impl.GraphqlAdapter;
 import com.revenga.rits.front.openits.adapter.impl.VODataSourceAdapter;
+import com.revenga.rits.front.openits.model.ElementHistoryDTO;
 import com.revenga.rits.front.openits.model.EntityChangedUI;
+import com.revenga.rits.front.openits.util.ConversionUtil;
 
 @Service
 public class ElementBO extends GenericBO {
@@ -22,8 +27,11 @@ public class ElementBO extends GenericBO {
 	@Autowired 
 	SessionBO sessionBO;
 	
+	@Autowired
+	ElementTypeBO elementTypeBO;
+	
 	public static final int ENTITY_TYPE_ELEMENT = getPropertyInt("entityType.element");
-
+	
 	@PostConstruct
 	private void initialize() {
 		
@@ -206,5 +214,77 @@ public class ElementBO extends GenericBO {
 
 		return voDataSourceAdapter
 				.putList(VODataSourceAdapter.DATA_SOURCE_DISABLE_PRIORITY, input);
+	}
+	
+	public List<Map<String, Object>> getHistoryElementStates(ElementHistoryDTO elementHistory) {
+		
+		List<Map<String, Object>> historicalElementStates = null;
+		
+		List<Map<String, Object>> objects = ElementHistoryDTO.getObjectListParamHist(elementHistory, ElementHistoryDTO.getStateFields());
+		
+		historicalElementStates = voDataSourceAdapter
+				.getList(VODataSourceAdapter.DATA_SOURCE_GET_HISTORICAL_ELEMENT_STATES, new Object[] { objects });
+		
+		return historicalElementStates;
+	}
+	
+	public List<Map<String, Object>> getHistoryElementValues(ElementHistoryDTO elementHistory) {
+		
+		List<Map<String, Object>> historicalElementValues = null;
+				
+		List<String> elementIds = elementHistory.getElementIds();
+		Long dateIni = elementHistory.getDateIni();
+		Long dateEnd = elementHistory.getDateEnd();
+		
+		if (!CollectionUtils.isEmpty(elementIds) && dateIni < dateEnd) {
+			
+			List<Map<String, Object>> elements = getElements(elementIds);
+			List<String> elementValueIds = new ArrayList<>();
+			
+			if (!CollectionUtils.isEmpty(elements)) {
+				
+				for (Map<String, Object> element : elements) {
+					
+					if (element.get("elementValues") instanceof List) {
+						
+						List<?> elementValues = (List<?>) element.get("elementValues");
+						
+						if (!CollectionUtils.isEmpty(elementValues)) {
+							
+							List<Map<String, Object>> elementValuesMap = elementValues.stream()
+									.map(ConversionUtil::objectToMap).collect(Collectors.toList()); 
+							
+							elementValueIds.addAll(elementValuesMap.stream().filter(e -> {
+
+								Map<String, Object> elementTypeParam = ConversionUtil
+										.objectToMap(e.get("elementTypeParam"));
+
+								if (elementTypeParam != null) {
+
+									Map<String, Object> paramType = ConversionUtil
+											.objectToMap(elementTypeParam.get("paramType"));
+
+									if (paramType != null) {
+
+										return paramType.get("id").equals("ParamType:2");
+									}
+								}
+
+								return false;
+							}).map(e -> String.valueOf(e.get("id"))).collect(Collectors.toList()));
+						}
+					}
+				}
+				
+				if (!CollectionUtils.isEmpty(elementValueIds)) {
+
+					historicalElementValues = voDataSourceAdapter.getList(
+							VODataSourceAdapter.DATA_SOURCE_GET_HISTORICAL_ELEMENT_VALUES,
+							new Object[] { elementValueIds, dateIni, dateEnd });
+				}
+			}
+		}
+		
+		return historicalElementValues;
 	}
 }

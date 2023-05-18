@@ -112,12 +112,12 @@ public class BackOfficeBO {
 		
 		if (backOffice != null) {
 			
-			String sql = DBUtil.getDml(persist);
-			
-			if (!StringUtils.isEmpty(sql)) {
-			
-				try (Connection conn = DriverManager.getConnection(backOffice.getJdbc(), backOffice.getUser(),
-						AES.decrypt(backOffice.getPassword()))) {
+			try (Connection conn = DriverManager.getConnection(backOffice.getJdbc(), backOffice.getUser(),
+					AES.decrypt(backOffice.getPassword()))) {
+				
+				String sql = DBUtil.getDml(conn, persist);
+				
+				if (!StringUtils.isEmpty(sql)) {
 					
 					Table table = new Table(persist.getTableName());
 					
@@ -145,12 +145,12 @@ public class BackOfficeBO {
 							}
 						}
 					}
-					
-				} catch (Exception e) {
-					
-					persistResult.setError(e.getMessage());
-					persistResult.setErrorDescription(ExceptionUtils.getStackTrace(e));
 				}
+				
+			} catch (Exception e) {
+				
+				persistResult.setError(e.getMessage());
+				persistResult.setErrorDescription(ExceptionUtils.getStackTrace(e));
 			}
 		}
 		

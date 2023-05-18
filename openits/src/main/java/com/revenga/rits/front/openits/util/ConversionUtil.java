@@ -1,5 +1,6 @@
 package com.revenga.rits.front.openits.util;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +33,29 @@ public class ConversionUtil {
 	public static String mapToString(Map<String, Object> map) {
 
 		return mapToJson(map).toString();
+	}
+	
+	public static String mapToGraphqlString(Map<String, Object> map) {
+		
+		String str = map.toString();
+		
+		StringBuilder sbItem = new StringBuilder();
+		
+		sbItem.append("{");
+		
+		String fields = str.substring(str.indexOf("{") + 1, str.length() - 1);
+		
+		String[] arrayFields = fields.split(",");
+		
+		for (int i = 0; i < arrayFields.length; i++) {
+			
+			arrayFields[i] = arrayFields[i].trim().replace("=", ":");
+		}
+		
+		sbItem.append(String.join(",", Arrays.asList(arrayFields)));
+		sbItem.append("}");
+		
+		return sbItem.toString();
 	}
 
 	public static Map<String, Object> stringToMap(String jsonStr) throws JsonProcessingException {

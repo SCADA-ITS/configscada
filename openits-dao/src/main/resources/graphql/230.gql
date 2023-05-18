@@ -1,0 +1,12 @@
+{
+  id
+  alarmConfig {
+    id
+  }
+  createdAt
+  activation
+  deactivation
+  targetElement {
+    id
+  }
+}

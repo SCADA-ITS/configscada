@@ -291,6 +291,10 @@ public class VODataSourceAdapter {
 	public static final int DATA_SOURCE_GET_THRESHOLD_BY_STATE_MACHINE = getPropertyInt("get_threshold_by_state_machine");
 	public static final int DATA_SOURCE_UPDATE_THRESHOLD= getPropertyInt("update_threshold");
 	
+	public static final int DATA_SOURCE_GET_HISTORICAL_ELEMENT_STATES = getPropertyInt("get_historical_element_states");
+	public static final int DATA_SOURCE_GET_HISTORICAL_ELEMENT_VALUES = getPropertyInt("get_historical_element_values");
+	public static final int DATA_SOURCE_GET_HISTORICAL_ALARMS = getPropertyInt("get_historical_alarms");
+	
 	private static int getPropertyInt(final String prop) {
 		
 		if (!MapUtils.isEmpty(props)) {
@@ -610,7 +614,8 @@ public class VODataSourceAdapter {
 
 					paramTypeGraphQL = String.format("%s:\"%s\"", paramTypeArray[paramTypePos], (String) objValue);
 
-				} else if (objValue instanceof List<?>) {
+				} 
+				else if (objValue instanceof List<?>) {
 
 					List<?> strList = (List<?>) objValue;
 
@@ -622,7 +627,16 @@ public class VODataSourceAdapter {
 
 							strParam = String.join(",", (List<String>) strList);
 							strParam = String.format("\"%s\"", strParam.replace(",", "\",\""));
-						} else {
+						} 
+						else if (((List<?>) objValue).get(0) instanceof Map) {
+							
+							List<String> items = new ArrayList<>();
+							
+							strList.forEach(obj -> items.add(ConversionUtil.mapToGraphqlString((Map<String, Object>) obj)));
+							
+							strParam = String.join(",", items);
+						}
+						else {
 
 							List<String> otherList = strList.stream().map(Object::toString)
 									.collect(Collectors.toList());
@@ -633,7 +647,13 @@ public class VODataSourceAdapter {
 
 						paramTypeGraphQL = String.format("%s:%s", paramTypeArray[paramTypePos], strParam);
 					}
-				} else {
+				} 
+				else if (objValue instanceof Map) {
+					
+					paramTypeGraphQL = String.format("%s:%s", paramTypeArray[paramTypePos], ConversionUtil.mapToGraphqlString((Map<String, Object>) objValue));
+					
+				} 
+				else {
 
 					if (objValue != null) {
 						

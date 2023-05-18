@@ -10,13 +10,14 @@ import org.springframework.stereotype.Service;
 
 import com.revenga.rits.front.openits.adapter.impl.GraphqlAdapter;
 import com.revenga.rits.front.openits.adapter.impl.VODataSourceAdapter;
+import com.revenga.rits.front.openits.model.ElementHistoryDTO;
 
 @Service
 public class AlarmBO extends GenericBO {
 
 	@Autowired
 	GraphqlAdapter graphqlAdapter;
-
+	
 	@PostConstruct
 	private void initialize() {
 		
@@ -108,6 +109,18 @@ public class AlarmBO extends GenericBO {
 
 		return res;
 
+	}
+	
+	public List<Map<String, Object>> getHistoryAlarms(ElementHistoryDTO elementHistory) {
+		
+		List<Map<String, Object>> historicalElementAlarms = null;
+		
+		List<Map<String, Object>> objects = ElementHistoryDTO.getObjectListParamHist(elementHistory, ElementHistoryDTO.getAlarmFields());
+		
+		historicalElementAlarms = voDataSourceAdapter
+				.getList(VODataSourceAdapter.DATA_SOURCE_GET_HISTORICAL_ALARMS, new Object[] { objects });
+		
+		return historicalElementAlarms;
 	}
 
 }

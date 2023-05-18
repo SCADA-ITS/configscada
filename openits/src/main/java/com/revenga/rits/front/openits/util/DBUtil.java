@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
@@ -127,15 +128,8 @@ public class DBUtil {
 		DatabaseMetaData metaData = conn.getMetaData();
 		String url = metaData.getURL();
 		
-		for (DBType dbType : List.of(DBType.values())) {
-			
-			if (StringUtils.containsIgnoreCase(url, dbType.toString())) {
-				
-				return dbType;
-			}
-		}
-		
-		return null;
+		return List.of(DBType.values()).stream()
+				.filter(dbType -> StringUtils.containsIgnoreCase(url, dbType.toString())).findFirst().orElse(null);	
 	}
 	
 	public static void setColType(Column col, DBType dbType, String dataType) {
@@ -169,7 +163,7 @@ public class DBUtil {
 		}
 	}
 	
-	public static String getDml(Persist persist) {
+	public static String getDml(Connection conn, Persist persist) throws SQLException {
 		
 		String sql = null;
 		
@@ -177,7 +171,7 @@ public class DBUtil {
 			
 			if (persist.getPersistenceType().equals(PersistenceType.INSERT)) {
 				
-				sql = getDmlInsert(persist);
+				sql = getDmlInsert(conn, persist);
 			}
 			else if (persist.getPersistenceType().equals(PersistenceType.UPDATE)) {
 				
@@ -193,9 +187,9 @@ public class DBUtil {
 		
 	}
 	
-	private static String getDmlInsert(Persist persist) {
+	private static String getDmlInsert(Connection conn, Persist persist) throws SQLException {
 
-		String sql = "INSERT INTO %s(id%s) VALUES(" + persist.getId() + "%s)";
+		String sql = "INSERT INTO %s(id%s) VALUES(" + getNextId(conn, persist.getTableName()) + "%s)";
 		
 		if (!CollectionUtils.isEmpty(persist.getPersistValues())) {
 		
@@ -249,6 +243,33 @@ public class DBUtil {
 		}
 		
 		return sql;
+	}
+	
+	public static Integer getNextId(Connection conn, String tableName) throws SQLException {
+		
+		Integer nextId = null;
+		
+		try (Statement stmt = conn.createStatement()) {
+			
+			String sql = null;
+			
+			if (DBType.POSTGRESQL.equals(getDBType(conn))) {
+		
+				sql = String.format("SELECT nextval('%s_id_seq'::regclass) as next_id", tableName);
+			}
+			
+			if (!StringUtils.isEmpty(sql)) {
+			
+				ResultSet rs = stmt.executeQuery(sql);
+
+				if (rs.next()) {
+					
+					nextId = rs.getInt("next_id");
+				}
+			}
+		}
+		
+		return nextId;
 	}
 	
 	private static String getDmlDelete(Persist persist) {

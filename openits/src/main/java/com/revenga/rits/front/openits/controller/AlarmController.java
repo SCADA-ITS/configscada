@@ -21,6 +21,7 @@ import com.revenga.rits.front.openits.bo.AlarmConfigBO;
 import com.revenga.rits.front.openits.bo.AlarmLevelBO;
 import com.revenga.rits.front.openits.bo.AlarmFilteredBO;
 import com.revenga.rits.front.openits.bo.AlarmTypeBO;
+import com.revenga.rits.front.openits.model.ElementHistoryDTO;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -331,5 +332,12 @@ public class AlarmController {
 	public ResponseEntity<Boolean> sendDeactivationAlarms(@RequestBody Object alarmDeactivation) {
 		
 		return new ResponseEntity<>(alarmBO.sendDeactivationAlarms(alarmDeactivation), HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/history")
+	@ApiOperation(value = "Get historical equipments alarms", notes = "Get historical equipments alarms")
+	public ResponseEntity<Object> getHistoryAlarm(@RequestBody ElementHistoryDTO elementHistory) {
+		
+		return new ResponseEntity<>(alarmBO.getHistoryAlarms(elementHistory), HttpStatus.OK);
 	}
 }
