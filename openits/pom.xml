@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.3.0.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.revenga.rits.front</groupId>
 	<artifactId>openits</artifactId>
 	<version>0.9.0</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>openits</name>
 	<description>Open-ITS</description>
 
@@ -27,12 +26,12 @@
 	</properties>
 
 	<dependencies>
-	
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
@@ -53,7 +52,7 @@
 			<artifactId>lombok</artifactId>
 			<scope>provided</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -65,7 +64,7 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.revenga.rits.lib</groupId>
 			<artifactId>encrypt</artifactId>
@@ -77,21 +76,21 @@
 			<version>${openits-dao.version}</version>
 		</dependency>
 		<dependency>
-		    <groupId>org.postgresql</groupId>
-		    <artifactId>postgresql</artifactId>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.dataformat</groupId>
 			<artifactId>jackson-dataformat-xml</artifactId>
 		</dependency>
 		<dependency>
-		    <groupId>org.apache.commons</groupId>
-		    <artifactId>commons-collections4</artifactId>
-		    <version>${commons-collections4.version}</version>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-collections4</artifactId>
+			<version>${commons-collections4.version}</version>
 		</dependency>
 		<dependency>
-		    <groupId>org.apache.commons</groupId>
-		    <artifactId>commons-lang3</artifactId>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
 		</dependency>
 		<!-- Exclude Spring Boot's Default Logging -->
 		<dependency>
@@ -110,28 +109,17 @@
 			<artifactId>spring-boot-starter-log4j2</artifactId>
 		</dependency>
 		<dependency>
-		    <groupId>org.codehaus.groovy</groupId>
-		    <artifactId>groovy-all</artifactId>
-		    <version>3.0.2</version>
-		    <type>pom</type>
+			<groupId>org.codehaus.groovy</groupId>
+			<artifactId>groovy-all</artifactId>
+			<version>3.0.2</version>
+			<type>pom</type>
 		</dependency>
 		<dependency>
-		    <groupId>org.quartz-scheduler</groupId>
-		    <artifactId>quartz</artifactId>
+			<groupId>org.quartz-scheduler</groupId>
+			<artifactId>quartz</artifactId>
 		</dependency>
 	</dependencies>
 
-	<!-- <build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<finalName>openits-v2</finalName>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>-->
 	<build>
 		<finalName>openits</finalName>
 		<pluginManagement>
@@ -149,6 +137,13 @@
 		</pluginManagement>
 
 		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<finalName>openits</finalName>
+				</configuration>
+			</plugin>
 			<plugin>
 				<artifactId>exec-maven-plugin</artifactId>
 				<groupId>org.codehaus.mojo</groupId>
