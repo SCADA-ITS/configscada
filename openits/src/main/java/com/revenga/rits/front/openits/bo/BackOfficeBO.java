@@ -109,48 +109,65 @@ public class BackOfficeBO {
 		
 		PersistResult persistResult = new PersistResult();
 		BackOffice backOffice = getItem(backOfficeId);
+		String sql = null;
 		
 		if (backOffice != null) {
 			
 			try (Connection conn = DriverManager.getConnection(backOffice.getJdbc(), backOffice.getUser(),
 					AES.decrypt(backOffice.getPassword()))) {
 				
-				String sql = DBUtil.getDml(conn, persist);
+				sql = DBUtil.getDml(conn, backOffice, persist);
 				
 				if (!StringUtils.isEmpty(sql)) {
 					
 					Table table = new Table(persist.getTableName());
 					
 					assignColumns(conn, backOffice, table);
-					
-					List<Row> rowsOld = assignRows(conn, backOffice, table, null, "id = " + persist.getId());
-					
-					if (!CollectionUtils.isEmpty(rowsOld) && rowsOld.size() == 1) {
 						
-						try (Statement stmt = conn.createStatement()) {
+					try (Statement stmt = conn.createStatement()) {
 
-							if (stmt.executeUpdate(sql) == 1) {
+						if (stmt.executeUpdate(sql) == 1) {
+							
+							Table tableNew = new Table(persist.getTableName());
+							
+							tableNew.setColumns(table.getColumns());
+							
+							List<Row> rowsNew = assignRows(conn, backOffice, tableNew, null, "id = " + persist.getId());
+							
+							if (!CollectionUtils.isEmpty(rowsNew) && rowsNew.size() == 1) {
 								
-								Table tableNew = new Table(persist.getTableName());
+								List<Row> rowsOld = assignRows(conn, backOffice, table, null, "id = " + persist.getId());
 								
-								tableNew.setColumns(table.getColumns());
-								
-								List<Row> rowsNew = assignRows(conn, backOffice, tableNew, null, "id = " + persist.getId());
-								
-								if (!CollectionUtils.isEmpty(rowsNew) && rowsNew.size() == 1) {
+								if (!CollectionUtils.isEmpty(rowsOld) && rowsOld.size() == 1) {
 									
 									persistResult.setOldRow(rowsOld.get(0));
-									persistResult.setNewRow(rowsNew.get(0));
-								}
+								}		
+								
+								persistResult.setNewRow(rowsNew.get(0));
 							}
 						}
+						else {
+							
+							// TODO: Cascade rows affected???
+						}
 					}
+				}
+				else {
+					
+					throw new Exception(String.format("SQL is empty. BackOffice: %d, Persist: %s", backOfficeId,
+							persist.toString()));
 				}
 				
 			} catch (Exception e) {
 				
-				persistResult.setError(e.getMessage());
+				String message = e.getMessage() + (!StringUtils.isEmpty(sql) ? " SQL: " + sql : "");
+				String stackTrace = ExceptionUtils.getStackTrace(e);
+				
+				persistResult.setError(message);
 				persistResult.setErrorDescription(ExceptionUtils.getStackTrace(e));
+				
+				log.error(message);
+				log.debug(stackTrace);
 			}
 		}
 		
@@ -344,34 +361,41 @@ public class BackOfficeBO {
 									&& e.getRefColumn().getTable().getId().equals(parentTable.getId()))
 							.findFirst().orElse(null);
 					
-					if (colRef != null) {
+					if (colRef != null && !CollectionUtils.isEmpty(idsParent)) {
 					
 						sql += String.format(" WHERE %s IN(%s)", colRef.getName(),
 								String.join(",", idsParent.stream().collect(Collectors.toList())));
 					}
+					else {
+						
+						sql = null;
+					}
 				}
 				
-				if (!StringUtils.isEmpty(conditions)) {
+				if (!StringUtils.isEmpty(sql)) {
 					
-					sql += (!sql.contains("WHERE") ? " WHERE " : " AND ") + conditions;
-				}
-				
-				try (Statement stmt = conn.createStatement()) {
+					if (!StringUtils.isEmpty(conditions)) {
+						
+						sql += (!sql.contains("WHERE") ? " WHERE " : " AND ") + conditions;
+					}
+					
+					try (Statement stmt = conn.createStatement()) {
 
-					ResultSet rs = stmt.executeQuery(sql);
+						ResultSet rs = stmt.executeQuery(sql);
 
-					while (rs.next()) {
-						
-						Row row = new Row();
-						
-						List<RowData> rowData = row.getData();
-						
-						for (Column column : table.getColumns()) {
+						while (rs.next()) {
 							
-							rowData.add(new RowData(column, DBUtil.getStringValueFromResultSet(column, rs)));
+							Row row = new Row();
+							
+							List<RowData> rowData = row.getData();
+							
+							for (Column column : table.getColumns()) {
+								
+								rowData.add(new RowData(column, DBUtil.getStringValueFromResultSet(column, rs)));
+							}
+							
+							rows.add(row);
 						}
-						
-						rows.add(row);
 					}
 				}
 			}

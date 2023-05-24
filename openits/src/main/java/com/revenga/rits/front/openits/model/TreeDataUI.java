@@ -6,11 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.persistence.Entity;
-
 import lombok.Data;
 
-@Entity
 @Data
 public class TreeDataUI implements Serializable {
 

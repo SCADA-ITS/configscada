@@ -3,7 +3,16 @@ import BackOfficeManager from "./backOfficeManager.js";
 import BackOfficeHelper from "./backOfficeHelper.js";
 import { util } from "../../lib/util.js";
 
-export default class EquipmentModule extends GenericModule {
+export default class BackOfficeModule extends GenericModule {
+	
+	static get Config() { 
+		return {
+			DEFAULT_FORM_WIDTH: 900,
+			DEFAULT_FORM_HEIGHT: 700,
+			MODULE_ID: 1044,
+			MODULE_ACTION_OPEN_ID: 104401
+		}
+	}
 
 	constructor(module, moduleAction, args) {
 
@@ -19,18 +28,52 @@ export default class EquipmentModule extends GenericModule {
 		
 		$$("loading-" + self.uid).show();
 		
-		if (this.moduleAction && this.moduleAction.id === this.config.moduleAction.open) {
+		if (self.moduleAction && self.moduleAction.id === BackOfficeModule.Config.MODULE_ACTION_OPEN_ID) {
 
 			backOffice = self.args.backOffice;
 			backOffice.containerId = self.args.containerId; 
 		}
 		else {
 			
+			let id = undefined;
+			let tableName = undefined;
+			let filterColumnName = undefined;
+			let filterColumnValue = undefined;
+			
+			let moduleValueId = this.module.moduleValues.find(e => e.moduleParam.id === MODULE_PARAM_TYPE_GENERIC_BACKOFFICE_WINDOW_ID);
+			
+			if (moduleValueId) {
+				
+				id = moduleValueId.value;
+			}
+			
+			let moduleValueTableName = this.module.moduleValues.find(e => e.moduleParam.id === MODULE_PARAM_TYPE_GENERIC_BACKOFFICE_WINDOW_TABLE_NAME);
+			
+			if (moduleValueTableName) {
+				
+				tableName = moduleValueTableName.value;
+			}
+			
+			let moduleValueFilterColumnName = this.module.moduleValues.find(e => e.moduleParam.id === MODULE_PARAM_TYPE_GENERIC_BACKOFFICE_WINDOW_FILTER_COLUMN_NAME); 
+			
+			if (moduleValueFilterColumnName) {
+				
+				filterColumnName = moduleValueFilterColumnName.value;
+			}
+			
+			let moduleValueFilterColumnValue = this.module.moduleValues.find(e => e.moduleParam.id === MODULE_PARAM_TYPE_GENERIC_BACKOFFICE_WINDOW_FILTER_COLUMN_VALUE); 
+			
+			if (moduleValueFilterColumnValue) {
+				
+				filterColumnValue = moduleValueFilterColumnValue.value;
+			}
+
 			backOffice = {
 				
-				id: this.module.moduleValues.find(e => e.moduleParam.id === MODULE_PARAM_TYPE_GENERIC_BACKOFFICE_WINDOW_ID).value,
-				tableName: this.module.moduleValues.find(e => e.moduleParam.id === MODULE_PARAM_TYPE_GENERIC_BACKOFFICE_WINDOW_TABLE_NAME).value,
-				conditions: this.module.moduleValues.find(e => e.moduleParam.id === MODULE_PARAM_TYPE_GENERIC_BACKOFFICE_WINDOW_CONDITIONS).value,
+				id: id,
+				tableName: tableName,
+				filterColumnName: filterColumnName,
+				filterColumnValue: filterColumnValue,
 				containerId: self.args.containerId 
 			}
 		}
@@ -40,19 +83,31 @@ export default class EquipmentModule extends GenericModule {
 			BackOfficeHelper.getData(backOffice).then((data) => {
 				
 				let backOfficeManager = new BackOfficeManager(backOffice, data);
-					
+		
 				$$("loading-" + self.uid).hide();
-				webix.ui(backOfficeManager.getView(), $$(self.uid));
 				
-				let container = $$(backOffice.containerId);
-
-				if (container) {
+				let isCreating = false;
+				let backOfficeManagerView = backOfficeManager.getView(onCreate);
+				
+				if (backOfficeManagerView && !isCreating) {
 					
-					let currentTableData = data.find(e => e.name === backOffice.tableName);
-					
-					if (currentTableData) {
+					webix.ui(backOfficeManager.getView(), $$(self.uid));
+										
+					if (self.args.onLoad) {
 						
-						util.ui.setTitle(container.config.id, currentTableData.label ?? currentTableData.name);	
+						self.args.onLoad();
+					}	
+				}
+				
+				function onCreate() {
+			
+					const container = $$(backOffice.containerId);
+						
+					if (container) {
+						
+						isCreating = true;
+						
+						container.close();
 					}
 				}
 			});

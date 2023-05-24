@@ -5,6 +5,8 @@ import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
@@ -16,8 +18,10 @@ import org.springframework.util.CollectionUtils;
 import com.revenga.rits.front.openits.model.backoffice.Column;
 import com.revenga.rits.front.openits.model.backoffice.Table.Persist;
 import com.revenga.rits.front.openits.model.backoffice.Table.Persist.PersistValue;
+import com.revenga.rits.front.openitsdao.model.BackOffice;
 
 import lombok.Getter;
+import lombok.NonNull;
 
 public class DBUtil {
 
@@ -52,6 +56,8 @@ public class DBUtil {
 			return dmlMap.get(dmlType);
 		}
 	}
+	
+	private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	
 	protected static final Map<DBType, DmlLibrary> dmlMap;
 	
@@ -104,7 +110,7 @@ public class DBUtil {
 		String value = null;
 		
 		if (column.getColType().equals(ColType.STRING)) {
-		
+			
 			value = rs.getString(column.getName()); 
 		}
 		else if (column.getColType().equals(ColType.INTEGER)) {
@@ -118,6 +124,11 @@ public class DBUtil {
 		else if (column.getColType().equals(ColType.TIMESTAMP)) {
 			
 			value = String.valueOf(rs.getTimestamp(column.getName()).getTime());
+		}
+		
+		if (rs.wasNull()) {
+			
+			value = null;
 		}
 		
 		return value;
@@ -163,23 +174,23 @@ public class DBUtil {
 		}
 	}
 	
-	public static String getDml(Connection conn, Persist persist) throws SQLException {
+	public static String getDml(Connection conn, BackOffice backOffice, Persist persist) throws SQLException {
 		
 		String sql = null;
 		
-		if (persist.getId() != null && !StringUtils.isEmpty(persist.getTableName())) {
+		if (!StringUtils.isEmpty(persist.getTableName())) {
 			
 			if (persist.getPersistenceType().equals(PersistenceType.INSERT)) {
 				
-				sql = getDmlInsert(conn, persist);
+				sql = getDmlInsert(conn, backOffice, persist);
 			}
 			else if (persist.getPersistenceType().equals(PersistenceType.UPDATE)) {
 				
-				sql = getDmlUpdate(persist);
+				sql = getDmlUpdate(backOffice, persist);
 			}
 			else if (persist.getPersistenceType().equals(PersistenceType.DELETE)) {
 				
-				sql = getDmlDelete(persist);
+				sql = getDmlDelete(backOffice, persist);
 			}
 		}
 		
@@ -187,41 +198,46 @@ public class DBUtil {
 		
 	}
 	
-	private static String getDmlInsert(Connection conn, Persist persist) throws SQLException {
-
-		String sql = "INSERT INTO %s(id%s) VALUES(" + getNextId(conn, persist.getTableName()) + "%s)";
-		
-		if (!CollectionUtils.isEmpty(persist.getPersistValues())) {
-		
-			StringBuilder sbColNames = new StringBuilder();
-			StringBuilder sbValues = new StringBuilder();
-			
-			for (PersistValue persistValue : persist.getPersistValues()) {
-				
-				String valueAddon = persistValue.getColType().equals(ColType.STRING) ? "'" : "";
-				
-				sbColNames.append(", ");
-				sbColNames.append(persistValue.getColName());
-				
-				sbValues.append(", ");
-				sbValues.append(valueAddon + persistValue.getNewValue() + valueAddon); 
-			}
-			
-			sql = String.format(sql, persist.getTableName(), sbColNames.toString(), sbValues.toString());
-		}
-		else {
-			
-			sql = String.format(sql, persist.getTableName(), "", "");
-		}
-		
-		return sql;
-	}
-	
-	private static String getDmlUpdate(Persist persist) {
+	private static String getDmlInsert(Connection conn, BackOffice backOffice, Persist persist) throws SQLException {
 
 		String sql = null;
 		
-		if (!CollectionUtils.isEmpty(persist.getPersistValues())) {
+		persist.setId(getNextId(conn, backOffice, persist));
+		
+		if (persist.getId() != null) {
+			
+			sql = "INSERT INTO %s.%s(id%s) VALUES(" + persist.getId() + "%s)";
+			
+			if (!CollectionUtils.isEmpty(persist.getPersistValues())) {
+			
+				StringBuilder sbColNames = new StringBuilder();
+				StringBuilder sbValues = new StringBuilder();
+				
+				for (PersistValue persistValue : persist.getPersistValues()) {
+					
+					sbColNames.append(", ");
+					sbColNames.append(persistValue.getColName());
+					
+					sbValues.append(", ");
+					sbValues.append(getValue(persistValue.getColType(), persistValue.getNewValue())); 
+				}
+				
+				sql = String.format(sql, backOffice.getSchema(), persist.getTableName(), sbColNames.toString(), sbValues.toString());
+			}
+			else {
+				
+				sql = String.format(sql, backOffice.getSchema(), persist.getTableName(), "", "");
+			}
+		}
+		
+		return sql;
+	}
+	
+	private static String getDmlUpdate(BackOffice backOffice, Persist persist) {
+
+		String sql = null;
+		
+		if (!CollectionUtils.isEmpty(persist.getPersistValues()) && persist.getId() != null) {
 		
 			List<String> updateValues = new ArrayList<>();
 			
@@ -229,15 +245,13 @@ public class DBUtil {
 				
 				if (!StringUtils.equals(persistValue.getOldValue(), persistValue.getNewValue())) {
 					
-					String valueAddon = persistValue.getColType().equals(ColType.STRING) ? "'" : "";
-					
-					updateValues.add(persistValue.getColName() + " = " + valueAddon + persistValue.getNewValue() + valueAddon);
+					updateValues.add(persistValue.getColName() + " = " + getValue(persistValue.getColType(), persistValue.getNewValue()));
 				}
 			}
 			
 			if (!CollectionUtils.isEmpty(updateValues)) {
 		
-				sql = String.format("UPDATE %s SET %s WHERE id = %d", persist.getTableName(),
+				sql = String.format("UPDATE %s.%s SET %s WHERE id = %d", backOffice.getSchema(), persist.getTableName(),
 						String.join(",", updateValues), persist.getId());
 			}
 		}
@@ -245,7 +259,7 @@ public class DBUtil {
 		return sql;
 	}
 	
-	public static Integer getNextId(Connection conn, String tableName) throws SQLException {
+	public static Integer getNextId(Connection conn, BackOffice backOffice, Persist persist) throws SQLException {
 		
 		Integer nextId = null;
 		
@@ -255,7 +269,8 @@ public class DBUtil {
 			
 			if (DBType.POSTGRESQL.equals(getDBType(conn))) {
 		
-				sql = String.format("SELECT nextval('%s_id_seq'::regclass) as next_id", tableName);
+				sql = String.format("SELECT nextval('%s.%s_id_seq'::regclass) as next_id", backOffice.getSchema(),
+						persist.getTableName());
 			}
 			
 			if (!StringUtils.isEmpty(sql)) {
@@ -272,8 +287,32 @@ public class DBUtil {
 		return nextId;
 	}
 	
-	private static String getDmlDelete(Persist persist) {
+	private static String getDmlDelete(BackOffice backOffice, Persist persist) {
 		
-		return String.format("DELETE FROM %s WHERE id = %d", persist.getTableName(), persist.getId());
+		String sql = null;
+		
+		if (persist.getId() != null) {
+			
+			sql = String.format("DELETE FROM %s.%s WHERE id = %d", backOffice.getSchema(), persist.getTableName(), persist.getId());
+		}
+		
+		return sql;
+	}
+	
+	@NonNull
+	private static String getValue(ColType colType, String value) {
+		
+		String formattedValue = value;
+		
+		if (colType.equals(ColType.STRING)) {
+			
+			formattedValue = "'" + value + "'";
+		}
+		else if (colType.equals(ColType.TIMESTAMP)) {
+			
+			formattedValue = "'" + sdf.format(new Timestamp(Long.valueOf(value))) + "'";
+		}
+		
+		return formattedValue;
 	}
 }

@@ -4,11 +4,8 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.persistence.Entity;
-
 import lombok.Data;
 
-@Entity
 @Data
 public class EntityChangedUI implements Serializable {
 	

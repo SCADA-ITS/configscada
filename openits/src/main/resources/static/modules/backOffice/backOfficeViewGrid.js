@@ -1,6 +1,9 @@
+import BackOfficeModule from "./backOfficeModule.js";
 import BackOfficeView from "./backOfficeView.js";
 import BackOfficeHelper from "./backOfficeHelper.js";
 import DataTable from "../../component/datatable.js";
+import MessageBox from "../../component/messageBox.js";
+import { util } from "../../lib/util.js";
 
 export default class BackOfficeViewGrid extends BackOfficeView {
 	
@@ -11,6 +14,12 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 		super(backOffice, data, currentTableData);
 		
 		this.dataTable = undefined;
+		
+		if (backOffice.containerId) {
+			
+			util.ui.centerWindow(backOffice.containerId, backOffice.isModal ? 20: 0);
+			util.ui.setTitle(backOffice.containerId, currentTableData.label ?? currentTableData.name);	
+		}
 	}
 	
 	getView() {
@@ -53,7 +62,7 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 	//					{ gridOption: { id: 2 }, value: "true" },
 	//					{ gridOption: { id: 3 }, value: "2" },
 	//					{ gridOption: { id: 4 }, value: "asc" },
-						{ gridOption: { id: 7 }, value: "true" },
+						{ gridOption: { id: 7 }, value: "false" },
 						{ gridOption: { id: 8 }, value: "false" },
 						{ gridOption: { id: 9 }, value: "true" },
 						{ gridOption: { id: 10 }, value: "true" },
@@ -68,7 +77,7 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 		
 					let metadata = {
 						filter: true,
-						label: self.currentTableData.label,
+						label: self.currentTableData.label ?? self.currentTableData.name,
 						visible: true,
 						gridOptionValues: defaultGridOptionValues,
 						gridFields: [],
@@ -87,9 +96,9 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 							
 							let filterColumnName = undefined;
 							
-							if (self.backOffice.conditions) {
-								
-								filterColumnName = self.backOffice.conditions.trim().split("=")[0].trim();
+							if (self.backOffice.filterColumn && self.backOffice.filterColumnValue) {
+											
+								filterColumnName = self.backOffice.filterColumn.name;
 							}
 								
 							if (!filterColumnName || column.name != filterColumnName) {
@@ -178,49 +187,208 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 					events[DataTable.EventTypes.ON_COMMAND_EXEC] = [];
 		
 					events[DataTable.EventTypes.ON_COMMAND_EXEC].push(
-						{
-							commandId: 1,
-							function: () => {					
-									
-								if ($$("backOffice-view-" + self.uid) && self.dataTable) {
-									
-									BackOfficeHelper.getData(self.backOffice).then((data) => {
-										
-										const selectedIds = self.dataTable.getSelectedIds();
-										
-										self.data = data;
-										self.currentTableData = data.find(e => e.name === self.backOffice.tableName);
-	
-										self.dataTable = getDataTable();
-										
-										if (self.dataTable) {
-										
-											let viewDataTable = {
+						
+						{ commandId: BackOfficeViewGrid.GRID_COMMANDS.refresh, function: cmdRefresh },
+						{ commandId: BackOfficeViewGrid.GRID_COMMANDS.new, function: cmdNew },
+						{ commandId: BackOfficeViewGrid.GRID_COMMANDS.edit, function: cmdEdit },
+						{ commandId: BackOfficeViewGrid.GRID_COMMANDS.delete, function: cmdDelete }
+					);
+					
+					function cmdRefresh() {
+						
+						if ($$("backOffice-view-" + self.uid) && self.dataTable) {
 							
-												id: "backOffice-view-" + self.uid,
-												rows: self.dataTable.getView()
+							BackOfficeHelper.getData(self.backOffice).then((data) => {
+								
+								const selectedIds = self.dataTable.getSelectedIds();
+								
+								self.data = data;
+								self.currentTableData = data.find(e => e.name === self.backOffice.tableName);
+
+								self.dataTable = getDataTable();
+								
+								if (self.dataTable) {
+								
+									let viewDataTable = {
+					
+										id: "backOffice-view-" + self.uid,
+										rows: self.dataTable.getView()
+									}
+									
+									viewDataTable.rows.push({
+										view: "template",
+										height: 1,
+										on: {
+											onAfterRender: function() {
+							
+												self.dataTable.callbacks()
+											}
+										}	
+									});
+									
+									webix.ui(viewDataTable, $$("backOffice-view-" + self.uid));
+									
+									self.dataTable.select(selectedIds);	
+								}
+							});
+						}
+						
+					}
+					
+					function cmdNew() {
+						
+						let persistValues = [];
+						
+						if (self.backOffice.filterColumn && self.backOffice.filterColumnValue) {
+											
+							persistValues.push({
+								colName: self.backOffice.filterColumn.name,
+								oldValue: undefined,
+								newValue: self.backOffice.filterColumnValue,
+								colType: self.backOffice.filterColumn.colType
+							});
+						}
+						
+						BackOfficeHelper.insertData(self.backOffice, self.currentTableData, persistValues).then((persistResult) => {
+										
+							if (!persistResult.error) {
+								
+								if (persistResult.newRow && Array.isArray(persistResult.newRow.data)) {
+									
+									const columnId = self.currentTableData.columns.find(e => e.name === "id");
+									
+									if (columnId) {
+										
+										const data = persistResult.newRow.data.find(e => e.columnId === columnId.id);
+										
+										if (data && data.value) {
+											
+											const columnIdValue = data.value;
+								
+											edit(columnIdValue, function () {
+							
+												BackOfficeHelper.deleteData(self.backOffice, self.currentTableData, columnIdValue).then((persistResult) => {
+													
+													if (persistResult.error) {
+														
+														log.error(persistResult.error + "\n" + persistResult.errorDescription);
+														
+														(new MessageBox (MessageBox.ERROR, i18n.t("LBL_BACKOFFICE_ERROR_SAVING_CHANGES_ON") + " " + (self.currentTableData.alias ?? self.currentTableData.name), persistResult.error + "\n" + persistResult.errorDescription, null, null)).show();
+													}	
+												});
+											});			
+										}	
+									}
+								}
+							}
+							else {
+								
+								log.error(persistResult.error + "\n" + persistResult.errorDescription);
+								
+								(new MessageBox (MessageBox.ERROR, i18n.t("LBL_BACKOFFICE_ERROR_SAVING_CHANGES_ON") + " " + (self.currentTableData.alias ?? self.currentTableData.name), persistResult.error + "\n" + persistResult.errorDescription, null, null)).show();
+							}
+						});
+					}
+					
+					function cmdEdit(ids) {
+						
+						if (Array.isArray(ids) && ids.length > 0) {
+						
+							edit(ids[0]);
+						}
+					}
+					
+					function cmdDelete(ids) {
+						
+						if (Array.isArray(ids) && ids.length > 0) {
+							
+							(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_BACKOFFICE_DELETE_CONFIRM") + " " + (self.currentTableData.alias ?? self.currentTableData.name), null, onAccept , null)).show();
+							
+							function onAccept() {
+								
+								let recordsToDelete = ids.length;
+								let error = "";
+								
+								while (recordsToDelete > 0) {
+									
+									recordsToDelete--;
+									
+									BackOfficeHelper.deleteData(self.backOffice, self.currentTableData, ids[recordsToDelete]).then((persistResult) => {
+													
+										if (persistResult.error) {
+		
+											error += "\nError id: "+ ids[recordsToDelete] + " => " +  persistResult.error + "\n" + persistResult.errorDescription;
+										}
+										
+										if (!recordsToDelete) {
+											
+											if (error) {
+												
+												(new MessageBox (MessageBox.ERROR, i18n.t("LBL_BACKOFFICE_ERROR_DELETING_RECORDS") + " " + (self.currentTableData.alias ?? self.currentTableData.name), error, null, null)).show();				
 											}
 											
-											viewDataTable.rows.push({
-												view: "template",
-												height: 1,
-												on: {
-													onAfterRender: function() {
-									
-														self.dataTable.callbacks()
-													}
-												}	
-											});
-											
-											webix.ui(viewDataTable, $$("backOffice-view-" + self.uid));
-											
-											self.dataTable.select(selectedIds);	
+											self.refresh();
 										}
-									});
+									});	
 								}
 							}
 						}
-					);
+					}
+					
+					function edit(id, onCancel) {
+						
+						const module = window.em.getByField(EntityType.MODULE, "id", BackOfficeModule.Config.MODULE_ID);
+
+						if (module) {
+							
+							const winId = util.ui.loadWindow(undefined, { id: self.uid }, BackOfficeModule.Config.DEFAULT_FORM_HEIGHT, 
+																BackOfficeModule.Config.DEFAULT_FORM_WIDTH, true);
+							const args = {
+								backOffice: {
+									id: self.backOffice.id,
+									tableName: self.currentTableData.name,
+									filterColumnName: "id",
+									filterColumnValue: id,
+									isModal: true,
+									onAccept: onAccept,
+									onCancel: onCancel
+								},
+								containerId: winId,
+								onLoad: onLoad
+							}
+	
+							util.module.open(module, {id: BackOfficeModule.Config.MODULE_ACTION_OPEN_ID }, VIEW_TYPE_CUSTOM, drawContent, args);
+						
+							function drawContent(view) {
+	
+								webix.ui(view, $$(self.uid));
+							}
+							
+							function onLoad() {
+								
+								util.ui.resizeWindow(winId, BackOfficeModule.Config.DEFAULT_FORM_WIDTH, BackOfficeModule.Config.DEFAULT_FORM_HEIGHT);
+								util.ui.centerWindow(winId);
+								
+								let windowTitle = i18n.t("LBL_EDIT") + " -  "; 
+			
+								if (args.backOffice.onCancel) {
+								
+									windowTitle = i18n.t("LBL_NEW") + " - ";
+								}
+								
+								windowTitle += (self.currentTableData.label ?? self.currentTableData.name);
+								
+								util.ui.setTitle(args.backOffice.containerId, windowTitle);	
+							}
+							
+							function onAccept(values) {
+								
+								log.debug(values);
+								
+								self.refresh();
+							}
+						}
+					}
 					
 					return events;	
 				}
@@ -245,9 +413,9 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 										
 										let filterColumnName = undefined;
 							
-										if (self.backOffice.conditions) {
+										if (self.backOffice.filterColumn && self.backOffice.filterColumnValue) {
 											
-											filterColumnName = self.backOffice.conditions.trim().split("=")[0].trim();
+											filterColumnName = self.backOffice.filterColumn.name;
 										}
 											
 										if (!filterColumnName || column.name != filterColumnName) {
@@ -263,8 +431,6 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 												record[column.name] = e.value;	
 											}	
 										}
-										
-										
 									} 
 								});
 								

@@ -5,11 +5,8 @@ import java.time.Instant;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 
-import javax.persistence.Entity;
-
 import lombok.Data;
 
-@Entity
 @Data
 public class ServerTimeUI implements Serializable {
 

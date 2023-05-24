@@ -4,13 +4,10 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
-import javax.persistence.Entity;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Data;
 
-@Entity
 @Data
 public class MapUI implements Serializable {
 

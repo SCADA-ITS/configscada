@@ -221,6 +221,14 @@
 	font-family: Roboto;
 }
 
+.global-header-mdi {
+	width: 100px !important;
+	padding: 10px 30px;
+	font-size: 40px !important;
+	color: var(--blue-text-default) !important;
+}
+
+
 /* Loading image */
 
 .empty-app-inner {

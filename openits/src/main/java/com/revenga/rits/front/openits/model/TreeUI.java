@@ -3,14 +3,11 @@ package com.revenga.rits.front.openits.model;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.Entity;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.revenga.rits.front.openitsdao.model.Tree;
 
 import lombok.Data;
 
-@Entity
 @Data
 public class TreeUI implements Serializable {
 

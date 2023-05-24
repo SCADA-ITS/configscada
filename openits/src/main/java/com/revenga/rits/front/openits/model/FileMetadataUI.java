@@ -2,11 +2,8 @@ package com.revenga.rits.front.openits.model;
 
 import java.io.Serializable;
 
-import javax.persistence.Entity;
-
 import lombok.Data;
 
-@Entity
 @Data
 public class FileMetadataUI implements Serializable {
 

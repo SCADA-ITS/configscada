@@ -1,6 +1,7 @@
 import { util } from "../../lib/util.js";
 
 const REST_BACKOFFICE_TABLE = "backoffice/${backOfficeId}/table/${tableName}";
+const REST_BACKOFFICE_TABLE_PERSIST = "backoffice/${backOfficeId}/persist";
 const COL_NAMES_REF = [/name/i, /description/i, /alias/i];
 
 export default class BackOfficeHelper {
@@ -9,6 +10,10 @@ export default class BackOfficeHelper {
 	static get DB_TYPE_INTEGER() { return "INTEGER" }
 	static get DB_TYPE_DECIMAL() { return "DECIMAL" }
 	static get DB_TYPE_TIMESTAMP() { return "TIMESTAMP" }
+	
+	static get PERSISTENCE_TYPE_INSERT() { return "INSERT" }
+	static get PERSISTENCE_TYPE_UPDATE() { return "UPDATE" }
+	static get PERSISTENCE_TYPE_DELETE() { return "DELETE" }
 		
 	static getDBTypes(name) {
 		
@@ -29,14 +34,73 @@ export default class BackOfficeHelper {
 		const url = appConfig.restUrl + 
 						util.fillTemplate(REST_BACKOFFICE_TABLE, { backOfficeId: backOffice.id, tableName: backOffice.tableName });
 			
-		if (backOffice.conditions) {
+		if (backOffice.filterColumnName && backOffice.filterColumnValue) {
+			
+			const conditions = backOffice.filterColumnName + "=" + backOffice.filterColumnValue
 		
-			response = await webix.ajax().headers(CONTENT_TYPE_JSON).post(url, backOffice.conditions);
+			response = await webix.ajax().headers(CONTENT_TYPE_JSON).post(url, conditions);
 		}
 		else {
 		
 			response = await webix.ajax().get(url);	
 		}
+		
+		return response ? response.json() : undefined;
+	}
+	
+	static async insertData(backOffice, table, persistValues) {
+		
+		let response;
+		
+		const body = {
+			id: undefined,
+			persistValues: persistValues,
+			persistenceType: BackOfficeHelper.PERSISTENCE_TYPE_INSERT,
+			tableName: table.name
+		}
+		
+		const url = appConfig.restUrl + 
+						util.fillTemplate(REST_BACKOFFICE_TABLE_PERSIST, { backOfficeId: backOffice.id });
+			
+		response = await webix.ajax().headers(CONTENT_TYPE_JSON).post(url, body);
+		
+		return response ? response.json() : undefined;
+	}
+	
+	static async updateData(backOffice, table, persistValues, id) {
+		
+		let response;
+		
+		const body = {
+			id: id,
+			persistValues: persistValues,
+			persistenceType: BackOfficeHelper.PERSISTENCE_TYPE_UPDATE,
+			tableName: table.name
+		}
+		
+		const url = appConfig.restUrl + 
+						util.fillTemplate(REST_BACKOFFICE_TABLE_PERSIST, { backOfficeId: backOffice.id });
+			
+		response = await webix.ajax().headers(CONTENT_TYPE_JSON).post(url, body);
+		
+		return response ? response.json() : undefined;
+	}
+	
+	static async deleteData(backOffice, table, id) {
+		
+		let response;
+		
+		const body = {
+			id: id,
+			persistValues: undefined,
+			persistenceType: BackOfficeHelper.PERSISTENCE_TYPE_DELETE,
+			tableName: table.name
+		}
+		
+		const url = appConfig.restUrl + 
+						util.fillTemplate(REST_BACKOFFICE_TABLE_PERSIST, { backOfficeId: backOffice.id });
+			
+		response = await webix.ajax().headers(CONTENT_TYPE_JSON).post(url, body);
 		
 		return response ? response.json() : undefined;
 	}
@@ -105,18 +169,24 @@ export default class BackOfficeHelper {
 						refColumnName = refTable.columns.find(col => col.name.match(/name/i));
 					}
 			
-					if (refColumnName && Array.isArray(refTable.rows) && refTable.rows.length > 0) {
-										
-						const row = refTable.rows.find(row => row.data.find(dat => dat.columnId === column.refColumn.id && dat.value == valueId) != null);
+					if (refColumnName) {
+						
+						refColumnValue = webix.copy(refColumnName);
+						
+						if (Array.isArray(refTable.rows) && refTable.rows.length > 0) {
+							
+							const row = refTable.rows.find(row => row.data.find(dat => dat.columnId === column.refColumn.id && dat.value == valueId) != null);
 					
-						if (row) {
-							
-							const rowColumnValue = row.data.find(dat => dat.columnId === refColumnName.id);
-							
-							refColumnValue = webix.copy(refColumnName);
-							
-							refColumnValue.value = rowColumnValue.value;  
-						}	
+							if (row) {
+								
+								const rowColumnValue = row.data.find(dat => dat.columnId === refColumnName.id);
+								
+								if (rowColumnValue) {
+								
+									refColumnValue.value = rowColumnValue.value;	
+								}
+							}
+						}
 					}
 				}
 			}
@@ -139,7 +209,19 @@ export default class BackOfficeHelper {
 				
 				if (rowData) {
 					
-					value = rowData.value;
+					if (column.colType === BackOfficeHelper.DB_TYPE_TIMESTAMP ||
+					    column.colType === BackOfficeHelper.DB_TYPE_INTEGER) {
+						
+						value = parseInt(rowData.value);
+					}
+					else if (column.colType === BackOfficeHelper.DB_TYPE_DECIMAL) {
+						
+						value = parseFloat(rowData.value);
+					}
+					else {
+						
+						value = rowData.value;	
+					}
 				}
 			}
 		}

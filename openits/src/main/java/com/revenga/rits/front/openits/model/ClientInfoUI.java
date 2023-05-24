@@ -2,12 +2,9 @@ package com.revenga.rits.front.openits.model;
 
 import java.io.Serializable;
 
-import javax.persistence.Entity;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-@Entity
 @Data
 public class ClientInfoUI implements Serializable {
 

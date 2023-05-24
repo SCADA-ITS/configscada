@@ -1376,19 +1376,14 @@ export default class DataTable {
 		
 		let self = this;
 		let metadata = this.metadata;
-		let resultCommands = this.getGridOptions(GridOptions.TB_ACTIONS_BUTTONS_COMMANDS);
 
-		if (metadata.gridCommands && resultCommands) {
+		if (metadata && metadata.gridCommands) {
 
+			let gridCommand = metadata.gridCommands.find(e => e.id === gridCommandId);
+			
+			if (gridCommand) {
 
-			if (ctxMenuData.length > 0) {
-				
-				let gridCommand = metadata.gridCommands.find(e => e.id === gridCommandId);
-				
-				if (gridCommand) {
-
-					self.open_module(gridCommand);
-				}
+				self.open_module(gridCommand);
 			}
 		}
 	}
