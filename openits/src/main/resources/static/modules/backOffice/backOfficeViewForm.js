@@ -114,7 +114,7 @@ export default class BackOfficeViewForm extends BackOfficeView {
 					body: getInfoView(),
 				});
 				
-				if (!self.backOffice.onCancel) {
+				if (!self.backOffice.noReferTables) {
 					
 					pushReferTables();	
 				}
@@ -423,6 +423,7 @@ export default class BackOfficeViewForm extends BackOfficeView {
 																filterColumnName: "id",
 																filterColumnValue: id,
 																isModal: true,
+																noReferTables: true,
 																onAccept: onAccept,
 																onCancel: onCancel
 															},

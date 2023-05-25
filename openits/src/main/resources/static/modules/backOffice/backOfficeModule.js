@@ -1,7 +1,6 @@
 import GenericModule from "../genericModule.js";
 import BackOfficeManager from "./backOfficeManager.js";
 import BackOfficeHelper from "./backOfficeHelper.js";
-import { util } from "../../lib/util.js";
 
 export default class BackOfficeModule extends GenericModule {
 	
