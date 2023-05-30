@@ -35,6 +35,8 @@ import lombok.extern.log4j.Log4j2;
 @Service
 public class GroovyManager {
 	
+	public enum GroovyType { ADAPTER, BACKOFFICE }
+	
 	Map<String, Pair<GroovyObject, Long>> groovyInstances;
 	
 	@Autowired
@@ -60,7 +62,7 @@ public class GroovyManager {
 		this.groovyInstances = Collections.synchronizedMap(new HashMap<>());
 	}
 
-	public GroovyObject getGroovyObject(String groovyFile) {
+	public GroovyObject getGroovyObject(String groovyFile, GroovyType groovyType) {
 		
 		GroovyObject groovyObject = null;
 		
@@ -93,7 +95,7 @@ public class GroovyManager {
 							
 							log.debug("Groovy file " + groovyFile + " changes at " + cal.getTime().toString());
 					
-							groovyObject = loadGroovy(groovyFile);	
+							groovyObject = loadGroovy(groovyFile, groovyType);	
 						}
 					}
 				}
@@ -101,7 +103,7 @@ public class GroovyManager {
 			
 			if (groovyObject == null) {
 				
-				groovyObject = loadGroovy(groovyFile);
+				groovyObject = loadGroovy(groovyFile, groovyType);
 			}
 		
 		} catch (IOException | URISyntaxException e) {
@@ -112,7 +114,7 @@ public class GroovyManager {
 		return groovyObject;
 	}
 	
-	private GroovyObject loadGroovy(String groovyFile) {
+	private GroovyObject loadGroovy(String groovyFile, GroovyType groovyType) {
 		
 		GroovyObject groovyObject = null;
 		
@@ -126,8 +128,17 @@ public class GroovyManager {
 			
 			Class<?> groovy = classLoader.parseClass(strGroovy); 
 
-			groovyObject = (GroovyObject) groovy.getDeclaredConstructor(CacheManager.class, VO2UIAdapter.class, org.apache.logging.log4j.Logger.class)
-					.newInstance(cacheManager, vo2uiAdapter, log);
+			if (groovyType.equals(GroovyType.ADAPTER)) {
+				
+				groovyObject = (GroovyObject) groovy.getDeclaredConstructor(CacheManager.class, VO2UIAdapter.class, org.apache.logging.log4j.Logger.class)
+						.newInstance(cacheManager, vo2uiAdapter, log);	
+			}
+			else if (groovyType.equals(GroovyType.BACKOFFICE)) {
+				
+				groovyObject = (GroovyObject) groovy.getDeclaredConstructor(org.apache.logging.log4j.Logger.class)
+						.newInstance(log);
+			}
+			
 			
 			if (groovyObject != null) {
 			

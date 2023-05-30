@@ -1,11 +1,18 @@
 package com.revenga.rits.front.openits.model.backoffice;
 
 import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import com.revenga.rits.front.openits.util.DBUtil.ColType;
-import com.revenga.rits.front.openits.util.DBUtil.PersistenceType;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
+
+import com.revenga.rits.front.openits.model.backoffice.Column.ColType;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -17,54 +24,103 @@ public class Table extends Basic {
 	
 	private static final long serialVersionUID = 6887327590735622987L;
 	
+	public enum PersistenceType { INSERT, UPDATE, DELETE }
+	
+//	@Data
+//	public static class TableMetadata implements Serializable {
+//
+//		private static final long serialVersionUID = 5331438666910347282L;
+//		
+//		@Data
+//		public static class Tab implements Serializable {
+//			
+//			private static final long serialVersionUID = 4199740125852638602L;
+//			
+//			private String label;
+//			private List<Field> fields;
+//		}
+//		
+//		@Data
+//		public static class Field implements Serializable {
+//			
+//			private static final long serialVersionUID = -793822838493352111L;
+//			
+//			private String name;
+//		}
+//		
+//		@Data
+//		public static class Grid implements Serializable {
+//			
+//			private static final long serialVersionUID = -3673069280484549825L;
+//			
+//			private List<Field> fields;
+//		}
+//		
+//		private String mdiIcon;
+//		private Integer width;
+//		private Integer height;
+//		private List<Tab> tabs;
+//		
+//		private List<Field> fields;
+//	}
+	
 	@Data
-	public static class TableMetadata implements Serializable {
+	@EqualsAndHashCode(callSuper=false)
+	public static class Trigger extends Basic {
+		
+		private static final long serialVersionUID = 7426288403894220149L;
+		private String groovy;
+		
+		public enum Type { BEFORE, AFTER }
+		
+		private static final Map<Pair<Trigger.Type, PersistenceType>, String> triggerMethod = new HashMap<>() {
 
-		private static final long serialVersionUID = 5331438666910347282L;
-		
-		@Data
-		public static class Tab implements Serializable {
-			
-			private static final long serialVersionUID = 4199740125852638602L;
-			
-			private String label;
-			private List<Field> fields;
-		}
-		
-		@Data
-		public static class Field implements Serializable {
-			
-			private static final long serialVersionUID = -793822838493352111L;
-			
-			private String name;
-		}
-		
-		@Data
-		public static class Grid implements Serializable {
-			
-			private static final long serialVersionUID = -3673069280484549825L;
-			
-			private List<Field> fields;
-		}
-		
-		@Data
-		public static class Trigger implements Serializable {
-			
-			private static final long serialVersionUID = -3823233926074563767L;
+			private static final long serialVersionUID = 1L;
 
-			private PersistenceType operationType;
+			{
+				put(new ImmutablePair<>(Trigger.Type.BEFORE, PersistenceType.INSERT), "onBeforeInsert");
+				put(new ImmutablePair<>(Trigger.Type.BEFORE, PersistenceType.UPDATE), "onBeforeUpdate");
+				put(new ImmutablePair<>(Trigger.Type.BEFORE, PersistenceType.DELETE), "onBeforeDelete");
+				put(new ImmutablePair<>(Trigger.Type.AFTER, PersistenceType.INSERT), "onAfterInsert");
+				put(new ImmutablePair<>(Trigger.Type.AFTER, PersistenceType.UPDATE), "onAfterUpdate");
+				put(new ImmutablePair<>(Trigger.Type.AFTER, PersistenceType.DELETE), "onAfterDelete");
+			}
+		};
+		
+		public Trigger(String name) {
 			
-			private String groovy;
+			super(name);
 		}
 		
-		private String mdiIcon;
-		private Integer width;
-		private Integer height;
-		private List<Tab> tabs;
+		public static Object call(Trigger.Type triggerType, PersistenceType persistenceType, Object instance) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
 		
-		private List<Field> fields;
+			String methodName = triggerMethod.get(new ImmutablePair<>(triggerType, persistenceType));
+			
+			if (!StringUtils.isEmpty(methodName) && instance != null) {
+				
+		        Method method = instance.getClass().getMethod(methodName);
+		        
+		        if (method != null) {
+		        	
+		        	return method.invoke(instance);
+		        }
+			}
+			
+			return null;
+		}
+	}
+	
+	@Data
+	@EqualsAndHashCode(callSuper=false)
+	public static class Command extends Basic {
 		
-		private List<Trigger> triggers = new ArrayList<>();
+		private static final long serialVersionUID = 7426288403894220149L;
+		private String groovy;
+		
+		public Command(String name) {
+			
+			super(name);
+		}
 	}
 
 	@Data
@@ -112,7 +168,15 @@ public class Table extends Basic {
 	@ToString.Exclude
 	private List<Row> rows = new ArrayList<>();
 	
-	private TableMetadata metadata;
+	private Map<String, Object> metadata;
+	
+	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
+	private List<Trigger> triggers = new ArrayList<>();
+	
+	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
+	private List<Command> commands = new ArrayList<>();
 	
 	public Table(String name) {
 		

@@ -93,7 +93,7 @@ public class GridAdapter {
 							// Load from groovy file here
 							String groovyFile = adapterDataSource.getValue();
 							
-							GroovyObject groovyObj = groovyManager.getGroovyObject(groovyFile);
+							GroovyObject groovyObj = groovyManager.getGroovyObject(groovyFile, GroovyManager.GroovyType.ADAPTER);
 							
 							if (groovyObj != null) {
 								

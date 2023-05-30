@@ -1,4 +1,4 @@
-package com.revenga.rits.front.openits.util;
+package com.revenga.rits.front.openits.backoffice;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -16,14 +16,16 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.CollectionUtils;
 
 import com.revenga.rits.front.openits.model.backoffice.Column;
+import com.revenga.rits.front.openits.model.backoffice.Column.ColType;
 import com.revenga.rits.front.openits.model.backoffice.Table.Persist;
 import com.revenga.rits.front.openits.model.backoffice.Table.Persist.PersistValue;
+import com.revenga.rits.front.openits.model.backoffice.Table.PersistenceType;
 import com.revenga.rits.front.openitsdao.model.BackOffice;
 
 import lombok.Getter;
 import lombok.NonNull;
 
-public class DBUtil {
+public class BackOfficeUtil {
 
 	public enum DBType {
 		
@@ -37,9 +39,7 @@ public class DBUtil {
 			this.dbName = dbName;
 		}
 	}
-	
-	public enum PersistenceType { INSERT, UPDATE, DELETE }
-	
+
 	public enum DMLType { REFERENCE_TABLES, REFERENCED_BY_TABLE, COLUMNS_TABLE }
 	
 	public static class DmlLibrary {
@@ -57,7 +57,7 @@ public class DBUtil {
 		}
 	}
 	
-	private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	private static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 	
 	protected static final Map<DBType, DmlLibrary> dmlMap;
 	
@@ -88,8 +88,6 @@ public class DBUtil {
 		
 		// TODO MYSQL, MSSQL, ORACLE
 	}
-	
-	public enum ColType { INTEGER, DECIMAL, STRING, BOOLEAN, TIMESTAMP }
 	
 	public static String getDmlLib(DBType dbtype, DMLType dmlType) {
 		
@@ -310,7 +308,7 @@ public class DBUtil {
 		}
 		else if (colType.equals(ColType.TIMESTAMP)) {
 			
-			formattedValue = "'" + sdf.format(new Timestamp(Long.valueOf(value))) + "'";
+			formattedValue = "'" + new SimpleDateFormat(DATE_FORMAT).format(new Timestamp(Long.valueOf(value))) + "'";
 		}
 		
 		return formattedValue;

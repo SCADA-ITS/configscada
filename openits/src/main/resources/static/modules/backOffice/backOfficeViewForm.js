@@ -253,8 +253,9 @@ export default class BackOfficeViewForm extends BackOfficeView {
 									field.value = value;
 									
 									const refColumn = column.refColumn;
+									const refTable = refColumn ? self.data.find(e => e.id === refColumn.tableId) : undefined;
 									
-									if (refColumn) {
+									if (refColumn && refTable) {
 										
 										const referencedColumnValue = BackOfficeHelper.getReferencedColumnValue(column, value, self.data);
 										
@@ -266,7 +267,7 @@ export default class BackOfficeViewForm extends BackOfficeView {
 										
 											let fieldGroup = {
 												cols: [
-													{ view: fieldRef.view, type: "text", name: refColumn.tableId + "_" + refColumn.id + "_" + referencedColumnValue.name, required: fieldRef.required, label: (referencedColumnValue.alias ?? referencedColumnValue.name), readonly: true, labelWidth: 275, value: referencedColumnValue.value },
+													{ view: fieldRef.view, type: "text", name: refColumn.tableId + "_" + refColumn.id + "_" + referencedColumnValue.name, required: fieldRef.required, label: (refTable.alias ?? refTable.name), readonly: true, labelWidth: 275, value: referencedColumnValue.value },
 													{ view: field.view, name: field.name, hidden: false, readonly: true, value: field.value, width: 50 },
 													{
 														view: "icon", 
@@ -384,8 +385,17 @@ export default class BackOfficeViewForm extends BackOfficeView {
 																	const columnIdValue = data.value; 
 														
 																	edit(columnIdValue, function () {
+																		
+																		let persistValues = [];
+																		
+																		persistValues.push({
+																			colName: columnId.name,
+																			oldValue: columnIdValue,
+																			newValue: undefined,
+																			colType: columnId.colType
+																		});
 													
-																		BackOfficeHelper.deleteData(self.backOffice, table, columnIdValue).then((persistResult) => {
+																		BackOfficeHelper.deleteData(self.backOffice, table, persistValues, columnIdValue).then((persistResult) => {
 																			
 																			if (persistResult.error) {
 																				

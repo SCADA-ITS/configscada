@@ -106,8 +106,19 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 								const referencedColumnName = BackOfficeHelper.getReferencedColumnName(column, self.data);
 								const sourceField = referencedColumnName ? referencedColumnName.name : column.name;
 								
-								const dataTypeId = BackOfficeHelper.getDBTypes(referencedColumnName ? referencedColumnName.colType : column.colType).id; 
-								const label = referencedColumnName ? (referencedColumnName.label ?? referencedColumnName.name) : (column.label ?? column.name); 
+								const dataTypeId = BackOfficeHelper.getDBTypes(referencedColumnName ? referencedColumnName.colType : column.colType).id;
+								
+								let label = column.alias ?? column.name;
+								
+								if (referencedColumnName) {
+									
+									const table = self.data.find(e => e.id === referencedColumnName.tableId);
+									
+									if (table) {
+										
+										label = table.alias ?? table.name;
+									}
+								}
 		
 								gridFields.push({
 									id: idxField,
@@ -267,7 +278,7 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 								
 											edit(columnIdValue, function () {
 							
-												BackOfficeHelper.deleteData(self.backOffice, self.currentTableData, columnIdValue).then((persistResult) => {
+												BackOfficeHelper.deleteData(self.backOffice, self.currentTableData, persistValues, columnIdValue).then((persistResult) => {
 													
 													if (persistResult.error) {
 														
@@ -308,28 +319,59 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 								
 								let recordsToDelete = ids.length;
 								let error = "";
+								const columnId = self.currentTableData.columns.find(c => c.name === "id");
 								
 								while (recordsToDelete > 0) {
 									
+									let persistValues = [];
 									recordsToDelete--;
 									
-									BackOfficeHelper.deleteData(self.backOffice, self.currentTableData, ids[recordsToDelete]).then((persistResult) => {
-													
-										if (persistResult.error) {
-		
-											error += "\nError id: "+ ids[recordsToDelete] + " => " +  persistResult.error + "\n" + persistResult.errorDescription;
-										}
+									if (Array.isArray(self.currentTableData.rows) && self.currentTableData.rows.length > 0) {
 										
-										if (!recordsToDelete) {
+										const row = self.currentTableData.rows.find(row => 
+																Array.isArray(row.data) && 
+																(row.data.find(dat => dat.columnId === columnId.id)) != undefined && 
+																(row.data.find(dat => dat.value == ids[recordsToDelete])) != undefined);
+										
+										if (row) {
+										
+											row.data.forEach(dat => {
 											
-											if (error) {
+												const column = self.currentTableData.columns.find(c => c.id === dat.columnId);
 												
-												(new MessageBox (MessageBox.ERROR, i18n.t("LBL_BACKOFFICE_ERROR_DELETING_RECORDS") + " " + (self.currentTableData.alias ?? self.currentTableData.name), error, null, null)).show();				
+												if (column) {
+													
+													persistValues.push({
+														colName: column.name,
+														oldValue: dat.value,
+														newValue: undefined,
+														colType: column.colType
+													});
+												}
+											});
+										}
+									}
+									
+									if (Array.isArray(persistValues) && persistValues.length > 0) {
+											
+										BackOfficeHelper.deleteData(self.backOffice, self.currentTableData, persistValues, ids[recordsToDelete]).then((persistResult) => {
+												
+											if (persistResult.error) {
+			
+												error += "\nError id: "+ ids[recordsToDelete] + " => " +  persistResult.error + "\n" + persistResult.errorDescription;
 											}
 											
-											self.refresh();
-										}
-									});	
+											if (!recordsToDelete) {
+												
+												if (error) {
+													
+													(new MessageBox (MessageBox.ERROR, i18n.t("LBL_BACKOFFICE_ERROR_DELETING_RECORDS") + " " + (self.currentTableData.alias ?? self.currentTableData.name), error, null, null)).show();				
+												}
+												
+												self.refresh();
+											}
+										});	
+									}
 								}
 							}
 						}

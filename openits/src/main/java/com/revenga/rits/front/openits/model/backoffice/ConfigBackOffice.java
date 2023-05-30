@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.revenga.rits.front.openits.util.DBUtil.DBType;
+import com.revenga.rits.front.openits.backoffice.BackOfficeUtil.DBType;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

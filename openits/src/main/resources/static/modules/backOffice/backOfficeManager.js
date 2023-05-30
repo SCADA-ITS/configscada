@@ -90,8 +90,17 @@ export default class BackOfficeManager {
 											const columnIdValue = data.value;
 								
 											edit(columnIdValue, function () {
+												
+												let persistValues = [];
+																		
+												persistValues.push({
+													colName: columnId.name,
+													oldValue: columnIdValue,
+													newValue: undefined,
+													colType: columnId.colType
+												});
 							
-												BackOfficeHelper.deleteData(self.backOffice, currentTableData, columnIdValue).then((persistResult) => {
+												BackOfficeHelper.deleteData(self.backOffice, currentTableData, persistValues, columnIdValue).then((persistResult) => {
 													
 													if (persistResult.error) {
 					

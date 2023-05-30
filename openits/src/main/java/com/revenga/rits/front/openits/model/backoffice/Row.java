@@ -38,6 +38,11 @@ public class Row implements Serializable {
 				this.columnId = column.getId();
 			}
 		}
+
+		@Override
+		public String toString() {
+			return column.name + " = " + this.value;
+		}
 	}
 	
 	private List<RowData> data = new ArrayList<>();

@@ -86,13 +86,13 @@ export default class BackOfficeHelper {
 		return response ? response.json() : undefined;
 	}
 	
-	static async deleteData(backOffice, table, id) {
+	static async deleteData(backOffice, table, persistValues, id) {
 		
 		let response;
 		
 		const body = {
 			id: id,
-			persistValues: undefined,
+			persistValues: persistValues,
 			persistenceType: BackOfficeHelper.PERSISTENCE_TYPE_DELETE,
 			tableName: table.name
 		}
