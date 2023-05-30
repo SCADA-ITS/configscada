@@ -52,7 +52,7 @@ export default class BackOfficeViewForm extends BackOfficeView {
 			function getHeader() {
 
 				let header;
-				const label = (self.backOffice.onCancel ? i18n.t("LBL_NEW") : i18n.t("LBL_EDIT")) + " " + (self.currentTableData.label ?? self.currentTableData.name);
+				const label = (self.backOffice.onCancel ? i18n.t("LBL_NEW") : i18n.t("LBL_EDIT")) + " " + self.currentTableData.labelSingular ?? (self.currentTableData.label ?? self.currentTableData.name);
 				const description = self.currentTableData.labelDescription ?? "";
 				
 				const icon = self.currentTableData.metadata && self.currentTableData.metadata.mdiIcon ? self.currentTableData.metadata.mdiIcon : "mdi mdi-application"; 
@@ -227,7 +227,7 @@ export default class BackOfficeViewForm extends BackOfficeView {
 									let field = webix.copy(dbType.component);
 								
 									field.name = column.tableId + "_" + column.id + "_" + column.name;
-									field.label = (column.alias ?? column.name);
+									field.label = util.getStringCapitalized(column.alias ?? column.name);
 									field.disabled = (column.name === "id");
 									
 									let value = BackOfficeHelper.getColumnValue(self.currentTableData, column.id, 0);
@@ -267,7 +267,7 @@ export default class BackOfficeViewForm extends BackOfficeView {
 										
 											let fieldGroup = {
 												cols: [
-													{ view: fieldRef.view, type: "text", name: refColumn.tableId + "_" + refColumn.id + "_" + referencedColumnValue.name, required: fieldRef.required, label: (refTable.alias ?? refTable.name), readonly: true, labelWidth: 275, value: referencedColumnValue.value },
+													{ view: fieldRef.view, type: "text", name: refColumn.tableId + "_" + refColumn.id + "_" + referencedColumnValue.name, required: fieldRef.required, label: util.getStringCapitalized(refTable.labelSingular ?? (refTable.label ?? refTable.name)), readonly: true, labelWidth: 275, value: referencedColumnValue.value },
 													{ view: field.view, name: field.name, hidden: false, readonly: true, value: field.value, width: 50 },
 													{
 														view: "icon", 
@@ -303,7 +303,7 @@ export default class BackOfficeViewForm extends BackOfficeView {
 						
 													dialogRefField.fillDialogEntity = fillDialogEntity;
 													dialogRefField.pkField = field.name
-													const fields = referencedColumnValue.tableId + "_" + referencedColumnValue.id + "_" + referencedColumnValue.name + "=" + (referencedColumnValue.alias ?? referencedColumnValue.name);
+													const fields = referencedColumnValue.tableId + "_" + referencedColumnValue.id + "_" + referencedColumnValue.name + "=" + util.getStringCapitalized(referencedColumnValue.alias ?? referencedColumnValue.name);
 													dialogRefField.fields = [fields];
 													dialogRefField.sortFieldId = 1;
 													dialogRefField.height = 600;
@@ -330,7 +330,7 @@ export default class BackOfficeViewForm extends BackOfficeView {
 														onFilledDialogEntity(dialogEntity);
 													}
 													
-													(new SearchDialogBox(i18n.t("LBL_SEARCH " + (table.alias ?? table.name)), dialogRefField, onAccept)).show();
+													(new SearchDialogBox(i18n.t("LBL_SEARCH " + util.getStringCapitalized(table.alias ?? table.name)), dialogRefField, onAccept)).show();
 													
 													function onAccept(selection) {
 														
@@ -424,7 +424,7 @@ export default class BackOfficeViewForm extends BackOfficeView {
 						
 												if (module) {
 													
-													const winId = util.ui.loadWindow(i18n.t("LBL_NEW") + " " + (table.name ?? table.alias), { id: self.uid }, BackOfficeModule.Config.DEFAULT_FORM_HEIGHT, 
+													const winId = util.ui.loadWindow(i18n.t("LBL_NEW") + " " + (table.labelSingular ?? (table.label ?? table.name)), { id: self.uid }, BackOfficeModule.Config.DEFAULT_FORM_HEIGHT, 
 																						BackOfficeModule.Config.DEFAULT_FORM_WIDTH, true);
 														const args = {
 															backOffice: {
@@ -511,7 +511,7 @@ export default class BackOfficeViewForm extends BackOfficeView {
 								
 								self.currentTableData.referTables.forEach(referTable => {
 								
-									const label = (referTable.label ?? referTable.name);
+									const label = util.getStringCapitalized(referTable.label ?? referTable.name);
 									const idValue = BackOfficeHelper.getColumnValue(self.currentTableData, columnId.id, 0); 
 									const referColumn = BackOfficeHelper.getRefColumn(self.currentTableData, referTable.id);
 									

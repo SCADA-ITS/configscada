@@ -510,7 +510,7 @@ public class BackOfficeProcessor {
 		Integer tableId = null;
 		
 		final String QRY_TABLE_METADATA = String
-				.format("SELECT id, label, label_description, metadata FROM %s.sg_metadata_tables WHERE name = ?", backOffice.getSchema());	
+				.format("SELECT id, label, label_singular, label_description, metadata FROM %s.sg_metadata_tables WHERE name = ?", backOffice.getSchema());	
 		
 		try (PreparedStatement stmt = conn.prepareStatement(QRY_TABLE_METADATA)) {
 			
@@ -523,6 +523,7 @@ public class BackOfficeProcessor {
 				tableId = rs.getInt("id");
 				table.setId(tableId);
 				table.setLabel(translationService.getTranslation(this.localeCode, rs.getString("label"), conn, backOffice));
+				table.setLabelSingular(translationService.getTranslation(this.localeCode, rs.getString("label_singular"), conn, backOffice));
 				table.setLabelDescription(translationService.getTranslation(this.localeCode, rs.getString("label_description"), conn, backOffice));
 				String metadata = rs.getString("metadata");
 				

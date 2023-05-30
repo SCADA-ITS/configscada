@@ -2947,5 +2947,13 @@ export let util = {
 			
 			return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
 		}
+	},
+	
+	getStringCapitalized(str) {
+				
+		if (str) {
+			
+			return `${str[0].toUpperCase()}${str.slice(1)}`;
+		}
 	}
 };

@@ -157,6 +157,8 @@ public class Table extends Basic {
 		private List<PersistValue> persistValues;
 	}
 	
+	private String labelSingular;
+	
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
 	private List<Column> columns = new ArrayList<>();

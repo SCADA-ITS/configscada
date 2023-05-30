@@ -18,7 +18,7 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 		if (backOffice.containerId) {
 			
 			util.ui.centerWindow(backOffice.containerId, backOffice.isModal ? 20: 0);
-			util.ui.setTitle(backOffice.containerId, currentTableData.label ?? currentTableData.name);	
+			util.ui.setTitle(backOffice.containerId, util.getStringCapitalized(currentTableData.label ?? currentTableData.name));	
 		}
 	}
 	
@@ -116,7 +116,7 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 									
 									if (table) {
 										
-										label = table.alias ?? table.name;
+										label = table.labelSingular ?? (table.label ?? table.name);
 									}
 								}
 		
@@ -130,7 +130,7 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 									parameterized: false,
 									position: idxField,
 									required: true,
-									label: label,
+									label: util.getStringCapitalized(label),
 									sourceField: sourceField,
 									visible: sourceField !== 'id',
 									gridFieldDataType: {
@@ -411,14 +411,14 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 								util.ui.resizeWindow(winId, BackOfficeModule.Config.DEFAULT_FORM_WIDTH, BackOfficeModule.Config.DEFAULT_FORM_HEIGHT);
 								util.ui.centerWindow(winId);
 								
-								let windowTitle = i18n.t("LBL_EDIT") + " -  "; 
+								let windowTitle = i18n.t("LBL_EDIT"); 
 			
 								if (args.backOffice.onCancel) {
 								
-									windowTitle = i18n.t("LBL_NEW") + " - ";
+									windowTitle = i18n.t("LBL_NEW");
 								}
 								
-								windowTitle += (self.currentTableData.label ?? self.currentTableData.name);
+								windowTitle += " " + (self.currentTableData.labelSingular ?? (self.currentTableData.label ?? self.currentTableData.name));
 								
 								util.ui.setTitle(args.backOffice.containerId, windowTitle);	
 							}
