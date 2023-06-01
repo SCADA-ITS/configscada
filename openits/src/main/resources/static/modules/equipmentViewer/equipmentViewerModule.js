@@ -30,6 +30,7 @@ export default class EquipmentViewerModule extends GenericModule {
 		this.equipmentViewerContent = undefined;
 		this.containerWidth = 0;
 		this.firstRequest = false;
+		this.parentElementId = undefined;
 	}
 
 	getView() {
@@ -73,6 +74,7 @@ export default class EquipmentViewerModule extends GenericModule {
 				
 				if (self.moduleAction.id === self.config.moduleAction.view) {
 					
+					self.parentElementId = self.args.selectedPks[0];
 					requestEquipment(self.args.selectedPks[0]);
 				}
 				else if (self.moduleAction.id === self.config.moduleAction.viewFromAlarm) {
@@ -84,6 +86,8 @@ export default class EquipmentViewerModule extends GenericModule {
 							let alarm = alarmResponse.json();
 							
 							if (alarm) {
+								
+								self.parentElementId = alarm.targetElement.id;
 								
 								requestEquipment(alarm.targetElement.id)
 							}
@@ -329,8 +333,6 @@ export default class EquipmentViewerModule extends GenericModule {
 				$$("view-main-body-" + self.uid).hide();
 				$$("view-main-loading-" + self.uid).show();
 				
-				let elem = getElementFromElementId(elementId);
-				
 				if (!self.firstRequest) {
 					self.firstRequest = !self.firstRequest;
 					
@@ -338,7 +340,7 @@ export default class EquipmentViewerModule extends GenericModule {
 				}
 				else {
 					
-					webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.equipmentViewer, { elementId: elem.id })).then(function(dat) {
+					webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.equipmentViewer, { elementId: elementId })).then(function(dat) {
 				
 						if (dat != null) {
 							
@@ -355,18 +357,28 @@ export default class EquipmentViewerModule extends GenericModule {
 				}
 				
 				function doSelect(equipmentViewer) {
+					
+					webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.element, { id: self.parentElementId })).then(function(elementResponse) {
 				
-					$$("view-main-body-" + self.uid).show();
-					$$("view-main-loading-" + self.uid).hide();
-					
-					webix.ui(getViewContent(elem, equipmentViewer), $$("view-main-content-" + self.uid));
-					
-					if (self.equipmentViewerContent) {
+						if (elementResponse != null) {
 							
-						self.equipmentViewerContent.loadData();
-					}
+							self.element = elementResponse.json();
+							
+							let elem = getElementFromElementId(elementId);
+							
+							$$("view-main-body-" + self.uid).show();
+							$$("view-main-loading-" + self.uid).hide();
+							
+							webix.ui(getViewContent(elem, equipmentViewer), $$("view-main-content-" + self.uid));
 					
-					self.args.fromTable = false;
+							if (self.equipmentViewerContent) {
+									
+								self.equipmentViewerContent.loadData();
+							}
+							
+							self.args.fromTable = false;
+						}
+					});
 				}
 			}
 			
