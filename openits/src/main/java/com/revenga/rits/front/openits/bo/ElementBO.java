@@ -220,10 +220,9 @@ public class ElementBO extends GenericBO {
 		
 		List<Map<String, Object>> historicalElementStates = null;
 		
-		List<Map<String, Object>> objects = ElementHistoryDTO.getObjectListParamHist(elementHistory, ElementHistoryDTO.getStateFields());
-		
 		historicalElementStates = voDataSourceAdapter
-				.getList(VODataSourceAdapter.DATA_SOURCE_GET_HISTORICAL_ELEMENT_STATES, new Object[] { objects });
+				.getList(VODataSourceAdapter.DATA_SOURCE_GET_HISTORICAL_ELEMENT_STATES, new Object[] {
+						elementHistory.getElementIds(), elementHistory.getDateIni(), elementHistory.getDateEnd() });
 		
 		return historicalElementStates;
 	}

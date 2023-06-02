@@ -78,6 +78,8 @@ public class BackOfficeProcessor {
 				if (!CollectionUtils.isEmpty(this.referencedTables)) {
 				
 					tables = this.referencedTables.values().stream().collect(Collectors.toList());
+					
+					Collections.sort(tables, Comparator.comparing(Table::getName));
 				}
 			}
 			catch (Exception e) {

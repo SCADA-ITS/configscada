@@ -19,10 +19,10 @@ export default class BackOfficeHelper {
 		
 		const dbType = {};
 		
-		dbType[BackOfficeHelper.DB_TYPE_STRING] = { id: 1, name: BackOfficeHelper.DB_TYPE_STRING, component: { view: "text", required: true, labelWidth: 275 }};
-		dbType[BackOfficeHelper.DB_TYPE_INTEGER] = { id: 2, name: BackOfficeHelper.DB_TYPE_INTEGER, component: { view: "text", required: true, labelWidth: 275 }};
-		dbType[BackOfficeHelper.DB_TYPE_DECIMAL] = { id: 3, name: BackOfficeHelper.DB_TYPE_DECIMAL, component: { view: "text", required: true, labelWidth: 275 }},
-		dbType[BackOfficeHelper.DB_TYPE_TIMESTAMP] = { id: 4, name: BackOfficeHelper.DB_TYPE_TIMESTAMP, component: { view: "datepicker", timepicker: true, required: true, labelWidth: 275, format: (webix.i18n.locales[i18n.localeCode].dateFormat + " " + webix.i18n.locales[i18n.localeCode].timeFormat)}} 
+		dbType[BackOfficeHelper.DB_TYPE_STRING] = { id: 1, name: BackOfficeHelper.DB_TYPE_STRING, component: { view: "text", required: false, labelWidth: 275 }};
+		dbType[BackOfficeHelper.DB_TYPE_INTEGER] = { id: 2, name: BackOfficeHelper.DB_TYPE_INTEGER, component: { view: "text", required: false, labelWidth: 275 }};
+		dbType[BackOfficeHelper.DB_TYPE_DECIMAL] = { id: 3, name: BackOfficeHelper.DB_TYPE_DECIMAL, component: { view: "text", required: false, labelWidth: 275 }},
+		dbType[BackOfficeHelper.DB_TYPE_TIMESTAMP] = { id: 4, name: BackOfficeHelper.DB_TYPE_TIMESTAMP, component: { view: "datepicker", timepicker: true, required: false, labelWidth: 275, format: (webix.i18n.locales[i18n.localeCode].dateFormat + " " + webix.i18n.locales[i18n.localeCode].timeFormat)}} 
 		
 		return dbType[name];
 	}
@@ -143,6 +143,11 @@ export default class BackOfficeHelper {
 							refColumnName = refTable.columns.find(col => col.name.match(COL_NAMES_REF[i]));	
 						}
 					}
+					
+					if (!refColumnName) {
+						
+						refColumnName = refTable.columns.find(col => col.name === "id");
+					}
 				}
 			}
 		}
@@ -160,31 +165,23 @@ export default class BackOfficeHelper {
 			
 			if (refTable) {
 				
-				if (Array.isArray(refTable.columns)) {
+				let refColumnName = BackOfficeHelper.getReferencedColumnName(column, data);
 					
-					let refColumnName = refTable.columns.find(col => col.metadata && col.metadata.refName);
+				if (refColumnName) {
 					
-					if (!refColumnName) {
+					refColumnValue = webix.copy(refColumnName);
+					
+					if (Array.isArray(refTable.rows) && refTable.rows.length > 0) {
 						
-						refColumnName = refTable.columns.find(col => col.name.match(/name/i));
-					}
-			
-					if (refColumnName) {
-						
-						refColumnValue = webix.copy(refColumnName);
-						
-						if (Array.isArray(refTable.rows) && refTable.rows.length > 0) {
+						const row = refTable.rows.find(row => row.data.find(dat => dat.columnId === column.refColumn.id && dat.value == valueId) != null);
+				
+						if (row) {
 							
-							const row = refTable.rows.find(row => row.data.find(dat => dat.columnId === column.refColumn.id && dat.value == valueId) != null);
-					
-							if (row) {
-								
-								const rowColumnValue = row.data.find(dat => dat.columnId === refColumnName.id);
-								
-								if (rowColumnValue) {
-								
-									refColumnValue.value = rowColumnValue.value;	
-								}
+							const rowColumnValue = row.data.find(dat => dat.columnId === refColumnName.id);
+							
+							if (rowColumnValue) {
+							
+								refColumnValue.value = rowColumnValue.value;
 							}
 						}
 					}

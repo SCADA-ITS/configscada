@@ -115,10 +115,9 @@ public class AlarmBO extends GenericBO {
 		
 		List<Map<String, Object>> historicalElementAlarms = null;
 		
-		List<Map<String, Object>> objects = ElementHistoryDTO.getObjectListParamHist(elementHistory, ElementHistoryDTO.getAlarmFields());
-		
-		historicalElementAlarms = voDataSourceAdapter
-				.getList(VODataSourceAdapter.DATA_SOURCE_GET_HISTORICAL_ALARMS, new Object[] { objects });
+		historicalElementAlarms = voDataSourceAdapter.getList(VODataSourceAdapter.DATA_SOURCE_GET_HISTORICAL_ALARMS,
+				new Object[] { elementHistory.getElementIds(), elementHistory.getDateIni(),
+						elementHistory.getDateEnd() });
 		
 		return historicalElementAlarms;
 	}
