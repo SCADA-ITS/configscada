@@ -13,14 +13,31 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import com.revenga.rits.front.openits.model.backoffice.Table;
 import com.revenga.rits.front.openitsdao.model.BackOffice;
 
 @Service
-public class TranslationService {
-	
+public class BackOfficeManager {
+
 	private Map<Pair<Integer, String>, Map<String, String>> translations = new HashMap<>();
+	private Map<Pair<Integer, String>, Table> tables = new HashMap<>();
 	
-	public String getTranslation(String localeCode, String label, Connection conn, BackOffice backOffice) throws SQLException {
+	public Table getTable(BackOffice backOffice, String tableName) {
+		
+		return this.tables.get(new ImmutablePair<>(backOffice.getId(), tableName));
+	}
+	
+	public boolean containsTable(BackOffice backOffice, String tableName) {
+		
+		return this.tables.containsKey(new ImmutablePair<>(backOffice.getId(), tableName));
+	}
+	
+	public void putTable(BackOffice backOffice, Table table) {
+		
+		this.tables.put(new ImmutablePair<>(backOffice.getId(), table.getName()), table);
+	}
+	
+	public String getTranslation(BackOffice backOffice, Connection conn, String localeCode, String label) throws SQLException {
 		
 		String translation = null;
 		Map<String, String> translationsByLocale = this.translations.get(new ImmutablePair<>(backOffice.getId(), localeCode));

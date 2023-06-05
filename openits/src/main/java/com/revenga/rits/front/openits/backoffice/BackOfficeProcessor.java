@@ -19,6 +19,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.SerializationUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.util.CollectionUtils;
@@ -47,16 +48,16 @@ public class BackOfficeProcessor {
 	
 	GroovyManager groovyManager;
 	BackOfficeService backOfficeService;
-	TranslationService translationService;
+	BackOfficeManager backOfficeManager;
 	String localeCode;
 	
 	private Map<String, Table> referencedTables = new HashMap<>();
 	
-	public BackOfficeProcessor(GroovyManager groovyManager, BackOfficeService backOfficeService, TranslationService translationService, String localeCode) {
+	public BackOfficeProcessor(GroovyManager groovyManager, BackOfficeService backOfficeService, BackOfficeManager backOfficeManager, String localeCode) {
 		
 		this.groovyManager = groovyManager;
 		this.backOfficeService = backOfficeService;
-		this.translationService = translationService;
+		this.backOfficeManager = backOfficeManager;
 		this.localeCode = localeCode;
 	}
 	
@@ -155,11 +156,11 @@ public class BackOfficeProcessor {
 					
 					conn.commit();
 				}
-				else {
-					
-					throw new BackOfficePersistException(String.format("SQL is empty. BackOffice: %d, Persist: %s", backOfficeId,
-							persist.toString()));
-				}
+//				else {
+//					
+//					throw new BackOfficePersistException(String.format("SQL is empty. BackOffice: %d, Persist: %s", backOfficeId,
+//							persist.toString()));
+//				}
 				
 			} catch (Exception e) {
 				
@@ -288,27 +289,74 @@ public class BackOfficeProcessor {
 		
 		if (table == null) {
 			
-			table = new Table(tableName);
-			
-			this.referencedTables.put(tableName, table);
-			
-			assignColumns(conn, backOffice, table);
-			
-			assignReferTables(conn, backOffice, table);
-			
-			assignRows(conn, backOffice, table, parentTable, conditions);
-			
-			assignReferencedByTables(conn, backOffice, table);
-			
-			assignMetadata(conn, backOffice, table);
-			
-			assignCommands(conn, backOffice, table);
+			if (this.backOfficeManager.containsTable(backOffice, tableName)) {
+				
+				table = SerializationUtils.clone(this.backOfficeManager.getTable(backOffice, tableName));
+				
+				table.getRows().clear();
+				
+				this.referencedTables.put(tableName, table);
+				
+				assignReferTables(conn, backOffice, table);
+				
+				assignRows(conn, backOffice, table, parentTable, conditions);
+				
+				assignReferencedByTables(conn, backOffice, table);
+			}
+			else {
+				
+				table = new Table(tableName);
+				
+				this.referencedTables.put(tableName, table);
+				
+				assignColumns(conn, backOffice, table);
+				
+				assignReferTables(conn, backOffice, table);
+				
+				assignRows(conn, backOffice, table, parentTable, conditions);
+				
+				assignReferencedByTables(conn, backOffice, table);
+				
+				assignMetadata(conn, backOffice, table);
+				
+				assignCommands(conn, backOffice, table);
+				
+				this.backOfficeManager.putTable(backOffice, table);
+			}
 			
 			traceTable(table);
 		}
 		
 		return table;
 	}
+	
+//	private Table getTable(Connection conn, BackOffice backOffice, String tableName, Table parentTable, String conditions) throws SQLException {
+//		
+//		Table table = this.referencedTables.get(tableName);
+//		
+//		if (table == null) {
+//			
+//			table = new Table(tableName);
+//			
+//			this.referencedTables.put(tableName, table);
+//			
+//			assignColumns(conn, backOffice, table);
+//			
+//			assignReferTables(conn, backOffice, table);
+//			
+//			assignRows(conn, backOffice, table, parentTable, conditions);
+//			
+//			assignReferencedByTables(conn, backOffice, table);
+//			
+//			assignMetadata(conn, backOffice, table);
+//			
+//			assignCommands(conn, backOffice, table);
+//			
+//			traceTable(table);
+//		}
+//		
+//		return table;
+//	}
 	
 	private List<Column> assignColumns(Connection conn, BackOffice backOffice, Table table) throws SQLException {
 		
@@ -389,41 +437,47 @@ public class BackOfficeProcessor {
 	
 	private List<Table> assignReferencedByTables(Connection conn, BackOffice backOffice, Table table) throws SQLException {
 		
-		List<Table> referencedByTables = new ArrayList<>();
+		List<Table> referTables = table.getReferTables();
 		
-		try (PreparedStatement stmt = conn.prepareStatement(BackOfficeUtil.getDmlLib(BackOfficeUtil.getDBType(conn), DMLType.REFERENCED_BY_TABLE))) {
+		if (!CollectionUtils.isEmpty(referTables)) {
 			
-			stmt.setString(1, backOffice.getSchema()+ "." + table.getName());
+			for (Table referTable : referTables) {
+				
+				getTable(conn, backOffice, referTable.getName(), table);
+			}
+		}
+		else {
 			
-			ResultSet rs = stmt.executeQuery();
-			
-			List<Table> referTables = table.getReferTables();
-			
-			while (rs.next()) {
+			try (PreparedStatement stmt = conn.prepareStatement(BackOfficeUtil.getDmlLib(BackOfficeUtil.getDBType(conn), DMLType.REFERENCED_BY_TABLE))) {
 				
-				String tableReferenceName = rs.getString("table_reference");
+				stmt.setString(1, backOffice.getSchema()+ "." + table.getName());
 				
-				tableReferenceName = tableReferenceName.replace(backOffice.getSchema()+ ".", "");
+				ResultSet rs = stmt.executeQuery();
 				
-				Table referTable = getTable(conn, backOffice, tableReferenceName, table);
-				
-				if (referTable != null) {
-				
-					referTables.add(referTable);
+				while (rs.next()) {
 					
-					referencedByTables.add(referTable);
+					String tableReferenceName = rs.getString("table_reference");
+					
+					tableReferenceName = tableReferenceName.replace(backOffice.getSchema()+ ".", "");
+					
+					Table referTable = getTable(conn, backOffice, tableReferenceName, table);
+					
+					if (referTable != null) {
+					
+						referTables.add(referTable);
+					}
 				}
 			}
 		}
 		
-		return referencedByTables;
+		return referTables;
 	}
 	
 	private List<Row> assignRows(Connection conn, BackOffice backOffice, Table table, Table parentTable, String conditions) throws SQLException {
 	
 		List<Row> rows = table.getRows();
 		
-		if (CollectionUtils.isEmpty(rows) && !CollectionUtils.isEmpty(table.getColumns())) {
+		if (!CollectionUtils.isEmpty(table.getColumns())) {
 			
 			String sql = "";
 			
@@ -524,9 +578,9 @@ public class BackOfficeProcessor {
 				
 				tableId = rs.getInt("id");
 				table.setId(tableId);
-				table.setLabel(translationService.getTranslation(this.localeCode, rs.getString("label"), conn, backOffice));
-				table.setLabelSingular(translationService.getTranslation(this.localeCode, rs.getString("label_singular"), conn, backOffice));
-				table.setLabelDescription(translationService.getTranslation(this.localeCode, rs.getString("label_description"), conn, backOffice));
+				table.setLabel(backOfficeManager.getTranslation(backOffice, conn, this.localeCode, rs.getString("label")));
+				table.setLabelSingular(backOfficeManager.getTranslation(backOffice, conn, this.localeCode, rs.getString("label_singular")));
+				table.setLabelDescription(backOfficeManager.getTranslation(backOffice, conn, this.localeCode, rs.getString("label_description")));
 				String metadata = rs.getString("metadata");
 				
 				if (!StringUtils.isEmpty(metadata)) {
@@ -572,8 +626,8 @@ public class BackOfficeProcessor {
 						if (column != null) {
 							
 							column.setId(rs.getInt("id"));
-							column.setLabel(translationService.getTranslation(this.localeCode, rs.getString("label"), conn, backOffice));
-							column.setLabelDescription(translationService.getTranslation(this.localeCode, rs.getString("label_description"), conn, backOffice));
+							column.setLabel(backOfficeManager.getTranslation(backOffice, conn, this.localeCode, rs.getString("label")));
+							column.setLabelDescription(backOfficeManager.getTranslation(backOffice, conn, this.localeCode, rs.getString("label_description")));
 							
 							String metadata = rs.getString("metadata");
 							

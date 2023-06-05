@@ -121,7 +121,7 @@ public class BackOfficeUtil {
 		}
 		else if (column.getColType().equals(ColType.TIMESTAMP)) {
 			
-			value = String.valueOf(rs.getTimestamp(column.getName()).getTime());
+			value = String.valueOf(rs.getTimestamp(column.getName()) != null ? rs.getTimestamp(column.getName()).getTime() : null);
 		}
 		
 		if (rs.wasNull()) {

@@ -52,7 +52,7 @@ export default class BackOfficeViewForm extends BackOfficeView {
 			function getHeader() {
 
 				let header;
-				const label = (self.backOffice.onCancel ? i18n.t("LBL_NEW") : i18n.t("LBL_EDIT")) + " " + self.currentTableData.labelSingular ?? (self.currentTableData.label ?? self.currentTableData.name);
+				const label = (self.backOffice.onCancel ? i18n.t("LBL_NEW") : i18n.t("LBL_EDIT")) + " " + (self.currentTableData.labelSingular ?? (self.currentTableData.label ?? self.currentTableData.name));
 				const description = self.currentTableData.labelDescription ?? "";
 				
 				const icon = self.currentTableData.metadata && self.currentTableData.metadata.mdiIcon ? self.currentTableData.metadata.mdiIcon : "mdi mdi-application"; 
@@ -180,7 +180,7 @@ export default class BackOfficeViewForm extends BackOfficeView {
 																
 								let info = {
 									view: "scrollview",
-									scroll: "auto",
+									scroll: "y",
 									borderless: true,
 									body: {
 										cols: [
@@ -647,24 +647,29 @@ export default class BackOfficeViewForm extends BackOfficeView {
 											if (column) {
 												
 												const oldValue = BackOfficeHelper.getColumnValue(self.currentTableData, colId, 0);
+												
 												let newValue = undefined;
 												
-												if (column.colType === BackOfficeHelper.DB_TYPE_INTEGER) {
+												if (values[key]) {
 													
-													newValue = parseInt(values[key]);
-												}
-												else if (column.colType === BackOfficeHelper.DB_TYPE_TIMESTAMP) {
+													if (column.colType === BackOfficeHelper.DB_TYPE_INTEGER) {
 													
-													newValue = parseInt(values[key].getTime());
+														newValue = parseInt(values[key]);
+													}
+													else if (column.colType === BackOfficeHelper.DB_TYPE_TIMESTAMP) {
+														
+														newValue = parseInt(values[key].getTime());
+													}
+													else if (column.colType === BackOfficeHelper.DB_TYPE_DECIMAL) {
+														
+														newValue = parseFloat(values[key]);
+													}
+													else {
+														
+														newValue = values[key];	
+													}	
 												}
-												else if (column.colType === BackOfficeHelper.DB_TYPE_DECIMAL) {
-													
-													newValue = parseFloat(values[key]);
-												}
-												else {
-													
-													newValue = values[key];	
-												}
+												
 												
 												if (column.name === "id") {
 														

@@ -204,7 +204,7 @@ export default class BackOfficeHelper {
 				
 				const rowData = table.rows[idx].data.find(e => e.columnId === column.id);
 				
-				if (rowData) {
+				if (rowData && rowData.value) {
 					
 					if (column.colType === BackOfficeHelper.DB_TYPE_TIMESTAMP ||
 					    column.colType === BackOfficeHelper.DB_TYPE_INTEGER) {

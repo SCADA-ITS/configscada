@@ -47,7 +47,7 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 					on: {
 						onAfterRender: function() {
 		
-							self.dataTable.callbacks()
+							self.dataTable.callbacks();
 						}
 					}	
 				});	

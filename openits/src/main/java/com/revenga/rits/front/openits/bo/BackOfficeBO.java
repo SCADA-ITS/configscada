@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import com.revenga.rits.front.openits.backoffice.BackOfficeManager;
 import com.revenga.rits.front.openits.backoffice.BackOfficeProcessor;
-import com.revenga.rits.front.openits.backoffice.TranslationService;
 import com.revenga.rits.front.openits.model.UserSessionUI;
 import com.revenga.rits.front.openits.model.backoffice.Table;
 import com.revenga.rits.front.openits.model.backoffice.Table.Persist;
@@ -35,7 +35,7 @@ public class BackOfficeBO {
 	GroovyManager groovyManager;
 	
 	@Autowired
-	TranslationService translationService;
+	BackOfficeManager backOfficeManager;
 	
 	public List<BackOffice> getList() {
 		
@@ -54,14 +54,14 @@ public class BackOfficeBO {
 	
 	public List<Table> get(Integer backOfficeId, String tableName, String conditions) {
 		
-		BackOfficeProcessor backOfficeProcessor = new BackOfficeProcessor(groovyManager, backOfficeService, translationService, getLocaleCode());
+		BackOfficeProcessor backOfficeProcessor = new BackOfficeProcessor(groovyManager, backOfficeService, backOfficeManager, getLocaleCode());
 		
 		return backOfficeProcessor.get(backOfficeId, tableName, conditions);	
 	}
 
 	public PersistResult persist(Integer backOfficeId, Persist persist) {
 		
-		BackOfficeProcessor backOfficeProcessor = new BackOfficeProcessor(groovyManager, backOfficeService, translationService, getLocaleCode());
+		BackOfficeProcessor backOfficeProcessor = new BackOfficeProcessor(groovyManager, backOfficeService, backOfficeManager, getLocaleCode());
 		
 		return backOfficeProcessor.persist(backOfficeId, persist);
 	}
