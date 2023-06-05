@@ -75,7 +75,7 @@ class MeasureItem {
 						unit = valuesForPrint.unit;
 					}
 
-					let valueHTML = (valuesForPrint.hasEnumImage != undefined) ? `<img style="width:40px" src="${valuesForPrint.value}">` : `<span title="${valuesForPrint.value}">${valuesForPrint.value}</span>`;
+					let valueHTML = (valuesForPrint.hasEnumImage != undefined) ? `<img style="width:40px" src="${valuesForPrint.value}">` : `<span title="${valuesForPrint.value} - ${valuesForPrint.updatedAt}">${valuesForPrint.value}</span>`;
 					let res;
 
 					if (elementValue.elementTypeParam.showCompleteMeasure || self.parent.parent.config.forceAdjustMeasures) {

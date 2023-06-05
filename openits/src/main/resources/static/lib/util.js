@@ -7,15 +7,15 @@ export let util = {
 	module: {
 
 		getParamValue(module, param) {
-			
+
 			let value = undefined;
 			let paramValue = module.moduleValues.find(e => e.moduleParam.id === param);
-			
+
 			if (paramValue) {
-				
+
 				value = paramValue.value;
 			}
-			
+
 			return value;
 		},
 
@@ -23,12 +23,12 @@ export let util = {
 
 			let value = defaultValue;
 			let windowValue = module.windowValues.find(e => e.windowParam.id === param);
-			
+
 			if (windowValue) {
-			
-				value = windowValue.value;	
+
+				value = windowValue.value;
 			}
-			
+
 			return value;
 		},
 
@@ -40,38 +40,38 @@ export let util = {
 			if (drawCallback) {
 
 				lazyClass = new mod.default(module, moduleAction, args);
-				
+
 				if (!lazyClass.waitingForEntities) {
-				
+
 					callMethods();
 				}
 				else {
-					
+
 					let hnd;
-				
+
 					hnd = setInterval(function() {
-						
+
 						if (!lazyClass.waitingForEntities) {
-						
+
 							clearInterval(hnd);
 							callMethods();
 						}
-							
-					}, 100);	
+
+					}, 100);
 				}
 
 				function callMethods() {
-					
+
 					if (module.jsMethodDraw) {
 
 						viewModule = lazyClass.runOne(module.jsMethodDraw);
-	
+
 						if (viewModule) {
-	
+
 							drawCallback(viewModule);
 						}
 					}
-					
+
 					if (module.jsMethodCallbacks) {
 
 						lazyClass.runOne(module.jsMethodCallbacks);
@@ -126,50 +126,50 @@ export let util = {
 			args.containerId = winId;
 
 			lazyClass = new mod.default(module, moduleAction, args);
-			
+
 			if (!lazyClass.waitingForEntities) {
-				
+
 				callMethods();
 			}
 			else {
-				
+
 				let hnd;
-			
+
 				hnd = setInterval(function() {
-					
+
 					if (!lazyClass.waitingForEntities) {
-					
+
 						clearInterval(hnd);
 						callMethods();
 					}
-						
-				}, 100);	
-			}		
-			
+
+				}, 100);
+			}
+
 			function callMethods() {
-				
+
 				viewModule = lazyClass.runOne(module.jsMethodDraw)
 
 
 				if (viewModule) {
-					
+
 					let noExternalizableModuleAction = undefined;
 					let modAction = undefined;
-					
-					if(moduleAction){
-					
-						modAction = module.moduleActions.find(mod => mod.id === moduleAction.id);	
+
+					if (moduleAction) {
+
+						modAction = module.moduleActions.find(mod => mod.id === moduleAction.id);
 					}
-					
-					if(modAction) {
-						
-						noExternalizableModuleAction = (modAction.noExternalizable) ? true: false;
+
+					if (modAction) {
+
+						noExternalizableModuleAction = (modAction.noExternalizable) ? true : false;
 					}
-					
+
 					let hideIconDock = !taskManagerService || !externalizable || window.isExternal || noExternalizableModuleAction;
 					let hideIconExternalize = !taskManagerService || !externalizable || noExternalizableModuleAction;
 					let hideIconMinimize = !taskManagerService || !externalizable || window.isExternal || noExternalizableModuleAction;
-	
+
 					let head = {
 						view: "toolbar",
 						css: "active-window-head",
@@ -177,10 +177,10 @@ export let util = {
 						cols: [
 							{
 								id: winId + "-label",
-								css: "window-head-title " + ((!taskManagerService || !externalizable || window.isExternal || noExternalizableModuleAction) ? "window-head-title-wo-buttons" : "window-head-title-w-buttons"), 
+								css: "window-head-title " + ((!taskManagerService || !externalizable || window.isExternal || noExternalizableModuleAction) ? "window-head-title-wo-buttons" : "window-head-title-w-buttons"),
 								view: "label",
 								//css: "notification-center-title", 
-								label: label ? i18n.t(label): ""
+								label: label ? i18n.t(label) : ""
 							},
 							{
 								view: "icon",
@@ -189,9 +189,9 @@ export let util = {
 								tooltip: i18n.t("LBL_WINDOW_DOCK"),
 								on: {
 									onItemClick: function(id) {
-																			
+
 										if (taskManagerService) {
-									
+
 											taskManagerService.dock(winId, lazyClass);
 										}
 									}
@@ -204,9 +204,9 @@ export let util = {
 								tooltip: i18n.t("LBL_WINDOW_EXTERNALIZE"),
 								on: {
 									onItemClick: function(id) {
-										
+
 										if (taskManagerService) {
-									
+
 											taskManagerService.externalize(winId, lazyClass);
 										}
 									}
@@ -219,9 +219,9 @@ export let util = {
 								tooltip: i18n.t("LBL_WINDOW_MINIMIZE"),
 								on: {
 									onItemClick: function(id) {
-										
+
 										if (taskManagerService) {
-									
+
 											taskManagerService.minimize(winId);
 										}
 									}
@@ -240,7 +240,7 @@ export let util = {
 						],
 						borderless: 1
 					};
-	
+
 					webix.ui({
 						view: "window",
 						id: winId,
@@ -258,47 +258,47 @@ export let util = {
 						},
 						on: {
 							onBeforeShow: function() {
-	
+
 								window.wm.add(winId);
-	
+
 								if (taskManagerService) {
-									
+
 									taskManagerService.add(winId, lazyClass);
 								}
 							},
 							onDestruct: function() {
-	
+
 								window.wm.delete(winId);
-								
+
 								if (taskManagerService) {
-									
+
 									taskManagerService.remove(winId);
 								}
 							}
 						}
 					});
 				}
-	
+
 				if ($$(winId)) {
-	
+
 					$$(winId).show();
 				}
-	
+
 				if (module.jsMethodCallbacks && module.jsMethodCallbacks !== "DEPRECATED" && lazyClass) {
-	
+
 					lazyClass.runOne(module.jsMethodCallbacks)
 				}
-	
-				util.ui.centerWindow(winId);	
+
+				util.ui.centerWindow(winId);
 			}
 
 			return lazyClass;
 		},
 
 		loadInTab(module, moduleAction, mod, args) {
-			
+
 			if (window.isExternal) {
-				
+
 				return this.loadInWindow(module, moduleAction, mod, args);
 			}
 
@@ -334,60 +334,60 @@ export let util = {
 
 				args = {};
 			}
-			
-			
-			if(args.actualLabel){
-				
-				tabLabel = args.actualLabel; 
+
+
+			if (args.actualLabel) {
+
+				tabLabel = args.actualLabel;
 
 			} else {
-							
+
 				tabLabel = (label) ? i18n.t(label) : '';
 			}
 
 			args.containerId = tab_id.replace("tab", "tab_body");
 
 			lazyClass = new mod.default(module, moduleAction, args);
-			
+
 			if (!lazyClass.waitingForEntities) {
-				
+
 				callMethods();
 			}
 			else {
-				
+
 				let hnd;
-			
+
 				hnd = setInterval(function() {
-					
+
 					if (!lazyClass.waitingForEntities) {
-					
+
 						clearInterval(hnd);
 						callMethods();
 					}
-						
-				}, 100);	
+
+				}, 100);
 			}
-			
+
 			function callMethods() {
-				
+
 				viewModule = lazyClass.runOne(module.jsMethodDraw);
 
 				if (viewModule) {
-					
+
 					let genericModule = {
 						module: module,
 						moduleAction: moduleAction,
 						args: args
 					}
-	
+
 					$$(MAIN_TAB_ID).addView({
-	
+
 						id: tab_id,
-	//					header: `<div style='float: left; width: 250px;'>
-	//								<img class='tab-icon' src='${icon}'/>
-	//								<span class='tab-text'>${i18n.t(label)}</span>
-	//								<span style='float: right; padding-top: 2px'><a href='#' onclick='window.extenalizeTab(${JSON.stringify(tab_id)}, ${module ? JSON.stringify(module) : undefined }, ${moduleAction ? JSON.stringify(moduleAction) : undefined}, ${args ? JSON.stringify(args) : undefined})'><img id='${tab_id}-externalize' title='${i18n.t("LBL_VIEW_IN_WINDOW")}' src='./img/externalize_button.png'></a></span>
-	//							</div>`,
+						//					header: `<div style='float: left; width: 250px;'>
+						//								<img class='tab-icon' src='${icon}'/>
+						//								<span class='tab-text'>${i18n.t(label)}</span>
+						//								<span style='float: right; padding-top: 2px'><a href='#' onclick='window.extenalizeTab(${JSON.stringify(tab_id)}, ${module ? JSON.stringify(module) : undefined }, ${moduleAction ? JSON.stringify(moduleAction) : undefined}, ${args ? JSON.stringify(args) : undefined})'><img id='${tab_id}-externalize' title='${i18n.t("LBL_VIEW_IN_WINDOW")}' src='./img/externalize_button.png'></a></span>
+						//							</div>`,
 						tabId: tab_id,
 						header: `<div id='${tab_id}' style='float: left; width: 250px;'>
 									<img class='tab-icon' style='height:22px; width:22px' src='${icon}'/>
@@ -408,29 +408,29 @@ export let util = {
 							]
 						}
 					});
-					
+
 					let closeButtons = $$(MAIN_TAB_ID).getNode().getElementsByClassName('webix_tab_close');
-				
+
 					if (closeButtons) {
-						
+
 						let closeButtonsArray = Array.from(closeButtons);
-						
+
 						closeButtonsArray.forEach(closeButton => {
-							
+
 							closeButton.title = i18n.t("LBL_TAB_CLOSE");
 						});
 					}
-	
+
 					$$(MAIN_TAB_ID).getTabbar().setValue(tab_id.replace("tab", "tab_body"));
 				}
-	
+
 				if (module.jsMethodCallbacks && module.jsMethodCallbacks !== "DEPRECATED" && lazyClass) {
-	
+
 					lazyClass.runOne(module.jsMethodCallbacks)
-				}	
+				}
 			}
 
-			
+
 
 			return lazyClass;
 		},
@@ -438,12 +438,12 @@ export let util = {
 		getModuleOpenedId(moduleId) {
 
 			let tabItems = undefined;
-			
+
 			if ($$(MAIN_TAB_ID)) {
-				
+
 				tabItems = $$(MAIN_TAB_ID).getMultiview().getChildViews();
 			}
-			
+
 			let winItems = Array.from(window.wm.getAll());
 
 			if (tabItems) {
@@ -475,10 +475,10 @@ export let util = {
 				const lazy = async _ => {
 
 					let jsFile = util.getContextPath() + "/" + module.jsFile;
-					
+
 					if (args && viewTypeId) {
-						
-						args.viewTypeId = viewTypeId;	
+
+						args.viewTypeId = viewTypeId;
 					}
 
 					const mod = await import(jsFile);
@@ -556,9 +556,9 @@ export let util = {
 					// Multiselect not allowed with 2 o more selected
 					if (processPks.length > 1 && command.multiselect === false) {
 
-						let ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_COMMAND_NOT_COMPATIBLE_MULTISELECT_DESCRIPTION"), null, null, null);
+						let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_COMMAND_NOT_COMPATIBLE_MULTISELECT_DESCRIPTION"), null, null, null);
 						ms.show();
-				
+
 					}
 					// One or more selected and multiselect allowed
 					else {
@@ -570,8 +570,8 @@ export let util = {
 				else {
 					// Required one or more selected
 					if (command.itemRequired) {
-						
-						let ms = new MessageBox (MessageBox.WARN, i18n.t("LBL_COMMAND_NO_ROWS_SELECTED_DESCRIPTION"), null, null, null);
+
+						let ms = new MessageBox(MessageBox.WARN, i18n.t("LBL_COMMAND_NO_ROWS_SELECTED_DESCRIPTION"), null, null, null);
 						ms.show();
 
 					}
@@ -608,7 +608,7 @@ export let util = {
 
 					executeCommand();
 				}
-		
+
 				function executeCommand() {
 
 					let cmd = command;
@@ -648,7 +648,7 @@ export let util = {
 					}
 
 					if (args.selectedPks.length > 0) {
-						
+
 						let module = util.module.getFromModuleAction(cmd.moduleAction.id);
 
 						util.module.open(module, cmd.moduleAction, viewTypeId, null, args);
@@ -692,7 +692,7 @@ export let util = {
 				});
 			}
 		},
-		
+
 		checkSystemPermissions(modules, userData) {
 
 			let systemPermissionId = [];
@@ -814,7 +814,7 @@ export let util = {
 		isAllowedPermission(permissionToCheck) {
 
 			let userData = util.user.getUserData();
-			
+
 			let rolePermissions = userData.role.rolePermissions;
 			let userPermissions = userData.userPermissions;
 			let permissionsOK = false;
@@ -843,7 +843,7 @@ export let util = {
 
 			return permissionsOK;
 		},
-		
+
 		openFromJSONConfig(moduleActionCfg, drawCallback, args, instanceCallback) {
 
 			let moduleActionId = undefined;
@@ -855,25 +855,25 @@ export let util = {
 
 				moduleActionId = moduleActionCfg.moduleActionId;
 				viewTypeId = moduleActionCfg.viewTypeId;
-			} 
+			}
 			else if (!isNaN(moduleActionCfg)) {
 
 				moduleActionId = moduleActionCfg;
 			}
-			
+
 			if (moduleActionId) {
-				
+
 				modAction = { id: moduleActionId };
 				moduleAux = this.getFromModuleAction(moduleActionId);
-	
+
 				if (moduleAux) {
-	
+
 					this.open(moduleAux, modAction, viewTypeId, drawCallback, args, instanceCallback);
-	
+
 				} else {
-	
+
 					(new MessageBox(MessageBox.WARN, i18n.t("LBL_NOT_AVAILABLE") + " moduleAction = " + moduleActionIdFromJSON, null, null, null)).show();
-				}	
+				}
 			}
 		}
 	},
@@ -890,108 +890,108 @@ export let util = {
 	},
 
 	user: {
-		
+
 		getUserData() {
-			
+
 			let userData = undefined;
 			let sessionData = webix.storage.session.get(SESSION_STORAGE_SESSION_DATA);
-			
+
 			if (sessionData && sessionData.user) {
-			
-				userData = sessionData.user;	
+
+				userData = sessionData.user;
 			}
-						
+
 			return userData;
 		},
-		
+
 		getSessionData() {
-			
+
 			return webix.storage.session.get(SESSION_STORAGE_SESSION_DATA);
 		},
-		
+
 		closeSession() {
-			
+
 			webix.storage.session.remove(SESSION_STORAGE_SESSION_DATA);
-			
+
 			let services = window.sm.getAll();
-			
+
 			if (Array.isArray(services)) {
-				
+
 				services.forEach(service => {
-					
-					if (service.object && typeof service.object.destroy === "function") { 
-					
-						service.object.destroy();	
+
+					if (service.object && typeof service.object.destroy === "function") {
+
+						service.object.destroy();
 					}
 				});
 			}
 		},
-		
+
 		redirectLogin() {
 
 			if (util.ui.isExternal()) {
-				
-				window.open('', '_self').close();	
+
+				window.open('', '_self').close();
 			}
 			else {
-				
+
 				window.location = "./login.html";
-			}			
+			}
 		},
 
 		keepAlive(onResponse, onError) {
-			
+
 			util.user.request("auth/keep_alive", onResponse, onError);
 		},
-		
+
 		auth() {
-			
+
 			let sessionData;
-			
+
 			webix.storage.session.remove(SESSION_STORAGE_SESSION_DATA);
-			
+
 			let response = webix.ajax().sync().post(appConfig.restUrl + "auth/keep_alive");
 
 			if (response && response.responseText) {
 
 				sessionData = JSON.parse(response.responseText);
-				
+
 				if (sessionData.access === LOGIN_MESSAGE.AUTHORIZED.id) {
-					
+
 					webix.storage.session.put(SESSION_STORAGE_SESSION_DATA, sessionData);
 				}
 				else {
-					
+
 					sessionData = undefined;
 				}
 			}
 
 			return sessionData;
-		
+
 		},
-		
+
 		logout(onResponse, onError) {
-			
+
 			util.user.request("auth/logout", onResponse, onError);
 		},
-		
+
 		request(endpoint, onResponse, onError) {
-			
+
 			webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + endpoint).then(
 				function(dat) {
-					
+
 					if (dat != null) {
-	
+
 						if (dat != null && onResponse) {
-						
-							onResponse(dat.json());	
+
+							onResponse(dat.json());
 						}
-					}	
+					}
 				},
 				function(err) {
-					
+
 					if (onError) {
-						
+
 						onError(err);
 					}
 				}
@@ -1172,7 +1172,7 @@ export let util = {
 
 		notImplementedMessage() {
 
-			let ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_NOT IMPLEMENTED_DESCRIPTION"), null, null, null);
+			let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_NOT IMPLEMENTED_DESCRIPTION"), null, null, null);
 			ms.show();
 
 		},
@@ -1246,7 +1246,7 @@ export let util = {
 			let icon = 'img/module/default.png';
 
 			if (mainTab) {
-				
+
 				mainTab.addView({
 					id: tabId,
 					header: `<div style='float: left; width: 250px;'>
@@ -1304,7 +1304,7 @@ export let util = {
 					let titleView = head.queryView({ view: "label" });
 
 					if (titleView) {
-						
+
 						titleView.config.shortTitle = (shortTitle) ? shortTitle : "";
 						titleView.config.longTitle = title;
 
@@ -1394,9 +1394,9 @@ export let util = {
 				}
 			}
 		},
-		
+
 		clearScreen() {
-			
+
 			webix.ui({
 				view: "popup",
 				move: true,
@@ -1408,57 +1408,57 @@ export let util = {
 				},
 				on: {
 					onBeforeShow: function() {
-	
+
 						if (webix.env.isFF) {
 
 							let mainScreen = $$(MAIN_SCREEN);
-							
+
 							if (mainScreen) {
-								
+
 								webix.html.addCss(mainScreen.$view, "main-screen-locked-firefox");
-							}							
+							}
 						}
 					}
 				}
 			}).show();
 		},
-		
+
 		getViewLogout() {
 
 			return {
 				view: "template",
 				template: function(data) {
-					
+
 					let logo = "<img src='img/open_its_full.png' align='center'>";
-	
+
 					return `<div class='welcome-screen-inner'>${logo}</div>`;
 				}
 			}
 		},
-		
+
 		isInside(limits, lon, lat) {
-			
+
 			let res = true;
 			const Limit = { LON_INI: 0, LAT_INI: 1, LON_END: 2, LAT_END: 3 }
-			
+
 			let ext, point, elementPoint, feature, coordsFeatures;
-					
+
 			if (Array.isArray(limits) && limits.length === 4) {
-	
+
 				let destLoc = [limits[Limit.LON_END], limits[Limit.LAT_END]];
 				let currentLoc = [limits[Limit.LON_INI], limits[Limit.LAT_INI]];
-				
+
 				ext = ol.extent.boundingExtent([destLoc, currentLoc]);
 				ext = ol.proj.transformExtent(ext, ol.proj.get('EPSG:4326'), ol.proj.get('EPSG:3857'));
-				
+
 				point = ol.proj.fromLonLat([parseFloat(lon), parseFloat(lat)]);
 				elementPoint = new ol.geom.Point(point);
 				feature = new ol.Feature(elementPoint);
 				coordsFeatures = feature.getGeometry().getCoordinates();
-				
+
 				res = ol.extent.containsXY(ext, coordsFeatures[0], coordsFeatures[1]);
 			}
-			
+
 			return res;
 		},
 
@@ -1488,13 +1488,13 @@ export let util = {
 
 			return width;
 		},
-		
+
 		calculateFontSize(text, fontFamily, fontSize, letterSpacing, maxWidth) {
 
 			const CORRECTION_FACTORS = {
 				DECREASE_FONT: 0.9,
 				INCREASE_FONT: 1.1,
-				WIDTH: 0.8				
+				WIDTH: 0.8
 			};
 			let correctFontSize = fontSize;
 			let initialTextWidth = this.calculateTextWidth(text, fontFamily, fontSize, letterSpacing);
@@ -1503,9 +1503,9 @@ export let util = {
 
 				let newFontSize = Math.floor(correctFontSize * CORRECTION_FACTORS.DECREASE_FONT);
 				initialTextWidth = this.calculateTextWidth(text, fontFamily, newFontSize, letterSpacing);
-				correctFontSize = (newFontSize === 0) ? 1 : newFontSize;				
+				correctFontSize = (newFontSize === 0) ? 1 : newFontSize;
 			};
-						
+
 			while (initialTextWidth < maxWidth * CORRECTION_FACTORS.WIDTH) {
 
 				let newFontSize = Math.ceil(correctFontSize * CORRECTION_FACTORS.INCREASE_FONT);
@@ -1515,12 +1515,12 @@ export let util = {
 
 			return correctFontSize;
 		},
-		
+
 		isExternal() {
-			
+
 			return (window.location.pathname.indexOf("external.html") !== -1);
 		},
-		
+
 		changeColorTheme(theme) {
 
 			let color;
@@ -1706,17 +1706,17 @@ export let util = {
 	element: {
 
 		getElementTypeByCommandElementTypeId(commandElementTypeId) {
-			
+
 			const ELEMENT_TYPE = "ElementType";
 			let elementTypeArray = [];
 			let elementTypeId = undefined;
-			
+
 			if (commandElementTypeId) {
-				
+
 				let commandElementTypeArray = commandElementTypeId.split(":");
-				
+
 				if (commandElementTypeArray.length === 3) {
-					
+
 					elementTypeArray.push(ELEMENT_TYPE);
 					elementTypeArray.push(commandElementTypeArray[2]);
 					elementTypeId = elementTypeArray.join(":");
@@ -1724,7 +1724,7 @@ export let util = {
 			}
 			return elementTypeId;
 		},
-		
+
 		getElementTypeParamId(elementValueId) {
 
 			const ELEMENT_TYPE_PARAM = "ElementTypeParam";
@@ -1748,9 +1748,9 @@ export let util = {
 
 			return elementTypeParamId;
 		},
-		
+
 		getElementValueId(elementTypeParamId, elementId) {
-			
+
 			const ELEMENT_VALUE = "ElementValue";
 			let elementValueArray = [];
 			let elementValueId = undefined;
@@ -1804,285 +1804,285 @@ export let util = {
 
 			return color;
 		},
-		
+
 		sendCommand(commands, onResponse, confirmMessage) {
-			
+
 			let showCommentDialog = false;
 			let auditLogs = [];
-			
+
 			if (Array.isArray(commands) && commands.length > 0) {
-				
+
 				showCommentDialog = (commands.find(command => {
-					
+
 					let res = false;
 					let element = window.em.getByField(EntityType.ELEMENT, "id", command.elementId);
-				
+
 					if (element) {
-					
+
 						let commandElementType = util.element.getCommandElementType(element, command.commandElementTypeId);
-				
+
 						if (commandElementType && LogLevel[commandElementType.logLevel]) {
-						
+
 							res = (commandElementType.logComment === "true")
 						}
 					}
-					
+
 					return res;
-					
+
 				}) != null);
-				
+
 				auditLogs = util.element.getAuditLogs(commands);
-				
+
 				if (Array.isArray(auditLogs) && auditLogs.length > 0 && showCommentDialog) {
-					
+
 					(new InputDialogBox(i18n.t("LBL_ARE_YOU_SURE_QUEUE_COMMAND"), i18n.t("LBL_SEND_COMMAND_COMMENT"), function(comment) {
 
 						auditLogs = auditLogs.map(auditLog => {
-							
+
 							let newAuditLog = webix.copy(auditLog);
-							
+
 							if (Array.isArray(newAuditLog.auditLogValues) && newAuditLog.auditLogValues.length > 0) {
-								
+
 								let auditLogValueComment = newAuditLog.auditLogValues.find(e => e.logTypeParamId == LogType.LOG_TYPE_COMMANDS.params.COMMENT);
-								
+
 								if (auditLogValueComment) {
-									
+
 									auditLogValueComment.value = auditLogValueComment.value === "" ? comment : undefined;
 								}
 							}
-							
+
 							return newAuditLog;
 						});
-						
-						send();		
+
+						send();
 
 					}, false)).show();
 				}
 				else {
-					
+
 					if (confirmMessage) {
-				
-						(new MessageBox (MessageBox.CONFIRM, confirmMessage, null, send, null)).show();
+
+						(new MessageBox(MessageBox.CONFIRM, confirmMessage, null, send, null)).show();
 					}
 					else {
-						
+
 						send();
 					}
-				}	
+				}
 			}
-			
+
 			function send() {
-				
+
 				if (Array.isArray(auditLogs) && auditLogs.length > 0) {
-						
+
 					webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + ENDPOINT_SEND_AUDIT_LOG, { auditLogs: auditLogs }).then(
 						function(okSendAuditLog) {
-							
-							callSendCommand();						
+
+							callSendCommand();
 						},
 						function(errSendAuditLog) {
-							
+
 							log.error(errSendAuditLog);
-						
+
 							if (onResponse) {
-								
-								onResponse(false);	
+
+								onResponse(false);
 							}
-							
+
 						}
-					);	
+					);
 				}
 				else {
-				
-					callSendCommand();	
+
+					callSendCommand();
 				}
-				
+
 				function callSendCommand() {
-					
+
 					webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + ENDPOINT_ADD_COMMAND, { commands: commands }).then(
 						function(responseCommandElementErrors) {
-							
+
 							if (responseCommandElementErrors) {
-								
+
 								let commandElementErrors = responseCommandElementErrors.json();
-								
+
 								if (Array.isArray(commandElementErrors) && commandElementErrors.length > 0) {
-									
+
 									util.element.printCommandElementErrors(commandElementErrors);
-									
+
 									if (onResponse) {
-										
-										onResponse(false);	
+
+										onResponse(false);
 									}
-									
+
 								}
 								else {
-									
+
 									if (onResponse) {
-										
+
 										onResponse(true);
 									}
 								}
-								
+
 							}
 						},
 						function(errSendCommand) {
-							
+
 							log.error(errSendCommand);
-							
+
 							if (onResponse) {
-								
+
 								onResponse(false);
 							}
 						}
 					);
-					
-					
+
+
 				}
 			}
 		},
-		
+
 		deleteCommand(commandIds, onResponse, confirm) {
-			
+
 			if (Array.isArray(commandIds) && commandIds.length > 0) {
-				
+
 				if (confirm) {
-					
-					(new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_ARE_YOU_SURE_DEQUEUE_COMMAND"), null, doAction, null)).show();
+
+					(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_ARE_YOU_SURE_DEQUEUE_COMMAND"), null, doAction, null)).show();
 				}
 				else {
-					
+
 					doAction();
 				}
-				
+
 				function doAction() {
-					
+
 					let body = {
-				
+
 						commandElementsId: commandIds
 					}
-					
+
 					webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + ENDPOINT_DELETE_COMMAND, body).then(
 						function(responseCommandElementErrors) {
-							
+
 							if (responseCommandElementErrors) {
-								
+
 								let commandElementErrors = responseCommandElementErrors.json();
-								
+
 								if (Array.isArray(commandElementErrors) && commandElementErrors.length > 0) {
-									
+
 									util.element.printCommandElementErrors(commandElementErrors);
-									
+
 									if (onResponse) {
-										
-										onResponse(false);	
+
+										onResponse(false);
 									}
-									
+
 								}
 								else {
-									
+
 									if (onResponse) {
-										
+
 										onResponse(true);
 									}
 								}
-								
+
 							}
 						},
 						function(errSendCommand) {
-							
+
 							if (onResponse) {
-								
+
 								onResponse(false);
 							}
 						}
 					);
 				}
-				
-					
+
+
 			}
 		},
-		
+
 		setPriority(elementId, priorityId, active, onResponse, confirm) {
-			
+
 			if (elementId && priorityId) {
-				
+
 				if (confirm) {
-				
-					(new MessageBox (MessageBox.CONFIRM, active ? i18n.t("LBL_ARE_YOU_SURE_ENABLE_PRIORITY") : i18n.t("LBL_ARE_YOU_SURE_DISABLE_PRIORITY"), null, doAction, null)).show();
+
+					(new MessageBox(MessageBox.CONFIRM, active ? i18n.t("LBL_ARE_YOU_SURE_ENABLE_PRIORITY") : i18n.t("LBL_ARE_YOU_SURE_DISABLE_PRIORITY"), null, doAction, null)).show();
 				}
 				else {
-					
+
 					doAction();
-				}	
+				}
 			}
-			
+
 			function doAction() {
-				
-				let endPointChangePriority = util.fillTemplate(active ? ENDPOINT_PRIORITY_ENABLE : ENDPOINT_PRIORITY_DISABLE, { elementId: elementId, priorityId: priorityId }); 
-				
+
+				let endPointChangePriority = util.fillTemplate(active ? ENDPOINT_PRIORITY_ENABLE : ENDPOINT_PRIORITY_DISABLE, { elementId: elementId, priorityId: priorityId });
+
 				webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + endPointChangePriority).then(
 					function(responseCommandElementErrors) {
-						
+
 						if (responseCommandElementErrors) {
-							
+
 							let commandElementErrors = responseCommandElementErrors.json();
-							
+
 							if (Array.isArray(commandElementErrors) && commandElementErrors.length > 0) {
-								
+
 								util.element.printCommandElementErrors(commandElementErrors);
-								
+
 								if (onResponse) {
-									
-									onResponse(false);	
+
+									onResponse(false);
 								}
-								
+
 							}
 							else {
-								
+
 								if (onResponse) {
-									
+
 									onResponse(true);
 								}
 							}
-							
+
 						}
 					},
 					function(errSendCommand) {
-						
+
 						if (onResponse) {
-							
+
 							onResponse(false);
 						}
 					}
-				);	
+				);
 			}
 		},
-		
+
 		getAuditLogs(commands) {
-			
+
 			let aLogs = [];
 			let userData = util.user.getUserData();
-				
+
 			commands.forEach(command => {
-				
+
 				let element = window.em.getByField(EntityType.ELEMENT, "id", command.elementId);
-				
+
 				if (element) {
-					
+
 					let commandElementType = util.element.getCommandElementType(element, command.commandElementTypeId);
-				
+
 					if (commandElementType && LogLevel[commandElementType.logLevel]) {
-						
+
 						let commandValues = undefined;
-						
+
 						if (Array.isArray(command.commandElementValues) && command.commandElementValues.length > 0) {
-							
-							commandValues = command.commandElementValues.map(e=> e.value).join(",");
+
+							commandValues = command.commandElementValues.map(e => e.value).join(",");
 						}
-						
-						const LOG_TYPE_COMMANDS = LogType.LOG_TYPE_COMMANDS; 
-					
+
+						const LOG_TYPE_COMMANDS = LogType.LOG_TYPE_COMMANDS;
+
 						let auditLog = {
 							logTypeId: LOG_TYPE_COMMANDS.id,
 							logSubtypeId: LOG_TYPE_COMMANDS.subtypes.LOG_SUBTYPE_EXECUTE_COMMAND,
@@ -2107,51 +2107,51 @@ export let util = {
 								}
 							]
 						};
-						
-						aLogs.push(auditLog);	
-					}	
+
+						aLogs.push(auditLog);
+					}
 				}
 			});
-			
-			
-			
+
+
+
 			return aLogs;
 		},
-			
+
 		/**
 		 *
 		 * Calculate and classify commands by element(sub)Types
 		 * 
-	 	 * @param elementIds {array} Array of element ids 
-	 	 * @param defaultSignalingModuleAction {number} id of defaultModuleAction for signalling
-	 	 * @param elementTypeCommands {array} Referenced array of classified commands by (sub)type
-	 	 * @param mapElements {map} Referenced map of classified elements by (sub)type
-	 	 * @param mapCommandModule {map} Referenced map of classified commands by (sub)type
-	 	 * @param useDefaultModule {boolean} Referenced boolean to use default module
-	 	 * @return
-	 	 */
+		   * @param elementIds {array} Array of element ids 
+		   * @param defaultSignalingModuleAction {number} id of defaultModuleAction for signalling
+		   * @param elementTypeCommands {array} Referenced array of classified commands by (sub)type
+		   * @param mapElements {map} Referenced map of classified elements by (sub)type
+		   * @param mapCommandModule {map} Referenced map of classified commands by (sub)type
+		   * @param useDefaultModule {boolean} Referenced boolean to use default module
+		   * @return
+		   */
 		calculateElementTypeCommands(elementIds, defaultSignalingModuleAction, elementTypeCommands, mapElements, mapCommandModule, useDefaultModule) {
-			
+
 			if (!elementTypeCommands) {
-				
+
 				elementTypeCommands = [];
 			}
-			
+
 			if (!mapElements) {
-				
+
 				mapElements = new Map();
 			}
-			
+
 			if (!mapCommandModule) {
-				
+
 				mapCommandModule = new Map();
 			}
-			
+
 			if (useDefaultModule === undefined) {
-				
+
 				useDefaultModule = false;
 			}
-			
+
 			if (Array.isArray(elementIds) && elementIds.length > 0) {
 
 				self.mapElements = new Map();
@@ -2173,24 +2173,24 @@ export let util = {
 								let elementSubtype = elementType.elementSubtypes.find(e => e.id === element.elementSubtype.id);
 
 								if (elementSubtype) {
-									
+
 									let commandModule = defaultSignalingModuleAction;
 									let alias = "";
-									
+
 									if (element.elementSubtype.commandModule) {
-										
-										commandModule = element.elementSubtype.commandModule; 
+
+										commandModule = element.elementSubtype.commandModule;
 									}
 									else if (element.elementType.commandModule) {
-										
+
 										commandModule = element.elementType.commandModule;
 									}
-									
+
 									if (commandModule == defaultSignalingModuleAction) {
-										
+
 										alias = "(*) ";
 									}
-									
+
 									let listElement = mapElements.get(element.elementSubtype.id);
 
 									if (!listElement) {
@@ -2202,26 +2202,26 @@ export let util = {
 
 										elementTypeCommands.push({
 											id: element.elementSubtype.id,
-											elementType: element.elementType, 
+											elementType: element.elementType,
 											alias: alias + i18n.t(elementType.labelAlias) + ' - ' + i18n.t(elementSubtype.labelAlias),
 											aliasCtx: i18n.t(elementSubtype.labelAlias),
 											description: i18n.t(elementSubtype.labelDescription),
 											image: elementType.elementTypePhoto,
 											defaultSignallingModule: !commandModule || commandModule == DEFAULT_SIGNALLING_MODULE_ACTION,
 											commandElements: function() {
-												
+
 												let cmds = [];
-												
+
 												if (Array.isArray(element.commandElements) && element.commandElements.length > 0) {
-													
+
 													cmds = element.commandElements;
 												}
-												
+
 												return cmds;
 											}()
 										});
 									}
-									
+
 									listElement.push(id);
 								}
 
@@ -2259,50 +2259,50 @@ export let util = {
 										image: elementType.elementTypePhoto,
 										defaultSignallingModule: !commandModule || commandModule == DEFAULT_SIGNALLING_MODULE_ACTION,
 										commandElements: function() {
-											
+
 											let cmds = [];
-											
+
 											if (Array.isArray(element.commandElements) && element.commandElements.length > 0) {
-												
+
 												cmds = element.commandElements;
 											}
-											
+
 											return cmds;
 										}()
 									});
 								}
-								
+
 								listElement.push(id);
 							}
 						}
 					}
 				});
 			}
-			
+
 			return elementTypeCommands;
 		},
-		
+
 		getCommandElementType(element, commandElementTypeId) {
-				
+
 			let commandElementType = undefined;
-			
+
 			if (element && element.elementType && element.elementType.id) {
-			
+
 				let elementType = window.em.getByField(EntityType.ELEMENT_TYPE, "id", element.elementType.id);
-				
+
 				if (elementType && Array.isArray(elementType.commandElementTypes)) {
-					
+
 					commandElementType = elementType.commandElementTypes.find(e => e.id === commandElementTypeId);
 				}
 			}
-			
-			return commandElementType;				
+
+			return commandElementType;
 		},
-		
+
 		printCommandElementErrors(commandElementErrors) {
-						
+
 			const LBL_COMMAND_ELEMENT_ERRORS = {
-				
+
 				1: "LBL_ELEMENT_NOT_CONNECTED",
 				2: "LBL_NOT_COMPLY_PRECONDITIONS",
 				3: "LBL_TIME_OUT_EXPIRED",
@@ -2310,57 +2310,57 @@ export let util = {
 				5: "LBL_COMMAND_NOT_FOUND",
 				6: "LBL_ELEMENT_NOT_FOUND"
 			}
-			
+
 			if (Array.isArray(commandElementErrors) && commandElementErrors.length > 0) {
-				
+
 				let label = i18n.t("LBL_COMMAND_ELEMENT_ERRORS_DESCRIPTION");
-		
+
 				let table = {
 					fields: ["element=LBL_ELEMENT", "error=LBL_ERROR", "description=LBL_DESCRIPTION"],
 					data: []
 				};
-		
+
 				commandElementErrors.forEach(commandElementError => {
-					
+
 					let elementAlias = "";
-					
+
 					if (commandElementError.element) {
-						
+
 						let element = window.em.getByField(EntityType.ELEMENT, "id", commandElementError.element.id);
-						
+
 						if (element) {
-							
+
 							elementAlias = element.alias;
-						}	
+						}
 					}
-					
+
 					let description = "";
-					
+
 					if (Array.isArray(commandElementError.commandElementPreconditions) && commandElementError.commandElementPreconditions.length > 0) {
-						
+
 						commandElementError.commandElementPreconditions.forEach(commandElementPrecondition => {
-							
+
 							if (commandElementPrecondition.toStr) {
-								
+
 								let stringTanslate = i18n.t(commandElementPrecondition.toStr);
-								description += stringTanslate;	
+								description += stringTanslate;
 							}
 						});
 					}
-					
+
 					table.data.push({
 						id: webix.uid(),
 						element: elementAlias,
 						error: (commandElementError.error && commandElementError.error > 0) ? i18n.t(LBL_COMMAND_ELEMENT_ERRORS[commandElementError.error]) : "",
 						description: description
-						
+
 					});
 				});
-				
+
 				(new TableMessageBox(label, TableMessageBox.ERROR, table)).show()
 			}
 		},
-		
+
 		getValuesForPrint(data, elementValue) {
 
 			let stateValueId = StateValue.ONLINE;
@@ -2371,6 +2371,7 @@ export let util = {
 			if (data && data.elementValue) {
 
 				elementValue.value = data.elementValue.value;
+				elementValue.updatedAt = data.elementValue.updatedAt;
 
 				if (data.elementValue.elementValueState) {
 
@@ -2399,9 +2400,10 @@ export let util = {
 
 			let icon = elementValue.elementTypeParam.image ? elementValue.elementTypeParam.image : undefined;
 			let value = '-';
+			let updatedAt = elementValue.updatedAt ? util.toLocaleString(elementValue.updatedAt / 1000) : '-';
 			let hasEnum = undefined;
 			let hasEnumImage = undefined;
-	
+
 			if (elementValue.value) {
 
 				value = elementValue.value;
@@ -2440,7 +2442,7 @@ export let util = {
 						let enumValue = enumListValues.find(e => e.key == elementValue.value);
 
 						if (enumValue) {
-							
+
 							hasEnum = true;
 
 							if (enumValue.image) {
@@ -2462,7 +2464,7 @@ export let util = {
 
 			let unit = (elementValue.elementTypeParam.labelUnit) ? i18n.t(elementValue.elementTypeParam.labelUnit) : "";
 			let iconElementValueState = stateValueId.replace(":", "_") + ".png";
-			
+
 			let res = {
 				elementTypeParamDescription: elementTypeParamDescription,
 				hasEnum: hasEnum,
@@ -2474,9 +2476,10 @@ export let util = {
 				stateValueBackColor: stateValueBackColor,
 				unit: unit,
 				value: value,
-				elementValueState:stateValueId
+				updatedAt: updatedAt,
+				elementValueState: stateValueId
 			};
-			
+
 			return res;
 
 		}
@@ -2514,7 +2517,7 @@ export let util = {
 		cronDescription(cronExpression) {
 
 			let translate = prettyCron.toString(cronExpression, true);
-			
+
 			if (translate != undefined) {
 
 				return translate;
@@ -2581,110 +2584,110 @@ export let util = {
 	},
 
 	tree: {
-			
+
 		getNodes(items, relationships, remapedFields, translate) {
-			
+
 			let instantInit = (new Date()).getTime();
 			let uid = webix.uid();
 			let mapNodes = undefined;
 			let nodes = [];
 			let hierarchies = [];
 			let ids = new Set();
-			
+
 			if (Array.isArray(items) && Array.isArray(relationships)) {
-				
+
 				mapNodes = createMapNodes();
 				hierarchies = getHierarchies();
-				nodes = getParentNodes();		
-				
+				nodes = getParentNodes();
+
 				if (Array.isArray(nodes)) {
-						
+
 					nodes.forEach(node => {
-						
+
 						fillNode(node);
 					});
 				}
-				
+
 				let diffTime = (new Date()).getTime() - instantInit;
-				
+
 				log.debug("Tree::getNodes(uid = " + uid + ", build = " + diffTime + "ms.) init => " + items.length + " items; " + relationships.length + " relationships");
 			}
-			
+
 			function fillNode(node) {
-								
+
 				if (Array.isArray(hierarchies) && hierarchies.length > 0) {
-					
+
 					// Find child nodes for current node
 					let childNodes = hierarchies.filter(e => e.parentNode == node.id_);
-					
+
 					// Assing child nodes to current node
 					if (Array.isArray(childNodes) && childNodes.length > 0) {
-						
+
 						node.props.folder = true;
-												
+
 						childNodes.forEach(childNode => {
-							
+
 							let nodeChild = mapNodes.get(childNode.childNode);
-							
+
 							if (nodeChild) {
-								
+
 								let newNodeChild = webix.copy(nodeChild);
 								let id = [node.id_, nodeChild.id_].join('_');
-								
+
 								if (ids.has(id)) {
-									
+
 									id = [node.id_, nodeChild.id_, webix.uid()].join('_');
 								}
-								
+
 								ids.add(id);
 
 								newNodeChild.id = id;
 								newNodeChild.parentId = node.id_;
-								
+
 								fillNode(newNodeChild);
-								
+
 								node.data.push(newNodeChild);
 							}
 						});
 					}
 				}
 			}
-			
+
 			function createMapNodes() {
-				
+
 				let mapNodesAux = new Map();
-				
+
 				if (Array.isArray(items)) {
-					
+
 					items.forEach(item => {
-						
+
 						mapNodesAux.set(item.id, createNode(item, null));
 					})
 				}
-				
+
 				return mapNodesAux;
 			}
-			
+
 			function getParentNodes() {
-				
+
 				let parentNodesAux = [];
-				
+
 				mapNodes.forEach(node => {
-				
+
 					if (hierarchies.findIndex(e => e.childNode == node.id_) === -1) {
-						
+
 						parentNodesAux.push(node);
 					}
-				});	
-				
-				
+				});
+
+
 				return parentNodesAux;
 			}
-			
+
 			function createNode(item, parentId) {
-				
-				let nodeAux; 
-				
+
+				let nodeAux;
+
 				nodeAux = {
 					id: parentId ? parentId + "_" + item.id : item.id + "_" + item.id,
 					value: item.label,
@@ -2704,15 +2707,15 @@ export let util = {
 
 				return nodeAux;
 			}
-			
+
 			function getHierarchies() {
-				
+
 				let hierarchiesAux = [];
-				
+
 				if (Array.isArray(relationships)) {
-					
+
 					if (remapedFields.parentNodeId && remapedFields.childNodeId) {
-						
+
 						hierarchiesAux = relationships.map(e => {
 
 							return {
@@ -2723,14 +2726,14 @@ export let util = {
 						});
 					}
 					else {
-					
+
 						hierarchiesAux = remapedFields;
 					}
 				}
-				
+
 				return hierarchiesAux;
 			}
-			
+
 			return nodes;
 		}
 	},
@@ -2744,7 +2747,7 @@ export let util = {
 		}
 
 		let date = new Date(ts * 1000);
-		
+
 		let userData = util.user.getUserData();
 
 		if (userData) {
@@ -2763,7 +2766,7 @@ export let util = {
 		}
 
 		let date = new Date(ts * 1000);
-		
+
 		let userData = util.user.getUserData();
 
 		if (userData) {
@@ -2777,22 +2780,22 @@ export let util = {
 	resourceExist(url) {
 
 		var result = false;
-		
+
 		var http = new XMLHttpRequest();
 		http.open('HEAD', url, false);
-		
+
 		try {
-		
-			http.send();	
+
+			http.send();
 			result = (http.status != 404);
 		}
 		catch {
-			
+
 		}
-		
+
 		return result;
 	},
-	
+
 	toLocaleTimeString(ts) {
 
 		if (!ts) {
@@ -2801,7 +2804,7 @@ export let util = {
 		}
 
 		let date = new Date(ts * 1000);
-		
+
 		let userData = util.user.getUserData();
 
 		if (userData) {
@@ -2877,16 +2880,16 @@ export let util = {
 
 		const canvas = document.createElement("canvas");
 		const context = canvas.getContext("2d");
-	
+
 		canvas.width = (size) ? size : 250;
-		canvas.height = (size)? size : 250;
+		canvas.height = (size) ? size : 250;
 		let fSize = (fontSize) ? fontSize : 140;
-		
+
 		// Get color
 		let hashValue = this.getHash(text);
 		let color;
 		let mod = Math.abs(hashValue) % 10;
-		
+
 		switch (mod) {
 
 			case 0:
@@ -2923,36 +2926,36 @@ export let util = {
 
 		// Get value
 		let textValue = "";
-		if(text && text.trim().length > 0){
-			textValue= text.trim().substring(0,2).toUpperCase();
+		if (text && text.trim().length > 0) {
+			textValue = text.trim().substring(0, 2).toUpperCase();
 		}
-	
+
 		// Draw background
 		context.fillStyle = color + '3b';
 		context.fillRect(0, 0, canvas.width, canvas.height);
-	
+
 		// Draw text
 		context.font = "500 " + fSize + "px Roboto, sans-serif";
 		context.fillStyle = color + 'a0';
 		context.textAlign = "center";
 		context.textBaseline = "middle";
 		context.fillText(textValue, canvas.width / 2, canvas.height / 2);
-	
+
 		return canvas.toDataURL("image/png");
 	},
-	
+
 	getStringNormalized(str) {
-				
+
 		if (str) {
-			
+
 			return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
 		}
 	},
-	
+
 	getStringCapitalized(str) {
-				
+
 		if (str) {
-			
+
 			return `${str[0].toUpperCase()}${str.slice(1)}`;
 		}
 	}

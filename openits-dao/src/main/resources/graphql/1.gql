@@ -45,6 +45,7 @@
   elementValues {
     id
     value
+    updatedAt
     elementValueState {
       id
       labelAlias

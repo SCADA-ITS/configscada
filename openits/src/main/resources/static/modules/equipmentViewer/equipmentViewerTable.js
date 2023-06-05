@@ -357,6 +357,26 @@ export default class EquipmentViewerTable {
 							id: 1,
 							name: "string"
 						}
+					},
+										{
+						id: 9,
+						extended: false,
+						filtered: false,
+						isEpochMilli: false,
+						isPk: false,
+						label: "LBL_UPDATE_UP",
+						labelTooltip: "LBL_UPDATE_UP",
+						needsTranslation: false,
+						parameterized: false,
+						position: 9,
+						required: true,
+						sourceField: "updatedAt",
+						visible: true,
+						widthPx: 190,
+						gridFieldDataType: {
+							id: 4,
+							name: "date"
+						}
 					}
 				]
 			};
@@ -389,11 +409,12 @@ export default class EquipmentViewerTable {
 
 				let dataToUpdate = self.data.find(dat => dat.id === ev.id);
 				
-				if (dataToUpdate && ((dataToUpdate.value != ev.value) || (ev.elementValueState && dataToUpdate.elementValueState != ev.elementValueState.id))) {
+				if (dataToUpdate && ((dataToUpdate.value != ev.value) || (dataToUpdate.updatedAt != ev.updatedAt) || (ev.elementValueState && dataToUpdate.elementValueState != ev.elementValueState.id))) {
 
 					let valuesForPrint = util.element.getValuesForPrint(null, ev);
 
 					dataToUpdate.value = valuesForPrint.value;
+					dataToUpdate.updatedAt = valuesForPrint.updatedAt;
 					dataToUpdate.iconElementValueState = valuesForPrint.iconElementValueState;
 					dataToUpdate.elementValueState = valuesForPrint.elementValueState;
 
