@@ -2,6 +2,7 @@ package com.revenga.rits.front.openits.service;
 
 import javax.annotation.PostConstruct;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class SessionManager extends FrontManager {
 	@PostConstruct
 	private void afterLoad() {
 		
-		this.enabled = SESSION_ENABLED.equals("true");
+		this.enabled = StringUtils.equals(SESSION_ENABLED, Boolean.TRUE.toString());
 		this.cronExpression = SESSION_CRON;
 	}
 	

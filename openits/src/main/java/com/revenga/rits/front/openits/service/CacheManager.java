@@ -57,7 +57,7 @@ public class CacheManager extends FrontManager {
 	@PostConstruct
 	private void afterLoad() {
 		
-		this.enabled = CACHE_ENABLED.equals("true");
+		this.enabled = StringUtils.equals(CACHE_ENABLED, Boolean.TRUE.toString());
 		this.cronExpression = CACHE_CRON;
 	}
 	
@@ -72,18 +72,18 @@ public class CacheManager extends FrontManager {
 		
 		Instant timeRef = Instant.now();
 		
-		log.info("Caching VOEntities...");
+		log.info(this.getClass().getSimpleName() + ": Caching VOEntities...");
 		
 		this.voEntities = voEntityService.getAll();
 		
 		if (!CollectionUtils.isEmpty(voEntities)) {
 			
-			log.info("Chached VOEntities. Items = " + this.voEntities.size() + " ("
+			log.info(this.getClass().getSimpleName() + ": Cached VOEntities. Items = " + this.voEntities.size() + " ("
 					+ Duration.between(timeRef, Instant.now()).toMillis() + " ms.)");
 		}
 		else {
 			
-			log.warn("Chached VOEntities without items (" + Duration.between(timeRef, Instant.now()).toMillis()
+			log.warn(this.getClass().getSimpleName() + ": Cached VOEntities without items (" + Duration.between(timeRef, Instant.now()).toMillis()
 					+ " ms.)");
 		}
 	}
@@ -200,18 +200,18 @@ public class CacheManager extends FrontManager {
 										
 										entitiesCached.put(dataSourceId, list);
 										
-										log.info("Cached datasource " + dataSource.getId() + " [" + dataSource.getName()
+										log.info(this.getClass().getSimpleName() + ": Cached datasource " + dataSource.getId() + " [" + dataSource.getName()
 												+ "]: " + list.size() + " " + dataSource.getEntityVo() + " ("
 												+ Duration.between(timeRef, Instant.now()).toMillis() + " ms." + ")");
 									}
 									else {
 										
-										log.error("Not allow caching of single entities");
+										log.error(this.getClass().getSimpleName() + ": Not allow caching of single entities");
 									}
 								}
 								else {
 									
-									log.warn("Cached datasource " + dataSource.getId() + " [" + dataSource.getName()
+									log.warn(this.getClass().getSimpleName() + ": Cached datasource " + dataSource.getId() + " [" + dataSource.getName()
 											+ "]: Not response. Try again in " + CACHE_RETRY_TIMEOUT_SECS + " secs...");
 									
 									Thread.sleep(Long.parseLong(CACHE_RETRY_TIMEOUT_SECS));
@@ -230,7 +230,7 @@ public class CacheManager extends FrontManager {
 					
 				});
 				
-				log.info(this.getClass().getSimpleName() + " => Total time to sync entities repository = "
+				log.info(this.getClass().getSimpleName() + ": Total time to sync entities repository = "
 						+ Duration.between(instant, Instant.now()).toMillis() + " ms.");
 			}
 		}

@@ -17,7 +17,6 @@ import javax.annotation.PostConstruct;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
-import org.apache.logging.log4j.Level;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -58,27 +57,9 @@ public class BackOfficeManager extends FrontManager {
 	@PostConstruct
 	private void afterLoad() {
 		
-		this.enabled = BACKOFFICE_ENABLED.equals("true");
-		this.showSql = BACKOFFICE_SHOW_SQL.equals("true");
-		this.traceTable = BACKOFFICE_TRACE_TABLE.equals("true");
-	}
-	
-	@Override
-	public void start() {
-		
-		log.log((this.enabled ? Level.INFO : Level.WARN),
-				this.getClass().getSimpleName() + (this.enabled ? " enabled" : " disabled"));
-		
-		if (this.enabled) {
-			
-			load();
-			
-			afterStart();
-		}
-		else {
-			
-			log.warn("Disabled " + this.getClass().getSimpleName());
-		}
+		this.enabled = StringUtils.equals(BACKOFFICE_ENABLED, Boolean.TRUE.toString()); 
+		this.showSql = StringUtils.equals(BACKOFFICE_SHOW_SQL, Boolean.TRUE.toString());
+		this.traceTable = StringUtils.equals(BACKOFFICE_TRACE_TABLE, Boolean.TRUE.toString());
 	}
 	
 	public Table getTable(BackOffice backOffice, String tableName) {
@@ -184,10 +165,10 @@ public class BackOfficeManager extends FrontManager {
 				
 				Instant timeRef = Instant.now();
 				
-				List<Table> tables = backOfficeProcessor.getAll(backOffice.getId());
+				List<Table> t = backOfficeProcessor.getAll(backOffice.getId());
 				
 				log.info("Cached backoffice " + backOffice.getId() + " [" + backOffice.getName() + "]: "
-						+ (tables != null ? tables.size() : "0") + " ("
+						+ (t != null ? t.size() : "0") + " ("
 						+ Duration.between(timeRef, Instant.now()).toMillis() + " ms." + ")");
 			}
 		}

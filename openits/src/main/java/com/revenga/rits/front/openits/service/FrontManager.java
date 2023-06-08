@@ -36,7 +36,7 @@ public abstract class FrontManager {
 	public void start() {
 		
 		log.log((this.enabled ? Level.INFO : Level.WARN),
-				this.getClass().getSimpleName() + (this.enabled ? " enabled" : " disabled"));
+				this.getClass().getSimpleName() + ":" + (this.enabled ? " enabled" : " disabled"));
 		
 		if (this.enabled) {
 			
@@ -62,10 +62,6 @@ public abstract class FrontManager {
 			}
 			
 			afterStart();
-		}
-		else {
-			
-			log.warn("Disabled " + this.getClass().getSimpleName());
 		}
 	}
 	

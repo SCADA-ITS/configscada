@@ -38,7 +38,7 @@ public class ServerManager extends FrontManager {
 	@PostConstruct
 	private void afterLoad() {
 		
-		this.enabled = SERVER_ENABLED.equals("true");
+		this.enabled = StringUtils.equals(SERVER_ENABLED, Boolean.TRUE.toString());
 		this.cronExpression = SERVER_CRON;
 	}
 	
