@@ -2,7 +2,7 @@ import { util } from "../../lib/util.js";
 
 const REST_BACKOFFICE_TABLE = "backoffice/${backOfficeId}/table/${tableName}";
 const REST_BACKOFFICE_TABLE_PERSIST = "backoffice/${backOfficeId}/persist";
-const COL_NAMES_REF = [/name/i, /description/i, /alias/i];
+const COL_NAMES_REF = [/name/i, /alias/i, /description/i];
 
 export default class BackOfficeHelper {
 	
@@ -105,17 +105,22 @@ export default class BackOfficeHelper {
 		return response ? response.json() : undefined;
 	}
 	
-	static getRefColumn(parentTable, referTableId) {
+	static getRefColumn(parentTable, referTableName, data) {
 		
 		let refColumn = undefined;
 		
-		if (parentTable && Array.isArray(parentTable.referTables)) {
+		if (parentTable && Array.isArray(parentTable.referTableNames) && data && referTableName) {
 		
-			const referTable = parentTable.referTables.find(e => e.id === referTableId);
+			const referTableNameFound = parentTable.referTableNames.find(e => e === referTableName);
 			
-			if (referTable) {
+			if (referTableNameFound) {
 				
-				refColumn = referTable.columns.find(e => e.refColumn && e.refColumn.tableId === parentTable.id)
+				const referTable = data.find(e => e.name === referTableNameFound);
+					
+				if (referTable) {
+					
+					refColumn = referTable.columns.find(e => e.refColumn && e.refColumn.tableId === parentTable.id)	
+				}
 			}
 		}
 		
@@ -224,5 +229,10 @@ export default class BackOfficeHelper {
 		}
 		
 		return value;
+	}
+	
+	static getColumnUID(column) {
+		
+		return column.name + "$" + column.tableId + "$" + column.id;
 	}
 }

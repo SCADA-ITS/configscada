@@ -53,6 +53,69 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 				});	
 			}
 			
+			function getData() {
+			
+				let data = [];
+				
+				if (Array.isArray(self.currentTableData.rows) && self.currentTableData.rows.length > 0) {
+					
+					self.currentTableData.rows.forEach(row => {
+				
+						if (Array.isArray(row.data) && row.data.length > 0) {
+						
+							let record = {};
+							
+							row.data.forEach(e => {
+							
+								const column = self.currentTableData.columns.find(col => col.id === e.columnId);
+								
+								if (column && column.name) {
+									
+									let filterColumnName = undefined;
+						
+									if (self.backOffice.filterColumn && self.backOffice.filterColumnValue) {
+										
+										filterColumnName = self.backOffice.filterColumn.name;
+									}
+										
+									if (!filterColumnName || column.name != filterColumnName) {
+										
+										const referencedColumnValue = BackOfficeHelper.getReferencedColumnValue(column, e.value, self.data);
+										
+										let value = e.value;
+										
+										if (column.colType === BackOfficeHelper.DB_TYPE_TIMESTAMP && !isNaN(value)) {
+											
+											value = new Date(parseInt(value));
+										}
+									
+										if (referencedColumnValue) {
+											
+											let referencedValue = referencedColumnValue.value;
+											
+											if (referencedColumnValue.colType === BackOfficeHelper.DB_TYPE_TIMESTAMP && !isNaN(referencedValue)) {
+											
+												referencedValue = new Date(parsetInt(referencedColumnValue.value));												
+											}
+											
+											record[BackOfficeHelper.getColumnUID(referencedColumnValue)] = referencedValue ?? value;	
+										}
+										else {
+											
+											record[column.name === "id" ? "id" : BackOfficeHelper.getColumnUID(column)] = value;	
+										}	
+									}
+								} 
+							});
+							
+							data.push(record);
+						}		
+					});
+				}
+				
+				return data;	
+			}
+			
 			function getDataTable() {
 				
 				function getMetadata() {
@@ -104,7 +167,7 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 							if (!filterColumnName || column.name != filterColumnName) {
 								
 								const referencedColumnName = BackOfficeHelper.getReferencedColumnName(column, self.data);
-								const sourceField = referencedColumnName ? (referencedColumnName.tableId + "_" + referencedColumnName.name) : column.name;
+								const sourceField = referencedColumnName ? (BackOfficeHelper.getColumnUID(referencedColumnName)) : BackOfficeHelper.getColumnUID(column);
 								
 								const dataTypeId = BackOfficeHelper.getDBTypes(referencedColumnName ? referencedColumnName.colType : column.colType).id;
 								
@@ -125,14 +188,14 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 									extended: false,
 									filtered: false,
 									isEpochMilli: dataTypeId == BackOfficeHelper.getDBTypes(BackOfficeHelper.DB_TYPE_TIMESTAMP).id,
-									isPk: sourceField === 'id',
+									isPk: column.name === "id",
 									needsTranslation: false,
 									parameterized: false,
 									position: idxField,
 									required: true,
 									label: util.getStringCapitalized(label),
-									sourceField: sourceField,
-									visible: sourceField !== 'id',
+									sourceField: column.name === "id" ? "id" : sourceField,
+									visible: column.name !== "id",
 									gridFieldDataType: {
 										id: dataTypeId
 									}
@@ -209,41 +272,32 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 						
 						if ($$("backOffice-view-" + self.uid) && self.dataTable) {
 							
-							BackOfficeHelper.getData(self.backOffice).then((data) => {
-								
-								const selectedIds = self.dataTable.getSelectedIds();
-								
-								self.data = data;
-								self.currentTableData = data.find(e => e.name === self.backOffice.tableName);
-
-								self.dataTable = getDataTable();
-								
-								if (self.dataTable) {
-								
-									let viewDataTable = {
-					
-										id: "backOffice-view-" + self.uid,
-										rows: self.dataTable.getView()
-									}
-									
-									viewDataTable.rows.push({
-										view: "template",
-										height: 1,
-										on: {
-											onAfterRender: function() {
+							const grid = $$(self.dataTable.getViewId())
+			
+							if (grid) {
 							
-												self.dataTable.callbacks()
-											}
-										}	
-									});
+								webix.extend(grid, webix.ProgressBar);
+
+								grid.showProgress({
+					
+									hide: false, type: "bottom"
+								});
+							
+								BackOfficeHelper.getData(self.backOffice).then((data) => {
 									
-									webix.ui(viewDataTable, $$("backOffice-view-" + self.uid));
+									const selectedIds = self.dataTable.getSelectedIds();
 									
-									self.dataTable.select(selectedIds);	
-								}
-							});
+									self.data = data;
+									self.currentTableData = data.find(e => e.name === self.backOffice.tableName);
+	
+									self.dataTable.clear();
+									self.dataTable.add(getData());
+									self.dataTable.select(selectedIds);
+									
+									grid.hideProgress();								
+								});	
+							}
 						}
-						
 					}
 					
 					function cmdNew() {
@@ -321,6 +375,8 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 								let error = "";
 								const columnId = self.currentTableData.columns.find(c => c.name === "id");
 								
+								let deletedRecords = 0;
+								
 								while (recordsToDelete > 0) {
 									
 									let persistValues = [];
@@ -353,22 +409,34 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 									}
 									
 									if (Array.isArray(persistValues) && persistValues.length > 0) {
-											
+										
 										BackOfficeHelper.deleteData(self.backOffice, self.currentTableData, persistValues, ids[recordsToDelete]).then((persistResult) => {
-												
+											
 											if (persistResult.error) {
 			
 												error += "\nError id: "+ ids[recordsToDelete] + " => " +  persistResult.error + "\n" + persistResult.errorDescription;
 											}
 											
-											if (!recordsToDelete) {
+											if (++deletedRecords === ids.length) {
 												
 												if (error) {
 													
 													(new MessageBox (MessageBox.ERROR, i18n.t("LBL_BACKOFFICE_ERROR_DELETING_RECORDS") + " " + (self.currentTableData.alias ?? self.currentTableData.name), error, null, null)).show();				
 												}
+												else {
+													
+													ids.forEach(id => {
+														
+														const itemToDelete = self.dataTable.getItem(id);
 												
-												self.refresh();
+														if (itemToDelete) {
+															
+															self.dataTable.delete(itemToDelete);
+														}
+													});
+												}
+												
+												//self.refresh();
 											}
 										});	
 									}
@@ -393,7 +461,8 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 									filterColumnValue: id,
 									isModal: true,
 									onAccept: onAccept,
-									onCancel: onCancel
+									onCancel: onCancel,
+									filterColumn: self.backOffice.filterColumn
 								},
 								containerId: winId,
 								onLoad: onLoad
@@ -425,63 +494,55 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 							
 							function onAccept(values) {
 								
-								log.debug(values);
+								if (values && self.dataTable) {
+									
+									const id = values["id"];
+									
+									if (id) {
+										
+										const grid = $$(self.dataTable.getViewId())
+			
+										if (grid) {
+										
+											webix.extend(grid, webix.ProgressBar);
+			
+											grid.showProgress({
 								
-								self.refresh();
+												hide: false, type: "bottom"
+											});
+											
+											const keys = Object.keys(values);
+									
+											let row = {};
+		
+											if (Array.isArray(keys) && keys.length > 0) {
+												
+												keys.forEach(key => {
+													
+													row[key] = (values[key] ? values[key] : undefined);
+												});
+											}
+											
+											if (self.dataTable.getItem(id)) {
+												
+												self.dataTable.update(row);	
+											}
+											else {
+												
+												self.dataTable.add(row);
+											}
+											
+											self.dataTable.select(id);
+											
+											grid.hideProgress();
+										}
+									}
+								}								
 							}
 						}
 					}
 					
 					return events;	
-				}
-				
-				function getData() {
-				
-					let data = [];
-					
-					if (Array.isArray(self.currentTableData.rows) && self.currentTableData.rows.length > 0) {
-						
-						self.currentTableData.rows.forEach(row => {
-					
-							if (Array.isArray(row.data) && row.data.length > 0) {
-							
-								let record = {};
-								
-								row.data.forEach(e => {
-								
-									const column = self.currentTableData.columns.find(col => col.id === e.columnId);
-									
-									if (column && column.name) {
-										
-										let filterColumnName = undefined;
-							
-										if (self.backOffice.filterColumn && self.backOffice.filterColumnValue) {
-											
-											filterColumnName = self.backOffice.filterColumn.name;
-										}
-											
-										if (!filterColumnName || column.name != filterColumnName) {
-											
-											const referencedColumnValue = BackOfficeHelper.getReferencedColumnValue(column, e.value, self.data);
-										
-											if (referencedColumnValue) {
-												
-												record[referencedColumnValue.tableId + "_" + referencedColumnValue.name] = referencedColumnValue.value;	
-											}
-											else {
-												
-												record[column.name] = e.value;	
-											}	
-										}
-									} 
-								});
-								
-								data.push(record);
-							}		
-						});
-					}
-					
-					return data;	
 				}
 				
 				return new DataTable(null, null, getMetadata(), getData(), getEvents());;
@@ -499,7 +560,12 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 		
 		if (self.dataTable) {
 			
-			self.dataTable.executeCommand(BackOfficeViewGrid.GRID_COMMANDS.refresh)
+			const grid = $$(self.dataTable.getViewId())
+			
+			if (grid) {
+				
+				self.dataTable.executeCommand(BackOfficeViewGrid.GRID_COMMANDS.refresh)	
+			}
 		}
 	}
 }

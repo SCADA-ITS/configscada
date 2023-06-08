@@ -23,7 +23,6 @@ import com.revenga.rits.front.openits.model.backoffice.Table.PersistenceType;
 import com.revenga.rits.front.openitsdao.model.BackOffice;
 
 import lombok.Getter;
-import lombok.NonNull;
 
 public class BackOfficeUtil {
 
@@ -40,7 +39,7 @@ public class BackOfficeUtil {
 		}
 	}
 
-	public enum DMLType { REFERENCE_TABLES, REFERENCED_BY_TABLE, COLUMNS_TABLE }
+	public enum DMLType { REFERENCE_TABLES, REFERENCED_BY_TABLE, COLUMNS_TABLE, TABLES }
 	
 	public static class DmlLibrary {
 		
@@ -83,6 +82,8 @@ public class BackOfficeUtil {
 				"SELECT column_name as column_name, ordinal_position as ordinal_position, udt_name as data_type " + 
 				"  FROM information_schema.columns " + 
 				" WHERE table_name = ? AND table_schema = ?");
+		dmlLibrary.add(DMLType.TABLES, 
+				"SELECT table_name FROM information_schema.tables where table_schema = ?");
 
 		dmlMap.put(DBType.POSTGRESQL, dmlLibrary);
 		
@@ -272,7 +273,7 @@ public class BackOfficeUtil {
 			}
 			
 			if (!StringUtils.isEmpty(sql)) {
-			
+						
 				ResultSet rs = stmt.executeQuery(sql);
 
 				if (rs.next()) {
@@ -297,18 +298,26 @@ public class BackOfficeUtil {
 		return sql;
 	}
 	
-	@NonNull
 	private static String getValue(ColType colType, String value) {
 		
-		String formattedValue = value;
+		String formattedValue = null;
 		
-		if (colType.equals(ColType.STRING)) {
+		formattedValue = value;
+		
+		if (formattedValue != null) {
 			
-			formattedValue = "'" + value + "'";
+			if (colType.equals(ColType.STRING)) {
+				
+				formattedValue = "'" + value + "'";
+			}
+			else if (colType.equals(ColType.TIMESTAMP)) {
+				
+				formattedValue = "'" + new SimpleDateFormat(DATE_FORMAT).format(new Timestamp(Long.valueOf(value))) + "'";
+			}
 		}
-		else if (colType.equals(ColType.TIMESTAMP)) {
+		else {
 			
-			formattedValue = "'" + new SimpleDateFormat(DATE_FORMAT).format(new Timestamp(Long.valueOf(value))) + "'";
+			formattedValue = "null";
 		}
 		
 		return formattedValue;

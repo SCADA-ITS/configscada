@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 
+import com.revenga.rits.front.openits.service.BackOfficeManager;
 import com.revenga.rits.front.openits.service.CacheManager;
 import com.revenga.rits.front.openits.service.ServerManager;
 import com.revenga.rits.front.openits.service.SessionManager;
@@ -54,6 +55,9 @@ public class AppInfra {
 	@Autowired
 	ServerManager serverManager;
 	
+	@Autowired
+	BackOfficeManager backOfficeManager;
+	
 		
 	public static boolean isDebugging() {
 	    for (String arg : ManagementFactory.getRuntimeMXBean().getInputArguments()) {
@@ -80,6 +84,7 @@ public class AppInfra {
 		entitiesManager.start();
 		sessionManager.start();
 		serverManager.start();
+		backOfficeManager.start();
 	}
 	
 	private void initShutdownHook() {

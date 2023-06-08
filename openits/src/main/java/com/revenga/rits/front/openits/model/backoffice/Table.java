@@ -7,11 +7,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.revenga.rits.front.openits.model.backoffice.Column.ColType;
 
 import lombok.Data;
@@ -89,7 +92,11 @@ public class Table extends Basic {
 		
 		public Trigger(String name) {
 			
-			super(name);
+			super();
+			
+			this.name = name;
+			
+			this.id = Objects.hash(this.getClass().getName(), this.name);
 		}
 		
 		public static Object call(Trigger.Type triggerType, PersistenceType persistenceType, Object instance) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
@@ -119,7 +126,11 @@ public class Table extends Basic {
 		
 		public Command(String name) {
 			
-			super(name);
+			super();
+			
+			this.name = name;
+			
+			this.id = Objects.hash(this.getClass().getName(), this.name);
 		}
 	}
 
@@ -157,14 +168,16 @@ public class Table extends Basic {
 		private List<PersistValue> persistValues;
 	}
 	
+	@JsonIgnore
 	private String labelSingular;
+	@JsonProperty("labelSingular")
+	private String labelSingularTranslated;
 	
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
 	private List<Column> columns = new ArrayList<>();
-	@EqualsAndHashCode.Exclude
-	@ToString.Exclude
-	private List<Table> referTables = new ArrayList<>();
+	
+	private List<String> referTableNames = new ArrayList<>();
 	
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
@@ -182,6 +195,9 @@ public class Table extends Basic {
 	
 	public Table(String name) {
 		
-		super(name);
+		super();
+		
+		this.name = name;
+		this.id = Objects.hash(this.getClass().getName(), this.name);
 	}
 }

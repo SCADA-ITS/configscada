@@ -226,7 +226,7 @@ export default class BackOfficeViewForm extends BackOfficeView {
 									
 									let field = webix.copy(dbType.component);
 								
-									field.name = column.tableId + "_" + column.id + "_" + column.name;
+									field.name = (column.name === "id") ? "id" : BackOfficeHelper.getColumnUID(column);
 									field.label = util.getStringCapitalized(column.alias ?? column.name);
 									field.disabled = (column.name === "id");
 									
@@ -259,7 +259,9 @@ export default class BackOfficeViewForm extends BackOfficeView {
 										
 										const referencedColumnValue = BackOfficeHelper.getReferencedColumnValue(column, value, self.data);
 										
-										if (referencedColumnValue) {
+										const disabled = self.backOffice.filterColumn && self.backOffice.filterColumn.refColumn && self.backOffice.filterColumn.refColumn.id === refColumn.id && self.backOffice.filterColumn.refColumn.tableId === refColumn.tableId; 
+										
+										if (referencedColumnValue && (!self.backOffice.filterColumn || refColumn.id != self.backOffice.filterColumn.id)) {
 											
 											const dbTypeRefColumn = BackOfficeHelper.getDBTypes(BackOfficeHelper.DB_TYPE_STRING);
 										
@@ -267,12 +269,13 @@ export default class BackOfficeViewForm extends BackOfficeView {
 										
 											let fieldGroup = {
 												cols: [
-													{ view: fieldRef.view, type: "text", name: refColumn.tableId + "_" + refColumn.id + "_" + referencedColumnValue.name, required: fieldRef.required, label: util.getStringCapitalized(refTable.labelSingular ?? (refTable.label ?? refTable.name)), readonly: true, labelWidth: 275, value: referencedColumnValue.value },
-													{ view: field.view, name: field.name, hidden: false, readonly: true, value: field.value, width: 50 },
+													{ view: fieldRef.view, type: "text", name: BackOfficeHelper.getColumnUID(referencedColumnValue), required: fieldRef.required, label: util.getStringCapitalized(refTable.labelSingular ?? (refTable.label ?? refTable.name)), readonly: true, labelWidth: 275, value: referencedColumnValue.value ?? field.value, disabled: disabled },
+													{ view: field.view, name: field.name, hidden: true, readonly: true, value: field.value, width: 50 },
 													{
 														view: "icon", 
 														icon: "wxi-search",
 														tooltip: i18n.t("LBL_SEARCH"),
+														hidden: disabled,
 														on: {
 															onItemClick: updateRefField
 														}
@@ -281,6 +284,7 @@ export default class BackOfficeViewForm extends BackOfficeView {
 														view: "icon", 
 														icon: "wxi-plus",
 														tooltip: i18n.t("LBL_CMD_ADD"),
+														hidden: disabled,
 														on: {
 															onItemClick: createRefField
 														}
@@ -303,7 +307,7 @@ export default class BackOfficeViewForm extends BackOfficeView {
 						
 													dialogRefField.fillDialogEntity = fillDialogEntity;
 													dialogRefField.pkField = field.name
-													const fields = referencedColumnValue.tableId + "_" + referencedColumnValue.id + "_" + referencedColumnValue.name + "=" + util.getStringCapitalized(referencedColumnValue.alias ?? referencedColumnValue.name);
+													const fields = BackOfficeHelper.getColumnUID(referencedColumnValue) + "=" + util.getStringCapitalized(referencedColumnValue.alias ?? referencedColumnValue.name);
 													dialogRefField.fields = [fields];
 													dialogRefField.sortFieldId = 1;
 													dialogRefField.height = 600;
@@ -321,7 +325,7 @@ export default class BackOfficeViewForm extends BackOfficeView {
 															if (rowId && rowAlias) {
 																
 																obj[field.name] = rowId.value;
-																obj[referencedColumnValue.tableId + "_" + referencedColumnValue.id + "_" + referencedColumnValue.name] = rowAlias.value;	
+																obj[BackOfficeHelper.getColumnUID(referencedColumnValue)] = rowAlias.value;	
 															}
 															
 															return obj;
@@ -344,7 +348,7 @@ export default class BackOfficeViewForm extends BackOfficeView {
 															let oldValue = form.getValues();
 															
 															newValue[field.name] = itemSelected.id;
-															newValue[refColumn.tableId + "_" + refColumn.id + "_" + referencedColumnValue.name] = itemSelected[referencedColumnValue.tableId + "_" + referencedColumnValue.id + "_" + referencedColumnValue.name];
+															newValue[BackOfficeHelper.getColumnUID(referencedColumnValue)] = itemSelected[BackOfficeHelper.getColumnUID(referencedColumnValue)];
 															
 															form.setValues(newValue, true);
 														}
@@ -466,15 +470,17 @@ export default class BackOfficeViewForm extends BackOfficeView {
 															
 															if (form) {
 															
-																const rowId = newRow.data.find(data => data.columnId === table.columns.find(col => col.name === "id").id);
-																const rowAlias = newRow.data.find(data => data.columnId === referencedColumnValue.id);
-																	
-																if (rowId && rowAlias) {
+//																const rowId = newRow.data.find(data => data.columnId === table.columns.find(col => col.name === "id").id);
+//																const rowAlias = newRow.data.find(data => data.columnId === referencedColumnValue.id);
+//																	
+//																if (rowId && rowAlias) {
+	
+																if (referencedColumnValue) {
 																	
 																	let newValue = {};
 																	
-																	newValue[self.currentTableData.id + "_" + column.id + "_" + column.name] = rowId.value;
-																	newValue[refColumn.tableId + "_" + refColumn.id + "_" + referencedColumnValue.name] = rowAlias.value;
+																	newValue[BackOfficeHelper.getColumnUID(column)] = newRow.id;
+																	newValue[BackOfficeHelper.getColumnUID(referencedColumnValue)] = newRow[BackOfficeHelper.getColumnUID(referencedColumnValue)];
 																	
 																	form.setValues(newValue, true);
 																}
@@ -501,7 +507,7 @@ export default class BackOfficeViewForm extends BackOfficeView {
 				
 				function pushReferTables() {
 					
-					if (Array.isArray(self.currentTableData.referTables) && self.currentTableData.referTables.length > 0) {
+					if (Array.isArray(self.currentTableData.referTableNames) && self.currentTableData.referTableNames.length > 0) {
 						
 						if (Array.isArray(self.currentTableData.columns) && self.currentTableData.columns.length > 0) {
 								
@@ -509,41 +515,48 @@ export default class BackOfficeViewForm extends BackOfficeView {
 							
 							if (columnId) {
 								
-								self.currentTableData.referTables.forEach(referTable => {
-								
-									const label = util.getStringCapitalized(referTable.label ?? referTable.name);
-									const idValue = BackOfficeHelper.getColumnValue(self.currentTableData, columnId.id, 0); 
-									const referColumn = BackOfficeHelper.getRefColumn(self.currentTableData, referTable.id);
+								self.currentTableData.referTableNames.forEach(referTableName => {
 									
-									if (referColumn && idValue) {
+									const referTable = self.data.find(e => e.name === referTableName);
+									
+									if (referTable) {
+									
+										const label = util.getStringCapitalized(referTable.label ?? referTable.name);
+										const idValue = BackOfficeHelper.getColumnValue(self.currentTableData, columnId.id, 0); 
+										const referColumn = BackOfficeHelper.getRefColumn(self.currentTableData, referTable.name, self.data);
 										
-										let newBackOffice = {
-										
-											id: self.backOffice.id,
-											tableName: referTable.name,
-											filterColumnName: referColumn.name,
-											filterColumnValue: idValue,
-											containerId: self.backOffice.containerId,
-											filterColumn: referColumn
-										}
-										
-										let backOfficeViewGrid = new BackOfficeViewGrid(newBackOffice, self.data, self.data.find(e => e.id === referColumn.tableId));
-										
-										if (backOfficeViewGrid) {
+										if (referColumn && idValue) {
 											
-											let viewBackOfficeViewGrid = backOfficeViewGrid.getView();
+											let newBackOffice = {
 											
-											if (viewBackOfficeViewGrid) {
-												
-												viewBackOfficeViewGrid.css = "bordered-layout-without-border-top";
-												
-												tabs.cells.push({
-													header: label,
-													body: viewBackOfficeViewGrid
-												});	 
+												id: self.backOffice.id,
+												tableName: referTable.name,
+												filterColumnName: referColumn.name,
+												filterColumnValue: idValue,
+												containerId: self.backOffice.containerId,
+												filterColumn: referColumn
 											}
-										}
+											
+											let backOfficeViewGrid = new BackOfficeViewGrid(newBackOffice, self.data, self.data.find(e => e.id === referColumn.tableId));
+											
+											if (backOfficeViewGrid) {
+												
+												let viewBackOfficeViewGrid = backOfficeViewGrid.getView();
+												
+												if (viewBackOfficeViewGrid) {
+													
+													viewBackOfficeViewGrid.css = "bordered-layout-without-border-top";
+													
+													tabs.cells.push({
+														header: label,
+														body: viewBackOfficeViewGrid
+													});	 
+												}
+											}
+										}	
 									}
+								
+									
 								});
 							}		
 						}
@@ -633,62 +646,64 @@ export default class BackOfficeViewForm extends BackOfficeView {
 								
 								keys.forEach(key => {
 									
-									const keySplitted = key.split("_");
-									
-									if (Array.isArray(keySplitted) && keySplitted.length > 2) {
+									if (key === "id") {
 										
-										const tableId = parseInt(keySplitted[0]);
-
-										if (tableId === self.currentTableData.id) {
-											
-											const colId = parseInt(keySplitted[1]);
-											const column = self.currentTableData.columns.find(e => e.id === colId);
-												
-											if (column) {
-												
-												const oldValue = BackOfficeHelper.getColumnValue(self.currentTableData, colId, 0);
-												
-												let newValue = undefined;
-												
-												if (values[key]) {
-													
-													if (column.colType === BackOfficeHelper.DB_TYPE_INTEGER) {
-													
-														newValue = parseInt(values[key]);
-													}
-													else if (column.colType === BackOfficeHelper.DB_TYPE_TIMESTAMP) {
-														
-														newValue = parseInt(values[key].getTime());
-													}
-													else if (column.colType === BackOfficeHelper.DB_TYPE_DECIMAL) {
-														
-														newValue = parseFloat(values[key]);
-													}
-													else {
-														
-														newValue = values[key];	
-													}	
-												}
-												
-												
-												if (column.name === "id") {
-														
-													id = newValue;
-												}
-												
-												if (oldValue !== newValue) {
-													
-													persistValues.push({
-														colName: column.name,
-														oldValue: oldValue,
-														newValue: newValue,
-														colType: column.colType
-													});
-												}
-											}	
-										}
-										
+										id = parseInt(values[key]);
 									}
+									else {
+
+										const keySplitted = key.split("$");
+									
+										if (Array.isArray(keySplitted) && keySplitted.length > 2) {
+											
+											const tableId = parseInt(keySplitted[1]);
+	
+											if (tableId === self.currentTableData.id) {
+												
+												const colId = parseInt(keySplitted[2]);
+												const column = self.currentTableData.columns.find(e => e.id === colId);
+													
+												if (column) {
+													
+													const oldValue = BackOfficeHelper.getColumnValue(self.currentTableData, colId, 0);
+													
+													let newValue = undefined;
+													
+													if (values[key]) {
+														
+														if (column.colType === BackOfficeHelper.DB_TYPE_INTEGER) {
+														
+															newValue = parseInt(values[key]);
+														}
+														else if (column.colType === BackOfficeHelper.DB_TYPE_TIMESTAMP) {
+															
+															newValue = parseInt(values[key].getTime());
+														}
+														else if (column.colType === BackOfficeHelper.DB_TYPE_DECIMAL) {
+															
+															newValue = parseFloat(values[key]);
+														}
+														else {
+															
+															newValue = values[key];	
+														}	
+													}
+													
+													if (oldValue !== newValue) {
+														
+														persistValues.push({
+															colName: column.name,
+															oldValue: oldValue,
+															newValue: newValue,
+															colType: column.colType
+														});
+													}
+												}	
+											}
+										}
+									}
+									
+									
 								});
 								
 								if (id && ((Array.isArray(persistValues) && persistValues.length > 0) || self.backOffice.onCancel)) {
@@ -704,36 +719,40 @@ export default class BackOfficeViewForm extends BackOfficeView {
 								}
 							}	
 						}
+						
+						function onAccept() {
+						
+							self.accepted = true;
+							
+							const form = $$("form-" + self.uid);
+							
+							if (form && self.backOffice.onAccept && typeof(values) === 'object') {
+								
+								self.backOffice.onAccept();	
+								
+								BackOfficeHelper.updateData(self.backOffice, self.currentTableData, persistValues, id).then((persistResult) => {
+											
+									if (!persistResult.error) {
+										
+										self.backOffice.onAccept(values);
+								
+										if (container) {
+								
+											container.close();	
+										}
+									}
+									else {
+										
+										log.error(persistResult.error + "\n" + persistResult.errorDescription);
+										
+										(new MessageBox (MessageBox.ERROR, i18n.t("LBL_BACKOFFICE_ERROR_SAVING_CHANGES_ON") + " " + (self.currentTableData.alias ?? self.currentTableData.name), persistResult.error + "\n" + persistResult.errorDescription, null, null)).show();
+									}
+								});
+							}
+						}
 					}
 					
-					function onAccept() {
-						
-						self.accepted = true;
-						
-						BackOfficeHelper.updateData(self.backOffice, self.currentTableData, persistValues, id).then((persistResult) => {
-										
-							if (!persistResult.error) {
-								
-								const form = $$("form-" + self.uid);
-						
-								if (form && self.backOffice.onAccept) {
-									
-									self.backOffice.onAccept(persistResult.newRow);
-								}
-								
-								if (container) {
-						
-									container.close();	
-								}
-							}
-							else {
-								
-								log.error(persistResult.error + "\n" + persistResult.errorDescription);
-								
-								(new MessageBox (MessageBox.ERROR, i18n.t("LBL_BACKOFFICE_ERROR_SAVING_CHANGES_ON") + " " + (self.currentTableData.alias ?? self.currentTableData.name), persistResult.error + "\n" + persistResult.errorDescription, null, null)).show();
-							}
-						});	
-					}
+					
 				}
 
 				return viewToolbarActions;

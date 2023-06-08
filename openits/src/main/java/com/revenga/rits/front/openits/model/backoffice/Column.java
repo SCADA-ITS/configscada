@@ -1,6 +1,7 @@
 package com.revenga.rits.front.openits.model.backoffice;
 
 import java.util.Map;
+import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -49,9 +50,14 @@ public class Column extends Basic {
 	
 	private Map<String, Object> metadata;
 	
-	public Column(String name) {
+	public Column(Table table, String name) {
 		
-		super(name);
+		super();
+		
+		this.table = table;
+		this.name = name;
+		
+		this.id = Objects.hash(this.getClass().getName(), this.table.getName() + this.name);
 	}
 	
 	public Integer getTableId() {
