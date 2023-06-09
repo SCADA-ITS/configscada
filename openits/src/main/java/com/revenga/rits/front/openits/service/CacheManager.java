@@ -200,7 +200,7 @@ public class CacheManager extends FrontManager {
 										
 										entitiesCached.put(dataSourceId, list);
 										
-										log.info(this.getClass().getSimpleName() + ": Cached datasource " + dataSource.getId() + " [" + dataSource.getName()
+										log.debug(this.getClass().getSimpleName() + ": Cached datasource " + dataSource.getId() + " [" + dataSource.getName()
 												+ "]: " + list.size() + " " + dataSource.getEntityVo() + " ("
 												+ Duration.between(timeRef, Instant.now()).toMillis() + " ms." + ")");
 									}

@@ -78,37 +78,50 @@ export default class BackOfficeModule extends GenericModule {
 		}
 		
 		if (backOffice.id && backOffice.tableName) {
+			
+			BackOfficeHelper.getBackOfficeData(backOffice).then((backOfficeData) => {
+				
+				if (backOfficeData) {
 					
-			BackOfficeHelper.getData(backOffice).then((data) => {
-				
-				let backOfficeManager = new BackOfficeManager(backOffice, data);
-		
-				$$("loading-" + self.uid).hide();
-				
-				let isCreating = false;
-				let backOfficeManagerView = backOfficeManager.getView(onCreate);
-				
-				if (backOfficeManagerView && !isCreating) {
-					
-					webix.ui(backOfficeManager.getView(), $$(self.uid));
-										
-					if (self.args.onLoad) {
+					backOffice.metadata = {
 						
-						self.args.onLoad();
+						defaultMetadataBackoffice: JSON.parse(backOfficeData.defaultMetadataBackoffice),
+						defaultMetadataTable: JSON.parse(backOfficeData.defaultMetadataTable),
+						defaultMetadataColumn: JSON.parse(backOfficeData.defaultMetadataColumn)
 					}	
 				}
-				
-				function onCreate() {
 			
-					const container = $$(backOffice.containerId);
+				BackOfficeHelper.getData(backOffice).then((data) => {
+					
+					let backOfficeManager = new BackOfficeManager(backOffice, data);
+			
+					$$("loading-" + self.uid).hide();
+					
+					let isCreating = false;
+					let backOfficeManagerView = backOfficeManager.getView(onCreate);
+					
+					if (backOfficeManagerView && !isCreating) {
 						
-					if (container) {
-						
-						isCreating = true;
-						
-						container.close();
+						webix.ui(backOfficeManager.getView(), $$(self.uid));
+											
+						if (self.args.onLoad) {
+							
+							self.args.onLoad();
+						}	
 					}
-				}
+					
+					function onCreate() {
+				
+						const container = $$(backOffice.containerId);
+							
+						if (container) {
+							
+							isCreating = true;
+							
+							container.close();
+						}
+					}
+				});	
 			});
 		}
 	}

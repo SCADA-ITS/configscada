@@ -1,5 +1,6 @@
 import { util } from "../../lib/util.js";
 
+const REST_BACKOFFICE_DATA = "backoffice/${backOfficeId}";
 const REST_BACKOFFICE_TABLE = "backoffice/${backOfficeId}/table/${tableName}";
 const REST_BACKOFFICE_TABLE_PERSIST = "backoffice/${backOfficeId}/persist";
 const COL_NAMES_REF = [/name/i, /alias/i, /description/i];
@@ -10,6 +11,43 @@ export default class BackOfficeHelper {
 	static get DB_TYPE_INTEGER() { return "INTEGER" }
 	static get DB_TYPE_DECIMAL() { return "DECIMAL" }
 	static get DB_TYPE_TIMESTAMP() { return "TIMESTAMP" }
+	
+	static get META_TYPE_BACKOFFICE() { 
+		return { 
+			name: "META_TYPE_BACKOFFICE",
+			DEFAULT_METADATA: "defaultMetadataBackoffice",
+			PROPERTY: {
+				
+			} 
+		} 
+	}
+	static get META_TYPE_TABLE() { 
+		return { 
+			name: "META_TYPE_TABLE",
+			DEFAULT_METADATA: "defaultMetadataTable",
+			PROPERTY: {
+				FORM_HEIGHT: { name: "formHeight", default: 700 }, 
+				FORM_WIDTH: { name: "formWidth", default: 900 }, 
+				GRID_HEIGHT: { name: "gridHeight", default: 700 }, 
+				GRID_WIDTH: { name: "gridWidth", default: 900 },
+				SHOW_ID_FORM: { name: "showIdForm", default: true }, 
+				SHOW_ID_TABLE: { name: "showIdTable", default: false },
+				SHOW_ID_SEARCH: { name: "showIdSearch", default: false },
+				GRID_FILTERS: { name: "gridFilters", default: false }
+			} 
+		} 
+	}
+	static get META_TYPE_COLUMN() { 
+		return { 
+			name: "META_TYPE_COLUMN",
+			DEFAULT_METADATA: "defaultMetadataColumn",
+			PROPERTY: {
+				REQUIRED: { name: "required", default: false }, 
+				EDITABLE: { name: "editable", default: true }, 
+				RED_ADD_BUTTON: { name: "refAddButton", default: true }
+			} 
+		} 
+	}
 	
 	static get PERSISTENCE_TYPE_INSERT() { return "INSERT" }
 	static get PERSISTENCE_TYPE_UPDATE() { return "UPDATE" }
@@ -25,6 +63,46 @@ export default class BackOfficeHelper {
 		dbType[BackOfficeHelper.DB_TYPE_TIMESTAMP] = { id: 4, name: BackOfficeHelper.DB_TYPE_TIMESTAMP, component: { view: "datepicker", timepicker: true, required: false, labelWidth: 275, format: (webix.i18n.locales[i18n.localeCode].dateFormat + " " + webix.i18n.locales[i18n.localeCode].timeFormat)}} 
 		
 		return dbType[name];
+	}
+	
+	static getMetadata(metaType, prop, defaultMetadata, object) {
+		
+		let value = undefined;
+		
+		if (metaType.name === BackOfficeHelper.META_TYPE_BACKOFFICE.name ||
+			metaType.name === BackOfficeHelper.META_TYPE_TABLE.name || 
+			metaType.name === BackOfficeHelper.META_TYPE_COLUMN.name) {
+		
+			if (defaultMetadata) {
+				
+				value = prop.default;
+				
+				if (defaultMetadata[metaType.DEFAULT_METADATA]) {
+					
+					value = defaultMetadata[metaType.DEFAULT_METADATA][prop.name];
+				}
+			}
+			
+			if (object && object.metadata && (metaType.name === BackOfficeHelper.META_TYPE_TABLE.name || 
+							metaType.name === BackOfficeHelper.META_TYPE_COLUMN.name)) {
+					
+				value = object.metadata[prop.name] ?? value;	
+			}		
+		}
+		
+		return value;
+	}
+	
+	static async getBackOfficeData(backOffice) {
+		
+		let response;
+		
+		const url = appConfig.restUrl + 
+						util.fillTemplate(REST_BACKOFFICE_DATA, { backOfficeId: backOffice.id });
+						
+		response = await webix.ajax().get(url);
+			
+		return response ? response.json() : undefined;
 	}
 	
 	static async getData(backOffice) {

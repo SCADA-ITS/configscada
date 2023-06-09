@@ -2,6 +2,7 @@ package com.revenga.rits.front.openitsdao.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,7 +16,7 @@ import javax.persistence.Table;
  * 
  */
 @Entity
-@Table(name="backoffice")
+@Table(name="backoffices")
 @NamedQuery(name="BackOffice.findAll", query="SELECT d FROM BackOffice d")
 public class BackOffice implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -37,12 +38,18 @@ public class BackOffice implements Serializable {
 	private String password;
 	
 	private String schema;
+	
+	@Column(name="default_metadata_backoffice")
+	private String defaultMetadataBackoffice;
+	
+	@Column(name="default_metadata_table")
+	private String defaultMetadataTable;
+	
+	@Column(name="default_metadata_column")
+	private String defaultMetadataColumn;
 
 	private Boolean enabled;
-
-	private Boolean visible;
 	
-
 	public BackOffice() {
 	}
 
@@ -86,14 +93,6 @@ public class BackOffice implements Serializable {
 		this.enabled = enabled;
 	}
 
-	public Boolean getVisible() {
-		return this.visible;
-	}
-
-	public void setVisible(Boolean visible) {
-		this.visible = visible;
-	}
-
 	public String getJdbc() {
 		return jdbc;
 	}
@@ -124,5 +123,29 @@ public class BackOffice implements Serializable {
 
 	public void setSchema(String schema) {
 		this.schema = schema;
+	}
+
+	public String getDefaultMetadataBackoffice() {
+		return defaultMetadataBackoffice;
+	}
+
+	public void setDefaultMetadataBackoffice(String defaultMetadataBackoffice) {
+		this.defaultMetadataBackoffice = defaultMetadataBackoffice;
+	}
+
+	public String getDefaultMetadataTable() {
+		return defaultMetadataTable;
+	}
+
+	public void setDefaultMetadataTable(String defaultMetadataTable) {
+		this.defaultMetadataTable = defaultMetadataTable;
+	}
+
+	public String getDefaultMetadataColumn() {
+		return defaultMetadataColumn;
+	}
+
+	public void setDefaultMetadataColumn(String defaultMetadataColumn) {
+		this.defaultMetadataColumn = defaultMetadataColumn;
 	}
 }

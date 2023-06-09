@@ -14,6 +14,8 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 		super(backOffice, data, currentTableData);
 		
 		this.dataTable = undefined;
+		this.formHeight = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, BackOfficeHelper.META_TYPE_TABLE.PROPERTY.FORM_HEIGHT, backOffice.metadata, currentTableData);
+		this.formWidth = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, BackOfficeHelper.META_TYPE_TABLE.PROPERTY.FORM_WIDTH, backOffice.metadata, currentTableData);
 		
 		if (backOffice.containerId) {
 			
@@ -451,8 +453,11 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 
 						if (module) {
 							
-							const winId = util.ui.loadWindow(undefined, { id: self.uid }, BackOfficeModule.Config.DEFAULT_FORM_HEIGHT, 
-																BackOfficeModule.Config.DEFAULT_FORM_WIDTH, true);
+//							const winId = util.ui.loadWindow(undefined, { id: self.uid }, BackOfficeModule.Config.DEFAULT_FORM_HEIGHT, 
+//																BackOfficeModule.Config.DEFAULT_FORM_WIDTH, true);
+
+							const winId = util.ui.loadWindow(undefined, { id: self.uid }, self.formHeight, self.formWidth, true);
+							
 							const args = {
 								backOffice: {
 									id: self.backOffice.id,
@@ -477,7 +482,9 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 							
 							function onLoad() {
 								
-								util.ui.resizeWindow(winId, BackOfficeModule.Config.DEFAULT_FORM_WIDTH, BackOfficeModule.Config.DEFAULT_FORM_HEIGHT);
+								//util.ui.resizeWindow(winId, BackOfficeModule.Config.DEFAULT_FORM_WIDTH, BackOfficeModule.Config.DEFAULT_FORM_HEIGHT);
+								
+								util.ui.resizeWindow(winId, self.formWidth, self.formHeight);
 								util.ui.centerWindow(winId);
 								
 								let windowTitle = i18n.t("LBL_EDIT"); 

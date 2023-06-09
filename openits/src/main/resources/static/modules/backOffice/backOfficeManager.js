@@ -127,11 +127,15 @@ export default class BackOfficeManager {
 				function edit(id, onCancel) {
 				
 					const module = window.em.getByField(EntityType.MODULE, "id", BackOfficeModule.Config.MODULE_ID);
+					const formHeight = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, BackOfficeHelper.META_TYPE_TABLE.PROPERTY.FORM_HEIGHT, self.backoffice.metadata);
+					const formWidth = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, BackOfficeHelper.META_TYPE_TABLE.PROPERTY.FORM_WIDTH, self.backoffice.metadata);
 
 					if (module) {
 						
-						const winId = util.ui.loadWindow(undefined, { id: self.uid }, BackOfficeModule.Config.DEFAULT_FORM_HEIGHT, 
-															BackOfficeModule.Config.DEFAULT_FORM_WIDTH, true);
+//						const winId = util.ui.loadWindow(undefined, { id: self.uid }, BackOfficeModule.Config.DEFAULT_FORM_HEIGHT, 
+//															BackOfficeModule.Config.DEFAULT_FORM_WIDTH, true);
+															
+						const winId = util.ui.loadWindow(undefined, { id: self.uid }, formHeight, formWidth, true);
 							const args = {
 								backOffice: {
 									id: self.backOffice.id,
@@ -154,7 +158,9 @@ export default class BackOfficeManager {
 						}
 						
 						function onLoad() {
-							util.ui.resizeWindow(winId, BackOfficeModule.Config.DEFAULT_FORM_WIDTH, BackOfficeModule.Config.DEFAULT_FORM_HEIGHT);
+							//util.ui.resizeWindow(winId, BackOfficeModule.Config.DEFAULT_FORM_WIDTH, BackOfficeModule.Config.DEFAULT_FORM_HEIGHT);
+							
+							util.ui.resizeWindow(winId, formWidth, formHeight);
 							util.ui.centerWindow(winId, 20);	
 						}
 						

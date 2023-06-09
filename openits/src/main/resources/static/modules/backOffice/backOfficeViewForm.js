@@ -12,10 +12,12 @@ export default class BackOfficeViewForm extends BackOfficeView {
 
 		super(backOffice, data, currentTableData);
 		this.accepted = false;
+		this.formHeight = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, BackOfficeHelper.META_TYPE_TABLE.PROPERTY.FORM_HEIGHT, backOffice.metadata, currentTableData);
+		this.formWidth = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, BackOfficeHelper.META_TYPE_TABLE.PROPERTY.FORM_WIDTH, backOffice.metadata, currentTableData);
 		
 		if (backOffice.containerId) {
 			
-			util.ui.resizeWindow(backOffice.containerId, BackOfficeModule.Config.DEFAULT_FORM_WIDTH, BackOfficeModule.Config.DEFAULT_FORM_HEIGHT);
+			util.ui.resizeWindow(backOffice.containerId, this.formWidth, this.formHeight);
 			util.ui.centerWindow(backOffice.containerId);
 		}
 	}
@@ -44,7 +46,6 @@ export default class BackOfficeViewForm extends BackOfficeView {
 							{ width: 15 }
 						]
 					},
-					getButtons(),
 					{ height: 15 }
 				]
 			};
@@ -60,12 +61,6 @@ export default class BackOfficeViewForm extends BackOfficeView {
 				header = {
 					id: "viewHeader-" + self.uid,
 					cols: [
-//						{
-//							view: "label",
-//							label: "<img src='img/grid/default.png' class='grid-icon'/>",
-//							height: 75,
-//							css: "global-header-icon"
-//						},
 						{
 							view: "label",
 							height: 75,
@@ -122,14 +117,20 @@ export default class BackOfficeViewForm extends BackOfficeView {
 				function getInfoView() {
 
 					let infoView;
-
+					
 					infoView = {
-						id: "form-" + self.uid,
-						view: "form",
-						css: "bordered-layout-without-border-top",
-						elementsConfig: { labelAlign: "left" },
-						elements: getElements()
-					}
+						rows: [
+							{
+								id: "form-" + self.uid,
+								view: "form",
+								css: "bordered-layout-without-border-top",
+								elementsConfig: { labelAlign: "left" },
+								elements: getElements()
+							},
+							{ height: 15 },
+							getButtons()
+						]
+					};
 					
 					function getElements() {
 						
@@ -249,7 +250,6 @@ export default class BackOfficeViewForm extends BackOfficeView {
 										}
 									}
 									
-									
 									field.value = value;
 									
 									const refColumn = column.refColumn;
@@ -269,8 +269,45 @@ export default class BackOfficeViewForm extends BackOfficeView {
 										
 											let fieldGroup = {
 												cols: [
-													{ view: fieldRef.view, type: "text", name: BackOfficeHelper.getColumnUID(referencedColumnValue), required: fieldRef.required, label: util.getStringCapitalized(refTable.labelSingular ?? (refTable.label ?? refTable.name)), readonly: true, labelWidth: 275, value: referencedColumnValue.value ?? field.value, disabled: disabled },
-													{ view: field.view, name: field.name, hidden: true, readonly: true, value: field.value, width: 50 },
+													{ 
+														view: fieldRef.view, 
+														type: "text", 
+														name: BackOfficeHelper.getColumnUID(referencedColumnValue), 
+														required: fieldRef.required, 
+														label: util.getStringCapitalized(refTable.labelSingular ?? (refTable.label ?? refTable.name)), 
+														readonly: true, 
+														labelWidth: 275, 
+														value: referencedColumnValue.value ?? field.value, 
+														disabled: disabled 
+													},
+													{ 
+														view: field.view, 
+														name: field.name, 
+														hidden: true, 
+														readonly: true, 
+														value: field.value, 
+														width: 50,
+														on: {
+															onChange: function() {
+														    
+														    	const btnAccept = $$("btn-accept-" + self.uid);
+														    	
+														    	if (btnAccept) {
+															
+																	const persistValues = getPersistValues();
+																
+																	if (Array.isArray(persistValues) && persistValues.length > 0) {
+																	
+																		btnAccept.enable();	
+																	}
+																	else {
+																		
+																		btnAccept.disable();
+																	}
+																}
+															}
+														}
+													},
 													{
 														view: "icon", 
 														icon: "wxi-search",
@@ -345,7 +382,6 @@ export default class BackOfficeViewForm extends BackOfficeView {
 															let itemSelected = selection[0];
 															
 															let newValue = {};
-															let oldValue = form.getValues();
 															
 															newValue[field.name] = itemSelected.id;
 															newValue[BackOfficeHelper.getColumnUID(referencedColumnValue)] = itemSelected[BackOfficeHelper.getColumnUID(referencedColumnValue)];
@@ -427,23 +463,26 @@ export default class BackOfficeViewForm extends BackOfficeView {
 												const module = window.em.getByField(EntityType.MODULE, "id", BackOfficeModule.Config.MODULE_ID);
 						
 												if (module) {
+																																		
+													const formHeight = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, BackOfficeHelper.META_TYPE_TABLE.PROPERTY.FORM_HEIGHT, self.backOffice.metadata, table);
+													const formWidth = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, BackOfficeHelper.META_TYPE_TABLE.PROPERTY.FORM_WIDTH, self.backOffice.metadata, table);
 													
-													const winId = util.ui.loadWindow(i18n.t("LBL_NEW") + " " + (table.labelSingular ?? (table.label ?? table.name)), { id: self.uid }, BackOfficeModule.Config.DEFAULT_FORM_HEIGHT, 
-																						BackOfficeModule.Config.DEFAULT_FORM_WIDTH, true);
-														const args = {
-															backOffice: {
-																id: self.backOffice.id,
-																tableName: table.name,
-																filterColumnName: "id",
-																filterColumnValue: id,
-																isModal: true,
-																noReferTables: true,
-																onAccept: onAccept,
-																onCancel: onCancel
-															},
-															containerId: winId,
-															onLoad: onLoad
-														}
+													const winId = util.ui.loadWindow(i18n.t("LBL_NEW") + " " + (table.labelSingular ?? (table.label ?? table.name)), { id: self.uid }, formHeight, formWidth, true);
+													
+													const args = {
+														backOffice: {
+															id: self.backOffice.id,
+															tableName: table.name,
+															filterColumnName: "id",
+															filterColumnValue: id,
+															isModal: true,
+															noReferTables: true,
+															onAccept: onAccept,
+															onCancel: onCancel
+														},
+														containerId: winId,
+														onLoad: onLoad
+													}
 							
 													util.module.open(module, {id: BackOfficeModule.Config.MODULE_ACTION_OPEN_ID }, VIEW_TYPE_CUSTOM, drawContent, args);
 												
@@ -454,7 +493,7 @@ export default class BackOfficeViewForm extends BackOfficeView {
 													
 													function onLoad() {
 														
-														util.ui.resizeWindow(winId, BackOfficeModule.Config.DEFAULT_FORM_WIDTH, BackOfficeModule.Config.DEFAULT_FORM_HEIGHT);
+														util.ui.resizeWindow(winId, formWidth, formHeight);
 														util.ui.centerWindow(winId, 20);	
 													}
 													
@@ -470,11 +509,6 @@ export default class BackOfficeViewForm extends BackOfficeView {
 															
 															if (form) {
 															
-//																const rowId = newRow.data.find(data => data.columnId === table.columns.find(col => col.name === "id").id);
-//																const rowAlias = newRow.data.find(data => data.columnId === referencedColumnValue.id);
-//																	
-//																if (rowId && rowAlias) {
-	
 																if (referencedColumnValue) {
 																	
 																	let newValue = {};
@@ -492,6 +526,27 @@ export default class BackOfficeViewForm extends BackOfficeView {
 										}
 									}
 									else {
+										
+										field.on = {
+											onTimedKeyPress: function() {
+												
+												const btnAccept = $$("btn-accept-" + self.uid);
+														    	
+										    	if (btnAccept) {
+											
+													const persistValues = getPersistValues();
+												
+													if (Array.isArray(persistValues) && persistValues.length > 0) {
+													
+														btnAccept.enable();	
+													}
+													else {
+														
+														btnAccept.disable();
+													}
+												}	
+											}
+										}
 									
 										fields.push(field);	
 									}
@@ -501,8 +556,235 @@ export default class BackOfficeViewForm extends BackOfficeView {
 						
 						return fields;
 					}
+					
+					function getButtons() {
+
+						let viewToolbarActions = {};
+						
+						const container = $$(self.backOffice.containerId);
+		
+						viewToolbarActions = {
+							id: "buttons-" + self.uid,
+							borderless: true,
+							css: { "margin-top": "1px !important" },
+							rows: [
+								{
+									cols: [
+										{ width: 15 },
+										{
+											view: "button",
+											value: i18n.t("LBL_CANCEL"),
+											width: 130,
+											height: 41,
+											css: "dialog-cancel",
+											click:
+												function() {
+													
+													if (self.backOffice.onCancel) {
+														
+														self.backOffice.onCancel()
+													}
+													
+													if (container) {
+														
+														container.close();	
+													}
+												}
+										},
+										{},
+										{
+											id: "btn-accept-" + self.uid,
+											view: "button",
+											value: i18n.t("LBL_ACCEPT"),
+											disabled: !self.backOffice.onCancel,
+											width: 130,
+											height: 41,
+											css: "dialog-accept",
+											click:
+												function() {
+		
+													let validation = $$("form-" + self.uid).validate({ disabled: true });
+		
+													if (validation) {
+		
+														persistUpdate();
+		
+													} else {
+		
+														$$("form-" + self.uid).show();
+													}
+												}
+										},
+										{ width: 15 }
+									]
+								}
+							]
+						}
+						
+						function persistUpdate() {
+							
+							const id = getIdToPersist();
+							const persistValues = getPersistValues();
+							
+										
+							if (id && ((Array.isArray(persistValues) && persistValues.length > 0) || self.backOffice.onCancel)) {
+								
+								(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_BACKOFFICE_SAVE_CHANGES_ON") + " " + (self.currentTableData.alias ?? self.currentTableData.name), null, onAccept , null)).show();
+							}
+							else {
+								
+								if (container) {
+					
+									container.close();	
+								}
+							}
+								
+							function onAccept() {
+							
+								self.accepted = true;
+								
+								const form = $$("form-" + self.uid);
+								
+								if (form && self.backOffice.onAccept) {
+									
+									const values = form.getValues();
+									
+									if (typeof(values) === 'object') {
+									
+										self.backOffice.onAccept();	
+										
+										BackOfficeHelper.updateData(self.backOffice, self.currentTableData, persistValues, id).then((persistResult) => {
+													
+											if (!persistResult.error) {
+												
+												self.backOffice.onAccept(values);
+										
+												if (container) {
+										
+													container.close();	
+												}
+											}
+											else {
+												
+												log.error(persistResult.error + "\n" + persistResult.errorDescription);
+												
+												(new MessageBox (MessageBox.ERROR, i18n.t("LBL_BACKOFFICE_ERROR_SAVING_CHANGES_ON") + " " + (self.currentTableData.alias ?? self.currentTableData.name), persistResult.error + "\n" + persistResult.errorDescription, null, null)).show();
+											}
+										});
+									}
+								}
+							}
+						}
+		
+						return viewToolbarActions;
+					}
 
 					return infoView;
+				}
+				
+				function getIdToPersist() {
+							
+					const form = $$("form-" + self.uid);
+					let id = undefined;
+					
+					if (form) {
+						
+						const values = form.getValues();
+						
+						if (typeof(values) === 'object') {
+							
+							const keys = Object.keys(values);
+
+							if (Array.isArray(keys) && keys.length > 0) {
+								
+								const key = keys.find(e => e === "id");
+								
+								if (key) {
+									
+									id = parseInt(values[key]);
+								}
+							}
+						}
+					}
+					
+					return id;
+				}
+				
+				function getPersistValues() {
+				
+					const form = $$("form-" + self.uid);
+					let persistValues = [];
+					
+					if (form) {
+						
+						const values = form.getValues();
+						
+						if (typeof(values) === 'object') {
+							
+							const keys = Object.keys(values);
+
+							if (Array.isArray(keys) && keys.length > 0) {
+								
+								keys.forEach(key => {
+									
+									if (key != "id") {
+
+										const keySplitted = key.split("$");
+									
+										if (Array.isArray(keySplitted) && keySplitted.length > 2) {
+											
+											const tableId = parseInt(keySplitted[1]);
+	
+											if (tableId === self.currentTableData.id) {
+												
+												const colId = parseInt(keySplitted[2]);
+												const column = self.currentTableData.columns.find(e => e.id === colId);
+													
+												if (column) {
+													
+													const oldValue = BackOfficeHelper.getColumnValue(self.currentTableData, colId, 0);
+													
+													let newValue = undefined;
+													
+													if (values[key]) {
+														
+														if (column.colType === BackOfficeHelper.DB_TYPE_INTEGER) {
+														
+															newValue = parseInt(values[key]);
+														}
+														else if (column.colType === BackOfficeHelper.DB_TYPE_TIMESTAMP) {
+															
+															newValue = parseInt(values[key].getTime());
+														}
+														else if (column.colType === BackOfficeHelper.DB_TYPE_DECIMAL) {
+															
+															newValue = parseFloat(values[key]);
+														}
+														else {
+															
+															newValue = values[key];	
+														}	
+													}
+													
+													if (oldValue !== newValue) {
+														
+														persistValues.push({
+															colName: column.name,
+															oldValue: oldValue,
+															newValue: newValue,
+															colType: column.colType
+														});
+													}
+												}	
+											}
+										}
+									}
+								});
+							}
+						}
+					}
+					
+					return persistValues;
 				}
 				
 				function pushReferTables() {
@@ -564,198 +846,6 @@ export default class BackOfficeViewForm extends BackOfficeView {
 				}
 
 				return tabs;
-			}
-
-			function getButtons() {
-
-				let viewToolbarActions = {};
-				
-				const container = $$(self.backOffice.containerId);
-
-				viewToolbarActions = {
-					id: "buttons-" + self.uid,
-					borderless: true,
-					css: { "margin-top": "1px !important" },
-					rows: [
-						{
-							cols: [
-								{ width: 15 },
-								{
-									view: "button",
-									value: i18n.t("LBL_CANCEL"),
-									width: 130,
-									height: 41,
-									css: "dialog-cancel",
-									click:
-										function() {
-											
-											if (self.backOffice.onCancel) {
-												
-												self.backOffice.onCancel()
-											}
-											
-											if (container) {
-												
-												container.close();	
-											}
-										}
-								},
-								{},
-								{
-									view: "button",
-									value: i18n.t("LBL_ACCEPT"),
-									width: 130,
-									height: 41,
-									css: "dialog-accept",
-									click:
-										function() {
-
-											let validation = $$("form-" + self.uid).validate({ disabled: true });
-
-											if (validation) {
-
-												persistUpdate();
-
-											} else {
-
-												$$("form-" + self.uid).show();
-											}
-										}
-								},
-								{ width: 15 }
-							]
-						}
-					]
-				}
-				
-				function persistUpdate() {
-					
-					const form = $$("form-" + self.uid);
-					let id = undefined;
-					let persistValues = [];
-					
-					if (form) {
-						
-						const values = form.getValues();
-						
-						if (typeof(values) === 'object') {
-							
-							const keys = Object.keys(values);
-
-							if (Array.isArray(keys) && keys.length > 0) {
-								
-								keys.forEach(key => {
-									
-									if (key === "id") {
-										
-										id = parseInt(values[key]);
-									}
-									else {
-
-										const keySplitted = key.split("$");
-									
-										if (Array.isArray(keySplitted) && keySplitted.length > 2) {
-											
-											const tableId = parseInt(keySplitted[1]);
-	
-											if (tableId === self.currentTableData.id) {
-												
-												const colId = parseInt(keySplitted[2]);
-												const column = self.currentTableData.columns.find(e => e.id === colId);
-													
-												if (column) {
-													
-													const oldValue = BackOfficeHelper.getColumnValue(self.currentTableData, colId, 0);
-													
-													let newValue = undefined;
-													
-													if (values[key]) {
-														
-														if (column.colType === BackOfficeHelper.DB_TYPE_INTEGER) {
-														
-															newValue = parseInt(values[key]);
-														}
-														else if (column.colType === BackOfficeHelper.DB_TYPE_TIMESTAMP) {
-															
-															newValue = parseInt(values[key].getTime());
-														}
-														else if (column.colType === BackOfficeHelper.DB_TYPE_DECIMAL) {
-															
-															newValue = parseFloat(values[key]);
-														}
-														else {
-															
-															newValue = values[key];	
-														}	
-													}
-													
-													if (oldValue !== newValue) {
-														
-														persistValues.push({
-															colName: column.name,
-															oldValue: oldValue,
-															newValue: newValue,
-															colType: column.colType
-														});
-													}
-												}	
-											}
-										}
-									}
-									
-									
-								});
-								
-								if (id && ((Array.isArray(persistValues) && persistValues.length > 0) || self.backOffice.onCancel)) {
-									
-									(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_BACKOFFICE_SAVE_CHANGES_ON") + " " + (self.currentTableData.alias ?? self.currentTableData.name), null, onAccept , null)).show();
-								}
-								else {
-									
-									if (container) {
-						
-										container.close();	
-									}
-								}
-							}	
-						}
-						
-						function onAccept() {
-						
-							self.accepted = true;
-							
-							const form = $$("form-" + self.uid);
-							
-							if (form && self.backOffice.onAccept && typeof(values) === 'object') {
-								
-								self.backOffice.onAccept();	
-								
-								BackOfficeHelper.updateData(self.backOffice, self.currentTableData, persistValues, id).then((persistResult) => {
-											
-									if (!persistResult.error) {
-										
-										self.backOffice.onAccept(values);
-								
-										if (container) {
-								
-											container.close();	
-										}
-									}
-									else {
-										
-										log.error(persistResult.error + "\n" + persistResult.errorDescription);
-										
-										(new MessageBox (MessageBox.ERROR, i18n.t("LBL_BACKOFFICE_ERROR_SAVING_CHANGES_ON") + " " + (self.currentTableData.alias ?? self.currentTableData.name), persistResult.error + "\n" + persistResult.errorDescription, null, null)).show();
-									}
-								});
-							}
-						}
-					}
-					
-					
-				}
-
-				return viewToolbarActions;
 			}
 			
 			return viewContent;
