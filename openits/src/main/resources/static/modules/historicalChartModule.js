@@ -26,6 +26,7 @@ export default class HistoricalChartModule extends GenericModule {
 		this.list = undefined;
 		this.elementValues = undefined;
 		this.states = undefined;
+		this.alarms = undefined;
 		this.elementTypeParamsIdsSet = new Set();
 		this.valuesMap = new Map();
 		this.isCharging = false;
@@ -80,7 +81,6 @@ export default class HistoricalChartModule extends GenericModule {
 		let initRange;
 		let initCountdown;
 		let initPeriod;
-		let rangeLabel;
 		let dat = {};
 		let dataSet = [];
 		let dataSeries = [];
@@ -142,8 +142,7 @@ export default class HistoricalChartModule extends GenericModule {
 					id: self.config.moduleAction.alarms,
 					label: i18n.t("LBL_ALARMS"),
 					icon: null,
-					description: i18n.t("LBL_MODE_ALARMS_DESCRIPTION"),
-					disabled: true
+					description: i18n.t("LBL_MODE_ALARMS_DESCRIPTION")
 				},
 				{
 					id: self.config.moduleAction.states,
@@ -552,8 +551,8 @@ export default class HistoricalChartModule extends GenericModule {
 			function getSeriesOfElementValues(dataArr) {
 
 				dataSet = [];
-				let initYKey = 'yValue';
 				dataSeries = [{ value: '#yValue#' }];
+				let initYKey = 'yValue';
 				let numOfUndefinedSeries = 0;
 
 				for (let i = 0; i < dataArr.length; i++) {
@@ -613,133 +612,185 @@ export default class HistoricalChartModule extends GenericModule {
 			}
 
 			$$("view-main-" + self.uid).show();
+
+			if ("chart-" + self.uid) {
+
+				$$("chart-" + self.uid).show();
+			}
+
+			if ("loading-chart-" + self.uid) {
+
+				$$("loading-chart-" + self.uid).hide();
+			}
+
 			$$("loading-" + self.uid).hide();
 		}
 
 		function getRangeDataOfAlarms(elementId) {
 
+			let dataArrAux = [];
+			let dataArr = [];
+			let arrAux = [];
 			let sameElementArr = self.alarms.filter(e => e.targetElement.id === elementId);
+			let alarmConfigs = window.em.getAll(EntityType.ALARM_CONFIG);
+			let element = window.em.getByField(EntityType.ELEMENT, "id", elementId);
+			let aConfigsArr = alarmConfigs.filter(e => e.elementType.id === element.elementType.id);
 
-			if (Array.isArray(sameElementArr) && sameElementArr.length > 0) {
+			aConfigsArr.forEach(aConfig => {
 
-				$$("chart-" + self.uid).clearAll();
+				let d = {};
 
-				let dataArr = [];
-				let dataArrAux = [];
-				let alarmsConfigsIdsSet = new Set();
+				for (let xVal of xAxis) {
 
-				for (let sameElement of sameElementArr) {
+					let withAlarms = sameElementArr.filter(el => ((xVal.initEpoch < el.activation) && (el.activation < xVal.endEpoch) && (el.alarmConfig.id === aConfig.id)));
 
-					alarmsConfigsIdsSet.add(sameElement.alarmConfig.id);
-				}
+					if (Array.isArray(withAlarms) && withAlarms.length > 0) {
 
-				let alarmsConfigsIdsArr = Array.from(alarmsConfigsIdsSet);
-				let alarmConfig;
-				let sameAlarmConfigsArr;
-				let createdAt;
-				let elementIdAlias;
+						withAlarms.sort((a, b) => (a.activation > b.activation) ? 1 : ((b.activation > a.activation) ? -1 : 0));
 
+						d['yValue'] = withAlarms;
+						d['withAlarms'] = true;
 
-				for (let j = 0; j < alarmsConfigsIdsArr.length; j++) {
+					} else {
 
-					alarmConfig = window.em.getByField(EntityType.ALARM_CONFIG, "id", alarmsConfigsIdsArr[j]);
-					sameAlarmConfigsArr = sameElementArr.filter(e => e.alarmConfig.id === alarmsConfigsIdsArr[j]);
-					console.log(sameAlarmConfigsArr)
-					elementIdAlias = alarmsConfigsIdsArr[j].replaceAll(":", "");
-
-					let dat = [];
-
-
-					for (let i = 0; i < xAxis.length; i++) {
-
-						let activeAlarms = sameAlarmConfigsArr.filter(aConfig => (xAxis[i].initEpoch <= aConfig.activation) && (aConfig.activation <= xAxis[i].endEpoch));
-
-						console.log(activeAlarms)
-						let d = {};
-
-						//d['initSerie'] = (i === 0) ? elementIdAlias : "";
-						d['serie'] = j;
-
-						if (Array.isArray(activeAlarms) && activeAlarms.length > 0) {
-
-							d['yValue' + j] = j + 1;
-
-						} else {
-
-							d['yValue' + j] = undefined;
-						}
-
-						d['xValue'] = xAxis[i].xValue;
-
-						if (i === 0 || i === xAxis.length - 1 || i % 5 === 0) {
-
-							d["epoch"] = xAxis[i].initEpoch;
-							d["element"] = i18n.t(alarmConfig.labelAlias);
-						}
-
-						dat.push(d);
-
+						d['yValue'] = undefined;
+						d['withAlarms'] = false;
 					}
 
-					dataArrAux.push(dat)
+					d['xValue'] = xVal.xValue;
+					d["epoch"] = xVal.initEpoch;
+					d['alarm'] = aConfig.id;
+
+					arrAux.push(d);
+					d = {};
 				}
 
+				dataArrAux.push(arrAux);
+				arrAux = [];
+			});
 
-				dataArrAux.forEach(aux => {
+			for (let j = 0; j < xAxis.length; j++) {
 
-					let dataArrAuxLength = aux.length;
+				let d = {};
 
-					for (let j = 0; j < dataArrAuxLength; j++) {
+				for (let dArrAux of dataArrAux) {
 
-						let dataObject = dataArr[j];
+					let elementId = dArrAux[j].alarm.replaceAll(":", "");
 
-						if (dataObject) {
+					d['yValue' + elementId] = dArrAux[j].yValue;
+					d['withAlarms' + elementId] = dArrAux[j].withAlarms;
+				}
 
-							dataObject['yValue' + aux[j].serie] = aux[j]['yValue' + aux[j].serie];
-
-						} else {
-
-							dataArr.push(aux[j])
-						}
-					}
-				});
-
-				console.log(dataArrAux, dataArr)
-				getSeriesOfAlarms(dataArr);
+				d['xValue'] = dataArrAux[0][j].xValue;
+				d['epoch'] = dataArrAux[0][j].epoch;
+				dataArr.push(d);
+				d = {};
 			}
+
+			getSeriesOfAlarms(dataArr);
 
 			function getSeriesOfAlarms(dataArr) {
 
 				dataSet = [];
 				dataSeries = [];
 
+				let firstData;
+				let tooltipText;
+				let numOfSerie = 0;
+
 				for (let i = 0; i < dataArr.length; i++) {
 
 					let d = {};
-					let serie = dataArr[0].serie;
 
-					d['yValue' + serie] = dataArr[i]['yValue' + serie];
-					d['xValue'] = dataArr[i].xValue;
-					d['epoch'] = dataArr[i].epoch;
+					for (let j = 0; j < aConfigsArr.length; j++) {
+
+						let alarmConfigId = aConfigsArr[j].id.replaceAll(":", "");
+
+						if (i === 0) {
+
+							firstData = dataArr.find(e => e['yValue' + alarmConfigId] != undefined);
+
+							if (firstData) {
 
 
-					dataSeries.push({
-						value: "#yValue" + serie + "#",
-						color: (dataArr[i]['yValue' + serie]) ? "#de5757" : "#ffffff",
-						line: {
-							width: 10
-						},
-						tooltip: {
-							template: function(obj) {
+								let firstDate = new Date(self.dateIni).toLocaleString();
+								tooltipText = i18n.t(firstData.labelAlias);
 
-								return obj["tooltip"];
+								let tooltipHTML = `<div>
+												<span>${firstDate}</span><br>
+												<span>${tooltipText}</span><br>
+												</div>`;
+
+								d['yValue' + alarmConfigId + numOfSerie] = j + 1;
+								d['element'] = j + 1;
+								d['withAlarms' + alarmConfigId] = dataArr[i]['withAlarms' + alarmConfigId];
+								d['numOfSerie' + alarmConfigId] = numOfSerie;
+								d['tooltip' + alarmConfigId + numOfSerie] = tooltipHTML;
+							}
+
+						} else {
+
+							let lastValue = dataSet[dataSet.length - 1];
+							numOfSerie = lastValue['numOfSerie' + alarmConfigId];
+
+							if (dataArr[i]['withAlarms' + alarmConfigId] === true) {
+
+								console.log(dataArr[i])
+							}
+							if ((lastValue['withAlarms' + alarmConfigId] === false) && (dataArr[i]['withAlarms' + alarmConfigId] === true)) {
+
+								tooltipText = i18n.t("LBL_ALARMED");
+								let firstDate = new Date(dataArr[i]['yValue' + alarmConfigId][0].activation).toLocaleString();
+
+								let tooltipHTML = `<div>
+												<span>${firstDate}</span><br>
+												<span>${tooltipText}</span><br>
+												</div>`;
+
+								numOfSerie++;
+								d['yValue' + alarmConfigId + numOfSerie] = j + 1;
+								d['element'] = j + 1;
+								d['withAlarms' + alarmConfigId] = dataArr[i]['withAlarms' + alarmConfigId];
+								d['numOfSerie' + alarmConfigId] = numOfSerie;
+								d['tooltip' + alarmConfigId + numOfSerie] = tooltipHTML;
+
+								dataSeries.push({
+									value: "#yValue" + alarmConfigId + numOfSerie + "#",
+									state: tooltipText,
+									line: {
+										width: 10,
+										color: "#EC5D30",
+										item: { radius: 0 }
+									},
+									tooltip: {
+										template: function(obj) {
+
+											return obj['tooltip' + alarmConfigId + obj['numOfSerie' + alarmConfigId]];
+										}
+									}
+								});
+
+							} else {
+
+								d['yValue' + alarmConfigId + numOfSerie] = j + 1;
+								d['element'] = j + 1;
+								d['withAlarms' + alarmConfigId] = dataArr[i]['withAlarms' + alarmConfigId];
+								d['numOfSerie' + alarmConfigId] = lastValue['numOfSerie' + alarmConfigId];
+								d['tooltip' + alarmConfigId + numOfSerie] = lastValue['tooltip' + alarmConfigId + numOfSerie];
 							}
 						}
-					});
+					}
+
+					d['xValue'] = dataArr[i].xValue;
+
+					if (i === 0 || i === xAxis.length - 1 || i % 25 === 0) {
+
+						d["epoch"] = dataArr[i].epoch;
+					}
 
 					dataSet.push(d);
+					d = {};
 				}
-
 
 				if ($$("chart-" + self.uid)) {
 
@@ -748,12 +799,11 @@ export default class HistoricalChartModule extends GenericModule {
 					$$("chart-" + self.uid).define("data", dataSet);
 					$$("chart-" + self.uid).refresh();
 
-					$$("view-main-" + self.uid).show();
-					$$("loading-" + self.uid).hide();
+					$$("chart-" + self.uid).show();
+					$$("loading-chart-" + self.uid).hide();
 				}
 
-				console.log(dataSet, dataSeries)
-
+				//				console.log(dataSet, dataSeries)
 			}
 		}
 
@@ -767,44 +817,46 @@ export default class HistoricalChartModule extends GenericModule {
 
 				let arrAux = [];
 				let sameElementArr = self.states.filter(e => e.element.id === id);
-				let dat = {};
+				let d = {};
 
-				for (let i = 0; i < xAxis.length; i++) {
+				for (let xVal of xAxis) {
 
-					let withStates = sameElementArr.filter(el => ((xAxis[i].initEpoch < el.createdAt) && (el.createdAt < xAxis[i].endEpoch)));
+					let withStates = sameElementArr.filter(el => ((xVal.initEpoch < el.createdAt) && (el.createdAt < xVal.endEpoch)));
 
 					if (Array.isArray(withStates) && withStates.length > 0) {
-						console.log(withStates)
-						dat['yValue'] = withStates;
-						dat['withStates'] = true;
+
+						withStates.sort((a, b) => (a.createdAt > b.createdAt) ? 1 : ((b.createdAt > a.createdAt) ? -1 : 0));
+
+						d['yValue'] = withStates;
+						d['withStates'] = true;
 
 					} else {
 
-						dat['yValue'] = undefined;
-						dat['withStates'] = false;
+						d['yValue'] = undefined;
+						d['withStates'] = false;
 					}
 
-					dat['xValue'] = xAxis[i].xValue;
-					dat["epoch"] = xAxis[i].initEpoch;
-					dat['element'] = id;
+					d['xValue'] = xVal.xValue;
+					d["epoch"] = xVal.initEpoch;
+					d['element'] = id;
 
-					arrAux.push(dat);
-					dat = {};
+					arrAux.push(d);
+					d = {};
 				}
 
 				dataArrAux.push(arrAux);
 			});
 
-			let d = {};
-
 			for (let j = 0; j < xAxis.length; j++) {
 
-				for (let i = 0; i < dataArrAux.length; i++) {
+				let d = {};
 
-					let elementId = dataArrAux[i][j].element.replaceAll(":", "");
+				for (let dArrAux of dataArrAux) {
 
-					d['yValue' + elementId] = dataArrAux[i][j].yValue;
-					d['withStates' + elementId] = dataArrAux[i][j].withStates;
+					let elementId = dArrAux[j].element.replaceAll(":", "");
+
+					d['yValue' + elementId] = dArrAux[j].yValue;
+					d['withStates' + elementId] = dArrAux[j].withStates;
 				}
 
 				d['xValue'] = dataArrAux[0][j].xValue;
@@ -827,7 +879,6 @@ export default class HistoricalChartModule extends GenericModule {
 				let firstColor;
 				let tooltipText;
 				let numOfSerie = 0;
-				let yAxisArr = [];
 
 				for (let i = 0; i < dataArr.length; i++) {
 
@@ -835,57 +886,81 @@ export default class HistoricalChartModule extends GenericModule {
 
 					for (let j = 0; j < elementIds.length; j++) {
 
-
 						let elementId = elementIds[j].replaceAll(":", "");
 
 						if (i === 0) {
 
-							yAxisArr.push({
-								id: elementIds[j],
-								value: j + 1
-							});
-
 							firstData = dataArr.find(e => e['yValue' + elementId] != undefined);
 
-							let firstVal = firstData['yValue' + elementId][0];
-							let lastVal = firstData['yValue' + elementId][firstData['yValue' + elementId].length - 1];
+							if (firstData) {
 
-							firstState = window.em.getByField(EntityType.ELEMENT_TYPE_STATE, "id", firstVal.currentElementTypeState.id);
-							lastState = window.em.getByField(EntityType.ELEMENT_TYPE_STATE, "id", lastVal.currentElementTypeState.id);
+								let firstVal = firstData['yValue' + elementId][0];
+								let lastVal = firstData['yValue' + elementId][firstData['yValue' + elementId].length - 1];
 
-							firstColor = (firstState.color) ? firstState.color : util.element.getColor(firstVal.id);
+								firstState = window.em.getByField(EntityType.ELEMENT_TYPE_STATE, "id", firstVal.currentElementTypeState.id);
+								lastState = window.em.getByField(EntityType.ELEMENT_TYPE_STATE, "id", lastVal.currentElementTypeState.id);
+								firstColor = (firstState.color) ? firstState.color : util.element.getColor(firstState.id);
+								tooltipText = i18n.t(firstState.labelAlias);
 
+								let firstDate = new Date(self.dateIni).toLocaleString();
 
-							tooltipText = i18n.t(firstState.labelAlias);
-
-							let firstDate = new Date(self.dateIni).toLocaleString();
-							let lastDate = new Date(lastVal.createdAt);
-
-							let tooltipHTML = `<div>
+								let tooltipHTML = `<div>
 												<span>${firstDate}</span><br>
 												<span>${tooltipText}</span><br>
 												</div>`;
 
-							d['yValue' + elementId + numOfSerie] = j + 1;
-							d['element'] = j + 1;
-							d['withStates' + elementId] = dataArr[i]['withStates' + elementId];
-							d['numOfSerie' + elementId] = numOfSerie;
-							d['tooltip' + elementId + numOfSerie] = tooltipHTML;
+								d['yValue' + elementId + numOfSerie] = j + 1;
+								d['element'] = j + 1;
+								d['withStates' + elementId] = dataArr[i]['withStates' + elementId];
+								d['numOfSerie' + elementId] = numOfSerie;
+								d['tooltip' + elementId + numOfSerie] = tooltipHTML;
 
-							dataSeries.push({
-								value: "#yValue" + elementId + numOfSerie + "#",
-								line: {
-									width: 10,
-									color: firstColor,
-									item: { radius: 0 }
-								},
-								state: tooltipText,
-								tooltip: {
-									template: function(obj) {
-										return obj['tooltip' + elementId + obj['numOfSerie' + elementId]];
+								dataSeries.push({
+									value: "#yValue" + elementId + numOfSerie + "#",
+									line: {
+										width: 10,
+										color: firstColor,
+										item: { radius: 0 }
+									},
+									state: tooltipText,
+									tooltip: {
+										template: function(obj) {
+											return obj['tooltip' + elementId + obj['numOfSerie' + elementId]];
+										}
 									}
-								}
-							});
+								});
+
+							} else {
+
+								tooltipText = i18n.t("LBL_ELEMENT_TYPE_STATE_UNKNOWN");
+								let firstDate = new Date(self.dateIni).toLocaleString();
+
+								let tooltipHTML = `<div>
+												<span>${firstDate}</span><br>
+												<span>${tooltipText}</span><br>
+												</div>`;
+
+								d['yValue' + elementId + numOfSerie] = j + 1;
+								d['element'] = j + 1;
+								d['withStates' + elementId] = dataArr[i]['withStates' + elementId];
+								d['numOfSerie' + elementId] = numOfSerie;
+								d['tooltip' + elementId + numOfSerie] = tooltipHTML;
+
+								dataSeries.push({
+									value: "#yValue" + elementId + numOfSerie + "#",
+									line: {
+										width: 10,
+										color: "#ffcc00",
+										item: { radius: 0 }
+									},
+									state: tooltipText,
+									tooltip: {
+										template: function(obj) {
+											return obj['tooltip' + elementId + obj['numOfSerie' + elementId]];
+										}
+									}
+								});
+							}
 
 						} else {
 
@@ -899,7 +974,6 @@ export default class HistoricalChartModule extends GenericModule {
 								let lastColor = (lastState.color) ? lastState.color : util.element.getColor(lastState.id);
 
 								let firstDate = new Date(dataArr[i]['yValue' + elementId][0].createdAt).toLocaleString();
-								let lastDate = new Date(dataArr[i]['yValue' + elementId][dataArr[i]['yValue' + elementId].length - 1].createdAt);
 
 								let tooltipHTML = `<div>
 												<span>${firstDate}</span><br>
@@ -951,40 +1025,18 @@ export default class HistoricalChartModule extends GenericModule {
 					d = {};
 				}
 
-				let yAxis = {
-					//					start: 1,
-					//					end: yAxisArr.length,
-					//					step: 1,
-					value: function(obj) {
-
-						let yText = "";
-
-						let element = yAxisArr.find(e => e.value == obj);
-
-						if (element) {
-
-							let el = window.em.getByField(EntityType.ELEMENT, "id", element.id);
-
-							yText = (el && el.alias) ? el.alias : "";
-						}
-
-						return yText;
-					}
-				};
-
 				if ($$("chart-" + self.uid)) {
 
 					$$("chart-" + self.uid).clearAll();
 					$$("chart-" + self.uid).define("series", dataSeries);
 					$$("chart-" + self.uid).define("data", dataSet);
-					//$$("chart-" + self.uid).define("yAxis", yAxis);
 					$$("chart-" + self.uid).refresh();
 
-					$$("view-main-" + self.uid).show();
-					$$("loading-" + self.uid).hide();
+					$$("chart-" + self.uid).show();
+					$$("loading-chart-" + self.uid).hide();
 				}
 
-				console.log(dataSet, dataSeries)
+				//				console.log(dataSet, dataSeries)
 			}
 		}
 
@@ -1050,8 +1102,8 @@ export default class HistoricalChartModule extends GenericModule {
 
 													button.attachEvent("onItemClick", function() {
 
-														$$("loading-" + self.uid).show();
-														$$("view-main-" + self.uid).hide();
+														$$("loading-chart-" + self.uid).show();
+														$$("chart-" + self.uid).hide();
 
 														if (!self.isCharging) {
 
@@ -1158,7 +1210,12 @@ export default class HistoricalChartModule extends GenericModule {
 							},
 							data: dataSet,
 							series: dataSeries
-						}
+						},
+						{
+							id: "loading-chart-" + self.uid,
+							rows: [util.ui.getViewDrawLoading()],
+							hidden: true
+						},
 					]
 				};
 
@@ -1173,6 +1230,9 @@ export default class HistoricalChartModule extends GenericModule {
 
 				listEvents[ListView.EventTypes.ON_SELECT_ROW] = function() {
 
+					$$("loading-chart-" + self.uid).show();
+					$$("chart-" + self.uid).hide();
+
 					let evSelected = self.list.getSelectedItems()[0];
 
 					if (self.moduleAction && self.moduleAction.id === self.config.moduleAction.alarms) {
@@ -1183,7 +1243,6 @@ export default class HistoricalChartModule extends GenericModule {
 
 						getRangeDataOfElementValues(evSelected.id);
 					}
-
 				}
 
 				let listOptions = {};
