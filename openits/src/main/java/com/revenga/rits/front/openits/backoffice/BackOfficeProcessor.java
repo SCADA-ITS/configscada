@@ -636,11 +636,20 @@ public class BackOfficeProcessor {
 							
 							Row row = new Row();
 							
-							List<RowData> rowData = row.getData();
+							List<RowData> rowDataList = row.getData();
 							
 							for (Column column : table.getColumns()) {
 								
-								rowData.add(new RowData(column, BackOfficeUtil.getStringValueFromResultSet(column, rs)));
+								String value = BackOfficeUtil.getStringValueFromResultSet(column, rs);
+								RowData rowData = new RowData(column, value);
+								
+								if (Boolean.TRUE.equals(column.getNeedsTranslation())) {
+									
+									rowData.setLabel(value);
+									rowData.setValue(this.backOfficeManager.translate(backOffice, conn, this.localeCode, value));
+								}
+								
+								rowDataList.add(rowData);
 							}
 							
 							rows.add(row);
@@ -669,6 +678,8 @@ public class BackOfficeProcessor {
 		if (!StringUtils.isEmpty(this.localeCode)) {
 		
 			backOfficeManager.translateBasic(backOffice, conn, this.localeCode, table);
+			
+			table.setLabelSingularTranslated(backOfficeManager.translate(backOffice, conn, this.localeCode, table.getLabelSingular()));
 			
 			List<Column> cols = table.getColumns();
 			
@@ -739,7 +750,7 @@ public class BackOfficeProcessor {
 	private void assignMetadataColumns(Connection conn, BackOffice backOffice, Table table) throws SQLException {
 		
 		final String QRY_COLUMN_METADATA = String
-				.format("SELECT cols.id, cols.label, cols.label_description, cols.column_name, cols.metadata " + 
+				.format("SELECT cols.id, cols.label, cols.label_description, cols.column_name, cols.metadata, cols.needs_translation " + 
 						"  FROM %s.sg_metadata_tables t, " +
 						"       %s.sg_metadata_columns cols " +
 						" WHERE cols.sg_metadata_table_id = t.id " +
@@ -775,6 +786,7 @@ public class BackOfficeProcessor {
 							//column.setId(rs.getInt("id"));
 							column.setLabel(rs.getString("label"));
 							column.setLabelDescription(rs.getString("label_description"));
+							column.setNeedsTranslation(rs.getBoolean("needs_translation"));
 							
 							String metadata = rs.getString("metadata");
 							

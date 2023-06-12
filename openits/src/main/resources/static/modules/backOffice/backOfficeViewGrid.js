@@ -171,9 +171,16 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 								const referencedColumnName = BackOfficeHelper.getReferencedColumnName(column, self.data);
 								const sourceField = referencedColumnName ? (BackOfficeHelper.getColumnUID(referencedColumnName)) : BackOfficeHelper.getColumnUID(column);
 								
-								const dataTypeId = BackOfficeHelper.getDBTypes(referencedColumnName ? referencedColumnName.colType : column.colType).id;
+								let dataTypeId = BackOfficeHelper.getDBTypes(referencedColumnName ? referencedColumnName.colType : column.colType).id;
+								let isBoolean = false;
 								
-								let label = column.alias ?? column.name;
+								if (dataTypeId == BackOfficeHelper.getDBTypes(BackOfficeHelper.DB_TYPE_BOOLEAN).id) {
+									
+									dataTypeId = BackOfficeHelper.getDBTypes(BackOfficeHelper.DB_TYPE_STRING).id
+									isBoolean = true;
+								}
+								
+								let label = column.label ?? column.name;
 								
 								if (referencedColumnName) {
 									
@@ -184,8 +191,8 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 										label = table.labelSingular ?? (table.label ?? table.name);
 									}
 								}
-		
-								gridFields.push({
+								
+								let gridField = {
 									id: idxField,
 									extended: false,
 									filtered: false,
@@ -201,7 +208,55 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 									gridFieldDataType: {
 										id: dataTypeId
 									}
-								});
+								};
+								
+								if (isBoolean) {
+									
+									gridField.gridFieldIcons = [
+										{
+											id: 1,
+											avatar: false,
+											badgeColor: false,
+											enabled: true,
+											icon: "./img/state/valid.png",
+											showValue: false,
+											value: "true",
+											labelValue: "LBL_YES"
+										},
+										{
+											id: 2,
+											avatar: false,
+											badgeColor: false,
+											enabled: true,
+											icon: "./img/state/invalid.png",
+											showValue: false,
+											value: "false",
+											labelValue: "LBL_NO"
+										},
+										{
+											id: 3,
+											avatar: false,
+											badgeColor: false,
+											enabled: true,
+											icon: "./img/state/valid.png",
+											showValue: false,
+											value: "1",
+											labelValue: "LBL_YES"
+										},
+										{
+											id: 4,
+											avatar: false,
+											badgeColor: false,
+											enabled: true,
+											icon: "./img/state/invalid.png",
+											showValue: false,
+											value: "0",
+											labelValue: "LBL_NO"
+										}
+									];
+								}
+								
+								gridFields.push(gridField);
 								
 								idxField++;
 							}
@@ -340,7 +395,7 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 														
 														log.error(persistResult.error + "\n" + persistResult.errorDescription);
 														
-														(new MessageBox (MessageBox.ERROR, i18n.t("LBL_BACKOFFICE_ERROR_SAVING_CHANGES_ON") + " " + (self.currentTableData.alias ?? self.currentTableData.name), persistResult.error + "\n" + persistResult.errorDescription, null, null)).show();
+														(new MessageBox (MessageBox.ERROR, i18n.t("LBL_BACKOFFICE_ERROR_SAVING_CHANGES_ON") + " " + (self.currentTableData.label ?? self.currentTableData.name), persistResult.error + "\n" + persistResult.errorDescription, null, null)).show();
 													}	
 												});
 											});			
@@ -352,7 +407,7 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 								
 								log.error(persistResult.error + "\n" + persistResult.errorDescription);
 								
-								(new MessageBox (MessageBox.ERROR, i18n.t("LBL_BACKOFFICE_ERROR_SAVING_CHANGES_ON") + " " + (self.currentTableData.alias ?? self.currentTableData.name), persistResult.error + "\n" + persistResult.errorDescription, null, null)).show();
+								(new MessageBox (MessageBox.ERROR, i18n.t("LBL_BACKOFFICE_ERROR_SAVING_CHANGES_ON") + " " + (self.currentTableData.label ?? self.currentTableData.name), persistResult.error + "\n" + persistResult.errorDescription, null, null)).show();
 							}
 						});
 					}
@@ -369,7 +424,7 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 						
 						if (Array.isArray(ids) && ids.length > 0) {
 							
-							(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_BACKOFFICE_DELETE_CONFIRM") + " " + (self.currentTableData.alias ?? self.currentTableData.name), null, onAccept , null)).show();
+							(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_BACKOFFICE_DELETE_CONFIRM") + " " + (self.currentTableData.label ?? self.currentTableData.name), null, onAccept , null)).show();
 							
 							function onAccept() {
 								
@@ -423,7 +478,7 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 												
 												if (error) {
 													
-													(new MessageBox (MessageBox.ERROR, i18n.t("LBL_BACKOFFICE_ERROR_DELETING_RECORDS") + " " + (self.currentTableData.alias ?? self.currentTableData.name), error, null, null)).show();				
+													(new MessageBox (MessageBox.ERROR, i18n.t("LBL_BACKOFFICE_ERROR_DELETING_RECORDS") + " " + (self.currentTableData.label ?? self.currentTableData.name), error, null, null)).show();				
 												}
 												else {
 													
@@ -434,6 +489,16 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 														if (itemToDelete) {
 															
 															self.dataTable.delete(itemToDelete);
+														}
+														
+														const idxRow = self.currentTableData.rows.findIndex(row => 
+																Array.isArray(row.data) && 
+																(row.data.find(dat => dat.columnId === columnId.id)) != undefined && 
+																(row.data.find(dat => dat.value == ids[recordsToDelete])) != undefined);
+										
+														if (idxRow > -1) {
+														
+															self.currentTableData.rows.splice(idxRow, 1);
 														}
 													});
 												}
@@ -504,8 +569,9 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 								if (values && self.dataTable) {
 									
 									const id = values["id"];
+									const columnIdentify = self.currentTableData.columns.find(e => e.name === "id");
 									
-									if (id) {
+									if (id && columnIdentify) {
 										
 										const grid = $$(self.dataTable.getViewId())
 			
@@ -521,13 +587,49 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 											const keys = Object.keys(values);
 									
 											let row = {};
+											let rowData = [];
 		
 											if (Array.isArray(keys) && keys.length > 0) {
 												
 												keys.forEach(key => {
-													
+																									
 													row[key] = (values[key] ? values[key] : undefined);
+													
+													if (key !== "id") {
+														
+														if (self.currentTableData.id == BackOfficeHelper.getTableIdFromColumnUID(key)) {
+														
+															const columnId = parseInt(BackOfficeHelper.getColumnIdFromColumnUID(key));
+															
+															rowData.push({
+																columnId: columnId,
+																value: row[key]
+															});
+														}	
+													}
+													else {
+														
+														rowData.push({
+															columnId: columnIdentify.id,
+															value: row[key]
+														});
+													}
 												});
+											}
+											
+											if (Array.isArray(rowData) && rowData.length > 0) {
+												
+												let indexRow = self.currentTableData.rows.findIndex(row => row.data.columnId == columnIdentify.id);
+											
+												if (indexRow > -1) {
+													
+													self.currentTableData.rows.splice(indexRow, 1);
+												}
+												
+												self.currentTableData.rows.push({
+													
+													data: rowData
+												});	
 											}
 											
 											if (self.dataTable.getItem(id)) {

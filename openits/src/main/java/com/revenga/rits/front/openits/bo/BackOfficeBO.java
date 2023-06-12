@@ -46,6 +46,13 @@ public class BackOfficeBO {
 		
 		return backOfficeService.getById(id);
 	}
+	
+	public List<Table> reload(Integer id) {
+		
+		BackOfficeProcessor backOfficeProcessor = new BackOfficeProcessor(groovyManager, backOfficeService, backOfficeManager, getLocaleCode(), false);
+		
+		return backOfficeProcessor.getAll(id);
+	}
 
 	public List<Table> get(Integer backOfficeId, String tableName) {
 

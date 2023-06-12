@@ -49,6 +49,14 @@ public class BackOfficeController {
 		return new ResponseEntity<>(backOfficeBO.getItem(backOfficeId), HttpStatus.OK);
 	}
 	
+	@GetMapping(value = "/reload/{backOfficeId}")
+	@ApiOperation(value = "Reload backOffice by id", notes = "Reload backOffice by id")
+	public ResponseEntity<List<Table>> reloadBackOffice(
+			@ApiParam(name = "backOfficeId", type = "Integer", value = "BackOffice identifier", example = "1", required = true) @PathVariable Integer backOfficeId) {
+
+		return new ResponseEntity<>(backOfficeBO.reload(backOfficeId), HttpStatus.OK);
+	}
+	
 	@GetMapping(path = "/{backOfficeId}/table/{tableName}")
 	@ApiOperation(value = "Get table from backoffice schema", notes = "Get table from backoffice schema")
 	public ResponseEntity<List<Table>> getTables(

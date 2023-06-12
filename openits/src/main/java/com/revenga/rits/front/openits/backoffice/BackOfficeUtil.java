@@ -124,6 +124,10 @@ public class BackOfficeUtil {
 			
 			value = String.valueOf(rs.getTimestamp(column.getName()) != null ? rs.getTimestamp(column.getName()).getTime() : null);
 		}
+		else if (column.getColType().equals(ColType.BOOLEAN)) {
+			
+			value = String.valueOf(rs.getBoolean(column.getName()));
+		} 
 		
 		if (rs.wasNull()) {
 			
@@ -169,6 +173,10 @@ public class BackOfficeUtil {
 			else if (dataType.equals(("timestamptz"))) {
 				
 				col.setColType(ColType.TIMESTAMP);
+			}
+			else if (dataType.equals(("bool"))) {
+				
+				col.setColType(ColType.BOOLEAN);
 			}
 		}
 	}
@@ -313,6 +321,10 @@ public class BackOfficeUtil {
 			else if (colType.equals(ColType.TIMESTAMP)) {
 				
 				formattedValue = "'" + new SimpleDateFormat(DATE_FORMAT).format(new Timestamp(Long.valueOf(value))) + "'";
+			}
+			else if (colType.equals(ColType.BOOLEAN)) {
+				
+				formattedValue = Long.valueOf(value) != 0 ? Boolean.TRUE.toString() : Boolean.FALSE.toString();
 			}
 		}
 		else {

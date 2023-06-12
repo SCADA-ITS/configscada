@@ -1,4 +1,4 @@
-package com.revenga.rits.front.openits.model.backoffice;
+	package com.revenga.rits.front.openits.model.backoffice;
 
 import java.util.Map;
 import java.util.Objects;
@@ -47,6 +47,8 @@ public class Column extends Basic {
 	private Column refColumn;
 	
 	private Integer position;
+	
+	private Boolean needsTranslation;
 	
 	private Map<String, Object> metadata;
 	

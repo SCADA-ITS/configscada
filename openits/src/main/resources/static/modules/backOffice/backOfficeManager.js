@@ -58,7 +58,7 @@ export default class BackOfficeManager {
 			
 			if (column) {
 				
-				(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_BACKOFFICE_CREATE_NEW_RECORDS_ON_TABLE") + " " + (currentTableData.alias ?? currentTableData.name) + i18n.t("LBL_BACKOFFICE_WITH_CONDITIONS") + ": " + self.backOffice.filterColumnName + "=" + self.backOffice.filterColumnValue, null, onAccept , null)).show();
+				(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_BACKOFFICE_CREATE_NEW_RECORDS_ON_TABLE") + " " + (currentTableData.label ?? currentTableData.name) + i18n.t("LBL_BACKOFFICE_WITH_CONDITIONS") + ": " + self.backOffice.filterColumnName + "=" + self.backOffice.filterColumnValue, null, onAccept , null)).show();
 		
 				function onAccept() {
 					
@@ -106,7 +106,7 @@ export default class BackOfficeManager {
 					
 														log.error(persistResult.error + "\n" + persistResult.errorDescription);
 														
-														(new MessageBox (MessageBox.ERROR, i18n.t("LBL_BACKOFFICE_ERROR_SAVING_CHANGES_ON") + " " + (currentTableData.alias ?? currentTableData.name), persistResult.error + "\n" + persistResult.errorDescription, null, null)).show();
+														(new MessageBox (MessageBox.ERROR, i18n.t("LBL_BACKOFFICE_ERROR_SAVING_CHANGES_ON") + " " + (currentTableData.label ?? currentTableData.name), persistResult.error + "\n" + persistResult.errorDescription, null, null)).show();
 													}	
 												});
 											});			
@@ -118,7 +118,7 @@ export default class BackOfficeManager {
 								
 								log.error(persistResult.error + "\n" + persistResult.errorDescription);
 								
-								(new MessageBox (MessageBox.ERROR, i18n.t("LBL_BACKOFFICE_ERROR_SAVING_CHANGES_ON") + " " + (currentTableData.alias ?? currentTableData.name), persistResult.error + "\n" + persistResult.errorDescription, null, null)).show();
+								(new MessageBox (MessageBox.ERROR, i18n.t("LBL_BACKOFFICE_ERROR_SAVING_CHANGES_ON") + " " + (currentTableData.label ?? currentTableData.name), persistResult.error + "\n" + persistResult.errorDescription, null, null)).show();
 							}
 						});
 					}

@@ -11,6 +11,7 @@ export default class BackOfficeHelper {
 	static get DB_TYPE_INTEGER() { return "INTEGER" }
 	static get DB_TYPE_DECIMAL() { return "DECIMAL" }
 	static get DB_TYPE_TIMESTAMP() { return "TIMESTAMP" }
+	static get DB_TYPE_BOOLEAN() { return "BOOLEAN" }
 	
 	static get META_TYPE_BACKOFFICE() { 
 		return { 
@@ -59,8 +60,9 @@ export default class BackOfficeHelper {
 		
 		dbType[BackOfficeHelper.DB_TYPE_STRING] = { id: 1, name: BackOfficeHelper.DB_TYPE_STRING, component: { view: "text", required: false, labelWidth: 275 }};
 		dbType[BackOfficeHelper.DB_TYPE_INTEGER] = { id: 2, name: BackOfficeHelper.DB_TYPE_INTEGER, component: { view: "text", required: false, labelWidth: 275 }};
-		dbType[BackOfficeHelper.DB_TYPE_DECIMAL] = { id: 3, name: BackOfficeHelper.DB_TYPE_DECIMAL, component: { view: "text", required: false, labelWidth: 275 }},
-		dbType[BackOfficeHelper.DB_TYPE_TIMESTAMP] = { id: 4, name: BackOfficeHelper.DB_TYPE_TIMESTAMP, component: { view: "datepicker", timepicker: true, required: false, labelWidth: 275, format: (webix.i18n.locales[i18n.localeCode].dateFormat + " " + webix.i18n.locales[i18n.localeCode].timeFormat)}} 
+		dbType[BackOfficeHelper.DB_TYPE_DECIMAL] = { id: 3, name: BackOfficeHelper.DB_TYPE_DECIMAL, component: { view: "text", required: false, labelWidth: 275 }};
+		dbType[BackOfficeHelper.DB_TYPE_TIMESTAMP] = { id: 4, name: BackOfficeHelper.DB_TYPE_TIMESTAMP, component: { view: "datepicker", timepicker: true, required: false, labelWidth: 275, format: (webix.i18n.locales[i18n.localeCode].dateFormat + " " + webix.i18n.locales[i18n.localeCode].timeFormat)}};
+		dbType[BackOfficeHelper.DB_TYPE_BOOLEAN] = { id: 5, name: BackOfficeHelper.DB_TYPE_BOOLEAN, component: { view: "checkbox", required: false, labelWidth: 275 }}; 
 		
 		return dbType[name];
 	}
@@ -312,5 +314,20 @@ export default class BackOfficeHelper {
 	static getColumnUID(column) {
 		
 		return column.name + "$" + column.tableId + "$" + column.id;
+	}
+	
+	static getColumnNameFromColumnUID(columnUID) {
+		
+		return columnUID.split("$")[0];
+	}
+	
+	static getTableIdFromColumnUID(columnUID) {
+		
+		return columnUID.split("$")[1];
+	}
+	
+	static getColumnIdFromColumnUID(columnUID) {
+		
+		return columnUID.split("$")[2];
 	}
 }

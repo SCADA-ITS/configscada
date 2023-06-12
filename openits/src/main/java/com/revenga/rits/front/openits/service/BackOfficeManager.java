@@ -89,11 +89,11 @@ public class BackOfficeManager extends FrontManager {
 	
 	public void translateBasic(BackOffice backOffice, Connection conn, String localeCode, Basic basic) throws SQLException {
 		
-		basic.setLabelTranslated(getTranslation(backOffice, conn, localeCode, basic.getLabel()));
-		basic.setLabelDescriptionTranslated(getTranslation(backOffice, conn, localeCode, basic.getLabelDescription()));
+		basic.setLabelTranslated(translate(backOffice, conn, localeCode, basic.getLabel()));
+		basic.setLabelDescriptionTranslated(translate(backOffice, conn, localeCode, basic.getLabelDescription()));
 	}
 	
-	public String getTranslation(BackOffice backOffice, Connection conn, String localeCode, String label) throws SQLException {
+	public String translate(BackOffice backOffice, Connection conn, String localeCode, String label) throws SQLException {
 		
 		String translation = label;
 		
@@ -149,8 +149,6 @@ public class BackOfficeManager extends FrontManager {
 			}
 		}
 	}
-	
-	
 
 	@Override
 	protected void load() {

@@ -25,6 +25,7 @@ public class Row implements Serializable {
 		
 		private Integer columnId;
 		private String value;
+		private String label;
 		
 		public RowData(Column column, String value) {
 			

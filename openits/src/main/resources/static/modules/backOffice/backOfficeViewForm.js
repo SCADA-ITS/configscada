@@ -228,7 +228,7 @@ export default class BackOfficeViewForm extends BackOfficeView {
 									let field = webix.copy(dbType.component);
 								
 									field.name = (column.name === "id") ? "id" : BackOfficeHelper.getColumnUID(column);
-									field.label = util.getStringCapitalized(column.alias ?? column.name);
+									field.label = util.getStringCapitalized(column.label ?? column.name);
 									field.disabled = (column.name === "id");
 									
 									let value = BackOfficeHelper.getColumnValue(self.currentTableData, column.id, 0);
@@ -243,7 +243,11 @@ export default class BackOfficeViewForm extends BackOfficeView {
 												 dbType.name === BackOfficeHelper.DB_TYPE_INTEGER) {
 										
 											field.type = "number";
-										}	
+										}
+										else if (dbType.name === BackOfficeHelper.DB_TYPE_BOOLEAN) {
+										
+											value = IS_TRUE(value);
+										}
 										else {
 											
 											field.type = "text";
@@ -344,7 +348,7 @@ export default class BackOfficeViewForm extends BackOfficeView {
 						
 													dialogRefField.fillDialogEntity = fillDialogEntity;
 													dialogRefField.pkField = field.name
-													const fields = BackOfficeHelper.getColumnUID(referencedColumnValue) + "=" + util.getStringCapitalized(referencedColumnValue.alias ?? referencedColumnValue.name);
+													const fields = BackOfficeHelper.getColumnUID(referencedColumnValue) + "=" + util.getStringCapitalized(referencedColumnValue.label ?? referencedColumnValue.name);
 													dialogRefField.fields = [fields];
 													dialogRefField.sortFieldId = 1;
 													dialogRefField.height = 600;
@@ -371,7 +375,7 @@ export default class BackOfficeViewForm extends BackOfficeView {
 														onFilledDialogEntity(dialogEntity);
 													}
 													
-													(new SearchDialogBox(i18n.t("LBL_SEARCH " + util.getStringCapitalized(table.alias ?? table.name)), dialogRefField, onAccept)).show();
+													(new SearchDialogBox(i18n.t("LBL_SEARCH " + util.getStringCapitalized(table.label ?? table.name)), dialogRefField, onAccept)).show();
 													
 													function onAccept(selection) {
 														
@@ -393,7 +397,7 @@ export default class BackOfficeViewForm extends BackOfficeView {
 											}
 											else {
 												
-												(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_BACKOFFICE_NO_RECORDS_ON_REF_TABLE") + ": " + (table.alias ?? table.name) + i18n.t("LBL_BACKOFFICE_CREATE_NEW_RECORD"), null, onAccept, null)).show();
+												(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_BACKOFFICE_NO_RECORDS_ON_REF_TABLE") + ": " + (table.label ?? table.name) + i18n.t("LBL_BACKOFFICE_CREATE_NEW_RECORD"), null, onAccept, null)).show();
 												
 												function onAccept() {
 													
@@ -441,7 +445,7 @@ export default class BackOfficeViewForm extends BackOfficeView {
 																				
 																				log.error(persistResult.error + "\n" + persistResult.errorDescription);
 																				
-																				(new MessageBox (MessageBox.ERROR, i18n.t("LBL_BACKOFFICE_ERROR_SAVING_CHANGES_ON") + " " + (self.currentTableData.alias ?? self.currentTableData.name), persistResult.error + "\n" + persistResult.errorDescription, null, null)).show();
+																				(new MessageBox (MessageBox.ERROR, i18n.t("LBL_BACKOFFICE_ERROR_SAVING_CHANGES_ON") + " " + (self.currentTableData.label ?? self.currentTableData.name), persistResult.error + "\n" + persistResult.errorDescription, null, null)).show();
 																			}	
 																		});
 																	});			
@@ -453,7 +457,7 @@ export default class BackOfficeViewForm extends BackOfficeView {
 														
 														log.error(persistResult.error + "\n" + persistResult.errorDescription);
 														
-														(new MessageBox (MessageBox.ERROR, i18n.t("LBL_BACKOFFICE_ERROR_SAVING_CHANGES_ON") + " " + (self.currentTableData.alias ?? self.currentTableData.name), persistResult.error + "\n" + persistResult.errorDescription, null, null)).show();
+														(new MessageBox (MessageBox.ERROR, i18n.t("LBL_BACKOFFICE_ERROR_SAVING_CHANGES_ON") + " " + (self.currentTableData.label ?? self.currentTableData.name), persistResult.error + "\n" + persistResult.errorDescription, null, null)).show();
 													}
 												});	
 											}
@@ -527,27 +531,34 @@ export default class BackOfficeViewForm extends BackOfficeView {
 									}
 									else {
 										
-										field.on = {
-											onTimedKeyPress: function() {
-												
-												const btnAccept = $$("btn-accept-" + self.uid);
-														    	
-										    	if (btnAccept) {
+										if (dbType.name === BackOfficeHelper.DB_TYPE_BOOLEAN) {
 											
-													const persistValues = getPersistValues();
+											field.on = { onChange: onChangeField }
+										}
+										else {
+											
+											field.on = { onTimedKeyPress: onChangeField }	
+										}
+										
+										function onChangeField() {
+											
+											const btnAccept = $$("btn-accept-" + self.uid);
+															    	
+									    	if (btnAccept) {
+										
+												const persistValues = getPersistValues();
+											
+												if (Array.isArray(persistValues) && persistValues.length > 0) {
 												
-													if (Array.isArray(persistValues) && persistValues.length > 0) {
+													btnAccept.enable();	
+												}
+												else {
 													
-														btnAccept.enable();	
-													}
-													else {
-														
-														btnAccept.disable();
-													}
-												}	
+													btnAccept.disable();
+												}
 											}
 										}
-									
+
 										fields.push(field);	
 									}
 								}
@@ -629,7 +640,7 @@ export default class BackOfficeViewForm extends BackOfficeView {
 										
 							if (id && ((Array.isArray(persistValues) && persistValues.length > 0) || self.backOffice.onCancel)) {
 								
-								(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_BACKOFFICE_SAVE_CHANGES_ON") + " " + (self.currentTableData.alias ?? self.currentTableData.name), null, onAccept , null)).show();
+								(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_BACKOFFICE_SAVE_CHANGES_ON") + " " + (self.currentTableData.label ?? self.currentTableData.name), null, onAccept , null)).show();
 							}
 							else {
 								
@@ -668,7 +679,7 @@ export default class BackOfficeViewForm extends BackOfficeView {
 												
 												log.error(persistResult.error + "\n" + persistResult.errorDescription);
 												
-												(new MessageBox (MessageBox.ERROR, i18n.t("LBL_BACKOFFICE_ERROR_SAVING_CHANGES_ON") + " " + (self.currentTableData.alias ?? self.currentTableData.name), persistResult.error + "\n" + persistResult.errorDescription, null, null)).show();
+												(new MessageBox (MessageBox.ERROR, i18n.t("LBL_BACKOFFICE_ERROR_SAVING_CHANGES_ON") + " " + (self.currentTableData.label ?? self.currentTableData.name), persistResult.error + "\n" + persistResult.errorDescription, null, null)).show();
 											}
 										});
 									}
