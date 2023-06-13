@@ -330,4 +330,77 @@ export default class BackOfficeHelper {
 		
 		return columnUID.split("$")[2];
 	}
+	
+	static getPersistValues(formValues, table) {
+		
+		let persistValues = [];
+		
+		const values = formValues;
+		
+		if (typeof(values) === 'object') {
+			
+			const keys = Object.keys(values);
+
+			if (Array.isArray(keys) && keys.length > 0) {
+				
+				keys.forEach(key => {
+					
+					if (key != "id") {
+
+						const keySplitted = key.split("$");
+					
+						if (Array.isArray(keySplitted) && keySplitted.length > 2) {
+							
+							const tableId = parseInt(keySplitted[1]);
+
+							if (tableId === table.id) {
+								
+								const colId = parseInt(keySplitted[2]);
+								const column = table.columns.find(e => e.id === colId);
+									
+								if (column) {
+									
+									const oldValue = BackOfficeHelper.getColumnValue(table, colId, 0);
+									
+									let newValue = undefined;
+									
+									if (values[key]) {
+										
+										if (column.colType === BackOfficeHelper.DB_TYPE_INTEGER) {
+										
+											newValue = parseInt(values[key]);
+										}
+										else if (column.colType === BackOfficeHelper.DB_TYPE_TIMESTAMP) {
+											
+											newValue = parseInt(values[key].getTime());
+										}
+										else if (column.colType === BackOfficeHelper.DB_TYPE_DECIMAL) {
+											
+											newValue = parseFloat(values[key]);
+										}
+										else {
+											
+											newValue = values[key];	
+										}	
+									}
+									
+									if (oldValue !== newValue) {
+										
+										persistValues.push({
+											colName: column.name,
+											oldValue: oldValue,
+											newValue: newValue,
+											colType: column.colType
+										});
+									}
+								}	
+							}
+						}
+					}
+				});
+			}
+		}
+		
+		return persistValues;
+	}
 }
