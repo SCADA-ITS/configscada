@@ -1,5 +1,5 @@
-import { util } from "../lib/util.js";
-import EquipmentList from "../component/equipmentList.js";
+import { util } from "../../lib/util.js";
+import EquipmentList from "../../component/equipmentList.js";
 
 export default class HistoricalChartWizard {
 
@@ -73,6 +73,7 @@ export default class HistoricalChartWizard {
 										onItemClick() {
 
 											$$(equipmentListWindow).close();
+											$$(MAIN_TAB_ID).removeView(self.parent.args.containerId);
 										}
 									}
 								},
