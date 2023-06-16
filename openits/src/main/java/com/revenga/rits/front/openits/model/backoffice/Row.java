@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.util.CollectionUtils;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
@@ -11,12 +13,12 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper=false)
-public class Row implements Serializable {
+public class Row implements Cloneable, Serializable {
 	
 	private static final long serialVersionUID = 3515110338135944787L;
 	
 	@Data
-	public static class RowData implements Serializable {
+	public static class RowData implements Cloneable, Serializable {
 		
 		private static final long serialVersionUID = 1689896293999857137L;
 		
@@ -44,7 +46,31 @@ public class Row implements Serializable {
 		public String toString() {
 			return column.name + " = " + this.value;
 		}
+		
+		@Override
+		public Object clone() throws CloneNotSupportedException {
+			
+			return super.clone();
+		}
 	}
 	
 	private List<RowData> data = new ArrayList<>();
+	
+	@Override
+	public Object clone() throws CloneNotSupportedException {
+
+		Object objCloned = super.clone(); 
+		
+		if (!CollectionUtils.isEmpty(this.data)) {
+			
+			((Row) objCloned).setData(new ArrayList<>());
+			
+			for (RowData rowData : this.data) {
+			
+				((Row) objCloned).getData().add((RowData) rowData.clone());
+			}
+		}
+		
+		return objCloned;
+	}
 }

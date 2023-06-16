@@ -54,11 +54,6 @@ public class BackOfficeBO {
 		return backOfficeProcessor.getAll(id);
 	}
 
-	public List<Table> get(Integer backOfficeId, String tableName) {
-
-		return get(backOfficeId, tableName, null);
-	}
-	
 	public List<Table> get(Integer backOfficeId, String tableName, String conditions) {
 		
 		BackOfficeProcessor backOfficeProcessor = new BackOfficeProcessor(groovyManager, backOfficeService, backOfficeManager, getLocaleCode(), true);
@@ -71,6 +66,13 @@ public class BackOfficeBO {
 		BackOfficeProcessor backOfficeProcessor = new BackOfficeProcessor(groovyManager, backOfficeService, backOfficeManager, getLocaleCode(), true);
 		
 		return backOfficeProcessor.persist(backOfficeId, persist);
+	}
+	
+	public PersistResult filler(Integer backOfficeId, String columnName, Persist persist) {
+		
+		BackOfficeProcessor backOfficeProcessor = new BackOfficeProcessor(groovyManager, backOfficeService, backOfficeManager, getLocaleCode(), true);
+		
+		return backOfficeProcessor.filler(backOfficeId, columnName, persist);
 	}
 	
 	private String getLocaleCode() {
@@ -95,6 +97,4 @@ public class BackOfficeBO {
 
 		return localeCode;
 	}
-	
-	
 }

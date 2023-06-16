@@ -3,6 +3,7 @@ import { util } from "../../lib/util.js";
 const REST_BACKOFFICE_DATA = "backoffice/${backOfficeId}";
 const REST_BACKOFFICE_TABLE = "backoffice/${backOfficeId}/table/${tableName}";
 const REST_BACKOFFICE_TABLE_PERSIST = "backoffice/${backOfficeId}/persist";
+const REST_BACKOFFICE_COLUMN_FILLER = "backoffice/${backOfficeId}/filler/${columnName}";
 const COL_NAMES_REF = [/name/i, /alias/i, /description/i];
 
 export default class BackOfficeHelper {
@@ -53,6 +54,7 @@ export default class BackOfficeHelper {
 	static get PERSISTENCE_TYPE_INSERT() { return "INSERT" }
 	static get PERSISTENCE_TYPE_UPDATE() { return "UPDATE" }
 	static get PERSISTENCE_TYPE_DELETE() { return "DELETE" }
+	static get PERSISTENCE_TYPE_FILL() 	 { return "FILL" }
 		
 	static getDBTypes(name) {
 		
@@ -114,16 +116,14 @@ export default class BackOfficeHelper {
 		const url = appConfig.restUrl + 
 						util.fillTemplate(REST_BACKOFFICE_TABLE, { backOfficeId: backOffice.id, tableName: backOffice.tableName });
 			
+		let conditions = undefined;
+		
 		if (backOffice.filterColumnName && backOffice.filterColumnValue) {
 			
-			const conditions = backOffice.filterColumnName + "=" + backOffice.filterColumnValue
-		
-			response = await webix.ajax().headers(CONTENT_TYPE_JSON).post(url, conditions);
+			conditions = backOffice.filterColumnName + "=" + backOffice.filterColumnValue;
 		}
-		else {
 		
-			response = await webix.ajax().get(url);	
-		}
+		response = await webix.ajax().headers(CONTENT_TYPE_JSON).post(url, conditions);
 		
 		return response ? response.json() : undefined;
 	}
@@ -179,6 +179,25 @@ export default class BackOfficeHelper {
 		
 		const url = appConfig.restUrl + 
 						util.fillTemplate(REST_BACKOFFICE_TABLE_PERSIST, { backOfficeId: backOffice.id });
+			
+		response = await webix.ajax().headers(CONTENT_TYPE_JSON).post(url, body);
+		
+		return response ? response.json() : undefined;
+	}
+	
+	static async filler(backOffice, table, column, persistValues, id) {
+		
+		let response;
+		
+		const body = {
+			id: id,
+			persistValues: persistValues,
+			persistenceType: BackOfficeHelper.PERSISTENCE_TYPE_FILL,
+			tableName: table.name
+		}
+		
+		const url = appConfig.restUrl + 
+						util.fillTemplate(REST_BACKOFFICE_COLUMN_FILLER, { backOfficeId: backOffice.id, columnName: column.name });
 			
 		response = await webix.ajax().headers(CONTENT_TYPE_JSON).post(url, body);
 		
@@ -323,12 +342,12 @@ export default class BackOfficeHelper {
 	
 	static getTableIdFromColumnUID(columnUID) {
 		
-		return columnUID.split("$")[1];
+		return parseInt(columnUID.split("$")[1]);
 	}
 	
 	static getColumnIdFromColumnUID(columnUID) {
 		
-		return columnUID.split("$")[2];
+		return parseInt(columnUID.split("$")[2]);
 	}
 	
 	static getPersistValues(formValues, table) {

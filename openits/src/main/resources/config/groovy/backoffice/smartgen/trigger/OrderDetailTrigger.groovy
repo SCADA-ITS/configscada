@@ -1,12 +1,12 @@
 // Uncomment following line for groovy file
-package config.groovy.backoffice.smartgen;
+package config.groovy.backoffice.smartgen.trigger;
 // or Uncomment following line for java file
-//package com.revenga.rits.front.openits.backoffice.trigger;
+//package com.revenga.rits.front.openits.backoffice.groovy.trigger;
 
 import org.apache.commons.lang3.math.NumberUtils;
 
-import com.revenga.rits.front.openits.backoffice.AbstractBackOfficeTrigger;
-import com.revenga.rits.front.openits.backoffice.BackOfficePersistException;
+import com.revenga.rits.front.openits.backoffice.groovy.AbstractBackOfficeTrigger;
+import com.revenga.rits.front.openits.backoffice.BackOfficeException;
 
 public class OrderDetailTrigger extends AbstractBackOfficeTrigger {
 
@@ -79,7 +79,7 @@ public class OrderDetailTrigger extends AbstractBackOfficeTrigger {
 				}
 				else {
 					
-					throw new BackOfficePersistException(String.format(
+					throw new BackOfficeException(String.format(
 							"Insufficient stock to allocate %d units. %d are available for productId = %d", diffStock,
 							availableStock, productId));
 				}
@@ -87,4 +87,3 @@ public class OrderDetailTrigger extends AbstractBackOfficeTrigger {
 		}
 	}
 }
-

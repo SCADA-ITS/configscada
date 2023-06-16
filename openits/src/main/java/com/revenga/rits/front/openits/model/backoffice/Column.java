@@ -1,9 +1,12 @@
 	package com.revenga.rits.front.openits.model.backoffice;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.revenga.rits.front.openits.model.backoffice.Table.GroovyBasic;
 
 import lombok.AccessLevel;
 import lombok.Data;
@@ -19,20 +22,24 @@ public class Column extends Basic {
 	
 	public enum ColType { INTEGER, DECIMAL, STRING, BOOLEAN, TIMESTAMP }
 	
-//	@Data
-//	public static class ColumnMetadata implements Serializable {
-//		
-//		private static final long serialVersionUID = 5747863839138739437L;
-//		
-//		private String name;
-//		private Integer position;
-//		private Integer maxLength;
-//		private Integer multiLine;
-//		private String mdiIcon;
-//		private Boolean refName;
-//		private Boolean required;
-//		private Boolean visible;
-//	}
+	@Data
+	@EqualsAndHashCode(callSuper=false)
+	public static class Filler extends GroovyBasic {
+		
+		private static final long serialVersionUID = -1605938528996576885L;
+
+		private static final String PACKAGE_NAME = "com.revenga.rits.front.openits.backoffice.groovy.filler";
+		
+		public Filler(String name) {
+			
+			super();
+			
+			this.name = name;
+			
+			this.id = Objects.hash(this.getClass().getName(), this.name);
+			this.packageName = PACKAGE_NAME; 
+		}
+	}
 	
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
@@ -49,6 +56,10 @@ public class Column extends Basic {
 	private Integer position;
 	
 	private Boolean needsTranslation;
+	
+	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
+	private List<Filler> fillers = new ArrayList<>();
 	
 	private Map<String, Object> metadata;
 	

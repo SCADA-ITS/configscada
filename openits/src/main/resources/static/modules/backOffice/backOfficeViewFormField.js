@@ -12,7 +12,8 @@ export default class BackOfficeViewFormField  {
 		this.data = form.data;
 		this.currentTableData = form.currentTableData;
 		this.uid = form.uid;
-		this.refresh = form.refresh; 		
+		this.refresh = form.refresh;
+		this.setValues = form.setValues; 		
 	}
 	
 	getField(column) {
@@ -96,45 +97,27 @@ export default class BackOfficeViewFormField  {
 									width: 50,
 									on: {
 										onChange: function() {
-									    
-									    	const btnAccept = $$("btn-accept-" + self.uid);
-									    	
-									    	if (btnAccept) {
-										
-												const form = $$("form-" + self.uid);
-																						
-												if (form) {
-																		
-													const persistValues = BackOfficeHelper.getPersistValues(form.getValues(), self.currentTableData);
+											
+											const persistValues = onChangeField();
+											
+											if (Array.isArray(persistValues) && persistValues.length > 0 &&
+												Array.isArray(dependentColumns) && dependentColumns.length > 0) {
 													
-													if (Array.isArray(persistValues) && persistValues.length > 0) {
-												
-														btnAccept.enable();
+												dependentColumns.forEach(dependCol => {
+													
+													const form = $$("form-" + self.uid);
+													const dependentReferencedColumnName = BackOfficeHelper.getReferencedColumnName(dependCol, self.data);
+													
+													if (dependentReferencedColumnName && form) {
 														
-														if (Array.isArray(dependentColumns) && dependentColumns.length > 0) {
-															
-															dependentColumns.forEach(dependCol => {
-																
-																const form = $$("form-" + self.uid);
-																const dependentReferencedColumnName = BackOfficeHelper.getReferencedColumnName(dependCol, self.data);
-																
-																if (dependentReferencedColumnName && form) {
-																	
-																	let newValue = {};
-																	
-																	newValue[BackOfficeHelper.getColumnUID(dependCol)] = "";
-																	newValue[BackOfficeHelper.getColumnUID(dependentReferencedColumnName)] = "";
-																	
-																	form.setValues(newValue, true);	
-																}
-															});
-														}
-													}
-													else {
+														let newValue = {};
 														
-														btnAccept.disable();
+														newValue[BackOfficeHelper.getColumnUID(dependCol)] = "";
+														newValue[BackOfficeHelper.getColumnUID(dependentReferencedColumnName)] = "";
+														
+														form.setValues(newValue, true);	
 													}
-												}
+												});
 											}
 										}
 									}
@@ -203,8 +186,6 @@ export default class BackOfficeViewFormField  {
 						}
 						
 						newField = fieldGroup;
-						
-						//fields.push(fieldGroup);
 					}
 					
 					function updateRefFieldTable(table, colFilter, colFilterValue) {
@@ -537,42 +518,100 @@ export default class BackOfficeViewFormField  {
 					if (dbType.name === BackOfficeHelper.DB_TYPE_BOOLEAN ||
 						dbType.name === BackOfficeHelper.DB_TYPE_TIMESTAMP) {
 						
-						field.on = { onChange: onChangeField }
+						field.on = { 
+							onChange: function() { 
+
+								const persistValues = onChangeField(); 
+								
+								if (Array.isArray(persistValues) && persistValues.length > 0) {
+								
+									filler();	
+								}
+							} 
+						}
 					}
 					else {
 						
-						field.on = { onTimedKeyPress: onChangeField }	
-					}
-					
-					function onChangeField() {
-						
-						const btnAccept = $$("btn-accept-" + self.uid);
-										    	
-				    	if (btnAccept) {
-					
-							const form = $$("form-" + self.uid);
-																						
-							if (form) {
-													
-								const persistValues = BackOfficeHelper.getPersistValues(form.getValues(), self.currentTableData);
-							
+						field.on = { onTimedKeyPress: onChangeField }
+						field.on = { 
+							onChange: function() { 
+
+								const persistValues = onChangeField(); 
+								
 								if (Array.isArray(persistValues) && persistValues.length > 0) {
-							
-									btnAccept.enable();	
+								
+									filler();	
 								}
-								else {
-									
-									btnAccept.disable();
-								}	
-							}
-						
-							
+							} 
 						}
 					}
-
+					
 					//fields.push(field);
 					
 					newField = field;	
+				}
+				
+				function onChangeField() {
+					
+					let persistValues;
+					const btnAccept = $$("btn-accept-" + self.uid);
+									    	
+			    	if (btnAccept) {
+				
+						const form = $$("form-" + self.uid);
+																					
+						if (form) {
+												
+							persistValues = BackOfficeHelper.getPersistValues(form.getValues(), self.currentTableData);
+						
+							if (Array.isArray(persistValues) && persistValues.length > 0) {
+						
+								btnAccept.enable();
+							}
+							else {
+								
+								btnAccept.disable();
+							}	
+						}
+					}
+					
+					return persistValues;
+				}
+				
+				function filler() {
+							
+					const form = $$("form-" + self.uid);
+										
+					if (form) {
+						
+						if (Array.isArray(column.fillers) && column.fillers.length > 0) {
+							
+							const values = form.getValues();
+						
+							if (typeof(values) === 'object') {
+								
+								const persistValues = BackOfficeHelper.getPersistValues(values, self.currentTableData);
+								const id = values["id"];
+								
+								if (id && (Array.isArray(persistValues) && persistValues.length > 0)) {
+							
+									BackOfficeHelper.filler(self.backOffice, self.currentTableData, column, persistValues, id).then((persistResult) => {
+												
+										if (!persistResult.error) {
+											
+											self.setValues(persistResult.newRow);
+										}
+										else {
+											
+											log.error(persistResult.error + "\n" + persistResult.errorDescription);
+											
+											(new MessageBox (MessageBox.ERROR, i18n.t("LBL_BACKOFFICE_ERROR__ON_FILLER") + " " + (self.currentTableData.label ?? self.currentTableData.name), persistResult.error + "\n" + persistResult.errorDescription, null, null)).show();
+										}
+									});
+								}
+							}
+						}
+					}
 				}
 			}
 		}

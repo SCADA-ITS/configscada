@@ -1,14 +1,14 @@
 // Uncomment following line for groovy file
-package config.groovy.backoffice.smartgen;
+package config.groovy.backoffice.smartgen.trigger;
 // or Uncomment following line for java file
-//package com.revenga.rits.front.openits.backoffice.trigger;
+//package com.revenga.rits.front.openits.backoffice.groovy.trigger;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.revenga.rits.front.openits.backoffice.AbstractBackOfficeTrigger;
-import com.revenga.rits.front.openits.backoffice.BackOfficePersistException;
+import com.revenga.rits.front.openits.backoffice.groovy.AbstractBackOfficeTrigger;
+import com.revenga.rits.front.openits.backoffice.BackOfficeException;
 
 public class OrderUtils {
 	
@@ -47,7 +47,7 @@ public class OrderUtils {
 		return availableStock;
 	}
 	
-	public static void updateAvailableStock(Integer productId, Integer stock, AbstractBackOfficeTrigger backOfficeTrigger) throws SQLException, BackOfficePersistException {
+	public static void updateAvailableStock(Integer productId, Integer stock, AbstractBackOfficeTrigger backOfficeTrigger) throws SQLException, BackOfficeException {
 		
 		final String qry = String.format("UPDATE %s.products SET stock = ? WHERE id = ?", backOfficeTrigger.getSchema());	
 		
@@ -66,7 +66,7 @@ public class OrderUtils {
 			
 			if (rowsAffected != 1) {
 				
-				throw new BackOfficePersistException(
+				throw new BackOfficeException(
 						String.format("Can not update stock to %d units for product_id = %d", stock,
 								productId));
 			}
@@ -80,4 +80,3 @@ public class OrderUtils {
 		}
 	}
 }
-

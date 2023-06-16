@@ -57,21 +57,12 @@ public class BackOfficeController {
 		return new ResponseEntity<>(backOfficeBO.reload(backOfficeId), HttpStatus.OK);
 	}
 	
-	@GetMapping(path = "/{backOfficeId}/table/{tableName}")
-	@ApiOperation(value = "Get table from backoffice schema", notes = "Get table from backoffice schema")
-	public ResponseEntity<List<Table>> getTables(
-			@ApiParam(name = "backOfficeId", type = "Integer", example = "1", required = true) @PathVariable Integer backOfficeId,
-			@ApiParam(name = "tableName", type = "String", example = "orders", required = true) @PathVariable String tableName) {
-		
-		return new ResponseEntity<>(backOfficeBO.get(backOfficeId, tableName), HttpStatus.OK);
-	}
-	
 	@PostMapping(path = "/{backOfficeId}/table/{tableName}")
 	@ApiOperation(value = "get table with conditions")
-	public ResponseEntity<List<Table>> getTablesConditions(
+	public ResponseEntity<List<Table>> getTables(
 			@ApiParam(name = "backOfficeId", type = "Integer", example = "1", required = true) @PathVariable Integer backOfficeId,
 			@ApiParam(name = "tableName", type = "String", example = "orders", required = true) @PathVariable String tableName,
-			@RequestBody String conditions) {
+			@RequestBody(required = false) String conditions) {
 		
 		return new ResponseEntity<>(backOfficeBO.get(backOfficeId, tableName, conditions), HttpStatus.OK);
 	}
@@ -83,5 +74,15 @@ public class BackOfficeController {
 			@RequestBody Persist persist) {
 		
 		return new ResponseEntity<>(backOfficeBO.persist(backOfficeId, persist), HttpStatus.OK);
+	}
+	
+	@PostMapping(path = "/{backOfficeId}/filler/{columnName}")
+	@ApiOperation(value = "On Change field")
+	public ResponseEntity<PersistResult> filler(
+			@ApiParam(name = "backOfficeId", type = "Integer", example = "1", required = true) @PathVariable Integer backOfficeId,
+			@ApiParam(name = "columnName", type = "String", example = "1", required = true) @PathVariable String columnName,
+			@RequestBody Persist persist) {
+		
+		return new ResponseEntity<>(backOfficeBO.filler(backOfficeId, columnName, persist), HttpStatus.OK);
 	}
 }

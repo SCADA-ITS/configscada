@@ -76,7 +76,7 @@ public class GraphqlAdapter {
 				
 				//String graphqlUrl = env.getProperty(GRAPHQL_URL); 
 				
-				String test = "{\"query\":\"query   {\\n  getHistoricalElementStates(params:[{columnName: \\\"element_type_id\\\", operation: EQUALS, value: \\\"9\\\"}])\\n  {   element {     id   }   currentElementTypeState {     id   }   createdAt }\\n}\"}";
+				//String test = "{\"query\":\"query   {\\n  getHistoricalElementStates(params:[{columnName: \\\"element_type_id\\\", operation: EQUALS, value: \\\"9\\\"}])\\n  {   element {     id   }   currentElementTypeState {     id   }   createdAt }\\n}\"}";
 				
 				HttpRequest request = HttpRequest.newBuilder().uri(URI.create(graphqlUrl))
 						.header("content-type", "application/json")

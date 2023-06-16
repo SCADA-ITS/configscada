@@ -27,52 +27,26 @@ public class Table extends Basic {
 	
 	private static final long serialVersionUID = 6887327590735622987L;
 	
-	public enum PersistenceType { INSERT, UPDATE, DELETE }
-	
-//	@Data
-//	public static class TableMetadata implements Serializable {
-//
-//		private static final long serialVersionUID = 5331438666910347282L;
-//		
-//		@Data
-//		public static class Tab implements Serializable {
-//			
-//			private static final long serialVersionUID = 4199740125852638602L;
-//			
-//			private String label;
-//			private List<Field> fields;
-//		}
-//		
-//		@Data
-//		public static class Field implements Serializable {
-//			
-//			private static final long serialVersionUID = -793822838493352111L;
-//			
-//			private String name;
-//		}
-//		
-//		@Data
-//		public static class Grid implements Serializable {
-//			
-//			private static final long serialVersionUID = -3673069280484549825L;
-//			
-//			private List<Field> fields;
-//		}
-//		
-//		private String mdiIcon;
-//		private Integer width;
-//		private Integer height;
-//		private List<Tab> tabs;
-//		
-//		private List<Field> fields;
-//	}
+	public enum PersistenceType { INSERT, UPDATE, DELETE, FILL }
 	
 	@Data
 	@EqualsAndHashCode(callSuper=false)
-	public static class Trigger extends Basic {
+	public static class GroovyBasic extends Basic {
+		
+		private static final long serialVersionUID = -8133168767393817311L;
+		
+		protected String groovy;
+		protected String packageName;
+	}
+	
+	
+	@Data
+	@EqualsAndHashCode(callSuper=false)
+	public static class Trigger extends GroovyBasic {
 		
 		private static final long serialVersionUID = 7426288403894220149L;
-		private String groovy;
+		
+		private static final String PACKAGE_NAME = "com.revenga.rits.front.openits.backoffice.groovy.trigger";
 		
 		public enum Type { BEFORE, AFTER }
 		
@@ -97,6 +71,7 @@ public class Table extends Basic {
 			this.name = name;
 			
 			this.id = Objects.hash(this.getClass().getName(), this.name);
+			this.packageName = PACKAGE_NAME; 
 		}
 		
 		public static Object call(Trigger.Type triggerType, PersistenceType persistenceType, Object instance) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
@@ -133,7 +108,7 @@ public class Table extends Basic {
 			this.id = Objects.hash(this.getClass().getName(), this.name);
 		}
 	}
-
+	
 	@Data
 	public static class Persist implements Serializable {
 

@@ -21,6 +21,45 @@ export default class BackOfficeViewForm extends BackOfficeView {
 		}
 	}
 	
+	setValues(row) {
+		
+		const form = $$("form-" + this.uid);
+		
+		if (form && row && Array.isArray(row.data) && row.data.length > 0) {
+			
+			const formValues = form.getValues();
+			
+			if (typeof(formValues) === 'object') {
+			
+				const keys = Object.keys(formValues);
+				let newValues = {};
+	
+				if (Array.isArray(keys) && keys.length > 0) {
+					
+					keys.forEach(key => {
+						
+						if (key != "id") {
+							
+							const columnId = BackOfficeHelper.getColumnIdFromColumnUID(key);
+							
+							let rowData = row.data.find(e => e.columnId === columnId);
+							
+							if (rowData && formValues[key] != rowData.value) {
+								
+								newValues[key] = rowData.value;
+							}
+						}
+					});
+				}
+				
+				if (Object.keys(newValues).length > 0) {
+					
+					form.setValues(newValues, true);
+				}
+			}
+		}		
+	}
+	
 	getView() {
 		
 		let self = this;

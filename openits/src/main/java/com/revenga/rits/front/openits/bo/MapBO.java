@@ -14,11 +14,8 @@ import org.springframework.stereotype.Service;
 
 import com.revenga.rits.front.openits.adapter.impl.VODataSourceAdapter;
 import com.revenga.rits.front.openits.model.MapUI;
-import com.revenga.rits.front.openits.model.SynopticUI;
 import com.revenga.rits.front.openitsdao.model.MapLayer;
 import com.revenga.rits.front.openitsdao.model.MapLayerElement;
-import com.revenga.rits.front.openitsdao.model.Synoptic;
-import com.revenga.rits.front.openitsdao.model.SynopticLayerElement;
 import com.revenga.rits.front.openitsdao.service.MapLayerElementService;
 import com.revenga.rits.front.openitsdao.service.MapService;
 

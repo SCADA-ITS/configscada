@@ -1,5 +1,8 @@
 package com.revenga.rits.front.openits.backoffice;
 
+import java.lang.reflect.InvocationTargetException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
@@ -15,15 +18,24 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.CollectionUtils;
 
+import com.revenga.rits.front.openits.backoffice.groovy.AbstractBackOfficeGroovy;
 import com.revenga.rits.front.openits.model.backoffice.Column;
 import com.revenga.rits.front.openits.model.backoffice.Column.ColType;
+import com.revenga.rits.front.openits.model.backoffice.Row;
+import com.revenga.rits.front.openits.model.backoffice.Row.RowData;
+import com.revenga.rits.front.openits.model.backoffice.Table;
+import com.revenga.rits.front.openits.model.backoffice.Table.GroovyBasic;
 import com.revenga.rits.front.openits.model.backoffice.Table.Persist;
 import com.revenga.rits.front.openits.model.backoffice.Table.Persist.PersistValue;
 import com.revenga.rits.front.openits.model.backoffice.Table.PersistenceType;
+import com.revenga.rits.front.openits.util.GroovyManager;
 import com.revenga.rits.front.openitsdao.model.BackOffice;
 
 import lombok.Getter;
+import lombok.NonNull;
+import lombok.extern.log4j.Log4j2;
 
+@Log4j2
 public class BackOfficeUtil {
 
 	public enum DBType {
@@ -226,7 +238,7 @@ public class BackOfficeUtil {
 					sbColNames.append(persistValue.getColName());
 					
 					sbValues.append(", ");
-					sbValues.append(getValue(persistValue.getColType(), persistValue.getNewValue())); 
+					sbValues.append(getValueForDml(persistValue.getColType(), persistValue.getNewValue())); 
 				}
 				
 				sql = String.format(sql, backOffice.getSchema(), persist.getTableName(), sbColNames.toString(), sbValues.toString());
@@ -252,7 +264,7 @@ public class BackOfficeUtil {
 				
 				if (!StringUtils.equals(persistValue.getOldValue(), persistValue.getNewValue())) {
 					
-					updateValues.add(persistValue.getColName() + " = " + getValue(persistValue.getColType(), persistValue.getNewValue()));
+					updateValues.add(persistValue.getColName() + " = " + getValueForDml(persistValue.getColType(), persistValue.getNewValue()));
 				}
 			}
 			
@@ -306,7 +318,7 @@ public class BackOfficeUtil {
 		return sql;
 	}
 	
-	private static String getValue(ColType colType, String value) {
+	private static String getValueForDml(ColType colType, String value) {
 		
 		String formattedValue = null;
 		
@@ -333,5 +345,91 @@ public class BackOfficeUtil {
 		}
 		
 		return formattedValue;
+	}
+	
+	@NonNull
+	public static void setValue(Row row, String colName, String value) {
+		
+		if (row != null && !CollectionUtils.isEmpty(row.getData())) {
+			
+			List<RowData> rowData = row.getData();
+			
+			RowData rowDataField = rowData.stream()
+					.filter(e -> e.getColumn() != null && e.getColumn().getName().equals(colName)).findFirst()
+					.orElse(null);
+			
+			if (rowDataField != null) {
+				
+				rowDataField.setValue(value);			
+			}
+		}
+	}
+	
+	public static AbstractBackOfficeGroovy newGroovyInstance(GroovyManager groovyManager, GroovyBasic groovyBasic, Connection conn, String schema, Table table, Integer id, Row oldRow, Row newRow) throws Exception {
+		
+		String groovyFile = groovyBasic.getGroovy();
+		
+		if (!StringUtils.isEmpty(groovyFile)) {
+			
+			Object groovyInstance = null;
+			
+			try {
+				
+				Path path = Paths.get(groovyFile);
+				
+				if (path != null) {
+					
+					String fileName = path.getFileName().toString();
+					
+					if (!StringUtils.isEmpty(fileName)) {
+				
+						Class<?> clazz = Class.forName(
+								groovyBasic.getPackageName() + "." + fileName.substring(0, fileName.indexOf(".")));
+						
+						if (AbstractBackOfficeGroovy.class.isAssignableFrom(clazz)) {
+						
+							groovyInstance = clazz.getDeclaredConstructor(org.apache.logging.log4j.Logger.class).newInstance(log);
+						}
+					}
+				}
+				
+			} catch (ClassNotFoundException e) {
+				
+				// Nothing to do
+				
+			} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
+					| InvocationTargetException | NoSuchMethodException | SecurityException e) {
+				
+				throw e;
+			}
+			
+			if (groovyInstance == null) {
+				
+				groovyInstance = groovyManager.getGroovyObject(groovyFile, GroovyManager.GroovyType.BACKOFFICE);
+			}
+			
+			if (groovyInstance instanceof AbstractBackOfficeGroovy) {
+				
+				AbstractBackOfficeGroovy backOfficeGroovy = (AbstractBackOfficeGroovy) groovyInstance;
+				
+				AbstractBackOfficeGroovy backOfficeGroovyCloned = (AbstractBackOfficeGroovy) backOfficeGroovy.clone();
+				
+				if (backOfficeGroovyCloned.getLog() == null) {
+					
+					backOfficeGroovyCloned.setLog(log);					
+				}
+				
+				backOfficeGroovyCloned.setConn(conn);
+				backOfficeGroovyCloned.setSchema(schema);
+				backOfficeGroovyCloned.setTable(table);
+				backOfficeGroovyCloned.setId(id);
+				backOfficeGroovyCloned.setOldRow(oldRow);
+				backOfficeGroovyCloned.setNewRow(newRow);
+				
+				return backOfficeGroovyCloned;
+			}
+		}
+		
+		return null;
 	}
 }
