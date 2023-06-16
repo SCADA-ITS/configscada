@@ -3,6 +3,7 @@ import EquipmentViewerInfoMeasure from "./equipmentViewerInfoMeasure.js";
 import EquipmentViewerInfoIcon from "./equipmentViewerInfoIcon.js";
 import EquipmentViewerTable from "./equipmentViewerTable.js";
 import EquipmentViewerChart from "./equipmentViewerChart.js";
+import HistoricalChartModule from "../historicalChart/historicalChartModule.js";
 
 const MEASURE_MARGINS = 40;
 const MEASURE_ITEM_WIDTH = 200;
@@ -18,6 +19,7 @@ export default class EquipmentViewerInfo {
 		this.equipmentViewerInfoMeasure = undefined;
 		this.equipmentViewerTable = undefined;
 		this.equipmentViewerChart = undefined;
+		this.equipmentViewerHistoricalChart = undefined;
 		this.graphicIconInstance = undefined;
 		this.equipmentViewerInfoIconFromMosaic = undefined;
 		this.equipmentViewerInfoIconFromTable = undefined;
@@ -42,12 +44,14 @@ export default class EquipmentViewerInfo {
 		const TAB_MODE = {
 			MOSAIC: 1,
 			TABLE: 2,
-			CHART: 3
+			CHART: 3,
+			HISTORICAL_CHART: 4
 		};
 
 		initViews.set(TAB_MODE.MOSAIC, false);
 		initViews.set(TAB_MODE.TABLE, false);
 		initViews.set(TAB_MODE.CHART, false);
+		initViews.set(TAB_MODE.HISTORICAL_CHART, false);
 
 		self.equipmentViewerInfoIcon = new EquipmentViewerInfoIcon(self.parent, element, self.equipmentViewer);
 		viewInfoIcon = self.equipmentViewerInfoIcon.getView();
@@ -69,6 +73,20 @@ export default class EquipmentViewerInfo {
 
 				self.equipmentViewerChart = new EquipmentViewerChart(self.parent, self.element, self.equipmentViewer, self.measuresGroups);
 				self.equipmentViewerChart.initMeasuresMaintenance();
+			}
+
+			if (self.parent.config.tabMode.historicalChart || self.equipmentViewer.showHistoricalChart) {
+
+				let args = {
+					elementIds: [self.element.id],
+					isEmbed: true
+				};
+
+				let modAction = {
+					id: self.parent.config.moduleAction.historicalChart
+				};
+
+				self.equipmentViewerHistoricalChart = new HistoricalChartModule(util.module.getFromModuleAction(self.parent.config.moduleAction.historicalChart), modAction, args, HistoricalChartModule.MODE_ELEMENT_VALUES.id);
 			}
 
 			view = {
@@ -100,6 +118,10 @@ export default class EquipmentViewerInfo {
 									{
 										id: "segmented-show-chart-" + self.uid,
 										value: "<span class='ico webix_icon mdi mdi-chart-areaspline-variant'></span>"
+									},
+									{
+										id: "segmented-show-historical-chart-" + self.uid,
+										value: "<span class='ico webix_icon mdi mdi-chart-line'></span>"
 									}
 								],
 								tooltip: function(obj) {
@@ -115,6 +137,10 @@ export default class EquipmentViewerInfo {
 									} else if (obj.id === "segmented-show-chart-" + self.uid) {
 
 										return i18n.t("LBL_CHART_TAB");
+
+									} else if (obj.id === "segmented-show-historical-chart-" + self.uid) {
+
+										return i18n.t("LBL_HISTORICAL_CHART_TAB");
 									}
 								},
 								on: {
@@ -127,12 +153,14 @@ export default class EquipmentViewerInfo {
 												$$("view-main-mosaic-tab-" + self.uid).show();
 												$$("view-main-table-tab-" + self.uid).hide();
 												$$("view-main-chart-tab-" + self.uid).hide();
+												$$("view-main-historical-chart-tab-" + self.uid).hide();
 
 											} else {
 
 												$$("view-main-mosaic-tab-" + self.uid).show();
 												$$("view-main-table-tab-" + self.uid).hide();
 												$$("view-main-chart-tab-" + self.uid).hide();
+												$$("view-main-historical-chart-tab-" + self.uid).hide();
 												initViews.set(TAB_MODE.MOSAIC, true);
 												drawInitialTabMosaic();
 											}
@@ -144,12 +172,14 @@ export default class EquipmentViewerInfo {
 												$$("view-main-table-tab-" + self.uid).show();
 												$$("view-main-mosaic-tab-" + self.uid).hide();
 												$$("view-main-chart-tab-" + self.uid).hide();
+												$$("view-main-historical-chart-tab-" + self.uid).hide();
 
 											} else {
 
 												$$("view-main-table-tab-" + self.uid).show();
 												$$("view-main-mosaic-tab-" + self.uid).hide();
 												$$("view-main-chart-tab-" + self.uid).hide();
+												$$("view-main-historical-chart-tab-" + self.uid).hide();
 												initViews.set(TAB_MODE.TABLE, true);
 												drawInitialTabTable();
 											}
@@ -161,6 +191,7 @@ export default class EquipmentViewerInfo {
 												$$("view-main-chart-tab-" + self.uid).show();
 												$$("view-main-table-tab-" + self.uid).hide();
 												$$("view-main-mosaic-tab-" + self.uid).hide();
+												$$("view-main-historical-chart-tab-" + self.uid).hide();
 
 											} else {
 
@@ -169,6 +200,26 @@ export default class EquipmentViewerInfo {
 												$$("view-main-table-tab-" + self.uid).hide();
 												$$("view-main-mosaic-tab-" + self.uid).hide();
 												$$("view-main-chart-tab-" + self.uid).show();
+												$$("view-main-historical-chart-tab-" + self.uid).hide();
+											}
+
+										} else if (newv === "segmented-show-historical-chart-" + self.uid) {
+
+											if (initViews.get(TAB_MODE.HISTORICAL_CHART)) {
+
+												$$("view-main-historical-chart-tab-" + self.uid).show();
+												$$("view-main-chart-tab-" + self.uid).hide();
+												$$("view-main-table-tab-" + self.uid).hide();
+												$$("view-main-mosaic-tab-" + self.uid).hide();
+
+											} else {
+
+												initViews.set(TAB_MODE.HISTORICAL_CHART, true);
+												drawInitialTabHistoricalChart();
+												$$("view-main-table-tab-" + self.uid).hide();
+												$$("view-main-mosaic-tab-" + self.uid).hide();
+												$$("view-main-chart-tab-" + self.uid).hide();
+												$$("view-main-historical-chart-tab-" + self.uid).show();
 											}
 										}
 									}
@@ -191,6 +242,9 @@ export default class EquipmentViewerInfo {
 							},
 							{
 								id: "view-main-chart-tab-" + self.uid
+							},
+							{
+								id: "view-main-historical-chart-tab-" + self.uid
 							}
 						]
 					}
@@ -278,6 +332,65 @@ export default class EquipmentViewerInfo {
 
 			webix.ui(viewTabChart, $$("view-main-chart-tab-" + self.uid));
 			self.equipmentViewerChart.selectByIndex(0);
+		}
+
+		function drawInitialTabHistoricalChart() {
+
+			let viewTabHistoricalChart;
+			let viewHistoricalChart;
+
+			viewHistoricalChart = self.equipmentViewerHistoricalChart.getView();
+
+			viewTabHistoricalChart = {
+				id: "view-main-historical-chart-tab-" + self.uid,
+				borderless: true,
+				rows: [
+					{
+						cols: [
+							{
+								view: "richselect",
+								css: { "padding-left": "3px" },
+								inputWidth: 280,
+								value: 104503,
+								options: [
+									{ id: 104503, value: i18n.t("LBL_HISTORICAL_CHART_MODE_ELEMENT_VALUES") },
+									{ id: 104502, value: i18n.t("LBL_HISTORICAL_CHART_MODE_STATES") },
+									{ id: 104501, value: i18n.t("LBL_HISTORICAL_CHART_MODE_ALARMS") }
+								],
+								on: {
+									onChange: function(obj) {
+
+										let args = {
+											elementIds: [self.element.id],
+											isEmbed: true
+										};
+
+										let modAction = {
+											id: parseInt(obj)
+										};
+										
+										let lastView = ($$("historical-chart-" + self.equipmentViewerHistoricalChart.uid)) ? "historical-chart-" + self.equipmentViewerHistoricalChart.uid : "historical-chart-" + self.uid;
+										$$(lastView).hide();
+
+										self.equipmentViewerHistoricalChart = new HistoricalChartModule(util.module.getFromModuleAction(self.parent.config.moduleAction.historicalChart), modAction, args, obj);
+										viewHistoricalChart = self.equipmentViewerHistoricalChart.getView();
+
+										webix.ui(viewHistoricalChart, $$(lastView));
+										self.equipmentViewerHistoricalChart.loadData();
+									}
+								}
+							}
+						]
+					},
+					{
+						id: "historical-chart-" + self.uid,
+						cols: [viewHistoricalChart]
+					}
+				]
+			};
+
+			webix.ui(viewTabHistoricalChart, $$("view-main-historical-chart-tab-" + self.uid));
+			self.equipmentViewerHistoricalChart.loadData();
 		}
 
 		return view;
@@ -377,6 +490,16 @@ export default class EquipmentViewerInfo {
 				if (!self.equipmentViewer.showChart) {
 
 					$$("segmented-" + self.uid).hideOption("segmented-show-chart-" + self.uid);
+				}
+
+				if (!self.parent.config.tabMode.historicalChart && !self.equipmentViewer.showHistoricalChart) {
+
+					$$("segmented-" + self.uid).hideOption("segmented-show-historical-chart-" + self.uid);
+				}
+
+				if (!self.parent.config.tabMode.table && !self.equipmentViewer.showTable) {
+
+					$$("segmented-" + self.uid).hideOption("segmented-show-table-" + self.uid);
 				}
 			}
 

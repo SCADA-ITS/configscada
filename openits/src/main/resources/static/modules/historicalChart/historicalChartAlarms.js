@@ -16,7 +16,8 @@ export default class HistoricalChartAlarms {
 				dateEnd: this.parent.dateEnd
 			},
 			elementsIds: this.parent.elementsIds,
-			url: this.parent.config.restEndpoints.alarms
+			url: this.parent.config.restEndpoints.alarms,
+			isEmbed: this.parent.isEmbed
 		};
 
 		let hCGeneric = new HistoricalChartGeneric(args, HistoricalChartModule.MODE_ALARMS.id, this.parent);

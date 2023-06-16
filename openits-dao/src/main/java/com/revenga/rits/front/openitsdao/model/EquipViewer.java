@@ -38,6 +38,12 @@ public class EquipViewer implements Serializable {
 	@Column(name="show_chart")
 	private Boolean showChart;
 	
+	@Column(name="show_table")
+	private Boolean showTable;
+	
+	@Column(name="show_historical_chart")
+	private Boolean showHistoricalChart;
+	
 	@Column(name="chart_interval_min")
 	private Integer chartIntervalMin;
 	
@@ -148,6 +154,22 @@ public class EquipViewer implements Serializable {
 		this.showChart= showChart;
 	}
 
+	public Boolean getshowTable() {
+		return this.showTable;
+	}
+
+	public void setshowTable(Boolean showTable) {
+		this.showTable = showTable;
+	}
+	
+	public Boolean getshowHistoricalChart() {
+		return this.showHistoricalChart;
+	}
+
+	public void setshowHistoricalChart(Boolean showHistoricalChart) {
+		this.showHistoricalChart = showHistoricalChart;
+	}
+	
 	public Integer getchartIntervalMin() {
 		return this.chartIntervalMin;
 	}

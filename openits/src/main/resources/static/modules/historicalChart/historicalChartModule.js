@@ -22,6 +22,7 @@ export default class HistoricalChartModule extends GenericModule {
 		this.dateEnd = Date.now();
 		this.dateIni = Date.now() - (this.config.defaultInitRangeInHours * 60 * 60000);
 		this.elementsIds = this.args.elementIds;
+		this.isEmbed = this.args.isEmbed;
 
 		this.uid = webix.uid();
 	}
@@ -32,6 +33,7 @@ export default class HistoricalChartModule extends GenericModule {
 		let view;
 
 		view = {
+			id: "historical-chart-" + this.uid,
 			css: "custom_window",
 			cols: [
 				{
@@ -169,7 +171,7 @@ export default class HistoricalChartModule extends GenericModule {
 				let hChartStates = new HistoricalChartStates(self);
 				hChartStates.getStates();
 
-			} else if (self.moduleAction.id === self.config.moduleAction.elementValues) {
+			} else if ((self.moduleAction.id === self.config.moduleAction.elementValues) || (self.moduleAction.id === self.config.moduleAction.equipmentViewer)) {
 
 				let hChartEV = new HistoricalChartElementValues(self);
 				hChartEV.getElementValues();

@@ -186,7 +186,7 @@ export default class EquipmentViewerChart {
 			let chartList;
 
 			chartList = {
-				width: 350,
+				width: 300,
 				rows: [
 					{
 						cols: [

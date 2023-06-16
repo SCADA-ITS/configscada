@@ -16,7 +16,8 @@ export default class HistoricalChartStates {
 				dateEnd: this.parent.dateEnd
 			},
 			elementsIds: this.parent.elementsIds,
-			url: this.parent.config.restEndpoints.states
+			url: this.parent.config.restEndpoints.states,
+			isEmbed: this.parent.isEmbed
 		};
 
 		let hCGeneric = new HistoricalChartGeneric(args, HistoricalChartModule.MODE_STATES.id, this.parent);
