@@ -162,7 +162,25 @@ export default class BackOfficeViewForm extends BackOfficeView {
 								view: "form",
 								css: "bordered-layout-without-border-top",
 								elementsConfig: { labelAlign: "left" },
-								elements: getElements()
+								elements: function() {
+									
+									let elements = [];
+									
+									if (Array.isArray(self.currentTableData.commands) && self.currentTableData.commands.length > 0) {
+										
+										let actionButtons = {
+											cols: [
+												getActionButtons()
+											]
+										}
+											
+										elements.push(actionButtons);
+									}
+									
+									elements.push(...getElements());
+									
+									return elements;
+								}(),
 							},
 							{ height: 15 },
 							getButtons()
@@ -235,32 +253,137 @@ export default class BackOfficeViewForm extends BackOfficeView {
 							}		
 						}
 						
+						function getFields(tab) {
+						
+							let fields = [{ height: 45 }];
+							
+							let backOfficeViewFormField = new BackOfficeViewFormField(self);
+							
+							if (tab && Array.isArray(tab.fields) && tab.fields.length > 0) {
+							
+								tab.fields.forEach(field => {
+									
+									fields.push(backOfficeViewFormField.getField(self.currentTableData.columns.find(e => e.name === field.name)));
+								});
+							}
+							else {
+								
+								self.currentTableData.columns.forEach(column => {
+									
+									fields.push(backOfficeViewFormField.getField(column));	
+								});
+							}	
+							
+							return fields;
+						}
+						
 						return elements;
 					}
 					
-					function getFields(tab) {
+					function getActionButtons() {
+
+						let buttonsGrid = {
+							hidden: !Array.isArray(self.currentTableData.commands) || self.currentTableData.commands.length === 0,
+							css: { "margin-left": "2px !important" },
+							height: 45,
+							cols: [
+							]
+						};
 						
-						let fields = [{ height: 45 }];
-						
-						let backOfficeViewFormField = new BackOfficeViewFormField(self);
-						
-						if (tab && Array.isArray(tab.fields) && tab.fields.length > 0) {
-						
-							tab.fields.forEach(field => {
-								
-								fields.push(backOfficeViewFormField.getField(self.currentTableData.columns.find(e => e.name === field.name)));
-							});
-						}
-						else {
+						if (Array.isArray(self.currentTableData.commands) && self.currentTableData.commands.length > 0) {
 							
-							self.currentTableData.columns.forEach(column => {
-								
-								fields.push(backOfficeViewFormField.getField(column));	
-							});
-						}	
+							self.currentTableData.commands.forEach(cmd => {
+		
+								buttonsGrid.cols.push(getButton(cmd));
+							});	
+						}
+		
+						function getButton(cmd) {
+		
+							let button = {
+								view: "button",
+								type: "icon",
+								css: "toolbar-button-text",
+								width: 130,
+								on: {
+									onItemClick: function() {
+										
+										if (cmd.requireConfirmation) {
+										
+											(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_BACKOFFICE_CONFIRM_COMMAND") + " " + (cmd.label ?? cmd.name), null, executeCommand, null)).show();	
+										}
+										else {
+											
+											executeCommand();
+										}
+									}
+								}
+							};
+		
+							button.label = i18n.t(cmd.label ?? cmd.name);
+							button.tooltip = i18n.t(cmd.labelDescription ?? cmd.name);
+							button.icon = cmd.mdiIcon;
+							
+							function executeCommand() {
+							
+								const form = $$("form-" + self.uid);
+													
+								if (form) {
+									
+									if (Array.isArray(self.currentTableData.commands) && self.currentTableData.commands.length > 0) {
+										
+										const values = form.getValues();
+									
+										if (typeof(values) === 'object') {
+											
+											const requestInput = BackOfficeHelper.getRequestInput(values, self.currentTableData, true);
+											const id = values["id"];
+											
+											if (id && (Array.isArray(requestInput) && requestInput.length > 0)) {
+										
+												BackOfficeHelper.command(self.backOffice, self.currentTableData, cmd.id, requestInput, id).then((requestResult) => {
+															
+													if (!requestResult.requestResultMessage.error) {
+														
+														self.setValues(requestResult.newRow);
+														
+														if (requestResult.requestResultMessage.info) {
+														
+															log.info(requestResult.requestResultMessage.info + "\n" + requestResult.requestResultMessage.infoDescription);
+														
+															(new MessageBox (MessageBox.INFO, i18n.t("LBL_BACKOFFICE_INFO_ON_COMMAND") + " " + requestResult.requestResultMessage.info + ":" + requestResult.requestResultMessage.infoDescription, null, null, null)).show();
+														}
+														else if (requestResult.requestResultMessage.warn) {
+														
+															log.warn(requestResult.requestResultMessage.info + "\n" + requestResult.requestResultMessage.infoDescription);
+														
+															(new MessageBox (MessageBox.WARN, i18n.t("LBL_BACKOFFICE_WARN_ON_COMMAND") + " " + requestResult.requestResultMessage.warn + ":" + requestResult.requestResultMessage.warnDescription, null, null, null)).show();
+														}
+													}
+													else {
+														
+														log.error(requestResult.requestResultMessage.error + "\n" + requestResult.requestResultMessage.errorDescription);
+														
+														(new MessageBox (MessageBox.ERROR, i18n.t("LBL_BACKOFFICE_ERROR_ON_COMMAND") + " " + (self.currentTableData.label ?? self.currentTableData.name), requestResult.requestResultMessage.error + "\n" + requestResult.requestResultMessage.errorDescription, null, null)).show();
+													}
+												});
+											}
+										}
+									}
+								}
+							}
+		
+							return button;
+						}
 						
-						return fields;
+						
+		
+						buttonsGrid.cols.push({});
+		
+						return buttonsGrid;
 					}
+					
+					
 					
 					function getButtons() {
 
@@ -334,9 +457,9 @@ export default class BackOfficeViewForm extends BackOfficeView {
 												
 							if (form) {
 													
-								const persistValues = BackOfficeHelper.getPersistValues(form.getValues(), self.currentTableData);
+								const requestInput = BackOfficeHelper.getRequestInput(form.getValues(), self.currentTableData);
 							
-								if (id && ((Array.isArray(persistValues) && persistValues.length > 0) || self.backOffice.onCancel)) {
+								if (id && ((Array.isArray(requestInput) && requestInput.length > 0) || self.backOffice.onCancel)) {
 									
 									(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_BACKOFFICE_SAVE_CHANGES_ON") + " " + (self.currentTableData.label ?? self.currentTableData.name), null, onAccept , null)).show();
 								}
@@ -362,9 +485,9 @@ export default class BackOfficeViewForm extends BackOfficeView {
 										
 											self.backOffice.onAccept();	
 											
-											BackOfficeHelper.updateData(self.backOffice, self.currentTableData, persistValues, id).then((persistResult) => {
+											BackOfficeHelper.updateData(self.backOffice, self.currentTableData, requestInput, id).then((requestResult) => {
 														
-												if (!persistResult.error) {
+												if (!requestResult.requestResultMessage.error) {
 													
 													self.backOffice.onAccept(values);
 											
@@ -375,9 +498,9 @@ export default class BackOfficeViewForm extends BackOfficeView {
 												}
 												else {
 													
-													log.error(persistResult.error + "\n" + persistResult.errorDescription);
+													log.error(requestResult.requestResultMessage.error + "\n" + requestResult.requestResultMessage.errorDescription);
 													
-													(new MessageBox (MessageBox.ERROR, i18n.t("LBL_BACKOFFICE_ERROR_SAVING_CHANGES_ON") + " " + (self.currentTableData.label ?? self.currentTableData.name), persistResult.error + "\n" + persistResult.errorDescription, null, null)).show();
+													(new MessageBox (MessageBox.ERROR, i18n.t("LBL_BACKOFFICE_ERROR_SAVING_CHANGES_ON") + " " + (self.currentTableData.label ?? self.currentTableData.name), requestResult.requestResultMessage.error + "\n" + requestResult.requestResultMessage.errorDescription, null, null)).show();
 												}
 											});
 										}

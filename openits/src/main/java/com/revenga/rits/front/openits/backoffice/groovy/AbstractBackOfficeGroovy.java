@@ -5,10 +5,11 @@ import java.util.List;
 
 import org.springframework.util.CollectionUtils;
 
+import com.revenga.rits.front.openits.model.backoffice.Request.RequestResult.RequestResultMessage;
 import com.revenga.rits.front.openits.model.backoffice.Row;
 import com.revenga.rits.front.openits.model.backoffice.Table;
 import com.revenga.rits.front.openits.model.backoffice.Row.RowData;
-import com.revenga.rits.front.openits.model.backoffice.Table.PersistenceType;
+import com.revenga.rits.front.openits.model.backoffice.Table.RequestType;
 
 import lombok.Data;
 
@@ -21,6 +22,7 @@ public abstract class AbstractBackOfficeGroovy implements Cloneable {
 	protected Integer id;
 	protected Row oldRow;
 	protected Row newRow;
+	protected RequestResultMessage requestResultMessage;
 	protected org.apache.logging.log4j.Logger log;
 
 	protected AbstractBackOfficeGroovy(org.apache.logging.log4j.Logger log) {
@@ -29,7 +31,7 @@ public abstract class AbstractBackOfficeGroovy implements Cloneable {
 	}
 	
 	protected AbstractBackOfficeGroovy(Connection conn, String schema, Table table, Integer id, Row oldRow, Row newRow,
-			org.apache.logging.log4j.Logger log) {
+			RequestResultMessage requestResultMessage, org.apache.logging.log4j.Logger log) {
 	
 		this.conn = conn;
 		this.schema = schema;
@@ -37,6 +39,7 @@ public abstract class AbstractBackOfficeGroovy implements Cloneable {
 		this.id = id;
 		this.oldRow = oldRow;
 		this.newRow = newRow;
+		this.requestResultMessage = requestResultMessage;
 		this.log = log;
 	}
 	
@@ -86,7 +89,7 @@ public abstract class AbstractBackOfficeGroovy implements Cloneable {
 		}
 	}
 	
-	public void trace(PersistenceType persistenceType) {
+	public void trace(RequestType persistenceType) {
 		
 		String prefix = String.format("Trigger %s on %s.%s: ", persistenceType,
 				this.schema, this.table);

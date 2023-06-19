@@ -16,9 +16,9 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.util.CollectionUtils;
 
 import com.revenga.rits.front.openits.backoffice.BackOfficeUtil.DMLType;
+import com.revenga.rits.front.openits.model.backoffice.Request;
+import com.revenga.rits.front.openits.model.backoffice.Request.RequestResult;
 import com.revenga.rits.front.openits.model.backoffice.Table;
-import com.revenga.rits.front.openits.model.backoffice.Table.Persist;
-import com.revenga.rits.front.openits.model.backoffice.Table.Persist.PersistResult;
 import com.revenga.rits.front.openits.service.BackOfficeManager;
 import com.revenga.rits.front.openits.util.GroovyManager;
 import com.revenga.rits.front.openitsdao.model.BackOffice;
@@ -137,14 +137,19 @@ public class BackOfficeProcessor {
 		return tables;
 	}
 	
-	public PersistResult persist(Integer backOfficeId, Persist persist) {
+	public RequestResult persist(Integer backOfficeId, Request request) {
 		
-		return (new BackOfficePersist(this)).persist(backOfficeId, persist);
+		return (new BackOfficePersist(this)).persist(backOfficeId, request);
 	}
 	
-	public PersistResult filler(Integer backOfficeId, String columnName, Persist persist) {
+	public RequestResult command(Integer backOfficeId, Request request) {
 		
-		return (new BackOfficeFiller(this)).onChange(backOfficeId, columnName, persist);
+		return (new BackOfficeCommand(this)).onExecute(backOfficeId, request);
+	}
+	
+	public RequestResult filler(Integer backOfficeId, Request request) {
+		
+		return (new BackOfficeFiller(this)).onChange(backOfficeId, request);
 	}
 	
 	public Table getTable(Connection conn, BackOffice backOffice, String tableName) throws SQLException {

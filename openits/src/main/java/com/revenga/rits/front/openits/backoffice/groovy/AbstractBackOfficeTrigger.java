@@ -3,6 +3,7 @@ package com.revenga.rits.front.openits.backoffice.groovy;
 import java.sql.Connection;
 import java.sql.Statement;
 
+import com.revenga.rits.front.openits.model.backoffice.Request.RequestResult.RequestResultMessage;
 import com.revenga.rits.front.openits.model.backoffice.Row;
 import com.revenga.rits.front.openits.model.backoffice.Table;
 
@@ -17,13 +18,14 @@ public abstract class AbstractBackOfficeTrigger extends AbstractBackOfficeGroovy
 
 		super(log);
 	}
-	
-	protected AbstractBackOfficeTrigger(Connection conn, String schema, Table table, Integer id, Row oldRow, Row newRow, org.apache.logging.log4j.Logger log) {
-	
-		super(conn, schema, table, id, oldRow, newRow, log);
+
+	protected AbstractBackOfficeTrigger(Connection conn, String schema, Table table, Integer id, Row oldRow, Row newRow,
+			RequestResultMessage requestResultMessage, org.apache.logging.log4j.Logger log) {
+
+		super(conn, schema, table, id, oldRow, newRow, requestResultMessage, log);
 	}
 
-	public boolean onBeforeInsert() throws Exception{
+	public boolean onBeforeInsert() throws Exception {
 
 		return true;
 	}
@@ -37,7 +39,7 @@ public abstract class AbstractBackOfficeTrigger extends AbstractBackOfficeGroovy
 
 		return true;
 	}
-	
+
 	public boolean onAfterInsert() throws Exception {
 
 		return true;
@@ -52,9 +54,9 @@ public abstract class AbstractBackOfficeTrigger extends AbstractBackOfficeGroovy
 
 		return true;
 	}
-	
+
 	public void traceSQL(Statement stmt) {
-		
+
 		log.debug(String.format("Executing DML on Trigger: %s", stmt.toString()));
 	}
 }

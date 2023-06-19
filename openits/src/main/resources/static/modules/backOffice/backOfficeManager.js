@@ -73,17 +73,17 @@ export default class BackOfficeManager {
 							colType: BackOfficeHelper.DB_TYPE_INTEGER
 						});
 						
-						BackOfficeHelper.insertData(self.backOffice, currentTableData, persistValues).then((persistResult) => {
+						BackOfficeHelper.insertData(self.backOffice, currentTableData, persistValues).then((requestResult) => {
 									
-							if (!persistResult.error) {
+							if (!requestResult.requestResultMessage.error) {
 								
-								if (persistResult.newRow && Array.isArray(persistResult.newRow.data)) {
+								if (requestResult.newRow && Array.isArray(requestResult.newRow.data)) {
 									
 									const columnId = currentTableData.columns.find(e => e.name === "id");
 									
 									if (columnId) {
 										
-										const data = persistResult.newRow.data.find(e => e.columnId === columnId.id);
+										const data = requestResult.newRow.data.find(e => e.columnId === columnId.id);
 										
 										if (data && data.value) {
 											
@@ -100,13 +100,13 @@ export default class BackOfficeManager {
 													colType: columnId.colType
 												});
 							
-												BackOfficeHelper.deleteData(self.backOffice, currentTableData, persistValues, columnIdValue).then((persistResult) => {
+												BackOfficeHelper.deleteData(self.backOffice, currentTableData, persistValues, columnIdValue).then((requestResult) => {
 													
-													if (persistResult.error) {
+													if (requestResult.requestResultMessage.error) {
 					
-														log.error(persistResult.error + "\n" + persistResult.errorDescription);
+														log.error(requestResult.requestResultMessage.error + "\n" + requestResult.requestResultMessage.errorDescription);
 														
-														(new MessageBox (MessageBox.ERROR, i18n.t("LBL_BACKOFFICE_ERROR_SAVING_CHANGES_ON") + " " + (currentTableData.label ?? currentTableData.name), persistResult.error + "\n" + persistResult.errorDescription, null, null)).show();
+														(new MessageBox (MessageBox.ERROR, i18n.t("LBL_BACKOFFICE_ERROR_SAVING_CHANGES_ON") + " " + (currentTableData.label ?? currentTableData.name), requestResult.requestResultMessage.error + "\n" + requestResult.requestResultMessage.errorDescription, null, null)).show();
 													}	
 												});
 											});			
@@ -116,9 +116,9 @@ export default class BackOfficeManager {
 							}
 							else {
 								
-								log.error(persistResult.error + "\n" + persistResult.errorDescription);
+								log.error(requestResult.requestResultMessage.error + "\n" + requestResult.requestResultMessage.errorDescription);
 								
-								(new MessageBox (MessageBox.ERROR, i18n.t("LBL_BACKOFFICE_ERROR_SAVING_CHANGES_ON") + " " + (currentTableData.label ?? currentTableData.name), persistResult.error + "\n" + persistResult.errorDescription, null, null)).show();
+								(new MessageBox (MessageBox.ERROR, i18n.t("LBL_BACKOFFICE_ERROR_SAVING_CHANGES_ON") + " " + (currentTableData.label ?? currentTableData.name), requestResult.requestResultMessage.error + "\n" + requestResult.requestResultMessage.errorDescription, null, null)).show();
 							}
 						});
 					}

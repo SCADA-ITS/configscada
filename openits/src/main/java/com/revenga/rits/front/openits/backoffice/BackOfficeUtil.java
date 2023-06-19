@@ -21,13 +21,14 @@ import org.springframework.util.CollectionUtils;
 import com.revenga.rits.front.openits.backoffice.groovy.AbstractBackOfficeGroovy;
 import com.revenga.rits.front.openits.model.backoffice.Column;
 import com.revenga.rits.front.openits.model.backoffice.Column.ColType;
+import com.revenga.rits.front.openits.model.backoffice.GroovyBasic;
+import com.revenga.rits.front.openits.model.backoffice.Request;
+import com.revenga.rits.front.openits.model.backoffice.Request.RequestInput;
+import com.revenga.rits.front.openits.model.backoffice.Request.RequestResult;
 import com.revenga.rits.front.openits.model.backoffice.Row;
 import com.revenga.rits.front.openits.model.backoffice.Row.RowData;
 import com.revenga.rits.front.openits.model.backoffice.Table;
-import com.revenga.rits.front.openits.model.backoffice.Table.GroovyBasic;
-import com.revenga.rits.front.openits.model.backoffice.Table.Persist;
-import com.revenga.rits.front.openits.model.backoffice.Table.Persist.PersistValue;
-import com.revenga.rits.front.openits.model.backoffice.Table.PersistenceType;
+import com.revenga.rits.front.openits.model.backoffice.Table.RequestType;
 import com.revenga.rits.front.openits.util.GroovyManager;
 import com.revenga.rits.front.openitsdao.model.BackOffice;
 
@@ -193,23 +194,23 @@ public class BackOfficeUtil {
 		}
 	}
 	
-	public static String getDml(Connection conn, BackOffice backOffice, Persist persist) throws SQLException {
+	public static String getDml(Connection conn, BackOffice backOffice, Request request) throws SQLException {
 		
 		String sql = null;
 		
-		if (!StringUtils.isEmpty(persist.getTableName())) {
+		if (!StringUtils.isEmpty(request.getTableName())) {
 			
-			if (persist.getPersistenceType().equals(PersistenceType.INSERT)) {
+			if (request.getRequestType().equals(RequestType.INSERT)) {
 				
-				sql = getDmlInsert(conn, backOffice, persist);
+				sql = getDmlInsert(conn, backOffice, request);
 			}
-			else if (persist.getPersistenceType().equals(PersistenceType.UPDATE)) {
+			else if (request.getRequestType().equals(RequestType.UPDATE)) {
 				
-				sql = getDmlUpdate(backOffice, persist);
+				sql = getDmlUpdate(backOffice, request);
 			}
-			else if (persist.getPersistenceType().equals(PersistenceType.DELETE)) {
+			else if (request.getRequestType().equals(RequestType.DELETE)) {
 				
-				sql = getDmlDelete(backOffice, persist);
+				sql = getDmlDelete(backOffice, request);
 			}
 		}
 		
@@ -217,68 +218,68 @@ public class BackOfficeUtil {
 		
 	}
 	
-	private static String getDmlInsert(Connection conn, BackOffice backOffice, Persist persist) throws SQLException {
+	private static String getDmlInsert(Connection conn, BackOffice backOffice, Request request) throws SQLException {
 
 		String sql = null;
 		
-		persist.setId(getNextId(conn, backOffice, persist));
+		request.setId(getNextId(conn, backOffice, request));
 		
-		if (persist.getId() != null) {
+		if (request.getId() != null) {
 			
-			sql = "INSERT INTO %s.%s(id%s) VALUES(" + persist.getId() + "%s)";
+			sql = "INSERT INTO %s.%s(id%s) VALUES(" + request.getId() + "%s)";
 			
-			if (!CollectionUtils.isEmpty(persist.getPersistValues())) {
+			if (!CollectionUtils.isEmpty(request.getRequestInput())) {
 			
 				StringBuilder sbColNames = new StringBuilder();
 				StringBuilder sbValues = new StringBuilder();
 				
-				for (PersistValue persistValue : persist.getPersistValues()) {
+				for (RequestInput requestInput : request.getRequestInput()) {
 					
 					sbColNames.append(", ");
-					sbColNames.append(persistValue.getColName());
+					sbColNames.append(requestInput.getColName());
 					
 					sbValues.append(", ");
-					sbValues.append(getValueForDml(persistValue.getColType(), persistValue.getNewValue())); 
+					sbValues.append(getValueForDml(requestInput.getColType(), requestInput.getNewValue())); 
 				}
 				
-				sql = String.format(sql, backOffice.getSchema(), persist.getTableName(), sbColNames.toString(), sbValues.toString());
+				sql = String.format(sql, backOffice.getSchema(), request.getTableName(), sbColNames.toString(), sbValues.toString());
 			}
 			else {
 				
-				sql = String.format(sql, backOffice.getSchema(), persist.getTableName(), "", "");
+				sql = String.format(sql, backOffice.getSchema(), request.getTableName(), "", "");
 			}
 		}
 		
 		return sql;
 	}
 	
-	private static String getDmlUpdate(BackOffice backOffice, Persist persist) {
+	private static String getDmlUpdate(BackOffice backOffice, Request request) {
 
 		String sql = null;
 		
-		if (!CollectionUtils.isEmpty(persist.getPersistValues()) && persist.getId() != null) {
+		if (!CollectionUtils.isEmpty(request.getRequestInput()) && request.getId() != null) {
 		
 			List<String> updateValues = new ArrayList<>();
 			
-			for (PersistValue persistValue : persist.getPersistValues()) {
+			for (RequestInput requestInput : request.getRequestInput()) {
 				
-				if (!StringUtils.equals(persistValue.getOldValue(), persistValue.getNewValue())) {
+				if (!StringUtils.equals(requestInput.getOldValue(), requestInput.getNewValue())) {
 					
-					updateValues.add(persistValue.getColName() + " = " + getValueForDml(persistValue.getColType(), persistValue.getNewValue()));
+					updateValues.add(requestInput.getColName() + " = " + getValueForDml(requestInput.getColType(), requestInput.getNewValue()));
 				}
 			}
 			
 			if (!CollectionUtils.isEmpty(updateValues)) {
 		
-				sql = String.format("UPDATE %s.%s SET %s WHERE id = %d", backOffice.getSchema(), persist.getTableName(),
-						String.join(",", updateValues), persist.getId());
+				sql = String.format("UPDATE %s.%s SET %s WHERE id = %d", backOffice.getSchema(), request.getTableName(),
+						String.join(",", updateValues), request.getId());
 			}
 		}
 		
 		return sql;
 	}
 	
-	public static Integer getNextId(Connection conn, BackOffice backOffice, Persist persist) throws SQLException {
+	public static Integer getNextId(Connection conn, BackOffice backOffice, Request request) throws SQLException {
 		
 		Integer nextId = null;
 		
@@ -289,7 +290,7 @@ public class BackOfficeUtil {
 			if (DBType.POSTGRESQL.equals(getDBType(conn))) {
 		
 				sql = String.format("SELECT nextval('%s.%s_id_seq'::regclass) as next_id", backOffice.getSchema(),
-						persist.getTableName());
+						request.getTableName());
 			}
 			
 			if (!StringUtils.isEmpty(sql)) {
@@ -306,13 +307,13 @@ public class BackOfficeUtil {
 		return nextId;
 	}
 	
-	private static String getDmlDelete(BackOffice backOffice, Persist persist) {
+	private static String getDmlDelete(BackOffice backOffice, Request request) {
 		
 		String sql = null;
 		
-		if (persist.getId() != null) {
+		if (request.getId() != null) {
 			
-			sql = String.format("DELETE FROM %s.%s WHERE id = %d", backOffice.getSchema(), persist.getTableName(), persist.getId());
+			sql = String.format("DELETE FROM %s.%s WHERE id = %d", backOffice.getSchema(), request.getTableName(), request.getId());
 		}
 		
 		return sql;
@@ -365,7 +366,8 @@ public class BackOfficeUtil {
 		}
 	}
 	
-	public static AbstractBackOfficeGroovy newGroovyInstance(GroovyManager groovyManager, GroovyBasic groovyBasic, Connection conn, String schema, Table table, Integer id, Row oldRow, Row newRow) throws Exception {
+	public static AbstractBackOfficeGroovy newGroovyInstance(GroovyManager groovyManager, GroovyBasic groovyBasic,
+			Connection conn, String schema, Table table, Integer id, RequestResult requestResult) throws Exception {
 		
 		String groovyFile = groovyBasic.getGroovy();
 		
@@ -423,8 +425,9 @@ public class BackOfficeUtil {
 				backOfficeGroovyCloned.setSchema(schema);
 				backOfficeGroovyCloned.setTable(table);
 				backOfficeGroovyCloned.setId(id);
-				backOfficeGroovyCloned.setOldRow(oldRow);
-				backOfficeGroovyCloned.setNewRow(newRow);
+				backOfficeGroovyCloned.setOldRow(requestResult.getOldRow());
+				backOfficeGroovyCloned.setNewRow(requestResult.getNewRow());
+				backOfficeGroovyCloned.setRequestResultMessage(requestResult.getRequestResultMessage());
 				
 				return backOfficeGroovyCloned;
 			}

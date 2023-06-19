@@ -12,9 +12,9 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.revenga.rits.front.openits.backoffice.BackOfficeProcessor;
 import com.revenga.rits.front.openits.model.UserSessionUI;
+import com.revenga.rits.front.openits.model.backoffice.Request;
+import com.revenga.rits.front.openits.model.backoffice.Request.RequestResult;
 import com.revenga.rits.front.openits.model.backoffice.Table;
-import com.revenga.rits.front.openits.model.backoffice.Table.Persist;
-import com.revenga.rits.front.openits.model.backoffice.Table.Persist.PersistResult;
 import com.revenga.rits.front.openits.service.BackOfficeManager;
 import com.revenga.rits.front.openits.util.ConversionUtil;
 import com.revenga.rits.front.openits.util.GroovyManager;
@@ -61,18 +61,25 @@ public class BackOfficeBO {
 		return backOfficeProcessor.get(backOfficeId, tableName, conditions);	
 	}
 
-	public PersistResult persist(Integer backOfficeId, Persist persist) {
+	public RequestResult persist(Integer backOfficeId, Request request) {
 		
 		BackOfficeProcessor backOfficeProcessor = new BackOfficeProcessor(groovyManager, backOfficeService, backOfficeManager, getLocaleCode(), true);
 		
-		return backOfficeProcessor.persist(backOfficeId, persist);
+		return backOfficeProcessor.persist(backOfficeId, request);
 	}
 	
-	public PersistResult filler(Integer backOfficeId, String columnName, Persist persist) {
+	public RequestResult command(Integer backOfficeId, Request request) {
 		
 		BackOfficeProcessor backOfficeProcessor = new BackOfficeProcessor(groovyManager, backOfficeService, backOfficeManager, getLocaleCode(), true);
 		
-		return backOfficeProcessor.filler(backOfficeId, columnName, persist);
+		return backOfficeProcessor.command(backOfficeId, request);
+	}
+	
+	public RequestResult filler(Integer backOfficeId, Request request) {
+		
+		BackOfficeProcessor backOfficeProcessor = new BackOfficeProcessor(groovyManager, backOfficeService, backOfficeManager, getLocaleCode(), true);
+		
+		return backOfficeProcessor.filler(backOfficeId, request);
 	}
 	
 	private String getLocaleCode() {

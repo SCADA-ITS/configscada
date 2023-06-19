@@ -1,6 +1,5 @@
 package com.revenga.rits.front.openits.model.backoffice;
 
-import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -15,7 +14,6 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.revenga.rits.front.openits.model.backoffice.Column.ColType;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -27,18 +25,7 @@ public class Table extends Basic {
 	
 	private static final long serialVersionUID = 6887327590735622987L;
 	
-	public enum PersistenceType { INSERT, UPDATE, DELETE, FILL }
-	
-	@Data
-	@EqualsAndHashCode(callSuper=false)
-	public static class GroovyBasic extends Basic {
-		
-		private static final long serialVersionUID = -8133168767393817311L;
-		
-		protected String groovy;
-		protected String packageName;
-	}
-	
+	public enum RequestType { INSERT, UPDATE, DELETE, FILLER, COMMAND }
 	
 	@Data
 	@EqualsAndHashCode(callSuper=false)
@@ -50,17 +37,17 @@ public class Table extends Basic {
 		
 		public enum Type { BEFORE, AFTER }
 		
-		private static final Map<Pair<Trigger.Type, PersistenceType>, String> triggerMethod = new HashMap<>() {
+		private static final Map<Pair<Trigger.Type, RequestType>, String> triggerMethod = new HashMap<>() {
 
 			private static final long serialVersionUID = 1L;
 
 			{
-				put(new ImmutablePair<>(Trigger.Type.BEFORE, PersistenceType.INSERT), "onBeforeInsert");
-				put(new ImmutablePair<>(Trigger.Type.BEFORE, PersistenceType.UPDATE), "onBeforeUpdate");
-				put(new ImmutablePair<>(Trigger.Type.BEFORE, PersistenceType.DELETE), "onBeforeDelete");
-				put(new ImmutablePair<>(Trigger.Type.AFTER, PersistenceType.INSERT), "onAfterInsert");
-				put(new ImmutablePair<>(Trigger.Type.AFTER, PersistenceType.UPDATE), "onAfterUpdate");
-				put(new ImmutablePair<>(Trigger.Type.AFTER, PersistenceType.DELETE), "onAfterDelete");
+				put(new ImmutablePair<>(Trigger.Type.BEFORE, RequestType.INSERT), "onBeforeInsert");
+				put(new ImmutablePair<>(Trigger.Type.BEFORE, RequestType.UPDATE), "onBeforeUpdate");
+				put(new ImmutablePair<>(Trigger.Type.BEFORE, RequestType.DELETE), "onBeforeDelete");
+				put(new ImmutablePair<>(Trigger.Type.AFTER, RequestType.INSERT), "onAfterInsert");
+				put(new ImmutablePair<>(Trigger.Type.AFTER, RequestType.UPDATE), "onAfterUpdate");
+				put(new ImmutablePair<>(Trigger.Type.AFTER, RequestType.DELETE), "onAfterDelete");
 			}
 		};
 		
@@ -74,9 +61,9 @@ public class Table extends Basic {
 			this.packageName = PACKAGE_NAME; 
 		}
 		
-		public static Object call(Trigger.Type triggerType, PersistenceType persistenceType, Object instance) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+		public static Object call(Trigger.Type triggerType, RequestType requestType, Object instance) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
 		
-			String methodName = triggerMethod.get(new ImmutablePair<>(triggerType, persistenceType));
+			String methodName = triggerMethod.get(new ImmutablePair<>(triggerType, requestType));
 			
 			if (!StringUtils.isEmpty(methodName) && instance != null) {
 				
@@ -94,10 +81,13 @@ public class Table extends Basic {
 	
 	@Data
 	@EqualsAndHashCode(callSuper=false)
-	public static class Command extends Basic {
+	public static class Command extends GroovyBasic {
 		
 		private static final long serialVersionUID = 7426288403894220149L;
-		private String groovy;
+		
+		private static final String PACKAGE_NAME = "com.revenga.rits.front.openits.backoffice.groovy.command";
+		
+		private Boolean requireConfirmation;
 		
 		public Command(String name) {
 			
@@ -106,43 +96,10 @@ public class Table extends Basic {
 			this.name = name;
 			
 			this.id = Objects.hash(this.getClass().getName(), this.name);
+			this.packageName = PACKAGE_NAME;
 		}
 	}
-	
-	@Data
-	public static class Persist implements Serializable {
 
-		private static final long serialVersionUID = -7083949386292171354L;
-		
-		@Data
-		public static class PersistResult implements Serializable {
-		
-			private static final long serialVersionUID = 5812000347882814475L;
-			
-			private Row oldRow;
-			private Row newRow;
-			private String error;
-			private String errorDescription;
-		}
-		
-		@Data
-		public static class PersistValue implements Serializable {
-			
-			private static final long serialVersionUID = 8519188939495926713L;
-			
-			private String colName;
-			private String oldValue;
-			private String newValue;
-			private ColType colType;
-		}
-		
-		private String tableName;
-		private Integer id;
-		private PersistenceType persistenceType;
-		
-		private List<PersistValue> persistValues;
-	}
-	
 	@JsonIgnore
 	private String labelSingular;
 	@JsonProperty("labelSingular")

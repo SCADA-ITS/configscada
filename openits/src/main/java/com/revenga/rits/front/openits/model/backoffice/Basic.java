@@ -23,6 +23,7 @@ public abstract class Basic implements Serializable, Cloneable {
 	protected String labelTranslated;
 	@JsonProperty("labelDescription")
 	protected String labelDescriptionTranslated;
+	protected String mdiIcon;
 	
 	protected Basic() {
 		

@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.revenga.rits.front.openits.model.backoffice.Table.GroovyBasic;
 
 import lombok.AccessLevel;
 import lombok.Data;

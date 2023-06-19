@@ -333,7 +333,7 @@ public class BackOfficeAssignment {
 //		Integer tableId = null;
 		
 		final String QRY_TABLE_METADATA = String
-				.format("SELECT id, label, label_singular, label_description, metadata " + 
+				.format("SELECT id, label, label_singular, label_description, mdi_icon, metadata " + 
 						"  FROM %s.sg_metadata_tables " + 
 						" WHERE name = ?", 
 						backOffice.getSchema());	
@@ -354,6 +354,7 @@ public class BackOfficeAssignment {
 				table.setLabel(rs.getString("label"));
 				table.setLabelSingular(rs.getString("label_singular"));
 				table.setLabelDescription(rs.getString("label_description"));
+				table.setMdiIcon(rs.getString("mdi_icon"));
 				String metadata = rs.getString("metadata");
 				
 				if (!StringUtils.isEmpty(metadata)) {
@@ -375,7 +376,8 @@ public class BackOfficeAssignment {
 	private void assignMetadataColumns(Connection conn, BackOffice backOffice, Table table) throws SQLException {
 		
 		final String QRY_COLUMN_METADATA = String
-				.format("SELECT cols.id, cols.label, cols.label_description, cols.column_name, cols.metadata, cols.needs_translation " + 
+				.format("SELECT cols.id, cols.label, cols.label_description, cols.mdi_icon, " + 
+						"       cols.column_name, cols.metadata, cols.needs_translation " + 
 						"  FROM %s.sg_metadata_tables t, " +
 						"       %s.sg_metadata_columns cols " +
 						" WHERE cols.sg_metadata_table_id = t.id " +
@@ -411,6 +413,7 @@ public class BackOfficeAssignment {
 							//column.setId(rs.getInt("id"));
 							column.setLabel(rs.getString("label"));
 							column.setLabelDescription(rs.getString("label_description"));
+							column.setMdiIcon(rs.getString("mdi_icon"));
 							column.setNeedsTranslation(rs.getBoolean("needs_translation"));
 							
 							String metadata = rs.getString("metadata");
@@ -512,7 +515,8 @@ public class BackOfficeAssignment {
 	private void assignCommands(Connection conn, BackOffice backOffice, Table table) throws SQLException {
 		
 		final String QRY_TABLE_COMMANDS = String.format(
-				"SELECT cmds.id, cmds.name, cmds.label, cmds.label_description, cmds.groovy " +
+				"SELECT cmds.id, cmds.name, cmds.label, cmds.label_description, " + 
+				"       cmds.mdi_icon, cmds.require_confirmation, cmds.groovy " +
 				"  FROM %s.sg_metadata_tables t, " +
 				"       %s.sg_metadata_table_commands cmds " +
 				" WHERE cmds.sg_metadata_table_id = t.id " +
@@ -536,6 +540,8 @@ public class BackOfficeAssignment {
 				
 				command.setLabel(rs.getString("label"));
 				command.setLabelDescription(rs.getString("label_description"));
+				command.setMdiIcon(rs.getString("mdi_icon"));
+				command.setRequireConfirmation(rs.getBoolean("require_confirmation"));
 				command.setGroovy(rs.getString("groovy"));
 				
 				table.getCommands().add(command);				

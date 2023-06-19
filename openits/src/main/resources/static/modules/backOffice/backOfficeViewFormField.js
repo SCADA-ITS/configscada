@@ -396,17 +396,17 @@ export default class BackOfficeViewFormField  {
 			
 						if (table && Array.isArray(table.rows) && field.name && referencedColumnValue) {
 						
-							BackOfficeHelper.insertData(self.backOffice, table).then((persistResult) => {
+							BackOfficeHelper.insertData(self.backOffice, table).then((requestResult) => {
 										
-								if (!persistResult.error) {
+								if (!requestResult.requestResultMessage.error) {
 									
-									if (persistResult.newRow && Array.isArray(persistResult.newRow.data)) {
+									if (requestResult.newRow && Array.isArray(requestResult.newRow.data)) {
 										
 										const columnId = table.columns.find(e => e.name === "id");
 										
 										if (columnId) {
 											
-											const data = persistResult.newRow.data.find(e => e.columnId === columnId.id);
+											const data = requestResult.newRow.data.find(e => e.columnId === columnId.id);
 											
 											if (data && data.value) {
 												
@@ -423,13 +423,13 @@ export default class BackOfficeViewFormField  {
 														colType: columnId.colType
 													});
 								
-													BackOfficeHelper.deleteData(self.backOffice, table, persistValues, columnIdValue).then((persistResult) => {
+													BackOfficeHelper.deleteData(self.backOffice, table, persistValues, columnIdValue).then((requestResult) => {
 														
-														if (persistResult.error) {
+														if (requestResult.requestResultMessage.error) {
 															
-															log.error(persistResult.error + "\n" + persistResult.errorDescription);
+															log.error(requestResult.requestResultMessage.error + "\n" + requestResult.requestResultMessage.errorDescription);
 															
-															(new MessageBox (MessageBox.ERROR, i18n.t("LBL_BACKOFFICE_ERROR_SAVING_CHANGES_ON") + " " + (self.currentTableData.label ?? self.currentTableData.name), persistResult.error + "\n" + persistResult.errorDescription, null, null)).show();
+															(new MessageBox (MessageBox.ERROR, i18n.t("LBL_BACKOFFICE_ERROR_SAVING_CHANGES_ON") + " " + (self.currentTableData.label ?? self.currentTableData.name), requestResult.requestResultMessage.error + "\n" + requestResult.requestResultMessage.errorDescription, null, null)).show();
 														}	
 													});
 												});			
@@ -439,9 +439,9 @@ export default class BackOfficeViewFormField  {
 								}
 								else {
 									
-									log.error(persistResult.error + "\n" + persistResult.errorDescription);
+									log.error(requestResult.requestResultMessage.error + "\n" + requestResult.requestResultMessage.errorDescription);
 									
-									(new MessageBox (MessageBox.ERROR, i18n.t("LBL_BACKOFFICE_ERROR_SAVING_CHANGES_ON") + " " + (self.currentTableData.label ?? self.currentTableData.name), persistResult.error + "\n" + persistResult.errorDescription, null, null)).show();
+									(new MessageBox (MessageBox.ERROR, i18n.t("LBL_BACKOFFICE_ERROR_SAVING_CHANGES_ON") + " " + (self.currentTableData.label ?? self.currentTableData.name), requestResult.requestResultMessage.error + "\n" + requestResult.requestResultMessage.errorDescription, null, null)).show();
 								}
 							});	
 						}
@@ -553,7 +553,7 @@ export default class BackOfficeViewFormField  {
 				
 				function onChangeField() {
 					
-					let persistValues;
+					let requestInput;
 					const btnAccept = $$("btn-accept-" + self.uid);
 									    	
 			    	if (btnAccept) {
@@ -562,9 +562,9 @@ export default class BackOfficeViewFormField  {
 																					
 						if (form) {
 												
-							persistValues = BackOfficeHelper.getPersistValues(form.getValues(), self.currentTableData);
+							requestInput = BackOfficeHelper.getRequestInput(form.getValues(), self.currentTableData);
 						
-							if (Array.isArray(persistValues) && persistValues.length > 0) {
+							if (Array.isArray(requestInput) && requestInput.length > 0) {
 						
 								btnAccept.enable();
 							}
@@ -575,7 +575,7 @@ export default class BackOfficeViewFormField  {
 						}
 					}
 					
-					return persistValues;
+					return requestInput;
 				}
 				
 				function filler() {
@@ -590,22 +590,35 @@ export default class BackOfficeViewFormField  {
 						
 							if (typeof(values) === 'object') {
 								
-								const persistValues = BackOfficeHelper.getPersistValues(values, self.currentTableData);
+								const requestInput = BackOfficeHelper.getRequestInput(values, self.currentTableData);
 								const id = values["id"];
 								
-								if (id && (Array.isArray(persistValues) && persistValues.length > 0)) {
+								if (id && (Array.isArray(requestInput) && requestInput.length > 0)) {
 							
-									BackOfficeHelper.filler(self.backOffice, self.currentTableData, column, persistValues, id).then((persistResult) => {
+									BackOfficeHelper.filler(self.backOffice, self.currentTableData, column, requestInput, id).then((requestResult) => {
 												
-										if (!persistResult.error) {
+										if (!requestResult.requestResultMessage.error) {
 											
-											self.setValues(persistResult.newRow);
+											self.setValues(requestResult.newRow);
+											
+											if (requestResult.requestResultMessage.info) {
+											
+												log.info(requestResult.requestResultMessage.info + "\n" + requestResult.requestResultMessage.infoDescription);
+											
+												(new MessageBox (MessageBox.INFO, i18n.t("LBL_BACKOFFICE_INFO_ON_FILLER") + " " + requestResult.requestResultMessage.info + ":" + requestResult.requestResultMessage.infoDescription, null, null, null)).show();
+											}
+											else if (requestResult.requestResultMessage.warn) {
+											
+												log.warn(requestResult.warn + "\n" + requestResult.warnDescription);
+											
+												(new MessageBox (MessageBox.WARN, i18n.t("LBL_BACKOFFICE_INFO_ON_FILLER") + " " + requestResult.requestResultMessage.warn + ":" + requestResult.requestResultMessage.warnDescription, null, null, null)).show();
+											}
 										}
 										else {
 											
-											log.error(persistResult.error + "\n" + persistResult.errorDescription);
+											log.error(requestResult.requestResultMessage.error + "\n" + requestResult.requestResultMessage.errorDescription);
 											
-											(new MessageBox (MessageBox.ERROR, i18n.t("LBL_BACKOFFICE_ERROR__ON_FILLER") + " " + (self.currentTableData.label ?? self.currentTableData.name), persistResult.error + "\n" + persistResult.errorDescription, null, null)).show();
+											(new MessageBox (MessageBox.ERROR, i18n.t("LBL_BACKOFFICE_ERROR_ON_FILLER") + " " + (self.currentTableData.label ?? self.currentTableData.name), requestResult.requestResultMessage.error + "\n" + requestResult.requestResultMessage.errorDescription, null, null)).show();
 										}
 									});
 								}

@@ -11,10 +11,11 @@ import org.springframework.util.CollectionUtils;
 
 import com.revenga.rits.front.openits.backoffice.groovy.AbstractBackOfficeGroovy;
 import com.revenga.rits.front.openits.backoffice.groovy.AbstractBackOfficeTrigger;
+import com.revenga.rits.front.openits.model.backoffice.Request;
+import com.revenga.rits.front.openits.model.backoffice.Request.RequestResult;
 import com.revenga.rits.front.openits.model.backoffice.Row;
 import com.revenga.rits.front.openits.model.backoffice.Table;
-import com.revenga.rits.front.openits.model.backoffice.Table.Persist;
-import com.revenga.rits.front.openits.model.backoffice.Table.Persist.PersistResult;
+import com.revenga.rits.front.openits.model.backoffice.Table.RequestType;
 import com.revenga.rits.front.openits.model.backoffice.Table.Trigger;
 import com.revenga.rits.front.openitsdao.model.BackOffice;
 import com.revenga.rits.lib.encrypt.util.AES;
@@ -22,18 +23,16 @@ import com.revenga.rits.lib.encrypt.util.AES;
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
-public class BackOfficePersist {
-	
-	BackOfficeProcessor backOfficeProcessor;
+public class BackOfficePersist extends BackOfficeAction {
 	
 	public BackOfficePersist(BackOfficeProcessor backOfficeProcessor) {
 		
-		this.backOfficeProcessor = backOfficeProcessor;
+		super(backOfficeProcessor);
 	}
 	
-	public PersistResult persist(Integer backOfficeId, Persist persist) {
+	public RequestResult persist(Integer backOfficeId, Request request) {
 		
-		PersistResult persistResult = new PersistResult();
+		RequestResult requestResult = new RequestResult();
 		BackOffice backOffice = this.backOfficeProcessor.getBackOfficeService().getById(backOfficeId);
 		String sql = null;
 		
@@ -42,13 +41,22 @@ public class BackOfficePersist {
 			try (Connection conn = DriverManager.getConnection(backOffice.getJdbc(), backOffice.getUser(),
 					AES.decrypt(backOffice.getPassword()))) {
 				
+				if (request.getRequestType() != RequestType.INSERT &&
+					request.getRequestType() != RequestType.UPDATE &&
+					request.getRequestType() != RequestType.DELETE) {
+					
+					throw new BackOfficeException("Wrong request type: " + request.getRequestType()
+							+ ". RequestType expected is: " + String.join(", ", RequestType.INSERT.toString(),
+									RequestType.UPDATE.toString(), RequestType.DELETE.toString()));
+				}
+				
 				conn.setAutoCommit(false);
 				
-				sql = BackOfficeUtil.getDml(conn, backOffice, persist);
+				sql = BackOfficeUtil.getDml(conn, backOffice, request);
 				
 				if (!StringUtils.isEmpty(sql)) {
 					
-					Table tableRepository = this.backOfficeProcessor.getBackOfficeManager().getTable(backOffice, persist.getTableName());
+					Table tableRepository = this.backOfficeProcessor.getBackOfficeManager().getTable(backOffice, request.getTableName());
 					
 					if (tableRepository != null) {
 						
@@ -60,46 +68,38 @@ public class BackOfficePersist {
 							
 							BackOfficeAssignment backOfficeAssignment = new BackOfficeAssignment(this.backOfficeProcessor);
 							
-							List<Row> rowsOld = backOfficeAssignment.assignRows(conn, backOffice, table, null, "id = " + persist.getId());
+							List<Row> rowsOld = backOfficeAssignment.assignRows(conn, backOffice, table, null, "id = " + request.getId());
 							
 							if (!CollectionUtils.isEmpty(rowsOld) && rowsOld.size() == 1) {
 								
-								persistResult.setOldRow(rowsOld.get(0));
+								requestResult.setOldRow(rowsOld.get(0));
 							}
 								
 							try (Statement stmt = conn.createStatement()) {
-								
-								//log.debug(String.format("Executing DML [%s]: %s", persist.getPersistenceType(), sql));
 								
 								if (this.backOfficeProcessor.getBackOfficeManager().isShowSql()) {
 									
 									log.debug(stmt);					
 								}
 								
-								executeTriggers(Trigger.Type.BEFORE, conn, backOffice, table, persist, persistResult);
+								executeTriggers(Trigger.Type.BEFORE, conn, backOffice, table, request, requestResult);
 								
 								int rowsAffected = stmt.executeUpdate(sql);
 								
-								//log.debug(String.format("Executed DML [%s] %d rows affected ", persist.getPersistenceType(), rowsAffected));
-
 								if (rowsAffected == 1) {
 									
-									Table tableNew = new Table(persist.getTableName());
+									Table tableNew = new Table(request.getTableName());
 									
 									tableNew.setColumns(table.getColumns());
 									
-									List<Row> rowsNew = backOfficeAssignment.assignRows(conn, backOffice, tableNew, null, "id = " + persist.getId());
+									List<Row> rowsNew = backOfficeAssignment.assignRows(conn, backOffice, tableNew, null, "id = " + request.getId());
 									
 									if (!CollectionUtils.isEmpty(rowsNew) && rowsNew.size() == 1) {
 										
-										persistResult.setNewRow(rowsNew.get(0));
+										requestResult.setNewRow(rowsNew.get(0));
 									}
 									
-									executeTriggers(Trigger.Type.AFTER, conn, backOffice, table, persist, persistResult);
-								}
-								else {
-									
-									// TODO: Cascade rows affected???
+									executeTriggers(Trigger.Type.AFTER, conn, backOffice, table, request, requestResult);
 								}
 							}
 							
@@ -113,19 +113,19 @@ public class BackOfficePersist {
 				String message = e.getMessage() + (!StringUtils.isEmpty(sql) ? " SQL: " + sql : "");
 				String stackTrace = ExceptionUtils.getStackTrace(e);
 				
-				persistResult.setError(message);
-				persistResult.setErrorDescription(ExceptionUtils.getStackTrace(e));
+				requestResult.getRequestResultMessage().setError(message);
+				requestResult.getRequestResultMessage().setErrorDescription(ExceptionUtils.getStackTrace(e));
 				
 				log.error(message);
 				log.debug(stackTrace);
 			}
 		}
 		
-		return persistResult;
+		return requestResult;
 	}
 	
 	private void executeTriggers(Trigger.Type triggerType, Connection conn, BackOffice backOffice, Table table,
-			Persist persist, PersistResult persistResult) throws Exception {
+			Request request, RequestResult requestResult) throws Exception {
 
 		List<Trigger> triggers = table.getTriggers();
 		
@@ -135,21 +135,21 @@ public class BackOfficePersist {
 				
 				AbstractBackOfficeGroovy backOfficeGroovy = BackOfficeUtil.newGroovyInstance(
 						this.backOfficeProcessor.getGroovyManager(), trigger, conn, backOffice.getSchema(), table,
-						persist.getId(), persistResult.getOldRow(), persistResult.getNewRow());
+						request.getId(), requestResult);
 				
 				if (backOfficeGroovy instanceof AbstractBackOfficeTrigger) {
 					
-					backOfficeGroovy.trace(persist.getPersistenceType());
+					backOfficeGroovy.trace(request.getRequestType());
 					
 					boolean triggerResult = false;
 					
-					triggerResult = (boolean) Trigger.call(triggerType, persist.getPersistenceType(), backOfficeGroovy);
+					triggerResult = (boolean) Trigger.call(triggerType, request.getRequestType(), backOfficeGroovy);
 										
 					if (!triggerResult) {
 						
 						throw new BackOfficeException(
 								String.format("Trigger %s on table: %s.%s with operation: %s fails.", trigger.getGroovy(),
-										backOffice.getSchema(), table.getName(), persist.getPersistenceType()));
+										backOffice.getSchema(), table.getName(), request.getRequestType()));
 					}
 				}
 			}

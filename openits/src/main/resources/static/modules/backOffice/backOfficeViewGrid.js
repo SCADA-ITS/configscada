@@ -273,7 +273,7 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 							label: "LBL_TABLE_REFRESH",
 							multiselect: true,
 							position: 1,
-							showText: true,
+							showText: false,
 							itemRequired: false
 						},
 						{
@@ -308,6 +308,40 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 						}
 					);
 					
+					if (Array.isArray(self.currentTableData.commands) && self.currentTableData.commands.length > 0) {
+										
+						metadata.gridCommands.push(...getCommandButtons());
+					}
+					
+					function getCommandButtons() {
+
+						let commandButtons = [];
+						let cmdPosition = metadata.gridCommands.length + 1;
+						
+						if (Array.isArray(self.currentTableData.commands) && self.currentTableData.commands.length > 0) {
+							
+							self.currentTableData.commands.forEach(cmd => {
+		
+								commandButtons.push(getCommand(cmd));
+							});	
+						}
+		
+						function getCommand(cmd) {
+		
+							return {
+								id: webix.uid(),
+								icon: cmd.mdiIcon,
+								label: cmd.label ?? cmd.name, 
+								multiselect: false,
+								position: cmdPosition++,
+								showText: true,
+								itemRequired: true,
+							}
+						}
+		
+						return commandButtons;
+					}
+					
 					return metadata;
 				}
 				
@@ -324,6 +358,35 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 						{ commandId: BackOfficeViewGrid.GRID_COMMANDS.edit, function: cmdEdit },
 						{ commandId: BackOfficeViewGrid.GRID_COMMANDS.delete, function: cmdDelete }
 					);
+					
+					if (Array.isArray(self.currentTableData.commands) && self.currentTableData.commands.length > 0) {
+										
+						events[DataTable.EventTypes.ON_COMMAND_EXEC].push(...getCommandButtons());
+					}
+					
+					function getCommandButtons() {
+
+						let commandButtons = [];
+						let cmdPosition = events[DataTable.EventTypes.ON_COMMAND_EXEC].length + 1;
+						
+						if (Array.isArray(self.currentTableData.commands) && self.currentTableData.commands.length > 0) {
+							
+							self.currentTableData.commands.forEach(() => {
+		
+								commandButtons.push({
+									commandId: cmdPosition++,
+									function: command 
+								});
+							});	
+						}
+
+						
+						function command(ids) {
+							
+						}
+		
+						return commandButtons;
+					}
 					
 					function cmdRefresh() {
 						
@@ -371,17 +434,17 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 							});
 						}
 						
-						BackOfficeHelper.insertData(self.backOffice, self.currentTableData, persistValues).then((persistResult) => {
+						BackOfficeHelper.insertData(self.backOffice, self.currentTableData, persistValues).then((requestResult) => {
 										
-							if (!persistResult.error) {
+							if (!requestResult.requestResultMessage.error) {
 								
-								if (persistResult.newRow && Array.isArray(persistResult.newRow.data)) {
+								if (requestResult.newRow && Array.isArray(requestResult.newRow.data)) {
 									
 									const columnId = self.currentTableData.columns.find(e => e.name === "id");
 									
 									if (columnId) {
 										
-										const data = persistResult.newRow.data.find(e => e.columnId === columnId.id);
+										const data = requestResult.newRow.data.find(e => e.columnId === columnId.id);
 										
 										if (data && data.value) {
 											
@@ -389,13 +452,13 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 								
 											edit(columnIdValue, function () {
 							
-												BackOfficeHelper.deleteData(self.backOffice, self.currentTableData, persistValues, columnIdValue).then((persistResult) => {
+												BackOfficeHelper.deleteData(self.backOffice, self.currentTableData, persistValues, columnIdValue).then((requestResult) => {
 													
-													if (persistResult.error) {
+													if (requestResult.requestResultMessage.error) {
 														
-														log.error(persistResult.error + "\n" + persistResult.errorDescription);
+														log.error(requestResult.requestResultMessage.error + "\n" + requestResult.requestResultMessage.errorDescription);
 														
-														(new MessageBox (MessageBox.ERROR, i18n.t("LBL_BACKOFFICE_ERROR_SAVING_CHANGES_ON") + " " + (self.currentTableData.label ?? self.currentTableData.name), persistResult.error + "\n" + persistResult.errorDescription, null, null)).show();
+														(new MessageBox (MessageBox.ERROR, i18n.t("LBL_BACKOFFICE_ERROR_SAVING_CHANGES_ON") + " " + (self.currentTableData.label ?? self.currentTableData.name), requestResult.requestResultMessage.error + "\n" + requestResult.requestResultMessage.errorDescription, null, null)).show();
 													}	
 												});
 											});			
@@ -405,9 +468,9 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 							}
 							else {
 								
-								log.error(persistResult.error + "\n" + persistResult.errorDescription);
+								log.error(requestResult.requestResultMessage.error + "\n" + requestResult.requestResultMessage.errorDescription);
 								
-								(new MessageBox (MessageBox.ERROR, i18n.t("LBL_BACKOFFICE_ERROR_SAVING_CHANGES_ON") + " " + (self.currentTableData.label ?? self.currentTableData.name), persistResult.error + "\n" + persistResult.errorDescription, null, null)).show();
+								(new MessageBox (MessageBox.ERROR, i18n.t("LBL_BACKOFFICE_ERROR_SAVING_CHANGES_ON") + " " + (self.currentTableData.label ?? self.currentTableData.name), requestResult.requestResultMessage.error + "\n" + requestResult.requestResultMessage.errorDescription, null, null)).show();
 							}
 						});
 					}
@@ -467,11 +530,11 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 									
 									if (Array.isArray(persistValues) && persistValues.length > 0) {
 										
-										BackOfficeHelper.deleteData(self.backOffice, self.currentTableData, persistValues, ids[recordsToDelete]).then((persistResult) => {
+										BackOfficeHelper.deleteData(self.backOffice, self.currentTableData, persistValues, ids[recordsToDelete]).then((requestResult) => {
 											
-											if (persistResult.error) {
+											if (requestResult.requestResultMessage.error) {
 			
-												error += "\nError id: "+ ids[recordsToDelete] + " => " +  persistResult.error + "\n" + persistResult.errorDescription;
+												error += "\nError id: "+ ids[recordsToDelete] + " => " +  requestResult.requestResultMessage.error + "\n" + requestResult.requestResultMessage.errorDescription;
 											}
 											
 											if (++deletedRecords === ids.length) {

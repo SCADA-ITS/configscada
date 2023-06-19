@@ -11,29 +11,28 @@ import com.revenga.rits.front.openits.backoffice.groovy.AbstractBackOfficeFiller
 import com.revenga.rits.front.openits.backoffice.groovy.AbstractBackOfficeGroovy;
 import com.revenga.rits.front.openits.model.backoffice.Column;
 import com.revenga.rits.front.openits.model.backoffice.Column.Filler;
+import com.revenga.rits.front.openits.model.backoffice.Request;
+import com.revenga.rits.front.openits.model.backoffice.Request.RequestInput;
+import com.revenga.rits.front.openits.model.backoffice.Request.RequestResult;
+import com.revenga.rits.front.openits.model.backoffice.Table.RequestType;
 import com.revenga.rits.front.openits.model.backoffice.Row;
 import com.revenga.rits.front.openits.model.backoffice.Table;
-import com.revenga.rits.front.openits.model.backoffice.Table.Persist;
-import com.revenga.rits.front.openits.model.backoffice.Table.Persist.PersistResult;
-import com.revenga.rits.front.openits.model.backoffice.Table.Persist.PersistValue;
 import com.revenga.rits.front.openitsdao.model.BackOffice;
 import com.revenga.rits.lib.encrypt.util.AES;
 
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
-public class BackOfficeFiller {
-	
-	BackOfficeProcessor backOfficeProcessor;
+public class BackOfficeFiller extends BackOfficeAction {
 	
 	public BackOfficeFiller(BackOfficeProcessor backOfficeProcessor) {
 		
-		this.backOfficeProcessor = backOfficeProcessor;
+		super(backOfficeProcessor);
 	}
 	
-	public PersistResult onChange(Integer backOfficeId, String columnName, Persist persist) {
+	public RequestResult onChange(Integer backOfficeId, Request request) {
 		
-		PersistResult persistResult = new PersistResult();
+		RequestResult requestResult = new RequestResult();
 		BackOffice backOffice = this.backOfficeProcessor.getBackOfficeService().getById(backOfficeId);
 		
 		if (backOffice != null) {
@@ -41,14 +40,18 @@ public class BackOfficeFiller {
 			try (Connection conn = DriverManager.getConnection(backOffice.getJdbc(), backOffice.getUser(),
 					AES.decrypt(backOffice.getPassword()))) {
 				
-				conn.setAutoCommit(false);
+				if (request.getRequestType() != RequestType.FILLER) {
+					
+					throw new BackOfficeException("Wrong request type: " + request.getRequestType()
+							+ ". RequestType expected is: " + RequestType.FILLER);
+				}
 				
-				Table tableRepository = this.backOfficeProcessor.getBackOfficeManager().getTable(backOffice, persist.getTableName());
+				Table tableRepository = this.backOfficeProcessor.getBackOfficeManager().getTable(backOffice, request.getTableName());
 				
 				if (tableRepository != null) {
 					
 					Column colFiller = tableRepository.getColumns().stream()
-							.filter(e -> e.getName().equals(columnName) && !CollectionUtils.isEmpty(e.getFillers()))
+							.filter(e -> e.getName().equals(request.getColumnName()) && !CollectionUtils.isEmpty(e.getFillers()))
 							.findFirst().orElse(null);
 					
 					if (colFiller != null) {
@@ -61,24 +64,24 @@ public class BackOfficeFiller {
 							
 							BackOfficeAssignment backOfficeAssignment = new BackOfficeAssignment(this.backOfficeProcessor);
 							
-							backOfficeAssignment.assignRows(conn, backOffice, table, null, "id = " + persist.getId());
+							backOfficeAssignment.assignRows(conn, backOffice, table, null, "id = " + request.getId());
 							
 							if (!CollectionUtils.isEmpty(table.getRows())) {
 								
-								List<PersistValue> persistValues = persist.getPersistValues();
+								List<RequestInput> requestInputs = request.getRequestInput();
 								
-								if (!CollectionUtils.isEmpty(persistValues)) {
+								if (!CollectionUtils.isEmpty(requestInputs)) {
 								
 									Row currentRow = table.getRows().get(0);
 									Row userRow = (Row) currentRow.clone();
 									
-									persistValues.forEach(persistValue -> BackOfficeUtil.setValue(userRow,
+									requestInputs.forEach(persistValue -> BackOfficeUtil.setValue(userRow,
 											persistValue.getColName(), persistValue.getNewValue()));
 									
-									persistResult.setOldRow(userRow);
-									persistResult.setNewRow((Row) userRow.clone());
+									requestResult.setOldRow(userRow);
+									requestResult.setNewRow((Row) userRow.clone());
 									
-									executeFillers(conn, backOffice, table, colFiller, persist, persistResult);
+									executeFillers(conn, backOffice, table, colFiller, request, requestResult);
 								}
 							}
 						}
@@ -90,20 +93,20 @@ public class BackOfficeFiller {
 				String message = e.getMessage();
 				String stackTrace = ExceptionUtils.getStackTrace(e);
 				
-				persistResult.setError(message);
-				persistResult.setErrorDescription(ExceptionUtils.getStackTrace(e));
+				requestResult.getRequestResultMessage().setError(message);
+				requestResult.getRequestResultMessage().setErrorDescription(ExceptionUtils.getStackTrace(e));
 				
 				log.error(message);
 				log.debug(stackTrace);
 			}
 		}
 		
-		return persistResult;
+		return requestResult;
 	}
 	
 
-	private void executeFillers(Connection conn, BackOffice backOffice, Table table, Column column, Persist persist,
-			PersistResult persistResult) throws Exception {
+	private void executeFillers(Connection conn, BackOffice backOffice, Table table, Column column, Request request,
+			RequestResult requestResult) throws Exception {
 
 		List<Filler> fillers = column.getFillers();
 		
@@ -113,7 +116,7 @@ public class BackOfficeFiller {
 				
 				AbstractBackOfficeGroovy backOfficeGroovy = BackOfficeUtil.newGroovyInstance(
 						this.backOfficeProcessor.getGroovyManager(), filler, conn, backOffice.getSchema(), table,
-						persist.getId(), persistResult.getOldRow(), persistResult.getNewRow());
+						request.getId(), requestResult);
 				
 				if (backOfficeGroovy instanceof AbstractBackOfficeFiller) {
 					
@@ -127,7 +130,7 @@ public class BackOfficeFiller {
 						
 						throw new BackOfficeException(
 								String.format("Filler %s on table: %s.%s with operation: %s fails.", filler.getGroovy(),
-										backOffice.getSchema(), table.getName(), persist.getPersistenceType()));
+										backOffice.getSchema(), table.getName(), request.getRequestType()));
 					}
 				}
 			}

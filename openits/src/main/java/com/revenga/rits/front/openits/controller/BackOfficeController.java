@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.revenga.rits.front.openits.bo.BackOfficeBO;
+import com.revenga.rits.front.openits.model.backoffice.Request;
+import com.revenga.rits.front.openits.model.backoffice.Request.RequestResult;
 import com.revenga.rits.front.openits.model.backoffice.Table;
-import com.revenga.rits.front.openits.model.backoffice.Table.Persist;
-import com.revenga.rits.front.openits.model.backoffice.Table.Persist.PersistResult;
 import com.revenga.rits.front.openitsdao.model.BackOffice;
 
 import io.swagger.annotations.Api;
@@ -69,20 +69,28 @@ public class BackOfficeController {
 	
 	@PostMapping(path = "/{backOfficeId}/persist")
 	@ApiOperation(value = "persist data")
-	public ResponseEntity<PersistResult> persist(
+	public ResponseEntity<RequestResult> persist(
 			@ApiParam(name = "backOfficeId", type = "Integer", example = "1", required = true) @PathVariable Integer backOfficeId,
-			@RequestBody Persist persist) {
+			@RequestBody Request request) {
 		
-		return new ResponseEntity<>(backOfficeBO.persist(backOfficeId, persist), HttpStatus.OK);
+		return new ResponseEntity<>(backOfficeBO.persist(backOfficeId, request), HttpStatus.OK);
 	}
 	
-	@PostMapping(path = "/{backOfficeId}/filler/{columnName}")
-	@ApiOperation(value = "On Change field")
-	public ResponseEntity<PersistResult> filler(
+	@PostMapping(path = "/{backOfficeId}/command")
+	@ApiOperation(value = "persist data")
+	public ResponseEntity<RequestResult> command(
 			@ApiParam(name = "backOfficeId", type = "Integer", example = "1", required = true) @PathVariable Integer backOfficeId,
-			@ApiParam(name = "columnName", type = "String", example = "1", required = true) @PathVariable String columnName,
-			@RequestBody Persist persist) {
+			@RequestBody Request request) {
 		
-		return new ResponseEntity<>(backOfficeBO.filler(backOfficeId, columnName, persist), HttpStatus.OK);
+		return new ResponseEntity<>(backOfficeBO.command(backOfficeId, request), HttpStatus.OK);
+	}
+	
+	@PostMapping(path = "/{backOfficeId}/filler")
+	@ApiOperation(value = "On Change field")
+	public ResponseEntity<RequestResult> filler(
+			@ApiParam(name = "backOfficeId", type = "Integer", example = "1", required = true) @PathVariable Integer backOfficeId,
+			@RequestBody Request request) {
+		
+		return new ResponseEntity<>(backOfficeBO.filler(backOfficeId, request), HttpStatus.OK);
 	}
 }
