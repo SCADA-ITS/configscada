@@ -88,6 +88,8 @@ public class Table extends Basic {
 		private static final String PACKAGE_NAME = "com.revenga.rits.front.openits.backoffice.groovy.command";
 		
 		private Boolean requireConfirmation;
+		private Boolean availableInForm;
+		private Boolean availableInTable;
 		
 		public Command(String name) {
 			

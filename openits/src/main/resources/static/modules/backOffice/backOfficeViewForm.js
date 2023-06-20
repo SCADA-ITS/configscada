@@ -292,7 +292,9 @@ export default class BackOfficeViewForm extends BackOfficeView {
 						
 						if (Array.isArray(self.currentTableData.commands) && self.currentTableData.commands.length > 0) {
 							
-							self.currentTableData.commands.forEach(cmd => {
+							const commandsAvailable = self.currentTableData.commands.filter(e => e.availableInForm);
+							
+							commandsAvailable.forEach(cmd => {
 		
 								buttonsGrid.cols.push(getButton(cmd));
 							});	

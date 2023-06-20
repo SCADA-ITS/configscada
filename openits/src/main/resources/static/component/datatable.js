@@ -1259,20 +1259,29 @@ export default class DataTable {
 					],
 					on: {
 						onMenuItemClick: function(id) {
-
-							let gridCommand = metadata.gridCommands.find(element => {
-								return (element.moduleAction.id === this.getMenuItem(id).moduleId);
-							});
-
-							if (gridCommand) {
-								self.open_module(gridCommand);
+							
+							const item = this.getMenuItem(id);
+							
+							if (item && item.cmd) {
+								
+								self.open_module(item.cmd);	
 							}
+							
+//
+//							let gridCommand = metadata.gridCommands.find(element => {
+//								return (element.moduleAction.id === this.getMenuItem(id).moduleId);
+//							});
+//
+//							if (gridCommand) {
+//								self.open_module(gridCommand);
+//							}
 						}
 					}
 				};
 
 				groupedMenu.forEach(cmd => {
-					subMenu.data[0].submenu.push({ id: "tb_btnMenu-" + this.uid + "_" + cmd.id, view: "button", type: "icon", icon: cmd.icon, value: i18n.t(cmd.label), moduleId: cmd.moduleAction.id});
+					//subMenu.data[0].submenu.push({ id: "tb_btn-" + this.uid + "_" + cmd.id, view: "button", type: "icon", icon: cmd.icon, value: i18n.t(cmd.label), moduleId: cmd.moduleAction.id});
+					subMenu.data[0].submenu.push({ id: "tb_btn-" + this.uid + "_" + cmd.id, view: "button", type: "icon", icon: cmd.icon, value: i18n.t(cmd.label), cmd: cmd});
 				});
 
 				toolbar.elements.push(subMenu);

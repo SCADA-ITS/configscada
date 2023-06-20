@@ -120,6 +120,8 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 			
 			function getDataTable() {
 				
+				const firstCommandIdCalculated = 5;
+				
 				function getMetadata() {
 					
 					const defaultGridOptionValues = [
@@ -273,7 +275,7 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 							label: "LBL_TABLE_REFRESH",
 							multiselect: true,
 							position: 1,
-							showText: false,
+							showText: true,
 							itemRequired: false
 						},
 						{
@@ -310,17 +312,25 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 					
 					if (Array.isArray(self.currentTableData.commands) && self.currentTableData.commands.length > 0) {
 										
-						metadata.gridCommands.push(...getCommandButtons());
+						const commandButtons = getCommandButtons();
+						
+						if (Array.isArray(commandButtons) && commandButtons.length > 0) {
+							
+							metadata.gridCommands.push(...commandButtons);	
+						}
 					}
 					
 					function getCommandButtons() {
 
+						let commandIdValue = firstCommandIdCalculated;
 						let commandButtons = [];
 						let cmdPosition = metadata.gridCommands.length + 1;
 						
 						if (Array.isArray(self.currentTableData.commands) && self.currentTableData.commands.length > 0) {
 							
-							self.currentTableData.commands.forEach(cmd => {
+							const commandsAvailable = self.currentTableData.commands.filter(e => e.availableInTable);
+							
+							commandsAvailable.forEach(cmd => {
 		
 								commandButtons.push(getCommand(cmd));
 							});	
@@ -329,13 +339,14 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 						function getCommand(cmd) {
 		
 							return {
-								id: webix.uid(),
+								id: commandIdValue++,
 								icon: cmd.mdiIcon,
 								label: cmd.label ?? cmd.name, 
 								multiselect: false,
 								position: cmdPosition++,
 								showText: true,
 								itemRequired: true,
+								grouped: true
 							}
 						}
 		
@@ -346,7 +357,8 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 				}
 				
 				function getEvents() {
-				
+					
+					let commandIdValue = firstCommandIdCalculated;
 					let events = {};
 		
 					events[DataTable.EventTypes.ON_COMMAND_EXEC] = [];
@@ -360,31 +372,81 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 					);
 					
 					if (Array.isArray(self.currentTableData.commands) && self.currentTableData.commands.length > 0) {
-										
-						events[DataTable.EventTypes.ON_COMMAND_EXEC].push(...getCommandButtons());
+						
+						const commandButtons = getCommandButtons();
+						
+						if (Array.isArray(commandButtons) && commandButtons.length > 0) {
+							
+							events[DataTable.EventTypes.ON_COMMAND_EXEC].push(...commandButtons);	
+						}
 					}
 					
 					function getCommandButtons() {
 
 						let commandButtons = [];
-						let cmdPosition = events[DataTable.EventTypes.ON_COMMAND_EXEC].length + 1;
 						
-						if (Array.isArray(self.currentTableData.commands) && self.currentTableData.commands.length > 0) {
+						const commandsAvailable = self.currentTableData.commands.filter(e => e.availableInTable); 
+						
+						commandsAvailable.forEach(cmd => {
 							
-							self.currentTableData.commands.forEach(() => {
-		
-								commandButtons.push({
-									commandId: cmdPosition++,
-									function: command 
-								});
-							});	
-						}
+							let commandButton = {
+								
+								commandId: commandIdValue++,
+								function: command
+							}
+	
+							commandButtons.push(commandButton);
+							
+							function command(ids, items) {
+								
+								if (Array.isArray(items) && items.length === 1) {
+								
+									if (cmd.requireConfirmation) {
+											
+										(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_BACKOFFICE_CONFIRM_COMMAND") + " " + (cmd.label ?? cmd.name), null, executeCommand, null)).show();	
+									}
+									else {
+										
+										executeCommand();
+									}	
+								}
+								
+								function executeCommand() {
+								
+									const requestInput = BackOfficeHelper.getRequestInput(items[0], self.currentTableData, true);
+									const id = items[0]["id"];
+									
+									if (id && (Array.isArray(requestInput) && requestInput.length > 0)) {
+										
+										BackOfficeHelper.command(self.backOffice, self.currentTableData, cmd.id, requestInput, id).then((requestResult) => {
+													
+											if (!requestResult.requestResultMessage.error) {
+												
+												if (requestResult.requestResultMessage.info) {
+												
+													log.info(requestResult.requestResultMessage.info + "\n" + requestResult.requestResultMessage.infoDescription);
+												
+													(new MessageBox (MessageBox.INFO, i18n.t("LBL_BACKOFFICE_INFO_ON_COMMAND") + " " + requestResult.requestResultMessage.info + ":" + requestResult.requestResultMessage.infoDescription, null, null, null)).show();
+												}
+												else if (requestResult.requestResultMessage.warn) {
+												
+													log.warn(requestResult.requestResultMessage.info + "\n" + requestResult.requestResultMessage.infoDescription);
+												
+													(new MessageBox (MessageBox.WARN, i18n.t("LBL_BACKOFFICE_WARN_ON_COMMAND") + " " + requestResult.requestResultMessage.warn + ":" + requestResult.requestResultMessage.warnDescription, null, null, null)).show();
+												}
+											}
+											else {
+												
+												log.error(requestResult.requestResultMessage.error + "\n" + requestResult.requestResultMessage.errorDescription);
+												
+												(new MessageBox (MessageBox.ERROR, i18n.t("LBL_BACKOFFICE_ERROR_ON_COMMAND") + " " + (self.currentTableData.label ?? self.currentTableData.name), requestResult.requestResultMessage.error + "\n" + requestResult.requestResultMessage.errorDescription, null, null)).show();
+											}
+										});
+									}
+								}
+							}
+						});	
 
-						
-						function command(ids) {
-							
-						}
-		
 						return commandButtons;
 					}
 					
