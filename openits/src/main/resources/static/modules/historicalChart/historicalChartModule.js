@@ -161,20 +161,38 @@ export default class HistoricalChartModule extends GenericModule {
 
 		function startModule() {
 
+			let args = {
+				dates: {
+					dateIni: self.dateIni,
+					dateEnd: self.dateEnd
+				},
+				elementsIds: self.elementsIds,
+				isEmbed: self.isEmbed
+			};
+
 			if (self.moduleAction.id === self.config.moduleAction.alarms) {
 
-				let hChartAlarms = new HistoricalChartAlarms(self);
-				hChartAlarms.getAlarms();
+				args.url = self.config.restEndpoints.alarms;
+				args.mode = HistoricalChartModule.MODE_ALARMS;
+
+				let hChartAlarms = new HistoricalChartAlarms(args, self);
+				hChartAlarms.initialize();
 
 			} else if (self.moduleAction.id === self.config.moduleAction.states) {
 
-				let hChartStates = new HistoricalChartStates(self);
-				hChartStates.getStates();
+				args.url = self.config.restEndpoints.states;
+				args.mode = HistoricalChartModule.MODE_STATES;
+
+				let hChartStates = new HistoricalChartStates(args, self);
+				hChartStates.initialize();
 
 			} else if ((self.moduleAction.id === self.config.moduleAction.elementValues) || (self.moduleAction.id === self.config.moduleAction.equipmentViewer)) {
 
-				let hChartEV = new HistoricalChartElementValues(self);
-				hChartEV.getElementValues();
+				args.url = self.config.restEndpoints.elementValues;
+				args.mode = HistoricalChartModule.MODE_ELEMENT_VALUES;
+
+				let hChartEV = new HistoricalChartElementValues(args, self);
+				hChartEV.initialize();
 			}
 		}
 	}
