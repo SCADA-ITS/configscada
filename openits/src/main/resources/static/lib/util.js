@@ -1700,7 +1700,32 @@ export let util = {
 				sheet.insertRule(newRule, css_rules_num);
 				document.documentElement.setAttribute('theme', hsl.h);
 			}
-		}
+		},
+		
+		createSvg(svgId) {
+			
+			$('body').append(`<svg id="${"vms-composer-svg-" + svgId}"></svg>`);
+		},
+		
+		getHTMLSvg(svgId) {
+			
+			const svg = $('#vms-composer-svg-' + svgId)
+			
+			if (svg) {
+				
+				return svg.prop("outerHTML");
+			}
+		},
+		
+		removeSvg(svgId) {
+			
+			const svg = $('#vms-composer-svg-' + svgId)
+			
+			if (svg) {
+				
+				svg.remove();
+			}
+		},
 	},
 
 	element: {

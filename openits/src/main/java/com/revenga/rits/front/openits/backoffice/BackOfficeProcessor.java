@@ -1,5 +1,8 @@
 package com.revenga.rits.front.openits.backoffice;
 
+import java.io.File;
+import java.net.MalformedURLException;
+import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -13,9 +16,13 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.util.CollectionUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.revenga.rits.front.openits.backoffice.BackOfficeUtil.DMLType;
+import com.revenga.rits.front.openits.model.backoffice.Attachment;
 import com.revenga.rits.front.openits.model.backoffice.Request;
 import com.revenga.rits.front.openits.model.backoffice.Request.RequestResult;
 import com.revenga.rits.front.openits.model.backoffice.Table;
@@ -104,7 +111,6 @@ public class BackOfficeProcessor {
 		return tables;
 	}
 
-	
 	public List<Table> get(Integer backOfficeId, String tableName, String conditions) {
 
 		List<Table> tables = null;
@@ -136,6 +142,124 @@ public class BackOfficeProcessor {
 
 		return tables;
 	}
+	
+	public List<Attachment> getAttachments(Integer backOfficeId, Attachment.Type attachmentType, String tableName, Integer idValue) {
+
+		List<Attachment> attachments = null;
+		
+		BackOffice backOffice = this.backOfficeService.getById(backOfficeId);
+		
+		if (backOffice != null) {
+		
+			Table table = this.referencedTables.get(tableName);
+			
+			if (table == null && this.backOfficeManager.containsTable(backOffice, tableName)) {
+			
+				table = this.backOfficeManager.getTable(backOffice, tableName);
+			}
+			
+			if (table != null) {
+				
+				try (Connection conn = DriverManager.getConnection(backOffice.getJdbc(), backOffice.getUser(),
+						AES.decrypt(backOffice.getPassword()))) {
+					
+					BackOfficeAssignment backOfficeAssignment = new BackOfficeAssignment(this);
+				
+					attachments = backOfficeAssignment.getAttachments(conn, backOffice, attachmentType, table, idValue);
+				}
+				catch (Exception e) {
+
+					log.error(e.getMessage());
+					log.debug(ExceptionUtils.getStackTrace(e));
+				}
+			}
+		}
+
+		return attachments;
+	}
+	
+	public Attachment uploadAttachment(String baseDir, Integer backOfficeId, Attachment attachment, MultipartFile multipartFile) {
+
+		// TODO
+		
+		return null;
+	}
+	
+	public Resource downloadAttachment(String baseDir, Integer backOfficeId, Attachment attachment) {
+		
+		Resource resource = null;
+		Attachment attachmentFound = getAttachment(backOfficeId, attachment.getType(), attachment.getTable().getName(), attachment.getId());
+		
+		if (attachmentFound != null) {
+			
+			resource = loadFileAsResource(attachment.getPath(baseDir, backOfficeId), attachment.getFileName());
+		}
+
+		return resource;
+	}
+	
+	private Attachment getAttachment(Integer backOfficeId, Attachment.Type attachmentType, String tableName, Integer id) {
+
+		Attachment attachmentFound = null;
+		
+		BackOffice backOffice = this.backOfficeService.getById(backOfficeId);
+		
+		if (backOffice != null) {
+		
+			Table table = this.referencedTables.get(tableName);
+			
+			if (table == null && this.backOfficeManager.containsTable(backOffice, tableName)) {
+			
+				table = this.backOfficeManager.getTable(backOffice, tableName);
+			}
+			
+			if (table != null) {
+				
+				try (Connection conn = DriverManager.getConnection(backOffice.getJdbc(), backOffice.getUser(),
+						AES.decrypt(backOffice.getPassword()))) {
+					
+					BackOfficeAssignment backOfficeAssignment = new BackOfficeAssignment(this);
+				
+					attachmentFound = backOfficeAssignment.getAttachment(conn, backOffice, attachmentType,
+							table, id);
+				}
+				catch (Exception e) {
+
+					log.error(e.getMessage());
+					log.debug(ExceptionUtils.getStackTrace(e));
+				}
+			}
+		}
+
+		return attachmentFound;
+	}
+	
+	private Resource loadFileAsResource(String path, String fileName) {
+        
+		Resource resource = null;
+		
+		try {
+        	
+        	Path filePath = Path.of(path + File.separator + fileName); 
+
+        	resource = new UrlResource(filePath.toUri());
+        	
+            if(resource.exists()) {
+            	
+                return resource;
+                
+            } else {
+            	
+            	throw new MalformedURLException("File not found: " + fileName); 
+            }
+        } catch (MalformedURLException e) {
+            
+        	log.error(e.getMessage());
+			log.debug(ExceptionUtils.getStackTrace(e));
+        }
+		
+		return null;
+    }
 	
 	public RequestResult persist(Integer backOfficeId, Request request) {
 		

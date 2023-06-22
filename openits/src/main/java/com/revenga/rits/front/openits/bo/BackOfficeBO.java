@@ -3,15 +3,20 @@ package com.revenga.rits.front.openits.bo;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.revenga.rits.front.openits.backoffice.BackOfficeProcessor;
 import com.revenga.rits.front.openits.model.UserSessionUI;
+import com.revenga.rits.front.openits.model.backoffice.Attachment;
 import com.revenga.rits.front.openits.model.backoffice.Request;
 import com.revenga.rits.front.openits.model.backoffice.Request.RequestResult;
 import com.revenga.rits.front.openits.model.backoffice.Table;
@@ -24,6 +29,7 @@ import com.revenga.rits.front.openitsdao.service.BackOfficeService;
 @Service
 public class BackOfficeBO {
 
+	private static final String FILE_BASEDIR = "file.basedir";
 	
 	@Autowired
 	BackOfficeService backOfficeService;
@@ -36,6 +42,17 @@ public class BackOfficeBO {
 	
 	@Autowired
 	BackOfficeManager backOfficeManager;
+	
+	@Autowired
+	private Environment env;
+	
+	private String baseDir; 
+	
+	@PostConstruct
+	private void postConstruct() {
+		
+		this.baseDir = env.getProperty(FILE_BASEDIR);
+	}
 	
 	public List<BackOffice> getList() {
 		
@@ -58,7 +75,29 @@ public class BackOfficeBO {
 		
 		BackOfficeProcessor backOfficeProcessor = new BackOfficeProcessor(groovyManager, backOfficeService, backOfficeManager, getLocaleCode(), true);
 		
-		return backOfficeProcessor.get(backOfficeId, tableName, conditions);	
+		return backOfficeProcessor.get(backOfficeId, tableName, conditions);
+	}
+		
+	public List<Attachment> getAttachments(Integer backOfficeId, Attachment.Type attachmentType, String tableName, Integer id) {
+		
+		BackOfficeProcessor backOfficeProcessor = new BackOfficeProcessor(groovyManager, backOfficeService, backOfficeManager, getLocaleCode(), false);
+		
+		return backOfficeProcessor.getAttachments(backOfficeId, attachmentType, tableName, id);	
+	}
+	
+	public Attachment uploadAttachment(Integer backOfficeId, Attachment attachment, MultipartFile multipartFile) {
+		
+		BackOfficeProcessor backOfficeProcessor = new BackOfficeProcessor(groovyManager, backOfficeService, backOfficeManager, getLocaleCode(), false);
+		
+		return backOfficeProcessor.uploadAttachment(this.baseDir, backOfficeId, attachment, multipartFile);	
+	}
+	
+	public Resource downloadAttachment(Integer backOfficeId, Attachment attachment) {
+		
+		
+		BackOfficeProcessor backOfficeProcessor = new BackOfficeProcessor(groovyManager, backOfficeService, backOfficeManager, getLocaleCode(), false);
+		
+		return backOfficeProcessor.downloadAttachment(baseDir, backOfficeId, attachment);
 	}
 
 	public RequestResult persist(Integer backOfficeId, Request request) {

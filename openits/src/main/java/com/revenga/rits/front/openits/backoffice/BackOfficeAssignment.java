@@ -19,6 +19,7 @@ import org.springframework.util.CollectionUtils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.revenga.rits.front.openits.backoffice.BackOfficeUtil.DMLType;
+import com.revenga.rits.front.openits.model.backoffice.Attachment;
 import com.revenga.rits.front.openits.model.backoffice.Basic;
 import com.revenga.rits.front.openits.model.backoffice.Column;
 import com.revenga.rits.front.openits.model.backoffice.Column.Filler;
@@ -287,6 +288,113 @@ public class BackOfficeAssignment {
 		}
 		
 		return rows;
+	}
+
+	List<Attachment> getAttachments(Connection conn, BackOffice backOffice, Attachment.Type attachmentType, Table table, Integer idValue) throws SQLException {
+		
+		List<Attachment> attachments = new ArrayList<>();
+		String tableSql = "";
+		
+		if (attachmentType.equals(Attachment.Type.IMAGE)) {
+		
+			tableSql = "sg_metadata_table_images";
+		}
+		else if (attachmentType.equals(Attachment.Type.OTHER)) {
+			
+			tableSql = "sg_metadata_table_attachments";
+		}
+		
+		if (!StringUtils.isEmpty(tableSql)) {
+		
+			String sql = String
+					.format("SELECT id, group_name, file_name, description, position " + 
+							"  FROM %s.%s " + 
+							" WHERE sg_metadata_table_id = ? " + 
+							"   AND id_value = ?",  
+							backOffice.getSchema(), tableSql);
+			
+			try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+				
+				stmt.setInt(1, table.getId());
+				stmt.setInt(2, idValue);
+				
+				if (this.backOfficeProcessor.getBackOfficeManager().isShowSql()) {
+					
+					log.debug(stmt);					
+				}
+				
+				ResultSet rs = stmt.executeQuery();
+				
+				while (rs.next()) {
+					
+					Attachment attachment = new Attachment();
+					
+					attachment.setId(rs.getInt("id"));
+					attachment.setTable(table);
+					attachment.setIdValue(idValue);
+					attachment.setGroupName(rs.getString("group_name"));
+					attachment.setFileName(rs.getString("file_name"));
+					attachment.setDescription(rs.getString("description"));
+					attachment.setPosition(rs.getInt("position"));
+					
+					attachments.add(attachment);
+				}
+			}
+		}
+		
+		return attachments;
+	}
+	
+	Attachment getAttachment(Connection conn, BackOffice backOffice, Attachment.Type attachmentType, Table table, Integer id) throws SQLException {
+		
+		Attachment attachment = null;
+		String sql = "";
+		
+		if (attachmentType.equals(Attachment.Type.IMAGE)) {
+			
+			sql = String
+					.format("SELECT id, group_name, file_name, description " + 
+							"  FROM %s.sg_metadata_table_images " + 
+							" WHERE id = ?", 
+							backOffice.getSchema());
+		}
+		else if (attachmentType.equals(Attachment.Type.OTHER)) {
+			
+			sql = String
+					.format("SELECT id, group_name, file_name, description " + 
+							"  FROM %s.sg_metadata_table_attachments " + 
+							" WHERE id = ?", 
+							backOffice.getSchema());
+		}
+		
+		if (!StringUtils.isEmpty(sql)) {
+		
+			try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+				
+				stmt.setInt(1, id);
+				
+				if (this.backOfficeProcessor.getBackOfficeManager().isShowSql()) {
+					
+					log.debug(stmt);					
+				}
+				
+				ResultSet rs = stmt.executeQuery();
+				
+				if (rs.next()) {
+					
+					attachment = new Attachment();
+					
+					attachment.setId(rs.getInt("id"));
+					attachment.setTable(table);
+					attachment.setIdValue(id);
+					attachment.setGroupName(rs.getString("group_name"));
+					attachment.setFileName(rs.getString("file_name"));
+					attachment.setDescription(rs.getString("description"));
+				}
+			}
+		}
+		
+		return attachment;
 	}
 	
 	void assignMetadata(Connection conn, BackOffice backOffice, Table table) throws SQLException {

@@ -3,6 +3,7 @@ package com.revenga.rits.front.openits.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -12,9 +13,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.revenga.rits.front.openits.bo.BackOfficeBO;
+import com.revenga.rits.front.openits.model.backoffice.Attachment;
 import com.revenga.rits.front.openits.model.backoffice.Request;
 import com.revenga.rits.front.openits.model.backoffice.Request.RequestResult;
 import com.revenga.rits.front.openits.model.backoffice.Table;
@@ -65,6 +69,36 @@ public class BackOfficeController {
 			@RequestBody(required = false) String conditions) {
 		
 		return new ResponseEntity<>(backOfficeBO.get(backOfficeId, tableName, conditions), HttpStatus.OK);
+	}
+	
+	@GetMapping(path = "/{backOfficeId}/attachments/{attachmentType}/{tableName}/{id}")
+	@ApiOperation(value = "get attachments from table row")
+	public ResponseEntity<List<Attachment>> getAttachments(
+			@ApiParam(name = "backOfficeId", type = "Integer", example = "1", required = true) @PathVariable Integer backOfficeId,
+			@ApiParam(name = "attachmentType", type = "String", example = "file", required = true) @PathVariable Attachment.Type attachmentType,
+			@ApiParam(name = "tableName", type = "String", example = "orders", required = true) @PathVariable String tableName,
+			@ApiParam(name = "id", type = "Integer", example = "1", required = true) @PathVariable Integer id) {
+		
+		return new ResponseEntity<>(backOfficeBO.getAttachments(backOfficeId, attachmentType, tableName, id), HttpStatus.OK);
+	}
+	
+	@PostMapping(path = "/{backOfficeId}/attachments/upload")
+	@ApiOperation(value = "Upload image associated to table row")
+	public ResponseEntity<Attachment> uploadAttachmment(
+			@ApiParam(name = "backOfficeId", type = "Integer", example = "1", required = true) @PathVariable Integer backOfficeId,
+			@RequestParam("upload") MultipartFile multipartFile,
+			@RequestBody(required = true) Attachment attachment) {
+
+		return new ResponseEntity<>(backOfficeBO.uploadAttachment(backOfficeId, attachment, multipartFile), HttpStatus.OK);
+	}
+	
+	@PostMapping(path = "/{backOfficeId}/attachments/download")
+	@ApiOperation(value = "Download image by id")
+	public ResponseEntity<Resource> downloadAttachmment(
+			@ApiParam(name = "backOfficeId", type = "Integer", example = "1", required = true) @PathVariable Integer backOfficeId,
+			@RequestBody(required = true) Attachment attachment) {
+
+		return new ResponseEntity<>(backOfficeBO.downloadAttachment(backOfficeId, attachment), HttpStatus.OK);
 	}
 	
 	@PostMapping(path = "/{backOfficeId}/persist")
