@@ -5,10 +5,7 @@ import TreeView from "../../../../component/treeview.js";
 import GraphicIcon from "../../../../component/graphicIcon/graphicIcon.js";
 
 const MODULE_PARAM_CONFIG = 8;
-const QUEUE_COLOR_ACTIVE = "#009688";
-const QUEUE_COLOR_NO_ACTIVE = "#f44336";
 const MAX_EPOCH_TIME = 4102444799000;
-//const TOPIC_ELEMENTS = "/topic/element.>";
 
 export default class VmsSignalingMonitorModule extends GenericModule {
 
@@ -30,8 +27,6 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 		this.virtualTree = undefined;
 		this.elementsMap = new Map();
 		this.graphicIconInstanceMap = new Map();
-		//this.idStompSubscriptorQueues = [];
-		//this.idStompSubscriptorElementTypes = [];
 		this.idStompSubscriptorElements = undefined;
 		this.setTimeOut = undefined;
 
@@ -151,23 +146,10 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 
 						for (let element of self.elements) {
 
-							if (element.queue && element.queue.commandElements && element.queue.commandElements.length > 1) {
-
-								element.queue.commandElements.sort((a, b) => (a.enable ? 0 : 1) - (b.enable ? 0 : 1) || a.startTime - b.startTime);
-								let activePanel = element.queue.commandElements.shift();
-								element.queue.commandElements = [activePanel];
-							}
-
 							self.elementsMap.set(element.id, element);
 						}
 
 						webix.ui(drawContent(), $$(self.uid));
-
-//						if (!self.withTreeConfig) {
-//
-//							$$("loading-switcher-" + self.uid).hide();
-//							self.virtualTree.select("root");
-//						}
 
 						connectWS();
 					}
@@ -316,8 +298,8 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 									id: element.id,
 									label: element.alias,
 									image: element.elementType.elementTypePhoto,
-									stateColor: util.element.getColor({ id: element.elementTypeState.id }),
-									stateLabel: i18n.t(element.elementTypeState.labelAlias),
+									stateColor: element.elementState ? util.element.getColorByState(element.elementState) : util.element.getColor(element.elementTypeState),
+									stateLabel: element.elementState ? util.element.getAliasState(element.elementState) : i18n.t(element.elementTypeState.labelAlias)
 								};
 
 								if (hierarchies) {
@@ -647,8 +629,8 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 						id: item.id,
 						label: item.alias,
 						image: item.elementType.elementTypePhoto,
-						stateColor: util.element.getColor({ id: item.elementTypeState.id }),
-						stateLabel: i18n.t(item.elementTypeState.labelAlias),
+						stateColor: item.elementState ? util.element.getColorByState(item.elementState) : util.element.getColor(item.elementTypeState),
+						stateLabel: item.elementState ? util.element.getAliasState(item.elementState) : i18n.t(item.elementTypeState.labelAlias)
 					});
 
 					relationship.childNodeId = item.id;
@@ -719,14 +701,14 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 						
 						let graphicIcon = self.graphicIconInstanceMap.get(elementInMap.id);
 						
-						if (element.elementTypeState) {
+						if (element.elementState) {
 									
 							if (graphicIcon) {
 								
-								graphicIcon.updateState(element.elementTypeState);	
+								graphicIcon.updateElementState(element.elementState);	
 							}
 							
-							elementInMap.elementTypeState = element.elementTypeState;
+							elementInMap.elementState = element.elementState;
 						}
 						
 						if (Array.isArray(element.elementValues) && element.elementValues.length > 0) {
@@ -761,14 +743,15 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 	
 								items.forEach(item => {
 	
-									let color = util.element.getColor(elementInMap.elementTypeState);
-	
-									if (color != item.props.stateColor) {
+									let newColor = util.element.getColorByState(elementInMap.elementState);
+									let newLabel = util.element.getAliasState(elementInMap.elementState);
+									
+									if (newColor != item.props.stateColor || newLabel != item.props.stateLabel) {
 	
 										let newItem = webix.copy(item);
 	
-										newItem.props.stateColor = color;
-										newItem.props.stateLabel = i18n.t(elementInMap.elementTypeState.labelAlias);
+										newItem.props.stateColor = newColor;
+										newItem.props.stateLabel = newLabel;
 	
 										treeView.update(newItem.id, newItem);
 									}
@@ -780,225 +763,6 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 				}
 			}
 		}
-
-
-//		function connectWS() {
-//
-//			let stompSubscriptorService = window.sm.getService(Services.STOMP_SUBSCRIPTOR_SERVICE);
-//
-//			if (stompSubscriptorService) {
-//
-//				if (Array.isArray(self.elements) && self.elements.length > 0) {
-//
-//					self.elements.forEach(element => {
-//
-//						let topic = self.vmsSignalingModuleConfig.topics.elementQueue + "." + element.id;
-//						let subscriptorId = stompSubscriptorService.subscribe(appConfig.stompUrl, topic, onMessage);
-//						self.idStompSubscriptorQueues.push(subscriptorId);
-//					});
-//
-//					let fields = [];
-//					fields.push({
-//						target: "id",
-//						values: []
-//					});
-//
-//					self.elements.forEach(element => fields[0].values.push(element.id));
-//					self.idStompSubscriptorElementTypes = stompSubscriptorService.subscribe(appConfig.stompUrl, TOPIC_ELEMENTS, onMessage, fields);
-//				}
-//			}
-//
-//			function onMessage(data) {
-//
-//				if (data && data.id) {
-//
-//					let sameId = self.dataToUpdate.find(e => e === data.id);
-//
-//					if (!sameId) {
-//
-//						self.dataToUpdate.push(data.id);
-//					}
-//
-//					if (self.dataToUpdate.length === 1 && !self.setTimeOut) {
-//
-//						self.setTimeOut = true;
-//
-//						setTimeout(function() {
-//
-//							let dataToUpdateCopy = webix.copy(self.dataToUpdate);
-//							self.dataToUpdate = [];
-//
-//							webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.restEndpoints.element, JSON.stringify(dataToUpdateCopy)).then(function(elementsResponse) {
-//
-//								if (elementsResponse != null) {
-//
-//									let elements = elementsResponse.json();
-//									let elementDataArr = [];
-//
-//									elements.forEach(element => {
-//
-//										let elementCopy = webix.copy(element);
-//										let idHTML;
-//
-//										for (let treeView of self.treeViewsArr) {
-//
-//											if (treeView.dataMap.has(elementCopy.id)) {
-//
-//												let item = {
-//													id: treeView.dataMap.get(elementCopy.id)[0]
-//												};
-//
-//												let parent = treeView.getParent(item);
-//
-//												if (parent) {
-//
-//													idHTML = parent.id_.replaceAll(":", "");
-//												}
-//											}
-//										}
-//
-//										elementDataArr = self.getDataPanels([elementCopy]);
-//
-//										elementDataArr.forEach(elementData => {									
-//
-//											let color;
-//											let windowScrollview = $$("scrollview-" + idHTML + "-" + self.uid);
-//
-//											if (elementData.state) {
-//
-//												let newElementTypeState = window.em.getByField(EntityType.ELEMENT_TYPE_STATE, "id", elementData.state);
-//												color = util.element.getColor(newElementTypeState);
-//											}
-//
-////											if (elementData.priority && elementData.priority.enable) {
-////
-////												color = (elementData.command && elementData.command.enable) ? QUEUE_COLOR_ACTIVE : QUEUE_COLOR_NO_ACTIVE;
-////											}
-//
-//											if (self.elementsMap.has(elementCopy.id)) {
-//
-//												let elementGraphicIcontMap = self.graphicIconInstanceMap.get(elementCopy.id);
-//
-//												elementGraphicIcontMap.updateState({
-//													color: color
-//												});
-//
-//												let jsonValue = [];
-//												
-//												if (elementData.command && elementData.command.value) {
-//
-//													jsonValue = JSON.parse(elementData.command.value);
-//
-//												} else {
-//
-//													try {
-//
-//														jsonValue = JSON.parse([{ "zone": 1, "graphics": [] }, { "zone": 2, "alternance_ms": 5000, "align": "center", "texts": [{ "id": 1, "value": "APAGAR" }, { "id": 2, "value": "APAGAR" }, { "id": 3, "value": "APAGAR" }] }]);
-//
-//													} catch (error) { }
-//
-//												}
-////
-////												if (elementData.command && elementData.command.commandElementValues && Array.isArray(elementData.command.commandElementValues) &&
-////													elementData.command.commandElementValues.length > 0) {
-////
-////													let commandElementValue = elementData.command.commandElementValues.find(e => e.commandElementTypeParam.id === self.vmsSignalingModuleConfig.commands.sendMessage.commandElementValues[0].commandElementTypeParamId);
-////
-////													if (commandElementValue) {
-////
-////														jsonValue = JSON.parse(commandElementValue.value);
-////													}
-////
-////												} else {
-////
-////													try {
-////
-////														jsonValue = JSON.parse([{ "zone": 1, "graphics": [] }, { "zone": 2, "alternance_ms": 5000, "align": "center", "texts": [{ "id": 1, "value": "APAGAR" }, { "id": 2, "value": "APAGAR" }, { "id": 3, "value": "APAGAR" }] }]);
-////
-////													} catch (error) { }
-////
-////												}
-//
-//												let elementValueJsonData = {
-//
-//													elementTypeParam: {
-//														id: self.vmsSignalingModuleConfig.vms.jsonData
-//													},
-//													value: JSON.stringify(jsonValue)
-//												}
-//
-//												elementGraphicIcontMap.updateValues([elementValueJsonData]);
-//											}
-//
-//											if (windowScrollview) {
-//
-//												//let labelPriority = $$("label-priority-" + self.uid + "-" + elementData.id);
-//												let conflictTemplate = $$("conflict-template-" + self.uid + "-" + elementData.id);
-////												let dateTemplate = $$("date-template-" + self.uid + "-" + elementData.id);
-//
-////												if (labelPriority) {
-////
-////													let newLabel = (elementData.priority && elementData.priority.labelAlias) ? i18n.t(elementData.priority.labelAlias) : "-";
-////													labelPriority.setValue(newLabel);
-////												}
-//
-//												if (conflictTemplate) {
-//
-//													let showIcon = (elementData.conflict) ? elementData.conflict : {};
-//													conflictTemplate.setValues(showIcon);
-//												}
-//												
-////												if (dateTemplate) {
-////
-////													dateTemplate.setValues({
-////														validSince: elementData.validSince,
-////														validUntil: elementData.validUntil
-////													});
-////												}
-//											}
-//										});
-//
-//										let items;
-//
-//										if (elementCopy.elementTypeState) {
-//
-//											for (let treeView of self.treeViewsArr) {
-//
-//												items = treeView.getItemsById_(elementCopy.id);
-//
-//												if (Array.isArray(items) && items.length > 0) {
-//
-//													items.forEach(item => {
-//
-//														let newElementTypeState = window.em.getByField(EntityType.ELEMENT_TYPE_STATE, "id", elementCopy.elementTypeState.id);
-//														let color = util.element.getColor(newElementTypeState);
-//
-//														if (color != item.props.stateColor) {
-//
-//															let newItem = webix.copy(item);
-//
-//															newItem.props.stateColor = color;
-//															newItem.props.stateLabel = i18n.t(newElementTypeState.labelAlias);
-//
-//															treeView.update(newItem.id, newItem);
-//														}
-//													});
-//												}
-//											}
-//										}
-//
-//										self.elementsMap.set(elementCopy.id, elementCopy);
-//									});
-//
-//									self.setTimeOut = false;
-//								}
-//							});
-//
-//						}, 1000);
-//					}
-//				}
-//			}
-//		}
 	}
 
 	callbackSelectedItemTree(item) {
@@ -1268,7 +1032,6 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 										{
 											id: "window-panel-" + idHTML + "-" + self.uid,
 											width: 600,
-											//height: 650,
 											header: function() {
 
 												return `<div>
@@ -1325,8 +1088,6 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 
 						panel = {
 							id: "panel-" + self.uid + "-" + el.id,
-							priority: (el.priority && el.priority.priority) ? el.priority.priority : "-",
-							enable: (el.command && el.command.enable) ? 1 : 0,
 							location: parseFloat(el.element.location.alias),
 							css: { "border-top": "1px solid var(--blue-backcolor)", "border-bottom": "1px solid var(--blue-backcolor)", "box-sizing": "border-box" },
 							rows: [
@@ -1368,27 +1129,6 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 													css: "signaling-monitor-text-panel-pk",
 												},
 												{}
-//												{
-//													id: "label-priority-" + self.uid + "-" + el.id,
-//													view: "label",
-//													label: (el.priority && el.priority.labelAlias) ? i18n.t(el.priority.labelAlias) : "-",
-//													align: "center",
-//													css: "signaling-monitor-text-panel-priority",
-//												},
-//												{
-//													id: "conflict-template-" + self.uid + "-" + el.id,
-//													view: "template",
-//													css: { "border-top": "0px", "border-left": "0px", "border-right": "0px", "border-bottom": "0px" },
-//													template: function(obj) {
-//
-//														let conflict = (obj === true) ? obj : (el.command && el.command.conflict) ? el.command.conflict : false;
-//														let icon = (conflict) ? "mdi mdi-alert-circle" : "";
-//
-//														return `<div class="signaling-monitor-text-panel-icon">
-//																	<span title="${i18n.t("LBL_CONFLICT")}"class="ico webix_icon ${icon}"></span>
-//																	</div>`
-//													}
-//												}
 											]
 										},
 										{
@@ -1413,7 +1153,7 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 
 															if (data) {
 
-																drawGraphicIcon(el.id, data.element, data.command, data.priority, function(graphicIconInstance) {
+																drawGraphicIcon(el.id, data.element, data.command, function(graphicIconInstance) {
 
 																	config.graphicIconInstance = graphicIconInstance;
 
@@ -1434,46 +1174,6 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 													}
 												},
 												{}
-//												{
-//													id: "date-template-" + self.uid + "-" + el.id,
-//													borderless: true,
-//													css: { "text-align": "center" },
-//													height: 20,
-//													tooltip: function() {
-//
-//														let tooltip = "";
-//														if (el.validSince) {
-//
-//															let since = (el.validSince) ? el.validSince : "---";
-//															let until = (el.validUntil) ? el.validUntil : "---";
-//
-//															tooltip = i18n.t("LBL_SINCE") + ": " + since + " " + i18n.t("LBL_UNTIL") + ": " + until;
-//														}
-//
-//														return tooltip;
-//
-//													},
-//													template: function(obj) {
-//
-//														let since;
-//														let until;
-//														
-//														if (obj.validSince && obj.validUntil) {
-//
-//															since = obj.validSince;
-//															until = obj.validUntil;
-//
-//														} else {
-//
-//															since = (el.validSince) ? el.validSince : "---";
-//															until = (el.validUntil) ? el.validUntil : "---";
-//														}
-//
-//														return `<div>
-//															<span><p style='font-size:11px; font-style:italic; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 0px;'><strong>${i18n.t("LBL_SINCE")}</strong>: ${since} <strong>${i18n.t("LBL_UNTIL")}</strong>: ${until}</p></span>
-//															</div>`;
-//													}
-//												}
 											]
 										}
 									]
@@ -1487,7 +1187,7 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 
 						panelsArr.push(panel);
 
-						function drawGraphicIcon(svgId, element, commandElement, priority, onAfterRender) {
+						function drawGraphicIcon(svgId, element, commandElement, onAfterRender) {
 
 							let property = self.vmsSignalingModuleConfig.properties.find(e => e.id === element.elementSubtype.id);
 							let graphicIcon = undefined;
@@ -1524,20 +1224,8 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 									graphicIconInstance.load(function() {
 
 										graphicIconInstance.loadRender(function() {
-
-											let color;
-											let newElementTypeState = window.em.getByField(EntityType.ELEMENT_TYPE_STATE, "id", element.elementTypeState.id);
 											
-											color = util.element.getColor(newElementTypeState);
-											
-//											if (priority && priority.enable) {
-//
-//												color = (commandElement && commandElement.enable) ? QUEUE_COLOR_ACTIVE : QUEUE_COLOR_NO_ACTIVE;
-//											}
-
-											graphicIconInstance.updateState({
-												color: color
-											});
+											graphicIconInstance.updateElementState(element.elementState);
 
 											let jsonValue = [];
 
@@ -1554,26 +1242,6 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 												} catch (error) { }
 
 											}
-											
-//											if (commandElement && Array.isArray(commandElement.commandElementValues) &&
-//												commandElement.commandElementValues.length > 0) {
-//
-//												let commandElementValue = commandElement.commandElementValues.find(e => e.commandElementTypeParam.id === self.vmsSignalingModuleConfig.commands.sendMessage.commandElementValues[0].commandElementTypeParamId);
-//
-//												if (commandElementValue) {
-//
-//													jsonValue = JSON.parse(commandElementValue.value);
-//												}
-//
-//											} else {
-//
-//												try {
-//
-//													jsonValue = JSON.parse([{ "zone": 1, "graphics": [] }, { "zone": 2, "alternance_ms": 5000, "align": "center", "texts": [{ "id": 1, "value": "APAGAR" }, { "id": 2, "value": "APAGAR" }, { "id": 3, "value": "APAGAR" }] }]);
-//
-//												} catch (error) { }
-//
-//											}
 
 											let elementValueJsonData = {
 
@@ -1598,8 +1266,6 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 						}
 					}
 
-					panelsArr.sort((a, b) => (a.location - b.location) || (a.priority - b.priority) || (b.enable - a.enable));
-
 					return panelsArr;
 				}
 
@@ -1612,64 +1278,18 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 
 		let self = this;
 		let elementData = new Map();
-		let elementType = window.em.getByField(EntityType.ELEMENT_TYPE, "id", self.config.elementTypeId);
 
 		for (let element of elements) {
 
 			let commandElement;
-			let state;
-			let priority;
-			let validSince;
-			let validUntil;
-			let conflict;
-			let elementTypeCopy = webix.copy(elementType);
 			let svgId = element.id.replaceAll(":", "") + self.args.containerId;
 
-			if (element.queue && Array.isArray(element.queue.commandElements) && element.queue.commandElements.length > 0) {
-
-				if (element.queue.commandElements.length > 1) {
-
-					element.queue.commandElements.sort((a, b) => (a.enable ? 0 : 1) - (b.enable ? 0 : 1) || a.startTime - b.startTime);
-					element.queue.commandElements = [element.queue.commandElements.shift()];
-				}
-
-				element.queue.commandElements.forEach(cmd => {
-
-					priority = elementTypeCopy.priorities.find(e => e.id === cmd.priority.id);
-
-					if (priority) {
-
-						let priorityEnable = element.queue.priorities.find(e => e.id === priority.id);
-
-						priority.enable = priorityEnable.enable;
-					}
-
-					//let commandElementArr = element.queue.commandElements.filter(e => e.priority.id === priority.id);
-					//commandElement = commandElementArr.find(e => e.id === cmd.id);				
-					
-					validSince = util.toLocaleString(cmd.startTime / 1000);
-					validUntil = "---";
-
-					if (cmd.endTime < MAX_EPOCH_TIME) {
-
-						validUntil = util.toLocaleString(cmd.endTime / 1000);
-					}
-
-					conflict = cmd.conflict;
-				});
-			}
 			
 			commandElement = element.elementValues.find(e=> e.elementTypeParam.id === self.vmsSignalingModuleConfig.vms.jsonData);
-			state= element.elementTypeState.id;
 			
 			elementData.set(svgId, {
-				priority: priority,
 				command: commandElement,
-				validUntil: validUntil,
-				validSince: validSince,
-				element: element,
-				conflict: conflict,
-				state: state
+				element: element
 			});
 		}
 
@@ -1677,14 +1297,9 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 
 			return {
 				id: e[0],
-				priority: e[1].priority,
 				command: e[1].command,
-				validUntil: e[1].validUntil,
-				validSince: e[1].validSince,
 				element: e[1].element,
-				elementId: e[1].element.id,
-				conflict: e[1].conflict,
-				state: e[1].state
+				elementId: e[1].element.id
 			}
 		});
 

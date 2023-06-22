@@ -269,6 +269,7 @@ export default class EquipmentViewerInfo {
 
 			let viewTabMosaic;
 			element.elementTypeState = self.element.elementTypeState;
+			element.elementState = self.element.elementState;
 
 			let equipmentViewerInfoIconForCarousel = new EquipmentViewerInfoIcon(self.parent, element, self.equipmentViewer);
 			let viewInfoIconForCarousel = equipmentViewerInfoIconForCarousel.getView();
@@ -298,6 +299,7 @@ export default class EquipmentViewerInfo {
 			let viewTable;
 
 			element.elementTypeState = self.element.elementTypeState;
+			element.elementState = self.element.elementState;
 			element.elementValues = self.element.elementValues;
 
 			self.equipmentViewerTable = new EquipmentViewerTable(self.parent, element, self.equipmentViewer, self.measuresGroups);
@@ -556,31 +558,31 @@ export default class EquipmentViewerInfo {
 		}
 	}
 
-	updateState(elementTypeState) {
+	updateState(elementState) {
 
-		if (elementTypeState != undefined) {
+		if (elementState != undefined) {
 
 			let viewMainInfoImage = $$("view-main-info-image-" + this.uid);
 			let viewMainTableImage = $$("view-main-info-table-image-" + this.uid);
 
 			if (this.parent.graphicIconInstance) {
 
-				this.parent.graphicIconInstance.updateState(elementTypeState);
+				this.parent.graphicIconInstance.updateElementState(elementState);
 			}
 
 			if (this.parent.graphicIconInstanceFromTable) {
 
-				this.parent.graphicIconInstanceFromTable.updateState(elementTypeState);
+				this.parent.graphicIconInstanceFromTable.updateElementState(elementState);
 			}
 
 			if (viewMainInfoImage) {
 
-				viewMainInfoImage.setValues({ elementTypeState: elementTypeState });
+				viewMainInfoImage.setValues({ elementState: elementState });
 			}
 
 			if (viewMainTableImage) {
 
-				viewMainTableImage.setValues({ elementTypeState: elementTypeState });
+				viewMainTableImage.setValues({ elementState: elementState });
 			}
 		}
 	}

@@ -91,15 +91,16 @@ export default class EquipmentViewerInfoIcon {
 
 									let equipmentIcon = self.elementType.elementTypePhoto;
 
-									let color = util.element.getColor(self.element.elementTypeState);
+									let color = util.element.getColorByState(self.element.elementState);
 
-									if (data && data.elementTypeState) {
+									if (data && data.elementState && data.elementState.currentElementTypeState) {
 
-										let elementTypeState = self.elementType.elementTypeStates.find(e => e.id === data.elementTypeState.id);
+										let elementTypeState = self.elementType.elementTypeStates.find(e => e.id === data.elementState.currentElementTypeState.id);
 
 										if (elementTypeState) {
-
-											color = util.element.getColor(elementTypeState);
+											
+											data.elementState.currentElementTypeState = elementTypeState;
+											color = util.element.getColorByState(data.elementState);
 										}
 									}
 
@@ -149,15 +150,16 @@ export default class EquipmentViewerInfoIcon {
 							height: 25,
 							template: function(data) {
 
-								let color = util.element.getColor(self.element.elementTypeState);
+								let color = util.element.getColorByState(self.element.elementState);
 
-								if (data && data.elementTypeState) {
+								if (data && data.elementState && data.elementState.currentElementTypeState) {
 
-									let elementTypeState = self.elementType.elementTypeStates.find(e => e.id === data.elementTypeState.id);
+									let elementTypeState = self.elementType.elementTypeStates.find(e => e.id === data.elementState.currentElementTypeState.id);
 
 									if (elementTypeState) {
 
-										color = util.element.getColor(elementTypeState);
+										data.elementState.currentElementTypeState = elementTypeState;
+										color = util.element.getColorByState(data.elementState);
 									}
 								}
 
@@ -222,9 +224,9 @@ export default class EquipmentViewerInfoIcon {
 
 								self.graphicIconInstance.loadRender(function() {
 
-									if (self.element.elementTypeState) {
+									if (self.element.elementState) {
 
-										self.graphicIconInstance.updateState(self.element.elementTypeState);
+										self.graphicIconInstance.updateElementState(self.element.elementState);
 									}
 
 									if (Array.isArray(self.element.elementValues) && self.element.elementValues.length > 0) {

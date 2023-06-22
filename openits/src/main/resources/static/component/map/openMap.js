@@ -768,9 +768,9 @@ export default class OpenMap extends GenericMap {
 	
 							const lazy = async _ => {
 								
-								if (element.elementTypeState) {
+								if (element.elementState) {
 											
-									graphicIcon.updateState(element.elementTypeState);	
+									graphicIcon.updateElementState(element.elementState);	
 								}
 								
 								if (Array.isArray(element.elementValues) && element.elementValues.length > 0) {
@@ -1697,9 +1697,9 @@ export default class OpenMap extends GenericMap {
 							
 							graphicIcons.forEach(graphicIcon => {
 							
-								if (element.elementTypeState) {
+								if (element.elementState) {
 									
-									graphicIcon.updateState(element.elementTypeState);
+									graphicIcon.updateElementState(element.elementState);
 								}
 								
 								if (Array.isArray(element.elementValues) && element.elementValues.length > 0) {

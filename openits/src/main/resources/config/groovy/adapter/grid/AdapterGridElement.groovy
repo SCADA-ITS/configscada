@@ -30,8 +30,13 @@ class AdapterGridElement extends AdapterGrid{
 	static final String FIELD_STATE = "state";
 	static final String FIELD_VALUE = "value";
 	static final String FIELD_ELEMENT_TYPE_STATE = "elementTypeState";
-	static final String FIELD_ELEMENT_TYPE_STATE_STATE = "state";
-	static final String FIELD_ELEMENT_TYPE_STATE_STATE_LABEL = "stateLabel";
+	static final String FIELD_ELEMENT_STATE = "elementState";
+	static final String FIELD_ELEMENT_STATE_CURRENT= "currentElementTypeState";
+	static final String FIELD_ELEMENT_STATE_MAX_ALARM_LEVEL= "maxAlarmLevel";
+	static final String ALARM_STATE_ID = "3"
+	
+	static final String FIELD_ELEMENT_STATE_STATE = "state";
+	static final String FIELD_ELEMENT_STATE_STATE_LABEL = "stateLabel";
 	static final String FIELD_LOCATION = "location";
 	static final String FIELD_ALIAS = "alias";
 	static final String FIELD_DESCRIPTION = "description";
@@ -77,18 +82,50 @@ class AdapterGridElement extends AdapterGrid{
 	
 	void flattenElementTypeState(Map<String, Object> dataRow) {
 		
-		if (dataRow.containsKey(FIELD_ELEMENT_TYPE_STATE)) {
+		if (dataRow.containsKey(FIELD_ELEMENT_STATE)) {
 			
-			Object objElementTypeState = dataRow.get(FIELD_ELEMENT_TYPE_STATE);
+			Object objElementState = dataRow.get(FIELD_ELEMENT_STATE);
 			
-			if (objElementTypeState instanceof Map) {
+			if (objElementState instanceof Map) {
 				
-				Map<String, Object> elementTypeState = (Map<String, Object>) objElementTypeState; 
+				Map<String, Object> elementState = (Map<String, Object>) objElementState; 
 				
-				dataRow.put(FIELD_ELEMENT_TYPE_STATE_STATE, elementTypeState.get(FIELD_ID));
-				dataRow.put(FIELD_ELEMENT_TYPE_STATE_STATE_LABEL, elementTypeState.get(FIELD_LABEL_ALIAS));
+				
+				if (elementState.containsKey(FIELD_ELEMENT_STATE_CURRENT)) {
+					Object objCurrentElementTypeState = elementState.get(FIELD_ELEMENT_STATE_CURRENT);
+					
+					if (objCurrentElementTypeState instanceof Map) {
+						
+						Map<String, Object> currentElementTypeState = (Map<String, Object>) objCurrentElementTypeState;
+						String labelAlias = currentElementTypeState.get(FIELD_LABEL_ALIAS);
+						String id = currentElementTypeState.get(FIELD_ID);
+						String[] parts = id.split(":");
+						
+						
+						if (parts.length == 3 && parts[2].equals(ALARM_STATE_ID) && elementState.containsKey(FIELD_ELEMENT_STATE_MAX_ALARM_LEVEL)){
+							
+							Object oblMaxAlarmLevel = elementState.get(FIELD_ELEMENT_STATE_MAX_ALARM_LEVEL);
+							
+							if (oblMaxAlarmLevel instanceof Map) {
+						
+								Map<String, Object> maxAlarmLevel = (Map<String, Object>) oblMaxAlarmLevel;
+								
+								if(maxAlarmLevel.containsKey(FIELD_LABEL_ALIAS)){
+									
+									labelAlias = labelAlias + " - " + maxAlarmLevel.get(FIELD_LABEL_ALIAS);
+								}
+							}
+							
+						}
+						
+						dataRow.put(FIELD_ELEMENT_STATE_STATE, id);
+						dataRow.put(FIELD_ELEMENT_STATE_STATE_LABEL, labelAlias);
+					}
+				}
+					
 			}
 			
+			dataRow.remove(FIELD_ELEMENT_STATE);
 			dataRow.remove(FIELD_ELEMENT_TYPE_STATE);
 		}
 	}

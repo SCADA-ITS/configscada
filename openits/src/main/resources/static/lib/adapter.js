@@ -46,18 +46,13 @@ export let adapter = {
 
 								dataItem.id = element.id;
 
-								if (element.elementTypeState != undefined) {
+								if (element.elementState != undefined && element.elementState.currentElementTypeState != undefined) {
 
-									dataItem.state = element.elementTypeState.id;
+									dataItem.state = element.elementState.currentElementTypeState.id;
 									
 									if (Array.isArray(elementType.elementTypeStates) && elementType.elementTypeStates.length > 0) {
 										
-										let elementTypeState = elementType.elementTypeStates.find(e => e.id == element.elementTypeState.id);
-										
-										if (elementTypeState) {
-										
-											dataItem.stateLabel = elementTypeState.labelAlias;		
-										}
+										dataItem.stateLabel = util.element.getAliasState(element.elementState);		
 									}
 								}
 
@@ -112,16 +107,7 @@ export let adapter = {
 														dataItem[elementTypeParamId].value = IS_TRUE(elementValue.value);
 													}
 												}
-
-
-												//                                                              if (elementValue.value != undefined) {
-												//                   
-												//                                                                    dataItem[elementTypeParamId].value = elementValue.value;
-												//                                                              }
-												//                                                              else {
-												//                   
-												//                                                                    dataItem[elementTypeParamId].value = "";
-												//                                                              }          
+       
 											}
 										}
 									});
@@ -141,7 +127,7 @@ export let adapter = {
 				}
 			},
 
-			// Only for one element
+			// Deprecated
 			get(data, elementTypeParams, update_callback) {
 
 				let element = undefined;
@@ -151,13 +137,13 @@ export let adapter = {
 					element = webix.copy(data);
 
 					// Adapter for state
-					if (element.elementTypeState) {
+					if (element.elementState && element.elementState.currentElementTypeState) {
 
-						let elementTypeState = window.em.getByField(EntityType.ELEMENT_TYPE_STATE, "id", element.elementTypeState.id);
+						let elementTypeState = window.em.getByField(EntityType.ELEMENT_TYPE_STATE, "id", element.elementState.currentElementTypeState.id);
 
 						if (elementTypeState) {
 
-							element.elementTypeState = elementTypeState;
+							element.elementState.currentElementTypeState = elementTypeState;
 						}
 					}
 
@@ -208,6 +194,73 @@ export let adapter = {
 				return element;
 			},
 
+			// Only for one element
+			getByState(data, elementTypeParams, update_callback) {
+
+				let element = undefined;
+
+				if (data) {
+
+					element = webix.copy(data);
+
+					// Adapter for state
+					if (element.elementState && element.elementState.currentElementTypeState) {
+
+						let elementTypeState = window.em.getByField(EntityType.ELEMENT_TYPE_STATE, "id", element.elementState.currentElementTypeState.id);
+
+						if (elementTypeState) {
+
+							element.elementState.currentElementTypeState = elementTypeState;
+						}
+					}
+
+					// Adapter for measures
+					let elementValues = getElementValues();
+
+					if (elementValues) {
+
+						element.elementValues = elementValues;
+					}
+
+					// TODO: Adapter for alarms
+
+
+					if (update_callback) {
+
+						update_callback(elements);
+					}
+
+					function getElementValues() {
+
+						let elementValuesToUpdate = [];
+
+						if (element && Array.isArray(elementTypeParams) && elementTypeParams.length > 0 &&
+							Array.isArray(element.elementValues) && element.elementValues.length > 0) {
+
+							element.elementValues.forEach(elementValue => {
+
+								let elementTypeParamId = util.element.getElementTypeParamId(elementValue.id);
+
+								let elementTypeParam = elementTypeParams.find(e => e.id === elementTypeParamId);
+
+								if (elementTypeParam) {
+
+									elementValue.elementTypeParam = elementTypeParam;
+
+									elementValuesToUpdate.push(elementValue);
+								}
+
+							});
+						}
+
+						return elementValuesToUpdate;
+					}
+				}
+
+
+				return element;
+			},
+			
 			update(oldData, newData, update_callback) {
 
 				function updateObject(oldItem, newItem) {

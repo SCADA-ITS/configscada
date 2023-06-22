@@ -16,7 +16,7 @@ export default class EquipmentViewerContent {
 
 		this.equipmentViewer = equipmentViewer;
 		this.idStompSubscriptor = undefined;
-		this.currentElementTypeState = element.elementTypeState;
+		this.currentElementState = element.elementState;
 
 		if (element) {
 
@@ -84,15 +84,16 @@ export default class EquipmentViewerContent {
 					height: 15,
 					template: function(data) {
 
-						let color = util.element.getColor(self.element.elementTypeState);
+						let color = util.element.getColorByState(self.element.elementState);
 
-						if (data && data.elementTypeState) {
+						if (data && data.elementState && data.elementState.currentElementTypeState) {
 
-							let elementTypeState = self.elementType.elementTypeStates.find(e => e.id === data.elementTypeState.id);
+							let elementTypeState = self.elementType.elementTypeStates.find(e => e.id === data.elementState.currentElementTypeState.id);
 
 							if (elementTypeState) {
 
-								color = util.element.getColor(elementTypeState);
+								data.elementState.currentElementTypeState = elementTypeState;
+								color = util.element.getColorByState(data.elementState);
 							}
 						}
 
@@ -127,18 +128,19 @@ export default class EquipmentViewerContent {
 
 									let equipmentIcon = self.elementType.elementTypePhoto;
 
-									if (data && data.elementTypeState) {
+									if (data && data.elementState &&  data.elementState.currentElementTypeState) {
 
-										let elementTypeState = self.elementType.elementTypeStates.find(e => e.id === data.elementTypeState.id);
+										let elementTypeState = self.elementType.elementTypeStates.find(e => e.id === data.elementState.currentElementTypeState.id);
 
 										if (elementTypeState) {
 
-											self.currentElementTypeState = elementTypeState;
+											self.currentElementState = data.elementState;
+											self.currentElementState.currentElementTypeState = elementTypeState;
 										}
 									}
 
-									let elementTypeStateLabel = i18n.t(self.currentElementTypeState.labelAlias);
-									let color = util.element.getColor(self.currentElementTypeState);
+									let elementTypeStateLabel =  util.element.getAliasState(self.currentElementState);
+									let color = util.element.getColorByState(self.currentElementState);
 
 									let res = `<image class="ims-incident-report-icon" src="img/${equipmentIcon}" onerror="this.onerror=null;this.src='img/not_found_50.png';"/>
 											<div class="ims-incident-report-title" id="equipDescription" ${ellipsis} title="${elementLabelDescription + ' - ' + self.element.alias}">
@@ -523,7 +525,7 @@ export default class EquipmentViewerContent {
 					elementTypeParams = self.element.elementValues.map(elementValue => elementValue.elementTypeParam);
 				}
 
-				let element = adapter.ws.element.get(data, elementTypeParams);
+				let element = adapter.ws.element.getByState(data, elementTypeParams);
 
 				if (element) {
 
@@ -537,23 +539,23 @@ export default class EquipmentViewerContent {
 						elementHeader.setValues({ clockUpdate: true });
 					}
 
-					if (element.elementTypeState) {
+					if (element.elementState) {
 
 						let elementStateBar = $$("view-main-content-header-bar-state-" + self.uid);
 
 						if (elementHeader) {
 
-							elementHeader.setValues({ elementTypeState: element.elementTypeState });
+							elementHeader.setValues({ elementState: element.elementState });
 						}
 
 						if (elementStateBar) {
 
-							elementStateBar.setValues({ elementTypeState: element.elementTypeState });
+							elementStateBar.setValues({ elementState: element.elementState });
 						}
 
 						if (self.equipmentViewerInfo) {
 
-							self.equipmentViewerInfo.updateState(element.elementTypeState);
+							self.equipmentViewerInfo.updateState(element.elementState);
 						}
 					}
 
@@ -587,6 +589,11 @@ export default class EquipmentViewerContent {
 					if (element.elementTypeState) {
 
 						self.element.elementTypeState = element.elementTypeState;
+					}
+					
+					if (element.elementState) {
+
+						self.element.elementState = element.elementState;
 					}
 				}
 			}

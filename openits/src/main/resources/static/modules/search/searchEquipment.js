@@ -41,7 +41,7 @@ export default class SearchEquipment {
 								
 								if (elem) {
 									
-									elem.elementTypeState = webix.copy(elementWithState.elementTypeState);
+									elem.elementState = webix.copy(elementWithState.elementState);
 								}		
 							});
 						}
@@ -155,9 +155,9 @@ export default class SearchEquipment {
 											width : 36,
 											template: function() {
 												
-												let cssCircle = `width: 26px; height: 26px; -webkit-border-radius: 13px; -moz-border-radius: 13px; border-radius: 13px; margin: 5px 0px 0px 5px; background: ${util.element.getColor(element.elementTypeState) + 'A0'};`;
+												let cssCircle = `width: 26px; height: 26px; -webkit-border-radius: 13px; -moz-border-radius: 13px; border-radius: 13px; margin: 5px 0px 0px 5px; background: ${util.element.getColorByState(element.elementState) + 'A0'};`;
 											
-												return `<div title="${i18n.t(element.elementTypeState.labelAlias)}" style="${cssCircle}"></div>`;		
+												return `<div title="${util.element.getAliasState(element.elementState)}" style="${cssCircle}"></div>`;		
 											}
 										},
 										{ width : 15 },

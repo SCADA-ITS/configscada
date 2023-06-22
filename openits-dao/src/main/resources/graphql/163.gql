@@ -15,6 +15,14 @@
   elementTypeState {
     id
   }
+  elementState {
+    currentElementTypeState {
+      id
+    }
+    maxAlarmLevel {
+      id
+    }
+  }
   alarms {
     id
     alarmConfig {

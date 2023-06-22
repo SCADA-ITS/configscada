@@ -6,6 +6,16 @@
     id
     labelAlias
   }
+  elementState {
+    currentElementTypeState {
+      id
+      labelAlias
+    }
+    maxAlarmLevel {
+      id
+      labelAlias
+    }
+  }
   elementValues {
     id
     value

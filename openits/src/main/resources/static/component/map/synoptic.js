@@ -957,9 +957,11 @@ export default class Synoptic extends GenericMap {
 				
 				graphicIcons.forEach(graphicIcon => {
 					
-					if (element.elementTypeState) {
+					
+					if (element.elementState) {
 						
-						graphicIcon.updateState(element.elementTypeState);	
+						graphicIcon.updateElementState(element.elementState);	
+						
 					}
 					
 					if (Array.isArray(element.elementValues) && element.elementValues.length > 0) {

@@ -801,10 +801,10 @@ export default class AlarmMonitorModule extends GenericModule {
 										id: element.id,
 										label: element.alias,
 										image: element.elementType.elementTypePhoto,
-										stateColor: util.element.getColor({ id: element.elementTypeState.id }),
-										stateLabel: i18n.t(element.elementTypeState.labelAlias),
+										stateColor: element.elementState ? util.element.getColorByState(element.elementState) : util.element.getColor(element.elementTypeState),
+										stateLabel: element.elementState ? util.element.getAliasState(element.elementState) : i18n.t(element.elementTypeState.labelAlias)		
 									};
-
+								
 									if (hierarchies) {
 
 										let childHierarchy = hierarchies.find(h => h.child.id === el.id);
@@ -826,8 +826,8 @@ export default class AlarmMonitorModule extends GenericModule {
 								id: el.id,
 								label: el.alias + " (" + i18n.t(el.elementType.labelAlias) + ")",
 								image: el.elementType.elementTypePhoto,
-								stateColor: util.element.getColor({ id: el.elementTypeState.id }),
-								stateLabel: i18n.t(el.elementTypeState.labelAlias),
+								stateColor: el.elementState ? util.element.getColorByState(el.elementState) : util.element.getColor(el.elementTypeState),
+								stateLabel: el.elementState ? util.element.getAliasState(el.elementState) : i18n.t(el.elementTypeState.labelAlias)
 							}
 						}
 					});
@@ -1867,7 +1867,7 @@ export default class AlarmMonitorModule extends GenericModule {
 
 				let items;
 
-				if (data.elementTypeState) {
+				if (data.elementState) {
 
 					for (let treeView of self.treeViewsArr) {
 
@@ -1877,14 +1877,15 @@ export default class AlarmMonitorModule extends GenericModule {
 
 							items.forEach(item => {
 
-								let newElementTypeState = window.em.getByField(EntityType.ELEMENT_TYPE_STATE, "id", data.elementTypeState.id);
-
-								if (newElementTypeState.color != item.props.stateColor) {
+								let newColor = data.elementState ? util.element.getColorByState(data.elementState) : util.element.getColor(data.elementTypeState);
+								let newLabel = data.elementState ? util.element.getAliasState(data.elementState) : i18n.t(data.elementTypeState.labelAlias);		
+									
+								if (newColor != item.props.stateColor || newLabel != item.props.stateLabel) {
 
 									let newItem = webix.copy(item);
 
-									newItem.props.stateColor = newElementTypeState.color;
-									newItem.props.stateLabel = i18n.t(newElementTypeState.labelAlias);
+									newItem.props.stateColor = newColor;
+									newItem.props.stateLabel = newLabel;
 
 									treeView.update(newItem.id, newItem);
 								}

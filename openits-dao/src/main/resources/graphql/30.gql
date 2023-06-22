@@ -11,6 +11,14 @@
   elementTypeState {
     id
   }
+  elementState {
+    currentElementTypeState {
+      id
+    }
+    maxAlarmLevel {
+      id
+    }
+  }
   location {
     id
     alias

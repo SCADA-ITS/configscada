@@ -1777,7 +1777,7 @@ export let util = {
 
 		getColor(elementTypeState) {
 
-			let colors = ["#ffcc00", "#008000", "#800080", "#ff0000"]
+			let colors = ["#ffcc00", "#008000", "#800080", "#ff0000", "00bcd4"]
 			let color = colors[0];
 
 			if (elementTypeState) {
@@ -1803,6 +1803,87 @@ export let util = {
 			}
 
 			return color;
+		},
+
+		getColorByState(elementState) {
+
+			let colors = ["#ffcc00", "#008000", "#800080", "#ff0000", "00bcd4"]
+			let color = colors[0];
+
+			if (elementState && elementState.currentElementTypeState && elementState.currentElementTypeState.id) {
+
+				let idx = elementState.currentElementTypeState.id.substring(elementState.currentElementTypeState.id.lastIndexOf(":") + 1);
+
+				if (!isNaN(idx)) {
+
+					let colorPos = parseInt(idx, 10);
+
+					let maxAlarmLevel = elementState.maxAlarmLevel ? window.em.getByField(EntityType.ALARM_LEVEL, "id", elementState.maxAlarmLevel.id) : undefined;
+
+					if (maxAlarmLevel && util.element.isAlarmState(elementState) && maxAlarmLevel.color) {
+
+						color = maxAlarmLevel.color;
+
+					} else if (elementState.currentElementTypeState.color) {
+
+						color = elementState.currentElementTypeState.color
+
+					} else if (colorPos < colors.length) {
+
+						color = colors[colorPos];
+					}
+				}
+			}
+
+			return color;
+		},
+
+		isAlarmState(elementState) {
+
+			let res = false;
+
+			if (elementState && elementState.currentElementTypeState && elementState.currentElementTypeState.id) {
+
+				const ALARM_STATE_IDX = 3;
+
+				let idx = elementState.currentElementTypeState.id.substring(elementState.currentElementTypeState.id.lastIndexOf(":") + 1);
+				let pos = parseInt(idx, 10);
+
+				res = pos === ALARM_STATE_IDX;
+			}
+
+			return res;
+		},
+
+		getAliasState(elementState) {
+
+			let alias = undefined;
+
+			if (elementState) {
+
+				if (elementState.currentElementTypeState) {
+
+					let elementTypeState = window.em.getByField(EntityType.ELEMENT_TYPE_STATE, "id", elementState.currentElementTypeState.id);
+
+					if (elementTypeState && elementTypeState.labelAlias) {
+
+						alias = i18n.t(elementTypeState.labelAlias);
+					}
+				}
+
+				if (util.element.isAlarmState(elementState) && elementState.maxAlarmLevel) {
+
+					let alarmLevel = window.em.getByField(EntityType.ALARM_LEVEL, "id", elementState.maxAlarmLevel.id);
+
+					if (alarmLevel && alarmLevel.labelAlias) {
+
+						alias = alias + " - " + i18n.t(alarmLevel.labelAlias);
+					}
+
+				}
+
+			}
+			return alias;
 		},
 
 		sendCommand(commands, onResponse, confirmMessage) {

@@ -232,7 +232,7 @@ export default class VmsSignalingQueuesModule extends GenericModule {
 					queue.push({
 						id: commandElement.id,
 						labelAlias: element.alias,
-						state: i18n.t(element.elementTypeState.labelAlias),
+						state: element.elementState ? util.element.getAliasState(element.elementState) : i18n.t(element.elementTypeState.labelAlias),
 						conflict: (commandElement.conflict) ? i18n.t("LBL_CONFLICT") : "",
 						message: panel,
 						initialDate: commandElement.startTime,

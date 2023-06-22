@@ -11,6 +11,15 @@
     id
     labelAlias
   }
+  elementState {
+    currentElementTypeState {
+      id
+      labelAlias
+    }
+    maxAlarmLevel {
+      id
+    }
+  }
   elementValues {
     id
     value
@@ -67,6 +76,15 @@
     elementTypeState {
       id
       labelAlias
+    }
+    elementState {
+      currentElementTypeState {
+        id
+        labelAlias
+      }
+      maxAlarmLevel {
+        id
+      }
     }
     elementValues {
       id

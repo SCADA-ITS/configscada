@@ -57,9 +57,8 @@ export default class GraphicIconCustom extends GraphicIcon {
 			
 			function getState() {
 				
-				let id = self.element.elementTypeState.id;
-				
-				let color = util.element.getColor(self.element.elementTypeState);
+				let id = self.element.elementState ? self.element.elementState.currentElementTypeState.id : self.element.elementTypeState.id;
+				let color = self.element.elementState ? util.element.getColorByState(self.element.elementState) : util.element.getColor(self.element.elementTypeState);
 							
 				return {
 					id: id,
@@ -99,6 +98,26 @@ export default class GraphicIconCustom extends GraphicIcon {
 		}
 	}
 	
+	updateElementState(elementState) {
+		
+		super.updateElementState(elementState);
+		let id = elementState.currentElementTypeState.id;
+		
+		if (this.graphicIconCustomType) {
+			
+			let color = util.element.getColorByState(elementState);
+					
+			this.elementInfo.state = {
+				id: id,
+				color: color 
+			};
+			
+			this.graphicIconCustomType.render(this.elementInfo);	
+		}
+	}
+
+
+
 	updateValues(elementValues) {
 	
 		super.updateAlarms(elementValues);

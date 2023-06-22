@@ -28,6 +28,26 @@ export default class GraphicIconDefault extends GraphicIcon {
 		}
 	}
 	
+	updateElementState(elementState) {
+					
+		super.updateElementState(elementState);
+					
+		if (this.g) {
+			
+			let gState = this.g.select("#" + GraphicIcon.G_ID_STATE);
+			
+			if (gState) {
+				
+				let color = util.element.getColorByState(elementState);
+				
+				gState.attr({
+					
+					fill: color
+				})
+			}
+		}
+	}
+
 	updateValues(elementValues) {
 		
 		super.updateValues(elementValues);
