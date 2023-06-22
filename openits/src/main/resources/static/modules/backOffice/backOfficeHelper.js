@@ -36,7 +36,8 @@ export default class BackOfficeHelper {
 				SHOW_ID_FORM: { name: "showIdForm", default: true }, 
 				SHOW_ID_TABLE: { name: "showIdTable", default: false },
 				SHOW_ID_SEARCH: { name: "showIdSearch", default: false },
-				GRID_FILTERS: { name: "gridFilters", default: false }
+				GRID_FILTERS: { name: "gridFilters", default: false },
+				REF_ADD_BUTTON: { name: "refAddButton", default: true }
 			} 
 		} 
 	}
@@ -47,7 +48,8 @@ export default class BackOfficeHelper {
 			PROPERTY: {
 				REQUIRED: { name: "required", default: false }, 
 				EDITABLE: { name: "editable", default: true }, 
-				RED_ADD_BUTTON: { name: "refAddButton", default: true }
+				REF_ADD_BUTTON: { name: "refAddButton", default: true },
+				GRID_FILTERS: { name: "gridFilters", default: false }
 			} 
 		} 
 	}
@@ -83,7 +85,7 @@ export default class BackOfficeHelper {
 				
 				value = prop.default;
 				
-				if (defaultMetadata[metaType.DEFAULT_METADATA]) {
+				if (defaultMetadata[metaType.DEFAULT_METADATA] && defaultMetadata[metaType.DEFAULT_METADATA][prop.name]) {
 					
 					value = defaultMetadata[metaType.DEFAULT_METADATA][prop.name];
 				}

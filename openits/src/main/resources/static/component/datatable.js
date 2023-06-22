@@ -1079,9 +1079,16 @@ export default class DataTable {
 
 
 		toolbar.elements = [];
-		toolbar.elements.push({ width: 4 })
+		toolbar.elements.push({ width: 4 });
+		
+		if (resultIcon && resultIcon.startsWith('mdi')) {
 
-		toolbar.elements.push({ view: "label", label: `<img src="${resultIcon}" class="grid-icon" onerror="this.onerror=null;this.src='./img/grid/default.png'" /><span class="grid-title">${i18n.t(metadata.label)}</span>` });
+			toolbar.elements.push({ view: "label", label: `<span class="${resultIcon} material-icons md-24"></span><span class="grid-title">${i18n.t(metadata.label)}</span>` });
+	
+		} else {
+
+			toolbar.elements.push({ view: "label", label: `<img src="${resultIcon}" class="grid-icon" onerror="this.onerror=null;this.src='./img/grid/default.png'" /><span class="grid-title">${i18n.t(metadata.label)}</span>` });
+		}
 
 		toolbar.elements.push({ minWidth: 4 });
 

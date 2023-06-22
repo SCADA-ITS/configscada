@@ -16,7 +16,8 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 		this.dataTable = undefined;
 		this.formHeight = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, BackOfficeHelper.META_TYPE_TABLE.PROPERTY.FORM_HEIGHT, backOffice.metadata, currentTableData);
 		this.formWidth = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, BackOfficeHelper.META_TYPE_TABLE.PROPERTY.FORM_WIDTH, backOffice.metadata, currentTableData);
-		
+		this.gridFilters = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, BackOfficeHelper.META_TYPE_TABLE.PROPERTY.GRID_FILTERS, backOffice.metadata, currentTableData);
+
 		if (backOffice.containerId) {
 			
 			util.ui.centerWindow(backOffice.containerId, backOffice.isModal ? 20: 0);
@@ -124,26 +125,35 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 				
 				function getMetadata() {
 					
+					let icon;	
+					let withIcon = (self.currentTableData.metadata && self.currentTableData.metadata.mdiIcon) ? "true" : "false"; 
+
 					const defaultGridOptionValues = [
 						{ gridOption: { id: 1 }, value: "true" },
-	//					{ gridOption: { id: 2 }, value: "true" },
-	//					{ gridOption: { id: 3 }, value: "2" },
-	//					{ gridOption: { id: 4 }, value: "asc" },
-						{ gridOption: { id: 7 }, value: "false" },
+						//					{ gridOption: { id: 2 }, value: "true" },
+						//					{ gridOption: { id: 3 }, value: "2" },
+						//					{ gridOption: { id: 4 }, value: "asc" },
+						{ gridOption: { id: 7 }, value: withIcon },
 						{ gridOption: { id: 8 }, value: "false" },
 						{ gridOption: { id: 9 }, value: "true" },
 						{ gridOption: { id: 10 }, value: "true" },
 						{ gridOption: { id: 11 }, value: "true" },
 						{ gridOption: { id: 12 }, value: "true" },
 						{ gridOption: { id: 13 }, value: "true" },
-						{ gridOption: { id: 14 }, value: "true" },
+						{ gridOption: { id: 14 }, value: "false" },						
 						{ gridOption: { id: 21 }, value: "auto" },
 						{ gridOption: { id: 23 }, value: "true" },
 						{ gridOption: { id: 25 }, value: "true" }
 					];
-		
+				
+					if (IS_TRUE(withIcon)) {
+
+						icon = self.currentTableData.metadata.mdiIcon;
+						defaultGridOptionValues.push({ gridOption: { id: 16 }, value: icon });
+					}
+
 					let metadata = {
-						filter: true,
+						filter: self.gridFilters,
 						label: self.currentTableData.label ?? self.currentTableData.name,
 						visible: true,
 						gridOptionValues: defaultGridOptionValues,
@@ -193,11 +203,14 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 										label = table.labelSingular ?? (table.label ?? table.name);
 									}
 								}
-								
+
+								let gridFiltersColumn = (column.metadata) ? column.metadata[BackOfficeHelper.META_TYPE_COLUMN.PROPERTY.GRID_FILTERS.name] : undefined;
+								let gridFilter = (gridFiltersColumn != undefined) ? gridFiltersColumn : self.gridFilters;  
+
 								let gridField = {
 									id: idxField,
 									extended: false,
-									filtered: false,
+									filtered: gridFilter,
 									isEpochMilli: dataTypeId == BackOfficeHelper.getDBTypes(BackOfficeHelper.DB_TYPE_TIMESTAMP).id,
 									isPk: column.name === "id",
 									needsTranslation: false,

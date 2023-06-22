@@ -169,6 +169,7 @@ export default class AlarmFilteredView {
 														view: "label",
 														label: i18n.t("LBL_USER"),
 														align: "left",
+														hidden: (!alarmFiltered.user) ? true : false,
 														height: 27
 													},
 													{ height: 24 },
@@ -229,6 +230,7 @@ export default class AlarmFilteredView {
 														view: "label",
 														label: `<span class="form-text-font">${alarmFiltered.user.name}</span>`,
 														align: "left",
+														hidden: (!alarmFiltered.user) ? true : false,
 														height: 20
 													},
 													{ height: 24 },

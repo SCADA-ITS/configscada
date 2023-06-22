@@ -32,7 +32,9 @@ export default class BackOfficeViewFormField  {
 				field.name = (column.name === "id") ? "id" : BackOfficeHelper.getColumnUID(column);
 				field.label = util.getStringCapitalized(column.label ?? column.name);
 				field.disabled = (column.name === "id");
-				
+				field.required = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_COLUMN, BackOfficeHelper.META_TYPE_COLUMN.PROPERTY.REQUIRED, self.backOffice.metadata, column);
+				field.readonly = !BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_COLUMN, BackOfficeHelper.META_TYPE_COLUMN.PROPERTY.EDITABLE, self.backOffice.metadata, column);
+			
 				let value = BackOfficeHelper.getColumnValue(self.currentTableData, column.id, 0);
 				
 				if (value) {
@@ -68,7 +70,11 @@ export default class BackOfficeViewFormField  {
 					const refGroupField = refTable.columns.find(e => column.metadata && column.metadata.refGroupFieldName === e.name);
 					const dependentColumns = self.currentTableData.columns.filter(e => e.metadata && e.metadata.associatedFieldName === BackOfficeHelper.getColumnNameFromColumnUID(field.name));										
 					const disabled = self.backOffice.filterColumn && self.backOffice.filterColumn.refColumn && self.backOffice.filterColumn.refColumn.id === refColumn.id && self.backOffice.filterColumn.refColumn.tableId === refColumn.tableId; 
-					
+					const refAddButtonTable = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, BackOfficeHelper.META_TYPE_TABLE.PROPERTY.REF_ADD_BUTTON, self.backOffice.metadata, self.currentTableData);
+									
+					let refAddButtonColumn = (column.metadata) ? column.metadata[BackOfficeHelper.META_TYPE_COLUMN.PROPERTY.REF_ADD_BUTTON.name] : undefined;
+					let refAddButton = (refAddButtonColumn != undefined) ? refAddButtonColumn : refAddButtonTable;  
+
 					if (referencedColumnValue && (!self.backOffice.filterColumn || refColumn.id != self.backOffice.filterColumn.id)) {
 						
 						const dbTypeRefColumn = BackOfficeHelper.getDBTypes(BackOfficeHelper.DB_TYPE_STRING);
@@ -81,7 +87,7 @@ export default class BackOfficeViewFormField  {
 									view: fieldRef.view, 
 									type: "text", 
 									name: BackOfficeHelper.getColumnUID(referencedColumnValue), 
-									required: fieldRef.required, 
+									required: field.required, 
 									label: util.getStringCapitalized(refTable.labelSingular ?? (refTable.label ?? refTable.name)), 
 									readonly: true, 
 									labelWidth: 275, 
@@ -177,7 +183,7 @@ export default class BackOfficeViewFormField  {
 									view: "icon", 
 									icon: "wxi-plus",
 									tooltip: i18n.t("LBL_CMD_ADD"),
-									hidden: disabled,
+									hidden: !refAddButton ,// disabled,
 									on: {
 										onItemClick: createRefField
 									}

@@ -6,11 +6,11 @@ export default class MessageBox {
 	static get CONFIRM() { return { id: 4, color: "#3498db", icon: "./img/question.png", title: "LBL_CONFIRM" } }
 	static get CONFIRM_WARN() { return { id: 5, color: "#fdbf4c", icon: "./img/warn.png", title: "LBL_WARN" } }
 	
-	constructor(type, message, textMultiline, onAccept, onCancel) {
+	constructor(type, message, options, onAccept, onCancel) {
 
 		this.type = (type) ? type : MessageBox.INFO;
 		this.message = message;
-		this.textMultiline = textMultiline;
+		this.options = options;
 		this.onAccept = onAccept;
 		this.onCancel = onCancel;
 
@@ -35,7 +35,7 @@ export default class MessageBox {
 
 		let self = this;
 		let image = this.images[self.type.id].src;
-		let withMultiline = (self.textMultiline) ? true : false;
+		let withMultiline = (self.options && self.options.textMultiline) ? true : false;
 		  
 		webix.ui({
 			id: "alert-" + self.uid,
@@ -126,7 +126,7 @@ export default class MessageBox {
 									view: "textarea",
 									height: 150,
 									readonly: true,
-									value: self.textMultiline,
+									value: self.options.textMultiline,
 									scroll: true,
 									on: {
 										onAfterRender: function() {
@@ -140,16 +140,19 @@ export default class MessageBox {
 												checkbox.enable();
 
 											} else {
+												
+												if (self.options && self.options.requireRead) {
+													
+													textareaNode.addEventListener('scroll', function() {
 
-												textareaNode.addEventListener('scroll', function() {
-
-													let scrollPercentage = (textareaNode.scrollTop + textareaNode.offsetHeight) / textareaNode.scrollHeight;
-
-													if (scrollPercentage > 1 && checkbox) {
-
-														checkbox.enable();
-													}
-												});
+														let scrollPercentage = (textareaNode.scrollTop + textareaNode.offsetHeight) / textareaNode.scrollHeight;
+	
+														if (scrollPercentage > 1 && checkbox) {
+	
+															checkbox.enable();
+														}
+													});	
+												}
 											}
 										}
 									}
@@ -160,35 +163,47 @@ export default class MessageBox {
 						{
 							cols: [
 								{ width: 40 },
-								{
-									id: "checkbox-" + self.uid,
-									view: "checkbox",
-									label: i18n.t("LBL_READ"),
-									labelWidth: 50,
-									disabled: true,
-									css: "message-box-label",
-									on: {
-										onChange: function(newv){
-
-											let acceptButton = $$("accept-button-" + self.uid);
-											
-											if(newv === 1 && acceptButton){
-												
-												acceptButton.enable();
-											}
-											
-											if(newv === 0 && acceptButton){
-												
-												acceptButton.disable();
-											}
-										}
-									}
-								}
+								getCheck()
 							]
 						},
 						{ height: 10 }
 					]
 				};
+				
+				function getCheck() {
+
+					let check = { height: 1 };
+
+					if (withMultiline && self.options && self.options.requireRead) {
+
+						check = {
+							id: "checkbox-" + self.uid,
+							view: "checkbox",
+							label: i18n.t("LBL_READ"),
+							labelWidth: 50,
+							disabled: (withMultiline && self.options && self.options.requireRead) ? true : false,
+							css: "message-box-label",
+							on: {
+								onChange: function(newv) {
+
+									let acceptButton = $$("accept-button-" + self.uid);
+
+									if (newv === 1 && acceptButton) {
+
+										acceptButton.enable();
+									}
+
+									if (newv === 0 && acceptButton) {
+
+										acceptButton.disable();
+									}
+								}
+							}
+						};
+					}
+
+					return check;
+				}
 			}
 
 			return textMultiline;
@@ -213,7 +228,7 @@ export default class MessageBox {
 						view: "button",
 						value: i18n.t("LBL_ACCEPT"),
 						width: 100,
-						disabled: (withMultiline) ? true : false,
+						disabled: (withMultiline && self.options && self.options.requireRead) ? true : false,
 						click: function() {
 
 							execute(self.onAccept);
@@ -240,7 +255,7 @@ export default class MessageBox {
 						view: "button",
 						value: i18n.t("LBL_YES"),
 						width: 100,
-						disabled: (withMultiline) ? true : false,
+						disabled: (withMultiline && self.options && self.options.requireRead) ? true : false,
 						click: function() {
 
 							execute(self.onAccept);
