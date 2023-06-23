@@ -5,7 +5,8 @@ import ListView from "../../component/listview.js";
 const DEFAULT_INIT_TIMES = {
 	RANGE: 24,
 	PERIOD: 60,
-	NUM_OF_MEASURES: 500
+	NUM_OF_MEASURES: 500,
+	REAL_TIME: 60
 };
 
 export default class HistoricalChartGeneric {
@@ -25,6 +26,7 @@ export default class HistoricalChartGeneric {
 		this.selectedRangeInHours = undefined;
 		this.initRange = undefined;
 		this.initCountdown = undefined;
+		this.realTimeInterval = undefined;
 		this.isCharging = false;
 		this.xAxis = [];
 
@@ -136,7 +138,13 @@ export default class HistoricalChartGeneric {
 			rows: [
 				getCalendar(),
 				getChart()
-			]
+			],
+			on: {
+				onDestruct: function() {
+
+					clearInterval(self.realTimeInterval);
+				}
+			}
 		};
 
 		$$("loading-" + self.parent.uid).hide();
@@ -156,6 +164,36 @@ export default class HistoricalChartGeneric {
 						id: "label-" + self.uid,
 						view: "label",
 						label: self.label
+					},
+					{
+						cols: [
+							{
+								gravity: 2
+							},
+							{
+								view: "checkbox",
+								label: i18n.t("LBL_HISTORICAL_CHART_REAL_TIME"),
+								labelWidth: 85,
+								minWidth: 200,
+								gravity: 1,
+								align: "right",
+								on: {
+									onChange: function(newv) {
+
+										clearInterval(self.realTimeInterval);
+
+										if (newv === 1) {
+
+											startRealTime();
+
+										} else {
+
+											$$("daterangepicker-" + self.uid).enable();
+										}
+									}
+								}
+							}
+						]
 					},
 					{
 						id: "daterangepicker-" + self.uid,
@@ -296,6 +334,41 @@ export default class HistoricalChartGeneric {
 			listview = self.list.getView();
 
 			return listview;
+		}
+
+		function startRealTime() {
+
+			let realTimePeriodInSeconds = (self.parent.config.defaultRealTimePeriodInSeconds) ? self.parent.config.defaultRealTimePeriodInSeconds : DEFAULT_INIT_TIMES.REAL_TIME;
+			let datePicker = $$("daterangepicker-" + self.uid);
+
+			self.dateEnd = new Date().getTime();
+			self.selectedRangeInHours = (self.dateEnd - self.dateIni) / (60000 * 60);
+
+			if (datePicker) {
+
+				datePicker.disable();
+				datePicker.setValue(
+					{ start: new Date(self.dateEnd), end: new Date(self.dateIni) }
+				);
+			}
+
+			self.initialize();
+
+			self.realTimeInterval = setInterval(function() {
+
+				self.dateIni = self.dateIni + (realTimePeriodInSeconds * 1000);
+				self.dateEnd = new Date().getTime();
+
+				if (datePicker) {
+
+					datePicker.setValue(
+						{ start: new Date(self.dateEnd), end: new Date(self.dateIni) }
+					);
+				}
+
+				self.initialize();
+
+			}, realTimePeriodInSeconds * 1000);
 		}
 	}
 }

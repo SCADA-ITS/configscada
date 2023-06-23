@@ -1,6 +1,7 @@
 {
 	"defaultInitRangeInHours": 72,
 	"defaultInitPeriodInMinutes": 1,
+	"defaultRealTimePeriodInSeconds": 5,
 	"paramTypeMeasure": "ParamType:2",
 	"moduleAction": {
 		"alarms": 104501,
