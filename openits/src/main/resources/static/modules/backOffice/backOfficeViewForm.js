@@ -93,7 +93,7 @@ export default class BackOfficeViewForm extends BackOfficeView {
 				const label = (self.backOffice.onCancel ? i18n.t("LBL_NEW") : i18n.t("LBL_EDIT")) + " " + (self.currentTableData.labelSingular ?? (self.currentTableData.label ?? self.currentTableData.name));
 				const description = self.currentTableData.labelDescription ?? "";
 				
-				const icon = self.currentTableData.metadata && self.currentTableData.metadata.mdiIcon ? self.currentTableData.metadata.mdiIcon : "mdi mdi-application"; 
+				const icon = (self.currentTableData.mdiIcon) ? self.currentTableData.mdiIcon : "mdi mdi-application"; 
 
 				header = {
 					id: "viewHeader-" + self.uid,

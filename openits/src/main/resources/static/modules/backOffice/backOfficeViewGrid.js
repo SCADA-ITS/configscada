@@ -126,7 +126,7 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 				function getMetadata() {
 					
 					let icon;	
-					let withIcon = (self.currentTableData.metadata && self.currentTableData.metadata.mdiIcon) ? "true" : "false"; 
+					let withIcon = (self.currentTableData.mdiIcon) ? "true" : "false"; 
 
 					const defaultGridOptionValues = [
 						{ gridOption: { id: 1 }, value: "true" },
@@ -148,7 +148,7 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 				
 					if (IS_TRUE(withIcon)) {
 
-						icon = self.currentTableData.metadata.mdiIcon;
+						icon = self.currentTableData.mdiIcon;
 						defaultGridOptionValues.push({ gridOption: { id: 16 }, value: icon });
 					}
 
