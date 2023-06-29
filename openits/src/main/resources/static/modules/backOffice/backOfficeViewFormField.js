@@ -34,7 +34,8 @@ export default class BackOfficeViewFormField  {
 				field.disabled = (column.name === "id");
 				field.required = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_COLUMN, BackOfficeHelper.META_TYPE_COLUMN.PROPERTY.REQUIRED, self.backOffice.metadata, column);
 				field.readonly = !BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_COLUMN, BackOfficeHelper.META_TYPE_COLUMN.PROPERTY.EDITABLE, self.backOffice.metadata, column);
-			
+				field.hidden = !BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_COLUMN, BackOfficeHelper.META_TYPE_COLUMN.PROPERTY.FORM_VISIBLE, self.backOffice.metadata, column);
+				
 				let value = BackOfficeHelper.getColumnValue(self.currentTableData, column.id, 0);
 				
 				if (value) {
@@ -74,6 +75,7 @@ export default class BackOfficeViewFormField  {
 									
 					let refAddButtonColumn = (column.metadata) ? column.metadata[BackOfficeHelper.META_TYPE_COLUMN.PROPERTY.REF_ADD_BUTTON.name] : undefined;
 					let refAddButton = (refAddButtonColumn != undefined) ? refAddButtonColumn : refAddButtonTable;  
+					let visibleColumn = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_COLUMN, BackOfficeHelper.META_TYPE_COLUMN.PROPERTY.FORM_VISIBLE, self.backOffice.metadata, self.currentTableData);
 
 					if (referencedColumnValue && (!self.backOffice.filterColumn || refColumn.id != self.backOffice.filterColumn.id)) {
 						
@@ -83,6 +85,11 @@ export default class BackOfficeViewFormField  {
 					
 						let fieldGroup = {
 							cols: [
+								{
+									width: 725,
+									height: 1,
+									hidden: visibleColumn
+								},
 								{ 
 									view: fieldRef.view, 
 									type: "text", 
@@ -92,12 +99,13 @@ export default class BackOfficeViewFormField  {
 									readonly: true, 
 									labelWidth: 275, 
 									value: referencedColumnValue.value ?? field.value, 
-									disabled: disabled 
+									disabled: disabled, 
+									hidden: !visibleColumn
 								},
 								{ 
 									view: field.view, 
 									name: field.name, 
-									hidden: false, 
+									hidden: !visibleColumn, 
 									readonly: true, 
 									value: field.value, 
 									width: 50,
@@ -132,7 +140,7 @@ export default class BackOfficeViewFormField  {
 									view: "icon", 
 									icon: "wxi-search",
 									tooltip: i18n.t("LBL_SEARCH"),
-									hidden: disabled,
+									hidden: !visibleColumn,
 									on: {
 										onItemClick: function() {
 											
@@ -183,7 +191,7 @@ export default class BackOfficeViewFormField  {
 									view: "icon", 
 									icon: "wxi-plus",
 									tooltip: i18n.t("LBL_CMD_ADD"),
-									hidden: !refAddButton ,// disabled,
+									hidden: (!visibleColumn) ? !visibleColumn: !refAddButton,
 									on: {
 										onItemClick: createRefField
 									}
@@ -200,17 +208,32 @@ export default class BackOfficeViewFormField  {
 							
 							if (field.name && referencedColumnValue) {
 								
-								let dialogRefField = webix.copy(SearchDialogBox.CALLBACK);				
-	
+								let dialogRefField = webix.copy(SearchDialogBox.CALLBACK);	
+								let aditionalColumnsValues = [];			
+							
 								dialogRefField.fillDialogEntity = fillDialogEntity;
-								dialogRefField.pkField = "id";
+
 								const fields = BackOfficeHelper.getColumnUID(referencedColumnValue) + "=" + util.getStringCapitalized(referencedColumnValue.label ?? referencedColumnValue.name);
 								dialogRefField.fields = [fields];
+
+								if (Array.isArray(table.columns) && table.columns.length > 0) {
+
+									table.columns.forEach(col => {
+
+										if (BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_COLUMN, BackOfficeHelper.META_TYPE_COLUMN.PROPERTY.SEARCH_VISIBLE, self.backOffice.metadata, col)) {
+
+											aditionalColumnsValues.push(col);
+											dialogRefField.fields.push(BackOfficeHelper.getColumnUID(col) + "=" + util.getStringCapitalized(col.label ?? col.name));
+										}
+									});
+								}
+
+								dialogRefField.pkField = "id";
 								dialogRefField.sortFieldId = 1;
 								dialogRefField.height = 600;
 								dialogRefField.width = 800;
 								dialogRefField.showEmptyRowCol = SearchDialogBox.ID_NOT_SELECTED;
-																					
+
 								function fillDialogEntity(dialogEntity, onFilledDialogEntity) {
 					
 									dialogEntity.data = table.rows.map(row => {
@@ -224,7 +247,15 @@ export default class BackOfficeViewFormField  {
 											
 											obj.id = rowId.value;
 											obj[BackOfficeHelper.getColumnUID(referencedColumnValue)] = rowAlias.value;
-											
+
+											if (Array.isArray(aditionalColumnsValues) && aditionalColumnsValues.length > 0) {
+
+												for (let aditionalColumn of aditionalColumnsValues) {
+
+													obj[BackOfficeHelper.getColumnUID(aditionalColumn)] = row.data.find(data => data.columnId === aditionalColumn.id).value;
+												}
+											}
+																							
 											if (colFilter) {
 												
 												const rowFilter = row.data.find(data => data.columnId === colFilter.id);
@@ -536,19 +567,43 @@ export default class BackOfficeViewFormField  {
 							} 
 						}
 					}
-					else {
+					else if (dbType.name === BackOfficeHelper.DB_TYPE_INTEGER ||
+						dbType.name === BackOfficeHelper.DB_TYPE_DECIMAL) {
+
+						field.on = {
+							onKeyPress: function(code, e) {
+
+								if (e.key === "Dead") {
+
+									this.disable();
+									this.enable();
+									this.focus();
+								}
+
+								const persistValues = onChangeField();
+
+								if (Array.isArray(persistValues) && persistValues.length > 0) {
+
+									filler();
+								}
+
+								return code == 46 || code == 8 || (code >= 35 && code <= 40) || (code >= 48 && code <= 57) || code == 190 || code == 173;
+							}
+						};
+											
+					} else {
 						
 						field.on = { onTimedKeyPress: onChangeField }
-						field.on = { 
-							onChange: function() { 
+						field.on = {
+							onChange: function() {
 
-								const persistValues = onChangeField(); 
-								
+								const persistValues = onChangeField();
+
 								if (Array.isArray(persistValues) && persistValues.length > 0) {
-								
-									filler();	
+
+									filler();
 								}
-							} 
+							}
 						}
 					}
 					

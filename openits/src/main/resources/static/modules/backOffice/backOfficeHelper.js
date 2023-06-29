@@ -5,6 +5,7 @@ const REST_BACKOFFICE_TABLE = "backoffice/${backOfficeId}/table/${tableName}";
 const REST_BACKOFFICE_TABLE_PERSIST = "backoffice/${backOfficeId}/persist";
 const REST_BACKOFFICE_TABLE_COMMAND = "backoffice/${backOfficeId}/command";
 const REST_BACKOFFICE_COLUMN_FILLER = "backoffice/${backOfficeId}/filler";
+const REST_GRIDS_ID = "grids/${id}";
 const COL_NAMES_REF = [/name/i, /alias/i, /description/i];
 
 export default class BackOfficeHelper {
@@ -48,8 +49,12 @@ export default class BackOfficeHelper {
 			PROPERTY: {
 				REQUIRED: { name: "required", default: false }, 
 				EDITABLE: { name: "editable", default: true }, 
+				FORM_VISIBLE: { name: "formVisible", default: true },
+				TABLE_VISIBLE: { name: "tableVisible", default: true },
+				SEARCH_VISIBLE: { name: "searchVisible", default: false },
 				REF_ADD_BUTTON: { name: "refAddButton", default: true },
-				GRID_FILTERS: { name: "gridFilters", default: false }
+				GRID_FILTERS: { name: "gridFilters", default: false },
+				POSITION: {name: "position"}
 			} 
 		} 
 	}
@@ -229,6 +234,15 @@ export default class BackOfficeHelper {
 		return response ? response.json() : undefined;
 	}
 	
+	static async getDataTableMetadata(gridId) {
+
+		let response;
+
+		response = await webix.ajax().get(appConfig.restUrl + util.fillTemplate(REST_GRIDS_ID, { id: gridId }));
+
+		return response ? response.json() : undefined;
+	}
+	
 	static getRefColumn(parentTable, referTableName, data) {
 		
 		let refColumn = undefined;
@@ -373,6 +387,37 @@ export default class BackOfficeHelper {
 	static getColumnIdFromColumnUID(columnUID) {
 		
 		return parseInt(columnUID.split("$")[2]);
+	}
+	
+	static getNewSourceField(sourceField, data) {
+
+		let tableName;
+		let columnName;		
+		let newSourceField = sourceField;
+		
+		for (let character of sourceField) {
+
+			if (/[A-Z]/.test(character)) {
+
+				let index = sourceField.indexOf(character);
+				tableName = sourceField.substring(0, index).toLowerCase();
+				columnName = sourceField.substring(index).toLowerCase();
+			}
+		}
+
+		let table = data.find(dat => dat.name === tableName);
+
+		if (table) {
+
+			let column = table.columns.find(col => col.name === columnName);
+
+			if (column) {
+
+				newSourceField = BackOfficeHelper.getColumnUID(column);				
+			}
+		}
+		
+		return newSourceField;
 	}
 	
 	static getRequestInput(formValues, table, allValues) {

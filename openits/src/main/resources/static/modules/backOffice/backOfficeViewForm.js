@@ -190,13 +190,16 @@ export default class BackOfficeViewForm extends BackOfficeView {
 					function getElements() {
 						
 						let elements = [];
-						
+						let currentTableDataColumnsCopy = [];
+
 						if (Array.isArray(self.currentTableData.columns) &&
 							self.currentTableData.columns.length > 0) {
 						
-							if (self.currentTableData.metatada && 
-								Array.isArray(self.currentTableData.metatada.tabs) && 
-								self.currentTableData.metatada.tabs.length > 0) {
+							if (self.currentTableData.metadata && 
+								Array.isArray(self.currentTableData.metadata.tabs) && 
+								self.currentTableData.metadata.tabs.length > 0) {
+									
+								let currentTableMetadataTabsCopy = webix.copy(self.currentTableData.metadata.tabs);
 									
 								let tabInfo = {
 									view: "tabview",
@@ -206,13 +209,50 @@ export default class BackOfficeViewForm extends BackOfficeView {
 									tabbar: {
 										tabMargin: 6,
 									}
-								}
-									
-								self.currentTableData.metatada.tabs.forEach(tab => {
+								};
+								
+								self.currentTableData.metadata.tabs.sort((a, b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));
+							
+								let initialTabLabel = currentTableMetadataTabsCopy.find(e=> e.initialTabLabel);
+								
+								if (initialTabLabel) {
 
+									let index = currentTableMetadataTabsCopy.indexOf(initialTabLabel);
+									currentTableMetadataTabsCopy.splice(index, 1);
+								}
+																							
+								currentTableMetadataTabsCopy.forEach(tab => {
+
+									currentTableDataColumnsCopy = webix.copy(self.currentTableData.columns);
+									
+									for (let field of tab.fields) {
+
+										currentTableDataColumnsCopy = currentTableDataColumnsCopy.filter(e => e.name != field.name);
+									}
+
+									if (Array.isArray(currentTableDataColumnsCopy) && currentTableDataColumnsCopy.length > 0) {
+
+										tabInfo.cells.push({
+											header: (initialTabLabel) ? i18n.t(initialTabLabel.initialTabLabel) : i18n.t("LBL_INITIAL_TAB"),
+											body: {
+												view: "scrollview",
+												scroll: "auto",
+												borderless: true,
+												body: {
+													cols: [
+														{ width: 45 },
+														{
+															rows: getFields()
+														},
+														{ width: 45 }
+													]
+												}
+											}
+										});
+									}
+									
 									tabInfo.cells.push({
-										
-										header: tab.label,
+										header: i18n.t(tab.label),
 										body: {
 											view: "scrollview",
 											scroll: "auto",
@@ -254,7 +294,9 @@ export default class BackOfficeViewForm extends BackOfficeView {
 						}
 						
 						function getFields(tab) {
-						
+							
+							let columns = (Array.isArray(currentTableDataColumnsCopy) && currentTableDataColumnsCopy.length > 0) ? currentTableDataColumnsCopy : self.currentTableData.columns;
+
 							let fields = [{ height: 45 }];
 							
 							let backOfficeViewFormField = new BackOfficeViewFormField(self);
@@ -267,10 +309,22 @@ export default class BackOfficeViewForm extends BackOfficeView {
 								});
 							}
 							else {
-								
-								self.currentTableData.columns.forEach(column => {
-									
-									fields.push(backOfficeViewFormField.getField(column));	
+
+								columns.forEach(column => {
+
+									let pos = (column.metadata) ? column.metadata[BackOfficeHelper.META_TYPE_COLUMN.PROPERTY.POSITION.name] : undefined;
+
+									if (pos != undefined) {
+
+										column.position = pos;
+									}
+								});
+
+								columns.sort((a, b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));
+
+								columns.forEach(column => {
+
+									fields.push(backOfficeViewFormField.getField(column));
 								});
 							}	
 							
@@ -568,14 +622,14 @@ export default class BackOfficeViewForm extends BackOfficeView {
 										if (referColumn && idValue) {
 											
 											let newBackOffice = {
-											
 												id: self.backOffice.id,
 												tableName: referTable.name,
 												filterColumnName: referColumn.name,
 												filterColumnValue: idValue,
 												containerId: self.backOffice.containerId,
-												filterColumn: referColumn
-											}
+												filterColumn: referColumn,
+												metadata: self.backOffice.metadata												
+											};
 											
 											let backOfficeViewGrid = new BackOfficeViewGrid(newBackOffice, self.data, self.data.find(e => e.id === referColumn.tableId));
 											
