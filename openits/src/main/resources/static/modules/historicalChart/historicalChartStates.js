@@ -59,35 +59,39 @@ export default class HistoricalChartStates extends HistoricalChartGeneric {
 
 			let dataArrAux = [];
 			let dataArr = [];
-			let sameElementArr = [];
 
 			ids.forEach(id => {
 
-				let arrAux = [];
-				let d = {};
+				let arrAux = [];								
+				let d = {};				
 
-				sameElementArr = self.states.filter(e => e.element.id === id);
+				let sameElementArr = self.states.filter(e => e.element.id === id);
+				sameElementArr.sort((a, b) => (a.createdAt > b.createdAt) ? 1 : ((b.createdAt > a.createdAt) ? -1 : 0));
 
+				let elementTypeStateId = sameElementArr[0].currentElementTypeState.id; 
+				
 				for (let xVal of self.xAxis) {
 
 					let withData = sameElementArr.filter(el => ((xVal.initEpoch < el.createdAt) && (el.createdAt < xVal.endEpoch)));
 
 					if (Array.isArray(withData) && withData.length > 0) {
 
-						withData.sort((a, b) => (a["createdAt"] > b["createdAt"]) ? 1 : ((b["createdAt"] > a["createdAt"]) ? -1 : 0));
+						withData.sort((a, b) => (a.createdAt > b.createdAt) ? 1 : ((b.createdAt > a.createdAt) ? -1 : 0));
 
+						elementTypeStateId = withData[withData.length-1].currentElementTypeState.id;
 						d['yValue'] = withData;
-						d['withData'] = true;
+						d['withData'] = true;				
 
 					} else {
 
 						d['yValue'] = undefined;
-						d['withData'] = false;
+						d['withData'] = false;						
 					}
 
 					d['xValue'] = xVal.xValue;
 					d["epoch"] = xVal.initEpoch;
 					d['element'] = id;
+					d['elementTypeStateId'] = elementTypeStateId;
 
 					arrAux.push(d);
 					d = {};
@@ -110,6 +114,7 @@ export default class HistoricalChartStates extends HistoricalChartGeneric {
 
 				d['xValue'] = dataArrAux[0][j].xValue;
 				d['epoch'] = dataArrAux[0][j].epoch;
+				d['elementTypeStateId'] = dataArrAux[0][j].elementTypeStateId; 
 				dataArr.push(d);
 				d = {};
 			}
@@ -218,11 +223,13 @@ export default class HistoricalChartStates extends HistoricalChartGeneric {
 
 							let color;
 							let lastValue = self.dataSet[self.dataSet.length - 1];
+							let changeState = (dataArr[i - 1]['elementTypeStateId'] != dataArr[i]['elementTypeStateId']);
+
 							numOfSerie = lastValue['numOfSerie' + id];
 							alias = lastValue['element' + id];
 
-							if ((lastValue['withData' + id] === false) && (dataArr[i]['withData' + id] === true)) {
-
+							if ((lastValue['withData' + id] === false) && (dataArr[i]['withData' + id] === true) && changeState) {								
+								
 								lastState = window.em.getByField(EntityType.ELEMENT_TYPE_STATE, "id", dataArr[i]['yValue' + id][dataArr[i]['yValue' + id].length - 1].currentElementTypeState.id);
 								tooltipText = alias + " - " + i18n.t(lastState.labelAlias);
 								color = (lastState.color) ? lastState.color : util.element.getColor(lastState.id);
