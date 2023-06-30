@@ -179,7 +179,7 @@ export default class HistoricalChartAlarms extends HistoricalChartGeneric {
 												<span>${tooltipText}</span><br>
 												</div>`;
 
-						d['yValue' + id + numOfSerie] = j + 1;
+						d['yValue' + id + numOfSerie] = (dataArr[i]['yValue'+id]) ? j + 1 : undefined;
 						d['element' + id] = alias;
 						d['withData' + id] = dataArr[i]['withData' + id];
 						d['numOfSerie' + id] = numOfSerie;
@@ -206,7 +206,7 @@ export default class HistoricalChartAlarms extends HistoricalChartGeneric {
 												</div>`;
 
 							numOfSerie++;
-							d['yValue' + id + numOfSerie] = j + 1;
+							d['yValue' + id + numOfSerie] = (dataArr[i]['yValue'+id]) ? j + 1 : undefined;
 							d['element' + id] = alias;
 							d['withData' + id] = dataArr[i]['withData' + id];
 							d['numOfSerie' + id] = numOfSerie;
@@ -216,9 +216,8 @@ export default class HistoricalChartAlarms extends HistoricalChartGeneric {
 							self.dataSeries.push({
 								value: "#yValue" + id + numOfSerie + "#",
 								line: {
-									width: 10,
-									color: color,
-									item: {},
+									width: 15,
+									color: color
 								},
 								tooltip: {
 									template: function(obj) {
@@ -227,10 +226,18 @@ export default class HistoricalChartAlarms extends HistoricalChartGeneric {
 									}
 								}
 							});
+						} else if ((lastValue['withData' + id] === true) && (dataArr[i]['withData' + id] === false)) {
+
+							d['yValue' + id + numOfSerie] = j + 1;
+							d['element' + id] = alias;
+							d['withData' + id] = dataArr[i]['withData' + id];
+							d['numOfSerie' + id] = lastValue['numOfSerie' + id];
+							d['tooltip' + id + numOfSerie] = lastValue['tooltip' + id + numOfSerie];
+							d['bG' + id + numOfSerie + j] = j + 1;
 
 						} else {
 
-							d['yValue' + id + numOfSerie] = j + 1;
+							d['yValue' + id + numOfSerie] =(dataArr[i]['yValue'+id]) ? j + 1 : undefined;
 							d['element' + id] = alias;
 							d['withData' + id] = dataArr[i]['withData' + id];
 							d['numOfSerie' + id] = lastValue['numOfSerie' + id];

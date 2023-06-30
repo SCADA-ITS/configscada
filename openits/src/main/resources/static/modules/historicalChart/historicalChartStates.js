@@ -171,7 +171,7 @@ export default class HistoricalChartStates extends HistoricalChartGeneric {
 
 								firstState = window.em.getByField(EntityType.ELEMENT_TYPE_STATE, "id", firstVal.currentElementTypeState.id);
 								lastState = window.em.getByField(EntityType.ELEMENT_TYPE_STATE, "id", lastVal.currentElementTypeState.id);
-								firstColor = (firstState.color) ? firstState.color : util.element.getColor(firstState.id);
+								firstColor = (firstState.color) ? firstState.color : util.element.getColor(firstState);
 								tooltipText = alias + " - " + i18n.t(firstState.labelAlias);
 
 							} else {
@@ -232,7 +232,7 @@ export default class HistoricalChartStates extends HistoricalChartGeneric {
 								
 								lastState = window.em.getByField(EntityType.ELEMENT_TYPE_STATE, "id", dataArr[i]['yValue' + id][dataArr[i]['yValue' + id].length - 1].currentElementTypeState.id);
 								tooltipText = alias + " - " + i18n.t(lastState.labelAlias);
-								color = (lastState.color) ? lastState.color : util.element.getColor(lastState.id);
+								color = (lastState.color) ? lastState.color : util.element.getColor(lastState);
 
 								let firstDate = new Date(dataArr[i]['yValue' + id][0]["createdAt"]).toLocaleString();
 
