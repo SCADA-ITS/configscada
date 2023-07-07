@@ -60,6 +60,9 @@ public class Column extends Basic {
 	@ToString.Exclude
 	private List<Filler> fillers = new ArrayList<>();
 	
+	@JsonIgnore
+	private Integer metadataId;
+	
 	private Map<String, Object> metadata;
 	
 	public Column(Table table, String name) {

@@ -117,6 +117,9 @@ public class Table extends Basic {
 	@ToString.Exclude
 	private List<Row> rows = new ArrayList<>();
 	
+	@JsonIgnore
+	private Integer metadataId;
+	
 	private Map<String, Object> metadata;
 	
 	@EqualsAndHashCode.Exclude

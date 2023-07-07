@@ -1,8 +1,11 @@
 package com.revenga.rits.front.openits.backoffice;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -19,6 +22,7 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.revenga.rits.front.openits.backoffice.BackOfficeUtil.DMLType;
@@ -143,6 +147,27 @@ public class BackOfficeProcessor {
 		return tables;
 	}
 	
+	public String translate(Integer backOfficeId, String label) {
+		
+		String labelTranslated = label;
+		BackOffice backOffice = this.backOfficeService.getById(backOfficeId);
+		
+		if (backOffice != null) {
+		
+			try {
+				
+				labelTranslated = this.backOfficeManager.translate(backOffice, null, this.localeCode, label);
+				
+			} catch (SQLException e) {
+				
+				log.error(e.getMessage());
+				log.debug(ExceptionUtils.getStackTrace(e));
+			}
+		}
+		
+		return labelTranslated;
+	}
+	
 	public List<Attachment> getAttachments(Integer backOfficeId, Attachment.Type attachmentType, String tableName, Integer idValue) {
 
 		List<Attachment> attachments = null;
@@ -178,11 +203,75 @@ public class BackOfficeProcessor {
 		return attachments;
 	}
 	
-	public Attachment uploadAttachment(String baseDir, Integer backOfficeId, Attachment attachment, MultipartFile multipartFile) {
-
-		// TODO
+	public Attachment editImage(Integer backOfficeId, String tableName, Attachment attachment) {
 		
-		return null;
+		Attachment newAttachment = null;
+		
+		BackOffice backOffice = this.backOfficeService.getById(backOfficeId);
+		Attachment attachmentFound = getAttachment(backOfficeId, Attachment.Type.IMAGE, tableName, attachment.getId());
+		
+		if (backOffice != null && attachmentFound != null) {
+			
+			try (Connection conn = DriverManager.getConnection(backOffice.getJdbc(), backOffice.getUser(),
+					AES.decrypt(backOffice.getPassword()))) {
+				
+				Attachment editAttachment = (Attachment) attachmentFound.clone();
+				editAttachment.change(attachment);
+				
+				BackOfficeAssignment backOfficeAssignment = new BackOfficeAssignment(this);
+			
+				newAttachment = backOfficeAssignment.editAttachment(conn, backOffice, editAttachment);
+			}
+			catch (Exception e) {
+
+				log.error(e.getMessage());
+				log.debug(ExceptionUtils.getStackTrace(e));
+			}
+		}
+		
+		return newAttachment;
+	}
+	
+	public Attachment uploadImage(String baseDir, Integer backOfficeId, String tableName, Integer id, String groupName, Integer position, MultipartFile multipartFile) {
+		
+		return upload(baseDir, backOfficeId, Attachment.Type.IMAGE, tableName, id, groupName, position, multipartFile);
+	}
+	
+	public Attachment uploadAttachment(String baseDir, Integer backOfficeId, String tableName, Integer id, String groupName, Integer position, MultipartFile multipartFile) {
+		
+		return upload(baseDir, backOfficeId, Attachment.Type.OTHER, tableName, id, groupName, position, multipartFile);
+	}
+	
+	private Attachment upload(String baseDir, Integer backOfficeId, Attachment.Type attachmentType, String tableName, Integer id, String groupName, Integer position, MultipartFile multipartFile) {
+		
+		Attachment newAttachment = null;
+		BackOffice backOffice = this.backOfficeService.getById(backOfficeId);
+		
+		if (backOffice != null) {
+			
+			Table table = this.referencedTables.get(tableName);
+			
+			if (table == null && this.backOfficeManager.containsTable(backOffice, tableName)) {
+			
+				table = this.backOfficeManager.getTable(backOffice, tableName);
+			}
+			
+			if (table != null) {
+				
+				Attachment attachmentInput = new Attachment();
+		    	
+		    	attachmentInput.setType(attachmentType);
+		    	attachmentInput.setTable(table);
+		    	attachmentInput.setIdValue(id);
+		    	attachmentInput.setGroupName(groupName);
+		    	attachmentInput.setFileName(multipartFile.getOriginalFilename());
+		    	attachmentInput.setPosition(position);
+		    	
+		    	newAttachment = putAttachment(baseDir, backOfficeId, attachmentInput, multipartFile);
+			}
+		}
+					
+		return newAttachment;
 	}
 	
 	public Resource downloadAttachment(String baseDir, Integer backOfficeId, Attachment attachment) {
@@ -192,10 +281,134 @@ public class BackOfficeProcessor {
 		
 		if (attachmentFound != null) {
 			
-			resource = loadFileAsResource(attachment.getPath(baseDir, backOfficeId), attachment.getFileName());
+			resource = loadFileAsResource(attachment.getPath(baseDir, attachmentFound.getIdValue(), backOfficeId), attachment.getFileName());
 		}
 
 		return resource;
+	}
+	
+	public byte[] downloadImage(String baseDir, Integer backOfficeId, String tableName, Integer imageId) {
+		
+		byte[] imageBytes = null;
+		Attachment attachmentFound = getAttachment(backOfficeId, Attachment.Type.IMAGE, tableName, imageId);
+		
+		if (attachmentFound != null) {
+			
+			Resource resource = loadFileAsResource(attachmentFound.getPath(baseDir, attachmentFound.getIdValue(), backOfficeId), attachmentFound.getFileName());
+			
+			try {
+				
+				if (resource != null) {
+					
+					imageBytes = Files.readAllBytes(Path.of(resource.getURI()));
+				}
+				
+			} catch (IOException e) {
+				
+				log.error(e.getMessage());
+				log.debug(ExceptionUtils.getStackTrace(e));
+			}
+		}
+
+		return imageBytes;
+	}
+	
+	public Attachment deleteImage(String baseDir, Integer backOfficeId, String tableName, Integer imageId) {
+		
+		Attachment deletedAttachment = null;
+		Attachment attachmentInput = getAttachment(backOfficeId, Attachment.Type.IMAGE, tableName, imageId);
+		
+		BackOffice backOffice = this.backOfficeService.getById(backOfficeId);
+		
+		if (backOffice != null && attachmentInput != null) {
+			
+			try (Connection conn = DriverManager.getConnection(backOffice.getJdbc(), backOffice.getUser(),
+					AES.decrypt(backOffice.getPassword()))) {
+				
+				BackOfficeAssignment backOfficeAssignment = new BackOfficeAssignment(this);
+			
+				deletedAttachment = backOfficeAssignment.deleteAttachment(conn, backOffice, attachmentInput);
+				
+				String targetDirStr = attachmentInput.getPath(baseDir, attachmentInput.getIdValue(), backOfficeId);
+				String pathName = targetDirStr + File.separator + attachmentInput.getFileName();
+				
+				Path targetLocation = Path.of(pathName);
+				
+				Files.deleteIfExists(targetLocation);
+			}
+			catch (Exception e) {
+
+				log.error(e.getMessage());
+				log.debug(ExceptionUtils.getStackTrace(e));
+			}
+		}
+		
+		return deletedAttachment;
+	}
+	
+	private Attachment putAttachment(String baseDir, Integer backOfficeId, Attachment attachmentInput, MultipartFile multipartFile) {
+		
+		Attachment newAttachment = null;
+		
+		try {
+			
+			BackOffice backOffice = this.backOfficeService.getById(backOfficeId);
+			
+			if (backOffice != null && multipartFile != null && multipartFile.getOriginalFilename() != null) {
+			
+				String tableName = attachmentInput.getTable().getName();
+				String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+				
+				// Check if the file's name contains invalid characters
+	            if(!fileName.contains("..")) {
+	            	
+	            	// Check if target directory exists
+	            	
+					String targetDirStr = String
+							.join(File.separator, baseDir, "backoffice", backOfficeId.toString(), tableName,
+									attachmentInput.getIdValue().toString(), attachmentInput.getType().toString())
+							.toLowerCase();
+	            	
+					String pathName = targetDirStr + File.separator + multipartFile.getOriginalFilename();
+	            	
+	            	File targetDir = new File(targetDirStr);
+	            	
+	            	if (!targetDir.exists()) {
+	            		
+	            		targetDir.mkdirs();
+	            	}
+	            	
+	                Path targetLocation = Path.of(pathName);
+	                Files.copy(multipartFile.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+	                
+	                // Check if file is created
+	                File file = new File(targetLocation.toString());
+	                
+	                if (file.isFile()) {
+	                	
+	                	try (Connection conn = DriverManager.getConnection(backOffice.getJdbc(), backOffice.getUser(),
+	    						AES.decrypt(backOffice.getPassword()))) {
+	    					
+	    					BackOfficeAssignment backOfficeAssignment = new BackOfficeAssignment(this);
+	    				
+	    					newAttachment = backOfficeAssignment.putAttachment(conn, backOffice, attachmentInput);
+	    				}
+	    				catch (Exception e) {
+
+	    					log.error(e.getMessage());
+	    					log.debug(ExceptionUtils.getStackTrace(e));
+	    				}
+	                }
+	            }
+			}
+            
+        } catch (IOException e) {
+            
+        	log.error(e.getMessage());
+			log.debug(ExceptionUtils.getStackTrace(e));
+        }
+		
+		return newAttachment;
 	}
 	
 	private Attachment getAttachment(Integer backOfficeId, Attachment.Type attachmentType, String tableName, Integer id) {

@@ -56,6 +56,9 @@ public class Row implements Cloneable, Serializable {
 	
 	private List<RowData> data = new ArrayList<>();
 	
+	private List<Attachment> images = new ArrayList<>();
+	private List<Attachment> attachments = new ArrayList<>();
+	
 	@Override
 	public Object clone() throws CloneNotSupportedException {
 
@@ -68,6 +71,26 @@ public class Row implements Cloneable, Serializable {
 			for (RowData rowData : this.data) {
 			
 				((Row) objCloned).getData().add((RowData) rowData.clone());
+			}
+		}
+		
+		if (!CollectionUtils.isEmpty(this.images)) {
+			
+			((Row) objCloned).setImages(new ArrayList<>());
+			
+			for (Attachment image : this.images) {
+			
+				((Row) objCloned).getAttachments().add((Attachment) image.clone());
+			}
+		}
+		
+		if (!CollectionUtils.isEmpty(this.attachments)) {
+			
+			((Row) objCloned).setAttachments(new ArrayList<>());
+			
+			for (Attachment attachment : this.attachments) {
+			
+				((Row) objCloned).getAttachments().add((Attachment) attachment.clone());
 			}
 		}
 		

@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.util.CollectionUtils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -282,6 +283,29 @@ public class BackOfficeAssignment {
 							
 							rows.add(row);
 						}
+						
+						// Load images and attachments if only result one row
+						if (!CollectionUtils.isEmpty(rows) && rows.size() == 1 && !StringUtils.isEmpty(conditions)) {
+
+							Row row = rows.get(0);
+
+							Column colId = table.getColumns().stream().filter(e -> e.getName().equals("id")).findFirst()
+									.orElse(null);
+
+							if (colId != null && row != null) {
+
+								RowData rowDataId = row.getData().stream()
+										.filter(e -> e.getColumnId().equals(colId.getId())).findFirst().orElse(null);
+
+								if (rowDataId != null && NumberUtils.isCreatable(rowDataId.getValue())) {
+
+									row.setImages(getAttachments(conn, backOffice, Attachment.Type.IMAGE, table,
+											Integer.parseInt(rowDataId.getValue())));
+									row.setAttachments(getAttachments(conn, backOffice, Attachment.Type.OTHER, table,
+											Integer.parseInt(rowDataId.getValue())));
+								}
+							}
+						}
 					}
 				}
 			}
@@ -307,16 +331,18 @@ public class BackOfficeAssignment {
 		if (!StringUtils.isEmpty(tableSql)) {
 		
 			String sql = String
-					.format("SELECT id, group_name, file_name, description, position " + 
-							"  FROM %s.%s " + 
-							" WHERE sg_metadata_table_id = ? " + 
-							"   AND id_value = ?",  
-							backOffice.getSchema(), tableSql);
+					.format("SELECT a.id, a.group_name, a.file_name, a.description, a.position " + 
+							"  FROM %s.%s a, " +
+							"       %s.sg_metadata_tables t " +
+							" WHERE a.sg_metadata_table_id = t.id " + 
+							"   AND a.id_value = ? " +
+							"   AND t.name = ?",
+							backOffice.getSchema(), tableSql, backOffice.getSchema());
 			
 			try (PreparedStatement stmt = conn.prepareStatement(sql)) {
 				
-				stmt.setInt(1, table.getId());
-				stmt.setInt(2, idValue);
+				stmt.setInt(1, idValue);
+				stmt.setString(2, table.getName());
 				
 				if (this.backOfficeProcessor.getBackOfficeManager().isShowSql()) {
 					
@@ -348,23 +374,17 @@ public class BackOfficeAssignment {
 	Attachment getAttachment(Connection conn, BackOffice backOffice, Attachment.Type attachmentType, Table table, Integer id) throws SQLException {
 		
 		Attachment attachment = null;
-		String sql = "";
+		String sql = "SELECT id, id_value, group_name, file_name, description " + 
+					 "  FROM %s.%s " + 
+					 " WHERE id = ?";
 		
 		if (attachmentType.equals(Attachment.Type.IMAGE)) {
 			
-			sql = String
-					.format("SELECT id, group_name, file_name, description " + 
-							"  FROM %s.sg_metadata_table_images " + 
-							" WHERE id = ?", 
-							backOffice.getSchema());
+			sql = String.format(sql, backOffice.getSchema(), "sg_metadata_table_images");
 		}
 		else if (attachmentType.equals(Attachment.Type.OTHER)) {
 			
-			sql = String
-					.format("SELECT id, group_name, file_name, description " + 
-							"  FROM %s.sg_metadata_table_attachments " + 
-							" WHERE id = ?", 
-							backOffice.getSchema());
+			sql = String.format(sql, backOffice.getSchema(), "sg_metadata_table_attachments");
 		}
 		
 		if (!StringUtils.isEmpty(sql)) {
@@ -385,8 +405,9 @@ public class BackOfficeAssignment {
 					attachment = new Attachment();
 					
 					attachment.setId(rs.getInt("id"));
+					attachment.setType(attachmentType);
 					attachment.setTable(table);
-					attachment.setIdValue(id);
+					attachment.setIdValue(rs.getInt("id_value"));
 					attachment.setGroupName(rs.getString("group_name"));
 					attachment.setFileName(rs.getString("file_name"));
 					attachment.setDescription(rs.getString("description"));
@@ -395,6 +416,154 @@ public class BackOfficeAssignment {
 		}
 		
 		return attachment;
+	}
+	
+	Attachment putAttachment(Connection conn, BackOffice backOffice, Attachment attachmentInput) throws SQLException {
+		
+		Attachment newAttachment = null;
+		String sql = "INSERT INTO %s.%s(id, sg_metadata_table_id, id_value, group_name, file_name, description, position) " + 
+					 "VALUES(?, ?, ?, ?, ?, ?, ?)";
+		
+		String targetTableName = null;
+		
+		if (attachmentInput.getType().equals(Attachment.Type.IMAGE)) {
+			
+			targetTableName = "sg_metadata_table_images";
+		}
+		else if (attachmentInput.getType().equals(Attachment.Type.OTHER)) {
+			
+			targetTableName = "sg_metadata_table_attachments";
+		}
+		
+		if (!StringUtils.isEmpty(targetTableName)) {
+			
+			sql = String.format(sql, backOffice.getSchema(), targetTableName);
+				
+			try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+				
+				Integer nextId = BackOfficeUtil.getNextId(conn, backOffice, targetTableName) + 1;
+				
+				stmt.setInt(1, nextId);
+				stmt.setInt(2, attachmentInput.getTable().getMetadataId());
+				stmt.setInt(3, attachmentInput.getIdValue());
+				stmt.setString(4, attachmentInput.getGroupName());
+				stmt.setString(5, attachmentInput.getFileName());
+				stmt.setString(6, attachmentInput.getDescription());
+				stmt.setInt(7, attachmentInput.getPosition());
+				
+				if (this.backOfficeProcessor.getBackOfficeManager().isShowSql()) {
+					
+					log.debug(stmt);					
+				}
+				
+				int rowsAffected = stmt.executeUpdate();
+				
+				if (rowsAffected == 1) {
+					
+					try {
+						
+						newAttachment = (Attachment) attachmentInput.clone();
+						newAttachment.setId(nextId);
+						
+					} catch (CloneNotSupportedException e) {
+						
+						log.error(e.getMessage());
+						log.debug(ExceptionUtils.getStackTrace(e));
+					}
+				}
+			}
+		}
+		
+		return newAttachment;
+	}
+	
+	Attachment editAttachment(Connection conn, BackOffice backOffice, Attachment attachmentInput) throws SQLException {
+		
+		Attachment newAttachment = null;
+		String sql = "UPDATE %s.%s SET sg_metadata_table_id = ?, id_value = ?, group_name = ?, file_name = ?, description = ?, position = ?" + 
+					 " WHERE id = ?";
+		
+		String targetTableName = null;
+		
+		if (attachmentInput.getType().equals(Attachment.Type.IMAGE)) {
+			
+			targetTableName = "sg_metadata_table_images";
+		}
+		else if (attachmentInput.getType().equals(Attachment.Type.OTHER)) {
+			
+			targetTableName = "sg_metadata_table_attachments";
+		}
+		
+		if (!StringUtils.isEmpty(targetTableName)) {
+			
+			sql = String.format(sql, backOffice.getSchema(), targetTableName);
+				
+			try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+				
+				stmt.setInt(1, attachmentInput.getTable().getMetadataId());
+				stmt.setInt(2, attachmentInput.getIdValue());
+				stmt.setString(3, attachmentInput.getGroupName());
+				stmt.setString(4, attachmentInput.getFileName());
+				stmt.setString(5, attachmentInput.getDescription());
+				stmt.setInt(6, attachmentInput.getPosition());
+				stmt.setInt(7, attachmentInput.getId());
+				
+				if (this.backOfficeProcessor.getBackOfficeManager().isShowSql()) {
+					
+					log.debug(stmt);					
+				}
+				
+				int rowsAffected = stmt.executeUpdate();
+				
+				if (rowsAffected == 1) {
+					
+					newAttachment = attachmentInput;
+				}
+			}
+		}
+		
+		return newAttachment;
+	}
+	
+	Attachment deleteAttachment(Connection conn, BackOffice backOffice, Attachment attachmentInput) throws SQLException {
+		
+		Attachment deletedAttachment = null;
+		String sql = "DELETE FROM %s.%s WHERE id = ?";
+		
+		String targetTableName = null;
+		
+		if (attachmentInput.getType().equals(Attachment.Type.IMAGE)) {
+			
+			targetTableName = "sg_metadata_table_images";
+		}
+		else if (attachmentInput.getType().equals(Attachment.Type.OTHER)) {
+			
+			targetTableName = "sg_metadata_table_attachments";
+		}
+		
+		if (!StringUtils.isEmpty(targetTableName)) {
+			
+			sql = String.format(sql, backOffice.getSchema(), targetTableName);
+				
+			try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+				
+				stmt.setInt(1, attachmentInput.getId());
+				
+				if (this.backOfficeProcessor.getBackOfficeManager().isShowSql()) {
+					
+					log.debug(stmt);					
+				}
+				
+				int rowsAffected = stmt.executeUpdate();
+				
+				if (rowsAffected == 1) {
+					
+					deletedAttachment = attachmentInput;
+				}
+			}
+		}
+		
+		return deletedAttachment;
 	}
 	
 	void assignMetadata(Connection conn, BackOffice backOffice, Table table) throws SQLException {
@@ -463,6 +632,7 @@ public class BackOfficeAssignment {
 				table.setLabelSingular(rs.getString("label_singular"));
 				table.setLabelDescription(rs.getString("label_description"));
 				table.setMdiIcon(rs.getString("mdi_icon"));
+				table.setMetadataId(rs.getInt("id"));
 				String metadata = rs.getString("metadata");
 				
 				if (!StringUtils.isEmpty(metadata)) {
@@ -523,6 +693,7 @@ public class BackOfficeAssignment {
 							column.setLabelDescription(rs.getString("label_description"));
 							column.setMdiIcon(rs.getString("mdi_icon"));
 							column.setNeedsTranslation(rs.getBoolean("needs_translation"));
+							column.setMetadataId(rs.getInt("id"));
 							
 							String metadata = rs.getString("metadata");
 							

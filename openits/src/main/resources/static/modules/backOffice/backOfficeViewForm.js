@@ -1,5 +1,6 @@
 import BackOfficeView from "./backOfficeView.js";
 import BackOfficeViewFormField from "./backOfficeViewFormField.js";
+import BackOfficeViewFormCarousel from "./backOfficeViewFormCarousel.js";
 import BackOfficeViewGrid from "./backOfficeViewGrid.js";
 import BackOfficeHelper from "./backOfficeHelper.js";
 import MessageBox from "../../component/messageBox.js";
@@ -199,8 +200,6 @@ export default class BackOfficeViewForm extends BackOfficeView {
 								Array.isArray(self.currentTableData.metadata.tabs) && 
 								self.currentTableData.metadata.tabs.length > 0) {
 									
-								let currentTableMetadataTabsCopy = webix.copy(self.currentTableData.metadata.tabs);
-									
 								let tabInfo = {
 									view: "tabview",
 									borderless: true,
@@ -211,17 +210,11 @@ export default class BackOfficeViewForm extends BackOfficeView {
 									}
 								};
 								
-								self.currentTableData.metadata.tabs.sort((a, b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));
-							
-								let initialTabLabel = currentTableMetadataTabsCopy.find(e=> e.initialTabLabel);
+								let initialTabLabel = BackOfficeHelper.translate(self.backOffice, self.currentTableData.metadata.initialTabLabel) ?? i18n.t("LBL_INITIAL_TAB");
 								
-								if (initialTabLabel) {
-
-									let index = currentTableMetadataTabsCopy.indexOf(initialTabLabel);
-									currentTableMetadataTabsCopy.splice(index, 1);
-								}
+								self.currentTableData.metadata.tabs.sort((a, b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));
 																							
-								currentTableMetadataTabsCopy.forEach(tab => {
+								self.currentTableData.metadata.tabs.forEach(tab => {
 
 									currentTableDataColumnsCopy = webix.copy(self.currentTableData.columns);
 									
@@ -233,7 +226,7 @@ export default class BackOfficeViewForm extends BackOfficeView {
 									if (Array.isArray(currentTableDataColumnsCopy) && currentTableDataColumnsCopy.length > 0) {
 
 										tabInfo.cells.push({
-											header: (initialTabLabel) ? i18n.t(initialTabLabel.initialTabLabel) : i18n.t("LBL_INITIAL_TAB"),
+											header: initialTabLabel,
 											body: {
 												view: "scrollview",
 												scroll: "auto",
@@ -242,7 +235,7 @@ export default class BackOfficeViewForm extends BackOfficeView {
 													cols: [
 														{ width: 45 },
 														{
-															rows: getFields()
+															rows: getItems()
 														},
 														{ width: 45 }
 													]
@@ -252,7 +245,7 @@ export default class BackOfficeViewForm extends BackOfficeView {
 									}
 									
 									tabInfo.cells.push({
-										header: i18n.t(tab.label),
+										header: BackOfficeHelper.translate(self.backOffice, tab.label),
 										body: {
 											view: "scrollview",
 											scroll: "auto",
@@ -261,7 +254,7 @@ export default class BackOfficeViewForm extends BackOfficeView {
 												cols: [
 													{ width: 45 },
 													{
-														rows: getFields(tab)
+														rows: getItems(tab)
 													},
 													{ width: 45 }
 												]
@@ -282,7 +275,7 @@ export default class BackOfficeViewForm extends BackOfficeView {
 										cols: [
 											{ width: 45 },
 											{
-												rows: getFields()
+												rows: getItems()
 											},
 											{ width: 45 }
 										]
@@ -293,40 +286,131 @@ export default class BackOfficeViewForm extends BackOfficeView {
 							}		
 						}
 						
-						function getFields(tab) {
+						function getItems(tab) {
 							
-							let columns = (Array.isArray(currentTableDataColumnsCopy) && currentTableDataColumnsCopy.length > 0) ? currentTableDataColumnsCopy : self.currentTableData.columns;
-
 							let fields = [{ height: 45 }];
-							
 							let backOfficeViewFormField = new BackOfficeViewFormField(self);
 							
-							if (tab && Array.isArray(tab.fields) && tab.fields.length > 0) {
+							const TYPE_COLUMN = "column";
+							const TYPE_IMAGE = "image";
 							
-								tab.fields.forEach(field => {
+							let items = [];
+							
+							assignFields();
+							assignImages();
+							
+							if (Array.isArray(items) && items.length > 0) {
+								
+								items.sort((a, b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));
+								
+								for (let item of items) {
 									
-									fields.push(backOfficeViewFormField.getField(self.currentTableData.columns.find(e => e.name === field.name)));
-								});
-							}
-							else {
-
-								columns.forEach(column => {
-
-									let pos = (column.metadata) ? column.metadata[BackOfficeHelper.META_TYPE_COLUMN.PROPERTY.POSITION.name] : undefined;
-
-									if (pos != undefined) {
-
-										column.position = pos;
+									if (item.type === TYPE_COLUMN) {
+										
+										fields.push(backOfficeViewFormField.getField(item.value));
 									}
-								});
+									else if (item.type === TYPE_IMAGE) {
+										
+										const rowDataId = self.currentTableData.rows[0].data.find(data => data.columnId === self.currentTableData.columns.find(col => col.name === "id").id);
+										
+										let backOfficeViewFormCarousel = new BackOfficeViewFormCarousel(self.backOffice, item.value.groupImage, self.currentTableData.name, rowDataId.value, item.value.images, onChangeCarousel);
+										
+										fields.push(backOfficeViewFormCarousel.getView());
+									}
+								}
+							}
+							
+							function onChangeCarousel() {
+								
+								const btnAccept = $$("btn-accept-" + self.uid);
+								
+								if (btnAccept) {
+									
+									btnAccept.enable();
+								}
+							}
+							
+							function assignFields() {
+							
+								if (tab && Array.isArray(tab.fields) && tab.fields.length > 0) {
 
-								columns.sort((a, b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));
-
-								columns.forEach(column => {
-
-									fields.push(backOfficeViewFormField.getField(column));
-								});
-							}	
+									let position = 0;							
+									tab.fields.forEach(field => {
+										
+										let column = self.currentTableData.columns.find(e => e.name === field.name);
+										
+										if (column) {
+											
+											items.push({
+												position: ++position,
+												type: TYPE_COLUMN,
+												value: column
+											})
+										}
+									});
+								}
+								else {
+									
+									let columns = (Array.isArray(currentTableDataColumnsCopy) && currentTableDataColumnsCopy.length > 0) ? currentTableDataColumnsCopy : self.currentTableData.columns;
+									
+									if (Array.isArray(columns)) {
+										
+										columns.forEach(column => {
+	
+											let pos = (column.metadata) ? column.metadata[BackOfficeHelper.META_TYPE_COLUMN.PROPERTY.POSITION.name] : undefined;
+			
+											if (pos != undefined) {
+			
+												column.position = pos;
+											}
+										});
+			
+										columns.sort((a, b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));
+			
+										columns.forEach(column => {
+											
+											items.push({
+												position: column.position,
+												type: TYPE_COLUMN,
+												value: column
+											});
+										});	
+									}
+								}	
+							}
+							
+							function assignImages() {
+								
+								if (self.currentTableData.metadata && 
+									Array.isArray(self.currentTableData.metadata.groupImages) && 
+									self.currentTableData.metadata.groupImages.length > 0) {
+									
+									self.currentTableData.metadata.groupImages.sort((a, b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));
+									
+									for (let groupImage of self.currentTableData.metadata.groupImages) {
+										
+										if (Array.isArray(self.currentTableData.rows) && self.currentTableData.rows.length === 1) {
+											
+											const row = self.currentTableData.rows[0];
+											
+											if ((!tab && !groupImage.tabPosition) || (tab && groupImage.tabPosition == tab.position)) {
+												
+												if (row && Array.isArray(row.images)) {
+										
+													items.push({
+														position: groupImage.position,
+														type: TYPE_IMAGE,
+														value: {
+															groupImage: groupImage,
+															images: row.images
+														}
+													});
+												}	
+											} 
+										}
+									}
+								}
+							}
 							
 							return fields;
 						}

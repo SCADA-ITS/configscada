@@ -222,7 +222,7 @@ public class BackOfficeUtil {
 
 		String sql = null;
 		
-		request.setId(getNextId(conn, backOffice, request));
+		request.setId(getNextId(conn, backOffice, request.getTableName()));
 		
 		if (request.getId() != null) {
 			
@@ -279,7 +279,7 @@ public class BackOfficeUtil {
 		return sql;
 	}
 	
-	public static Integer getNextId(Connection conn, BackOffice backOffice, Request request) throws SQLException {
+	public static Integer getNextId(Connection conn, BackOffice backOffice, String tableName) throws SQLException {
 		
 		Integer nextId = null;
 		
@@ -290,7 +290,7 @@ public class BackOfficeUtil {
 			if (DBType.POSTGRESQL.equals(getDBType(conn))) {
 		
 				sql = String.format("SELECT nextval('%s.%s_id_seq'::regclass) as next_id", backOffice.getSchema(),
-						request.getTableName());
+						tableName);
 			}
 			
 			if (!StringUtils.isEmpty(sql)) {

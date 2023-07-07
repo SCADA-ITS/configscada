@@ -1,0 +1,103 @@
+/* Global */
+
+.backoffice-textarea textarea {
+	border: 0;
+	font-style: italic;
+}
+
+.backoffice-image-box-title-description {
+	font-style: italic;
+}
+
+.backoffice-image .webix_template{
+	position: relative;
+	padding: 50px 60px;
+}
+
+.backoffice-image-content {
+	height:100%;
+	margin: auto; 
+	display: block;
+	cursor: zoom-in;
+}
+
+.backoffice-image-file {
+	position: absolute;
+	left: 10px;
+	bottom: 15px;
+}
+
+.backoffice-image-box {
+	box-sizing: border-box;
+	border: 1px solid #CCD7E6;
+	border-radius: 2px;	
+}
+
+.backoffice-image-carousel 
+.webix_nav_button_side.webix_nav_button_prev .webix_nav_button_inner,
+.webix_nav_button_side.webix_nav_button_next .webix_nav_button_inner {
+	opacity: 1;
+	text-align: center;
+	font-family: "Webix Material Icons";
+	font-size: 40px;
+	color: var(--blue-mid-opacity-4);
+	background: transparent;
+	border-radius: 2px;
+}
+
+.backoffice-image-carousel 
+.webix_nav_button_side.webix_nav_button_prev .webix_nav_button_inner:hover,
+.webix_nav_button_side.webix_nav_button_next .webix_nav_button_inner:hover,
+.webix_nav_button_side.webix_nav_button_prev .webix_nav_button_inner:focus,
+.webix_nav_button_side.webix_nav_button_next .webix_nav_button_inner:focus {
+	color: var(--blue-mid);
+	background: transparent;
+}
+
+.backoffice-image-carousel
+.webix_nav_panel .webix_nav_item {
+    background-color: transparent;
+    border-color: transparent;
+    height: 7px;
+    width: 7px;
+    margin: 0 7px;
+}
+
+.backoffice-image-carousel 
+.webix_nav_panel .webix_nav_active {
+	background-color: var(--blue-mid-opacity-4);
+}
+
+.backoffice-image-carousel
+.webix_nav_panel .webix_nav_inactive {
+    background-color: var(--blue-mid-opacity-2);
+}
+
+.backoffice-image-carousel
+.webix_nav_panel .webix_nav_item:hover {
+  	background-color: var(--blue-mid-opacity-6);
+  	border-color: transparent;
+}
+
+.webix_menu-x.edit-img-button-text .webix_list_item {
+	    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border: 1px;
+    border-radius: 5px;
+    background: transparent;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--blue-headers);
+    border: 1px solid var(--blue-headers-not-sel);
+    height: 35px !important;
+    margin-top: 2px;
+    text-align: center;
+} 
+
+.webix_menu-x.edit-img-button-text .webix_list_item:hover {
+	background: var(--blue-headers-not-sel) !important;
+    border-radius: 5px;
+    color: var(--blue-headers);
+}

@@ -11,7 +11,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Data
-public class Attachment implements Serializable {
+public class Attachment implements Serializable, Cloneable {
 
 	private static final long serialVersionUID = -2199350032533894812L;
 	
@@ -50,10 +50,22 @@ public class Attachment implements Serializable {
 		return null;
 	}
 	
-	public String getPath(String baseDir, Integer backofficeId) {
+	public String getPath(String baseDir, Integer idValue, Integer backofficeId) {
 		
 		return String.join(File.separator, baseDir, "backoffice", backofficeId.toString(),
-				this.getTable().getName(), this.getId().toString(),
-				this.getType().toString());
+				this.getTable().getName(), idValue.toString(),
+				this.getType().toString()).toLowerCase();
+	}
+	
+	public void change(Attachment attachment) {
+		
+		this.position = attachment.position;
+		this.description = attachment.description;
+	}
+	
+	@Override
+	public Object clone() throws CloneNotSupportedException {
+		
+		return super.clone();
 	}
 }

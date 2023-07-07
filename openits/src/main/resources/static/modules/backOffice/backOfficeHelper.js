@@ -5,6 +5,7 @@ const REST_BACKOFFICE_TABLE = "backoffice/${backOfficeId}/table/${tableName}";
 const REST_BACKOFFICE_TABLE_PERSIST = "backoffice/${backOfficeId}/persist";
 const REST_BACKOFFICE_TABLE_COMMAND = "backoffice/${backOfficeId}/command";
 const REST_BACKOFFICE_COLUMN_FILLER = "backoffice/${backOfficeId}/filler";
+const REST_BACKOFFICE_TRANSLATE = "backoffice/${backOfficeId}/translate/${label}";
 const REST_GRIDS_ID = "grids/${id}";
 const COL_NAMES_REF = [/name/i, /alias/i, /description/i];
 
@@ -135,6 +136,16 @@ export default class BackOfficeHelper {
 		response = await webix.ajax().headers(CONTENT_TYPE_JSON).post(url, conditions);
 		
 		return response ? response.json() : undefined;
+	}
+	
+	static translate(backOffice, label) {
+		
+		const url = appConfig.restUrl + 
+						util.fillTemplate(REST_BACKOFFICE_TRANSLATE, { backOfficeId: backOffice.id, label: label });
+
+		const translationResponse = webix.ajax().sync().get(url);
+		 
+		return (translationResponse && translationResponse.responseText) ? translationResponse.responseText : "¿¿" + label + "??"; 
 	}
 	
 	static async insertData(backOffice, table, requestInput) {

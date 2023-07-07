@@ -22,6 +22,7 @@
 
 /* Modules */
 @import url(./css_modules/alarmModules.css);
+@import url(./css_modules/backOfficeModule.css);
 @import url(./css_modules/camViewer.css);
 @import url(./css_modules/equipmentModule.css);
 @import url(./css_modules/equipmentViewerModule.css);
