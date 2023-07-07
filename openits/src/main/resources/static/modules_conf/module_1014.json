@@ -3,7 +3,8 @@
 	    "view": 101401,
 	    "viewFromAlarm": 101402,
 	    "commandEquipments": 101701,
-		"historicalChart": 104504
+		"historicalChart": 104504,
+		"maintenanceMode": 104601 
 	},
 	"actionEndpoints": {
 		

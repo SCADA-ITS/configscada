@@ -19,6 +19,7 @@
     maxAlarmLevel {
       id
     }
+    maintenanceComment
   }
   elementValues {
     id
@@ -95,6 +96,7 @@
       maxAlarmLevel {
         id
       }
+      maintenanceComment
     }
     elementValues {
       id

@@ -2,6 +2,7 @@ import EquipmentViewerInfo from "./equipmentViewerInfo.js";
 import EquipmentViewerProperties from "./equipmentViewerProperties.js";
 import { util } from "../../lib/util.js";
 import { adapter } from "../../lib/adapter.js";
+import MessageBox from "../../component/messageBox.js";
 
 export default class EquipmentViewerContent {
 
@@ -128,7 +129,7 @@ export default class EquipmentViewerContent {
 
 									let equipmentIcon = self.elementType.elementTypePhoto;
 
-									if (data && data.elementState &&  data.elementState.currentElementTypeState) {
+									if (data && data.elementState && data.elementState.currentElementTypeState) {
 
 										let elementTypeState = self.elementType.elementTypeStates.find(e => e.id === data.elementState.currentElementTypeState.id);
 
@@ -139,8 +140,10 @@ export default class EquipmentViewerContent {
 										}
 									}
 
-									let elementTypeStateLabel =  util.element.getAliasState(self.currentElementState);
+									let elementTypeStateLabel = util.element.getAliasState(self.currentElementState);
 									let color = util.element.getColorByState(self.currentElementState);
+
+									let commentIcon = self.currentElementState && self.currentElementState.maintenanceComment ? `<span id="comment_icon" class='webix_nav_item mdi mdi-comment'></span>` : ``;
 
 									let res = `<image class="ims-incident-report-icon" src="img/${equipmentIcon}" onerror="this.onerror=null;this.src='img/not_found_50.png';"/>
 											<div class="ims-incident-report-title" id="equipDescription" ${ellipsis} title="${elementLabelDescription + ' - ' + self.element.alias}">
@@ -148,6 +151,7 @@ export default class EquipmentViewerContent {
 											</div>
 											<div class="equip-viewer-header">
 												<span class="badge" style="background: ${color}; ">${elementTypeStateLabel}</span>
+												${commentIcon}
 											</div>`;
 
 									if (data.clockUpdate) {
@@ -160,12 +164,69 @@ export default class EquipmentViewerContent {
 											</div>
 											<div class="equip-viewer-header">
 												<span class="badge" style="background: ${color}; ">${elementTypeStateLabel}</span>
+												${commentIcon}
 												<span class='clock-ico ico webix_icon mdi mdi-clock-time-four-outline'></span>
 												<span class='clock-text'>${util.toLocaleString(Math.round(timeService.getEpoch() / 1000))}</span>
 											</div>`;
 									}
 
 									return res;
+								}
+							},
+							on: {
+								onAfterRender: function() {
+
+									if (self.currentElementState && self.currentElementState.maintenanceComment) {
+
+										let headerElement = $$("view-main-content-header-element-" + self.uid)
+
+										if (headerElement) {
+
+											let commentIcon = headerElement.getNode().querySelector('#comment_icon');
+
+											if (commentIcon) {
+
+												let tooltip = document.createElement("div");
+												tooltip.setAttribute("id", "comment_icon-icon-tooltip");
+												tooltip.setAttribute("class", "graphic-icon-tooltip");
+												tooltip.setAttribute("display", "none");
+												tooltip.setAttribute("style", "position: absolute; display: none;");
+												document.body.appendChild(tooltip);
+
+												commentIcon.addEventListener('click', function() {
+
+													(new MessageBox(MessageBox.INFO, i18n.t("LBL_ELEMENT_STATE_COMMENT"), { textMultiline: self.currentElementState.maintenanceComment }, null, null)).show();
+												});
+
+												commentIcon.addEventListener('mouseover', function(e) {
+
+													let tooltip = document.getElementById("comment_icon-icon-tooltip");
+
+													if (tooltip) {
+
+														tooltip.innerHTML = `<div>${i18n.t("LBL_ELEMENT_STATE_COMMENT")}</div>`;
+
+														tooltip.style.display = "block";
+														tooltip.style.left = e.pageX + 10 + 'px';
+														tooltip.style.top = e.pageY + 10 + 'px';
+														tooltip.style.zIndex = 99999;
+													}
+												});
+
+												commentIcon.addEventListener('mouseout', function() {
+
+													var tooltip = document.getElementById("comment_icon-icon-tooltip");
+
+													if (tooltip) {
+
+														tooltip.style.display = "none";
+													}
+												});
+
+											}
+										}
+
+									}
 								}
 							}
 						},
@@ -182,6 +243,7 @@ export default class EquipmentViewerContent {
 				let commandsModule;
 				let isAllowedCommands = false;
 				let noProperties = true;
+				let noMaintenanceMode = !(self.elementType.maintenanceState) || !self.parent.config.moduleAction.maintenanceMode;
 				let numberOfHeaderButtons = 0;
 				let toolbarButtonsWidth = 0;
 
@@ -199,6 +261,7 @@ export default class EquipmentViewerContent {
 				}
 
 				numberOfHeaderButtons = (noProperties) ? numberOfHeaderButtons : ++numberOfHeaderButtons;
+				numberOfHeaderButtons = (noMaintenanceMode) ? numberOfHeaderButtons : ++numberOfHeaderButtons;
 				numberOfHeaderButtons = !(self.equipmentViewer.showActions) || !isAllowedCommands ? numberOfHeaderButtons : ++numberOfHeaderButtons;
 				numberOfHeaderButtons = (self.element.tm && self.element.tm != undefined) ? ++numberOfHeaderButtons : numberOfHeaderButtons;
 				numberOfHeaderButtons = (self.element.doc && self.element.doc != undefined) ? ++numberOfHeaderButtons : numberOfHeaderButtons;
@@ -310,7 +373,7 @@ export default class EquipmentViewerContent {
 									hidden: (self.element.doc && self.element.doc != undefined) ? false : true,
 									on: {
 										onItemClick: function() {
-											
+
 											let element = document.createElement('a');
 											element.setAttribute('href', self.element.doc);
 											element.setAttribute('download', self.element.doc);
@@ -319,6 +382,31 @@ export default class EquipmentViewerContent {
 											document.body.removeChild(element);
 										}
 									},
+								},
+								{
+									view: "button",
+									width: 135,
+									label: i18n.t("LBL_EQUIP_VIEWER_MAINTENANCE_MODE"),
+									tooltip: i18n.t("LBL_EQUIP_VIEWER_MAINTENANCE_MODE_DESCRIPTION"),
+									type: "iconTop",
+									icon: "mdi  mdi-wrench",
+									hidden: noMaintenanceMode,
+									on: {
+
+										onItemClick() {
+
+											let module = util.module.getFromModuleAction(self.parent.config.moduleAction.maintenanceMode);
+
+											if (module) {
+
+												let moduleAction = { id: self.parent.config.moduleAction.maintenanceMode };
+												let args = { selectedPks: [self.element.id] };
+
+												util.module.open(module, moduleAction, VIEW_TYPE_WINDOW, null, args);
+											}
+
+										}
+									}
 								},
 								{ width: 5 }
 							]
@@ -590,7 +678,7 @@ export default class EquipmentViewerContent {
 
 						self.element.elementTypeState = element.elementTypeState;
 					}
-					
+
 					if (element.elementState) {
 
 						self.element.elementState = element.elementState;

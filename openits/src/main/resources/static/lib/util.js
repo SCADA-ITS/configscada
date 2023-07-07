@@ -1802,7 +1802,7 @@ export let util = {
 
 		getColor(elementTypeState) {
 
-			let colors = ["#ffcc00", "#008000", "#800080", "#ff0000", "00bcd4"]
+			let colors = ["#ffcc00", "#008000", "#800080", "#ff0000", "#00bcd4"]
 			let color = colors[0];
 
 			if (elementTypeState) {
@@ -1832,7 +1832,7 @@ export let util = {
 
 		getColorByState(elementState) {
 
-			let colors = ["#ffcc00", "#008000", "#800080", "#ff0000", "00bcd4"]
+			let colors = ["#ffcc00", "#008000", "#800080", "#ff0000", "#00bcd4"]
 			let color = colors[0];
 
 			if (elementState && elementState.currentElementTypeState && elementState.currentElementTypeState.id) {

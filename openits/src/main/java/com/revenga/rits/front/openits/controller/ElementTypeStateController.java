@@ -6,6 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -56,4 +58,12 @@ public class ElementTypeStateController {
 		
 		return new ResponseEntity<>(elementValueStateBO.getList(), HttpStatus.OK);
 	}
+	
+	@PostMapping(value = "/send_change_element_state")
+	@ApiOperation(value = "Send change element state", notes = "Send change element state")
+	public ResponseEntity<Boolean> sendChangeElementState(@RequestBody Object elementStates) {
+		
+		return new ResponseEntity<>(elementTypeStateBO.sendChangeElementState(elementStates), HttpStatus.OK);
+	}
+	
 }

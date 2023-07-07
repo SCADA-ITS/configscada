@@ -54,7 +54,7 @@ export default class SearchDialogBox {
 					}
 				}
 				
-				if (self.onAccept && Array.isArray(selected) && selected.length > 0) {
+				if (self.onAccept && (self.dialogEntity.messageType || (Array.isArray(selected) && selected.length > 0))) {
 					
 					// Prevent z-index disorder. Bug preventing inputboxes contained in tabs from being selected
 					setTimeout(function() {
@@ -534,11 +534,11 @@ export default class SearchDialogBox {
 				css: "dialog-cancel", 
 				width: 130,
 				height: 35, 
-				label: (self.dialogEntity.messageType) ? i18n.t("LBL_CLOSE") : i18n.t("LBL_CANCEL"),
+				label: (!self.onAccept && self.dialogEntity.messageType) ? i18n.t("LBL_CLOSE") : i18n.t("LBL_CANCEL"),
 				on: {
 					onItemClick() {
 
-						if (self.onAccept) {
+						if (self.onAccept && !self.dialogEntity.messageType) {
 
 							self.onAccept();
 						}
@@ -550,10 +550,10 @@ export default class SearchDialogBox {
 			
 			let acceptButton = { 
 					view: "button", 
-					css: (self.dialogEntity.messageType) ?  "dialog-cancel" :"dialog-accept",
+					css: (!self.onAccept && self.dialogEntity.messageType) ?  "dialog-cancel" :"dialog-accept",
 					width: 130,
 					height: 35,
-					label: (self.dialogEntity.messageType) ? i18n.t("LBL_CLOSE") : i18n.t("LBL_ACCEPT"),
+					label: (!self.onAccept && self.dialogEntity.messageType) ? i18n.t("LBL_CLOSE") : i18n.t("LBL_ACCEPT"),
 					on: {
 						onItemClick(){
 							
@@ -565,7 +565,7 @@ export default class SearchDialogBox {
 					}
 				};
 			
-			if (!self.onAccept || self.dialogEntity.messageType) {
+			if (!self.onAccept) {
 
 				viewToolbarActions.elements.push({});
 				viewToolbarActions.elements.push(cancelButton);

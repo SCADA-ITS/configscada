@@ -4,6 +4,12 @@
   description
   labelAlias
   labelDescription
+  maintenanceState {
+    id
+  }
+  initialState {
+    id
+  }
   elementTypeStates {
     id
     alias

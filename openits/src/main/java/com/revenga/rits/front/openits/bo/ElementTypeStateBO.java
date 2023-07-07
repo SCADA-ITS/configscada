@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.revenga.rits.front.openits.adapter.impl.GraphqlAdapter;
+import com.revenga.rits.front.openits.adapter.impl.VODataSourceAdapter;
 
 @Service
 public class ElementTypeStateBO extends GenericBO {
@@ -68,4 +69,17 @@ public class ElementTypeStateBO extends GenericBO {
 		return elementTypeStates;
 	}
 				
+
+	@SuppressWarnings("unchecked")
+	public Boolean sendChangeElementState(Object input) {
+	    
+	    Boolean res = false;
+	    
+	    Map<String, Object> sendChangeElementState = voDataSourceAdapter.put(VODataSourceAdapter.DATA_SOURCE_SEND_CHANGE_ELEMENT_STATE, (Map<String, Object>) input);
+	    
+	    res = checkMapIsBoolean(sendChangeElementState);
+
+	    return res;
+	    
+	  }
 }

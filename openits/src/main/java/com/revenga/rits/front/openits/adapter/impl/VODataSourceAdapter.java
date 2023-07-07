@@ -295,6 +295,8 @@ public class VODataSourceAdapter {
 	public static final int DATA_SOURCE_GET_HISTORICAL_ELEMENT_VALUES = getPropertyInt("get_historical_element_values");
 	public static final int DATA_SOURCE_GET_HISTORICAL_ALARMS = getPropertyInt("get_historical_alarms");
 	
+	public static final int DATA_SOURCE_SEND_CHANGE_ELEMENT_STATE = getPropertyInt("send_change_element_state");
+	
 	private static int getPropertyInt(final String prop) {
 		
 		if (!MapUtils.isEmpty(props)) {

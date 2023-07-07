@@ -21,6 +21,7 @@ export default class TableMessageBox {
 		
 		let dialogEntity = webix.copy(SearchDialogBox.CUSTOM);
 		dialogEntity.data = this.table.data;
+		dialogEntity.icons = this.table.icons;
 		dialogEntity.fields = this.table.fields;
 		dialogEntity.pkField = this.table.pkField;
 		dialogEntity.sortFieldId = this.table.sortFieldId;
