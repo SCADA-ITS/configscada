@@ -69,6 +69,7 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 				viewDataTable.cols[1].rows.push({
 					view: "template",
 					height: 1,
+					borderless: true,
 					on: {
 						onAfterRender: function() {
 		

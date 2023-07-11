@@ -23,6 +23,7 @@ export default class BackOfficeViewForm extends BackOfficeView {
 		}
 		
 		this.refreshInterval = undefined;
+		this.selectedRefreshTime = currentTableData.metadata && currentTableData.metadata.autorefreshForm && currentTableData.metadata.autorefresh && currentTableData.metadata.autorefresh > 0 ? currentTableData.metadata.autorefresh : undefined;
 	}
 	
 	setValues(row) {
@@ -91,6 +92,7 @@ export default class BackOfficeViewForm extends BackOfficeView {
 					{
 						view: "template",
 						height: 1,
+						borderless: true,
 						on: {
 							onAfterRender: function() {
 								
@@ -98,27 +100,9 @@ export default class BackOfficeViewForm extends BackOfficeView {
 									self.currentTableData.metadata.autorefresh && 
 									!isNaN(self.currentTableData.metadata.autorefresh)) {
 									
-									if (self.refreshInterval) {
-										
-										clearInterval(self.refreshInterval);
-									}
-									
-									const viewForm = $$("backOffice-view-" + self.uid);
-									
-									if (viewForm) {
-										
-										self.refreshInterval = setInterval(function() {
-												
-											self.refresh(function() {
-												
-												if (Array.isArray(self.currentTableData.rows) && self.currentTableData.rows.length > 0) {
-													
-													self.setValues(self.currentTableData.rows[0]);	
-												}
-											})
-											
-										}, self.currentTableData.metadata.autorefresh * 1000);	
-									}
+									$$("slider-" + self.uid).setValue(self.currentTableData.metadata.autorefresh);
+
+									timerRefresh();
 								}
 							}
 						}
@@ -134,6 +118,38 @@ export default class BackOfficeViewForm extends BackOfficeView {
 					}
 				}
 			};
+			
+			function timerRefresh() {
+				
+				if (self.refreshInterval) {
+										
+					clearInterval(self.refreshInterval);
+				}
+				
+				if (self.selectedRefreshTime > 0) {
+					
+					self.refreshInterval = setInterval(function() {
+						
+						self.refresh(function() {
+							
+							if (Array.isArray(self.currentTableData.rows) && self.currentTableData.rows.length > 0) {
+								
+								webix.extend($$(self.backOffice.containerId), webix.ProgressBar);
+	
+								$$(self.backOffice.containerId).showProgress({
+					
+									hide: false, type: "bottom"
+								});
+								
+								self.setValues(self.currentTableData.rows[0]);
+								
+								$$(self.backOffice.containerId).hideProgress();	
+							}
+						})
+						
+					}, self.selectedRefreshTime * 1000);	
+				}
+			}
 			
 			function getHeader() {
 
@@ -214,7 +230,8 @@ export default class BackOfficeViewForm extends BackOfficeView {
 									
 									let elements = [];
 									
-									if (Array.isArray(self.currentTableData.commands) && self.currentTableData.commands.length > 0) {
+									if ((Array.isArray(self.currentTableData.commands) && self.currentTableData.commands.length > 0) ||
+										self.currentTableData.metadata && self.currentTableData.metadata.autorefresh && self.currentTableData.metadata.autorefreshForm && self.currentTableData.metadata.autorefresh > 0) {
 										
 										let actionButtons = {
 											cols: [
@@ -497,39 +514,6 @@ export default class BackOfficeViewForm extends BackOfficeView {
 								}
 							}
 							
-//							function assignImages() {
-//								
-//								if (self.currentTableData.metadata && 
-//									Array.isArray(self.currentTableData.metadata.groupImages) && 
-//									self.currentTableData.metadata.groupImages.length > 0) {
-//									
-//									self.currentTableData.metadata.groupImages.sort((a, b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));
-//									
-//									for (let groupImage of self.currentTableData.metadata.groupImages) {
-//										
-//										if (Array.isArray(self.currentTableData.rows) && self.currentTableData.rows.length === 1) {
-//											
-//											const row = self.currentTableData.rows[0];
-//											
-//											if ((!tab && !groupImage.tabPosition) || (tab && groupImage.tabPosition == tab.position)) {
-//												
-//												if (row && Array.isArray(row.images)) {
-//										
-//													items.push({
-//														position: groupImage.position,
-//														type: TYPE_IMAGE,
-//														value: {
-//															groupImage: groupImage,
-//															images: row.images
-//														}
-//													});
-//												}	
-//											} 
-//										}
-//									}
-//								}
-//							}
-							
 							return fields;
 						}
 						
@@ -539,7 +523,7 @@ export default class BackOfficeViewForm extends BackOfficeView {
 					function getActionButtons() {
 
 						let buttonsGrid = {
-							hidden: !Array.isArray(self.currentTableData.commands) || self.currentTableData.commands.length === 0,
+							hidden: (!Array.isArray(self.currentTableData.commands) || self.currentTableData.commands.length === 0) && !(self.currentTableData.metadata && self.currentTableData.metadata.autorefreshForm && self.currentTableData.metadata.autorefresh > 0),
 							css: { "margin-left": "2px !important" },
 							height: 45,
 							cols: [
@@ -637,6 +621,32 @@ export default class BackOfficeViewForm extends BackOfficeView {
 						
 		
 						buttonsGrid.cols.push({});
+						
+						if (self.currentTableData.metadata && self.currentTableData.metadata.autorefreshForm && self.currentTableData.metadata.autorefresh > 0) {
+							
+							buttonsGrid.cols.push({
+								id: "slider-" + self.uid,
+								view: "slider",
+								value: 0,
+								label: i18n.t("LBL_UPDATE_TIME"),
+								labelWidth: 175,
+								gravity: 0.5,
+								min: 0,
+								max: 300,
+								step: 5,
+								title: webix.template("#value# secs"),
+								on: {
+									onChange: function(newv) {
+		
+										self.selectedRefreshTime = newv;
+										
+										timerRefresh();
+									}
+								}
+							});	
+						}
+						
+						
 		
 						return buttonsGrid;
 					}
