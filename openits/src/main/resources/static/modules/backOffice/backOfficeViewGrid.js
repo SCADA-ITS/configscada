@@ -23,6 +23,9 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 			util.ui.centerWindow(backOffice.containerId, backOffice.isModal ? 20: 0);
 			util.ui.setTitle(backOffice.containerId, util.getStringCapitalized(currentTableData.label ?? currentTableData.name));	
 		}
+		
+		this.refreshInterval = undefined;
+		this.selectedRefreshTime = currentTableData.metadata && currentTableData.metadata.autorefresh && currentTableData.metadata.autorefresh > 0 ? currentTableData.metadata.autorefresh : undefined;
 	}
 	
 	getView() {
@@ -51,7 +54,16 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 							id: "backOffice-view-" + self.uid,
 							rows: dataTableContent
 						}
-					]
+					],
+					on: {
+						onDestruct: function() {
+	
+							if (self.refreshInterval) {
+								
+								clearInterval(self.refreshInterval);
+							}
+						}
+					}
 				};
 				
 				viewDataTable.cols[1].rows.push({
@@ -61,6 +73,11 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 						onAfterRender: function() {
 		
 							self.dataTable.callbacks();
+							
+							if (self.currentTableData.metadata && self.currentTableData.metadata.autorefresh && self.currentTableData.metadata.autorefresh > 0) {
+												
+								$$("slider-" + self.uid).setValue(self.currentTableData.metadata.autorefresh);
+							}
 						},
 						onBeforeRender: function() {
 
@@ -99,6 +116,86 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 						}
 					}	
 				});	
+				
+				if (self.currentTableData.metadata && self.currentTableData.metadata.autorefresh && self.currentTableData.metadata.autorefresh > 0) {
+					
+					viewDataTable.cols[1].rows.push({
+						height: 55,
+						cols: [
+							{},
+							{
+								id: "slider-" + self.uid,
+								view: "slider",
+								value: 0,
+								label: i18n.t("LBL_UPDATE_TIME"),
+								labelWidth: 175,
+								gravity: 0.5,
+								min: 0,
+								max: 300,
+								step: 5,
+								title: webix.template("#value# secs"),
+								on: {
+									onChange: function(newv) {
+		
+										self.selectedRefreshTime = newv;
+										timerRefresh();
+									}
+								}
+							},
+							{ width: 30 }
+						]  
+					});
+
+				}
+			}
+			
+			function timerRefresh() {
+				
+				if (self.refreshInterval) {
+						
+					clearInterval(self.refreshInterval);
+				}
+				
+				if (self.currentTableData.metadata && self.currentTableData.metadata.autorefresh && 
+					!isNaN(self.currentTableData.metadata.autorefresh)) {
+						
+					if (self.selectedRefreshTime > 0) {
+						
+						self.refreshInterval = setInterval(refreshGrid, self.selectedRefreshTime * 1000);	
+					}
+				}	
+			}
+			
+			function refreshGrid() {
+				
+				if ($$("backOffice-view-" + self.uid) && self.dataTable) {
+					
+					const grid = $$(self.dataTable.getViewId())
+	
+					if (grid) {
+					
+						webix.extend(grid, webix.ProgressBar);
+
+						grid.showProgress({
+			
+							hide: false, type: "bottom"
+						});
+					
+						BackOfficeHelper.getData(self.backOffice).then((data) => {
+							
+							const selectedIds = self.dataTable.getSelectedIds();
+							
+							self.data = data;
+							self.currentTableData = data.find(e => e.name === self.backOffice.tableName);
+
+							self.dataTable.clear();
+							self.dataTable.add(getData());
+							self.dataTable.select(selectedIds);
+							
+							grid.hideProgress();								
+						});	
+					}
+				}
 			}
 
 			
@@ -439,7 +536,7 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 		
 					events[DataTable.EventTypes.ON_COMMAND_EXEC].push(
 						
-						{ commandId: BackOfficeViewGrid.GRID_COMMANDS.refresh, function: cmdRefresh },
+						{ commandId: BackOfficeViewGrid.GRID_COMMANDS.refresh, function: refreshGrid },
 						{ commandId: BackOfficeViewGrid.GRID_COMMANDS.new, function: cmdNew },
 						{ commandId: BackOfficeViewGrid.GRID_COMMANDS.edit, function: cmdEdit },
 						{ commandId: BackOfficeViewGrid.GRID_COMMANDS.delete, function: cmdDelete }
@@ -524,38 +621,6 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 						return commandButtons;
 					}
 					
-					function cmdRefresh() {
-						
-						if ($$("backOffice-view-" + self.uid) && self.dataTable) {
-							
-							const grid = $$(self.dataTable.getViewId())
-			
-							if (grid) {
-							
-								webix.extend(grid, webix.ProgressBar);
-
-								grid.showProgress({
-					
-									hide: false, type: "bottom"
-								});
-							
-								BackOfficeHelper.getData(self.backOffice).then((data) => {
-									
-									const selectedIds = self.dataTable.getSelectedIds();
-									
-									self.data = data;
-									self.currentTableData = data.find(e => e.name === self.backOffice.tableName);
-	
-									self.dataTable.clear();
-									self.dataTable.add(getData());
-									self.dataTable.select(selectedIds);
-									
-									grid.hideProgress();								
-								});	
-							}
-						}
-					}
-					
 					function cmdNew() {
 						
 						let persistValues = [];
@@ -623,7 +688,7 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 						
 						if (Array.isArray(ids) && ids.length > 0) {
 							
-							(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_BACKOFFICE_DELETE_CONFIRM") + " " + (self.currentTableData.label ?? self.currentTableData.name), null, onAccept , null)).show();
+							(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_BACKOFFICE_DELETE_CONFIRM") + " " + (self.currentTableData.label ?? self.currentTableData.name) + "?", null, onAccept , null)).show();
 							
 							function onAccept() {
 								

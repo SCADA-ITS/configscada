@@ -1,9 +1,14 @@
 package com.revenga.rits.front.openits.controller;
 
+import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -29,12 +34,14 @@ import com.revenga.rits.front.openitsdao.model.BackOffice;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import lombok.extern.log4j.Log4j2;
 
 @RestController
 @CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT,
 		RequestMethod.DELETE })
 @RequestMapping(value = "/api/v1/backoffice", produces = { "application/json", "application/xml" })
 @Api(value = "BackOffice", tags = { "BACKOFFICE" })
+@Log4j2
 public class BackOfficeController {
 
 	@Autowired
@@ -82,19 +89,8 @@ public class BackOfficeController {
 		return new ResponseEntity<>(backOfficeBO.get(backOfficeId, tableName, conditions), HttpStatus.OK);
 	}
 	
-	@GetMapping(path = "/{backOfficeId}/attachments/{attachmentType}/{tableName}/{id}")
-	@ApiOperation(value = "get attachments from table row")
-	public ResponseEntity<List<Attachment>> getAttachments(
-			@ApiParam(name = "backOfficeId", type = "Integer", example = "1", required = true) @PathVariable Integer backOfficeId,
-			@ApiParam(name = "attachmentType", type = "String", example = "file", required = true) @PathVariable Attachment.Type attachmentType,
-			@ApiParam(name = "tableName", type = "String", example = "orders", required = true) @PathVariable String tableName,
-			@ApiParam(name = "id", type = "Integer", example = "1", required = true) @PathVariable Integer id) {
-		
-		return new ResponseEntity<>(backOfficeBO.getAttachments(backOfficeId, attachmentType, tableName, id), HttpStatus.OK);
-	}
-	
 	@GetMapping(path = "/{backOfficeId}/attachments/image/{tableName}/{imageId}", produces = MediaType.IMAGE_JPEG_VALUE)
-	public ResponseEntity<byte[]> getImage(
+	public ResponseEntity<byte[]> downloadImage(
 			@ApiParam(name = "backOfficeId", type = "Integer", example = "1", required = true) @PathVariable Integer backOfficeId, 
 			@ApiParam(name = "tableName", type = "String", example = "products", required = true) @PathVariable String tableName,
 			@ApiParam(name = "imageId", type = "Integer", example = "1", required = true) @PathVariable Integer imageId) {
@@ -102,8 +98,57 @@ public class BackOfficeController {
 		return new ResponseEntity<>(backOfficeBO.downloadImage(backOfficeId, tableName, imageId), HttpStatus.OK);
 	}
 	
-	@PostMapping("{backOfficeId}/attachments/image/upload/{tableName}/{id}/{groupName}/{position}")
-	public ResponseEntity<Attachment> uploadImage(
+	@GetMapping(path = "/{backOfficeId}/attachments/other/{tableName}/{attachmentId}")
+	public ResponseEntity<Resource> downloadAttachment(
+			@ApiParam(name = "backOfficeId", type = "Integer", example = "1", required = true) @PathVariable Integer backOfficeId, 
+			@ApiParam(name = "tableName", type = "String", example = "products", required = true) @PathVariable String tableName,
+			@ApiParam(name = "attachmentId", type = "Integer", example = "1", required = true) @PathVariable Integer attachmentId,
+			HttpServletRequest request) {
+		
+		ResponseEntity<Resource> response = null;
+		
+		// Load file as Resource
+		Resource resource = backOfficeBO.downloadAttachment(backOfficeId, tableName, attachmentId);
+
+		// Try to determine file's content type
+		String contentType = null;
+		
+		if (resource != null) {
+			
+			try {
+
+				contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
+
+			} catch (IOException e) {
+
+				log.error("Could not determine file type.");
+				log.error(e.getMessage());
+				log.debug(ExceptionUtils.getStackTrace(e));
+			}
+
+			// Fallback to the default content type if type could not be determined
+			if (contentType == null) {
+
+				contentType = "application/octet-stream";
+				
+			}
+			
+			response = ResponseEntity.ok().contentType(MediaType.parseMediaType(contentType))
+					.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+					.body(resource);
+		}
+		else {
+			
+			response = new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+		return response;
+
+	}
+	
+	@PostMapping("{backOfficeId}/attachments/{attachmentType}/upload/{tableName}/{id}/{groupName}/{position}")
+	public ResponseEntity<Attachment> uploadAttachment(
+			@ApiParam(name = "attachmentType", type = "String", example = "image", required = true) @PathVariable String attachmentType,
 			@ApiParam(name = "backOfficeId", type = "Integer", example = "1", required = true) @PathVariable Integer backOfficeId,
 			@ApiParam(name = "tableName", type = "String", example = "products", required = true) @PathVariable String tableName,
 			@ApiParam(name = "id", type = "Integer", example = "1", required = true) @PathVariable Integer id,
@@ -111,37 +156,28 @@ public class BackOfficeController {
 			@ApiParam(name = "position", type = "String", example = "1", required = true) @PathVariable Integer position,
 			@RequestParam("upload") MultipartFile multipartFile) {
 
-		return new ResponseEntity<>(backOfficeBO.uploadImage(backOfficeId, tableName, id, groupName, position, multipartFile), HttpStatus.OK);
+		return new ResponseEntity<>(backOfficeBO.upload(attachmentType, backOfficeId, tableName, id, groupName, position, multipartFile), HttpStatus.OK);
 	}
 	
-	@PostMapping("/{backOfficeId}/attachments/image/edit/{tableName}")
-	public ResponseEntity<Attachment> editImage(
+	@PostMapping("/{backOfficeId}/attachments/{attachmentType}/edit/{tableName}")
+	public ResponseEntity<Attachment> editAttachment(
+			@ApiParam(name = "attachmentType", type = "String", example = "image", required = true) @PathVariable String attachmentType,
 			@ApiParam(name = "backOfficeId", type = "Integer", example = "1", required = true) @PathVariable Integer backOfficeId,
 			@ApiParam(name = "tableName", type = "String", example = "products", required = true) @PathVariable String tableName,
 			@RequestBody(required = false) Attachment attachment) {
 
-		return new ResponseEntity<>(backOfficeBO.editImage(backOfficeId, tableName, attachment), HttpStatus.OK);
+		return new ResponseEntity<>(backOfficeBO.editAttachment(attachmentType, backOfficeId, tableName, attachment), HttpStatus.OK);
 	}
 	
-	@DeleteMapping("/{backOfficeId}/attachments/image/delete/{tableName}/{imageId}")
-	public ResponseEntity<Attachment> deleteImage(
+	@DeleteMapping("/{backOfficeId}/attachments/{attachmentType}/delete/{tableName}/{imageId}")
+	public ResponseEntity<Attachment> deleteAttachment(
+			@ApiParam(name = "attachmentType", type = "String", example = "image", required = true) @PathVariable String attachmentType,
 			@ApiParam(name = "backOfficeId", type = "Integer", example = "1", required = true) @PathVariable Integer backOfficeId, 
 			@ApiParam(name = "tableName", type = "String", example = "products", required = true) @PathVariable String tableName,
 			@ApiParam(name = "imageId", type = "Integer", example = "1", required = true) @PathVariable Integer imageId) {
 		
-		return new ResponseEntity<>(backOfficeBO.deleteImage(backOfficeId, tableName, imageId), HttpStatus.OK);
+		return new ResponseEntity<>(backOfficeBO.deleteAttachment(attachmentType, backOfficeId, tableName, imageId), HttpStatus.OK);
 	}
-	
-	@PostMapping(path = "/{backOfficeId}/attachments/download")
-	@ApiOperation(value = "Download image by id")
-	public ResponseEntity<Resource> downloadAttachmment(
-			@ApiParam(name = "backOfficeId", type = "Integer", example = "1", required = true) @PathVariable Integer backOfficeId,
-			@RequestBody(required = true) Attachment attachment) {
-
-		return new ResponseEntity<>(backOfficeBO.downloadAttachment(backOfficeId, attachment), HttpStatus.OK);
-	}
-	
-	
 	
 	@PostMapping(path = "/{backOfficeId}/persist")
 	@ApiOperation(value = "persist data")

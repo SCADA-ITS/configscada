@@ -300,7 +300,7 @@ export default class BackOfficeViewFormField  {
 						}
 						else {
 							
-							(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_BACKOFFICE_NO_RECORDS_ON_REF_TABLE") + ": " + (table.label ?? table.name) + i18n.t("LBL_BACKOFFICE_CREATE_NEW_RECORD"), null, onAccept, null)).show();
+							(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_BACKOFFICE_NO_RECORDS_ON_REF_TABLE") + ": " + (table.label ?? table.name) + ". " + i18n.t("LBL_BACKOFFICE_CREATE_NEW_RECORD"), null, onAccept, null)).show();
 							
 							function onAccept() {
 								

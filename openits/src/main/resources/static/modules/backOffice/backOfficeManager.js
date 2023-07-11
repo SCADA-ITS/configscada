@@ -58,7 +58,7 @@ export default class BackOfficeManager {
 			
 			if (column) {
 				
-				(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_BACKOFFICE_CREATE_NEW_RECORDS_ON_TABLE") + " " + (currentTableData.label ?? currentTableData.name) + i18n.t("LBL_BACKOFFICE_WITH_CONDITIONS") + ": " + self.backOffice.filterColumnName + "=" + self.backOffice.filterColumnValue, null, onAccept , null)).show();
+				(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_BACKOFFICE_CREATE_NEW_RECORDS_ON_TABLE") + " " + (currentTableData.label ?? currentTableData.name) + i18n.t("LBL_BACKOFFICE_WITH_CONDITIONS") + ": " + self.backOffice.filterColumnName + "=" + self.backOffice.filterColumnValue + "?", null, onAccept , null)).show();
 		
 				function onAccept() {
 					

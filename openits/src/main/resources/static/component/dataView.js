@@ -116,6 +116,7 @@ export default class DataView {
 							view: "button", 
 							type: "icon", 
 							icon: cmd.icon, 
+							hidden: cmd.hidden === true,
 							css: "toolbar-button-text", 
 							width: TOOLBAR_BUTTONS_WIDTH_TEXT, 
 							label: (cmd.showText && cmd.label) ? i18n.t(cmd.label) : undefined, 

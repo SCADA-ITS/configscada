@@ -18,11 +18,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.revenga.rits.front.openits.backoffice.BackOfficeUtil.DMLType;
@@ -203,12 +203,15 @@ public class BackOfficeProcessor {
 		return attachments;
 	}
 	
-	public Attachment editImage(Integer backOfficeId, String tableName, Attachment attachment) {
+	public Attachment editAttachment(String attachmentTypeStr, Integer backOfficeId, String tableName, Attachment attachment) {
 		
 		Attachment newAttachment = null;
 		
+		Attachment.Type attachmentType = StringUtils.equalsIgnoreCase(
+				Attachment.Type.IMAGE.toString(), attachmentTypeStr) ? Attachment.Type.IMAGE : Attachment.Type.OTHER;
+		
 		BackOffice backOffice = this.backOfficeService.getById(backOfficeId);
-		Attachment attachmentFound = getAttachment(backOfficeId, Attachment.Type.IMAGE, tableName, attachment.getId());
+		Attachment attachmentFound = getAttachment(backOfficeId, attachmentType, tableName, attachment.getId());
 		
 		if (backOffice != null && attachmentFound != null) {
 			
@@ -232,20 +235,13 @@ public class BackOfficeProcessor {
 		return newAttachment;
 	}
 	
-	public Attachment uploadImage(String baseDir, Integer backOfficeId, String tableName, Integer id, String groupName, Integer position, MultipartFile multipartFile) {
-		
-		return upload(baseDir, backOfficeId, Attachment.Type.IMAGE, tableName, id, groupName, position, multipartFile);
-	}
-	
-	public Attachment uploadAttachment(String baseDir, Integer backOfficeId, String tableName, Integer id, String groupName, Integer position, MultipartFile multipartFile) {
-		
-		return upload(baseDir, backOfficeId, Attachment.Type.OTHER, tableName, id, groupName, position, multipartFile);
-	}
-	
-	private Attachment upload(String baseDir, Integer backOfficeId, Attachment.Type attachmentType, String tableName, Integer id, String groupName, Integer position, MultipartFile multipartFile) {
+	public Attachment upload(String attachmentTypeStr, String baseDir, Integer backOfficeId, String tableName, Integer id, String groupName, Integer position, MultipartFile multipartFile) {
 		
 		Attachment newAttachment = null;
 		BackOffice backOffice = this.backOfficeService.getById(backOfficeId);
+		
+		Attachment.Type attachmentType = StringUtils.equalsIgnoreCase(
+				Attachment.Type.IMAGE.toString(), attachmentTypeStr) ? Attachment.Type.IMAGE : Attachment.Type.OTHER;
 		
 		if (backOffice != null) {
 			
@@ -274,22 +270,10 @@ public class BackOfficeProcessor {
 		return newAttachment;
 	}
 	
-	public Resource downloadAttachment(String baseDir, Integer backOfficeId, Attachment attachment) {
-		
-		Resource resource = null;
-		Attachment attachmentFound = getAttachment(backOfficeId, attachment.getType(), attachment.getTable().getName(), attachment.getId());
-		
-		if (attachmentFound != null) {
-			
-			resource = loadFileAsResource(attachment.getPath(baseDir, attachmentFound.getIdValue(), backOfficeId), attachment.getFileName());
-		}
-
-		return resource;
-	}
-	
 	public byte[] downloadImage(String baseDir, Integer backOfficeId, String tableName, Integer imageId) {
 		
-		byte[] imageBytes = null;
+		byte[] fileBytes = null;
+		
 		Attachment attachmentFound = getAttachment(backOfficeId, Attachment.Type.IMAGE, tableName, imageId);
 		
 		if (attachmentFound != null) {
@@ -300,7 +284,7 @@ public class BackOfficeProcessor {
 				
 				if (resource != null) {
 					
-					imageBytes = Files.readAllBytes(Path.of(resource.getURI()));
+					fileBytes = Files.readAllBytes(Path.of(resource.getURI()));
 				}
 				
 			} catch (IOException e) {
@@ -310,13 +294,30 @@ public class BackOfficeProcessor {
 			}
 		}
 
-		return imageBytes;
+		return fileBytes;
 	}
 	
-	public Attachment deleteImage(String baseDir, Integer backOfficeId, String tableName, Integer imageId) {
+	public Resource downloadAttachment(String baseDir, Integer backOfficeId, String tableName, Integer imageId) {
+		
+		Resource resource = null;
+		Attachment attachmentFound = getAttachment(backOfficeId, Attachment.Type.OTHER, tableName, imageId);
+		
+		if (attachmentFound != null) {
+			
+			resource = loadFileAsResource(attachmentFound.getPath(baseDir, attachmentFound.getIdValue(), backOfficeId), attachmentFound.getFileName());
+		}
+
+		return resource;
+	}
+	
+	public Attachment deleteAttachment(String attachmentTypeStr, String baseDir, Integer backOfficeId, String tableName, Integer imageId) {
 		
 		Attachment deletedAttachment = null;
-		Attachment attachmentInput = getAttachment(backOfficeId, Attachment.Type.IMAGE, tableName, imageId);
+		
+		Attachment.Type attachmentType = StringUtils.equalsIgnoreCase(
+				Attachment.Type.IMAGE.toString(), attachmentTypeStr) ? Attachment.Type.IMAGE : Attachment.Type.OTHER;
+		
+		Attachment attachmentInput = getAttachment(backOfficeId, attachmentType, tableName, imageId);
 		
 		BackOffice backOffice = this.backOfficeService.getById(backOfficeId);
 		
@@ -357,7 +358,7 @@ public class BackOfficeProcessor {
 			if (backOffice != null && multipartFile != null && multipartFile.getOriginalFilename() != null) {
 			
 				String tableName = attachmentInput.getTable().getName();
-				String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+				String fileName = org.springframework.util.StringUtils.cleanPath(multipartFile.getOriginalFilename());
 				
 				// Check if the file's name contains invalid characters
 	            if(!fileName.contains("..")) {

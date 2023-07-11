@@ -92,25 +92,18 @@ public class BackOfficeBO {
 		return backOfficeProcessor.getAttachments(backOfficeId, attachmentType, tableName, id);	
 	}
 	
-	public Attachment editImage(Integer backOfficeId, String tableName, Attachment attachment) {
+	public Attachment editAttachment(String attachmentType, Integer backOfficeId, String tableName, Attachment attachment) {
 		
 		BackOfficeProcessor backOfficeProcessor = new BackOfficeProcessor(groovyManager, backOfficeService, backOfficeManager, getLocaleCode(), false);
 		
-		return backOfficeProcessor.editImage(backOfficeId, tableName, attachment);	
+		return backOfficeProcessor.editAttachment(attachmentType, backOfficeId, tableName, attachment);	
 	}
 	
-	public Attachment uploadImage(Integer backOfficeId, String tableName, Integer id, String groupName, Integer position, MultipartFile multipartFile) {
+	public Attachment upload(String attachmentType, Integer backOfficeId, String tableName, Integer id, String groupName, Integer position, MultipartFile multipartFile) {
 		
 		BackOfficeProcessor backOfficeProcessor = new BackOfficeProcessor(groovyManager, backOfficeService, backOfficeManager, getLocaleCode(), false);
 		
-		return backOfficeProcessor.uploadImage(this.baseDir, backOfficeId, tableName, id, groupName, position, multipartFile);	
-	}
-	
-	public Resource downloadAttachment(Integer backOfficeId, Attachment attachment) {
-		
-		BackOfficeProcessor backOfficeProcessor = new BackOfficeProcessor(groovyManager, backOfficeService, backOfficeManager, getLocaleCode(), false);
-		
-		return backOfficeProcessor.downloadAttachment(baseDir, backOfficeId, attachment);
+		return backOfficeProcessor.upload(attachmentType, this.baseDir, backOfficeId, tableName, id, groupName, position, multipartFile);	
 	}
 	
 	public byte[] downloadImage(Integer backOfficeId, String tableName, Integer imageId) {
@@ -120,11 +113,18 @@ public class BackOfficeBO {
 		return backOfficeProcessor.downloadImage(baseDir, backOfficeId, tableName, imageId);
 	}
 	
-	public Attachment deleteImage(Integer backOfficeId, String tableName, Integer imageId) {
+	public Resource downloadAttachment(Integer backOfficeId, String tableName, Integer imageId) {
 		
 		BackOfficeProcessor backOfficeProcessor = new BackOfficeProcessor(groovyManager, backOfficeService, backOfficeManager, getLocaleCode(), false);
 		
-		return backOfficeProcessor.deleteImage(baseDir, backOfficeId, tableName, imageId);
+		return backOfficeProcessor.downloadAttachment(baseDir, backOfficeId, tableName, imageId);
+	}
+	
+	public Attachment deleteAttachment(String attachment, Integer backOfficeId, String tableName, Integer imageId) {
+		
+		BackOfficeProcessor backOfficeProcessor = new BackOfficeProcessor(groovyManager, backOfficeService, backOfficeManager, getLocaleCode(), false);
+		
+		return backOfficeProcessor.deleteAttachment(attachment, baseDir, backOfficeId, tableName, imageId);
 	}
 
 	public RequestResult persist(Integer backOfficeId, Request request) {

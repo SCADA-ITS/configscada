@@ -1,6 +1,7 @@
 import BackOfficeView from "./backOfficeView.js";
 import BackOfficeViewFormField from "./backOfficeViewFormField.js";
-import BackOfficeViewFormCarousel from "./backOfficeViewFormCarousel.js";
+import BackOfficeViewFormImage from "./backOfficeViewFormImage.js";
+import BackOfficeViewFormAttachment from "./backOfficeViewFormAttachment.js";
 import BackOfficeViewGrid from "./backOfficeViewGrid.js";
 import BackOfficeHelper from "./backOfficeHelper.js";
 import MessageBox from "../../component/messageBox.js";
@@ -20,6 +21,8 @@ export default class BackOfficeViewForm extends BackOfficeView {
 			util.ui.resizeWindow(backOffice.containerId, this.formWidth, this.formHeight);
 			util.ui.centerWindow(backOffice.containerId);
 		}
+		
+		this.refreshInterval = undefined;
 	}
 	
 	setValues(row) {
@@ -84,8 +87,52 @@ export default class BackOfficeViewForm extends BackOfficeView {
 							getTabs(),
 							{ width: 15 }
 						]
+					},
+					{
+						view: "template",
+						height: 1,
+						on: {
+							onAfterRender: function() {
+								
+								if (self.currentTableData.metadata && self.currentTableData.metadata.autorefreshForm &&
+									self.currentTableData.metadata.autorefresh && 
+									!isNaN(self.currentTableData.metadata.autorefresh)) {
+									
+									if (self.refreshInterval) {
+										
+										clearInterval(self.refreshInterval);
+									}
+									
+									const viewForm = $$("backOffice-view-" + self.uid);
+									
+									if (viewForm) {
+										
+										self.refreshInterval = setInterval(function() {
+												
+											self.refresh(function() {
+												
+												if (Array.isArray(self.currentTableData.rows) && self.currentTableData.rows.length > 0) {
+													
+													self.setValues(self.currentTableData.rows[0]);	
+												}
+											})
+											
+										}, self.currentTableData.metadata.autorefresh * 1000);	
+									}
+								}
+							}
+						}
 					}
-				]
+				],
+				on: {
+					onDestruct: function() {
+	
+						if (self.refreshInterval) {
+							
+							clearInterval(self.refreshInterval);
+						}
+					}
+				}
 			};
 			
 			function getHeader() {
@@ -293,11 +340,13 @@ export default class BackOfficeViewForm extends BackOfficeView {
 							
 							const TYPE_COLUMN = "column";
 							const TYPE_IMAGE = "image";
+							const TYPE_ATTACHMENT = "attachment";
 							
 							let items = [];
 							
 							assignFields();
-							assignImages();
+							assignFiles(TYPE_IMAGE);
+							assignFiles(TYPE_ATTACHMENT);
 							
 							if (Array.isArray(items) && items.length > 0) {
 								
@@ -313,14 +362,22 @@ export default class BackOfficeViewForm extends BackOfficeView {
 										
 										const rowDataId = self.currentTableData.rows[0].data.find(data => data.columnId === self.currentTableData.columns.find(col => col.name === "id").id);
 										
-										let backOfficeViewFormCarousel = new BackOfficeViewFormCarousel(self.backOffice, item.value.groupImage, self.currentTableData.name, rowDataId.value, item.value.images, onChangeCarousel);
+										let backOfficeViewFormImage = new BackOfficeViewFormImage(self.backOffice, item.value.groupImage, self.currentTableData.name, rowDataId.value, item.value.images, onChangeAttachment);
 										
-										fields.push(backOfficeViewFormCarousel.getView());
+										fields.push(backOfficeViewFormImage.getView());
+									}
+									else if (item.type === TYPE_ATTACHMENT) {
+										
+										const rowDataId = self.currentTableData.rows[0].data.find(data => data.columnId === self.currentTableData.columns.find(col => col.name === "id").id);
+										
+										let backOfficeViewFormAttachment = new BackOfficeViewFormAttachment(self.backOffice, item.value.groupAttachment, self.currentTableData.name, rowDataId.value, item.value.attachments, onChangeAttachment);
+										
+										fields.push(backOfficeViewFormAttachment.getView());
 									}
 								}
 							}
 							
-							function onChangeCarousel() {
+							function onChangeAttachment() {
 								
 								const btnAccept = $$("btn-accept-" + self.uid);
 								
@@ -379,38 +436,99 @@ export default class BackOfficeViewForm extends BackOfficeView {
 								}	
 							}
 							
-							function assignImages() {
+							function assignFiles(fileType) {
 								
-								if (self.currentTableData.metadata && 
-									Array.isArray(self.currentTableData.metadata.groupImages) && 
-									self.currentTableData.metadata.groupImages.length > 0) {
+								if (self.currentTableData.metadata) {
 									
-									self.currentTableData.metadata.groupImages.sort((a, b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));
+									let groups = undefined;
 									
-									for (let groupImage of self.currentTableData.metadata.groupImages) {
+									if (fileType === TYPE_IMAGE) {
 										
-										if (Array.isArray(self.currentTableData.rows) && self.currentTableData.rows.length === 1) {
-											
-											const row = self.currentTableData.rows[0];
-											
-											if ((!tab && !groupImage.tabPosition) || (tab && groupImage.tabPosition == tab.position)) {
+										groups = self.currentTableData.metadata.groupImages;
+									} 
+									else if (fileType === TYPE_ATTACHMENT) {
+										
+										groups = self.currentTableData.metadata.groupAttachments;
+									}
+									
+									if (Array.isArray(groups) && groups.length > 0) {
+									
+										groups.sort((a, b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));
+									
+										for (let group of groups) {
+										
+											if (Array.isArray(self.currentTableData.rows) && self.currentTableData.rows.length === 1) {
 												
-												if (row && Array.isArray(row.images)) {
-										
-													items.push({
-														position: groupImage.position,
-														type: TYPE_IMAGE,
-														value: {
-															groupImage: groupImage,
-															images: row.images
+												const row = self.currentTableData.rows[0];
+												
+												if ((!tab && !group.tabPosition) || (tab && group.tabPosition == tab.position)) {
+													
+													if (row && Array.isArray(row.images)) {
+														
+														let item = {
+															position: group.position,
+															type: fileType
+														} 
+														
+														if (fileType === TYPE_IMAGE && Array.isArray(row.images)) {
+											
+															item.value = {
+																groupImage: group,
+																images: row.images
+															}
+														} 
+														else if (fileType === TYPE_ATTACHMENT && Array.isArray(row.attachments)) {
+															
+															item.value = {
+																groupAttachment: group,
+																attachments: row.attachments
+															}
 														}
-													});
-												}	
+														
+														if (item.value) {
+															
+															items.push(item);	
+														}
+													}	
+												}
 											} 
 										}
 									}
 								}
 							}
+							
+//							function assignImages() {
+//								
+//								if (self.currentTableData.metadata && 
+//									Array.isArray(self.currentTableData.metadata.groupImages) && 
+//									self.currentTableData.metadata.groupImages.length > 0) {
+//									
+//									self.currentTableData.metadata.groupImages.sort((a, b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));
+//									
+//									for (let groupImage of self.currentTableData.metadata.groupImages) {
+//										
+//										if (Array.isArray(self.currentTableData.rows) && self.currentTableData.rows.length === 1) {
+//											
+//											const row = self.currentTableData.rows[0];
+//											
+//											if ((!tab && !groupImage.tabPosition) || (tab && groupImage.tabPosition == tab.position)) {
+//												
+//												if (row && Array.isArray(row.images)) {
+//										
+//													items.push({
+//														position: groupImage.position,
+//														type: TYPE_IMAGE,
+//														value: {
+//															groupImage: groupImage,
+//															images: row.images
+//														}
+//													});
+//												}	
+//											} 
+//										}
+//									}
+//								}
+//							}
 							
 							return fields;
 						}
@@ -450,7 +568,7 @@ export default class BackOfficeViewForm extends BackOfficeView {
 										
 										if (cmd.requireConfirmation) {
 										
-											(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_BACKOFFICE_CONFIRM_COMMAND") + " " + (cmd.label ?? cmd.name), null, executeCommand, null)).show();	
+											(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_BACKOFFICE_CONFIRM_COMMAND") + " " + (cmd.label ?? cmd.name) + "?", null, executeCommand, null)).show();	
 										}
 										else {
 											
@@ -601,7 +719,7 @@ export default class BackOfficeViewForm extends BackOfficeView {
 							
 								if (id && ((Array.isArray(requestInput) && requestInput.length > 0) || self.backOffice.onCancel)) {
 									
-									(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_BACKOFFICE_SAVE_CHANGES_ON") + " " + (self.currentTableData.label ?? self.currentTableData.name), null, onAccept , null)).show();
+									(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_BACKOFFICE_SAVE_CHANGES_ON") + " " + (self.currentTableData.label ?? self.currentTableData.name) + "?", null, onAccept , null)).show();
 								}
 								else {
 									
@@ -750,7 +868,7 @@ export default class BackOfficeViewForm extends BackOfficeView {
 		return view;
 	}
 	
-	refresh() {
+	refresh(onRefresh) {
 		
 		let self = this;
 		
@@ -758,6 +876,11 @@ export default class BackOfficeViewForm extends BackOfficeView {
 			
 			self.data = data;
 			self.currentTableData = data.find(e => e.name === self.backOffice.tableName);
+			
+			if (onRefresh) {
+				
+				onRefresh();
+			}
 		});
 	}
 }

@@ -8,8 +8,7 @@ const REST_BACKOFFICE_UPLOAD_IMAGE = "backoffice/${backOfficeId}/attachments/ima
 const REST_BACKOFFICE_DELETE_IMAGE = "backoffice/${backOfficeId}/attachments/image/delete/${tableName}/${imageId}";
 const REST_BACKOFFICE_EDIT_IMAGE = "backoffice/${backOfficeId}/attachments/image/edit/${tableName}";
 
-
-export default class BackOfficeViewFormCarousel  {
+export default class BackOfficeViewFormImage  {
 
 	constructor(backOffice, groupImage, tableName, rowId, images, onChange) {
 
@@ -30,7 +29,7 @@ export default class BackOfficeViewFormCarousel  {
 		let self = this;
 		let view;
 		
-		if (Array.isArray(this.images) && this.images.length > 0) {
+		if (Array.isArray(self.images) && self.images.length > 0) {
 			
 			self.images.sort((a, b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));
 			
@@ -86,9 +85,12 @@ export default class BackOfficeViewFormCarousel  {
 						label: util.getStringCapitalized(BackOfficeHelper.translate(self.backOffice, self.groupImage.label) ?? i18n.t("LBL_IMAGE_GROUP"))
 					},
 					{
-						view: "label",
-						css: "backoffice-image-box-title-description",
-						label: self.groupImage.description ?? i18n.t("LBL_IMAGE_GROUP_DESCRIPTION")
+						view: "textarea",
+						css: "backoffice-textarea",
+						height: 100,
+						readonly: true,
+						hidden: !self.groupImage.description,
+						value: BackOfficeHelper.translate(self.backOffice, self.groupImage.description)
 					},
 					{}
 				]
@@ -110,7 +112,7 @@ export default class BackOfficeViewFormCarousel  {
 				view: "carousel",
 				borderless: true,
 				hidden: (Array.isArray(self.images) && self.images.length === 0) || !self.images,
-				height: 300,
+				height: self.groupImage.height ?? 300,
 				cols: [],
 				navigation:{
 			    	type: "side"
@@ -156,7 +158,7 @@ export default class BackOfficeViewFormCarousel  {
 				cols: [
 					viewCarousel,
 					{
-						height: 350,
+						height: self.groupImage.height ? self.groupImage.height + 50 : 350,
 						hidden: Array.isArray(self.images) && self.images.length > 0,
 						borderless: true,
 						rows: [

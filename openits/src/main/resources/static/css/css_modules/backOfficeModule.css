@@ -2,6 +2,7 @@
 
 .backoffice-textarea textarea {
 	border: 0;
+	color: var(--strong-grey);
 	font-style: italic;
 }
 
