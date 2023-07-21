@@ -71,11 +71,12 @@ export default class BackOfficeViewFormField  {
 					const refGroupField = refTable.columns.find(e => column.metadata && column.metadata.refGroupFieldName === e.name);
 					const dependentColumns = self.currentTableData.columns.filter(e => e.metadata && e.metadata.associatedFieldName === BackOfficeHelper.getColumnNameFromColumnUID(field.name));										
 					const disabled = self.backOffice.filterColumn && self.backOffice.filterColumn.refColumn && self.backOffice.filterColumn.refColumn.id === refColumn.id && self.backOffice.filterColumn.refColumn.tableId === refColumn.tableId; 
-					const refAddButtonTable = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, BackOfficeHelper.META_TYPE_TABLE.PROPERTY.REF_ADD_BUTTON, self.backOffice.metadata, self.currentTableData);
+					//const refAddButtonTable = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, BackOfficeHelper.META_TYPE_TABLE.PROPERTY.REF_ADD_BUTTON, self.backOffice.metadata, self.currentTableData);
 									
-					let refAddButtonColumn = (column.metadata) ? column.metadata[BackOfficeHelper.META_TYPE_COLUMN.PROPERTY.REF_ADD_BUTTON.name] : undefined;
-					let refAddButton = (refAddButtonColumn != undefined) ? refAddButtonColumn : refAddButtonTable;  
-					let visibleColumn = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_COLUMN, BackOfficeHelper.META_TYPE_COLUMN.PROPERTY.FORM_VISIBLE, self.backOffice.metadata, self.currentTableData);
+					//let refAddButtonColumn = (column.metadata) ? column.metadata[BackOfficeHelper.META_TYPE_COLUMN.PROPERTY.REF_ADD_BUTTON.name] : undefined;
+					//let refAddButton = (refAddButtonColumn != undefined) ? refAddButtonColumn : refAddButtonTable;  
+					const visibleAddButton = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_COLUMN, BackOfficeHelper.META_TYPE_COLUMN.PROPERTY.REF_ADD_BUTTON, self.backOffice.metadata, column);
+					let visibleColumn = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_COLUMN, BackOfficeHelper.META_TYPE_COLUMN.PROPERTY.FORM_VISIBLE, self.backOffice.metadata, column);
 
 					if (referencedColumnValue && (!self.backOffice.filterColumn || refColumn.id != self.backOffice.filterColumn.id)) {
 						
@@ -140,7 +141,7 @@ export default class BackOfficeViewFormField  {
 									view: "icon", 
 									icon: "wxi-search",
 									tooltip: i18n.t("LBL_SEARCH"),
-									hidden: !visibleColumn,
+									hidden: !visibleColumn || disabled,
 									on: {
 										onItemClick: function() {
 											
@@ -191,7 +192,7 @@ export default class BackOfficeViewFormField  {
 									view: "icon", 
 									icon: "wxi-plus",
 									tooltip: i18n.t("LBL_CMD_ADD"),
-									hidden: (!visibleColumn) ? !visibleColumn: !refAddButton,
+									hidden: ((!visibleColumn) ? !visibleColumn: !visibleAddButton) || disabled,
 									on: {
 										onItemClick: createRefField
 									}
@@ -423,6 +424,15 @@ export default class BackOfficeViewFormField  {
 										}														
 									}
 								}
+							}
+						}
+						else {
+							
+							(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_BACKOFFICE_NO_RECORDS_ON_REF_TABLE") + ": " + (table.label ?? table.name) + ". " + i18n.t("LBL_BACKOFFICE_CREATE_NEW_RECORD"), null, onAccept, null)).show();
+							
+							function onAccept() {
+								
+								createRefField();
 							}
 						}
 					}

@@ -44,7 +44,7 @@ export default class OptionDialogBox {
 
 		if (self.mode === OptionDialogBox.MODE_TOGGLE) {
 
-			content = new OptionButtonList(self.options, self.onChange, self.mode);
+			content = new OptionButtonList(self.options, self.onChange, undefined, self.mode);
 
 			height = (self.options.length <= 2) ? 240 : 336;
 

@@ -136,7 +136,7 @@ export default class PlanLibraryModule extends GenericModule {
 					});
 				}
 
-				self.optionButtonList = new OptionButtonList(options, onAceptOptionButtonList, OptionButtonList.MODE_BUTTONS);
+				self.optionButtonList = new OptionButtonList(options, onAceptOptionButtonList, undefined, OptionButtonList.MODE_BUTTONS);
 
 				viewOptionButtonList = {
 					id: "view-option-dialog-" + self.uid,

@@ -39,7 +39,14 @@ export default class BackOfficeHelper {
 				SHOW_ID_TABLE: { name: "showIdTable", default: false },
 				SHOW_ID_SEARCH: { name: "showIdSearch", default: false },
 				GRID_FILTERS: { name: "gridFilters", default: false },
-				REF_ADD_BUTTON: { name: "refAddButton", default: true }
+				INITIAL_TAB_LABEL: { name: "initialTabLabel" },
+				TABS: { name: "tabs" },
+				GRID_ID: { name: "gridId" },
+				AUTOREFRESH: { name: "autorefresh" },
+				AUTOREFRESH_FORM: { name: "autorefresh" },
+				REFER_TABLES: { name: "referTables" },
+				GROUP_IMAGES: { name: "groupImages" },
+				GROUP_ATTACHMENTS: { name: "groupAttachments" }
 			} 
 		} 
 	}
@@ -55,7 +62,8 @@ export default class BackOfficeHelper {
 				SEARCH_VISIBLE: { name: "searchVisible", default: false },
 				REF_ADD_BUTTON: { name: "refAddButton", default: true },
 				GRID_FILTERS: { name: "gridFilters", default: false },
-				POSITION: {name: "position"}
+				POSITION: { name: "position" },
+				REF_NAME: { name: "refName" }
 			} 
 		} 
 	}
@@ -91,7 +99,7 @@ export default class BackOfficeHelper {
 				
 				value = prop.default;
 				
-				if (defaultMetadata[metaType.DEFAULT_METADATA] && defaultMetadata[metaType.DEFAULT_METADATA][prop.name]) {
+				if (defaultMetadata[metaType.DEFAULT_METADATA] && defaultMetadata[metaType.DEFAULT_METADATA][prop.name] !== undefined) {
 					
 					value = defaultMetadata[metaType.DEFAULT_METADATA][prop.name];
 				}
@@ -288,7 +296,7 @@ export default class BackOfficeHelper {
 				
 				if (Array.isArray(refTable.columns)) {
 					
-					refColumnName = refTable.columns.find(col => col.metadata && col.metadata.refName);
+					refColumnName = refTable.columns.find(col => col.metadata && col.metadata[BackOfficeHelper.META_TYPE_COLUMN.PROPERTY.REF_NAME.name]);
 					
 					if (!refColumnName) {
 						
@@ -398,37 +406,6 @@ export default class BackOfficeHelper {
 	static getColumnIdFromColumnUID(columnUID) {
 		
 		return parseInt(columnUID.split("$")[2]);
-	}
-	
-	static getNewSourceField(sourceField, data) {
-
-		let tableName;
-		let columnName;		
-		let newSourceField = sourceField;
-		
-		for (let character of sourceField) {
-
-			if (/[A-Z]/.test(character)) {
-
-				let index = sourceField.indexOf(character);
-				tableName = sourceField.substring(0, index).toLowerCase();
-				columnName = sourceField.substring(index).toLowerCase();
-			}
-		}
-
-		let table = data.find(dat => dat.name === tableName);
-
-		if (table) {
-
-			let column = table.columns.find(col => col.name === columnName);
-
-			if (column) {
-
-				newSourceField = BackOfficeHelper.getColumnUID(column);				
-			}
-		}
-		
-		return newSourceField;
 	}
 	
 	static getRequestInput(formValues, table, allValues) {

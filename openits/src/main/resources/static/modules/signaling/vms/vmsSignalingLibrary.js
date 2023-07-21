@@ -635,7 +635,7 @@ export default class VmsSignalingLibrary {
 						});
 					}
 
-					self.optionButtonList = new OptionButtonList(options, onAcceptOptionButtonList, OptionButtonList.MODE_BUTTONS);
+					self.optionButtonList = new OptionButtonList(options, onAcceptOptionButtonList, undefined, OptionButtonList.MODE_BUTTONS);
 
 					let viewOptionButtonList;
 					

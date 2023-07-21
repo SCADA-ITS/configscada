@@ -135,7 +135,7 @@ export default class IncidentTypeModule extends GenericModule {
 					});
 				}
 
-				self.optionButtonList = new OptionButtonList(options, onAcceptOptionButtonList, OptionButtonList.MODE_BUTTONS);
+				self.optionButtonList = new OptionButtonList(options, onAcceptOptionButtonList, undefined, OptionButtonList.MODE_BUTTONS);
 
 				viewOptionButtonList = {
 					id: "view-option-dialog-" + self.uid,

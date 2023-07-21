@@ -25,7 +25,7 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 		}
 		
 		this.refreshInterval = undefined;
-		this.selectedRefreshTime = currentTableData.metadata && currentTableData.metadata.autorefresh && currentTableData.metadata.autorefresh > 0 ? currentTableData.metadata.autorefresh : undefined;
+		this.selectedRefreshTime = currentTableData.metadata && currentTableData.metadata[BackOfficeHelper.META_TYPE_TABLE.PROPERTY.AUTOREFRESH.name] && currentTableData.metadata[BackOfficeHelper.META_TYPE_TABLE.PROPERTY.AUTOREFRESH.name] > 0 ? currentTableData.metadata[BackOfficeHelper.META_TYPE_TABLE.PROPERTY.AUTOREFRESH.name] : undefined;
 	}
 	
 	getView() {
@@ -75,19 +75,19 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 		
 							self.dataTable.callbacks();
 							
-							if (self.currentTableData.metadata && self.currentTableData.metadata.autorefresh && self.currentTableData.metadata.autorefresh > 0) {
+							if (self.currentTableData.metadata && self.currentTableData.metadata[BackOfficeHelper.META_TYPE_TABLE.PROPERTY.AUTOREFRESH.name] && self.currentTableData.metadata[BackOfficeHelper.META_TYPE_TABLE.PROPERTY.AUTOREFRESH.name] > 0) {
 												
-								$$("slider-" + self.uid).setValue(self.currentTableData.metadata.autorefresh);
+								$$("slider-" + self.uid).setValue(self.currentTableData.metadata[BackOfficeHelper.META_TYPE_TABLE.PROPERTY.AUTOREFRESH.name]);
 							}
 						},
 						onBeforeRender: function() {
 
-							if (self.currentTableData.metadata && self.currentTableData.metadata.gridId) {
+							if (self.currentTableData.metadata && self.currentTableData.metadata[BackOfficeHelper.META_TYPE_TABLE.PROPERTY.GRID_ID.name]) {
 
 								$$("loading-backOffice-view-" + self.uid).show();
 								$$("backOffice-view-" + self.uid).hide();
 
-								BackOfficeHelper.getDataTableMetadata(self.currentTableData.metadata.gridId).then((response)=> {
+								BackOfficeHelper.getDataTableMetadata(self.currentTableData.metadata[BackOfficeHelper.META_TYPE_TABLE.PROPERTY.GRID_ID.name]).then((response)=> {
 
 									if (response != undefined) {
 
@@ -97,7 +97,7 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 
 										for (let gridField of newDataTableData.metadata.gridFields) {
 
-											gridField.sourceField = BackOfficeHelper.getNewSourceField(gridField.sourceField, self.data);
+											gridField.sourceField = getNewSourceField(gridField.sourceField);
 										}								
 										
 										self.dataTable = new DataTable(null, null, newDataTableData.metadata, self.dataTable.data, self.dataTable.events);
@@ -114,11 +114,43 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 									}
 								});
 							}
+							
+							function getNewSourceField(sourceField) {
+
+								let tableName = undefined;
+								let columnName = undefined;		
+								let newSourceField = sourceField;
+								
+								let arraySourceField = sourceField.split("$");
+								
+								if (Array.isArray(arraySourceField) && arraySourceField.length === 2) {
+									
+									tableName = arraySourceField[0];
+									columnName = arraySourceField[1];
+								}
+								
+								if (tableName) {
+									
+									let table = self.data.find(dat => dat.name === tableName);
+									
+									if (table) {
+						
+										let column = table.columns.find(col => col.name === columnName);
+							
+										if (column) {
+							
+											newSourceField = BackOfficeHelper.getColumnUID(column);				
+										}
+									}	
+								}
+								
+								return newSourceField;
+							}
 						}
 					}	
 				});	
 				
-				if (self.currentTableData.metadata && self.currentTableData.metadata.autorefresh && self.currentTableData.metadata.autorefresh > 0) {
+				if (self.currentTableData.metadata && self.currentTableData.metadata[BackOfficeHelper.META_TYPE_TABLE.PROPERTY.AUTOREFRESH.name] && self.currentTableData.metadata[BackOfficeHelper.META_TYPE_TABLE.PROPERTY.AUTOREFRESH.name] > 0) {
 					
 					viewDataTable.cols[1].rows.push({
 						height: 55,
@@ -157,8 +189,8 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 					clearInterval(self.refreshInterval);
 				}
 				
-				if (self.currentTableData.metadata && self.currentTableData.metadata.autorefresh && 
-					!isNaN(self.currentTableData.metadata.autorefresh)) {
+				if (self.currentTableData.metadata && self.currentTableData.metadata[BackOfficeHelper.META_TYPE_TABLE.PROPERTY.AUTOREFRESH.name] && 
+					!isNaN(self.currentTableData.metadata[BackOfficeHelper.META_TYPE_TABLE.PROPERTY.AUTOREFRESH.name])) {
 						
 					if (self.selectedRefreshTime > 0) {
 						

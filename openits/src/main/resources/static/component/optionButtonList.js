@@ -3,10 +3,11 @@ export default class OptionButtonList {
 	static get MODE_TOGGLE() { return 1 };
 	static get MODE_BUTTONS() { return 2 };
 
-	constructor(options, onChange, mode) {
+	constructor(options, onChange, onToggle, mode) {
 
 		this.options = options;
 		this.onChange = onChange;
+		this.onToggle = onToggle;
 		this.mode = mode;
 
 		this.uid = webix.uid();
@@ -138,7 +139,11 @@ export default class OptionButtonList {
 					on: {
 						onItemClick() {
 
-							self.onChange(option.id);
+							if (self.onChange) {
+								
+								self.onChange(option.id);	
+							}
+							
 						}
 					}
 				}
@@ -178,6 +183,12 @@ export default class OptionButtonList {
 								$$(obj).config.icon = "mdi mdi-checkbox-marked-outline";
 								$$(obj).refresh();
 							}
+							
+							if (self.onToggle) {
+								
+								self.onToggle(option.id);	
+							}
+							
 						}
 					}
 				}

@@ -3,6 +3,9 @@ import OptionButtonList from "../component/optionButtonList.js";
 import MessageBox from "../component/messageBox.js";
 import TableMessageBox from "../component/tableMessageBox.js";
 
+const ACTION_MAINTENANCE_ON = 1;
+const ACTION_MAINTENANCE_OFF = 2;
+
 export default class EquipmentCommandModule extends GenericModule {
 
 	constructor(module, moduleAction, args) {
@@ -125,13 +128,13 @@ export default class EquipmentCommandModule extends GenericModule {
 			let optionButtonList;
 
 			let options = [{
-				id: "On",
+				id: ACTION_MAINTENANCE_ON,
 				label: i18n.t("LBL_MAINTENANCE_MODE_ON"),
 				icon: "mdi mdi-wrench",
 				description: i18n.t("LBL_MAINTENANCE_MODE_ON_DESCRIPTION"),
 				default: false
 			}, {
-				id: "Off",
+				id: ACTION_MAINTENANCE_OFF,
 				label: i18n.t("LBL_MAINTENANCE_MODE_OFF"),
 				icon: "mdi mdi-undo",
 				description: i18n.t("LBL_MAINTENANCE_MODE_OFF_DESCRIPTION"),
@@ -139,19 +142,23 @@ export default class EquipmentCommandModule extends GenericModule {
 			}];
 
 
-			optionButtonList = new OptionButtonList(options, onAceptOptionButtonList, OptionButtonList.MODE_BUTTONS);
+			optionButtonList = new OptionButtonList(options, undefined, onToggle, OptionButtonList.MODE_TOGGLE);
 
 			viewOptionButtonList = optionButtonList.getView();
 
-			function onAceptOptionButtonList(obj) {
+			function onToggle(id) {
 
-				self.action = obj;
+				self.action = id;
 
-				if (obj === "On") {
+				if (id === ACTION_MAINTENANCE_ON) {
+					
 					$$("txt-dialog-" + self.uid).enable();
+					
 				} else {
+					
 					$$("txt-dialog-" + self.uid).disable();
 				}
+				
 				$$("txt-dialog-" + self.uid).setValue("");
 			}
 			return viewOptionButtonList;
@@ -195,14 +202,14 @@ export default class EquipmentCommandModule extends GenericModule {
 							if (currentElementTypeState) {
 
 								let elementType = window.em.getByField(EntityType.ELEMENT_TYPE, "id", element.elementType.id);
-								let newElementTypeState = self.action === "On" ? window.em.getByField(EntityType.ELEMENT_TYPE_STATE, "id", elementType.maintenanceState.id) : window.em.getByField(EntityType.ELEMENT_TYPE_STATE, "id", elementType.initialState.id);
+								let newElementTypeState = self.action === ACTION_MAINTENANCE_ON ? window.em.getByField(EntityType.ELEMENT_TYPE_STATE, "id", elementType.maintenanceState.id) : window.em.getByField(EntityType.ELEMENT_TYPE_STATE, "id", elementType.initialState.id);
 
 								if (currentElementTypeState.id !== newElementTypeState.id) {
 
 									elementStates.push({
 										elementId: element.id,
 										currentElementTypeStateId: newElementTypeState.id,
-										maintenanceComment: self.action === "On" ? $$("txt-dialog-" + self.uid).getValue() : undefined
+										maintenanceComment: self.action === ACTION_MAINTENANCE_ON ? $$("txt-dialog-" + self.uid).getValue() : undefined
 									});
 								}
 

@@ -23,7 +23,7 @@ export default class BackOfficeViewForm extends BackOfficeView {
 		}
 		
 		this.refreshInterval = undefined;
-		this.selectedRefreshTime = currentTableData.metadata && currentTableData.metadata.autorefreshForm && currentTableData.metadata.autorefresh && currentTableData.metadata.autorefresh > 0 ? currentTableData.metadata.autorefresh : undefined;
+		this.selectedRefreshTime = currentTableData.metadata && currentTableData.metadata[BackOfficeHelper.META_TYPE_TABLE.PROPERTY.AUTOREFRESH_FORM.name] && currentTableData.metadata.autorefresh && currentTableData.metadata.autorefresh > 0 ? currentTableData.metadata.autorefresh : undefined;
 	}
 	
 	setValues(row) {
@@ -96,7 +96,7 @@ export default class BackOfficeViewForm extends BackOfficeView {
 						on: {
 							onAfterRender: function() {
 								
-								if (self.currentTableData.metadata && self.currentTableData.metadata.autorefreshForm &&
+								if (self.currentTableData.metadata && self.currentTableData.metadata[BackOfficeHelper.META_TYPE_TABLE.PROPERTY.AUTOREFRESH_FORM.name] &&
 									self.currentTableData.metadata.autorefresh && 
 									!isNaN(self.currentTableData.metadata.autorefresh)) {
 									
@@ -134,16 +134,19 @@ export default class BackOfficeViewForm extends BackOfficeView {
 							
 							if (Array.isArray(self.currentTableData.rows) && self.currentTableData.rows.length > 0) {
 								
-								webix.extend($$(self.backOffice.containerId), webix.ProgressBar);
+								if ($$(self.backOffice.containerId)) {
+									
+									webix.extend($$(self.backOffice.containerId), webix.ProgressBar);
 	
-								$$(self.backOffice.containerId).showProgress({
-					
-									hide: false, type: "bottom"
-								});
-								
-								self.setValues(self.currentTableData.rows[0]);
-								
-								$$(self.backOffice.containerId).hideProgress();	
+									$$(self.backOffice.containerId).showProgress({
+						
+										hide: false, type: "bottom"
+									});
+									
+									self.setValues(self.currentTableData.rows[0]);
+									
+									$$(self.backOffice.containerId).hideProgress();	
+								}									
 							}
 						})
 						
@@ -231,7 +234,7 @@ export default class BackOfficeViewForm extends BackOfficeView {
 									let elements = [];
 									
 									if ((Array.isArray(self.currentTableData.commands) && self.currentTableData.commands.length > 0) ||
-										self.currentTableData.metadata && self.currentTableData.metadata.autorefresh && self.currentTableData.metadata.autorefreshForm && self.currentTableData.metadata.autorefresh > 0) {
+										self.currentTableData.metadata && self.currentTableData.metadata.autorefresh && self.currentTableData.metadata[BackOfficeHelper.META_TYPE_TABLE.PROPERTY.AUTOREFRESH_FORM.name] && self.currentTableData.metadata.autorefresh > 0) {
 										
 										let actionButtons = {
 											cols: [
@@ -259,10 +262,10 @@ export default class BackOfficeViewForm extends BackOfficeView {
 
 						if (Array.isArray(self.currentTableData.columns) &&
 							self.currentTableData.columns.length > 0) {
-						
+
 							if (self.currentTableData.metadata && 
-								Array.isArray(self.currentTableData.metadata.tabs) && 
-								self.currentTableData.metadata.tabs.length > 0) {
+								Array.isArray(self.currentTableData.metadata[BackOfficeHelper.META_TYPE_TABLE.PROPERTY.TABS.name]) && 
+								self.currentTableData.metadata[BackOfficeHelper.META_TYPE_TABLE.PROPERTY.TABS.name].length > 0) {
 									
 								let tabInfo = {
 									view: "tabview",
@@ -274,11 +277,11 @@ export default class BackOfficeViewForm extends BackOfficeView {
 									}
 								};
 								
-								let initialTabLabel = BackOfficeHelper.translate(self.backOffice, self.currentTableData.metadata.initialTabLabel) ?? i18n.t("LBL_INITIAL_TAB");
-								
-								self.currentTableData.metadata.tabs.sort((a, b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));
+								let initialTabLabel = BackOfficeHelper.translate(self.backOffice, self.currentTableData.metadata[BackOfficeHelper.META_TYPE_TABLE.PROPERTY.INITIAL_TAB_LABEL.name]) ?? i18n.t("LBL_INITIAL_TAB");
+																
+								self.currentTableData.metadata[BackOfficeHelper.META_TYPE_TABLE.PROPERTY.TABS.name].sort((a, b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));
 																							
-								self.currentTableData.metadata.tabs.forEach(tab => {
+								self.currentTableData.metadata[BackOfficeHelper.META_TYPE_TABLE.PROPERTY.TABS.name].forEach(tab => {
 
 									currentTableDataColumnsCopy = webix.copy(self.currentTableData.columns);
 									
@@ -461,11 +464,11 @@ export default class BackOfficeViewForm extends BackOfficeView {
 									
 									if (fileType === TYPE_IMAGE) {
 										
-										groups = self.currentTableData.metadata.groupImages;
+										groups = self.currentTableData.metadata[BackOfficeHelper.META_TYPE_TABLE.PROPERTY.GROUP_IMAGES.name];
 									} 
 									else if (fileType === TYPE_ATTACHMENT) {
 										
-										groups = self.currentTableData.metadata.groupAttachments;
+										groups = self.currentTableData.metadata[BackOfficeHelper.META_TYPE_TABLE.PROPERTY.GROUP_ATTACHMENTS.name];
 									}
 									
 									if (Array.isArray(groups) && groups.length > 0) {
@@ -523,7 +526,7 @@ export default class BackOfficeViewForm extends BackOfficeView {
 					function getActionButtons() {
 
 						let buttonsGrid = {
-							hidden: (!Array.isArray(self.currentTableData.commands) || self.currentTableData.commands.length === 0) && !(self.currentTableData.metadata && self.currentTableData.metadata.autorefreshForm && self.currentTableData.metadata.autorefresh > 0),
+							hidden: (!Array.isArray(self.currentTableData.commands) || self.currentTableData.commands.length === 0) && !(self.currentTableData.metadata && self.currentTableData.metadata[BackOfficeHelper.META_TYPE_TABLE.PROPERTY.AUTOREFRESH_FORM.name] && self.currentTableData.metadata.autorefresh > 0),
 							css: { "margin-left": "2px !important" },
 							height: 45,
 							cols: [
@@ -622,7 +625,7 @@ export default class BackOfficeViewForm extends BackOfficeView {
 		
 						buttonsGrid.cols.push({});
 						
-						if (self.currentTableData.metadata && self.currentTableData.metadata.autorefreshForm && self.currentTableData.metadata.autorefresh > 0) {
+						if (self.currentTableData.metadata && self.currentTableData.metadata[BackOfficeHelper.META_TYPE_TABLE.PROPERTY.AUTOREFRESH_FORM.name] && self.currentTableData.metadata.autorefresh > 0) {
 							
 							buttonsGrid.cols.push({
 								id: "slider-" + self.uid,
@@ -825,7 +828,7 @@ export default class BackOfficeViewForm extends BackOfficeView {
 									
 									const referTable = self.data.find(e => e.name === referTableName);
 									
-									if (referTable) {
+									if (referTable && isVisibleReferTable(referTableName)) {
 									
 										const label = util.getStringCapitalized(referTable.label ?? referTable.name);
 										const idValue = BackOfficeHelper.getColumnValue(self.currentTableData, columnId.id, 0); 
@@ -866,6 +869,28 @@ export default class BackOfficeViewForm extends BackOfficeView {
 								});
 							}		
 						}
+					}
+					
+					function isVisibleReferTable(referTableName) {
+						
+						let isVisible = true;
+						
+						if (self.currentTableData.metadata && self.currentTableData.metadata[BackOfficeHelper.META_TYPE_TABLE.PROPERTY.REFER_TABLES.name]) {
+							
+							if (Array.isArray(self.currentTableData.metadata[BackOfficeHelper.META_TYPE_TABLE.PROPERTY.REFER_TABLES.name])) {
+								
+								if (self.currentTableData.metadata[BackOfficeHelper.META_TYPE_TABLE.PROPERTY.REFER_TABLES.name].length === 0) {
+									
+									isVisible = false;
+								}
+								else {
+									
+									isVisible = self.currentTableData.metadata[BackOfficeHelper.META_TYPE_TABLE.PROPERTY.REFER_TABLES.name].includes(referTableName);
+								}								
+							}
+						}
+						
+						return isVisible;
 					}
 				}
 
