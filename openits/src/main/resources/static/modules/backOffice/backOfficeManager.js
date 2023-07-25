@@ -127,8 +127,8 @@ export default class BackOfficeManager {
 				function edit(id, onCancel) {
 				
 					const module = window.em.getByField(EntityType.MODULE, "id", BackOfficeModule.Config.MODULE_ID);
-					const formHeight = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, BackOfficeHelper.META_TYPE_TABLE.PROPERTY.FORM_HEIGHT, self.backoffice.metadata);
-					const formWidth = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, BackOfficeHelper.META_TYPE_TABLE.PROPERTY.FORM_WIDTH, self.backoffice.metadata);
+					const formHeight = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, BackOfficeHelper.META_TYPE_TABLE.PROPERTY.FORM_HEIGHT, self.backOffice.metadata);
+					const formWidth = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, BackOfficeHelper.META_TYPE_TABLE.PROPERTY.FORM_WIDTH, self.backOffice.metadata);
 
 					if (module) {
 						
