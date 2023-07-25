@@ -357,114 +357,112 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 
 							self.currentTableData.columns.forEach(column => {
 
-								let visibleColumn = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_COLUMN, BackOfficeHelper.META_TYPE_COLUMN.PROPERTY.TABLE_VISIBLE, self.backOffice.metadata, column);
+								const visibleColumn = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_COLUMN, BackOfficeHelper.META_TYPE_COLUMN.PROPERTY.TABLE_VISIBLE, self.backOffice.metadata, column);
+								const showIdTable = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, BackOfficeHelper.META_TYPE_TABLE.PROPERTY.SHOW_ID_TABLE,  self.backOffice.metadata, self.currentTableData);
 
-								if (visibleColumn) {
+								let filterColumnName = undefined;
 
-									let filterColumnName = undefined;
+								if (self.backOffice.filterColumn && self.backOffice.filterColumnValue) {
 
-									if (self.backOffice.filterColumn && self.backOffice.filterColumnValue) {
+									filterColumnName = self.backOffice.filterColumn.name;
+								}
 
-										filterColumnName = self.backOffice.filterColumn.name;
+								if (!filterColumnName || column.name != filterColumnName) {
+
+									const referencedColumnName = BackOfficeHelper.getReferencedColumnName(column, self.data);
+									const sourceField = referencedColumnName ? (BackOfficeHelper.getColumnUID(referencedColumnName)) : BackOfficeHelper.getColumnUID(column);
+
+									let dataTypeId = BackOfficeHelper.getDBTypes(referencedColumnName ? referencedColumnName.colType : column.colType).id;
+									let isBoolean = false;
+
+									if (dataTypeId == BackOfficeHelper.getDBTypes(BackOfficeHelper.DB_TYPE_BOOLEAN).id) {
+
+										dataTypeId = BackOfficeHelper.getDBTypes(BackOfficeHelper.DB_TYPE_STRING).id
+										isBoolean = true;
 									}
 
-									if (!filterColumnName || column.name != filterColumnName) {
+									let label = column.label ?? column.name;
 
-										const referencedColumnName = BackOfficeHelper.getReferencedColumnName(column, self.data);
-										const sourceField = referencedColumnName ? (BackOfficeHelper.getColumnUID(referencedColumnName)) : BackOfficeHelper.getColumnUID(column);
+									if (referencedColumnName) {
 
-										let dataTypeId = BackOfficeHelper.getDBTypes(referencedColumnName ? referencedColumnName.colType : column.colType).id;
-										let isBoolean = false;
+										const table = self.data.find(e => e.id === referencedColumnName.tableId);
 
-										if (dataTypeId == BackOfficeHelper.getDBTypes(BackOfficeHelper.DB_TYPE_BOOLEAN).id) {
+										if (table) {
 
-											dataTypeId = BackOfficeHelper.getDBTypes(BackOfficeHelper.DB_TYPE_STRING).id
-											isBoolean = true;
+											label = table.labelSingular ?? (table.label ?? table.name);
 										}
-
-										let label = column.label ?? column.name;
-
-										if (referencedColumnName) {
-
-											const table = self.data.find(e => e.id === referencedColumnName.tableId);
-
-											if (table) {
-
-												label = table.labelSingular ?? (table.label ?? table.name);
-											}
-										}
-
-										let gridFiltersColumn = (column.metadata) ? column.metadata[BackOfficeHelper.META_TYPE_COLUMN.PROPERTY.GRID_FILTERS.name] : undefined;
-										let gridFilter = (gridFiltersColumn != undefined) ? gridFiltersColumn : self.gridFilters;
-
-										let gridField = {
-											id: idxField,
-											extended: false,
-											filtered: gridFilter,
-											isEpochMilli: dataTypeId == BackOfficeHelper.getDBTypes(BackOfficeHelper.DB_TYPE_TIMESTAMP).id,
-											isPk: column.name === "id",
-											needsTranslation: false,
-											parameterized: false,
-											position: idxField,
-											required: true,
-											label: util.getStringCapitalized(label),
-											sourceField: column.name === "id" ? "id" : sourceField,
-											visible: column.name !== "id",
-											gridFieldDataType: {
-												id: dataTypeId
-											}
-										};
-
-										if (isBoolean) {
-
-											gridField.gridFieldIcons = [
-												{
-													id: 1,
-													avatar: false,
-													badgeColor: false,
-													enabled: true,
-													icon: "./img/state/valid.png",
-													showValue: false,
-													value: "true",
-													labelValue: "LBL_YES"
-												},
-												{
-													id: 2,
-													avatar: false,
-													badgeColor: false,
-													enabled: true,
-													icon: "./img/state/invalid.png",
-													showValue: false,
-													value: "false",
-													labelValue: "LBL_NO"
-												},
-												{
-													id: 3,
-													avatar: false,
-													badgeColor: false,
-													enabled: true,
-													icon: "./img/state/valid.png",
-													showValue: false,
-													value: "1",
-													labelValue: "LBL_YES"
-												},
-												{
-													id: 4,
-													avatar: false,
-													badgeColor: false,
-													enabled: true,
-													icon: "./img/state/invalid.png",
-													showValue: false,
-													value: "0",
-													labelValue: "LBL_NO"
-												}
-											];
-										}
-
-										gridFields.push(gridField);
-
-										idxField++;
 									}
+
+									let gridFiltersColumn = (column.metadata) ? column.metadata[BackOfficeHelper.META_TYPE_COLUMN.PROPERTY.GRID_FILTERS.name] : undefined;
+									let gridFilter = (gridFiltersColumn != undefined) ? gridFiltersColumn : self.gridFilters;
+
+									let gridField = {
+										id: idxField,
+										extended: false,
+										filtered: gridFilter,
+										isEpochMilli: dataTypeId == BackOfficeHelper.getDBTypes(BackOfficeHelper.DB_TYPE_TIMESTAMP).id,
+										isPk: column.name === "id",
+										needsTranslation: false,
+										parameterized: referencedColumnName ? true : false,
+										position: idxField,
+										required: true,
+										label: util.getStringCapitalized(label),
+										sourceField: column.name === "id" ? "id" : sourceField,
+										visible: column.name !== "id" ? visibleColumn : (visibleColumn && showIdTable),
+										gridFieldDataType: {
+											id: dataTypeId
+										}
+									};
+
+									if (isBoolean) {
+
+										gridField.gridFieldIcons = [
+											{
+												id: 1,
+												avatar: false,
+												badgeColor: false,
+												enabled: true,
+												icon: "./img/state/valid.png",
+												showValue: false,
+												value: "true",
+												labelValue: "LBL_YES"
+											},
+											{
+												id: 2,
+												avatar: false,
+												badgeColor: false,
+												enabled: true,
+												icon: "./img/state/invalid.png",
+												showValue: false,
+												value: "false",
+												labelValue: "LBL_NO"
+											},
+											{
+												id: 3,
+												avatar: false,
+												badgeColor: false,
+												enabled: true,
+												icon: "./img/state/valid.png",
+												showValue: false,
+												value: "1",
+												labelValue: "LBL_YES"
+											},
+											{
+												id: 4,
+												avatar: false,
+												badgeColor: false,
+												enabled: true,
+												icon: "./img/state/invalid.png",
+												showValue: false,
+												value: "0",
+												labelValue: "LBL_NO"
+											}
+										];
+									}
+
+									gridFields.push(gridField);
+
+									idxField++;
 								}
 							});
 

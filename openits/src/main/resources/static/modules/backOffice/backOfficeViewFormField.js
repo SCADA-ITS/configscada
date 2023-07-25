@@ -29,12 +29,21 @@ export default class BackOfficeViewFormField  {
 				
 				let field = webix.copy(dbType.component);
 			
-				field.name = (column.name === "id") ? "id" : BackOfficeHelper.getColumnUID(column);
+				field.name = BackOfficeHelper.getColumnUID(column);
 				field.label = util.getStringCapitalized(column.label ?? column.name);
-				field.disabled = (column.name === "id");
+				field.disabled = false;
 				field.required = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_COLUMN, BackOfficeHelper.META_TYPE_COLUMN.PROPERTY.REQUIRED, self.backOffice.metadata, column);
 				field.readonly = !BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_COLUMN, BackOfficeHelper.META_TYPE_COLUMN.PROPERTY.EDITABLE, self.backOffice.metadata, column);
 				field.hidden = !BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_COLUMN, BackOfficeHelper.META_TYPE_COLUMN.PROPERTY.FORM_VISIBLE, self.backOffice.metadata, column);
+				
+				const showIdForm = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, BackOfficeHelper.META_TYPE_TABLE.PROPERTY.SHOW_ID_FORM, self.backOffice.metadata, self.currentTableData);
+				
+				if (column.name === "id") {
+					
+					field.name = "id";
+					field.disabled = true;
+					field.hidden = !showIdForm;
+				}
 				
 				let value = BackOfficeHelper.getColumnValue(self.currentTableData, column.id, 0);
 				
@@ -106,7 +115,7 @@ export default class BackOfficeViewFormField  {
 								{ 
 									view: field.view, 
 									name: field.name, 
-									hidden: !visibleColumn, 
+									hidden: !visibleColumn || !showIdForm, 
 									readonly: true, 
 									value: field.value, 
 									width: 50,
@@ -230,6 +239,7 @@ export default class BackOfficeViewFormField  {
 								}
 
 								dialogRefField.pkField = "id";
+								dialogRefField.pkFieldVisible = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, BackOfficeHelper.META_TYPE_TABLE.PROPERTY.SHOW_ID_SEARCH, self.backOffice.metadata, self.currentTableData);
 								dialogRefField.sortFieldId = 1;
 								dialogRefField.height = 600;
 								dialogRefField.width = 800;
@@ -301,12 +311,14 @@ export default class BackOfficeViewFormField  {
 						}
 						else {
 							
-							(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_BACKOFFICE_NO_RECORDS_ON_REF_TABLE") + ": " + (table.label ?? table.name) + ". " + i18n.t("LBL_BACKOFFICE_CREATE_NEW_RECORD"), null, onAccept, null)).show();
-							
-							function onAccept() {
+							if (((!visibleColumn) ? !visibleColumn: !visibleAddButton) || disabled) {
 								
-								createRefField();
+								(new MessageBox(MessageBox.WARN, i18n.t("LBL_BACKOFFICE_NO_RECORDS_ON_REF_TABLE") + ": " + (table.label ?? table.name))).show();
 							}
+							else {
+								
+								(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_BACKOFFICE_NO_RECORDS_ON_REF_TABLE") + ": " + (table.label ?? table.name) + ". " + i18n.t("LBL_BACKOFFICE_CREATE_NEW_RECORD"), null, createRefField, null)).show();
+							}							
 						}
 					}
 					
@@ -428,11 +440,13 @@ export default class BackOfficeViewFormField  {
 						}
 						else {
 							
-							(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_BACKOFFICE_NO_RECORDS_ON_REF_TABLE") + ": " + (table.label ?? table.name) + ". " + i18n.t("LBL_BACKOFFICE_CREATE_NEW_RECORD"), null, onAccept, null)).show();
-							
-							function onAccept() {
+							if (((!visibleColumn) ? !visibleColumn: !visibleAddButton) || disabled) {
 								
-								createRefField();
+								(new MessageBox(MessageBox.WARN, i18n.t("LBL_BACKOFFICE_NO_RECORDS_ON_REF_TABLE") + ": " + (table.label ?? table.name))).show();
+							}
+							else {
+							
+								(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_BACKOFFICE_NO_RECORDS_ON_REF_TABLE") + ": " + (table.label ?? table.name) + ". " + i18n.t("LBL_BACKOFFICE_CREATE_NEW_RECORD"), null, createRefField, null)).show();	
 							}
 						}
 					}

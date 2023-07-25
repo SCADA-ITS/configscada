@@ -49,7 +49,9 @@ export default class BackOfficeViewForm extends BackOfficeView {
 							
 							let rowData = row.data.find(e => e.columnId === columnId);
 							
-							if (rowData && formValues[key] != rowData.value) {
+							let valueComparison = isNaN(formValues[key]) ? formValues[key] : (formValues[key] === 1 ? "true" : "false"); 
+							
+							if (rowData && valueComparison !== rowData.value) {
 								
 								newValues[key] = rowData.value;
 							}

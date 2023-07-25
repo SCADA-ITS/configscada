@@ -58,7 +58,7 @@ export default class BackOfficeManager {
 			
 			if (column) {
 				
-				(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_BACKOFFICE_CREATE_NEW_RECORDS_ON_TABLE") + " " + (currentTableData.label ?? currentTableData.name) + i18n.t("LBL_BACKOFFICE_WITH_CONDITIONS") + ": " + self.backOffice.filterColumnName + "=" + self.backOffice.filterColumnValue + "?", null, onAccept , null)).show();
+				(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_BACKOFFICE_CREATE_NEW_RECORDS_ON_TABLE") + " " + (currentTableData.label ?? currentTableData.name) + " " + i18n.t("LBL_BACKOFFICE_WITH_CONDITIONS") + ": " + self.backOffice.filterColumnName + "=" + self.backOffice.filterColumnValue + "?", null, onAccept , null)).show();
 		
 				function onAccept() {
 					
@@ -70,7 +70,7 @@ export default class BackOfficeManager {
 							colName: self.backOffice.filterColumnName,
 							oldValue: undefined,
 							newValue: self.backOffice.filterColumnValue,
-							colType: BackOfficeHelper.DB_TYPE_INTEGER
+							colType: BackOfficeHelper.DB_TYPE_STRING
 						});
 						
 						BackOfficeHelper.insertData(self.backOffice, currentTableData, persistValues).then((requestResult) => {
@@ -88,28 +88,30 @@ export default class BackOfficeManager {
 										if (data && data.value) {
 											
 											const columnIdValue = data.value;
+											
+											edit(columnIdValue);
 								
-											edit(columnIdValue, function () {
-												
-												let persistValues = [];
-																		
-												persistValues.push({
-													colName: columnId.name,
-													oldValue: columnIdValue,
-													newValue: undefined,
-													colType: columnId.colType
-												});
-							
-												BackOfficeHelper.deleteData(self.backOffice, currentTableData, persistValues, columnIdValue).then((requestResult) => {
-													
-													if (requestResult.requestResultMessage.error) {
-					
-														log.error(requestResult.requestResultMessage.error + "\n" + requestResult.requestResultMessage.errorDescription);
-														
-														(new MessageBox (MessageBox.ERROR, i18n.t("LBL_BACKOFFICE_ERROR_SAVING_CHANGES_ON") + " " + (currentTableData.label ?? currentTableData.name), requestResult.requestResultMessage.error + "\n" + requestResult.requestResultMessage.errorDescription, null, null)).show();
-													}	
-												});
-											});			
+//											edit(columnIdValue, function () {
+//												
+//												let persistValues = [];
+//																		
+//												persistValues.push({
+//													colName: columnId.name,
+//													oldValue: columnIdValue,
+//													newValue: undefined,
+//													colType: columnId.colType
+//												});
+//							
+//												BackOfficeHelper.deleteData(self.backOffice, currentTableData, persistValues, columnIdValue).then((requestResult) => {
+//													
+//													if (requestResult.requestResultMessage.error) {
+//					
+//														log.error(requestResult.requestResultMessage.error + "\n" + requestResult.requestResultMessage.errorDescription);
+//														
+//														(new MessageBox (MessageBox.ERROR, i18n.t("LBL_BACKOFFICE_ERROR_SAVING_CHANGES_ON") + " " + (currentTableData.label ?? currentTableData.name), requestResult.requestResultMessage.error + "\n" + requestResult.requestResultMessage.errorDescription, null, null)).show();
+//													}	
+//												});
+//											});			
 										}	
 									}
 								}
