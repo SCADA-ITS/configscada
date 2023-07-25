@@ -138,7 +138,7 @@ export default class BackOfficeHelper {
 		
 		if (backOffice.filterColumnName && backOffice.filterColumnValue) {
 			
-			conditions = backOffice.filterColumnName + "=" + backOffice.filterColumnValue;
+			conditions = backOffice.filterColumnName + "='" + backOffice.filterColumnValue + "'";
 		}
 		
 		response = await webix.ajax().headers(CONTENT_TYPE_JSON).post(url, conditions);
