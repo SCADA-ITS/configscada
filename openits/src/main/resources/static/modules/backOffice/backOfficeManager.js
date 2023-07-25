@@ -89,29 +89,7 @@ export default class BackOfficeManager {
 											
 											const columnIdValue = data.value;
 											
-											edit(columnIdValue);
-								
-//											edit(columnIdValue, function () {
-//												
-//												let persistValues = [];
-//																		
-//												persistValues.push({
-//													colName: columnId.name,
-//													oldValue: columnIdValue,
-//													newValue: undefined,
-//													colType: columnId.colType
-//												});
-//							
-//												BackOfficeHelper.deleteData(self.backOffice, currentTableData, persistValues, columnIdValue).then((requestResult) => {
-//													
-//													if (requestResult.requestResultMessage.error) {
-//					
-//														log.error(requestResult.requestResultMessage.error + "\n" + requestResult.requestResultMessage.errorDescription);
-//														
-//														(new MessageBox (MessageBox.ERROR, i18n.t("LBL_BACKOFFICE_ERROR_SAVING_CHANGES_ON") + " " + (currentTableData.label ?? currentTableData.name), requestResult.requestResultMessage.error + "\n" + requestResult.requestResultMessage.errorDescription, null, null)).show();
-//													}	
-//												});
-//											});			
+											edit(columnIdValue);		
 										}	
 									}
 								}
@@ -125,6 +103,8 @@ export default class BackOfficeManager {
 						});
 					}
 				}
+				
+				
 				
 				function edit(id, onCancel) {
 				
@@ -163,7 +143,11 @@ export default class BackOfficeManager {
 							//util.ui.resizeWindow(winId, BackOfficeModule.Config.DEFAULT_FORM_WIDTH, BackOfficeModule.Config.DEFAULT_FORM_HEIGHT);
 							
 							util.ui.resizeWindow(winId, formWidth, formHeight);
-							util.ui.centerWindow(winId, 20);	
+							util.ui.centerWindow(winId, 20);
+							
+							//const windowTitle = i18n.t("LBL_EDIT") + " " + (self.currentTableData.labelSingular ?? (self.currentTableData.label ?? self.currentTableData.name));
+								
+							//util.ui.setTitle(winId, windowTitle);
 						}
 						
 						function onAccept(values) {

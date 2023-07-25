@@ -284,6 +284,31 @@ export default class BackOfficeHelper {
 		return refColumn;
 	}
 	
+	static getRepresentativeField(table) {
+		
+		let refColumnName = undefined;
+		
+		if (Array.isArray(table.columns)) {
+					
+			refColumnName = table.columns.find(col => col.metadata && col.metadata[BackOfficeHelper.META_TYPE_COLUMN.PROPERTY.REF_NAME.name]);
+			
+			if (!refColumnName) {
+				
+				for (let i = 0; !refColumnName && i < COL_NAMES_REF.length; i++) {
+				
+					refColumnName = table.columns.find(col => col.name.match(COL_NAMES_REF[i]));	
+				}
+			}
+			
+			if (!refColumnName) {
+				
+				refColumnName = table.columns.find(col => col.name === "id");
+			}
+		}
+		
+		return refColumnName;
+	}
+	
 	static getReferencedColumnName(column, data) {
 		
 		let refColumnName = undefined;
@@ -294,23 +319,7 @@ export default class BackOfficeHelper {
 			
 			if (refTable) {
 				
-				if (Array.isArray(refTable.columns)) {
-					
-					refColumnName = refTable.columns.find(col => col.metadata && col.metadata[BackOfficeHelper.META_TYPE_COLUMN.PROPERTY.REF_NAME.name]);
-					
-					if (!refColumnName) {
-						
-						for (let i = 0; !refColumnName && i < COL_NAMES_REF.length; i++) {
-						
-							refColumnName = refTable.columns.find(col => col.name.match(COL_NAMES_REF[i]));	
-						}
-					}
-					
-					if (!refColumnName) {
-						
-						refColumnName = refTable.columns.find(col => col.name === "id");
-					}
-				}
+				refColumnName = BackOfficeHelper.getRepresentativeField(refTable);
 			}
 		}
 		

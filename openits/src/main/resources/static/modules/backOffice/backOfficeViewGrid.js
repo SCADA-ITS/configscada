@@ -847,16 +847,16 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 								util.ui.resizeWindow(winId, self.formWidth, self.formHeight);
 								util.ui.centerWindow(winId);
 								
-								let windowTitle = i18n.t("LBL_EDIT"); 
-			
-								if (args.backOffice.onCancel) {
-								
-									windowTitle = i18n.t("LBL_NEW");
-								}
-								
-								windowTitle += " " + (self.currentTableData.labelSingular ?? (self.currentTableData.label ?? self.currentTableData.name));
-								
-								util.ui.setTitle(args.backOffice.containerId, windowTitle);	
+//								let windowTitle = i18n.t("LBL_EDIT"); 
+//			
+//								if (args.backOffice.onCancel) {
+//								
+//									windowTitle = i18n.t("LBL_NEW");
+//								}
+//								
+//								windowTitle += " " + (self.currentTableData.labelSingular ?? (self.currentTableData.label ?? self.currentTableData.name));
+//								
+//								util.ui.setTitle(args.backOffice.containerId, windowTitle);	
 							}
 							
 							function onAccept(values) {

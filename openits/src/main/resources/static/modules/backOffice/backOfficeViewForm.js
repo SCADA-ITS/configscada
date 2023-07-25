@@ -106,6 +106,26 @@ export default class BackOfficeViewForm extends BackOfficeView {
 
 									timerRefresh();
 								}
+								
+								let windowTitle = i18n.t("LBL_EDIT"); 
+			
+								if (self.backOffice.onCancel) {
+								
+									windowTitle = i18n.t("LBL_NEW");
+								}
+								
+								const representativeField = BackOfficeHelper.getRepresentativeField(self.currentTableData);
+								
+								let rowData = undefined;
+								
+								if (representativeField) {
+								
+									rowData = self.currentTableData.rows[0].data.find(data => data.columnId === self.currentTableData.columns.find(col => col.name === representativeField.name).id);	
+								}
+								
+								windowTitle += " " + (self.currentTableData.labelSingular ?? (self.currentTableData.label ?? self.currentTableData.name)) + ((rowData && rowData.value !== undefined) ? " - " + rowData.value : "");
+								
+								util.ui.setTitle(self.backOffice.containerId, windowTitle);
 							}
 						}
 					}
