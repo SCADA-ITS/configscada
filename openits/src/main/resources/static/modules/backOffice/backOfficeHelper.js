@@ -63,7 +63,8 @@ export default class BackOfficeHelper {
 				REF_ADD_BUTTON: { name: "refAddButton", default: true },
 				GRID_FILTERS: { name: "gridFilters", default: false },
 				POSITION: { name: "position" },
-				REF_NAME: { name: "refName" }
+				REF_NAME: { name: "refName" },
+				MULTILINE: {name: "multiline"}
 			} 
 		} 
 	}

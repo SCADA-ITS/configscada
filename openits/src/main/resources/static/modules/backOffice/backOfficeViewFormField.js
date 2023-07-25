@@ -65,6 +65,14 @@ export default class BackOfficeViewFormField  {
 					else {
 						
 						field.type = "text";
+						
+						const multiline = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_COLUMN, BackOfficeHelper.META_TYPE_COLUMN.PROPERTY.MULTILINE, self.backOffice.metadata, column);
+					
+						if (!isNaN(multiline) && multiline > 0) {
+							
+							field.view = "textarea";
+							field.height = multiline * 20;	
+						}
 					}
 				}
 				
