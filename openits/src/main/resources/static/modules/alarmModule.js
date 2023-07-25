@@ -4,6 +4,8 @@ import InputDialogBox from "../component/inputDialogBox.js";
 import TreeView from "../component/treeview.js";
 import DataTable from "../component/datatable.js";
 import MessageBox from "../component/messageBox.js";
+import BackOfficeModule from "./backOffice/backOfficeModule.js";
+
 
 export default class AlarmModule extends GenericModule {
 
@@ -17,7 +19,7 @@ export default class AlarmModule extends GenericModule {
 		this.stompClient = undefined;
 		this.requestReport = true;
 		this.config = module.config;
-		
+
 		this.editAlarmConfigsPermission = util.module.isAllowedPermission(this.config.requiredPermissions.edit);
 
 	}
@@ -25,7 +27,7 @@ export default class AlarmModule extends GenericModule {
 	getView() {
 
 		let view = undefined;
-		
+
 		if (this.moduleAction.id === this.config.moduleAction.view) {
 
 			view = super.getView();
@@ -59,30 +61,30 @@ export default class AlarmModule extends GenericModule {
 		function recognize() {
 
 			let recog = function(alarmsId) {
-				
-//				(new InputDialogBox(i18n.t("LBL_DIALOG_RECOGNIZE_ALARMS"), i18n.t("LBL_ARE_YOU_SURE_RECOGNIZE"), function(comments) {
-//					
-//					let body = {
-//						alarmIds: alarmsId,
-//						recognizedComments: comments,
-//						userId: self.userData.id
-//					};
-//
-//					webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.actionEndpoints.recognize, body).then(function(data) {
-//						console.log(data);
-//					});
-//					
-//				})).show();
+
+				//				(new InputDialogBox(i18n.t("LBL_DIALOG_RECOGNIZE_ALARMS"), i18n.t("LBL_ARE_YOU_SURE_RECOGNIZE"), function(comments) {
+				//					
+				//					let body = {
+				//						alarmIds: alarmsId,
+				//						recognizedComments: comments,
+				//						userId: self.userData.id
+				//					};
+				//
+				//					webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.actionEndpoints.recognize, body).then(function(data) {
+				//						console.log(data);
+				//					});
+				//					
+				//				})).show();
 
 				showDialogRecognize(function(data) {
-					
+
 					let body = {
 						alarmIds: alarmsId,
 						recognizedComments: data.comments,
 						disagree: data.disagree,
 						userId: self.userData.id
 					};
-					
+
 					webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.actionEndpoints.recognize, body).then(
 						function(data) {
 							console.log(data);
@@ -90,9 +92,9 @@ export default class AlarmModule extends GenericModule {
 					);
 				});
 			};
-			
+
 			function showDialogRecognize(onAccept) {
-				
+
 				let body = {
 					width: 600,
 					height: 250,
@@ -121,16 +123,16 @@ export default class AlarmModule extends GenericModule {
 											value: "",
 											on: {
 												onAfterRender: function() {
-					
+
 													this.focus();
-					
+
 													if (this.getValue()) {
-					
+
 														this.getInputNode().setSelectionRange(0, this.getValue().length);
 													}
 												}
 											}
-										},	
+										},
 										{ width: 1 }
 									]
 								},
@@ -139,12 +141,12 @@ export default class AlarmModule extends GenericModule {
 									cols: [
 										{ width: 1 },
 										{
-										    view: "checkbox", 
-										    id: "chk-disagree-" + self.uid,
-										    css: { "margin-left": "-75px !important"},
-										    labelRight: i18n.t("LBL_DISAGREE"),
-										    tooltip: i18n.t("LBL_CHECK_TO_DISAGREE_THIS_ALARM"), 
-										    value: false
+											view: "checkbox",
+											id: "chk-disagree-" + self.uid,
+											css: { "margin-left": "-75px !important" },
+											labelRight: i18n.t("LBL_DISAGREE"),
+											tooltip: i18n.t("LBL_CHECK_TO_DISAGREE_THIS_ALARM"),
+											value: false
 										},
 										{ width: 1 }
 									]
@@ -165,7 +167,7 @@ export default class AlarmModule extends GenericModule {
 									label: i18n.t("LBL_CANCEL"),
 									value: i18n.t("LBL_CANCEL"),
 									click: function() {
-		
+
 										const window = this.getTopParentView();
 										window.close();
 									}
@@ -180,23 +182,23 @@ export default class AlarmModule extends GenericModule {
 									label: i18n.t("LBL_ACCEPT"),
 									value: i18n.t("LBL_ACCEPT"),
 									click: function() {
-		
+
 										const window = this.getTopParentView();
 										const txtDialogReconize = $$("input-dialog-" + self.uid);
 										const chkDisagree = $$("chk-disagree-" + self.uid);
-	
+
 										let data = {
 											comments: txtDialogReconize.getValue(),
 											disagree: (chkDisagree.getValue() === 1)
 										};
-										
+
 										// Prevent z-index disorder. Bug preventing inputboxes contained in tabs from being selected
 										setTimeout(function() {
-									
-											onAccept(data);						
-			
+
+											onAccept(data);
+
 										}, 1);
-										
+
 										window.close();
 									}
 								},
@@ -206,39 +208,39 @@ export default class AlarmModule extends GenericModule {
 						{ height: 15 }
 					]
 				};
-				
+
 				util.ui.loadWindow(i18n.t("LBL_DIALOG_RECOGNIZE_ALARMS"), body, 400, 600, true);
 			}
-			
+
 			function recognizeAll() {
-				
+
 				webix.ajax().get(appConfig.restUrl + self.config.restEndpoints.alarms).then(function(dat) {
-					
+
 					if (dat != null) {
 
 						let alarms = dat.json();
-						
+
 						if (Array.isArray(alarms) && alarms.length > 0) {
-							
+
 							let alarmsToRecognize = alarms.filter(alarm => {
-								
+
 								return !alarm.recognized;
 							});
-							
+
 							if (Array.isArray(alarmsToRecognize) && alarmsToRecognize.length > 0) {
-								
+
 								let alarmsId = alarmsToRecognize.map(alarm => {
-									
+
 									return alarm.id;
 								});
-								
+
 								recog(alarmsId);
-							} 
+							}
 						}
 					}
 				});
 			}
-			
+
 			// Recognize selectedPks
 			if (Array.isArray(self.args.selectedPks) && self.args.selectedPks.length > 0) {
 
@@ -246,31 +248,31 @@ export default class AlarmModule extends GenericModule {
 			}
 			// Recognize all
 			else {
-				
+
 				recognizeAll();
 			}
 		}
-		
+
 		function deactivate() {
-			
+
 			if (Array.isArray(self.args.selectedPks) && self.args.selectedPks.length > 0) {
-				
+
 				let allAlarmsManual = true;
-				
+
 				webix.ajax().headers(HEADER_POST).post(appConfig.restUrl + self.config.restEndpoints.alarmsArray, JSON.stringify(self.args.selectedPks)).then(function(data) {
-					
+
 					let responseAlarms = data.json();
-					
+
 					if (Array.isArray(responseAlarms) && responseAlarms.length > 0) {
-						
+
 						responseAlarms.forEach(alarm => {
-							
+
 							let alarmConfig = window.em.getByField(EntityType.ALARM_CONFIG, "id", alarm.alarmConfig.id);
-							
+
 							if (alarmConfig) {
-							
+
 								let alarmType = alarmConfig.alarmType.id;
-								
+
 								if (alarmType) {
 
 									allAlarmsManual &= Array.isArray(self.config.alarmTypeManual) && (self.config.alarmTypeManual.indexOf(alarmType) !== -1);
@@ -278,11 +280,11 @@ export default class AlarmModule extends GenericModule {
 								}
 							}
 						});
-						
+
 						if (allAlarmsManual) {
-							
+
 							(new InputDialogBox(i18n.t("LBL_DIALOG_DEACTIVATE_ALARMS"), i18n.t("LBL_ARE_YOU_SURE_DEACTIVATE"), function(comments) {
-					
+
 								let body = {
 									alarmIds: self.args.selectedPks,
 									deactivationComments: comments,
@@ -292,14 +294,14 @@ export default class AlarmModule extends GenericModule {
 								webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.actionEndpoints.deactivate, body).then(function(data) {
 									console.log(data);
 								});
-								
+
 							})).show();
 						}
 						else {
-							
-							let ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_DEACTIVATE_ALARMS_ERROR_SELECTED_AUTO_ALARMS_NOT_COMPATIBLE"), null, null, null);
+
+							let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_DEACTIVATE_ALARMS_ERROR_SELECTED_AUTO_ALARMS_NOT_COMPATIBLE"), null, null, null);
 							ms.show();
-												
+
 						}
 					}
 				});
@@ -307,33 +309,33 @@ export default class AlarmModule extends GenericModule {
 		}
 
 		function createManualAlarm() {
-			
+
 			function drawHeader() {
 
-			let header;
-			
-			header = {
+				let header;
+
+				header = {
 					id: "viewHeader-" + self.uid,
 					rows: [
-						{height: 10},
+						{ height: 10 },
 						{
-					cols: [
-						{
-							view: "label",
-							label: "<img src='img/grid/alarmConfig.png' class='grid-icon'/>",
-							height: 75,
-							css: "global-header-icon"
+							cols: [
+								{
+									view: "label",
+									label: "<img src='img/grid/alarmConfig.png' class='grid-icon'/>",
+									height: 75,
+									css: "global-header-icon"
+								},
+								{
+									view: "label",
+									height: 75,
+									id: "label-bottom-" + self.uid,
+									template: "<span>" + i18n.t("LBL_CREATE_MANUAL_ALARM") + "</span> <br> <span style='font-size: 13px'>" + i18n.t("LBL_CREATE_MANUAL_ALARM_DESCRIPTION") + "</span>",
+									css: "global-header-label"
+								}
+							]
 						},
-						{
-							view: "label",
-							height: 75,
-							id: "label-bottom-" + self.uid,
-							template: "<span>"+ i18n.t("LBL_CREATE_MANUAL_ALARM")+ "</span> <br> <span style='font-size: 13px'>" +i18n.t("LBL_CREATE_MANUAL_ALARM_DESCRIPTION")+"</span>",
-							css: "global-header-label"
-						}
-					]							
-						},
-						{height: 10}
+						{ height: 10 }
 					]
 
 				};
@@ -347,10 +349,10 @@ export default class AlarmModule extends GenericModule {
 				let view = {};
 
 				const defaultGridOptionValues = [
-					{ id: 1024, value: "false", gridOption: { id:  7, description: "bool", enabled: "true", name: "tb_main", visible: "true"}},
-					{ id: 1023, value: "false", gridOption: { id: 10, description: "bool", enabled: "true", name: "tb_actions", visible: "true"}},
-					{ id: 1022, value: "false", gridOption: { id: 11, description: "bool", enabled: "true", name: "tb_actions_buttons_commons", visible: "true"}},
-					{ id: 1025, value: "img/grid/alarmConfig.png", gridOption: { id: 16, description: "string", enabled: "true", name: "icon", visible: "true"}}
+					{ id: 1024, value: "false", gridOption: { id: 7, description: "bool", enabled: "true", name: "tb_main", visible: "true" } },
+					{ id: 1023, value: "false", gridOption: { id: 10, description: "bool", enabled: "true", name: "tb_actions", visible: "true" } },
+					{ id: 1022, value: "false", gridOption: { id: 11, description: "bool", enabled: "true", name: "tb_actions_buttons_commons", visible: "true" } },
+					{ id: 1025, value: "img/grid/alarmConfig.png", gridOption: { id: 16, description: "string", enabled: "true", name: "icon", visible: "true" } }
 				];
 
 				let metadata = {
@@ -386,7 +388,7 @@ export default class AlarmModule extends GenericModule {
 							isEpochMilli: false,
 							isPk: false,
 							label: "LBL_ALARM_CONFIG_ALIAS",
-        					labelTooltip: "LBL_ALARM_CONFIG_ALIAS",
+							labelTooltip: "LBL_ALARM_CONFIG_ALIAS",
 							needsTranslation: false,
 							parameterized: false,
 							position: 2,
@@ -422,23 +424,23 @@ export default class AlarmModule extends GenericModule {
 
 					]
 				};
-	
+
 				self.tableAlarmsModal = new DataTable(null, null, metadata, []);
 
 				view = {
 					id: "viewTable" + self.uid,
-					css: {"box-sizing": "border-box" },
+					css: { "box-sizing": "border-box" },
 					width: 590,
 					cols: [
 						{
-							css: {"box-sizing": "border-box" },
+							css: { "box-sizing": "border-box" },
 							width: 580,
 							height: 350,
 							rows: self.tableAlarmsModal.getView()
-							
+
 						}
 					]
-				};			
+				};
 
 				return view;
 
@@ -450,15 +452,15 @@ export default class AlarmModule extends GenericModule {
 
 				let alarmsConfig = window.em.getAll(EntityType.ALARM_CONFIG);
 				let alarmsConfigManual = alarmsConfig.filter(e => self.config.alarmTypeManual.includes(e.alarmType.id));
-		
+
 				let data = [];
 				let elementsTree = [];
 				let elements = window.em.getAll(EntityType.ELEMENT);
-	
+
 				alarmsConfigManual.forEach(e => {
-						
+
 					let elementType = window.em.getByField(EntityType.ELEMENT_TYPE, "id", e.elementType.id);
-	
+
 					let parent = {
 						id: elementType.id,
 						id_: elementType.id,
@@ -469,37 +471,37 @@ export default class AlarmModule extends GenericModule {
 							translate: false
 						}
 					}
-						
-					if(e.element && e.element.id){
-								
-						elementsTree = elements.filter(item => item.id === e.element.id);											
+
+					if (e.element && e.element.id) {
+
+						elementsTree = elements.filter(item => item.id === e.element.id);
 
 					} else {
-							
+
 						elementsTree = elements.filter(item => item.elementType.id === e.elementType.id);
 					}
 
 					if (Array.isArray(elementsTree) && elementsTree.length > 0) {
-						
+
 						elementsTree.forEach(item => {
-							
+
 							let child = {
-								
+
 								id: item.id,
 								id_: item.id,
 								value: item.alias,
 								props: {}
 							}
-							
+
 							parent.data.push(child);
 						});
 					}
-					
+
 					data.push(parent);
 				});
-	
+
 				let events = {};
-	
+
 				let metadata = {
 					id: -1,
 					label: "LBL_EQUIPMENT_HIERARCHY",
@@ -512,48 +514,48 @@ export default class AlarmModule extends GenericModule {
 						{ value: false, treeOption: { id: 6 } }
 					]
 				};
-				
+
 				events[TreeView.EventTypes.ON_SELECT_ITEM] = function(item) {
-	
+
 					self.tableAlarmsModal.clear();
-	
+
 					let element = window.em.getByField(EntityType.ELEMENT, "id", item.id_);
 					self.alarmMutedElementSelect = element;
-	
+
 					let elementTypeId = element.elementType.id;
 					let alarmConfig = window.em.getAll(EntityType.ALARM_CONFIG);
 					let alarmsCfgManual = alarmConfig.filter(e => self.config.alarmTypeManual.includes(e.alarmType.id));
-					let aconfitArray = alarmsCfgManual.filter(e => e.elementType && e.elementType.id  === elementTypeId && (!e.element || (e.element && e.element.id === element.id)));
-					
+					let aconfitArray = alarmsCfgManual.filter(e => e.elementType && e.elementType.id === elementTypeId && (!e.element || (e.element && e.element.id === element.id)));
+
 					if (Array.isArray(aconfitArray) && aconfitArray.length > 0 && aconfitArray != undefined) {
-						
+
 						let alarmsConfig = aconfitArray;
 						for (let i = 0; i < alarmsConfig.length; i++) {
-	
+
 							let row = {};
-	
+
 							row.id = alarmsConfig[i].id;
 							row.alarmConfigAlias = alarmsConfig[i].alias;
 							row.alarmTypeLabelAlias = i18n.t(alarmsConfig[i].alarmType.labelAlias);
 							row.alarmLevelLabelAlias = i18n.t(alarmsConfig[i].alarmLevel.labelAlias);
-	
+
 							self.tableAlarmsModal.add(row);
 						}
 					} else {
-	
+
 						let row = {};
-	
+
 						row.id = aconfitArray.id;
 						row.alarmConfigAlias = aconfitArray.alias;
 						row.alarmTypeLabelAlias = i18n.t(aconfitArray.alarmType.labelAlias);
 						row.alarmLevelLabelAlias = i18n.t(aconfitArray.alarmLevel.labelAlias);
-	
+
 						self.tableAlarmsModal.add(row);
 					}
-			};
-	
+				};
+
 				let treeView = new TreeView(metadata, data, events);
-	
+
 				view = {
 					id: "viewTree" + self.uid,
 					cols: [
@@ -561,7 +563,7 @@ export default class AlarmModule extends GenericModule {
 							width: 250,
 							hight: 370,
 							rows: [
-								treeView.getView()		
+								treeView.getView()
 							]
 						}
 					]
@@ -577,64 +579,64 @@ export default class AlarmModule extends GenericModule {
 					cols: [
 						{
 							rows: [
-								{ height: 20},
+								{ height: 20 },
 								{
 									view: "toolbar",
 									height: 45,
 									borderless: true,
 									elements: [
 										{ width: 10 },
-										{ 
+										{
 											id: "button-cancel-" + "-" + self.uid,
 											view: "button",
-											css: "dialog-cancel", 
+											css: "dialog-cancel",
 											width: 130,
 											height: 35,
 											label: i18n.t("LBL_CANCEL"),
 											on: {
 												onItemClick() {
-				
+
 													$$(self.createView).close();
-				
+
 												}
 											}
 										},
 										{},
 										{
 											id: "button-next-" + "-" + self.uid,
-											view: "button", 
+											view: "button",
 											css: "dialog-accept",
 											width: 130,
 											height: 35,
 											label: i18n.t("LBL_ACCEPT"),
 											on: {
 												onItemClick() {
-					
-													if(Array.isArray(self.tableAlarmsModal.getSelectedIds()) && self.tableAlarmsModal.getSelectedIds().length > 0){
-															
+
+													if (Array.isArray(self.tableAlarmsModal.getSelectedIds()) && self.tableAlarmsModal.getSelectedIds().length > 0) {
+
 														let userData = util.user.getUserData();
-		
+
 														(new InputDialogBox(i18n.t("LBL_DIALOG_CREATE_MANUAL_ALARM"), i18n.t("LBL_ARE_YOU_SURE_CREATE_MANUAL_ALARM"), function(comments) {
-						
+
 															let body = {
-																"alarmConfigIds": self.tableAlarmsModal.getSelectedIds(), 
-																"targetElementIds":[self.alarmMutedElementSelect.id], 
+																"alarmConfigIds": self.tableAlarmsModal.getSelectedIds(),
+																"targetElementIds": [self.alarmMutedElementSelect.id],
 																"userId": userData.id,
 																"creationComments": comments
 															};
-										
+
 															webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.actionEndpoints.createManualAlarm, body).then(function(data) {
 																console.log(data);
 																$$(self.createView).close();
 															});
-															
+
 														})).show();
-		
+
 													} else {
-														
-														let ms = new MessageBox (MessageBox.WARN, i18n.t("LBL_COMMAND_NO_ROWS_SELECTED_DESCRIPTION"), null, null, null);
+
+														let ms = new MessageBox(MessageBox.WARN, i18n.t("LBL_COMMAND_NO_ROWS_SELECTED_DESCRIPTION"), null, null, null);
 														ms.show();
-		
+
 													}
 												}
 											}
@@ -642,7 +644,7 @@ export default class AlarmModule extends GenericModule {
 										{ width: 10 }
 									]
 								},
-								{ height: 10}
+								{ height: 10 }
 							]
 						}
 					]
@@ -670,13 +672,13 @@ export default class AlarmModule extends GenericModule {
 									},
 									{ width: 6 }
 								]
-							}						]
+							}]
 					}
 				]
 			};
 
-//			let h = document.documentElement.clientHeight - 400;
-//			let w = document.documentElement.clientWidth - 1000;
+			//			let h = document.documentElement.clientHeight - 400;
+			//			let w = document.documentElement.clientWidth - 1000;
 
 			self.createView = util.ui.loadWindow(
 				i18n.t("LBL_CREATE_MANUAL_ALARM"),
@@ -685,11 +687,11 @@ export default class AlarmModule extends GenericModule {
 				850,
 				true
 			);
-		
+
 			$$("view" + "createManual" + "loading-" + self.uid).show();
 
 			let multiView = {
-				
+
 				view: "multiview",
 				id: "multi" + self.uid,
 				animate: false,
@@ -700,10 +702,10 @@ export default class AlarmModule extends GenericModule {
 							{
 								id: "treeGridView" + self.uid,
 								css: "alarm-multiview",
-								cols:[]
+								cols: []
 							},
-							{ 
-								rows: [{ height: 1 }] 
+							{
+								rows: [{ height: 1 }]
 							},
 							drawButtons()
 						]
@@ -711,7 +713,7 @@ export default class AlarmModule extends GenericModule {
 				]
 
 			};
-		
+
 			$$("custom_window" + self.uid).addView(multiView, 1);
 			$$("treeGridView" + self.uid).addView(drawTree(), 1);
 			$$("treeGridView" + self.uid).addView(drawGrid(), 2);
@@ -741,7 +743,7 @@ export default class AlarmModule extends GenericModule {
 						self.alarm = dat.json();
 						self.update();
 					}
-	
+
 				}, function(response) { util.ajax.handleError(response); });
 			}
 
@@ -780,19 +782,19 @@ export default class AlarmModule extends GenericModule {
 		}
 
 		this.alarm.alarmType = this.alarmConfig.alarmType.id;
-		
+
 		let container = $$(this.args.containerId);
 
 		if (container) {
-		
+
 			util.ui.setTitle(container.config.id, this.alarmConfigLabelAlias + " - " + this.targetElementAlias);
 		}
 
 		this.drawComponents();
-		
+
 		$$("loading-" + this.uid).hide();
 		$$(this.uid).show();
-			
+
 	}
 
 	getViewDrawLoading() {
@@ -827,19 +829,20 @@ export default class AlarmModule extends GenericModule {
 			let userLabel = userName + " " + new Date(this.alarm.recognized).toLocaleString(i18n.getLocale(), FORMAT_NUMERIC_DATES);
 
 			let view;
-			
+
 			view = {
-				cols:[
-					{	width: 34,
+				cols: [
+					{
+						width: 34,
 						borderless: true,
 						height: 27,
 						template: `<img style="max-width:100%; width:auto; width: -moz-available; width: -webkit-fill-available; height:auto; padding-right: 10px;" src="${icon}">`,
 					},
 					{
 						width: 130,
-						view:"label", 
-						label: `<span class="form-text-font">${i18n.t(vlabel)}</span>`, 
-						align:"left",
+						view: "label",
+						label: `<span class="form-text-font">${i18n.t(vlabel)}</span>`,
+						align: "left",
 						height: 27
 					},
 					{
@@ -852,34 +855,35 @@ export default class AlarmModule extends GenericModule {
 					}
 				]
 			};
-			
+
 			return view;
 		};
 
 		const getAlarmDeactivationIcon = () => {
 
-			const NO_DEACTIVATION = "LBL_ACTIVE" ;
-			const YES_DEACTIVATION = "LBL_ICON_ALARM_INACTIVE" ;
-			
-			let deactivation = this.alarm.deactivation !== undefined && this.alarm.deactivation !== null ? true : false ;
+			const NO_DEACTIVATION = "LBL_ACTIVE";
+			const YES_DEACTIVATION = "LBL_ICON_ALARM_INACTIVE";
+
+			let deactivation = this.alarm.deactivation !== undefined && this.alarm.deactivation !== null ? true : false;
 			let icon = deactivation ? "./img/grid/alarm_inactive.png" : "./img/grid/alarm_active.png";
-			let vlabel = deactivation ? YES_DEACTIVATION : NO_DEACTIVATION ;
-			let deactivationDateLabel = deactivation ? new Date(this.alarm.deactivation).toLocaleString(i18n.getLocale(), FORMAT_NUMERIC_DATES): "";
-			
+			let vlabel = deactivation ? YES_DEACTIVATION : NO_DEACTIVATION;
+			let deactivationDateLabel = deactivation ? new Date(this.alarm.deactivation).toLocaleString(i18n.getLocale(), FORMAT_NUMERIC_DATES) : "";
+
 			let view;
-			
+
 			view = {
-				cols:[
-					{	width: 34,
+				cols: [
+					{
+						width: 34,
 						borderless: true,
 						height: 27,
 						template: `<img style="max-width:100%; width:auto; width: -moz-available; width: -webkit-fill-available; height:auto; padding-right: 10px;" src="${icon}">`,
 					},
 					{
 						width: 130,
-						view:"label", 
-						label: `<span class="form-text-font">${i18n.t(vlabel)}</span>`, 
-						align:"left",
+						view: "label",
+						label: `<span class="form-text-font">${i18n.t(vlabel)}</span>`,
+						align: "left",
 						height: 27
 					},
 					{
@@ -891,21 +895,22 @@ export default class AlarmModule extends GenericModule {
 					}
 				]
 			};
-			
+
 			return view;
 		};
 
 		const getAlarmTypeIcon = (typeId) => {
 
-			let isManual = this.config.alarmTypeAuto.includes(typeId) ? false : true; 
+			let isManual = this.config.alarmTypeAuto.includes(typeId) ? false : true;
 			let icon = isManual ? "./img/grid/manual.png" : "./img/grid/auto.png";
 			let vlabel = isManual ? "LBL_ALARM_MANUAL" : "LBL_ALARM_AUTO";
 			let numType = typeId.charAt(typeId.length - 1);
 			let view;
-			
+
 			view = {
-				cols:[
-					{	width: 34,
+				cols: [
+					{
+						width: 34,
 						borderless: true,
 						height: 27,
 						template: `<img style="max-width:100%; width:auto; width: -moz-available; width: -webkit-fill-available; height:auto; padding-right: 10px;" src="${icon}">`,
@@ -926,32 +931,33 @@ export default class AlarmModule extends GenericModule {
 
 		const getAlarmLevelIcon = (levelId) => {
 
-			let isCritical = this.config.levels.critical.includes(levelId) ? true : false ; 
-			let isWarn = this.config.levels.warn.includes(levelId) ? true : false ; 
-			let isInfo = this.config.levels.info.includes(levelId) ? true : false ; 
+			let isCritical = this.config.levels.critical.includes(levelId) ? true : false;
+			let isWarn = this.config.levels.warn.includes(levelId) ? true : false;
+			let isInfo = this.config.levels.info.includes(levelId) ? true : false;
 
 			let iconInfo = "./img/grid/info.png";
 			let iconWarn = "./img/grid/warn.png";
-			let iconCritical ="./img/grid/critical.png";
+			let iconCritical = "./img/grid/critical.png";
 			let labelInfo = "LBL_ALARM_LEVEL_INFO";
 			let labelWarn = "LBL_ALARM_LEVEL_WARN";
 			let labelCritical = "LBL_ALARM_LEVEL_CRITICAL";
-			let icon = isCritical ? iconCritical : isWarn ? iconWarn : isInfo ? iconInfo : "" ;
-			let vlabel = isCritical ? labelCritical : isWarn ? labelWarn : isInfo ? labelInfo : "" ;
+			let icon = isCritical ? iconCritical : isWarn ? iconWarn : isInfo ? iconInfo : "";
+			let vlabel = isCritical ? labelCritical : isWarn ? labelWarn : isInfo ? labelInfo : "";
 			let view;
-			
+
 			view = {
-				cols:[
-					{	width: 34,
+				cols: [
+					{
+						width: 34,
 						borderless: true,
 						height: 27,
 						template: `<img style="max-width:100%; width:auto; width: -moz-available; width: -webkit-fill-available; height:auto; padding-right: 10px;" src="${icon}">`,
 					},
 					{
 						width: 365,
-						view:"label", 
-						label: `<span class="form-text-font">${i18n.t(vlabel)}</span>`, 
-						align:"left",
+						view: "label",
+						label: `<span class="form-text-font">${i18n.t(vlabel)}</span>`,
+						align: "left",
 						height: 27
 					},
 					{}
@@ -994,16 +1000,16 @@ export default class AlarmModule extends GenericModule {
 		let labelAlarm = this.alarmConfigLabelAlias;
 		let container = $$(self.args.containerId);
 		let ellipsis = undefined;
-		
+
 		if (container) {
 
 			ellipsis = `style='display: inline-block; max-width: ${container.$width * 0.5}px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis'`;
 		}
-			
+
 		let viewMain = {
 			id: this.uid,
 			cols: [
-				{width: 1},
+				{ width: 1 },
 				{
 					width: 744,
 					rows: [
@@ -1048,7 +1054,7 @@ export default class AlarmModule extends GenericModule {
 											hidden: (this.alarm.deactivation !== undefined && this.alarm.deactivation !== null) ? false : true,
 											height: 20
 										},
-										{ 
+										{
 											height: 24,
 											hidden: (this.alarm.deactivation !== undefined && this.alarm.deactivation !== null) ? false : true
 										},
@@ -1089,7 +1095,7 @@ export default class AlarmModule extends GenericModule {
 									]
 								},
 								{
-									width:400,
+									width: 400,
 									rows: [
 										{ height: 16 },
 										{
@@ -1106,10 +1112,10 @@ export default class AlarmModule extends GenericModule {
 											hidden: (this.alarm.deactivation !== undefined && this.alarm.deactivation !== null) ? false : true,
 											height: 20
 										},
-										{ 
+										{
 											height: 24,
 											hidden: (this.alarm.deactivation !== undefined && this.alarm.deactivation !== null) ? false : true
-										 },
+										},
 										{
 											cols: [
 												{
@@ -1197,38 +1203,71 @@ export default class AlarmModule extends GenericModule {
 						paintFieldRecognizedComments(this.alarm),
 						{
 							css: { "box-sizing": "border-box", "border-bottom": "1px solid #e2e2e2", "border-left ": "1px solid #e2e2e2", "border-right": "1px solid #e2e2e2" },
-							height: 155,
-							cols: [
-								{ width: 42 },
+							height: 182,
+							rows: [
 								{
-									width: 194,
-									rows: [
-										{ height: 24 },
+									cols: [
+										{ width: 42 },
 										{
-											view: "label",
-											label: i18n.t("LBL_CRITICAL_LEVEL"),
-											align: "left",
-											height: 27
+											width: 194,
+											rows: [
+												{ height: 24 },
+												{
+													view: "label",
+													label: i18n.t("LBL_CRITICAL_LEVEL"),
+													align: "left",
+													height: 27
+												},
+												{ height: 24 },
+												{
+													view: "label",
+													label: i18n.t("LBL_ALARM_STATE"),
+													align: "left",
+													height: 27
+												},
+											]
 										},
-										{ height: 24 },
 										{
-											view: "label",
-											label: i18n.t("LBL_ALARM_STATE"),
-											align: "left",
-											height: 27
-										},
+											width: 400,
+											rows: [
+												{ height: 24 },
+												getAlarmLevelIcon(this.alarmLevelId),
+												{ height: 24 },
+												getAlarmDeactivationIcon()
+											]
+										}
 									]
 								},
+								{ height: 24 },
 								{
-									width: 400,
-									rows: [
-										{ height: 24 },
-										getAlarmLevelIcon(this.alarmLevelId),
-										{ height: 24 },
-										getAlarmDeactivationIcon()
+									cols: [
+										{ width: 42 },
+										{
+											view: "label",
+											label: i18n.t("LBL_MORE_INFO"),
+											tooltip: i18n.t("LBL_MORE_INFO_DESCRIPTION"),
+											hidden: !getBackOffice(),
+											css: "label-window-alarms",
+											align: "left",
+											height: 27,
+											on: {
+												onItemClick: function() {
+													let mod = util.module.getFromModuleAction(BackOfficeModule.Config.MODULE_ACTION_OPEN_ID);
+
+													let moduleAction = { id: BackOfficeModule.Config.MODULE_ACTION_OPEN_ID };
+
+													let args = {
+														backOffice: getBackOffice()
+													};
+
+													util.module.open(mod, moduleAction, VIEW_TYPE_WINDOW, null, args);
+
+												}
+											}
+										}
 									]
-								}
-							]
+
+								}]
 						},
 						{ height: 20 },
 						{
@@ -1252,11 +1291,33 @@ export default class AlarmModule extends GenericModule {
 						}
 					]
 				},
-				{width: 1}
+				{ width: 1 }
 			]
 		};
 
 		webix.ui(viewMain, $$(this.uid));
+
+		function getBackOffice() {
+
+			let backOffice;
+
+			let elementType = window.em.getByField(EntityType.ELEMENT_TYPE, "id", self.targetElement.elementType.id);
+
+			if (elementType) {
+
+				backOffice = self.config.backOffice ? self.config.backOffice : undefined;
+				backOffice = elementType.alarmBackOffice ? JSON.parse(elementType.alarmBackOffice) : backOffice;
+
+				if (backOffice && self.alarm.id) {
+
+					let splitStr = self.alarm.id.split(":");
+					backOffice.filterColumnValue = splitStr[1];
+				}
+			}
+
+
+			return backOffice;
+		}
 	}
 
 }

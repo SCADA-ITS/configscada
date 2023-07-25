@@ -5,6 +5,7 @@ import FileManager from "../../component/fileManager.js";
 import DataTable from "../../component/datatable.js";
 import MessageBox from "../../component/messageBox.js";
 import SearchDialogBox from "../../component/searchDialogBox.js";
+import BackOfficeModule from "../backOffice/backOfficeModule.js";
 
 const MARGIN_ACTION_PANEL = 15;
 const TOOLBARS_ALLOWED = 3;
@@ -83,28 +84,28 @@ export default class IncidentReportActionPanel {
 											view: "button",
 											css: "action-button",
 											disabled: (function() {
-		
+
 												let disabled = false;
-												
+
 												disabled |= !sameUser;
 												disabled |= (self.incidentReport.sequenceOfStates.findIndex(e => e.state.id === self.incidentReport.incidentState.id) === 0);
-												disabled |= self.closed; 
-		
+												disabled |= self.closed;
+
 												return disabled;
 											})(),
 											hidden: !self.incidentReport.confirm,
 											label: i18n.t("LBL_INCIDENT_ACTION_PREVIOUS"),
 											tooltip: "#label#",
 											on: {
-		
+
 												onItemClick() {
-		
+
 													if (self.incidentReport.confirm === true && sameUser) {
-	
+
 														let endpoint = util.fillTemplate(self.config.actionEndpoints.backward, {
 															id: self.incidentReport.id
 														});
-														
+
 														self.parent.restAction(endpoint);
 													}
 												}
@@ -116,125 +117,125 @@ export default class IncidentReportActionPanel {
 											view: "button",
 											css: "action-button",
 											disabled: (function() {
-		
+
 												if (!self.closed && self.incidentReport.confirm === true && sameUser) {
-		
+
 													// Mandatory tasks with state must be completed in penultimate state
 													if (Array.isArray(self.incidentReport.taskStates) && self.incidentReport.taskStates.length && self.incidentReport.sequenceOfStates.length > 1) {
-		
+
 														let penUltimateState = self.incidentReport.sequenceOfStates[self.incidentReport.sequenceOfStates.length - 2];
-		
+
 														if (penUltimateState && penUltimateState.state && self.incidentReport.incidentState.id == penUltimateState.state.id) {
-		
+
 															let tasksCompleted = filterTasksByRoadImpact(self.incidentReport.taskStates.filter(e => e.completedAt && e.incidentTypeTask.mandatory === true));
 															let tasksMandatory = filterTasksByRoadImpact(self.incidentReport.taskStates.filter(e => e.incidentTypeTask.mandatory === true));
-		
+
 															if (tasksCompleted.length < tasksMandatory.length) {
-		
+
 																return true;
 															}
 														}
 													}
-		
+
 													if (Array.isArray(self.currentSequenceOfState.taskStates) && self.currentSequenceOfState.taskStates.length) {
-		
+
 														let tasksCompleted = filterTasksByRoadImpact(self.currentSequenceOfState.taskStates.filter(e => e.completedAt && e.incidentTypeTask.mandatory === true));
 														let tasksMandatory = filterTasksByRoadImpact(self.currentSequenceOfState.taskStates.filter(e => e.incidentTypeTask.mandatory === true));
-		
+
 														if (tasksCompleted.length < tasksMandatory.length) {
-		
+
 															return true;
 														}
 													}
-		
+
 												} else if (!self.closed && self.incidentReport.confirm !== true && self.confirmIncidentPermissions) {
-		
+
 													if (sameUser || (onlyAutoassignIncident && sameRole) || self.assignAnotherPermissions) {
-		
+
 														return false;
 													}
-		
+
 													return true;
-		
+
 												} else {
-		
+
 													return true;
 												}
-		
+
 											})(),
 											label: (function() {
-		
+
 												let label = i18n.t("LBL_INCIDENT_ACTION_FINALIZE");
 												let positionCurrentState = self.incidentReport.sequenceOfStates.findIndex(seq => seq.state.id === self.incidentReport.incidentState.id)
 												let isLastState = self.incidentReport.sequenceOfStates.length > 1 && positionCurrentState >= self.incidentReport.sequenceOfStates.length - 2;
-		
+
 												if (!self.closed) {
-		
+
 													if (self.incidentReport.confirm === true) {
-		
+
 														if (!isLastState) {
-		
+
 															label = i18n.t("LBL_INCIDENT_ACTION_NEXT");
 														}
 													}
 													else {
-		
+
 														label = i18n.t("LBL_INCIDENT_ACTION_CONFIRM");
 														drawCounterLabel = true;
 													}
 												}
-		
+
 												return label;
-		
+
 											})(),
 											tooltip: "#label#",
 											on: {
-		
+
 												onItemClick() {
-		
+
 													if (!self.closed) {
-		
+
 														if (self.incidentReport.confirm === true) {
-		
+
 															let ireportType = window.em.getByField(EntityType.IMS_INCIDENT_TYPE, "id", self.incidentReport.incidentType.id);
-		
+
 															if (Array.isArray(ireportType.incidentTypeCauses) && ireportType.incidentTypeCauses.length > 0 && (!self.incidentReport.alarms || self.incidentReport.alarms.length === 0)) {
-		
+
 																let comboCauseValue = $$("fieldCause-combo-" + self.uid).getValue();
-		
+
 																if (comboCauseValue === "") {
-		
+
 																	let ms = new MessageBox(MessageBox.WARN, i18n.t("LBL_CAUSE_OF_INCIDENT_NOT_SELECTED_DESCRIPTION"), null, onAccept, null);
 																	ms.show();
-		
+
 																	function onAccept() {
-		
+
 																		$$("tab-details-" + self.uid).show();
 																	};
 																}
 															}
-		
+
 															let endpoint = util.fillTemplate(self.config.actionEndpoints.forward, {
 																id: self.incidentReport.id
 															});
-		
+
 															if (Array.isArray(self.currentSequenceOfState.taskStates) && self.currentSequenceOfState.taskStates.length) {
-		
+
 																let tasksCompleted = filterTasksByRoadImpact(self.currentSequenceOfState.taskStates.filter(e => e.completedAt && e.incidentTypeTask.mandatory === true));
 																let tasksMandatory = filterTasksByRoadImpact(self.currentSequenceOfState.taskStates.filter(e => e.incidentTypeTask.mandatory === true));
-		
+
 																if (tasksCompleted.length === tasksMandatory.length) {
-		
+
 																	self.parent.restAction(endpoint);
 																}
-		
+
 															} else {
-		
+
 																self.parent.restAction(endpoint);
 															}
-		
+
 														} else {
-			
+
 															let needCheckCameras = (self.incidentReport.scenario && self.incidentReport.scenario.id && self.config.action && self.config.action.cctvScenario) ? true : false;
 
 															if (needCheckCameras && !self.parent.camerasChecked) {
@@ -279,7 +280,7 @@ export default class IncidentReportActionPanel {
 										}
 									]
 								},
-								
+
 								{ height: 20 }
 							]
 						},
@@ -389,19 +390,34 @@ export default class IncidentReportActionPanel {
 				}
 			]
 		};
-		
+
 		function getRoadImpacts() {
-		
+
 			let roadImpacts;
-			
+
 			if (self.incidentReport && self.incidentReport.roadImpacts && Array.isArray(self.incidentReport.roadImpacts)) {
-					
-					roadImpacts = self.incidentReport.roadImpacts;  	
+
+				roadImpacts = self.incidentReport.roadImpacts;
 			}
-			
+
 			return roadImpacts;
 		}
 
+		function getBackOffice() {
+
+			let backOffice;
+
+			backOffice = self.parent.config.backOffice ? self.parent.config.backOffice : undefined;
+			backOffice = self.incidentType.backOffice ? JSON.parse(self.incidentType.backOffice) : backOffice;
+			
+			if (backOffice && self.incidentReport.id) {
+				let splitStr = self.incidentReport.id.split(":");
+				backOffice.filterColumnValue = splitStr[1];
+			}
+
+			return backOffice;
+		}
+		
 		function drawActionsButtons() {
 
 			let actionsButtons = { rows: [] };
@@ -413,13 +429,14 @@ export default class IncidentReportActionPanel {
 			let showAlarmsButton = {};
 			let changeIncidentButton = {};
 			let changeRoadImpactButton = {};
+			let moreInfoButton = {};
 
 			changeUserButton = {
 				view: "button",
 				width: 135,
 				label: (onlyAutoassignIncident) ? i18n.t("LBL_AUTOASSIGN") : i18n.t("LBL_INCIDENT_CHANGE_ASSIGNMENT"),
 				tooltip: i18n.t("LBL_INCIDENT_CHANGE_ASSIGNMENT_DESCRIPTION"),
-				disabled: !changeAssignIncident || self.closed,  
+				disabled: !changeAssignIncident || self.closed,
 				type: "iconTop",
 				icon: "mdi mdi-account",
 				on: {
@@ -427,12 +444,12 @@ export default class IncidentReportActionPanel {
 					onItemClick() {
 
 						let moduleAction = { id: self.parent.module.config.moduleAction.assign };
-						let args = { 
+						let args = {
 							selectedPks: [self.incidentReport.id],
 							selectedRows: [{
 								id: self.incidentReport.id,
-								currentUserId: self.incidentReport.currentUser.id 
-							}] 
+								currentUserId: self.incidentReport.currentUser.id
+							}]
 						};
 
 						util.module.open(self.parent.module, moduleAction, null, null, args);
@@ -530,13 +547,13 @@ export default class IncidentReportActionPanel {
 				buttonsArray.push(changeIncidentButton);
 				numberOfButtonsToDraw++;
 			}
-			
+
 			actionsButtons.rows.push({ height: 10 });
-			
+
 			let roadImpacts = getRoadImpacts();
-			
+
 			if (Array.isArray(roadImpacts) && roadImpacts.length > 0) {
-				
+
 				changeRoadImpactButton = {
 					view: "button",
 					width: 135,
@@ -555,6 +572,28 @@ export default class IncidentReportActionPanel {
 				};
 
 				buttonsArray.push(changeRoadImpactButton);
+				numberOfButtonsToDraw++;
+			}
+
+			if (getBackOffice()) {
+
+				moreInfoButton = {
+					view: "button",
+					width: 135,
+					label: i18n.t("LBL_MORE_INFO"),
+					tooltip: i18n.t("LBL_MORE_INFO_DESCRIPTION"),
+					type: "iconTop",
+					icon: "mdi mdi-file-document",
+					on: {
+
+						onItemClick() {
+
+							openMoreInfo();
+						}
+					}
+				};
+
+				buttonsArray.push(moreInfoButton);
 				numberOfButtonsToDraw++;
 			}
 
@@ -628,7 +667,7 @@ export default class IncidentReportActionPanel {
 		function viewCameras() {
 
 			self.parent.camerasChecked = true;
-			
+
 			if (self.config && self.config.action && self.config.action.cctvScenario &&
 				self.incidentReport.scenario && self.incidentReport.scenario.id) {
 
@@ -886,14 +925,14 @@ export default class IncidentReportActionPanel {
 				}
 			}
 		}
-	
+
 		function showOperationalPlan() {
-			
+
 			let h = document.documentElement.clientHeight - 50;
 			let w = document.documentElement.clientWidth - 50;
 			let x = 0;
 			let y = 0;
-			
+
 			const img = new Image();
 
 			img.onload = function() {
@@ -902,7 +941,7 @@ export default class IncidentReportActionPanel {
 				y = this.height + 50 < h ? (document.documentElement.clientHeight - this.height + 50) / 2 : 0;
 				h = this.height + 50 < h ? this.height + 50 : h;
 				w = this.width < w ? this.width : w;
-				
+
 				const winHtml = `<!DOCTYPE html>
 				    <html>
 				        <head>
@@ -913,18 +952,18 @@ export default class IncidentReportActionPanel {
 				            <img src='${img.src}'/>
 				        </body>
 				    </html>`;
-				
+
 				const winUrl = URL.createObjectURL(
-				    new Blob([winHtml], { type: "text/html" })
+					new Blob([winHtml], { type: "text/html" })
 				);
-				
+
 				window.open(
-				    winUrl,
-				    "win",
-				    `width=${w},height=${h},screenX=${x},screenY=${y}`
+					winUrl,
+					"win",
+					`width=${w},height=${h},screenX=${x},screenY=${y}`
 				);
 			};
-	
+
 			img.src = self.incidentReport.operationalPlanUrl;
 		}
 
@@ -1021,17 +1060,17 @@ export default class IncidentReportActionPanel {
 				}
 			}
 		}
-		
+
 		function filterTasksByRoadImpact(tasks) {
-			
+
 			let filteredTasks = undefined;
 			let roadImpact = self.incidentReport.roadImpact;
-			
+
 			if (Array.isArray(tasks)) {
-				
+
 				filteredTasks = tasks.filter(e => !e.incidentTypeTask.roadImpact || (roadImpact && e.incidentTypeTask.roadImpact.id === roadImpact.id));
 			}
-			
+
 			return filteredTasks;
 		}
 
@@ -1066,7 +1105,7 @@ export default class IncidentReportActionPanel {
 		}
 
 		function acceptChangeIncident(selectedIncidentTypeId, selectedStretchId, selectedLocationId, selectedRoadImpactId) {
-				
+
 			(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_CHANGE_CONFIRM_DESCRIPTION"), null, onAccept, null)).show();
 
 			function onAccept(res) {
@@ -1094,21 +1133,21 @@ export default class IncidentReportActionPanel {
 
 				let changeLocation = new IncidentReportChangeLocation(self.config, self.incidentReport, selectedIncidentTypeId, onAcceptChangeLocation);
 				changeLocation.show();
-				
+
 				function onAcceptChangeLocation(selectedStretchId, selectedLocationId) {
-					
+
 					let selectedRoadImpactId = undefined;
-					
+
 					webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.incidentTypeStretchs, { incidentTypeId: selectedIncidentTypeId, stretchId: selectedStretchId })).then(
 
 						function(responseIncidentTypeStretchs) {
-	
+
 							if (responseIncidentTypeStretchs != null) {
-	
+
 								let incidentTypeStretch = responseIncidentTypeStretchs.json();
-	
+
 								if (incidentTypeStretch && Array.isArray(incidentTypeStretch.roadImpacts) && incidentTypeStretch.roadImpacts.length > 0) {
-									
+
 									let dialogRoadImpacts = webix.copy(SearchDialogBox.CUSTOM);
 									let label = i18n.t("LBL_ROAD_IMPACTS");
 
@@ -1118,68 +1157,68 @@ export default class IncidentReportActionPanel {
 									dialogRoadImpacts.showEmptyRowCol = SearchDialogBox.ID_NOT_SELECTED;
 									dialogRoadImpacts.fields = ["alias=LBL_ALIAS", "description=LBL_DESCRIPTION"];
 									dialogRoadImpacts.sortFieldId = 1;
-	
+
 									incidentTypeStretch.roadImpacts.sort((a, b) => (a.alias > b.alias) ? 1 : ((b.alias > a.alias) ? -1 : 0));
-	
+
 									incidentTypeStretch.roadImpacts.forEach(p => {
-	
+
 										dialogRoadImpacts.data.push({
 											id: p.id,
 											alias: p.alias,
 											description: p.description
 										})
 									});
-	
+
 									let s = new SearchDialogBox(label, dialogRoadImpacts, function(items) {
-	
+
 										if (Array.isArray(items) && items.length === 1) {
-	
+
 											let roadImpact = items[0];
-	
+
 											if (roadImpact.id !== SearchDialogBox.ID_NOT_SELECTED) {
-	
+
 												selectedRoadImpactId = roadImpact.id;
 											}
-											
+
 											acceptChangeIncident(selectedIncidentTypeId, selectedStretchId, selectedLocationId, selectedRoadImpactId);
 										}
 									});
-									
+
 									s.show();
-									
+
 								} else {
-									
+
 									acceptChangeIncident(selectedIncidentTypeId, selectedStretchId, selectedLocationId);
 								}
 							}
 						}
-					);				
+					);
 				}
 			}
 		}
-		
+
 		function changeRoadImpact() {
-			
+
 			let dialogRoadImpacts = webix.copy(SearchDialogBox.CUSTOM);
 			let label = i18n.t("LBL_ROAD_IMPACTS");
 			let roadImpacts = getRoadImpacts();
-			
+
 			dialogRoadImpacts.data = [];
 			dialogRoadImpacts.pkField = "id"
-			
+
 			if (self.incidentReport.roadImpact) {
-				
+
 				roadImpacts = roadImpacts.filter(e => self.incidentReport.roadImpact && self.incidentReport.roadImpact.id != e.id);
 				dialogRoadImpacts.showEmptyRowCol = SearchDialogBox.ID_NOT_SELECTED;
 			}
-			
+
 			dialogRoadImpacts.fields = ["alias=LBL_ALIAS", "description=LBL_DESCRIPTION"];
 			dialogRoadImpacts.sortFieldId = 1;
-			
+
 			if (Array.isArray(roadImpacts) && roadImpacts.length > 0) {
-				
+
 				roadImpacts.sort((a, b) => (a.alias > b.alias) ? 1 : ((b.alias > a.alias) ? -1 : 0));
-				
+
 				roadImpacts.forEach(e => {
 
 					dialogRoadImpacts.data.push({
@@ -1193,17 +1232,17 @@ export default class IncidentReportActionPanel {
 			let s = new SearchDialogBox(label, dialogRoadImpacts, function(items) {
 
 				if (Array.isArray(items) && items.length === 1) {
-					
+
 					let roadImpact = items[0];
 					let roadImpactId = undefined;
-					
-					if (roadImpact.id != SearchDialogBox.ID_NOT_SELECTED && 
-						((self.incidentReport.roadImpact && self.incidentReport.roadImpact.id != roadImpact.id) || 
+
+					if (roadImpact.id != SearchDialogBox.ID_NOT_SELECTED &&
+						((self.incidentReport.roadImpact && self.incidentReport.roadImpact.id != roadImpact.id) ||
 							!self.incidentReport.roadImpact)) {
-						
+
 						roadImpactId = roadImpact.id
 					}
-					
+
 					let body = {
 						id: self.incidentReport.id,
 						roadImpactId: roadImpactId
@@ -1216,6 +1255,21 @@ export default class IncidentReportActionPanel {
 			});
 
 			s.show();
+		}
+
+
+		function openMoreInfo() {
+
+			let mod = util.module.getFromModuleAction(BackOfficeModule.Config.MODULE_ACTION_OPEN_ID);
+
+			let moduleAction = { id: BackOfficeModule.Config.MODULE_ACTION_OPEN_ID };
+
+			let args = {
+				backOffice: getBackOffice()
+			};
+
+			util.module.open(mod, moduleAction, VIEW_TYPE_WINDOW, null, args);
+
 		}
 
 		function getLowerButtonsViewArray() {

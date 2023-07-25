@@ -3,6 +3,8 @@ import EquipmentViewerProperties from "./equipmentViewerProperties.js";
 import { util } from "../../lib/util.js";
 import { adapter } from "../../lib/adapter.js";
 import MessageBox from "../../component/messageBox.js";
+import BackOfficeModule from "../backOffice/backOfficeModule.js";
+
 
 export default class EquipmentViewerContent {
 
@@ -260,11 +262,12 @@ export default class EquipmentViewerContent {
 					noProperties = (self.equipmentViewer.noShowProperties) ? true : false;
 				}
 
-				numberOfHeaderButtons = (noProperties) ? numberOfHeaderButtons : ++numberOfHeaderButtons;
-				numberOfHeaderButtons = (noMaintenanceMode) ? numberOfHeaderButtons : ++numberOfHeaderButtons;
-				numberOfHeaderButtons = !(self.equipmentViewer.showActions) || !isAllowedCommands ? numberOfHeaderButtons : ++numberOfHeaderButtons;
-				numberOfHeaderButtons = (self.element.tm && self.element.tm != undefined) ? ++numberOfHeaderButtons : numberOfHeaderButtons;
-				numberOfHeaderButtons = (self.element.doc && self.element.doc != undefined) ? ++numberOfHeaderButtons : numberOfHeaderButtons;
+				if (!noProperties) ++numberOfHeaderButtons;
+				if (!noMaintenanceMode) ++numberOfHeaderButtons;
+				if (self.equipmentViewer.showActions && isAllowedCommands) ++numberOfHeaderButtons;
+				if (self.element.tm && self.element.tm != undefined) ++numberOfHeaderButtons;
+				if (self.element.doc && self.element.doc != undefined) ++numberOfHeaderButtons;
+				if (getBackOffice()) ++numberOfHeaderButtons;
 
 				toolbarButtonsWidth = numberOfHeaderButtons * 150;
 
@@ -297,6 +300,30 @@ export default class EquipmentViewerContent {
 											let propertiesWindow = new EquipmentViewerProperties(self.parent, self.element, self.equipmentViewer);
 											propertiesWindow.loadData();
 
+										}
+									}
+								},
+								{
+									view: "button",
+									width: 135,
+									label: i18n.t("LBL_MORE_INFO"),
+									tooltip: i18n.t("LBL_MORE_INFO_DESCRIPTION"),
+									type: "iconTop",
+									icon: "mdi mdi-file-document",
+									hidden: !getBackOffice(),
+									on: {
+
+										onItemClick() {
+
+											let mod = util.module.getFromModuleAction(BackOfficeModule.Config.MODULE_ACTION_OPEN_ID);
+
+											let moduleAction = { id: BackOfficeModule.Config.MODULE_ACTION_OPEN_ID };
+
+											let args = {
+												backOffice: getBackOffice()
+											};
+
+											util.module.open(mod, moduleAction, VIEW_TYPE_WINDOW, null, args);
 										}
 									}
 								},
@@ -416,6 +443,20 @@ export default class EquipmentViewerContent {
 				};
 
 				return viewHeaderButtons;
+			}
+
+			function getBackOffice() {
+
+				let backOffice;
+
+				backOffice = self.parent.config.backOffice ? self.parent.config.backOffice : undefined;
+				backOffice = self.element.elementType.elementBackOffice ? JSON.parse(self.element.elementType.elementBackOffice) : backOffice;
+
+				if (backOffice && self.element.id) {
+					backOffice.filterColumnValue = self.element.id;
+				}
+
+				return backOffice;
 			}
 
 			return viewHeader;

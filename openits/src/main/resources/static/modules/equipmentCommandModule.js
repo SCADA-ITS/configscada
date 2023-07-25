@@ -102,8 +102,10 @@ export default class EquipmentCommandModule extends GenericModule {
 							{
 								view: "button",
 								css: "dialog-accept",
+								id: "accept-button-" + self.uid,
 								width: 130,
 								height: 40,
+								disabled: true,
 								label: i18n.t("LBL_ACCEPT"),
 								click: function() {
 									sendElementState();
@@ -150,6 +152,8 @@ export default class EquipmentCommandModule extends GenericModule {
 
 				self.action = id;
 
+				$$("accept-button-" + self.uid).enable();
+				
 				if (id === ACTION_MAINTENANCE_ON) {
 					
 					$$("txt-dialog-" + self.uid).enable();
