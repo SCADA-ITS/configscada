@@ -64,7 +64,10 @@ export default class BackOfficeHelper {
 				GRID_FILTERS: { name: "gridFilters", default: false },
 				POSITION: { name: "position" },
 				REF_NAME: { name: "refName" },
-				MULTILINE: {name: "multiline"}
+				MULTILINE: { name: "multiline" },
+				ASSOCIATED_FIELD_NAME: { name: "associatedFieldName" },
+				REF_GROUP_FIELD_NAME: { name: "refGroupFieldName" },
+				BADGE_IN_HEADER: {name: "badgeInHeader" }
 			} 
 		} 
 	}

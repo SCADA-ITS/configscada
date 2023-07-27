@@ -1,0 +1,240 @@
+// Uncomment following line for groovy file
+package config.groovy.backoffice.common.task;
+// or Uncomment following line for java file
+//package com.revenga.rits.front.openits.backoffice.groovy.task;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.apache.commons.lang3.math.NumberUtils;
+import org.springframework.util.CollectionUtils;
+import org.springframework.util.FileSystemUtils;
+
+import com.revenga.rits.front.openits.backoffice.BackOfficeException;
+import com.revenga.rits.front.openits.backoffice.groovy.AbstractBackOfficeTask;
+
+public class CleanAttachmentTask extends AbstractBackOfficeTask {
+
+	public CleanAttachmentTask(org.apache.logging.log4j.Logger log) {
+		super(log);
+	}
+
+	@Override
+	public boolean onExecute() {
+		
+		boolean res = false;
+		
+		try {
+			
+			if (this.conn == null || this.conn.isClosed()) {
+				
+				throw new BackOfficeException("Connection is not initialized");
+			}
+			
+			if (this.backOffice == null) {
+				
+				throw new BackOfficeException("Backoffice is not initialized");
+			}
+			
+			if (this.baseDir == null) {
+				
+				throw new BackOfficeException("Base dir is not configured");
+			}
+			
+			Set<String> tableNames = getTableNames();
+			
+			if (!CollectionUtils.isEmpty(tableNames)) {
+				
+				deleteAttachments(getMapImagesDB(tableNames), getMapImagesFS(tableNames));
+			}
+			
+			res = true;
+			
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			log.debug(ExceptionUtils.getStackTrace(e));
+		} 
+		
+		return res;
+	}
+	
+	private Map<String, Set<Integer>> getMapImagesDB(Set<String> tables) throws SQLException {
+		
+		Map<String, Set<Integer>> map = new HashMap<>();
+		
+		for (String tableName : tables) {
+					
+			if (!StringUtils.isEmpty(tableName)) {
+				
+				map.put(tableName, new HashSet<>());
+				
+				final String SQL = String.format("SELECT id FROM %s.%s", this.backOffice.getSchema(), tableName);
+				
+				PreparedStatement stmt = null;
+				
+				try {
+					
+					stmt = conn.prepareStatement(SQL);
+					
+					ResultSet rs = stmt.executeQuery();
+					
+					while (rs.next()) {
+						
+						Set<Integer> ids = map.get(tableName);
+						
+						if (ids != null) {
+							
+							ids.add(rs.getInt("id"));
+						}
+					}
+				}
+				catch (Exception e) {
+
+					log.error(e.getMessage());
+					log.debug(ExceptionUtils.getStackTrace(e));
+				}
+				finally {
+					
+					if (stmt != null) {
+						
+						stmt.close();
+					}
+				}
+			}
+		}
+		
+		return map;
+	}
+	
+	private Map<String, Set<Integer>> getMapImagesFS(Set<String> tables) {
+		
+		Map<String, Set<Integer>> map = new HashMap<>();
+		
+		for (String tableName : tables) {
+					
+			if (!StringUtils.isEmpty(tableName)) {
+				
+				map.put(tableName, new HashSet<>());
+				
+				List<String> listPathArray = Arrays.asList(this.getBaseDir(), "backoffice", backOffice.getId().toString(), tableName);
+				
+				String path = String.join(File.separator, listPathArray.toArray(new String[listPathArray.size()]));
+				
+				File baseDirectory = new File(path);
+				
+				if (baseDirectory.isDirectory()) {
+					
+					Set<Integer> ids = map.get(tableName);
+					
+					for (File dir : Arrays.asList(baseDirectory.listFiles())) {
+						
+						if (ids != null && dir.isDirectory() && NumberUtils.isCreatable(dir.getName())) {
+							
+							ids.add(Integer.parseInt(dir.getName()));
+						}
+					}
+				}		
+			}
+		}
+		
+		return map;
+	}
+	
+	private void deleteAttachments(Map<String, Set<Integer>> mapDB, Map<String, Set<Integer>> mapFS) throws IOException {
+		
+		if (!CollectionUtils.isEmpty(mapDB) && !CollectionUtils.isEmpty(mapFS)) {
+			
+			List<Path> pathsToDelete = new ArrayList<>();
+		
+			for (Map.Entry<String, Set<Integer>> entry : mapFS.entrySet()) {
+				
+				List<Integer> tableIdsToDelete = new ArrayList<>();
+				
+				String tableName = entry.getKey();
+				Set<Integer> idsFS = entry.getValue();
+				
+				if (!CollectionUtils.isEmpty(idsFS)) {
+					
+					Set<Integer> idsDB = mapDB.get(tableName);
+					
+					for (Integer idFs : idsFS) {
+						
+						if (CollectionUtils.isEmpty(idsDB) || (!CollectionUtils.isEmpty(idsDB) && !idsDB.contains(idFs))) {
+							
+							tableIdsToDelete.add(idFs);
+						}
+					}
+
+					if (!CollectionUtils.isEmpty(tableIdsToDelete)) {
+						
+						for (Integer id : tableIdsToDelete) {
+							
+							List<String> listPathArray = Arrays.asList(this.getBaseDir(), "backoffice", backOffice.getId().toString(), tableName, id.toString());
+							String path = String.join(File.separator, listPathArray.toArray(new String[listPathArray.size()]));
+							
+							pathsToDelete.add(new File(path).toPath());
+						}
+					}
+				}
+			}
+			
+			if (!CollectionUtils.isEmpty(pathsToDelete)) {
+				
+				for (Path pathToDelete : pathsToDelete) {
+					
+					FileSystemUtils.deleteRecursively(pathToDelete);
+					
+					log.debug("Delete path: " + pathsToDelete.toString());
+				}
+			}
+		}
+	}
+	
+	private Set<String> getTableNames() throws SQLException {
+		
+		Set<String> tables = new HashSet<>();
+		final String QRY_TABLES = String.format("SELECT name FROM %s.sg_metadata_tables WHERE support_images = TRUE OR support_attachments = TRUE", this.backOffice.getSchema());
+		
+		PreparedStatement stmt = null;
+		
+		try {
+			
+			stmt = conn.prepareStatement(QRY_TABLES);
+						
+			ResultSet rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				
+				tables.add(rs.getString("name"));
+			}
+		}
+		catch (Exception e) {
+
+			log.error(e.getMessage());
+			log.debug(ExceptionUtils.getStackTrace(e));
+		}
+		finally {
+			
+			if (stmt != null) {
+				
+				stmt.close();
+			}
+		}
+		
+		return tables;
+	}
+}
+

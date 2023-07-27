@@ -26,6 +26,7 @@ export default class SearchDialogBox {
 		this.searchTreeView = undefined;
 		this.containerId = undefined;
 		this.pkField = (dialogEntity.pkField) ? dialogEntity.pkField : "id";
+		this.pkFieldVisible = dialogEntity.pkFieldVisible ?? false;
 		this.windowHeight = (dialogEntity.height) ? dialogEntity.height : 600;
 		this.windowWidth = (dialogEntity.width) ? dialogEntity.width : 800;
 	}
@@ -287,7 +288,7 @@ export default class SearchDialogBox {
 						position: position,
 						required: true,
 						sourceField: self.pkField,
-						visible: false,
+						visible: self.pkFieldVisible,
 						gridFieldDataType: {
 							id: 1,
 							name: "string"

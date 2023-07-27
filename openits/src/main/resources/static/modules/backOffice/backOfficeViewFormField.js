@@ -84,9 +84,9 @@ export default class BackOfficeViewFormField  {
 				if (refColumn && refTable) {
 					
 					const referencedColumnValue = BackOfficeHelper.getReferencedColumnValue(column, value, self.data);
-					const associatedField = self.currentTableData.columns.find(e => column.metadata && column.metadata.associatedFieldName === e.name);
-					const refGroupField = refTable.columns.find(e => column.metadata && column.metadata.refGroupFieldName === e.name);
-					const dependentColumns = self.currentTableData.columns.filter(e => e.metadata && e.metadata.associatedFieldName === BackOfficeHelper.getColumnNameFromColumnUID(field.name));										
+					const associatedField = self.currentTableData.columns.find(e => column.metadata && BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_COLUMN, BackOfficeHelper.META_TYPE_COLUMN.PROPERTY.ASSOCIATED_FIELD_NAME, self.backOffice.metadata, column)  === e.name);
+					const refGroupField = refTable.columns.find(e => column.metadata && BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_COLUMN, BackOfficeHelper.META_TYPE_COLUMN.PROPERTY.REF_GROUP_FIELD_NAME, self.backOffice.metadata, column) === e.name);
+					const dependentColumns = self.currentTableData.columns.filter(e => e.metadata && BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_COLUMN, BackOfficeHelper.META_TYPE_COLUMN.PROPERTY.ASSOCIATED_FIELD_NAME, self.backOffice.metadata, e) === BackOfficeHelper.getColumnNameFromColumnUID(field.name));										
 					const disabled = self.backOffice.filterColumn && self.backOffice.filterColumn.refColumn && self.backOffice.filterColumn.refColumn.id === refColumn.id && self.backOffice.filterColumn.refColumn.tableId === refColumn.tableId; 
 					//const refAddButtonTable = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, BackOfficeHelper.META_TYPE_TABLE.PROPERTY.REF_ADD_BUTTON, self.backOffice.metadata, self.currentTableData);
 									

@@ -178,36 +178,121 @@ export default class BackOfficeViewForm extends BackOfficeView {
 			
 			function getHeader() {
 
-				let header;
-				const label = (self.backOffice.onCancel ? i18n.t("LBL_NEW") : i18n.t("LBL_EDIT")) + " " + (self.currentTableData.labelSingular ?? (self.currentTableData.label ?? self.currentTableData.name));
-				const description = self.currentTableData.labelDescription ?? "";
+				let header;				
+				let colValuesInHeader = [];
 				
-				const icon = (self.currentTableData.mdiIcon) ? self.currentTableData.mdiIcon : "mdi mdi-application"; 
+				if (Array.isArray(self.currentTableData.rows) && self.currentTableData.rows.length > 0) {
+					
+					self.currentTableData.columns.forEach(col => {
+						
+						const badgeInHeader = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_COLUMN, BackOfficeHelper.META_TYPE_COLUMN.PROPERTY.BADGE_IN_HEADER, self.backOffice.metadata, col);
+					
+						if (badgeInHeader) {
+							
+							const refColumn = col.refColumn;
+							const refTable = refColumn ? self.data.find(e => e.id === refColumn.tableId) : undefined;
+				
+							let colName;
+							let value = BackOfficeHelper.getColumnValue(self.currentTableData, col.id, 0);
+							
+							if (refColumn && refTable) {
+								
+								const referencedColumnValue = BackOfficeHelper.getReferencedColumnValue(col, value, self.data);
+								
+								if (referencedColumnValue) {
+									
+									colName = util.getStringCapitalized(refTable.labelSingular ?? refTable.name);
+									value = referencedColumnValue.value
+								}
+							}
+							else {
+
+								colName = util.getStringCapitalized(col.label ?? col.name);
+								
+							}
+							
+							if (colName && value) {
+									
+								colValuesInHeader.push({
+									field: colName,
+									icon: badgeInHeader,
+									value: value
+								});
+							}
+						} 
+					});	
+				}
 
 				header = {
 					id: "viewHeader-" + self.uid,
+					height: 95 - (colValuesInHeader.length === 0 ? 30 : 0),
 					cols: [
 						{
-							view: "label",
-							height: 75,
-							template: `<span class='${icon}'></span>`,
-							css: "global-header-mdi"
-						},
-						{
-							view: "label",
-							height: 75,
-							width: 450,
-							template: "<span>" + label + "</span> <br> <span style='font-size: 13px'>" + description + "</span>",
-							css: "global-header-label",
-							on: {
-								onDestruct: function() {
-									
-									if (self.backOffice.onCancel && !self.accepted) {
+							rows: [
+								{},
+								{
+									height: 86 - (colValuesInHeader.length === 0 ? 30 : 0),
+									borderless: true,
+									template: function() {
 										
-										self.backOffice.onCancel();
-									}		
-								}
-							}
+										const icon = (self.currentTableData.mdiIcon) ? self.currentTableData.mdiIcon : "mdi mdi-application";
+										const description = self.currentTableData.labelDescription ?? "";
+										
+										let windowTitle = i18n.t("LBL_EDIT"); 
+			
+										if (self.backOffice.onCancel) {
+										
+											windowTitle = i18n.t("LBL_NEW");
+										}
+										
+										const representativeField = BackOfficeHelper.getRepresentativeField(self.currentTableData);
+										
+										let rowData = undefined;
+										
+										if (representativeField) {
+										
+											rowData = self.currentTableData.rows[0].data.find(data => data.columnId === self.currentTableData.columns.find(col => col.name === representativeField.name).id);	
+										}
+										
+										windowTitle += " " + (self.currentTableData.labelSingular ?? (self.currentTableData.label ?? self.currentTableData.name)) + ((rowData && rowData.value !== undefined) ? " - " + rowData.value : "");
+										
+										let badges = '';
+										
+										if (Array.isArray(colValuesInHeader) && colValuesInHeader.length > 0) {
+											
+											colValuesInHeader.forEach(colValue => {
+												
+												badges += `<span title='${colValue.field}' class='backoffice-badge' style='border: 1px solid rgb(71, 84, 102); padding-left: 14px; margin-left: 6px'><span class="ico webix_icon ${colValue.icon}"></span>${colValue.field + ": " + colValue.value}</span>`;	
+											});
+										}
+										
+										let res =  `<span style='font-size: 40px; padding-left: 14px' class='${icon}'></span>
+													<div class="backoffice-header" id="equipDescription" style="padding-left: 10px !important; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; display: inline-block" title="${description ?? i18n.t("LBL_NO_DESCRIPTION")}">
+														${windowTitle}
+													</div>`;
+													
+										if (badges) {
+											
+											res += `<div style="padding-top: 8px; padding-left: 44px">
+													${badges}
+													</div>`
+										}
+										
+										return res;
+		
+									},
+									on: {
+										onDestruct: function() {
+											
+											if (self.backOffice.onCancel && !self.accepted) {
+												
+												self.backOffice.onCancel();
+											}		
+										}
+									}
+								},
+								{}
+							]
 						}
 					]
 				};

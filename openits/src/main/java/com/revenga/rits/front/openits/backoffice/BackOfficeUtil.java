@@ -425,9 +425,13 @@ public class BackOfficeUtil {
 				backOfficeGroovyCloned.setSchema(schema);
 				backOfficeGroovyCloned.setTable(table);
 				backOfficeGroovyCloned.setId(id);
-				backOfficeGroovyCloned.setOldRow(requestResult.getOldRow());
-				backOfficeGroovyCloned.setNewRow(requestResult.getNewRow());
-				backOfficeGroovyCloned.setRequestResultMessage(requestResult.getRequestResultMessage());
+				
+				if (requestResult != null) {
+					
+					backOfficeGroovyCloned.setOldRow(requestResult.getOldRow());
+					backOfficeGroovyCloned.setNewRow(requestResult.getNewRow());
+					backOfficeGroovyCloned.setRequestResultMessage(requestResult.getRequestResultMessage());
+				}
 				
 				return backOfficeGroovyCloned;
 			}
