@@ -98,6 +98,7 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 										for (let gridField of newDataTableData.metadata.gridFields) {
 
 											gridField.sourceField = getNewSourceField(gridField.sourceField);
+											gridField.label = util.getStringCapitalized(BackOfficeHelper.translate(self.backOffice, gridField.label));
 										}								
 										
 										self.dataTable = new DataTable(null, null, newDataTableData.metadata, self.dataTable.data, self.dataTable.events);

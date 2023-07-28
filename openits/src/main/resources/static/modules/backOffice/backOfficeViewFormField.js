@@ -13,7 +13,8 @@ export default class BackOfficeViewFormField  {
 		this.currentTableData = form.currentTableData;
 		this.uid = form.uid;
 		this.refresh = form.refresh;
-		this.setValues = form.setValues; 		
+		this.setValues = form.setValues;
+		this.isVisible = true;
 	}
 	
 	getField(column) {
@@ -78,6 +79,8 @@ export default class BackOfficeViewFormField  {
 				
 				field.value = value;
 				
+				self.isVisible = !field.hidden;
+				
 				const refColumn = column.refColumn;
 				const refTable = refColumn ? self.data.find(e => e.id === refColumn.tableId) : undefined;
 				
@@ -94,6 +97,8 @@ export default class BackOfficeViewFormField  {
 					//let refAddButton = (refAddButtonColumn != undefined) ? refAddButtonColumn : refAddButtonTable;  
 					const visibleAddButton = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_COLUMN, BackOfficeHelper.META_TYPE_COLUMN.PROPERTY.REF_ADD_BUTTON, self.backOffice.metadata, column);
 					let visibleColumn = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_COLUMN, BackOfficeHelper.META_TYPE_COLUMN.PROPERTY.FORM_VISIBLE, self.backOffice.metadata, column);
+					
+					self.isVisible = visibleColumn;
 
 					if (referencedColumnValue && (!self.backOffice.filterColumn || refColumn.id != self.backOffice.filterColumn.id)) {
 						

@@ -24,6 +24,7 @@ export default class BackOfficeViewForm extends BackOfficeView {
 		
 		this.refreshInterval = undefined;
 		this.selectedRefreshTime = currentTableData.metadata && currentTableData.metadata[BackOfficeHelper.META_TYPE_TABLE.PROPERTY.AUTOREFRESH_FORM.name] && currentTableData.metadata.autorefresh && currentTableData.metadata.autorefresh > 0 ? currentTableData.metadata.autorefresh : undefined;
+		this.tabInfoVisible = false;
 	}
 	
 	setValues(row) {
@@ -126,6 +127,11 @@ export default class BackOfficeViewForm extends BackOfficeView {
 								windowTitle += " " + (self.currentTableData.labelSingular ?? (self.currentTableData.label ?? self.currentTableData.name)) + ((rowData && rowData.value !== undefined) ? " - " + rowData.value : "");
 								
 								util.ui.setTitle(self.backOffice.containerId, windowTitle);
+								
+								if (!self.tabInfoVisible) {
+									
+									$$("tabview-" + self.uid).getTabbar().hideOption("info-tab-" + self.uid)
+								}
 							}
 						}
 					}
@@ -330,6 +336,7 @@ export default class BackOfficeViewForm extends BackOfficeView {
 					let infoView;
 					
 					infoView = {
+						id: "info-tab-" + self.uid,
 						rows: [
 							{
 								id: "form-" + self.uid,
@@ -484,6 +491,8 @@ export default class BackOfficeViewForm extends BackOfficeView {
 									if (item.type === TYPE_COLUMN) {
 										
 										fields.push(backOfficeViewFormField.getField(item.value));
+										
+										self.tabInfoVisible |= backOfficeViewFormField.isVisible;
 									}
 									else if (item.type === TYPE_IMAGE) {
 										
@@ -492,6 +501,8 @@ export default class BackOfficeViewForm extends BackOfficeView {
 										let backOfficeViewFormImage = new BackOfficeViewFormImage(self.backOffice, item.value.groupImage, self.currentTableData.name, rowDataId.value, item.value.images, onChangeAttachment);
 										
 										fields.push(backOfficeViewFormImage.getView());
+										
+										self.tabInfoVisible |= true;
 									}
 									else if (item.type === TYPE_ATTACHMENT) {
 										
@@ -500,6 +511,8 @@ export default class BackOfficeViewForm extends BackOfficeView {
 										let backOfficeViewFormAttachment = new BackOfficeViewFormAttachment(self.backOffice, item.value.groupAttachment, self.currentTableData.name, rowDataId.value, item.value.attachments, onChangeAttachment);
 										
 										fields.push(backOfficeViewFormAttachment.getView());
+										
+										self.tabInfoVisible |= true;
 									}
 								}
 							}
