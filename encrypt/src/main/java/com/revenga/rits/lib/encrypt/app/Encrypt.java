@@ -1,12 +1,6 @@
 package com.revenga.rits.lib.encrypt.app;
 
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
-
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
 
 import org.apache.commons.lang3.ArrayUtils;
 
