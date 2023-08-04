@@ -614,14 +614,14 @@ export default class BackOfficeViewForm extends BackOfficeView {
 											
 															item.value = {
 																groupImage: group,
-																images: row.images
+																images: row.images.filter(e => e.groupName === group.name)
 															}
 														} 
 														else if (fileType === TYPE_ATTACHMENT && Array.isArray(row.attachments)) {
 															
 															item.value = {
 																groupAttachment: group,
-																attachments: row.attachments
+																attachments: row.attachments.filter(e => e.groupName === group.name)
 															}
 														}
 														
