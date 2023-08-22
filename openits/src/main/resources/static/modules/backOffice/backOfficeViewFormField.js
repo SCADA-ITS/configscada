@@ -105,6 +105,7 @@ export default class BackOfficeViewFormField  {
 					//let refAddButtonColumn = (column.metadata) ? column.metadata[BackOfficeHelper.META_TYPE_COLUMN.PROPERTY.REF_ADD_BUTTON.name] : undefined;
 					//let refAddButton = (refAddButtonColumn != undefined) ? refAddButtonColumn : refAddButtonTable;  
 					const visibleAddButton = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_COLUMN, BackOfficeHelper.META_TYPE_COLUMN.PROPERTY.REF_ADD_BUTTON, self.backOffice.metadata, column);
+					const visibleEditButton = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_COLUMN, BackOfficeHelper.META_TYPE_COLUMN.PROPERTY.REF_EDIT_BUTTON, self.backOffice.metadata, column);
 					let visibleColumn = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_COLUMN, BackOfficeHelper.META_TYPE_COLUMN.PROPERTY.FORM_VISIBLE, self.backOffice.metadata, column);
 					
 					self.isVisible = visibleColumn;
@@ -167,6 +168,20 @@ export default class BackOfficeViewFormField  {
 													}
 												});
 											}
+												
+											const fieldEditButton = $$(field.name + "-edit");
+											
+											if (fieldEditButton) {
+												
+												if (this.getValue()) {
+													
+													fieldEditButton.enable();	
+												}
+												else {
+													
+													fieldEditButton.disable();
+												}
+											}
 										}
 									}
 								},
@@ -228,6 +243,31 @@ export default class BackOfficeViewFormField  {
 									hidden: ((!visibleColumn) ? !visibleColumn: !visibleAddButton) || disabled,
 									on: {
 										onItemClick: createRefField
+									}
+								},
+								{
+									view: "icon", 
+									id: field.name + "-edit",
+									icon: "wxi-pencil",
+									tooltip: i18n.t("LBL_CMD_EDIT"),
+									hidden: ((!visibleColumn) ? !visibleColumn: !visibleEditButton) || disabled,
+									disable: !field.value,
+									on: {
+										onItemClick: function() {
+											
+											const form = $$("form-" + self.uid);
+											const table = self.data.find(e => e.id === refColumn.tableId);
+											
+											if (form && table) {
+												
+												const formValues = form.getValues();
+												
+												if (formValues && field.name && formValues[field.name]) {
+													
+													edit(table, formValues[field.name]);
+												}
+											}
+										}
 									}
 								}
 							]
@@ -497,7 +537,7 @@ export default class BackOfficeViewFormField  {
 												
 												const columnIdValue = data.value; 
 									
-												edit(columnIdValue, function () {
+												edit(table, columnIdValue, function () {
 													
 													let persistValues = [];
 													
@@ -531,68 +571,70 @@ export default class BackOfficeViewFormField  {
 							});	
 						}
 						
-						function edit(id, onCancel) {
+						
+					}
+					
+					function edit(table, id, onCancel) {
 	
-							const module = window.em.getByField(EntityType.MODULE, "id", BackOfficeModule.Config.MODULE_ID);
-	
-							if (module) {
-																													
-								const formHeight = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, BackOfficeHelper.META_TYPE_TABLE.PROPERTY.FORM_HEIGHT, self.backOffice.metadata, table);
-								const formWidth = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, BackOfficeHelper.META_TYPE_TABLE.PROPERTY.FORM_WIDTH, self.backOffice.metadata, table);
-								
-								const winId = util.ui.loadWindow(i18n.t("LBL_NEW") + " " + (table.labelSingular ?? (table.label ?? table.name)), { id: self.uid }, formHeight, formWidth, true);
-								
-								const args = {
-									backOffice: {
-										id: self.backOffice.id,
-										tableName: table.name,
-										filterColumnName: "id",
-										filterColumnValue: id,
-										isModal: true,
-										noReferTables: true,
-										onAccept: onAccept,
-										onCancel: onCancel
-									},
-									containerId: winId,
-									onLoad: onLoad
-								}
-		
-								util.module.open(module, {id: BackOfficeModule.Config.MODULE_ACTION_OPEN_ID }, VIEW_TYPE_CUSTOM, drawContent, args);
+						const module = window.em.getByField(EntityType.MODULE, "id", BackOfficeModule.Config.MODULE_ID);
+
+						if (module) {
+																												
+							const formHeight = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, BackOfficeHelper.META_TYPE_TABLE.PROPERTY.FORM_HEIGHT, self.backOffice.metadata, table);
+							const formWidth = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, BackOfficeHelper.META_TYPE_TABLE.PROPERTY.FORM_WIDTH, self.backOffice.metadata, table);
 							
-								function drawContent(view) {
-		
-									webix.ui(view, $$(self.uid));
-								}
+							const winId = util.ui.loadWindow(i18n.t("LBL_NEW") + " " + (table.labelSingular ?? (table.label ?? table.name)), { id: self.uid }, formHeight, formWidth, true);
+							
+							const args = {
+								backOffice: {
+									id: self.backOffice.id,
+									tableName: table.name,
+									filterColumnName: "id",
+									filterColumnValue: id,
+									isModal: true,
+									noReferTables: true,
+									onAccept: onAccept,
+									onCancel: onCancel
+								},
+								containerId: winId,
+								onLoad: onLoad
+							}
+	
+							util.module.open(module, {id: BackOfficeModule.Config.MODULE_ACTION_OPEN_ID }, VIEW_TYPE_CUSTOM, drawContent, args);
+						
+							function drawContent(view) {
+	
+								webix.ui(view, $$(self.uid));
+							}
+							
+							function onLoad() {
 								
-								function onLoad() {
-									
-									util.ui.resizeWindow(winId, formWidth, formHeight);
-									util.ui.centerWindow(winId, 20);	
-								}
+								util.ui.resizeWindow(winId, formWidth, formHeight);
+								util.ui.centerWindow(winId, 20);	
+							}
+							
+							function onAccept(newRow) {
 								
-								function onAccept(newRow) {
+								if (newRow) {
+								
+									log.debug(newRow);
 									
-									if (newRow) {
+									self.refresh();
 									
-										log.debug(newRow);
-										
-										self.refresh();
-										
-										const form = $$("form-" + self.uid);
-										
-										if (form) {
-										
-											if (referencedColumnValue) {
-												
-												let newValue = {};
-												
-												newValue[BackOfficeHelper.getColumnUID(column)] = newRow.id;
-												newValue[BackOfficeHelper.getColumnUID(referencedColumnValue)] = newRow[BackOfficeHelper.getColumnUID(referencedColumnValue)];
-												
-												form.setValues(newValue, true);
-											}
-										}	
-									}
+									const form = $$("form-" + self.uid);
+									
+									if (form) {
+									
+										if (referencedColumnValue) {
+											
+											let newValue = {};
+											
+											newValue[BackOfficeHelper.getColumnUID(column)] = newRow.id;
+											newValue[BackOfficeHelper.getColumnUID(referencedColumnValue)] = newRow[BackOfficeHelper.getColumnUID(referencedColumnValue)];
+											
+											form.setValues(newValue, true);
+										}
+									}	
 								}
 							}
 						}

@@ -61,6 +61,7 @@ export default class BackOfficeHelper {
 				TABLE_VISIBLE: { name: "tableVisible", default: true },
 				SEARCH_VISIBLE: { name: "searchVisible", default: false },
 				REF_ADD_BUTTON: { name: "refAddButton", default: true },
+				REF_EDIT_BUTTON: { name: "refEditButton", default: true },
 				GRID_FILTERS: { name: "gridFilters", default: false },
 				POSITION: { name: "position" },
 				REF_NAME: { name: "refName" },
