@@ -100,5 +100,6 @@
 	},
 	"action": {
 		"assign": 100404
-	}
+	},
+	"roadImpact": false
 }

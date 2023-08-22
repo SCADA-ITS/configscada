@@ -59,34 +59,32 @@ export default class SelectorModule extends GenericModule {
 
 			if (moduleId) {
 
-				if (moduleId) {
+				let module = window.em.getByField(EntityType.MODULE, "id", moduleId);
 
-					let module = window.em.getByField(EntityType.MODULE, "id", moduleId);
+				if (module) {
 
-					if (module) {
+					util.module.open(module, null, VIEW_TYPE_CUSTOM, drawContent, {containerId: "view-main-content-selector-module-" + self.uid});
 
-						util.module.open(module, null, VIEW_TYPE_CUSTOM, drawContent, null);
+					function drawContent(view) {
 
-						function drawContent(view) {
+						let content = $$("view-main-content-selector-module-" + self.uid);
 
-							let content = $$("view-main-content-selector-module-" + self.uid);
+						if (content) {
 
-							if (content) {
+							let viewContent = {
+								rows: [
+									{
+										id: "view-main-content-selector-module-" + self.uid,
+										cols: [view]
+									}
+								]
+							};
 
-								let viewContent = {
-									rows: [
-										{
-											id: "view-main-content-selector-module-" + self.uid,
-											cols: [view]
-										}
-									]
-								};
-
-								webix.ui(viewContent, $$("view-main-content-selector-module-" + self.uid));
-							}
+							webix.ui(viewContent, $$("view-main-content-selector-module-" + self.uid));
 						}
 					}
 				}
+
 			}
 		}
 

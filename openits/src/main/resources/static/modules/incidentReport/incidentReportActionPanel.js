@@ -575,8 +575,8 @@ export default class IncidentReportActionPanel {
 				numberOfButtonsToDraw++;
 			}
 
-			if (getBackOffice()) {
-
+			if (self.incidentReport.confirm && getBackOffice()) {
+				
 				moreInfoButton = {
 					view: "button",
 					width: 135,

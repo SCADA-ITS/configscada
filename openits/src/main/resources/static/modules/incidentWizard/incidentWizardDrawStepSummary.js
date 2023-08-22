@@ -128,6 +128,7 @@ export default class IncidentWizardDrawStepSummary extends IncidentWizardDrawSte
 															},
 															{
 																id: "summary-road-impact-" + parent.uid,
+																hidden: !parent.config.roadImpact,
 																height: 50,
 																borderless: true,
 																template: function(obj) {
