@@ -1238,6 +1238,47 @@ export let util = {
 
 			return winId;
 		},
+		
+		showImagePopup(url, title) {
+
+			let h = document.documentElement.clientHeight - 50;
+			let w = document.documentElement.clientWidth - 50;
+			let x = 0;
+			let y = 0;
+
+			const img = new Image();
+
+			img.onload = function() {
+
+				x = this.width < w ? (document.documentElement.clientWidth - this.width) / 2 : 0;
+				y = this.height + 50 < h ? (document.documentElement.clientHeight - this.height + 50) / 2 : 0;
+				h = this.height + 50 < h ? this.height + 50 : h;
+				w = this.width < w ? this.width : w;
+
+				const winHtml = `<!DOCTYPE html>
+				    <html>
+				        <head>
+				        	<meta charset="utf-8">
+				            <title>${title}</title>
+				        </head>
+				        <body style='margin: 0 0 0 0;'>
+				            <img src='${img.src}'/>
+				        </body>
+				    </html>`;
+
+				const winUrl = URL.createObjectURL(
+					new Blob([winHtml], { type: "text/html" })
+				);
+
+				window.open(
+					winUrl,
+					"win",
+					`width=${w},height=${h},screenX=${x},screenY=${y}`
+				);
+			};
+
+			img.src = url;
+		},
 
 		loadTab(title, body) {
 

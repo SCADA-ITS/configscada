@@ -95,7 +95,7 @@ export default class DecoderSNAP extends Decoder {
 		function onLoadImage() {
 			
 			self.loading = false;
-			var ctx = cnv.getContext("2d");
+			let ctx = cnv.getContext("2d");
 			
 			if (self.img != null && cnv) {
 				

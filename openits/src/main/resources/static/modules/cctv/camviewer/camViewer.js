@@ -221,6 +221,13 @@ export default class CamViewer {
 
 					viewButtons.cols.push(viewButtonCamControls);
 				}
+				
+				let viewButtonTakeSnapshoot = getButtonTakeSnapshoot();
+				
+				viewButtonTakeSnapshoot.height = SIZE_MULTI;
+				viewButtonTakeSnapshoot.width = SIZE_MULTI;
+				viewButtonTakeSnapshoot.css = "cam-viewer-button";
+				viewButtons.cols.push(viewButtonTakeSnapshoot);
 
 				if (!self.fullScreen) {
 
@@ -273,6 +280,13 @@ export default class CamViewer {
 
 					viewButtons.cols.push(viewButtonCamControls);
 				}
+				
+				let viewButtonTakeSnapshoot = getButtonTakeSnapshoot();
+				
+				viewButtonTakeSnapshoot.height = SIZE_SINGLE;
+				viewButtonTakeSnapshoot.width = SIZE_SINGLE;
+				viewButtonTakeSnapshoot.css = "cam-viewer-button-small";
+				viewButtons.cols.push(viewButtonTakeSnapshoot);
 
 				if (!self.fullScreen) {
 
@@ -390,6 +404,40 @@ export default class CamViewer {
 				}
 
 				return viewButtonFullScreen;
+			}
+			
+			function getButtonTakeSnapshoot() {
+
+				let viewButtonTakeSnapshoot;
+
+				viewButtonTakeSnapshoot = {
+
+					view: "button",
+					type: "icon",
+					icon: "mdi mdi-camera",
+					tooltip: i18n.t("LBL_TAKE_SNAPSHOT"),
+					on: {
+						onItemClick: function() {
+													
+							let timeService = window.sm.getService(Services.TIME_SERVICE);
+							
+							if (timeService) {
+								
+								const elementValueUrl = self.element.elementValues.find(e => e.elementTypeParam.id === self.config.camConf.decoders[self.decoderType].url);
+
+								if (elementValueUrl) {
+						
+									const url = elementValueUrl.value;
+									const title = i18n.t("LBL_SNAPSHOT") + " - " + self.element.alias + " (" + util.toLocaleString(timeService.getEpoch() / 1000) + ")";
+									
+									util.ui.showImagePopup(url, title);
+								}
+							}
+						}
+					}
+				}
+
+				return viewButtonTakeSnapshoot;
 			}
 
 			function getButtonExpandCam() {

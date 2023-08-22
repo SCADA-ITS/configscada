@@ -131,7 +131,12 @@ export default class DecoderMJPEG extends Decoder {
 					if (!self.isOnline) {
 						
 						webix.ui(self.getViewNoImage(), $$("camviewer-" + self.uid));
-						$$("camviewer-buttons-" + self.uid).hide();	
+						
+						if ($$("camviewer-buttons-" + self.uid)) {
+							
+							$$("camviewer-buttons-" + self.uid).hide();	
+						}
+							
 					}
 
 				}, self.timeoutCheckStreamMs);	

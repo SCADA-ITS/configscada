@@ -82,7 +82,16 @@ export default class BackOfficeHelper {
 
 		const dbType = {};
 
-		let locale = webix.i18n.locales[i18n.localeCode] ? webix.i18n.locales[i18n.localeCode] : webix.i18n.locales["en-US"];
+		let locale = webix.i18n.locales["en-US"];
+		
+		if (webix.i18n.locales[i18n.localeCode]) {
+			
+			locale = webix.i18n.locales[i18n.localeCode];
+		}
+		else {
+		
+			log.warn("No locale js file for: " + i18n.localeCode + " Set default locale to en-US")
+		}
 
 		dbType[BackOfficeHelper.DB_TYPE_STRING] = { id: 1, name: BackOfficeHelper.DB_TYPE_STRING, component: { view: "text", required: false, labelWidth: 275 } };
 		dbType[BackOfficeHelper.DB_TYPE_INTEGER] = { id: 2, name: BackOfficeHelper.DB_TYPE_INTEGER, component: { view: "text", required: false, labelWidth: 275 } };

@@ -868,19 +868,25 @@ export default class BackOfficeViewForm extends BackOfficeView {
 									
 									const form = $$("form-" + self.uid);
 									
-									if (form && self.backOffice.onAccept) {
+									if (form) {
 										
 										const values = form.getValues();
 										
 										if (typeof(values) === 'object') {
-										
-											self.backOffice.onAccept();	
+											
+											if (self.backOffice.onAccept) {
+											
+												self.backOffice.onAccept();	
+											}
 											
 											BackOfficeHelper.updateData(self.backOffice, self.currentTableData, requestInput, id).then((requestResult) => {
 														
 												if (!requestResult.requestResultMessage.error) {
 													
-													self.backOffice.onAccept(values);
+													if (self.backOffice.onAccept) {
+													
+														self.backOffice.onAccept(values);	
+													}
 											
 													if (container) {
 											
