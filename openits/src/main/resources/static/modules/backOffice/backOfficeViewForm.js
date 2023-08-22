@@ -108,11 +108,11 @@ export default class BackOfficeViewForm extends BackOfficeView {
 									timerRefresh();
 								}
 								
-								let windowTitle = i18n.t("LBL_EDIT"); 
+								let windowTitle = i18n.t("LBL_CMD_EDIT"); 
 			
 								if (self.backOffice.onCancel) {
 								
-									windowTitle = i18n.t("LBL_NEW");
+									windowTitle = i18n.t("LBL_CMD_ADD");
 								}
 								
 								const representativeField = BackOfficeHelper.getRepresentativeField(self.currentTableData);
@@ -244,11 +244,11 @@ export default class BackOfficeViewForm extends BackOfficeView {
 										const icon = (self.currentTableData.mdiIcon) ? self.currentTableData.mdiIcon : "mdi mdi-application";
 										const description = self.currentTableData.labelDescription ?? "";
 										
-										let windowTitle = i18n.t("LBL_EDIT"); 
+										let windowTitle = i18n.t("LBL_CMD_EDIT"); 
 			
 										if (self.backOffice.onCancel) {
 										
-											windowTitle = i18n.t("LBL_NEW");
+											windowTitle = i18n.t("LBL_CMD_ADD");
 										}
 										
 										const representativeField = BackOfficeHelper.getRepresentativeField(self.currentTableData);

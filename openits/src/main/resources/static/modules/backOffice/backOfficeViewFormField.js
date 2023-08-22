@@ -46,34 +46,43 @@ export default class BackOfficeViewFormField  {
 					field.hidden = !showIdForm;
 				}
 				
-				let value = BackOfficeHelper.getColumnValue(self.currentTableData, column.id, 0);
-				
-				if (value) {
-				
-					if (dbType.name === BackOfficeHelper.DB_TYPE_TIMESTAMP) {
+				if (dbType.name === BackOfficeHelper.DB_TYPE_STRING) {
 					
-						value = new Date(parseInt(value));
+					const multiline = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_COLUMN, BackOfficeHelper.META_TYPE_COLUMN.PROPERTY.MULTILINE, self.backOffice.metadata, column);
+					
+					if (!isNaN(multiline) && multiline > 0) {
+						
+						field.view = "textarea";
+						field.height = multiline * 20;	
 					}
-					else if (dbType.name === BackOfficeHelper.DB_TYPE_DECIMAL || 
+				}
+				
+				if (field.view === "text") {
+					
+					if (dbType.name === BackOfficeHelper.DB_TYPE_DECIMAL || 
 							 dbType.name === BackOfficeHelper.DB_TYPE_INTEGER) {
 					
 						field.type = "number";
 					}
-					else if (dbType.name === BackOfficeHelper.DB_TYPE_BOOLEAN) {
-					
-						value = IS_TRUE(value);
-					}
 					else {
 						
 						field.type = "text";
-						
-						const multiline = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_COLUMN, BackOfficeHelper.META_TYPE_COLUMN.PROPERTY.MULTILINE, self.backOffice.metadata, column);
+					}
 					
-						if (!isNaN(multiline) && multiline > 0) {
-							
-							field.view = "textarea";
-							field.height = multiline * 20;	
-						}
+					field.css = field.readonly ? "backoffice-input-readonly" : undefined;
+				}
+				
+				let value = BackOfficeHelper.getColumnValue(self.currentTableData, column.id, 0);
+				
+				if (value) {
+					
+					if (dbType.name === BackOfficeHelper.DB_TYPE_TIMESTAMP) {
+					
+						value = new Date(parseInt(value));
+					}
+					else if (dbType.name === BackOfficeHelper.DB_TYPE_BOOLEAN) {
+					
+						value = IS_TRUE(value);
 					}
 				}
 				
@@ -122,7 +131,8 @@ export default class BackOfficeViewFormField  {
 									readonly: true, 
 									labelWidth: 275, 
 									value: referencedColumnValue.value ?? field.value, 
-									disabled: disabled, 
+									disabled: disabled,
+									css: "backoffice-input-readonly",
 									hidden: !visibleColumn
 								},
 								{ 
@@ -130,6 +140,7 @@ export default class BackOfficeViewFormField  {
 									name: field.name, 
 									hidden: !visibleColumn || !showIdForm, 
 									readonly: true, 
+									css: "backoffice-input-readonly",
 									value: field.value, 
 									width: 50,
 									on: {
