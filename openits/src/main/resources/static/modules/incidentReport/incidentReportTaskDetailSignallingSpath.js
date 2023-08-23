@@ -852,9 +852,11 @@ export default class IncidentReportTaskDetailSignallingSpath extends IncidentRep
 												id: signallingSpath.command.commandElementTypeId
 											},
 											element: element,
-											commandElementValues: undefined
+											commandElementValues: undefined,
+											hideTitles: true
 										}
 									}
+
 								};
 
 								if (args.data.commandElement && Array.isArray(signallingSpath.command.commandElementValues) && signallingSpath.command.commandElementValues.length > 0) {

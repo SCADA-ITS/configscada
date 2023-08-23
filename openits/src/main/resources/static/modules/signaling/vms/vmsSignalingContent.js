@@ -96,6 +96,7 @@ export default class VmsSignalingContent {
 			let viewHeader;
 			
 			viewHeader = {
+				hidden: self.currentCommandElement.hideTitles,
 				cols: [
 					{
 						view: "label",
@@ -870,21 +871,19 @@ export default class VmsSignalingContent {
 									let sameElement = selectedElements.find(element => element.id === self.element.id);
 
 									self.selectedElements = selectedElements;
-									
+
 									$$("elements-selected-label" + self.uid).config.label = function(){
-											
 										let label = (sameElement) ? sameElement.alias : selectedElements[0].alias;
-											
 										if (Array.isArray(selectedElements) && selectedElements.length > 1) {
-											
 											label += " " + i18n.t("LBL_AND").toLowerCase() + " " + (selectedElements.length - 1) + " " + i18n.t("LBL_MORE_SELECTED") + " ...";
 										}
-							 
+									
 										return `<span class="view-header-details-text">${label}</span>`;											
 										}();
 									
 									$$("elements-selected-label" + self.uid).refresh();	
 									
+
 									let btnMultisignaling = $$("btn-multisignaling-" + self.uid);
 									
 									if (btnMultisignaling) {

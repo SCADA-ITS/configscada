@@ -89,6 +89,7 @@ export default class GenericSignalingModule extends GenericModule {
 					if (Array.isArray(self.args.selectedPks) && self.args.selectedPks.length === 1) {
 
 						viewHeader = {
+							hidden: self.args.data && self.args.data.commandElement && self.args.data.commandElement .hideTitles, 
 							cols: [
 								{
 									view: "label",
@@ -124,6 +125,7 @@ export default class GenericSignalingModule extends GenericModule {
 
 						viewHeader = {
 							id: "view-main-content-signaling-header-" + self.uid,
+							hidden: self.args.data && self.args.data.commandElement && self.args.data.commandElement .hideTitles, 
 							cols: [
 								{ width: 50 },
 								{
