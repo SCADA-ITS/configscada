@@ -664,14 +664,24 @@ export default class TubeContent {
 					body: {
 						rows: getCircuitsTable()
 					}
-				},
-				{
-					header: i18n.t("LBL_DALIS"),
-					body: {
-						rows: getDalisTable()
-					}
 				}
 			);
+
+			if (Array.isArray(self.tubeDalis) && self.tubeDalis.length > 0){
+
+				viewContent.cells.push(
+
+					{
+						header: i18n.t("LBL_DALIS"),
+						body: {
+							rows: getDalisTable()
+						}
+					}
+				);
+
+			} else {
+				self.tubeDalisDataTable = undefined;
+			}	
 
 			if (self.parent.config.viewEquipmentMeasures && self.parent.config.viewEquipmentMeasures.enabled === true) {
 
@@ -709,132 +719,132 @@ export default class TubeContent {
 
 			if (Array.isArray(data) && data.length > 0) {
 
-				let metadata = webix.copy(self.circuitsGrid.metadata);
+			let metadata = webix.copy(self.circuitsGrid.metadata);
 
-				metadata.gridCommands.push({
-					id: 1,
-					default_: true,
-					icon: "mdi mdi-information-outline",
-					label: "LBL_INFO",
-					multiselect: false,
-					position: 1,
-					showText: false,
-					itemRequired: true
-				});
-				
-				if (self.parent.commandEquipmentPermission) {
+			metadata.gridCommands.push({
+				id: 1,
+				default_: true,
+				icon: "mdi mdi-information-outline",
+				label: "LBL_INFO",
+				multiselect: false,
+				position: 1,
+				showText: false,
+				itemRequired: true
+			});
+			
+			if (self.parent.commandEquipmentPermission) {
 
-					metadata.gridCommands.push(
-						{
-							id: 2,
-							default_: false,
-							icon: "mdi mdi-toggle-switch",
-							label: "LBL_SWITCH_ON",
-							multiselect: true,
-							position: 2,
-							showText: true,
-							itemRequired: true
-						},
-						{
-							id: 3,
-							default_: false,
-							icon: "mdi mdi-toggle-switch-off",
-							label: "LBL_SWITCH_OFF",
-							multiselect: true,
-							position: 3,
-							showText: true,
-							itemRequired: true
-						},
-						{
-							id: 4,
-							default_: false,
-							icon: "mdi mdi-broom",
-							label: "LBL_CLEAN",
-							multiselect: true,
-							position: 4,
-							showText: false,
-							itemRequired: true
-						}
-					);
+				metadata.gridCommands.push(
+					{
+						id: 2,
+						default_: false,
+						icon: "mdi mdi-toggle-switch",
+						label: "LBL_SWITCH_ON",
+						multiselect: true,
+						position: 2,
+						showText: true,
+						itemRequired: true
+					},
+					{
+						id: 3,
+						default_: false,
+						icon: "mdi mdi-toggle-switch-off",
+						label: "LBL_SWITCH_OFF",
+						multiselect: true,
+						position: 3,
+						showText: true,
+						itemRequired: true
+					},
+					{
+						id: 4,
+						default_: false,
+						icon: "mdi mdi-broom",
+						label: "LBL_CLEAN",
+						multiselect: true,
+						position: 4,
+						showText: false,
+						itemRequired: true
+					}
+				);
+			}
+
+			let events = {};
+			events[DataTable.EventTypes.ON_COMMAND_EXEC] = [];
+
+			events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
+				commandId: 2,
+				function: () => {
+
+					self.tubeCircuitsDataTable.getSelectedItems().forEach(item => {
+
+						item.circuitStateToSend = CIRCUIT_COMMAND_SEND_ON;
+						item.circuitStateToSendAlias = i18n.t("LBL_CIRCUIT_COMMAND_SEND_ON");
+						self.tubeCircuitsDataTable.update(item);
+					});
+
+					self.checkDisableChangeStatusButton();
 				}
+			});
 
-				let events = {};
-				events[DataTable.EventTypes.ON_COMMAND_EXEC] = [];
+			events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
+				commandId: 3,
+				function: () => {
 
-				events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
-					commandId: 2,
-					function: () => {
+					self.tubeCircuitsDataTable.getSelectedItems().forEach(item => {
 
-						self.tubeCircuitsDataTable.getSelectedItems().forEach(item => {
+						item.circuitStateToSend = CIRCUIT_COMMAND_SEND_OFF;
+						item.circuitStateToSendAlias = i18n.t("LBL_CIRCUIT_COMMAND_SEND_OFF");
+						self.tubeCircuitsDataTable.update(item);
+					});
 
-							item.circuitStateToSend = CIRCUIT_COMMAND_SEND_ON;
-							item.circuitStateToSendAlias = i18n.t("LBL_CIRCUIT_COMMAND_SEND_ON");
-							self.tubeCircuitsDataTable.update(item);
-						});
+					self.checkDisableChangeStatusButton();
+				}
+			});
 
-						self.checkDisableChangeStatusButton();
-					}
-				});
+			events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
+				commandId: 4,
+				function: () => {
 
-				events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
-					commandId: 3,
-					function: () => {
+					self.tubeCircuitsDataTable.getSelectedItems().forEach(item => {
 
-						self.tubeCircuitsDataTable.getSelectedItems().forEach(item => {
+						item.circuitStateToSend = null;
+						item.circuitStateToSendAlias = "-";
+						self.tubeCircuitsDataTable.update(item);
+					});
 
-							item.circuitStateToSend = CIRCUIT_COMMAND_SEND_OFF;
-							item.circuitStateToSendAlias = i18n.t("LBL_CIRCUIT_COMMAND_SEND_OFF");
-							self.tubeCircuitsDataTable.update(item);
-						});
+					self.checkDisableChangeStatusButton();
+				}
+			});
 
-						self.checkDisableChangeStatusButton();
-					}
-				});
+			events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
+				commandId: 1,
+				function: () => {
 
-				events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
-					commandId: 4,
-					function: () => {
+					let selectedItems = self.tubeCircuitsDataTable.getSelectedItems();
 
-						self.tubeCircuitsDataTable.getSelectedItems().forEach(item => {
+					if (Array.isArray(selectedItems) && selectedItems.length == 1) {
 
-							item.circuitStateToSend = null;
-							item.circuitStateToSendAlias = "-";
-							self.tubeCircuitsDataTable.update(item);
-						});
+						let selectedItem = selectedItems[0];
 
-						self.checkDisableChangeStatusButton();
-					}
-				});
+						if (selectedItem) {
 
-				events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
-					commandId: 1,
-					function: () => {
+							let module = util.module.getFromModuleAction(self.parent.config.equipmentViewer);
 
-						let selectedItems = self.tubeCircuitsDataTable.getSelectedItems();
+							if (module) {
 
-						if (Array.isArray(selectedItems) && selectedItems.length == 1) {
+								let moduleAction = { id: self.parent.config.equipmentViewer };
+								let args = { selectedPks: [selectedItem.id] };
 
-							let selectedItem = selectedItems[0];
-
-							if (selectedItem) {
-
-								let module = util.module.getFromModuleAction(self.parent.config.equipmentViewer);
-
-								if (module) {
-
-									let moduleAction = { id: self.parent.config.equipmentViewer };
-									let args = { selectedPks: [selectedItem.id] };
-
-									util.module.open(module, moduleAction, VIEW_TYPE_WINDOW, null, args);
-								}
+								util.module.open(module, moduleAction, VIEW_TYPE_WINDOW, null, args);
 							}
 						}
 					}
-				});
+				}
+			});
 
-				self.tubeCircuitsDataTable = new DataTable(null, null, metadata, data, events);
+			self.tubeCircuitsDataTable = new DataTable(null, null, metadata, data, events);
 
-				viewCircuits = self.tubeCircuitsDataTable.getView();
+			viewCircuits = self.tubeCircuitsDataTable.getView();
 			}
 			else {
 
@@ -851,252 +861,252 @@ export default class TubeContent {
 
 			if (Array.isArray(data) && data.length > 0) {
 
-				const defaultGridOptionValues = [
-					{ gridOption: { id: 5 }, value: undefined },
-					{ gridOption: { id: 6 }, value: undefined },
-					{ gridOption: { id: 7 }, value: "false" },
-					{ gridOption: { id: 8 }, value: "false" },
-					{ gridOption: { id: 9 }, value: "true" },
-					{ gridOption: { id: 10 }, value: "true" },
-					{ gridOption: { id: 16 }, value: "img/grid/default.png" },
-					{ gridOption: { id: 21 }, value: "custom" },
-					{ gridOption: { id: 23 }, value: "true" }
-				];
+			const defaultGridOptionValues = [
+				{ gridOption: { id: 5 }, value: undefined },
+				{ gridOption: { id: 6 }, value: undefined },
+				{ gridOption: { id: 7 }, value: "false" },
+				{ gridOption: { id: 8 }, value: "false" },
+				{ gridOption: { id: 9 }, value: "true" },
+				{ gridOption: { id: 10 }, value: "true" },
+				{ gridOption: { id: 16 }, value: "img/grid/default.png" },
+				{ gridOption: { id: 21 }, value: "custom" },
+				{ gridOption: { id: 23 }, value: "true" }
+			];
 
-				let metadata = {
-					filter: true,
-					label: "LBL_DALI",
-					visible: true,
-					gridOptionValues: defaultGridOptionValues,
-					gridFields: [
-						{
-							extended: false,
-							filtered: false,
-							isEpochMilli: false,
-							isPk: true,
-							parameterized: false,
-							position: 1,
-							required: true,
-							sourceField: "id",
-							visible: false,
-							widthPx: 1,
-							gridFieldDataType: {
-								id: 1,
-								name: "string"
-							}
-						},
-						{
-							extended: false,
-							filtered: false,
-							isEpochMilli: false,
-							isPk: false,
-							parameterized: false,
-							position: 2,
-							required: true,
-							sourceField: "state",
-							visible: true,
-							widthPx: 30,
-							adjust: false,
-							gridFieldDataType: {
-								id: 1,
-								name: "string"
-							},
-							gridFieldIcons: [
-								{
-									icon: "./img/state/stateUnknown.png",
-									showValue: false,
-									value: "ElementTypeState:85:0",
-									labelValue: "LBL_ELEMENT_TYPE_STATE_UNKNOWN"
-								},
-								{
-									icon: "./img/state/stateUp.png",
-									showValue: false,
-									value: "ElementTypeState:85:1",
-									labelValue: "LBL_ELEMENT_TYPE_STATE_UP"
-								},
-								{
-									icon: "./img/state/stateDown.png",
-									showValue: false,
-									value: "ElementTypeState:85:2",
-									labelValue: "LBL_ELEMENT_TYPE_STATE_DOWN"
-								},
-								{
-									icon: "./img/state/stateAlarm.png",
-									showValue: false,
-									value: "ElementTypeState:85:3",
-									labelValue: "LBL_ELEMENT_TYPE_STATE_ALARMS"
-								}
-							]
-						},
-						{
-							extended: false,
-							filtered: false,
-							isEpochMilli: false,
-							isPk: false,
-							label: "LBL_DALI",
-							labelTooltip: "LBL_DALI",
-							parameterized: false,
-							position: 3,
-							required: false,
-							sourceField: "alias",
-							visible: true,
-							widthPx: 200,
-							gridFieldDataType: {
-								id: 1,
-								name: "string"
-							},
-							gridFieldIcons: []
-						},
-						{
-							extended: false,
-							filtered: false,
-							isEpochMilli: false,
-							isPk: false,
-							parameterized: false,
-							position: 4,
-							required: true,
-							sourceField: self.parent.config.params.daliState,
-							visible: false,
-							widthPx: 1,
-							adjust: false,
-							gridFieldDataType: {
-								id: 1,
-								name: "string"
-							},
-							gridFieldIcons: []
-						},
-						{
-							extended: false,
-							filtered: false,
-							isEpochMilli: false,
-							isPk: false,
-							label: "LBL_DALI_REGIME",
-							labelTooltip: "LBL_DALI_REGIME",
-							parameterized: false,
-							position: 5,
-							required: true,
-							sourceField: "daliStateAlias",
-							visible: true,
-							widthPx: 250,
-							adjust: false,
-							gridFieldDataType: {
-								id: 1,
-								name: "string"
-							},
-							gridFieldIcons: []
-						}
-					],
-					gridCommands: [
-						{
+			let metadata = {
+				filter: true,
+				label: "LBL_DALI",
+				visible: true,
+				gridOptionValues: defaultGridOptionValues,
+				gridFields: [
+					{
+						extended: false,
+						filtered: false,
+						isEpochMilli: false,
+						isPk: true,
+						parameterized: false,
+						position: 1,
+						required: true,
+						sourceField: "id",
+						visible: false,
+						widthPx: 1,
+						gridFieldDataType: {
 							id: 1,
-							default_: true,
-							icon: "mdi mdi-information-outline",
-							label: "LBL_INFO",
-							multiselect: false,
-							position: 1,
-							showText: false,
-							itemRequired: true
+							name: "string"
 						}
-					]
-				};
-
-				if (self.parent.commandEquipmentPermission) {
-
-					metadata.gridCommands.push(
-						{
-							id: 2,
-							default_: false,
-							icon: "mdi mdi-pen",
-							label: "LBL_CHANGE_REGIME",
-							multiselect: false,
-							position: 2,
-							showText: true,
-							itemRequired: true
-						}
-					);
-				}
-
-				let events = {};
-				events[DataTable.EventTypes.ON_COMMAND_EXEC] = [];
-
-				events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
-					commandId: 2,
-					function: () => {
-
-						let options = [];
-						let selectedItem = self.tubeDalisDataTable.getSelectedItems()[0];
-						let dali = self.tubeDalis.find(d => d.id == selectedItem.id);
-
-						let daliRegimeConfig = dali[self.parent.config.params.daliRegimeConfig];
-						daliRegimeConfig = JSON.parse(daliRegimeConfig);
-
-						for (let regime of daliRegimeConfig.regimes) {
-
-							options.push({
-								id: regime.id,
-								label: regime.alias,
-								description: i18n.t("LBL_MODE_" + regime.alias.toUpperCase() + "_DESCRIPTION"),
-								default: regime.id == selectedItem[self.parent.config.params.daliState]
-							});
-						}
-
-						let optionDialog = new OptionDialogBox(i18n.t("LBL_SELECT_ANY_OPTION"), options, changeRegime);
-						optionDialog.show();
-					}
-				});
-
-				events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
-					commandId: 1,
-					function: () => {
-
-						let selectedItems = self.tubeDalisDataTable.getSelectedItems();
-
-						if (Array.isArray(selectedItems) && selectedItems.length == 1) {
-
-							let selectedItem = selectedItems[0];
-
-							if (selectedItem) {
-
-								let module = util.module.getFromModuleAction(self.parent.config.equipmentViewer);
-
-								if (module) {
-
-									let moduleAction = { id: self.parent.config.equipmentViewer };
-									let args = { selectedPks: [selectedItem.id] };
-
-									util.module.open(module, moduleAction, VIEW_TYPE_WINDOW, null, args);
-								}
+					},
+					{
+						extended: false,
+						filtered: false,
+						isEpochMilli: false,
+						isPk: false,
+						parameterized: false,
+						position: 2,
+						required: true,
+						sourceField: "state",
+						visible: true,
+						widthPx: 30,
+						adjust: false,
+						gridFieldDataType: {
+							id: 1,
+							name: "string"
+						},
+						gridFieldIcons: [
+							{
+								icon: "./img/state/stateUnknown.png",
+								showValue: false,
+								value: "ElementTypeState:85:0",
+								labelValue: "LBL_ELEMENT_TYPE_STATE_UNKNOWN"
+							},
+							{
+								icon: "./img/state/stateUp.png",
+								showValue: false,
+								value: "ElementTypeState:85:1",
+								labelValue: "LBL_ELEMENT_TYPE_STATE_UP"
+							},
+							{
+								icon: "./img/state/stateDown.png",
+								showValue: false,
+								value: "ElementTypeState:85:2",
+								labelValue: "LBL_ELEMENT_TYPE_STATE_DOWN"
+							},
+							{
+								icon: "./img/state/stateAlarm.png",
+								showValue: false,
+								value: "ElementTypeState:85:3",
+								labelValue: "LBL_ELEMENT_TYPE_STATE_ALARMS"
 							}
-						}
+						]
+					},
+					{
+						extended: false,
+						filtered: false,
+						isEpochMilli: false,
+						isPk: false,
+						label: "LBL_DALI",
+						labelTooltip: "LBL_DALI",
+						parameterized: false,
+						position: 3,
+						required: false,
+						sourceField: "alias",
+						visible: true,
+						widthPx: 200,
+						gridFieldDataType: {
+							id: 1,
+							name: "string"
+						},
+						gridFieldIcons: []
+					},
+					{
+						extended: false,
+						filtered: false,
+						isEpochMilli: false,
+						isPk: false,
+						parameterized: false,
+						position: 4,
+						required: true,
+						sourceField: self.parent.config.params.daliState,
+						visible: false,
+						widthPx: 1,
+						adjust: false,
+						gridFieldDataType: {
+							id: 1,
+							name: "string"
+						},
+						gridFieldIcons: []
+					},
+					{
+						extended: false,
+						filtered: false,
+						isEpochMilli: false,
+						isPk: false,
+						label: "LBL_DALI_REGIME",
+						labelTooltip: "LBL_DALI_REGIME",
+						parameterized: false,
+						position: 5,
+						required: true,
+						sourceField: "daliStateAlias",
+						visible: true,
+						widthPx: 250,
+						adjust: false,
+						gridFieldDataType: {
+							id: 1,
+							name: "string"
+						},
+						gridFieldIcons: []
 					}
-				});
+				],
+				gridCommands: [
+					{
+						id: 1,
+						default_: true,
+						icon: "mdi mdi-information-outline",
+						label: "LBL_INFO",
+						multiselect: false,
+						position: 1,
+						showText: false,
+						itemRequired: true
+					}
+				]
+			};
 
-				self.tubeDalisDataTable = new DataTable(null, null, metadata, data, events);
+			if (self.parent.commandEquipmentPermission) {
 
-				viewDalis = self.tubeDalisDataTable.getView();
+				metadata.gridCommands.push(
+					{
+						id: 2,
+						default_: false,
+						icon: "mdi mdi-pen",
+						label: "LBL_CHANGE_REGIME",
+						multiselect: false,
+						position: 2,
+						showText: true,
+						itemRequired: true
+					}
+				);
+			}
 
-				function changeRegime(newRegimeId, callbackCloseDialog) {
+			let events = {};
+			events[DataTable.EventTypes.ON_COMMAND_EXEC] = [];
 
-					let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_LIGHTING_CHANGE_OPTION_CONFIRM_DESCRIPTION"), null, onAccept, null);
-					ms.show();
+			events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
+				commandId: 2,
+				function: () => {
 
-					function onAccept() {
+					let options = [];
+					let selectedItem = self.tubeDalisDataTable.getSelectedItems()[0];
+					let dali = self.tubeDalis.find(d => d.id == selectedItem.id);
 
-						callbackCloseDialog(true);
-						let command = self.parent.config.commands.SEND_DALI_REGIME;
-						let dali = self.tubeDalis.find(d => d.id == self.tubeDalisDataTable.getSelectedItems()[0].id);
+					let daliRegimeConfig = dali[self.parent.config.params.daliRegimeConfig];
+					daliRegimeConfig = JSON.parse(daliRegimeConfig);
 
-						command.elementId = dali.id;
-						command.commandElementValues[0].value = newRegimeId;
+					for (let regime of daliRegimeConfig.regimes) {
 
-						util.element.sendCommand([command], function(res) {
-
-							if (res) {
-
-								(new MessageBox(MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null, null)).show();
-							}
+						options.push({
+							id: regime.id,
+							label: regime.alias,
+							description: i18n.t("LBL_MODE_" + regime.alias.toUpperCase() + "_DESCRIPTION"),
+							default: regime.id == selectedItem[self.parent.config.params.daliState]
 						});
 					}
+
+					let optionDialog = new OptionDialogBox(i18n.t("LBL_SELECT_ANY_OPTION"), options, changeRegime);
+					optionDialog.show();
+				}
+			});
+
+			events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
+				commandId: 1,
+				function: () => {
+
+					let selectedItems = self.tubeDalisDataTable.getSelectedItems();
+
+					if (Array.isArray(selectedItems) && selectedItems.length == 1) {
+
+						let selectedItem = selectedItems[0];
+
+						if (selectedItem) {
+
+							let module = util.module.getFromModuleAction(self.parent.config.equipmentViewer);
+
+							if (module) {
+
+								let moduleAction = { id: self.parent.config.equipmentViewer };
+								let args = { selectedPks: [selectedItem.id] };
+
+								util.module.open(module, moduleAction, VIEW_TYPE_WINDOW, null, args);
+							}
+						}
+					}
+				}
+			});
+
+			self.tubeDalisDataTable = new DataTable(null, null, metadata, data, events);
+
+			viewDalis = self.tubeDalisDataTable.getView();
+
+			function changeRegime(newRegimeId, callbackCloseDialog) {
+
+				let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_LIGHTING_CHANGE_OPTION_CONFIRM_DESCRIPTION"), null, onAccept, null);
+				ms.show();
+
+				function onAccept() {
+
+					callbackCloseDialog(true);
+					let command = self.parent.config.commands.SEND_DALI_REGIME;
+					let dali = self.tubeDalis.find(d => d.id == self.tubeDalisDataTable.getSelectedItems()[0].id);
+
+					command.elementId = dali.id;
+					command.commandElementValues[0].value = newRegimeId;
+
+					util.element.sendCommand([command], function(res) {
+
+						if (res) {
+
+							(new MessageBox(MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null, null)).show();
+						}
+					});
+				}
 				}
 
 			} else {
@@ -1132,7 +1142,7 @@ export default class TubeContent {
 							function onAccept() {
 
 								let responseSend = 0;
-								let allTableItems = self.tubeCircuitsDataTable.getAllItems();
+								let allTableItems = self.tubeCircuitsDataTable ? self.tubeCircuitsDataTable.getAllItems() : [];
 
 								let circuitsOnCommand = [];
 								let circuitsOffCommand = [];
@@ -1331,106 +1341,113 @@ export default class TubeContent {
 
 		function onMessageCircuit(data) {
 
-			let oldItemData = self.tubeCircuitsDataTable.getItem(data.id);
-			let newItemData = undefined;
+			if(self.tubeCircuitsDataTable) {
 
-			if (oldItemData) {
-
-				if (data.elementTypeState) {
-
-					newItemData = webix.copy(oldItemData);
-					newItemData.state = data.elementTypeState.id;
-				}
-
-				if (Array.isArray(data.elementValues) && data.elementValues.length > 0) {
-
-					let circuitState = data.elementValues.find(e => util.element.getElementTypeParamId(e.id) == self.parent.config.params.circuitState);
-
-					if (circuitState && circuitState.value) {
-
-						if (oldItemData[self.parent.config.params.circuitState] != circuitState.value) {
-
-							if (!newItemData) {
-
-								newItemData = webix.copy(oldItemData);
-							}
-
-							newItemData[self.parent.config.params.circuitState] = circuitState.value;
-
-							let circuitStateLabel = CircuitState.find(e => e.value == circuitState.value);
-
-							if (circuitStateLabel) {
-
-								newItemData["circuitStateLabel"] = i18n.t(circuitStateLabel.label);
+				let oldItemData = self.tubeCircuitsDataTable.getItem(data.id);
+				let newItemData = undefined;
+	
+				if (oldItemData) {
+	
+					if (data.elementTypeState) {
+	
+						newItemData = webix.copy(oldItemData);
+						newItemData.state = data.elementTypeState.id;
+					}
+	
+					if (Array.isArray(data.elementValues) && data.elementValues.length > 0) {
+	
+						let circuitState = data.elementValues.find(e => util.element.getElementTypeParamId(e.id) == self.parent.config.params.circuitState);
+	
+						if (circuitState && circuitState.value) {
+	
+							if (oldItemData[self.parent.config.params.circuitState] != circuitState.value) {
+	
+								if (!newItemData) {
+	
+									newItemData = webix.copy(oldItemData);
+								}
+	
+								newItemData[self.parent.config.params.circuitState] = circuitState.value;
+	
+								let circuitStateLabel = CircuitState.find(e => e.value == circuitState.value);
+	
+								if (circuitStateLabel) {
+	
+									newItemData["circuitStateLabel"] = i18n.t(circuitStateLabel.label);
+								}
 							}
 						}
 					}
-				}
-
-				if (newItemData) {
-
-					self.tubeCircuitsDataTable.update(newItemData);
+	
+					if (newItemData) {
+	
+						self.tubeCircuitsDataTable.update(newItemData);
+					}
 				}
 			}
 		}
 
 		function onMessageDali(data) {
 
-			let oldItemData = self.tubeDalisDataTable.getItem(data.id);
-			let newItemData = undefined;
+			if(self.tubeDalisDataTable) {
 
-			if (oldItemData) {
-
-				if (data.elementTypeState) {
-
-					newItemData = webix.copy(oldItemData);
-					newItemData.state = data.elementTypeState.id;
-				}
-
-				if (Array.isArray(data.elementValues) && data.elementValues.length > 0) {
-
-					let daliState = data.elementValues.find(e => util.element.getElementTypeParamId(e.id) == self.parent.config.params.daliState);
-
-					if (daliState && daliState.value) {
-
-						if (oldItemData[self.parent.config.params.daliState] != daliState.value) {
-
-							if (!newItemData) {
-
-								newItemData = webix.copy(oldItemData);
-							}
-
-							newItemData[self.parent.config.params.daliState] = daliState.value;
-
-							if (Array.isArray(self.tubeDalis)) {
-
-								let tubeDali = self.tubeDalis.find(dali => dali.id == data.id)
-
-								if (tubeDali) {
-
-									let daliRegimeConfig = JSON.parse(tubeDali[self.parent.config.params.daliRegimeConfig]);
-
-									if (daliRegimeConfig && Array.isArray(daliRegimeConfig["regimes"])) {
-
-										let daliRegime = daliRegimeConfig["regimes"].find(e => e.id == daliState.value);
-
-										if (daliRegime) {
-
-											newItemData["daliStateAlias"] = daliRegime.alias;
+				let oldItemData = self.tubeDalisDataTable.getItem(data.id);
+				let newItemData = undefined;
+	
+				if (oldItemData) {
+	
+					if (data.elementTypeState) {
+	
+						newItemData = webix.copy(oldItemData);
+						newItemData.state = data.elementTypeState.id;
+					}
+	
+					if (Array.isArray(data.elementValues) && data.elementValues.length > 0) {
+	
+						let daliState = data.elementValues.find(e => util.element.getElementTypeParamId(e.id) == self.parent.config.params.daliState);
+	
+						if (daliState && daliState.value) {
+	
+							if (oldItemData[self.parent.config.params.daliState] != daliState.value) {
+	
+								if (!newItemData) {
+	
+									newItemData = webix.copy(oldItemData);
+								}
+	
+								newItemData[self.parent.config.params.daliState] = daliState.value;
+	
+								if (Array.isArray(self.tubeDalis)) {
+	
+									let tubeDali = self.tubeDalis.find(dali => dali.id == data.id)
+	
+									if (tubeDali) {
+	
+										let daliRegimeConfig = JSON.parse(tubeDali[self.parent.config.params.daliRegimeConfig]);
+	
+										if (daliRegimeConfig && Array.isArray(daliRegimeConfig["regimes"])) {
+	
+											let daliRegime = daliRegimeConfig["regimes"].find(e => e.id == daliState.value);
+	
+											if (daliRegime) {
+	
+												newItemData["daliStateAlias"] = daliRegime.alias;
+											}
 										}
+	
 									}
-
 								}
 							}
 						}
 					}
-				}
-
-				if (newItemData) {
-
-					self.tubeDalisDataTable.update(newItemData);
+	
+					if (newItemData) {
+	
+						self.tubeDalisDataTable.update(newItemData);
+					}
 				}
 			}
+
 		}
 	}
 
