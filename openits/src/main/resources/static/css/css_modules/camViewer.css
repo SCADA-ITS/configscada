@@ -210,6 +210,15 @@
 	cursor: pointer;
 }
 
+.cam-viewer-name-small-no-pointer {
+	height: 20px;
+}
+
+.cam-viewer-name-small-no-pointer .webix_el_box {
+	color: var(--white-text-default);
+	font-size: 10px;
+}
+
 .cam-viewer-name {
 	height: 30px;
 }
@@ -219,6 +228,15 @@
 	font-size: 20px;
 	text-decoration: underline;
 	cursor: pointer;
+}
+
+.cam-viewer-name-no-pointer {
+	height: 30px;
+}
+
+.cam-viewer-name-no-pointer .webix_el_box {
+	color: var(--white-text-default);
+	font-size: 20px;
 }
 
 .camviewer-matrix .webix_template {

@@ -491,20 +491,6 @@ export default class CamViewer {
 
 									util.element.sendCommand([sendMessageCmdCopy]);
 								}
-
-//								if (self.config.commands.lock) {
-//
-//									let body = {
-//										commands: []
-//									};
-//
-//									let sendMessageCmd = webix.copy(self.config.commands.lock);
-//
-//									sendMessageCmd.elementId = self.element.id;
-//									body.commands.push(webix.copy(sendMessageCmd));
-//
-//									webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.restEndpoints.command, body);
-//								}
 							}
 						}
 					}
@@ -1649,25 +1635,9 @@ export default class CamViewer {
 					}
 
 					let sendMessageCmdCopy = webix.copy(sendMessageCmd);
-console.log(sendMessageCmdCopy)
+					//console.log(sendMessageCmdCopy)
 					util.element.sendCommand([sendMessageCmdCopy]);
 				}
-
-//				if (self.config.commands.ptz && id) {
-//
-//					let body = {
-//						commands: []
-//					};
-//
-//					let sendMessageCmd = webix.copy(self.config.commands.ptz);
-//
-//					sendMessageCmd.elementId = self.element.id;
-//					sendMessageCmd.commandElementValues[0].value = id;
-//
-//					body.commands.push(webix.copy(sendMessageCmd));
-//
-//					webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.restEndpoints.command, body);
-//				}
 			}
 
 			function preset(id) {
@@ -1683,22 +1653,6 @@ console.log(sendMessageCmdCopy)
 
 					util.element.sendCommand([sendMessageCmdCopy]);
 				}
-				
-//				if (self.config.commands.preset && id) {
-//
-//					let body = {
-//						commands: []
-//					};
-//
-//					let sendMessageCmd = webix.copy(self.config.commands.preset);
-//
-//					sendMessageCmd.elementId = self.element.id;
-//					sendMessageCmd.commandElementValues[0].value = id;
-//
-//					body.commands.push(webix.copy(sendMessageCmd));
-//
-//					webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.restEndpoints.command, body);
-//				}
 			}
 
 			return viewCamControls;
@@ -1717,11 +1671,17 @@ console.log(sendMessageCmdCopy)
 			left: marginLeft,
 			bottom: bottom,
 			width: w / 2,
-			css: self.mode === CamViewer.MODE_SINGLE ? "cam-viewer-name" : "cam-viewer-name-small",
+			css: self.mode === CamViewer.MODE_SINGLE ? "cam-viewer-name-no-pointer" : "cam-viewer-name-small-no-pointer",
 			view: "label",
 			label: self.element.alias,
-			tooltip: i18n.t("LBL_SHOW_EQUIPMENT_INFO"),
-			on: {
+			
+		}
+		
+		if (self.mode === CamViewer.MODE_MULTI) {
+			
+			viewCamName.css = self.mode === CamViewer.MODE_SINGLE ? "cam-viewer-name" : "cam-viewer-name-small";
+			viewCamName.tooltip = i18n.t("LBL_SHOW_EQUIPMENT_INFO");
+			viewCamName.on = {
 				onItemClick: function(id) {
 
 					let module = util.module.getFromModuleAction(self.config.moduleAction.equipmentViewer);
