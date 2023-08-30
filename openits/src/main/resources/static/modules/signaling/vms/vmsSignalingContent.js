@@ -96,7 +96,7 @@ export default class VmsSignalingContent {
 			let viewHeader;
 			
 			viewHeader = {
-				hidden: self.currentCommandElement.hideTitles,
+				hidden: self.currentCommandElement && self.currentCommandElement.hideTitles,
 				cols: [
 					{
 						view: "label",
