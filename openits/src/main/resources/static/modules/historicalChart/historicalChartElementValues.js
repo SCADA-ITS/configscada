@@ -83,7 +83,9 @@ export default class HistoricalChartElementValues extends HistoricalChartGeneric
 						}
 					});
 
-					elementType.elementTypeParams.forEach(eTypeParam => {
+					let elementTypeParamsToShow = (element.elementSubtype && Array.isArray(element.elementSubtype.elementSubtypeActiveParams) && element.elementSubtype.elementSubtypeActiveParams.length > 0) ? element.elementSubtype.elementSubtypeActiveParams : elementType.elementTypeParams;
+
+					elementTypeParamsToShow.forEach(eTypeParam => {
 
 						if (eTypeParam.paramType.id === self.parent.config.paramTypeMeasure) {
 
@@ -94,6 +96,7 @@ export default class HistoricalChartElementValues extends HistoricalChartGeneric
 							});
 						}
 					});
+
 				}
 			}
 

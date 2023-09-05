@@ -9,6 +9,13 @@
   elementSubtype {
     id
     labelAlias
+    elementSubtypeActiveParams {
+        id
+        labelAlias
+        paramType {
+           id
+        }
+    }
   }
   commandElements {
     id
