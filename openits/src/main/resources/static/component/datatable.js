@@ -1,7 +1,7 @@
 import { util } from "../lib/util.js";
 import { adapter } from "../lib/adapter.js";
 import MessageBox from "./messageBox.js";
-import OptionDialogBox from "./optionDialogBox.js";
+import PrintPreview from "./printPreview.js";
 
 const EMPTY_ICON = "./img/grid/empty.png"; 
 
@@ -2844,147 +2844,29 @@ export default class DataTable {
 		let self = this;
 		let exportButton = $$("tb_btn-export-" + self.uid);
 		let grid = $$("dt-" + self.uid);
-		let gridFields = self.metadata.gridFields;
-
-		const FORMAT = {
-			PDF: 1,
-			XLS: 2
-		};
 
 		if (!webix.isUndefined(grid) && !webix.isUndefined(exportButton)) {
 
 			exportButton.attachEvent("onItemClick", function() {
 
-				let options = [
-					{
-						id: FORMAT.PDF,
-						label: i18n.t("LBL_TABLE_EXPORT_PDF"),
-						icon: "mdi mdi-file-pdf-box",
-						description: i18n.t("LBL_TABLE_EXPORT_PDF_DESCRIPTION"),
-					},
-					{
-						id: FORMAT.XLS,
-						label: i18n.t("LBL_TABLE_EXPORT_XLS"),
-						icon: "mdi mdi-file-excel",
-						description: i18n.t("LBL_TABLE_EXPORT_XLS_DESCRIPTION"),
+				let dataToPrint = [];
+
+				let options = {
+					metadata: self.metadata
+				};
+
+				grid.eachRow(function(row) {
+
+					let dat = self.data.find(d => d.id === row);
+
+					if (dat) {
+
+						dataToPrint.push(dat);
 					}
-				];
+				});
 
-				let optionDialogBox = new OptionDialogBox(i18n.t("LBL_SELECT_EXPORT_FORMAT"), options, selectOption, OptionDialogBox.MODE_TOGGLE);
-				optionDialogBox.show();
-
-				function selectOption(obj, callbackCloseDialog) {
-
-					let columns = [];
-					let dataToPrint = [];
-
-					for (let gridField of gridFields) {
-
-						if (gridField.visible) {
-
-							columns.push({
-								id: gridField.sourceField,
-								header: (gridField.label) ? i18n.t(gridField.label) : gridField.sourceField,
-								width: gridField.widthPx,
-								icons: gridField.gridFieldIcons,
-								replacementFunction: gridField.replacementFunction,
-								adjust: "data",
-								dataType: gridField.gridFieldDataType
-							});
-						}
-					}
-
-					grid.eachRow(function(row) {
-
-						let dat = grid.getItem(row);
-						let newData = {};
-
-						for (let col of columns) {
-
-							let value = dat[col.id];
-
-							if (col.replacementFunction) {
-
-								if (eval("util.datatable." + col.replacementFunction)) {
-
-									value = eval("util.datatable." + col.replacementFunction)(dat[col.id]);
-								}
-
-							} else if (col.dataType && col.dataType.id === DataType.DATE.value && value != undefined && value != null) {
-
-								value = dat[col.id].toLocaleString(i18n.getLocale(), FORMAT_NUMERIC_DATES);
-							}
-
-							if (Array.isArray(col.icons) && col.icons.length > 0) {
-
-								let dataWithIcon = col.icons.find(e => e.value == value);
-
-								if (dataWithIcon) {
-
-									value = i18n.t(dataWithIcon.labelValue); //`<img class="table-field-icons" src="${dataWithIcon.icon}">`;
-								}
-							}
-
-							newData[col.id] = (value != undefined) ? value : "-";
-						}
-
-						dataToPrint.push(newData)
-					});
-
-
-					let tableToPrint = {
-						rows: [
-							{
-								id: "toolbar-print-" + self.uid,
-								view: "toolbar",
-								elements: [
-									{
-										id: "button-print-" + self.uid,
-										view: "button",
-										type: "icon",
-										icon: "mdi mdi-printer",
-										css: "grid-button-text",
-										width: 120,
-										on: {
-											onAfterRender: function() {
-
-												if (obj == FORMAT.PDF) {
-													
-													let header = (self.metadata && self.metadata.label) ? i18n.t(self.metadata.label) : "";
-
-													webix.toPDF($$("dt-print-" + self.uid), {
-														orientation: "landscape",
-														autowidth: true,
-														docHeader: {
-															text: header,
-															textAlign: "left",
-															fontSize: 15
-														}
-													});
-
-												} else if (obj == FORMAT.XLS) {
-
-													webix.toExcel($$("dt-print-" + self.uid), { orientation: "landscape", autowidth: true });
-												}
-
-												this.getTopParentView().close();
-												callbackCloseDialog(true);
-											}
-										}
-									}
-								]
-							},
-							{
-								view: "datatable",
-								id: "dt-print-" + self.uid,
-								columns: columns,
-								data: dataToPrint
-							}
-						]
-					};
-
-					util.ui.loadWindow("", tableToPrint, 1, 1, true);
-				}
+				let printPreview = new PrintPreview(PrintPreview.TYPE_DATATABLE, dataToPrint, options);
+				printPreview.show();
 			});
 		}
 	}

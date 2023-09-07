@@ -15,6 +15,7 @@
 @import url(./css_components/splashScreen.css);
 @import url(./css_components/taskbar.css);
 @import url(./css_components/treeView.css);
+@import url(./css_components/printPreview.css);
 
 /* Libraries */
 @import url(./css_libraries/ol.css);

@@ -1,0 +1,33 @@
+.print-global-template {
+	padding: 5px;
+	width: fit-content !important;
+	height: auto !important;
+}
+
+.print-cell {	
+	height: 30px !important;
+	border: 1px solid var(--global-grey);
+	overflow: hidden;
+}
+
+.print-cell-text {
+	text-align: center;
+	overflow: hidden;
+	margin: 0px;	
+	height: inherit;
+}
+
+.print-strong-border {
+	border: 2px solid var(--strong-grey);
+	overflow: hidden;	
+	table-layout: fixed; 	
+}
+
+.print-row {
+	height: 30px !important;
+}
+
+.print-dblist {
+	box-sizing: border-box;
+	border: 1px solid var(--global-grey);
+}
