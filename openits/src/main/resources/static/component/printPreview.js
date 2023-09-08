@@ -23,7 +23,7 @@ export default class PrintPreview {
 
 		if (self.type === PrintPreview.TYPE_DATATABLE) {
 
-		let body = {};
+			let body = {};
 
 			body = {
 				cols: [
@@ -100,19 +100,29 @@ export default class PrintPreview {
 
 			function getDbList() {
 
+				let fieldsSelected = "";
 				let dbList = {};
 				let dbListDataArr = [];
 				let fields = self.options.metadata.gridFields.filter(e => e.visible);
 
 				if (Array.isArray(fields) && fields.length > 0) {
 
-					fields.forEach(field => {
+					for (let i = 0; i < fields.length; i++) {
 
 						dbListDataArr.push({
-							id: field.id,
-							value: (field.label) ? i18n.t(field.label) : field.sourceField
+							id: fields[i].id,
+							value: (fields[i].label) ? i18n.t(fields[i].label) : fields[i].sourceField
 						});
-					});
+
+						if (i === fields.length - 1) {
+
+							fieldsSelected += fields[i].id;
+
+						} else {
+
+							fieldsSelected += fields[i].id + ",";
+						}
+					}
 				}
 
 				dbList = {
@@ -139,7 +149,8 @@ export default class PrintPreview {
 									css: "dbllist",
 									labelLeft: i18n.t("LBL_AVAILABLE"),
 									labelRight: i18n.t("LBL_SELECTED"),
-									data: dbListDataArr
+									data: dbListDataArr,
+									value: fieldsSelected
 								},
 								{ height: 10 }
 							]
