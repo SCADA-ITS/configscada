@@ -9,6 +9,7 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Map;
 import java.util.Properties;
 import java.util.regex.Pattern;
 
@@ -18,13 +19,15 @@ import javax.xml.xpath.XPathFactory;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.w3c.dom.Document;
 
 import com.revenga.rits.front.openits.service.BackOfficeManager;
 import com.revenga.rits.front.openits.service.CacheManager;
 import com.revenga.rits.front.openits.service.ServerManager;
-import com.revenga.rits.front.openits.service.SessionManager;
+import com.revenga.rits.front.openits.util.ConfigProperty;
 
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
@@ -40,6 +43,9 @@ public class AppInfra {
 		
 	private static final Pattern debugPattern = Pattern.compile("-Xdebug|jdwp");
 	
+	private static final String FILE_CONFIG_PROPERTIES = "config.properties";
+	private static Map<String, String> props;
+	
 	@Getter
 	private final String version = getVer();
 	
@@ -50,13 +56,13 @@ public class AppInfra {
 	CacheManager entitiesManager;
 	
 	@Autowired
-	SessionManager sessionManager;
-	
-	@Autowired
 	ServerManager serverManager;
 	
 	@Autowired
 	BackOfficeManager backOfficeManager;
+	
+	@Autowired
+	ServerProperties serverProperties;
 	
 		
 	public static boolean isDebugging() {
@@ -79,12 +85,33 @@ public class AppInfra {
 		
 		showSplash();
 		
+		showWebserver();
+		
 		initShutdownHook();
 		
 		entitiesManager.start();
-		sessionManager.start();
 		serverManager.start();
 		backOfficeManager.start();
+	}
+	
+	public static String getProperty(String property) {
+		
+		String value = ArgumentProcessor.getInstance().getArgumentValue(property);
+		
+		if (value == null) {
+			
+			if (CollectionUtils.isEmpty(props)) {
+				
+				props = ConfigProperty.getInstance().getProperties(FILE_CONFIG_PROPERTIES);
+			}
+			
+			if (props != null) {
+				
+				value = props.get(property);
+			}
+		}
+		
+		return value;
 	}
 	
 	private void initShutdownHook() {
@@ -115,6 +142,11 @@ public class AppInfra {
 		});
 		
 		log.info("Initialized shutdown handler success");
+	}
+	
+	private void showWebserver() {
+		
+		log.info("Web server is configured in port " + serverProperties.getPort());
 	}
 
 	private void showSplash() {

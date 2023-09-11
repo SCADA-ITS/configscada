@@ -24,6 +24,7 @@ public class WebappApplication extends SpringBootServletInitializer implements A
 
 	public static void main(String[] args) {
 
+		ArgumentProcessor.getInstance().setArgs(args);
 		SpringApplication.run(WebappApplication.class, args);
 	}
 

@@ -20,8 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import com.revenga.rits.front.openits.bo.SessionBO;
 import com.revenga.rits.front.openits.model.UserSessionUI;
+import com.revenga.rits.front.openits.service.user.SessionService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -35,7 +35,7 @@ import io.swagger.annotations.ApiParam;
 public class AuthController {
 	
 	@Autowired
-	SessionBO sessionBO;
+	SessionService sessionService;
 
 	@PostMapping(value = "/login")
 	@ApiOperation(value = "login")
@@ -46,7 +46,7 @@ public class AuthController {
 		Map<String, String> headers = Collections.list(attr.getRequest().getHeaderNames()).stream()
 				.collect(Collectors.toMap(h -> h.toLowerCase(), attr.getRequest()::getHeader));
 	    
-		return new ResponseEntity<>(sessionBO.login(headers, httpSession), HttpStatus.OK);
+		return new ResponseEntity<>(sessionService.login(headers, httpSession), HttpStatus.OK);
 	}
 	
 	@PostMapping(value = "/logout")
@@ -56,7 +56,7 @@ public class AuthController {
 		ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
 		HttpSession httpSession = attr.getRequest().getSession(true);
 	    
-		return new ResponseEntity<>(sessionBO.logout(httpSession), HttpStatus.OK);
+		return new ResponseEntity<>(sessionService.logout(httpSession), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/swagger/login/{user}/{password}")
@@ -68,7 +68,7 @@ public class AuthController {
 		ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
 		HttpSession httpSession = attr.getRequest().getSession(true);
 		
-		return new ResponseEntity<>(sessionBO.login(user, password, httpSession), HttpStatus.OK);
+		return new ResponseEntity<>(sessionService.login(user, password, httpSession), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/swagger/logout")
@@ -78,7 +78,7 @@ public class AuthController {
 		ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
 		HttpSession httpSession = attr.getRequest().getSession(true);
 
-		return new ResponseEntity<>(sessionBO.logout(httpSession), HttpStatus.OK);
+		return new ResponseEntity<>(sessionService.logout(httpSession), HttpStatus.OK);
 	}
 	
 	@PostMapping(value = "/keep_alive")
@@ -90,7 +90,7 @@ public class AuthController {
 //		Map<String, String> headers = Collections.list(attr.getRequest().getHeaderNames()).stream()
 //				.collect(Collectors.toMap(h -> h, attr.getRequest()::getHeader));
 		
-		UserSessionUI userSession = sessionBO.keepAlive(httpSession);
+		UserSessionUI userSession = sessionService.keepAlive(httpSession);
 		
 		return new ResponseEntity<>(userSession, userSession != null ? HttpStatus.OK : HttpStatus.FORBIDDEN);
 	}
@@ -99,7 +99,7 @@ public class AuthController {
 	@ApiOperation(value = "sessions", notes = "Get list of active sessions")
 	public ResponseEntity<List<UserSessionUI>> getSessions() {
 		
-		List<UserSessionUI> sessions = sessionBO.getUserSessions();
+		List<UserSessionUI> sessions = sessionService.getUserSessions();
 		
 		return new ResponseEntity<>(sessions, sessions != null ? HttpStatus.OK : HttpStatus.FORBIDDEN);
 	}
@@ -108,7 +108,7 @@ public class AuthController {
 	@ApiOperation(value = "sessions", notes = "Get list of active sessions")
 	public ResponseEntity<UserSessionUI> getUserSession(@ApiParam(name = "sessionId", type = "String", value = "sessionId", example = "1234", required = true) @PathVariable String sessionId) {
 		
-		UserSessionUI session = sessionBO.getUserSession(sessionId);
+		UserSessionUI session = sessionService.getUserSession(sessionId);
 		
 		return new ResponseEntity<>(session, session != null ? HttpStatus.OK : HttpStatus.FORBIDDEN);
 	}

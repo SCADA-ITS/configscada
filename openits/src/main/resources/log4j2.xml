@@ -2,13 +2,13 @@
 <Configuration status="WARN" monitorInterval="30">
 	<Properties>
 		<Property name="LOG_PATTERN_CONSOLE">
-			%highlight{[OPENITS][%d{dd/MM/yyyy HH:mm:ss,SSS}][%-5p] - %m%n}
+			%highlight{[OPENITS][%pid][%d{dd/MM/yyyy HH:mm:ss,SSS}][%-5p] - %m%n}
 		</Property>
 		<Property name="LOG_PATTERN_DEBUG">
-			[%d{dd/MM/yyyy HH:mm:ss,SSS}][%30.30t][%-5p](%30.30F#%-4L) - %m%n
+			[%pid][%d{dd/MM/yyyy HH:mm:ss,SSS}][%30.30t][%-5p](%30.30F#%-4L) - %m%n
 		</Property>
 		<Property name="LOG_PATTERN_INFO">
-			[%d{dd/MM/yyyy HH:mm:ss,SSS}][%-5p] - %m%n
+			[%pid][%d{dd/MM/yyyy HH:mm:ss,SSS}][%-5p] - %m%n
 		</Property>
 	</Properties>
 	<Appenders>

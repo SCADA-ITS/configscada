@@ -23,6 +23,7 @@
 		<springfox-swagger2.version>2.9.2</springfox-swagger2.version>
 		<springfox-swagger-ui.version>2.9.2</springfox-swagger-ui.version>
 		<commons-collections4.version>4.4</commons-collections4.version>
+		<commons-text.version>1.10.0</commons-text.version>
 	</properties>
 
 	<dependencies>
@@ -89,6 +90,11 @@
 			<version>${commons-collections4.version}</version>
 		</dependency>
 		<dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-text</artifactId>
+		    <version>${commons-text.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 		</dependency>
@@ -118,6 +124,7 @@
 			<groupId>org.quartz-scheduler</groupId>
 			<artifactId>quartz</artifactId>
 		</dependency>
+
 	</dependencies>
 
 	<build>

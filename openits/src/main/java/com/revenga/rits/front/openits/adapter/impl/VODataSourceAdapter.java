@@ -1,6 +1,8 @@
 package com.revenga.rits.front.openits.adapter.impl;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -15,11 +17,15 @@ import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
+import com.revenga.rits.front.openits.app.AppInfra;
+import com.revenga.rits.front.openits.app.ApplicationContextProvider;
+import com.revenga.rits.front.openits.bo.GenericBO;
 import com.revenga.rits.front.openits.service.CacheManager;
-import com.revenga.rits.front.openits.util.ConfigProperty;
 import com.revenga.rits.front.openits.util.ConversionUtil;
 import com.revenga.rits.front.openitsdao.model.DataSource;
 import com.revenga.rits.front.openitsdao.model.DataSourceValue;
@@ -33,10 +39,6 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 public class VODataSourceAdapter {
 
-	protected static final String FILE_CONFIG_PROPERTIES = "config.properties";
-	
-	private static Map<String, String> props = ConfigProperty.getInstance().getProperties(FILE_CONFIG_PROPERTIES);
-	
 	public static final int DATA_SOURCE_GET_ALARMS = getPropertyInt("get_alarms");
 	public static final int DATA_SOURCE_GET_ALARMS_ARRAY = getPropertyInt("get_alarms_array");
 	public static final int DATA_SOURCE_GET_ALARMS_BY_ALARM_TYPE = getPropertyInt("get_alarms_by_alarm_type");
@@ -218,6 +220,7 @@ public class VODataSourceAdapter {
 
 	public static final int DATA_SOURCE_TYPE_GRAPHQL_QUERY = getPropertyInt("type.graphql_query");
 	public static final int DATA_SOURCE_TYPE_GRAPHQL_MUTATION = getPropertyInt("type.graphql_mutation");
+	public static final int DATA_SOURCE_TYPE_SPRING_SERVICE = getPropertyInt("type.spring_service");
 	public static final int DATA_SOURCE_GRAPHQL_QUERY_URL = getPropertyInt("graphql_query.url");
 	public static final int DATA_SOURCE_GRAPHQL_QUERY_METHOD = getPropertyInt("graphql_query.method");
 	public static final int DATA_SOURCE_GRAPHQL_QUERY_PARAMS = getPropertyInt("graphql_query.params");
@@ -227,6 +230,8 @@ public class VODataSourceAdapter {
 	public static final int DATA_SOURCE_GRAPHQL_MUTATION_PARAMS = getPropertyInt("graphql_mutation.params");
 	public static final int DATA_SOURCE_GRAPHQL_MUTATION_PARAM_TYPES = getPropertyInt("graphql_mutation.param_types");
 	public static final int DATA_SOURCE_GRAPHQL_MUTATION_CONTENT = getPropertyInt("graphql_mutation.content");
+	public static final int DATA_SOURCE_SPRING_SERVICE_CLASS = getPropertyInt("spring_service.class");
+	public static final int DATA_SOURCE_SPRING_SERVICE_METHOD = getPropertyInt("spring_service.method");
 	
 	public static final int DATA_SOURCE_SEND_CONFIRM_INCIDENT_REPORT = getPropertyInt("send_confirm_incident_report");
 	public static final int DATA_SOURCE_SEND_FORWARD_INCIDENT_REPORT = getPropertyInt("send_forward_incident_report");
@@ -299,14 +304,11 @@ public class VODataSourceAdapter {
 	
 	private static int getPropertyInt(final String prop) {
 		
-		if (!MapUtils.isEmpty(props)) {
+		String value = AppInfra.getProperty(prop);
+		
+		if (!StringUtils.isEmpty(value)) {
 			
-			String value = props.get(prop);
-			
-			if (!StringUtils.isEmpty(value)) {
-				
-				return Integer.parseInt(value);
-			}
+			return Integer.parseInt(value);
 		}
 		
 		return -1;
@@ -351,9 +353,16 @@ public class VODataSourceAdapter {
 					
 					dataSource = dataSourceService.getById(dataSourceId);
 					
-					if (dataSource != null && dataSource.getDataSourceType().getId().equals(DATA_SOURCE_TYPE_GRAPHQL_QUERY)) {
+					if (dataSource != null) {
 					
-						list = getListFromGraphql(dataSource, params);
+						if (dataSource.getDataSourceType().getId().equals(DATA_SOURCE_TYPE_GRAPHQL_QUERY)) {
+							
+							list = getListFromGraphql(dataSource, params);
+						}
+						else if (dataSource.getDataSourceType().getId().equals(DATA_SOURCE_TYPE_SPRING_SERVICE)) {
+							
+							list = getListFromSpringService(dataSource, params);
+						}
 					}
 				}
 			}
@@ -381,10 +390,19 @@ public class VODataSourceAdapter {
 		DataSource dataSource = dataSourceService.getById(dataSourceId);
 
 		try {
-			if (dataSource != null && dataSource.getDataSourceType().getId().equals(DATA_SOURCE_TYPE_GRAPHQL_QUERY)) {
+			if (dataSource != null) {
+				
+				List<Map<String, Object>> list = null;
+			
+				if (dataSource.getDataSourceType().getId().equals(DATA_SOURCE_TYPE_GRAPHQL_QUERY)) {
 
-				List<Map<String, Object>> list = getListFromGraphql(dataSource, params);
+					list = getListFromGraphql(dataSource, params);
+				}
+				else if (dataSource.getDataSourceType().getId().equals(DATA_SOURCE_TYPE_SPRING_SERVICE)) {
 
+					list = getListFromSpringService(dataSource, params);
+				}
+				
 				if (!CollectionUtils.isEmpty(list)) {
 
 					output = list.get(0);
@@ -594,6 +612,50 @@ public class VODataSourceAdapter {
 			Thread.currentThread().interrupt();
 		}
 
+		return list;
+	}
+	
+	@SuppressWarnings("unchecked")
+	private List<Map<String, Object>> getListFromSpringService(DataSource dataSource, Object[] objParamValues) {
+		
+		List<Map<String, Object>> list = null;
+		String serviceClass = null;
+		String serviceMethod = null;
+		
+		try {
+			DataSourceValue dataSourceClass = dataSource.getDataSourceValues().stream()
+					.filter(e -> e.getDataSourceParam().getId().equals(DATA_SOURCE_SPRING_SERVICE_CLASS)).findFirst()
+					.orElse(null);
+			DataSourceValue dataSourceValMethod = dataSource.getDataSourceValues().stream()
+					.filter(e -> e.getDataSourceParam().getId().equals(DATA_SOURCE_SPRING_SERVICE_METHOD)).findFirst()
+					.orElse(null);
+			
+			if (dataSourceClass != null)
+				serviceClass = dataSourceClass.getValue();
+			if (dataSourceValMethod != null)
+				serviceMethod = dataSourceValMethod.getValue();
+			
+			if (!StringUtils.isAllEmpty(serviceClass, serviceMethod)) {
+			
+				ApplicationContext context = ApplicationContextProvider.getApplicationContext();
+				
+				GenericBO genericBO = (GenericBO) context.getBean(Class.forName("com.revenga.rits.front.openits.bo." + serviceClass));
+				
+				Method method = genericBO.getClass().getMethod(serviceMethod);
+			    
+			    if (method != null) {
+			    	
+			    	list = (List<Map<String, Object>>) method.invoke(genericBO, objParamValues);
+			    }
+			}
+			
+		} catch (BeansException | ClassNotFoundException | NoSuchMethodException | SecurityException
+				| IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+			
+			log.error(e.getMessage());
+			log.debug(ExceptionUtils.getStackTrace(e));
+		}
+		
 		return list;
 	}
 

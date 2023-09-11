@@ -20,6 +20,9 @@ import com.revenga.rits.front.openitsdao.model.DataSourceValue;
 import com.revenga.rits.front.openitsdao.repository.DataSourceRepository;
 import com.revenga.rits.front.openitsdao.service.DataSourceService;
 
+import graphql.language.AstPrinter;
+import graphql.language.Document;
+import graphql.parser.Parser;
 import lombok.extern.log4j.Log4j2;
 
 @Service
@@ -80,6 +83,10 @@ public class DataSourceImpl implements DataSourceService {
 				        }
 				        
 				        graphql = sbGraphql.toString();
+				        
+				        Parser parser = new Parser();
+				        Document doc = parser.parseDocument(graphql);
+				        graphql = AstPrinter.printAstCompact(doc);
 				        
 				        graphqlMap.put(dataSource.getId(), graphql);
 				        

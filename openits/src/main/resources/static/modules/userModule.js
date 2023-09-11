@@ -824,8 +824,8 @@ export default class UserModule extends GenericModule {
 
 											systemPermissionsCopy.forEach(permission => {
 
-												let withPermission = data.find(p => p.id === permission.id);
-
+												let withPermission = (Array.isArray(data) && data.length > 0) ? data.find(p => p.id === permission.id) : undefined;
+												
 												if (!withPermission) {
 
 													dialogEntity.data.push({
@@ -985,8 +985,6 @@ export default class UserModule extends GenericModule {
 											msgboxAccept.show();
 						
 											function onAccept() {
-												
-												$$(self.args.containerId).hide();
 						
 												let values = $$(form.id).getValues();
 
@@ -1057,6 +1055,9 @@ export default class UserModule extends GenericModule {
 																}																
 															});
 														}
+														
+														$$(self.args.containerId).hide();
+														
 													} else {
 	
 														let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_REQUIRED_FIELDS_NOT_COMPLETED_DESCRIPTION"), null, null, null);

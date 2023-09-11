@@ -1,4 +1,4 @@
-package com.revenga.rits.front.openits.scheduler;
+package com.revenga.rits.front.openits.service.user;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.quartz.Job;
@@ -7,14 +7,12 @@ import org.quartz.JobExecutionException;
 import org.quartz.SchedulerContext;
 import org.quartz.SchedulerException;
 
-import com.revenga.rits.front.openits.service.SessionManager;
-
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
-public class ScheduledSessionsJob implements Job {
+public class ScheduledUsersJob implements Job {
 	
-	public ScheduledSessionsJob() {
+	public ScheduledUsersJob() {
 
 		super();
 	}
@@ -30,10 +28,10 @@ public class ScheduledSessionsJob implements Job {
 			
 			schedulerContext = context.getScheduler().getContext();
 			
-			SessionManager sessionManager = (SessionManager) schedulerContext
-					.get(SessionManager.class.getSimpleName());
+			SessionService sessionService = (SessionService) schedulerContext
+					.get(SessionService.class.getSimpleName());
 
-			sessionManager.maintenance();
+			sessionService.maintenanceSessions();
 
 			log.debug(this.getClass().getSimpleName() + "Next fire time at " + context.getNextFireTime()); ;			
 			

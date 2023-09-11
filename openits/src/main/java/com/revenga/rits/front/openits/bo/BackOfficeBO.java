@@ -21,6 +21,7 @@ import com.revenga.rits.front.openits.model.backoffice.Request;
 import com.revenga.rits.front.openits.model.backoffice.Request.RequestResult;
 import com.revenga.rits.front.openits.model.backoffice.Table;
 import com.revenga.rits.front.openits.service.BackOfficeManager;
+import com.revenga.rits.front.openits.service.user.SessionService;
 import com.revenga.rits.front.openits.util.ConversionUtil;
 import com.revenga.rits.front.openits.util.GroovyManager;
 import com.revenga.rits.front.openitsdao.model.BackOffice;
@@ -35,7 +36,7 @@ public class BackOfficeBO {
 	BackOfficeService backOfficeService;
 	
 	@Autowired
-	SessionBO sessionBO;
+	SessionService sessionService;
 	
 	@Autowired
 	GroovyManager groovyManager;
@@ -154,7 +155,7 @@ public class BackOfficeBO {
 		ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
 		HttpSession httpSession = attr.getRequest().getSession(true);
 		
-		UserSessionUI userSession = sessionBO.getUserSession(httpSession.getId());
+		UserSessionUI userSession = sessionService.getUserSession(httpSession.getId());
 		
 		if (userSession != null) {
 			

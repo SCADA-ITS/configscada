@@ -5,7 +5,6 @@ import static org.quartz.JobBuilder.newJob;
 import static org.quartz.TriggerBuilder.newTrigger;
 
 import java.util.Date;
-import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -18,17 +17,11 @@ import org.quartz.SchedulerException;
 import org.quartz.SchedulerFactory;
 import org.quartz.impl.StdSchedulerFactory;
 
-import com.revenga.rits.front.openits.util.ConfigProperty;
-
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
 public abstract class FrontManager {
 	
-	protected static final String FILE_CONFIG_PROPERTIES = "config.properties";
-	
-	protected static Map<String, String> props = ConfigProperty.getInstance().getProperties(FILE_CONFIG_PROPERTIES);
-
 	protected Scheduler scheduler;
 	protected boolean enabled;
 	protected String cronExpression;

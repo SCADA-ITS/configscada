@@ -59,6 +59,12 @@
 			<groupId>com.fasterxml.jackson.dataformat</groupId>
 			<artifactId>jackson-dataformat-xml</artifactId>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.graphql-java/graphql-java -->
+		<dependency>
+		    <groupId>com.graphql-java</groupId>
+		    <artifactId>graphql-java</artifactId>
+		    <version>21.1</version>
+		</dependency>
 	</dependencies>
 	
 	<build>

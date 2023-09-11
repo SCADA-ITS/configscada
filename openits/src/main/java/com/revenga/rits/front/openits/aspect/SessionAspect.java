@@ -16,9 +16,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import com.revenga.rits.front.openits.bo.SessionBO;
 import com.revenga.rits.front.openits.controller.AuthController;
 import com.revenga.rits.front.openits.model.UserSessionUI;
+import com.revenga.rits.front.openits.service.user.SessionService;
 
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
@@ -32,7 +32,7 @@ public class SessionAspect {
 	private static final String REST_DEBUG = "rest.debug";
 	
 	@Autowired
-	SessionBO sessionBO;
+	SessionService sessionService;
 	
 	@Autowired
 	private Environment env;
@@ -67,7 +67,7 @@ public class SessionAspect {
 			ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
 			HttpSession httpSession = attr.getRequest().getSession(true);
 
-			UserSessionUI userSession = sessionBO.keepAlive(httpSession); 
+			UserSessionUI userSession = sessionService.keepAlive(httpSession); 
 			
 			if (userSession == null || !userSession.getAccess().equals(UserSessionUI.AUTHORIZED)) {
 
@@ -94,7 +94,7 @@ public class SessionAspect {
 			
 			response = (ResponseEntity<?>) pjp.proceed();
 			
-			traceREST(attr.getRequest().getRequestURI(), response);
+			traceREST(attr.getRequest().getRequestURI(), httpSession, response);
 
 		} catch (Throwable t) {
 
@@ -108,12 +108,13 @@ public class SessionAspect {
 
 	}
 
-	private void traceREST(String request, ResponseEntity<?> response) {
+	private void traceREST(String request, HttpSession httpSession, ResponseEntity<?> response) {
 		
 		if (restDebug && request != null && response != null) {
 
 			log.debug("---------------------------------- REST DEBUG ----------------------------------");
 			log.debug("");
+			log.debug("  SESSION  >> " + httpSession.getId());
 			log.debug("  REQUEST  >> " + request);
 			log.debug("");
 			log.debug("  RESPONSE << " + response.getStatusCode());

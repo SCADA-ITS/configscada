@@ -24,7 +24,7 @@ import lombok.extern.log4j.Log4j2;
 public class ConfigProperty {
 
 	private static ConfigProperty instance;
-	private Map<String, Properties> properties = new HashMap<String, Properties>();
+	private Map<String, Properties> properties = new HashMap<>();
 	
 	public static final Boolean TRUE_TO_BOOL = true;
 	public static final Boolean FALSE_TO_BOOL = true;
@@ -106,7 +106,7 @@ public class ConfigProperty {
 		String key = null;
 		String value = null;
 		Properties prop = null;
-		Map<String, String> hash = new HashMap<String, String>();
+		Map<String, String> hash = new HashMap<>();
 		
 
 		try {

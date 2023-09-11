@@ -10,27 +10,20 @@ import org.springframework.stereotype.Service;
 
 import com.revenga.rits.front.openits.adapter.impl.VO2UIAdapter;
 import com.revenga.rits.front.openits.adapter.impl.VODataSourceAdapter;
-import com.revenga.rits.front.openits.util.ConfigProperty;
+import com.revenga.rits.front.openits.app.AppInfra;
 
 @Service
 public abstract class GenericBO {
 	
-	private static final String FILE_CONFIG_PROPERTIES = "config.properties";
-	
-	private static Map<String, String> props = ConfigProperty.getInstance().getProperties(FILE_CONFIG_PROPERTIES);
-	
 	protected static int getPropertyInt(final String prop) {
 		
-		if (!MapUtils.isEmpty(props)) {
-			
-			String value = props.get(prop);
-			
-			if (!StringUtils.isEmpty(value)) {
-				
-				return Integer.parseInt(value);
-			}
-		}
+		String value = AppInfra.getProperty(prop);
 		
+		if (!StringUtils.isEmpty(value)) {
+			
+			return Integer.parseInt(value);
+		}
+			
 		return -1;
 	}
 	

@@ -222,12 +222,17 @@ export default class CamViewer {
 					viewButtons.cols.push(viewButtonCamControls);
 				}
 				
-				let viewButtonTakeSnapshoot = getButtonTakeSnapshoot();
+				if (self.decoderType === Decoder.SNAP && 
+					self.config.camConf.decoders[self.decoderType] && 
+					self.config.camConf.decoders[self.decoderType].snapshot === true) {
 				
-				viewButtonTakeSnapshoot.height = SIZE_MULTI;
-				viewButtonTakeSnapshoot.width = SIZE_MULTI;
-				viewButtonTakeSnapshoot.css = "cam-viewer-button";
-				viewButtons.cols.push(viewButtonTakeSnapshoot);
+					let viewButtonTakeSnapshot = getButtonTakeSnapshot();
+					
+					viewButtonTakeSnapshot.height = SIZE_MULTI;
+					viewButtonTakeSnapshot.width = SIZE_MULTI;
+					viewButtonTakeSnapshot.css = "cam-viewer-button";
+					viewButtons.cols.push(viewButtonTakeSnapshot);	
+				}
 
 				if (!self.fullScreen) {
 
@@ -281,12 +286,17 @@ export default class CamViewer {
 					viewButtons.cols.push(viewButtonCamControls);
 				}
 				
-				let viewButtonTakeSnapshoot = getButtonTakeSnapshoot();
+				if (self.decoderType === Decoder.SNAP && 
+					self.config.camConf.decoders[self.decoderType] && 
+					self.config.camConf.decoders[self.decoderType].snapshot === true) {
 				
-				viewButtonTakeSnapshoot.height = SIZE_SINGLE;
-				viewButtonTakeSnapshoot.width = SIZE_SINGLE;
-				viewButtonTakeSnapshoot.css = "cam-viewer-button-small";
-				viewButtons.cols.push(viewButtonTakeSnapshoot);
+					let viewButtonTakeSnapshot = getButtonTakeSnapshot();
+				
+					viewButtonTakeSnapshot.height = SIZE_SINGLE;
+					viewButtonTakeSnapshot.width = SIZE_SINGLE;
+					viewButtonTakeSnapshot.css = "cam-viewer-button-small";
+					viewButtons.cols.push(viewButtonTakeSnapshot);		
+				}
 
 				if (!self.fullScreen) {
 
@@ -406,11 +416,11 @@ export default class CamViewer {
 				return viewButtonFullScreen;
 			}
 			
-			function getButtonTakeSnapshoot() {
+			function getButtonTakeSnapshot() {
 
-				let viewButtonTakeSnapshoot;
+				let viewButtonTakeSnapshot;
 
-				viewButtonTakeSnapshoot = {
+				viewButtonTakeSnapshot = {
 
 					view: "button",
 					type: "icon",
@@ -437,7 +447,7 @@ export default class CamViewer {
 					}
 				}
 
-				return viewButtonTakeSnapshoot;
+				return viewButtonTakeSnapshot;
 			}
 
 			function getButtonExpandCam() {

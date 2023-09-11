@@ -45,4 +45,5 @@ public class UserSessionUI implements Serializable {
 	private String access;
 	private Long validUntil;
 	private Boolean serverAvailable = true;
+	private String nodeName;
 }

@@ -37,6 +37,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import com.revenga.rits.front.openits.app.AppInfra;
 import com.revenga.rits.front.openits.backoffice.BackOfficeProcessor;
 import com.revenga.rits.front.openits.model.backoffice.Basic;
 import com.revenga.rits.front.openits.model.backoffice.CronTask;
@@ -55,9 +56,9 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 public class BackOfficeManager extends FrontManager {
 
-	private static final String BACKOFFICE_ENABLED = props.get("backoffice.enabled");
-	private static final String BACKOFFICE_SHOW_SQL = props.get("backoffice.show_sql");
-	private static final String BACKOFFICE_TRACE_TABLE = props.get("backoffice.trace_table");
+	private static final String BACKOFFICE_ENABLED = AppInfra.getProperty("backoffice.enabled");
+	private static final String BACKOFFICE_SHOW_SQL = AppInfra.getProperty("backoffice.show_sql");
+	private static final String BACKOFFICE_TRACE_TABLE = AppInfra.getProperty("backoffice.trace_table");
 	private static final String FILE_BASEDIR = "file.basedir";
 	
 	private Map<Pair<Integer, String>, Map<String, String>> translations = new HashMap<>();

@@ -31,7 +31,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import com.revenga.rits.front.openits.adapter.impl.GraphqlTypeAdapter;
-import com.revenga.rits.front.openits.adapter.impl.VODataSourceAdapter;
+import com.revenga.rits.front.openits.app.AppInfra;
 import com.revenga.rits.front.openits.model.EntityChangedUI;
 import com.revenga.rits.front.openits.model.UserSessionUI;
 import com.revenga.rits.front.openits.service.CacheManager;
@@ -93,6 +93,9 @@ public class SessionBO extends GenericBO {
 	
 	@Autowired
 	AuditLogBO auditLogBO;
+	
+	@Autowired
+	UserBO userBO;
 
 	private Map<Pair<String, String>, Integer> sessionLoginRetries;
 	private Map<String, UserSessionUI> sessions;
@@ -149,12 +152,9 @@ public class SessionBO extends GenericBO {
 		
 		if (sessions.size() < maxSessions || maxSessions == null || maxSessions <= 0) {
 			
-			List<Map<String, Object>> users = voDataSourceAdapter
-					.getList(VODataSourceAdapter.DATA_SOURCE_GET_USERS, null);
+			List<Map<String, Object>> users = userBO.getList();
 
 			if (!CollectionUtils.isEmpty(users)) {
-
-				users = vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_USERS, users);
 
 				for (Map<String, Object> u : users) {
 
@@ -165,48 +165,43 @@ public class SessionBO extends GenericBO {
 						String id = u.get(UserSessionUI.USER_FIELD_ID).toString();
 						String pwd = u.get(UserSessionUI.USER_FIELD_PASSWORD).toString();
 						
-						Map<String, Object> user = voDataSourceAdapter.get(VODataSourceAdapter.DATA_SOURCE_GET_USER, new Object[] { id });
+						Map<String, Object> user = userBO.getItem(id);
 						
 						if (user != null) {
 							
-							user = vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_USER, user);
-							
-							if (user != null) {
+							if (Boolean.parseBoolean(env.getProperty(AUTH_ENCRYPTED_PASSWORD))) {
 								
-								if (Boolean.parseBoolean(env.getProperty(AUTH_ENCRYPTED_PASSWORD))) {
+								try {
 									
-									try {
-										
-										password = AES.encrypt(password);
-										
-									} catch (Exception e) {
-										
-										log.error(e.getMessage());
-										log.debug(ExceptionUtils.getStackTrace(e));
-									}
+									password = AES.encrypt(password);
+									
+								} catch (Exception e) {
+									
+									log.error(e.getMessage());
+									log.debug(ExceptionUtils.getStackTrace(e));
 								}
+							}
 
-								if (password.equals(pwd)) {
+							if (password.equals(pwd)) {
+								
+								user.put(UserSessionUI.USER_FIELD_PASSWORD, null);
+
+								userSession.setUser(user);
+
+								setAccess(user, userSession);
+
+								if (userSession.getAccess().equals(UserSessionUI.AUTHORIZED)) {
+
+									activate(userSession);
 									
-									user.put(UserSessionUI.USER_FIELD_PASSWORD, null);
-
-									userSession.setUser(user);
-
-									setAccess(user, userSession);
-
-									if (userSession.getAccess().equals(UserSessionUI.AUTHORIZED)) {
-
-										activate(userSession);
-										
-										sendAuditLog(userSession, AUDIT_LOG_SUBTYPE_LOGIN, AuditLogLevel.INFO, null);
-									}
-									
-								} else {
-									
-									userSession.setAccess(allowLoginRetry(user, httpSession.getId())
-											? UserSessionUI.WRONG_USER_PASSWORD
-											: UserSessionUI.DENY_LOCKED);
+									sendAuditLog(userSession, AUDIT_LOG_SUBTYPE_LOGIN, AuditLogLevel.INFO, null);
 								}
+								
+							} else {
+								
+								userSession.setAccess(allowLoginRetry(user, httpSession.getId())
+										? UserSessionUI.WRONG_USER_PASSWORD
+										: UserSessionUI.DENY_LOCKED);
 							}
 						}
 						
@@ -571,12 +566,13 @@ public class SessionBO extends GenericBO {
 							if (lockedUntil == null || lockedUntil < dateLocked) {
 
 								user.put(UserSessionUI.USER_FIELD_LOCKED_UNTIL, dateLocked);
-
+								
 								Map<String, Object> input = new HashMap<>();
 
 								input.put(GraphqlTypeAdapter.USER_DATA, user);
+								
+								userBO.updateUser(input);
 
-								voDataSourceAdapter.put(VODataSourceAdapter.DATA_SOURCE_UPDATE_USER, input);
 								sessionLoginRetries.remove(new ImmutablePair<>(sessionId, userName));
 							}
 

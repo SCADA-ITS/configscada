@@ -16,8 +16,9 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.revenga.rits.front.openits.adapter.impl.GraphqlAdapter;
 import com.revenga.rits.front.openits.adapter.impl.VODataSourceAdapter;
+import com.revenga.rits.front.openits.app.AppInfra;
 import com.revenga.rits.front.openits.model.UserSessionUI;
-import com.revenga.rits.front.openits.util.ConfigProperty;
+import com.revenga.rits.front.openits.service.user.SessionService;
 
 @Service
 public class ImsIncidentReportBO extends GenericBO {
@@ -26,14 +27,10 @@ public class ImsIncidentReportBO extends GenericBO {
 	GraphqlAdapter graphqlAdapter;
 
 	@Autowired
-	SessionBO sessionBO;
+	SessionService sessionService;
 
 	@Autowired
 	UserBO userBO;
-
-	private static final String FILE_CONFIG_PROPERTIES = "config.properties";
-
-	private static Map<String, String> props = ConfigProperty.getInstance().getProperties(FILE_CONFIG_PROPERTIES);
 
 	static final String FIELD_INCIDENT_REPORT_LOGS = "incidentReportLogs";
 	static final String FIELD_INCIDENT_REPORT_ID = "incidentReportId";
@@ -49,22 +46,22 @@ public class ImsIncidentReportBO extends GenericBO {
 	static final String FIELD_ROAD_IMPACTS = "roadImpacts";
 
 	static final String VALUE_DEFAULT_LEVEL = "INFO";
-	static final String LOG_TYPE_PARAM_STATE = props.get("log_type_param_state");
-	static final String LOG_TYPE_PARAM_ARG_1 = props.get("log_type_param_arg_1");
+	static final String LOG_TYPE_PARAM_STATE = AppInfra.getProperty("log_type_param_state");
+	static final String LOG_TYPE_PARAM_ARG_1 = AppInfra.getProperty("log_type_param_arg_1");
 
-	static final String LOG_SUBTYPE_INCIDENT_REPORT_CREATED = props.get("log_subtype_incident_report_created");
-	static final String LOG_SUBTYPE_INCIDENT_REPORT_CONFIRMED = props.get("log_subtype_incident_report_confirmed");
-	static final String LOG_SUBTYPE_INCIDENT_REPORT_CHANGE_STATE = props
-			.get("log_subtype_incident_report_change_state");
-	static final String LOG_SUBTYPE_INCIDENT_REPORT_CANCELED = props.get("log_subtype_incident_report_canceled");
-	static final String LOG_SUBTYPE_ASSIGNED_USER = props.get("log_subtype_assigned_user");
-	static final String LOG_SUBTYPE_ASSIGNED_CAUSE = props.get("log_subtype_assigned_cause");
-	static final String LOG_SUBTYPE_CHANGE_ROAD_IMPACT = props.get("log_subtype_change_road_impact");
-	static final String LOG_SUBTYPE_FINALIZED_TASK = props.get("log_subtype_finalized_task");
-	static final String LOG_SUBTYPE_EXECUTED_TASK_PLAN = props.get("log_subtype_executed_task_plan");
-	static final String LOG_SUBTYPE_ATTACHED_DOCUMENT = props.get("log_subtype_attached_document");
-	static final String LOG_SUBTYPE_DELETED_DOCUMENT = props.get("log_subtype_deleted_document");
-	static final String LOG_SUBTYPE_INCIDENT_REPORT_CHANGED = props.get("log_subtype_incident_report_changed");
+	static final String LOG_SUBTYPE_INCIDENT_REPORT_CREATED = AppInfra.getProperty("log_subtype_incident_report_created");
+	static final String LOG_SUBTYPE_INCIDENT_REPORT_CONFIRMED = AppInfra.getProperty("log_subtype_incident_report_confirmed");
+	static final String LOG_SUBTYPE_INCIDENT_REPORT_CHANGE_STATE = AppInfra
+			.getProperty("log_subtype_incident_report_change_state");
+	static final String LOG_SUBTYPE_INCIDENT_REPORT_CANCELED = AppInfra.getProperty("log_subtype_incident_report_canceled");
+	static final String LOG_SUBTYPE_ASSIGNED_USER = AppInfra.getProperty("log_subtype_assigned_user");
+	static final String LOG_SUBTYPE_ASSIGNED_CAUSE = AppInfra.getProperty("log_subtype_assigned_cause");
+	static final String LOG_SUBTYPE_CHANGE_ROAD_IMPACT = AppInfra.getProperty("log_subtype_change_road_impact");
+	static final String LOG_SUBTYPE_FINALIZED_TASK = AppInfra.getProperty("log_subtype_finalized_task");
+	static final String LOG_SUBTYPE_EXECUTED_TASK_PLAN = AppInfra.getProperty("log_subtype_executed_task_plan");
+	static final String LOG_SUBTYPE_ATTACHED_DOCUMENT = AppInfra.getProperty("log_subtype_attached_document");
+	static final String LOG_SUBTYPE_DELETED_DOCUMENT = AppInfra.getProperty("log_subtype_deleted_document");
+	static final String LOG_SUBTYPE_INCIDENT_REPORT_CHANGED = AppInfra.getProperty("log_subtype_incident_report_changed");
 
 	static final String FIELD_INCIDENT_STATE = "incidentState";
 	static final String FIELD_LABEL_ALIAS = "labelAlias";
@@ -614,7 +611,7 @@ public class ImsIncidentReportBO extends GenericBO {
 
 			HttpSession httpSession = attr.getRequest().getSession(true);
 
-			UserSessionUI userSession = sessionBO.getUserSession(httpSession.getId());
+			UserSessionUI userSession = sessionService.getUserSession(httpSession.getId());
 
 			if (userSession != null
 					&& !StringUtils.isEmpty((String) userSession.getUser().get(UserSessionUI.USER_FIELD_ID))

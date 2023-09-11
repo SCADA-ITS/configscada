@@ -13,10 +13,11 @@ import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.revenga.rits.front.openits.app.AppInfra;
 import com.revenga.rits.front.openits.bo.ServerBO;
-import com.revenga.rits.front.openits.bo.SessionBO;
 import com.revenga.rits.front.openits.model.ServerTimeUI;
 import com.revenga.rits.front.openits.scheduler.ScheduledServerJob;
+import com.revenga.rits.front.openits.service.user.SessionService;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -24,10 +25,10 @@ import lombok.extern.log4j.Log4j2;
 @Service
 public class ServerManager extends FrontManager {
 	
-	private static final String SERVER_ENABLED = props.get("server.enabled");
-	private static final String SERVER_CRON = props.get("server.cron");
-	private static final String SERVER_REQUIRED_PROCCESES = props.get("server.required_processes");
-	private static final String SERVER_OPTIONAL_PROCCESES = props.get("server.optional_processes");
+	private static final String SERVER_ENABLED = AppInfra.getProperty("server.enabled");
+	private static final String SERVER_CRON = AppInfra.getProperty("server.cron");
+	private static final String SERVER_REQUIRED_PROCCESES = AppInfra.getProperty("server.required_processes");
+	private static final String SERVER_OPTIONAL_PROCCESES = AppInfra.getProperty("server.optional_processes");
 	
 	private static final long DIFF_SERVER_AND_PROCESSES_TIME_MS = 60000;
 	
@@ -43,7 +44,7 @@ public class ServerManager extends FrontManager {
 	}
 	
 	@Autowired
-	SessionBO sessionBO;
+	SessionService sessionService;
 	
 	@Override
 	protected void launchScheduled() {
@@ -76,7 +77,7 @@ public class ServerManager extends FrontManager {
 		
 		Boolean serverAvailable = checkRequiredProcesses(); 
 		
-		sessionBO.maintenanceServer(serverAvailable);
+		sessionService.maintenanceServer(serverAvailable);
 		
 		if (!serverAvailable.booleanValue()) {
 			

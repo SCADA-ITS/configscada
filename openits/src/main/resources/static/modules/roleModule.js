@@ -469,7 +469,7 @@ export default class RoleModule extends GenericModule {
 
 											systemPermissionsCopy.forEach(permission => {
 
-												let withPermission = data.find(p => p.id === permission.id);
+												let withPermission = (Array.isArray(data) && data.length > 0) ? data.find(p => p.id === permission.id) : undefined;
 
 												if (!withPermission) {
 

@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 
 import com.revenga.rits.front.openits.adapter.impl.VO2UIAdapter;
 import com.revenga.rits.front.openits.adapter.impl.VODataSourceAdapter;
+import com.revenga.rits.front.openits.app.AppInfra;
 import com.revenga.rits.front.openitsdao.model.DataSource;
 import com.revenga.rits.front.openitsdao.model.VoEntity;
 import com.revenga.rits.front.openitsdao.service.VoEntityService;
@@ -33,12 +34,12 @@ import lombok.extern.log4j.Log4j2;
 @Service
 public class CacheManager extends FrontManager {
 	
-	private static final String CACHE_ENABLED = props.get("cache.enabled");
-	private static final String CACHE_CRON = props.get("cache.cron");
+	private static final String CACHE_ENABLED = AppInfra.getProperty("cache.enabled");
+	private static final String CACHE_CRON = AppInfra.getProperty("cache.cron");
 	
-	private static final String CACHE_DATA_SOURCES = props.get("cache.datasources");
-	private static final String CACHE_RETRY_TIMES = props.get("cache.retry.times");
-	private static final String CACHE_RETRY_TIMEOUT_SECS = props.get("cache.retry.timeout_secs");
+	private static final String CACHE_DATA_SOURCES = AppInfra.getProperty("cache.datasources");
+	private static final String CACHE_RETRY_TIMES = AppInfra.getProperty("cache.retry.times");
+	private static final String CACHE_RETRY_TIMEOUT_SECS = AppInfra.getProperty("cache.retry.timeout_secs");
 	
 	@Autowired
 	VODataSourceAdapter voDataSourceAdapter;
