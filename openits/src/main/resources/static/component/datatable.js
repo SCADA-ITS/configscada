@@ -2857,7 +2857,7 @@ export default class DataTable {
 
 				grid.eachRow(function(row) {
 
-					let dat = self.data.find(d => d.id === row);
+					let dat = grid.getItem(row);
 
 					if (dat) {
 

@@ -454,7 +454,7 @@ export default class PrintPreview {
 						id: "template-" + self.uid,
 						view: "template",
 						css: "print-global-template",
-						src: self.options.templateSrc,
+						src: self.options.srcTemplate,
 						on: {
 							onAfterRender: function() {
 
@@ -523,7 +523,11 @@ export default class PrintPreview {
 					} else {
 
 						let fieldData = document.getElementById('field.' + key);
-						fieldData.innerHTML = self.data[key];
+						
+						if (fieldData) {
+
+							fieldData.innerHTML = (self.data[key]) ? self.data[key] : "";
+						}
 					}
 				}
 			}
