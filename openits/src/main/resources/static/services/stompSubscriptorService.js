@@ -1,4 +1,3 @@
-//import { util } from "../lib/util.js";
 import GenericModule from "../modules/genericModule.js";
 
 const DATASOURCE_PARAM_URL = 0;
@@ -16,7 +15,7 @@ const BROKER_TYPE = {
 
 function stompConnect(url, topic, onConnected, onMessage) {
 
-	var client = new StompJs.Client({
+	let client = new StompJs.Client({
 		brokerURL: url,
 		connectHeaders: {
 			login: "guest",
@@ -121,13 +120,12 @@ class Subscriptor {
 
 		function onConnect() {
 
-			//console.log("[StompSubscriptorService] Connected to " + self.url + self.topic);
 			log.debug("Connected to " + self.url + self.topic);
 		}
 
 		function onMessage(message) {
 
-			var data = JSON.parse(JSON.parse(message.body));
+			let data = JSON.parse(JSON.parse(message.body));
 
 			// RouteMessage
 			if (data && Array.isArray(self.clients) && self.clients.length > 0) {
@@ -158,7 +156,6 @@ class Subscriptor {
 			}
 		}
 
-		//this.stompClient = util.stomp.connect(this.url, this.topic, onConnect, onMessage);
 		this.stompClient = stompConnect(this.url, this.topic, onConnect, onMessage);
 	}
 
@@ -166,10 +163,8 @@ class Subscriptor {
 		
 		if (this.stompClient && this.stompClient.connected) {
 
-			//util.stomp.disconnect(this.stompClient);
 			stompDisconnect(this.stompClient);
 			
-			//console.log("[StompSubscriptorService] Disconnected from " + this.url + this.topic)
 			log.debug("Disconnected from " + this.url + this.topic);
 			
 			this.stompClient = undefined;
@@ -190,6 +185,7 @@ export default class StompSubscriptorService extends GenericModule {
 
 		this.module = module;
 		this.subscriptors = [];
+		this.sessionData = webix.storage.session.get(SESSION_STORAGE_SESSION_DATA);
 	}
 	
 	destroy() {
@@ -221,14 +217,15 @@ export default class StompSubscriptorService extends GenericModule {
 	}
 
 	loadData() {
-
-
-	}
+ 	
+ 		// method must be empty
+ 	}
 
 	subscribe(url, topic, callback, fields) {
 
 		let id = undefined;
-		let topicBroker = topic; 
+		let topicBroker = topic;
+		let self = this; 
 		
 		if (appConfig.brokerId) {
 			
@@ -238,6 +235,11 @@ export default class StompSubscriptorService extends GenericModule {
 				
 				topicBroker = topic.replace('.>', topicWildCard)
 			}
+		}
+		
+		if (self.sessionData && self.sessionData.managementAreaId) {
+			
+			topicBroker = topicBroker.replace ('/topic/', '/topic/' + self.sessionData.managementAreaId + '.');
 		}
 		
 		let dataSource = {
@@ -266,7 +268,6 @@ export default class StompSubscriptorService extends GenericModule {
 			id = subscriptor.register(callback, fields);
 		}
 		
-		//console.log("[StompSubscriptorService] Subscribe => Id: " + id + "; DataSource: " + JSON.stringify(dataSource) + "; Fields: " + JSON.stringify(fields));
 		log.debug("Subscribe => Id: " + id + "; DataSource: " + JSON.stringify(dataSource) + "; Fields: " + JSON.stringify(fields));
 
 		return id;
@@ -295,7 +296,6 @@ export default class StompSubscriptorService extends GenericModule {
 
 						subscriptorFound = true;
 						
-						//console.log("[StompSubscriptorService] Unsubscribe => Id: " + client.id);						
 						log.debug("Unsubscribe => Id: " + client.id);
 					}
 				}
