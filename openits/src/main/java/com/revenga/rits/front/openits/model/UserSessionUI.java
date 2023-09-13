@@ -46,4 +46,5 @@ public class UserSessionUI implements Serializable {
 	private Long validUntil;
 	private Boolean serverAvailable = true;
 	private String nodeName;
+	private String managementAreaId;
 }

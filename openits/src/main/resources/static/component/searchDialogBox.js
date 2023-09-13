@@ -573,7 +573,11 @@ export default class SearchDialogBox {
 
 			} else {
 
-				viewToolbarActions.elements.push(cancelButton);
+				if (!self.dialogEntity.required) {
+					
+					viewToolbarActions.elements.push(cancelButton);	
+				}
+				
 				viewToolbarActions.elements.push({});
 				viewToolbarActions.elements.push(acceptButton);
 			}

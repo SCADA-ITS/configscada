@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.collections4.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
@@ -17,9 +18,13 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.revenga.rits.front.openits.model.UserSessionUI;
+import com.revenga.rits.front.openits.service.user.SessionService;
 import com.revenga.rits.front.openits.util.ConversionUtil;
 
 import lombok.extern.log4j.Log4j2;
@@ -32,6 +37,8 @@ public class GraphqlAdapter {
 	
 	@Autowired
 	private Environment env;
+	
+	@Autowired SessionService sessionService;
 	
 	boolean graphqlDebug;
 	
@@ -78,9 +85,7 @@ public class GraphqlAdapter {
 				
 				//String test = "{\"query\":\"query   {\\n  getHistoricalElementStates(params:[{columnName: \\\"element_type_id\\\", operation: EQUALS, value: \\\"9\\\"}])\\n  {   element {     id   }   currentElementTypeState {     id   }   createdAt }\\n}\"}";
 				
-				HttpRequest request = HttpRequest.newBuilder().uri(URI.create(graphqlUrl))
-						.header("content-type", "application/json")
-						.method("POST", HttpRequest.BodyPublishers.ofString(body)).build();
+				HttpRequest request = getRequest(graphqlUrl, body);
 				
 				response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
 				
@@ -127,9 +132,7 @@ public class GraphqlAdapter {
 				
 				//String graphqlUrl = env.getProperty(GRAPHQL_URL); 
 				
-				HttpRequest request = HttpRequest.newBuilder().uri(URI.create(graphqlUrl))
-						.header("content-type", "application/json")
-						.method("POST", HttpRequest.BodyPublishers.ofString(body)).build();
+				HttpRequest request = getRequest(graphqlUrl, body);
 				
 				response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
 				
@@ -143,6 +146,43 @@ public class GraphqlAdapter {
 		} 
 		
 		return response != null ? response2VO(response.body(), method) : null;
+	}
+	
+	private HttpRequest getRequest(String graphqlUrl, String body) {
+		
+		HttpRequest request = null;
+		HttpSession httpSession = null;
+		
+		try {
+			
+			ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+			httpSession = attr.getRequest().getSession(true);
+			
+			if (httpSession != null) {
+				
+				UserSessionUI userSession = sessionService.getSession(httpSession.getId());
+
+				if (userSession != null && !StringUtils.isEmpty(userSession.getManagementAreaId())) {
+					
+					request = HttpRequest.newBuilder().uri(URI.create(graphqlUrl))
+							.headers("content-type", "application/json",
+									 "management-area", userSession.getManagementAreaId())
+							.method("POST", HttpRequest.BodyPublishers.ofString(body)).build();
+				}
+			}
+			
+		} catch (IllegalStateException e) {
+			
+		}
+		
+		if (request == null) {
+			
+			request = HttpRequest.newBuilder().uri(URI.create(graphqlUrl))
+					.header("content-type", "application/json")
+					.method("POST", HttpRequest.BodyPublishers.ofString(body)).build();
+		}
+		
+		return request;
 	}
 	
 	

@@ -1,6 +1,8 @@
 import { util } from "../../lib/util.js";
 import GenericControlPanel from "./genericControlPanel.js";
 import SubscriptorService from "../../services/subscriptorService.js";
+import SearchDialogBox from "../searchDialogBox.js";
+import MessageBox from "../messageBox.js";
 
 export default class UserControlPanel extends GenericControlPanel {
 
@@ -165,7 +167,7 @@ export default class UserControlPanel extends GenericControlPanel {
 								}
 							}
 						},
-												{
+						{
 							view: "label",
 							id: "user-control-panel-conflicts",
 							css: cssStyleLightCPNotification,
@@ -313,6 +315,25 @@ export default class UserControlPanel extends GenericControlPanel {
 			borderless: true
 		};
 		
+		let lblUserArea = undefined;
+		
+		if (Array.isArray(sessionData.user.managementAreas) && sessionData.user.managementAreas.length > 0) {
+			
+			if (sessionData.managementAreaId) {
+				
+				const managementArea = sessionData.user.managementAreas.find(e => e.id === sessionData.managementAreaId);
+			
+				if (managementArea) {
+					
+					lblUserArea = managementArea.alias; 
+				}	
+			}
+			else {
+				
+				lblUserArea = i18n.t("LBL_WO_MANAGEMENT_AREA");
+			}
+		}
+		
 		return webix.ui({
 			view: "popup",
 			id: "userControlPanel",
@@ -343,6 +364,98 @@ export default class UserControlPanel extends GenericControlPanel {
 						view: "label",
 						label: `<span class="user-email ${lightMode}">${userData.email}</span>`,
 						borderless: true
+					},
+					{
+						view: "label",
+						css: cssStyleLightCPNotification,
+						align: "center",
+						tooltip: i18n.t("LBL_CHANGE_MANAGEMENT_AREA"),
+						hidden: !lblUserArea,
+						width: 350,
+						height: 50,
+						label: function() {
+
+							return `<div>
+										<span class="value-event ${lightMode}">${lblUserArea}</span>
+									</div>`
+						}(),
+						on: {
+							onItemClick: function(id) {
+								
+								if (sessionData.user && Array.isArray(sessionData.user.managementAreas) && sessionData.user.managementAreas.length > 0) {
+									
+									let dialog = webix.copy(SearchDialogBox.CUSTOM);
+									let label = i18n.t("LBL_CHANGE_MANAGEMENT_AREA");
+		
+									dialog.data = [];
+		
+									dialog.pkField = "id"
+									dialog.fields = ["alias=LBL_ALIAS", "description=LBL_DESCRIPTION"];
+									dialog.height = 500;
+									dialog.width = 800;
+		
+									if (sessionData.managementAreaId) {
+										
+										dialog.data.push({
+											id: -1,
+											alias: i18n.t("LBL_WO_MANAGEMENT_AREA")
+										});	
+									}
+									
+									sessionData.user.managementAreas.sort((a, b) => (a.alias > b.alias) ? 1 : ((b.alias > a.alias) ? -1 : 0));
+										
+									sessionData.user.managementAreas.forEach(p => {
+	
+										if (sessionData.managementAreaId != p.id) {
+											dialog.data.push({
+												id: p.id,
+												alias: p.alias,
+												description: p.description
+											})	
+										}
+									});
+		
+									let s = new SearchDialogBox(label, dialog, function(items) {
+		
+										if (Array.isArray(items) && items.length === 1) {
+		
+											let item = items[0];
+		
+											if (item && item.id) {
+												
+												if (sessionData.managementAreaId != item.id) {
+													
+													let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_QUESTION_CONFIRM_CHANGE_MANAGEMENT_AREA"), null, onAccept, null);
+													ms.show();
+								
+													function onAccept() {
+								
+														webix.ajax().get(appConfig.restUrl + util.fillTemplate("auth/setManagementArea/${managementAreaId}", { managementAreaId: item.id })).then(
+															function(response) {
+																
+																if (response) {
+												
+																	let userSession = response.json();
+																	
+																	if (userSession) {
+															
+																		webix.storage.session.put(SESSION_STORAGE_SESSION_DATA, userSession);
+																		
+																		window.location = "./home.html";
+																	}
+																}
+															}
+														);
+													}
+												}
+											}
+										}
+									});
+		
+									s.show();	
+								}
+							}
+						}
 					},
 					{ height: 20 },
 					{

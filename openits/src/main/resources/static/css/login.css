@@ -112,10 +112,52 @@
 	margin: 0px !important;
 }
 
-.form-button .webix_button, .form-button .webix_button:hover, .form-button .webix_button:focus {
+.form-button .webix_button, 
+.form-button .webix_button:hover, 
+.form-button .webix_button:focus {
 	background-color: #1f3263;
 	font-size: 16px !important;	
 }
+
+.form-area-button {
+	margin: 0px !important;
+}
+
+.form-area-button .webix_button, 
+.form-area-button .webix_button:focus {
+	background-color: #29458E;
+    font-size: 16px !important;
+    border: 1px solid #2b7579;
+}
+
+.form-area-button .webix_button:hover {
+	background-color: #1f3263;
+    font-size: 16px !important;
+    border: 1px solid #155357;
+}
+
+
+.form-no-area-button {
+	margin: 0px !important;
+}
+
+.form-no-area-button .webix_button, 
+.form-no-area-button .webix_button:focus {
+    background-color: #6f6b6b;
+    font-size: 16px !important;
+    border: 1px solid #a9a9a9;
+}
+
+.form-no-area-button .webix_button:hover {
+	background-color: #505050;
+    font-size: 16px !important;
+    border: 1px solid #6f6b6b;
+}
+
+.form-area-label .webix_el_box {
+    font-size: 17px;
+  }
+
 
 .alert-text {
 	width: 328px !important;

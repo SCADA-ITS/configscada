@@ -114,6 +114,18 @@ export const CONFIG = {
 				"en-US": "Validating credentials...",
 				"es-ES": "Validando credenciales...",
 				"es-CL": "Validando credenciales..."
+			},
+			{
+				"label": "LBL_WO_MANAGEMENT_AREA",
+				"en-US": "No area",
+				"es-ES": "Ninguna",
+				"es-CL": "Ninguna"
+			},
+			{
+				"label": "LBL_SELECT_MANAGEMENT_AREA",
+				"en-US": "Select management area:",
+				"es-ES": "Seleccione un área de gestión:",
+				"es-CL": "Seleccione un área de gestión:"
 			}
 		]
 	}

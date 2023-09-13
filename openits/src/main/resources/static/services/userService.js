@@ -30,25 +30,76 @@ export default class UserService extends GenericModule {
 	
 	getView() {
 
+		let self = this;
 		let views = [];
 		let cssStyleInvertUser = (window.lightMode) ? "user-template light-templates" : "user-template";
 		let calculatedWidth;
 		let webixToolbarElem = document.querySelector('.webix_toolbar');
 		
+		let lblUserName = self.userData.name;
+		let lblUserArea = undefined;
+		
+		const sessionData = util.user.getSessionData();
+		
+		if (sessionData && sessionData.managementAreaId) {
+			
+			if (Array.isArray(sessionData.user.managementAreas)) {
+				
+				const managementArea = sessionData.user.managementAreas.find(e => e.id === sessionData.managementAreaId);
+				
+				if (managementArea) {
+					
+					lblUserArea = managementArea.alias; 
+				}
+			}
+		}
+		
 		if (webixToolbarElem) {
 			
 			let webixToolbarStyle = getComputedStyle(webixToolbarElem);
 			
-			calculatedWidth = util.ui.calculateTextWidth(this.userData.name, webixToolbarStyle.fontFamily, webixToolbarStyle.fontSize);	
+			const calculatedWidthUserName = util.ui.calculateTextWidth(lblUserName, webixToolbarStyle.fontFamily, webixToolbarStyle.fontSize);
+			
+			calculatedWidth = calculatedWidthUserName;
+			
+			if (lblUserArea) {
+				
+				const calculatedWidthUserArea = util.ui.calculateTextWidth(lblUserArea, webixToolbarStyle.fontFamily, webixToolbarStyle.fontSize);
+				
+				if (calculatedWidthUserArea > calculatedWidth) {
+					
+					calculatedWidth = calculatedWidthUserArea;
+				}	
+			}
+				
 		}
 		
-		let labelUser = { 
-			id: "label-user-service",
-			view: "label", 
-			label: this.userData.name, 
-			align: "right", 
-			maxWidth: calculatedWidth ? calculatedWidth + 15 : 350 
-		};
+//		let labelUser = { 
+//			id: "label-user-service",
+//			view: "label", 
+//			label: lblUser, 
+//			align: "right",
+//			maxWidth: calculatedWidth ? calculatedWidth + 15 : 350 
+//		};
+
+		let cssStyleInvertTimer = (window.lightMode) ? "time-template light-templates" : "time-template";
+
+		let labelUser = {
+			view: "template",
+			css: cssStyleInvertTimer,
+			maxWidth: calculatedWidth,
+			template: function() {
+				
+				let html = `<div class='toolbar-user-single' title='${lblUserName}'>${lblUserName}</div>`;
+				 
+				if (lblUserArea) {
+					
+					html = `<div class='toolbar-user' title='${lblUserName}'>${lblUserName}</div><div class='toolbar-user' title='${lblUserArea}'>${lblUserArea}</div>`;
+				}
+				
+				return html;
+			} 
+		}
 				
 		let iconUser = { 
 			id: "icon-user-service", 

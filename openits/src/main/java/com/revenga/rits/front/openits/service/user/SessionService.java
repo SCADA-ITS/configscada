@@ -406,6 +406,24 @@ public class SessionService {
 		return userSession;
 	}
 	
+	public UserSessionUI setManagementArea(String managementAreaId, HttpSession httpSession) {
+
+		UserSessionUI userSession = this.sessions.get(httpSession.getId());
+
+		if (userSession != null) {
+
+			userSession.setManagementAreaId(!StringUtils.equals(managementAreaId, "-1") ? managementAreaId : null);
+			
+			log.info("Session id " + httpSession.getId() + " by user "
+					+ userSession.getUser().get(UserSessionUI.USER_FIELD_USER) + " established management area to "
+					+ (!StringUtils.isEmpty(managementAreaId) ? managementAreaId : "undefined"));			
+			
+			this.userServer.syncSession(SessionOperation.UPDATE_SESSION, userSession);
+		} 
+
+		return userSession;
+	}
+	
 	public void maintenanceServer(Boolean available) {
 		
 		if (!MapUtils.isEmpty(this.sessions)) {

@@ -56,3 +56,26 @@
 .toolbar-time {
    text-align: center;
 }
+
+.toolbar-user {
+   text-align: center;
+   white-space: nowrap;
+   text-overflow: ellipsis;
+   overflow: hidden
+}
+
+.toolbar-user-single {
+   text-align: center;
+   white-space: nowrap;
+   text-overflow: ellipsis;
+   overflow: hidden;
+   padding-top: 8px;
+   font-size: 14px;
+}
+
+.toolbar-user {
+   text-align: center;
+   white-space: nowrap;
+   text-overflow: ellipsis;
+   overflow: hidden;
+}

@@ -48,6 +48,13 @@
 	margin-left: 10px;
 }
 
+.management-area {
+	/*width: 165px;*/
+	height: 75%; 
+	margin-top: 7px; 
+	margin-left: 10px;
+}
+
 .head-color {
 	background: var(--blue-strong);
 }

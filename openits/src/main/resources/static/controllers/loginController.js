@@ -1,4 +1,5 @@
 import { CONFIG } from "./loginController_conf.js";
+import { util } from "../lib/util.js";
 
 let uid = webix.uid();
 
@@ -338,9 +339,16 @@ function access(loginData) {
 				webix.html.addCss($$("alertText-" + uid).getNode(), "alert-text-authorized");
 				$$("alertText-" + uid).refresh();
 				
-				webix.delay(function() {
-					window.location = "./home.html";
-				}, null, null, 1000);	
+				if (Array.isArray(userData.managementAreas) && userData.managementAreas.length > 0) {
+
+					selectManagementArea(userData.managementAreas);					
+				}
+				else {
+					
+					webix.delay(function() {
+						window.location = "./home.html";
+					}, null, null, 1000);	
+				}
 			}
 			else {
 				
@@ -351,6 +359,104 @@ function access(loginData) {
 				validating(false);
 			}
 		}
+	}
+}
+
+function selectManagementArea(managementAreas) {
+	
+	if (Array.isArray(managementAreas) && managementAreas.length > 0) {
+		
+		let formManagementAreas = {
+			id: "login-form-" + uid,
+			view: "form",
+			css: "form",
+			elements: [
+				{
+					view: "label",
+					css: "form-area-label",
+					label: translateLabel("LBL_SELECT_MANAGEMENT_AREA")
+				},
+				{
+					view: "scrollview",
+					css: { "background-color" : "transparent"},
+					scroll: "auto",
+					borderless: true,
+					body: {
+						rows: getManagementAreaButtons()
+					}
+				}
+			]
+		}
+		
+		function getManagementAreaButtons() {
+			
+			let managementAreaButtons = [];
+			
+			let noManagementArea = {
+				
+				view: "button",
+				value: translateLabel("LBL_WO_MANAGEMENT_AREA"),
+				width: 260,
+				height: 42,
+				css: "form-no-area-button",
+				on: {
+					onItemClick: function() {
+
+						webix.delay(function() {
+							window.location = "./home.html";
+						}, null, null, 1000);
+					}
+				}
+			}
+			
+			managementAreaButtons.push(noManagementArea);
+			managementAreaButtons.push({ height: 7 });
+			
+			managementAreas.sort((a, b) => (a.alias > b.alias) ? 1 : ((b.alias > a.alias) ? -1 : 0));
+			
+			managementAreas.forEach(managementArea => {
+			
+				let managementAreaBtn = {
+					view: "button",
+					value: managementArea.alias,
+					tooltip: managementArea.description,
+					managementAreaId: managementArea.id, 
+					width: 260,
+					height: 42,
+					css: "form-area-button",
+					on: {
+						onItemClick: function() {
+	
+							webix.ajax().get(appConfig.restUrl + util.fillTemplate("auth/setManagementArea/${managementAreaId}", { managementAreaId: this.config.managementAreaId })).then(
+								function(response) {
+									
+									if (response) {
+					
+										let userSession = response.json();
+										
+										if (userSession) {
+								
+											webix.storage.session.put(SESSION_STORAGE_SESSION_DATA, userSession);
+											
+											window.location = "./home.html";
+										}
+									}
+								}
+							);
+						}
+					}
+				}
+				
+				managementAreaButtons.push(managementAreaBtn);
+				managementAreaButtons.push({ height: 7 });
+			});
+			
+			managementAreaButtons.push({ height: 15 });
+			
+			return managementAreaButtons;
+		}
+		
+		webix.ui(formManagementAreas, $$("login-form-" + uid));
 	}
 }
 

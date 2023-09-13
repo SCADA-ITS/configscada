@@ -44,7 +44,7 @@ public class AuthController {
 		ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
 		HttpSession httpSession = attr.getRequest().getSession(true);
 		Map<String, String> headers = Collections.list(attr.getRequest().getHeaderNames()).stream()
-				.collect(Collectors.toMap(h -> h.toLowerCase(), attr.getRequest()::getHeader));
+				.collect(Collectors.toMap(String::toLowerCase, attr.getRequest()::getHeader));
 	    
 		return new ResponseEntity<>(sessionService.login(headers, httpSession), HttpStatus.OK);
 	}
@@ -71,6 +71,17 @@ public class AuthController {
 		return new ResponseEntity<>(sessionService.login(user, password, httpSession), HttpStatus.OK);
 	}
 	
+	@GetMapping(value = "/setManagementArea/{managementAreaId}")
+	@ApiOperation(value = "swagger")
+	public ResponseEntity<UserSessionUI> setManagementArea(
+			@ApiParam(name = "managementAreaId", type = "String", value = "Management area id", example = "ManagementArea:1", required = true) @PathVariable String managementAreaId) {
+
+		ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+		HttpSession httpSession = attr.getRequest().getSession(true);
+		
+		return new ResponseEntity<>(sessionService.setManagementArea(managementAreaId, httpSession), HttpStatus.OK);
+	}
+	
 	@GetMapping(value = "/swagger/logout")
 	@ApiOperation(value = "swagger")
 	public ResponseEntity<UserSessionUI> logoutSwagger() {
@@ -87,8 +98,6 @@ public class AuthController {
 		
 		ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
 		HttpSession httpSession = attr.getRequest().getSession(true);
-//		Map<String, String> headers = Collections.list(attr.getRequest().getHeaderNames()).stream()
-//				.collect(Collectors.toMap(h -> h, attr.getRequest()::getHeader));
 		
 		UserSessionUI userSession = sessionService.keepAlive(httpSession);
 		
