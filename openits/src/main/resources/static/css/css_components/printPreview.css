@@ -1,30 +1,48 @@
-.print-global-template {
+.print-table-template {
 	padding: 5px;
 	width: fit-content !important;
 	height: auto !important;
 }
 
-.print-cell {	
-	height: 30px !important;
-	border: 1px solid var(--global-grey);
-	overflow: hidden;
-}
-
-.print-cell-text {
-	text-align: center;
-	overflow: hidden;
-	margin: 0px;	
-	height: inherit;
-}
-
-.print-strong-border {
-	border: 2px solid var(--strong-grey);
+.print-datatable {
+	font-family: monospace;
 	overflow: hidden;	
 	table-layout: fixed; 	
+	border-collapse: collapse !important;
+	min-width: 435px;
 }
 
-.print-row {
-	height: 30px !important;
+.print-data-row {
+	height: 34px;	
+}
+
+.print-head {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height: 100px;
+}
+
+.print-head-logo {
+	max-width: 200px;
+    min-width: 200px;
+}
+
+.print-head-text {
+	font-family: monospace;	
+}
+
+.print-th-headers {
+	height: 35px; 
+	text-align: left;
+	background-color: var(--blue-backcolor);
+	border-right-color: transparent; 
+	border-left-color: transparent; 	
+}
+.print-cell {	
+	overflow: hidden;
+	white-space: nowrap; 
+	text-overflow: ellipsis;
 }
 
 .print-dblist {

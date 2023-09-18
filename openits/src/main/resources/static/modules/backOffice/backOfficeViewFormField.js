@@ -132,6 +132,8 @@ export default class BackOfficeViewFormField  {
 									readonly: true, 
 									labelWidth: 275, 
 									value: referencedColumnValue.value ?? field.value, 
+									printValue: referencedColumnValue.value ?? field.value,
+									printId: field.name,
 									disabled: disabled,
 									css: "backoffice-input-readonly",
 									hidden: !visibleColumn

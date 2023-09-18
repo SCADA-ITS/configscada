@@ -5,6 +5,7 @@ import BackOfficeViewFormAttachment from "./backOfficeViewFormAttachment.js";
 import BackOfficeViewGrid from "./backOfficeViewGrid.js";
 import BackOfficeHelper from "./backOfficeHelper.js";
 import MessageBox from "../../component/messageBox.js";
+import PrintPreview from "../../component/printPreview.js";
 import { util } from "../../lib/util.js";
 
 export default class BackOfficeViewForm extends BackOfficeView {
@@ -811,6 +812,67 @@ export default class BackOfficeViewForm extends BackOfficeView {
 												}
 										},
 										{},
+										{
+											view: "button",
+											value: i18n.t("LBL_TABLE_PRINT"),
+											width: 130,
+											height: 41,
+											css: "dialog-finish",
+											hidden: (self.currentTableData.metadata && self.currentTableData.metadata.srcTemplate) ? false : true,
+											click:
+												function() {
+
+													if (self.currentTableData.metadata && self.currentTableData.metadata.srcTemplate) {
+
+														let inputData = {};
+
+														let options = {
+															srcTemplate: self.currentTableData.metadata.srcTemplate
+														};
+
+														if (Array.isArray(self.currentTableData.columns) && self.currentTableData.columns.length > 0) {
+
+															let backOfficeViewFormField = new BackOfficeViewFormField(self);
+
+															for (let column of self.currentTableData.columns) {
+
+																let val;
+																let label = column.name;
+																let input = backOfficeViewFormField.getField(column);
+
+																if (input.cols && Array.isArray(input.cols) && input.cols.length > 0) {
+
+																	let colWithPrintValue = input.cols.find(col => col.printValue);
+
+																	if (colWithPrintValue) {
+
+																		val = colWithPrintValue.printValue;
+																	}
+
+																} else {
+
+																	let col = self.currentTableData.rows[0].data.find(d => d.columnId === column.id);
+
+																	if (col) {
+
+																		val = col.value;
+																	}
+																}
+
+																inputData[label] = val;
+															}
+														}
+
+														let printPreview = new PrintPreview(PrintPreview.TYPE_TEMPLATE, inputData, options);
+														printPreview.show();
+														
+													} else {
+
+														new MessageBox(MessageBox.ERROR, i18n.t("LBL_NO_SRC_TEMPLATE_CONFIG"), null, null , null).show();
+
+													}
+												}
+										},										
 										{
 											id: "btn-accept-" + self.uid,
 											view: "button",

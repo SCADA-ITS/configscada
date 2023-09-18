@@ -37,7 +37,8 @@ const GridOptions = {
 	HEADER_ROW_HEIGHT: 22,
 	SHOW_SELECTED: 23,
 	SHOW_HEADER: 24,
-	SHOW_PRINT_EXPORT: 25
+	SHOW_PRINT: 25,
+	SHOW_EXPORT: 26
 };
 
 const RowAdjustement = {
@@ -47,7 +48,7 @@ const RowAdjustement = {
 	CUSTOM: "custom"
 };
 
-const DefOptionValues = { 1: true, 2: true, 7: true, 8: true, 9: false, 10: true, 11: true, 12: true, 13: true, 14: false, 15: false, 17: true, 20: true, 21: RowAdjustement.CUSTOM, 22: 34, 23: true, 24: true, 25: false };
+const DefOptionValues = { 1: true, 2: true, 7: true, 8: true, 9: false, 10: true, 11: true, 12: true, 13: true, 14: false, 15: false, 17: true, 20: true, 21: RowAdjustement.CUSTOM, 22: 34, 23: true, 24: true, 25: false, 26: false};
 
 const _TRUE = "true";
 const _FALSE = "false";
@@ -1113,7 +1114,8 @@ export default class DataTable {
 		let resultRefresh = this.getGridOptions(GridOptions.REFRESH_BUTTON);
 		let resultSegmented = this.getGridOptions(GridOptions.TB_MAIN_SEGMENTED);
 		let resultSelRows = this.getGridOptions(GridOptions.SHOW_SELECTED);
-		let resultPrintExport = this.getGridOptions(GridOptions.SHOW_PRINT_EXPORT);
+		let resultPrint = this.getGridOptions(GridOptions.SHOW_PRINT);
+		let resultExport = this.getGridOptions(GridOptions.SHOW_EXPORT);
 
 		let showOnlySearchBar = !resultCommons && !resultCommands && resultSearch;
 		let resultFilter = undefined;
@@ -1196,7 +1198,12 @@ export default class DataTable {
 
 			}
 
-			if(resultPrintExport){
+			if(resultPrint){
+			
+				toolbar.elements.push({ id: "tb_btn-print-" + this.uid, view: "icon", icon: "mdi mdi-printer", value: i18n.t("LBL_TABLE_PRINT"), tooltip: true });		
+			}			
+
+			if(resultExport){
 			
 				toolbar.elements.push({ id: "tb_btn-export-" + this.uid, view: "icon", icon: "mdi mdi-file-export", value: i18n.t("LBL_TABLE_EXPORT"), tooltip: true });		
 			}			
@@ -2843,11 +2850,12 @@ export default class DataTable {
 
 		let self = this;
 		let exportButton = $$("tb_btn-export-" + self.uid);
+		let printButton = $$("tb_btn-print-" + self.uid);
 		let grid = $$("dt-" + self.uid);
 
-		if (!webix.isUndefined(grid) && !webix.isUndefined(exportButton)) {
+		if (!webix.isUndefined(grid) && !webix.isUndefined(printButton)) {
 
-			exportButton.attachEvent("onItemClick", function() {
+			printButton.attachEvent("onItemClick", function() {
 
 				let dataToPrint = [];
 
@@ -2865,7 +2873,32 @@ export default class DataTable {
 					}
 				});
 
-				let printPreview = new PrintPreview(PrintPreview.TYPE_DATATABLE, dataToPrint, options);
+				let printPreview = new PrintPreview(PrintPreview.TYPE_PRINT_DATATABLE, dataToPrint, options);
+				printPreview.show();
+			});
+		}
+
+		if (!webix.isUndefined(grid) && !webix.isUndefined(exportButton)) {
+
+			exportButton.attachEvent("onItemClick", function() {
+					
+				let dataToPrint = [];
+
+				let options = {
+					metadata: self.metadata
+				};
+
+				grid.eachRow(function(row) {
+
+					let dat = grid.getItem(row);
+
+					if (dat) {
+
+						dataToPrint.push(dat);
+					}
+				});
+
+				let printPreview = new PrintPreview(PrintPreview.TYPE_EXPORT_DATATABLE, dataToPrint, options);
 				printPreview.show();
 			});
 		}

@@ -1,10 +1,21 @@
 import { util } from "../lib/util.js";
-import OptionDialogBox from "./optionDialogBox.js";
+
+const COLUMNS = {
+	MAX_COLUMN_WIDTH: 250,
+	COLUMN_WIDTH_CORRECTION: 1.1
+};
+
+const FONTS = {
+	FONT_FAMILY: "monospace",
+	FONT_SIZE: 12,
+	LETTER_SPACING: 0.2
+};
 
 export default class PrintPreview {
 
-	static get TYPE_DATATABLE() { return 1 }
-	static get TYPE_TEMPLATE() { return 2 }
+	static get TYPE_PRINT_DATATABLE() { return 1 }
+	static get TYPE_EXPORT_DATATABLE() { return 2 }
+	static get TYPE_TEMPLATE() { return 3 }
 
 	constructor(type, data, options) {
 
@@ -12,6 +23,7 @@ export default class PrintPreview {
 		this.data = data;
 		this.options = options;
 		this.fieldsSelectedIdsArr = [];
+		this.templateWinId = undefined;
 
 		this.uid = webix.uid();
 	}
@@ -21,7 +33,7 @@ export default class PrintPreview {
 		let self = this;
 		let containerId;
 
-		if (self.type === PrintPreview.TYPE_DATATABLE) {
+		if (self.type === PrintPreview.TYPE_PRINT_DATATABLE || self.type === PrintPreview.TYPE_EXPORT_DATATABLE) {
 
 			let body = {};
 
@@ -38,7 +50,7 @@ export default class PrintPreview {
 				]
 			};
 
-			containerId = util.ui.loadWindow(i18n.t("LBL_TABLE_PRINT"), body, 600, 750, true);
+			containerId = util.ui.loadWindow((self.type === PrintPreview.TYPE_PRINT_DATATABLE) ? i18n.t("LBL_TABLE_PRINT") : i18n.t("LBL_TABLE_EXPORT"), body, 600, 750, true);
 
 			webix.ui(drawDataTable(), $$(self.uid));
 			$$("view-loading-" + self.uid).hide();
@@ -52,6 +64,25 @@ export default class PrintPreview {
 		function drawDataTable() {
 
 			let viewContent = {};
+			let icon;
+			let label;
+			let labelDescription;
+			let labelAcceptButton;
+
+			if (self.type === PrintPreview.TYPE_PRINT_DATATABLE) {
+
+				icon = "img/grid/print.png";
+				label = i18n.t("LBL_SELECT_PRINT_FIELDS")
+				labelDescription = i18n.t("LBL_SELECT_PRINT_FIELDS_DESCRIPTION");
+				labelAcceptButton = i18n.t("LBL_TABLE_PRINT");
+
+			} else if (self.type === PrintPreview.TYPE_EXPORT_DATATABLE) {
+
+				icon = "img/grid/csv-export.png";
+				label = i18n.t("LBL_SELECT_EXPORT_FIELDS")
+				labelDescription = i18n.t("LBL_SELECT_EXPORT_FIELDS_DESCRIPTION");
+				labelAcceptButton = i18n.t("LBL_TABLE_EXPORT");
+			}
 
 			viewContent = {
 				id: self.uid,
@@ -80,7 +111,7 @@ export default class PrintPreview {
 					cols: [
 						{
 							view: "label",
-							label: "<img src='img/grid/print.png' class='grid-icon'/>",
+							label: "<img src='" + icon + "' class='grid-icon'/>",
 							height: 75,
 							css: "global-header-icon"
 						},
@@ -89,7 +120,7 @@ export default class PrintPreview {
 							height: 75,
 							width: 450,
 							id: "label-bottom-" + self.uid,
-							template: "<span>" + i18n.t("LBL_SELECT_FIELDS") + "</span> <br> <span style='font-size: 13px'>" + i18n.t("LBL_SELECT_FIELDS_DESCRIPTION") + "</span>",
+							template: "<span>" + label + "</span> <br> <span style='font-size: 13px'>" + labelDescription + "</span>",
 							css: "global-header-label"
 						}
 					]
@@ -132,17 +163,6 @@ export default class PrintPreview {
 						{
 							rows: [
 								{ height: 10 },
-								{
-									cols: [
-										{ width: 15 },
-										{
-											view: "label",
-											align: "center",
-											label: i18n.t("LBL_SELECT_FIELDS_DBLIST_DESCRIPTION") + " " + i18n.t(self.options.metadata.label)
-										},
-										{ width: 15 }
-									]
-								},
 								{
 									id: "view-dbllist-" + self.uid,
 									view: "dbllist",
@@ -188,7 +208,7 @@ export default class PrintPreview {
 								{},
 								{
 									view: "button",
-									value: i18n.t("LBL_ACCEPT"),
+									value: labelAcceptButton,
 									width: 130,
 									height: 41,
 									css: "dialog-accept",
@@ -219,9 +239,11 @@ export default class PrintPreview {
 
 			function createTable() {
 
+				let tableWinId;
 				let newGridFields = [];
 				let dataToPrint = [];
 				let columns = [];
+				let columnWidthMap = new Map();
 
 				for (let fieldSelectedId of self.fieldsSelectedIdsArr) {
 
@@ -237,6 +259,8 @@ export default class PrintPreview {
 
 				newGridFields.forEach(fld => {
 
+					let withIcons = (Array.isArray(fld.gridFieldIcons) && fld.gridFieldIcons.length > 0 && fld.gridFieldIcons.find(e => e.icon)) ? true : false;
+
 					let dataType = {
 						id: fld.gridFieldDataType.id,
 						type: "DataType:" + fld.gridFieldDataType.id
@@ -244,11 +268,12 @@ export default class PrintPreview {
 
 					columns.push({
 						id: fld.sourceField,
-						header: (fld.label) ? i18n.t(fld.label) : fld.sourceField,
+						header: (fld.label) ? i18n.t(fld.label) : "",
 						width: fld.widthPx,
 						icons: fld.gridFieldIcons,
 						replacementFunction: fld.replacementFunction,
-						dataType: dataType
+						dataType: dataType,
+						withIcons: withIcons
 					});
 				});
 
@@ -276,11 +301,15 @@ export default class PrintPreview {
 
 							let dataWithIcon = col.icons.find(e => e.value == value);
 
-							if (dataWithIcon) {
+							if (dataWithIcon && dataWithIcon.icon) {
 
-								if (dataWithIcon.icon) {
+								if (self.type === PrintPreview.TYPE_PRINT_DATATABLE) {
 
-									value = `<img class="table-field-icons" src="${dataWithIcon.icon}">`;//i18n.t(dataWithIcon.labelValue);									
+									value = `<img class="table-field-icons" src="${dataWithIcon.icon}">`;
+
+								} else if (self.type === PrintPreview.TYPE_EXPORT_DATATABLE) {
+
+									value = i18n.t(dataWithIcon.labelValue);
 								}
 							}
 						}
@@ -291,108 +320,76 @@ export default class PrintPreview {
 					dataToPrint.push(newData);
 				});
 
-				let tableToPrint = {
-					rows: [
-						{
-							id: "toolbar-print-" + self.uid,
-							view: "toolbar",
-							elements: [
-								{
-									id: "button-print-" + self.uid,
-									view: "button",
-									type: "icon",
-									icon: "mdi mdi-printer",
-									css: "grid-button-text",
-									width: 120,
-									on: {
-										onItemClick: function() {
+				columns.forEach(col => {
 
-											const FORMAT = {
-												PDF: 1,
-												XLS: 2
-											};
+					let characters = 0;
 
-											let options = [
-												{
-													id: FORMAT.PDF,
-													label: i18n.t("LBL_TABLE_EXPORT_PDF"),
-													icon: "mdi mdi-file-pdf-box",
-													description: i18n.t("LBL_TABLE_EXPORT_PDF_DESCRIPTION"),
-												},
-												{
-													id: FORMAT.XLS,
-													label: i18n.t("LBL_TABLE_EXPORT_XLS"),
-													icon: "mdi mdi-file-excel",
-													description: i18n.t("LBL_TABLE_EXPORT_XLS_DESCRIPTION"),
-												}
-											];
+					dataToPrint.forEach(d => {
 
-											let optionDialogBox = new OptionDialogBox(i18n.t("LBL_SELECT_EXPORT_FORMAT"), options, selectOption, OptionDialogBox.MODE_TOGGLE);
-											optionDialogBox.show();
+						if (characters < d[col.id].length) {
 
-											function selectOption(sel, callbackCloseDialog) {
+							characters = d[col.id].length;
+							columnWidthMap.set(col.id, d[col.id]);
+						}
+					});
+				});
 
-												if (sel == FORMAT.PDF) {
+				if (self.type === PrintPreview.TYPE_PRINT_DATATABLE) {
 
-													webix.print($$("dt-print-" + self.uid), { mode: "landscape" });
+					let tableToPrint = {};
 
-												} else if (sel == FORMAT.XLS) {
-
-													let downloadLink;
-													let dataType = 'application/vnd.ms-excel';
-													let tableSelect = $$("dt-print-" + self.uid).getNode().querySelector('#print-table');
-													let tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
-
-													downloadLink = document.createElement("a");
-
-													document.body.appendChild(downloadLink);
-
-													if (navigator.msSaveOrOpenBlob) {
-
-														let blob = new Blob(['\ufeff', tableHTML], {
-															type: dataType
-														});
-
-														navigator.msSaveOrOpenBlob(blob, filename);
-
-													} else {
-
-														downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
-														downloadLink.download = 'excel_data.xls';
-														downloadLink.click();
-													}
-												}
-
-												callbackCloseDialog(true);
-											}
-										}
-									}
-								}
-							]
-						},
-						{
-							id: "scroll-" + self.uid,
-							view: "scrollview",
-							scroll: "auto",
-							height: 650,
-							width: document.documentElement.clientWidth * 0.7,
-							body:
+					tableToPrint = {
+						rows: [
 							{
 								id: "dt-print-" + self.uid,
 								view: "template",
-								css: "print-global-template",
+								css: "print-table-template",
 								template: function() {
 
 									let table;
 									let tableWidth = 0;
 									let tHeaders = "";
 									let tRows = "";
+									let width;
+									let head;
+									let tableLabel = (self.options.metadata && self.options.metadata.label) ? i18n.t(self.options.metadata.label) : "";
+									let date = new Date().toLocaleString();
+
+									head = `<div class="print-head">
+											<div><img class="print-head-logo" src="./img/logo-project.svg"></div>
+											<div><span class="print-head-text">${tableLabel}</span></div>
+											<div><span class="print-head-text">${date}</span></div>
+											</div>`;
 
 									for (let col of columns) {
 
-										let th = `<th id="${col.id}" class="print-cell print-strong-border" style="width:${col.width}px !important">${col.header}</th>`;
+										if (columnWidthMap.has(col.id)) {
+
+											if (columnWidthMap.get(col.id).startsWith('<img') || col.withIcons) {
+
+												width = col.width;
+
+											} else {
+
+												let textWidth;
+												let dataWidth = util.ui.calculateTextWidth(columnWidthMap.get(col.id), FONTS.FONT_FAMILY, FONTS.FONT_SIZE, FONTS.LETTER_SPACING);
+												let headerWidth = util.ui.calculateTextWidth(col.header, FONTS.FONT_FAMILY, FONTS.FONT_SIZE, FONTS.LETTER_SPACING);
+
+												textWidth = (headerWidth > dataWidth) ? headerWidth : dataWidth;
+
+												width = (textWidth > COLUMNS.MAX_COLUMN_WIDTH) ? COLUMNS.MAX_COLUMN_WIDTH : textWidth;
+											}
+										} else {
+
+											let headerTextWidth = util.ui.calculateTextWidth(col.header, FONTS.FONT_FAMILY, FONTS.FONT_SIZE, FONTS.LETTER_SPACING);
+											let headerWidth = (headerTextWidth > col.width) ? headerTextWidth : col.width;
+
+											width = (headerWidth > COLUMNS.MAX_COLUMN_WIDTH) ? COLUMNS.MAX_COLUMN_WIDTH : headerWidth;
+										}
+
+										let th = `<th id="${col.id}" class="print-th-headers" style="width:${width * COLUMNS.COLUMN_WIDTH_CORRECTION}px !important; font-size: ${FONTS.FONT_SIZE}px;">${col.header}</th>`;
 										tHeaders += th;
-										tableWidth = tableWidth + col.width;
+										tableWidth = tableWidth + width;
 									}
 
 									for (let j = 0; j < dataToPrint.length; j++) {
@@ -401,34 +398,65 @@ export default class PrintPreview {
 
 										for (let dat in dataToPrint[j]) {
 
-											let td = `<td class="print-cell"><p class="print-cell-text">${dataToPrint[j][dat]}</p></td>`;
+											let td = `<td><div class="print-cell" style="font-size: ${FONTS.FONT_SIZE}px;">${dataToPrint[j][dat]}</div></td>`;
 											tDatas += td;
 										}
 
-										tRows += `<tr id="row${j}" class="print-row">${tDatas}</tr>`;
+										let oddBackground = (j % 2) ? "#f5f5fa" : "";
+
+										tRows += `<tr id="row${j}" class="print-data-row" style="background-color: ${oddBackground}">${tDatas}</tr>`;
 									}
 
-									table = `<table id="print-table" class="print-strong-border" style="width:${tableWidth}px">
-											<thead>
-											<tr id="print-headers">${tHeaders}</tr>										
-										    </thead>
-											<tbody id="print-body">${tRows}</tbody>										
-										</table>`;
+									table = `${head}
+											 <table id="print-table" class="print-datatable" style="width: ${tableWidth}px">
+											 <thead style="print-header-bk">
+											 <tr id="print-headers">${tHeaders}</tr>										
+									  	     </thead>
+											 <tbody id="print-body">${tRows}</tbody>										
+										     </table>`;
 
 									return table;
 								}()
 							}
-						}
-					]
-				};
+						]
+					};
 
-				util.ui.loadWindow(i18n.t("LBL_TABLE_PRINT"), tableToPrint, 750, document.documentElement.clientWidth * 0.85, true);
+					tableWinId = util.ui.loadWindow(i18n.t("LBL_TABLE_PRINT"), tableToPrint, 1, 1, false);
+
+					if (tableWinId) {
+
+						webix.print($$("dt-print-" + self.uid), { mode: "landscape" });
+						$$(tableWinId).close();
+					}
+
+				} else if (self.type === PrintPreview.TYPE_EXPORT_DATATABLE) {
+
+					let tableToExport = {};
+
+					tableToExport = {
+						id: "dt-export-" + self.uid,
+						view: "datatable",
+						columns: columns,
+						data: dataToPrint
+					};
+
+					tableWinId = util.ui.loadWindow(i18n.t("LBL_TABLE_EXPORT"), tableToExport, 1, 1, false);
+
+					if (tableWinId) {
+
+						webix.toCSV($$("dt-export-" + self.uid), { filname: "table_csv" });
+						$$(tableWinId).close();
+					}
+				}
 			}
 		}
 
 		function drawTemplate() {
 
-			let templateToPrint = {
+			let withTable = false;
+			let templateToPrint = {};
+
+			templateToPrint = {
 				rows: [
 					{
 						id: "toolbar-print-" + self.uid,
@@ -453,12 +481,21 @@ export default class PrintPreview {
 					{
 						id: "template-" + self.uid,
 						view: "template",
-						css: "print-global-template",
 						src: self.options.srcTemplate,
 						on: {
 							onAfterRender: function() {
 
 								createReport();
+
+								let templateHTML = document.getElementById('template');
+								let printTable = document.getElementById('print-table');
+								util.ui.resizeWindow(self.templateWinId, templateHTML.clientWidth, 750);
+								util.ui.centerWindow(self.templateWinId);
+
+								if (!withTable && printTable) {
+
+									printTable.style.display = 'none';
+								}
 							}
 						}
 					}
@@ -480,6 +517,7 @@ export default class PrintPreview {
 
 						if (HTMLtable) {
 
+							withTable = true;
 							let tableHeaders = Object.keys(val[0]);
 							let tableHeader = document.createElement("tr");
 
@@ -523,7 +561,7 @@ export default class PrintPreview {
 					} else {
 
 						let fieldData = document.getElementById('field.' + key);
-						
+
 						if (fieldData) {
 
 							fieldData.innerHTML = (self.data[key]) ? self.data[key] : "";
@@ -532,7 +570,7 @@ export default class PrintPreview {
 				}
 			}
 
-			util.ui.loadWindow(i18n.t("LBL_TABLE_PRINT"), templateToPrint, 750, 1200, true);
+			self.templateWinId = util.ui.loadWindow(i18n.t("LBL_TABLE_PRINT"), templateToPrint, 750, 1200, true);
 		}
 	}
 }
