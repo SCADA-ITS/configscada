@@ -81,7 +81,7 @@ export default class PrintPreview {
 				icon = "img/grid/csv-export.png";
 				label = i18n.t("LBL_SELECT_EXPORT_FIELDS")
 				labelDescription = i18n.t("LBL_SELECT_EXPORT_FIELDS_DESCRIPTION");
-				labelAcceptButton = i18n.t("LBL_TABLE_EXPORT");
+				labelAcceptButton = i18n.t("LBL_EXPORT");
 			}
 
 			viewContent = {
@@ -259,22 +259,23 @@ export default class PrintPreview {
 
 				newGridFields.forEach(fld => {
 
-					let withIcons = (Array.isArray(fld.gridFieldIcons) && fld.gridFieldIcons.length > 0 && fld.gridFieldIcons.find(e => e.icon)) ? true : false;
+					if (fld.widthPx > 1 && label != "") {
 
-					let dataType = {
-						id: fld.gridFieldDataType.id,
-						type: "DataType:" + fld.gridFieldDataType.id
-					};
+						let dataType = {
+							id: fld.gridFieldDataType.id,
+							type: "DataType:" + fld.gridFieldDataType.id
+						};
 
-					columns.push({
-						id: fld.sourceField,
-						header: (fld.label) ? i18n.t(fld.label) : "",
-						width: fld.widthPx,
-						icons: fld.gridFieldIcons,
-						replacementFunction: fld.replacementFunction,
-						dataType: dataType,
-						withIcons: withIcons
-					});
+						columns.push({
+							id: fld.sourceField,
+							header: (fld.label) ? i18n.t(fld.label) : "",
+							width: fld.widthPx,
+							icons: fld.gridFieldIcons,
+							replacementFunction: fld.replacementFunction,
+							references: fld.gridFieldReferences,
+							dataType: dataType
+						});
+					}
 				});
 
 				self.data.forEach(dat => {
@@ -291,8 +292,28 @@ export default class PrintPreview {
 
 								value = eval("util.datatable." + col.replacementFunction)(dat[col.id]);
 							}
+						}
 
-						} else if (col.dataType && col.dataType.type === DataType.TIMESTAMP && value != undefined && value != null) {
+						if (col.references != undefined && col.references.length > 0) {
+
+							let gridFieldReference = col.references[0];
+							let refField = self.options.metadata.gridFields.filter(e => e.id == gridFieldReference.refFieldId);
+
+							if (refField != undefined) {
+
+								value = window.em.getByField(EntityType[gridFieldReference.emId], gridFieldReference.emField, dat[refField[0].sourceField]);
+								value = value[gridFieldReference.emFieldReturned];
+
+								if (col.needsTranslation) {
+
+									value = i18n.t(value);
+
+									dat[field.id] = value;
+								}
+							}
+						}
+
+						if (col.dataType && col.dataType.type === DataType.TIMESTAMP && value != undefined && value != null && dat[col.id]) {
 
 							value = dat[col.id].toLocaleString(i18n.getLocale(), FORMAT_NUMERIC_DATES);
 						}
@@ -365,7 +386,7 @@ export default class PrintPreview {
 
 										if (columnWidthMap.has(col.id)) {
 
-											if (columnWidthMap.get(col.id).startsWith('<img') || col.withIcons) {
+											if (columnWidthMap.get(col.id).startsWith('<img')) {
 
 												width = col.width;
 
