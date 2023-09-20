@@ -839,6 +839,57 @@ export default class BackOfficeViewForm extends BackOfficeView {
 																let val;
 																let label = column.name;
 																let input = backOfficeViewFormField.getField(column);
+																																
+																if (Array.isArray(self.currentTableData.referTableNames) && self.currentTableData.referTableNames.length > 0) {
+
+																	const columnId = self.currentTableData.columns.find(e => e.name === 'id');
+
+																	if (columnId) {
+
+																		self.currentTableData.referTableNames.forEach(referTableName => {
+
+																			const referTable = self.data.find(e => e.name === referTableName);
+
+																			if (referTable) {
+
+																				let tableArr = [];
+
+																				if (Array.isArray(referTable.rows) && referTable.rows.length > 0) {
+
+																					for (let row of referTable.rows) {
+
+																						let aux = {}
+
+																						for (let dat of row.data) {
+
+																							let d = referTable.columns.find(e => e.id === dat.columnId);
+
+																							if (d) {
+
+																								aux[d.name] = dat.value;
+																							}
+																						}
+
+																						tableArr.push(aux);
+																					}
+																				
+																				} else {
+																					
+																					let aux = {};
+																					
+																					for (let col of referTable.columns){
+																						
+																						aux[col.name] = undefined;																							
+																					}	
+																					
+																					tableArr.push(aux);																				
+																				}
+
+																				inputData[referTable.name] = tableArr;
+																			}
+																		});
+																	}
+																}									
 
 																if (input.cols && Array.isArray(input.cols) && input.cols.length > 0) {
 
@@ -862,7 +913,7 @@ export default class BackOfficeViewForm extends BackOfficeView {
 																inputData[label] = val;
 															}
 														}
-
+														
 														let printPreview = new PrintPreview(PrintPreview.TYPE_TEMPLATE, inputData, options);
 														printPreview.show();
 														

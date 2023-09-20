@@ -11,6 +11,8 @@ const FONTS = {
 	LETTER_SPACING: 0.2
 };
 
+const SRC_TEMPLATE = "./templates/";
+
 export default class PrintPreview {
 
 	static get TYPE_PRINT_DATATABLE() { return 1 }
@@ -259,23 +261,20 @@ export default class PrintPreview {
 
 				newGridFields.forEach(fld => {
 
-					if (fld.widthPx > 1 && label != "") {
+					let dataType = {
+						id: fld.gridFieldDataType.id,
+						type: "DataType:" + fld.gridFieldDataType.id
+					};
 
-						let dataType = {
-							id: fld.gridFieldDataType.id,
-							type: "DataType:" + fld.gridFieldDataType.id
-						};
-
-						columns.push({
-							id: fld.sourceField,
-							header: (fld.label) ? i18n.t(fld.label) : "",
-							width: fld.widthPx,
-							icons: fld.gridFieldIcons,
-							replacementFunction: fld.replacementFunction,
-							references: fld.gridFieldReferences,
-							dataType: dataType
-						});
-					}
+					columns.push({
+						id: fld.sourceField,
+						header: (fld.label) ? i18n.t(fld.label) : "",
+						width: fld.widthPx,
+						icons: fld.gridFieldIcons,
+						replacementFunction: fld.replacementFunction,
+						references: fld.gridFieldReferences,
+						dataType: dataType
+					});
 				});
 
 				self.data.forEach(dat => {
@@ -430,7 +429,7 @@ export default class PrintPreview {
 
 									table = `${head}
 											 <table id="print-table" class="print-datatable" style="width: ${tableWidth}px">
-											 <thead style="print-header-bk">
+											 <thead>
 											 <tr id="print-headers">${tHeaders}</tr>										
 									  	     </thead>
 											 <tbody id="print-body">${tRows}</tbody>										
@@ -474,7 +473,6 @@ export default class PrintPreview {
 
 		function drawTemplate() {
 
-			let withTable = false;
 			let templateToPrint = {};
 
 			templateToPrint = {
@@ -500,24 +498,31 @@ export default class PrintPreview {
 						]
 					},
 					{
-						id: "template-" + self.uid,
-						view: "template",
-						src: self.options.srcTemplate,
-						on: {
-							onAfterRender: function() {
+						id: "scroll-" + self.uid,
+						view: "scrollview",
+						scroll: "auto",
+						width: document.documentElement.clientWidth * 0.7,
+						body:
+						{
+							rows: [
+								{
+									id: "template-" + self.uid,
+									view: "template",
+									src: SRC_TEMPLATE + self.options.srcTemplate,
+									autoheight: true,
+									on: {
+										onAfterRender: function() {
 
-								createReport();
+											createReport();
 
-								let templateHTML = document.getElementById('template');
-								let printTable = document.getElementById('print-table');
-								util.ui.resizeWindow(self.templateWinId, templateHTML.clientWidth, 750);
-								util.ui.centerWindow(self.templateWinId);
+											let templateHTML = document.getElementById('template');
 
-								if (!withTable && printTable) {
-
-									printTable.style.display = 'none';
+											util.ui.resizeWindow(self.templateWinId, templateHTML.clientWidth, 750);
+											util.ui.centerWindow(self.templateWinId);
+										}
+									}
 								}
-							}
+							]
 						}
 					}
 				]
@@ -525,6 +530,7 @@ export default class PrintPreview {
 
 			function createReport() {
 
+				let numOfTable = 0;
 				let HTMLTemplate = $$("template-" + self.uid).getNode();
 				let keys = Object.keys(self.data);
 
@@ -534,47 +540,41 @@ export default class PrintPreview {
 
 					if (Array.isArray(val) && val.length > 0) {
 
-						let HTMLtable = HTMLTemplate.querySelector("#print-table");
+						let tableToCreate = document.getElementById('field.' + key);
 
-						if (HTMLtable) {
+						if (tableToCreate) {
 
-							withTable = true;
-							let tableHeaders = Object.keys(val[0]);
-							let tableHeader = document.createElement("tr");
+							numOfTable++;
+							let tableTitle = document.createElement("caption");
 
-							HTMLtable.appendChild(tableHeader);
-							tableHeader.setAttribute("id", "headers");
+							tableToCreate.appendChild(tableTitle);
+							tableTitle.setAttribute("id", "title" + numOfTable);
 
-							let HTMLheaders = HTMLTemplate.querySelector("#headers");
+							let HTMLtitle = HTMLTemplate.querySelector("#title" + numOfTable);
 
-							for (let header of tableHeaders) {
-
-								let th = document.createElement("th");
-
-								HTMLheaders.appendChild(th);
-								th.innerHTML = header;
-								th.classList.add("print-cell", "print-strong-border");
-								th.setAttribute("id", header);
-								th.setAttribute("width", "200px");
-							}
+							HTMLtitle.innerHTML = key;
 
 							for (let j = 0; j < val.length; j++) {
 
 								let tr = document.createElement("tr");
 
-								HTMLtable.appendChild(tr);
+								tableToCreate.appendChild(tr);
 								tr.setAttribute("id", "row" + j);
 
 								for (let header in val[j]) {
 
-									let cell = document.createElement("td");
-									let paragraph = document.createElement("p");
+									let th = document.getElementById('field.' + key + "." + header);
 
-									cell.appendChild(paragraph);
-									tr.appendChild(cell);
-									paragraph.innerHTML = val[j][header];
-									cell.className = "print-cell";
-									paragraph.className = "print-cell-text";
+									if (th) {
+
+										let cell = document.createElement("td");
+										let paragraph = document.createElement("p");
+
+										cell.appendChild(paragraph);
+										tr.appendChild(cell);
+										th.innerHTML = header;
+										paragraph.innerHTML = (val[j][header]) ? val[j][header] : "";
+									}
 								}
 							}
 						}
