@@ -29,6 +29,9 @@ public class MenuItem implements Serializable {
 	private String label;
 
 	private String name;
+	
+	@Column(name="management_areas")
+	private String managementAreas;
 
 	private Integer position;
 
@@ -95,6 +98,14 @@ public class MenuItem implements Serializable {
 		this.name = name;
 	}
 
+	public String getManagementAreas() {
+		return this.managementAreas;
+	}
+
+	public void setManagementAreas(String managementAreas) {
+		this.managementAreas = managementAreas;
+	}
+	
 	public Integer getPosition() {
 		return this.position;
 	}

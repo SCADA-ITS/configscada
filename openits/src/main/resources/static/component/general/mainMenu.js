@@ -7,6 +7,7 @@ export default class MainMenu {
 		this.onLoadMainMenu = onLoadMainMenu;
 		this.menuToolbar = menuToolbar;
 		this.menus = undefined;
+		this.sessionData = webix.storage.session.get(SESSION_STORAGE_SESSION_DATA);
 		
 		this.loadMenus();
 	}
@@ -90,6 +91,7 @@ export default class MainMenu {
 
 		let self = this;
 		let menuResponse = [];
+		let managementAreasEnables = (self.sessionData.managementAreaId) ?? undefined;  
 
 		if (Array.isArray(self.menus)) {
 
@@ -115,38 +117,66 @@ export default class MainMenu {
 	
 						submenus.forEach(submenu => {
 							
-							if (submenu.enabled !== false) {
+							let managementAreas = undefined;
+
+							if (submenu.managementAreas) {
+
+								try {
+
+									managementAreas = JSON.parse(submenu.managementAreas);
+
+								} catch (e) {
+
+								}
+							}
+
+							if (managementAreasEnables) {
+
+								if (managementAreas && (managementAreas.find(id => id === managementAreasEnables)) && (submenu.enabled !== false)) {
+
+									addSubMenus();
+								}
 								
-								var mainSubmenu = {};
+							} else {
+
+								if (managementAreas === undefined) {
+
+									addSubMenus();
+								}
+							}	
 							
+							function addSubMenus() {
+
+								var mainSubmenu = {};
+
 								if (submenu.module) {
-									
+
 									if (util.module.isAllowedModule(window.em.getAll(EntityType.MODULE), submenu.module.id)) {
-										
+
 										mainSubmenu.id = mainMenu.id + "." + submenu.id;
 										mainSubmenu.value = i18n.t(submenu.label);
 										mainSubmenu.moduleId = submenu.module.id;
-										mainSubmenu.icon = submenu.icon;	
+										mainSubmenu.icon = submenu.icon;
 										mainMenu.submenu.push(mainSubmenu);
 									}
-									
+
 								} else {
-									
+
 									mainSubmenu.$template = "Separator";
 									mainMenu.submenu.push(mainSubmenu);
-								}	
-							}
+								}
+							}																															
 						});
 					}
 	
 					if (mainMenu.submenu.length > 0) {
 	
 						menuResponse.push(mainMenu);
-					}	
+					}								
 				}
 			});
 		}
-
+		
 		return menuResponse;
 	}
 }
