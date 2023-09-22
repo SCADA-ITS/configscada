@@ -865,8 +865,9 @@ export default class BackOfficeViewForm extends BackOfficeView {
 																							let d = referTable.columns.find(e => e.id === dat.columnId);
 
 																							if (d) {
-
-																								aux[d.name] = dat.value;
+																								
+																								let referencedColumnValue = BackOfficeHelper.getReferencedColumnValue(d, dat.value, self.data);
+																								aux[d.name] = (referencedColumnValue && referencedColumnValue.value) ? referencedColumnValue.value : dat.value;
 																							}
 																						}
 
