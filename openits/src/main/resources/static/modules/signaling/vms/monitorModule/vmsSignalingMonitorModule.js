@@ -385,16 +385,19 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 					}
 				}
 
-				let firstVirtualId = self.treeViewsArr[self.treeViewsArr.length - 1].data[0].id_;
+				if (Array.isArray(elementsWithoutTree) && elementsWithoutTree.length > 0) {
 
-				options.push({
-					id: "virtual-" + self.uid + "_" + self.treeViewsArr[self.treeViewsArr.length - 1].uid,
-					firstId: firstVirtualId,
-					value: `<div id='${"virtual-" + self.uid + "_" + self.treeViewsArr[self.treeViewsArr.length - 1].uid}' title='${i18n.t("LBL_VIRTUAL")}' style='text-align: center; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;'>
+					let firstVirtualId = self.treeViewsArr[self.treeViewsArr.length - 1].data[0].id_;
+
+					options.push({
+						id: "virtual-" + self.uid + "_" + self.treeViewsArr[self.treeViewsArr.length - 1].uid,
+						firstId: firstVirtualId,
+						value: `<div id='${"virtual-" + self.uid + "_" + self.treeViewsArr[self.treeViewsArr.length - 1].uid}' title='${i18n.t("LBL_VIRTUAL")}' style='text-align: center; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;'>
 							   <span class='ico webix_icon mdi mdi-family-tree'></span>
 							   <span>${i18n.t("LBL_VIRTUAL")}</span>
 						    </div>`
-				});
+					});
+				}
 
 				switcherButtonsView = {
 					css: { "background-color": "var(--blue-soft-opacity-1)" },
