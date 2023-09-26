@@ -865,12 +865,29 @@ export default class BackOfficeViewForm extends BackOfficeView {
 																							let d = referTable.columns.find(e => e.id === dat.columnId);
 
 																							if (d) {
-																								
+
+																								let lab;
+																								let referencedColumnName = BackOfficeHelper.getReferencedColumnName(d, self.data);
 																								let referencedColumnValue = BackOfficeHelper.getReferencedColumnValue(d, dat.value, self.data);
-																								aux[d.name] = (referencedColumnValue && referencedColumnValue.value) ? referencedColumnValue.value : dat.value;
+																								
+																								if (referencedColumnName) {
+
+																									let table = self.data.find(e => e.id === referencedColumnName.tableId);
+
+																									if (table) {
+
+																										lab = table.labelSingular ?? (table.label ?? table.name);
+																									}
+																								}
+																								
+																								aux[d.name] = {
+																									value: (referencedColumnValue && referencedColumnValue.value) ? referencedColumnValue.value : dat.value,
+																									header: lab ?? d.name
+																								};
 																							}
 																						}
-
+																						
+																						aux["caption"] = referTable.label;
 																						tableArr.push(aux);
 																					}
 																				
@@ -883,6 +900,7 @@ export default class BackOfficeViewForm extends BackOfficeView {
 																						aux[col.name] = undefined;																							
 																					}	
 																					
+																					aux["caption"] = referTable.label;
 																					tableArr.push(aux);																				
 																				}
 

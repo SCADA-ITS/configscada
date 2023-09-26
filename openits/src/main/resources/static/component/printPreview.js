@@ -552,7 +552,7 @@ export default class PrintPreview {
 
 							let HTMLtitle = HTMLTemplate.querySelector("#title" + numOfTable);
 
-							HTMLtitle.innerHTML = key;
+							HTMLtitle.innerHTML = val[0].caption;
 
 							for (let j = 0; j < val.length; j++) {
 
@@ -561,9 +561,9 @@ export default class PrintPreview {
 								tableToCreate.appendChild(tr);
 								tr.setAttribute("id", "row" + j);
 
-								for (let header in val[j]) {
+								for (let id in val[j]) {
 
-									let th = document.getElementById('field.' + key + "." + header);
+									let th = document.getElementById('field.' + key + "." + id);
 
 									if (th) {
 
@@ -572,8 +572,8 @@ export default class PrintPreview {
 
 										cell.appendChild(paragraph);
 										tr.appendChild(cell);
-										th.innerHTML = header;
-										paragraph.innerHTML = (val[j][header]) ? val[j][header] : "";
+										th.innerHTML = (val[j][id] && val[j][id].header) ? val[j][id].header : "";
+										paragraph.innerHTML = (val[j][id] && val[j][id].value) ? val[j][id].value : "";
 									}
 								}
 							}
