@@ -28,6 +28,7 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 public class UserManager {
 
+	private static final Boolean USERMGR_ENABLED = Boolean.valueOf(AppInfra.getProperty("usermgr.enabled"));
 	private static final String USERMGR_SQL_JDBC = AppInfra.getProperty("usermgr.sql.jdbc");
 	private static final String USERMGR_SQL_USER = AppInfra.getProperty("usermgr.sql.user");
 	private static final String USERMGR_SQL_PASSWORD = AppInfra.getProperty("usermgr.sql.password");
@@ -42,7 +43,7 @@ public class UserManager {
 		
 		try {
 			
-			if (this.conn == null || this.conn.isClosed()) {
+			if (USERMGR_ENABLED.booleanValue() && (this.conn == null || this.conn.isClosed())) {
 					
 				this.conn = DriverManager.getConnection(USERMGR_SQL_JDBC, USERMGR_SQL_USER,
 						AES.decrypt(USERMGR_SQL_PASSWORD));

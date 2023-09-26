@@ -18,7 +18,10 @@ import org.springframework.stereotype.Service;
 
 import com.revenga.rits.front.openits.util.ConversionUtil;
 import com.revenga.rits.front.openitsdao.model.Module;
+import com.revenga.rits.front.openitsdao.model.ModuleParam;
+import com.revenga.rits.front.openitsdao.model.ModuleValue;
 import com.revenga.rits.front.openitsdao.service.ModuleService;
+import com.revenga.rits.front.openitsdao.service.ModuleValueService;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -31,6 +34,9 @@ public class ModuleBO extends GenericBO {
 	
 	@Autowired
 	ModuleService moduleService;
+	
+	@Autowired
+	ModuleValueService moduleValueService;
 	
 	private static final String STATIC_FOLDER = "static";
 	private static final String PROJECT_FOLDER = "project";
@@ -102,6 +108,41 @@ public class ModuleBO extends GenericBO {
 		}
 		
 		return list;
+	}
+	
+	public ModuleValue save(Integer moduleId, ModuleValue moduleValue) {
+		
+		ModuleValue newModuleValue = null;
+		
+		Module module = moduleService.getById(moduleId);
+		ModuleParam moduleParam = module.getModuleType().getModuleParams().stream()
+				.filter(e -> e.getId().equals(moduleValue.getModuleParam().getId())).findFirst().orElse(null);
+				
+		if (moduleParam != null) {
+			
+			ModuleValue currentModuleValue = null;
+			
+			if (!CollectionUtils.isEmpty(module.getModuleValues())) {
+			
+				currentModuleValue = module.getModuleValues().stream()
+						.filter(e -> e.getModuleParam().getId().equals(moduleParam.getId())).findFirst().orElse(null); 
+			}
+				
+			if (currentModuleValue == null) {
+				
+				currentModuleValue = new ModuleValue();
+				
+				module.addModuleValue(currentModuleValue);
+				
+				currentModuleValue.setModuleParam(moduleParam);
+			}
+			
+			currentModuleValue.setValue(moduleValue.getValue());
+			
+			newModuleValue = moduleValueService.save(currentModuleValue);
+		}
+				
+		return newModuleValue;
 	}
 	
 	private Map<String, Object> getModuleConfig(Integer moduleId) {

@@ -572,14 +572,15 @@ export default class UserControlPanel extends GenericControlPanel {
 										self.logout();
 									}
 								}
-							}
+							},
+							{}
 						],
 						borderless: true
 					}
 				]
 			},
 			position: function(state) {
-				state.left = document.documentElement.clientWidth - panelWidth - 20;
+				state.left = document.documentElement.clientWidth - panelWidth - 15;
 				state.top = 89;
 			},
 			on: {

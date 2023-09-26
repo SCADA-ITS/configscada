@@ -16,8 +16,15 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class ModuleValue implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+//    @SequenceGenerator(name="module_values_id_seq",
+//                       sequenceName="module_values_id_seq",
+//                       allocationSize=1)
+//    @GeneratedValue(strategy = GenerationType.SEQUENCE,
+//                    generator="module_values_id_seq")
+//    @Column(name = "id", updatable=false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	private String value;

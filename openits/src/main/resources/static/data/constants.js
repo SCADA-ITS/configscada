@@ -119,6 +119,8 @@ const MODULE_PARAM_TYPE_GENERIC_BACKOFFICE_WINDOW_ID = 13;
 const MODULE_PARAM_TYPE_GENERIC_BACKOFFICE_WINDOW_TABLE_NAME = 14;
 const MODULE_PARAM_TYPE_GENERIC_BACKOFFICE_WINDOW_FILTER_COLUMN_NAME = 15;
 const MODULE_PARAM_TYPE_GENERIC_BACKOFFICE_WINDOW_FILTER_COLUMN_VALUE = 16;
+const MODULE_PARAM_TYPE_GENERIC_BACKOFFICE_WINDOW_FILTERS = 17;
+const MODULE_PARAM_TYPE_GENERIC_BACKOFFICE_WINDOW_FILTERS_REQUIRED = 18;
 
 // View type constants
 const VIEW_TYPE_TAB = 1;
@@ -218,6 +220,8 @@ const ENDPOINT_ADD_COMMAND = "elements/add_command_element";
 const ENDPOINT_DELETE_COMMAND = "elements/delete_command_element";
 const ENDPOINT_PRIORITY_ENABLE = "elements/enable_priority/element/${elementId}/priority/${priorityId}";
 const ENDPOINT_PRIORITY_DISABLE = "elements/disable_priority/element/${elementId}/priority/${priorityId}";
+
+const ENDPOINT_SAVE_MODULE_VALUE = "modules/${moduleId}/module_value/save";
 
 // DataTypes
 const LogType = Object.freeze({

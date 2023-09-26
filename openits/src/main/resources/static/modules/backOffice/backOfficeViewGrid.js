@@ -1,5 +1,6 @@
 import BackOfficeModule from "./backOfficeModule.js";
 import BackOfficeView from "./backOfficeView.js";
+import BackOfficeViewGridFilter from "./backOfficeViewGridFilter.js";
 import BackOfficeHelper from "./backOfficeHelper.js";
 import DataTable from "../../component/datatable.js";
 import MessageBox from "../../component/messageBox.js";
@@ -7,7 +8,7 @@ import { util } from "../../lib/util.js";
 
 export default class BackOfficeViewGrid extends BackOfficeView {
 	
-	static get GRID_COMMANDS() { return { refresh: 1, new: 2, edit: 3, delete: 4 } }
+	static get GRID_COMMANDS() { return { refresh: 1, filter: 2, new: 3, edit: 4, delete: 5 } }
 
 	constructor(backOffice, data, currentTableData) {
 
@@ -20,8 +21,15 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 
 		if (backOffice.containerId) {
 			
+			let windowTitle = util.getStringCapitalized(currentTableData.label ?? currentTableData.name);
+			
+			if (Array.isArray(backOffice.filters) && backOffice.filters.length > 0) {
+				
+				windowTitle += " (" + i18n.t("LBL_DATATABLE_FILTERED") + ")";
+			}
+			
 			util.ui.centerWindow(backOffice.containerId, backOffice.isModal ? 20: 0);
-			util.ui.setTitle(backOffice.containerId, util.getStringCapitalized(currentTableData.label ?? currentTableData.name));	
+			util.ui.setTitle(backOffice.containerId, windowTitle);	
 		}
 		
 		this.refreshInterval = undefined;
@@ -201,37 +209,116 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 			}
 			
 			function refreshGrid() {
-				
-				if ($$("backOffice-view-" + self.uid) && self.dataTable) {
 					
-					const grid = $$(self.dataTable.getViewId())
+				if (self.backOffice.filtersRequired && 
+					((Array.isArray(self.backOffice.filters) && self.backOffice.filters.length === 0) || !self.backOffice.filters)) {
+
+					(new MessageBox(MessageBox.WARN, i18n.t("LBL_BACKOFFICE_REQUIRED_FILTERS_TO_REFRESH"))).show();												
+				}
+				else {
+					
+					if ($$("backOffice-view-" + self.uid) && self.dataTable) {
+					
+						const grid = $$(self.dataTable.getViewId())
 	
-					if (grid) {
-					
-						webix.extend(grid, webix.ProgressBar);
-
-						grid.showProgress({
-			
-							hide: false, type: "bottom"
-						});
-					
-						BackOfficeHelper.getData(self.backOffice).then((data) => {
-							
-							const selectedIds = self.dataTable.getSelectedIds();
-							
-							self.data = data;
-							self.currentTableData = data.find(e => e.name === self.backOffice.tableName);
-
-							self.dataTable.clear();
-							self.dataTable.add(getData());
-							self.dataTable.select(selectedIds);
-							
-							grid.hideProgress();								
-						});	
+						if (grid) {
+						
+							webix.extend(grid, webix.ProgressBar);
+	
+							grid.showProgress({
+				
+								hide: false, type: "bottom"
+							});
+						
+							BackOfficeHelper.getData(self.backOffice).then((data) => {
+								
+								const selectedIds = self.dataTable.getSelectedIds();
+								
+								self.data = data;
+								self.currentTableData = data.find(e => e.name === self.backOffice.tableName);
+	
+								self.dataTable.clear();
+								self.dataTable.add(getData());
+								self.dataTable.select(selectedIds);
+								
+								grid.hideProgress();								
+							});	
+						}
 					}
 				}
 			}
+			
+			function cmdFilterGrid() {
+				
+				let backOfficeViewGridFilter = new BackOfficeViewGridFilter(self.backOffice, self.data, self.currentTableData, onAccept, onCancel);
+				
+				const winId = util.ui.loadWindow(i18n.t("LBL_VIEW_GRID_FILTER_TITLE"), backOfficeViewGridFilter.getView(), 
+									BackOfficeHelper.META_TYPE_TABLE.PROPERTY.FORM_HEIGHT.default, 
+									BackOfficeHelper.META_TYPE_TABLE.PROPERTY.FORM_WIDTH.default, true);
+				
+				function onAccept(filters, save) {
+					
+					self.backOffice.filters = filters;
+					
+					$$(winId).close();
+					
+					if (save && self.backOffice.moduleId) {
+						
+						const module = window.em.getByField(EntityType.MODULE, "id", self.backOffice.moduleId);
 
+						if (module) {
+							
+							const moduleParam = module.moduleType.moduleParams.find(e => e.id == MODULE_PARAM_TYPE_GENERIC_BACKOFFICE_WINDOW_FILTERS);
+							
+							if (moduleParam) {
+								
+								const moduleValueFilters = module.moduleValues.find(e => e.moduleParam.id === moduleParam.id); 
+			
+								let currentFilters = [];
+								
+								if (moduleValueFilters && moduleValueFilters.value) {
+									
+									currentFilters = JSON.parse(moduleValueFilters.value);
+								}
+								
+								let newFilters = currentFilters.filter(e => e.userId != util.user.getUserData().id);
+									
+								newFilters.push(...filters);
+								
+								const moduleValue = {
+									
+									id: moduleValueFilters ? moduleValueFilters.id : undefined,
+									moduleParam: moduleParam,
+									module: module,
+									value: JSON.stringify(newFilters)
+								}
+								
+								util.module.saveModuleValue(moduleValue).then(updModuleValue => {
+									
+									module.moduleValues = module.moduleValues.filter(e => e.moduleParam.id != moduleParam.id);
+									module.moduleValues.push(updModuleValue);
+								});
+								
+								let windowTitle = util.getStringCapitalized(self.currentTableData.label ?? self.currentTableData.name);
+			
+								if (Array.isArray(self.backOffice.filters) && self.backOffice.filters.length > 0) {
+									
+									windowTitle += " (" + i18n.t("LBL_DATATABLE_FILTERED") + ")";
+								}
+								
+								util.ui.setTitle(self.backOffice.containerId, windowTitle);
+							}
+						}	
+					}
+					
+					refreshGrid();
+				}
+				
+				function onCancel() {
+					
+					$$(winId).close();
+				}
+			}
 			
 			function getData() {
 			
@@ -298,7 +385,7 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 			
 			function getDataTable() {
 				
-				const firstCommandIdCalculated = 5;
+				let firstCommandIdCalculated = Object.keys(BackOfficeViewGrid.GRID_COMMANDS).length;
 				
 				function getMetadata() {
 
@@ -476,8 +563,8 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 							default_: false,
 							icon: "mdi mdi-refresh",
 							label: "LBL_TABLE_REFRESH",
-							multiselect: true,
-							position: 1,
+							multiselect: false,
+							position: BackOfficeViewGrid.GRID_COMMANDS.refresh,
 							showText: true,
 							itemRequired: false
 						},
@@ -487,7 +574,7 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 							icon: "mdi mdi-plus",
 							label: "LBL_CMD_ADD",
 							multiselect: false,
-							position: 2,
+							position: BackOfficeViewGrid.GRID_COMMANDS.new,
 							showText: false,
 							itemRequired: false
 						},
@@ -497,7 +584,7 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 							icon: "mdi mdi-pencil",
 							label: "LBL_CMD_EDIT",
 							multiselect: false,
-							position: 3,
+							position: BackOfficeViewGrid.GRID_COMMANDS.edit,
 							showText: false,
 							itemRequired: true
 						},
@@ -507,11 +594,26 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 							icon: "mdi mdi-delete",
 							label: "LBL_CMD_DELETE",
 							multiselect: true,
-							position: 4,
+							position: BackOfficeViewGrid.GRID_COMMANDS.delete,
 							showText: false,
 							itemRequired: true
 						}
 					);
+					
+					if (!self.backOffice.filterColumn) {
+					
+						metadata.gridCommands.push(
+							{
+								id: BackOfficeViewGrid.GRID_COMMANDS.filter,
+								default_: false,
+								icon: "mdi mdi-filter",
+								label: "LBL_TABLE_FILTER",
+								multiselect: false,
+								position: BackOfficeViewGrid.GRID_COMMANDS.filter,
+								showText: true,
+								itemRequired: false
+							});
+					}
 
 					if (Array.isArray(self.currentTableData.commands) && self.currentTableData.commands.length > 0) {
 
@@ -524,10 +626,10 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 					}
 
 					function getCommandButtons() {
-
-						let commandIdValue = firstCommandIdCalculated;
+						
+						let lastCommandIdValue = firstCommandIdCalculated;
+						
 						let commandButtons = [];
-						let cmdPosition = metadata.gridCommands.length + 1;
 
 						if (Array.isArray(self.currentTableData.commands) && self.currentTableData.commands.length > 0) {
 
@@ -541,12 +643,14 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 
 						function getCommand(cmd) {
 
+							lastCommandIdValue++;
+
 							return {
-								id: commandIdValue++,
+								id: lastCommandIdValue,
 								icon: cmd.mdiIcon,
 								label: cmd.label ?? cmd.name,
 								multiselect: false,
-								position: cmdPosition++,
+								position: lastCommandIdValue,
 								showText: true,
 								itemRequired: true,
 								grouped: true
@@ -573,6 +677,14 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 						{ commandId: BackOfficeViewGrid.GRID_COMMANDS.edit, function: cmdEdit },
 						{ commandId: BackOfficeViewGrid.GRID_COMMANDS.delete, function: cmdDelete }
 					);
+					
+					if (!self.backOffice.filterColumn) {
+						
+						events[DataTable.EventTypes.ON_COMMAND_EXEC].push(
+							{ commandId: BackOfficeViewGrid.GRID_COMMANDS.filter, function: cmdFilterGrid }
+						);
+					}
+					
 					
 					if (Array.isArray(self.currentTableData.commands) && self.currentTableData.commands.length > 0) {
 						

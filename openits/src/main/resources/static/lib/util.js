@@ -875,6 +875,17 @@ export let util = {
 					(new MessageBox(MessageBox.WARN, i18n.t("LBL_NOT_AVAILABLE") + " moduleAction = " + moduleActionIdFromJSON, null, null, null)).show();
 				}
 			}
+		},
+		
+		async saveModuleValue(moduleValue) {
+			
+			let response;
+			
+			let endPointSaveModuleValue = appConfig.restUrl + util.fillTemplate(ENDPOINT_SAVE_MODULE_VALUE, { moduleId: moduleValue.module.id });
+			
+			response = await webix.ajax().headers(CONTENT_TYPE_JSON).post(endPointSaveModuleValue, moduleValue);
+
+			return response ? response.json() : undefined;
 		}
 	},
 

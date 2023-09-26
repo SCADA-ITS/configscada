@@ -10,11 +10,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.CollectionUtils;
 
@@ -72,6 +74,8 @@ public class BackOfficeUtil {
 	private static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 	
 	protected static final Map<DBType, DmlLibrary> dmlMap;
+
+	private static final String condition = null;
 	
 	static {
 		
@@ -438,5 +442,55 @@ public class BackOfficeUtil {
 		}
 		
 		return null;
+	}
+	
+	public static String getConditions(Connection conn, Table table, String conditions) throws SQLException {
+
+		//String patternTimestamp = "\\d{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[1-2]\\d|3[0-1])T(?:[0-1]\\d|2[0-3]):[0-5]\\d:[0-5]\\dZ";
+		String[] conditionsArr = null;
+		
+		if (!StringUtils.isEmpty(conditions)) {
+			
+			conditionsArr = conditions.trim().split("AND");
+			
+			if (!ArrayUtils.isEmpty(conditionsArr)) {
+				
+				for (int i = 0; i < conditionsArr.length; i++) {
+					
+					String condition = conditionsArr[i];
+					
+					String[] items = condition.trim().split(" ");
+					
+					if (!ArrayUtils.isEmpty(items) && items.length == 3 && !CollectionUtils.isEmpty(table.getColumns())) {
+
+						Column col = table.getColumns().stream().filter(e -> e.getName().equals(items[0])).findFirst().orElse(null);
+						
+						if (col != null) {
+							
+							if (col.getColType().equals(ColType.DECIMAL) || col.getColType().equals(ColType.INTEGER)) {
+								
+								items[2] = items[2].replace("'", "");
+							}
+							else if (col.getColType().equals(ColType.TIMESTAMP)) {
+								
+								items[2] = items[2].replace("'", "");
+								
+								if (Instant.parse(items[2]) != null) {
+									
+									if (DBType.POSTGRESQL.equals(getDBType(conn))) {
+										
+										items[2] = "to_timestamp('" + items[2] + "', 'YYYY-MM-DD''T''HH24:MI:SSZ')";
+									}
+								}
+							}
+						}
+					}
+					
+					conditionsArr[i] = String.join(" ", items);
+				}
+			}
+		}
+		
+		return !ArrayUtils.isEmpty(conditionsArr) ? String.join(" AND ", conditionsArr) : conditions;
 	}
 }

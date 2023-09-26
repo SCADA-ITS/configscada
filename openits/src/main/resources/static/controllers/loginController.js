@@ -341,7 +341,9 @@ function access(loginData) {
 				
 				if (Array.isArray(userData.managementAreas) && userData.managementAreas.length > 0) {
 
-					selectManagementArea(userData.managementAreas);					
+					webix.delay(function() {
+						selectManagementArea(userData.managementAreas);
+					}, null, null, 500);				
 				}
 				else {
 					
@@ -402,9 +404,7 @@ function selectManagementArea(managementAreas) {
 				on: {
 					onItemClick: function() {
 
-						webix.delay(function() {
-							window.location = "./home.html";
-						}, null, null, 1000);
+						window.location = "./home.html";
 					}
 				}
 			}

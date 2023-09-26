@@ -89,6 +89,15 @@ public class BackOfficeController {
 		return new ResponseEntity<>(backOfficeBO.get(backOfficeId, tableName, conditions), HttpStatus.OK);
 	}
 	
+	@GetMapping(path = "/{backOfficeId}/table/{tableName}/nodata")
+	@ApiOperation(value = "get table with conditions, without row data")
+	public ResponseEntity<List<Table>> getTablesNoRows(
+			@ApiParam(name = "backOfficeId", type = "Integer", example = "1", required = true) @PathVariable Integer backOfficeId,
+			@ApiParam(name = "tableName", type = "String", example = "orders", required = true) @PathVariable String tableName) {
+		
+		return new ResponseEntity<>(backOfficeBO.get(backOfficeId, tableName), HttpStatus.OK);
+	}
+	
 	@GetMapping(path = "/{backOfficeId}/attachments/image/{tableName}/{imageId}", produces = MediaType.IMAGE_JPEG_VALUE)
 	public ResponseEntity<byte[]> downloadImage(
 			@ApiParam(name = "backOfficeId", type = "Integer", example = "1", required = true) @PathVariable Integer backOfficeId, 

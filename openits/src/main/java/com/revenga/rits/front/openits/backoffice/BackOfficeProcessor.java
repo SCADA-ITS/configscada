@@ -43,21 +43,39 @@ import lombok.extern.log4j.Log4j2;
 @Getter
 public class BackOfficeProcessor {
 	
+	public enum ShowData {
+		
+		ALL,
+		NONE,
+		ONLY_RELATIONS
+	}
+
 	GroovyManager groovyManager;
 	BackOfficeService backOfficeService;
 	BackOfficeManager backOfficeManager;
 	String localeCode;
-	Boolean requestRows;
+	ShowData showData;
+	String requestTableName;
 	
 	private Map<String, Table> referencedTables = new HashMap<>();
 	
-	public BackOfficeProcessor(GroovyManager groovyManager, BackOfficeService backOfficeService, BackOfficeManager backOfficeManager, String localeCode, Boolean requestRows) {
+	public BackOfficeProcessor(GroovyManager groovyManager, BackOfficeService backOfficeService, BackOfficeManager backOfficeManager, String localeCode, ShowData showData) {
 		
 		this.groovyManager = groovyManager;
 		this.backOfficeService = backOfficeService;
 		this.backOfficeManager = backOfficeManager;
 		this.localeCode = localeCode;
-		this.requestRows = requestRows;
+		this.showData = showData;
+	}
+	
+	public BackOfficeProcessor(GroovyManager groovyManager, BackOfficeService backOfficeService, BackOfficeManager backOfficeManager, String localeCode, ShowData showData, String requestTableName) {
+		
+		this.groovyManager = groovyManager;
+		this.backOfficeService = backOfficeService;
+		this.backOfficeManager = backOfficeManager;
+		this.localeCode = localeCode;
+		this.showData = showData;
+		this.requestTableName = requestTableName;
 	}
 	
 	public List<Table> getAll(Integer backOfficeId) {
@@ -538,7 +556,8 @@ public class BackOfficeProcessor {
 					
 					backOfficeAssignment.assignReferTables(conn, backOffice, table);
 					
-					if (Boolean.TRUE.equals(this.requestRows)) {
+					if (this.showData.equals(ShowData.ALL) || 
+						(this.showData.equals(ShowData.ONLY_RELATIONS) && !StringUtils.equals(this.requestTableName, tableName))) {
 					
 						backOfficeAssignment.assignRows(conn, backOffice, table, parentTable, conditions);
 					}
@@ -558,8 +577,9 @@ public class BackOfficeProcessor {
 				
 				backOfficeAssignment.assignReferTables(conn, backOffice, table);
 				
-				if (Boolean.TRUE.equals(this.requestRows)) {
-				
+				if (this.showData.equals(ShowData.ALL) || 
+					(this.showData.equals(ShowData.ONLY_RELATIONS) && !StringUtils.equals(this.requestTableName, tableName))) {
+					
 					backOfficeAssignment.assignRows(conn, backOffice, table, parentTable, conditions);
 				}
 				

@@ -1,6 +1,7 @@
 import GenericModule from "../genericModule.js";
 import BackOfficeManager from "./backOfficeManager.js";
 import BackOfficeHelper from "./backOfficeHelper.js";
+import { util } from "../../lib/util.js";
 
 export default class BackOfficeModule extends GenericModule {
 	
@@ -38,33 +39,59 @@ export default class BackOfficeModule extends GenericModule {
 			let tableName = undefined;
 			let filterColumnName = undefined;
 			let filterColumnValue = undefined;
+			let filters = [];
+			let filtersRequired = false;
 			
-			let moduleValueId = this.module.moduleValues.find(e => e.moduleParam.id === MODULE_PARAM_TYPE_GENERIC_BACKOFFICE_WINDOW_ID);
+			const moduleValueId = this.module.moduleValues.find(e => e.moduleParam.id === MODULE_PARAM_TYPE_GENERIC_BACKOFFICE_WINDOW_ID);
 			
 			if (moduleValueId) {
 				
 				id = moduleValueId.value;
 			}
 			
-			let moduleValueTableName = this.module.moduleValues.find(e => e.moduleParam.id === MODULE_PARAM_TYPE_GENERIC_BACKOFFICE_WINDOW_TABLE_NAME);
+			const moduleValueTableName = this.module.moduleValues.find(e => e.moduleParam.id === MODULE_PARAM_TYPE_GENERIC_BACKOFFICE_WINDOW_TABLE_NAME);
 			
 			if (moduleValueTableName) {
 				
 				tableName = moduleValueTableName.value;
 			}
 			
-			let moduleValueFilterColumnName = this.module.moduleValues.find(e => e.moduleParam.id === MODULE_PARAM_TYPE_GENERIC_BACKOFFICE_WINDOW_FILTER_COLUMN_NAME); 
+			const moduleValueFilterColumnName = this.module.moduleValues.find(e => e.moduleParam.id === MODULE_PARAM_TYPE_GENERIC_BACKOFFICE_WINDOW_FILTER_COLUMN_NAME); 
 			
 			if (moduleValueFilterColumnName) {
 				
 				filterColumnName = moduleValueFilterColumnName.value;
 			}
 			
-			let moduleValueFilterColumnValue = this.module.moduleValues.find(e => e.moduleParam.id === MODULE_PARAM_TYPE_GENERIC_BACKOFFICE_WINDOW_FILTER_COLUMN_VALUE); 
+			const moduleValueFilterColumnValue = this.module.moduleValues.find(e => e.moduleParam.id === MODULE_PARAM_TYPE_GENERIC_BACKOFFICE_WINDOW_FILTER_COLUMN_VALUE); 
 			
 			if (moduleValueFilterColumnValue) {
 				
 				filterColumnValue = moduleValueFilterColumnValue.value;
+			}
+			
+			const moduleValueFilters = this.module.moduleValues.find(e => e.moduleParam.id === MODULE_PARAM_TYPE_GENERIC_BACKOFFICE_WINDOW_FILTERS); 
+			
+			if (moduleValueFilters && moduleValueFilters.value) {
+				
+				filters = JSON.parse(moduleValueFilters.value);
+				
+				if (Array.isArray(filters)) {
+					
+					const userData = util.user.getUserData();
+					
+					if (userData) {
+						
+						filters = filters.filter(e => e.userId == userData.id);	
+					}
+				}
+			}
+			
+			const moduleValueFilterRequired = this.module.moduleValues.find(e => e.moduleParam.id === MODULE_PARAM_TYPE_GENERIC_BACKOFFICE_WINDOW_FILTERS_REQUIRED); 
+			
+			if (moduleValueFilterRequired) {
+				
+				filtersRequired = IS_TRUE(moduleValueFilterRequired.value);
 			}
 
 			backOffice = {
@@ -73,6 +100,9 @@ export default class BackOfficeModule extends GenericModule {
 				tableName: tableName,
 				filterColumnName: filterColumnName,
 				filterColumnValue: filterColumnValue,
+				filters: filters,
+				filtersRequired: filtersRequired,
+				moduleId: self.module.id,
 				containerId: self.args.containerId 
 			}
 		}

@@ -39,6 +39,7 @@ import org.springframework.util.CollectionUtils;
 
 import com.revenga.rits.front.openits.app.AppInfra;
 import com.revenga.rits.front.openits.backoffice.BackOfficeProcessor;
+import com.revenga.rits.front.openits.backoffice.BackOfficeProcessor.ShowData;
 import com.revenga.rits.front.openits.model.backoffice.Basic;
 import com.revenga.rits.front.openits.model.backoffice.CronTask;
 import com.revenga.rits.front.openits.model.backoffice.Table;
@@ -213,7 +214,7 @@ public class BackOfficeManager extends FrontManager {
 			
 			for (BackOffice backOffice : this.backOffices) {
 				
-				BackOfficeProcessor backOfficeProcessor = new BackOfficeProcessor(groovyManager, backOfficeService, this, null, false);
+				BackOfficeProcessor backOfficeProcessor = new BackOfficeProcessor(groovyManager, backOfficeService, this, null, ShowData.NONE);
 				
 				Instant timeRef = Instant.now();
 				

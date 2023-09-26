@@ -248,7 +248,7 @@ public class BackOfficeAssignment {
 					
 					if (!StringUtils.isEmpty(conditions)) {
 						
-						sql += (!sql.contains("WHERE") ? " WHERE " : " AND ") + conditions;
+						sql += (!sql.contains("WHERE") ? " WHERE " : " AND ") + BackOfficeUtil.getConditions(conn, table, conditions);
 					}
 					
 					try (Statement stmt = conn.createStatement()) {

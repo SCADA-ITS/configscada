@@ -1,7 +1,9 @@
 import { util } from "../../lib/util.js";
 
 const REST_BACKOFFICE_DATA = "backoffice/${backOfficeId}";
+
 const REST_BACKOFFICE_TABLE = "backoffice/${backOfficeId}/table/${tableName}";
+const REST_BACKOFFICE_TABLE_NODATA = "backoffice/${backOfficeId}/table/${tableName}/nodata";
 const REST_BACKOFFICE_TABLE_PERSIST = "backoffice/${backOfficeId}/persist";
 const REST_BACKOFFICE_TABLE_COMMAND = "backoffice/${backOfficeId}/command";
 const REST_BACKOFFICE_COLUMN_FILLER = "backoffice/${backOfficeId}/filler";
@@ -150,22 +152,62 @@ export default class BackOfficeHelper {
 	static async getData(backOffice) {
 
 		let response;
-
-		const url = appConfig.restUrl +
-			util.fillTemplate(REST_BACKOFFICE_TABLE, { backOfficeId: backOffice.id, tableName: backOffice.tableName });
+		let url = appConfig.restUrl +
+					util.fillTemplate(REST_BACKOFFICE_TABLE, { backOfficeId: backOffice.id, tableName: backOffice.tableName });
 
 		let conditions = undefined;
 
 		if (backOffice.filterColumnName && backOffice.filterColumnValue) {
 
 			conditions = backOffice.filterColumnName + "='" + backOffice.filterColumnValue + "'";
+			
+			response = await webix.ajax().headers(CONTENT_TYPE_JSON).post(url, conditions);
 		}
-
-		response = await webix.ajax().headers(CONTENT_TYPE_JSON).post(url, conditions);
+		else {
+		
+			if (Array.isArray(backOffice.filters)) {
+			
+				const userData = util.user.getUserData();
+				
+				if (userData) {
+					
+					let filters = [];
+					
+					filters = backOffice.filters.filter(e => e.userId == userData.id);
+					
+					let conditionsArr = [];
+					
+					if (Array.isArray(filters) && filters.length > 0) {
+						
+						filters.forEach(filter => {
+						
+							conditionsArr.push(filter.filterField + " " + filter.filterOperator + " '" + filter.filterValue + "'");
+						})	
+					}
+					
+					if (Array.isArray(conditionsArr) && conditionsArr.length > 0) {
+				
+						conditions = conditionsArr.join(" AND ");
+					}
+				}
+			}
+			
+			if (conditions || !backOffice.filtersRequired) {
+					
+				response = await webix.ajax().headers(CONTENT_TYPE_JSON).post(url, conditions);
+			}
+			else {
+				
+				url = appConfig.restUrl +
+					util.fillTemplate(REST_BACKOFFICE_TABLE_NODATA, { backOfficeId: backOffice.id, tableName: backOffice.tableName });
+				
+				response = await webix.ajax().get(url);
+			}
+		}
 
 		return response ? response.json() : undefined;
 	}
-
+	
 	static translate(backOffice, label) {
 
 		const url = appConfig.restUrl +
