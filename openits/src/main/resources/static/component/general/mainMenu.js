@@ -126,24 +126,17 @@ export default class MainMenu {
 									managementAreas = JSON.parse(submenu.managementAreas);
 
 								} catch (e) {
-
+									
+									managementAreas = undefined;
 								}
 							}
 
-							if (managementAreasEnables) {
-
-								if (managementAreas && (managementAreas.find(id => id === managementAreasEnables)) && (submenu.enabled !== false)) {
+							if (submenu.enabled !== false && (managementAreas === undefined || 
+								(managementAreasEnables && managementAreas.find(id => id === managementAreasEnables)))){
 
 									addSubMenus();
-								}
+							}
 								
-							} else {
-
-								if (managementAreas === undefined) {
-
-									addSubMenus();
-								}
-							}	
 							
 							function addSubMenus() {
 
