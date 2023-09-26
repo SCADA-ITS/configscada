@@ -205,9 +205,21 @@ export default class GraphicIcon {
 
 			if (self.container.type !== GraphicIcon.CONTAINER_TYPE_WEBIX_VIEW && (self.layerElement.selectable === true || self.layerElement.selectable == undefined)) {
 
-				let gSel = s.rect(0, 0, gWidth, gHeight);
-				gSel.attr({ id: GraphicIcon.G_ID_SELBOX, visibility: "hidden", stroke: "#FF9800", strokeWidth: 10, fill: "#FF9800", opacity: 0.6 });
-				self.g.prepend(gSel);
+				let gSel = undefined;
+				
+				gSel = s.rect(0, 0, gWidth, gHeight);
+				
+				gSel.attr({ 
+					id: GraphicIcon.G_ID_SELBOX, 
+					visibility: "hidden", 
+					stroke: "#FF9800", 
+					strokeWidth: self.container.type === GraphicIcon.CONTAINER_TYPE_OPEN_LAYER ? 0 : 10, 
+					fill: "#FF9800", 
+					opacity: 0.4 
+				});
+				
+				// self.g.prepend(gSel);
+				self.g.append(gSel);
 			}
 
 		}
