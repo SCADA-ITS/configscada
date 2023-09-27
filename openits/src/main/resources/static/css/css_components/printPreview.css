@@ -50,3 +50,7 @@
 	box-sizing: border-box;
 	border: 1px solid var(--global-grey);
 }
+
+.print-chart-template {
+	padding: 5px;
+}

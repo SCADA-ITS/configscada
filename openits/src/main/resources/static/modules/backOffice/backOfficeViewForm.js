@@ -887,7 +887,7 @@ export default class BackOfficeViewForm extends BackOfficeView {
 																							}
 																						}
 																						
-																						aux["caption"] = referTable.label;
+																						aux["caption"] = referTable.label ?? referTable.name;
 																						tableArr.push(aux);
 																					}
 																				

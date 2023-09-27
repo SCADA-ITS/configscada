@@ -66,38 +66,42 @@ export default class HistoricalChartStates extends HistoricalChartGeneric {
 				let d = {};				
 
 				let sameElementArr = self.states.filter(e => e.element.id === id);
-				sameElementArr.sort((a, b) => (a.createdAt > b.createdAt) ? 1 : ((b.createdAt > a.createdAt) ? -1 : 0));
-
-				let elementTypeStateId = sameElementArr[0].currentElementTypeState.id; 
 				
-				for (let xVal of self.xAxis) {
+				if (Array.isArray(sameElementArr) && sameElementArr.length > 0) {
 
-					let withData = sameElementArr.filter(el => ((xVal.initEpoch < el.createdAt) && (el.createdAt < xVal.endEpoch)));
+					sameElementArr.sort((a, b) => (a.createdAt > b.createdAt) ? 1 : ((b.createdAt > a.createdAt) ? -1 : 0));
 
-					if (Array.isArray(withData) && withData.length > 0) {
+					let elementTypeStateId = sameElementArr[0].currentElementTypeState.id;
 
-						withData.sort((a, b) => (a.createdAt > b.createdAt) ? 1 : ((b.createdAt > a.createdAt) ? -1 : 0));
+					for (let xVal of self.xAxis) {
 
-						elementTypeStateId = withData[withData.length-1].currentElementTypeState.id;
-						d['yValue'] = withData;
-						d['withData'] = true;				
+						let withData = sameElementArr.filter(el => ((xVal.initEpoch < el.createdAt) && (el.createdAt < xVal.endEpoch)));
 
-					} else {
+						if (Array.isArray(withData) && withData.length > 0) {
 
-						d['yValue'] = undefined;
-						d['withData'] = false;						
+							withData.sort((a, b) => (a.createdAt > b.createdAt) ? 1 : ((b.createdAt > a.createdAt) ? -1 : 0));
+
+							elementTypeStateId = withData[withData.length - 1].currentElementTypeState.id;
+							d['yValue'] = withData;
+							d['withData'] = true;
+
+						} else {
+
+							d['yValue'] = undefined;
+							d['withData'] = false;
+						}
+
+						d['xValue'] = xVal.xValue;
+						d["epoch"] = xVal.initEpoch;
+						d['element'] = id;
+						d['elementTypeStateId'] = elementTypeStateId;
+
+						arrAux.push(d);
+						d = {};
 					}
 
-					d['xValue'] = xVal.xValue;
-					d["epoch"] = xVal.initEpoch;
-					d['element'] = id;
-					d['elementTypeStateId'] = elementTypeStateId;
-
-					arrAux.push(d);
-					d = {};
+					dataArrAux.push(arrAux);
 				}
-
-				dataArrAux.push(arrAux);
 			});
 
 			for (let j = 0; j < self.xAxis.length; j++) {

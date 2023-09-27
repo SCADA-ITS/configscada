@@ -18,6 +18,7 @@ export default class PrintPreview {
 	static get TYPE_PRINT_DATATABLE() { return 1 }
 	static get TYPE_EXPORT_DATATABLE() { return 2 }
 	static get TYPE_TEMPLATE() { return 3 }
+	static get TYPE_CHART() { return 4 }
 
 	constructor(type, data, options) {
 
@@ -60,6 +61,10 @@ export default class PrintPreview {
 		} else if (self.type === PrintPreview.TYPE_TEMPLATE) {
 
 			drawTemplate();
+
+		} else if (self.type === PrintPreview.TYPE_CHART) {
+
+			drawChart();
 		}
 
 
@@ -581,17 +586,71 @@ export default class PrintPreview {
 
 					} else {
 
-						let fieldData = document.getElementById('field.' + key);
+						let classData = document.getElementsByClassName(key);
 
-						if (fieldData) {
+						if (classData.length > 0) {
 
-							fieldData.innerHTML = (self.data[key]) ? self.data[key] : "";
+							for (let dat of classData) {
+
+								dat.innerHTML = (self.data[key]) ? self.data[key] : "";
+							}
+						} else {
+
+							let fieldData = document.getElementById('field.' + key);
+
+							if (fieldData) {
+
+								fieldData.innerHTML = (self.data[key]) ? self.data[key] : "";
+							}
 						}
 					}
 				}
 			}
 
 			self.templateWinId = util.ui.loadWindow(i18n.t("LBL_TABLE_PRINT"), templateToPrint, 750, 1200, true);
+		}
+
+		function drawChart() {
+
+			let chartToPrint = {};
+
+			chartToPrint = {
+				rows: [
+					{
+						id: "chart-print-" + self.uid,
+						view: "template",
+						css: "print-chart-template",
+						template: function() {
+
+							let head;
+							let chartLabel = (self.options.title) ? self.options.title : "";
+							let date = new Date().toLocaleString();
+
+							head = `<div class="print-head" style="width: 99%;">
+											<div><img class="print-head-logo" src="./img/logo-project.svg"></div>
+											<div><span class="print-head-text">${chartLabel}</span></div>
+											<div><span class="print-head-text">${date}</span></div>
+											</div>`;
+
+							return `${head}
+									<img style="width:99%;" src="${self.options.canvas}">`;
+						}()
+					}
+				]
+			};
+
+			let chartWinId = util.ui.loadWindow(i18n.t("LBL_CHART_PRINT"), chartToPrint, 750, 1200, false);
+
+			if (chartWinId) {
+
+				$$(chartWinId).hide();
+
+				webix.delay(function() {
+
+					webix.print($$("chart-print-" + self.uid), { mode: "landscape" });
+					$$(chartWinId).close();
+				}, 500);
+			}
 		}
 	}
 }

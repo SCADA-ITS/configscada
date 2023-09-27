@@ -1,6 +1,7 @@
 import { util } from "../../lib/util.js";
 import HistoricalChartModule from "./historicalChartModule.js";
 import ListView from "../../component/listview.js";
+import PrintPreview from "../../component/printPreview.js";
 
 const DEFAULT_INIT_TIMES = {
 	RANGE: 24,
@@ -126,7 +127,7 @@ export default class HistoricalChartGeneric {
 
 		return xAxisAux.reverse();
 	}
-	
+
 
 	drawComponent() {
 
@@ -169,6 +170,46 @@ export default class HistoricalChartGeneric {
 						cols: [
 							{
 								gravity: 2
+							},
+							{
+								view: "icon",
+								icon: "mdi mdi-printer",
+								value: i18n.t("LBL_TABLE_PRINT"),
+								css: { "padding-right": "15px" },
+								tooltip: true,
+								on: {
+									onItemClick: function() {
+
+										let chart = $$("chart-" + self.uid)
+
+										if (chart) {
+
+											let chartNode = chart.getNode();
+
+											html2canvas(chartNode).then(function(canvas) {
+
+												let element;
+												let title = self.label;
+												let image = canvas.toDataURL();
+
+												if (self.args.isEmbed) {
+
+													element = window.em.getByField(EntityType.ELEMENT, "id", self.args.elementsIds[0]);
+
+													title += " - " + element.alias;
+												} 
+
+												let options = {
+													canvas: image,
+													title: title
+												};
+
+												let chartToPrint = new PrintPreview(PrintPreview.TYPE_CHART, null, options);
+												chartToPrint.show();
+											});
+										}
+									}
+								}
 							},
 							{
 								view: "checkbox",
