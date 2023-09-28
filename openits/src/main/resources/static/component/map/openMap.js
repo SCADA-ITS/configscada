@@ -546,8 +546,15 @@ export default class OpenMap extends GenericMap {
 			let graphicIconsToLoad = [];
 			
 			self.metadata.layers.forEach(layer => {
+				
+				let layerElementsFiltered = []; 
+				
+				if (Array.isArray(layer.layerElements) && layer.layerElements.length > 0) {
+					
+					layerElementsFiltered = layer.layerElements.filter(layerElement => window.em.getByField(EntityType.ELEMENT, "id", layerElement.elementId));
+				}
 			
-				layer.layerElements.forEach(layerElement => {
+				layerElementsFiltered.forEach(layerElement => {
 					
 					if (Array.isArray(layerElement.layerElementZooms) && layerElement.layerElementZooms.length > 0) {
 					
