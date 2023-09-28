@@ -119,11 +119,11 @@ export default class MainMenu {
 							
 							let managementAreas = undefined;
 
-							if (submenu.managementAreas) {
+							if (submenu.module && submenu.module.managementAreas) {
 
 								try {
 
-									managementAreas = JSON.parse(submenu.managementAreas);
+									managementAreas = JSON.parse(submenu.module.managementAreas);
 
 								} catch (e) {
 									

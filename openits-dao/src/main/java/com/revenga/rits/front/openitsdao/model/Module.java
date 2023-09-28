@@ -57,6 +57,9 @@ public class Module implements Serializable {
 	private Boolean visible;
 	
 	private Boolean autoload;
+		
+	@Column(name="management_areas")
+	private String managementAreas;
 
 	@Column(name="wss_topic")
 	private String wssTopic;
@@ -249,6 +252,14 @@ public class Module implements Serializable {
 
 	public void setAutoload(Boolean autoload) {
 		this.autoload = autoload;
+	}
+	
+	public String getManagementAreas() {
+		return this.managementAreas;
+	}
+
+	public void setManagementAreas(String managementAreas) {
+		this.managementAreas = managementAreas;
 	}
 
 	public String getDefaultSystemPermissionId() {

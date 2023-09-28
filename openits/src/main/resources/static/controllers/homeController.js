@@ -198,8 +198,26 @@ function initialize() {
 				modules.forEach(module => {
 					
 					if (module.autoload && module.moduleType.id != MODULE_TYPE_SERVICE) {
+
+						let managementAreas = undefined;
+						let managementAreasEnables = (webix.storage.session.get(SESSION_STORAGE_SESSION_DATA).managementAreaId) ?? undefined;  
 		
-						util.module.open(module);					
+						if (module.managementAreas) {
+
+							try {
+
+								managementAreas = JSON.parse(module.managementAreas);
+
+							} catch (e) {
+
+								managementAreas = undefined;
+							}
+						}
+						
+						if (managementAreas === undefined || managementAreasEnables && managementAreas.find(id => id === managementAreasEnables)) {
+
+							util.module.open(module);
+						}
 					}
 				});
 			}		
