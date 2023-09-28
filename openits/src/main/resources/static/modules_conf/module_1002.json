@@ -4,7 +4,8 @@
 	},
 	"restEndpoints": {
 		"alarmConfigByElementType": "alarms/alarm_configs/element_type/${id}",
-		"alarmConfigId": "alarms/alarm_configs/${id}"
+		"alarmConfigId": "alarms/alarm_configs/${id}",
+		"grids": "grids/${id}"
 	},
 	"action": {
 		"edit": 103501,
@@ -12,7 +13,7 @@
 		"delete": 103503
 	},
 	"requiredPermissions": {
-		"edit": "SystemPermission:19"		
+		"edit": "SystemPermission:22"		
 	}
 	
 }

@@ -4,7 +4,6 @@ import DataTable from "../component/datatable.js";
 import ListView from "../component/listview.js";
 
 const DATA_GRID_ID = 1002;
-const ELEMENT_TYPE_STATE_ALARM = 3;
 
 export default class AlarmConfigListModule extends GenericGridModule {
 
@@ -58,18 +57,27 @@ export default class AlarmConfigListModule extends GenericGridModule {
 	loadData() {
 
 		let self = this;
+		let alarmConfigGrid;
 
-		webix.ui(drawContent(), $$(self.uid));
+		webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.grids, { id: 1002 })).then(function(alarmConfigGridResponse) {
 
-		if (self.dataTable) {
+			if (alarmConfigGridResponse != null) {
 
-			self.dataTable.callbacks();
-		}
+				alarmConfigGrid = alarmConfigGridResponse.json();
 
-		if (self.listView) {
+				webix.ui(drawContent(), $$(self.uid));
 
-			self.listView.selectByIndex(0);
-		}
+				if (self.dataTable) {
+
+					self.dataTable.callbacks();
+				}
+
+				if (self.listView) {
+
+					self.listView.selectByIndex(0);
+				}
+			}
+		});
 
 		function drawContent() {
 
@@ -150,11 +158,10 @@ export default class AlarmConfigListModule extends GenericGridModule {
 											id: alarmConfigSelected.id,
 											labelAlias: (alarmConfigSelected.labelAlias) ? i18n.t(alarmConfigSelected.labelAlias) : alarmConfigSelected.alias,
 											alarmLevelLabelAlias: i18n.t(alarmConfigSelected.alarmLevel.labelAlias),
-											measures: (alarmConfigSelected.alarmConfigMeasures && alarmConfigSelected.alarmConfigMeasures[0].alarmMeasureOperation) ? true : false,
+											measures: (alarmConfigSelected.alarmConfigMeasures && alarmConfigSelected.alarmConfigMeasures[0].alarmMeasureOperation) ? "true" : "false",
 											alarmLevelId: alarmConfigSelected.alarmLevel.id,
 											elementSubtype: (alarmConfigSelected.elementSubtype && alarmConfigSelected.elementSubtype.labelAlias) ? i18n.t(alarmConfigSelected.elementSubtype.labelAlias) : "",
 											elementSubtypeId: (alarmConfigSelected.elementSubtype && alarmConfigSelected.elementSubtype.id) ? i18n.t(alarmConfigSelected.elementSubtype.id) : ""
-											
 										});
 									}
 	
@@ -175,7 +182,6 @@ export default class AlarmConfigListModule extends GenericGridModule {
 								
 								$$("table-" + self.uid).show();
 								$$("no-data-" + self.uid).hide();
-							
 							}
 						}
 					});
@@ -188,350 +194,418 @@ export default class AlarmConfigListModule extends GenericGridModule {
 
 			function getTable() {
 
-				const defaultGridOptionValues = [
-					{ gridOption: { id: 1 }, value: "false" },
-					{ gridOption: { id: 2 }, value: "true" },
-					{ gridOption: { id: 3 }, value: 4 },
-					{ gridOption: { id: 4 }, value: "asc" },
-					{ gridOption: { id: 5 }, value: undefined },
-					{ gridOption: { id: 6 }, value: undefined },
-					{ gridOption: { id: 7 }, value: "true" },
-					{ gridOption: { id: 8 }, value: "false" },
-					{ gridOption: { id: 9 }, value: "true" },
-					{ gridOption: { id: 10 }, value: "true" },
-					{ gridOption: { id: 11 }, value: "true" },
-					{ gridOption: { id: 12 }, value: "true" },
-					{ gridOption: { id: 13 }, value: "true" },
-					{ gridOption: { id: 14 }, value: "false" },
-					{ gridOption: { id: 15 }, value: "false" },
-					{ gridOption: { id: 16 }, value: "img/grid/alarmConfig.png" },
-					{ gridOption: { id: 17 }, value: "true" },
-					{ gridOption: { id: 20 }, value: "true" }
-				];
+				//				const defaultGridOptionValues = [
+				//					{ gridOption: { id: 1 }, value: "false" },
+				//					{ gridOption: { id: 2 }, value: "true" },
+				//					{ gridOption: { id: 3 }, value: 4 },
+				//					{ gridOption: { id: 4 }, value: "asc" },
+				//					{ gridOption: { id: 5 }, value: undefined },
+				//					{ gridOption: { id: 6 }, value: undefined },
+				//					{ gridOption: { id: 7 }, value: "true" },
+				//					{ gridOption: { id: 8 }, value: "false" },
+				//					{ gridOption: { id: 9 }, value: "true" },
+				//					{ gridOption: { id: 10 }, value: "true" },
+				//					{ gridOption: { id: 11 }, value: "true" },
+				//					{ gridOption: { id: 12 }, value: "true" },
+				//					{ gridOption: { id: 13 }, value: "true" },
+				//					{ gridOption: { id: 14 }, value: "false" },
+				//					{ gridOption: { id: 15 }, value: "false" },
+				//					{ gridOption: { id: 16 }, value: "img/grid/alarmConfig.png" },
+				//					{ gridOption: { id: 17 }, value: "true" },
+				//					{ gridOption: { id: 20 }, value: "true" }
+				//				];
+				//
+				//				let metadata = {
+				//					filter: true,
+				//					label: "LBL_ALARMS",
+				//					visible: true,
+				//					gridOptionValues: defaultGridOptionValues,
+				//					gridFields: [
+				//						{
+				//							id: 1,
+				//							enabled: true,
+				//							extended: false,
+				//							filtered: false,
+				//							groupingSummary: false,
+				//							isEpochMilli: false,
+				//							isPk: true,
+				//							label: "LBL_ID",
+				//							labelTooltip: "LBL_ID",
+				//							needsTranslation: false,
+				//							parameterized: false,
+				//							position: 1,
+				//							required: true,
+				//							sourceField: "id",
+				//							visible: false,
+				//							widthPx: 500,
+				//							gridFieldDataType: {
+				//								id: 1,
+				//								description: "string",
+				//								name: "string"
+				//							}
+				//						},
+				//						{
+				//							id: 3,
+				//							enabled: true,
+				//							extended: false,
+				//							filtered: false,
+				//							groupingSummary: false,
+				//							isEpochMilli: true,
+				//							isPk: false,
+				//							label: "",
+				//							labelTooltip: "",
+				//							needsTranslation: false,
+				//							parameterized: false,
+				//							position: 2,
+				//							required: true,
+				//							sourceField: "alarmLevelId",
+				//							visible: true,
+				//							widthPx: 35,
+				//							gridFieldIcons: [
+				//								{
+				//									id: 5,
+				//									avatar: false,
+				//									badgeColor: false,
+				//									enabled: true,
+				//									icon: "./img/grid/critical.png",
+				//									showValue: false,
+				//									value: "AlarmLevel:6",
+				//									labelValue: "LBL_ALARM_LEVEL_CLASIF_CRITICAL"
+				//								},
+				//								{
+				//									id: 6,
+				//									avatar: false,
+				//									badgeColor: false,
+				//									enabled: true,
+				//									icon: "./img/grid/critical.png",
+				//									showValue: false,
+				//									value: "AlarmLevel:5",
+				//									labelValue: "LBL_ALARM_LEVEL_CLASIF_CRITICAL"
+				//								},
+				//								{
+				//									id: 7,
+				//									avatar: false,
+				//									badgeColor: false,
+				//									enabled: true,
+				//									icon: "./img/grid/warn.png",
+				//									showValue: false,
+				//									value: "AlarmLevel:4",
+				//									labelValue: "LBL_ALARM_LEVEL_CLASIF_WARNING"
+				//								},
+				//								{
+				//									id: 8,
+				//									avatar: false,
+				//									badgeColor: false,
+				//									enabled: true,
+				//									icon: "./img/grid/warn.png",
+				//									showValue: false,
+				//									value: "AlarmLevel:3",
+				//									labelValue: "LBL_ALARM_LEVEL_CLASIF_WARNING"
+				//								},
+				//								{
+				//									id: 9,
+				//									avatar: false,
+				//									badgeColor: false,
+				//									enabled: true,
+				//									icon: "./img/grid/info.png",
+				//									showValue: false,
+				//									value: "AlarmLevel:2",
+				//									labelValue: "LBL_ALARM_LEVEL_CLASIF_INFO"
+				//								},
+				//								{
+				//									id: 10,
+				//									avatar: false,
+				//									badgeColor: false,
+				//									enabled: true,
+				//									icon: "./img/grid/info.png",
+				//									showValue: false,
+				//									value: "AlarmLevel:1",
+				//									labelValue: "LBL_ALARM_LEVEL_CLASIF_INFO"
+				//								}
+				//							],
+				//
+				//							gridFieldDataType: {
+				//								id: 1,
+				//								description: "string",
+				//								name: "string"
+				//							}
+				//						},
+				//						{
+				//							id: 4,
+				//							enabled: true,
+				//							extended: false,
+				//							filtered: false,
+				//							groupingSummary: false,
+				//							isEpochMilli: false,
+				//							isPk: false,
+				//							label: "LBL_ALIAS",
+				//							labelTooltip: "LBL_ALIAS",
+				//							needsTranslation: true,
+				//							parameterized: false,
+				//							position: 3,
+				//							required: true,
+				//							sourceField: "labelAlias",
+				//							visible: true,
+				//							widthPx: 600,
+				//							gridFieldDataType: {
+				//								id: 1,
+				//								description: "string",
+				//								name: "string"
+				//							}
+				//						},
+				//						{
+				//							id: 7,
+				//							enabled: true,
+				//							extended: false,
+				//							filtered: true,
+				//							groupingSummary: false,
+				//							isEpochMilli: false,
+				//							isPk: false,
+				//							label: "LBL_ELEMENT_SUBTYPE",
+				//							labelTooltip: "LBL_ELEMENT_SUBTYPE",
+				//							needsTranslation: true,
+				//							parameterized: true,
+				//							position: 4,
+				//							required: true,
+				//							sourceField: "elementSubtype",
+				//							visible: true,
+				//							widthPx: 500,
+				//							gridFieldDataType: {
+				//								id: 1,
+				//								description: "string",
+				//								name: "string"
+				//							}
+				//						},
+				//						{
+				//							id: 5,
+				//							enabled: true,
+				//							extended: false,
+				//							filtered: false,
+				//							groupingSummary: false,
+				//							isEpochMilli: false,
+				//							isPk: false,
+				//							label: "LBL_ALARM_CONFIG_THRESHOLDS",
+				//							labelTooltip: "LBL_ALARM_CONFIG_THRESHOLDS",
+				//							needsTranslation: false,
+				//							parameterized: false,
+				//							position: 5,
+				//							required: true,
+				//							sourceField: "measures",
+				//							visible: true,
+				//							widthPx: 100,
+				//							gridFieldIcons: [
+				//								{
+				//									icon: "./img/grid/confirmed.png",
+				//									showValue: false,
+				//									value: true,
+				//									labelValue: "LBL_ALARM_CONFIG_THRESHOLDS"
+				//								},
+				//								{
+				//									icon: "./img/grid/empty.png",
+				//									showValue: false,
+				//									value: false,
+				//									labelValue: ""
+				//								},
+				//							],
+				//							gridFieldDataType: {
+				//								id: 1,
+				//								description: "string",
+				//								name: "string"
+				//							}
+				//						},
+				//						{
+				//							id: 6,
+				//							enabled: true,
+				//							extended: false,
+				//							filtered: true,
+				//							groupingSummary: false,
+				//							isEpochMilli: false,
+				//							isPk: false,
+				//							label: "LBL_ALARM_LEVEL_LABEL_ALIAS",
+				//							labelTooltip: "LBL_ALARM_LEVEL_LABEL_ALIAS",
+				//							needsTranslation: true,
+				//							parameterized: true,
+				//							position: 6,
+				//							required: true,
+				//							sourceField: "alarmLevelLabelAlias",
+				//							visible: true,
+				//							widthPx: 200,
+				//							gridFieldIcons: [
+				//								{
+				//									id: 11,
+				//									avatar: false,
+				//									badgeColor: false,
+				//									enabled: true,
+				//									icon: "./img/grid/alarm_level_1.png",
+				//									showValue: false,
+				//									value: "LEVEL_MAINTENANCE",
+				//									labelValue: "LBL_ALARM_LEVEL_MAINTENANCE"
+				//								},
+				//								{
+				//									id: 12,
+				//									avatar: false,
+				//									badgeColor: false,
+				//									enabled: true,
+				//									icon: "./img/grid/alarm_level_2.png",
+				//									showValue: false,
+				//									value: "LEVEL_0",
+				//									labelValue: "LBL_ALARM_LEVEL_0"
+				//								},
+				//								{
+				//									id: 13,
+				//									avatar: false,
+				//									badgeColor: false,
+				//									enabled: true,
+				//									icon: "./img/grid/alarm_level_3.png",
+				//									showValue: false,
+				//									value: "LEVEL_1",
+				//									labelValue: "LBL_ALARM_LEVEL_1"
+				//								},
+				//								{
+				//									id: 14,
+				//									avatar: false,
+				//									badgeColor: false,
+				//									enabled: true,
+				//									icon: "./img/grid/alarm_level_4.png",
+				//									showValue: false,
+				//									value: "LEVEL_2",
+				//									labelValue: "LBL_ALARM_LEVEL_2"
+				//								},
+				//								{
+				//									id: 15,
+				//									avatar: false,
+				//									badgeColor: false,
+				//									enabled: true,
+				//									icon: "./img/grid/alarm_level_5.png",
+				//									showValue: false,
+				//									value: "LEVEL_3",
+				//									labelValue: "LBL_ALARM_LEVEL_3"
+				//								},
+				//								{
+				//									id: 16,
+				//									avatar: false,
+				//									badgeColor: false,
+				//									enabled: true,
+				//									icon: "./img/grid/alarm_level_6.png",
+				//									showValue: false,
+				//									value: "LEVEL_4",
+				//									labelValue: "LBL_ALARM_LEVEL_4"
+				//								}
+				//							],
+				//							gridFieldDataType: {
+				//								id: 1,
+				//								description: "string",
+				//								name: "string"
+				//							}
+				//						}
+				//					],
+				//					gridCommands: [],
+				//					refreshCallback: function() {
+				//
+				//						let idSelected = self.listView.getSelectedId()
+				//
+				//						webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.alarmConfigByElementType, { id: idSelected })).then(function(alarmsConfigToUpdateResponse) {
+				//
+				//							if (alarmsConfigToUpdateResponse != null) {
+				//
+				//								let alarmsConfigToUpdate = alarmsConfigToUpdateResponse.json();
+				//
+				//								if (Array.isArray(alarmsConfigToUpdate) && alarmsConfigToUpdate.length > 0) {
+				//
+				//									let alarmConfigToTable = [];
+				//
+				//									for (let alarmConfigToUpdate of alarmsConfigToUpdate) {
+				//
+				//										alarmConfigToTable.push({
+				//											id: alarmConfigToUpdate.id,
+				//											labelAlias: (alarmConfigToUpdate.labelAlias) ? i18n.t(alarmConfigToUpdate.labelAlias) : alarmConfigToUpdate.alias,
+				//											alarmLevelLabelAlias: i18n.t(alarmConfigToUpdate.alarmLevel.labelAlias),
+				//											measures: (alarmConfigToUpdate.alarmConfigMeasures && alarmConfigToUpdate.alarmConfigMeasures[0].alarmMeasureOperation) ? "true" : "false",
+				//											alarmLevelId: alarmConfigToUpdate.alarmLevel.id,
+				//											elementSubtype: (alarmConfigToUpdate.elementSubtype && alarmConfigToUpdate.elementSubtype.labelAlias) ? i18n.t(alarmConfigToUpdate.elementSubtype.labelAlias) : "",
+				//											elementSubtypeId: (alarmConfigToUpdate.elementSubtype && alarmConfigToUpdate.elementSubtype.id) ? i18n.t(alarmConfigToUpdate.elementSubtype.id) : ""
+				//										});
+				//									}
+				//
+				//									self.dataTable.clear();
+				//									self.dataTable.add(alarmConfigToTable);
+				//								}
+				//							}
+				//						});
+				//					}
+				//				};
+				//
+				//				if (self.editAlarmConfigsPermission) {
+				//
+				//					metadata.gridCommands.push(
+				//						{
+				//							id: 1,
+				//							value: "LBL_EDIT",
+				//							icon: "mdi mdi-pencil",
+				//							default_: true,
+				//							label: "LBL_CMD_EDIT",
+				//							showText: false,
+				//							position: 2,
+				//							multiselect: false,
+				//							itemRequired: true,
+				//							moduleAction: { id: self.config.action.edit }
+				//						},
+				//						{
+				//							id: 2,
+				//							value: "LBL_ADD",
+				//							icon: "mdi mdi-plus",
+				//							default_: false,
+				//							label: "LBL_CMD_ADD",
+				//							showText: false,
+				//							position: 1,
+				//							multiselect: false,
+				//							itemRequired: false
+				//						},
+				//						{
+				//							id: 3,
+				//							value: "LBL_DELETE",
+				//							icon: "mdi mdi-delete",
+				//							default_: false,
+				//							label: "LBL_CMD_DELETE",
+				//							showText: false,
+				//							position: 3,
+				//							multiselect: true,
+				//							itemRequired: true,
+				//							moduleAction: { id: self.config.action.delete }
+				//						}
+				//					);
+				//				}
+				//
+				//				let events = {};
 
-				let metadata = {
-					filter: true,
-					label: "LBL_ALARMS",
-					visible: true,
-					gridOptionValues: defaultGridOptionValues,
-					gridFields: [
-						{
-							id: 1,
-							enabled: true,
-							extended: false,
-							filtered: false,
-							groupingSummary: false,
-							isEpochMilli: false,
-							isPk: true,
-							label: "LBL_ID",
-							labelTooltip: "LBL_ID",
-							needsTranslation: false,
-							parameterized: false,
-							position: 1,
-							required: true,
-							sourceField: "id",
-							visible: false,
-							widthPx: 500,
-							gridFieldDataType: {
-								id: 1,
-								description: "string",
-								name: "string"
-							}
-						},
-						{
-							id: 3,
-							enabled: true,
-							extended: false,
-							filtered: false,
-							groupingSummary: false,
-							isEpochMilli: true,
-							isPk: false,
-							label: "",
-							labelTooltip: "",
-							needsTranslation: false,
-							parameterized: false,
-							position: 2,
-							required: true,
-							sourceField: "alarmLevelId",
-							visible: true,
-							widthPx: 35,
-							gridFieldIcons: [
-								{
-									id: 5,
-									avatar: false,
-									badgeColor: false,
-									enabled: true,
-									icon: "./img/grid/critical.png",
-									showValue: false,
-									value: "AlarmLevel:6",
-									labelValue: "LBL_ALARM_LEVEL_CLASIF_CRITICAL"
-								},
-								{
-									id: 6,
-									avatar: false,
-									badgeColor: false,
-									enabled: true,
-									icon: "./img/grid/critical.png",
-									showValue: false,
-									value: "AlarmLevel:5",
-									labelValue: "LBL_ALARM_LEVEL_CLASIF_CRITICAL"
-								},
-								{
-									id: 7,
-									avatar: false,
-									badgeColor: false,
-									enabled: true,
-									icon: "./img/grid/warn.png",
-									showValue: false,
-									value: "AlarmLevel:4",
-									labelValue: "LBL_ALARM_LEVEL_CLASIF_WARNING"
-								},
-								{
-									id: 8,
-									avatar: false,
-									badgeColor: false,
-									enabled: true,
-									icon: "./img/grid/warn.png",
-									showValue: false,
-									value: "AlarmLevel:3",
-									labelValue: "LBL_ALARM_LEVEL_CLASIF_WARNING"
-								},
-								{
-									id: 9,
-									avatar: false,
-									badgeColor: false,
-									enabled: true,
-									icon: "./img/grid/info.png",
-									showValue: false,
-									value: "AlarmLevel:2",
-									labelValue: "LBL_ALARM_LEVEL_CLASIF_INFO"
-								},
-								{
-									id: 10,
-									avatar: false,
-									badgeColor: false,
-									enabled: true,
-									icon: "./img/grid/info.png",
-									showValue: false,
-									value: "AlarmLevel:1",
-									labelValue: "LBL_ALARM_LEVEL_CLASIF_INFO"
-								}
-							],
+				//
+				//				events[DataTable.EventTypes.ON_COMMAND_EXEC] = [];
+				//
+				//				events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
+				//					commandId: 2,
+				//					function: () => {
+				//						let itemSelected = self.listView.getSelectedItems();
+				//						let mod = util.module.getFromModuleAction(self.config.action.add);
+				//
+				//						let moduleAction = {
+				//							id: self.config.action.add
+				//						};
+				//
+				//						let args = {
+				//							elementType: itemSelected[0],
+				//							callbacks: [metadata.refreshCallback]
+				//						};
+				//
+				//						util.module.open(mod, moduleAction, VIEW_TYPE_WINDOW, null, args);
+				//					}
+				//				});
 
-							gridFieldDataType: {
-								id: 1,
-								description: "string",
-								name: "string"
-							}
-						},
-						{
-							id: 4,
-							enabled: true,
-							extended: false,
-							filtered: false,
-							groupingSummary: false,
-							isEpochMilli: false,
-							isPk: false,
-							label: "LBL_ALIAS",
-							labelTooltip: "LBL_ALIAS",
-							needsTranslation: true,
-							parameterized: false,
-							position: 3,
-							required: true,
-							sourceField: "labelAlias",
-							visible: true,
-							widthPx: 600,
-							gridFieldDataType: {
-								id: 1,
-								description: "string",
-								name: "string"
-							}
-						},
-						{
-							id: 7,
-							enabled: true,
-							extended: false,
-							filtered: true,
-							groupingSummary: false,
-							isEpochMilli: false,
-							isPk: false,
-							label: "LBL_ELEMENT_SUBTYPE",
-							labelTooltip: "LBL_ELEMENT_SUBTYPE",
-							needsTranslation: true,
-							parameterized: true,
-							position: 4,
-							required: true,
-							sourceField: "elementSubtype",
-							visible: true,
-							widthPx: 500,
-							gridFieldDataType: {
-								id: 1,
-								description: "string",
-								name: "string"
-							}
-						},
-						{
-							id: 5,
-							enabled: true,
-							extended: false,
-							filtered: false,
-							groupingSummary: false,
-							isEpochMilli: false,
-							isPk: false,
-							label: "LBL_ALARM_CONFIG_THRESHOLDS",
-							labelTooltip: "LBL_ALARM_CONFIG_THRESHOLDS",
-							needsTranslation: false,
-							parameterized: false,
-							position: 5,
-							required: true,
-							sourceField: "measures",
-							visible: true,
-							widthPx: 100,
-							gridFieldIcons: [
-								{
-									icon: "./img/grid/confirmed.png",
-									showValue: false,
-									value: true,
-									labelValue: "LBL_ALARM_CONFIG_THRESHOLDS"
-								},
-								{
-									icon: "./img/grid/empty.png",
-									showValue: false,
-									value: false,
-									labelValue: ""
-								},
-							],
-							gridFieldDataType: {
-								id: 1,
-								description: "string",
-								name: "string"
-							}
-						},
-						{
-							id: 6,
-							enabled: true,
-							extended: false,
-							filtered: true,
-							groupingSummary: false,
-							isEpochMilli: false,
-							isPk: false,
-							label: "LBL_ALARM_LEVEL_LABEL_ALIAS",
-							labelTooltip: "LBL_ALARM_LEVEL_LABEL_ALIAS",
-							needsTranslation: true,
-							parameterized: true,
-							position: 6,
-							required: true,
-							sourceField: "alarmLevelLabelAlias",
-							visible: true,
-							widthPx: 200,
-							gridFieldIcons: [
-								{
-									id: 11,
-									avatar: false,
-									badgeColor: false,
-									enabled: true,
-									icon: "./img/grid/alarm_level_1.png",
-									showValue: false,
-									value: "LEVEL_MAINTENANCE",
-									labelValue: "LBL_ALARM_LEVEL_MAINTENANCE"
-								},
-								{
-									id: 12,
-									avatar: false,
-									badgeColor: false,
-									enabled: true,
-									icon: "./img/grid/alarm_level_2.png",
-									showValue: false,
-									value: "LEVEL_0",
-									labelValue: "LBL_ALARM_LEVEL_0"
-								},
-								{
-									id: 13,
-									avatar: false,
-									badgeColor: false,
-									enabled: true,
-									icon: "./img/grid/alarm_level_3.png",
-									showValue: false,
-									value: "LEVEL_1",
-									labelValue: "LBL_ALARM_LEVEL_1"
-								},
-								{
-									id: 14,
-									avatar: false,
-									badgeColor: false,
-									enabled: true,
-									icon: "./img/grid/alarm_level_4.png",
-									showValue: false,
-									value: "LEVEL_2",
-									labelValue: "LBL_ALARM_LEVEL_2"
-								},
-								{
-									id: 15,
-									avatar: false,
-									badgeColor: false,
-									enabled: true,
-									icon: "./img/grid/alarm_level_5.png",
-									showValue: false,
-									value: "LEVEL_3",
-									labelValue: "LBL_ALARM_LEVEL_3"
-								},
-								{
-									id: 16,
-									avatar: false,
-									badgeColor: false,
-									enabled: true,
-									icon: "./img/grid/alarm_level_6.png",
-									showValue: false,
-									value: "LEVEL_4",
-									labelValue: "LBL_ALARM_LEVEL_4"
-								}
-							],
-							gridFieldDataType: {
-								id: 1,
-								description: "string",
-								name: "string"
-							}
-						}
-					],
-					gridCommands: [],
-					refreshCallback: function() {
-
-						let idSelected = self.listView.getSelectedId()
-
-						webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.alarmConfigByElementType, { id: idSelected })).then(function(alarmsConfigToUpdateResponse) {
-
-							if (alarmsConfigToUpdateResponse != null) {
-
-								let alarmsConfigToUpdate = alarmsConfigToUpdateResponse.json();
-
-								if (Array.isArray(alarmsConfigToUpdate) && alarmsConfigToUpdate.length > 0) {
-
-									let alarmConfigToTable = [];
-
-									for (let alarmConfigToUpdate of alarmsConfigToUpdate) {
-
-										alarmConfigToTable.push({
-											id: alarmConfigToUpdate.id,
-											labelAlias: (alarmConfigToUpdate.labelAlias) ? i18n.t(alarmConfigToUpdate.labelAlias) : alarmConfigToUpdate.alias,
-											alarmLevelLabelAlias: i18n.t(alarmConfigToUpdate.alarmLevel.labelAlias),
-											measures: (alarmConfigToUpdate.alarmConfigMeasures && alarmConfigToUpdate.alarmConfigMeasures[0].alarmMeasureOperation) ? true : false,
-											alarmLevelId: alarmConfigToUpdate.alarmLevel.id,
-											elementSubtype: (alarmConfigToUpdate.elementSubtype && alarmConfigToUpdate.elementSubtype.labelAlias) ? i18n.t(alarmConfigToUpdate.elementSubtype.labelAlias) : "",
-											elementSubtypeId: (alarmConfigToUpdate.elementSubtype && alarmConfigToUpdate.elementSubtype.id) ? i18n.t(alarmConfigToUpdate.elementSubtype.id) : ""
-										});
-									}
-
-									self.dataTable.clear();
-									self.dataTable.add(alarmConfigToTable);
-								}
-							}
-						});
-					}
-				};
+				let data = [];
+				let metadataCopy = webix.copy(alarmConfigGrid.metadata);
 
 				if (self.editAlarmConfigsPermission) {
 
-					metadata.gridCommands.push(
+					metadataCopy.gridCommands.push(
 						{
 							id: 1,
 							value: "LBL_EDIT",
@@ -570,6 +644,40 @@ export default class AlarmConfigListModule extends GenericGridModule {
 					);
 				}
 
+				metadataCopy.refreshCallback = function() {
+
+					let idSelected = self.listView.getSelectedId()
+
+					webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.alarmConfigByElementType, { id: idSelected })).then(function(alarmsConfigToUpdateResponse) {
+
+						if (alarmsConfigToUpdateResponse != null) {
+
+							let alarmsConfigToUpdate = alarmsConfigToUpdateResponse.json();
+
+							if (Array.isArray(alarmsConfigToUpdate) && alarmsConfigToUpdate.length > 0) {
+
+								let alarmConfigToTable = [];
+
+								for (let alarmConfigToUpdate of alarmsConfigToUpdate) {
+
+									alarmConfigToTable.push({
+										id: alarmConfigToUpdate.id,
+										labelAlias: (alarmConfigToUpdate.labelAlias) ? i18n.t(alarmConfigToUpdate.labelAlias) : alarmConfigToUpdate.alias,
+										alarmLevelLabelAlias: i18n.t(alarmConfigToUpdate.alarmLevel.labelAlias),
+										measures: (alarmConfigToUpdate.alarmConfigMeasures && alarmConfigToUpdate.alarmConfigMeasures[0].alarmMeasureOperation) ? "true" : "false",
+										alarmLevelId: alarmConfigToUpdate.alarmLevel.id,
+										elementSubtype: (alarmConfigToUpdate.elementSubtype && alarmConfigToUpdate.elementSubtype.labelAlias) ? i18n.t(alarmConfigToUpdate.elementSubtype.labelAlias) : "",
+										elementSubtypeId: (alarmConfigToUpdate.elementSubtype && alarmConfigToUpdate.elementSubtype.id) ? i18n.t(alarmConfigToUpdate.elementSubtype.id) : ""
+									});
+								}
+
+								self.dataTable.clear();
+								self.dataTable.add(alarmConfigToTable);
+							}
+						}
+					});
+				}
+
 				let events = {};
 
 				events[DataTable.EventTypes.ON_COMMAND_EXEC] = [];
@@ -577,6 +685,7 @@ export default class AlarmConfigListModule extends GenericGridModule {
 				events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
 					commandId: 2,
 					function: () => {
+
 						let itemSelected = self.listView.getSelectedItems();
 						let mod = util.module.getFromModuleAction(self.config.action.add);
 
@@ -586,16 +695,14 @@ export default class AlarmConfigListModule extends GenericGridModule {
 
 						let args = {
 							elementType: itemSelected[0],
-							callbacks: [metadata.refreshCallback]
+							callbacks: [metadataCopy.refreshCallback]
 						};
 
 						util.module.open(mod, moduleAction, VIEW_TYPE_WINDOW, null, args);
 					}
 				});
 
-				let data = [];
-				
-				self.dataTable = new DataTable(DATA_GRID_ID, null, metadata, data, events);
+				self.dataTable = new DataTable(DATA_GRID_ID, null, metadataCopy, data, events);
 
 				return self.dataTable.getView();
 			}
