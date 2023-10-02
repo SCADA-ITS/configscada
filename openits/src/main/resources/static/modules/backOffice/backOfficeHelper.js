@@ -48,7 +48,9 @@ export default class BackOfficeHelper {
 				AUTOREFRESH_FORM: { name: "autorefresh" },
 				REFER_TABLES: { name: "referTables" },
 				GROUP_IMAGES: { name: "groupImages" },
-				GROUP_ATTACHMENTS: { name: "groupAttachments" }
+				GROUP_ATTACHMENTS: { name: "groupAttachments" },
+				PRINTABLE: { name: "printable", default: true },
+				EXPORTABLE: { name: "exportable", default: true }
 			}
 		}
 	}

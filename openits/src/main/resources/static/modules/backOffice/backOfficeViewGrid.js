@@ -392,6 +392,9 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 						let icon;
 						let withIcon = (self.currentTableData.mdiIcon) ? "true" : "false";
 
+						const printable = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, BackOfficeHelper.META_TYPE_TABLE.PROPERTY.PRINTABLE, self.backOffice.metadata, self.currentTableData);
+						const exportable = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, BackOfficeHelper.META_TYPE_TABLE.PROPERTY.EXPORTABLE, self.backOffice.metadata, self.currentTableData);
+
 						const defaultGridOptionValues = [
 							{ gridOption: { id: 1 }, value: "true" },
 							//					{ gridOption: { id: 2 }, value: "true" },
@@ -407,7 +410,8 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 							{ gridOption: { id: 14 }, value: "false" },
 							{ gridOption: { id: 21 }, value: "auto" },
 							{ gridOption: { id: 23 }, value: "true" },
-							{ gridOption: { id: 25 }, value: "true" }
+							{ gridOption: { id: 25 }, value: printable },
+							{ gridOption: { id: 26 }, value: exportable }
 						];
 
 						if (IS_TRUE(withIcon)) {

@@ -26,7 +26,6 @@ export default class PrintPreview {
 		this.data = data;
 		this.options = options;
 		this.fieldsSelectedIdsArr = [];
-		this.templateWinId = undefined;
 
 		this.uid = webix.uid();
 	}
@@ -478,30 +477,11 @@ export default class PrintPreview {
 
 		function drawTemplate() {
 
+			let templateWinId;
 			let templateToPrint = {};
 
 			templateToPrint = {
 				rows: [
-					{
-						id: "toolbar-print-" + self.uid,
-						view: "toolbar",
-						elements: [
-							{
-								id: "button-print-" + self.uid,
-								view: "button",
-								type: "icon",
-								icon: "mdi mdi-printer",
-								css: "grid-button-text",
-								width: 120,
-								on: {
-									onItemClick: function() {
-
-										webix.print($$("template-" + self.uid), { mode: "landscape" });
-									}
-								}
-							}
-						]
-					},
 					{
 						id: "scroll-" + self.uid,
 						view: "scrollview",
@@ -520,10 +500,16 @@ export default class PrintPreview {
 
 											createReport();
 
-											let templateHTML = document.getElementById('template');
+											if (templateWinId) {
+												
+												$$(templateWinId).hide();
 
-											util.ui.resizeWindow(self.templateWinId, templateHTML.clientWidth, 750);
-											util.ui.centerWindow(self.templateWinId);
+												webix.delay(function() {
+
+													webix.print($$("template-" + self.uid), { mode: "landscape" });
+													$$(templateWinId).close();
+												}, 1500);
+											}
 										}
 									}
 								}
@@ -557,7 +543,7 @@ export default class PrintPreview {
 
 							let HTMLtitle = HTMLTemplate.querySelector("#title" + numOfTable);
 
-							HTMLtitle.innerHTML = val[0].caption;
+							HTMLtitle.innerHTML = val[0].caption ?? "";
 
 							for (let j = 0; j < val.length; j++) {
 
@@ -592,7 +578,7 @@ export default class PrintPreview {
 
 							for (let dat of classData) {
 
-								dat.innerHTML = (self.data[key]) ? self.data[key] : "";
+								dat.innerHTML = (self.data[key]) ? self.data[key] : "-";
 							}
 						} else {
 
@@ -600,14 +586,14 @@ export default class PrintPreview {
 
 							if (fieldData) {
 
-								fieldData.innerHTML = (self.data[key]) ? self.data[key] : "";
+								fieldData.innerHTML = (self.data[key]) ? self.data[key] : "-";
 							}
 						}
 					}
 				}
 			}
 
-			self.templateWinId = util.ui.loadWindow(i18n.t("LBL_TABLE_PRINT"), templateToPrint, 750, 1200, true);
+			templateWinId = util.ui.loadWindow(i18n.t("LBL_TABLE_PRINT"), templateToPrint, 750, 1200, true);
 		}
 
 		function drawChart() {
