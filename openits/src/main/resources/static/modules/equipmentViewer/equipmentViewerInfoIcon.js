@@ -327,13 +327,13 @@ export default class EquipmentViewerInfoIcon {
 									return `<div class="equip-viewer-info">
 											<span class="ico webix_icon mdi mdi-map-marker"></span>
 											<span class="title">${i18n.t("LBL_ELEMENT_LOCATION")}</span>
-											<span class="value">${self.element.location.alias} - ${self.element.location.stretchs[0].alias} - ${self.element.location.stretchs[0].road.alias} ${ellipsis}</span>									
+											<span class="value link-value">${self.element.location.alias} - ${self.element.location.stretchs[0].alias} - ${self.element.location.stretchs[0].road.alias} ${ellipsis}</span>									
 										</div>`;
 								} else {
 									return `<div class="equip-viewer-info">
 											<span class="ico webix_icon mdi mdi-map-marker"></span>
 											<span class="title">${i18n.t("LBL_ELEMENT_LOCATION")}</span>
-											<span class="value">${self.element.location.alias}</span>									
+											<span class="value link-value">${self.element.location.alias}</span>									
 										</div>`;
 								}
 							} else {
@@ -342,6 +342,33 @@ export default class EquipmentViewerInfoIcon {
 											<span class="title">${i18n.t("LBL_ELEMENT_LOCATION")}</span>
 											<span class="value"> - </span>									
 										</div>`;
+							}
+						},
+						on: {
+							onAfterRender: function() {
+
+								let linkLabel = $$(this).getNode().querySelector('.link-value');
+
+								if (linkLabel) {
+
+									linkLabel.addEventListener('click', function() {
+
+										if (self.parent.config.moduleAction && self.parent.config.moduleAction.showInMapOrSynoptic) {
+
+											let mod = util.module.getFromModuleAction(self.parent.config.moduleAction.showInMapOrSynoptic);
+
+											let moduleAction = {
+												id: self.parent.config.moduleAction.showInMapOrSynoptic
+											};
+
+											let args = {
+												selectedPks: [self.element.id]
+											};
+
+											util.module.open(mod, moduleAction, undefined, null, args, undefined);
+										}
+									});
+								}
 							}
 						}
 					},

@@ -139,6 +139,12 @@
     font-weight: 500;
 }
 
+.equip-viewer-info .link-value {
+    text-decoration: underline;
+    cursor: pointer;
+    color: var(--blue-mid2) !important;
+}
+
 .equip-viewer-info-image .image {
 	display: block;
     margin-left: auto;
