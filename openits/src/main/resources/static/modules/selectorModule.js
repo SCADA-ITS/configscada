@@ -16,12 +16,15 @@ export default class SelectorModule extends GenericModule {
 		this.config = module.config;
 		this.treeNodes = undefined;
 		this.componentView = undefined;
-		this.treeView = undefined;
+		this.treeView = undefined;		
+		this.sessionData = webix.storage.session.get(SESSION_STORAGE_SESSION_DATA);
+		
 	}
 
 	loadData() {
 
 		let self = this;
+		let managementAreasEnables = (self.sessionData.managementAreaId) ?? undefined;  
 
 		if ($$(this.uid)) {
 
@@ -163,9 +166,26 @@ export default class SelectorModule extends GenericModule {
 				if (Array.isArray(nodes) && nodes.length > 0) {
 
 					nodes.forEach(node => {
+						
+						let managementAreas = undefined;
 
-						let treeData = newTreeData(node.id);
-						mapNodes.set(node.id, treeData);
+						if (node.managementAreas) {
+
+							try {
+
+								managementAreas = JSON.parse(node.managementAreas);
+
+							} catch (e) {
+
+								managementAreas = undefined;
+							}
+						}
+
+						if ((managementAreas === undefined || (managementAreasEnables && managementAreas.find(id => id === managementAreasEnables)))) {
+
+							let treeData = newTreeData(node.id);
+							mapNodes.set(node.id, treeData);
+						}
 					});
 				}
 
@@ -176,8 +196,15 @@ export default class SelectorModule extends GenericModule {
 						let parentElement = mapNodes.get(hierarchy.nodeParentId);
 						let childElement = mapNodes.get(hierarchy.nodeChildId);
 
-						parentElement.props.folder = true;
-						parentElement.data.push(childElement);
+						if (parentElement) {
+
+							parentElement.props.folder = true;
+						}
+
+						if (childElement && parentElement) {
+
+							parentElement.data.push(childElement);
+						}
 
 						childElements.push(hierarchy.nodeChildId);
 					});

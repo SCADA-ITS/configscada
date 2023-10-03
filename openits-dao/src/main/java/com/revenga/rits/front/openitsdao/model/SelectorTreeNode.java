@@ -36,6 +36,9 @@ public class SelectorTreeNode implements Serializable {
 	private Integer position;
 	
 	private Boolean visible;
+	
+	@Column(name="management_areas")
+	private String managementAreas;
 
 	// bi-directional many-to-one association to Tree
 	@JsonIgnore
@@ -102,6 +105,14 @@ public class SelectorTreeNode implements Serializable {
 
 	public void setImage(String image) {
 		this.image = image;
+	}
+
+	public String getManagementAreas() {
+		return this.managementAreas;
+	}
+
+	public void setManagementAreas(String managementAreas) {
+		this.managementAreas = managementAreas;
 	}
 
 	public Integer getPosition() {
