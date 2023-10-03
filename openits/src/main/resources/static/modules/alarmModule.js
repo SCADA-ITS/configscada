@@ -1152,8 +1152,8 @@ export default class AlarmModule extends GenericModule {
 												},
 												{
 													view: "icon",
-													width: 20,
-													height: 20,
+													width: 24,
+													height: 24,
 													css: "alarm-module-window-edit-button",
 													icon: "mdi mdi-pencil",
 													value: i18n.t("LBL_EDIT_ALARM_CONFIG"),
@@ -1296,6 +1296,15 @@ export default class AlarmModule extends GenericModule {
 		};
 
 		webix.ui(viewMain, $$(this.uid));
+		
+		let contentHeight = $$(this.uid).$height;
+		let winHeight = $$(this.uid).getTopParentView().$height;
+
+		if ((contentHeight / winHeight) > 0.95) {
+
+			let winWidth = $$(this.uid).getTopParentView().$width;
+			util.ui.resizeWindow(self.args.containerId, winWidth, winHeight * 1.1);
+		}
 
 		function getBackOffice() {
 
