@@ -347,7 +347,7 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 										
 									if (!filterColumnName || column.name != filterColumnName) {
 										
-										const referencedColumnValue = BackOfficeHelper.getReferencedColumnValue(column, e.value, self.data);
+										const referencedColumnValue = BackOfficeHelper.getReferencedColumnValue(self.backOffice, column, e.value, self.data);
 										
 										let value = e.value;
 										
@@ -461,7 +461,7 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 
 								if (!filterColumnName || column.name != filterColumnName) {
 
-									const referencedColumnName = BackOfficeHelper.getReferencedColumnName(column, self.data);
+									const referencedColumnName = BackOfficeHelper.getReferencedColumnName(self.backOffice, column, self.data);
 									const sourceField = referencedColumnName ? (BackOfficeHelper.getColumnUID(referencedColumnName)) : BackOfficeHelper.getColumnUID(column);
 
 									let dataTypeId = BackOfficeHelper.getDBTypes(referencedColumnName ? referencedColumnName.colType : column.colType).id;

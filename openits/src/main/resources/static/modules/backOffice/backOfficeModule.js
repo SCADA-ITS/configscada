@@ -128,17 +128,7 @@ export default class BackOfficeModule extends GenericModule {
 					$$("loading-" + self.uid).hide();
 					
 					let isCreating = false;
-					let backOfficeManagerView = backOfficeManager.getView(onCreate);
-					
-					if (backOfficeManagerView && !isCreating) {
-						
-						webix.ui(backOfficeManager.getView(), $$(self.uid));
-											
-						if (self.args.onLoad) {
-							
-							self.args.onLoad();
-						}	
-					}
+					backOfficeManager.getView(onCreate, onGetView);
 					
 					function onCreate() {
 				
@@ -150,6 +140,19 @@ export default class BackOfficeModule extends GenericModule {
 							
 							container.close();
 						}
+					}
+					
+					function onGetView(backOfficeManagerView) {
+					
+						if (backOfficeManagerView && !isCreating) {
+						
+							webix.ui(backOfficeManagerView, $$(self.uid));
+												
+							if (self.args.onLoad) {
+								
+								self.args.onLoad();
+							}	
+						}		
 					}
 				});	
 			});

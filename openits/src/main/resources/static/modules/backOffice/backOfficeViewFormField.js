@@ -15,9 +15,10 @@ export default class BackOfficeViewFormField  {
 		this.refresh = form.refresh;
 		this.setValues = form.setValues;
 		this.isVisible = true;
+		this.formId = form.formId;
 	}
 	
-	getField(column) {
+	getField(column, options) {
 		
 		let self = this;
 		let newField;
@@ -36,6 +37,8 @@ export default class BackOfficeViewFormField  {
 				field.required = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_COLUMN, BackOfficeHelper.META_TYPE_COLUMN.PROPERTY.REQUIRED, self.backOffice.metadata, column);
 				field.readonly = !BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_COLUMN, BackOfficeHelper.META_TYPE_COLUMN.PROPERTY.EDITABLE, self.backOffice.metadata, column);
 				field.hidden = !BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_COLUMN, BackOfficeHelper.META_TYPE_COLUMN.PROPERTY.FORM_VISIBLE, self.backOffice.metadata, column);
+				
+				applyOptions(field);
 				
 				const showIdForm = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, BackOfficeHelper.META_TYPE_TABLE.PROPERTY.SHOW_ID_FORM, self.backOffice.metadata, self.currentTableData);
 				
@@ -95,7 +98,7 @@ export default class BackOfficeViewFormField  {
 				
 				if (refColumn && refTable) {
 					
-					const referencedColumnValue = BackOfficeHelper.getReferencedColumnValue(column, value, self.data);
+					const referencedColumnValue = BackOfficeHelper.getReferencedColumnValue(self.backOffice, column, value, self.data);
 					const associatedField = self.currentTableData.columns.find(e => column.metadata && BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_COLUMN, BackOfficeHelper.META_TYPE_COLUMN.PROPERTY.ASSOCIATED_FIELD_NAME, self.backOffice.metadata, column)  === e.name);
 					const refGroupField = refTable.columns.find(e => column.metadata && BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_COLUMN, BackOfficeHelper.META_TYPE_COLUMN.PROPERTY.REF_GROUP_FIELD_NAME, self.backOffice.metadata, column) === e.name);
 					const dependentColumns = self.currentTableData.columns.filter(e => e.metadata && BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_COLUMN, BackOfficeHelper.META_TYPE_COLUMN.PROPERTY.ASSOCIATED_FIELD_NAME, self.backOffice.metadata, e) === BackOfficeHelper.getColumnNameFromColumnUID(field.name));										
@@ -156,8 +159,8 @@ export default class BackOfficeViewFormField  {
 													
 												dependentColumns.forEach(dependCol => {
 													
-													const form = $$("form-" + self.uid);
-													const dependentReferencedColumnName = BackOfficeHelper.getReferencedColumnName(dependCol, self.data);
+													const form = $$(self.formId);
+													const dependentReferencedColumnName = BackOfficeHelper.getReferencedColumnName(self.backOffice, dependCol, self.data);
 													
 													if (dependentReferencedColumnName && form) {
 														
@@ -205,7 +208,7 @@ export default class BackOfficeViewFormField  {
 												
 												if (colFilter) {
 													
-													const form = $$("form-" + self.uid);
+													const form = $$(self.formId);
 													
 													if (form) {
 														
@@ -257,7 +260,7 @@ export default class BackOfficeViewFormField  {
 									on: {
 										onItemClick: function() {
 											
-											const form = $$("form-" + self.uid);
+											const form = $$(self.formId);
 											const table = self.data.find(e => e.id === refColumn.tableId);
 											
 											if (form && table) {
@@ -359,7 +362,7 @@ export default class BackOfficeViewFormField  {
 								
 								function onAccept(selection) {
 									
-									const form = $$("form-" + self.uid);
+									const form = $$(self.formId);
 									
 									if (form && selection) {
 										
@@ -434,7 +437,7 @@ export default class BackOfficeViewFormField  {
 									
 									for (let [key, value] of group) {
 										
-										const groupValue = BackOfficeHelper.getReferencedColumnValue(refGroupField, JSON.parse(key).value, self.data);
+										const groupValue = BackOfficeHelper.getReferencedColumnValue(self.backOffice, refGroupField, JSON.parse(key).value, self.data);
 										
 										let folder = {
 											
@@ -485,7 +488,7 @@ export default class BackOfficeViewFormField  {
 								
 								function onAccept(selection) {
 									
-									const form = $$("form-" + self.uid);
+									const form = $$(self.formId);
 									
 									if (form && selection) {
 										
@@ -623,7 +626,7 @@ export default class BackOfficeViewFormField  {
 									
 									self.refresh();
 									
-									const form = $$("form-" + self.uid);
+									const form = $$(self.formId);
 									
 									if (form) {
 									
@@ -711,7 +714,7 @@ export default class BackOfficeViewFormField  {
 									    	
 			    	if (btnAccept) {
 				
-						const form = $$("form-" + self.uid);
+						const form = $$(self.formId);
 																					
 						if (form) {
 												
@@ -733,7 +736,7 @@ export default class BackOfficeViewFormField  {
 				
 				function filler() {
 							
-					const form = $$("form-" + self.uid);
+					const form = $$(self.formId);
 										
 					if (form) {
 						
@@ -752,7 +755,7 @@ export default class BackOfficeViewFormField  {
 												
 										if (!requestResult.requestResultMessage.error) {
 											
-											self.setValues(requestResult.newRow);
+											self.setValues(requestResult.newRow, form);
 											
 											if (requestResult.requestResultMessage.info) {
 											
@@ -777,6 +780,25 @@ export default class BackOfficeViewFormField  {
 								}
 							}
 						}
+					}
+				}
+			}
+		}
+		
+		function applyOptions(field) {
+			
+			if (options) {
+				
+				if (options.view) {
+					
+					const keys = Object.keys(options.view);
+					
+					if (Array.isArray(keys) && keys.length > 0) {
+					
+						keys.forEach(key => {
+							
+							field[key] = options.view[key];	
+						})
 					}
 				}
 			}

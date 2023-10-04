@@ -9,7 +9,6 @@ const REST_BACKOFFICE_TABLE_COMMAND = "backoffice/${backOfficeId}/command";
 const REST_BACKOFFICE_COLUMN_FILLER = "backoffice/${backOfficeId}/filler";
 const REST_BACKOFFICE_TRANSLATE = "backoffice/${backOfficeId}/translate/${label}";
 const REST_GRIDS_ID = "grids/${id}";
-const COL_NAMES_REF = [/name/i, /alias/i, /description/i];
 
 export default class BackOfficeHelper {
 
@@ -24,7 +23,7 @@ export default class BackOfficeHelper {
 			name: "META_TYPE_BACKOFFICE",
 			DEFAULT_METADATA: "defaultMetadataBackoffice",
 			PROPERTY: {
-
+				REPRESENTATIVE_COL_NAMES: { name: "representativeColNames", default: ["name", "alias", "description"] } 
 			}
 		}
 	}
@@ -50,7 +49,8 @@ export default class BackOfficeHelper {
 				GROUP_IMAGES: { name: "groupImages" },
 				GROUP_ATTACHMENTS: { name: "groupAttachments" },
 				PRINTABLE: { name: "printable", default: true },
-				EXPORTABLE: { name: "exportable", default: true }
+				EXPORTABLE: { name: "exportable", default: true },
+				CUSTOM_JS: { name: "customJS" }
 			}
 		}
 	}
@@ -348,19 +348,28 @@ export default class BackOfficeHelper {
 		return refColumn;
 	}
 
-	static getRepresentativeField(table) {
+	static getRepresentativeField(backOffice, table) {
 
 		let refColumnName = undefined;
 
 		if (Array.isArray(table.columns)) {
 
 			refColumnName = table.columns.find(col => col.metadata && col.metadata[BackOfficeHelper.META_TYPE_COLUMN.PROPERTY.REF_NAME.name]);
+			
+			const representativeColNames = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_BACKOFFICE, 
+										 			BackOfficeHelper.META_TYPE_BACKOFFICE.PROPERTY.REPRESENTATIVE_COL_NAMES, 
+										 			backOffice.metadata);
 
-			if (!refColumnName) {
+			if (!refColumnName && representativeColNames) {
+				
+				if (Array.isArray(representativeColNames)) {
 
-				for (let i = 0; !refColumnName && i < COL_NAMES_REF.length; i++) {
+					for (let i = 0; !refColumnName && i < representativeColNames.length; i++) {
+						
+						const regExp = new RegExp(representativeColNames[i], "i");
 
-					refColumnName = table.columns.find(col => col.name.match(COL_NAMES_REF[i]));
+						refColumnName = table.columns.find(col => col.name.match(regExp));
+					}					
 				}
 			}
 
@@ -373,7 +382,7 @@ export default class BackOfficeHelper {
 		return refColumnName;
 	}
 
-	static getReferencedColumnName(column, data) {
+	static getReferencedColumnName(backOffice, column, data) {
 
 		let refColumnName = undefined;
 
@@ -383,14 +392,14 @@ export default class BackOfficeHelper {
 
 			if (refTable) {
 
-				refColumnName = BackOfficeHelper.getRepresentativeField(refTable);
+				refColumnName = BackOfficeHelper.getRepresentativeField(backOffice, refTable);
 			}
 		}
 
 		return refColumnName;
 	}
 
-	static getReferencedColumnValue(column, valueId, data) {
+	static getReferencedColumnValue(backOffice, column, valueId, data) {
 
 		let refColumnValue = undefined;
 
@@ -400,7 +409,7 @@ export default class BackOfficeHelper {
 
 			if (refTable) {
 
-				let refColumnName = BackOfficeHelper.getReferencedColumnName(column, data);
+				let refColumnName = BackOfficeHelper.getReferencedColumnName(backOffice, column, data);
 
 				if (refColumnName) {
 

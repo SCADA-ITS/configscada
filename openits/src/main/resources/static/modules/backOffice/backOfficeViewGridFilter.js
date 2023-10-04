@@ -113,7 +113,7 @@ export default class BackOfficeViewGridFilter {
 								
 								if (tableRef) {
 	
-									const refColumnRepresentative = BackOfficeHelper.getRepresentativeField(tableRef);
+									const refColumnRepresentative = BackOfficeHelper.getRepresentativeField(self.backOffice, tableRef);
 									
 									if (refColumnRepresentative) {
 										
@@ -345,7 +345,7 @@ export default class BackOfficeViewGridFilter {
 							
 							if (Array.isArray(table.rows)) {
 								
-								const column = BackOfficeHelper.getRepresentativeField(table);
+								const column = BackOfficeHelper.getRepresentativeField(self.backOffice, table);
 								
 								table.rows.forEach(row => {
 									
@@ -492,7 +492,7 @@ export default class BackOfficeViewGridFilter {
 									
 									let label = column.label ?? column.name;
 									
-									const referencedColumnName = BackOfficeHelper.getReferencedColumnName(column, self.data);
+									const referencedColumnName = BackOfficeHelper.getReferencedColumnName(self.backOffice, column, self.data);
 									
 									if (referencedColumnName) {
 

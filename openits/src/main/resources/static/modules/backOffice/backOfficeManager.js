@@ -14,10 +14,9 @@ export default class BackOfficeManager {
 		this.uid = webix.uid();
 	}
 	
-	getView(onCreate) {
+	getView(onCreate, onGetView) {
 		
 		let self = this;
-		let view;
 		
 		let currentTableData = undefined;
 		
@@ -34,7 +33,7 @@ export default class BackOfficeManager {
 					
 					if (currentTableData.rows.length === 1) {
 					
-						loadForm(currentTableData);	
+						loadForm(currentTableData, onGetView);	
 					}
 					else if (currentTableData.rows.length === 0) {
 							
@@ -42,13 +41,13 @@ export default class BackOfficeManager {
 					}
 					else {
 						
-						loadGrid(currentTableData);
+						loadGrid(currentTableData, onGetView);
 					}
 				}		
 			}
 			else {
 				
-				loadGrid(currentTableData);
+				loadGrid(currentTableData, onGetView);
 			}
 		}
 	
@@ -169,20 +168,55 @@ export default class BackOfficeManager {
 			}
 		}
 				
-		function loadGrid(currentTableData) {
+		function loadGrid(currentTableData, onGetView) {
 			
+			let view = undefined;
 			let backOfficeView = new BackOfficeViewGrid(self.backOffice, self.data, currentTableData);
 			
 			view = backOfficeView.getView();
+			
+			if (onGetView && view) {
+				
+				onGetView(view);
+			}
 		}
 		
-		function loadForm(currentTableData) {
+		function loadForm(currentTableData, onGetView) {
 			
-			let backOfficeView = new BackOfficeViewForm(self.backOffice, self.data, currentTableData);
+			let view = undefined;
+			let backOfficeView = undefined;
 			
-			view = backOfficeView.getView();
+			if (currentTableData.metadata && currentTableData.metadata[BackOfficeHelper.META_TYPE_TABLE.PROPERTY.CUSTOM_JS.name]) {			
+			
+				const lazy = async _ => {
+					
+					let jsFile = util.getContextPath() + "/templates/" + currentTableData.metadata[BackOfficeHelper.META_TYPE_TABLE.PROPERTY.CUSTOM_JS.name];
+	
+					const mod = await import(jsFile);
+					
+					backOfficeView = new mod.default(self.backOffice, self.data, currentTableData);
+					
+					view = backOfficeView.getView();
+					
+					if (onGetView && view) {
+				
+						onGetView(view);
+					}
+				}
+				
+				lazy();
+			}
+			else {
+				
+				backOfficeView = new BackOfficeViewForm(self.backOffice, self.data, currentTableData);
+			
+				view = backOfficeView.getView();
+				
+				if (onGetView && view) {
+				
+					onGetView(view);
+				}
+			}
 		}
-		
-		return view;
 	}
 }
