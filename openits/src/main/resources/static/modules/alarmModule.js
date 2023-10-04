@@ -1300,7 +1300,7 @@ export default class AlarmModule extends GenericModule {
 		let contentHeight = $$(this.uid).$height;
 		let winHeight = $$(this.uid).getTopParentView().$height;
 
-		if ((contentHeight / winHeight) > 0.95) {
+		if ((contentHeight / winHeight) > 0.9) {
 
 			let winWidth = $$(this.uid).getTopParentView().$width;
 			util.ui.resizeWindow(self.args.containerId, winWidth, winHeight * 1.1);
