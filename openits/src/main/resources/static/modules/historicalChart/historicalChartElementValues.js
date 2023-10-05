@@ -1,6 +1,8 @@
 import HistoricalChartModule from "./historicalChartModule.js";
 import HistoricalChartGeneric from "./historicalChartGeneric.js";
 
+const LINES_COLORS = ["#87CEFA88", "#3b607a88", "#00800088", "#FFFF0088", "#fc08fc", "#FFA500", "#7d4c4c", "#C0C0C0", "#9fc944", "#438c73", "#ebdcab", "#48474d", "#48dbaa", "#c7a5ab", "#a4bf8a"];
+
 export default class HistoricalChartElementValues extends HistoricalChartGeneric {
 
 	constructor(args, parent) {
@@ -14,17 +16,25 @@ export default class HistoricalChartElementValues extends HistoricalChartGeneric
 		this.selectedRangeInHours = undefined;
 		this.xAxis = [];
 		this.listElements = [];
+		this.listLegend = [];
 		this.dataSet = [];
 		this.dataSeries = [];
 		this.valuesMap = new Map();
 		this.chartType = HistoricalChartModule.MODE_ELEMENT_VALUES.chartType;
 		this.label = i18n.t("LBL_HISTORICAL_CHART_OF_ELEMENT_VALUES");
-		
-		if (!this.args.isEmbed) {
 
-			for (let elId of this.args.elementsIds) {
+		for (let i = 0; i < this.elementsIds.length; i++) {
 
-				let element = window.em.getByField(EntityType.ELEMENT, "id", elId);
+			let element = window.em.getByField(EntityType.ELEMENT, "id", this.elementsIds[i]);
+
+			this.listLegend.push({
+				id: this.elementsIds[i],
+				alias: element.alias,
+				description: element.alias,
+				color: LINES_COLORS[i % LINES_COLORS.length]
+			});
+			
+			if (!this.parent.isEmbed) {
 
 				this.label += " - " + element.alias;
 			}
@@ -71,10 +81,23 @@ export default class HistoricalChartElementValues extends HistoricalChartGeneric
 
 								for (let ev of elementValuesArr) {
 
+									let id;
+
+									self.elementsIds.forEach(elementId => {
+
+										let elementValue = elementId.replace("Element", "ElementValue");
+
+										if (ev.id.startsWith(elementValue)) {
+
+											id = elementId;
+										}
+									});
+
 									valuesArr.push({
 										epoch: ev.createdAt,
 										time: new Date(ev.createdAt),
-										value: ev.value
+										value: ev.value,
+										id: id
 									});
 								}
 
@@ -92,7 +115,8 @@ export default class HistoricalChartElementValues extends HistoricalChartGeneric
 							self.listElements.push({
 								id: eTypeParam.id,
 								alias: i18n.t(eTypeParam.labelAlias),
-								description: i18n.t(eTypeParam.labelAlias)
+								description: i18n.t(eTypeParam.labelAlias),
+								unit: i18n.t(eTypeParam.labelUnit) ?? ""
 							});
 						}
 					});
@@ -182,6 +206,8 @@ export default class HistoricalChartElementValues extends HistoricalChartGeneric
 
 		let self = this;
 
+		$$("chart-" + self.uid).clearAll();
+
 		if (self.valuesMap.has(ids)) {
 
 			let dataArr = [];
@@ -191,20 +217,28 @@ export default class HistoricalChartElementValues extends HistoricalChartGeneric
 
 				for (let i = 0; i < self.xAxis.length; i++) {
 
-					let average = 0;
-					let count = 0;
+
 					let d = {};
 
-					values.valuesArr.forEach(val => {
+					self.elementsIds.forEach(elementId => {
 
-						if (((self.xAxis[i].initEpoch <= val.epoch) && (val.epoch <= self.xAxis[i].endEpoch))) {
+						let average = 0;
+						let count = 0;
+						let valuesOfElement = values.valuesArr.filter(v => v.id === elementId);
+						let id = elementId.replaceAll(":", "");
 
-							average = average + parseFloat(val.value);
-							count++;
-						}
+						valuesOfElement.forEach(val => {
+
+							if (((self.xAxis[i].initEpoch <= val.epoch) && (val.epoch <= self.xAxis[i].endEpoch))) {
+
+								average = average + parseFloat(val.value);
+								count++;
+							}
+						});
+
+						d['yValue' + id] = (count > 0) ? average / count : undefined;
 					});
 
-					d['yValue'] = (count > 0) ? average / count : undefined;
 					d['xValue'] = self.xAxis[i].xValue;
 
 					if (i === 0 || i === self.xAxis.length - 1 || i % 5 === 0) {
@@ -223,6 +257,13 @@ export default class HistoricalChartElementValues extends HistoricalChartGeneric
 
 		if ("chart-" + self.uid) {
 
+			let measure = self.listElements.find(e => e.id === ids);
+
+			if (measure) {
+
+				$$("chart-" + self.uid).config.yAxis.title = measure.unit;
+			}
+
 			$$("chart-" + self.uid).show();
 		}
 
@@ -236,9 +277,7 @@ export default class HistoricalChartElementValues extends HistoricalChartGeneric
 		function getSeriesOfElementValues(dataArr) {
 
 			self.dataSet = [];
-			self.dataSeries = [{ value: '#yValue#' }];
-			let initYKey = 'yValue';
-			let numOfUndefinedSeries = 0;
+			self.dataSeries = [];
 
 			for (let i = 0; i < dataArr.length; i++) {
 
@@ -246,40 +285,61 @@ export default class HistoricalChartElementValues extends HistoricalChartGeneric
 
 					self.dataSet.push(dataArr[i]);
 
+					self.elementsIds.forEach(elementId => {
+
+						let id = elementId.replaceAll(":", "");
+
+						self.dataSeries.push({
+							value: "#yValue" + id + "#"
+						});
+					});
+
 				} else {
 
 					let d = {};
-					let lastYValue = self.dataSet[self.dataSet.length - 1];
-					let keys = Object.keys(lastYValue);
-					let YValueIndex = keys.indexOf(initYKey);
 
-					if (lastYValue[keys[YValueIndex]] === undefined && dataArr[i][keys[YValueIndex]] != undefined) {
+					for (let elementId of self.elementsIds) {
 
-						d["yValue" + numOfUndefinedSeries] = dataArr[i][keys[YValueIndex]];
-						d["numOfSerie"] = numOfUndefinedSeries;
+						let bgColor = self.listLegend.find(e => e.id === elementId).color;
+						let id = elementId.replaceAll(":", "");
+						let initYKey = 'yValue' + id;
+						let lastYValue = self.dataSet[self.dataSet.length - 1];
+						let lastSerie = lastYValue['numOfSerie'] ?? 0;
+						let keys = Object.keys(lastYValue);
+						let YValueIndex = (keys.indexOf(initYKey) != -1) ? keys.indexOf(initYKey) : keys.indexOf('yValue' + lastSerie + id);
 
-						self.dataSeries.push(
-							{
-								value: "#yValue" + numOfUndefinedSeries + "#",
-								tooltip: {
-									template: function(obj) {
+						if (lastYValue[keys[YValueIndex]] === undefined && dataArr[i][keys[YValueIndex]] != undefined) {
 
-										return obj["tooltip"];
+							d["yValue" + lastSerie + id] = dataArr[i][keys[YValueIndex]];
+							d["numOfSerie"] = lastSerie;
+
+							self.dataSeries.push(
+								{
+									value: "#yValue" + lastSerie + id + "#",
+									item: {
+										radius: 0
+									},
+									line: {
+										color: bgColor,
+										width: 2
+									},
+									tooltip: {
+										template: function(obj) {
+
+											return obj["tooltip"];
+										}
 									}
-								}
-							});
+								});
 
-						initYKey = "yValue" + numOfUndefinedSeries;
-						numOfUndefinedSeries++;
+						} else {
 
-					} else {
+							d[[keys[YValueIndex]]] = dataArr[i]["yValue" + id];
+						}
 
-						d[[keys[YValueIndex]]] = dataArr[i].yValue;
+						d['xValue'] = dataArr[i].xValue;
+						d['epoch'] = dataArr[i].epoch;
+						d["tooltip"] = dataArr[i]["yValue" + id];
 					}
-
-					d['xValue'] = dataArr[i].xValue;
-					d['epoch'] = dataArr[i].epoch;
-					d["tooltip"] = dataArr[i].yValue;
 
 					self.dataSet.push(d);
 				}
@@ -287,7 +347,6 @@ export default class HistoricalChartElementValues extends HistoricalChartGeneric
 
 			if ($$("chart-" + self.uid)) {
 
-				$$("chart-" + self.uid).clearAll();
 				$$("chart-" + self.uid).define("series", self.dataSeries);
 				$$("chart-" + self.uid).define("data", self.dataSet);
 				$$("chart-" + self.uid).refresh();

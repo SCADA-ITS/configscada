@@ -609,6 +609,8 @@ export default class PrintPreview {
 						template: function() {
 
 							let head;
+							let legend = "";
+							let legendContainer = "";
 							let chartLabel = (self.options.title) ? self.options.title : "";
 							let date = new Date().toLocaleString();
 
@@ -618,14 +620,30 @@ export default class PrintPreview {
 											<div><span class="print-head-text">${date}</span></div>
 											</div>`;
 
+							if (Array.isArray(self.options.legend) && self.options.legend.length > 0) {
+
+								for (let item of self.options.legend) {
+
+									let legendItem = `<div>
+													<div class="list-color" style="background:${item.color}; margin-top: 0px"></div>
+													<span style="font-size: 12px; padding-left: 5px;">${item.alias} </span>
+												</div>`;
+
+									legend += legendItem;
+								}
+							}
+
+							legendContainer = `<div style="display:flex; justify-content:space-around; flex-wrap: wrap; margin-top: 10px; width: 99%;">${legend}</div>`;
+
 							return `${head}
-									<img style="width:99%;" src="${self.options.canvas}">`;
+									<img style="width:99%;" src="${self.options.canvas}">
+									${legendContainer}`;
 						}()
 					}
 				]
 			};
 
-			let chartWinId = util.ui.loadWindow(i18n.t("LBL_CHART_PRINT"), chartToPrint, 750, 1200, false);
+			let chartWinId = util.ui.loadWindow(i18n.t("LBL_CHART_PRINT"), chartToPrint, 825, 1200, false);
 
 			if (chartWinId) {
 

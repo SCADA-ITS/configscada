@@ -17,14 +17,22 @@ export default class HistoricalChartStates extends HistoricalChartGeneric {
 		this.xAxis = [];
 		this.dataSet = [];
 		this.dataSeries = [];
+		this.listLegend = [];
 		this.chartType = HistoricalChartModule.MODE_STATES.chartType;
 		this.label = i18n.t("LBL_HISTORICAL_CHART_OF_STATES");
 
-		if (!this.args.isEmbed) {
+		for (let i = 0; i < this.args.elementsIds.length; i++) {
 
-			for (let elId of this.args.elementsIds) {
+			let element = window.em.getByField(EntityType.ELEMENT, "id", this.args.elementsIds[i]);
 
-				let element = window.em.getByField(EntityType.ELEMENT, "id", elId);
+			this.listLegend.push({
+				id: this.args.elementsIds[i],
+				alias: element.alias,
+				description: element.alias,
+				color: LINES_COLORS[i % LINES_COLORS.length]
+			});
+
+			if (!this.parent.isEmbed) {
 
 				this.label += " - " + element.alias;
 			}
@@ -62,11 +70,11 @@ export default class HistoricalChartStates extends HistoricalChartGeneric {
 
 			ids.forEach(id => {
 
-				let arrAux = [];								
-				let d = {};				
+				let arrAux = [];
+				let d = {};
 
 				let sameElementArr = self.states.filter(e => e.element.id === id);
-				
+
 				if (Array.isArray(sameElementArr) && sameElementArr.length > 0) {
 
 					sameElementArr.sort((a, b) => (a.createdAt > b.createdAt) ? 1 : ((b.createdAt > a.createdAt) ? -1 : 0));
@@ -106,21 +114,24 @@ export default class HistoricalChartStates extends HistoricalChartGeneric {
 
 			for (let j = 0; j < self.xAxis.length; j++) {
 
-				let d = {};
+				if (Array.isArray(dataArrAux) && dataArrAux.length > 0) {
 
-				for (let dArrAux of dataArrAux) {
+					let d = {};
 
-					let elementId = dArrAux[j].element.replaceAll(":", "");
+					for (let dArrAux of dataArrAux) {
 
-					d['yValue' + elementId] = dArrAux[j].yValue;
-					d['withData' + elementId] = dArrAux[j].withData;
+						let elementId = dArrAux[j].element.replaceAll(":", "");
+
+						d['yValue' + elementId] = dArrAux[j].yValue;
+						d['withData' + elementId] = dArrAux[j].withData;
+					}
+
+					d['xValue'] = dataArrAux[0][j].xValue;
+					d['epoch'] = dataArrAux[0][j].epoch;
+					d['elementTypeStateId'] = dataArrAux[0][j].elementTypeStateId;
+					dataArr.push(d);
+					d = {};
 				}
-
-				d['xValue'] = dataArrAux[0][j].xValue;
-				d['epoch'] = dataArrAux[0][j].epoch;
-				d['elementTypeStateId'] = dataArrAux[0][j].elementTypeStateId; 
-				dataArr.push(d);
-				d = {};
 			}
 
 			getDataSeries();
@@ -137,7 +148,6 @@ export default class HistoricalChartStates extends HistoricalChartGeneric {
 				let tooltipText;
 				let alias;
 				let numOfSerie = 0;
-				let legendValues = [];
 
 				for (let i = 0; i < dataArr.length; i++) {
 
@@ -147,23 +157,13 @@ export default class HistoricalChartStates extends HistoricalChartGeneric {
 
 						let elId = ids[j];
 						let id = elId.replaceAll(":", "");
-						let bgColor = LINES_COLORS[j % LINES_COLORS.length];
+						let bgColor = self.listLegend.find(e => e.id === elId).color;
 
 						if (i === 0) {
 
+							let el = window.em.getByField(EntityType.ELEMENT, "id", elId);
+							alias = el.alias;
 							firstData = dataArr.find(e => e['yValue' + id] != undefined);
-
-							if (!legendValues.find(e => e.id === elId)) {
-
-								let el = window.em.getByField(EntityType.ELEMENT, "id", elId);
-								alias = el.alias;
-
-								legendValues.push({
-									id: elId,
-									color: bgColor,
-									text: alias
-								});
-							}
 
 							if (firstData) {
 
@@ -232,8 +232,8 @@ export default class HistoricalChartStates extends HistoricalChartGeneric {
 							numOfSerie = lastValue['numOfSerie' + id];
 							alias = lastValue['element' + id];
 
-							if ((lastValue['withData' + id] === false) && (dataArr[i]['withData' + id] === true) && changeState) {								
-								
+							if ((lastValue['withData' + id] === false) && (dataArr[i]['withData' + id] === true) && changeState) {
+
 								lastState = window.em.getByField(EntityType.ELEMENT_TYPE_STATE, "id", dataArr[i]['yValue' + id][dataArr[i]['yValue' + id].length - 1].currentElementTypeState.id);
 								tooltipText = alias + " - " + i18n.t(lastState.labelAlias);
 								color = (lastState.color) ? lastState.color : util.element.getColor(lastState);
@@ -308,20 +308,6 @@ export default class HistoricalChartStates extends HistoricalChartGeneric {
 					$$("chart-" + self.uid).clearAll();
 					$$("chart-" + self.uid).define("series", self.dataSeries);
 					$$("chart-" + self.uid).define("data", self.dataSet);
-
-					if (!self.parent.isEmbed) {
-
-						let legend = {
-							values: legendValues.reverse(),
-							align: "right",
-							valign: "middle",
-							width: 200,
-							layout: "y"
-						};
-
-						$$("chart-" + self.uid).define("legend", legend);
-					}
-
 					$$("chart-" + self.uid).refresh();
 					$$("chart-" + self.uid).show();
 					$$("loading-chart-" + self.uid).hide();

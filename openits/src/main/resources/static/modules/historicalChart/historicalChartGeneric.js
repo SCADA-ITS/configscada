@@ -30,6 +30,8 @@ export default class HistoricalChartGeneric {
 		this.realTimeInterval = undefined;
 		this.isCharging = false;
 		this.xAxis = [];
+		this.list = undefined;
+		this.legend = undefined;
 
 		this.uid = parent.uid;
 	}
@@ -154,6 +156,22 @@ export default class HistoricalChartGeneric {
 		function getCalendar() {
 
 			let toolbar;
+			let format;
+			let locale = webix.i18n.locales["en-US"];
+
+			if (i18n.localeCode != "es-ES") {
+
+				if (webix.i18n.locales[i18n.localeCode]) {
+
+					locale = webix.i18n.locales[i18n.localeCode];
+
+					format = locale.fullDateFormat;
+				}
+
+			} else {
+
+				format = "%l, %d %F %Y %G:%i";
+			}
 
 			toolbar = {
 				id: "toolbar-" + self.uid,
@@ -164,7 +182,8 @@ export default class HistoricalChartGeneric {
 					{
 						id: "label-" + self.uid,
 						view: "label",
-						label: self.label
+						label: self.label,
+						tooltip: self.label					
 					},
 					{
 						cols: [
@@ -177,6 +196,7 @@ export default class HistoricalChartGeneric {
 								value: i18n.t("LBL_TABLE_PRINT"),
 								css: { "padding-right": "15px" },
 								tooltip: true,
+								hidden: self.parent.isEmbed,
 								on: {
 									onItemClick: function() {
 
@@ -197,11 +217,12 @@ export default class HistoricalChartGeneric {
 													element = window.em.getByField(EntityType.ELEMENT, "id", self.args.elementsIds[0]);
 
 													title += " - " + element.alias;
-												} 
+												}
 
 												let options = {
 													canvas: image,
-													title: title
+													title: title,
+													legend: self.listLegend
 												};
 
 												let chartToPrint = new PrintPreview(PrintPreview.TYPE_CHART, null, options);
@@ -244,6 +265,7 @@ export default class HistoricalChartGeneric {
 						label: i18n.t("LBL_DATE"),
 						value: { start: new Date(), end: webix.Date.add(new Date(), self.initCountdown, self.initRange) },
 						timepicker: true,
+						format: format,
 						suggest: {
 							view: "daterangesuggest",
 							body: {
@@ -295,14 +317,23 @@ export default class HistoricalChartGeneric {
 			let chart = {};
 			let list = { width: 1 };
 
-			if (self.args.mode.id != HistoricalChartModule.MODE_STATES.id) {
+			if ((!self.parent.isEmbed && self.args.mode.id === HistoricalChartModule.MODE_ALARMS.id) || (self.args.mode.id === HistoricalChartModule.MODE_ELEMENT_VALUES.id)) {
+
+				let label = (self.args.mode.id === HistoricalChartModule.MODE_ELEMENT_VALUES.id) ? "LBL_HISTORICAL_CHART_MODE_ELEMENT_VALUES" : "LBL_EQUIPMENT_S";
 
 				list = {
 					width: 300,
-					hidden: (self.parent.isEmbed && self.args.mode.id === HistoricalChartModule.MODE_ALARMS.id),
-					rows: [
-						getList()
-					]
+					header: function() {
+
+						return `<div>
+								<span class='ico webix_icon mdi mdi-view-headline'></span>
+								<span>${i18n.t(label)}</span>
+							</div>`;
+					},
+					body: {
+						width: 300,
+						rows: [getList()]
+					}
 				};
 			}
 
@@ -318,6 +349,15 @@ export default class HistoricalChartGeneric {
 						offset: false,
 						line: {
 							width: 2
+						},
+						yAxis: {
+							template: function(obj) {
+
+								if (self.args.mode.id === HistoricalChartModule.MODE_ELEMENT_VALUES.id) {
+
+									return obj;
+								}
+							}
 						},
 						xAxis: {
 							lines: function(obj) {
@@ -345,6 +385,21 @@ export default class HistoricalChartGeneric {
 						id: "loading-chart-" + self.uid,
 						rows: [util.ui.getViewDrawLoading()],
 						hidden: true
+					},
+					{
+						width: 300,
+						hidden: (self.parent.isEmbed && self.args.mode.id != HistoricalChartModule.MODE_ALARMS.id),
+						header: function() {
+
+							return `<div>
+								<span class='ico webix_icon mdi mdi-view-headline'></span>
+								<span>${i18n.t("LBL_TABLE_LEGEND")}</span>
+							</div>`;
+						},
+						body: {
+							width: 300,
+							rows: [getLegend()]
+						}
 					},
 				]
 			};
@@ -375,6 +430,21 @@ export default class HistoricalChartGeneric {
 			listview = self.list.getView();
 
 			return listview;
+		}
+
+		function getLegend() {
+
+			let legendView = {};
+			let legendOptions = {};
+
+			legendOptions[ListView.Options.MODE] = ListView.DrawMode.COMPACT;
+			legendOptions[ListView.Options.SEARCH] = false;
+			legendOptions[ListView.Options.SELECTED] = false;
+
+			self.legend = new ListView(self.listLegend, legendOptions, null)
+			legendView = self.legend.getView();
+
+			return legendView;
 		}
 
 		function startRealTime() {

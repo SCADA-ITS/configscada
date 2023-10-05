@@ -178,7 +178,7 @@ export default class ListView {
 
 			if (getOptions(ListView.Options.SELECTED) === false) {
 				
-				list.css = "list-not-selected"
+				listView.css = "list-not-selected";
 			}
 	
 			return listView;
