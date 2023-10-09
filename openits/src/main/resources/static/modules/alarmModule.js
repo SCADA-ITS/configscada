@@ -824,8 +824,8 @@ export default class AlarmModule extends GenericModule {
 			let recognize = alarm.recognized !== undefined && alarm.recognized !== null ? true : false;
 			let icon = recognize ? "./img/grid/bell_recognized.png" : "./img/grid/bell_no_recognized.png";
 			let vlabel = (recognize ? YES_RECOGNIZED : NO_RECOGNIZED) + (alarm.disagree ? " " + DISAGREE : "");
-			let user = alarm.recognizedUser !== undefined && alarm.recognizedUser !== null ? alarm.recognizedUser : null;
-			let userName = user !== null ? window.em.getByField(EntityType.USER, "id", user.id).name : "";
+			let user = alarm.recognizedUser !== undefined && alarm.recognizedUser !== null ? alarm.recognizedUser : null;	
+			let userName = user !== null ? window.em.getByField(EntityType.USER, "id", user.id) ? window.em.getByField(EntityType.USER, "id", user.id).name : "" : "";
 			let userLabel = userName + " " + new Date(this.alarm.recognized).toLocaleString(i18n.getLocale(), FORMAT_NUMERIC_DATES);
 
 			let view;
