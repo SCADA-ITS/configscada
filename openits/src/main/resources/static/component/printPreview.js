@@ -323,8 +323,8 @@ export default class PrintPreview {
 
 						if (Array.isArray(col.icons) && col.icons.length > 0) {
 
-							let dataWithIcon = col.icons.find(e => e.value == value);
-
+							let dataWithIcon = col.icons.find(e => e.value == value || i18n.t(e.labelValue) == value);
+	
 							if (dataWithIcon && dataWithIcon.icon) {
 
 								if (self.type === PrintPreview.TYPE_PRINT_DATATABLE) {
