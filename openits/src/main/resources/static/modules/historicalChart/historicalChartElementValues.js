@@ -287,10 +287,18 @@ export default class HistoricalChartElementValues extends HistoricalChartGeneric
 
 					self.elementsIds.forEach(elementId => {
 
+						let bgColor = self.listLegend.find(e => e.id === elementId).color;
 						let id = elementId.replaceAll(":", "");
 
 						self.dataSeries.push({
-							value: "#yValue" + id + "#"
+							value: "#yValue" + id + "#",
+							item: {
+								radius: 0
+							},
+							line: {
+								color: bgColor,
+								width: 2
+							}
 						});
 					});
 

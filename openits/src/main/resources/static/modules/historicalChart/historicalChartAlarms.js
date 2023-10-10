@@ -99,7 +99,14 @@ export default class HistoricalChartAlarms extends HistoricalChartGeneric {
 
 			} else {
 
-				self.getRangeData(self.list.getSelectedItems()[0].id);
+				if (self.list) {
+
+					self.getRangeData(self.list.getSelectedItems()[0].id);
+
+				} else {
+
+					self.getRangeData(self.args.elementsIds[0]);
+				}
 			}
 		});
 	}
@@ -157,20 +164,23 @@ export default class HistoricalChartAlarms extends HistoricalChartGeneric {
 
 		for (let j = 0; j < self.xAxis.length; j++) {
 
-			let d = {};
+			if (Array.isArray(dataArrAux) && dataArrAux.length > 0) {
 
-			for (let dArrAux of dataArrAux) {
+				let d = {};
 
-				let elementId = dArrAux[j].element.replaceAll(":", "");
+				for (let dArrAux of dataArrAux) {
 
-				d['yValue' + elementId] = dArrAux[j].yValue;
-				d['withData' + elementId] = dArrAux[j].withData;
+					let elementId = dArrAux[j].element.replaceAll(":", "");
+
+					d['yValue' + elementId] = dArrAux[j].yValue;
+					d['withData' + elementId] = dArrAux[j].withData;
+				}
+
+				d['xValue'] = dataArrAux[0][j].xValue;
+				d['epoch'] = dataArrAux[0][j].epoch;
+				dataArr.push(d);
+				d = {};
 			}
-
-			d['xValue'] = dataArrAux[0][j].xValue;
-			d['epoch'] = dataArrAux[0][j].epoch;
-			dataArr.push(d);
-			d = {};
 		}
 
 		getDataSeries();

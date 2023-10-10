@@ -293,7 +293,17 @@ export default class HistoricalChartGeneric {
 
 														self.isCharging = true;
 														self.dateIni = new Date(daterangepicker.getValue().start).getTime();
-														self.dateEnd = new Date(daterangepicker.getValue().end).getTime();
+
+														if ((daterangepicker.getValue().end) != null) {
+
+															self.dateEnd = new Date(daterangepicker.getValue().end).getTime();
+
+														} else {
+
+															self.dateEnd = new Date().getTime();
+															$$("daterangepicker-" + self.uid).setValue({ start: new Date(), end: new Date(daterangepicker.getValue().start) });
+														}
+
 														self.selectedRangeInHours = (self.dateEnd - self.dateIni) / (60000 * 60);
 
 														self.initialize();
