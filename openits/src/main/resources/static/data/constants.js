@@ -223,6 +223,12 @@ const ENDPOINT_PRIORITY_DISABLE = "elements/disable_priority/element/${elementId
 
 const ENDPOINT_SAVE_MODULE_VALUE = "modules/${moduleId}/module_value/save";
 
+const ENDPOINT_GET_MODULE_HELP = "help/${moduleId}/module";
+const ENDPOINT_GET_TAG_HELP = "help/${tag}/tag";
+
+const HELP_PATH = "./help/";
+const HELP_FILE = "index.html";
+
 // DataTypes
 const LogType = Object.freeze({
 	LOG_TYPE_IMS: { 

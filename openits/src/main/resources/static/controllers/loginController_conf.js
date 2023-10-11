@@ -126,6 +126,18 @@ export const CONFIG = {
 				"en-US": "Select management area:",
 				"es-ES": "Seleccione un área de gestión:",
 				"es-CL": "Seleccione un área de gestión:"
+			},
+			{
+				"label": "LBL_ACCEPT",
+				"en-US": "Accept",
+				"es-ES": "Aceptar",
+				"es-CL": "Aceptar"
+			},
+			{
+				"label": "LBL_CANCEL",
+				"en-US": "Cancel",
+				"es-ES": "Cancelar",
+				"es-CL": "Cancelar"
 			}
 		]
 	}

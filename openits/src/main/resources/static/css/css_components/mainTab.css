@@ -40,11 +40,11 @@
 	padding-left: 27px;
 	padding-top: 3px;
 	display: inline-block;
-	width: 200px;
+	width: 175px;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	font-size: 14px;
+	font-size: 13px;
 }
 
 .main-tab .tab-icon {

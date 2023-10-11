@@ -75,8 +75,6 @@ public class BackOfficeUtil {
 	
 	protected static final Map<DBType, DmlLibrary> dmlMap;
 
-	private static final String condition = null;
-	
 	static {
 		
 		dmlMap = new EnumMap<>(DBType.class);

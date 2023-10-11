@@ -169,6 +169,16 @@ export let util = {
 					let hideIconDock = !taskManagerService || !externalizable || window.isExternal || noExternalizableModuleAction;
 					let hideIconExternalize = !taskManagerService || !externalizable || noExternalizableModuleAction;
 					let hideIconMinimize = !taskManagerService || !externalizable || window.isExternal || noExternalizableModuleAction;
+					let hideHelp = true;
+					
+					try {
+		
+						hideHelp = !APP_HELP_ENABLED || !module.helpAvailable;	
+					}
+					catch {
+						
+					} 
+					
 
 					let head = {
 						view: "toolbar",
@@ -209,6 +219,18 @@ export let util = {
 
 											taskManagerService.externalize(winId, lazyClass);
 										}
+									}
+								}
+							},
+							{
+								view: "icon",
+								hidden: hideHelp,
+								icon: "mdi mdi-help",
+								tooltip: i18n.t("LBL_WINDOW_HELP"),
+								on: {
+									onItemClick: function(id) {
+
+										util.module.showModuleHelp(module.id);
 									}
 								}
 							},
@@ -379,6 +401,16 @@ export let util = {
 						moduleAction: moduleAction,
 						args: args
 					}
+					
+					let hideHelp = true;
+					
+					try {
+		
+						hideHelp = !APP_HELP_ENABLED || !module.helpAvailable;	
+					}
+					catch {
+						
+					} 
 
 					$$(MAIN_TAB_ID).addView({
 
@@ -393,6 +425,7 @@ export let util = {
 									<img class='tab-icon' style='height:22px; width:22px' src='${icon}'/>
 									<span id='${tab_id}_title' class='tab-text'>${tabLabel}</span>
 									<span id='${tab_id}_action' style='float: right; padding-top: 2px'><a href='#' onclick='window.sm.getService(Services.TASK_MANAGER_SERVICE).undock(${JSON.stringify(tab_id)}, ${JSON.stringify(genericModule)})'><img id='${tab_id}-externalize' title='${i18n.t("LBL_VIEW_IN_WINDOW")}' src='./img/externalize_button.png'></a></span>
+									<span id='${tab_id}_action2' style='display: ${hideHelp ? "none" : "inline-block"}; margin-right: 8px; float: right; padding-top: 2px'><a href='#' onclick='window.util.module.showModuleHelp(${module.id})'><img title='${i18n.t("LBL_HELP")}' src='./img/help_button.png'></a></span>
 								</div>`,
 						body: {
 							autoheight: true,
@@ -886,6 +919,32 @@ export let util = {
 			response = await webix.ajax().headers(CONTENT_TYPE_JSON).post(endPointSaveModuleValue, moduleValue);
 
 			return response ? response.json() : undefined;
+		},
+		
+		showModuleHelp(moduleId) {
+			
+			const features = `toolbar=no,scrollbars=no,location=no,statusbar=no,menubar=no,noreferrer=yes,resizable=0,width=1000,height=800,left=${(window.screen.availWidth - 1000) / 2},top=${(window.screen.availHeight - 800) / 2}`;
+			let url = HELP_PATH + HELP_FILE;
+			
+			if (moduleId) {
+				
+				url = appConfig.restUrl + util.fillTemplate(ENDPOINT_GET_MODULE_HELP, { moduleId: moduleId });	
+			}
+			
+			window.open(url, '_blank', features);
+		},
+		
+		showTagHelp(tag) {
+			
+			const features = `toolbar=no,scrollbars=no,location=no,statusbar=no,menubar=no,noreferrer=yes,resizable=0,width=1000,height=800,left=${(window.screen.availWidth - 1000) / 2},top=${(window.screen.availHeight - 800) / 2}`;
+			let url = HELP_PATH + HELP_FILE;
+			
+			if (module) {
+				
+				url = appConfig.restUrl + util.fillTemplate(ENDPOINT_GET_TAG_HELP, { tag: tag });	
+			}
+			
+			window.open(url, '_blank', features);
 		}
 	},
 

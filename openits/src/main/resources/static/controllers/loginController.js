@@ -366,6 +366,125 @@ function access(loginData) {
 
 function selectManagementArea(managementAreas) {
 	
+	const woManagementAreaId = 9999999;
+	
+	if (Array.isArray(managementAreas) && managementAreas.length > 0) {
+		
+		managementAreas.sort((a, b) => (a.alias > b.alias) ? 1 : ((b.alias > a.alias) ? -1 : 0));
+		
+		let formManagementAreas = {
+			id: "login-form-" + uid,
+			view: "form",
+			css: "form",
+			elements: [
+				{
+					view: "label",
+					css: "form-area-label",
+					label: translateLabel("LBL_SELECT_MANAGEMENT_AREA")
+				},
+				{
+					view: "richselect",
+					id: "mgr-area-select-" + uid,
+					inputHeigth: 100,
+					value: woManagementAreaId,
+					css: "form-area-combo",
+					options:{
+						css: "form-area-combo-list",
+					    data: function() {
+						
+							let options = [];
+							
+							options.push({
+								id: woManagementAreaId,
+								value: translateLabel("LBL_WO_MANAGEMENT_AREA")
+							});
+							
+							managementAreas.forEach(managementArea => {
+								
+								options.push({
+									id: managementArea.id,
+									value: managementArea.alias
+								});
+							})
+							
+							return options;
+						}()
+					}
+				},
+				{ height: 10 },
+				{
+					cols: [
+						{
+							id: "cancel-area-select-" + uid,
+							view: "button",
+							height: 54,
+							value: translateLabel("LBL_CANCEL"),
+							css: "form-cancel-button",
+							on: {
+								onItemClick: function() {
+									
+									webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + "auth/logout").then(
+										function(dat) {
+										
+											webix.storage.session.remove(SESSION_STORAGE_SESSION_DATA);
+													
+											window.location = "./login.html";		
+										}
+									);
+								}
+							}
+						},
+						{ width: 10 },
+						{
+							id: "accept-area-select-" + uid,
+							view: "button",
+							height: 54,
+							value: translateLabel("LBL_ACCEPT"),
+							css: "form-accept-button",
+							on: {
+								onItemClick: function() {
+									
+									const managementAreaId = $$("mgr-area-select-" + uid).getValue(); 
+									
+									if (managementAreaId && managementAreaId != woManagementAreaId) {
+										
+										webix.ajax().get(appConfig.restUrl + util.fillTemplate("auth/setManagementArea/${managementAreaId}", { managementAreaId: managementAreaId })).then(
+											function(response) {
+												
+												if (response) {
+								
+													let userSession = response.json();
+													
+													if (userSession) {
+											
+														webix.storage.session.put(SESSION_STORAGE_SESSION_DATA, userSession);
+														
+														window.location = "./home.html";
+													}
+												}
+											}
+										);	
+									}
+									else {
+										
+										window.location = "./home.html";
+									}
+								}
+							}
+						}
+					]
+				}
+			]
+		}
+		
+		webix.ui(formManagementAreas, $$("login-form-" + uid));
+		
+		webix.UIManager.setFocus($$("accept-area-select-" + uid));
+	}
+}
+
+function selectManagementArea2(managementAreas) {
+	
 	if (Array.isArray(managementAreas) && managementAreas.length > 0) {
 		
 		let formManagementAreas = {

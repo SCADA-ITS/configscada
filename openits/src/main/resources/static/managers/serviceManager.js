@@ -26,10 +26,12 @@ function load(service, onLoaded) {
 	
 	let intervalService = undefined;
 	let onLoadedCallback = onLoaded;
-
-	webix.ajax(appConfig.restUrl + "module_types/" + MODULE_TYPE_SERVICE + "/modules").then(function(data) {
-
-		let svcs = data.json();
+	
+	const allModules = window.em.getAll(EntityType.MODULE);
+	
+	if (Array.isArray(allModules) && allModules.length > 0) {
+		
+		let svcs = allModules.filter(e => e.moduleType && e.moduleType.id === MODULE_TYPE_SERVICE);
 
 		if (Array.isArray(svcs) && svcs.length > 0) {
 			
@@ -60,7 +62,7 @@ function load(service, onLoaded) {
 
 			}, SLEEP_WAITING_FOR_SERVICES_MS);
 		}
-	});
+	}
 }
 
 function drawService(service, module) {

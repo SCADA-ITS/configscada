@@ -61,6 +61,8 @@ function initialize() {
 	window.wm = new WindowManager();
 
 	window.stompClient = undefined;
+	
+	window.util = util;
 
 	util.module.checkSystemPermissions(window.em.getAll(EntityType.MODULE), userData);
 	

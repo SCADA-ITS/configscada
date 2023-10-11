@@ -5,9 +5,13 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import javax.annotation.PostConstruct;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.MapUtils;
@@ -30,6 +34,7 @@ import lombok.extern.log4j.Log4j2;
 public class ModuleBO extends GenericBO {
 	
 	private static final String FIELD_CONFIG = "config";
+	private static final String FIELD_HELP_AVAILABLE = "helpAvailable";
 	private static final String MODULE_FILE_TEMPLATE = "module_%d.json";
 	
 	@Autowired
@@ -45,6 +50,30 @@ public class ModuleBO extends GenericBO {
 	
 	@Autowired
 	private Environment env;
+	
+	@Autowired
+	private HelpBO helpBO;
+	
+	private List<Module> modulesWithHelpAvailable;
+	
+	@PostConstruct
+	private void postConstruct() {
+		
+		Instant timeRef = Instant.now();
+		
+		List<Module> modules = moduleService.getAll();
+		
+		log.info(this.getClass().getSimpleName() + ": Pre-load Modules. Items = " + modules.size() + " ("
+				+ Duration.between(timeRef, Instant.now()).toMillis() + " ms.)");
+		
+		timeRef = Instant.now();
+		
+		this.modulesWithHelpAvailable = helpBO.getModulesWithHelpAvailable(modules);
+		
+		log.info(this.getClass().getSimpleName() + ": Check for help available in modules. Items = " + modules.size() + " ("
+				+ Duration.between(timeRef, Instant.now()).toMillis() + " ms.)");
+		
+	}
 		
 	@Override
 	public List<Map<String, Object>> getList() {
@@ -60,6 +89,12 @@ public class ModuleBO extends GenericBO {
 				Map<String, Object> moduleMap = ConversionUtil.objectToMap(module);
 				
 				moduleMap.put(FIELD_CONFIG, getModuleConfig(module.getId()));
+				
+				if (!CollectionUtils.isEmpty(modulesWithHelpAvailable) && modulesWithHelpAvailable.stream()
+						.filter(e -> e.getId().equals(module.getId())).findFirst().orElse(null) != null) {
+				
+					moduleMap.put(FIELD_HELP_AVAILABLE, true);
+				}
 				
 				list.add(moduleMap);
 			}
@@ -80,6 +115,12 @@ public class ModuleBO extends GenericBO {
 		
 		Map<String, Object> moduleMap = ConversionUtil.objectToMap(module);
 		
+		if (!CollectionUtils.isEmpty(modulesWithHelpAvailable) && modulesWithHelpAvailable.stream()
+				.filter(e -> e.getId().equals(module.getId())).findFirst().orElse(null) != null) {
+		
+			moduleMap.put(FIELD_HELP_AVAILABLE, true);
+		}
+		
 		moduleMap.put(FIELD_CONFIG, getModuleConfig(module.getId()));
 		
 		return moduleMap;
@@ -97,6 +138,12 @@ public class ModuleBO extends GenericBO {
 				
 				Map<String, Object> moduleMap = ConversionUtil.objectToMap(module);
 				Map<String, Object> moduleConfig = getModuleConfig(module.getId());
+				
+				if (!CollectionUtils.isEmpty(modulesWithHelpAvailable) && modulesWithHelpAvailable.stream()
+						.filter(e -> e.getId().equals(module.getId())).findFirst().orElse(null) != null) {
+				
+					moduleMap.put(FIELD_HELP_AVAILABLE, true);
+				}
 				
 				if (!MapUtils.isEmpty(moduleConfig)) {
 				
