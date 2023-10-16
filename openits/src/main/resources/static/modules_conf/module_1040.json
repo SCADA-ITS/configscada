@@ -1,4 +1,7 @@
 {
+	"moduleAction":{
+		"showInMapOrSynoptic": 200004
+	},
 	"elementTypeId": "ElementType:71",
 	"restEndpoints": {
 		"elementsTreeByRoadHierarchies": "elements/trees/${id}",

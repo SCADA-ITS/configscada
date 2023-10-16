@@ -1129,7 +1129,26 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 													view: "label",
 													label: el.element.location.alias,
 													align: "center",
-													css: "signaling-monitor-text-panel-pk",
+													css: "signaling-monitor-text-panel-alias signaling-monitor-text-panel-pk",
+													on: {
+														onItemClick: function() {
+
+															if (self.config.moduleAction && self.config.moduleAction.showInMapOrSynoptic) {
+
+																let module = util.module.getFromModuleAction(self.config.moduleAction.showInMapOrSynoptic);
+
+																let moduleAction = {
+																	id: self.config.moduleAction.showInMapOrSynoptic
+																};
+
+																let args = {
+																	selectedPks: [el.element.id]
+																};
+
+																util.module.open(module, moduleAction, undefined, null, args, undefined);
+															}
+														}
+													}
 												},
 												{}
 											]
