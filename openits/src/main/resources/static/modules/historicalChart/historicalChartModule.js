@@ -135,7 +135,7 @@ export default class HistoricalChartModule extends GenericModule {
 				}
 			);
 
-			let optionDialog = new OptionDialogBox(i18n.t("LBL_SELECT_ANY_OPTION"), options, selectModuleAction, OptionDialogBox.MODE_TOGGLE);
+			let optionDialog = new OptionDialogBox(i18n.t("LBL_SELECT_ANY_OPTION"), options, selectModuleAction, OptionDialogBox.MODE_TOGGLE, closeOptionDialog);
 			optionDialog.show();
 
 			function selectModuleAction(obj) {
@@ -155,6 +155,11 @@ export default class HistoricalChartModule extends GenericModule {
 
 					startModule();
 				}
+			}
+			
+			function closeOptionDialog() {
+
+				$$(MAIN_TAB_ID).removeView(self.args.containerId);
 			}
 		}
 

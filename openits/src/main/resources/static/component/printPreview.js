@@ -277,7 +277,9 @@ export default class PrintPreview {
 						icons: fld.gridFieldIcons,
 						replacementFunction: fld.replacementFunction,
 						references: fld.gridFieldReferences,
-						dataType: dataType
+						gridFieldReplacements: fld.gridFieldReplacements,
+						dataType: dataType,
+						needsTranslation: fld.needsTranslation
 					});
 				});
 
@@ -316,6 +318,18 @@ export default class PrintPreview {
 							}
 						}
 
+						if (Array.isArray(col.gridFieldReplacements) && col.gridFieldReplacements.length > 0) {
+
+							let gridFieldReplacement = col.gridFieldReplacements.find(e => e.value == value.value);
+
+							if (gridFieldReplacement) {
+
+								let val = col.needsTranslation ? i18n.t(gridFieldReplacement.label) : gridFieldReplacement.label;
+
+								value = val;
+							}
+						}
+
 						if (col.dataType && col.dataType.type === DataType.TIMESTAMP && value != undefined && value != null && dat[col.id]) {
 
 							value = dat[col.id].toLocaleString(i18n.getLocale(), FORMAT_NUMERIC_DATES);
@@ -324,7 +338,7 @@ export default class PrintPreview {
 						if (Array.isArray(col.icons) && col.icons.length > 0) {
 
 							let dataWithIcon = col.icons.find(e => e.value == value || i18n.t(e.labelValue) == value);
-	
+
 							if (dataWithIcon && dataWithIcon.icon) {
 
 								if (self.type === PrintPreview.TYPE_PRINT_DATATABLE) {
@@ -376,14 +390,16 @@ export default class PrintPreview {
 									let tRows = "";
 									let width;
 									let head;
+									let footer;
 									let tableLabel = (self.options.metadata && self.options.metadata.label) ? i18n.t(self.options.metadata.label) : "";
 									let date = new Date().toLocaleString();
 
 									head = `<div class="print-head">
-											<div><img class="print-head-logo" src="./img/logo-project.svg"></div>
-											<div><span class="print-head-text">${tableLabel}</span></div>
-											<div><span class="print-head-text">${date}</span></div>
+											<div style="height: 100%; border: 1px solid var(--global-grey);"><img class="print-head-logo" src="./img/logo-project.svg"></div>
+											<div class="print-head-text"><span>${tableLabel}</span></div>											
 											</div>`;
+
+									footer = `<div class="print-footer-text"><span style="font-family: monospace; font-size: 12px;">${i18n.t("LBL_PRINT_DATE")}: ${date}</span></div>`;
 
 									for (let col of columns) {
 
@@ -437,7 +453,8 @@ export default class PrintPreview {
 											 <tr id="print-headers">${tHeaders}</tr>										
 									  	     </thead>
 											 <tbody id="print-body">${tRows}</tbody>										
-										     </table>`;
+										     </table>
+											 ${footer}`;
 
 									return table;
 								}()
@@ -501,7 +518,7 @@ export default class PrintPreview {
 											createReport();
 
 											if (templateWinId) {
-												
+
 												$$(templateWinId).hide();
 
 												webix.delay(function() {
@@ -609,16 +626,18 @@ export default class PrintPreview {
 						template: function() {
 
 							let head;
+							let footer;
 							let legend = "";
 							let legendContainer = "";
 							let chartLabel = (self.options.title) ? self.options.title : "";
 							let date = new Date().toLocaleString();
 
 							head = `<div class="print-head" style="width: 99%;">
-											<div><img class="print-head-logo" src="./img/logo-project.svg"></div>
-											<div><span class="print-head-text">${chartLabel}</span></div>
-											<div><span class="print-head-text">${date}</span></div>
+											<div style="height: 100%; border: 1px solid var(--global-grey);"><img class="print-head-logo" src="./img/logo-project.svg"></div>
+											<div class="print-head-text"><span>${chartLabel}</span></div>											
 											</div>`;
+
+							footer = `<div class="print-footer-text"><span style="font-family: monospace; font-size: 12px;">${i18n.t("LBL_PRINT_DATE")}: ${date}</span></div>`;
 
 							if (Array.isArray(self.options.legend) && self.options.legend.length > 0) {
 
@@ -637,13 +656,14 @@ export default class PrintPreview {
 
 							return `${head}
 									<img style="width:99%;" src="${self.options.canvas}">
-									${legendContainer}`;
+									${legendContainer}
+									${footer}`;
 						}()
 					}
 				]
 			};
 
-			let chartWinId = util.ui.loadWindow(i18n.t("LBL_CHART_PRINT"), chartToPrint, 825, 1200, false);
+			let chartWinId = util.ui.loadWindow(i18n.t("LBL_CHART_PRINT"), chartToPrint, 850, 1200, false);
 
 			if (chartWinId) {
 

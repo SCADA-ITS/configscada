@@ -10,12 +10,13 @@ export default class OptionDialogBox {
 	static get MODE_TOGGLE() { return 1 }
 	static get MODE_COMBO() { return 2 }
 
-	constructor(title, options, onChange, mode) {
+	constructor(title, options, onChange, mode, onClose) {
 
 		this.title = title;
 		this.options = options;
 		this.onChange = onChange;
 		this.mode = OptionDialogBox.MODE_TOGGLE;
+		this.onClose = onClose;
 		
 		if (mode === OptionDialogBox.MODE_COMBO || mode === OptionDialogBox.MODE_TOGGLE) {
 			
@@ -94,6 +95,11 @@ export default class OptionDialogBox {
 						label: i18n.t("LBL_CANCEL"),
 						on: {
 							onItemClick() {
+								
+								if (self.onClose) {
+
+									self.onClose();
+								}
 
 								$$(self.optionWindow).close();
 							}

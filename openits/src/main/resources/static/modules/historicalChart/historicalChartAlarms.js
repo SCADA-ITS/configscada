@@ -22,6 +22,8 @@ export default class HistoricalChartAlarms extends HistoricalChartGeneric {
 		this.dataSeries = [];
 		this.chartType = HistoricalChartModule.MODE_ALARMS.chartType;
 		this.label = i18n.t("LBL_HISTORICAL_CHART_OF_ALARMS");
+		this.tooltip = i18n.t("LBL_HISTORICAL_CHART_OF_ALARMS");
+		this.headerTitle = i18n.t("LBL_HISTORICAL_CHART_OF_ALARMS");
 		this.alarmConfigs = window.em.getAll(EntityType.ALARM_CONFIG);
 
 		for (let elementId of this.args.elementsIds) {
@@ -30,7 +32,7 @@ export default class HistoricalChartAlarms extends HistoricalChartGeneric {
 
 			if (!this.parent.isEmbed) {
 
-				this.label += " - " + element.alias;
+				this.tooltip += " - " + element.alias;
 			}
 
 			let aConfigsArr = this.alarmConfigs.filter(e => e.elementType.id === element.elementType.id);
@@ -48,6 +50,17 @@ export default class HistoricalChartAlarms extends HistoricalChartGeneric {
 			}
 		}
 
+		if (!this.parent.isEmbed) {
+
+			let element = window.em.getByField(EntityType.ELEMENT, "id", this.args.elementsIds[0]);
+
+			this.label += " - " + element.alias;
+
+			if (Array.isArray(this.args.elementsIds) && this.args.elementsIds.length > 1) {
+
+				this.label += " " + i18n.t("LBL_AND").toLowerCase() + " " + (this.args.elementsIds.length - 1) + " " + i18n.t("LBL_MORE_SELECTED") + " ...";
+			}
+		}
 	}
 
 	initialize() {

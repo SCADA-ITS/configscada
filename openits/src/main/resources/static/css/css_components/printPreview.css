@@ -18,18 +18,37 @@
 
 .print-head {
 	display: flex;
-	justify-content: space-between;
 	align-items: center;
 	height: 100px;
+	padding-bottom: 10px;
 }
 
 .print-head-logo {
+	height: 100%;
 	max-width: 200px;
     min-width: 200px;
+	padding-left: 10px;
 }
 
 .print-head-text {
+	width: 100%;
+    height: 100%;
+    border: 1px solid var(--global-grey);
+    align-items: center;
+    display: flex;
+}
+
+.print-head-text span {
 	font-family: monospace;	
+	padding-left: 10px;
+}
+
+.print-footer-text {
+	font-family: monospace;
+	font-size: 12px;
+	display: flex;
+	justify-content: right;		
+	padding: 25px 10px;
 }
 
 .print-th-headers {

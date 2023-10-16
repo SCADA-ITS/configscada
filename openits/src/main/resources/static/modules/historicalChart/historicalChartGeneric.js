@@ -156,21 +156,11 @@ export default class HistoricalChartGeneric {
 		function getCalendar() {
 
 			let toolbar;
-			let format;
-			let locale = webix.i18n.locales["en-US"];
+			let format = webix.i18n.locales["en-US"].fullDateFormat;
 
-			if (i18n.localeCode != "es-ES") {
+			if (webix.i18n.locales[i18n.localeCode]) {
 
-				if (webix.i18n.locales[i18n.localeCode]) {
-
-					locale = webix.i18n.locales[i18n.localeCode];
-
-					format = locale.fullDateFormat;
-				}
-
-			} else {
-
-				format = "%l, %d %F %Y %G:%i";
+				format = webix.i18n.locales[i18n.localeCode].fullDateFormat;
 			}
 
 			toolbar = {
@@ -183,7 +173,7 @@ export default class HistoricalChartGeneric {
 						id: "label-" + self.uid,
 						view: "label",
 						label: self.label,
-						tooltip: self.label					
+						tooltip: self.tooltip
 					},
 					{
 						cols: [
@@ -209,8 +199,32 @@ export default class HistoricalChartGeneric {
 											html2canvas(chartNode).then(function(canvas) {
 
 												let element;
-												let title = self.label;
+												let title = self.headerTitle;
 												let image = canvas.toDataURL();
+
+												if (self.args.mode.id === HistoricalChartModule.MODE_ELEMENT_VALUES.id) {
+
+													if (self.list) {
+
+														let measure = self.list.getSelectedItems()[0];
+
+														title += " - " + measure.alias;
+
+														if (measure.unit != "") {
+
+															title += " " + measure.unit;
+														}
+													}
+
+												} else if (self.args.mode.id === HistoricalChartModule.MODE_ALARMS.id) {
+
+													if (self.list) {
+
+														let selectedElement = self.list.getSelectedItems()[0];
+
+														title += " - " + selectedElement.alias;
+													}													
+												}
 
 												if (self.args.isEmbed) {
 

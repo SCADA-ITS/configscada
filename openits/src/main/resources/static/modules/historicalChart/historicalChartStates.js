@@ -20,6 +20,8 @@ export default class HistoricalChartStates extends HistoricalChartGeneric {
 		this.listLegend = [];
 		this.chartType = HistoricalChartModule.MODE_STATES.chartType;
 		this.label = i18n.t("LBL_HISTORICAL_CHART_OF_STATES");
+		this.tooltip = i18n.t("LBL_HISTORICAL_CHART_OF_STATES");
+		this.headerTitle = i18n.t("LBL_HISTORICAL_CHART_OF_STATES");
 
 		for (let i = 0; i < this.args.elementsIds.length; i++) {
 
@@ -34,7 +36,17 @@ export default class HistoricalChartStates extends HistoricalChartGeneric {
 
 			if (!this.parent.isEmbed) {
 
-				this.label += " - " + element.alias;
+				this.tooltip += " - " + element.alias;
+			}
+		}
+
+		if (!this.parent.isEmbed) {
+
+			this.label += " - " + this.listLegend[0].alias;
+
+			if (Array.isArray(this.args.elementsIds) && this.args.elementsIds.length > 1) {
+
+				this.label += " " + i18n.t("LBL_AND").toLowerCase() + " " + (this.args.elementsIds.length - 1) + " " + i18n.t("LBL_MORE_SELECTED") + " ...";
 			}
 		}
 	}

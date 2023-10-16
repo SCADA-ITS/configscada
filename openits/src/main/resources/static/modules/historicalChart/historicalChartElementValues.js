@@ -22,21 +22,33 @@ export default class HistoricalChartElementValues extends HistoricalChartGeneric
 		this.valuesMap = new Map();
 		this.chartType = HistoricalChartModule.MODE_ELEMENT_VALUES.chartType;
 		this.label = i18n.t("LBL_HISTORICAL_CHART_OF_ELEMENT_VALUES");
+		this.tooltip = i18n.t("LBL_HISTORICAL_CHART_OF_ELEMENT_VALUES");
+		this.headerTitle = i18n.t("LBL_HISTORICAL_CHART_OF_ELEMENT_VALUES");
 
-		for (let i = 0; i < this.elementsIds.length; i++) {
+		for (let i = 0; i < this.args.elementsIds.length; i++) {
 
-			let element = window.em.getByField(EntityType.ELEMENT, "id", this.elementsIds[i]);
+			let element = window.em.getByField(EntityType.ELEMENT, "id", this.args.elementsIds[i]);
 
 			this.listLegend.push({
-				id: this.elementsIds[i],
+				id: this.args.elementsIds[i],
 				alias: element.alias,
 				description: element.alias,
 				color: LINES_COLORS[i % LINES_COLORS.length]
 			});
-			
+
 			if (!this.parent.isEmbed) {
 
-				this.label += " - " + element.alias;
+				this.tooltip += " - " + element.alias;
+			}
+		}
+
+		if (!this.parent.isEmbed) {
+
+			this.label += " - " + this.listLegend[0].alias;
+
+			if (Array.isArray(this.args.elementsIds) && this.args.elementsIds.length > 1) {
+
+				this.label += " " + i18n.t("LBL_AND").toLowerCase() + " " + (this.args.elementsIds.length - 1) + " " + i18n.t("LBL_MORE_SELECTED") + " ...";
 			}
 		}
 	}
@@ -298,6 +310,12 @@ export default class HistoricalChartElementValues extends HistoricalChartGeneric
 							line: {
 								color: bgColor,
 								width: 2
+							},
+							tooltip: {
+								template: function(obj) {
+
+									return obj["tooltip"];
+								}
 							}
 						});
 					});
