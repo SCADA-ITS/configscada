@@ -460,6 +460,9 @@ export default class BackOfficeViewGenericForm extends BackOfficeView {
 									if (self.currentTableData.metadata && self.currentTableData.metadata.srcTemplate) {
 
 										let inputData = {};
+										inputData.tables = [];									
+										inputData.groupImages = {};
+										inputData.fields = {};
 
 										let options = {
 											srcTemplate: self.currentTableData.metadata.srcTemplate
@@ -467,112 +470,125 @@ export default class BackOfficeViewGenericForm extends BackOfficeView {
 
 										if (Array.isArray(self.currentTableData.columns) && self.currentTableData.columns.length > 0) {
 
-
 											for (let column of self.currentTableData.columns) {
 
 												let val;
 												let label = column.name;
-																												
-												if (Array.isArray(self.currentTableData.referTableNames) && self.currentTableData.referTableNames.length > 0) {
-
-													const columnId = self.currentTableData.columns.find(e => e.name === 'id');
-
-													if (columnId) {
-
-														self.currentTableData.referTableNames.forEach(referTableName => {
-
-															const referTable = self.data.find(e => e.name === referTableName);
-
-															if (referTable) {
-
-																let tableArr = [];
-
-																if (Array.isArray(referTable.rows) && referTable.rows.length > 0) {
-
-																	for (let row of referTable.rows) {
-
-																		let aux = {}
-
-																		for (let dat of row.data) {
-
-																			let d = referTable.columns.find(e => e.id === dat.columnId);
-
-																			if (d) {
-
-																				let lab;
-																				let referencedColumnName = BackOfficeHelper.getReferencedColumnName(self.backOffice, d, self.data);
-																				let referencedColumnValue = BackOfficeHelper.getReferencedColumnValue(self.backOffice, d, dat.value, self.data);
-																				
-																				if (referencedColumnName) {
-
-																					let table = self.data.find(e => e.id === referencedColumnName.tableId);
-
-																					if (table) {
-
-																						lab = table.labelSingular ?? (table.label ?? table.name);
-																					}
-																				}
-																				
-																				aux[d.name] = {
-																					value: (referencedColumnValue && referencedColumnValue.value) ? referencedColumnValue.value : dat.value,
-																					header: lab ?? d.name
-																				};
-																			}
-																		}
-																		
-																		aux["caption"] = referTable.label ?? referTable.name;
-																		tableArr.push(aux);
-																	}
-																
-																} else {
-																	
-																	let aux = {};
-																	
-																	for (let col of referTable.columns){
-																		
-																		aux[col.name] = undefined;																							
-																	}	
-																	
-																	aux["caption"] = referTable.label;
-																	tableArr.push(aux);																				
-																}
-
-																inputData[referTable.name] = tableArr;
-															}
-														});
-													}
-												}
-												
 												const refColumn = column.refColumn;
-												
+
 												let col = self.currentTableData.rows[0].data.find(d => d.columnId === column.id);
 
 												if (col) {
+												
+													val = (column.colType === "TIMESTAMP") ? new Date(parseInt(col.value)).toLocaleString() : col.value;													
 
-													val = col.value;
-													
 													if (refColumn) {
-													
+
 														const referencedColumnValue = BackOfficeHelper.getReferencedColumnValue(self.backOffice, column, col.value, self.data);
-									
+
 														if (referencedColumnValue) {
-														
-															val = referencedColumnValue.value;	
+
+															val = referencedColumnValue.value;
 														}
 													}
 												}
-									
-												inputData[label] = val;
+
+												inputData.fields[label] = val;
+											}
+
+											if (Array.isArray(self.currentTableData.referTableNames) && self.currentTableData.referTableNames.length > 0) {
+
+												const columnId = self.currentTableData.columns.find(e => e.name === 'id');
+
+												if (columnId) {
+
+													self.currentTableData.referTableNames.forEach(referTableName => {
+
+														const referTable = self.data.find(e => e.name === referTableName);
+
+														if (referTable) {
+
+															let tableObj = {};
+
+															tableObj.data = [];
+															tableObj.caption = referTable.label ?? referTable.name;
+															tableObj.tableName = referTable.name;
+
+															if (Array.isArray(referTable.rows) && referTable.rows.length > 0) {
+
+																for (let row of referTable.rows) {
+
+																	let aux = {}
+
+																	for (let dat of row.data) {
+
+																		let d = referTable.columns.find(e => e.id === dat.columnId);
+
+																		if (d) {
+
+																			let lab;
+																			let referencedColumnName = BackOfficeHelper.getReferencedColumnName(self.backOffice, d, self.data);
+																			let referencedColumnValue = BackOfficeHelper.getReferencedColumnValue(self.backOffice, d, dat.value, self.data);
+
+																			if (referencedColumnName) {
+
+																				let table = self.data.find(e => e.id === referencedColumnName.tableId);
+
+																				if (table) {
+
+																					lab = table.labelSingular ?? (table.label ?? table.name);
+																				}
+																			}
+
+																			aux[d.name] = {
+																				value: (referencedColumnValue && referencedColumnValue.value) ? referencedColumnValue.value : dat.value,
+																				header: lab ?? d.name
+																			};
+																		}
+																	}
+
+																	tableObj.data.push(aux);
+																}
+
+															} else {
+
+																let aux = {};
+
+																for (let col of referTable.columns) {
+
+																	aux[col.name] = undefined;
+																}
+
+																tableObj.data.push(aux);
+															}
+
+															inputData.tables.push(tableObj);
+														}
+													});
+												}
+											}
+
+											if (Array.isArray(self.currentTableData.rows[0].images) && self.currentTableData.rows[0].images.length > 0) {
+												
+												inputData.groupImages.name = "groupImage" + self.currentTableData.rows[0].images[0].idValue;
+												inputData.groupImages.data = [];
+
+												for (let image of self.currentTableData.rows[0].images) {
+
+													inputData.groupImages.data.push({
+														src: `backoffice/${self.backOffice.id}/attachments/image/${self.currentTableData.name}/${image.id}`,
+														fileName: image.fileName
+													});
+												}
 											}
 										}
-										
+
 										let printPreview = new PrintPreview(PrintPreview.TYPE_TEMPLATE, inputData, options);
 										printPreview.show();
-										
+
 									} else {
 
-										new MessageBox(MessageBox.ERROR, i18n.t("LBL_NO_SRC_TEMPLATE_CONFIG"), null, null , null).show();
-
+										new MessageBox(MessageBox.ERROR, i18n.t("LBL_NO_SRC_TEMPLATE_CONFIG"), null, null, null).show();
 									}
 								}
 						},										

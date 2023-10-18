@@ -540,15 +540,42 @@ export default class PrintPreview {
 
 				let numOfTable = 0;
 				let HTMLTemplate = $$("template-" + self.uid).getNode();
-				let keys = Object.keys(self.data);
+				let fields = self.data.fields;
+				let tables = self.data.tables;
+				let groupImages = self.data.groupImages;
 
-				for (let key of keys) {
+				if (typeof (fields) === "object") {
 
-					let val = self.data[key];
+					let fieldsKeys = Object.keys(fields);
 
-					if (Array.isArray(val) && val.length > 0) {
+					for (let fieldKey of fieldsKeys) {
 
-						let tableToCreate = document.getElementById('field.' + key);
+						let classData = document.getElementsByClassName(fieldKey);
+
+						if (classData.length > 0) {
+
+							for (let dat of classData) {
+
+								dat.innerHTML = (fields[fieldKey]) ? fields[fieldKey] : "-";
+							}
+
+						} else {
+
+							let fieldData = document.getElementById('field.' + fieldKey);
+
+							if (fieldData) {
+
+								fieldData.innerHTML = (fields[fieldKey]) ? fields[fieldKey] : "-";
+							}
+						}
+					}
+				}
+
+				if (Array.isArray(tables) && tables.length > 0) {
+
+					for (let table of tables) {
+
+						let tableToCreate = document.getElementById('field.' + table.tableName);
 
 						if (tableToCreate) {
 
@@ -560,18 +587,18 @@ export default class PrintPreview {
 
 							let HTMLtitle = HTMLTemplate.querySelector("#title" + numOfTable);
 
-							HTMLtitle.innerHTML = val[0].caption ?? "";
+							HTMLtitle.innerHTML = i18n.t(table.caption) ?? "";
 
-							for (let j = 0; j < val.length; j++) {
+							for (let j = 0; j < table.data.length; j++) {
 
 								let tr = document.createElement("tr");
 
 								tableToCreate.appendChild(tr);
 								tr.setAttribute("id", "row" + j);
 
-								for (let id in val[j]) {
+								for (let id in table.data[j]) {
 
-									let th = document.getElementById('field.' + key + "." + id);
+									let th = document.getElementById('field.' + table.tableName + "." + id);
 
 									if (th) {
 
@@ -580,31 +607,31 @@ export default class PrintPreview {
 
 										cell.appendChild(paragraph);
 										tr.appendChild(cell);
-										th.innerHTML = (val[j][id] && val[j][id].header) ? val[j][id].header : "";
-										paragraph.innerHTML = (val[j][id] && val[j][id].value) ? val[j][id].value : "";
+										th.innerHTML = (table.data[j][id] && table.data[j][id].header) ? table.data[j][id].header : "";
+										paragraph.innerHTML = (table.data[j][id] && table.data[j][id].value) ? table.data[j][id].value : "";
 									}
 								}
 							}
 						}
+					}
+				}
 
-					} else {
+				if (typeof (groupImages) === "object") {
 
-						let classData = document.getElementsByClassName(key);
+					let group = document.getElementById('groupImage');
 
-						if (classData.length > 0) {
+					if (group && Array.isArray(groupImages.data) && groupImages.data.length > 0) {
 
-							for (let dat of classData) {
+						for (let image of groupImages.data) {
 
-								dat.innerHTML = (self.data[key]) ? self.data[key] : "-";
-							}
-						} else {
+							let newGroup = document.createElement("div");
+							let newImg = document.createElement("img");
 
-							let fieldData = document.getElementById('field.' + key);
-
-							if (fieldData) {
-
-								fieldData.innerHTML = (self.data[key]) ? self.data[key] : "-";
-							}
+							group.appendChild(newGroup);
+							newGroup.appendChild(newImg);
+							newGroup.setAttribute("id", groupImages.name);
+							newImg.setAttribute("id", "title" + image.fileName);
+							newImg.setAttribute("src", appConfig.restUrl + image.src);
 						}
 					}
 				}
