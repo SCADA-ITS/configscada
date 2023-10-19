@@ -496,7 +496,8 @@ export default class TaskManagerModule extends GenericModule {
 							{ gridOption: { id: 16 }, value: "img/menu/taskmanager.png" },
 							{ gridOption: { id: 21 }, value: "custom" },
 							{ gridOption: { id: 23 }, value: "true" },
-							{ gridOption: { id: 25 }, value: "true" }
+							{ gridOption: { id: 25 }, value: "true" },
+							{ gridOption: { id: 26 }, value: "true" }
 						];
 
 						let metadata = {
