@@ -511,7 +511,7 @@ export default class PrintPreview {
 									id: "template-" + self.uid,
 									view: "template",
 									src: SRC_TEMPLATE + self.options.srcTemplate,
-									autoheight: true,
+//									autoheight: true,
 									on: {
 										onAfterRender: function() {
 
