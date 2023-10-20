@@ -319,6 +319,7 @@ export default class HistoricalChartGeneric {
 														}
 
 														self.selectedRangeInHours = (self.dateEnd - self.dateIni) / (60000 * 60);
+														self.listLegend = [];
 
 														self.initialize();
 													}
@@ -465,7 +466,7 @@ export default class HistoricalChartGeneric {
 			legendOptions[ListView.Options.SEARCH] = false;
 			legendOptions[ListView.Options.SELECTED] = false;
 
-			self.legend = new ListView(self.listLegend, legendOptions, null)
+			self.legend = new ListView(self.listLegend, legendOptions, null);
 			legendView = self.legend.getView();
 
 			return legendView;

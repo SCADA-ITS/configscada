@@ -200,17 +200,20 @@ export default class HistoricalChartElementValues extends HistoricalChartGeneric
 
 				xAxisToShow.push(val);
 			}
+			
+			if (Array.isArray(xAxisToShow) && xAxisToShow.length > 0) {
 
-			xAxisToShow.forEach(xAux => {
+				xAxisToShow.forEach(xAux => {
 
-				self.xAxis.push({
-					initEpoch: xAux[0].initEpoch,
-					initTime: xAux[0].initTime,
-					endEpoch: xAux[xAux.length - 1].endEpoch,
-					endTime: xAux[xAux.length - 1].endTime,
-					xValue: xAux[xAux.length - 1].xValue
+					self.xAxis.push({
+						initEpoch: xAux[0].initEpoch,
+						initTime: xAux[0].initTime,
+						endEpoch: xAux[xAux.length - 1].endEpoch,
+						endTime: xAux[xAux.length - 1].endTime,
+						xValue: xAux[xAux.length - 1].xValue
+					});
 				});
-			});
+			}
 		}
 	}
 

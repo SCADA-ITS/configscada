@@ -120,6 +120,12 @@ export default class HistoricalChartAlarms extends HistoricalChartGeneric {
 
 					self.getRangeData(self.args.elementsIds[0]);
 				}
+				
+				if (self.legend) {
+
+					self.legend.clear();
+					self.legend.add(self.listLegend);
+				}
 			}
 		});
 	}
