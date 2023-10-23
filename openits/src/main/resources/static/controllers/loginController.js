@@ -354,6 +354,8 @@ function access(loginData) {
 			}
 			else {
 				
+				util.user.logout();
+				
 				$$("alertText-" + uid).config.label = translateLabel("LBL_UNAUTHORIZED");
 				webix.html.removeCss($$("alertText-" + uid).getNode(), "alert-text-authorized");
 				$$("alertText-" + uid).refresh();
