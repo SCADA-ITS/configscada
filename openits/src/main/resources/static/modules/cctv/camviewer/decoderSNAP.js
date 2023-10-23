@@ -186,6 +186,10 @@ export default class DecoderSNAP extends Decoder {
 							
 						self.img.src = Decoder.NO_VIDEO_IMAGE;
 					}
+					else {
+						
+						self.img.src = getNewUrl();
+					}
 				}
 			}
 			
