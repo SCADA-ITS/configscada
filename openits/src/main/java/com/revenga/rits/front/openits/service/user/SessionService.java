@@ -279,74 +279,54 @@ public class SessionService {
 		
 		if (sessions.size() < maxSessions || maxSessions == null || maxSessions <= 0) {
 			
-			List<Map<String, Object>> users = userBO.getList();
-
-			if (!CollectionUtils.isEmpty(users)) {
-
-				users = vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_USERS, users);
-
-				for (Map<String, Object> u : users) {
-
-					String usr = u.get(UserSessionUI.USER_FIELD_USER).toString();
-
-					if (userName.equalsIgnoreCase(usr)) {
+			Map<String, Object> user = userBO.getByName(userName);
+			
+			if (user != null) {
+				
+				if (Boolean.parseBoolean(env.getProperty(AUTH_ENCRYPTED_PASSWORD))) {
+					
+					try {
 						
-						String id = u.get(UserSessionUI.USER_FIELD_ID).toString();
-						String pwd = u.get(UserSessionUI.USER_FIELD_PASSWORD).toString();
+						password = AES.encrypt(password);
 						
-						Map<String, Object> user = userBO.getItem(id);
+					} catch (Exception e) {
+						
+						log.error(e.getMessage());
+						log.debug(ExceptionUtils.getStackTrace(e));
+					}
+				}
+				
+				if (isLockedUser(user)) {
+					
+					userSession.setAccess(UserSessionUI.DENY_LOCKED);
+				}
+				else {
+					
+					if (password.equals(user.get(UserSessionUI.USER_FIELD_PASSWORD))) {
+						
+						user = vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_USER, user);
 						
 						if (user != null) {
 							
-							if (Boolean.parseBoolean(env.getProperty(AUTH_ENCRYPTED_PASSWORD))) {
-								
-								try {
-									
-									password = AES.encrypt(password);
-									
-								} catch (Exception e) {
-									
-									log.error(e.getMessage());
-									log.debug(ExceptionUtils.getStackTrace(e));
-								}
-							}
+							user.put(UserSessionUI.USER_FIELD_PASSWORD, null);
 							
-							if (isLockedUser(user)) {
+							userSession.setUser(user);
+
+							setAccess(user, userSession);
+
+							if (userSession.getAccess().equals(UserSessionUI.AUTHORIZED)) {
+
+								activate(userSession);
 								
-								userSession.setAccess(UserSessionUI.DENY_LOCKED);
-							}
-							else {
-								
-								if (password.equals(pwd)) {
-									
-									user = vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_USER, user);
-									
-									if (user != null) {
-										
-										user.put(UserSessionUI.USER_FIELD_PASSWORD, null);
-										
-										userSession.setUser(user);
-
-										setAccess(user, userSession);
-
-										if (userSession.getAccess().equals(UserSessionUI.AUTHORIZED)) {
-
-											activate(userSession);
-											
-											sendAuditLog(userSession, AUDIT_LOG_SUBTYPE_LOGIN, AuditLogLevel.INFO, null);
-										}
-									}
-									
-								} else {
-									
-									userSession.setAccess(allowLoginRetry(user, httpSession.getId())
-											? UserSessionUI.WRONG_USER_PASSWORD
-											: UserSessionUI.DENY_LOCKED);
-								}
+								sendAuditLog(userSession, AUDIT_LOG_SUBTYPE_LOGIN, AuditLogLevel.INFO, null);
 							}
 						}
 						
-						break;
+					} else {
+						
+						userSession.setAccess(allowLoginRetry(user, httpSession.getId())
+								? UserSessionUI.WRONG_USER_PASSWORD
+								: UserSessionUI.DENY_LOCKED);
 					}
 				}
 			}

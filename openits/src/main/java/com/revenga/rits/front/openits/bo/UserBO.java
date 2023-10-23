@@ -83,6 +83,24 @@ public class UserBO extends GenericBO {
 				Boolean.parseBoolean(env.getProperty(AUTH_ENCRYPTED_PASSWORD)) ? decryptPasswordField(obj) : obj);
 	}
 	
+	public Map<String, Object> getByName(String name) {
+		
+		Map<String, Object> obj = null;
+		
+		if (USERMGR_ENABLED.booleanValue()) {
+
+			obj = userManager.getUserByName(name);
+		}
+		else {
+		
+			obj = voDataSourceAdapter.get(VODataSourceAdapter.DATA_SOURCE_GET_USER_BY_NAME,
+					new Object[] { name });
+		}
+
+		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_USER_BY_NAME,
+				Boolean.parseBoolean(env.getProperty(AUTH_ENCRYPTED_PASSWORD)) ? decryptPasswordField(obj) : obj);
+	}
+	
 	public List<Map<String, Object>> getListWithRole() {
 
 		List<Map<String, Object>> users = null;

@@ -102,6 +102,20 @@ public class UserManager {
 	}
 	
 	@SuppressWarnings("unchecked")
+	public Map<String, Object> getUserByName(String userNameStr) {
+		
+		Map<String, Object> user = null;
+		UserRepository userRepository = new UserRepository(this.conn);
+		
+		user = userRepository
+				.get(new ImmutablePair<String, Object>(UserRepository.FIELD_DB_NAME, userNameStr));
+			
+		userRepository.fill(user);
+			
+		return user;
+	}
+	
+	@SuppressWarnings("unchecked")
 	public Map<String, Object> createUser(Object input) {
 		
 		Map<String, Object> newUser = null;

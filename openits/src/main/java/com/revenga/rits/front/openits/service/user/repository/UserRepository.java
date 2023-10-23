@@ -29,6 +29,9 @@ public class UserRepository extends GenericRepository {
     
 	public static final String PK_USER_ID = "user_id";
 	public static final String FK_ROLE_ID = "role_id";
+	
+	public static final String FIELD_DB_NAME = "name_";
+	
 	public static final String FIELD_USER_ID = "userId";
 	private static final String FIELD_USER_ROLE_ID = "roleId";
 	private static final String FIELD_USER_LOCALE_CODE = "localeCode";
