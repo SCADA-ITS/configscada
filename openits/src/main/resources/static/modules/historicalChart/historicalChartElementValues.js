@@ -154,12 +154,13 @@ export default class HistoricalChartElementValues extends HistoricalChartGeneric
 
 		function getXAxisPeriods() {
 
+			let minNumOfMeasures = (xAxisAux.length < 100) ? xAxisAux.length : 100;
 			let xAxisToShow = [];
 			let diferencesArr = [];
 			let minArr = [];
-			let min;
+			let min;			
 
-			for (let i = 100; i < 250; i++) {
+			for (let i = minNumOfMeasures; i < 250; i++) {
 
 				let valuesForMeasure = Math.floor(xAxisAux.length / i);
 				let diference = xAxisAux.length - (valuesForMeasure * i);
