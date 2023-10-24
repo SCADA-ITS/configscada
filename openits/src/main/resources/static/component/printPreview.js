@@ -13,6 +13,14 @@ const FONTS = {
 
 const SRC_TEMPLATE = "./templates/";
 
+const DataType = {
+	STRING: { value: 1, filter: "textFilter", sort: "string" },
+	INT: { value: 2, filter: "numberFilter" },
+	DECIMAL: { value: 3, filter: "numberFilter", defaultPrecision: 2 },
+	DATE: { value: 4, filter: "dateRangeFilter", sort: "date" },
+	IMAGE: { value: 5, filter: "textFilter", sort: "string" }
+};
+
 export default class PrintPreview {
 
 	static get TYPE_PRINT_DATATABLE() { return 1 }
@@ -291,63 +299,105 @@ export default class PrintPreview {
 
 						let value = dat[col.id];
 
-						if (col.replacementFunction) {
+						if (typeof dat[col.id] === 'object' && col.dataType && col.dataType.id !== DataType.DATE.value) {
 
-							if (eval("util.datatable." + col.replacementFunction)) {
+							if (dat[col.id].template) {
 
-								value = eval("util.datatable." + col.replacementFunction)(dat[col.id]);
-							}
-						}
+								value = eval(dat[col.id].template)();
 
-						if (col.references != undefined && col.references.length > 0) {
+							} else {
 
-							let gridFieldReference = col.references[0];
-							let refField = self.options.metadata.gridFields.filter(e => e.id == gridFieldReference.refFieldId);
+								let replacementValue;
+								let dataObject = dat[col.id].value;
+								let stateObject = dat[col.id].state;
 
-							if (refField != undefined) {
+								if (Array.isArray(col.gridFieldReplacements) && col.gridFieldReplacements.length > 0) {
 
-								value = window.em.getByField(EntityType[gridFieldReference.emId], gridFieldReference.emField, dat[refField[0].sourceField]);
-								value = value[gridFieldReference.emFieldReturned];
+									let gridFieldReplacement = col.gridFieldReplacements.find(e => e.value == dataObject);
 
-								if (col.needsTranslation) {
+									if (gridFieldReplacement) {
 
-									value = i18n.t(value);
+										replacementValue = col.needsTranslation ? i18n.t(gridFieldReplacement.label) : gridFieldReplacement.label;										
+									}
+								}
+								
+								let val = (replacementValue) ? replacementValue : dataObject;
+								
+								if (stateObject != undefined) {
 
-									dat[field.id] = value;
+									let iconElementState = stateObject.replace(":", "_") + ".png";
+
+									value = `<div>
+											<span style="padding-bottom: 6px;display: inline-block;">${val}</span>		
+											<img class="table-field-icons" src="./img/state/${iconElementState}" onerror="this.onerror=null; this.style.display = 'none'"/>
+											</div>`;
+
+								} else {
+
+									value = val;
 								}
 							}
-						}
+							
+						} else {
 
-						if (Array.isArray(col.gridFieldReplacements) && col.gridFieldReplacements.length > 0) {
+							if (col.replacementFunction) {
 
-							let gridFieldReplacement = col.gridFieldReplacements.find(e => e.value == value.value);
+								if (eval("util.datatable." + col.replacementFunction)) {
 
-							if (gridFieldReplacement) {
-
-								let val = col.needsTranslation ? i18n.t(gridFieldReplacement.label) : gridFieldReplacement.label;
-
-								value = val;
+									value = eval("util.datatable." + col.replacementFunction)(dat[col.id]);
+								}
 							}
-						}
 
-						if (col.dataType && col.dataType.type === DataType.TIMESTAMP && value != undefined && value != null && dat[col.id]) {
+							if (col.references != undefined && col.references.length > 0) {
 
-							value = dat[col.id].toLocaleString(i18n.getLocale(), FORMAT_NUMERIC_DATES);
-						}
+								let gridFieldReference = col.references[0];
+								let refField = self.options.metadata.gridFields.filter(e => e.id == gridFieldReference.refFieldId);
 
-						if (Array.isArray(col.icons) && col.icons.length > 0) {
+								if (refField != undefined) {
 
-							let dataWithIcon = col.icons.find(e => e.value == value || i18n.t(e.labelValue) == value);
+									value = window.em.getByField(EntityType[gridFieldReference.emId], gridFieldReference.emField, dat[refField[0].sourceField]);
+									value = value[gridFieldReference.emFieldReturned];
 
-							if (dataWithIcon && dataWithIcon.icon) {
+									if (col.needsTranslation) {
 
-								if (self.type === PrintPreview.TYPE_PRINT_DATATABLE) {
+										value = i18n.t(value);
 
-									value = `<img class="table-field-icons" src="${dataWithIcon.icon}">`;
+										dat[col.id] = value;
+									}
+								}
+							}
 
-								} else if (self.type === PrintPreview.TYPE_EXPORT_DATATABLE) {
+							if (Array.isArray(col.gridFieldReplacements) && col.gridFieldReplacements.length > 0) {
 
-									value = i18n.t(dataWithIcon.labelValue);
+								let gridFieldReplacement = col.gridFieldReplacements.find(e => e.value == value.value);
+
+								if (gridFieldReplacement) {
+
+									let val = col.needsTranslation ? i18n.t(gridFieldReplacement.label) : gridFieldReplacement.label;
+
+									value = val;
+								} 
+							}
+
+							if (col.dataType && col.dataType.type === DataType.TIMESTAMP && value != undefined && value != null && dat[col.id]) {
+
+								value = dat[col.id].toLocaleString(i18n.getLocale(), FORMAT_NUMERIC_DATES);
+							}
+
+							if (Array.isArray(col.icons) && col.icons.length > 0) {
+
+								let dataWithIcon = col.icons.find(e => e.value == value || i18n.t(e.labelValue) == value);
+
+								if (dataWithIcon && dataWithIcon.icon) {
+
+									if (self.type === PrintPreview.TYPE_PRINT_DATATABLE) {
+
+										value = `<img class="table-field-icons" src="${dataWithIcon.icon}">`;
+
+									} else if (self.type === PrintPreview.TYPE_EXPORT_DATATABLE) {
+
+										value = i18n.t(dataWithIcon.labelValue);
+									}
 								}
 							}
 						}
