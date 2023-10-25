@@ -5,7 +5,6 @@ import TreeView from "../../../../component/treeview.js";
 import GraphicIcon from "../../../../component/graphicIcon/graphicIcon.js";
 
 const MODULE_PARAM_CONFIG = 8;
-const MAX_EPOCH_TIME = 4102444799000;
 
 export default class VmsSignalingMonitorModule extends GenericModule {
 
@@ -23,6 +22,7 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 		this.treeViewsArr = [];
 		this.scrollViewsArr = [];
 		this.dataToUpdate = [];
+		this.optionsArr = [];
 		this.scrollView = undefined;
 		this.virtualTree = undefined;
 		this.elementsMap = new Map();
@@ -104,7 +104,7 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 
 					} catch { }
 
-					if (elementTreeHierarchiesValues && Array.isArray(elementTreeHierarchiesValues.treeCustom) && elementTreeHierarchiesValues.treeCustom.length>0) {
+					if (elementTreeHierarchiesValues && Array.isArray(elementTreeHierarchiesValues.treeCustom) && elementTreeHierarchiesValues.treeCustom.length > 0) {
 
 						elementTreeHierarchiesValues.treeCustom.forEach(value => {
 
@@ -173,7 +173,15 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 
 			treeEquipments.push(getSwitcherViews());
 			treeEquipments.push({ height: 1, borderless: false });
-			treeEquipments.push(getSwitcherButtons());
+
+			if ((self.elementsTree.length + elementsWithoutTree.length) > MAX_NUM_OF_BUTTON_TREES) {
+
+				treeEquipments.push(getSwitcherCombo());
+
+			} else {
+
+				treeEquipments.push(getSwitcherButtons());
+			}
 
 			viewMain = {
 				id: "view-main-" + self.uid,
@@ -360,7 +368,6 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 
 				let switcherButtonsView;
 				let withTreeElements = undefined;
-				let options = [];
 
 				if (Array.isArray(self.elementsTree) && self.elementsTree.length > 0) {
 
@@ -373,7 +380,7 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 							let idHTML = self.elementsTree[i - idx].id.replaceAll(":", "-");
 							let firstId = self.elementsTree[i - idx].elementTreeNodes.find(e => !e.element);
 
-							options.push({
+							self.optionsArr.push({
 								id: self.elementsTree[i - idx].id + "-" + self.uid + "_" + self.treeViewsArr[i].uid,
 								firstId: firstId.id,
 								value: `<div id='${idHTML + "-" + self.uid + "_" + self.treeViewsArr[i].uid}' title='${i18n.t(self.elementsTree[i - idx].labelAlias)}' style='text-align: center; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;'>
@@ -389,7 +396,7 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 
 					let firstVirtualId = self.treeViewsArr[self.treeViewsArr.length - 1].data[0].id_;
 
-					options.push({
+					self.optionsArr.push({
 						id: "virtual-" + self.uid + "_" + self.treeViewsArr[self.treeViewsArr.length - 1].uid,
 						firstId: firstVirtualId,
 						value: `<div id='${"virtual-" + self.uid + "_" + self.treeViewsArr[self.treeViewsArr.length - 1].uid}' title='${i18n.t("LBL_VIRTUAL")}' style='text-align: center; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;'>
@@ -440,7 +447,7 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 												id: "carousel-list-" + self.uid,
 												view: "list",
 												css: "carousel-list",
-												data: options,
+												data: self.optionsArr,
 												layout: "x",
 												select: true,
 												type: {
@@ -542,7 +549,7 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 													},
 													onAfterRender: function() {
 
-														let idHTML = options[0].id.replaceAll(":", "-");
+														let idHTML = self.optionsArr[0].id.replaceAll(":", "-");
 														let HTMLelement = $$("carousel-list-" + self.uid).getNode().querySelector('#' + idHTML);
 														webix.html.triggerEvent(HTMLelement, "MouseEvent", "click");
 													}
@@ -575,6 +582,129 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 				};
 
 				return switcherButtonsView;
+			}
+
+			function getSwitcherCombo() {
+
+				let withTreeElements = undefined;
+				let switcherComboView = {};
+
+				if (Array.isArray(self.elementsTree) && self.elementsTree.length > 0) {
+
+					let idx = withTreeElements ? 1 : 0;
+
+					for (let i = idx; i <= self.elementsTree.length; i++) {
+
+						if (self.elementsTree[i - idx]) {
+
+							let idHTML = self.elementsTree[i - idx].id.replaceAll(":", "-");
+							let firstId = self.elementsTree[i - idx].elementTreeNodes.find(e => !e.element);
+
+							self.optionsArr.push({
+								id: self.elementsTree[i - idx].id + "-" + self.uid + "_" + self.treeViewsArr[i].uid,
+								auxId: self.elementsTree[i - idx].id,
+								treeUid: self.treeViewsArr[i].uid,
+								firstId: firstId.id,
+								value: `<div id='${idHTML + "-" + self.uid + "_" + self.treeViewsArr[i].uid}' title='${i18n.t(self.elementsTree[i - idx].labelAlias)}' style='text-align: center; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;'>
+									   <span class='ico webix_icon mdi mdi-family-tree'></span>
+									   <span>${i18n.t(self.elementsTree[i - idx].labelAlias)}</span>
+									    </div>`
+							});
+						}
+					}
+				}
+
+				if (Array.isArray(elementsWithoutTree) && elementsWithoutTree.length > 0) {
+
+					let firstVirtualId = self.treeViewsArr[self.treeViewsArr.length - 1].data[0].id_;
+
+					self.optionsArr.push({
+						id: "virtual-" + self.uid + "_" + self.treeViewsArr[self.treeViewsArr.length - 1].uid,
+						firstId: firstVirtualId,
+						treeUid: self.treeViewsArr[self.treeViewsArr.length - 1].uid,
+						value: `<div id='${"virtual-" + self.uid + "_" + self.treeViewsArr[self.treeViewsArr.length - 1].uid}' title='${i18n.t("LBL_VIRTUAL")}' style='text-align: center; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;'>
+							   <span class='ico webix_icon mdi mdi-family-tree'></span>
+							   <span>${i18n.t("LBL_VIRTUAL")}</span>
+						    </div>`
+					});
+				}
+
+				switcherComboView = {
+					id: "combo-list-" + self.uid,
+					view: "richselect",
+					css: { "background-color": "var(--blue-soft-opacity-1)" },
+					height: 50,
+					options: self.optionsArr,
+					on: {
+						onChange: function(newv) {
+
+							const VIEWS = {
+								EQUIPMENT: 0,
+								SCROLLVIEW: 1
+							};
+
+							$$("loading-switcher-" + self.uid).show();
+							$$("switcher-views-" + self.uid).hide();
+
+							webix.delay(function() {
+
+								let contentViews = $$("multi-" + self.uid).getChildViews();
+
+								$$("switcher-views-" + self.uid).show();
+								$$("loading-switcher-" + self.uid).hide();
+
+								let treeView;
+								let newTreeId;
+								let newTree = self.optionsArr.find(e => e.id === newv);
+
+								if (newTree) {
+
+									newTreeId = newTree.treeUid;
+								}
+
+								treeView = self.treeViewsArr.find(e => e.uid == newTreeId);
+
+								for (let treeIds of self.treeViewsArr) {
+
+									$$("treeview-" + treeIds.uid).hide();
+								}
+
+								$$("treeview-" + newTreeId).show();
+								$$("resizer-" + self.uid).disable();
+								$$("view-main-list-equipments-" + self.uid).refresh();
+
+								let itemSelected = treeView.getSelected();
+								let element = undefined;
+
+								if (itemSelected[0] && itemSelected[0].id_) {
+
+									element = window.em.getByField(EntityType.ELEMENT, "id", itemSelected[0].id_);
+								}
+
+								if (Array.isArray(itemSelected) && itemSelected.length > 0 && element != undefined) {
+
+									treeView.unselectAll();
+									treeView.select(itemSelected[0].id);
+									contentViews[VIEWS.EQUIPMENT].show();
+									util.ui.setTitle(self.args.containerId, i18n.t(itemSelected[0].value), null);
+
+								} else {
+
+									treeView.unselect("root");
+									treeView.select("root");
+								}
+
+								contentViews[VIEWS.SCROLLVIEW].hide();
+							});
+						},
+						onAfterRender: function() {
+
+							$$(this).setValue(self.optionsArr[0].id);
+						}
+					}
+				};
+
+				return switcherComboView;
 			}
 
 			function getVirtualTree() {
@@ -841,42 +971,33 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 		let self = this;
 		let treeData;
 		let elementsSet = new Set();
-		let foldersArr = [];
-		let rootSelected = false;
+		let foldersArrAux = [];
 
 		if (item) {
 
 			if (item.id === "root") {
 
-				rootSelected = true;
 				treeData = [];
 
 				if (Array.isArray(self.treeViewsArr) && self.treeViewsArr.length > 0) {
 
-					let itemListSelected = $$("carousel-list-" + self.uid).getSelectedItem();
+					let itemListSelected;
+
+					if ($$("carousel-list-" + self.uid)) {
+
+						itemListSelected = $$("carousel-list-" + self.uid).getSelectedItem();
+
+					} else if ($$("combo-list-" + self.uid)) {
+
+						itemListSelected = self.optionsArr.find(option => option.id === $$("combo-list-" + self.uid).getValue());
+					}
 
 					for (let treeView of self.treeViewsArr) {
 
 						if (treeView.dataMap.has(itemListSelected.firstId)) {
 
-							foldersArr = treeView.getChilds(item, 1);
-						}
-					}
-				}
-
-				getData(foldersArr);
-
-				function getData(foldersArr) {
-
-					for (let element of foldersArr) {
-
-						if (!element.props.folder) {
-
-							treeData.push(element);
-
-						} else {
-
-							getData(element.data);
+							foldersArrAux = treeView.getChilds(item, 1);
+							treeData = treeView.getChilds(item, 2);
 						}
 					}
 				}
@@ -892,6 +1013,22 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 						if (treeView) {
 
 							treeData = self.treeViewsArr[i].getChilds(item, 2);
+							foldersArrAux = self.treeViewsArr[i].getChilds(item, 1);
+
+						} else {
+
+							let treeParent = self.treeViewsArr[i].data.find(tree => tree.id_ === item.parentId);
+
+							if (treeParent) {
+
+								let childItem = treeParent.data.find(tree => tree.id === item.id);
+
+								if (childItem) {
+
+									treeData = self.treeViewsArr[i].getChilds(childItem, 2);
+									foldersArrAux = self.treeViewsArr[i].getChilds(item, 1);
+								}
+							}
 						}
 					}
 
@@ -948,26 +1085,47 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 					let elementsArr = Array.from(elementsSet);
 					
 					elementsArr.sort((a, b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));
-					
 					self.graphicIconInstanceMap.clear();
 
-					if (rootSelected) {
+					let foldersArr = foldersArrAux.filter(folder => {
+
+						return (item.id === "root") ? folder.parentId === undefined : folder.parentId === item.id_;
+					});
+
+					if (Array.isArray(foldersArr) && foldersArr.length > 0) {
 
 						for (let folder of foldersArr) {
 
 							let elements = [];
 							let idHTML = folder.id_.replaceAll(":", "");
 
-							folder.data.forEach(dat => {
+							getElements(folder);
 
-								if (self.elementsMap.has(dat.id_)) {
+							function getElements(folder) {
 
-									let el = self.elementsMap.get(dat.id_);
-									elements.push(el);
+								for (let element of folder.data) {
+
+									if (!element.props.folder) {
+
+										if (self.elementsMap.has(element.id_)) {
+
+											let el = self.elementsMap.get(element.id_);
+											elements.push(el);
+										}
+
+									} else {
+
+										getElements(element);
+									}
 								}
-							});
-							
+							}
+
 							elements.sort((a, b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));
+
+							for (let element of elements) {
+
+								elementsArr = elementsArr.filter(e => e.id != element.id);
+							}
 
 							let windowPanel = {
 								rows: [
@@ -977,14 +1135,12 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 										cols: [
 											{ width: 15 },
 											{
-												//width: 600,
-												//height: 650,
 												header: function() {
 
 													return `<div>
-																	<span class='ico webix_icon mdi mdi-view-headline'></span>
-																	<span id='${idHTML}'>${folder.value}</span>
-																</div>`;
+															<span class='ico webix_icon mdi mdi-view-headline'></span>
+															<span id='${idHTML}'>${folder.value}</span>
+															</div>`;
 												},
 												body: {
 													view: "scrollview",
@@ -1020,27 +1176,38 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 
 							windowPanelArr.push(windowPanel);
 						}
+					}
 
-					} else {
+					if (Array.isArray(elementsArr) && elementsArr.length > 0) {
 
-						let idHTML = item.id_.replaceAll(":", "");
+						let elements = [];
+						let idHTML = "aditionalPanel";
 
-						let windowPanel = {
+						for (let element of elementsArr) {
+
+							if (self.elementsMap.has(element.id)) {
+
+								let el = self.elementsMap.get(element.id);
+								elements.push(el);
+							}
+						}
+
+						elements.sort((a, b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));
+
+						let aditionalWindowPanel = {
 							rows: [
 								{ height: 15 },
 								{
-									css: { "background-color": "white !important", "box-sizing": "border-box" },
+									css: { "background-color": "white !important" },
 									cols: [
 										{ width: 15 },
 										{
-											id: "window-panel-" + idHTML + "-" + self.uid,
-											width: 600,
 											header: function() {
 
 												return `<div>
-															<span class='ico webix_icon mdi mdi-view-headline'></span>
-															<span id='${idHTML}'>${item.value}</span>
-															</div>`;
+														<span class='ico webix_icon mdi mdi-view-headline'></span>
+														<span id='${idHTML}'>${item.value}</span>
+														</div>`;
 											},
 											body: {
 												view: "scrollview",
@@ -1049,7 +1216,7 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 												css: { "box-sizing": "border-box" },
 												body: {
 													id: "scrollview-" + idHTML + "-" + self.uid,
-													rows: getPanels(elementsArr)
+													rows: getPanels(elements)
 												}
 											},
 											on: {
@@ -1068,13 +1235,13 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 											}
 										},
 										{ width: 15 }
-									],
+									]
 								},
 								{ height: 15 }
 							]
 						};
 
-						windowPanelArr.push(windowPanel);
+						windowPanelArr.push(aditionalWindowPanel);
 					}
 
 					return windowPanelArr;

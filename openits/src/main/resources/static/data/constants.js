@@ -278,3 +278,6 @@ const LogLevel = Object.freeze({
   	ERROR: { level: 5, color: "#e60000" },
   	CRITICAL: { level: 6, color: "#cc0000" }
 });
+
+// Number os buttons to show in monitor module left column
+const MAX_NUM_OF_BUTTON_TREES = 3;
