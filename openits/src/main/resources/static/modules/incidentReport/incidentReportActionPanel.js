@@ -582,6 +582,7 @@ export default class IncidentReportActionPanel {
 					width: 135,
 					label: i18n.t("LBL_MORE_INFO"),
 					tooltip: i18n.t("LBL_MORE_INFO_DESCRIPTION"),
+					disabled: self.closed,
 					type: "iconTop",
 					icon: "mdi mdi-file-document",
 					on: {
