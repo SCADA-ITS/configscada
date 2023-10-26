@@ -122,7 +122,9 @@ export default class HistoricalChartElementValues extends HistoricalChartGeneric
 
 					elementTypeParamsToShow.forEach(eTypeParam => {
 
-						if (eTypeParam.paramType.id === self.parent.config.paramTypeMeasure) {
+						let show = (eTypeParam.noShowMeasureInChart) ? !IS_TRUE(eTypeParam.noShowMeasureInChart) : true;
+
+						if (show && (eTypeParam.paramType.id === self.parent.config.paramTypeMeasure) && (eTypeParam.dataType && (eTypeParam.dataType.id === DataType.INTEGER || eTypeParam.dataType.id === DataType.DECIMAL))) {
 
 							self.listElements.push({
 								id: eTypeParam.id,
@@ -147,7 +149,24 @@ export default class HistoricalChartElementValues extends HistoricalChartGeneric
 
 			} else {
 
-				self.getRangeData(self.list.getSelectedItems()[0].id);
+				for (let i = 0; i < self.args.elementsIds.length; i++) {
+
+					let element = window.em.getByField(EntityType.ELEMENT, "id", self.args.elementsIds[i]);
+
+					self.listLegend.push({
+						id: self.args.elementsIds[i],
+						alias: element.alias,
+						description: element.alias,
+						color: LINES_COLORS[i % LINES_COLORS.length]
+					});
+				}
+				
+				let selecteditemArr = self.list.getSelectedItems();
+
+				if (Array.isArray(selecteditemArr) && selecteditemArr.length > 0) {
+
+					self.getRangeData(selecteditemArr[0].id);
+				}
 			}
 		});
 
@@ -158,7 +177,7 @@ export default class HistoricalChartElementValues extends HistoricalChartGeneric
 			let xAxisToShow = [];
 			let diferencesArr = [];
 			let minArr = [];
-			let min;			
+			let min;
 
 			for (let i = minNumOfMeasures; i < 250; i++) {
 
@@ -201,7 +220,7 @@ export default class HistoricalChartElementValues extends HistoricalChartGeneric
 
 				xAxisToShow.push(val);
 			}
-			
+
 			if (Array.isArray(xAxisToShow) && xAxisToShow.length > 0) {
 
 				xAxisToShow.forEach(xAux => {
