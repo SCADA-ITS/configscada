@@ -124,7 +124,7 @@ export default class HistoricalChartElementValues extends HistoricalChartGeneric
 
 						let show = (eTypeParam.noShowMeasureInChart) ? !IS_TRUE(eTypeParam.noShowMeasureInChart) : true;
 
-						if (show && (eTypeParam.paramType.id === self.parent.config.paramTypeMeasure) && (eTypeParam.dataType && (eTypeParam.dataType.id === DataType.INTEGER || eTypeParam.dataType.id === DataType.DECIMAL))) {
+						if (show && (eTypeParam.paramType && (eTypeParam.paramType.id === self.parent.config.paramTypeMeasure)) && (eTypeParam.dataType && (eTypeParam.dataType.id === DataType.INTEGER || eTypeParam.dataType.id === DataType.DECIMAL))) {
 
 							self.listElements.push({
 								id: eTypeParam.id,
