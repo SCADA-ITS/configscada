@@ -123,6 +123,16 @@ export default class HistoricalChartElementValues extends HistoricalChartGeneric
 					elementTypeParamsToShow.forEach(eTypeParam => {
 
 						let show = (eTypeParam.noShowMeasureInChart) ? !IS_TRUE(eTypeParam.noShowMeasureInChart) : true;
+						
+						if (!eTypeParam.dataType) {
+
+							let dType = elementType.elementTypeParams.find(e => e.id === eTypeParam.id);
+
+							if (dType) {
+
+								eTypeParam.dataType = dType.dataType;
+							}
+						}					
 
 						if (show && (eTypeParam.paramType && (eTypeParam.paramType.id === self.parent.config.paramTypeMeasure)) && (eTypeParam.dataType && (eTypeParam.dataType.id === DataType.INTEGER || eTypeParam.dataType.id === DataType.DECIMAL))) {
 
