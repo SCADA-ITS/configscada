@@ -1,5 +1,6 @@
 import { util } from "../../../lib/util.js";
 import { adapter } from "../../../lib/adapter.js";
+import SearchDialogBox from "../../../component/searchDialogBox.js";
 import GraphicIcon from "../../../component/graphicIcon/graphicIcon.js";
 
 const VMS_MAX_WIDTH = 525;
@@ -129,7 +130,7 @@ export default class VmsSignalingRealTimePanel {
 			viewMainInfo = {
 				width: 300,
 				rows: [
-					{height: 30},
+					{ height: 30 },
 					{
 						height: 65,
 						borderless: true,
@@ -178,7 +179,7 @@ export default class VmsSignalingRealTimePanel {
 									return tooltip;
 
 								} else {
-									
+
 									return "";
 								}
 							},
@@ -252,13 +253,77 @@ export default class VmsSignalingRealTimePanel {
 							return `<div class="equip-viewer-info">
 											<span class="ico webix_icon mdi mdi-view-headline"></span>
 											<span class="title">${i18n.t("LBL_ELEMENT_DESCRIPTION")}</span>
+											<span title="${i18n.t("LBL_EQUIP_VIEWER_PROPERTIES_DESCRIPTION")}" class="ico webix_icon mdi mdi-information signaling-properties-info-icon"></span>
 											<span class="value">${self.element.description}</span>
 										</div>`;
+						},
+						on: {
+							onAfterRender: function() {
+
+								let infoIcon = $$(this).getNode().querySelector('.signaling-properties-info-icon');
+
+								if (infoIcon) {
+
+									infoIcon.addEventListener('click', getProperties);
+								}
+							}
 						}
 					},
 					{}
 				]
 			};
+
+			function getProperties() {
+
+				let elementValues = [];
+				let dialogEntity = webix.copy(SearchDialogBox.CUSTOM);
+				let label = i18n.t("LBL_EQUIPMENT_PROPERTIES") + " - " + self.element.alias;
+
+				dialogEntity.data = [];
+
+				dialogEntity.pkField = "id";
+				dialogEntity.fields = ["element=LBL_PROPERTY", "elementType=LBL_PROPERTY_VALUE"];
+				dialogEntity.height = 600;
+				dialogEntity.width = 800;
+
+				if (self.element.equipmentViewer && Array.isArray(self.element.equipmentViewer.equipViewerConfigs) && self.element.equipmentViewer.equipViewerConfigs.length > 0) {
+
+					for (let equipViewerConfig of self.element.equipmentViewer.equipViewerConfigs) {
+
+						let equipConfigs = self.element.elementValues.find(element => {
+							return element.elementTypeParam.id === equipViewerConfig.voEntity.id;
+						});
+
+						if (equipConfigs) {
+
+							elementValues.push(equipConfigs);
+
+						} else {
+
+							elementValues = self.element.elementValues;
+						}
+					}
+
+				} else {
+
+					if (Array.isArray(self.element.elementValues)) {
+
+						elementValues = self.element.elementValues;
+					}
+				}
+
+				for (let elementValue of elementValues) {
+
+					dialogEntity.data.push({
+						id: elementValue.elementTypeParam.id,
+						element: i18n.t(elementValue.elementTypeParam.labelAlias),
+						elementType: elementValue.value
+					});
+				}
+
+				let s = new SearchDialogBox(label, dialogEntity);
+				s.show();
+			}
 
 			return viewMainInfo;
 		}

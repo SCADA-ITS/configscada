@@ -258,3 +258,11 @@ audio {
 .signaling-monitor-text-panel-icon {
 	text-align: center;
 }
+
+.signaling-properties-info-icon {
+	position: relative; 
+	left: 30px; 
+	bottom: 3px;
+	font-size: 18px !important; 
+	cursor: pointer;	
+}

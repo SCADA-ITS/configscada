@@ -107,6 +107,7 @@ export default class VmsSignalingModule extends GenericModule {
 
 								let equipmentViewer = equipmentViewerResponse.json();
 								element.graphicIcon = (equipmentViewer.graphicIcon) ?? undefined;
+								element.equipmentViewer = equipmentViewer ?? undefined;
 
 								onResponse(element);
 							}
