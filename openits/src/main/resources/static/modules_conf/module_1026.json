@@ -11,10 +11,12 @@
 		"saveNode": "vms_libraries/${id}/node/${parentNodeIds}",
 		"deleteNode": "vms_libraries/node/${id}",
 		"enablePriority": "elements/enable_priority/element/${elementId}/priority/${priorityId}",
-		"disablePriority": "elements/disable_priority/element/${elementId}/priority/${priorityId}"
+		"disablePriority": "elements/disable_priority/element/${elementId}/priority/${priorityId}",
+		"equipmentViewer": "equip_viewer/${elementId}"
 	},
 	"topics": {
-		"elementQueue": "/topic/pm_queue"
+		"elementQueue": "/topic/pm_queue",
+		"element": "/topic/element"		
 	},
 	"requiredPermissions": {
 		"editPanel": "SystemPermission:13",
@@ -388,6 +390,7 @@
 		}
 	],
 	"action": {
-		"equipmentViewer": 101401
+		"equipmentViewer": 101401,
+		"showInMapOrSynoptic": 200004
 	}
 }

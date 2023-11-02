@@ -4,6 +4,7 @@ import VmsSignalingLibrary from "./vmsSignalingLibrary.js";
 import VmsSignalingMulti from "./vmsSignalingMulti.js";
 import MessageBox from "../../../component/messageBox.js";
 import GenericSignalingCommand from "../generic/genericSignalingCommand.js";
+import VmsSignalingRealTimePanel from "./vmsSignalingRealTimePanel.js";
 
 const MAX_ALTERNANCE_S = 10;
 const MIN_ALTERNANCE_S = 1;
@@ -34,6 +35,7 @@ export default class VmsSignalingContent {
 		this.priorityId = undefined;
 		this.startTime = undefined;
 		this.endTime = undefined;
+		this.optionValues = undefined;
 
 		if (this.isEditAction && this.currentCommandElement) {
 			
@@ -66,12 +68,19 @@ export default class VmsSignalingContent {
 
 		let self = this;		
 		let editPanelPermission = util.module.isAllowedPermission(self.config.requiredPermissions.editPanel);
-		
-		let view = {
+
+		let view = {};
+
+		view = {
 			id: "view-main-content-" + self.uid,
 			rows: [
 				getViewHeader(),
 				{ height: 10 },
+				getViewRealTimePanel(),
+				{
+					height: 10,
+					css: { "border-top": "1px solid #DADEE0", "border-top-width": "1px !important" }
+				},
 				{
 					cols: [
 						{ width: 20 },
@@ -87,7 +96,6 @@ export default class VmsSignalingContent {
 					],	
 				},
 				{ height: 10 }
-	
 			]
 		};
 		
@@ -241,40 +249,32 @@ export default class VmsSignalingContent {
 				}
 			);
 			
-			viewToolbar.cols.push(
-				{ 
-					view: "button", 
-					type: "icon", 
-					icon: "mdi mdi-information-outline", 
-					css: "toolbar-button-text", 
-					width: TOOLBAR_BUTTONS_WIDTH, 
-					label: i18n.t("LBL_INFO"), 
-					tooltip: i18n.t("LBL_VIEW_EQUIPMENT"),
-					on: {
-						onItemClick() {
-	
-							if (self.config.action && self.config.action.equipmentViewer) {
-								
-								let moduleActionId = parseInt(self.config.action.equipmentViewer);
-								let elementIds = [self.element.id];
-				
-								if (moduleActionId && elementIds) {
-				
-									let module = util.module.getFromModuleAction(moduleActionId);
-				
-									if (module) {
-				
-										let moduleAction = { id: moduleActionId };
-										let args = { selectedPks: elementIds };
-				
-										util.module.open(module, moduleAction, VIEW_TYPE_WINDOW, null, args);
-									}
-								}
+			let property = self.config.properties.find(e => e.id === self.element.elementSubtype.id);
+
+			if (property) {
+
+				let showViewOptions = (property.alternance && (property.configAlternance === undefined || property.configAlternance === true)) ||
+					(property.blinking && (property.configBlinking === undefined || property.configBlinking === true));
+
+				viewToolbar.cols.push(
+					{
+						view: "button",
+						type: "icon",
+						icon: "mdi mdi-cog-outline",
+						css: "toolbar-button-text",
+						width: TOOLBAR_BUTTONS_WIDTH,
+						label: i18n.t("LBL_VMS_PARAMS"),
+						tooltip: i18n.t("LBL_VMS_SETTINGS"),
+						hidden: !showViewOptions,
+						on: {
+							onItemClick() {
+
+								getViewOptions();
 							}
 						}
-					} 
-				}
-			);
+					}
+				);
+			}
 
 			viewToolbar.cols.push({});
 			
@@ -293,9 +293,16 @@ export default class VmsSignalingContent {
 				}
 			}
 		}
-		
-		function getSignallingTabs() {
+
+		function getViewRealTimePanel() {
+
+			let viewRealTimePanel = new VmsSignalingRealTimePanel(self.config, self.element);
 			
+			return viewRealTimePanel.getView();
+		}
+
+		function getSignallingTabs() {
+
 			let signallingTabs = {};
 
 			signallingTabs = {
@@ -410,7 +417,6 @@ export default class VmsSignalingContent {
 								getViewToolbar(),
 								{ height: 10 },
 								getViewComposer(),
-								getViewOptions(),
 								{}	
 							]	
 						}
@@ -502,32 +508,28 @@ export default class VmsSignalingContent {
 		function getViewOptions() {
 			
 			let viewVmsOptions = {};
-			
-			let property = self.config.properties.find(e => e.id === self.element.elementSubtype.id)
-				
-			if (property) {
-				
-				let showViewOptions = (property.alternance && (property.configAlternance === undefined || property.configAlternance === true)) ||
-									  (property.blinking && (property.configBlinking === undefined || property.configBlinking === true));
-				
-				viewVmsOptions = {
-					cols: [
-						{ width: 20 },
-						{
-							rows: [
-								{ 
-									type: "section",
-									hidden: !showViewOptions, 
-									template: i18n.t("LBL_VMS_SETTINGS")
-								},
-								getViewOptionForm(),
-							]
-						},
-						{}
-					]
-				}	
-			}
-			
+			let paramWindow;
+
+			let property = self.config.properties.find(e => e.id === self.element.elementSubtype.id);
+
+			viewVmsOptions = {
+				cols: [
+					{ width: 20 },
+					{
+						rows: [
+							{
+								type: "section",
+								template: i18n.t("LBL_VMS_SETTINGS")
+							},
+							getViewOptionForm(),
+							{ height: 20 },
+							getToolbarActions(),
+						]
+					},
+					{}
+				]
+			};
+
 			function getViewOptionForm() {
 				
 				let viewOptionForm;
@@ -664,12 +666,54 @@ export default class VmsSignalingContent {
 				return viewOptionForm;
 			}
 			
-			return viewVmsOptions;
-		} 
-		
-				
-		function onUpdateComposer(jsonData) {
+			function getToolbarActions() {
+
+				let viewToolbarActions = {};
+
+				viewToolbarActions = {
+					view: "toolbar",
+					height: 45,
+					borderless: true,
+					elements: [
+						{
+							view: "button",
+							css: "dialog-cancel",
+							width: 130,
+							height: 35,
+							label: i18n.t("LBL_CLOSE"),
+							on: {
+								onItemClick() {
+
+									$$(paramWindow).close();
+								}
+							}
+						},
+						{},
+						{
+							view: "button",
+							css: "dialog-accept",
+							width: 130,
+							height: 35,
+							label: i18n.t("LBL_ACCEPT"),
+							on: {
+								onItemClick() {
+
+									self.optionValues = $$("view-form-options-" + self.uid).getValues();
+									$$(paramWindow).close();
+								}
+							}
+						}]
+				};
+
+				return viewToolbarActions;
+			}
 			
+			 paramWindow = util.ui.loadWindow(i18n.t("LBL_VMS_SETTINGS"), viewVmsOptions, 750, 750, true); 
+		}
+
+
+		function onUpdateComposer(jsonData) {
+
 			if (self.composer) {
 				
 				if (!self.undoJsonData) {
@@ -954,9 +998,7 @@ export default class VmsSignalingContent {
 
 												if (Array.isArray(sendMessageCmd.commandElementValues) && sendMessageCmd.commandElementValues.length === 1) {
 
-													let options = $$("view-form-options-" + self.uid).getValues();
-
-													sendMessageCmd.commandElementValues[0].value = JSON.stringify(self.composer.getCurrentSignalingJsonData(options));
+													sendMessageCmd.commandElementValues[0].value = JSON.stringify(self.composer.getCurrentSignalingJsonData(self.optionValues));
 												}
 											}
 											// Other commands
@@ -1079,8 +1121,6 @@ export default class VmsSignalingContent {
 						if (selectedCommandElement.id === self.config.commands.sendMessage.commandElementTypeId &&
 							self.composer) {
 								
-							let options = $$("view-form-options-" + self.uid).getValues();
-								
 							commandElement.commandElementValues = [];
 							
 							commandElement.commandElementValues.push({
@@ -1088,7 +1128,7 @@ export default class VmsSignalingContent {
 								commandElementTypeParam: {
 									id: selectedCommandElement.commandElementTypeParams[0].id 
 								},
-								value: self.composer.getCurrentSignalingJsonData(options)
+								value: self.composer.getCurrentSignalingJsonData(self.optionValues)
 							});
 						}
 						else {

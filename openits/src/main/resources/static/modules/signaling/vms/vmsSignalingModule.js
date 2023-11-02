@@ -5,7 +5,7 @@ import VmsSignalingTree from "./vmsSignalingTree.js";
 import VmsSignalingQueue from "./vmsSignalingQueue.js";
 import MessageBox from "../../../component/messageBox.js";
 
-const TREE_PANEL_WIDTH = 325;
+const TREE_PANEL_WIDTH = 300;
 const QUEUE_PANEL_WIDTH = 400;
 
 export default class VmsSignalingModule extends GenericModule {
@@ -92,7 +92,7 @@ export default class VmsSignalingModule extends GenericModule {
 				
 				webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.element, { id: elementId })).then(function(elementResponse) {
 			
-					if (elementResponse) {
+					if (elementResponse != null) {												
 						
 						let element = elementResponse.json();
 						
@@ -101,7 +101,16 @@ export default class VmsSignalingModule extends GenericModule {
 							element.elementType = webix.copy(self.elementType); 
 						}
 						
-						onResponse(element);	
+						webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.equipmentViewer, { elementId: elementId })).then(function(equipmentViewerResponse) {
+
+							if (equipmentViewerResponse != null) {
+
+								let equipmentViewer = equipmentViewerResponse.json();
+								element.graphicIcon = (equipmentViewer.graphicIcon) ?? undefined;
+
+								onResponse(element);
+							}
+						});						
 					}
 				});
 			}
