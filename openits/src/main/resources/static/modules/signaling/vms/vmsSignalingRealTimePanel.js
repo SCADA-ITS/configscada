@@ -23,13 +23,13 @@ export default class VmsSignalingRealTimePanel {
 		let realTimePanel = {};
 
 		realTimePanel = {
+			id: "real-time-panel-" + self.uid,
 			height: 220,
 			cols: [
 				{ width: 60 },
 				getPanel(),
 				{ width: 30 },
-				getInfo(),
-				{ width: 30 }
+				getInfo()
 			]
 		};
 
@@ -128,146 +128,153 @@ export default class VmsSignalingRealTimePanel {
 			let viewMainInfo;
 
 			viewMainInfo = {
-				width: 300,
-				rows: [
-					{ height: 30 },
+				id: "main-info-" + self.uid,
+				//				width: 300,
+				cols: [
 					{
-						height: 65,
-						borderless: true,
-						template: function(data) {
+						rows: [
+							{ height: 30 },
+							{
+								height: 65,
+								borderless: true,
+								template: function(data) {
 
-							let ellipsis;
-							let tooltip = "";
-							let labelType = i18n.t("LBL_ELEMENT_TYPE");
-							let labelTypeValue = i18n.t(self.element.elementType.labelDescription ? self.element.elementType.labelDescription : self.element.elementType.labelAlias);
+									let ellipsis;
+									let tooltip = "";
+									let labelType = i18n.t("LBL_ELEMENT_TYPE");
+									let labelTypeValue = i18n.t(self.element.elementType.labelDescription ? self.element.elementType.labelDescription : self.element.elementType.labelAlias);
+									let maxWidth = ($$("main-info-" + self.uid)) ? $$("main-info-" + self.uid).$width : 300;
 
-							if (self.element.elementSubtype) {
+									if (self.element.elementSubtype) {
 
-								labelType += " (" + i18n.t("LBL_ELEMENT_SUBTYPE") + ")";
-								labelTypeValue += " (" + i18n.t(self.element.elementSubtype.labelDescription ? self.element.elementSubtype.labelDescription : self.element.elementSubtype.labelAlias) + ")";
-							}
+										labelType += " (" + i18n.t("LBL_ELEMENT_SUBTYPE") + ")";
+										labelTypeValue += " (" + i18n.t(self.element.elementSubtype.labelDescription ? self.element.elementSubtype.labelDescription : self.element.elementSubtype.labelAlias) + ")";
+									}
 
-							let textWidth = util.ui.calculateTextWidth(labelTypeValue, "Roboto", 14, 0.2);
+									let textWidth = util.ui.calculateTextWidth(labelTypeValue, "Roboto", 14, 0.2);
 
-							if (textWidth > 305) {
+									if (textWidth > maxWidth) {
 
-								ellipsis = `style='max-width: ${300 * 0.85}px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis'`;
-								tooltip = `title="${labelTypeValue}"`;
-							}
+										ellipsis = `style='max-width: ${maxWidth * 0.85}px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis'`;
+										tooltip = `title="${labelTypeValue}"`;
+									}
 
-							return `<div class="equip-viewer-info">
+									return `<div class="equip-viewer-info">
 											<span class="ico webix_icon mdi mdi-view-grid"></span>
 											<span class="title">${labelType}</span>
 											<span class="value" ${tooltip} ${ellipsis}>${labelTypeValue}</span>
 										</div>`;
-						}
-					},
-					{
-						height: 65,
-						borderless: true,
-						tooltip: {
-							template: function() {
-
-								if (self.element.location && Array.isArray(self.element.location.stretchs) && self.element.location.stretchs.length > 1) {
-
-									let tooltip = `<div class='title'>${self.element.location.alias}</div>`;
-
-									for (let stretch of self.element.location.stretchs) {
-										tooltip += `<div style="color: #35445f; padding-top: 5px">${stretch.alias} - ${stretch.road.alias}</div>`;
-									}
-
-									return tooltip;
-
-								} else {
-
-									return "";
 								}
 							},
-							css: "graphic-icon-tooltip"
-						},
-						template: function(data) {
+							{
+								height: 65,
+								borderless: true,
+								tooltip: {
+									template: function() {
 
-							if (self.element.location) {
+										if (self.element.location && Array.isArray(self.element.location.stretchs) && self.element.location.stretchs.length > 1) {
 
-								if (Array.isArray(self.element.location.stretchs) && self.element.location.stretchs.length > 0) {
+											let tooltip = `<div class='title'>${self.element.location.alias}</div>`;
 
-									let ellipsis = (self.element.location.stretchs.length > 1) ? "..." : "";
+											for (let stretch of self.element.location.stretchs) {
+												tooltip += `<div style="color: #35445f; padding-top: 5px">${stretch.alias} - ${stretch.road.alias}</div>`;
+											}
 
-									return `<div class="equip-viewer-info">
+											return tooltip;
+
+										} else {
+
+											return "";
+										}
+									},
+									css: "graphic-icon-tooltip"
+								},
+								template: function(data) {
+
+									if (self.element.location) {
+
+										if (Array.isArray(self.element.location.stretchs) && self.element.location.stretchs.length > 0) {
+
+											let ellipsis = (self.element.location.stretchs.length > 1) ? "..." : "";
+
+											return `<div class="equip-viewer-info">
 											<span class="ico webix_icon mdi mdi-map-marker"></span>
 											<span class="title">${i18n.t("LBL_ELEMENT_LOCATION")}</span>
 											<span class="value link-value">${self.element.location.alias} - ${self.element.location.stretchs[0].alias} - ${self.element.location.stretchs[0].road.alias} ${ellipsis}</span>									
 										</div>`;
 
-								} else {
+										} else {
 
-									return `<div class="equip-viewer-info">
+											return `<div class="equip-viewer-info">
 											<span class="ico webix_icon mdi mdi-map-marker"></span>
 											<span class="title">${i18n.t("LBL_ELEMENT_LOCATION")}</span>
 											<span class="value link-value">${self.element.location.alias}</span>									
 										</div>`;
-								}
+										}
 
-							} else {
+									} else {
 
-								return `<div class="equip-viewer-info">
+										return `<div class="equip-viewer-info">
 											<span class="ico webix_icon mdi mdi-map-marker"></span>
 											<span class="title">${i18n.t("LBL_ELEMENT_LOCATION")}</span>
 											<span class="value"> - </span>									
 										</div>`;
-							}
-						},
-						on: {
-							onAfterRender: function() {
+									}
+								},
+								on: {
+									onAfterRender: function() {
 
-								let linkLabel = $$(this).getNode().querySelector('.link-value');
+										let linkLabel = $$(this).getNode().querySelector('.link-value');
 
-								if (linkLabel) {
+										if (linkLabel) {
 
-									linkLabel.addEventListener('click', function() {
+											linkLabel.addEventListener('click', function() {
 
-										if (self.config.moduleAction && self.config.action.showInMapOrSynoptic) {
+												if (self.config.moduleAction && self.config.action.showInMapOrSynoptic) {
 
-											let mod = util.module.getFromModuleAction(self.config.action.showInMapOrSynoptic);
+													let mod = util.module.getFromModuleAction(self.config.action.showInMapOrSynoptic);
 
-											let moduleAction = {
-												id: self.config.action.showInMapOrSynoptic
-											};
+													let moduleAction = {
+														id: self.config.action.showInMapOrSynoptic
+													};
 
-											let args = {
-												selectedPks: [self.element.id]
-											};
+													let args = {
+														selectedPks: [self.element.id]
+													};
 
-											util.module.open(mod, moduleAction, undefined, null, args, undefined);
+													util.module.open(mod, moduleAction, undefined, null, args, undefined);
+												}
+											});
 										}
-									});
+									}
 								}
-							}
-						}
-					},
-					{
-						height: 60,
-						borderless: true,
-						template: function(data) {
+							},
+							{
+								height: 60,
+								borderless: true,
+								template: function(data) {
 
-							return `<div class="equip-viewer-info">
+									return `<div class="equip-viewer-info">
 											<span class="ico webix_icon mdi mdi-view-headline"></span>
 											<span class="title">${i18n.t("LBL_ELEMENT_DESCRIPTION")}</span>
 											<span title="${i18n.t("LBL_EQUIP_VIEWER_PROPERTIES_DESCRIPTION")}" class="ico webix_icon mdi mdi-information signaling-properties-info-icon"></span>
 											<span class="value">${self.element.description}</span>
 										</div>`;
-						},
-						on: {
-							onAfterRender: function() {
+								},
+								on: {
+									onAfterRender: function() {
 
-								let infoIcon = $$(this).getNode().querySelector('.signaling-properties-info-icon');
+										let infoIcon = $$(this).getNode().querySelector('.signaling-properties-info-icon');
 
-								if (infoIcon) {
+										if (infoIcon) {
 
-									infoIcon.addEventListener('click', getProperties);
+											infoIcon.addEventListener('click', getProperties);
+										}
+									}
 								}
-							}
-						}
+							},
+							{}
+						]
 					},
 					{}
 				]
