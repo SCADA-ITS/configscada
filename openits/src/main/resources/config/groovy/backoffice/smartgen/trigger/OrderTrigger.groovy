@@ -91,3 +91,4 @@ public class OrderTrigger extends AbstractBackOfficeTrigger {
 		}
 	}
 }
+

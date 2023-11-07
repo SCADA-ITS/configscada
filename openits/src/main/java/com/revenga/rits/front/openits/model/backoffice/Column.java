@@ -56,6 +56,14 @@ public class Column extends Basic {
 	
 	private Boolean needsTranslation;
 	
+	private Boolean nullable;
+	
+	private Boolean primaryKey;
+	
+	private Boolean identity;
+	
+	private String defaultValue;
+	
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
 	private List<Filler> fillers = new ArrayList<>();

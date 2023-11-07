@@ -43,9 +43,9 @@ public class CustomerTrigger extends AbstractBackOfficeTrigger {
 										 "  FROM %s.order_details od, " + 
 										 "      %s.orders o, " +
 										 "      %s.customers cus " + 
-										 " WHERE o.id = od.order_id " + 
-										 "   AND cus.id = o.customer_id " +
-										 "   AND cus.id = ?", this.schema, this.schema, this.schema);	
+										 " WHERE o.order_id = od.order_id " + 
+										 "   AND cus.customer_id = o.customer_id " +
+										 "   AND cus.customer_id = ?", this.schema, this.schema, this.schema);	
 
 		PreparedStatement stmt = null;
 		

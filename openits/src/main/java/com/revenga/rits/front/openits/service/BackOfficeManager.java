@@ -214,15 +214,18 @@ public class BackOfficeManager extends FrontManager {
 			
 			for (BackOffice backOffice : this.backOffices) {
 				
-				BackOfficeProcessor backOfficeProcessor = new BackOfficeProcessor(groovyManager, backOfficeService, this, null, ShowData.NONE);
-				
-				Instant timeRef = Instant.now();
-				
-				List<Table> t = backOfficeProcessor.getAll(backOffice.getId());
-				
-				log.info("Cached backoffice " + backOffice.getId() + " [" + backOffice.getName() + "]: "
-						+ (t != null ? t.size() : "0") + " ("
-						+ Duration.between(timeRef, Instant.now()).toMillis() + " ms." + ")");
+				if (backOffice.getEnabled().booleanValue()) {
+					
+					BackOfficeProcessor backOfficeProcessor = new BackOfficeProcessor(groovyManager, backOfficeService, this, null, ShowData.NONE);
+					
+					Instant timeRef = Instant.now();
+					
+					List<Table> t = backOfficeProcessor.getAll(backOffice.getId());
+					
+					log.info("Cached backoffice " + backOffice.getId() + " [" + backOffice.getName() + "]: "
+							+ (t != null ? t.size() : "0") + " ("
+							+ Duration.between(timeRef, Instant.now()).toMillis() + " ms." + ")");
+				}
 			}
 			
 			initQuartzScheduler();

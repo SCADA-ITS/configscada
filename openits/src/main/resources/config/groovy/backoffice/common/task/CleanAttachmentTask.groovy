@@ -24,6 +24,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.FileSystemUtils;
 
 import com.revenga.rits.front.openits.backoffice.BackOfficeException;
+import com.revenga.rits.front.openits.backoffice.BackOfficeUtil.DBType;
 import com.revenga.rits.front.openits.backoffice.groovy.AbstractBackOfficeTask;
 
 public class CleanAttachmentTask extends AbstractBackOfficeTask {
@@ -81,36 +82,41 @@ public class CleanAttachmentTask extends AbstractBackOfficeTask {
 				
 				map.put(tableName, new HashSet<>());
 				
-				final String SQL = String.format("SELECT id FROM %s.%s", this.backOffice.getSchema(), tableName);
+				String fieldName = getFieldNamePk(tableName);
 				
-				PreparedStatement stmt = null;
-				
-				try {
+				if (!StringUtils.isEmpty(fieldName)) {
 					
-					stmt = conn.prepareStatement(SQL);
+					final String SQL = String.format("SELECT %s FROM %s.%s", fieldName, this.backOffice.getSchema(), tableName);
 					
-					ResultSet rs = stmt.executeQuery();
+					PreparedStatement stmt = null;
 					
-					while (rs.next()) {
+					try {
 						
-						Set<Integer> ids = map.get(tableName);
+						stmt = conn.prepareStatement(SQL);
 						
-						if (ids != null) {
+						ResultSet rs = stmt.executeQuery();
+						
+						while (rs.next()) {
 							
-							ids.add(rs.getInt("id"));
+							Set<Integer> ids = map.get(tableName);
+							
+							if (ids != null) {
+								
+								ids.add(rs.getInt(fieldName));
+							}
 						}
 					}
-				}
-				catch (Exception e) {
+					catch (Exception e) {
 
-					log.error(e.getMessage());
-					log.debug(ExceptionUtils.getStackTrace(e));
-				}
-				finally {
-					
-					if (stmt != null) {
+						log.error(e.getMessage());
+						log.debug(ExceptionUtils.getStackTrace(e));
+					}
+					finally {
 						
-						stmt.close();
+						if (stmt != null) {
+							
+							stmt.close();
+						}
 					}
 				}
 			}
@@ -206,13 +212,23 @@ public class CleanAttachmentTask extends AbstractBackOfficeTask {
 	private Set<String> getTableNames() throws SQLException {
 		
 		Set<String> tables = new HashSet<>();
-		final String QRY_TABLES = String.format("SELECT name FROM %s.sg_metadata_tables WHERE support_images = TRUE OR support_attachments = TRUE", this.backOffice.getSchema());
+		
+		String qryTables = "SELECT name FROM %s.sg_metadata_tables WHERE support_images = %s OR support_attachments = %s"; 
+		
+		if (this.dbType.equals(DBType.POSTGRESQL)) {
+			
+			qryTables = String.format(qryTables, this.backOffice.getSchema(), "TRUE", "TRUE");
+		}
+		else if (this.dbType.equals(DBType.MSSQL)){
+			
+			qryTables = String.format(qryTables, this.backOffice.getSchema(), "1", "1");
+		}
 		
 		PreparedStatement stmt = null;
 		
 		try {
 			
-			stmt = conn.prepareStatement(QRY_TABLES);
+			stmt = conn.prepareStatement(qryTables);
 						
 			ResultSet rs = stmt.executeQuery();
 			
@@ -236,5 +252,83 @@ public class CleanAttachmentTask extends AbstractBackOfficeTask {
 		
 		return tables;
 	}
-}
+	
+	private String getFieldNamePk(String table) throws SQLException {
+		
+		String fieldNamePk = null;
+		String sql = null;
+		
+		if (this.dbType.equals(DBType.POSTGRESQL)) {
+		
+			sql = String.format( "select column_name " +
+								  "  from " +
+								  "  ( " +
+								  "  SELECT a.attname AS column_name, " +  
+								  "                CASE " +  
+								  "                    WHEN c.conrelid IS NOT NULL THEN TRUE " +  
+								  "                    ELSE FALSE " +  
+								  "                END AS primary_key   " +
+								  "       FROM pg_attribute AS a " +  
+								  "            LEFT OUTER JOIN pg_constraint c ON (c.conrelid = a.attrelid " +  
+								  "                                              AND c.contype = 'p' " +  
+								  "                                              AND a.attnum = any(c.conkey)) " +  
+								  "      WHERE a.attrelid = ('%s' || '.' || '%s')::regclass " +  
+								  "        AND a.attnum > 0 " +  
+								  "        AND NOT a.attisdropped " +  
+								  "  ) a " +
+								  "  where primary_key = true ", this.backOffice.getSchema(), table); 
+		}
+		else if (this.dbType.equals(DBType.MSSQL)) {
+			
+			sql = String.format("SELECT column_name " +
+								"FROM ( " +
+								"   SELECT c.column_name AS column_name,   " +
+								"          c.ordinal_position AS ordinal_position,   " +
+								"          c.data_type AS data_type,   " +
+								"          CAST(CASE WHEN c.is_nullable = 'YES' THEN 1 ELSE 0 END AS BIT) AS is_nullable,   " +
+								"          CAST(ISNULL(OBJECTPROPERTY(OBJECT_ID(K.CONSTRAINT_SCHEMA + '.' +  K.CONSTRAINT_NAME), 'IsPrimaryKey'), 0) AS BIT) AS primary_key,   " +
+								"          CAST(ISNULL(COLUMNPROPERTY(OBJECT_ID(k.TABLE_NAME), c.column_name, 'IsIdentity'), 0) AS BIT) AS is_identity,   " +
+								"          c.column_default as default_value    " +
+								"     FROM information_schema.columns C LEFT OUTER JOIN INFORMATION_SCHEMA.KEY_COLUMN_USAGE K   " +
+								"          ON (c.TABLE_SCHEMA = K.TABLE_SCHEMA   " +
+								"               AND c.TABLE_NAME = k.TABLE_NAME    " +
+								"               AND C.COLUMN_NAME = K.COLUMN_NAME)     " +
+								"    WHERE c.table_schema = '%s'   " +
+								"      AND c.table_name = '%s' " +
+								") A " +
+								"WHERE A.primary_key = 1 ", this.backOffice.getSchema(), table);
+		}
+		
+		if (!StringUtils.isEmpty(sql)) {
+		
+			PreparedStatement stmt = null;
+			
+			try {
+				
+				stmt = conn.prepareStatement(sql);
+							
+				ResultSet rs = stmt.executeQuery();
+				
+				if (rs.next()) {
+					
+					fieldNamePk = rs.getString("column_name");
+				}
+			}
+			catch (Exception e) {
 
+				log.error(e.getMessage());
+				log.debug(ExceptionUtils.getStackTrace(e));
+			}
+			finally {
+				
+				if (stmt != null) {
+					
+					stmt.close();
+				}
+			}
+		}
+		
+		
+		return fieldNamePk;
+	}
+}

@@ -9,6 +9,7 @@ import org.springframework.util.CollectionUtils;
 
 import com.revenga.rits.front.openits.backoffice.groovy.AbstractBackOfficeCommand;
 import com.revenga.rits.front.openits.backoffice.groovy.AbstractBackOfficeGroovy;
+import com.revenga.rits.front.openits.model.backoffice.Column;
 import com.revenga.rits.front.openits.model.backoffice.Request;
 import com.revenga.rits.front.openits.model.backoffice.Request.RequestInput;
 import com.revenga.rits.front.openits.model.backoffice.Request.RequestResult;
@@ -56,13 +57,14 @@ public class BackOfficeCommand extends BackOfficeAction {
 				
 						Table table = (Table) tableRepository.clone();
 						
-						if (table != null) {
+						Column columnId = table.getColumns().stream().filter(e -> e.getPrimaryKey().booleanValue()).findFirst().orElse(null);				
+						if (table != null && columnId != null) {
 							
 							table.getRows().clear();
 							
 							BackOfficeAssignment backOfficeAssignment = new BackOfficeAssignment(this.backOfficeProcessor);
 							
-							backOfficeAssignment.assignRows(conn, backOffice, table, null, "id = " + request.getId());
+							backOfficeAssignment.assignRows(conn, backOffice, table, null, columnId.getName() + " = " + request.getId());
 							
 							if (!CollectionUtils.isEmpty(table.getRows())) {
 								

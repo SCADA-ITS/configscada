@@ -64,24 +64,31 @@ public class BackOfficeFiller extends BackOfficeAction {
 							
 							BackOfficeAssignment backOfficeAssignment = new BackOfficeAssignment(this.backOfficeProcessor);
 							
-							backOfficeAssignment.assignRows(conn, backOffice, table, null, "id = " + request.getId());
+							Column columnId = table.getColumns().stream().filter(e -> e.getPrimaryKey().booleanValue())
+									.findFirst().orElse(null);
 							
-							if (!CollectionUtils.isEmpty(table.getRows())) {
+							if (columnId != null) {
 								
-								List<RequestInput> requestInputs = request.getRequestInput();
+								backOfficeAssignment.assignRows(conn, backOffice, table, null,
+										String.format("%s = %d", columnId.getName(), request.getId()));
 								
-								if (!CollectionUtils.isEmpty(requestInputs)) {
-								
-									Row currentRow = table.getRows().get(0);
-									Row userRow = (Row) currentRow.clone();
+								if (!CollectionUtils.isEmpty(table.getRows())) {
 									
-									requestInputs.forEach(persistValue -> BackOfficeUtil.setValue(userRow,
-											persistValue.getColName(), persistValue.getNewValue()));
+									List<RequestInput> requestInputs = request.getRequestInput();
 									
-									requestResult.setOldRow(userRow);
-									requestResult.setNewRow((Row) userRow.clone());
+									if (!CollectionUtils.isEmpty(requestInputs)) {
 									
-									executeFillers(conn, backOffice, table, colFiller, request, requestResult);
+										Row currentRow = table.getRows().get(0);
+										Row userRow = (Row) currentRow.clone();
+										
+										requestInputs.forEach(persistValue -> BackOfficeUtil.setValue(userRow,
+												persistValue.getColName(), persistValue.getNewValue()));
+										
+										requestResult.setOldRow(userRow);
+										requestResult.setNewRow((Row) userRow.clone());
+										
+										executeFillers(conn, backOffice, table, colFiller, request, requestResult);
+									}
 								}
 							}
 						}

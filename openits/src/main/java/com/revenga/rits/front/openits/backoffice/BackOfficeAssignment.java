@@ -51,8 +51,9 @@ public class BackOfficeAssignment {
 		String sql = BackOfficeUtil.getDmlLib(BackOfficeUtil.getDBType(conn), DMLType.COLUMNS_TABLE);
 		try (PreparedStatement stmt = conn.prepareStatement(sql)) {
 			
-			stmt.setString(1, table.getName());
-			stmt.setString(2, backOffice.getSchema());
+			stmt.setString(1, backOffice.getSchema());
+			stmt.setString(2, table.getName());
+			
 			
 			if (this.backOfficeProcessor.getBackOfficeManager().isShowSql()) {
 				
@@ -66,10 +67,24 @@ public class BackOfficeAssignment {
 				Column col = new Column(table, rs.getString("column_name"));
 
 				col.setPosition(rs.getInt("ordinal_position"));
+				col.setNullable(rs.getBoolean("is_nullable"));
+				col.setPrimaryKey(rs.getBoolean("primary_key"));
+				col.setIdentity(rs.getBoolean("is_identity"));
+				col.setDefaultValue(rs.getString("default_value"));
 				
-				BackOfficeUtil.setColType(col, BackOfficeUtil.getDBType(conn), rs.getString("data_type"));
+				String datatype = rs.getString("data_type");
 				
-				cols.add(col);			
+				if (!StringUtils.isEmpty(datatype)) {
+				
+					BackOfficeUtil.setColType(col, BackOfficeUtil.getDBType(conn), datatype);
+				}
+				
+				if (col.getColType() == null) {
+					
+					log.warn("Field " + table.getName() + "." + col.getName() + " has no supported data type: "	+ datatype);
+				}
+				
+				cols.add(col);
 			}
 			
 			Collections.sort(cols, Comparator.comparingInt(Column::getPosition));
@@ -103,8 +118,8 @@ public class BackOfficeAssignment {
 				
 				referTables = new ArrayList<>();
 				
-				stmt.setString(1, table.getName());
-				stmt.setString(2, backOffice.getSchema());
+				stmt.setString(1, backOffice.getSchema());
+				stmt.setString(2, table.getName());
 				
 				if (this.backOfficeProcessor.getBackOfficeManager().isShowSql()) {
 					
@@ -168,7 +183,8 @@ public class BackOfficeAssignment {
 			
 			try (PreparedStatement stmt = conn.prepareStatement(sql)) {
 				
-				stmt.setString(1, backOffice.getSchema()+ "." + table.getName());
+				stmt.setString(1, backOffice.getSchema());
+				stmt.setString(2, table.getName());
 				
 				if (this.backOfficeProcessor.getBackOfficeManager().isShowSql()) {
 					
@@ -181,7 +197,7 @@ public class BackOfficeAssignment {
 					
 					String tableReferenceName = rs.getString("table_reference");
 					
-					tableReferenceName = tableReferenceName.replace(backOffice.getSchema()+ ".", "");
+					tableReferenceName = tableReferenceName.replace(backOffice.getSchema() + ".", "");
 					
 					Table referTable = this.backOfficeProcessor.getTable(conn, backOffice, tableReferenceName, table);
 					
@@ -213,8 +229,8 @@ public class BackOfficeAssignment {
 				
 				if (parentTable != null) {
 					
-					Column colId = parentTable.getColumns().stream().filter(e -> e.getName().equals("id")).findFirst()
-							.orElse(null);
+					Column colId = parentTable.getColumns().stream().filter(e -> e.getPrimaryKey().booleanValue())
+							.findFirst().orElse(null);
 					
 					Set<String> idsParent = new HashSet<>(); 
 					
@@ -289,8 +305,8 @@ public class BackOfficeAssignment {
 
 							Row row = rows.get(0);
 
-							Column colId = table.getColumns().stream().filter(e -> e.getName().equals("id")).findFirst()
-									.orElse(null);
+							Column colId = table.getColumns().stream().filter(e -> e.getPrimaryKey().booleanValue())
+									.findFirst().orElse(null);
 
 							if (colId != null && row != null) {
 
@@ -421,8 +437,8 @@ public class BackOfficeAssignment {
 	Attachment putAttachment(Connection conn, BackOffice backOffice, Attachment attachmentInput) throws SQLException {
 		
 		Attachment newAttachment = null;
-		String sql = "INSERT INTO %s.%s(id, sg_metadata_table_id, id_value, group_name, file_name, description, position) " + 
-					 "VALUES(?, ?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO %s.%s(sg_metadata_table_id, id_value, group_name, file_name, description, position) " + 
+					 "VALUES(?, ?, ?, ?, ?, ?)";
 		
 		String targetTableName = null;
 		
@@ -435,21 +451,23 @@ public class BackOfficeAssignment {
 			targetTableName = "sg_metadata_table_attachments";
 		}
 		
-		if (!StringUtils.isEmpty(targetTableName)) {
+		Table targetTable = this.backOfficeProcessor.getTable(conn, backOffice, targetTableName);
+		
+		if (targetTable != null) {
 			
-			sql = String.format(sql, backOffice.getSchema(), targetTableName);
+			sql = String.format(sql, backOffice.getSchema(), targetTable.getName());
 				
 			try (PreparedStatement stmt = conn.prepareStatement(sql)) {
 				
-				Integer nextId = BackOfficeUtil.getNextId(conn, backOffice, targetTableName) + 1;
+				Integer nextId = BackOfficeUtil.getNextId(conn, backOffice, targetTable);
+				Integer fieldStmt = 1;
 				
-				stmt.setInt(1, nextId);
-				stmt.setInt(2, attachmentInput.getTable().getMetadataId());
-				stmt.setInt(3, attachmentInput.getIdValue());
-				stmt.setString(4, attachmentInput.getGroupName());
-				stmt.setString(5, attachmentInput.getFileName());
-				stmt.setString(6, attachmentInput.getDescription());
-				stmt.setInt(7, attachmentInput.getPosition());
+				stmt.setInt(fieldStmt++, attachmentInput.getTable().getMetadataId());
+				stmt.setInt(fieldStmt++, attachmentInput.getIdValue());
+				stmt.setString(fieldStmt++, attachmentInput.getGroupName());
+				stmt.setString(fieldStmt++, attachmentInput.getFileName());
+				stmt.setString(fieldStmt++, attachmentInput.getDescription());
+				stmt.setInt(fieldStmt++, attachmentInput.getPosition());
 				
 				if (this.backOfficeProcessor.getBackOfficeManager().isShowSql()) {
 					

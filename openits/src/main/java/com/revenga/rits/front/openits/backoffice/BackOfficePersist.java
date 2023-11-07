@@ -11,6 +11,7 @@ import org.springframework.util.CollectionUtils;
 
 import com.revenga.rits.front.openits.backoffice.groovy.AbstractBackOfficeGroovy;
 import com.revenga.rits.front.openits.backoffice.groovy.AbstractBackOfficeTrigger;
+import com.revenga.rits.front.openits.model.backoffice.Column;
 import com.revenga.rits.front.openits.model.backoffice.Request;
 import com.revenga.rits.front.openits.model.backoffice.Request.RequestResult;
 import com.revenga.rits.front.openits.model.backoffice.Row;
@@ -52,58 +53,65 @@ public class BackOfficePersist extends BackOfficeAction {
 				
 				conn.setAutoCommit(false);
 				
-				sql = BackOfficeUtil.getDml(conn, backOffice, request);
+				Table tableRepository = this.backOfficeProcessor.getBackOfficeManager().getTable(backOffice, request.getTableName());
 				
-				if (!StringUtils.isEmpty(sql)) {
+				if (tableRepository != null) {
+				
+					sql = BackOfficeUtil.getDml(conn, backOffice, tableRepository, request);
+				
+					if (!StringUtils.isEmpty(sql)) {
 					
-					Table tableRepository = this.backOfficeProcessor.getBackOfficeManager().getTable(backOffice, request.getTableName());
-					
-					if (tableRepository != null) {
-						
 						Table table = (Table) tableRepository.clone();
 						
 						if (table != null) {
 							
-							table.getRows().clear();
+							Column columnId = table.getColumns().stream()
+									.filter(e -> e.getPrimaryKey().booleanValue()).findFirst().orElse(null);
 							
-							BackOfficeAssignment backOfficeAssignment = new BackOfficeAssignment(this.backOfficeProcessor);
-							
-							List<Row> rowsOld = backOfficeAssignment.assignRows(conn, backOffice, table, null, "id = " + request.getId());
-							
-							if (!CollectionUtils.isEmpty(rowsOld) && rowsOld.size() == 1) {
+							if (columnId != null) {
 								
-								requestResult.setOldRow(rowsOld.get(0));
-							}
+								table.getRows().clear();
 								
-							try (Statement stmt = conn.createStatement()) {
+								BackOfficeAssignment backOfficeAssignment = new BackOfficeAssignment(this.backOfficeProcessor);
 								
-								if (this.backOfficeProcessor.getBackOfficeManager().isShowSql()) {
+								List<Row> rowsOld = backOfficeAssignment.assignRows(conn, backOffice, table, null,
+										String.format("%s = %d", columnId.getName(), request.getId()));
+								
+								if (!CollectionUtils.isEmpty(rowsOld) && rowsOld.size() == 1) {
 									
-									log.debug(stmt);					
+									requestResult.setOldRow(rowsOld.get(0));
 								}
-								
-								executeTriggers(Trigger.Type.BEFORE, conn, backOffice, table, request, requestResult);
-								
-								int rowsAffected = stmt.executeUpdate(sql);
-								
-								if (rowsAffected == 1) {
 									
-									Table tableNew = new Table(request.getTableName());
+								try (Statement stmt = conn.createStatement()) {
 									
-									tableNew.setColumns(table.getColumns());
-									
-									List<Row> rowsNew = backOfficeAssignment.assignRows(conn, backOffice, tableNew, null, "id = " + request.getId());
-									
-									if (!CollectionUtils.isEmpty(rowsNew) && rowsNew.size() == 1) {
+									if (this.backOfficeProcessor.getBackOfficeManager().isShowSql()) {
 										
-										requestResult.setNewRow(rowsNew.get(0));
+										log.debug(stmt);					
 									}
 									
-									executeTriggers(Trigger.Type.AFTER, conn, backOffice, table, request, requestResult);
+									executeTriggers(Trigger.Type.BEFORE, conn, backOffice, table, request, requestResult);
+									
+									int rowsAffected = stmt.executeUpdate(sql);
+									
+									if (rowsAffected == 1) {
+										
+										Table tableNew = new Table(request.getTableName());
+										
+										tableNew.setColumns(table.getColumns());
+										
+										List<Row> rowsNew = backOfficeAssignment.assignRows(conn, backOffice, tableNew, null, columnId.getName() + " = " + request.getId());
+										
+										if (!CollectionUtils.isEmpty(rowsNew) && rowsNew.size() == 1) {
+											
+											requestResult.setNewRow(rowsNew.get(0));
+										}
+
+										executeTriggers(Trigger.Type.AFTER, conn, backOffice, table, request, requestResult);
+									}
 								}
+								
+								conn.commit();
 							}
-							
-							conn.commit();
 						}
 					}
 				}

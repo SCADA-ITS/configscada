@@ -1,14 +1,17 @@
 package com.revenga.rits.front.openits.backoffice.groovy;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.util.CollectionUtils;
 
+import com.revenga.rits.front.openits.backoffice.BackOfficeUtil;
+import com.revenga.rits.front.openits.backoffice.BackOfficeUtil.DBType;
 import com.revenga.rits.front.openits.model.backoffice.Request.RequestResult.RequestResultMessage;
 import com.revenga.rits.front.openits.model.backoffice.Row;
-import com.revenga.rits.front.openits.model.backoffice.Table;
 import com.revenga.rits.front.openits.model.backoffice.Row.RowData;
+import com.revenga.rits.front.openits.model.backoffice.Table;
 import com.revenga.rits.front.openits.model.backoffice.Table.RequestType;
 
 import lombok.Data;
@@ -24,6 +27,7 @@ public abstract class AbstractBackOfficeGroovy implements Cloneable {
 	protected Row newRow;
 	protected RequestResultMessage requestResultMessage;
 	protected org.apache.logging.log4j.Logger log;
+	protected DBType dbType;
 
 	protected AbstractBackOfficeGroovy(org.apache.logging.log4j.Logger log) {
 
@@ -41,6 +45,15 @@ public abstract class AbstractBackOfficeGroovy implements Cloneable {
 		this.newRow = newRow;
 		this.requestResultMessage = requestResultMessage;
 		this.log = log;
+		
+		try {
+			
+			this.dbType = BackOfficeUtil.getDBType(this.conn);
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	protected String getFieldValue(Row row, String fieldName) {

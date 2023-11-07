@@ -21,7 +21,7 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 
 		if (backOffice.containerId) {
 			
-			let windowTitle = util.getStringCapitalized(currentTableData.label ?? currentTableData.name);
+			let windowTitle = util.getStringCapitalized(currentTableData.label ? BackOfficeHelper.translate(backOffice, currentTableData.label) : currentTableData.name);
 			
 			if (Array.isArray(backOffice.filters) && backOffice.filters.length > 0) {
 				
@@ -369,7 +369,7 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 										}
 										else {
 											
-											record[column.name === "id" ? "id" : BackOfficeHelper.getColumnUID(column)] = value;	
+											record[column.primaryKey ? "id" : BackOfficeHelper.getColumnUID(column)] = value;	
 										}	
 									}
 								} 
@@ -493,14 +493,14 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 										extended: false,
 										filtered: gridFilter,
 										isEpochMilli: dataTypeId == BackOfficeHelper.getDBTypes(BackOfficeHelper.DB_TYPE_TIMESTAMP).id,
-										isPk: column.name === "id",
+										isPk: column.primaryKey === true,
 										needsTranslation: false,
 										parameterized: referencedColumnName ? true : false,
 										position: idxField,
 										required: true,
 										label: util.getStringCapitalized(label),
-										sourceField: column.name === "id" ? "id" : sourceField,
-										visible: column.name !== "id" ? visibleColumn : (visibleColumn && showIdTable),
+										sourceField: column.primaryKey ? "id" : sourceField,
+										visible: !column.primaryKey ? visibleColumn : (visibleColumn && showIdTable),
 										gridFieldDataType: {
 											id: dataTypeId
 										}
@@ -733,34 +733,40 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 								function executeCommand() {
 								
 									const requestInput = BackOfficeHelper.getRequestInput(items[0], self.currentTableData, true);
-									const id = items[0]["id"];
 									
-									if (id && (Array.isArray(requestInput) && requestInput.length > 0)) {
+									const columnId = self.currentTableData.columns.find(e => e.primaryKey === true);
+									
+									if (columnId) {
 										
-										BackOfficeHelper.command(self.backOffice, self.currentTableData, cmd.id, requestInput, id).then((requestResult) => {
+										const id = items[0][columnId.name];
+									
+										if (id && (Array.isArray(requestInput) && requestInput.length > 0)) {
+											
+											BackOfficeHelper.command(self.backOffice, self.currentTableData, cmd.id, requestInput, id).then((requestResult) => {
+														
+												if (!requestResult.requestResultMessage.error) {
 													
-											if (!requestResult.requestResultMessage.error) {
-												
-												if (requestResult.requestResultMessage.info) {
-												
-													log.info(requestResult.requestResultMessage.info + "\n" + requestResult.requestResultMessage.infoDescription);
-												
-													(new MessageBox (MessageBox.INFO, i18n.t("LBL_BACKOFFICE_INFO_ON_COMMAND") + " " + requestResult.requestResultMessage.info + ":" + requestResult.requestResultMessage.infoDescription, null, null, null)).show();
+													if (requestResult.requestResultMessage.info) {
+													
+														log.info(requestResult.requestResultMessage.info + "\n" + requestResult.requestResultMessage.infoDescription);
+													
+														(new MessageBox (MessageBox.INFO, i18n.t("LBL_BACKOFFICE_INFO_ON_COMMAND") + " " + requestResult.requestResultMessage.info + ":" + requestResult.requestResultMessage.infoDescription, null, null, null)).show();
+													}
+													else if (requestResult.requestResultMessage.warn) {
+													
+														log.warn(requestResult.requestResultMessage.info + "\n" + requestResult.requestResultMessage.infoDescription);
+													
+														(new MessageBox (MessageBox.WARN, i18n.t("LBL_BACKOFFICE_WARN_ON_COMMAND") + " " + requestResult.requestResultMessage.warn + ":" + requestResult.requestResultMessage.warnDescription, null, null, null)).show();
+													}
 												}
-												else if (requestResult.requestResultMessage.warn) {
-												
-													log.warn(requestResult.requestResultMessage.info + "\n" + requestResult.requestResultMessage.infoDescription);
-												
-													(new MessageBox (MessageBox.WARN, i18n.t("LBL_BACKOFFICE_WARN_ON_COMMAND") + " " + requestResult.requestResultMessage.warn + ":" + requestResult.requestResultMessage.warnDescription, null, null, null)).show();
+												else {
+													
+													log.error(requestResult.requestResultMessage.error + "\n" + requestResult.requestResultMessage.errorDescription);
+													
+													(new MessageBox (MessageBox.ERROR, i18n.t("LBL_BACKOFFICE_ERROR_ON_COMMAND") + " " + (self.currentTableData.label ?? self.currentTableData.name), requestResult.requestResultMessage.error + "\n" + requestResult.requestResultMessage.errorDescription, null, null)).show();
 												}
-											}
-											else {
-												
-												log.error(requestResult.requestResultMessage.error + "\n" + requestResult.requestResultMessage.errorDescription);
-												
-												(new MessageBox (MessageBox.ERROR, i18n.t("LBL_BACKOFFICE_ERROR_ON_COMMAND") + " " + (self.currentTableData.label ?? self.currentTableData.name), requestResult.requestResultMessage.error + "\n" + requestResult.requestResultMessage.errorDescription, null, null)).show();
-											}
-										});
+											});
+										}
 									}
 								}
 							}
@@ -789,7 +795,7 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 								
 								if (requestResult.newRow && Array.isArray(requestResult.newRow.data)) {
 									
-									const columnId = self.currentTableData.columns.find(e => e.name === "id");
+									const columnId = self.currentTableData.columns.find(e => e.primaryKey === true);
 									
 									if (columnId) {
 										
@@ -842,7 +848,7 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 								
 								let recordsToDelete = ids.length;
 								let error = "";
-								const columnId = self.currentTableData.columns.find(c => c.name === "id");
+								const columnId = self.currentTableData.columns.find(c => c.primaryKey === true);
 								
 								let deletedRecords = 0;
 								
@@ -914,8 +920,6 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 														}
 													});
 												}
-												
-												//self.refresh();
 											}
 										});	
 									}
@@ -930,27 +934,31 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 
 						if (module) {
 							
-//							const winId = util.ui.loadWindow(undefined, { id: self.uid }, BackOfficeModule.Config.DEFAULT_FORM_HEIGHT, 
-//																BackOfficeModule.Config.DEFAULT_FORM_WIDTH, true);
-
 							const winId = util.ui.loadWindow(undefined, { id: self.uid }, self.formHeight, self.formWidth, true);
 							
-							const args = {
-								backOffice: {
-									id: self.backOffice.id,
-									tableName: self.currentTableData.name,
-									filterColumnName: "id",
-									filterColumnValue: id,
-									isModal: true,
-									onAccept: onAccept,
-									onCancel: onCancel,
-									filterColumn: self.backOffice.filterColumn
-								},
-								containerId: winId,
-								onLoad: onLoad
+							const columnId = self.currentTableData.columns.find(e => e.primaryKey === true);
+							
+							if (columnId) {
+							
+								const args = {
+									backOffice: {
+										id: self.backOffice.id,
+										tableName: self.currentTableData.name,
+										filterColumnName: columnId.name,
+										filterColumnValue: id,
+										isModal: true,
+										onAccept: onAccept,
+										onCancel: onCancel,
+										filterColumn: self.backOffice.filterColumn
+									},
+									containerId: winId,
+									onLoad: onLoad
+								}
+		
+								util.module.open(module, {id: BackOfficeModule.Config.MODULE_ACTION_OPEN_ID }, VIEW_TYPE_CUSTOM, drawContent, args);	
 							}
-	
-							util.module.open(module, {id: BackOfficeModule.Config.MODULE_ACTION_OPEN_ID }, VIEW_TYPE_CUSTOM, drawContent, args);
+							
+							
 						
 							function drawContent(view) {
 	
@@ -959,35 +967,22 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 							
 							function onLoad() {
 								
-								//util.ui.resizeWindow(winId, BackOfficeModule.Config.DEFAULT_FORM_WIDTH, BackOfficeModule.Config.DEFAULT_FORM_HEIGHT);
-								
 								util.ui.resizeWindow(winId, self.formWidth, self.formHeight);
 								util.ui.centerWindow(winId);
-								
-//								let windowTitle = i18n.t("LBL_EDIT"); 
-//			
-//								if (args.backOffice.onCancel) {
-//								
-//									windowTitle = i18n.t("LBL_NEW");
-//								}
-//								
-//								windowTitle += " " + (self.currentTableData.labelSingular ?? (self.currentTableData.label ?? self.currentTableData.name));
-//								
-//								util.ui.setTitle(args.backOffice.containerId, windowTitle);	
 							}
 							
 							function onAccept(values) {
 								
 								if (values && self.dataTable) {
 									
-									const id = values["id"];
-									const columnIdentify = self.currentTableData.columns.find(e => e.name === "id");
+									const columnId = self.currentTableData.columns.find(e => e.primaryKey === true);
 									
-									if (id && columnIdentify) {
+									if (columnId) {
 										
+										const id = values[columnId.name];
 										const grid = $$(self.dataTable.getViewId())
-			
-										if (grid) {
+										
+										if (grid && id) {
 										
 											webix.extend(grid, webix.ProgressBar);
 			
@@ -1004,10 +999,12 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 											if (Array.isArray(keys) && keys.length > 0) {
 												
 												keys.forEach(key => {
-																									
-													row[key] = (values[key] ? values[key] : undefined);
 													
-													if (key !== "id") {
+													const rowFieldName = (key == columnId.name ? "id" : key);
+																									
+													row[rowFieldName] = (values[key] ? values[key] : undefined);
+													
+													if (key !== columnId.name) {
 														
 														if (self.currentTableData.id == BackOfficeHelper.getTableIdFromColumnUID(key)) {
 														
@@ -1015,15 +1012,15 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 															
 															rowData.push({
 																columnId: columnId,
-																value: row[key]
+																value: row[rowFieldName]
 															});
 														}	
 													}
 													else {
 														
 														rowData.push({
-															columnId: columnIdentify.id,
-															value: row[key]
+															columnId: columnId.id,
+															value: row[rowFieldName]
 														});
 													}
 												});
@@ -1031,7 +1028,7 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 											
 											if (Array.isArray(rowData) && rowData.length > 0) {
 												
-												let indexRow = self.currentTableData.rows.findIndex(row => row.data.columnId == columnIdentify.id);
+												let indexRow = self.currentTableData.rows.findIndex(row => row.data.find(e => e.columnId == columnId.id).value == id);
 											
 												if (indexRow > -1) {
 													

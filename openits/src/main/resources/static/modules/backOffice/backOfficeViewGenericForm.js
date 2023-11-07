@@ -34,6 +34,7 @@ export default class BackOfficeViewGenericForm extends BackOfficeView {
 	
 	setValues(row, formRef) {
 		
+		let self = this;
 		const form = formRef ?? $$(this.formId);
 		
 		if (form && row && Array.isArray(row.data) && row.data.length > 0) {
@@ -44,12 +45,14 @@ export default class BackOfficeViewGenericForm extends BackOfficeView {
 			
 				const keys = Object.keys(formValues);
 				let newValues = {};
+				
+				const columnId = self.currentTableData.columns.find(e => e.primaryKey === true);
 	
-				if (Array.isArray(keys) && keys.length > 0) {
+				if (Array.isArray(keys) && keys.length > 0 && columnId) {
 					
 					keys.forEach(key => {
 						
-						if (key != "id") {
+						if (key != columnId.name) {
 							
 							const columnId = BackOfficeHelper.getColumnIdFromColumnUID(key);
 							
@@ -129,7 +132,7 @@ export default class BackOfficeViewGenericForm extends BackOfficeView {
 									rowData = self.currentTableData.rows[0].data.find(data => data.columnId === self.currentTableData.columns.find(col => col.name === representativeField.name).id);	
 								}
 								
-								windowTitle += " " + (self.currentTableData.labelSingular ?? (self.currentTableData.label ?? self.currentTableData.name)) + ((rowData && rowData.value !== undefined) ? " - " + rowData.value : "");
+								windowTitle += " " + (self.currentTableData.labelSingular ? BackOfficeHelper.translate(self.backOffice, self.currentTableData.labelSingular) : (self.currentTableData.label ? BackOfficeHelper.translate(self.backOffice, self.currentTableData.label) : self.currentTableData.name)) + ((rowData && rowData.value !== undefined) ? " - " + rowData.value : "");
 								
 								util.ui.setTitle(self.backOffice.containerId, windowTitle);
 							}
@@ -225,7 +228,7 @@ export default class BackOfficeViewGenericForm extends BackOfficeView {
 											rowData = self.currentTableData.rows[0].data.find(data => data.columnId === self.currentTableData.columns.find(col => col.name === representativeField.name).id);	
 										}
 										
-										windowTitle += " " + (self.currentTableData.labelSingular ?? (self.currentTableData.label ?? self.currentTableData.name)) + ((rowData && rowData.value !== undefined) ? " - " + rowData.value : "");
+										windowTitle += " " + (self.currentTableData.labelSingular ? BackOfficeHelper.translate(self.backOffice, self.currentTableData.labelSingular) : (self.currentTableData.label ? BackOfficeHelper.translate(self.backOffice, self.currentTableData.label) : self.currentTableData.name)) + ((rowData && rowData.value !== undefined) ? " - " + rowData.value : "");
 										
 										let badges = '';
 										
@@ -338,36 +341,42 @@ export default class BackOfficeViewGenericForm extends BackOfficeView {
 						if (typeof(values) === 'object') {
 							
 							const requestInput = BackOfficeHelper.getRequestInput(values, self.currentTableData, true);
-							const id = values["id"];
 							
-							if (id && (Array.isArray(requestInput) && requestInput.length > 0)) {
-						
-								BackOfficeHelper.command(self.backOffice, self.currentTableData, cmd.id, requestInput, id).then((requestResult) => {
+							const columnId = self.currentTableData.columns.find(e => e.primaryKey === true);
+							
+							if (columnId) {
+								
+								const id = values[columnId.name];
+							
+								if (id && (Array.isArray(requestInput) && requestInput.length > 0)) {
+							
+									BackOfficeHelper.command(self.backOffice, self.currentTableData, cmd.id, requestInput, id).then((requestResult) => {
+												
+										if (!requestResult.requestResultMessage.error) {
 											
-									if (!requestResult.requestResultMessage.error) {
-										
-										self.setValues(requestResult.newRow);
-										
-										if (requestResult.requestResultMessage.info) {
-										
-											log.info(requestResult.requestResultMessage.info + "\n" + requestResult.requestResultMessage.infoDescription);
-										
-											(new MessageBox (MessageBox.INFO, i18n.t("LBL_BACKOFFICE_INFO_ON_COMMAND") + " " + requestResult.requestResultMessage.info + ":" + requestResult.requestResultMessage.infoDescription, null, null, null)).show();
+											self.setValues(requestResult.newRow);
+											
+											if (requestResult.requestResultMessage.info) {
+											
+												log.info(requestResult.requestResultMessage.info + "\n" + requestResult.requestResultMessage.infoDescription);
+											
+												(new MessageBox (MessageBox.INFO, i18n.t("LBL_BACKOFFICE_INFO_ON_COMMAND") + " " + requestResult.requestResultMessage.info + ":" + requestResult.requestResultMessage.infoDescription, null, null, null)).show();
+											}
+											else if (requestResult.requestResultMessage.warn) {
+											
+												log.warn(requestResult.requestResultMessage.info + "\n" + requestResult.requestResultMessage.infoDescription);
+											
+												(new MessageBox (MessageBox.WARN, i18n.t("LBL_BACKOFFICE_WARN_ON_COMMAND") + " " + requestResult.requestResultMessage.warn + ":" + requestResult.requestResultMessage.warnDescription, null, null, null)).show();
+											}
 										}
-										else if (requestResult.requestResultMessage.warn) {
-										
-											log.warn(requestResult.requestResultMessage.info + "\n" + requestResult.requestResultMessage.infoDescription);
-										
-											(new MessageBox (MessageBox.WARN, i18n.t("LBL_BACKOFFICE_WARN_ON_COMMAND") + " " + requestResult.requestResultMessage.warn + ":" + requestResult.requestResultMessage.warnDescription, null, null, null)).show();
+										else {
+											
+											log.error(requestResult.requestResultMessage.error + "\n" + requestResult.requestResultMessage.errorDescription);
+											
+											(new MessageBox (MessageBox.ERROR, i18n.t("LBL_BACKOFFICE_ERROR_ON_COMMAND") + " " + (self.currentTableData.label ?? self.currentTableData.name), requestResult.requestResultMessage.error + "\n" + requestResult.requestResultMessage.errorDescription, null, null)).show();
 										}
-									}
-									else {
-										
-										log.error(requestResult.requestResultMessage.error + "\n" + requestResult.requestResultMessage.errorDescription);
-										
-										(new MessageBox (MessageBox.ERROR, i18n.t("LBL_BACKOFFICE_ERROR_ON_COMMAND") + " " + (self.currentTableData.label ?? self.currentTableData.name), requestResult.requestResultMessage.error + "\n" + requestResult.requestResultMessage.errorDescription, null, null)).show();
-									}
-								});
+									});
+								}
 							}
 						}
 					}
@@ -498,7 +507,7 @@ export default class BackOfficeViewGenericForm extends BackOfficeView {
 
 											if (Array.isArray(self.currentTableData.referTableNames) && self.currentTableData.referTableNames.length > 0) {
 
-												const columnId = self.currentTableData.columns.find(e => e.name === 'id');
+												const columnId = self.currentTableData.columns.find(e => e.primaryKey === true);
 
 												if (columnId) {
 
@@ -695,13 +704,17 @@ export default class BackOfficeViewGenericForm extends BackOfficeView {
 					
 					const values = form.getValues();
 					
+					
+					
 					if (typeof(values) === 'object') {
 						
 						const keys = Object.keys(values);
+						
+						const columnId = self.currentTableData.columns.find(e => e.primaryKey === true);
 
-						if (Array.isArray(keys) && keys.length > 0) {
+						if (Array.isArray(keys) && keys.length > 0 && columnId) {
 							
-							const key = keys.find(e => e === "id");
+							const key = keys.find(e => e === columnId.name);
 							
 							if (key) {
 								

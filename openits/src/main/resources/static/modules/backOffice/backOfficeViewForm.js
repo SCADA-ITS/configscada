@@ -4,7 +4,6 @@ import BackOfficeViewFormImage from "./backOfficeViewFormImage.js";
 import BackOfficeViewFormAttachment from "./backOfficeViewFormAttachment.js";
 import BackOfficeViewGrid from "./backOfficeViewGrid.js";
 import BackOfficeHelper from "./backOfficeHelper.js";
-import MessageBox from "../../component/messageBox.js";
 
 import { util } from "../../lib/util.js";
 
@@ -235,7 +234,7 @@ export default class BackOfficeViewForm extends BackOfficeViewGenericForm {
 								}
 								else if (item.type === TYPE_IMAGE) {
 									
-									const rowDataId = self.currentTableData.rows[0].data.find(data => data.columnId === self.currentTableData.columns.find(col => col.name === "id").id);
+									const rowDataId = self.currentTableData.rows[0].data.find(data => data.columnId === self.currentTableData.columns.find(col => col.primaryKey === true).id);
 									
 									let backOfficeViewFormImage = new BackOfficeViewFormImage(self.backOffice, item.value.groupImage, self.currentTableData.name, rowDataId.value, item.value.images, onChangeAttachment);
 									
@@ -245,7 +244,7 @@ export default class BackOfficeViewForm extends BackOfficeViewGenericForm {
 								}
 								else if (item.type === TYPE_ATTACHMENT) {
 									
-									const rowDataId = self.currentTableData.rows[0].data.find(data => data.columnId === self.currentTableData.columns.find(col => col.name === "id").id);
+									const rowDataId = self.currentTableData.rows[0].data.find(data => data.columnId === self.currentTableData.columns.find(col => col.primaryKey === true).id);
 									
 									let backOfficeViewFormAttachment = new BackOfficeViewFormAttachment(self.backOffice, item.value.groupAttachment, self.currentTableData.name, rowDataId.value, item.value.attachments, onChangeAttachment);
 									
@@ -393,7 +392,7 @@ export default class BackOfficeViewForm extends BackOfficeViewGenericForm {
 					
 					if (Array.isArray(self.currentTableData.columns) && self.currentTableData.columns.length > 0) {
 							
-						const columnId = self.currentTableData.columns.find(e => e.name === 'id');
+						const columnId = self.currentTableData.columns.find(e => e.primaryKey === true);
 						
 						if (columnId) {
 							

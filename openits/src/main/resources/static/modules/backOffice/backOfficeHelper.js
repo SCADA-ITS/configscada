@@ -375,7 +375,7 @@ export default class BackOfficeHelper {
 
 			if (!refColumnName) {
 
-				refColumnName = table.columns.find(col => col.name === "id");
+				refColumnName = table.columns.find(col => col.primaryKey === true);
 			}
 		}
 
@@ -499,12 +499,14 @@ export default class BackOfficeHelper {
 		if (typeof (values) === 'object') {
 
 			const keys = Object.keys(values);
+			
+			const columnId = table.columns.find(e => e.primaryKey === true);
 
-			if (Array.isArray(keys) && keys.length > 0) {
+			if (Array.isArray(keys) && keys.length > 0 && columnId) {
 
 				keys.forEach(key => {
 
-					if (key != "id") {
+					if (key != columnId.name) {
 
 						const keySplitted = key.split("$");
 

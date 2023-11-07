@@ -32,9 +32,9 @@ export default class BackOfficeViewFormField  {
 				let field = webix.copy(dbType.component);
 			
 				field.name = BackOfficeHelper.getColumnUID(column);
-				field.label = util.getStringCapitalized(column.label ?? column.name);
+				field.label = util.getStringCapitalized(column.label ? BackOfficeHelper.translate(self.backOffice, column.label) : column.name);
 				field.disabled = false;
-				field.required = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_COLUMN, BackOfficeHelper.META_TYPE_COLUMN.PROPERTY.REQUIRED, self.backOffice.metadata, column);
+				field.required = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_COLUMN, BackOfficeHelper.META_TYPE_COLUMN.PROPERTY.REQUIRED, self.backOffice.metadata, column) || !column.nullable;
 				field.readonly = !BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_COLUMN, BackOfficeHelper.META_TYPE_COLUMN.PROPERTY.EDITABLE, self.backOffice.metadata, column);
 				field.hidden = !BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_COLUMN, BackOfficeHelper.META_TYPE_COLUMN.PROPERTY.FORM_VISIBLE, self.backOffice.metadata, column);
 				
@@ -42,9 +42,9 @@ export default class BackOfficeViewFormField  {
 				
 				const showIdForm = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, BackOfficeHelper.META_TYPE_TABLE.PROPERTY.SHOW_ID_FORM, self.backOffice.metadata, self.currentTableData);
 				
-				if (column.name === "id") {
+				if (column.primaryKey === true) {
 					
-					field.name = "id";
+					field.name = column.name;
 					field.disabled = true;
 					field.hidden = !showIdForm;
 				}
@@ -89,7 +89,12 @@ export default class BackOfficeViewFormField  {
 					}
 				}
 				
-				field.value = value;
+				field.value = undefined;
+				
+				if (!self.backOffice.onCancel || column.primaryKey === true) {
+					
+					field.value = value;	
+				}
 				
 				self.isVisible = !field.hidden;
 				
@@ -97,6 +102,8 @@ export default class BackOfficeViewFormField  {
 				const refTable = refColumn ? self.data.find(e => e.id === refColumn.tableId) : undefined;
 				
 				if (refColumn && refTable) {
+					
+					field.value = value;
 					
 					const referencedColumnValue = BackOfficeHelper.getReferencedColumnValue(self.backOffice, column, value, self.data);
 					const associatedField = self.currentTableData.columns.find(e => column.metadata && BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_COLUMN, BackOfficeHelper.META_TYPE_COLUMN.PROPERTY.ASSOCIATED_FIELD_NAME, self.backOffice.metadata, column)  === e.name);
@@ -131,10 +138,10 @@ export default class BackOfficeViewFormField  {
 									type: "text", 
 									name: BackOfficeHelper.getColumnUID(referencedColumnValue), 
 									required: field.required, 
-									label: util.getStringCapitalized(refTable.labelSingular ?? (refTable.label ?? refTable.name)), 
+									label: util.getStringCapitalized(refTable.labelSingular ? BackOfficeHelper.translate(self.backOffice, refTable.labelSingular) : (refTable.label ? BackOfficeHelper.translate(self.backOffice, refTable.label) : refTable.name)), 
 									readonly: true, 
 									labelWidth: 275, 
-									value: referencedColumnValue.value ?? field.value, 
+									value: !this.backOffice.onCancel || disabled ? (referencedColumnValue.value ?? field.value) : undefined, 
 									printValue: referencedColumnValue.value ?? field.value,
 									printId: field.name,
 									disabled: disabled,
@@ -147,7 +154,7 @@ export default class BackOfficeViewFormField  {
 									hidden: !visibleColumn || !showIdForm, 
 									readonly: true, 
 									css: "backoffice-input-readonly",
-									value: field.value, 
+									value: !this.backOffice.onCancel || disabled ? field.value : undefined, 
 									width: 50,
 									on: {
 										onChange: function() {
@@ -306,19 +313,24 @@ export default class BackOfficeViewFormField  {
 										}
 									});
 								}
-
-								dialogRefField.pkField = "id";
-								dialogRefField.pkFieldVisible = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, BackOfficeHelper.META_TYPE_TABLE.PROPERTY.SHOW_ID_SEARCH, self.backOffice.metadata, self.currentTableData);
-								dialogRefField.sortFieldId = 1;
-								dialogRefField.height = 600;
-								dialogRefField.width = 800;
-								dialogRefField.showEmptyRowCol = SearchDialogBox.ID_NOT_SELECTED;
+								
+								const columnId = table.columns.find(e => e.primaryKey === true);
+								
+								if (columnId) {
+									
+									dialogRefField.pkField = "id";
+									dialogRefField.pkFieldVisible = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, BackOfficeHelper.META_TYPE_TABLE.PROPERTY.SHOW_ID_SEARCH, self.backOffice.metadata, self.currentTableData);
+									dialogRefField.sortFieldId = 1;
+									dialogRefField.height = 600;
+									dialogRefField.width = 800;
+									dialogRefField.showEmptyRowCol = SearchDialogBox.ID_NOT_SELECTED;	
+								}
 
 								function fillDialogEntity(dialogEntity, onFilledDialogEntity) {
 					
 									dialogEntity.data = table.rows.map(row => {
 									
-										const rowId = row.data.find(data => data.columnId === table.columns.find(col => col.name === "id").id);
+										const rowId = row.data.find(data => data.columnId === table.columns.find(col => col.primaryKey === true).id);
 										const rowAlias = row.data.find(data => data.columnId === referencedColumnValue.id);
 											
 										let obj = {};
@@ -413,7 +425,7 @@ export default class BackOfficeViewFormField  {
 									
 									table.rows.forEach(row => {
 										
-										const rowId = row.data.find(data => data.columnId === table.columns.find(col => col.name === "id").id);
+										const rowId = row.data.find(data => data.columnId === table.columns.find(col => col.primaryKey === true).id);
 										const rowAlias = row.data.find(data => data.columnId === referencedColumnValue.id);
 										const rowRefColId = row.data.find(data => data.columnId === refGroupField.id);
 										
@@ -532,7 +544,7 @@ export default class BackOfficeViewFormField  {
 									
 									if (requestResult.newRow && Array.isArray(requestResult.newRow.data)) {
 										
-										const columnId = table.columns.find(e => e.name === "id");
+										const columnId = table.columns.find(e => e.primaryKey === true);
 										
 										if (columnId) {
 											
@@ -590,22 +602,27 @@ export default class BackOfficeViewFormField  {
 							
 							const winId = util.ui.loadWindow(i18n.t("LBL_NEW") + " " + (table.labelSingular ?? (table.label ?? table.name)), { id: self.uid }, formHeight, formWidth, true);
 							
-							const args = {
-								backOffice: {
-									id: self.backOffice.id,
-									tableName: table.name,
-									filterColumnName: "id",
-									filterColumnValue: id,
-									isModal: true,
-									noReferTables: true,
-									onAccept: onAccept,
-									onCancel: onCancel
-								},
-								containerId: winId,
-								onLoad: onLoad
+							const columnId = table.columns.find(e => e.primaryKey === true);
+							
+							if (columnId) {
+							
+								const args = {
+									backOffice: {
+										id: self.backOffice.id,
+										tableName: table.name,
+										filterColumnName: columnId.name,
+										filterColumnValue: id,
+										isModal: true,
+										noReferTables: true,
+										onAccept: onAccept,
+										onCancel: onCancel
+									},
+									containerId: winId,
+									onLoad: onLoad
+								}
+		
+								util.module.open(module, {id: BackOfficeModule.Config.MODULE_ACTION_OPEN_ID }, VIEW_TYPE_CUSTOM, drawContent, args);	
 							}
-	
-							util.module.open(module, {id: BackOfficeModule.Config.MODULE_ACTION_OPEN_ID }, VIEW_TYPE_CUSTOM, drawContent, args);
 						
 							function drawContent(view) {
 	
@@ -634,7 +651,7 @@ export default class BackOfficeViewFormField  {
 											
 											let newValue = {};
 											
-											newValue[BackOfficeHelper.getColumnUID(column)] = newRow.id;
+											newValue[BackOfficeHelper.getColumnUID(column)] = newRow[columnId.name];
 											newValue[BackOfficeHelper.getColumnUID(referencedColumnValue)] = newRow[BackOfficeHelper.getColumnUID(referencedColumnValue)];
 											
 											form.setValues(newValue, true);
@@ -746,37 +763,42 @@ export default class BackOfficeViewFormField  {
 						
 							if (typeof(values) === 'object') {
 								
-								const requestInput = BackOfficeHelper.getRequestInput(values, self.currentTableData);
-								const id = values["id"];
-								
-								if (id && (Array.isArray(requestInput) && requestInput.length > 0)) {
+								const columnId = self.currentTableData.columns.find(e => e.primaryKey === true);
 							
-									BackOfficeHelper.filler(self.backOffice, self.currentTableData, column, requestInput, id).then((requestResult) => {
+								if (columnId) {
+									
+									const requestInput = BackOfficeHelper.getRequestInput(values, self.currentTableData);
+									const id = values[columnId.name];
+									
+									if (id && (Array.isArray(requestInput) && requestInput.length > 0)) {
+								
+										BackOfficeHelper.filler(self.backOffice, self.currentTableData, column, requestInput, id).then((requestResult) => {
+													
+											if (!requestResult.requestResultMessage.error) {
 												
-										if (!requestResult.requestResultMessage.error) {
-											
-											self.setValues(requestResult.newRow, form);
-											
-											if (requestResult.requestResultMessage.info) {
-											
-												log.info(requestResult.requestResultMessage.info + "\n" + requestResult.requestResultMessage.infoDescription);
-											
-												(new MessageBox (MessageBox.INFO, i18n.t("LBL_BACKOFFICE_INFO_ON_FILLER") + " " + requestResult.requestResultMessage.info + ":" + requestResult.requestResultMessage.infoDescription, null, null, null)).show();
+												self.setValues(requestResult.newRow, form);
+												
+												if (requestResult.requestResultMessage.info) {
+												
+													log.info(requestResult.requestResultMessage.info + "\n" + requestResult.requestResultMessage.infoDescription);
+												
+													(new MessageBox (MessageBox.INFO, i18n.t("LBL_BACKOFFICE_INFO_ON_FILLER") + " " + requestResult.requestResultMessage.info + ":" + requestResult.requestResultMessage.infoDescription, null, null, null)).show();
+												}
+												else if (requestResult.requestResultMessage.warn) {
+												
+													log.warn(requestResult.warn + "\n" + requestResult.warnDescription);
+												
+													(new MessageBox (MessageBox.WARN, i18n.t("LBL_BACKOFFICE_INFO_ON_FILLER") + " " + requestResult.requestResultMessage.warn + ":" + requestResult.requestResultMessage.warnDescription, null, null, null)).show();
+												}
 											}
-											else if (requestResult.requestResultMessage.warn) {
-											
-												log.warn(requestResult.warn + "\n" + requestResult.warnDescription);
-											
-												(new MessageBox (MessageBox.WARN, i18n.t("LBL_BACKOFFICE_INFO_ON_FILLER") + " " + requestResult.requestResultMessage.warn + ":" + requestResult.requestResultMessage.warnDescription, null, null, null)).show();
+											else {
+												
+												log.error(requestResult.requestResultMessage.error + "\n" + requestResult.requestResultMessage.errorDescription);
+												
+												(new MessageBox (MessageBox.ERROR, i18n.t("LBL_BACKOFFICE_ERROR_ON_FILLER") + " " + (self.currentTableData.label ?? self.currentTableData.name), requestResult.requestResultMessage.error + "\n" + requestResult.requestResultMessage.errorDescription, null, null)).show();
 											}
-										}
-										else {
-											
-											log.error(requestResult.requestResultMessage.error + "\n" + requestResult.requestResultMessage.errorDescription);
-											
-											(new MessageBox (MessageBox.ERROR, i18n.t("LBL_BACKOFFICE_ERROR_ON_FILLER") + " " + (self.currentTableData.label ?? self.currentTableData.name), requestResult.requestResultMessage.error + "\n" + requestResult.requestResultMessage.errorDescription, null, null)).show();
-										}
-									});
+										});
+									}
 								}
 							}
 						}
