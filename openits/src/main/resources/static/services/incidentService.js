@@ -152,6 +152,8 @@ export default class IncidentService extends GenericModule {
 						
 						self.incidents.data.notifications = incidentReportsFiltered.map(e => createNotification(e));
 						
+						self.incidents.data.notifications = self.incidents.data.notifications.filter(e => e && typeof e === 'object');
+						
 						self.incidents.data.notifications.sort((a, b) => (a.created < b.created) ? 1 : ((b.created < a.created) ? -1 : 0));
 					}
 				}

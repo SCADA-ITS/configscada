@@ -184,6 +184,8 @@ export default class EventService extends GenericModule {
 						
 						self.events.data.notifications = events.map(e => createNotification(e));
 						
+						self.events.data.notifications = self.events.data.notifications.filter(e => e && typeof e === 'object');
+						
 						self.events.data.notifications.sort((a, b) => (a.created < b.created) ? 1 : ((b.created < a.created) ? -1 : 0));
 					}
 				}

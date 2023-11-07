@@ -374,6 +374,8 @@ export default class AlarmService extends GenericService {
 						
 						self.alarms.data.notifications = alarmsFiltered.map(e => createNotification(e));
 						
+						self.alarms.data.notifications = self.alarms.data.notifications.filter(e => e && typeof e === 'object'); 
+						
 						self.alarms.data.notifications.sort((a, b) => (a.created < b.created) ? 1 : ((b.created < a.created) ? -1 : 0))
 					}
 					
