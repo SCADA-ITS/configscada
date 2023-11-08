@@ -220,6 +220,15 @@ export default class HistoricalChartStates extends HistoricalChartGeneric {
 									}
 								}
 							});
+							
+							self.dataSeries.push({
+								value: "#extraValue#",
+								line: {
+									width: 0.01,
+									color: "#ffffff",
+									item: { radius: 0 }
+								}
+							});
 
 							let firstDate = new Date(self.dateIni).toLocaleString();
 
@@ -313,6 +322,11 @@ export default class HistoricalChartStates extends HistoricalChartGeneric {
 
 					self.dataSet.push(d);
 					d = {};
+				}
+
+				for (let data of self.dataSet) {
+
+					data.extraValue = ids.length + 1;
 				}
 
 				if ($$("chart-" + self.uid)) {

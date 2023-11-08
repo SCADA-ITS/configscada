@@ -400,7 +400,7 @@ export default class HistoricalChartGeneric {
 						tooltip: {
 							template: function(obj) {
 
-								return obj.yValue;
+								return (obj.yValue) ? obj.yValue : "";
 							}
 						},
 						data: self.dataSet,
