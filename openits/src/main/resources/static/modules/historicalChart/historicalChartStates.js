@@ -160,8 +160,9 @@ export default class HistoricalChartStates extends HistoricalChartGeneric {
 				let tooltipText;
 				let alias;
 				let numOfSerie = 0;
-				let idsArray = ids.reverse();
-
+				ids.sort((a, b) => (a > b) ? 1 : ((b > a) ? -1 : 0));
+				let idsArray = ids.reverse();		
+								
 				for (let i = 0; i < dataArr.length; i++) {
 
 					let d = {};
