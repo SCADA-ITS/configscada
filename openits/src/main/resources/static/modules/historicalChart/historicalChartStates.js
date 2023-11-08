@@ -160,14 +160,15 @@ export default class HistoricalChartStates extends HistoricalChartGeneric {
 				let tooltipText;
 				let alias;
 				let numOfSerie = 0;
+				let idsArray = ids.reverse();
 
 				for (let i = 0; i < dataArr.length; i++) {
 
 					let d = {};
 
-					for (let j = 0; j < ids.length; j++) {
+					for (let j = 0; j < idsArray.length; j++) {
 
-						let elId = ids[j];
+						let elId = idsArray[j];
 						let id = elId.replaceAll(":", "");
 						let bgColor = self.listLegend.find(e => e.id === elId).color;
 
