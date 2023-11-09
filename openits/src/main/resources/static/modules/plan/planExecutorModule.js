@@ -571,6 +571,16 @@ export default class PlanExecutor extends GenericModule {
 										icon: "./img/plan/PlanOrderType_8.png",
 										showValue: false,
 										value: "PlanOrderType:8"
+									},
+									{
+										icon: "./img/plan/PlanOrderType_9.png",
+										showValue: false,
+										value: "PlanOrderType:9"
+									},
+									{
+										icon: "./img/plan/PlanOrderType_10.png",
+										showValue: false,
+										value: "PlanOrderType:10"
 									}
 								]
 							},
