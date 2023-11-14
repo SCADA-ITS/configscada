@@ -281,7 +281,7 @@ export default class SelectorModule extends GenericModule {
 				id: "view-main-selector-tree-" + self.uid,
 				header: i18n.t(treeSelector.label),
 				body: {
-					width: 250,
+					width: 350,
 					rows: [
 						{
 							cols: [

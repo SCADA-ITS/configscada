@@ -95,4 +95,8 @@
     white-space:nowrap;
     display:inline-block;
     margin-left: 6px;
+    width: 230px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

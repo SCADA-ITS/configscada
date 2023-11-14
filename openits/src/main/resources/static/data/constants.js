@@ -179,28 +179,30 @@ const StateValue = Object.freeze({
 
 const ENTITIES_MANAGER_SCHEDULER_SECS = 600;
 
+function isGraphqlEnabled() { let res = true; try { res = (GRAPHQL_ENABLED === true); } catch {} return res; }
+
 // Type of entities to load
 const EntityType = Object.freeze({
-	ELEMENT_TYPE: { id: 1, syncLoad: false, endpoint: appConfig.restUrl + "element_types", load: true },
-	ELEMENT_TYPE_STATE: { id: 2, syncLoad: false, endpoint: appConfig.restUrl + "element_type_states", load: true },
-	ALARM_TYPE: { id: 3, syncLoad: false, endpoint: appConfig.restUrl + "alarms/alarm_types", load: true },
-	ALARM_LEVEL: { id: 4, syncLoad: false, endpoint: appConfig.restUrl + "alarms/alarm_levels", load: true },
-	ALARM_CONFIG: { id: 5, syncLoad: false, endpoint: appConfig.restUrl + "alarms/alarm_configs", load: true },
+	ELEMENT_TYPE: { id: 1, syncLoad: false, endpoint: appConfig.restUrl + "element_types", load: isGraphqlEnabled() },
+	ELEMENT_TYPE_STATE: { id: 2, syncLoad: false, endpoint: appConfig.restUrl + "element_type_states", load: isGraphqlEnabled() },
+	ALARM_TYPE: { id: 3, syncLoad: false, endpoint: appConfig.restUrl + "alarms/alarm_types", load: isGraphqlEnabled() },
+	ALARM_LEVEL: { id: 4, syncLoad: false, endpoint: appConfig.restUrl + "alarms/alarm_levels", load: isGraphqlEnabled() },
+	ALARM_CONFIG: { id: 5, syncLoad: false, endpoint: appConfig.restUrl + "alarms/alarm_configs", load: isGraphqlEnabled() },
 	MODULE: { id: 6, syncLoad: true, endpoint: appConfig.restUrl + "modules", load: true },
-	ELEMENT: { id: 7, syncLoad: false, endpoint: appConfig.restUrl + "elements/withCommands", load: true },
-	LOG_TYPE: { id: 8, syncLoad: false, endpoint: appConfig.restUrl + "log_types", load: true },
+	ELEMENT: { id: 7, syncLoad: false, endpoint: appConfig.restUrl + "elements/withCommands", load: isGraphqlEnabled() },
+	LOG_TYPE: { id: 8, syncLoad: false, endpoint: appConfig.restUrl + "log_types", load: isGraphqlEnabled() },
 	USER: { id: 9, syncLoad: true, endpoint: appConfig.restUrl + "users/with_role", load: true },
-	PLAN_SCHEDULE_STATE: { id: 11, syncLoad: false, endpoint: appConfig.restUrl + "plans/plan_schedule_state_types", load: true },
-	IMS_INCIDENT_GROUP: {id: 12, syncLoad: false, endpoint: appConfig.restUrl + "incidents/imsIncidentGroups", load: true },
-	IMS_INCIDENT_TYPE: {id: 13, syncLoad: false, endpoint: appConfig.restUrl + "incidents/imsIncidentTypes", load: true },
-	IMS_INCIDENT_LEVEL: {id: 14, syncLoad: false, endpoint: appConfig.restUrl + "incidents/incidentLevels", load: true },
-	STRETCH: {id: 15,syncLoad: false, endpoint: appConfig.restUrl + "locations/stretchs", load: true },
-	ELEMENT_VALUE_STATE: { id: 16, syncLoad: false, endpoint: appConfig.restUrl + "element_type_states/element_values_states", load: true },
-	PLAN_STATE_TYPE: { id: 17, syncLoad: false, endpoint: appConfig.restUrl + "plans/plan_state_types", load: true },
-	PLAN_ORDER_TYPE: { id: 18, syncLoad: false, endpoint: appConfig.restUrl + "plans/plan_order_types", load: true },
-	PLAN_ORDER_STATE_TYPE: { id: 19, syncLoad: false, endpoint: appConfig.restUrl + "plans/plan_order_state_types", load: true },
-	COMMAND_ELEMENT_TYPE: { id: 20, syncLoad: false, endpoint: appConfig.restUrl + "plans/plan_order_state_types", load: true },
-	IMS_TASK_TYPE: { id: 21, syncLoad: false, endpoint: appConfig.restUrl + "incidents/taskTypes", load: true }
+	PLAN_SCHEDULE_STATE: { id: 11, syncLoad: false, endpoint: appConfig.restUrl + "plans/plan_schedule_state_types", load: isGraphqlEnabled() },
+	IMS_INCIDENT_GROUP: {id: 12, syncLoad: false, endpoint: appConfig.restUrl + "incidents/imsIncidentGroups", load: isGraphqlEnabled() },
+	IMS_INCIDENT_TYPE: {id: 13, syncLoad: false, endpoint: appConfig.restUrl + "incidents/imsIncidentTypes", load: isGraphqlEnabled() },
+	IMS_INCIDENT_LEVEL: {id: 14, syncLoad: false, endpoint: appConfig.restUrl + "incidents/incidentLevels", load: isGraphqlEnabled() },
+	STRETCH: {id: 15,syncLoad: false, endpoint: appConfig.restUrl + "locations/stretchs", load: isGraphqlEnabled() },
+	ELEMENT_VALUE_STATE: { id: 16, syncLoad: false, endpoint: appConfig.restUrl + "element_type_states/element_values_states", load: isGraphqlEnabled() },
+	PLAN_STATE_TYPE: { id: 17, syncLoad: false, endpoint: appConfig.restUrl + "plans/plan_state_types", load: isGraphqlEnabled() },
+	PLAN_ORDER_TYPE: { id: 18, syncLoad: false, endpoint: appConfig.restUrl + "plans/plan_order_types", load: isGraphqlEnabled() },
+	PLAN_ORDER_STATE_TYPE: { id: 19, syncLoad: false, endpoint: appConfig.restUrl + "plans/plan_order_state_types", load: isGraphqlEnabled() },
+	COMMAND_ELEMENT_TYPE: { id: 20, syncLoad: false, endpoint: appConfig.restUrl + "plans/plan_order_state_types", load: isGraphqlEnabled() },
+	IMS_TASK_TYPE: { id: 21, syncLoad: false, endpoint: appConfig.restUrl + "incidents/taskTypes", load: isGraphqlEnabled() }
 });
 
 

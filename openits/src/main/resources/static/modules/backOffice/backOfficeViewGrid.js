@@ -365,7 +365,7 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 												referencedValue = new Date(parsetInt(referencedColumnValue.value));												
 											}
 											
-											record[BackOfficeHelper.getColumnUID(referencedColumnValue)] = referencedValue ?? value;	
+											record[BackOfficeHelper.getColumnUID(column) + "$ref"] = referencedValue ?? value;
 										}
 										else {
 											
@@ -462,7 +462,7 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 								if (!filterColumnName || column.name != filterColumnName) {
 
 									const referencedColumnName = BackOfficeHelper.getReferencedColumnName(self.backOffice, column, self.data);
-									const sourceField = referencedColumnName ? (BackOfficeHelper.getColumnUID(referencedColumnName)) : BackOfficeHelper.getColumnUID(column);
+									const sourceField = referencedColumnName ? (BackOfficeHelper.getColumnUID(column) + "$ref") : BackOfficeHelper.getColumnUID(column);
 
 									let dataTypeId = BackOfficeHelper.getDBTypes(referencedColumnName ? referencedColumnName.colType : column.colType).id;
 									let isBoolean = false;
@@ -1008,12 +1008,17 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 														
 														if (self.currentTableData.id == BackOfficeHelper.getTableIdFromColumnUID(key)) {
 														
-															const columnId = parseInt(BackOfficeHelper.getColumnIdFromColumnUID(key));
+															const colId = parseInt(BackOfficeHelper.getColumnIdFromColumnUID(key));
 															
-															rowData.push({
-																columnId: columnId,
-																value: row[rowFieldName]
-															});
+															const column = self.currentTableData.columns.find(e => e.id === colId);
+															
+															if (column) {
+																
+																rowData.push({
+																	columnId: colId,
+																	value: row[rowFieldName]
+																});	
+															}
 														}	
 													}
 													else {

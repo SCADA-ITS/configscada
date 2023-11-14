@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.revenga.rits.front.openits.bo.ServerBO;
 import com.revenga.rits.front.openits.model.ServerTimeUI;
+import com.revenga.rits.front.openits.service.ServerManager;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -29,6 +30,16 @@ public class ServerController {
 	
 	@Autowired
 	ServerBO serverBO;
+	
+	@Autowired
+	ServerManager serverManager;
+	
+	@GetMapping(value = "/graphqlEnable")
+	@ApiOperation(value = "Get if graphql server is available", notes = "Get if graphql server is available")
+	public ResponseEntity<Boolean> getGraphqlEnable() {
+		
+		return new ResponseEntity<>(Boolean.valueOf(serverManager.isGraphqlEnabled()), HttpStatus.OK);
+	}
 
 	@GetMapping(value = "/time")
 	@ApiOperation(value = "Get epoch milliseconds", notes = "Returns the number of milliseconds since the epoch of 1970-01-01T00:00:00Z")

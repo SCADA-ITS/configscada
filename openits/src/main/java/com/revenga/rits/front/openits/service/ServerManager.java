@@ -19,6 +19,7 @@ import com.revenga.rits.front.openits.model.ServerTimeUI;
 import com.revenga.rits.front.openits.scheduler.ScheduledServerJob;
 import com.revenga.rits.front.openits.service.user.SessionService;
 
+import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
@@ -26,6 +27,7 @@ import lombok.extern.log4j.Log4j2;
 public class ServerManager extends FrontManager {
 	
 	private static final String SERVER_ENABLED = AppInfra.getProperty("server.enabled");
+	private static final String SERVER_GRAPHQL = AppInfra.getProperty("server.graphql");
 	private static final String SERVER_CRON = AppInfra.getProperty("server.cron");
 	private static final String SERVER_REQUIRED_PROCCESES = AppInfra.getProperty("server.required_processes");
 	private static final String SERVER_OPTIONAL_PROCCESES = AppInfra.getProperty("server.optional_processes");
@@ -35,12 +37,15 @@ public class ServerManager extends FrontManager {
 	@Autowired
 	ServerBO serverBO;
 	
+	@Getter
+	boolean graphqlEnabled;
 	
 	@PostConstruct
 	private void afterLoad() {
 		
 		this.enabled = StringUtils.equals(SERVER_ENABLED, Boolean.TRUE.toString());
 		this.cronExpression = SERVER_CRON;
+		this.graphqlEnabled = SERVER_GRAPHQL == null || StringUtils.equals(SERVER_GRAPHQL, Boolean.TRUE.toString());
 	}
 	
 	@Autowired

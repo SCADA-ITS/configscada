@@ -33,9 +33,9 @@ export default class BackOfficeHelper {
 			DEFAULT_METADATA: "defaultMetadataTable",
 			PROPERTY: {
 				FORM_HEIGHT: { name: "formHeight", default: 700 },
-				FORM_WIDTH: { name: "formWidth", default: 900 },
+				FORM_WIDTH: { name: "formWidth", default: 1000 },
 				GRID_HEIGHT: { name: "gridHeight", default: 700 },
-				GRID_WIDTH: { name: "gridWidth", default: 900 },
+				GRID_WIDTH: { name: "gridWidth", default: 1000 },
 				SHOW_ID_FORM: { name: "showIdForm", default: true },
 				SHOW_ID_TABLE: { name: "showIdTable", default: false },
 				SHOW_ID_SEARCH: { name: "showIdSearch", default: false },
@@ -510,7 +510,7 @@ export default class BackOfficeHelper {
 
 						const keySplitted = key.split("$");
 
-						if (Array.isArray(keySplitted) && keySplitted.length > 2) {
+						if (Array.isArray(keySplitted) && keySplitted.length == 3) {
 
 							const tableId = parseInt(keySplitted[1]);
 

@@ -26,6 +26,7 @@ import com.revenga.rits.front.openits.app.AppInfra;
 import com.revenga.rits.front.openits.app.ApplicationContextProvider;
 import com.revenga.rits.front.openits.bo.GenericBO;
 import com.revenga.rits.front.openits.service.CacheManager;
+import com.revenga.rits.front.openits.service.ServerManager;
 import com.revenga.rits.front.openits.util.ConversionUtil;
 import com.revenga.rits.front.openitsdao.model.DataSource;
 import com.revenga.rits.front.openitsdao.model.DataSourceValue;
@@ -327,19 +328,15 @@ public class VODataSourceAdapter {
 	
 	@Autowired
 	CacheManager cacheManager;
-
-	@PostConstruct
-	private void initialize() {
-
-
-	}
+	
+	@Autowired
+	ServerManager serverManager;
 
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> getList(Integer dataSourceId, Object[] params) {
 
 		Instant instantIni = Instant.now();
 		List<Map<String, Object>> list = null;
-		DataSource dataSource = null;
 
 		try {
 			
@@ -352,7 +349,7 @@ public class VODataSourceAdapter {
 				
 				if (list == null) {
 					
-					dataSource = dataSourceService.getById(dataSourceId);
+					DataSource dataSource = dataSourceService.getById(dataSourceId);
 					
 					if (dataSource != null) {
 					
@@ -371,7 +368,7 @@ public class VODataSourceAdapter {
 				
 				throw new NotFoundException("Datasource not found. Check config.properties");
 			}
-			
+				
 			log.debug(String.format("Query time multiple items in datasourceId %d (%d ms.)", dataSourceId,
 					Duration.between(instantIni, Instant.now()).toMillis()));
 			
@@ -388,9 +385,11 @@ public class VODataSourceAdapter {
 
 		Instant instantIni = Instant.now();
 		Map<String, Object> output = null;
-		DataSource dataSource = dataSourceService.getById(dataSourceId);
 
 		try {
+				
+			DataSource dataSource = dataSourceService.getById(dataSourceId);
+			
 			if (dataSource != null) {
 				
 				List<Map<String, Object>> list = null;
@@ -430,10 +429,11 @@ public class VODataSourceAdapter {
 
 		Instant instantIni = Instant.now();
 		Map<String, Object> output = null;
-		DataSource dataSource = dataSourceService.getById(dataSourceId);
 
 		try {
 			
+			DataSource dataSource = dataSourceService.getById(dataSourceId);
+		
 			if (dataSource != null && dataSource.getDataSourceType().getId().equals(DATA_SOURCE_TYPE_GRAPHQL_MUTATION)) {
 
 				List<Map<String, Object>> list = putGraphql(dataSource, input);
@@ -463,10 +463,11 @@ public class VODataSourceAdapter {
 	public List<Map<String, Object>> putList(Integer dataSourceId, Map<String, Object> input) {
 
 		Instant instantIni = Instant.now();
-		DataSource dataSource = dataSourceService.getById(dataSourceId);
 		List<Map<String, Object>> list = null;
 
 		try {
+			
+			DataSource dataSource = dataSourceService.getById(dataSourceId);
 			
 			if (dataSource != null && dataSource.getDataSourceType().getId().equals(DATA_SOURCE_TYPE_GRAPHQL_MUTATION)) {
 
@@ -502,49 +503,52 @@ public class VODataSourceAdapter {
 		String variablesGraphQL = null;
 
 		try {
+			
+			if (serverManager.isGraphqlEnabled()) {
+			
+				DataSourceValue dataSourceValMutationUrl = dataSource.getDataSourceValues().stream()
+						.filter(e -> e.getDataSourceParam().getId().equals(DATA_SOURCE_GRAPHQL_MUTATION_URL)).findFirst()
+						.orElse(null);
+				DataSourceValue dataSourceValMethod = dataSource.getDataSourceValues().stream()
+						.filter(e -> e.getDataSourceParam().getId().equals(DATA_SOURCE_GRAPHQL_MUTATION_METHOD))
+						.findFirst().orElse(null);
+				DataSourceValue dataSourceValParams = dataSource.getDataSourceValues().stream()
+						.filter(e -> e.getDataSourceParam().getId().equals(DATA_SOURCE_GRAPHQL_MUTATION_PARAMS))
+						.findFirst().orElse(null);
+				DataSourceValue dataSourceValParamTypes = dataSource.getDataSourceValues().stream()
+						.filter(e -> e.getDataSourceParam().getId().equals(DATA_SOURCE_GRAPHQL_MUTATION_PARAM_TYPES))
+						.findFirst().orElse(null);
+				DataSourceValue dataSourceValContent = dataSource.getDataSourceValues().stream()
+						.filter(e -> e.getDataSourceParam().getId().equals(DATA_SOURCE_GRAPHQL_MUTATION_CONTENT))
+						.findFirst().orElse(null);
 
-			DataSourceValue dataSourceValMutationUrl = dataSource.getDataSourceValues().stream()
-					.filter(e -> e.getDataSourceParam().getId().equals(DATA_SOURCE_GRAPHQL_MUTATION_URL)).findFirst()
-					.orElse(null);
-			DataSourceValue dataSourceValMethod = dataSource.getDataSourceValues().stream()
-					.filter(e -> e.getDataSourceParam().getId().equals(DATA_SOURCE_GRAPHQL_MUTATION_METHOD))
-					.findFirst().orElse(null);
-			DataSourceValue dataSourceValParams = dataSource.getDataSourceValues().stream()
-					.filter(e -> e.getDataSourceParam().getId().equals(DATA_SOURCE_GRAPHQL_MUTATION_PARAMS))
-					.findFirst().orElse(null);
-			DataSourceValue dataSourceValParamTypes = dataSource.getDataSourceValues().stream()
-					.filter(e -> e.getDataSourceParam().getId().equals(DATA_SOURCE_GRAPHQL_MUTATION_PARAM_TYPES))
-					.findFirst().orElse(null);
-			DataSourceValue dataSourceValContent = dataSource.getDataSourceValues().stream()
-					.filter(e -> e.getDataSourceParam().getId().equals(DATA_SOURCE_GRAPHQL_MUTATION_CONTENT))
-					.findFirst().orElse(null);
+				if (dataSourceValMutationUrl != null)
+					mutationUrl = dataSourceValMutationUrl.getValue();
+				if (dataSourceValMethod != null)
+					method = dataSourceValMethod.getValue();
+				if (dataSourceValParams != null)
+					params = dataSourceValParams.getValue();
+				if (dataSourceValParamTypes != null)
+					paramTypes = dataSourceValParamTypes.getValue();
+				if (dataSourceValContent != null)
+					content = dataSourceValContent.getValue();
 
-			if (dataSourceValMutationUrl != null)
-				mutationUrl = dataSourceValMutationUrl.getValue();
-			if (dataSourceValMethod != null)
-				method = dataSourceValMethod.getValue();
-			if (dataSourceValParams != null)
-				params = dataSourceValParams.getValue();
-			if (dataSourceValParamTypes != null)
-				paramTypes = dataSourceValParamTypes.getValue();
-			if (dataSourceValContent != null)
-				content = dataSourceValContent.getValue();
+				if (!StringUtils.isEmpty(method) && !StringUtils.isEmpty(params) && !StringUtils.isEmpty(paramTypes)) {
 
-			if (!StringUtils.isEmpty(method) && !StringUtils.isEmpty(params) && !StringUtils.isEmpty(paramTypes)) {
+					Map<String, Object> inputForMutation = getInputForMutation(dataSource, input);
 
-				Map<String, Object> inputForMutation = getInputForMutation(dataSource, input);
+					if (!MapUtils.isEmpty(inputForMutation)) {
 
-				if (!MapUtils.isEmpty(inputForMutation)) {
+						paramsGraphQL = getParamsGraphqQLMutation(params);
+						paramTypesGraphQL = getParamTypesGraphqQLMutation(params, paramTypes);
+						variablesGraphQL = ConversionUtil.mapToString(inputForMutation);
 
-					paramsGraphQL = getParamsGraphqQLMutation(params);
-					paramTypesGraphQL = getParamTypesGraphqQLMutation(params, paramTypes);
-					variablesGraphQL = ConversionUtil.mapToString(inputForMutation);
+						if (!StringUtils.isEmpty(paramsGraphQL) && !StringUtils.isEmpty(paramTypesGraphQL)
+								&& !StringUtils.isEmpty(variablesGraphQL)) {
 
-					if (!StringUtils.isEmpty(paramsGraphQL) && !StringUtils.isEmpty(paramTypesGraphQL)
-							&& !StringUtils.isEmpty(variablesGraphQL)) {
-
-						list = graphqlAdapter.mutation(mutationUrl, method, content, paramsGraphQL, paramTypesGraphQL,
-								variablesGraphQL);
+							list = graphqlAdapter.mutation(mutationUrl, method, content, paramsGraphQL, paramTypesGraphQL,
+									variablesGraphQL);
+						}
 					}
 				}
 			}
@@ -571,37 +575,40 @@ public class VODataSourceAdapter {
 		String paramsGraphQL = null;
 
 		try {
+			
+			if (serverManager.isGraphqlEnabled()) {
+			
+				DataSourceValue dataSourceValQueryUrl = dataSource.getDataSourceValues().stream()
+						.filter(e -> e.getDataSourceParam().getId().equals(DATA_SOURCE_GRAPHQL_QUERY_URL)).findFirst()
+						.orElse(null);
+				DataSourceValue dataSourceValMethod = dataSource.getDataSourceValues().stream()
+						.filter(e -> e.getDataSourceParam().getId().equals(DATA_SOURCE_GRAPHQL_QUERY_METHOD)).findFirst()
+						.orElse(null);
+				DataSourceValue dataSourceValParams = dataSource.getDataSourceValues().stream()
+						.filter(e -> e.getDataSourceParam().getId().equals(DATA_SOURCE_GRAPHQL_QUERY_PARAMS)).findFirst()
+						.orElse(null);
+				DataSourceValue dataSourceValContent = dataSource.getDataSourceValues().stream()
+						.filter(e -> e.getDataSourceParam().getId().equals(DATA_SOURCE_GRAPHQL_QUERY_CONTENT)).findFirst()
+						.orElse(null);
 
-			DataSourceValue dataSourceValQueryUrl = dataSource.getDataSourceValues().stream()
-					.filter(e -> e.getDataSourceParam().getId().equals(DATA_SOURCE_GRAPHQL_QUERY_URL)).findFirst()
-					.orElse(null);
-			DataSourceValue dataSourceValMethod = dataSource.getDataSourceValues().stream()
-					.filter(e -> e.getDataSourceParam().getId().equals(DATA_SOURCE_GRAPHQL_QUERY_METHOD)).findFirst()
-					.orElse(null);
-			DataSourceValue dataSourceValParams = dataSource.getDataSourceValues().stream()
-					.filter(e -> e.getDataSourceParam().getId().equals(DATA_SOURCE_GRAPHQL_QUERY_PARAMS)).findFirst()
-					.orElse(null);
-			DataSourceValue dataSourceValContent = dataSource.getDataSourceValues().stream()
-					.filter(e -> e.getDataSourceParam().getId().equals(DATA_SOURCE_GRAPHQL_QUERY_CONTENT)).findFirst()
-					.orElse(null);
+				if (dataSourceValQueryUrl != null)
+					queryUrl = dataSourceValQueryUrl.getValue();
+				if (dataSourceValMethod != null)
+					method = dataSourceValMethod.getValue();
+				if (dataSourceValParams != null)
+					params = dataSourceValParams.getValue();
+				if (dataSourceValContent != null)
+					content = dataSourceValContent.getValue();
 
-			if (dataSourceValQueryUrl != null)
-				queryUrl = dataSourceValQueryUrl.getValue();
-			if (dataSourceValMethod != null)
-				method = dataSourceValMethod.getValue();
-			if (dataSourceValParams != null)
-				params = dataSourceValParams.getValue();
-			if (dataSourceValContent != null)
-				content = dataSourceValContent.getValue();
+				if (!StringUtils.isEmpty(params) && !ArrayUtils.isEmpty(objParamValues)) {
 
-			if (!StringUtils.isEmpty(params) && !ArrayUtils.isEmpty(objParamValues)) {
+					paramsGraphQL = getParamsGraphqQLQuery(params, objParamValues);
+				}
 
-				paramsGraphQL = getParamsGraphqQLQuery(params, objParamValues);
-			}
+				if (!StringUtils.isAllEmpty(method, content)) {
 
-			if (!StringUtils.isAllEmpty(method, content)) {
-
-				list = graphqlAdapter.query(queryUrl, method, paramsGraphQL, content);
+					list = graphqlAdapter.query(queryUrl, method, paramsGraphQL, content);
+				}
 			}
 
 		} catch (IOException e) {

@@ -136,7 +136,7 @@ export default class BackOfficeViewFormField  {
 								{ 
 									view: fieldRef.view, 
 									type: "text", 
-									name: BackOfficeHelper.getColumnUID(referencedColumnValue), 
+									name: field.name + "$ref", 
 									required: field.required, 
 									label: util.getStringCapitalized(refTable.labelSingular ? BackOfficeHelper.translate(self.backOffice, refTable.labelSingular) : (refTable.label ? BackOfficeHelper.translate(self.backOffice, refTable.label) : refTable.name)), 
 									readonly: true, 
@@ -383,7 +383,7 @@ export default class BackOfficeViewFormField  {
 										let newValue = {};
 										
 										newValue[field.name] = (itemSelected.id != -1 ? itemSelected.id : "");
-										newValue[BackOfficeHelper.getColumnUID(referencedColumnValue)] = (itemSelected.id != -1 ? itemSelected[BackOfficeHelper.getColumnUID(referencedColumnValue)] : "");
+										newValue[field.name + "$ref"] = (itemSelected.id != -1 ? itemSelected[BackOfficeHelper.getColumnUID(referencedColumnValue)] : "");
 										
 										form.setValues(newValue, true);
 									}
@@ -511,7 +511,7 @@ export default class BackOfficeViewFormField  {
 											let newValue = {};
 										
 											newValue[field.name] = itemSelected.aux.id;
-											newValue[BackOfficeHelper.getColumnUID(referencedColumnValue)] = itemSelected.value;
+											newValue[field.name + "$ref"] = itemSelected.value;
 											
 											form.setValues(newValue, true);
 										}														
