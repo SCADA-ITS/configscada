@@ -99,14 +99,13 @@ public class BackOfficeAssignment {
 		
 		List<Column> refColumns = table.getColumns().stream().filter(e -> e.getRefColumn() != null)
 				.map(Column::getRefColumn).collect(Collectors.toList());
-		
-		if (!CollectionUtils.isEmpty(refColumns)) {
+		if (!CollectionUtils.isEmpty(refColumns) ) {
 			
 			referTables = refColumns.stream().map(Column::getTable).collect(Collectors.toList());
 			
 			for (Table referTable : referTables) {
 				
-				this.backOfficeProcessor.getTable(conn, backOffice, referTable.getName());
+				this.backOfficeProcessor.getTable(conn, backOffice, referTable.getName(), null, null);
 			}
 		}
 		
@@ -137,7 +136,7 @@ public class BackOfficeAssignment {
 					
 					if (sourceTableName.equals(table.getName())) {
 						
-						Table referTable = this.backOfficeProcessor.getTable(conn, backOffice, targetTableName);
+						Table referTable = this.backOfficeProcessor.getTable(conn, backOffice, targetTableName, null, null);
 						
 						if (referTable != null) {
 							
@@ -174,7 +173,7 @@ public class BackOfficeAssignment {
 			
 			for (String tableName : referTableNames) {
 				
-				this.backOfficeProcessor.getTable(conn, backOffice, tableName, table);
+				this.backOfficeProcessor.getTable(conn, backOffice, tableName, table, null);
 			}
 		}
 		else {
@@ -199,7 +198,7 @@ public class BackOfficeAssignment {
 					
 					tableReferenceName = tableReferenceName.replace(backOffice.getSchema() + ".", "");
 					
-					Table referTable = this.backOfficeProcessor.getTable(conn, backOffice, tableReferenceName, table);
+					Table referTable = this.backOfficeProcessor.getTable(conn, backOffice, tableReferenceName, table, null);
 					
 					if (referTable != null) {
 					
@@ -451,7 +450,7 @@ public class BackOfficeAssignment {
 			targetTableName = "sg_metadata_table_attachments";
 		}
 		
-		Table targetTable = this.backOfficeProcessor.getTable(conn, backOffice, targetTableName);
+		Table targetTable = this.backOfficeProcessor.getTable(conn, backOffice, targetTableName, null, null);
 		
 		if (targetTable != null) {
 			

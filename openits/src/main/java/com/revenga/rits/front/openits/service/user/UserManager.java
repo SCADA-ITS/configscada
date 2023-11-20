@@ -29,9 +29,9 @@ import lombok.extern.log4j.Log4j2;
 public class UserManager {
 
 	private static final Boolean USERMGR_ENABLED = Boolean.valueOf(AppInfra.getProperty("usermgr.enabled"));
-	private static final String USERMGR_SQL_JDBC = AppInfra.getProperty("usermgr.sql.jdbc");
-	private static final String USERMGR_SQL_USER = AppInfra.getProperty("usermgr.sql.user");
-	private static final String USERMGR_SQL_PASSWORD = AppInfra.getProperty("usermgr.sql.password");
+	public static final String USERMGR_SQL_JDBC = AppInfra.getProperty("usermgr.sql.jdbc");
+	public static final String USERMGR_SQL_USER = AppInfra.getProperty("usermgr.sql.user");
+	public static final String USERMGR_SQL_PASSWORD = AppInfra.getProperty("usermgr.sql.password");
 	
 	private static final String FIELD_USER = "user";
 	private static final String FIELD_ROLE = "role";

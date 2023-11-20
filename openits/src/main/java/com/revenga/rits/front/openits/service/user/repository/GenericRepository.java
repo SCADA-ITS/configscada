@@ -23,7 +23,7 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.text.CaseUtils;
 
-import com.revenga.rits.front.openits.app.AppInfra;
+import com.revenga.rits.front.openits.service.user.UserManager;
 import com.revenga.rits.lib.encrypt.util.AES;
 
 import lombok.Data;
@@ -31,11 +31,7 @@ import lombok.extern.log4j.Log4j2;
 
 @Log4j2
 public abstract class GenericRepository {
-	
-	private static final String SERVER_SQL_JDBC = AppInfra.getProperty("server.sql.jdbc");
-	private static final String SERVER_SQL_USER = AppInfra.getProperty("server.sql.user");
-	private static final String SERVER_SQL_PASSWORD = AppInfra.getProperty("server.sql.password");
-	
+		
 	public static final String FIELD_ID = "id";
 	public enum Operation { CREATE, UPDATE, DELETE }
 	
@@ -153,8 +149,8 @@ public abstract class GenericRepository {
 			
 			if (this.conn == null || this.conn.isClosed()) {
 					
-				this.conn = DriverManager.getConnection(SERVER_SQL_JDBC, SERVER_SQL_USER,
-						AES.decrypt(SERVER_SQL_PASSWORD));
+				this.conn = DriverManager.getConnection( UserManager.USERMGR_SQL_JDBC, UserManager.USERMGR_SQL_USER,
+						AES.decrypt(UserManager.USERMGR_SQL_PASSWORD));
 				
 				this.conn.setAutoCommit(false);
 			}

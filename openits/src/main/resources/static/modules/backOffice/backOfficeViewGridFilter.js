@@ -120,7 +120,7 @@ export default class BackOfficeViewGridFilter {
 										filter.fieldId = refColumnRepresentative.id;
 										filter.fieldName = util.getStringCapitalized((tableRef.labelSingular ?? (tableRef.label ?? tableRef.name)));
 										
-										const refColumnId = tableRef.columns.find(e => e.name === "id");
+										const refColumnId = tableRef.columns.find(e => e.primaryKey === true);
 									
 										if (refColumnId) {
 											
@@ -482,7 +482,7 @@ export default class BackOfficeViewGridFilter {
 								value: ""
 							}];
 							
-							const columnsAvailable = self.currentTableData.columns.filter(e => e.name !== "id");
+							const columnsAvailable = self.currentTableData.columns.filter(e => e.primaryKey !== true);
 							
 							for (let column of columnsAvailable) {
 
@@ -662,7 +662,7 @@ export default class BackOfficeViewGridFilter {
 										column = columnRef;
 										
 										const tableRef = self.data.find(e => e.id === columnRef.tableId);
-										const columnRefId = tableRef.columns.find(c => c.name === "id");
+										const columnRefId = tableRef.columns.find(c => c.primaryKey === true);
 										
 										if (tableRef && columnRefId) {
 											

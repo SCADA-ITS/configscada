@@ -111,7 +111,7 @@ public class BackOfficeProcessor {
 						
 						if (!this.referencedTables.containsKey(tableName)) {
 							
-							getTable(conn, backOffice, tableName);
+							getTable(conn, backOffice, tableName, null, null);
 						}
 					}
 					
@@ -146,7 +146,7 @@ public class BackOfficeProcessor {
 			try (Connection conn = DriverManager.getConnection(backOffice.getJdbc(), backOffice.getUser(),
 					AES.decrypt(backOffice.getPassword()))) {
 			
-				getTable(conn, backOffice, tableName, conditions);
+				getTable(conn, backOffice, tableName, null, conditions);
 				
 				if (!CollectionUtils.isEmpty(this.referencedTables)) {
 				
@@ -507,23 +507,8 @@ public class BackOfficeProcessor {
 		
 		return (new BackOfficeFiller(this)).onChange(backOfficeId, request);
 	}
-	
-	public Table getTable(Connection conn, BackOffice backOffice, String tableName) throws SQLException {
 		
-		return getTable(conn, backOffice, tableName, null , null);
-	}
-	
-	public Table getTable(Connection conn, BackOffice backOffice, String tableName, Table parentTable) throws SQLException {
-		
-		return getTable(conn, backOffice, tableName, parentTable, null);
-	}
-	
-	private Table getTable(Connection conn, BackOffice backOffice, String tableName, String conditions) throws SQLException {
-		
-		return getTable(conn, backOffice, tableName, null, conditions);
-	}
-	
-	private Table getTable(Connection conn, BackOffice backOffice, String tableName, Table parentTable, String conditions) throws SQLException {
+	public Table getTable(Connection conn, BackOffice backOffice, String tableName, Table parentTable, String conditions) throws SQLException {
 		
 		Table table = this.referencedTables.get(tableName);
 		
@@ -551,18 +536,10 @@ public class BackOfficeProcessor {
 				if (table != null) {
 					
 					table.getRows().clear();
-					
+						
 					this.referencedTables.put(tableName, table);
 					
-					backOfficeAssignment.assignReferTables(conn, backOffice, table);
-					
-					if (this.showData.equals(ShowData.ALL) || 
-						(this.showData.equals(ShowData.ONLY_RELATIONS) && !StringUtils.equals(this.requestTableName, tableName))) {
-					
-						backOfficeAssignment.assignRows(conn, backOffice, table, parentTable, conditions);
-					}
-					
-					backOfficeAssignment.assignReferencedByTables(conn, backOffice, table);
+					setTableAssignments(conn, backOfficeAssignment, backOffice, table, parentTable, conditions);
 					
 					backOfficeAssignment.translateMetadata(conn, backOffice, table);
 				}
@@ -575,15 +552,7 @@ public class BackOfficeProcessor {
 				
 				backOfficeAssignment.assignColumns(conn, backOffice, table);
 				
-				backOfficeAssignment.assignReferTables(conn, backOffice, table);
-				
-				if (this.showData.equals(ShowData.ALL) || 
-					(this.showData.equals(ShowData.ONLY_RELATIONS) && !StringUtils.equals(this.requestTableName, tableName))) {
-					
-					backOfficeAssignment.assignRows(conn, backOffice, table, parentTable, conditions);
-				}
-				
-				backOfficeAssignment.assignReferencedByTables(conn, backOffice, table);
+				setTableAssignments(conn, backOfficeAssignment, backOffice, table, parentTable, conditions);
 				
 				backOfficeAssignment.assignMetadata(conn, backOffice, table);			
 				
@@ -597,6 +566,23 @@ public class BackOfficeProcessor {
 		}
 		
 		return table;
+	}
+	
+	private void setTableAssignments(Connection conn, BackOfficeAssignment backOfficeAssignment, BackOffice backOffice,
+			Table table, Table parentTable, String conditions) throws SQLException {
+		
+		backOfficeAssignment.assignReferTables(conn, backOffice, table);
+		
+		if (this.showData.equals(ShowData.ALL) || 
+			(this.showData.equals(ShowData.ONLY_RELATIONS) && !StringUtils.equals(this.requestTableName, table.getName()))) {
+		
+			backOfficeAssignment.assignRows(conn, backOffice, table, parentTable, conditions);
+		}
+		
+		if (StringUtils.equals(this.requestTableName, table.getName())) {
+			
+			backOfficeAssignment.assignReferencedByTables(conn, backOffice, table);
+		}
 	}
 	
 	private void traceTable(Table table) {

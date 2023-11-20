@@ -157,7 +157,7 @@ public class BackOfficeUtil {
 				"   AND OBJECT_NAME(fk.referenced_object_id) = ? ");
 		
 		dmlLibraryMSSQL.add(DMLType.COLUMNS_TABLE,
-				"SELECT c.column_name AS column_name, " +
+				"SELECT DISTINCT c.column_name AS column_name, " +
 				"       c.ordinal_position AS ordinal_position, " +
 				"       c.data_type AS data_type, " +
 				"       CAST(CASE WHEN c.is_nullable = 'YES' THEN 1 ELSE 0 END AS BIT) AS is_nullable, " +

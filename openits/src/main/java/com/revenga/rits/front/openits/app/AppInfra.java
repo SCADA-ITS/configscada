@@ -24,6 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.w3c.dom.Document;
 
+import com.microsoft.sqlserver.jdbc.StringUtils;
 import com.revenga.rits.front.openits.service.BackOfficeManager;
 import com.revenga.rits.front.openits.service.CacheManager;
 import com.revenga.rits.front.openits.service.ServerManager;
@@ -44,6 +45,8 @@ public class AppInfra {
 	private static final Pattern debugPattern = Pattern.compile("-Xdebug|jdwp");
 	
 	private static final String FILE_CONFIG_PROPERTIES = "config.properties";
+	private static final String CONSTANTS_PROPERTIES = "constants.properties";
+	private static final String DATASOURCES_PROPERTIES = "datasources.properties";
 	private static Map<String, String> props;
 	
 	@Getter
@@ -102,12 +105,36 @@ public class AppInfra {
 			
 			if (CollectionUtils.isEmpty(props)) {
 				
-				props = ConfigProperty.getInstance().getProperties(FILE_CONFIG_PROPERTIES);
+				String activeProfile = ConfigProperty.getInstance().getProperty("application.properties", "spring.profiles.active");
+				
+				if (!StringUtils.isEmpty(activeProfile)) {
+					
+					String fileConfigProperties = FILE_CONFIG_PROPERTIES.replace(".properties", "-" + activeProfile + ".properties");
+					
+					if (AppInfra.class.getClassLoader().getResource(fileConfigProperties) != null) {
+						
+						props = ConfigProperty.getInstance().getProperties(fileConfigProperties);
+					}
+					else {
+						
+						props = ConfigProperty.getInstance().getProperties(FILE_CONFIG_PROPERTIES);
+					}
+				}
 			}
 			
 			if (props != null) {
 				
 				value = props.get(property);
+				
+				if (value == null && AppInfra.class.getClassLoader().getResource(CONSTANTS_PROPERTIES) != null) {
+					
+					value = ConfigProperty.getInstance().getProperty(CONSTANTS_PROPERTIES, property);
+				}
+				
+				if (value == null && AppInfra.class.getClassLoader().getResource(DATASOURCES_PROPERTIES) != null) {
+					
+					value = ConfigProperty.getInstance().getProperty(DATASOURCES_PROPERTIES, property);
+				}
 			}
 		}
 		

@@ -89,7 +89,7 @@ public class BackOfficeBO {
 
 	public List<Table> get(Integer backOfficeId, String tableName, String conditions) {
 		
-		BackOfficeProcessor backOfficeProcessor = new BackOfficeProcessor(groovyManager, backOfficeService, backOfficeManager, getLocaleCode(), ShowData.ALL);
+		BackOfficeProcessor backOfficeProcessor = new BackOfficeProcessor(groovyManager, backOfficeService, backOfficeManager, getLocaleCode(), ShowData.ALL, tableName);
 		
 		return backOfficeProcessor.get(backOfficeId, tableName, conditions);
 	}
