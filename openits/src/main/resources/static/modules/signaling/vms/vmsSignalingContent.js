@@ -66,8 +66,14 @@ export default class VmsSignalingContent {
 
 	getView() {
 
-		let self = this;		
+		let self = this;
+		let realTimePanel = { height: 1 };		
 		let editPanelPermission = util.module.isAllowedPermission(self.config.requiredPermissions.editPanel);
+		
+		if (!self.isEditAction) {
+
+			realTimePanel = getViewRealTimePanel();
+		}
 
 		let view = {};
 
@@ -75,10 +81,8 @@ export default class VmsSignalingContent {
 			id: "view-main-content-" + self.uid,
 			rows: [
 				getViewHeader(),
-				{ height: 10 },
-				getViewRealTimePanel(),
+				realTimePanel,
 				{
-					height: 10,
 					css: { "border-top": "1px solid #DADEE0", "border-top-width": "1px !important" }
 				},
 				{

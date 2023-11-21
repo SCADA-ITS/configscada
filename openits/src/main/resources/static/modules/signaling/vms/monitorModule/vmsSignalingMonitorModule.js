@@ -1093,6 +1093,8 @@ export default class VmsSignalingMonitorModule extends GenericModule {
 					});
 
 					if (Array.isArray(foldersArr) && foldersArr.length > 0) {
+					
+						foldersArr.sort((a, b) => (a.value > b.value) ? 1 : ((b.value > a.value) ? -1 : 0));
 
 						for (let folder of foldersArr) {
 

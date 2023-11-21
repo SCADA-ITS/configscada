@@ -12,6 +12,7 @@ export default class VmsSignalingRealTimePanel {
 
 		this.config = config;
 		this.element = element;
+		this.initialElementState = webix.copy(element.elementState);
 		this.uid = webix.uid();
 
 		this.idStompSubscriptor = undefined;
@@ -91,15 +92,15 @@ export default class VmsSignalingRealTimePanel {
 							obj: s
 						};
 
-						self.graphicIconInstance = new mod.default(layerElement, self.element, container, null);
+						self.graphicIconInstance = new mod.default(layerElement, self.element, container);
 
 						self.graphicIconInstance.load(function() {
 
 							self.graphicIconInstance.loadRender(function() {
 
-								if (self.element.elementState) {
+								if (self.initialElementState) {
 
-									self.graphicIconInstance.updateElementState(self.element.elementState);
+									self.graphicIconInstance.updateElementState(self.initialElementState);
 								}
 
 								if (Array.isArray(self.element.elementValues) && self.element.elementValues.length > 0) {
@@ -257,18 +258,17 @@ export default class VmsSignalingRealTimePanel {
 									return `<div class="equip-viewer-info">
 											<span class="ico webix_icon mdi mdi-view-headline"></span>
 											<span class="title">${i18n.t("LBL_ELEMENT_DESCRIPTION")}</span>
-											<span title="${i18n.t("LBL_EQUIP_VIEWER_PROPERTIES_DESCRIPTION")}" class="ico webix_icon mdi mdi-information signaling-properties-info-icon"></span>
-											<span class="value">${self.element.description}</span>
+											<span id="info" class="value link-value">${self.element.description}</span>
 										</div>`;
 								},
 								on: {
 									onAfterRender: function() {
+										
+										let linkLabel = $$(this).getNode().querySelector("#info");
 
-										let infoIcon = $$(this).getNode().querySelector('.signaling-properties-info-icon');
+										if (linkLabel) {
 
-										if (infoIcon) {
-
-											infoIcon.addEventListener('click', getProperties);
+											linkLabel.addEventListener('click', getProperties);
 										}
 									}
 								}
