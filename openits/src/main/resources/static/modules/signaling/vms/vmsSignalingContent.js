@@ -1086,7 +1086,7 @@ export default class VmsSignalingContent {
 							commandElement.commandElementValues.push({
 								
 								commandElementTypeParam: {
-									id: selectedCommandElement.commandElementTypeParams[0].id 
+									id: self.config.commands.sendMessage.commandElementValues[0].commandElementTypeParamId 
 								},
 								value: self.composer.getCurrentSignalingJsonData(options)
 							});
