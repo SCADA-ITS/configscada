@@ -39,7 +39,7 @@ INSERT INTO ui.equip_viewers (id, name, description, "label", icon, show_info_ta
 ('ElementSubtype:3:3', 'DETECTOR', 'DETECTOR', 'LBL_ELEMENT_TYPE_DETECTOR', NULL, true, false, false, null, 450, 4, null, 000003,true),
 ('ElementSubtype:4:3', 'DETECTOR', 'DETECTOR', 'LBL_ELEMENT_TYPE_DETECTOR', NULL, true, false, false, null, 450, 4, null, 000003,true),
 ('ElementType:4', 'SECTION', 'SECTION', 'LBL_ELEMENT_TYPE_SECTION', NULL, true, true, false, null, 450, 3, null,000004,true),
-('ElementType:23', 'IMANAGER', 'IMANAGER', 'LBL_ELEMENT_TYPE_IMANAGER', NULL, true, false, false, null, 450, 3, null,000025,null),
+('ElementType:23', 'IMANAGER', 'IMANAGER', 'LBL_ELEMENT_TYPE_IMANAGER', NULL, true, false, true, null, 450, 3, null,000023,null),
 ('ElementType:25', 'EC', 'EC', 'LBL_ELEMENT_TYPE_ELECTRICAL_CABINET', NULL, true, false, false, null, 450, 3, null,000025,null),
 ('ElementType:34', 'EC_SCN', 'EC_SCN', 'LBL_ELEMENT_TYPE_ELECTRICAL_CABINET_SCN', NULL, true, false, false, null, 450, 3, null,000034,null),
 ('ElementType:39','HORIZONTAL_ACCESS','HORIZONTAL_ACCESS','LBL_ELEMENT_TYPE_HORIZONTAL_ACCESS',null,True,False,False,null,225.0,3,null,000039,null),
