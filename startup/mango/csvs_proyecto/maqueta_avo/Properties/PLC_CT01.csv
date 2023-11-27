@@ -1,2 +1,0 @@
-device_name;plc_name;plc_ip;port(i);url_publisher;read_permission;write_permission;offset_master_cpu_state(i);offset_slave_cpu_state(i);offset_master_cpu_function(i);offset_slave_cpu_function(i);bit_master_cpu_state(i);bit_slave_cpu_state(i)
-PLC_CT01;PLCs;192.168.88.199;2222;http:\/\/192.168.88.176:3000\/api\/v2\/generic\/;monitor;;5000;5001;5002;5003;4;5

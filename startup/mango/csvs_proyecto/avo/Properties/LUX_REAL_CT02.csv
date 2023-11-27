@@ -1,3 +1,0 @@
-device_name;session_uid;url_publisher;PLC_name;PLC_ip;PLC_port(i);read_permission;write_permission;offset_luminosity(i);offset_alarm_sensor(i);offset_broken_thread(i)
-S1TS-LUX-001;S1TS-LUX-001;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;CT02_PLC_G;10.133.50.37;28014;monitor;;15803;15801;15801
-S1TS-LUX-002;S1TS-LUX-002;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;CT02_PLC_G;10.133.50.37;28014;monitor;;15818;15816;15816

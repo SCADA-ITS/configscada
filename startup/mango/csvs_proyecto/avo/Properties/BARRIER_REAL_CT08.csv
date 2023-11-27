@@ -1,3 +1,0 @@
-device_name;session_uid;url_publisher;PLC_name;PLC_ip;PLC_port(i);read_permission;write_permission;offset_bar_order(i);offset_barrier_rised(i);offset_barrier_lowered(i);offset_rise_fail(i);offset_lowering_fail(i);offset_engine_fail(i)
-ICCP-BAR-001;ICCP-BAR-001;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;CT08_PLC_D;10.133.50.37;28053;monitor;;14422;14400;14400;14401;14401;14401
-IBTO-BAR-001;IBTO-BAR-001;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;CT08_PLC_D;10.133.50.37;28053;monitor;;14448;14426;14426;14427;14427;14427

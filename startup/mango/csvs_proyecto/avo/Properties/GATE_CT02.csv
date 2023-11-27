@@ -1,9 +1,0 @@
-device_name;session_uid;PLC_name;host;port(i);url_publisher;read_permission;write_permission;offset_gate_open(i);bit(i)
-1ER1-ELE-001.SEAbiertaN2;1ER1-ELE-001.SEAbiertaN2;CT02_PLC_C;10.133.50.37;28010;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;;8;1
-1ER2-ELE-001.SEAbiertaN2;1ER2-ELE-001.SEAbiertaN2;CT02_PLC_C;10.133.50.37;28010;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;;8;2
-1E01-ELE-001.SEAbiertaN2;1E01-ELE-001.SEAbiertaN2;CT02_PLC_C;10.133.50.37;28010;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;;8;3
-1E02-ELE-001.SEAbiertaN2;1E02-ELE-001.SEAbiertaN2;CT02_PLC_C;10.133.50.37;28010;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;;8;4
-1E03-ELE-001.SEAbiertaN2;1E03-ELE-001.SEAbiertaN2;CT02_PLC_C;10.133.50.37;28010;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;;8;5
-1E04-ELE-001.SEAbiertaN2;1E04-ELE-001.SEAbiertaN2;CT02_PLC_C;10.133.50.37;28010;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;;8;6
-1E05-ELE-001.SEAbiertaN2;1E05-ELE-001.SEAbiertaN2;CT02_PLC_C;10.133.50.37;28010;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;;8;7
-1ES0-ELE-001.SEAbiertaN2;1ES0-ELE-001.SEAbiertaN2;CT02_PLC_C;10.133.50.37;28010;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;;8;8

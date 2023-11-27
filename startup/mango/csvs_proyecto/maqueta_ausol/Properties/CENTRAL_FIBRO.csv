@@ -1,4 +1,0 @@
-device_name;session_uid;url_publisher;host;zone_name
-RV-OTS-1;RV-OTS-1;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/;192.168.88.199;RV-ZI-1CA
-MM-OTS-1;MM-OTS-1;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/;192.168.88.199;MM-ZI-1CA
-STMI-OTS-1;STMI-OTS-1;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/;192.168.88.199;STMI-ZI-1CA

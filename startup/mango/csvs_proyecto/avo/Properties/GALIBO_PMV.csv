@@ -1,7 +1,0 @@
-device_name;session_uid;PLC_name;host;port(i);url_publisher;read_permission;write_permission
-IBTO-AIM-001;IBTO-AIM-001;IBTO-AIM-001;10.30.17.2;502;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;
-ICCO-AIM-001;ICCO-AIM-001;ICCO-AIM-001;10.30.15.3;502;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;
-ICCP-AIM-001;ICCP-AIM-001;ICCP-AIM-001;10.30.18.2;502;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;
-INKP-AIM-001;INKP-AIM-001;INKP-AIM-001;10.30.11.1;502;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;
-IPRO-AIM-001;IPRO-AIM-001;IPRO-AIM-001;10.30.12.3;502;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;
-IVIP-AIM-001;IVIP-AIM-001;IVIP-AIM-001;10.30.10.2;502;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;

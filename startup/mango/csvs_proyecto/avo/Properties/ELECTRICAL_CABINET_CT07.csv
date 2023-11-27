@@ -1,2 +1,0 @@
-device_name;session_uid;url_publisher;PLC_name;PLC_ip;PLC_port(i);read_permission;write_permission;bit_door_open(i)
-ICCO-AIM-001_AE;ICCO-AIM-001_AE;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;CT07_PLC_A;10.133.50.37;28043;monitor;;0

@@ -1,3 +1,0 @@
-device_name;session_uid;PLC_name;host;port(i);url_publisher;read_permission;write_permission;offset_wind_speed(i);offset_wind_direction(i)
-RV-VTA-ANE-1CA;RV-VTA-ANE-1CA;RV-Rack-Exterior;192.168.88.199;1036;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/;monitor;;3;4
-CH-VTA-ANE-1CA;CH-VTA-ANE-1CA;CH-Rack-Exterior-Cadiz;192.168.88.199;1246;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/;monitor;;1;2

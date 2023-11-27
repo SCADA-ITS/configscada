@@ -1,5 +1,0 @@
-device_name;session_uid;PLC_name;host;port(i);url_publisher;read_permission;write_permission;offset_tank_capacity(i)
-RV-DALJ-1;RV-DALJ-1;RV-CTITS;192.168.88.199;1037;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/;monitor;;4
-RV-DEP-DIESEL-PCI;RV-DEP-DIESEL-PCI;RV-CTITS;192.168.88.199;1037;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/;monitor;;5
-MM-DALJ-1;MM-DALJ-1;MM-CTITS;192.168.88.199;1145;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/;monitor;;4
-MM-DEP-DIESEL-PCI;MM-DEP-DIESEL-PCI;MM-CTGBT;192.168.88.199;1146;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/;monitor;;5

@@ -1,4 +1,0 @@
-device_name;session_uid;url_publisher;ip;port(i);read_permission;write_permission
-RV-DAC-1;RV-DAC-1;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/;192.168.88.135;28000;monitor;
-STMI-DAC-1;STMI-DAC-1;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/;192.168.88.135;28000;monitor;
-MM-DAC-1;MM-DAC-1;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/;192.168.88.135;28000;monitor;

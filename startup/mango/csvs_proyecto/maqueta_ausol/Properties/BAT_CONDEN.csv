@@ -1,3 +1,0 @@
-device_name;session_uid;PLC_name;host;port(i);url_publisher;read_permission;write_permission;offset_battery_charge_state(i)
-RV-BAT-PCI;RV-BAT-PCI;RV-CTITS;192.168.88.199;1037;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/;monitor;;11
-MM-BAT-PCI;MM-BAT-PCI;MM-CTGBT;192.168.88.199;1146;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/;monitor;;11

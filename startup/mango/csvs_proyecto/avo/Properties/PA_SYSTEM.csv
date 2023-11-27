@@ -1,9 +1,0 @@
-device_name;session_uid;url_publisher;ip;port(i);read_permission;write_permission
-CT01-UCM-001;CT01-UCM-001;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;10.65.111.11;28000;;
-CT02-UCM-001;CT02-UCM-001;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;10.65.112.11;28000;;
-CT03-UCM-001;CT03-UCM-001;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;10.65.113.11;28000;;
-CT04-UCM-001;CT04-UCM-001;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;10.65.114.11;28000;;
-CT05-UCM-001;CT05-UCM-001;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;10.65.115.11;28000;;
-CT06-UCM-001;CT06-UCM-001;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;10.65.116.11;28000;;
-CT07-UCM-001;CT07-UCM-001;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;10.65.117.11;28000;;
-CT08-UCM-001;CT08-UCM-001;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;10.65.118.11;28000;;

@@ -1,2 +1,0 @@
-name;device;channel;description;controller;xAddress;xStatusAddress;xAlarmAddress;xAlarmStatusAddress;multiplier;offset;log;units;avg
-STMI-FOT-1CA;CT_ITS;M1AI1;STMI-FOT-1CA Nivel de luminosidad ;WAGO;16600;100;700;148;0.305250;0.0;true;lux;false

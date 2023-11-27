@@ -1,5 +1,0 @@
-device_name;session_uid;host;url_publisher;pv_offset(i);trigger_1_event_offset(i);trigger_2_event_offset(i);trigger_1_sp_offset(i);trigger_2_sp_offset(i);unit_system_fault_offset(i);port(i);read_permission;write_permission
-S-TG01-0478-S;S-TG01-0478-S;192.168.88.189;http:\/\/192.168.88.170:3000\/api\/v2\/generic\/;10;11;12;13;14;15;1025;monitor;
-S-TG01-1146-S;S-TG01-1146-S;192.168.88.189;http:\/\/192.168.88.170:3000\/api\/v2\/generic\/;10;11;12;13;14;15;1025;monitor;
-S-TG01-1725-N;S-TG01-1725-N;192.168.88.189;http:\/\/192.168.88.170:3000\/api\/v2\/generic\/;10;11;12;13;14;15;1025;monitor;
-S-TG01-2354-N;S-TG01-2354-N;192.168.88.189;http:\/\/192.168.88.170:3000\/api\/v2\/generic\/;10;11;12;13;14;15;1025;monitor;

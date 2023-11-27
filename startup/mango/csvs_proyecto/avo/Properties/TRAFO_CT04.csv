@@ -1,4 +1,0 @@
-device_name;plc_name;plc_ip;port(i);url_publisher;offset_alarms(i)
-CT04-TR1-SE4;CT04_PLC_G;10.133.50.37;28028;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;21701
-CT04-TR2-SE4;CT04_PLC_G;10.133.50.37;28028;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;21711
-CT04-TR3-SE4;CT04_PLC_G;10.133.50.37;28028;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;21721

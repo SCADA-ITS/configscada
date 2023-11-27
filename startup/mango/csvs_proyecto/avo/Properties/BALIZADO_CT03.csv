@@ -1,3 +1,0 @@
-device_name;session_uid;ct_upd;upd_state;plc_name;host;port(i);url_publisher;offset_state(i);offset_cmd(i)
-BALIZADO_CT03_01;BALIZADO_CT03_01;PLC_CT03;upd_fail_ct03_1;CT03_PLC_G;10.133.50.37;28021;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;55;56
-BALIZADO_CT03_02;BALIZADO_CT03_02;PLC_CT03;upd_fail_ct03_1;CT03_PLC_G;10.133.50.37;28021;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;57;58

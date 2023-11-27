@@ -1,2 +1,0 @@
-device_name;session_uid;url_publisher;PLC_name;PLC_ip;PLC_port(i);read_permission;write_permission;offset_luminosity(i);offset_alarm_sensor(i);offset_broken_thread(i)
-ICCO-LUM-001;ICCO-LUM-001;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;CT07_PLC_F;10.133.50.37;28048;monitor;;15703;15701;15701

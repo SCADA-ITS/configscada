@@ -1,3 +1,0 @@
-device_name;session_uid;url_publisher;PLC_name;PLC_ip;PLC_port(i);read_permission;write_permission;bit_door_open(i)
-INKP-AIM-001_AE;INKP-AIM-001_AE;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;CT05_PLC_A;10.133.50.37;28029;monitor;;0
-IVIP-AIM-001_AE;IVIP-AIM-001_AE;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;CT05_PLC_A;10.133.50.37;28029;monitor;;1

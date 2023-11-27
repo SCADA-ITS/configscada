@@ -1,7 +1,0 @@
-UPDATE conf.alarm_configs SET alarm_level_id = 3, enabled = True, treatment = True WHERE element_type_id = 95 AND alarm_config_id = 10095; --LBL_ALARM_CONFIGS_ALARM_SYNC_SERVER_NO_CONNECTION
-UPDATE conf.alarm_configs SET alarm_level_id = 2, enabled = True, treatment = False WHERE element_type_id = 95 AND alarm_config_id = 3010095; --LBL_ALARM_CONFIGS_ALARM_SYNC_SERVER_MÓDULO_ALIMENTACIÓN_1
-UPDATE conf.alarm_configs SET alarm_level_id = 2, enabled = True, treatment = False WHERE element_type_id = 95 AND alarm_config_id = 3020095; --LBL_ALARM_CONFIGS_ALARM_SYNC_SERVER_MÓDULO_ALIMENTACIÓN_2
-UPDATE conf.alarm_configs SET alarm_level_id = 2, enabled = True, treatment = False WHERE element_type_id = 95 AND alarm_config_id = 3030095; --LBL_ALARM_CONFIGS_ALARM_SYNC_SERVER_MÓDULO_BASE_DE_TIEMPOS_1_STATE
-UPDATE conf.alarm_configs SET alarm_level_id = 3, enabled = True, treatment = True WHERE element_type_id = 95 AND alarm_config_id = 3040095; --LBL_ALARM_CONFIGS_ALARM_SYNC_SERVER_MÓDULO_BASE_DE_TIEMPOS_1_NO_SYNC
-UPDATE conf.alarm_configs SET alarm_level_id = 2, enabled = True, treatment = False WHERE element_type_id = 95 AND alarm_config_id = 3050095; --LBL_ALARM_CONFIGS_ALARM_SYNC_SERVER_MÓDULO_BASE_DE_TIEMPOS_2_STATE
-UPDATE conf.alarm_configs SET alarm_level_id = 3, enabled = True, treatment = True WHERE element_type_id = 95 AND alarm_config_id = 3060095; --LBL_ALARM_CONFIGS_ALARM_SYNC_SERVER_MÓDULO_BASE_DE_TIEMPOS_2_NO_SYNC

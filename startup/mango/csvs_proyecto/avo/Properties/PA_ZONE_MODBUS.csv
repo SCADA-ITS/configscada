@@ -1,8 +1,0 @@
-device_name;session_uid;PLC_name;PLC_ip;PLC_port(i);url_publisher;read_permission;write_permission;offset_mod_status(i);offset_zone_activated(i)
-S1TS-ZMEG-01;S1TS-ZMEG-01;PLC1;192.168.88.198;999;http:\/\/192.168.88.176:3000\/api\/v2\/generic\/;monitor;;170;171
-SCNO-ZMEG-01;SCNO-ZMEG-01;PLC1;192.168.88.198;999;http:\/\/192.168.88.176:3000\/api\/v2\/generic\/;monitor;;170;171
-S1TS-ZMEG-02;S1TS-ZMEG-02;PLC1;192.168.88.198;999;http:\/\/192.168.88.176:3000\/api\/v2\/generic\/;monitor;;170;171
-S1TS-ZMEG-03;S1TS-ZMEG-03;PLC1;192.168.88.198;999;http:\/\/192.168.88.176:3000\/api\/v2\/generic\/;monitor;;170;171
-SAEB-ZMEG-01;SAEB-ZMEG-01;PLC1;192.168.88.198;999;http:\/\/192.168.88.176:3000\/api\/v2\/generic\/;monitor;;170;171
-SIGO-ZMEG-01;SIGO-ZMEG-01;PLC1;192.168.88.198;999;http:\/\/192.168.88.176:3000\/api\/v2\/generic\/;monitor;;170;171
-S1TN-ZMEG-01;S1TN-ZMEG-01;PLC1;192.168.88.198;999;http:\/\/192.168.88.176:3000\/api\/v2\/generic\/;monitor;;170;171

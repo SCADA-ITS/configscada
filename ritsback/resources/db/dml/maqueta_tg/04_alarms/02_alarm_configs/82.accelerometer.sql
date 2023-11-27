@@ -1,4 +1,0 @@
-INSERT INTO conf.alarm_configs 
-(alarm_config_id, alarm_type_id, alarm_level_id, element_type_id, element_id, element_type_state_id, mine, treatment, alias, description, label_alias, label_description, enabled, visible, created_at, updated_at) values
-(7, 2, 3, 82, NULL, NULL, true, true, 'ALARM ACCELEROMETER NO CONNECTION', 'ALARM ACCELEROMETER NO CONNECTION', 'LBL_ALARM_CONFIGS_ACCELEROMETER_NO_CONNECTION', 'LBL_ALARM_CONFIGS_ACCELEROMETER_NO_CONNECTION', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(8, 2, 3, 82, NULL, 3, true, true, 'ALARM ACCELEROMETER EVENT', 'ALARM ACCELEROMETER EVENT', 'LBL_ALARM_CONFIGS_ACCELEROMETER_EVENT', 'LBL_ALARM_CONFIGS_ACCELEROMETER_EVENT', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

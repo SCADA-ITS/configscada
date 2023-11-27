@@ -1,8 +1,0 @@
-device_name;session_uid;ip;port(i);url_publisher;read_permission;write_permission
-RV-ERU;RV-ERU;192.168.88.119;28013;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/;monitor;
-MM-ERU;MM-ERU;192.168.88.119;28014;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/;monitor;
-STMI-ERU;STMI-ERU;192.168.88.119;28015;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/;monitor;
-LQ-ERU;LQ-ERU;192.168.88.119;28016;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/;monitor;
-CH-ERU;CH-ERU;192.168.88.119;28017;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/;monitor;
-CAS-ERU;CAS-ERU;192.168.88.119;28018;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/;monitor;
-COR-ERU;COR-ERU;192.168.88.119;28019;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/;monitor;

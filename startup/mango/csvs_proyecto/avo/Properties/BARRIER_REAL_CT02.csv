@@ -1,2 +1,0 @@
-device_name;session_uid;url_publisher;PLC_name;PLC_ip;PLC_port(i);read_permission;write_permission;offset_bar_order(i);offset_barrier_rised(i);offset_barrier_lowered(i);offset_rise_fail(i);offset_lowering_fail(i);offset_engine_fail(i)
-S1TS-BAR-001;S1TS-BAR-001;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;CT02_PLC_D;10.133.50.37;28011;monitor;;14422;14400;14400;14401;14401;14401

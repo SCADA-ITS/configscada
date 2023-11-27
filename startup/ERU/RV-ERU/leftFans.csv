@@ -1,5 +1,0 @@
-model;description;spinningStatusRegisterXAddress;spinningStatusRegisterXStatusAddress;spinningRegisterXAddress;spinningRegisterXStatusAddress
-A;RV-VNT-VF1-CA;16500;600;25020;601
-A;RV-VNT-VF2-CA;16501;601;25021;602
-A;RV-VNT-VF3-CA;16502;602;25022;603
-A;RV-VNT-VF4-CA;16503;603;25023;604

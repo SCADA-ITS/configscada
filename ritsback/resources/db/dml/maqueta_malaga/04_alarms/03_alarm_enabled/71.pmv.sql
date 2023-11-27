@@ -1,1 +1,0 @@
-UPDATE conf.alarm_configs SET enabled = false WHERE element_type_id = 71 and alarm_config_id <> 336;

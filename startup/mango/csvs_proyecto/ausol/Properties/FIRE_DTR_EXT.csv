@@ -1,3 +1,0 @@
-device_name;session_uid;eru_name;url_publisher;read_permission;write_permission;offset_alarm_zone(i);offset_fiber_fault(i);offset_commstatus(i)
-CAS-ZI-1CA;CAS-ZI-1CA;CAS-ERU;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;monitor;1000;1008;1200
-CAS-ZI-8MA;CAS-ZI-8MA;CAS-ERU;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;monitor;1031;1039;1231

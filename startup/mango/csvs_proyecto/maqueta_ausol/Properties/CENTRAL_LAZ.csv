@@ -1,4 +1,0 @@
-device_name;session_uid;url_publisher;host;zone_name
-RV-CT-FIRE-DET-1;RV-CT-FIRE-DET-1;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/;192.168.11.19;RV-CT-ITS-HUM-1
-MM-CT-FIRE-DET-1;MM-CT-FIRE-DET-1;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/;192.168.12.19;MM-CT-ITS-HUM-1
-STMI-CT-FIRE-DET-1;STMI-CT-FIRE-DET-1;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/;192.168.13.22;STMI-CT-ITS-HUM-1

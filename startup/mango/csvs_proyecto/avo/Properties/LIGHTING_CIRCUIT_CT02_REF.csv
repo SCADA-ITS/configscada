@@ -1,3 +1,0 @@
-device_name;session_uid;ct_upd;upd_state;plc_name;host;port(i);url_publisher;offset_state_prot(i);bit_state_prot(i);offset_cmd(i);offset_state(i)
-AL.SE2-S1;AL.SE2-S1;plc_ct02;upd_fail_ct02_2;CT02_PLC_G;10.133.50.37;28014;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;22732;0;22735;22730
-AL.SE2-S2;AL.SE2-S2;plc_ct02;upd_fail_ct02_2;CT02_PLC_G;10.133.50.37;28014;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;22732;1;22735;22730

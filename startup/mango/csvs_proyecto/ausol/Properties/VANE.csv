@@ -1,9 +1,0 @@
-device_name;session_uid;eru_name;url_publisher;read_permission;write_permission;offset_wind_speed(i);offset_wind_direction(i);offset_alarm(i);offset_commstatus(i)
-RV-VTA-ANE-1CA;RV-VTA-ANE-1CA;RV-ERU;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;16698;16800;781;181
-MM-VTA-ANE-1CA;MM-VTA-ANE-1CA;MM-ERU;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;16750;16752;775;175
-CH-VTA-ANE-1CA;CH-VTA-ANE-1CA;CH-ERU;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;16762;16764;750;150
-LQ-VTA-ANE-1MA;LQ-VTA-ANE-1MA;LQ-ERU;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;16834;16836;967;217
-COR-VTA-ANE-1CA;COR-VTA-ANE-1CA;COR-ERU;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;16694;16696;747;147
-STM2-VTA-ANE-1CA;STM2-VTA-ANE-1CA;STM2-ERU;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;16738;16740;769;169
-CAS-VTA-ANE-1CA;CAS-VTA-ANE-1CA;CAS-ERU;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;16732;16734;766;166
-NG-VTA-ANE-1CA;NG-VTA-ANE-1CA;NG-ERU;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;16764;16766;782;182

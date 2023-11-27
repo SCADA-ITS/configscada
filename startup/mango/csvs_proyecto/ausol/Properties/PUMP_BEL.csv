@@ -1,8 +1,0 @@
-device_name;session_uid;PLC_name;host;port(i);url_publisher;read_permission;write_permission;offset_pump_on(i);offset_alarm_pump_no_operation(i)
-RV-BEL-1;RV-BEL-1;RV-PLCL-1;192.168.11.10;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;11;13
-MM-BEL-1;MM-BEL-1;MM-PLC-CGBT;192.168.12.54;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;149;148
-CH-BEL-1;CH-BEL-1;CH-PLCL-1;192.169.9.10;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;44;45
-CAS-BEL-1;CAS-BEL-1;CAS-PLCL-BC;192.168.5.130;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;70;69
-COR-BEL-1;COR-BEL-1;COR-PLCL-BC;192.168.15.10;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;65;64
-NG-BEL-1;NG-BEL-1;NG-PLC-CT-ITS-BM;192.168.17.48;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;65;67
-LQ-BEL-1;LQ-BEL-1;LQ-PLCL-1;192.168.14.10;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;56;53

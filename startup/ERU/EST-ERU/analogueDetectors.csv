@@ -1,2 +1,0 @@
-name;device;channel;description;controller;xAddress;xStatusAddress;xAlarmAddress;xAlarmStatusAddress;multiplier;offset;log;units;avg
-EST-FOT-1CA;CGBT;M1AI7;EST-FOT-1CA Fotocelula - SENSOR FOTOCELULA;WAGO;16600;100;700;200;0.305250;0.0;false;lux;true

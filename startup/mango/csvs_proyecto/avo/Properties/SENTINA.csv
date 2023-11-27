@@ -1,5 +1,0 @@
-device_name;session_uid;url_publisher;host;port(i)
-SENTINA_1;SENTINA_1;http:\/\/10.133.50.38:3001\/api\/v2\/generic\/;10.25.3.90;502
-SENTINA_2;SENTINA_2;http:\/\/10.133.50.38:3001\/api\/v2\/generic\/;10.25.8.90;502
-SENTINA_3;SENTINA_3;http:\/\/10.133.50.38:3001\/api\/v2\/generic\/;10.25.12.90;502
-SENTINA_4;SENTINA_4;http:\/\/10.133.50.38:3001\/api\/v2\/generic\/;10.25.17.90;502

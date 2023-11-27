@@ -1,3 +1,0 @@
-device_name;session_uid;eru_name;url_publisher;read_permission;write_permission;offset_remote_control(i);offset_pres_fan_1(i);offset_alarm_pres_fan_1(i);offset_alarm_emergency_button(i);offset_pres_fan_2(i);offset_alarm_pres_fan_2(i);offset_commstatus(i);offset_fire_press_cmd(i)
-MM-CUAD-PRES-GAL-CA;MM-CUAD-PRES-GAL-CA;MM-ERU;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/;monitor;;15604;15605;15606;15609;15611;15612;904;18023
-MM-CUAD-PRES-GAL-MA;MM-CUAD-PRES-GAL-MA;MM-ERU;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/;monitor;;15608;15609;15610;15609;15613;15614;908;18024

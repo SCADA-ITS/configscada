@@ -1,9 +1,0 @@
-device_name;session_uid;PLC_name;host;PLC_port(i);url_publisher;read_permission;write_permission;offset_alarm_door_open(i);bit_alarm_door_open(i)
-CT-1;CT-1;CT01_PLC_F;10.133.50.37;28006;http://10.133.50.38:3000/api/v2/generic/;monitor;;8;4
-CT-2;CT-2;CT02_PLC_F;10.133.50.37;28013;http://10.133.50.38:3000/api/v2/generic/;monitor;;8;0
-CT-3;CT-3;CT03_PLC_F;10.133.50.37;28020;http://10.133.50.38:3000/api/v2/generic/;monitor;;8;5
-CT-4;CT-4;CT04_PLC_F;10.133.50.37;28027;http://10.133.50.38:3000/api/v2/generic/;monitor;;8;0
-CT-5;CT-5;CT05_PLC_F;10.133.50.37;28034;http://10.133.50.38:3000/api/v2/generic/;monitor;;8;2
-CT-6;CT-6;CT06_PLC_F;10.133.50.37;28041;http://10.133.50.38:3000/api/v2/generic/;monitor;;8;1
-CT-7;CT-7;CT07_PLC_F;10.133.50.37;28048;http://10.133.50.38:3000/api/v2/generic/;monitor;;8;1
-CT-8;CT-8;CT08_PLC_F;10.133.50.37;28055;http://10.133.50.38:3000/api/v2/generic/;monitor;;8;2

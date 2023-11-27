@@ -1,8 +1,0 @@
-device_name;session_uid;PLC_name;host;port(i);url_publisher;read_permission;write_permission;offset_pump_on(i);offset_alarm_pump_no_operation(i);offset_alarm_no_auto_state(i)
-RV-BDI-1;RV-BDI-1;RV-PLCL-1;192.168.11.10;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;12;14;10
-MM-BDI-1;MM-BDI-1;MM-PLC-CGBT;192.168.12.54;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;146;144;145
-CH-BDI-1;CH-BDI-1;CH-PLC-1;192.169.9.10;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;43;41;42
-CAS-BDI-1;CAS-BDI-1;CAS-PLCL-BC;192.168.5.130;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;71;72;73
-COR-BDI-1;COR-BDI-1;COR-PLCL-BC;192.168.15.10;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;66;67;68
-NG-BDI-1;NG-BDI-1;NG-PLC-CT-ITS-BM;192.168.17.48;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;66;68;64
-LQ-BDI-1;LQ-BDI-1;LQ-PLCL-1;192.168.14.10;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;57;54;55

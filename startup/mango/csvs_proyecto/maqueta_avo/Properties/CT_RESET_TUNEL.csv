@@ -1,9 +1,0 @@
-device_name;host;plc_name;port(i)
-ct01_reset_tunel;10.25.21.101;CT01_PLC1;502
-ct02_reset_tunel;10.25.1.101;CT02_PLC1;502
-ct03_reset_tunel;10.25.3.101;CT03_PLC1;502
-ct04_reset_tunel;10.25.5.101;CT04_PLC1;502
-ct05_reset_tunel;10.25.8.101;CT05_PLC1;502
-ct06_reset_tunel;10.25.12.101;CT06_PLC1;502
-ct07_reset_tunel;10.25.15.101;CT07_PLC1;502
-ct08_reset_tunel;10.25.17.101;CT08_PLC1;502

@@ -1,2 +1,0 @@
-device_name;session_uid;ct_upd;upd_state;plc_name;host;port(i);url_publisher;offset_state_prot(i);bit_state_prot(i);offset_cmd(i);offset_state(i)
-CT05-EMR-002;CT05-EMR-002;PLC_CT05;upd_fail_ct05_2;CT05_PLC_G;10.133.50.37;28035;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;22750;0;22753;22748

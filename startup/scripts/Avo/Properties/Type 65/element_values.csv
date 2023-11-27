@@ -1,9 +1,0 @@
-item;alias;description;sessionuid;road;stretchs;secc;pk;sentido;dm
-1;CT01-UPS-001;CT01-UPS-001;CT01-UPS-001;AVO;Local_Técnico_1;Local_Técnico_1;36+920;;620
-2;CT02-UPS-001;CT02-UPS-001;CT02-UPS-001;AVO;Local_Técnico_2;Local_Técnico_2;38+048;;1748
-3;CT03-UPS-001;CT03-UPS-001;CT03-UPS-001;AVO;Local_Técnico_3;Local_Técnico_3;39+015;;2715
-4;CT01-UPS-001;CT01-UPS-001;CT01-UPS-001;AVO;Local_Técnico_4;Local_Técnico_4;40+370;;4070
-5;CT05-UPS-001;CT05-UPS-001;CT05-UPS-001;AVO;Local_Técnico_5;Local_Técnico_5;41+415;;5115
-6;CT06-UPS-001;CT06-UPS-001;CT06-UPS-001;AVO;Local_Técnico_6;Local_Técnico_6;42+580;;6280
-7;CT07-UPS-001;CT07-UPS-001;CT07-UPS-001;AVO;Local_Técnico_7;Local_Técnico_7;43+520;;7220
-8;CT08-UPS-001;CT08-UPS-001;CT08-UPS-001;AVO;Local_Técnico_8;Local_Técnico_8;44+520;;8220

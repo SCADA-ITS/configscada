@@ -1,8 +1,0 @@
-device_name;session_uid;PLC_name;host;port(i);url_publisher;read_permission;write_permission;offset_tank_capacity(i)
-RV-DEP-DIESEL-PCI;RV-DEP-DIESEL-PCI;RV-CTITS;192.168.11.10;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;5
-MM-DEP-DIESEL-PCI;MM-DEP-DIESEL-PCI;MM-CTGBT;192.168.12.54;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;1
-LQ-DEP-DIESEL-PCI;LQ-DEP-DIESEL-PCI;LQ-PLCL-1;192.168.14.10;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;1
-CAS-DEP-DIESEL-PCI;CAS-DEP-DIESEL-PCI;CAS-PLCL-BC;192.168.5.130;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;3
-CH-DEP-DIESEL-PCI;CH-DEP-DIESEL-PCI;CH-PLCL-1;192.168.9.10;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;1
-COR-DEP-DIESEL-PCI;COR-DEP-DIESEL-PCI;COR-PLCL-BC;192.168.15.10;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;5
-NG-DEP-DIESEL-PCI;NG-DEP-DIESEL-PCI;NG-PLC-CT-ITS-BM;192.168.17.48;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;2

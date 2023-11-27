@@ -1,5 +1,0 @@
-device_name;equip_name;session_uid;PLC_name;PLC_ip;PLC_port(i);url_publisher;read_permission;write_permission;offset_co_concentration(i);offset_co_out_of_range(i);offset_co_broken_thread(i);offset_equipment_fail(i);offset_temperature_out_of_range(i);offset_temperature_broken_thread(i)
-SCNO-SAM-CO-001;SCNO-SAM-001;SCNO-SAM-CO-001;CT02_PLC_D;10.133.50.37;28011;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;;15007;15001;15001;15001;15001;15001
-SCNO-SAM-CO-002;SCNO-SAM-002;SCNO-SAM-CO-002;CT02_PLC_D;10.133.50.37;28011;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;;15047;15041;15041;15041;15041;15041
-S1TS-SAM-CO-001;S1TS-SAM-001;S1TS-SAM-CO-001;CT02_PLC_D;10.133.50.37;28011;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;;15087;15081;15081;15081;15081;15081
-S1TS-SAM-CO-002;S1TS-SAM-002;S1TS-SAM-CO-002;CT02_PLC_D;10.133.50.37;28011;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;;15127;15121;15121;15121;15121;15121

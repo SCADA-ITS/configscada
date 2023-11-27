@@ -1,6 +1,0 @@
-device_name;session_uid;url_publisher;PLC_name;PLC_ip;PLC_port(i);read_permission;write_permission;bit_door_open(i)
-ICEO-AIM-001_AE;ICEO-AIM-001_AE;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;CT01_PLC_A;10.133.50.37;28001;monitor;;0
-ICEP-AIM-001_AE;ICEP-AIM-001_AE;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;CT01_PLC_A;10.133.50.37;28001;monitor;;1
-IVEN-AIM-001_AE;IVEN-AIM-001_AE;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;CT01_PLC_A;10.133.50.37;28001;monitor;;2
-S1TS-AIM-001_AE;S1TS-AIM-001_AE;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;CT01_PLC_A;10.133.50.37;28001;monitor;;3
-IVEN-AIM-002_AE;IVEN-AIM-002_AE;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;CT01_PLC_A;10.133.50.37;28001;monitor;;5

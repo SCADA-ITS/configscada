@@ -1,3 +1,0 @@
-device_name;session_uid;PLC_name;host;port(i);url_publisher;read_permission;write_permission;offset_pump_on(i);offset_alarm_pump_no_operation(i);offset_alarm_no_auto_state(i)
-RV-BDI-1;RV-BDI-1;RV-CTITS;192.168.88.189;1502;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/;monitor;;12;14;10
-MM-BDI-1;MM-BDI-1;MM-CTGBT;192.168.88.189;1503;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/;monitor;;148;150;146

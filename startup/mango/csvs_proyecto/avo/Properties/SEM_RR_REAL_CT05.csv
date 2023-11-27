@@ -1,3 +1,0 @@
-device_name;session_uid;url_publisher;PLC_name;PLC_ip;PLC_port(i);read_permission;write_permission;offset_light_status(i);offset_sem_power_off_fail(i);offset_sem_start_fail(i)
-IVIP-SEM-RR-BAR-001;IVIP-SEM-RR-BAR-001;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;CT05_PLC_D;10.133.50.37;28032;monitor;;14426;14427;14427
-INKP-SEM-RR-BAR-001;INKP-SEM-RR-BAR-001;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;CT05_PLC_D;10.133.50.37;28032;monitor;;14400;14401;14401
