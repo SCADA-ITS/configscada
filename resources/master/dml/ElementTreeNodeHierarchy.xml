@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="ElementTreeNodeHierarchy">
+	<SELECT>SELECT element_tree_node_hierarchy_id as "id",
+				   element_tree_id as "elementTreeId",
+				   node_parent_id as "nodeParentId",
+				   node_child_id as "nodeChildId",
+				   enabled as "enabled",
+				   visible as "visible"
+			  FROM conf.element_tree_node_hierarchies
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>
+	</INSERT>
+	<UPDATE> 
+	</UPDATE>
+	<DELETE>
+	</DELETE>
+</DML>

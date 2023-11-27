@@ -1,0 +1,47 @@
+Direccion;Nombre;Equipo;low_limit_AI;upper_limit_AI;low_limit_sensor;upper_limit_sensor;unidades;fin
+ED0;Puerta Extintor IZQ. abierta;RV-SOS-1MA;"
+";"
+";;;;
+ED1;Puerta SOS abierta;RV-SOS-1MA;;;;;;
+ED2;Puerta Extintor DER. abierta;RV-SOS-1MA;;;;;;
+ED3;RESERVA;RESERVA;;;;;;
+ED4;Alarma FA Sensores;RV-SOS-1MA;;;;;;
+ED5;Alarma FA Placa;RV-SOS-1MA;;;;;;
+ED6;RESERVA;RESERVA;;;;;;
+ED7;RESERVA;RESERVA;;;;;;
+ED8;Temperatura Devanados Motor Ventilador;RV-VENT-VF1-MA;;;;;;
+ED9;Temperatura Devanados Motor Ventilador;RV-VENT-VF2-MA;;;;;;
+ED10;Temperatura Devanados Motor Ventilador;RV-VENT-VF3-MA;;;;;;
+ED11;Temperatura Devanados Motor Ventilador;RV-VENT-VF4-MA;;;;;;
+ED12;Temperatura Devanados Motor Ventilador;RV-VENT-VF5-MA;;;;;;
+ED13;Temperatura Devanados Motor Ventilador;RV-VENT-VF6-MA;;;;;;
+ED14;RESERVA;RESERVA;;;;;;
+ED15;RESERVA;RESERVA;;;;;;
+AI0;Nivel de CO;RV-CO-1MA;0;32760;0;300;ppm;
+AI1;Nivel de NO2;RV-NO-1MA;0;32760;0;20;ppm;
+AI2;Nivel de opacidad;RV-OPC-1MA;0;32760;0;15;km-1;
+AI3;RESERVA;RESERVA;0;32760;0;0;reserva;
+AI4;Nivel de Vibración Ventilador;RV-VENT-VF1-MA;0;32760;0;25;mm/s;
+AI5;Nivel de Vibración Ventilador;RV-VENT-VF2-MA;0;32760;0;25;mm/s;
+AI6;Nivel de Vibración Ventilador;RV-VENT-VF3-MA;0;32760;0;25;mm/s;
+AI7;Nivel de Vibración Ventilador;RV-VENT-VF4-MA;0;32760;0;25;mm/s;
+AI8;Nivel de Vibración Ventilador;RV-VENT-VF5-MA;0;32760;0;25;mm/s;
+AI9;Nivel de Vibración Ventilador;RV-VENT-VF6-MA;0;32760;0;25;mm/s;
+AI10;Velocidad del viento;RV-ANI-1MA;0;32760;-20;20;m/s;
+AI11;Nivel de luminosidad;RV-LUX-2MA;0;32760;1;5000;lux;
+AI12;Nivel de luminosidad;RV-LUX-3MA;0;32760;1;5000;lux;
+AI13;RESERVA;RESERVA;0;32760;0;0;reserva;
+AI14;RESERVA;RESERVA;0;32760;0;0;reserva;
+AI15;RESERVA;RESERVA;0;32760;0;0;reserva;
+AI16;RESERVA;RESERVA;0;32760;0;0;reserva;
+AI17;RESERVA;RESERVA;0;32760;0;0;reserva;
+AI18;RESERVA;RESERVA;0;32760;0;0;reserva;
+AI19;RESERVA;RESERVA;0;32760;0;0;reserva;
+AI20;Temperatura Rodamientos Motor Delantero Ventilador;RV-VENT-VF1-MA;0;32760;0;200;ºC;
+AI21;Temperatura Rodamientos Motor Trasero Ventilador;RV-VENT-VF1-MA;0;32760;0;200;ºC;
+AI22;Temperatura Rodamientos Motor Delantero Ventilador;RV-VENT-VF2-MA;0;32760;0;200;ºC;
+AI23;Temperatura Rodamientos Motor Trasero Ventilador;RV-VENT-VF2-MA;0;32760;0;200;ºC;
+AI24;Temperatura Rodamientos Motor Delantero Ventilador;RV-VENT-VF3-MA;0;32760;0;200;ºC;
+AI25;Temperatura Rodamientos Motor Trasero Ventilador;RV-VENT-VF3-MA;0;32760;0;200;ºC;
+AI26;Temperatura Rodamientos Motor Delantero Ventilador;RV-VENT-VF4-MA;0;32760;0;200;ºC;
+AI27;Temperatura Rodamientos Motor Trasero Ventilador;RV-VENT-VF4-MA;0;32760;0;200;ºC;

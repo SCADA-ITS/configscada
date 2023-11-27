@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<p:historical_element_parser_v1
+	xmlns:p="historical_element_parser_v1"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="historical_element_parser_v1 ../../../../../adapter-lib/src/main/resources/schemas/manager/historical_element_parser_v1.xsd"
+	element_type_id="75">
+	<p:target_table>hist.ge</p:target_table>
+	<p:table_space>tbl_hist</p:table_space>
+	<p:field_element_id>f_element_id</p:field_element_id>
+	<p:field_timestamp>timestamp_at</p:field_timestamp>
+	<p:cron_expression>0 * * ? * * *</p:cron_expression>
+	<p:fields>
+		<p:field name="grp_corriente_fase_1">
+			<p:element_type_param>
+				<p:element_type_param_id>1</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+		<p:field name="grp_corriente_fase_2">
+			<p:element_type_param>
+				<p:element_type_param_id>2</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+		<p:field name="grp_corriente_fase_3">
+			<p:element_type_param>
+				<p:element_type_param_id>3</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+		<p:field name="grp_frecuencia_salida">
+			<p:element_type_param>
+				<p:element_type_param_id>4</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+		<p:field name="grp_rpm_generador">
+			<p:element_type_param>
+				<p:element_type_param_id>6</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+		<p:field name="grp_vol_gen_L1_N">
+			<p:element_type_param>
+				<p:element_type_param_id>12</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+		<p:field name="grp_vol_gen_L2_N">
+			<p:element_type_param>
+				<p:element_type_param_id>13</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+		<p:field name="grp_vol_gen_L3_N">
+			<p:element_type_param>
+				<p:element_type_param_id>14</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+		<p:field name="grp_consumo_combustible_motor">
+			<p:element_type_param>
+				<p:element_type_param_id>18</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+		<p:field name="grp_temp_refrigerante">
+			<p:element_type_param>
+				<p:element_type_param_id>19</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+		<p:field name="grp_presion_aceite">
+			<p:element_type_param>
+				<p:element_type_param_id>20</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+		<p:field name="grp_carga_ge">
+			<p:element_type_param>
+				<p:element_type_param_id>21</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+		<p:field name="grp_temp_aceite">
+			<p:element_type_param>
+				<p:element_type_param_id>22</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+		<p:field name="grp_kw_generador">
+			<p:element_type_param>
+				<p:element_type_param_id>23</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+		<p:field name="grp_kva_generador">
+			<p:element_type_param>
+				<p:element_type_param_id>24</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+		<p:field name="grp_power_factor">
+			<p:element_type_param>
+				<p:element_type_param_id>25</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+		<p:field name="grp_vol_gen_L1_L2">
+			<p:element_type_param>
+				<p:element_type_param_id>26</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+		<p:field name="grp_vol_gen_L2_L3">
+			<p:element_type_param>
+				<p:element_type_param_id>27</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+		<p:field name="grp_vol_gen_L3_L1">
+			<p:element_type_param>
+				<p:element_type_param_id>28</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+		<p:field name="grp_neutral_current">
+			<p:element_type_param>
+				<p:element_type_param_id>29</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+		<p:field name="grp_frecuencia_bus">
+			<p:element_type_param>
+				<p:element_type_param_id>30</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+		<p:field name="grp_conm_open_trans">
+			<p:element_type_param>
+				<p:element_type_param_id>31</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+		<p:field name="grp_conm_open_ge">
+			<p:element_type_param>
+				<p:element_type_param_id>32</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+		<p:field name="grp_start">
+			<p:element_type_param>
+				<p:element_type_param_id>33</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+		<p:field name="grp_start_ready">
+			<p:element_type_param>
+				<p:element_type_param_id>34</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+		<p:field name="grp_conm_open_trans_2">
+			<p:element_type_param>
+				<p:element_type_param_id>35</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+	</p:fields>
+</p:historical_element_parser_v1>

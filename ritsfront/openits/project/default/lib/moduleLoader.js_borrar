@@ -1,0 +1,125 @@
+import { synopticData } from "../data/synoptics.js";
+
+export default class ModuleLoader {
+
+	constructor(view, module, args) {
+
+		this.view = view;
+		this.module = module;
+		this.args = args;
+		this.moduleView = undefined;
+
+		// for using the object inside callbacks
+		self = this;
+
+		try {
+
+			const lazy = async _ => {
+
+				const mod = await import(self.module.jsFile);
+
+				if (view.config.view === "tabview") {
+
+					self.loadInTab(self.module, mod);
+				}
+				else {
+					self.instance = new mod.default(self.module, self.args);
+
+					webix.ui(self.instance.getView(), view);
+
+					self.instance.loadData();
+				}
+			}
+
+			lazy();
+
+		} catch (error) {
+
+			console.log(error);
+		}
+	}
+
+	loadInTab(module, mod) {
+
+		let viewModule;
+		let allowMultipleInstances, image, icon, color, label, externalizable;
+
+		if (module.windowValues) {
+
+			allowMultipleInstances = self.module.windowValues.find(e => e.windowParam.id === windowParams.allowMultipleInstances).value;
+			image = self.module.windowValues.find(e => e.windowParam.id === windowParams.image).value;
+			icon = self.module.windowValues.find(e => e.windowParam.id === windowParams.icon).value;
+			color = self.module.windowValues.find(e => e.windowParam.id === windowParams.color).value;
+			label = self.module.windowValues.find(e => e.windowParam.id === windowParams.label).value;
+			externalizable = self.module.windowValues.find(e => e.windowParam.id === windowParams.externalizable).value;
+
+		}
+
+		if (module.moduleType.id !== 4) {
+
+			viewModule = mod[module.jsMethodDraw];
+		}
+		else {
+
+			if (module.moduleValues) {
+
+				let synopticId = module.moduleValues.find(e => e.moduleParam.id === 4).value;
+				let item = synopticData.find(e => e.id === synopticId);
+				let syn = new mod.default(item);
+
+				viewModule = {
+					id: "syn-" + synopticId,
+					rows: [{
+						view: "template",
+						id: item.id,
+						url: function() {
+							syn.init();
+						}
+					}]
+				};
+			}
+		}
+
+		let tab_id = "tab_" + module.id + "_" + webix.uid();
+//		let toolbarView = {};
+//
+//		toolbarView = {
+//			view: "toolbar",
+//			height: 20,
+//			//css: "window-toolbar",
+//			margin: 0,
+//			padding: 0,
+//			cols: []
+//		};
+//
+//		toolbarView.cols.push({
+//			view: "label",
+//			label: `<div><img src='${icon}'/>${label}</div>`
+//		});
+
+		$$(MAIN_TAB_ID).addView({
+			id: tab_id,
+			//header: "<span class='webix_icon fa-film'></span>" + label,
+			header: `<div style='float: left; width: 250px;'><img src='${icon}'/><span class='tab-text'>${i18n.t(label)}</span><span style='float: right; padding-top: 2px'><a href='#'><img src='../img/externalize_button.png'></a></span></div>`,
+			body: {
+				autoheight: true,
+				id: tab_id.replace("tab", "tab_body"),
+				autowidth: true,
+				cols: [
+					{
+						rows: [
+							{ view: "template", role: "placeholder", borderless: 1, "height": 10 },
+							viewModule
+						]
+					}
+				]
+			}
+		});
+
+		$$(MAIN_TAB_ID).getTabbar().setValue(tab_id.replace("tab", "tab_body"));
+
+		//self.drawModuleView(mod.map);
+
+		self.moduleView = mod.map;
+	}
+}

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<p:json_generic_mango_v1 name="" version=""
+    xmlns:p="json_generic_mango_v1"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="json_generic_mango_v1 ../../../adapter-lib/src/main/resources/schemas/mango/json_generic_mango_v1.xsd " element_type_id="17">
+    <p:session_uid element_type_param_id="1003" param_type_id="1"></p:session_uid>
+    <p:state field="status">
+        <p:state_value source="0" input="2" disconnected="true"></p:state_value>
+        <p:state_value source="1" input="1"></p:state_value>
+    </p:state>
+    <p:alarms>
+        <p:alarm source="controller_cabinet_door_open" active_value="true" alarm_config_id="292"></p:alarm>
+        <p:alarm source="panel_excess_door_open" active_value="true" alarm_config_id="293"></p:alarm>
+        <p:alarm source="panel_message_activation_excess_gauge_signal" active_value="true" alarm_config_id="294"></p:alarm>
+        <p:alarm source="power_failure" active_value="true" alarm_config_id="295"></p:alarm>
+        <p:alarm source="gauge_control_alarm" active_value="true" alarm_config_id="296"></p:alarm>
+        <p:alarm source="coil_detector_failure" active_value="true" alarm_config_id="297"></p:alarm>
+        <p:alarm source="panel_fault_signal_excess_gauge" active_value="true" alarm_config_id="298"></p:alarm>
+        <p:alarm source="galibo_photocell_1_failure" active_value="true" alarm_config_id="299"></p:alarm>
+        <p:alarm source="galibo_photocell_2_failure" active_value="true" alarm_config_id="300"></p:alarm>
+        <p:alarm source="panel_communication_failure" active_value="true" alarm_config_id="301"></p:alarm>
+    </p:alarms>
+</p:json_generic_mango_v1>

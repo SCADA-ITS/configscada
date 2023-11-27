@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<p:historical_element_parser_v1
+	xmlns:p="historical_element_parser_v1"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="historical_element_parser_v1 ../../../../../adapter-lib/src/main/resources/schemas/manager/historical_element_parser_v1.xsd"
+	element_type_id="70">
+	<p:target_table>hist.ana_red</p:target_table>
+	<p:table_space>tbl_hist</p:table_space>
+	<p:field_element_id>f_element_id</p:field_element_id>
+	<p:field_timestamp>timestamp_at</p:field_timestamp>
+	<p:cron_expression>0 * * ? * * *</p:cron_expression>
+	<p:fields>
+      <p:field name="corriente_fase_a">
+      <p:element_type_param>
+        <p:element_type_param_id>1</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:element_type_param>
+    </p:field>
+      <p:field name="corriente_fase_b">
+      <p:element_type_param>
+        <p:element_type_param_id>2</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:element_type_param>
+    </p:field>
+      <p:field name="corriente_fase_c">
+      <p:element_type_param>
+        <p:element_type_param_id>3</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:element_type_param>
+    </p:field>
+      <p:field name="corriente_fase_neutro">
+      <p:element_type_param>
+        <p:element_type_param_id>4</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:element_type_param>
+    </p:field>
+      <p:field name="corriente_fase_trifasica">
+      <p:element_type_param>
+        <p:element_type_param_id>5</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:element_type_param>
+    </p:field>
+      <p:field name="tension_fase_a">
+      <p:element_type_param>
+        <p:element_type_param_id>6</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:element_type_param>
+    </p:field>
+      <p:field name="tension_fase_c">
+      <p:element_type_param>
+        <p:element_type_param_id>7</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:element_type_param>
+    </p:field>
+      <p:field name="tension_fase_b">
+      <p:element_type_param>
+        <p:element_type_param_id>8</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:element_type_param>
+    </p:field>
+      <p:field name="tension_fase_trifasica">
+      <p:element_type_param>
+        <p:element_type_param_id>9</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:element_type_param>
+    </p:field>
+      <p:field name="tension_fase_a_b">
+      <p:element_type_param>
+        <p:element_type_param_id>10</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:element_type_param>
+    </p:field>
+      <p:field name="tension_fase_b_c">
+      <p:element_type_param>
+        <p:element_type_param_id>11</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:element_type_param>
+    </p:field>
+      <p:field name="tension_fase_c_a">
+      <p:element_type_param>
+        <p:element_type_param_id>12</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:element_type_param>
+    </p:field>
+      <p:field name="tension_promedio_fase_neutro">
+      <p:element_type_param>
+        <p:element_type_param_id>13</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:element_type_param>
+    </p:field>
+      <p:field name="potencia_activa_fase_a">
+      <p:element_type_param>
+        <p:element_type_param_id>14</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:element_type_param>
+    </p:field>
+      <p:field name="potencia_activa_fase_b">
+      <p:element_type_param>
+        <p:element_type_param_id>15</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:element_type_param>
+    </p:field>
+      <p:field name="potencia_activa_fase_c">
+      <p:element_type_param>
+        <p:element_type_param_id>16</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:element_type_param>
+    </p:field>
+      <p:field name="potencia_activa_total">
+      <p:element_type_param>
+        <p:element_type_param_id>17</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:element_type_param>
+    </p:field>
+      <p:field name="potencia_reactiva_fase_a">
+      <p:element_type_param>
+        <p:element_type_param_id>18</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:element_type_param>
+    </p:field>
+      <p:field name="potencia_reactiva_fase_b">
+      <p:element_type_param>
+        <p:element_type_param_id>19</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:element_type_param>
+    </p:field>
+      <p:field name="potencia_reactiva_fase_c">
+      <p:element_type_param>
+        <p:element_type_param_id>20</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:element_type_param>
+    </p:field>
+      <p:field name="potencia_reactiva_total">
+      <p:element_type_param>
+        <p:element_type_param_id>21</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:element_type_param>
+    </p:field>
+      <p:field name="potencia_aparente_fase_a">
+      <p:element_type_param>
+        <p:element_type_param_id>22</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:element_type_param>
+    </p:field>
+      <p:field name="potencia_aparente_fase_b">
+      <p:element_type_param>
+        <p:element_type_param_id>23</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:element_type_param>
+    </p:field>
+      <p:field name="potencia_aparente_fase_c">
+      <p:element_type_param>
+        <p:element_type_param_id>24</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:element_type_param>
+    </p:field>
+      <p:field name="potencia_aparente_total">
+      <p:element_type_param>
+        <p:element_type_param_id>25</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:element_type_param>
+    </p:field>
+      <p:field name="factor_de_potencia_fase_a">
+      <p:element_type_param>
+        <p:element_type_param_id>26</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:element_type_param>
+    </p:field>
+      <p:field name="factor_de_potencia_fase_b">
+      <p:element_type_param>
+        <p:element_type_param_id>27</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:element_type_param>
+    </p:field>
+      <p:field name="factor_de_potencia_fase_c">
+      <p:element_type_param>
+        <p:element_type_param_id>28</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:element_type_param>
+    </p:field>
+      <p:field name="factor_de_potencia_trifasico">
+      <p:element_type_param>
+        <p:element_type_param_id>29</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:element_type_param>
+    </p:field>
+      <p:field name="frecuencia">
+      <p:element_type_param>
+        <p:element_type_param_id>30</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:element_type_param>
+    </p:field>
+      <p:field name="energia_activa_entregada">
+      <p:element_type_param>
+        <p:element_type_param_id>32</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:element_type_param>
+    </p:field>
+      <p:field name="energia_activa_recibida">
+      <p:element_type_param>
+        <p:element_type_param_id>33</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:element_type_param>
+    </p:field>
+      <p:field name="energia_activa_entregada_mas_recibida">
+      <p:element_type_param>
+        <p:element_type_param_id>34</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:element_type_param>
+    </p:field>
+      <p:field name="energia_activa_entregada_menos_recibida">
+      <p:element_type_param>
+        <p:element_type_param_id>35</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:element_type_param>
+    </p:field>
+      <p:field name="energia_reactiva_entregada">
+      <p:element_type_param>
+        <p:element_type_param_id>36</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:element_type_param>
+    </p:field>
+      <p:field name="energia_reactiva_recibida">
+      <p:element_type_param>
+        <p:element_type_param_id>37</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:element_type_param>
+    </p:field>
+      <p:field name="energia_reactiva_entregada_mas_recibida">
+      <p:element_type_param>
+        <p:element_type_param_id>38</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:element_type_param>
+    </p:field>
+      <p:field name="energia_reactiva_entregada_menos_recibida">
+      <p:element_type_param>
+        <p:element_type_param_id>39</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:element_type_param>
+    </p:field>
+      <p:field name="energia_aparente_entregada">
+      <p:element_type_param>
+        <p:element_type_param_id>40</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:element_type_param>
+    </p:field>
+      <p:field name="energia_aparente_recibida">
+      <p:element_type_param>
+        <p:element_type_param_id>41</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:element_type_param>
+    </p:field>
+      <p:field name="energia_aparente_entregada_mas_recibida">
+      <p:element_type_param>
+        <p:element_type_param_id>42</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:element_type_param>
+    </p:field>
+      <p:field name="energia_aparente_entregada_menos_recibida">
+      <p:element_type_param>
+        <p:element_type_param_id>43</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:element_type_param>
+    </p:field>
+      <p:field name="ultima_demanda">
+      <p:element_type_param>
+        <p:element_type_param_id>44</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:element_type_param>
+    </p:field>
+      <p:field name="demanda_actual">
+      <p:element_type_param>
+        <p:element_type_param_id>45</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:element_type_param>
+    </p:field>
+      <p:field name="demanda_prevista">
+      <p:element_type_param>
+        <p:element_type_param_id>46</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:element_type_param>
+    </p:field>
+      <p:field name="demanda_maxima">
+      <p:element_type_param>
+        <p:element_type_param_id>47</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:element_type_param>
+    </p:field>
+  </p:fields>
+</p:historical_element_parser_v1>

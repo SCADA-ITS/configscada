@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<p:json_generic_mango_v1 name="" version=""
+  xmlns:p="json_generic_mango_v1"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="json_generic_mango_v1 ../../../adapter-lib/src/main/resources/schemas/mango/json_generic_mango_v1.xsd " 
+    element_type_id="9" array_element_id="2401,2402,2403,2404,2405,2406,2407,2408,2409,2410,2411,2412,2413,2414,2415,2416,2417,2418,2419,2420,2421,2422,2423,2424,2425,2426,2427,2428,2429,2430,2431,2432,2433,2434,2435" >
+  <p:session_uid element_type_param_id="1003" param_type_id="1"></p:session_uid>
+  <p:state field="status">
+    <p:state_value source="0" input="2" disconnected="true"></p:state_value>
+    <p:state_value source="1" input="1"></p:state_value>
+  </p:state>
+  <p:fields>
+    <p:field>
+      <p:source>fan_state</p:source>
+      <p:input>
+        <p:element_type_param_id>1</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:input>
+    </p:field>
+    <p:field>
+      <p:source>fan_vibration</p:source>
+      <p:input>
+        <p:element_type_param_id>2</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:input>
+    </p:field>
+    <p:field>
+      <p:source>front_bearing_temperature</p:source>
+      <p:input>
+        <p:element_type_param_id>3</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:input>
+    </p:field>
+    <p:field>
+      <p:source>back_bearing_temperature</p:source>
+      <p:input>
+        <p:element_type_param_id>4</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:input>
+    </p:field>
+    <p:field>
+      <p:source>fan_available</p:source>
+      <p:input>
+        <p:element_type_param_id>5</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:input>
+    </p:field>
+    <p:field>
+      <p:source>flow</p:source>
+      <p:input>
+        <p:element_type_param_id>8</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:input>
+    </p:field>
+    <p:field>
+      <p:source>parcial_operating_hours</p:source>
+      <p:input>
+        <p:element_type_param_id>14</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:input>
+    </p:field>
+    <p:field>
+      <p:source>total_operating_hours</p:source>
+      <p:input>
+        <p:element_type_param_id>15</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:input>
+    </p:field>
+    <p:field>
+      <p:source>power</p:source>
+      <p:input>
+        <p:element_type_param_id>16</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:input>
+    </p:field>
+    <p:field>
+      <p:source>engine_reference</p:source>
+      <p:input>
+        <p:element_type_param_id>17</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:input>
+    </p:field>
+    <p:field>
+      <p:source>engine_speed</p:source>
+      <p:input>
+        <p:element_type_param_id>18</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:input>
+    </p:field>
+    <p:field>
+      <p:source>engine_speed_rpm</p:source>
+      <p:input>
+        <p:element_type_param_id>19</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:input>
+    </p:field>
+    <p:field>
+      <p:source>axial_direct_order</p:source>
+      <p:input>
+        <p:element_type_param_id>20</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:input>
+    </p:field>
+    <p:field>
+      <p:source>axial_reverse_order</p:source>
+      <p:input>
+        <p:element_type_param_id>21</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:input>
+    </p:field>
+    <p:field>
+      <p:source>local_mode</p:source>
+      <p:input>
+        <p:element_type_param_id>22</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:input>
+    </p:field>
+    <p:field>
+      <p:source>remote_mode</p:source>
+      <p:input>
+        <p:element_type_param_id>23</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:input>
+    </p:field>
+    <p:field>
+      <p:source>emergency_mode</p:source>
+      <p:input>
+        <p:element_type_param_id>24</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:input>
+    </p:field>
+    <p:field>
+      <p:source>opened_damper</p:source>
+      <p:input>
+        <p:element_type_param_id>25</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:input>
+    </p:field>
+    <p:field>
+      <p:source>closed_damper</p:source>
+      <p:input>
+        <p:element_type_param_id>26</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:input>
+    </p:field>
+    <p:field>
+      <p:source>n_starts</p:source>
+      <p:input>
+        <p:element_type_param_id>27</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:input>
+    </p:field>
+  </p:fields>
+    <p:alarms>
+    <p:alarm source="present_trip" active_value="true" alarm_config_id="090010"></p:alarm>
+    <p:alarm source="emergency_button_pushed" active_value="true" alarm_config_id="090011"></p:alarm>
+    <p:alarm source="variator_fail" active_value="true" alarm_config_id="090012"></p:alarm>
+    <p:alarm source="running_timeout_exceeded" active_value="true" alarm_config_id="090013"></p:alarm>
+    <p:alarm source="pt100_front_bearing_temperature" active_value="true" alarm_config_id="090014"></p:alarm>
+    <p:alarm source="pt100_back_bearing_temperature" active_value="true" alarm_config_id="090015"></p:alarm>
+    <p:alarm source="ptc_windings_temperature" active_value="true" alarm_config_id="090016"></p:alarm>
+    <p:alarm source="engine_vibrations" active_value="true" alarm_config_id="090017"></p:alarm>
+    <p:alarm source="warning_engine_vibrations" active_value="true" alarm_config_id="090018"></p:alarm>
+    <p:alarm source="warning_engine_vibrations_signal_fail" active_value="true" alarm_config_id="090019"></p:alarm>
+    <p:alarm source="ptc_trip_windings_temperature_state" active_value="true" alarm_config_id="090020"></p:alarm>
+    <p:alarm source="relay_phases" active_value="true" alarm_config_id="090034"></p:alarm>
+    <p:alarm source="actuator_1_opening_time_exceeded" active_value="true" alarm_config_id="090022"></p:alarm>
+    <p:alarm source="actuator_1_closing_time_exceeded" active_value="true" alarm_config_id="090023"></p:alarm>
+    <p:alarm source="actuator_1_electric_protection" active_value="true" alarm_config_id="090024"></p:alarm>
+    <p:alarm source="actuator_2_opening_time_exceeded" active_value="true" alarm_config_id="090025"></p:alarm>
+    <p:alarm source="actuator_2_closing_time_exceeded" active_value="true" alarm_config_id="090026"></p:alarm>
+    <p:alarm source="actuator_2_electric_protection" active_value="true" alarm_config_id="090027"></p:alarm>
+    <p:alarm source="axialfan_warning_plc_state" active_value="true" alarm_config_id="090030"></p:alarm>
+    <p:alarm source="damper_present_trip" active_value="true" alarm_config_id="090031"></p:alarm>
+    <p:alarm source="general_warning_present" active_value="true" alarm_config_id="090033"></p:alarm>
+    <p:alarm source="warning_overvoltage" active_value="true" alarm_config_id="090036"></p:alarm>    
+    <p:alarm source="fan_available" active_value="false" alarm_config_id="270009"></p:alarm>                            
+  </p:alarms>
+</p:json_generic_mango_v1>

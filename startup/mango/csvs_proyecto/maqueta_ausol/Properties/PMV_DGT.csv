@@ -1,0 +1,5 @@
+device_name;session_uid;ip;port(i);read_permission;write_permission;url_publisher
+STMI-PMV-24MA;STMI-PMV-24MA;192.168.88.199;9735;monitor;;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/
+STMI-PMV-23CA;STMI-PMV-23CA;192.168.88.199;9735;monitor;;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/
+CAS-PMV-15CA;CAS-PMV-15CA;192.168.88.199;9735;monitor;;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/
+CAS-PMV-14MA;CAS-PMV-14MA;192.168.88.199;9735;monitor;;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/

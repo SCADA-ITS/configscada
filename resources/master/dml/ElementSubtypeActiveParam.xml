@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="ElementSubtypeActiveParam">
+	<SELECT>SELECT element_type_param_id as "id", 
+				   element_type_id as "elementTypeId",
+				   element_subtype_id as "elementSubtypeId",
+				   param_type_id as "paramTypeId",
+				   enabled as "enabled", 
+				   visible as "visible"
+			  FROM master.element_subtype_active_params
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>
+	</INSERT>
+	<UPDATE>
+	</UPDATE>
+	<DELETE>
+	</DELETE>
+</DML>

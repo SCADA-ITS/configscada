@@ -1,0 +1,9 @@
+device_name;source_name;host;measure_port(i);alarm_port(i);url_publisher;offset_wind_speed(i);offset_wind_speed_kmh(i);offset_wind_direction(i);offset_alarm_sensor(i)
+RV-VTA-ANE-1CA;VANE;192.168.88.73;502;503;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/;5274;5275;5276;3072
+MM-VTA-ANE-1CA;VANE;192.168.88.73;502;503;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/;5277;5278;5279;3073
+CH-VTA-ANE-1CA;VANE;192.168.88.73;502;503;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/;5280;5281;5282;3074
+LQ-VTA-ANE-1MA;VANE;192.168.88.73;502;503;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/;5283;5284;5285;3075
+COR-VTA-ANE-1CA;VANE;192.168.88.73;502;503;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/;5286;5287;5288;3076
+NG-VTA-ANE-1CA;VANE;192.168.88.73;502;503;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/;5289;5290;5291;3077
+STM2-VTA-ANE-1CA;VANE;192.168.88.73;502;503;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/;5292;5293;5294;3078
+CAS-VTA-ANE-1CA;VANE;192.168.88.73;502;503;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/;5295;5296;5297;3079

@@ -1,0 +1,19 @@
+name;device;channel;description;controller;xAddress;xStatusAddress;inverseLogic
+STMI-SOS-1CA;SOS_C1;M1DI3;Alarma FA Sensores FA-SENSORES SOS C1;WAGO;15500;800;false
+STMI-SOS-1MA;SOS_M1;M1DI3;Alarma FA Sensores FA-SENSORES SOS M1;WAGO;15501;801;false
+STMI-CONT-AA1-SC;CTGBT;M1DI3;Estado contactor circuito permanente TSC AA1;WAGO;15502;802;true
+STMI-CONT-AA2-SC;CTGBT;M1DI5;Estado contactor circuito permanente TSC AA2;WAGO;15503;803;true
+STMI-CONT-AA6-SM;CTGBT;M1DI7;Estado contactor circuito permanente TSM AA6;WAGO;15504;804;true
+STMI-CONT-AA7-SM;CTGBT;M1DI9;Estado contactor circuito permanente TSM AA7;WAGO;15505;805;true
+STMI-CONT-AE5-SC;CTGBT;M1DI11;Estado contactor circuito guiado TSM AE5;WAGO;15506;806;true
+STMI-CONT-AE10-SM;CTGBT;M1DI13;Estado contactor circuito guiado TSM AE10;WAGO;15507;807;true
+STMI-CONT-AE11-SM;CTGBT;M1DI15;Estado contactor circuito guiado TSM AE11;WAGO;15508;808;true
+STMI-CONT-AE12-SC;CTGBT;M2DI1;Estado contactor circuito guiado TSC AE12;WAGO;15509;809;true
+STMI-CONT-A11;CTGBT;M2DI3;Estado contactor circuito aproximacion existente A11;WAGO;15510;810;false
+STMI-CONT-A12;CTGBT;M2DI5;Estado contactor circuito aproximacion existente A12;WAGO;15511;811;false
+STMI-CONT-A13;CTGBT;M2DI7;Estado contactor circuito aproximacion existente A13;WAGO;15512;812;false
+STMI-CONT-A14;CTGBT;M2DI9;Estado contactor circuito aproximacion existente A14;WAGO;15513;813;false
+STMI-CONT-A3-SC;CTGBT;M3DI1;Estado contactor circuito refuerzo TSC  A3;WAGO;15514;814;false
+STMI-CONT-A4-SC;CTGBT;M3DI3;Estado contactor circuito refuerzo TSC  A4;WAGO;15515;815;false
+STMI-CONT-A8-SM;CTGBT;M3DI5;Estado contactor circuito refuerzo TSM  A8;WAGO;15516;816;false
+STMI-CONT-A9-SM;CTGBT;M3DI7;Estado contactor circuito refuerzo TSM  A9;WAGO;15517;817;false

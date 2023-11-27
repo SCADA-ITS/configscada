@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<p:json_generic_mango_v1 
+	name="" 
+	version="" 
+	xmlns:p="json_generic_mango_v1" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="json_generic_mango_v1 ../../../adapter-lib/src/main/resources/schemas/mango/json_generic_mango_v1.xsd "
+	element_type_id="24"
+  array_element_id="2,3,6,7,9,11,13,17,18,20,22,24,26,30,31,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62,64,66,68,70,73,74,77,78,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194,195,196,197,198,199,200,201,202,203,204,205,206,207,208,209,210,211,212,213,214,215,216,217,218,219,220,221,222,223,224,225,226,227,228,229,230,381,383,384">
+  <p:session_uid element_type_param_id="1003" param_type_id="1"></p:session_uid>
+  <p:state field="status">
+    <p:state_value source="0" input="2" disconnected="true"></p:state_value>
+    <p:state_value source="1" input="1"></p:state_value>
+  </p:state>
+  <p:alarms>
+    <p:alarm source="bie_door_open" active_value="true" alarm_config_id="2402"></p:alarm>
+  </p:alarms>
+</p:json_generic_mango_v1>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="LevelOfService">
+	<SELECT>SELECT level_of_service_id as "id",
+				   los as "los",
+				   alias as "alias",
+				   description as "description",
+				   label_alias as "labelAlias", 
+				   label_description as "labelDescription",
+				   colour as "colour",
+				   enabled as "enabled",
+				   visible as "visible"
+			  FROM static.level_of_services
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>
+	</INSERT>
+	<UPDATE> 
+	</UPDATE>
+	<DELETE>
+	</DELETE>
+</DML>

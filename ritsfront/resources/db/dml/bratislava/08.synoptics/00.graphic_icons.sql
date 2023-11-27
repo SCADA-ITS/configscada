@@ -1,0 +1,45 @@
+-- Para los identificadores de los graphic_icons seguiremos los siguientes criterios
+-- Orden del graphic_icon dentro del mismo tipo --> 2 cifras
+-- Subtipo del elemento --> 2 cifras (0 si no tiene subtipo)
+-- Tipo del elemento --> 4 cifras
+INSERT INTO ui.graphic_icons 
+(id, name, description, alarms, measures, js_draw_file, width, height, svg_file, js_custom_type_render, keep_aspect_ratio) VALUES
+(000001, 'EM', 'EM', false, false, 'component/graphicIcon/graphicIconDefault.js', 50, 50, 'img/graphic_icon/01_weather_station.svg', null,true),
+(000002, 'CAMERA', 'CAMERA', false, false, 'component/graphicIcon/graphicIconDefault.js', 30, 30, 'img/graphic_icon/02_camera.svg', null,true),
+(00000200, 'CAM_DAI', 'CAM_DAI', false, false, 'component/graphicIcon/graphicIconDefault.js', 35, 35, 'img/graphic_icon/02_camera_dai.svg', null,true),
+(000003, 'Detector', 'Detector', false, false, 'component/graphicIcon/graphicIconDefault.js', 50, 50, 'img/graphic_icon/03_detector.svg', null,true),
+(000004, 'Seccion', 'Seccion', false, true, 'component/graphicIcon/graphicIconCustom.js', 85, 85, 'img/graphic_icon/04_section.svg', 'component/graphicIcon/custom/section.js',true),
+(000025, 'EC', 'EC', false, false, 'component/graphicIcon/graphicIconDefault.js', 25, 25, 'img/graphic_icon/25_electrical_cabinet.svg', null,true),
+(000034, 'EC', 'EC', false, false, 'component/graphicIcon/graphicIconDefault.js', 40, 40, 'img/graphic_icon/25_electrical_cabinet.svg', null,true),
+(000039, 'HORIZONTAL_ACCESS', 'HORIZONTAL_ACCESS', false, false, 'component/graphicIcon/graphicIconDefault.js', 30, 30, 'img/graphic_icon/39_horizontal_access.svg', null,true),
+(000040, 'PRESENCE_DETECTION', 'PRESENCE_DETECTION', false, false, 'component/graphicIcon/graphicIconDefault.js', 30, 30, 'img/graphic_icon/40_presence_detection.svg', null,true),
+(000041, 'EC', 'EC', false, false, 'component/graphicIcon/graphicIconDefault.js', 30, 30, 'img/graphic_icon/25_electrical_cabinet.svg', null,true),
+(000042, 'EC', 'EC', false, false, 'component/graphicIcon/graphicIconDefault.js', 30, 30, 'img/graphic_icon/25_electrical_cabinet.svg', null,true),
+(000043, 'EC', 'EC', false, false, 'component/graphicIcon/graphicIconDefault.js', 30, 30, 'img/graphic_icon/25_electrical_cabinet.svg', null,true),
+(000044, 'EC', 'EC', false, false, 'component/graphicIcon/graphicIconDefault.js', 30, 30, 'img/graphic_icon/25_electrical_cabinet.svg', null,true),
+(000045, 'EC', 'EC', false, false, 'component/graphicIcon/graphicIconDefault.js', 22.5, 22.5, 'img/graphic_icon/25_electrical_cabinet.svg', null,true),
+(000046, 'EC', 'EC', false, false, 'component/graphicIcon/graphicIconDefault.js', 30, 30, 'img/graphic_icon/25_electrical_cabinet.svg', null,true),
+(000047, 'EC', 'EC', false, false, 'component/graphicIcon/graphicIconDefault.js', 30, 30, 'img/graphic_icon/25_electrical_cabinet.svg', null,true),
+(000051, 'ETD', 'ETD', false, false, 'component/graphicIcon/graphicIconDefault.js', 30, 30, 'img/graphic_icon/51_etd.svg', null,true),
+(000054, 'ETD', 'ETD', false, false, 'component/graphicIcon/graphicIconDefault.js', 40, 40, 'img/graphic_icon/54_atc.svg', null,true),
+(000068, 'ETD', 'ETD', false, false, 'component/graphicIcon/graphicIconDefault.js', 40, 40, 'img/graphic_icon/68_TFA_3D.svg', null,true),
+(010071, 'VMS', 'VMS', false, true, 'component/graphicIcon/graphicIconCustom.js', 175, 85, 'img/graphic_icon/71_vms_ac_bd_3lcs.svg', 'component/graphicIcon/custom/vms.js',true),
+(020071, 'VMS', 'VMS', false, true, 'component/graphicIcon/graphicIconCustom.js', 290, 85, 'img/graphic_icon/71_vms_ac_bd_5lcs.svg', 'component/graphicIcon/custom/vms.js',true),
+(030071, 'VMS', 'VMS', false, true, 'component/graphicIcon/graphicIconCustom.js', 115, 85, 'img/graphic_icon/71_vms_ac_bd_2lcs.svg', 'component/graphicIcon/custom/vms.js',true),
+(040071, 'VMS', 'VMS', false, true, 'component/graphicIcon/graphicIconCustom.js', 280, 85, 'img/graphic_icon/71_vms_192_64.svg', 'component/graphicIcon/custom/vms.js',true),
+(050071, 'VMS', 'VMS', false, true, 'component/graphicIcon/graphicIconCustom.js', 158, 86.5, 'img/graphic_icon/71_vms_128_64.svg', 'component/graphicIcon/custom/vms.js',true),
+(060071, 'VMS', 'VMS', false, true, 'component/graphicIcon/graphicIconCustom.js', 86.5, 86.5, 'img/graphic_icon/71_vms_clv_af.svg', 'component/graphicIcon/custom/vms.js',true),
+(070071, 'VMS', 'VMS', false, true, 'component/graphicIcon/graphicIconCustom.js', 100, 60, 'img/graphic_icon/71_vms_temp.svg', 'component/graphicIcon/custom/vms.js',true),
+(080071, 'VMS', 'VMS', false, true, 'component/graphicIcon/graphicIconCustom.js', 65, 65, 'img/graphic_icon/71_vms_snow.svg', 'component/graphicIcon/custom/vms.js',true),
+(130071, 'VMS', 'VMS', false, true, 'component/graphicIcon/graphicIconCustom.js', 60, 20, 'img/graphic_icon/71_vms_overweight.svg', 'component/graphicIcon/custom/vms.js',true),
+(140071, 'VMS', 'VMS', false, true, 'component/graphicIcon/graphicIconCustom.js', 65, 85, 'img/graphic_icon/71_vms_alpha.svg', 'component/graphicIcon/custom/vms.js',true),
+(150071, 'VMS', 'VMS', false, true, 'component/graphicIcon/graphicIconCustom.js', 65, 85, 'img/graphic_icon/71_vms_flecha.svg', 'component/graphicIcon/custom/vms.js',true),
+(170071, 'VMS', 'VMS', false, true, 'component/graphicIcon/graphicIconCustom.js', 65, 65, 'img/graphic_icon/71_vms_ab.svg', 'component/graphicIcon/custom/vms.js',true),
+(230071, 'VMS', 'VMS', false, true, 'component/graphicIcon/graphicIconCustom.js', 46.177891, 85, 'img/graphic_icon/71_vms_rotapanel.svg', 'component/graphicIcon/custom/vms.js',true),
+(240071, 'VMS', 'VMS', false, true, 'component/graphicIcon/graphicIconCustom.js', 120, 85, 'img/graphic_icon/71_vms_meteo_trafico.svg', 'component/graphicIcon/custom/vms.js',true),
+(000089, 'GATE', 'GATE', false, false, 'component/graphicIcon/graphicIconDefault.js', 30, 30, 'img/graphic_icon/89_gate.svg', null,true),
+(000097, 'RTMS', 'RTMS', false, false, 'component/graphicIcon/graphicIconDefault.js', 70, 70, 'img/graphic_icon/51_etd.svg', null,true),
+(00002500, 'EC', 'EC', false, false, 'component/graphicIcon/graphicIconDefault.js', 35, 35, 'img/graphic_icon/25_electrical_cabinet.svg', null,true),
+(00004200, 'EC', 'EC', false, false, 'component/graphicIcon/graphicIconDefault.js', 50, 50, 'img/graphic_icon/25_electrical_cabinet.svg', null,true),
+(13007100, 'VMS', 'VMS', false, true, 'component/graphicIcon/graphicIconCustom.js', 75, 30, 'img/graphic_icon/71_vms_overweight.svg', 'component/graphicIcon/custom/vms.js',true);
+

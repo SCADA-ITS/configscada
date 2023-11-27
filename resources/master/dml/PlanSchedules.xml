@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="PlanSchedules">
+	<SELECT>SELECT plan_schedule_id as "id", 
+				   plan_id as "planId",
+				   cron_expression as "cronExpression",
+				   alias as "alias", 
+				   description as "description", 
+				   enabled as "enabled", 
+				   visible as "visible"
+			  FROM conf.plan_schedules
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>INSERT INTO conf.plan_schedules
+	                (plan_schedule_id,
+	                 plan_id,
+	                 cron_expression,
+	                 alias,
+	                 description,
+	                 enabled,
+	                 visible,
+	                 created_at,
+	                 updated_at)
+					VALUES 
+					(:id=getNextId{'conf.plan_schedules'$'plan_schedule_id'}, 
+					 :planId,
+					 :cronExpression,
+					 :alias, 
+					 :description, 
+					 :enabled, 
+					 :visible, 
+					 CURRENT_TIMESTAMP, 
+					 CURRENT_TIMESTAMP)
+	</INSERT>
+	<UPDATE>UPDATE conf.plan_schedules
+			   SET plan_id = :planId,
+			   	   cron_expression = :cronExpression,
+			       alias = :alias, 
+				   description = :description, 
+				   enabled = :enabled, 
+				   visible = :visible, 
+				   updated_at = CURRENT_TIMESTAMP
+			 WHERE plan_schedule_id = :id 
+	</UPDATE>
+	<DELETE>DELETE FROM conf.plan_schedules
+	         WHERE plan_schedule_id = :id
+	</DELETE>
+</DML>

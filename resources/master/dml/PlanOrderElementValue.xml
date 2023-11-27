@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="PlanOrderElementValue">
+	<SELECT>SELECT plan_id as "planId",
+				   plan_order_id as "planOrderId",
+				   element_type_id as "elementTypeId",
+				   param_type_id as "paramTypeId", 
+				   element_type_param_id as "elementTypeParamId",
+				   element_id as "elementId",
+				   value as "value",
+				   enabled as "enabled", 
+				   visible as "visible"
+			  FROM conf.plan_order_element_values
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>INSERT INTO conf.plan_order_element_values
+					   (plan_id,
+					    plan_order_id,
+					   	element_type_id,
+					   	param_type_id,
+					   	element_type_param_id,
+					   	element_id,
+					   	value,
+					    enabled,
+					    visible,
+					    created_at,
+					    updated_at)
+				 VALUES (:planId,
+				 		 :planOrderId,
+				 		 :elementTypeId,
+				 		 :paramTypeId,
+				 		 :elementTypeParamId,
+				 		 :elementId,
+				         :value,
+				         :enabled,
+				         :visible,
+				         CURRENT_TIMESTAMP,
+				         CURRENT_TIMESTAMP)
+	</INSERT>
+	<UPDATE>UPDATE conf.plan_order_element_values
+				SET value = :value,
+				 	enabled = :enabled,
+				 	visible = :visible,
+				 	updated_at = CURRENT_TIMESTAMP
+				WHERE plan_id = :planId 
+				AND plan_order_id = :planOrderId 
+				AND element_type_id = :elementTypeId 
+				AND param_type_id = :paramTypeId
+				AND element_type_param_id = :elementTypeParamId
+				AND element_id = :elementId
+	</UPDATE>
+	<DELETE>DELETE FROM conf.plan_order_element_values 
+				WHERE plan_id = :planId AND plan_order_id = :planOrderId 
+				AND element_type_id = :elementTypeId 
+				AND param_type_id = :paramTypeId 
+				AND element_type_param_id = :elementTypeParamId 
+				AND element_id = :elementId
+	</DELETE>
+</DML>

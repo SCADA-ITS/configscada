@@ -1,0 +1,12 @@
+device_name;session_uid;ct_upd;upd_state;plc_name;host;port(i);url_publisher;offset_state_prot(i);bit_state_prot(i);offset_cmd(i);offset_state(i)
+AL.SE3-S1;AL.SE3-S1;PLC_CT03;upd_fail_ct03_2;CT03_PLC_G;10.133.50.37;28021;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;22732;0;22735;22730
+AL.SE3-S2;AL.SE3-S2;PLC_CT03;upd_fail_ct03_2;CT03_PLC_G;10.133.50.37;28021;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;22732;1;22735;22730
+AL.SE3-S3;AL.SE3-S3;PLC_CT03;upd_fail_ct03_2;CT03_PLC_G;10.133.50.37;28021;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;22732;2;22735;22730
+AL.SE3-S4;AL.SE3-S4;PLC_CT03;upd_fail_ct03_2;CT03_PLC_G;10.133.50.37;28021;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;22732;3;22735;22730
+AL.SE3-S5;AL.SE3-S5;PLC_CT03;upd_fail_ct03_2;CT03_PLC_G;10.133.50.37;28021;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;22732;4;22735;22730
+AL.SE3-S6;AL.SE3-S6;PLC_CT03;upd_fail_ct03_2;CT03_PLC_G;10.133.50.37;28021;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;22732;5;22735;22730
+AL.SE3-S7;AL.SE3-S7;PLC_CT03;upd_fail_ct03_2;CT03_PLC_G;10.133.50.37;28021;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;22732;6;22735;22730
+AL.SE3-S8;AL.SE3-S8;PLC_CT03;upd_fail_ct03_2;CT03_PLC_G;10.133.50.37;28021;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;22732;7;22735;22730
+AL.SE3-S9;AL.SE3-S9;PLC_CT03;upd_fail_ct03_2;CT03_PLC_G;10.133.50.37;28021;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;22732;8;22735;22730
+AL.SE3-S10;AL.SE3-S10;PLC_CT03;upd_fail_ct03_2;CT03_PLC_G;10.133.50.37;28021;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;22732;9;22735;22730
+AL.SE3-S11;AL.SE3-S11;PLC_CT03;upd_fail_ct03_2;CT03_PLC_G;10.133.50.37;28021;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;22732;10;22735;22730

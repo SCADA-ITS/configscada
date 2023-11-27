@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="ImsIncidentTypeStateTransition">
+	<SELECT>SELECT incident_type_id as "incidentTypeId",
+				   ini_incident_state_id as "iniIncidentStateId",
+				   end_incident_state_id as "endIncidentStateId",
+				   auto as "auto", 
+				   enabled as "enabled", 
+				   visible as "visible"
+			  FROM conf.ims_incident_type_state_transitions
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>INSERT INTO conf.ims_incident_type_state_transitions
+					   (incident_type_id,
+					   	ini_incident_state_id,
+					   	end_incident_state_id,
+					   	auto,
+					    enabled,
+					    visible,
+					    created_at,
+					    updated_at)
+				 VALUES (:incidentTypeId,
+				 		 :iniIncidentStateId,
+				 		 :endIncidentStateId,
+				 		 :auto,
+				 		 :enabled,
+				         :visible,
+				         CURRENT_TIMESTAMP,
+				         CURRENT_TIMESTAMP)
+	</INSERT>
+	<UPDATE>UPDATE conf.ims_incident_type_state_transitions
+			   SET end_incident_state_id = :endIncidentStateId,
+			   	   auto = :auto,
+			   	   enabled = :enabled,
+				   visible = :visible,
+			       updated_at = CURRENT_TIMESTAMP
+			   WHERE incident_type_id = :incidentTypeId 
+					AND ini_incident_state_id = :iniIncidentStateId
+	</UPDATE>
+	<DELETE>DELETE FROM conf.ims_incident_type_state_transitions
+			   WHERE incident_type_id = :incidentTypeId 
+					AND ini_incident_state_id = :iniIncidentStateId
+	</DELETE>
+</DML>

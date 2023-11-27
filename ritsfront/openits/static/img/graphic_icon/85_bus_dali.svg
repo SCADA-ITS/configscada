@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="1450mm"
+   height="24mm"
+   viewBox="0 0 1450 24.000005"
+   version="1.1"
+   id="svg2"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
+   sodipodi:docname="91_bus_dali.svg"
+   inkscape:export-filename="C:\Users\jmatesanz\Desktop\SINOPTICOS\Con Elementos\91_bus_dali.png"
+   inkscape:export-xdpi="23.0909"
+   inkscape:export-ydpi="23.0909">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.11313709"
+     inkscape:cx="2926.6387"
+     inkscape:cy="-2355.2146"
+     inkscape:document-units="mm"
+     inkscape:current-layer="main"
+     inkscape:document-rotation="0"
+     showgrid="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="-8"
+     inkscape:window-y="61"
+     inkscape:window-maximized="1"
+     inkscape:snap-text-baseline="false"
+     showguides="false" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Capa 1"
+     inkscape:groupmode="layer"
+     id="main">
+    <rect
+       style="fill:#ffcc00;fill-opacity:1;stroke-width:0.20335717;stroke-linecap:square;stroke-linejoin:round"
+       id="state"
+       width="1450"
+       height="25"
+       x="-0.00092990202"
+       y="0.00074619212"
+       ry="6.5441041" />
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke-width:0.20335716;stroke-linecap:square;stroke-linejoin:round"
+       id="rectValue"
+       width="118.49181"
+       height="19.632313"
+       x="1.8796858"
+       y="3"
+       ry="6.5441041" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:20px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.86014664"
+       x="58.395092"
+       y="20.412498"
+       id="textValueP"><tspan
+         sodipodi:role="line"
+         id="tspan834"
+         x="58.395092"
+         y="20.412498"
+         style="font-size:32px;stroke-width:0.86014664">-</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-weight:normal;font-size:12.69999981px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1.06417096"
+       x="18.375166"
+       y="14"
+       id="text840"
+       transform="scale(0.69327934,1.44242)"><tspan
+         sodipodi:role="line"
+         id="tspan838"
+         x="18.375166"
+         y="13.543668"
+         style="font-size:12.69999981px;stroke-width:1.06417108">PERM</tspan></text>
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke-width:0.18320701;stroke-linecap:square;stroke-linejoin:round"
+       id="rectValue-3"
+       width="122"
+       height="19.883091"
+       x="126.42514"
+       y="3"
+       ry="6.627696" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:20px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.86014664"
+       x="181.47556"
+       y="20.412498"
+       id="textValueR"><tspan
+         sodipodi:role="line"
+         id="tspan834-7"
+         x="181.47556"
+         y="20.412498"
+         style="font-size:32px;stroke-width:0.86014664">-</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-weight:normal;font-size:11.3511591px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1.06417096"
+       x="208.239"
+       y="14"
+       id="text840-4"
+       transform="scale(0.69327935,1.44242)"><tspan
+         sodipodi:role="line"
+         id="tspan838-7"
+         x="208.239"
+         y="13.678377"
+         style="font-size:12.69999981px;stroke-width:1.06417108">REF</tspan></text>
+  </g>
+</svg>

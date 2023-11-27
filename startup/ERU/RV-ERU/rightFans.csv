@@ -1,0 +1,7 @@
+model;description;spinningStatusRegisterXAddress;spinningStatusRegisterXStatusAddress;spinningRegisterXAddress;spinningRegisterXStatusAddress
+A;RV-VNT-VF1-MA;16504;604;25024;605
+A;RV-VNT-VF2-MA;16505;605;25025;606
+A;RV-VNT-VF3-MA;16506;606;25026;607
+A;RV-VNT-VF4-MA;16507;607;25027;608
+A;RV-VNT-VF5-MA;16508;608;25028;609
+A;RV-VNT-VF6-MA;16509;609;25029;610

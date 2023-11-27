@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="Alarm">
+	<SELECT>SELECT alarm_id as "id", 
+	               alarm_config_id as "alarmConfigId",
+	               creation_user_id as "creationUserId",
+	               recognized_user_id as "recognizedUserId",
+	               recognized as "recognized",
+	               recognized_comment as "recognizedComments",	               
+	               activation as "activation",
+	               activation_comment as "activationComments",
+	               deactivation_user_id as "deactivationUserId",
+	               deactivation as "deactivation",
+	               deactivation_comment as "deactivationComments",
+	               filtered_until as "filteredUntil",
+	               disagree as "disagree",
+	               source_element_type_id as "sourceElementTypeId",
+	               source_element_id as "sourceElementId",
+	               target_element_type_id as "targetElementTypeId",
+	               target_element_id as "targetElementId"
+              FROM rt.alarms
+              
+	</SELECT>
+	<INSERT>INSERT INTO rt.alarms
+				   (alarm_id, 
+				    alarm_config_id, 
+				    creation_user_id,
+				    recognized_user_id,
+				    recognized, 
+				    recognized_comment, 				    
+				    activation, 
+				    activation_comment, 
+				    deactivation_user_id,
+				    deactivation, 
+				    deactivation_comment,
+				    filtered_until,
+				    disagree,
+				    source_element_type_id, 
+				    source_element_id, 
+				    target_element_type_id, 
+				    target_element_id, 
+				    created_at, 
+				    updated_at)
+		    VALUES (:id
+		  		  , :alarmConfigId
+		  		  , :creationUserId
+		  		  , :recognizedUserId
+		  		  , :recognized
+		  		  , :recognizedComments		  		  
+		  		  , :activation
+		  		  , :activationComments
+		  		  , :deactivationUserId 
+		  		  , :deactivation
+		  		  , :deactivationComments
+		  		  , :filteredUntil
+		  		  , :disagree
+		  		  , :sourceElementTypeId
+		  		  , :sourceElementId
+		  		  , :targetElementTypeId
+		  		  , :targetElementId
+		  		  , CURRENT_TIMESTAMP
+		  		  , CURRENT_TIMESTAMP)
+	</INSERT>				
+	<UPDATE>UPDATE rt.alarms
+			   SET alarm_config_id = :alarmConfigId,
+			   	   creation_user_id = :creationUserId,
+			   	   recognized_user_id = :recognizedUserId,
+			       recognized = :recognized,
+			       recognized_comment = :recognizedComments,			       
+			       activation = :activation,
+			       activation_comment = :activationComments,
+			       deactivation_user_id = :deactivationUserId,
+			       deactivation = :deactivation,
+			       deactivation_comment = :deactivationComments,
+			       filtered_until = :filteredUntil,
+			       disagree = :disagree,
+			       source_element_type_id = :sourceElementTypeId,
+			       source_element_id = :sourceElementId,
+			       target_element_type_id = :targetElementTypeId,
+			       target_element_id = :targetElementId,
+			       updated_at = CURRENT_TIMESTAMP
+			 WHERE alarm_id = :id
+	</UPDATE>
+	<DELETE>DELETE FROM rt.alarms
+			 WHERE alarm_id = :id
+	</DELETE>
+</DML>

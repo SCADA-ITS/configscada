@@ -1,0 +1,11 @@
+device_name;session_uid;PLC_name;host;port(i);url_publisher;read_permission;write_permission;offset_group_on(i);offset_alarm_general(i)
+RV-DEP-GE;RV-DEP-GE;RV-CTGBT;192.168.11.38;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;40;37
+MM-DEP-GE;MM-DEP-GE;MM-PLC-CGBT;192.168.12.54;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;156;155
+CAS-DEP-GE-BM;CAS-DEP-GE-BM;CAS-PLCL-BM;192.168.5.186;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;63;62
+CAS-DEP-GE-BC;CAS-DEP-GE-BC;CAS-PLC-CGBT-BC;192.168.5.131;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;108;106
+CH-DEP-GE;CH-DEP-GE;CH-PLC-CGBT;192.168.9.11;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;165;164
+NG-DEP-GE;NG-DEP-GE;NG-PLCL-BM;192.168.17.48;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;61;60
+LQ-DEP-GE;LQ-DEP-GE;LQ-PLCL-1;192.168.14.10;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;64;63
+STM2-DEP-GE;STM2-DEP-GE;STM2-PLCL-BC;192.168.10.10;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;59;58
+COR-DEP-GE-BM;COR-DEP-GE-BM;COR-PLCL-BC;192.168.15.10;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;63;61
+COR-DEP-GE-BC;COR-DEP-GE-BC;COR-PLCL-BM;192.168.15.56;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;63;61

@@ -1,0 +1,9 @@
+device_name;source_name;ip;measure_port(i);url_publisher;offset_Surface_Temperature(i);offset_Relative_Humidity(i);offset_Air_Pressure(i);offset_Gust_Wind_Direction(i);offset_Gust_Wind_Speed(i);offset_Precipitation_Intensity(i);offset_Precipitation_Quantity(i);offset_Precipitation_Type(i)
+RV-MET-1MA;METEOS;192.168.88.73;502;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/;1;2;3;4;5;6;7;8
+MM-MET-1MA;METEOS;192.168.88.73;502;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/;9;10;11;12;13;14;15;16
+CH-MET-1MA;METEOS;192.168.88.73;502;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/;17;18;19;20;21;22;23;24
+LQ-MET-1MA;METEOS;192.168.88.73;502;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/;25;26;27;28;29;30;31;32
+COR-MET-1MA;METEOS;192.168.88.73;502;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/;33;34;35;36;37;38;39;40
+NG-MET-1MA;METEOS;192.168.88.73;502;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/;41;42;43;44;45;46;47;48
+STM2-MET-1MA;METEOS;192.168.88.73;502;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/;49;50;51;52;53;54;55;56
+CAS-MET-1CA;METEOS;192.168.88.73;502;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/;57;58;59;60;61;62;63;64

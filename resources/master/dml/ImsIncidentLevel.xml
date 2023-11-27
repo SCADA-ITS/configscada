@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="ImsIncidentLevel">
+	<SELECT>SELECT incident_level_id as "id",
+				   priority as "priority",
+				   queue_priority_id as "pmQueuePriorityId",
+				   queue_id as "pmQueueId",
+				   alias as "alias",
+				   description as "description",
+				   label_alias as "labelAlias",
+				   label_description as "labelDescription",
+				   enabled as "enabled",
+				   visible as "visible"
+			  FROM static.ims_incident_levels
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>
+	</INSERT>
+	<UPDATE> 
+	</UPDATE>
+	<DELETE>
+	</DELETE>
+</DML>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="RolesUsers">
+	<SELECT>SELECT user_id as "userId",
+				   role_id as "roleId",
+				   enabled as "enabled",
+				   visible as "visible"
+			  FROM conf.roles_users
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>INSERT INTO conf.roles_users
+					    (user_id, 
+					    role_id,
+					    enabled, 
+					    visible, 
+					    created_at, 
+					    updated_at)
+				 VALUES (:userId,
+				         :roleId,
+				         :enabled,
+				         :visible,
+				         CURRENT_TIMESTAMP,
+				         CURRENT_TIMESTAMP)
+	</INSERT>
+	<UPDATE> 
+	</UPDATE>
+	<DELETE>DELETE FROM conf.roles_users
+				WHERE user_id = :userId 
+					AND role_id = :roleId 
+	</DELETE>
+</DML>

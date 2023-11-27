@@ -1,0 +1,19 @@
+--UPDATE master.element_subtype_active_params set enabled = false, visible = false where element_subtype_id = 1 and element_type_param_id = 108;
+--UPDATE master.element_subtype_active_params set enabled = false, visible = false where element_subtype_id = 1 and element_type_param_id = 109;
+--UPDATE master.element_subtype_active_params set enabled = false, visible = false where element_subtype_id = 1 and element_type_param_id = 110;
+--UPDATE master.element_subtype_active_params set enabled = false, visible = false where element_subtype_id = 1 and element_type_param_id = 111;
+--UPDATE master.element_subtype_active_params set enabled = false, visible = false where element_subtype_id = 1 and element_type_param_id = 112;
+--
+--INSERT INTO master.element_subtype_active_params
+--(element_subtype_id, element_type_id, param_type_id, element_type_param_id, enabled, visible, created_at, updated_at)VALUES
+--(1, 3, 2, 20, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--(1, 3, 2, 21, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--(1, 3, 2, 40, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--(1, 3, 2, 41, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--(1, 3, 2, 42, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--(1, 3, 2, 60, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--(1, 3, 2, 61, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--(1, 3, 2, 80, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--(1, 3, 2, 81, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--(1, 3, 2, 82, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="ElementStateAlarm">
+	<SELECT>SELECT element_type_id as "elementTypeId", 
+				   element_type_state_id as "stateId",
+				   alarm_config_id as "alarmConfigId"
+			  FROM conf.element_state_alarms
+	</SELECT>
+	<INSERT>INSERT INTO conf.element_state_alarms
+					   (element_type_id,
+					   	element_type_state_id,
+					   	alarm_config_id,
+					    created_at,
+					    updated_at)
+				 VALUES (:elementTypeId,
+				 		 :stateId,
+				 		 :alarmConfigId,
+				         CURRENT_TIMESTAMP,
+				         CURRENT_TIMESTAMP)
+	</INSERT>
+	<UPDATE>UPDATE conf.element_state_alarms
+			   SET element_type_id = :elementTypeId,
+			       element_type_state_id = :stateId,
+			       alarm_config_id = :alarmConfigId,
+			       updated_at = CURRENT_TIMESTAMP
+			 WHERE alarm_config_id = :alarmConfigId
+	</UPDATE>
+	<DELETE>DELETE FROM conf.element_state_alarms
+			 WHERE alarm_config_id = :alarmConfigId
+	</DELETE>
+</DML>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="Stretch">
+	<SELECT>SELECT stretch_id as "id",
+				   stretch_type_id as "stretchTypeId",
+				   alias as "alias",
+				   description as "description",
+				   pk_ini as "pkIni",
+				   pk_end as "pkEnd",
+				   lanes as "lanes",
+				   road_id as "roadId",
+				   enabled as "enabled",
+				   visible as "visible"
+			  FROM conf.stretchs
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>
+	</INSERT>
+	<UPDATE> 
+	</UPDATE>
+	<DELETE>
+	</DELETE>
+</DML>

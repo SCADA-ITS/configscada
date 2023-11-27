@@ -1,0 +1,11 @@
+device_name;session_uid;url_publisher;PLC_IP;PLC_name;port(i);offset_open_door(i)
+Dvere_1;Dvere_1;http:\/\/192.168.88.52:3000\/api\/v2\/generic\/;192.168.88.198;PLCRAIDJSKD01;502;7
+Dvere_2;Dvere_2;http:\/\/192.168.88.52:3000\/api\/v2\/generic\/;192.168.88.198;PLCRAIDJSKD01;502;4
+Dvere_3;Dvere_3;http:\/\/192.168.88.52:3000\/api\/v2\/generic\/;192.168.88.198;PLCRAIDJSKD09;502;4
+Dvere_4;Dvere_4;http:\/\/192.168.88.52:3000\/api\/v2\/generic\/;192.168.88.198;PLCRAIDJSKD10;502;4
+Dvere_5;Dvere_5;http:\/\/192.168.88.52:3000\/api\/v2\/generic\/;192.168.88.198;PLCRAIDJSKD13;502;6
+Dvere_6;Dvere_6;http:\/\/192.168.88.52:3000\/api\/v2\/generic\/;192.168.88.198;PLCRAIDJSKD14;502;6
+Dvere_7;Dvere_7;http:\/\/192.168.88.52:3000\/api\/v2\/generic\/;192.168.88.198;PLCRAIDJSKD17;502;4
+Dvere_8;Dvere_8;http:\/\/192.168.88.52:3000\/api\/v2\/generic\/;192.168.88.198;PLCRAIDJSKD18;502;4
+Dvere_9;Dvere_9;http:\/\/192.168.88.52:3000\/api\/v2\/generic\/;192.168.88.198;PLCRAIDJSKD30;502;4
+Dvere_10;Dvere_10;http:\/\/192.168.88.52:3000\/api\/v2\/generic\/;192.168.88.198;PLCRAIDJSKD30;502;7

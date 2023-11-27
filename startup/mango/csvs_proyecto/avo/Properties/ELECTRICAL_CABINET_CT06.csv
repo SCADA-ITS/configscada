@@ -1,0 +1,2 @@
+device_name;session_uid;url_publisher;PLC_name;PLC_ip;PLC_port(i);read_permission;write_permission;bit_door_open(i)
+IPRO-AIM-001_AE;IPRO-AIM-001_AE;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;CT06_PLC_A;10.133.50.37;28036;monitor;;0

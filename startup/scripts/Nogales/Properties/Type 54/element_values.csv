@@ -1,0 +1,5 @@
+item;alias;description;sessionuid;road;stretchs;pk;sentido;on_change_measure;param1_brand;param2_model;dm
+1;NO-S1S1-MCFV-01;NO-S1S1-MCFV-01;NO-S1S1-MCFV-01;Nogales;S1S1;177+317;Asc;EtdParamsAdapterTFA_NOG.groovy;PAT-TRAFFIC;AVC-1000;3+7
+2;NO-S1S2-MCFV-02;NO-S1S2-MCFV-02;NO-S1S2-MCFV-02;Nogales;S1S2;177+317;Asc;EtdParamsAdapterTFA_NOG.groovy;PAT-TRAFFIC;AVC-1000;7
+3;NO-S1S3-MCFV-03;NO-S1S3-MCFV-03;NO-S1S3-MCFV-03;Nogales;S1S3;177+317;Asc;EtdParamsAdapterTFA_NOG.groovy;PAT-TRAFFIC;AVC-1000;23
+4;NO-S2-MCFV-04;NO-S2-MCFV-04;NO-S2-MCFV-04;Nogales;S2;177+317;Asc;EtdParamsAdapterTFA_NOG.groovy;PAT-TRAFFIC;AVC-1000;28+8

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="PlanOrderTypeParam">
+	<SELECT>SELECT plan_order_type_id as "planOrderTypeId",
+				   plan_order_type_param_id as "id", 
+				   data_type_id as "dataTypeId",
+				   threshold_1 as "threshold1",
+				   threshold_2 as "threshold2",
+				   plan_order_type_param_unit_id as "planOrderTypeParamUnitId",
+				   alias as "alias", 
+				   description as "description",
+				   label_alias as "labelAlias",
+				   label_description as "labelDescription",
+				   enabled as "enabled", 
+				   visible as "visible"
+			  FROM master.plan_order_type_params
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>
+	</INSERT>
+	<UPDATE>
+	</UPDATE>
+	<DELETE>
+	</DELETE>
+</DML>

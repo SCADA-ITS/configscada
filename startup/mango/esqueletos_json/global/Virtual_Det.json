@@ -1,0 +1,1112 @@
+{
+  "dataPoints": [
+    {
+      "purgePeriod": 1,
+      "setExtremeLowLimit": -1.7976931348623157e+308,
+      "intervalLoggingType": "AVERAGE",
+      "dataSourceXid": "Virtual_Det_5",
+      "discardHighLimit": 1.7976931348623157e+308,
+      "deviceName": "Virtual_Det_5",
+      "enabled": true,
+      "rollup": "NONE",
+      "purgeOverride": false,
+      "chartRenderer": {
+        "numberOfPeriods": 1,
+        "type": "IMAGE",
+        "timePeriodType": "DAYS"
+      },
+      "xid": "DP_Virtual_Det_5_status",
+      "eventDetectors": [],
+      "textRenderer": {
+        "useUnitAsSuffix": false,
+        "format": "0.00",
+        "type": "ANALOG",
+        "suffix": ""
+      },
+      "loggingType": "NONE",
+      "overrideIntervalLoggingSamples": false,
+      "defaultCacheSize": 1,
+      "readPermission": "",
+      "setPermission": "",
+      "intervalLoggingPeriodType": "MINUTES",
+      "intervalLoggingSampleWindowSize": 0,
+      "tolerance": 0,
+      "purgeType": "YEARS",
+      "plotType": "SPLINE",
+      "intervalLoggingPeriod": 1,
+      "discardExtremeValues": false,
+      "tags": {},
+      "unit": "",
+      "pointLocator": {
+        "settable": true,
+        "dataType": "NUMERIC",
+        "changeType": {
+          "startValue": "1",
+          "type": "NO_CHANGE"
+        }
+      },
+      "discardLowLimit": -1.7976931348623157e+308,
+      "setExtremeHighLimit": 1.7976931348623157e+308,
+      "name": "status",
+      "chartColour": "",
+      "preventSetExtremeValues": false,
+      "simplifyType": "NONE"
+    },
+    {
+      "purgePeriod": 1,
+      "setExtremeLowLimit": -1.7976931348623157e+308,
+      "intervalLoggingType": "AVERAGE",
+      "dataSourceXid": "Virtual_Det_5",
+      "discardHighLimit": 1.7976931348623157e+308,
+      "deviceName": "Virtual_Det_5",
+      "enabled": true,
+      "rollup": "NONE",
+      "purgeOverride": false,
+      "chartRenderer": {
+        "numberOfPeriods": 1,
+        "type": "IMAGE",
+        "timePeriodType": "DAYS"
+      },
+      "xid": "DP_Virtual_Det_5_date",
+      "eventDetectors": [],
+      "textRenderer": {
+        "useUnitAsSuffix": false,
+        "format": "0.00",
+        "type": "ANALOG",
+        "suffix": ""
+      },
+      "loggingType": "NONE",
+      "overrideIntervalLoggingSamples": false,
+      "defaultCacheSize": 1,
+      "readPermission": "",
+      "setPermission": "",
+      "intervalLoggingPeriodType": "MINUTES",
+      "intervalLoggingSampleWindowSize": 0,
+      "tolerance": 0,
+      "purgeType": "YEARS",
+      "plotType": "SPLINE",
+      "intervalLoggingPeriod": 1,
+      "discardExtremeValues": false,
+      "tags": {},
+      "unit": "",
+      "pointLocator": {
+        "settable": true,
+        "dataType": "NUMERIC",
+        "changeType": {
+          "min": 0,
+          "max": 10000,
+          "startValue": "0",
+          "type": "RANDOM_ANALOG"
+        }
+      },
+      "discardLowLimit": -1.7976931348623157e+308,
+      "setExtremeHighLimit": 1.7976931348623157e+308,
+      "name": "date",
+      "chartColour": "",
+      "preventSetExtremeValues": false,
+      "simplifyType": "NONE"
+    },
+    {
+      "purgePeriod": 1,
+      "setExtremeLowLimit": -1.7976931348623157e+308,
+      "intervalLoggingType": "AVERAGE",
+      "dataSourceXid": "Virtual_Det_5",
+      "discardHighLimit": 1.7976931348623157e+308,
+      "deviceName": "Virtual_Det_5",
+      "enabled": true,
+      "rollup": "NONE",
+      "purgeOverride": false,
+      "chartRenderer": {
+        "numberOfPeriods": 1,
+        "type": "IMAGE",
+        "timePeriodType": "DAYS"
+      },
+      "xid": "DP_Virtual_Det_5_period",
+      "eventDetectors": [],
+      "textRenderer": {
+        "useUnitAsSuffix": false,
+        "format": "0.00",
+        "type": "ANALOG",
+        "suffix": ""
+      },
+      "loggingType": "NONE",
+      "overrideIntervalLoggingSamples": false,
+      "defaultCacheSize": 1,
+      "readPermission": "",
+      "setPermission": "",
+      "intervalLoggingPeriodType": "MINUTES",
+      "intervalLoggingSampleWindowSize": 0,
+      "tolerance": 0,
+      "purgeType": "YEARS",
+      "plotType": "SPLINE",
+      "intervalLoggingPeriod": 1,
+      "discardExtremeValues": false,
+      "tags": {},
+      "unit": "",
+      "pointLocator": {
+        "settable": true,
+        "dataType": "NUMERIC",
+        "changeType": {
+          "min": 0,
+          "max": 10000,
+          "startValue": "0",
+          "type": "RANDOM_ANALOG"
+        }
+      },
+      "discardLowLimit": -1.7976931348623157e+308,
+      "setExtremeHighLimit": 1.7976931348623157e+308,
+      "name": "period",
+      "chartColour": "",
+      "preventSetExtremeValues": false,
+      "simplifyType": "NONE"
+    },
+    {
+      "purgePeriod": 1,
+      "setExtremeLowLimit": -1.7976931348623157e+308,
+      "intervalLoggingType": "INSTANT",
+      "dataSourceXid": "Virtual_Det_5",
+      "discardHighLimit": 1.7976931348623157e+308,
+      "deviceName": "Virtual_Det_5",
+      "enabled": true,
+      "rollup": "NONE",
+      "purgeOverride": false,
+      "chartRenderer": {
+        "limit": 10,
+        "type": "TABLE"
+      },
+      "xid": "DP_Virtual_Det_5_current_direction",
+      "eventDetectors": [],
+      "textRenderer": {
+        "oneColour": "#00ff00",
+        "zeroColour": "#0000ff",
+        "oneLabel": "one",
+        "type": "BINARY",
+        "zeroLabel": "zero"
+      },
+      "loggingType": "NONE",
+      "overrideIntervalLoggingSamples": false,
+      "defaultCacheSize": 1,
+      "readPermission": "",
+      "setPermission": "",
+      "intervalLoggingPeriodType": "MINUTES",
+      "intervalLoggingSampleWindowSize": 0,
+      "tolerance": 0,
+      "purgeType": "YEARS",
+      "plotType": "STEP",
+      "intervalLoggingPeriod": 1,
+      "discardExtremeValues": false,
+      "tags": {},
+      "unit": "",
+      "pointLocator": {
+        "settable": true,
+        "dataType": "BINARY",
+        "changeType": {
+          "startValue": "true",
+          "type": "RANDOM_BOOLEAN"
+        }
+      },
+      "discardLowLimit": -1.7976931348623157e+308,
+      "setExtremeHighLimit": 1.7976931348623157e+308,
+      "name": "current_direction",
+      "chartColour": "",
+      "preventSetExtremeValues": false,
+      "simplifyType": "NONE"
+    },
+    {
+      "purgePeriod": 1,
+      "setExtremeLowLimit": -1.7976931348623157e+308,
+      "intervalLoggingType": "AVERAGE",
+      "dataSourceXid": "Virtual_Det_5",
+      "discardHighLimit": 1.7976931348623157e+308,
+      "deviceName": "Virtual_Det_5",
+      "enabled": true,
+      "rollup": "NONE",
+      "purgeOverride": false,
+      "chartRenderer": {
+        "numberOfPeriods": 1,
+        "type": "IMAGE",
+        "timePeriodType": "DAYS"
+      },
+      "xid": "DP_Virtual_Det_5_n_vehicles",
+      "eventDetectors": [],
+      "textRenderer": {
+        "useUnitAsSuffix": false,
+        "format": "0.00",
+        "type": "ANALOG",
+        "suffix": ""
+      },
+      "loggingType": "NONE",
+      "overrideIntervalLoggingSamples": false,
+      "defaultCacheSize": 1,
+      "readPermission": "",
+      "setPermission": "",
+      "intervalLoggingPeriodType": "MINUTES",
+      "intervalLoggingSampleWindowSize": 0,
+      "tolerance": 0,
+      "purgeType": "YEARS",
+      "plotType": "SPLINE",
+      "intervalLoggingPeriod": 1,
+      "discardExtremeValues": false,
+      "tags": {},
+      "unit": "",
+      "pointLocator": {
+        "settable": true,
+        "dataType": "NUMERIC",
+        "changeType": {
+          "min": 0,
+          "max": 10000,
+          "startValue": "0",
+          "type": "RANDOM_ANALOG"
+        }
+      },
+      "discardLowLimit": -1.7976931348623157e+308,
+      "setExtremeHighLimit": 1.7976931348623157e+308,
+      "name": "n_vehicles",
+      "chartColour": "",
+      "preventSetExtremeValues": false,
+      "simplifyType": "NONE"
+    },
+    {
+      "purgePeriod": 1,
+      "setExtremeLowLimit": -1.7976931348623157e+308,
+      "intervalLoggingType": "AVERAGE",
+      "dataSourceXid": "Virtual_Det_5",
+      "discardHighLimit": 1.7976931348623157e+308,
+      "deviceName": "Virtual_Det_5",
+      "enabled": true,
+      "rollup": "NONE",
+      "purgeOverride": false,
+      "chartRenderer": {
+        "numberOfPeriods": 1,
+        "type": "IMAGE",
+        "timePeriodType": "DAYS"
+      },
+      "xid": "DP_Virtual_Det_5_occupancy",
+      "eventDetectors": [],
+      "textRenderer": {
+        "useUnitAsSuffix": false,
+        "format": "0.00",
+        "type": "ANALOG",
+        "suffix": ""
+      },
+      "loggingType": "NONE",
+      "overrideIntervalLoggingSamples": false,
+      "defaultCacheSize": 1,
+      "readPermission": "",
+      "setPermission": "",
+      "intervalLoggingPeriodType": "MINUTES",
+      "intervalLoggingSampleWindowSize": 0,
+      "tolerance": 0,
+      "purgeType": "YEARS",
+      "plotType": "SPLINE",
+      "intervalLoggingPeriod": 1,
+      "discardExtremeValues": false,
+      "tags": {},
+      "unit": "",
+      "pointLocator": {
+        "settable": true,
+        "dataType": "NUMERIC",
+        "changeType": {
+          "min": 0,
+          "max": 10000,
+          "startValue": "0",
+          "type": "RANDOM_ANALOG"
+        }
+      },
+      "discardLowLimit": -1.7976931348623157e+308,
+      "setExtremeHighLimit": 1.7976931348623157e+308,
+      "name": "occupancy",
+      "chartColour": "",
+      "preventSetExtremeValues": false,
+      "simplifyType": "NONE"
+    },
+    {
+      "purgePeriod": 1,
+      "setExtremeLowLimit": -1.7976931348623157e+308,
+      "intervalLoggingType": "INSTANT",
+      "dataSourceXid": "Virtual_Det_5",
+      "discardHighLimit": 1.7976931348623157e+308,
+      "deviceName": "Virtual_Det_5",
+      "enabled": true,
+      "rollup": "NONE",
+      "purgeOverride": false,
+      "chartRenderer": {
+        "limit": 10,
+        "type": "TABLE"
+      },
+      "xid": "DP_Virtual_Det_5_congestion",
+      "eventDetectors": [],
+      "textRenderer": {
+        "oneColour": "#00ff00",
+        "zeroColour": "#0000ff",
+        "oneLabel": "one",
+        "type": "BINARY",
+        "zeroLabel": "zero"
+      },
+      "loggingType": "NONE",
+      "overrideIntervalLoggingSamples": false,
+      "defaultCacheSize": 1,
+      "readPermission": "",
+      "setPermission": "",
+      "intervalLoggingPeriodType": "MINUTES",
+      "intervalLoggingSampleWindowSize": 0,
+      "tolerance": 0,
+      "purgeType": "YEARS",
+      "plotType": "STEP",
+      "intervalLoggingPeriod": 1,
+      "discardExtremeValues": false,
+      "tags": {},
+      "unit": "",
+      "pointLocator": {
+        "settable": true,
+        "dataType": "BINARY",
+        "changeType": {
+          "startValue": "false",
+          "type": "RANDOM_BOOLEAN"
+        }
+      },
+      "discardLowLimit": -1.7976931348623157e+308,
+      "setExtremeHighLimit": 1.7976931348623157e+308,
+      "name": "congestion",
+      "chartColour": "",
+      "preventSetExtremeValues": false,
+      "simplifyType": "NONE"
+    },
+    {
+      "purgePeriod": 1,
+      "setExtremeLowLimit": -1.7976931348623157e+308,
+      "intervalLoggingType": "INSTANT",
+      "dataSourceXid": "Virtual_Det_5",
+      "discardHighLimit": 1.7976931348623157e+308,
+      "deviceName": "Virtual_Det_5",
+      "enabled": true,
+      "rollup": "NONE",
+      "purgeOverride": false,
+      "chartRenderer": {
+        "limit": 10,
+        "type": "TABLE"
+      },
+      "xid": "DP_Virtual_Det_5_kamikaze",
+      "eventDetectors": [],
+      "textRenderer": {
+        "oneColour": "#00ff00",
+        "zeroColour": "#0000ff",
+        "oneLabel": "one",
+        "type": "BINARY",
+        "zeroLabel": "zero"
+      },
+      "loggingType": "NONE",
+      "overrideIntervalLoggingSamples": false,
+      "defaultCacheSize": 1,
+      "readPermission": "",
+      "setPermission": "",
+      "intervalLoggingPeriodType": "MINUTES",
+      "intervalLoggingSampleWindowSize": 0,
+      "tolerance": 0,
+      "purgeType": "YEARS",
+      "plotType": "STEP",
+      "intervalLoggingPeriod": 15,
+      "discardExtremeValues": false,
+      "tags": {},
+      "unit": "",
+      "pointLocator": {
+        "settable": true,
+        "dataType": "BINARY",
+        "changeType": {
+          "startValue": "false",
+          "type": "RANDOM_BOOLEAN"
+        }
+      },
+      "discardLowLimit": -1.7976931348623157e+308,
+      "setExtremeHighLimit": 1.7976931348623157e+308,
+      "name": "kamikaze",
+      "chartColour": "",
+      "preventSetExtremeValues": false,
+      "simplifyType": "NONE"
+    },
+    {
+      "purgePeriod": 1,
+      "setExtremeLowLimit": -1.7976931348623157e+308,
+      "intervalLoggingType": "AVERAGE",
+      "dataSourceXid": "Virtual_Det_5",
+      "discardHighLimit": 1.7976931348623157e+308,
+      "deviceName": "Virtual_Det_5",
+      "enabled": true,
+      "rollup": "NONE",
+      "purgeOverride": false,
+      "chartRenderer": {
+        "numberOfPeriods": 1,
+        "type": "IMAGE",
+        "timePeriodType": "DAYS"
+      },
+      "xid": "DP_Virtual_Det_5_speed",
+      "eventDetectors": [],
+      "textRenderer": {
+        "useUnitAsSuffix": false,
+        "format": "0.00",
+        "type": "ANALOG",
+        "suffix": ""
+      },
+      "loggingType": "NONE",
+      "overrideIntervalLoggingSamples": false,
+      "defaultCacheSize": 1,
+      "readPermission": "",
+      "setPermission": "",
+      "intervalLoggingPeriodType": "MINUTES",
+      "intervalLoggingSampleWindowSize": 0,
+      "tolerance": 0,
+      "purgeType": "YEARS",
+      "plotType": "SPLINE",
+      "intervalLoggingPeriod": 1,
+      "discardExtremeValues": false,
+      "tags": {},
+      "unit": "",
+      "pointLocator": {
+        "settable": true,
+        "dataType": "NUMERIC",
+        "changeType": {
+          "min": 0,
+          "max": 10000,
+          "startValue": "0",
+          "type": "RANDOM_ANALOG"
+        }
+      },
+      "discardLowLimit": -1.7976931348623157e+308,
+      "setExtremeHighLimit": 1.7976931348623157e+308,
+      "name": "speed",
+      "chartColour": "",
+      "preventSetExtremeValues": false,
+      "simplifyType": "NONE"
+    },
+    {
+      "purgePeriod": 1,
+      "setExtremeLowLimit": -1.7976931348623157e+308,
+      "intervalLoggingType": "AVERAGE",
+      "dataSourceXid": "Virtual_Det_5",
+      "discardHighLimit": 1.7976931348623157e+308,
+      "deviceName": "Virtual_Det_5",
+      "enabled": true,
+      "rollup": "NONE",
+      "purgeOverride": false,
+      "chartRenderer": {
+        "numberOfPeriods": 1,
+        "type": "IMAGE",
+        "timePeriodType": "DAYS"
+      },
+      "xid": "DP_Virtual_Det_5_gap",
+      "eventDetectors": [],
+      "textRenderer": {
+        "useUnitAsSuffix": false,
+        "format": "0.00",
+        "type": "ANALOG",
+        "suffix": ""
+      },
+      "loggingType": "NONE",
+      "overrideIntervalLoggingSamples": false,
+      "defaultCacheSize": 1,
+      "readPermission": "",
+      "setPermission": "",
+      "intervalLoggingPeriodType": "MINUTES",
+      "intervalLoggingSampleWindowSize": 0,
+      "tolerance": 0,
+      "purgeType": "YEARS",
+      "plotType": "SPLINE",
+      "intervalLoggingPeriod": 1,
+      "discardExtremeValues": false,
+      "tags": {},
+      "unit": "",
+      "pointLocator": {
+        "settable": true,
+        "dataType": "NUMERIC",
+        "changeType": {
+          "min": 0,
+          "max": 10000,
+          "startValue": "0",
+          "type": "RANDOM_ANALOG"
+        }
+      },
+      "discardLowLimit": -1.7976931348623157e+308,
+      "setExtremeHighLimit": 1.7976931348623157e+308,
+      "name": "gap",
+      "chartColour": "",
+      "preventSetExtremeValues": false,
+      "simplifyType": "NONE"
+    },
+    {
+      "purgePeriod": 1,
+      "setExtremeLowLimit": -1.7976931348623157e+308,
+      "intervalLoggingType": "AVERAGE",
+      "dataSourceXid": "Virtual_Det_5",
+      "discardHighLimit": 1.7976931348623157e+308,
+      "deviceName": "Virtual_Det_5",
+      "enabled": true,
+      "rollup": "NONE",
+      "purgeOverride": false,
+      "chartRenderer": {
+        "numberOfPeriods": 1,
+        "type": "IMAGE",
+        "timePeriodType": "DAYS"
+      },
+      "xid": "DP_Virtual_Det_5_headway",
+      "eventDetectors": [],
+      "textRenderer": {
+        "useUnitAsSuffix": false,
+        "format": "0.00",
+        "type": "ANALOG",
+        "suffix": ""
+      },
+      "loggingType": "NONE",
+      "overrideIntervalLoggingSamples": false,
+      "defaultCacheSize": 1,
+      "readPermission": "",
+      "setPermission": "",
+      "intervalLoggingPeriodType": "MINUTES",
+      "intervalLoggingSampleWindowSize": 0,
+      "tolerance": 0,
+      "purgeType": "YEARS",
+      "plotType": "SPLINE",
+      "intervalLoggingPeriod": 1,
+      "discardExtremeValues": false,
+      "tags": {},
+      "unit": "",
+      "pointLocator": {
+        "settable": true,
+        "dataType": "NUMERIC",
+        "changeType": {
+          "min": 0,
+          "max": 10000,
+          "startValue": "0",
+          "type": "RANDOM_ANALOG"
+        }
+      },
+      "discardLowLimit": -1.7976931348623157e+308,
+      "setExtremeHighLimit": 1.7976931348623157e+308,
+      "name": "headway",
+      "chartColour": "",
+      "preventSetExtremeValues": false,
+      "simplifyType": "NONE"
+    },
+    {
+      "purgePeriod": 1,
+      "setExtremeLowLimit": -1.7976931348623157e+308,
+      "intervalLoggingType": "AVERAGE",
+      "dataSourceXid": "Virtual_Det_5",
+      "discardHighLimit": 1.7976931348623157e+308,
+      "deviceName": "Virtual_Det_5",
+      "enabled": true,
+      "rollup": "NONE",
+      "purgeOverride": false,
+      "chartRenderer": {
+        "limit": 10,
+        "type": "TABLE"
+      },
+      "xid": "DP_Virtual_Det_5_fail_data",
+      "eventDetectors": [],
+      "textRenderer": {
+        "oneColour": "#00ff00",
+        "zeroColour": "#0000ff",
+        "oneLabel": "one",
+        "type": "BINARY",
+        "zeroLabel": "zero"
+      },
+      "loggingType": "NONE",
+      "overrideIntervalLoggingSamples": false,
+      "defaultCacheSize": 1,
+      "readPermission": "",
+      "setPermission": "",
+      "intervalLoggingPeriodType": "MINUTES",
+      "intervalLoggingSampleWindowSize": 0,
+      "tolerance": 0,
+      "purgeType": "YEARS",
+      "plotType": "STEP",
+      "intervalLoggingPeriod": 1,
+      "discardExtremeValues": false,
+      "tags": {},
+      "unit": "",
+      "pointLocator": {
+        "settable": true,
+        "dataType": "BINARY",
+        "changeType": {
+          "startValue": "false",
+          "type": "ALTERNATE_BOOLEAN"
+        }
+      },
+      "discardLowLimit": -1.7976931348623157e+308,
+      "setExtremeHighLimit": 1.7976931348623157e+308,
+      "name": "fail_data",
+      "chartColour": "",
+      "preventSetExtremeValues": false,
+      "simplifyType": "NONE"
+    },
+    {
+      "purgePeriod": 1,
+      "setExtremeLowLimit": -1.7976931348623157e+308,
+      "intervalLoggingType": "AVERAGE",
+      "dataSourceXid": "Virtual_Det_5",
+      "discardHighLimit": 1.7976931348623157e+308,
+      "deviceName": "Virtual_Det_5",
+      "enabled": true,
+      "rollup": "NONE",
+      "purgeOverride": false,
+      "chartRenderer": {
+        "numberOfPeriods": 1,
+        "type": "IMAGE",
+        "timePeriodType": "DAYS"
+      },
+      "xid": "DP_Virtual_Det_5_veh_length_1",
+      "eventDetectors": [],
+      "textRenderer": {
+        "useUnitAsSuffix": false,
+        "format": "0.00",
+        "type": "ANALOG",
+        "suffix": ""
+      },
+      "loggingType": "NONE",
+      "overrideIntervalLoggingSamples": false,
+      "defaultCacheSize": 1,
+      "readPermission": "",
+      "setPermission": "",
+      "intervalLoggingPeriodType": "MINUTES",
+      "intervalLoggingSampleWindowSize": 0,
+      "tolerance": 0,
+      "purgeType": "YEARS",
+      "plotType": "SPLINE",
+      "intervalLoggingPeriod": 1,
+      "discardExtremeValues": false,
+      "tags": {},
+      "unit": "",
+      "pointLocator": {
+        "settable": true,
+        "dataType": "NUMERIC",
+        "changeType": {
+          "min": 0,
+          "max": 10000,
+          "startValue": "0",
+          "type": "RANDOM_ANALOG"
+        }
+      },
+      "discardLowLimit": -1.7976931348623157e+308,
+      "setExtremeHighLimit": 1.7976931348623157e+308,
+      "name": "veh_length_1",
+      "chartColour": "",
+      "preventSetExtremeValues": false,
+      "simplifyType": "NONE"
+    },
+    {
+      "purgePeriod": 1,
+      "setExtremeLowLimit": -1.7976931348623157e+308,
+      "intervalLoggingType": "AVERAGE",
+      "dataSourceXid": "Virtual_Det_5",
+      "discardHighLimit": 1.7976931348623157e+308,
+      "deviceName": "Virtual_Det_5",
+      "enabled": true,
+      "rollup": "NONE",
+      "purgeOverride": false,
+      "chartRenderer": {
+        "numberOfPeriods": 1,
+        "type": "IMAGE",
+        "timePeriodType": "DAYS"
+      },
+      "xid": "DP_Virtual_Det_5_veh_length_2",
+      "eventDetectors": [],
+      "textRenderer": {
+        "useUnitAsSuffix": false,
+        "format": "0.00",
+        "type": "ANALOG",
+        "suffix": ""
+      },
+      "loggingType": "NONE",
+      "overrideIntervalLoggingSamples": false,
+      "defaultCacheSize": 1,
+      "readPermission": "",
+      "setPermission": "",
+      "intervalLoggingPeriodType": "MINUTES",
+      "intervalLoggingSampleWindowSize": 0,
+      "tolerance": 0,
+      "purgeType": "YEARS",
+      "plotType": "SPLINE",
+      "intervalLoggingPeriod": 1,
+      "discardExtremeValues": false,
+      "tags": {},
+      "unit": "",
+      "pointLocator": {
+        "settable": true,
+        "dataType": "NUMERIC",
+        "changeType": {
+          "min": 0,
+          "max": 10000,
+          "startValue": "0",
+          "type": "RANDOM_ANALOG"
+        }
+      },
+      "discardLowLimit": -1.7976931348623157e+308,
+      "setExtremeHighLimit": 1.7976931348623157e+308,
+      "name": "veh_length_2",
+      "chartColour": "",
+      "preventSetExtremeValues": false,
+      "simplifyType": "NONE"
+    },
+    {
+      "purgePeriod": 1,
+      "setExtremeLowLimit": -1.7976931348623157e+308,
+      "intervalLoggingType": "AVERAGE",
+      "dataSourceXid": "Virtual_Det_5",
+      "discardHighLimit": 1.7976931348623157e+308,
+      "deviceName": "Virtual_Det_5",
+      "enabled": true,
+      "rollup": "NONE",
+      "purgeOverride": false,
+      "chartRenderer": {
+        "numberOfPeriods": 1,
+        "type": "IMAGE",
+        "timePeriodType": "DAYS"
+      },
+      "xid": "DP_Virtual_Det_5_veh_speed_1",
+      "eventDetectors": [],
+      "textRenderer": {
+        "useUnitAsSuffix": false,
+        "format": "0.00",
+        "type": "ANALOG",
+        "suffix": ""
+      },
+      "loggingType": "NONE",
+      "overrideIntervalLoggingSamples": false,
+      "defaultCacheSize": 1,
+      "readPermission": "",
+      "setPermission": "",
+      "intervalLoggingPeriodType": "MINUTES",
+      "intervalLoggingSampleWindowSize": 0,
+      "tolerance": 0,
+      "purgeType": "YEARS",
+      "plotType": "SPLINE",
+      "intervalLoggingPeriod": 1,
+      "discardExtremeValues": false,
+      "tags": {},
+      "unit": "",
+      "pointLocator": {
+        "settable": true,
+        "dataType": "NUMERIC",
+        "changeType": {
+          "min": 0,
+          "max": 10000,
+          "startValue": "0",
+          "type": "RANDOM_ANALOG"
+        }
+      },
+      "discardLowLimit": -1.7976931348623157e+308,
+      "setExtremeHighLimit": 1.7976931348623157e+308,
+      "name": "veh_speed_1",
+      "chartColour": "",
+      "preventSetExtremeValues": false,
+      "simplifyType": "NONE"
+    },
+    {
+      "purgePeriod": 1,
+      "setExtremeLowLimit": -1.7976931348623157e+308,
+      "intervalLoggingType": "AVERAGE",
+      "dataSourceXid": "Virtual_Det_5",
+      "discardHighLimit": 1.7976931348623157e+308,
+      "deviceName": "Virtual_Det_5",
+      "enabled": true,
+      "rollup": "NONE",
+      "purgeOverride": false,
+      "chartRenderer": {
+        "numberOfPeriods": 1,
+        "type": "IMAGE",
+        "timePeriodType": "DAYS"
+      },
+      "xid": "DP_Virtual_Det_5_veh_speed_2",
+      "eventDetectors": [],
+      "textRenderer": {
+        "useUnitAsSuffix": false,
+        "format": "0.00",
+        "type": "ANALOG",
+        "suffix": ""
+      },
+      "loggingType": "NONE",
+      "overrideIntervalLoggingSamples": false,
+      "defaultCacheSize": 1,
+      "readPermission": "",
+      "setPermission": "",
+      "intervalLoggingPeriodType": "MINUTES",
+      "intervalLoggingSampleWindowSize": 0,
+      "tolerance": 0,
+      "purgeType": "YEARS",
+      "plotType": "SPLINE",
+      "intervalLoggingPeriod": 1,
+      "discardExtremeValues": false,
+      "tags": {},
+      "unit": "",
+      "pointLocator": {
+        "settable": true,
+        "dataType": "NUMERIC",
+        "changeType": {
+          "min": 0,
+          "max": 10000,
+          "startValue": "0",
+          "type": "RANDOM_ANALOG"
+        }
+      },
+      "discardLowLimit": -1.7976931348623157e+308,
+      "setExtremeHighLimit": 1.7976931348623157e+308,
+      "name": "veh_speed_2",
+      "chartColour": "",
+      "preventSetExtremeValues": false,
+      "simplifyType": "NONE"
+    },
+    {
+      "purgePeriod": 1,
+      "setExtremeLowLimit": -1.7976931348623157e+308,
+      "intervalLoggingType": "AVERAGE",
+      "dataSourceXid": "Virtual_Det_5",
+      "discardHighLimit": 1.7976931348623157e+308,
+      "deviceName": "Virtual_Det_5",
+      "enabled": true,
+      "rollup": "NONE",
+      "purgeOverride": false,
+      "chartRenderer": {
+        "numberOfPeriods": 1,
+        "type": "IMAGE",
+        "timePeriodType": "DAYS"
+      },
+      "xid": "DP_Virtual_Det_5_veh_speed_3",
+      "eventDetectors": [],
+      "textRenderer": {
+        "useUnitAsSuffix": false,
+        "format": "0.00",
+        "type": "ANALOG",
+        "suffix": ""
+      },
+      "loggingType": "NONE",
+      "overrideIntervalLoggingSamples": false,
+      "defaultCacheSize": 1,
+      "readPermission": "",
+      "setPermission": "",
+      "intervalLoggingPeriodType": "MINUTES",
+      "intervalLoggingSampleWindowSize": 0,
+      "tolerance": 0,
+      "purgeType": "YEARS",
+      "plotType": "SPLINE",
+      "intervalLoggingPeriod": 1,
+      "discardExtremeValues": false,
+      "tags": {},
+      "unit": "",
+      "pointLocator": {
+        "settable": true,
+        "dataType": "NUMERIC",
+        "changeType": {
+          "min": 0,
+          "max": 10000,
+          "startValue": "0",
+          "type": "RANDOM_ANALOG"
+        }
+      },
+      "discardLowLimit": -1.7976931348623157e+308,
+      "setExtremeHighLimit": 1.7976931348623157e+308,
+      "name": "veh_speed_3",
+      "chartColour": "",
+      "preventSetExtremeValues": false,
+      "simplifyType": "NONE"
+    },
+    {
+      "purgePeriod": 1,
+      "setExtremeLowLimit": -1.7976931348623157e+308,
+      "intervalLoggingType": "AVERAGE",
+      "dataSourceXid": "Virtual_Det_5",
+      "discardHighLimit": 1.7976931348623157e+308,
+      "deviceName": "Virtual_Det_5",
+      "enabled": true,
+      "rollup": "NONE",
+      "purgeOverride": false,
+      "chartRenderer": {
+        "numberOfPeriods": 1,
+        "type": "IMAGE",
+        "timePeriodType": "DAYS"
+      },
+      "xid": "DP_Virtual_Det_5_length",
+      "eventDetectors": [],
+      "textRenderer": {
+        "useUnitAsSuffix": false,
+        "format": "0.00",
+        "type": "ANALOG",
+        "suffix": ""
+      },
+      "loggingType": "NONE",
+      "overrideIntervalLoggingSamples": false,
+      "defaultCacheSize": 1,
+      "readPermission": "",
+      "setPermission": "",
+      "intervalLoggingPeriodType": "MINUTES",
+      "intervalLoggingSampleWindowSize": 0,
+      "tolerance": 0,
+      "purgeType": "YEARS",
+      "plotType": "SPLINE",
+      "intervalLoggingPeriod": 1,
+      "discardExtremeValues": false,
+      "tags": {},
+      "unit": "",
+      "pointLocator": {
+        "settable": true,
+        "dataType": "NUMERIC",
+        "changeType": {
+          "min": 0,
+          "max": 1000,
+          "maxChange": 0.1,
+          "startValue": "50",
+          "type": "BROWNIAN"
+        }
+      },
+      "discardLowLimit": -1.7976931348623157e+308,
+      "setExtremeHighLimit": 1.7976931348623157e+308,
+      "name": "length",
+      "chartColour": "",
+      "preventSetExtremeValues": false,
+      "simplifyType": "NONE"
+    }
+  ],
+  "publishers": [
+    {
+      "publishAttributeChanges": false,
+      "cacheWarningSize": 100,
+      "dateFormat": "DATE_FORMAT_BASIC",
+      "useJSON": true,
+      "snapshotSendPeriods": 5,
+      "raiseResultWarning": true,
+      "staticParameters": [],
+      "sendSnapshot": false,
+      "type": "HTTP_SENDER",
+      "usePost": true,
+      "enabled": false,
+      "url": "http://localhost:3000/api/v2/generic/session-uid",
+      "points": [
+        {
+          "dataPointId": "DP_Virtual_Det_5_congestion",
+          "parameterName": "congestion",
+          "includeTimestamp": false
+        },
+        {
+          "dataPointId": "DP_Virtual_Det_5_current_direction",
+          "parameterName": "current_direction",
+          "includeTimestamp": false
+        },
+        {
+          "dataPointId": "DP_Virtual_Det_5_date",
+          "parameterName": "date",
+          "includeTimestamp": false
+        },
+        {
+          "dataPointId": "DP_Virtual_Det_5_fail_data",
+          "parameterName": "fail_data",
+          "includeTimestamp": false
+        },
+        {
+          "dataPointId": "DP_Virtual_Det_5_gap",
+          "parameterName": "gap",
+          "includeTimestamp": false
+        },
+        {
+          "dataPointId": "DP_Virtual_Det_5_kamikaze",
+          "parameterName": "kamikaze",
+          "includeTimestamp": false
+        },
+        {
+          "dataPointId": "DP_Virtual_Det_5_headway",
+          "parameterName": "headway",
+          "includeTimestamp": false
+        },
+        {
+          "dataPointId": "DP_Virtual_Det_5_occupancy",
+          "parameterName": "occupancy",
+          "includeTimestamp": false
+        },
+        {
+          "dataPointId": "DP_Virtual_Det_5_n_vehicles",
+          "parameterName": "n_vehicles",
+          "includeTimestamp": false
+        },
+        {
+          "dataPointId": "DP_Virtual_Det_5_speed",
+          "parameterName": "speed",
+          "includeTimestamp": false
+        },
+        {
+          "dataPointId": "DP_Virtual_Det_5_period",
+          "parameterName": "period",
+          "includeTimestamp": false
+        },
+        {
+          "dataPointId": "DP_Virtual_Det_5_status",
+          "parameterName": "status",
+          "includeTimestamp": false
+        },
+        {
+          "dataPointId": "DP_Virtual_Det_5_veh_length_1",
+          "parameterName": "veh_length_1",
+          "includeTimestamp": false
+        },
+        {
+          "dataPointId": "DP_Virtual_Det_5_veh_length_2",
+          "parameterName": "veh_length_2",
+          "includeTimestamp": false
+        },
+        {
+          "dataPointId": "DP_Virtual_Det_5_veh_speed_1",
+          "parameterName": "veh_speed_1",
+          "includeTimestamp": false
+        },
+        {
+          "dataPointId": "DP_Virtual_Det_5_veh_speed_2",
+          "parameterName": "veh_speed_2",
+          "includeTimestamp": false
+        },
+        {
+          "dataPointId": "DP_Virtual_Det_5_veh_speed_3",
+          "parameterName": "veh_speed_3",
+          "includeTimestamp": false
+        },
+        {
+          "dataPointId": "DP_Virtual_Det_5_length",
+          "parameterName": "length",
+          "includeTimestamp": false
+        }
+      ],
+      "xid": "PUB_Virtual_Det_5",
+      "publishType": "LOGGED_ONLY",
+      "alarmLevels": {
+        "POINT_DISABLED_EVENT": "DO_NOT_LOG",
+        "RESULT_WARNINGS_EVENT": "DO_NOT_LOG",
+        "SEND_EXCEPTION_EVENT": "DO_NOT_LOG",
+        "QUEUE_SIZE_WARNING_EVENT": "DO_NOT_LOG"
+      },
+      "staticHeaders": [
+        {
+          "value": "Virtual_Det_5",
+          "key": "session-uid"
+        }
+      ],
+      "name": "Virtual_Det_5",
+      "snapshotSendPeriodType": "MINUTES",
+      "cacheDiscardSize": 1000
+    }
+  ],
+  "dataSources": [
+    {
+      "updatePeriodType": "MINUTES",
+      "purgePeriod": 1,
+      "updatePeriods": 1,
+      "polling": true,
+      "type": "VIRTUAL",
+      "enabled": false,
+      "purgeOverride": false,
+      "useCron": false,
+      "xid": "Virtual_Det_5",
+      "alarmLevels": {
+        "POLL_ABORTED": "DO_NOT_LOG"
+      },
+      "name": "Virtual_Det_5",
+      "quantize": true,
+      "editPermission": "",
+      "purgeType": "YEARS"
+    }
+  ]
+}

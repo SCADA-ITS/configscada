@@ -1,0 +1,423 @@
+{
+  "dataSources": [
+    {
+      "xid": "DS_{device_name}",
+      "name": "{device_name}",
+      "enabled": true,
+      "type": "VIRTUAL",
+      "alarmLevels": {
+        "POLL_ABORTED": "DO_NOT_LOG"
+      },
+      "purgeType": "MONTHS",
+      "updatePeriods": 1,
+      "updatePeriodType": "MINUTES",
+      "polling": false,
+      "quantize": false,
+      "useCron": false,
+      "editPermission": "",
+      "purgeOverride": true,
+      "purgePeriod": 1
+    },
+    {
+      "xid": "DS_status",
+      "name": "status",
+      "enabled": true,
+      "type": "VIRTUAL",
+      "alarmLevels": {
+        "POLL_ABORTED": "DO_NOT_LOG"
+      },
+      "purgeType": "YEARS",
+      "updatePeriods": 1,
+      "updatePeriodType": "MINUTES",
+      "polling": false,
+      "quantize": false,
+      "useCron": false,
+      "editPermission": "",
+      "purgeOverride": false,
+      "purgePeriod": 1
+    },
+    {
+      "xid": "DS_ERU_meta",
+      "name": "ERU_meta",
+      "enabled": true,
+      "type": "META",
+      "alarmLevels": {
+        "SCRIPT_ERROR": "DO_NOT_LOG",
+        "CONTEXT_POINT_DISABLED": "DO_NOT_LOG",
+        "RESULT_TYPE_ERROR": "DO_NOT_LOG"
+      },
+      "purgeType": "YEARS",
+      "editPermission": "",
+      "purgeOverride": false,
+      "purgePeriod": 1
+    },
+    {
+      "xid": "DS_meta_status",
+      "name": "meta_status",
+      "enabled": true,
+      "type": "META",
+      "alarmLevels": {
+        "SCRIPT_ERROR": "DO_NOT_LOG",
+        "CONTEXT_POINT_DISABLED": "DO_NOT_LOG",
+        "RESULT_TYPE_ERROR": "DO_NOT_LOG"
+      },
+      "purgeType": "YEARS",
+      "editPermission": "",
+      "purgeOverride": false,
+      "purgePeriod": 1
+    }
+  ],
+  "dataPoints": [
+    {
+      "purgePeriod": 1,
+      "setExtremeLowLimit": -1.7976931348623157e+308,
+      "intervalLoggingType": "INSTANT",
+      "dataSourceXid": "DS_{device_name}",
+      "discardHighLimit": 1.7976931348623157e+308,
+      "deviceName": "{device_name}",
+      "enabled": true,
+      "rollup": "NONE",
+      "purgeOverride": false,
+      "chartRenderer": {
+        "limit": 10,
+        "type": "TABLE"
+      },
+      "xid": "DP_{device_name}_red_light",
+      "eventDetectors": [],
+      "textRenderer": {
+        "oneColour": "#00ff00",
+        "zeroColour": "#0000ff",
+        "oneLabel": "one",
+        "type": "BINARY",
+        "zeroLabel": "zero"
+      },
+      "loggingType": "NONE",
+      "overrideIntervalLoggingSamples": false,
+      "defaultCacheSize": 1,
+      "readPermission": "",
+      "setPermission": "",
+      "intervalLoggingPeriodType": "MINUTES",
+      "intervalLoggingSampleWindowSize": 0,
+      "tolerance": 0,
+      "purgeType": "YEARS",
+      "plotType": "STEP",
+      "intervalLoggingPeriod": 1,
+      "discardExtremeValues": false,
+      "tags": {},
+      "unit": "",
+      "pointLocator": {
+        "settable": true,
+        "dataType": "BINARY",
+        "changeType": {
+          "startValue": "false",
+          "type": "NO_CHANGE"
+        }
+      },
+      "discardLowLimit": -1.7976931348623157e+308,
+      "setExtremeHighLimit": 1.7976931348623157e+308,
+      "name": "red_light",
+      "chartColour": "",
+      "preventSetExtremeValues": false,
+      "simplifyType": "NONE"
+    },
+    {
+      "xid": "DP_{device_name}_status",
+      "name": "status",
+      "enabled": true,
+      "loggingType": "NONE",
+      "intervalLoggingPeriodType": "MINUTES",
+      "intervalLoggingType": "AVERAGE",
+      "purgeType": "YEARS",
+      "pointLocator": {
+        "dataType": "NUMERIC",
+        "changeType": {
+          "type": "NO_CHANGE",
+          "startValue": "1"
+        },
+        "settable": true
+      },
+      "eventDetectors": [],
+      "plotType": "STEP",
+      "rollup": "NONE",
+      "unit": "",
+      "simplifyType": "NONE",
+      "chartColour": "",
+      "chartRenderer": {
+        "type": "IMAGE",
+        "timePeriodType": "DAYS",
+        "numberOfPeriods": 1
+      },
+      "dataSourceXid": "DS_status",
+      "defaultCacheSize": 1,
+      "deviceName": "{device_name}",
+      "discardExtremeValues": false,
+      "discardHighLimit": 1.7976931348623157E308,
+      "discardLowLimit": -1.7976931348623157E308,
+      "intervalLoggingPeriod": 1,
+      "intervalLoggingSampleWindowSize": 0,
+      "overrideIntervalLoggingSamples": false,
+      "preventSetExtremeValues": false,
+      "purgeOverride": false,
+      "purgePeriod": 1,
+      "readPermission": "{read_permission}",
+      "setExtremeHighLimit": 1.7976931348623157E308,
+      "setExtremeLowLimit": -1.7976931348623157E308,
+      "setPermission": "{write_permission}",
+      "tags": {},
+      "textRenderer": {
+        "type": "ANALOG",
+        "useUnitAsSuffix": false,
+        "suffix": "",
+        "format": "0.00"
+      },
+      "tolerance": 0.0
+    },
+    {
+      "xid": "DP_{device_name}_sem_status",
+      "name": "sem_status",
+      "enabled": true,
+      "loggingType": "NONE",
+      "intervalLoggingPeriodType": "MINUTES",
+      "intervalLoggingType": "AVERAGE",
+      "purgeType": "YEARS",
+      "pointLocator": {
+        "range": "HOLDING_REGISTER",
+        "modbusDataType": "TWO_BYTE_INT_UNSIGNED",
+        "writeType": "SETTABLE",
+        "additive": 0.0,
+        "bit": 1,
+        "charset": "ASCII",
+        "multiplier": 1.0,
+        "multistateNumeric": false,
+        "offset": "{offset_sem_state}",
+        "registerCount": 0,
+        "slaveId": 1,
+        "slaveMonitor": false
+      },
+      "eventDetectors": [],
+      "plotType": "SPLINE",
+      "rollup": "NONE",
+      "unit": "",
+      "simplifyType": "NONE",
+      "chartColour": "",
+      "chartRenderer": {
+        "type": "IMAGE",
+        "timePeriodType": "DAYS",
+        "numberOfPeriods": 1
+      },
+      "dataSourceXid": "DS_{eru_name}",
+      "defaultCacheSize": 1,
+      "deviceName": "{device_name}",
+      "discardExtremeValues": false,
+      "discardHighLimit": 1.7976931348623157E308,
+      "discardLowLimit": -1.7976931348623157E308,
+      "intervalLoggingPeriod": 1,
+      "intervalLoggingSampleWindowSize": 0,
+      "overrideIntervalLoggingSamples": false,
+      "preventSetExtremeValues": false,
+      "purgeOverride": false,
+      "purgePeriod": 1,
+      "readPermission": "",
+      "setExtremeHighLimit": 1.7976931348623157E308,
+      "setExtremeLowLimit": -1.7976931348623157E308,
+      "setPermission": "",
+      "tags": {},
+      "textRenderer": {
+        "type": "ANALOG",
+        "useUnitAsSuffix": false,
+        "suffix": "",
+        "format": "0.00"
+      },
+      "tolerance": 0.0
+    },
+    {
+      "xid": "DP_{device_name}_parser_light",
+      "name": "parser_light",
+      "enabled": true,
+      "loggingType": "NONE",
+      "intervalLoggingPeriodType": "MINUTES",
+      "intervalLoggingType": "AVERAGE",
+      "purgeType": "YEARS",
+      "pointLocator": {
+        "dataType": "NUMERIC",
+        "updateEvent": "NONE",
+        "contextUpdateEvent": "CONTEXT_UPDATE",
+        "context": [
+          {
+            "varName": "sem_status",
+            "dataPointXid": "DP_{device_name}_sem_status",
+            "updateContext": true
+          },
+          {
+            "varName": "red_light",
+            "dataPointXid": "DP_{device_name}_red_light",
+            "updateContext": false
+          }
+        ],
+        "logLevel": "NONE",
+        "variableName": "my",
+        "scriptPermissions": [
+          "superadmin"
+        ],
+        "executionDelaySeconds": 0,
+        "logCount": 5,
+        "logSize": 1.0,
+        "script": "if(sem_status.value)\n{\n    red_light.set(true);\/\/red light\n}else\n{\n      red_light.set(false);\/\/light off\n}\n\n\nreturn 0;",
+        "settable": false,
+        "updateCronPattern": ""
+      },
+      "eventDetectors": [],
+      "plotType": "SPLINE",
+      "rollup": "NONE",
+      "unit": "",
+      "simplifyType": "NONE",
+      "chartColour": "",
+      "chartRenderer": {
+        "type": "IMAGE",
+        "timePeriodType": "DAYS",
+        "numberOfPeriods": 1
+      },
+      "dataSourceXid": "DS_ERU_meta",
+      "defaultCacheSize": 1,
+      "deviceName": "{device_name}",
+      "discardExtremeValues": false,
+      "discardHighLimit": 1.7976931348623157E308,
+      "discardLowLimit": -1.7976931348623157E308,
+      "intervalLoggingPeriod": 1,
+      "intervalLoggingSampleWindowSize": 0,
+      "overrideIntervalLoggingSamples": false,
+      "preventSetExtremeValues": false,
+      "purgeOverride": false,
+      "purgePeriod": 1,
+      "readPermission": "",
+      "setExtremeHighLimit": 1.7976931348623157E308,
+      "setExtremeLowLimit": -1.7976931348623157E308,
+      "setPermission": "",
+      "tags": {},
+      "textRenderer": {
+        "type": "ANALOG",
+        "useUnitAsSuffix": false,
+        "suffix": "",
+        "format": "0.00"
+      },
+      "tolerance": 0.0
+    },
+    {
+      "xid": "DP_{device_name}_meta_status",
+      "name": "meta_status",
+      "enabled": true,
+      "loggingType": "NONE",
+      "intervalLoggingPeriodType": "MINUTES",
+      "intervalLoggingType": "AVERAGE",
+      "purgeType": "YEARS",
+      "pointLocator": {
+        "dataType": "NUMERIC",
+        "updateEvent": "CRON",
+        "contextUpdateEvent": "CONTEXT_UPDATE",
+        "context": [
+          {
+            "varName": "sem_status",
+            "dataPointXid": "DP_{device_name}_sem_status",
+            "updateContext": true
+          },
+          {
+            "varName": "status",
+            "dataPointXid": "DP_{device_name}_status",
+            "updateContext": false
+          }
+        ],
+        "logLevel": "NONE",
+        "variableName": "my",
+        "scriptPermissions": [
+          "superadmin"
+        ],
+        "executionDelaySeconds": 0,
+        "logCount": 5,
+        "logSize": 1.0,
+        "script": "time_polling_min = 1;\ntime_polling_seg = time_polling_min * 60;\ntime_polling_ms = time_polling_seg * 1000;\n\nif(sem_status.time == null){\n    status.set(0.0);\n}else{\n    if(Date.now() - sem_status.time > time_polling_ms) \n    {\n        status.set(0.0);\n    }\n    else \n    {\n        status.set(1.0);\n    }\n}\n return 1;",
+        "settable": false,
+        "updateCronPattern": "0\/20 * * * * ?"
+      },
+      "eventDetectors": [],
+      "plotType": "SPLINE",
+      "rollup": "NONE",
+      "unit": "",
+      "simplifyType": "NONE",
+      "chartColour": "",
+      "chartRenderer": {
+        "type": "IMAGE",
+        "timePeriodType": "DAYS",
+        "numberOfPeriods": 1
+      },
+      "dataSourceXid": "DS_meta_status",
+      "defaultCacheSize": 1,
+      "deviceName": "{device_name}",
+      "discardExtremeValues": false,
+      "discardHighLimit": 1.7976931348623157E308,
+      "discardLowLimit": -1.7976931348623157E308,
+      "intervalLoggingPeriod": 1,
+      "intervalLoggingSampleWindowSize": 0,
+      "overrideIntervalLoggingSamples": false,
+      "preventSetExtremeValues": false,
+      "purgeOverride": false,
+      "purgePeriod": 1,
+      "readPermission": "",
+      "setExtremeHighLimit": 1.7976931348623157E308,
+      "setExtremeLowLimit": -1.7976931348623157E308,
+      "setPermission": "",
+      "tags": {},
+      "textRenderer": {
+        "type": "ANALOG",
+        "useUnitAsSuffix": false,
+        "suffix": "",
+        "format": "0.00"
+      },
+      "tolerance": 0.0
+    }
+  ],
+  "publishers": [
+    {
+      "publishAttributeChanges": false,
+      "cacheWarningSize": 100,
+      "dateFormat": "DATE_FORMAT_UTC",
+      "useJSON": true,
+      "snapshotSendPeriods": 5,
+      "raiseResultWarning": true,
+      "staticParameters": [],
+      "sendSnapshot": false,
+      "type": "HTTP_SENDER",
+      "usePost": true,
+      "enabled": true,
+      "url": "{url_publisher}",
+      "points": [
+        {
+          "dataPointId": "DP_{device_name}_red_light",
+          "parameterName": "red_light",
+          "includeTimestamp": false
+        },
+        {
+          "dataPointId": "DP_{device_name}_status",
+          "parameterName": "status",
+          "includeTimestamp": false
+        }
+      ],
+      "xid": "PUB_{device_name}",
+      "publishType": "CHANGES_ONLY",
+      "alarmLevels": {
+        "POINT_DISABLED_EVENT": "DO_NOT_LOG",
+        "RESULT_WARNINGS_EVENT": "DO_NOT_LOG",
+        "SEND_EXCEPTION_EVENT": "DO_NOT_LOG",
+        "QUEUE_SIZE_WARNING_EVENT": "DO_NOT_LOG"
+      },
+      "staticHeaders": [
+        {
+          "value": "{session_uid}",
+          "key": "session-uid"
+        }
+      ],
+      "name": "{device_name}",
+      "snapshotSendPeriodType": "MINUTES",
+      "cacheDiscardSize": 1000
+    }
+  ]
+}

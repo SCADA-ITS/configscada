@@ -1,0 +1,14 @@
+device_name;session_uid;ip;port(i);read_permission;write_permission;url_publisher
+PMV-A7056-PK-1-050-C;PMV-A7056-PK-1-050-C;172.25.13.250;5000;monitor;;http:\/\/192.168.88.173:3000\/api\/v2\/generic\/
+PMV-A7056-PK-0-550-D;PMV-A7056-PK-0-550-D;172.25.13.251;5000;monitor;;http:\/\/192.168.88.173:3000\/api\/v2\/generic\/
+PMV-A7056-PK-0-050-C;PMV-A7056-PK-0-050-C;172.25.13.252;5000;monitor;;http:\/\/192.168.88.173:3000\/api\/v2\/generic\/
+PMV-A357-PK-59-950-C;PMV-A357-PK-59-950-C;172.25.13.253;5000;monitor;;http:\/\/192.168.88.173:3000\/api\/v2\/generic\/
+PMV-A357-PK-61-645-D;PMV-A357-PK-61-645-D;172.25.13.254;5000;monitor;;http:\/\/192.168.88.173:3000\/api\/v2\/generic\/
+PGC1-A7056-PK-0-550-C;PGC1-A7056-PK-0-550-C;172.25.13.242;5000;monitor;;http:\/\/192.168.88.173:3000\/api\/v2\/generic\/
+PGC2-A7056-PK-0-550-C;PGC2-A7056-PK-0-550-C;172.25.13.243;5000;monitor;;http:\/\/192.168.88.173:3000\/api\/v2\/generic\/
+PGC3-A7056-PK-0-550-C;PGC3-A7056-PK-0-550-C;172.25.13.244;5000;monitor;;http:\/\/192.168.88.173:3000\/api\/v2\/generic\/
+PGC1-A7056-PK-0-050-C;PGC1-A7056-PK-0-050-C;172.25.13.245;5000;monitor;;http:\/\/192.168.88.173:3000\/api\/v2\/generic\/
+PGC2-A7056-PK-0-050-C;PGC2-A7056-PK-0-050-C;172.25.13.246;5000;monitor;;http:\/\/192.168.88.173:3000\/api\/v2\/generic\/
+PGC3-A7056-PK-0-050-C;PGC3-A7056-PK-0-050-C;172.25.13.247;5000;monitor;;http:\/\/192.168.88.173:3000\/api\/v2\/generic\/
+PGC1-A357-PK-61-000-D;PGC1-A357-PK-61-000-D;172.25.13.248;5000;monitor;;http:\/\/192.168.88.173:3000\/api\/v2\/generic\/
+PGC2-A357-PK-61-000-D;PGC2-A357-PK-61-000-D;172.25.13.249;5000;monitor;;http:\/\/192.168.88.173:3000\/api\/v2\/generic\/

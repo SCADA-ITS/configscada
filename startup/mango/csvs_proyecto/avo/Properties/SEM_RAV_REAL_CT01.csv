@@ -1,0 +1,6 @@
+device_name;session_uid;url_publisher;PLC_name;PLC_ip;PLC_port(i);read_permission;write_permission;offset_light_cmd(i)
+ICEP-SEM-001;ICEP-SEM-001;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;CT01_PLC_D;10.133.50.37;28004;monitor;;14719
+S1TS-SEM-001;S1TS-SEM-001;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;CT01_PLC_D;10.133.50.37;28004;monitor;;14742
+S1TS-SEM-003;S1TS-SEM-003;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;CT01_PLC_D;10.133.50.37;28004;monitor;;14742
+ICEO-SEM-001;ICEO-SEM-001;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;CT01_PLC_D;10.133.50.37;28004;monitor;;14811
+IVEN-SEM-001;IVEN-SEM-001;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;CT01_PLC_D;10.133.50.37;28004;monitor;;14834

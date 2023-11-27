@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="CommandElementTypeParam">
+	<SELECT>SELECT command_element_type_id as "commandElementTypeId",
+				   element_type_id as "elementTypeId",
+				   command_element_type_param_id as "id", 
+				   alias as "alias", 
+				   description as "description",
+				   label_alias as "labelAlias", 
+				   label_description as "labelDescription",
+				   data_type_id as "dataTypeId",
+				   threshold_1 as "threshold1",
+				   threshold_2 as "threshold2",
+				   command_element_type_param_unit_id as "commandElementTypeParamUnitId",
+				   element_type_param_id as "elementTypeParamId", 
+				   param_type_id as "paramTypeId", 
+				   enabled as "enabled", 
+				   visible as "visible"
+			  FROM master.command_element_type_params
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>
+	</INSERT>
+	<UPDATE>
+	</UPDATE>
+	<DELETE>
+	</DELETE>
+</DML>

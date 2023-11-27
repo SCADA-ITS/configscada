@@ -1,0 +1,34 @@
+-- Disable message for next USE command
+:setvar SQLCMDERRORLEVEL 1
+USE [bus_demo]
+GO
+-- Reenable
+:setvar SQLCMDERRORLEVEL 0
+
+SET ANSI_NULLS ON
+SET ANSI_WARNINGS ON
+SET NOCOUNT ON
+
+SET IDENTITY_INSERT dbo.VW_PRM_PARAMETROS ON;  
+GO
+
+INSERT INTO VW_PRM_PARAMETROS (PRM_ID,PRM_PAM_ID,PRM_PAM_CODIGO,PRM_PAM_NOMBRE,PRM_CODIGO,PRM_DESCRIP,PRM_VALOR_TIPO,PRM_VALOR_TIPO_TXT,PRM_VALOR) VALUES
+	 (30,1,N'GRAL',N'General',N'PTR_GEO_DIST',N'Distancia en metros para que un punto de itinerario se considere coincidente con una parada',1,N'SIMPLE',N'10'),
+	 (29,1,N'GRAL',N'General',N'PEX_NOCTURNA_H',N'Franja horaria de Expediciones Nocturnas',3,N'OBJECTO',N'{"PEX_NOCTURNA_H_INICIAL":"23:00","PEX_NOCTURNA_H_FINAL":"06:00"}'),
+	 (28,5,N'VTA ANT',N'Venta Anticipada',N'1000',N'EXCLUSIÓN FECHAS VENTA ANTICIPADA',1,N'SIMPLE',N'20230215'),
+	 (27,8,N'VAL',N'Validación a bordo',N'180',N'Porcentaje de cobro del más barato',3,N'OBJECTO',N'{"valor":"0","fecini":"20230101","fecfin":"20231231"}'),
+	 (26,8,N'VAL',N'Validación a bordo',N'170',N'Tiempo Transbordo salida interno',3,N'OBJECTO',N'{"valor":"45","fecini":"20230101","fecfin":"20401231"}'),
+	 (25,8,N'VAL',N'Validación a bordo',N'160',N'Tiempo Transbordo salida externo',3,N'OBJECTO',N'{"valor":"30","fecini":"20230101","fecfin":"20401231"}'),
+	 (24,8,N'VAL',N'Validación a bordo',N'150',N'Tiempo Transbordo asistido',3,N'OBJECTO',N'{"valor":"120","fecini":"20230101","fecfin":"20401231"}'),
+	 (23,8,N'VAL',N'Validación a bordo',N'140',N'Tiempo Transbordo urbano',3,N'OBJECTO',N'{"valor":"60","fecini":"20230101","fecfin":"20401231"}'),
+	 (22,8,N'VAL',N'Validación a bordo',N'130',N'Saldo Máximo',3,N'OBJECTO',N'{"valor":"52000","fecini":"20230101","fecfin":"20401231"}'),
+	 (21,8,N'VAL',N'Validación a bordo',N'120',N'Máximo Multivalidaciones',3,N'OBJECTO',N'{"valor":"9","fecini":"20230101","fecfin":"20401231"}'),
+	 (20,8,N'VAL',N'Validación a bordo',N'110',N'Código Multivalidación',3,N'OBJECTO',N'{"valor":"1","fecini":"20230101","fecfin":"20401231"}'),
+	 (19,8,N'VAL',N'Validación a bordo',N'100',N'Tiempo Passback',3,N'OBJECTO',N'{"valor":"5","fecini":"20230101","fecfin":"20401231"}'),
+	 (18,1,N'GRAL',N'General',N'PEX_GEN_DIAS',N'Cantidad de días para los que se generan expediciones',1,N'SIMPLE',N'30'),
+	 (17,1,N'GRAL',N'General',N'PTR_GEN_DIAS',N'Cantidad de días para los que se generan turnos',1,N'SIMPLE',N'30'),
+	 (8,5,N'VTA ANT',N'Venta Anticipada',N'CP_TPO_VTA_ANT',N'Tiempo de antelación mínima para la compra del viaje',1,N'SIMPLE',N'5');
+GO
+	
+SET IDENTITY_INSERT dbo.VW_PRM_PARAMETROS OFF;  
+GO

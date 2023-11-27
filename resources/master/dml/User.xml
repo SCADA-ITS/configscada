@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="User">
+	<SELECT>SELECT user_id as "id", 
+				   role_id as "roleId", 
+				   name_ as "name", 
+				   password_ as "password", 
+				   password_expired_at as "passwordExpiredAt", 
+				   session_expire_time_s as "sessionExpireTimeS", 
+				   locked_until as "lockedUntil", 
+				   preset as "preset",
+				   allow_multiple_sessions as "allowMultipleSessions",
+				   full_name as "fullName",
+				   email as "email",
+				   locale_code as "localeCode",
+				   enabled as "enabled", 
+				   visible as "visible", 
+				   created_at as "createdAt", 
+				   updated_at as "updatedAt"
+			  FROM conf.users
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>INSERT INTO conf.users
+					   (user_id, 
+					    role_id, 
+					    name_, 
+					    password_, 
+					    password_expired_at, 
+					    session_expire_time_s, 
+					    locked_until, 
+					    preset,
+					    allow_multiple_sessions, 
+					    full_name, 
+					    email, 
+					    locale_code, 
+					    enabled, 
+					    visible, 
+					    created_at, 
+					    updated_at)
+				 VALUES (:id=getNextId{'conf.users'$'user_id'},
+				         :roleId,
+				         :name,
+				         :password,
+				         :passwordExpiredAt,
+				         :sessionExpireTimeS,
+				         :lockedUntil,
+				         :preset,
+				         :allowMultipleSessions,
+				         :fullName,
+				         :email,
+				         :localeCode,
+				         :enabled,
+				         :visible,
+				         CURRENT_TIMESTAMP,
+				         CURRENT_TIMESTAMP)
+	</INSERT>
+	<UPDATE>UPDATE conf.users
+			   SET role_id = :roleId, 
+				   name_ = :name, 
+				   password_ = :password, 
+				   password_expired_at = :passwordExpiredAt, 
+				   session_expire_time_s = :sessionExpireTimeS, 
+				   locked_until = :lockedUntil, 
+				   preset = :preset, 
+				   allow_multiple_sessions = :allowMultipleSessions,
+				   full_name = :fullName, 
+				   email = :email, 
+				   locale_code = :localeCode,
+				   enabled = :enabled, 
+				   visible = :visible, 
+				   updated_at = CURRENT_TIMESTAMP
+			 WHERE user_id = :id 
+	</UPDATE> 
+	<DELETE>DELETE FROM conf.users
+	         WHERE user_id = :id
+	</DELETE>
+</DML>

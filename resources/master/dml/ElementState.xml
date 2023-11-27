@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="ElementState">
+	<SELECT>SELECT et.element_type_id as "elementTypeId",
+       e.element_id as "elementId",
+       et.initial_element_type_state_id as "previousStateId",
+       et.initial_element_type_state_id as "stateId",
+       NULL as "maintenanceComment"
+		FROM conf.elements e
+		JOIN master.element_types et
+    	ON e.element_type_id = et.element_type_id
+		WHERE (e.enabled = true OR e.enabled IS NULL)
+		AND NOT EXISTS (
+		  SELECT 1
+		  FROM rt.element_states es
+		  WHERE es.element_type_id = e.element_type_id
+		    AND es.element_id = e.element_id
+	)
+
+UNION ALL
+
+SELECT element_type_id as "elementTypeId",
+       element_id as "elementId",
+       previous_state_id as "previousStateId",
+       current_state_id as "stateId",
+       maintenance_comment as "maintenanceComment"
+FROM rt.element_states es
+
+	</SELECT>
+	<INSERT>INSERT INTO rt.element_states
+				   (element_type_id,
+				    element_id,
+				    previous_state_id,
+				    current_state_id,
+				    maintenance_comment,
+				    created_at, 
+				    updated_at)
+		    VALUES (:elementTypeId
+		  		  , :elementId
+		  		  , :previousStateId
+		  		  , :stateId
+		  		  , :maintenanceComment
+		  		  , CURRENT_TIMESTAMP
+		  		  , CURRENT_TIMESTAMP)
+	</INSERT>
+	<UPDATE>
+	</UPDATE>
+	<DELETE>DELETE FROM rt.element_states
+			 WHERE element_type_id = :elementTypeId AND element_id = :elementId
+	</DELETE>
+</DML>

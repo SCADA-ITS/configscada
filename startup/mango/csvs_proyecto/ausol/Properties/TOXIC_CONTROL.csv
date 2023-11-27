@@ -1,0 +1,2 @@
+device_name;session_uid;PLC_name;host;port(i);url_publisher;read_permission;write_permission;offset_selector_auto_manual(i);offset_opening_gate(i);offset_gate_going_down(i);offset_gate_malfunction(i);offset_gate_opened(i);offset_gate_lowered(i);offset_gate_cmd(i)
+CAS-COMP-TOX-BC;CAS-COMP-TOX-BC;CAS-PLC-CGBT-BC;192.168.5.131;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;112;113;114;115;116;117;768

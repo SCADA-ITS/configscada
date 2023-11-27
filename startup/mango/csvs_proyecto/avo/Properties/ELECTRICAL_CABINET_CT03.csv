@@ -1,0 +1,6 @@
+device_name;session_uid;url_publisher;PLC_name;PLC_ip;PLC_port(i);read_permission;write_permission;bit_door_open(i)
+S1TN-AIM-004_AE;S1TN-AIM-004_AE;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;CT03_PLC_A;10.133.50.37;28015;monitor;;0
+S1TN-AIM-005_AE;S1TN-AIM-005_AE;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;CT03_PLC_A;10.133.50.37;28015;monitor;;1
+S1TN-AIM-001_AE;S1TN-AIM-001_AE;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;CT03_PLC_A;10.133.50.37;28015;monitor;;2
+S1TN-AIM-003_AE;S1TN-AIM-003_AE;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;CT03_PLC_A;10.133.50.37;28015;monitor;;3
+S1TN-AIM-002_AE;S1TN-AIM-002_AE;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;CT03_PLC_A;10.133.50.37;28015;monitor;;4

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="PmQueuePriority">
+	<SELECT>SELECT priority_id as "id",
+				   queue_id as "queueId",
+				   alias as "alias",
+				   description as "description",
+				   label_alias as "labelAlias", 
+				   label_description as "labelDescription",
+				   priority as "priority",
+				   default_priority as "defaultPriority",
+				   plan_priority as "planPriority",
+				   incident_priority as "incidentPriority",
+				   travel_time_priority as "travelTimePriority",
+				   check_conflict as "checkConflict",
+				   enabled as "enabled",
+				   visible as "visible"
+			  FROM master.pm_queue_priorities
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>
+	</INSERT>
+	<UPDATE> 
+	</UPDATE>
+	<DELETE>
+	</DELETE>
+</DML>

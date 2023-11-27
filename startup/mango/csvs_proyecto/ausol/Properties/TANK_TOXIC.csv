@@ -1,0 +1,2 @@
+device_name;session_uid;PLC_name;host;port(i);url_publisher;read_permission;write_permission;offset_toxic_capacity(i)
+CAS-DEP-TOX-BC;CAS-DEP-TOX-BC;CAS-PLC-CGBT-BC;192.168.5.131;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;1

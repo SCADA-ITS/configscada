@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="Plan">
+	<SELECT>SELECT plan_id as "id", 
+				   plan_mode_type_id as "planModeTypeId",
+				   alias as "alias", 
+				   description as "description", 
+				   management_area_id as "managementAreaId",
+				   enabled as "enabled", 
+				   visible as "visible" 
+			  FROM conf.plans
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>INSERT INTO conf.plans
+					   (plan_id,
+					   	plan_mode_type_id,
+					    alias,
+					    description,
+					    management_area_id,
+					    enabled,
+					    visible,
+					    created_at,
+					    updated_at)
+				 VALUES (:id=getNextId{'conf.plans'$'plan_id'},
+				 		 :planModeTypeId,
+				         :alias,
+				         :description,
+				         :managementAreaId,
+				         :enabled,
+				         :visible,
+				         CURRENT_TIMESTAMP,
+				         CURRENT_TIMESTAMP)
+	</INSERT>
+	<UPDATE>UPDATE conf.plans
+			   SET plan_mode_type_id = :planModeTypeId,
+			   	   alias = :alias,
+				   description = :description,
+				   management_area_id = :managementAreaId,
+				   enabled = :enabled,
+				   visible = :visible,
+				   updated_at = CURRENT_TIMESTAMP
+			 WHERE plan_id = :id
+	</UPDATE>
+	<DELETE>DELETE FROM conf.plans
+			 WHERE plan_id = :id
+	</DELETE>
+</DML>

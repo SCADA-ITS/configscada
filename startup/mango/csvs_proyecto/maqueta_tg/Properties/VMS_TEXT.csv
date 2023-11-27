@@ -1,0 +1,13 @@
+device_name;session_uid;host;url_publisher;port(i);readCommunity;writeCommunity;read_permission;write_permission
+V-TG01-xxxx-S;V-TG01-xxxx-S;192.168.88.189;http:\/\/192.168.88.170:3000\/api\/v2\/generic\/;888;public;public;monitor;
+V-TG01-0060-S;V-TG01-0060-S;192.168.88.189;http:\/\/192.168.88.170:3000\/api\/v2\/generic\/;889;public;public;monitor;
+V-TG01-0297-S;V-TG01-0297-S;192.168.88.189;http:\/\/192.168.88.170:3000\/api\/v2\/generic\/;890;public;public;monitor;
+V-TG01-0824-N;V-TG01-0824-N;192.168.88.189;http:\/\/192.168.88.170:3000\/api\/v2\/generic\/;891;public;public;monitor;
+V-TG01-1546-S;V-TG01-1546-S;192.168.88.189;http:\/\/192.168.88.170:3000\/api\/v2\/generic\/;892;public;public;monitor;
+V-TG58-1729-W;V-TG58-1729-W;192.168.88.189;http:\/\/192.168.88.170:3000\/api\/v2\/generic\/;893;public;public;monitor;
+V-TG58-0320-E;V-TG58-0320-E;192.168.88.189;http:\/\/192.168.88.170:3000\/api\/v2\/generic\/;894;public;public;monitor;
+V-TG01-1785-S;V-TG01-1785-S;192.168.88.189;http:\/\/192.168.88.170:3000\/api\/v2\/generic\/;895;public;public;monitor;
+V-TG01-1893-N;V-TG01-1893-N;192.168.88.189;http:\/\/192.168.88.170:3000\/api\/v2\/generic\/;896;public;public;monitor;
+V-TG01-2179-N;V-TG01-2179-N;192.168.88.189;http:\/\/192.168.88.170:3000\/api\/v2\/generic\/;897;public;public;monitor;
+V-TG01-2459-S;V-TG01-2459-S;192.168.88.189;http:\/\/192.168.88.170:3000\/api\/v2\/generic\/;898;public;public;monitor;
+V-TG01-2900-N;V-TG01-2900-N;192.168.88.189;http:\/\/192.168.88.170:3000\/api\/v2\/generic\/;899;public;public;monitor;

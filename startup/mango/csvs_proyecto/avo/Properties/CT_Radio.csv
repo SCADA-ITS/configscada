@@ -1,0 +1,2 @@
+device_name;session_uid;url_publisher;host;port(i);offset_alarm(i);bit_alarm(i)
+CCOP-MST-001;CCOP-MST-001;http://192.168.88.176:3000/api/v2/generic/;10.133.50.37;28001;22701;1

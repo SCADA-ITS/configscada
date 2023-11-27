@@ -1,0 +1,25 @@
+root_device;signal;id;device;channel;description;controller;inverseLogic
+STM2-VENT-VF1-CA;directSpinInput;1;CGBT;M4DI9;STM2-VENT-VF1-CA Estado giro sentido directo;WAGO;false
+STM2-VENT-VF1-CA;directSpinOutput;2;CGBT;M2DO7;STM2-VENT-VF1-CA Control giro sentido directo;WAGO;false
+STM2-VENT-VF1-CA;inverseSpinInput;3;CGBT;M4DI10;STM2-VENT-VF1-CA Estado giro sentido inverso;WAGO;false
+STM2-VENT-VF1-CA;inverseSpinOutput;4;CGBT;M2DO8;STM2-VENT-VF1-CA Control giro sentido inverso;WAGO;false
+STM2-VENT-VF2-CA;directSpinInput;1;CGBT;M4DI13;STM2-VENT-VF2-CA Estado giro sentido directo;WAGO;false
+STM2-VENT-VF2-CA;directSpinOutput;2;CGBT;M2DO9;STM2-VENT-VF2-CA Control giro sentido directo;WAGO;false
+STM2-VENT-VF2-CA;inverseSpinInput;3;CGBT;M4DI14;STM2-VENT-VF2-CA Estado giro sentido inverso;WAGO;false
+STM2-VENT-VF2-CA;inverseSpinOutput;4;CGBT;M2DO10;STM2-VENT-VF2-CA Control giro sentido inverso;WAGO;false
+STM2-VENT-VF3-CA;directSpinInput;1;CGBT;M5DI1;STM2-VENT-VF3-CA  Estado giro sentido directo;WAGO;false
+STM2-VENT-VF3-CA;directSpinOutput;2;CGBT;M2DO11;STM2-VENT-VF3-CA  Control giro sentido directo;WAGO;false
+STM2-VENT-VF3-CA;inverseSpinInput;3;CGBT;M5DI2;STM2-VENT-VF3-CA  Estado giro sentido inverso;WAGO;false
+STM2-VENT-VF3-CA;inverseSpinOutput;4;CGBT;M2DO12;STM2-VENT-VF3-CA  Control giro sentido inverso;WAGO;false
+STM2-VENT-VF4-CA;directSpinInput;1;CGBT;M5DI5;STM2-VENT-VF4-CA  Estado giro sentido directo;WAGO;false
+STM2-VENT-VF4-CA;directSpinOutput;2;CGBT;M2DO13;STM2-VENT-VF4-CA  Control giro sentido directo;WAGO;false
+STM2-VENT-VF4-CA;inverseSpinInput;3;CGBT;M5DI6;STM2-VENT-VF4-CA  Estado giro sentido inverso;WAGO;false
+STM2-VENT-VF4-CA;inverseSpinOutput;4;CGBT;M2DO14;STM2-VENT-VF4-CA  Control giro sentido inverso;WAGO;false
+STM2-VENT-VF5-CA;directSpinInput;1;CGBT;M5DI9;STM2-VENT-VF5-CA  Estado giro sentido directo;WAGO;false
+STM2-VENT-VF5-CA;directSpinOutput;2;CGBT;M2DO15;STM2-VENT-VF5-CA  Control giro sentido directo;WAGO;false
+STM2-VENT-VF5-CA;inverseSpinInput;3;CGBT;M5DI10;STM2-VENT-VF5-CA  Estado giro sentido inverso;WAGO;false
+STM2-VENT-VF5-CA;inverseSpinOutput;4;CGBT;M3DO0;STM2-VENT-VF5-CA  Control giro sentido inverso;WAGO;false
+STM2-VENT-VF6-CA;directSpinInput;1;CGBT;M5DI13;STM2-VENT-VF6-CA  Estado giro sentido directo;WAGO;false
+STM2-VENT-VF6-CA;directSpinOutput;2;CGBT;M3DO1;STM2-VENT-VF6-CA  Control giro sentido directo;WAGO;false
+STM2-VENT-VF6-CA;inverseSpinInput;3;CGBT;M5DI14;STM2-VENT-VF6-CA  Estado giro sentido inverso;WAGO;false
+STM2-VENT-VF6-CA;inverseSpinOutput;4;CGBT;M3DO2;STM2-VENT-VF6-CA  Control giro sentido inverso;WAGO;false

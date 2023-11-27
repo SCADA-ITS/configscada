@@ -1,0 +1,72 @@
+{
+  "version": "3.0.3",
+
+ 
+  "mode": "TCP",
+
+
+  "port": {
+    "name": "COM1",
+    "baudRate": 19200,
+    "dataBits": 8,
+    "parity": "none",
+    "stopBits": 1
+  },
+
+
+  "frameDelay": null,
+
+ 
+  "tcpPort": "{port}",
+
+  "slaves": {
+    "1": {
+
+      "isOnline": true,
+
+    
+      "registers": {
+
+       
+        "HR0": 1,
+        "HR1": 2,
+        "HR2": 3,
+
+   
+        "HR10": "0x0A",
+        "HR11": "0x0B",
+        "HR12": "0x0C",
+        "HR13": "0xFFFF",
+        "HR14": "0x1234",
+
+      
+        "HR999": { "exception": 3 },
+
+       
+        "IR1": 1,
+        "IR2": 2,
+
+  
+        "C0": false,
+        "C1": true,
+
+  
+        "DI1": true,
+        "DI2": true
+      }
+    },
+    "2": {
+ 
+      "isOnline": false,
+      "registers": {
+        "HR1": 1
+      }
+    }
+  },
+
+  "api": {
+
+    "enable": true,
+    "port": "{port_sim_input_publisher}"
+  }
+}

@@ -1,0 +1,3 @@
+device_name;session_uid;ct_upd;upd_state;url_publisher;PLC_name;PLC_ip;PLC_port(i);read_permission;write_permission;offset_mt_pat_switch_position(i);offset_mt_disconnect_switch_position(i);offset_fuse_state(i)
+CT01-CLI1-SE1;CT01-CLI1-SE1;CT01_PLC_F;upd_fail_ct01;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;CT01_PLC_F;10.133.50.37;28006;monitor;;21800;21800;21800
+CT01-CPF1-SE1;CT01-CPF1-SE1;CT01_PLC_F;upd_fail_ct01;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;CT01_PLC_F;10.133.50.37;28006;monitor;;21810;21810;21810

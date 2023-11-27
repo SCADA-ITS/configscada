@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="VmsGraphic">
+	<SELECT>SELECT graphic_type_id as "graphicTypeId",
+	               graphic_id as "id",
+	               graphic_category_id as "graphicCategoryId",
+				   alias as "alias",
+				   description as "description",
+				   enabled as "enabled",
+				   visible as "visible"
+			  FROM master.vms_graphics
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>
+	</INSERT>
+	<UPDATE>
+	</UPDATE>
+	<DELETE>
+	</DELETE>
+</DML>

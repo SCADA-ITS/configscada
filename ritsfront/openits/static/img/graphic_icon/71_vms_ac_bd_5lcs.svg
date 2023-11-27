@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="187.85417mm"
+   height="55.562496mm"
+   viewBox="0 0 187.85417 55.562496"
+   version="1.1"
+   id="svg2"
+   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   sodipodi:docname="71_vms_ac_bd_5lcs.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <defs
+     id="defs2">
+    <rect
+       x="156.90378"
+       y="158.35213"
+       width="118.76409"
+       height="25.104605"
+       id="rect4297" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.0356666"
+     inkscape:cx="315.25589"
+     inkscape:cy="48.760866"
+     inkscape:document-units="px"
+     inkscape:current-layer="zone8"
+     inkscape:document-rotation="0"
+     showgrid="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="1912"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     showguides="false"
+     inkscape:guide-bbox="true"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:snap-global="false" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="main"
+     inkscape:groupmode="layer"
+     id="main"
+     style="display:inline">
+    <path
+       id="state"
+       style="fill:#ffcc00;fill-opacity:1;fill-rule:evenodd;stroke-width:1.43193"
+       d="M 0,0 H 187.85417 V 55.562499 H 0 Z" />
+    <path
+       id="path283"
+       style="display:inline;fill:#222222;fill-opacity:1;fill-rule:evenodd;stroke-width:1.38752"
+       d="M 1.3229167,1.3229167 H 186.53125 V 54.239583 H 1.3229167 Z" />
+    <g
+       inkscape:groupmode="layer"
+       id="zone5"
+       inkscape:label="zone5"
+       style="display:inline">
+      <path
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke-width:0.500632"
+         d="m 76.06775,1.984375 h 35.71882 V 37.703126 H 76.06775 Z"
+         id="path191" />
+      <image
+         xlink:href="../../../project/ausol/img/pictograms/80.bmp"
+         width="34.395832"
+         height="34.395832"
+         preserveAspectRatio="none"
+         id="graphic5-1"
+         x="76.729218"
+         y="2.6458333" />
+    </g>
+    <g
+       inkscape:groupmode="layer"
+       id="zone7"
+       inkscape:label="zone7"
+       style="display:inline">
+      <path
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke-width:0.500632"
+         d="M 39.02606,1.984375 H 74.744814 V 37.703126 H 39.02606 Z"
+         id="path191-2-2" />
+      <image
+         xlink:href="../../../project/ausol/img/pictograms/80.bmp"
+         width="34.395832"
+         height="34.395832"
+         preserveAspectRatio="none"
+         id="graphic7-1"
+         x="39.687515"
+         y="2.6458333" />
+    </g>
+    <g
+       inkscape:groupmode="layer"
+       id="zone9"
+       inkscape:label="zone9"
+       style="display:inline">
+      <path
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke-width:0.500632"
+         d="M 1.9843748,1.984375 H 37.703124 V 37.703126 H 1.9843748 Z"
+         id="path191-2-1" />
+      <image
+         xlink:href="../../../project/ausol/img/pictograms/80.bmp"
+         width="34.395832"
+         height="34.395832"
+         preserveAspectRatio="none"
+         id="graphic9-1"
+         x="2.6458325"
+         y="2.6458333" />
+    </g>
+    <g
+       inkscape:groupmode="layer"
+       id="zone6"
+       inkscape:label="zone6"
+       style="display:inline">
+      <path
+         style="display:inline;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke-width:0.333754"
+         d="m 76.06775,37.703126 h 35.71882 v 15.875 H 76.06775 Z"
+         id="path191-2" />
+      <image
+         xlink:href="../../../project/ausol/img/pictograms/80.bmp"
+         style="display:inline"
+         y="38.364582"
+         x="87.312561"
+         id="graphic6-1"
+         preserveAspectRatio="none"
+         height="14.552083"
+         width="14.552083" />
+    </g>
+    <g
+       inkscape:groupmode="layer"
+       id="zone10"
+       inkscape:label="zone10"
+       style="display:inline">
+      <path
+         style="display:inline;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke-width:0.333754"
+         d="M 1.9843748,37.703126 H 37.703124 v 15.875 H 1.9843748 Z"
+         id="path2588" />
+      <image
+         xlink:href="../../../project/ausol/img/pictograms/80.bmp"
+         style="display:inline"
+         y="38.364582"
+         x="13.229162"
+         id="graphic10-1"
+         preserveAspectRatio="none"
+         height="14.552083"
+         width="14.552083" />
+    </g>
+    <g
+       inkscape:groupmode="layer"
+       id="zone3"
+       inkscape:label="zone3"
+       style="display:inline">
+      <path
+         style="display:inline;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke-width:0.500633"
+         d="m 113.10949,1.9843747 h 35.71895 V 37.703125 h -35.71895 z"
+         id="path191-3" />
+      <image
+         xlink:href="../../../project/ausol/img/pictograms/80.bmp"
+         width="34.395832"
+         height="34.395832"
+         preserveAspectRatio="none"
+         id="graphic3-1"
+         x="113.77087"
+         y="2.6458316"
+         style="display:inline" />
+    </g>
+    <g
+       inkscape:groupmode="layer"
+       id="zone4"
+       inkscape:label="zone4"
+       style="display:inline">
+      <path
+         style="display:inline;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke-width:0.333752"
+         d="m 113.10949,37.703126 h 35.71896 v 15.875 h -35.71896 z"
+         id="path191-4" />
+      <text
+         xml:space="preserve"
+         id="line4-1"
+         style="font-size:4px;line-height:1.25;font-family:monospace;-inkscape-font-specification:Arial;text-align:center;letter-spacing:0.0826058px;word-spacing:0px;text-anchor:middle;display:inline;fill:#ffffff;fill-opacity:1;stroke-width:0.0806786;stroke-miterlimit:4;stroke-dasharray:none"
+         x="129.84937"
+         y="47.488934"><tspan
+           sodipodi:role="line"
+           id="tspan4299"
+           style="stroke-width:0.0806786"
+           x="129.89067"
+           y="47.488934"></tspan></text>
+    </g>
+    <g
+       inkscape:groupmode="layer"
+       id="zone8"
+       inkscape:label="zone8"
+       style="display:inline">
+      <path
+         style="display:inline;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke-width:0.333752"
+         d="m 39.026038,37.703126 h 35.718756 v 15.875 H 39.026038 Z"
+         id="path191-2-3" />
+      <text
+         xml:space="preserve"
+         id="line8-1"
+         style="font-size:4px;line-height:1.25;font-family:monospace;-inkscape-font-specification:Arial;text-align:center;letter-spacing:0.0826058px;word-spacing:0px;text-anchor:middle;display:inline;fill:#ffffff;fill-opacity:1;stroke-width:0.0806786;stroke-miterlimit:4;stroke-dasharray:none"
+         x="55.766029"
+         y="47.488934"><tspan
+           sodipodi:role="line"
+           id="tspan2698"
+           style="stroke-width:0.0806786"
+           x="55.807331"
+           y="47.488934"></tspan></text>
+    </g>
+    <g
+       inkscape:groupmode="layer"
+       id="zone1"
+       inkscape:label="zone1"
+       style="display:inline">
+      <path
+         style="display:inline;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke-width:0.500633"
+         d="m 150.15137,1.9843747 h 35.71888 V 37.703125 h -35.71888 z"
+         id="path191-1" />
+      <image
+         xlink:href="../../../project/ausol/img/pictograms/80.bmp"
+         style="display:inline"
+         y="2.6458347"
+         x="150.81221"
+         id="graphic1-1"
+         preserveAspectRatio="none"
+         height="34.395832"
+         width="34.395832" />
+    </g>
+    <g
+       inkscape:groupmode="layer"
+       id="zone2"
+       inkscape:label="zone2"
+       style="display:inline">
+      <path
+         style="display:inline;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke-width:0.333753"
+         d="m 150.15137,37.703126 h 35.71889 v 15.875 h -35.71889 z"
+         id="path191-6-7-0" />
+      <image
+         xlink:href="../../../project/ausol/img/pictograms/80.bmp"
+         width="14.552082"
+         height="14.552082"
+         preserveAspectRatio="none"
+         id="graphic2-1"
+         x="161.39543"
+         y="38.364586"
+         style="display:inline" />
+    </g>
+  </g>
+</svg>

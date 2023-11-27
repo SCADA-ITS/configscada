@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="SystemParamValue">
+	<SELECT>SELECT system_param_id as "id",
+				   value as "value", 
+				   enabled as "enabled", 
+				   visible as "visible", 
+				   created_at as "createdAt", 
+				   updated_at as "updatedAt"
+			  FROM conf.system_param_values
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>
+	</INSERT>
+	<UPDATE>
+	</UPDATE>
+	<DELETE>
+	</DELETE>
+</DML>

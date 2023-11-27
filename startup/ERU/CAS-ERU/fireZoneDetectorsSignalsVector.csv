@@ -1,0 +1,91 @@
+root_device;signal;id;device;channel;description;controller;inverseLogic;xAddress;xStatusAddress
+Central de alarmas CAS Sentido CA;zonesAlarm;1;DTR_OTS_CA;DO601;CAS-OTS CA Alarma Zona 1;OTS;false;1000;1200
+Central de alarmas CAS Sentido CA;zonesAlarm;2;DTR_OTS_CA;DO602;CAS-OTS CA Alarma Zona 2;OTS;false;1001;1201
+Central de alarmas CAS Sentido CA;zonesAlarm;3;DTR_OTS_CA;DO603;CAS-OTS CA Alarma Zona 3;OTS;false;1002;1202
+Central de alarmas CAS Sentido CA;zonesAlarm;4;DTR_OTS_CA;DO604;CAS-OTS CA Alarma Zona 4;OTS;false;1003;1203
+Central de alarmas CAS Sentido CA;zonesAlarm;5;DTR_OTS_CA;DO605;CAS-OTS CA Alarma Zona 5;OTS;false;1004;1204
+Central de alarmas CAS Sentido CA;zonesAlarm;6;DTR_OTS_CA;DO606;CAS-OTS CA Alarma Zona 6;OTS;false;1005;1205
+Central de alarmas CAS Sentido CA;zonesAlarm;7;DTR_OTS_CA;DO607;CAS-OTS CA Alarma Zona 7;OTS;false;1006;1206
+Central de alarmas CAS Sentido CA;zonesAlarm;8;DTR_OTS_CA;DO608;CAS-OTS CA Alarma Zona 8;OTS;false;1007;1207
+Central de alarmas CAS Sentido CA;zonesAlarm;9;DTR_OTS_CA;DO609;CAS-OTS CA Alarma Zona 9;OTS;false;1008;1208
+Central de alarmas CAS Sentido CA;zonesAlarm;10;DTR_OTS_CA;DO610;CAS-OTS CA Alarma Zona 10;OTS;false;1009;1209
+Central de alarmas CAS Sentido CA;zonesAlarm;11;DTR_OTS_CA;DO611;CAS-OTS CA Alarma Zona 11;OTS;false;1010;1210
+Central de alarmas CAS Sentido CA;zonesAlarm;12;DTR_OTS_CA;DO612;CAS-OTS CA Alarma Zona 12;OTS;false;1011;1211
+Central de alarmas CAS Sentido CA;zonesAlarm;13;DTR_OTS_CA;DO613;CAS-OTS CA Alarma Zona 13;OTS;false;1012;1212
+Central de alarmas CAS Sentido CA;zonesAlarm;14;DTR_OTS_CA;DO614;CAS-OTS CA Alarma Zona 14;OTS;false;1013;1213
+Central de alarmas CAS Sentido CA;zonesAlarm;15;DTR_OTS_CA;DO615;CAS-OTS CA Alarma Zona 15;OTS;false;1014;1214
+Central de alarmas CAS Sentido CA;fiberFaultAlarm;1;DTR_OTS_CA;DO901;CAS-OTS CA Alarma fibra Zona 1;OTS;false;1015;1215
+Central de alarmas CAS Sentido CA;fiberFaultAlarm;2;DTR_OTS_CA;DO902;CAS-OTS CA Alarma fibra Zona 2;OTS;false;1016;1216
+Central de alarmas CAS Sentido CA;fiberFaultAlarm;3;DTR_OTS_CA;DO903;CAS-OTS CA Alarma fibra Zona 3;OTS;false;1017;1217
+Central de alarmas CAS Sentido CA;fiberFaultAlarm;4;DTR_OTS_CA;DO904;CAS-OTS CA Alarma fibra Zona 4;OTS;false;1018;1218
+Central de alarmas CAS Sentido CA;fiberFaultAlarm;5;DTR_OTS_CA;DO905;CAS-OTS CA Alarma fibra Zona 5;OTS;false;1019;1219
+Central de alarmas CAS Sentido CA;fiberFaultAlarm;6;DTR_OTS_CA;DO906;CAS-OTS CA Alarma fibra Zona 6;OTS;false;1020;1220
+Central de alarmas CAS Sentido CA;fiberFaultAlarm;7;DTR_OTS_CA;DO907;CAS-OTS CA Alarma fibra Zona 7;OTS;false;1021;1221
+Central de alarmas CAS Sentido CA;fiberFaultAlarm;8;DTR_OTS_CA;DO908;CAS-OTS CA Alarma fibra Zona 8;OTS;false;1022;1222
+Central de alarmas CAS Sentido CA;fiberFaultAlarm;9;DTR_OTS_CA;DO909;CAS-OTS CA Alarma fibra Zona 9;OTS;false;1023;1223
+Central de alarmas CAS Sentido CA;fiberFaultAlarm;10;DTR_OTS_CA;DO910;CAS-OTS CA Alarma fibra Zona 10;OTS;false;1024;1224
+Central de alarmas CAS Sentido CA;fiberFaultAlarm;11;DTR_OTS_CA;DO911;CAS-OTS CA Alarma fibra Zona 11;OTS;false;1025;1225
+Central de alarmas CAS Sentido CA;fiberFaultAlarm;12;DTR_OTS_CA;DO912;CAS-OTS CA Alarma fibra Zona 12;OTS;false;1026;1226
+Central de alarmas CAS Sentido CA;fiberFaultAlarm;13;DTR_OTS_CA;DO913;CAS-OTS CA Alarma fibra Zona 13;OTS;false;1027;1227
+Central de alarmas CAS Sentido CA;fiberFaultAlarm;14;DTR_OTS_CA;DO914;CAS-OTS CA Alarma fibra Zona 14;OTS;false;1028;1228
+Central de alarmas CAS Sentido CA;fiberFaultAlarm;15;DTR_OTS_CA;DO915;CAS-OTS CA Alarma fibra Zona 15;OTS;false;1029;1229
+Central de alarmas CAS Sentido CA;averageTemperature;1;DTR_OTS_CA;AO1001;CAS-OTS CA Temperatura media Zona 1;OTS;false;1030;1230
+Central de alarmas CAS Sentido CA;averageTemperature;2;DTR_OTS_CA;AO1002;CAS-OTS CA Temperatura media Zona 2;OTS;false;1031;1231
+Central de alarmas CAS Sentido CA;averageTemperature;3;DTR_OTS_CA;AO1003;CAS-OTS CA Temperatura media Zona 3;OTS;false;1032;1232
+Central de alarmas CAS Sentido CA;averageTemperature;4;DTR_OTS_CA;AO1004;CAS-OTS CA Temperatura media Zona 4;OTS;false;1033;1233
+Central de alarmas CAS Sentido CA;averageTemperature;5;DTR_OTS_CA;AO1005;CAS-OTS CA Temperatura media Zona 5;OTS;false;1034;1234
+Central de alarmas CAS Sentido CA;averageTemperature;6;DTR_OTS_CA;AO1006;CAS-OTS CA Temperatura media Zona 6;OTS;false;1035;1235
+Central de alarmas CAS Sentido CA;averageTemperature;7;DTR_OTS_CA;AO1007;CAS-OTS CA Temperatura media Zona 7;OTS;false;1036;1236
+Central de alarmas CAS Sentido CA;averageTemperature;8;DTR_OTS_CA;AO1008;CAS-OTS CA Temperatura media Zona 8;OTS;false;1037;1237
+Central de alarmas CAS Sentido CA;averageTemperature;9;DTR_OTS_CA;AO1009;CAS-OTS CA Temperatura media Zona 9;OTS;false;1038;1238
+Central de alarmas CAS Sentido CA;averageTemperature;10;DTR_OTS_CA;AO1010;CAS-OTS CA Temperatura media Zona 10;OTS;false;1039;1239
+Central de alarmas CAS Sentido CA;averageTemperature;11;DTR_OTS_CA;AO1011;CAS-OTS CA Temperatura media Zona 11;OTS;false;1040;1240
+Central de alarmas CAS Sentido CA;averageTemperature;12;DTR_OTS_CA;AO1012;CAS-OTS CA Temperatura media Zona 12;OTS;false;1041;1241
+Central de alarmas CAS Sentido CA;averageTemperature;13;DTR_OTS_CA;AO1013;CAS-OTS CA Temperatura media Zona 13;OTS;false;1042;1242
+Central de alarmas CAS Sentido CA;averageTemperature;14;DTR_OTS_CA;AO1014;CAS-OTS CA Temperatura media Zona 14;OTS;false;1043;1243
+Central de alarmas CAS Sentido CA;averageTemperature;15;DTR_OTS_CA;AO1015;CAS-OTS CA Temperatura media Zona 15;OTS;false;1044;1244
+Central de alarmas CAS Sentido MA;zonesAlarm;1;DTR_OTS_MA;DO1201;CAS-OTS MA Alarma Zona 1;OTS;false;1045;1245
+Central de alarmas CAS Sentido MA;zonesAlarm;2;DTR_OTS_MA;DO1202;CAS-OTS MA Alarma Zona 2;OTS;false;1046;1246
+Central de alarmas CAS Sentido MA;zonesAlarm;3;DTR_OTS_MA;DO1203;CAS-OTS MA Alarma Zona 3;OTS;false;1047;1247
+Central de alarmas CAS Sentido MA;zonesAlarm;4;DTR_OTS_MA;DO1204;CAS-OTS MA Alarma Zona 4;OTS;false;1048;1248
+Central de alarmas CAS Sentido MA;zonesAlarm;5;DTR_OTS_MA;DO1205;CAS-OTS MA Alarma Zona 5;OTS;false;1049;1249
+Central de alarmas CAS Sentido MA;zonesAlarm;6;DTR_OTS_MA;DO1206;CAS-OTS MA Alarma Zona 6;OTS;false;1050;1250
+Central de alarmas CAS Sentido MA;zonesAlarm;7;DTR_OTS_MA;DO1207;CAS-OTS MA Alarma Zona 7;OTS;false;1051;1251
+Central de alarmas CAS Sentido MA;zonesAlarm;8;DTR_OTS_MA;DO1208;CAS-OTS MA Alarma Zona 8;OTS;false;1052;1252
+Central de alarmas CAS Sentido MA;zonesAlarm;9;DTR_OTS_MA;DO1209;CAS-OTS MA Alarma Zona 9;OTS;false;1053;1253
+Central de alarmas CAS Sentido MA;zonesAlarm;10;DTR_OTS_MA;DO1210;CAS-OTS MA Alarma Zona 10;OTS;false;1054;1254
+Central de alarmas CAS Sentido MA;zonesAlarm;11;DTR_OTS_MA;DO1211;CAS-OTS MA Alarma Zona 11;OTS;false;1055;1255
+Central de alarmas CAS Sentido MA;zonesAlarm;12;DTR_OTS_MA;DO1212;CAS-OTS MA Alarma Zona 12;OTS;false;1056;1256
+Central de alarmas CAS Sentido MA;zonesAlarm;13;DTR_OTS_MA;DO1213;CAS-OTS MA Alarma Zona 13;OTS;false;1057;1257
+Central de alarmas CAS Sentido MA;zonesAlarm;14;DTR_OTS_MA;DO1214;CAS-OTS MA Alarma Zona 14;OTS;false;1058;1258
+Central de alarmas CAS Sentido MA;zonesAlarm;15;DTR_OTS_MA;DO1215;CAS-OTS MA Alarma Zona 15;OTS;false;1059;1259
+Central de alarmas CAS Sentido MA;fiberFaultAlarm;1;DTR_OTS_MA;DO1501;CAS-OTS MA Alarma fibra Zona 1;OTS;false;1060;1260
+Central de alarmas CAS Sentido MA;fiberFaultAlarm;2;DTR_OTS_MA;DO1502;CAS-OTS MA Alarma fibra Zona 2;OTS;false;1061;1261
+Central de alarmas CAS Sentido MA;fiberFaultAlarm;3;DTR_OTS_MA;DO1503;CAS-OTS MA Alarma fibra Zona 3;OTS;false;1062;1262
+Central de alarmas CAS Sentido MA;fiberFaultAlarm;4;DTR_OTS_MA;DO1504;CAS-OTS MA Alarma fibra Zona 4;OTS;false;1063;1263
+Central de alarmas CAS Sentido MA;fiberFaultAlarm;5;DTR_OTS_MA;DO1505;CAS-OTS MA Alarma fibra Zona 5;OTS;false;1064;1264
+Central de alarmas CAS Sentido MA;fiberFaultAlarm;6;DTR_OTS_MA;DO1506;CAS-OTS MA Alarma fibra Zona 6;OTS;false;1065;1265
+Central de alarmas CAS Sentido MA;fiberFaultAlarm;7;DTR_OTS_MA;DO1507;CAS-OTS MA Alarma fibra Zona 7;OTS;false;1066;1266
+Central de alarmas CAS Sentido MA;fiberFaultAlarm;8;DTR_OTS_MA;DO1508;CAS-OTS MA Alarma fibra Zona 8;OTS;false;1067;1267
+Central de alarmas CAS Sentido MA;fiberFaultAlarm;9;DTR_OTS_MA;DO1509;CAS-OTS MA Alarma fibra Zona 9;OTS;false;1068;1268
+Central de alarmas CAS Sentido MA;fiberFaultAlarm;10;DTR_OTS_MA;DO1510;CAS-OTS MA Alarma fibra Zona 10;OTS;false;1069;1269
+Central de alarmas CAS Sentido MA;fiberFaultAlarm;11;DTR_OTS_MA;DO1511;CAS-OTS MA Alarma fibra Zona 11;OTS;false;1070;1270
+Central de alarmas CAS Sentido MA;fiberFaultAlarm;12;DTR_OTS_MA;DO1512;CAS-OTS MA Alarma fibra Zona 12;OTS;false;1071;1271
+Central de alarmas CAS Sentido MA;fiberFaultAlarm;13;DTR_OTS_MA;DO1513;CAS-OTS MA Alarma fibra Zona 13;OTS;false;1072;1272
+Central de alarmas CAS Sentido MA;fiberFaultAlarm;14;DTR_OTS_MA;DO1514;CAS-OTS MA Alarma fibra Zona 14;OTS;false;1073;1273
+Central de alarmas CAS Sentido MA;fiberFaultAlarm;15;DTR_OTS_MA;DO1515;CAS-OTS MA Alarma fibra Zona 15;OTS;false;1074;1274
+Central de alarmas CAS Sentido MA;averageTemperature;1;DTR_OTS_MA;AO2001;CAS-OTS MA Temperatura media Zona 1;OTS;false;1075;1275
+Central de alarmas CAS Sentido MA;averageTemperature;2;DTR_OTS_MA;AO2002;CAS-OTS MA Temperatura media Zona 2;OTS;false;1076;1276
+Central de alarmas CAS Sentido MA;averageTemperature;3;DTR_OTS_MA;AO2003;CAS-OTS MA Temperatura media Zona 3;OTS;false;1077;1277
+Central de alarmas CAS Sentido MA;averageTemperature;4;DTR_OTS_MA;AO2004;CAS-OTS MA Temperatura media Zona 4;OTS;false;1078;1278
+Central de alarmas CAS Sentido MA;averageTemperature;5;DTR_OTS_MA;AO2005;CAS-OTS MA Temperatura media Zona 5;OTS;false;1079;1279
+Central de alarmas CAS Sentido MA;averageTemperature;6;DTR_OTS_MA;AO2006;CAS-OTS MA Temperatura media Zona 6;OTS;false;1080;1280
+Central de alarmas CAS Sentido MA;averageTemperature;7;DTR_OTS_MA;AO2007;CAS-OTS MA Temperatura media Zona 7;OTS;false;1081;1281
+Central de alarmas CAS Sentido MA;averageTemperature;8;DTR_OTS_MA;AO2008;CAS-OTS MA Temperatura media Zona 8;OTS;false;1082;1282
+Central de alarmas CAS Sentido MA;averageTemperature;9;DTR_OTS_MA;AO2009;CAS-OTS MA Temperatura media Zona 9;OTS;false;1083;1283
+Central de alarmas CAS Sentido MA;averageTemperature;10;DTR_OTS_MA;AO2010;CAS-OTS MA Temperatura media Zona 10;OTS;false;1084;1284
+Central de alarmas CAS Sentido MA;averageTemperature;11;DTR_OTS_MA;AO2011;CAS-OTS MA Temperatura media Zona 11;OTS;false;1085;1285
+Central de alarmas CAS Sentido MA;averageTemperature;12;DTR_OTS_MA;AO2012;CAS-OTS MA Temperatura media Zona 12;OTS;false;1086;1286
+Central de alarmas CAS Sentido MA;averageTemperature;13;DTR_OTS_MA;AO2013;CAS-OTS MA Temperatura media Zona 13;OTS;false;1087;1287
+Central de alarmas CAS Sentido MA;averageTemperature;14;DTR_OTS_MA;AO2014;CAS-OTS MA Temperatura media Zona 14;OTS;false;1088;1288
+Central de alarmas CAS Sentido MA;averageTemperature;15;DTR_OTS_MA;AO2015;CAS-OTS MA Temperatura media Zona 15;OTS;false;1089;1289

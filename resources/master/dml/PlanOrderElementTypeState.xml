@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="PlanOrderElementTypeState">
+	<SELECT>SELECT plan_id as "planId",
+				   plan_order_id as "planOrderId",
+				   element_type_id as "elementTypeId",
+				   element_type_state_id as "elementTypeStateId", 
+				   element_id as "elementId",
+				   enabled as "enabled", 
+				   visible as "visible"
+			  FROM conf.plan_order_element_type_states
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>INSERT INTO conf.plan_order_element_type_states
+					   (plan_id,
+					    plan_order_id,
+					   	element_type_id,
+					   	element_type_state_id,
+					   	element_id,
+					    enabled,
+					    visible,
+					    created_at,
+					    updated_at)
+				 VALUES (:planId,
+				 		 :planOrderId,
+				 		 :elementTypeId,
+				 		 :elementTypeStateId,
+				 		 :elementId,
+				         :enabled,
+				         :visible,
+				         CURRENT_TIMESTAMP,
+				         CURRENT_TIMESTAMP)
+	</INSERT>
+	<UPDATE>UPDATE conf.plan_order_element_type_states
+				SET enabled = :enabled,
+				 	visible = :visible,
+				 	updated_at = CURRENT_TIMESTAMP
+				WHERE plan_id = :planId 
+				AND plan_order_id = :planOrderId 
+				AND element_type_id = :elementTypeId 
+				AND element_type_state_id = :elementTypeStateId
+				AND element_id = :elementId
+	</UPDATE>
+	<DELETE>DELETE FROM conf.plan_order_element_type_states 
+				WHERE plan_id = :planId AND plan_order_id = :planOrderId 
+				AND element_type_id = :elementTypeId 
+				AND element_type_state_id = :elementTypeStateId 
+				AND element_id = :elementId
+	</DELETE>
+</DML>

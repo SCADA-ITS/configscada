@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="ImsIncidentTypeTask">
+	<SELECT>SELECT incident_type_task_id as "id",
+				   incident_type_id as "incidentTypeId",
+				   incident_state_id as "incidentStateId",
+				   stretch_id as "stretchId",
+				   task_type_id as "taskTypeId",
+				   alias as "alias",
+				   description as "description",
+				   operation_description as "operationDescription",
+				   mandatory as "mandatory",
+				   position as "position",
+				   auto as "auto",
+				   on_change as "onChange",
+				   delay as "delay",
+				   rerun as "rerun",
+				   road_impact_id as "roadImpactId",
+				   enabled as "enabled",
+				   visible as "visible"
+			  FROM conf.ims_incident_type_tasks
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>INSERT INTO conf.ims_incident_type_tasks
+					   (incident_type_task_id,
+					   	incident_type_id,
+					   	incident_state_id,
+					   	stretch_id,
+					   	task_type_id,
+					   	alias,
+					   	description,
+					   	operation_description,
+					   	mandatory,
+					   	position,
+					   	auto,
+					   	on_change,
+					   	delay,
+					   	rerun,
+					   	road_impact_id,
+					    enabled,
+					    visible,
+					    created_at,
+					    updated_at)
+				 VALUES (:id=getNextId{'conf.ims_incident_type_tasks'$'incident_type_task_id'},
+				 		 :incidentTypeId,
+				 		 :incidentStateId,
+				 		 :stretchId,
+				 		 :taskTypeId,
+				 		 :alias,
+				 		 :description,
+				 		 :operationDescription,
+				 		 :mandatory,
+				 		 :position,
+				 		 :auto,
+				 		 :onChange,
+				 		 :delay,
+				 		 :rerun,
+				 		 :roadImpactId,
+				         :enabled,
+				         :visible,
+				         CURRENT_TIMESTAMP,
+				         CURRENT_TIMESTAMP)
+	</INSERT>
+	<UPDATE>UPDATE conf.ims_incident_type_tasks
+			   SET incident_type_id = :incidentTypeId,
+			       incident_state_id = :incidentStateId,
+			       stretch_id = :stretchId,
+			       task_type_id = :taskTypeId,
+			       alias = :alias,
+			       description = :description,
+			       operation_description = :operationDescription,
+			       mandatory = :mandatory,
+			       position = :position,
+			       auto = :auto,
+			       on_change = :onChange,
+			       delay = :delay,
+			       rerun = :rerun,
+			       road_impact_id = :roadImpactId,
+			       enabled = :enabled,
+				   visible = :visible,
+			       updated_at = CURRENT_TIMESTAMP
+			 WHERE incident_type_task_id = :id
+	</UPDATE>
+	<DELETE>DELETE FROM conf.ims_incident_type_tasks
+			 WHERE incident_type_task_id = :id
+	</DELETE>
+</DML>

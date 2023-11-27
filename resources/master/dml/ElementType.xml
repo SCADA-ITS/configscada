@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="ElementType">
+	<SELECT>SELECT element_type_id as "id",
+				   element_group_id as "elementGroupId",
+				   alias as "alias", 
+				   description as "description", 
+				   label_alias as "labelAlias", 
+				   label_description as "labelDescription",
+				   initial_element_type_state_id as "initialElementTypeStateId",
+				   connected_element_type_state_id as "connectedElementTypeStateId",
+				   disconnected_element_type_state_id as "disconnectedElementTypeStateId",
+				   maintenance_element_type_state_id as "maintenanceElementTypeStateId",
+				   is_logic as "isLogic",
+				   check_if_connected as "checkIfConnected",
+				   enabled as "enabled", 
+				   visible as "visible"
+			  FROM master.element_types
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>
+	</INSERT>
+	<UPDATE>
+	</UPDATE>
+	<DELETE>
+	</DELETE>
+</DML>

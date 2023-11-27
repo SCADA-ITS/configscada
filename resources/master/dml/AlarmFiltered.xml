@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="AlarmFiltered">
+	<SELECT>SELECT alarm_config_id as "alarmConfigId", 
+	               element_type_id as "elementTypeId", 
+	               element_id as "elementId",
+	               filtered_until as "filteredUntil",
+	               alarm_disabled as "alarmDisabled",
+	               user_id as "userId",
+	               comment as "comment"
+              FROM conf.alarms_filtered
+	</SELECT>
+	<INSERT>INSERT INTO conf.alarms_filtered
+					   (alarm_config_id,
+					   	element_type_id,
+					   	element_id,
+					    filtered_until,
+					    alarm_disabled,
+					    user_id,
+					    comment,
+					    created_at,
+					    updated_at)
+				 VALUES (:alarmConfigId,
+				 		 :elementTypeId,
+				 		 :elementId,
+				 		 :filteredUntil,
+				 		 :alarmDisabled,
+				 		 :userId,
+				 		 :comment,
+				         CURRENT_TIMESTAMP,
+				         CURRENT_TIMESTAMP)
+	</INSERT>
+	<UPDATE>UPDATE conf.alarms_filtered
+			   SET filtered_until = :filteredUntil,
+			       updated_at = CURRENT_TIMESTAMP
+			 WHERE alarm_config_id = :alarmConfigId
+			   AND element_type_id = :elementTypeId
+			   AND element_id = :elementId
+	</UPDATE>
+	<DELETE>DELETE FROM conf.alarms_filtered
+			 WHERE alarm_config_id = :alarmConfigId
+			   AND element_type_id = :elementTypeId
+			   AND element_id = :elementId
+	</DELETE>
+</DML>

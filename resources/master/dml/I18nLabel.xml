@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="I18nLabel">
+	<SELECT>SELECT locale_code as "localeCode",
+		           module_id as "moduleId",
+		           label as "label",
+		           translation as "translation",
+	               created_at as "createdAt", 
+	               updated_at as "updatedAt"
+              FROM master.i18n_labels
+	</SELECT>
+	<INSERT>INSERT INTO master.i18n_labels
+						(locale_code,
+						 module_id,
+						 label,
+						 translation,
+						 created_at,
+						 updated_at)
+					VALUES
+						(:localeCode,
+					 	:moduleId,
+					 	:label,
+					 	:translation,
+					 	CURRENT_TIMESTAMP,
+					 	CURRENT_TIMESTAMP)
+	</INSERT>
+	<UPDATE> 
+	</UPDATE>
+	<DELETE>
+	</DELETE>
+</DML>

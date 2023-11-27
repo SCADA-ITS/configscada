@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<p:json_generic_mango_v1 name="" version=""
+	xmlns:p="json_generic_mango_v1"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="json_generic_mango_v1 ../../../adapter-lib/src/main/resources/schemas/mango/json_generic_mango_v1.xsd "
+	element_type_id="68">
+	<p:session_uid element_type_param_id="1003"
+		param_type_id="1"></p:session_uid>
+	<p:state field="status">
+		<p:state_value source="0" input="2" disconnected="true"></p:state_value>
+		<p:state_value source="1" input="1"></p:state_value>
+	</p:state>
+  <p:fields>
+    <p:field>
+      <p:source>activate_panel</p:source>
+      <p:input>
+        <p:element_type_param_id>1</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:input>
+    </p:field>
+	  <p:field>
+	  	<p:source>etd_info</p:source>
+		  <p:input>
+		  	<p:element_type_param_id>2</p:element_type_param_id>
+		  	<p:param_type_id>2</p:param_type_id>
+		  </p:input>
+	  </p:field>
+  </p:fields>
+	<p:alarms>
+ 		<p:alarm source="alarm_activate_panel_state" active_value="1"
+			alarm_config_id="6801"></p:alarm>
+		<p:alarm source="alarm_comm_concentrator_1" active_value="1"
+			alarm_config_id="6802"></p:alarm>
+		<p:alarm source="alarm_comm_camera_1" active_value="1"
+			alarm_config_id="6803"></p:alarm>
+		<p:alarm source="alarm_comm_camera_2" active_value="1"
+			alarm_config_id="6804"></p:alarm>
+		<p:alarm source="alarm_comm_camera_3" active_value="1"
+			alarm_config_id="6805"></p:alarm>
+		<p:alarm source="alarm_comm_camera_4" active_value="1"
+			alarm_config_id="6806"></p:alarm>
+		<p:alarm source="alarm_context_camera" active_value="1"
+			alarm_config_id="6807"></p:alarm>
+		<p:alarm source="alarm_comm_anpr" active_value="1"
+			alarm_config_id="6809"></p:alarm>
+		<p:alarm source="alarm_dangerous_goods_vehicle" active_value="1"
+			alarm_config_id="6810"></p:alarm>
+ 		<p:alarm source="alarm_tailsback" active_value="1"
+			alarm_config_id="6811"></p:alarm>
+		<p:alarm source="alarm_collapse" active_value="1"
+			alarm_config_id="6812"></p:alarm>
+		<p:alarm source="alarm_vehicle_oppossite_direction" active_value="1"
+			alarm_config_id="6813"></p:alarm>
+		<p:alarm source="alarm_vehicle_oversize" active_value="1"
+			alarm_config_id="6814"></p:alarm>
+		<p:alarm source="alarm_speed_limit" active_value="1"
+			alarm_config_id="6815"></p:alarm>
+		<p:alarm source="alarm_vehicle_overweight" active_value="1"
+			alarm_config_id="6816"></p:alarm>
+		<p:alarm source="alarm_comm_laser_1" active_value="1"
+			alarm_config_id="6817"></p:alarm>
+		<p:alarm source="alarm_comm_laser_2" active_value="1"
+			alarm_config_id="6818"></p:alarm>
+		<p:alarm source="alarm_comm_laser_3" active_value="1"
+			alarm_config_id="6819"></p:alarm>
+		<p:alarm source="alarm_det_laser_1" active_value="1"
+			alarm_config_id="6820"></p:alarm>
+		<p:alarm source="alarm_det_laser_2" active_value="1"
+			alarm_config_id="6821"></p:alarm>
+		<p:alarm source="alarm_det_laser_3" active_value="1"
+			alarm_config_id="6822"></p:alarm>
+		<p:alarm source="alarm_error_laser_1" active_value="1"
+			alarm_config_id="6823"></p:alarm>
+		<p:alarm source="alarm_error_laser_2" active_value="1"
+			alarm_config_id="6824"></p:alarm>
+		<p:alarm source="alarm_error_laser_3" active_value="1"
+			alarm_config_id="6825"></p:alarm>
+		<p:alarm source="alarm_pollution_laser_1" active_value="1"
+			alarm_config_id="6826"></p:alarm>
+		<p:alarm source="alarm_pollution_laser_2" active_value="1"
+			alarm_config_id="6827"></p:alarm>
+		<p:alarm source="alarm_pollution_laser_3" active_value="1"
+			alarm_config_id="6828"></p:alarm>
+		<p:alarm source="alarm_comm_wim" active_value="1"
+			alarm_config_id="6829"></p:alarm>
+		<p:alarm source="alarm_wim_diagnostic_fault" active_value="1"
+			alarm_config_id="6830"></p:alarm>
+	  <p:alarm source="alarm_comm_panel_1" active_value="1"
+			alarm_config_id="6831"></p:alarm>
+    <p:alarm source="alarm_comm_panel_2" active_value="1"
+			alarm_config_id="6832"></p:alarm>
+    <p:alarm source="alarm_comm_panel_3" active_value="1"
+			alarm_config_id="6833"></p:alarm>
+    <p:alarm source="alarm_comm_panel_4" active_value="1"
+			alarm_config_id="6834"></p:alarm>
+    <p:alarm source="alarm_comm_panel_5" active_value="1"
+			alarm_config_id="6835"></p:alarm>
+     <p:alarm source="alarm_comm_panel_6" active_value="1"
+			alarm_config_id="6836"></p:alarm>
+     <p:alarm source="alarm_comm_panel_7" active_value="1"
+			alarm_config_id="6837"></p:alarm>
+ 		
+	</p:alarms>
+</p:json_generic_mango_v1>

@@ -1,0 +1,11 @@
+device_name;source_name;host;measure_port(i);alarm_port(i);url_publisher;offset_radio_system_fail(i)
+RV-MOD-1;RADIO;192.168.88.73;502;503;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/;2442
+MM-MOD-1;RADIO;192.168.88.73;502;503;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/;2443
+CH-MOD-1;RADIO;192.168.88.73;502;503;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/;2444
+COR-MOD-1;RADIO;192.168.88.73;502;503;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/;2445
+EST-MOD-1;RADIO;192.168.88.73;502;503;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/;2446
+LQ-MOD-1;RADIO;192.168.88.73;502;503;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/;2447
+NG-MOD-1;RADIO;192.168.88.73;502;503;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/;2448
+STM2-MOD-1;RADIO;192.168.88.73;502;503;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/;2449
+STMI-MOD-1;RADIO;192.168.88.73;502;503;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/;2450
+CAS-MOD-1;RADIO;192.168.88.73;502;503;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/;2451

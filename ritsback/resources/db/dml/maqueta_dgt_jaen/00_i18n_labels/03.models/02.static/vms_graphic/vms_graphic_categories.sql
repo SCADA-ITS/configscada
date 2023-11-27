@@ -1,0 +1,25 @@
+-- 
+-- Type:   model
+-- Entity: static.level_of_services.sql
+-- File:   level_of_services.sql
+-- Langs:  es_ES, en_GB, sk_SK, es_CL
+--
+
+-- 
+-- Table: master.i18n_labels
+--
+
+INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) VALUES
+	('es_CL', 1, 'LBL_VMS_GRAPHIC_LANES', 'Carriles', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_CL', 1, 'LBL_VMS_GRAPHIC_PROHIBITION_OR_RESTRICTION', 'Prohibición o restricción', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_CL', 1, 'LBL_VMS_GRAPHIC_ENTRY_PRIORITY', 'Prioridad de entrada', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_CL', 1, 'LBL_VMS_GRAPHIC_DANGER_WARNING', 'Advertencia de peligro', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_CL', 1, 'LBL_VMS_GRAPHIC_SERVICE', 'De servicio', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_CL', 1, 'LBL_VMS_GRAPHIC_PASSAGE_RESTRICTION', 'Restricción de paso', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_CL', 1, 'LBL_VMS_GRAPHIC_SPECIALS', 'Especiales', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_CL', 1, 'LBL_VMS_GRAPHIC_PRIORITY', 'Prioridad', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_CL', 1, 'LBL_VMS_GRAPHIC_GENERAL_INDICATIONS', 'Indicaciones generales', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_CL', 1, 'LBL_VMS_GRAPHIC_OTHERS', 'Otras', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_CL', 1, 'LBL_VMS_GRAPHIC_END_OF_RESTRICTION_PROHIBITION', 'Fin de restricción de prohibición', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_CL', 1, 'LBL_VMS_GRAPHIC_OBLIGATION', 'Obligación', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_CL', 1, 'LBL_VMS_GRAPHIC_VOLATILES', 'Volátiles', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

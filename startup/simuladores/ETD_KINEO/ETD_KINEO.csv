@@ -1,0 +1,5 @@
+device_name;session_uid;site;carril;det_order;det_name;host;port;url_publisher;num_polling_out_comm;time_polling_ms
+NO-S1S1-MCFV-01;NO-S1S1-MCFV-01;simulador_etd;1;1;NO-S1S1-DET-1OP;192.168.88.191;5430;http:\/\/192.168.88.190:3000\/api\/v2\/generic\/;2;60000
+NO-S1S1-MCFV-01;NO-S1S1-MCFV-01;simulador_etd;2;2;NO-S1S1-DET-2OP;192.168.88.191;5430;http:\/\/192.168.88.190:3000\/api\/v2\/generic\/;2;60000
+NO-S1S1-MCFV-01;NO-S1S1-MCFV-01;simulador_etd;3;3;NO-S1S1-DET-1PO;192.168.88.191;5430;http:\/\/192.168.88.190:3000\/api\/v2\/generic\/;2;60000
+NO-S1S1-MCFV-01;NO-S1S1-MCFV-01;simulador_etd;4;4;NO-S1S1-DET-2PO;192.168.88.191;5430;http:\/\/192.168.88.190:3000\/api\/v2\/generic\/;2;60000

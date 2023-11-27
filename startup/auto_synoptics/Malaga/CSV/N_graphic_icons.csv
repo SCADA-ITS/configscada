@@ -1,0 +1,7 @@
+element_type;element_subtype;alias;svg_file;js_custom_type_render;keepRatio
+71;22;VMS;71_vms_dgt.svg;vms.js;true
+71;12;VMS;71_vms_clv_af.svg;vms.js;true
+36;;BALIZA;36_baliza_amarilla.svg;baliza_amarilla.js;true
+36;;BALIZA;36_baliza_verde.svg;baliza_verde.js;true
+37;;IPL;37_ipl.svg;ipl.js;true
+38;;BUS_VAO;38_bus_vao.svg;;true

@@ -1,0 +1,9 @@
+element_type;element_subtype;alias;svg_file;js_custom_type_render;keepRatio
+2;1;CAM_DOMO;02_camera_domo.svg;;true
+2;2;CAM_DAI;02_camera.svg;;true
+9;1;VENTILADORES;09_jetfan.svg;jetfan.js;true
+11;1;SOS;11_sos.svg;;true
+13;;SEM;13_sem_3_grupos.svg;trafficLight.js;true
+71;11;PMV;71_vms_af_clv.svg;vms.js;true
+71;12;PMV;71_vms_af_clv.svg;vms.js;true
+71;18;PMV;71_vms_dgt_gr_txt.svg;vms.js;true

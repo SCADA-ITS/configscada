@@ -1,0 +1,50 @@
+{
+	"moduleAction": {
+	    "view": 101401,
+	    "viewFromAlarm": 101402,
+	    "commandEquipments": 101701,
+		"historicalChart": 104504,
+		"maintenanceMode": 104601,
+		"showInMapOrSynoptic": 200004
+	},
+	"actionEndpoints": {
+		
+	},
+	"topic": "/topic/element",
+	"adapter": "ws.element.getList",
+	"forceAdjustMeasures" : false,
+	"restEndpoints": {
+		"element": "elements/${id}",
+		"alarm": "alarms/${id}",
+		"equipmentViewer": "equip_viewer/${elementId}"
+	},
+	"paramType": {
+		"config": "ParamType:1",
+		"measure": "ParamType:2"
+	},
+	"dataType": {
+		"integer": "DataType:1",
+		"alphanumeric": "DataType:2",
+		"decimal": "DataType:3",
+		"timestamp": "DataType:4",
+		"boolean": "DataType:5"
+	},
+	"stateValue": {
+		"initialized": "ElementValueState:1",
+		"online": "ElementValueState:2",
+		"alerted": "ElementValueState:3",
+		"offline": "ElementValueState:4"
+	},
+	"tabMode": {
+		"enabled": true,
+		"infoTabMode": 1,
+		"table": true,
+		"historicalChart": true
+	},
+	"backOffice": {
+	    "id": 2,
+	    "tableName": "incidents",
+	    "filterColumnName": "incident_report_id",
+	    "filterColumnValue": null
+  	}	
+}

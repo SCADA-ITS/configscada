@@ -1,0 +1,2 @@
+device_name;session_uid;ct_upd;upd_state;url_publisher;PLC_name;PLC_ip;PLC_port(i);read_permission;write_permission;offset_bie_door_open(i);offset_extinguisher_door_open(i);offset_extinguisher_extraction(i)
+S1TS-BIE-001;S1TS-BIE-001;PLC_CT01;upd_fail_s1ts;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;CT01_PLC_B;10.133.50.37;28002;monitor;;22801;22801;22801

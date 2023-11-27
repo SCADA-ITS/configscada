@@ -1,0 +1,15 @@
+device_name;session_uid;ip;port(i);url_publisher;read_permission;write_permission;offset_primary_node(i);offset_comm_sec(i)
+RV-ERU-1-MASTER;RV-ERU-1-MASTER;192.168.88.137;39999;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/;monitor;;8191;8189
+RV-ERU-1-SLAVE;RV-ERU-1-SLAVE;192.168.88.139;39999;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/;monitor;;8191;8189
+MM-ERU-1-MASTER;MM-ERU-1-MASTER;192.168.88.138;39999;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/;monitor;;8191;8189
+MM-ERU-1-SLAVE;MM-ERU-1-SLAVE;192.168.88.140;39999;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/;monitor;;8191;8189
+STMI-ERU-1-MASTER;STMI-ERU-1-MASTER;192.168.88.141;39999;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/;monitor;;8191;8189
+STMI-ERU-1-SLAVE;STMI-ERU-1-SLAVE;192.168.88.142;39999;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/;monitor;;8191;8189
+LQ-ERU-1-MASTER;LQ-ERU-1-MASTER;192.168.88.150;39999;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/;monitor;;8191;8189
+LQ-ERU-1-SLAVE;LQ-ERU-1-SLAVE;192.168.88.151;39999;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/;monitor;;8191;8189
+CH-ERU-1-MASTER;CH-ERU-1-MASTER;192.168.88.137;39999;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/;monitor;;8191;8189
+CH-ERU-1-SLAVE;CH-ERU-1-SLAVE;192.168.88.138;39999;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/;monitor;;8191;8189
+CAS-ERU-1-MASTER;CAS-ERU-1-MASTER;192.168.88.137;39999;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/;monitor;;8191;8189
+CAS-ERU-1-SLAVE;CAS-ERU-1-SLAVE;192.168.88.138;39999;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/;monitor;;8191;8189
+COR-ERU-1-MASTER;COR-ERU-1-MASTER;192.168.88.137;39999;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/;monitor;;8191;8189
+COR-ERU-1-SLAVE;COR-ERU-1-SLAVE;192.168.88.138;39999;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/;monitor;;8191;8189

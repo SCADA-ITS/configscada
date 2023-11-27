@@ -1,0 +1,25 @@
+item;alias;description;sessionuid;road;stretchs;secc;pk;dm;param1_direction;param2_pk_ini;param3_pk_end;param4_name
+1;TT_01;TT_01;;AUSOL;;;;;false;199.700;195.650;Calahonda -  Santa María I
+2;TT_02;TT_02;;AUSOL;;;;;false;199.700;177.300;Calahonda - Rio Verde
+3;TT_03;TT_03;;AUSOL;;;;;false;199.700;173.500;Calahonda - La Quinta
+4;TT_04;TT_04;;AUSOL;;;;;false;195.600;177.300;Santa María I - Rio Verde
+5;TT_05;TT_05;;AUSOL;;;;;false;195.600;173.500;Santa María I - La Quinta
+6;TT_06;TT_06;;AUSOL;;;;;false;195.600;166.700;Santa María I - Montemayor
+7;TT_07;TT_07;;AUSOL;;;;;false;177.200;173.500;Rio Verde - La Quinta
+8;TT_08;TT_08;;AUSOL;;;;;false;177.200;166.700;Rio Verde - Montemayor
+9;TT_09;TT_09;;AUSOL;;;;;false;177.200;153.750;Rio Verde - Estepona
+10;TT_10;TT_10;;AUSOL;;;;;false;173.400;166.700;La Quinta - Montemayor
+11;TT_11;TT_11;;AUSOL;;;;;false;173.400;153.750;La Quinta - Estepona
+12;TT_12;TT_12;;AUSOL;;;;;false;166.600;153.750;Montemayor - Estepona
+13;TT_13;TT_13;;AUSOL;;;;;false;153.620;166.100;Estepona - Montemayor
+14;TT_14;TT_14;;AUSOL;;;;;false;153.620;172.670;Estepona - La Quinta
+15;TT_15;TT_15;;AUSOL;;;;;false;153.620;177;Estepona - Rio Verde
+16;TT_16;TT_16;;AUSOL;;;;;false;166.200;172.680;Montemayor - La Quinta
+17;TT_17;TT_17;;AUSOL;;;;;false;166.200;177;Montemayor - Rio Verde
+18;TT_18;TT_18;;AUSOL;;;;;false;166.200;195.500;Montemayor - Santa María I
+19;TT_19;TT_19;;AUSOL;;;;;false;172.750;177;La Quinta - Rio Verde
+20;TT_20;TT_20;;AUSOL;;;;;false;172.750;195.500;La Quinta - Santa María I
+21;TT_21;TT_21;;AUSOL;;;;;false;172.750;199.250;La Quinta - Calahonda
+22;TT_22;TT_22;;AUSOL;;;;;false;177.100;195.500;Rio Verde - Santa María I
+23;TT_23;TT_23;;AUSOL;;;;;false;177.100;199.250;Rio Verde - Calahonda
+24;TT_24;TT_24;;AUSOL;;;;;false;195.600;199.250;Santa María I - Calahonda

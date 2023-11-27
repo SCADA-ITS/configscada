@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="AlarmTargetElement">
+	<SELECT>SELECT alarm_config_id as "alarmConfigId", 
+	               source_element_type_id as "sourceElementTypeId", 
+	               source_element_id as "sourceElementId", 
+	               target_element_type_id as "targetElementTypeId", 
+	               target_element_id as "targetElementId" 
+              FROM conf.alarm_target_elements
+	</SELECT>
+	<INSERT>INSERT INTO conf.alarm_target_elements
+					   (alarm_config_id,
+					   	source_element_type_id,
+					   	source_element_id,
+					   	target_element_type_id,
+					    target_element_id,
+					    created_at,
+					    updated_at)
+				 VALUES (:alarmConfigId,
+				 		 :sourceElementTypeId,
+				 		 :sourceElementId,
+				 		 :targetElementTypeId,
+				 		 :targetElementId,
+				         CURRENT_TIMESTAMP,
+				         CURRENT_TIMESTAMP)
+	</INSERT>
+	<UPDATE>
+	</UPDATE>
+	<DELETE>DELETE FROM conf.alarm_target_elements
+			 WHERE alarm_config_id = :alarmConfigId
+			 AND source_element_type_id = :sourceElementTypeId
+			 AND source_element_id = :sourceElementId
+			 AND target_element_type_id = :targetElementTypeId
+			 AND target_element_id = :targetElementId
+	</DELETE>
+</DML>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="ElementSpreadState">
+	<SELECT>SELECT element_spread_state_id as "id", 
+	               source_element_type_id as "sourceElementTypeId", 
+	               source_element_id as "sourceElementId", 
+	               source_element_type_state_id as "sourceElementTypeStateId", 
+	               target_element_type_id as "targetElementTypeId",
+	               target_element_id as "targetElementId", 
+	               target_element_type_state_id as "targetElementTypeStateId",
+	               created_at as "createdAt",
+	               updated_at as "updatedAt"
+              FROM conf.element_spread_states
+	</SELECT>
+	<INSERT>
+	</INSERT>
+	<DELETE>
+	</DELETE>
+</DML>

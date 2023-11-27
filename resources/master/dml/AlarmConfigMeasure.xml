@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="AlarmConfigMeasure">
+	<SELECT>SELECT alarm_config_id as "alarmConfigId", 
+	               element_type_id as "elementTypeId", 
+	               param_type_id as "paramTypeId", 
+	               element_type_param_id as "elementTypeParamId", 
+	               alarm_threshold_operation_id as "alarmMeasureOperationId", 
+	               threshold_val1 as "thresholdVal1", 
+	               threshold_val2 as "thresholdVal2" 
+              FROM conf.alarm_config_measures
+	</SELECT>
+	<INSERT>INSERT INTO conf.alarm_config_measures
+					   (alarm_config_id,
+					   	element_type_id,
+					   	param_type_id,
+					   	element_type_param_id,
+					    alarm_threshold_operation_id,
+					    threshold_val1,
+					    threshold_val2,
+					    created_at,
+					    updated_at)
+				 VALUES (:alarmConfigId,
+				 		 :elementTypeId,
+				 		 :paramTypeId,
+				 		 :elementTypeParamId,
+				 		 :alarmMeasureOperationId,
+				 		 :thresholdVal1,
+				 		 :thresholdVal2,
+				         CURRENT_TIMESTAMP,
+				         CURRENT_TIMESTAMP)
+	</INSERT>
+	<UPDATE>
+	</UPDATE>
+	<DELETE>DELETE FROM conf.alarm_config_measures
+			 WHERE alarm_config_id = :alarmConfigId
+			 AND element_type_id = :elementTypeId
+			 AND param_type_id = :paramTypeId
+			 AND element_type_param_id = :elementTypeParamId
+	</DELETE>
+</DML>

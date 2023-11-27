@@ -1,0 +1,6 @@
+device_name;session_uid;ip;port(i);url_publisher;num_polling_out_comm;time_polling_ms;readCommunity;writeCommunity;read_permission;write_permission
+NO-S1S1-PMV-01;NO-S1S1-PMV-01;192.168.88.198;161;http:\/\/192.168.88.190:3000\/api\/v2\/generic\/;2;10000;public;public;monitor;
+NO-S1S2-PMV-01;NO-S1S2-PMV-01;192.168.88.198;161;http:\/\/192.168.88.190:3000\/api\/v2\/generic\/;2;10000;public;public;monitor;
+NO-S1S2-PMV-02;NO-S1S2-PMV-02;192.168.88.198;161;http:\/\/192.168.88.190:3000\/api\/v2\/generic\/;2;10000;public;public;monitor;
+NO-S1S3-PMV-01;NO-S1S3-PMV-01;192.168.88.198;161;http:\/\/192.168.88.190:3000\/api\/v2\/generic\/;2;10000;public;public;monitor;
+NO-S2-PMV-01;NO-S2-PMV-01;192.168.88.198;161;http:\/\/192.168.88.190:3000\/api\/v2\/generic\/;2;10000;public;public;monitor;

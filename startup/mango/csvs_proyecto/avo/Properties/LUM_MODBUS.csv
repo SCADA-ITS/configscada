@@ -1,0 +1,2 @@
+device_name;session_uid;url_publisher;PLC_name;PLC_ip;PLC_port(i);read_permission;write_permission;offset_luminosity(i);offset_alarm_sensor(i)
+S1TS-LUM-001;S1TS-LUM-001;http:\/\/192.168.88.176:3000\/api\/v2\/generic\/;PLC1;192.168.88.198;999;monitor;;230;240

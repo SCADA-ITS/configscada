@@ -1,0 +1,11 @@
+device_name;url_publisher
+STMI-DAI-1CA;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/
+CH-DAI;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/
+RV-DAI;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/
+MM-DAI;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/
+CAS-DAI-1CA;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/
+COR-DAI;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/
+EST-DAI;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/
+LQ-DAI;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/
+NG-DAI-1;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/
+STM2-DAI-1;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/

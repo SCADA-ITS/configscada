@@ -1,0 +1,5 @@
+item;stretch_type;alias;description;pk_ini;pk_end;lanes;road
+1;Element;S1S1;S1S1;0;6+5;2;Nogales
+2;Element;S1S2;S1S2;6+5;19;2;Nogales
+3;Element;S1S3;S1S3;19;25+8;2;Nogales
+4;Element;S2;S2;25+8;61;2;Nogales

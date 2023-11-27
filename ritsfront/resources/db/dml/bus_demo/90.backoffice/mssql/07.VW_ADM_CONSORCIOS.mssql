@@ -1,0 +1,22 @@
+-- Disable message for next USE command
+:setvar SQLCMDERRORLEVEL 1
+USE [bus_demo]
+GO
+-- Reenable
+:setvar SQLCMDERRORLEVEL 0
+
+SET ANSI_NULLS ON
+SET ANSI_WARNINGS ON
+SET NOCOUNT ON
+
+SET IDENTITY_INSERT dbo.VW_ADM_CONSORCIOS ON;  
+GO
+
+INSERT INTO dbo.VW_ADM_CONSORCIOS (ACS_ID,ACS_CODIGO,ACS_NOMBRE,ACS_POR_DEFECTO) VALUES
+	 (1,N'GGLA/ATTG',N'Gipuzkoako Garraioaren Lurralde Agintaritza/Autoridad Territorial Transporte de Gipuzkoa',1),
+	 (2,N'CTB',N'Bizkaiko Garraio Patzuergoa/Consorcio de Transportes de Bizkaia',0),
+	 (3,N'BEK/EGB',N'BAT Erakunde Kudeatzailea/Ente Gestor BAT',0);
+GO
+
+SET IDENTITY_INSERT dbo.VW_ADM_CONSORCIOS OFF;  
+GO

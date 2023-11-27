@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="LosSoftenedArray">
+	<SELECT>SELECT los_softened_array_id as "id",
+				   init_los_id as "initLosId",
+				   end_los_id as "endLosId",
+				   count_softened as "countSoftened",
+				   enabled as "enabled",
+				   visible as "visible"
+			  FROM static.los_softened_arrays
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>
+	</INSERT>
+	<UPDATE> 
+	</UPDATE>
+	<DELETE>
+	</DELETE>
+</DML>

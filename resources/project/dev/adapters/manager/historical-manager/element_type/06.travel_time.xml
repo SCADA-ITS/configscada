@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<p:historical_element_parser_v1
+	xmlns:p="historical_element_parser_v1"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="historical_element_parser_v1 ../../../../../adapter-lib/src/main/resources/schemas/manager/historical_element_parser_v1.xsd"
+	element_type_id="6">
+	<p:target_table>hist.travel_time_revenga</p:target_table>
+	<p:table_space>tbl_hist</p:table_space>
+	<p:field_element_id>f_element_id</p:field_element_id>
+	<p:fields>
+		<p:field name="date" pk="true" indexed="true">
+			<p:element_type_param>
+				<p:element_type_param_id>1</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+		<p:field name="time_min">
+			<p:element_type_param>
+				<p:element_type_param_id>2</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+	</p:fields>
+</p:historical_element_parser_v1>

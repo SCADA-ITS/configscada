@@ -1,0 +1,25 @@
+-- Disable message for next USE command
+:setvar SQLCMDERRORLEVEL 1
+USE [bus_demo]
+GO
+-- Reenable
+:setvar SQLCMDERRORLEVEL 0
+
+SET ANSI_NULLS ON
+SET ANSI_WARNINGS ON
+SET NOCOUNT ON
+
+SET IDENTITY_INSERT dbo.VW_GEO_PROVINCIAS ON;  
+GO   
+
+INSERT INTO dbo.VW_GEO_PROVINCIAS (GPR_ID,GPR_CODIGO,GPR_NOMBRE,GPR_GPA_ID) VALUES
+	 (5,N'20',N'Gipuzkoa',1),
+	 (6,N'48',N'Bizkaia',1),
+	 (7,N'01',N'Araba/Álava',1),
+	 (8,N'31',N'Navarra',1),
+	 (9,N'64',N'PYRÉNÉES-ATLANTIQUES',2);
+
+GO
+
+SET IDENTITY_INSERT dbo.VW_GEO_PROVINCIAS OFF;  
+GO

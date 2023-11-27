@@ -1,0 +1,1 @@
+UPDATE ui.grid_option_values SET value = 'false' WHERE grid_id IN (1000, 1001, 1003, 1004, 1005, 1010) AND grid_option_id IN (25, 26);

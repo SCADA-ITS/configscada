@@ -1,0 +1,40 @@
+{
+  "dataSources":[
+    {
+      "xid":"DS_Iniciar_Paneles",
+      "name":"Iniciar Paneles",
+      "enabled":false,
+      "type":"SCRIPTING",
+      "alarmLevels":{
+        "SCRIPT_ERROR":"URGENT",
+        "CONTEXT_POINT_DISABLED":"IGNORE",
+        "DATA_TYPE_ERROR":"URGENT",
+        "POLL_ABORTED":"URGENT",
+        "LOG_ERROR":"URGENT"
+      },
+      "purgeType":"YEARS",
+      "updatePeriods":1,
+      "updatePeriodType":"MINUTES",
+      "updateEvent":"UPDATE",
+      "context":[
+      ],
+      "logLevel":"INFO",
+      "scriptPermissions":[
+        "superadmin"
+      ],
+      "polling":true,
+      "executionDelaySeconds":0,
+      "historicalSetting":false,
+      "logCount":5,
+      "logSize":1.0,
+      "script":"var dataPoints = DataPointQuery.query(\"eq(name,message_multistring)&limit(1000)\");\n\nfor( var k = 0; k < dataPoints.length; k += 1 ) {\n  dataPoints[k].runtime.set(\"[g36,1,1][g2,1,49][g37,49,1][tr54,49,0,0][hc15]4000m[hc15][g38,97,1][g1,97,49]\");\n}\n\n",
+      "quantize":false,
+      "useCron":false,
+      "editPermission":"",
+      "purgeOverride":false,
+      "purgePeriod":1
+    }
+  ],
+  "dataPoints":[
+  ]
+}

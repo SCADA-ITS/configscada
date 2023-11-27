@@ -1,0 +1,17 @@
+device_name;equip_name;session_uid;url_publisher;read_permission;write_permission
+853.TFYA.1.SE1;853.TFYA.1.SE1;853.TFYA.1.SE1;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;
+853.TUPS.1.SE1;853.TUPS.1.SE1;853.TUPS.1.SE1;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;
+853.TFYA.1.SE2;853.TFYA.1.SE2;853.TFYA.1.SE2;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;
+853.TUPS.1.SE2;853.TUPS.1.SE2;853.TUPS.1.SE2;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;
+853.TFYA.1.SE3;853.TFYA.1.SE3;853.TFYA.1.SE3;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;
+853.TUPS.1.SE3;853.TUPS.1.SE3;853.TUPS.1.SE3;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;
+853.TFYA.1.SE4;853.TFYA.1.SE4;853.TFYA.1.SE4;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;
+853.TUPS.1.SE4;853.TUPS.1.SE4;853.TUPS.1.SE4;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;
+853.TFYA.1.SE5;853.TFYA.1.SE5;853.TFYA.1.SE5;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;
+853.TUPS.1.SE5;853.TUPS.1.SE5;853.TUPS.1.SE5;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;
+853.TFYA.1.SE6;853.TFYA.1.SE6;853.TFYA.1.SE6;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;
+853.TUPS.1.SE6;853.TUPS.1.SE6;853.TUPS.1.SE6;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;
+853.TFYA.1.SE7;853.TFYA.1.SE7;853.TFYA.1.SE7;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;
+853.TUPS.1.SE7;853.TUPS.1.SE7;853.TUPS.1.SE7;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;
+853.TFYA.1.SE8;853.TFYA.1.SE8;853.TFYA.1.SE8;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;
+853.TUPS.1.SE8;853.TUPS.1.SE8;853.TUPS.1.SE8;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;

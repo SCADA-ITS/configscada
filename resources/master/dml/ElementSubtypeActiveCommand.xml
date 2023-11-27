@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="ElementSubtypeActiveCommand">
+	<SELECT>SELECT element_type_id as "elementTypeId",
+				   element_subtype_id as "elementSubtypeId",
+				   command_element_type_id as "commandElementTypeId",
+				   enabled as "enabled", 
+				   visible as "visible"
+			  FROM master.element_subtype_active_commands
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>
+	</INSERT>
+	<UPDATE>
+	</UPDATE>
+	<DELETE>
+	</DELETE>
+</DML>

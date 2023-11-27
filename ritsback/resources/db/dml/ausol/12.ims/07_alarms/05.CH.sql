@@ -1,0 +1,307 @@
+--
+-- Table: conf.ims_incident_alarm_conditions
+--
+
+-- Para el id seguiremos el siguiente criterio:
+-- 1.- Id incident_type
+-- 2.- Orden (2 cifras)
+-- 3.- stretch_id (4 cifras)
+INSERT INTO conf.ims_incident_alarm_conditions (incident_alarm_condition_id, incident_type_id, stretch_id, auto, enabled, visible, created_at, updated_at)
+VALUES
+
+-- P-MET-01
+(7011031, 7, 1031, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+-- Visibilidad reducida(<300m)
+-- (702, 7, 1007, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+-- Calzada mojada
+-- (705, 7, 1007, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(7021031, 7, 1031, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(7031031, 7, 1031, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+-- P-AMB-01
+(8011032, 8, 1032, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(8021032, 8, 1032, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(8011033, 8, 1033, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(8021033, 8, 1033, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+-- P-AMB-02
+(9011032, 9, 1032, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(9011033, 9, 1033, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+-- P-TRA-08
+(17011032, 17, 1032, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(17021032, 17, 1032, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(17011033, 17, 1033, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(17021033, 17, 1033, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+-- E1-MET-01
+(21011031, 21, 1031, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(21021031, 21, 1031, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(21031031, 21, 1031, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+-- E1-AMB-01
+(22011032, 22, 1032, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(22021032, 22, 1032, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(22011033, 22, 1033, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(22021033, 22, 1033, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+-- E1-AMB-02
+(23011032, 23, 1032, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(23011033, 23, 1033, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+--E1-AVE-01
+(31011031, 31, 1031, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(31021031, 31, 1031, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(31031031, 31, 1031, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(31041031, 31, 1031, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(31051031, 31, 1031, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(31061031, 31, 1031, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(31071031, 31, 1031, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(31081031, 31, 1031, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(31091031, 31, 1031, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(31101031, 31, 1031, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(31111031, 31, 1031, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(31121031, 31, 1031, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(31131031, 31, 1031, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(31141031, 31, 1031, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(31151031, 31, 1031, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(31161031, 31, 1031, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(31171031, 31, 1031, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(31181031, 31, 1031, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(31191031, 31, 1031, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(31201031, 31, 1031, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(31211031, 31, 1031, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(31221031, 31, 1031, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(31231031, 31, 1031, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(31241031, 31, 1031, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(31251031, 31, 1031, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(31261031, 31, 1031, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(31271031, 31, 1031, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(31281031, 31, 1031, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(31291031, 31, 1031, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(31301031, 31, 1031, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(31311031, 31, 1031, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(31321031, 31, 1031, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+--E2-AVE-01
+(40011031, 40, 1031, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(40021031, 40, 1031, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(40031031, 40, 1031, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(40041031, 40, 1031, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(40051031, 40, 1031, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(40061031, 40, 1031, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+--E2-FUE-01
+(44011031, 44, 1031, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(44021031, 44, 1031, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(44031031, 44, 1031, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+--E2-FUE-02
+(45011034, 45, 1034, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(45011035, 45, 1035, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(45011036, 45, 1036, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(45011037, 45, 1037, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(45011038, 45, 1038, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(45011039, 45, 1039, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(45011040, 45, 1040, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(45011041, 45, 1041, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+-- 
+-- Table: conf.ims_incident_alarm_condition_alarms
+--
+-- Para el id seguiremos el siguiente criterio:
+-- 1.- Id ims_incident_alarm_conditions
+-- 2.- Orden (2 cifras)
+INSERT INTO conf.ims_incident_alarm_condition_alarms (incident_alarm_condition_alarm_id, incident_alarm_condition_id, incident_alarm_condition_alarm_type_id, alarm_config_id, element_type_id, element_id, min_alarmed_elements, enabled, visible, created_at, updated_at)
+VALUES
+
+----------------
+--- P-MET-01 ---
+----------------
+-- CH-MET-1MA, Precipitación moderada (<=10mm/h)
+(701100231, 7011031, 2, 3000001, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+-- CH-MET-1MA, Vientos fuertes(>60km/h)
+(702100231, 7021031, 2, 3010001, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+-- CH-MET-1MA, Baja Temperatura (<5 C)
+(703100231, 7031031, 2, 3020001, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+----------------
+--- P-AMB-01 ---
+----------------
+-- Co alto (50ppm < Co < 200  ppm)
+(801103201, 8011032, 2, 3000019, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(801103301, 8011033, 2, 3000019, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+-- No2 Alto (0.4 ppm < NO2 < 5ppm)
+(802103201, 8021032, 2, 3000020, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(802103301, 8021033, 2, 3000020, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+----------------
+--- P-AMB-02 ---
+----------------
+-- Visibilidad reducida (0.005 m-1 < k < 0.012 m-1)
+(901103201, 9011032, 2, 3000021, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(901103301, 9011033, 2, 3000021, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+----------------
+--- P-TRA-08 ---
+----------------
+(1701103201, 17011032, 2, 36, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(1702103201, 17021032, 2, 36, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(1701103301, 17011033, 2, 36, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(1702103301, 17021033, 2, 36, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+----------------
+--- E1-MET-01 ---
+----------------
+-- RV-MET-1MA, Vientos fuertes(>80km/h)
+(2101103101, 21011031, 2, 3030001, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+-- RV-MET-1MA, Baja Temperatura (<2 C)
+(2102103101, 21021031, 2, 3040001, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+-- RV-MET-1MA, Balsas en la calzada
+(2103103101, 21031031, 2, 3050001, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+
+
+-----------------
+--- E1-AMB-01 ---
+-----------------
+-- Excesiva concentración de CO (> 200ppm)
+(2201103201, 22011032, 2, 3010019, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(2201103301, 22011033, 2, 3010019, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+-- Excesiva concentración de NO2 (> 5ppm)
+(2202103201, 22021032, 2, 3010020, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(2202103301, 22021033, 2, 3010020, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+
+-----------------
+--- E1-AMB-02 ---
+-----------------
+(2301103201, 23011032, 2, 3010021, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(2301103301, 23011033, 2, 3010021, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+
+-----------------
+--- E1-AVE-01 ---
+-----------------
+-- Fallo en sistema de deteccion lineal de incendios
+
+(3121103101, 31211031, 2, 257, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(3122103101, 31221031, 2, 49, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+-- Fallo en 3 o mas camaras por tunel
+(3132103104, 31321031, 2, 29, null, null, 3, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+-- Fallo de comunicaciones Túnel – Centro de Control
+(3123103104, 31231031, 2, 218, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+-- Fallo SAI
+(3124103105, 31241031, 2, 03000065, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(3125103106, 31251031, 2, 03010065, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(3126103107, 31261031, 2, 40065, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(3127103108, 31271031, 2, 50065, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+
+-- Fallo de pérdida de comunicación con PLC que afecte a varios equipos del túnel
+(3128103109, 31281031, 1, 10027, 27, 58, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(3129103100, 31291031, 1, 10027, 27, 57, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+-- Fallo de sistema de extinción de incendios 
+(3130103101, 31301031, 2, 8602, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(3131103102, 31311031, 2, 8603, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+-- Fallo en el sistema de iluminación del túnel con un tramo sin iluminar.
+(3101103101, 31011031, 1, 20057, 57, 421, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(3102103101, 31021031, 1, 20057, 57, 422, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(3103103101, 31031031, 1, 20057, 57, 423, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(3104103101, 31041031, 1, 20057, 57, 424, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+-- Fallo de sistema de ventilación
+(3105103101, 31051031, 1, 20057, 57, 487, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(3106103101, 31061031, 1, 20057, 57, 488, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(3107103101, 31071031, 1, 20057, 57, 498, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(3108103101, 31081031, 1, 20057, 57, 499, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(3109103101, 31091031, 1, 20057, 57, 437, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(3110103101, 31101031, 1, 20057, 57, 438, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+-- Fallo acometida eléctrica y funcionamiento del túnel con grupo
+(3111103101, 31111031, 1, 80057, 57, 1074, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+-- Cuadros principales sin energía
+(3112103101, 31121031, 1, 20057, 57, 433, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(3113103101, 31131031, 1, 20057, 57, 443, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(3114103101, 31141031, 1, 20057, 57, 467, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(3115103101, 31151031, 1, 20057, 57, 405, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(3116103101, 31161031, 1, 20057, 57, 509, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(3117103101, 31171031, 1, 20057, 57, 477, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(3118103101, 31181031, 1, 20057, 57, 478, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(3119103101, 31191031, 1, 20057, 57, 479, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(3120103101, 31201031, 1, 20057, 57, 405, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+
+-----------------
+--- E2-AVE-01 ---
+-----------------
+
+-- Fallo completo sistema iluminación en tubo (Permanente + Guiado)
+(4001103101, 40011031, 1, 20057, 57, 421, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(4001103102, 40011031, 1, 20057, 57, 422, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(4001103103, 40011031, 1, 20057, 57, 426, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+
+(4002103101, 40021031, 1, 20057, 57, 423, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(4002103102, 40021031, 1, 20057, 57, 424, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(4002103103, 40021031, 1, 20057, 57, 425, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+
+(4003103101, 40031031, 1, 20057, 57, 419, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(4004103102, 40041031, 1, 20057, 57, 476, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(4005103103, 40051031, 1, 20057, 57, 475, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+
+-- Fallo simultáneo acometida eléctrica y grupo electrógeno
+(4006103101, 40061031, 1, 80057, 57, 1074, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(4006103102, 40061031, 2, 224, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+-----------------
+--- E2-FUE-01 ---
+-----------------
+(4401103101, 44011031, 2, 184, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(4402103101, 44021031, 2, 186, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(4403103101, 44031031, 2, 182, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+
+-----------------
+--- E2-FUE-02 ---
+-----------------
+(4501103801, 45011038, 2, 256, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(4501103903, 45011039, 2, 256, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(4501104002, 45011040, 2, 256, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(4501104101, 45011041, 2, 256, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(4501103401, 45011034, 2, 256, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(4501103501, 45011035, 2, 256, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(4501103601, 45011036, 2, 256, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(4501103701, 45011037, 2, 256, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+
+
+
+
+

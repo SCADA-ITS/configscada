@@ -1,0 +1,6 @@
+item;element_subtype;alias;description;sessionuid;road;stretchs;dm;sentido;param1_brand;param2_model;param4_config_json;pk;on_change_measure
+1;19;NO-S1S1-PMV-01;NO-S1S1-PMV-01;NO-S1S1-PMV-01;Nogales;S1S1;1;Asc;FIXALIA;Deva;"[{""zone"":1,""type"":""graphic"",""vms_group_id"":2},{""zone"":2,""type"":""text""}]";;ChangeMeasureHistorical.groovy
+2;19;NO-S1S2-PMV-01;NO-S1S2-PMV-01;NO-S1S2-PMV-01;Nogales;S1S2;7+12;Asc;FIXALIA;Deva;"[{""zone"":1,""type"":""graphic"",""vms_group_id"":2},{""zone"":2,""type"":""text""}]";;ChangeMeasureHistorical.groovy
+3;19;NO-S1S2-PMV-02;NO-S1S2-PMV-02;NO-S1S2-PMV-02;Nogales;S1S2;18+34;Asc;FIXALIA;Deva;"[{""zone"":1,""type"":""graphic"",""vms_group_id"":2},{""zone"":2,""type"":""text""}]";;ChangeMeasureHistorical.groovy
+4;19;NO-S1S3-PMV-01;NO-S1S3-PMV-01;NO-S1S3-PMV-01;Nogales;S1S3;25+5;Asc;FIXALIA;Deva;"[{""zone"":1,""type"":""graphic"",""vms_group_id"":2},{""zone"":2,""type"":""text""}]";;ChangeMeasureHistorical.groovy
+5;19;NO-S2-PMV-01;NO-S2-PMV-01;NO-S2-PMV-01;Nogales;S2;31+12;Asc;FIXALIA;Deva;"[{""zone"":1,""type"":""graphic"",""vms_group_id"":2},{""zone"":2,""type"":""text""}]";;ChangeMeasureHistorical.groovy

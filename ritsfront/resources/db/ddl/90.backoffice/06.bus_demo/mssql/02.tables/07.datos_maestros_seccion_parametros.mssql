@@ -1,0 +1,28 @@
+-- Disable message for next USE command
+:setvar SQLCMDERRORLEVEL 1
+USE [bus_demo]
+GO
+-- Reenable
+:setvar SQLCMDERRORLEVEL 0
+
+SET ANSI_NULLS ON
+SET ANSI_WARNINGS ON
+SET NOCOUNT ON
+
+--
+-- Table: dbo.VW_PRM_PARAMETROS
+--
+
+	CREATE TABLE dbo.VW_PRM_PARAMETROS (
+		PRM_ID int IDENTITY(1,1) NOT NULL,
+		PRM_PAM_ID smallint NULL,
+		PRM_PAM_CODIGO varchar(10) NULL,
+		PRM_PAM_NOMBRE varchar(100) NULL,
+		PRM_CODIGO varchar(50) NULL,
+		PRM_DESCRIP varchar(MAX) NULL,
+		PRM_VALOR_TIPO tinyint NULL,
+		PRM_VALOR_TIPO_TXT varchar(7) NULL,
+		PRM_VALOR nvarchar(4000) NULL,
+		CONSTRAINT PK_VW_PRM_PARAMETROS PRIMARY KEY (PRM_ID)
+	);
+	GO

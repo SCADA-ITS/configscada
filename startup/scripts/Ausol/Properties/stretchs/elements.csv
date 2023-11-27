@@ -1,0 +1,92 @@
+item;stretch_type;alias;description;pk_ini;pk_end;lanes;road
+1000;IncidentReport;RV-TUNEL;Tunel de Río Verde;0.0;0.0;0;AP7 - AUSOL I
+1001;IncidentReport;RV-TSM;Boca sentido Málaga del tunel de Río Verde;0.0;0.0;0;AP7 - AUSOL I
+1002;IncidentReport;RV-TSC;Boca sentido Cádiz del tunel de Río Verde;0.0;0.0;0;AP7 - AUSOL I
+1003;IncidentReport;RV-TSM+150;Sector TSM+150 del tubo sentido Málaga en el tunel de Río Verde;0.0;0.0;0;AP7 - AUSOL I
+1004;IncidentReport;RV-TSM+310;Sector TSM+310 del tubo sentido Málaga en el tunel de Río Verde;0.0;0.0;0;AP7 - AUSOL I
+1005;IncidentReport;RV-TSC+150;Sector TSC+150 del tubo sentido Cádiz en el tunel de Río Verde;0.0;0.0;0;AP7 - AUSOL I
+1006;IncidentReport;RV-TSC+300;Sector TSC+300 del tubo sentido Cádiz en el tunel de Río Verde;0.0;0.0;0;AP7 - AUSOL I
+1007;IncidentReport;MM-TUNEL;Tunel de Montemayor;0.0;0.0;0;AP7 - AUSOL I
+1008;IncidentReport;MM-TSM;Boca sentido Málaga del tunel de Montemayor;0.0;0.0;0;AP7 - AUSOL I
+1009;IncidentReport;MM-TSC;Boca sentido Cádiz del tunel de Montemayor;0.0;0.0;0;AP7 - AUSOL I
+1010;IncidentReport;MM-TSM+150;Sector TSM+150 del tubo sentido Málaga en el tunel Montemayor;0.0;0.0;0;AP7 - AUSOL I
+1011;IncidentReport;MM-TSM+300;Sector TSM+300 del tubo sentido Málaga en el tunel Montemayor;0.0;0.0;0;AP7 - AUSOL I
+1012;IncidentReport;MM-TSM+450;Sector TSM+450 del tubo sentido Málaga en el tunel Montemayor;0.0;0.0;0;AP7 - AUSOL I
+1013;IncidentReport;MM-TSM+600;Sector TSM+600 del tubo sentido Málaga en el tunel Montemayor;0.0;0.0;0;AP7 - AUSOL I
+1014;IncidentReport;MM-TSC+150;Sector TSC+150 del tubo sentido Cádiz en el tunel Montemayor;0.0;0.0;0;AP7 - AUSOL I
+1015;IncidentReport;MM-TSC+300;Sector TSC+300 del tubo sentido Cádiz en el tunel Montemayor;0.0;0.0;0;AP7 - AUSOL I
+1016;IncidentReport;MM-TSC+450;Sector TSC+450 del tubo sentido Cádiz en el tunel Montemayor;0.0;0.0;0;AP7 - AUSOL I
+1017;IncidentReport;MM-TSC+600;Sector TSC+600 del tubo sentido Cádiz en el tunel Montemayor;0.0;0.0;0;AP7 - AUSOL I
+1018;IncidentReport;STMI-TUNEL;Tunel de Montemayor;0.0;0.0;0;AP7 - AUSOL I
+1019;IncidentReport;STMI-TSM;Boca sentido Málaga del tunel de Santa María I;0.0;0.0;0;AP7 - AUSOL I
+1020;IncidentReport;STM-TSC;Boca sentido Cádiz del tunel de Santa María I;0.0;0.0;0;AP7 - AUSOL I
+1021;IncidentReport;LQ-TUNEL;Tunel de La Quinta;0.0;0.0;0;AP7 - AUSOL I
+1022;IncidentReport;LQ-TSM;Boca sentido Málaga del tunel de La Quinta;0.0;0.0;0;AP7 - AUSOL I
+1023;IncidentReport;LQ-TSC;Boca sentido Cádiz del tunel de La Quinta;0.0;0.0;0;AP7 - AUSOL I
+1024;IncidentReport;LQ-TSM+150;Sector TSM+150 del tubo sentido Málaga en el tunel de La Quinta;0.0;0.0;0;AP7 - AUSOL I
+1025;IncidentReport;LQ-TSM+300;Sector TSM+300 del tubo sentido Málaga en el tunel de La Quinta;0.0;0.0;0;AP7 - AUSOL I
+1026;IncidentReport;LQ-TSM+450;Sector TSM+450 del tubo sentido Málaga en el tunel de La Quinta;0.0;0.0;0;AP7 - AUSOL I
+1027;IncidentReport;LQ-TSC+210;Sector TSM+210 del tubo sentido Cádiz en el tunel de La Quinta;0.0;0.0;0;AP7 - AUSOL I
+1028;IncidentReport;LQ-TSC+420;Sector TSM+420 del tubo sentido Cádiz en el tunel de La Quinta;0.0;0.0;0;AP7 - AUSOL I
+1029;IncidentReport;LQ-TSC+630;Sector TSM+630 del tubo sentido Cádiz en el tunel de La Quinta;0.0;0.0;0;AP7 - AUSOL I
+1030;IncidentReport;LQ-TSC+840;Sector TSM+840 del tubo sentido Cádiz en el tunel de La Quinta;0.0;0.0;0;AP7 - AUSOL I
+1031;IncidentReport;CH-TUNEL;Tunel de Calahoda;0.0;0.0;0;AP7 - AUSOL I
+1032;IncidentReport;CH-TSM;Boca sentido Málaga del tunel de Calahoda;0.0;0.0;0;AP7 - AUSOL I
+1033;IncidentReport;CH-TSC;Boca sentido Cádiz del tunel de Calahoda;0.0;0.0;0;AP7 - AUSOL I
+1034;IncidentReport;CH-TSM+150;Sector TSM+150 del tubo sentido Málaga en el tunel de Calahoda;0.0;0.0;0;AP7 - AUSOL I
+1035;IncidentReport;CH-TSM+300;Sector TSM+300 del tubo sentido Málaga en el tunel de Calahoda;0.0;0.0;0;AP7 - AUSOL I
+1036;IncidentReport;CH-TSM+450;Sector TSM+450 del tubo sentido Málaga en el tunel de Calahoda;0.0;0.0;0;AP7 - AUSOL I
+1037;IncidentReport;CH-TSM+610;Sector TSM+610 del tubo sentido Málaga en el tunel de Calahoda;0.0;0.0;0;AP7 - AUSOL I
+1038;IncidentReport;CH-TSC+140;Sector TSC+140 del tubo sentido Cádiz en el tunel de Calahoda;0.0;0.0;0;AP7 - AUSOL I
+1039;IncidentReport;CH-TSC+280;Sector TSC+280 del tubo sentido Cádiz en el tunel de Calahoda;0.0;0.0;0;AP7 - AUSOL I
+1040;IncidentReport;CH-TSC+420;Sector TSC+420 del tubo sentido Cádiz en el tunel de Calahoda;0.0;0.0;0;AP7 - AUSOL I
+1041;IncidentReport;CH-TSC+570;Sector TSC+570 del tubo sentido Cádiz en el tunel de Calahoda;0.0;0.0;0;AP7 - AUSOL I
+1042;IncidentReport;CAS-TUNEL;Tunel de Casares;0.0;0.0;0;AP7 - AUSOL II
+1043;IncidentReport;CAS-TSM;Boca sentido Málaga del tunel de Casares;0.0;0.0;0;AP7 - AUSOL II
+1044;IncidentReport;CAS-TSC;Boca sentido Cádiz del tunel de Casares;0.0;0.0;0;AP7 - AUSOL II
+1045;IncidentReport;CAS-TSM+249;Sector TSM+249 del tubo sentido Málaga en el tunel de Casares;0.0;0.0;0;AP7 - AUSOL II
+1046;IncidentReport;CAS-TSM+497;Sector TSM+497 del tubo sentido Málaga en el tunel de Casares;0.0;0.0;0;AP7 - AUSOL II
+1047;IncidentReport;CAS-TSM+776;Sector TSM+776 del tubo sentido Málaga en el tunel de Casares;0.0;0.0;0;AP7 - AUSOL II
+1048;IncidentReport;CAS-TSM+1055;Sector TSM+1055 del tubo sentido Málaga en el tunel de Casares;0.0;0.0;0;AP7 - AUSOL II
+1049;IncidentReport;CAS-TSC+286;Sector TSC+286 del tubo sentido Cádiz en el tunel de Casares;0.0;0.0;0;AP7 - AUSOL II
+1050;IncidentReport;CAS-TSC+573;Sector TSC+573 del tubo sentido Cádiz en el tunel de Casares;0.0;0.0;0;AP7 - AUSOL II
+1051;IncidentReport;CAS-TSC+828;Sector TSC+828 del tubo sentido Cádiz en el tunel de Casares;0.0;0.0;0;AP7 - AUSOL II
+1052;IncidentReport;CAS-TSC+1084;Sector TSC+1084 del tubo sentido Cádiz en el tunel de Casares;0.0;0.0;0;AP7 - AUSOL II
+1053;IncidentReport;COR-TUNEL;Tunel de Corominas;0.0;0.0;0;AP7 - AUSOL II
+1054;IncidentReport;COR-TSM	Boca;sentido Málaga del tunel de Corominas;0.0;0.0;0;AP7 - AUSOL II
+1055;IncidentReport;COR-TSC	Boca;sentido Cádiz del tunel de Corominas;0.0;0.0;0;AP7 - AUSOL II
+1056;IncidentReport;COR-TSM+205;Sector TSM+249 del tubo sentido Málaga en el tunel de Corominas;0.0;0.0;0;AP7 - AUSOL II
+1057;IncidentReport;COR-TSM+410;Sector TSM+410 del tubo sentido Málaga en el tunel de Corominas;0.0;0.0;0;AP7 - AUSOL II
+1058;IncidentReport;COR-TSM+673;Sector TSM+673 del tubo sentido Málaga en el tunel de Corominas;0.0;0.0;0;AP7 - AUSOL II
+1059;IncidentReport;COR-TSM+937;Sector TSM+937 del tubo sentido Málaga en el tunel de Corominas;0.0;0.0;0;AP7 - AUSOL II
+1060;IncidentReport;COR-TSC+263;Sector TSC+263 del tubo sentido Cádiz en el tunel de Corominas;0.0;0.0;0;AP7 - AUSOL II
+1061;IncidentReport;COR-TSC+527;Sector TSC+527 del tubo sentido Cádiz en el tunel de Corominas;0.0;0.0;0;AP7 - AUSOL II
+1062;IncidentReport;COR-TSC+732;Sector TSC+732 del tubo sentido Cádiz en el tunel de Corominas;0.0;0.0;0;AP7 - AUSOL II
+1063;IncidentReport;COR-TSC+937;Sector TSC+937 del tubo sentido Cádiz en el tunel de Corominas;0.0;0.0;0;AP7 - AUSOL II
+1064;IncidentReport;STMII-TUNEL;Tunel de Santa María II;0.0;0.0;0;AP7 - AUSOL II
+1065;IncidentReport;STMII-TSM;Boca sentido Málaga del tunel de Santa María II;0.0;0.0;0;AP7 - AUSOL II
+1066;IncidentReport;STMII-TSC;Boca sentido Cádiz del tunel de Santa María II;0.0;0.0;0;AP7 - AUSOL II
+1067;IncidentReport;STMII-TSM+157;Sector TSM+157 del tubo sentido Málaga en el tunel de  Santa María II;0.0;0.0;0;AP7 - AUSOL II
+1068;IncidentReport;STMII-TSM+314;Sector TSM+314 del tubo sentido Málaga en el tunel de  Santa María II;0.0;0.0;0;AP7 - AUSOL II
+1069;IncidentReport;STMII-TSM+433;Sector TSM+433 del tubo sentido Málaga en el tunel de  Santa María II;0.0;0.0;0;AP7 - AUSOL II
+1070;IncidentReport;STMII-TSM+553;Sector TSM+553 del tubo sentido Málaga en el tunel de  Santa María II;0.0;0.0;0;AP7 - AUSOL II
+1071;IncidentReport;STMII-TSC+115;Sector TSM+115 del tubo sentido Cadíz en el tunel de  Santa María II;0.0;0.0;0;AP7 - AUSOL II
+1072;IncidentReport;STMII-TSC+230;Sector TSM+230 del tubo sentido Cadíz en el tunel de  Santa María II;0.0;0.0;0;AP7 - AUSOL II
+1073;IncidentReport;STMII-TSC+386;Sector TSM+386 del tubo sentido Cadíz en el tunel de  Santa María II;0.0;0.0;0;AP7 - AUSOL II
+1074;IncidentReport;STMII-TSC+542;Sector TSM+542 del tubo sentido Cadíz en el tunel de  Santa María II;0.0;0.0;0;AP7 - AUSOL II
+1075;IncidentReport;EST-TUNEL;Tunel de Estepona;0.0;0.0;0;AP7 - AUSOL II
+1076;IncidentReport;EST-TSM;Boca sentido Málaga del tunel de Estepona;0.0;0.0;0;AP7 - AUSOL II
+1077;IncidentReport;EST-TSC;Boca sentido Cádiz del tunel de Estepona;0.0;0.0;0;AP7 - AUSOL II
+1078;IncidentReport;NG-TUNEL;Tunel de Nagüeles;0.0;0.0;0;AP7 - AUSOL I
+1079;IncidentReport;NG-TSM;Boca sentido Málaga del tunel de Nagüeles;0.0;0.0;0;AP7 - AUSOL I
+1080;IncidentReport;NG-TSC;Boca sentido Cádiz del tunel de Nagüeles;0.0;0.0;0;AP7 - AUSOL I
+1081;IncidentReport;NG-TSM+162;Sector TSM+162 del tubo sentido Málaga en el tunel de  Nagüeles;0.0;0.0;0;AP7 - AUSOL I
+1082;IncidentReport;NG-TSM+324;Sector TSM+324 del tubo sentido Málaga en el tunel de  Nagüeles;0.0;0.0;0;AP7 - AUSOL I
+1083;IncidentReport;NG-TSM+486;Sector TSM+486 del tubo sentido Málaga en el tunel de  Nagüeles;0.0;0.0;0;AP7 - AUSOL I
+1084;IncidentReport;NG-TSM+648;Sector TSM+648 del tubo sentido Málaga en el tunel de  Nagüeles;0.0;0.0;0;AP7 - AUSOL I
+1085;IncidentReport;NG-TSC+173;Sector TSM+173 del tubo sentido Cadíz en el tunel de  Nagüeles;0.0;0.0;0;AP7 - AUSOL I
+1086;IncidentReport;NG-TSC+346;Sector TSM+346 del tubo sentido Cadíz en el tunel de  Nagüeles;0.0;0.0;0;AP7 - AUSOL I
+1087;IncidentReport;NG-TSC+519;Sector TSM+519 del tubo sentido Cadíz en el tunel de  Nagüeles;0.0;0.0;0;AP7 - AUSOL I
+1088;IncidentReport;NG-TSC+694;Sector TSM+694 del tubo sentido Cadíz en el tunel de  Nagüeles;0.0;0.0;0;AP7 - AUSOL I
+1089;IncidentReport;GDR-PEAJE;Peaje de Guadiaro;0.0;0.0;0;AP7 - AUSOL II
+1090;IncidentReport;MNV-PEAJE;Peaje de Manilva;0.0;0.0;0;AP7 - AUSOL II

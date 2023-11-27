@@ -1,0 +1,15 @@
+device_name;session_uid;PLC_name;host;port(i);url_publisher;read_permission;write_permission;offset_gate_open(i);bit(i)
+2E06-ELE-002.SEAbiertaN1;2E06-ELE-002.SEAbiertaN1;CT05_PLC_C;10.133.50.37;28031;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;;8;3
+2E07-ELE-002.SEAbiertaN2;2E07-ELE-002.SEAbiertaN2;CT05_PLC_C;10.133.50.37;28031;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;;8;4
+2E08-ELE-002.SEAbiertaN2;2E08-ELE-002.SEAbiertaN2;CT05_PLC_C;10.133.50.37;28031;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;;8;5
+2E06-ELE-002.SEAbiertaN2;2E06-ELE-002.SEAbiertaN2;CT05_PLC_C;10.133.50.37;28031;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;;8;6
+2E07-ELE-002.SEAbiertaN1;2E07-ELE-002.SEAbiertaN1;CT05_PLC_C;10.133.50.37;28031;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;;8;7
+2E08-ELE-002.SEAbiertaN1;2E08-ELE-002.SEAbiertaN1;CT05_PLC_C;10.133.50.37;28031;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;;8;8
+2E09-ELE-002.SEAbiertaN1;2E09-ELE-002.SEAbiertaN1;CT05_PLC_C;10.133.50.37;28031;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;;8;9
+2E09-ELE-002.SEAbiertaN2;2E09-ELE-002.SEAbiertaN;CT05_PLC_C;10.133.50.37;28031;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;;8;10
+2E10-ELE-002.SEAbiertaN1;2E10-ELE-002.SEAbiertaN1;CT05_PLC_C;10.133.50.37;28031;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;;8;11
+2E10-ELE-002.SEAbiertaN2;2E10-ELE-002.SEAbiertaN2;CT05_PLC_C;10.133.50.37;28031;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;;8;12
+2E10-ELE-002.SEAbiertaE47;2E10-ELE-002.SEAbiertaE47;CT05_PLC_C;10.133.50.37;28031;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;;8;13
+2E11-ELE-002.SEAbiertaN1;2E11-ELE-002.SEAbiertaN1;CT05_PLC_C;10.133.50.37;28031;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;;8;15
+2E11-ELE-002.SEAbiertaAux;2E11-ELE-002.SEAbiertaAux;CT05_PLC_C;10.133.50.37;28031;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;;9;0
+2E11-ELE-002.SEAbiertaN2;2E11-ELE-002.SEAbiertaN2;CT05_PLC_C;10.133.50.37;28031;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;;9;1

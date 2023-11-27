@@ -1,0 +1,5 @@
+device_name;session_uid;host;url_publisher;trigger_event_offset(i);port(i);read_permission;write_permission
+A-TG01-0465-S;A-TG01-0465-S;192.168.88.189;http:\/\/192.168.88.170:3000\/api\/v2\/generic\/;0;1025;monitor;
+A-TG01-1146-S;A-TG01-1146-S;192.168.88.189;http:\/\/192.168.88.170:3000\/api\/v2\/generic\/;0;1025;monitor;
+A-TG01-1729-N;A-TG01-1729-N;192.168.88.189;http:\/\/192.168.88.170:3000\/api\/v2\/generic\/;0;1025;monitor;
+A-TG01-2371-N;A-TG01-2371-N;192.168.88.189;http:\/\/192.168.88.170:3000\/api\/v2\/generic\/;0;1025;monitor;

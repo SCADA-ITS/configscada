@@ -1,0 +1,11 @@
+device_name;url_publisher
+RV-NAS-1;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/
+MM-NAS-1;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/
+STMI-NAS-1;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/
+COR-NAS1-BC;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/
+LQ-NAS-1;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/
+CH-NAS-1;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/
+STM2-NAS-1;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/
+CAS-NAS1-BC;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/
+EST-NAS-1;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/
+NG-NAS-1;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="SmCondition">
+	<SELECT>SELECT condition_id as "id",
+				   threshold_operation_id as "thresholdOperationId", 
+				   threshold_val1_id as "thresholdVal1Id",
+				   threshold_val2_id as "thresholdVal2Id",
+				   element_type_id as "elementTypeId",
+				   element_type_param_id as "elementTypeParamId",
+				   param_type_id as "paramTypeId",
+				   timer_id as "timerId",	
+				   min_elements_match_threshold as "minElementsMatchThreshold",
+				   enabled as "enabled",
+				   visible as "visible"
+			  FROM static.sm_conditions
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>
+	</INSERT>
+	<UPDATE>
+	</UPDATE>
+	<DELETE>
+	</DELETE>
+</DML>

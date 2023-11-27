@@ -1,0 +1,25 @@
+item;alias;description;sessionuid;road;stretchs;secc;pk;dm;param1_direction;param2_pk_ini;param3_pk_end;param4_name;param5_panels
+1;TT_01;Calahonda - Santa María I;;AUSOL;;;;;false;199.700;195.650;STMI;CH-PMV-8CA
+2;TT_02;Calahonda - Rio Verde;;AUSOL;;;;;false;199.700;177.300;RV;CH-PMV-8CA
+3;TT_03;Calahonda - La Quinta;;AUSOL;;;;;false;199.700;173.500;LQ;CH-PMV-8CA
+4;TT_04;Santa María I - Rio Verde;;AUSOL;;;;;false;195.600;177.300;RV;STMI-PMV-24CA
+5;TT_05;Santa María I - La Quinta;;AUSOL;;;;;false;195.600;173.500;LQ;STMI-PMV-24CA
+6;TT_06;Santa María I - Montemayor;;AUSOL;;;;;false;195.600;166.700;MM;STMI-PMV-24CA
+7;TT_07;Rio Verde - La Quinta;;AUSOL;;;;;false;177.200;173.500;LQ;RV-PMV-6CA
+8;TT_08;Rio Verde - Montemayor;;AUSOL;;;;;false;177.200;166.700;MM;RV-PMV-6CA
+9;TT_09;Rio Verde - Estepona;;AUSOL;;;;;false;177.200;153.750;EST;RV-PMV-6CA
+10;TT_10;La Quinta - Montemayor;;AUSOL;;;;;false;173.400;166.700;MM;LQ-PMV-4CA
+11;TT_11;La Quinta - Estepona;;AUSOL;;;;;false;173.400;153.750;EST;LQ-PMV-4CA
+12;TT_12;Montemayor - Estepona;;AUSOL;;;;;false;166.600;153.750;EST;MM-PMV-2CA
+13;TT_13;Estepona - Montemayor;;AUSOL;;;;;false;153.700;166.100;MM;EST-PMV-26MA
+14;TT_14;Estepona - La Quinta;;AUSOL;;;;;false;153.700;172.670;LQ;EST-PMV-26MA
+15;TT_15;Estepona - Rio Verde;;AUSOL;;;;;false;153.700;177;RV;EST-PMV-26MA
+16;TT_16;Montemayor - La Quinta;;AUSOL;;;;;false;166.200;172.680;LQ;MM-PMV-1MA
+17;TT_17;Montemayor - Rio Verde;;AUSOL;;;;;false;166.200;177;RV;MM-PMV-1MA
+18;TT_18;Montemayor - Santa María I;;AUSOL;;;;;false;166.200;195.500;STMI;MM-PMV-1MA
+19;TT_19;La Quinta - Rio Verde;;AUSOL;;;;;false;172.750;177;RV;LQ-PMV-3MA
+20;TT_20;La Quinta - Santa María I;;AUSOL;;;;;false;172.750;195.500;STMI;LQ-PMV-3MA
+21;TT_21;La Quinta - Calahonda;;AUSOL;;;;;false;172.750;199.250;CH;LQ-PMV-3MA
+22;TT_22;Rio Verde - Santa María I;;AUSOL;;;;;false;177.100;195.500;STMI;RV-PMV-5MA
+23;TT_23;Rio Verde - Calahonda;;AUSOL;;;;;false;177.100;199.250;CH;RV-PMV-5MA
+24;TT_24;Santa María I - Calahonda;;AUSOL;;;;;false;195.600;199.250;CH;STMI-PMV-23MA

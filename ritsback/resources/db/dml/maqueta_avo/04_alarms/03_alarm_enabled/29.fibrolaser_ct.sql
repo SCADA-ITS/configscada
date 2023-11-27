@@ -1,0 +1,12 @@
+UPDATE conf.alarm_configs SET alarm_level_id = 3, enabled = True, treatment = True WHERE element_type_id = 29 AND alarm_config_id = 10029; --LBL_ALARM_CONFIGS_ALARM_FIBROLASER_CT_NO_CONNECTION
+UPDATE conf.alarm_configs SET alarm_level_id = 2, enabled = True, treatment = False WHERE element_type_id = 29 AND alarm_config_id = 20029; --LBL_ALARM_CONFIGS_ALARM_FIBROLASER_FAILS_COMMS
+UPDATE conf.alarm_configs SET alarm_level_id = 4, enabled = True, treatment = True WHERE element_type_id = 29 AND alarm_config_id = 30029; --LBL_ALARM_CONFIGS_ALARM_FIBROLASER_SYSTEM_FAULT
+UPDATE conf.alarm_configs SET alarm_level_id = 3, enabled = True, treatment = True WHERE element_type_id = 29 AND alarm_config_id = 40029; --LBL_ALARM_CONFIGS_ALARM_FIBROLASER_FIBRE_BREAK
+UPDATE conf.alarm_configs SET alarm_level_id = 2, enabled = True, treatment = False WHERE element_type_id = 29 AND alarm_config_id = 50029; --LBL_ALARM_CONFIGS_ALARM_FIBROLASER_DEVICE_ERROR
+UPDATE conf.alarm_configs SET alarm_level_id = 2, enabled = True, treatment = False WHERE element_type_id = 29 AND alarm_config_id = 60029; --LBL_ALARM_CONFIGS_ALARM_FIBROLASER_MEASUREMENT_STOPPED
+UPDATE conf.alarm_configs SET alarm_level_id = 2, enabled = True, treatment = False WHERE element_type_id = 29 AND alarm_config_id = 70029; --LBL_ALARM_CONFIGS_ALARM_FIBROLASER_MEASUREMENT_INACTIVE
+UPDATE conf.alarm_configs SET alarm_level_id = 2, enabled = True, treatment = False WHERE element_type_id = 29 AND alarm_config_id = 80029; --LBL_ALARM_CONFIGS_ALARM_FIBROLASER_CT_CONFIGURATION_ERROR
+UPDATE conf.alarm_configs SET alarm_level_id = 3, enabled = True, treatment = True WHERE element_type_id = 29 AND alarm_config_id = 90029; --LBL_ALARM_CONFIGS_ALARM_FIBROLASER_CT_MEASUREMENT_ERROR
+UPDATE conf.alarm_configs SET alarm_level_id = 3, enabled = True, treatment = True WHERE element_type_id = 29 AND alarm_config_id = 100029; --LBL_ALARM_CONFIGS_ALARM_FIBROLASER_CT_DEVICE_ERROR_SUPPORT
+UPDATE conf.alarm_configs SET alarm_level_id = 2, enabled = True, treatment = False WHERE element_type_id = 29 AND alarm_config_id = 110029; --LBL_ALARM_CONFIGS_ALARM_FIBROLASER_CT_CONDITIONS_ERROR
+UPDATE conf.alarm_configs SET alarm_level_id = 2, enabled = True, treatment = False WHERE element_type_id = 29 AND alarm_config_id = 120029; --LBL_ALARM_CONFIGS_ALARM_FIBROLASER_CT_HANDLING_ERROR

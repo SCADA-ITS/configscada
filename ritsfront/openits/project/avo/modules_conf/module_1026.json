@@ -1,0 +1,396 @@
+{
+	"moduleAction": {
+	    "elements": 102601,
+	    "commandEdit": 102602
+	},
+	"restEndpoints": {
+		"elementsByType": "element_types/${id}/summary",
+		"element": "elements/${id}",
+		"vmsLibraryBySubtype": "vms_libraries/element_subtype/${id}",
+		"command": "elements/send_command_element",
+		"saveNode": "vms_libraries/${id}/node/${parentNodeIds}",
+		"deleteNode": "vms_libraries/node/${id}",
+		"enablePriority": "elements/enable_priority/element/${elementId}/priority/${priorityId}",
+		"disablePriority": "elements/disable_priority/element/${elementId}/priority/${priorityId}",		
+		"equipmentViewer": "equip_viewer/${elementId}"
+	},
+	"topics": {
+		"elementQueue": "/topic/pm_queue",
+		"element": "/topic/element"		
+	},
+	"requiredPermissions": {
+		"editPanel": "SystemPermission:13",
+		"editLibrary": "SystemPermission:14",
+		"commandEquipment": "SystemPermission:6"
+	},
+	"commands":{
+		"reset" :{
+			"commandElementTypeId":"CommandElementType:1:71"
+		},
+		"sendMessage" :{
+			"commandElementTypeId":"CommandElementType:2:71",
+			"elementId": null,
+			"commandElementValues": [
+				{
+					"commandElementTypeParamId": "CommandElementTypeParam:2:71:1",
+					"value": null
+				}
+			]
+		},
+		"switchOff" :{
+			"commandElementTypeId":"CommandElementType:3:71"
+		}
+	},
+	"vms": {
+		"type": "ElementType:71",
+		"jsonData": "ElementTypeParam:71:2:3",
+		"jsonConfig": "ElementTypeParam:71:1:4",
+		"pictogramsPath": "img/pictograms",
+		"pictogramsExtension": ".bmp",
+		"pictogramsSize": 64,
+		"textEditor": {
+			"width": 900,
+			"height": 500
+		},
+		"graphicEditor": {
+			"width": 930,
+			"height": 800
+		}
+	},
+	"properties": [
+		{
+			"id": "ElementSubtype:1:71",
+			"graphicIcon": {
+				
+				"jsDrawFile": "component/graphicIcon/graphicIconCustom.js",
+				"svgFile": "img/graphic_icon/71_vms_ac_bd_3lcs.svg",
+				"jsCustomTypeRender": "component/graphicIcon/custom/vms.js"
+			},
+			"decimalPrecision": 1,
+			"alternance": false,
+			"configAlternance": true,
+			"defaultAlternanceMs": 5000,
+			"blinking": false,
+			"configBlinking": false,
+			"defaultFlashingOnMs":1000,
+			"defaultFlashingOffMs":1000,
+			"textColor": false,
+			"defaultTextColor": "#FFFFFF",
+			"textAlign": false,
+			"specialCharacters": [2191]
+		},
+		{
+			"id": "ElementSubtype:2:71",
+			"graphicIcon": {
+				
+				"jsDrawFile": "component/graphicIcon/graphicIconCustom.js",
+				"svgFile": "img/graphic_icon/71_vms_ac_bd_5lcs.svg",
+				"jsCustomTypeRender": "component/graphicIcon/custom/vms.js"
+			},
+			"alternance": false,
+			"configAlternance": false,
+			"defaultAlternanceMs": 5000,
+			"blinking": false,
+			"configBlinking": false,
+			"defaultFlashingOnMs":1000,
+			"defaultFlashingOffMs":1000,
+			"textColor": false,
+			"defaultTextColor": "#FFFFFF",
+			"textAlign": false,
+			"specialCharacters": [2191]
+		},
+		{
+			"id": "ElementSubtype:3:71",
+			"graphicIcon": {
+				
+				"jsDrawFile": "component/graphicIcon/graphicIconCustom.js",
+				"svgFile": "img/graphic_icon/71_vms_ac_bd_2lcs.svg",
+				"jsCustomTypeRender": "component/graphicIcon/custom/vms.js"
+			},
+			"alternance": false,
+			"configAlternance": false,
+			"defaultAlternanceMs": 5000,
+			"blinking": false,
+			"configBlinking": false,
+			"defaultFlashingOnMs":1000,
+			"defaultFlashingOffMs":1000,
+			"textColor": false,
+			"defaultTextColor": "#FFFFFF",
+			"textAlign": false,
+			"specialCharacters": [2191]
+		},
+		{
+			"id": "ElementSubtype:4:71",
+			"graphicIcon": {
+				
+				"jsDrawFile": "component/graphicIcon/graphicIconCustom.js",
+				"svgFile": "img/graphic_icon/71_vms_192_64.svg",
+				"jsCustomTypeRender": "component/graphicIcon/custom/vms.js"
+			},
+			"alternance": false,
+			"configAlternance": false,
+			"defaultAlternanceMs": 5000,
+			"blinking": false,
+			"configBlinking": false,
+			"defaultFlashingOnMs":1000,
+			"defaultFlashingOffMs":1000,
+			"textColor": false,
+			"defaultTextColor": "#FFFFFF",
+			"textAlign": false,
+			"specialCharacters": [2191]
+		},
+		{
+			"id": "ElementSubtype:5:71",
+			"graphicIcon": {
+				
+				"jsDrawFile": "component/graphicIcon/graphicIconCustom.js",
+				"svgFile": "img/graphic_icon/71_vms_128_64.svg",
+				"jsCustomTypeRender": "component/graphicIcon/custom/vms.js"
+			},
+			"alternance": false,
+			"configAlternance": false,
+			"defaultAlternanceMs": 5000,
+			"blinking": false,
+			"configBlinking": false,
+			"defaultFlashingOnMs":1000,
+			"defaultFlashingOffMs":1000,
+			"textColor": false,
+			"defaultTextColor": "#FFFFFF",
+			"textAlign": false,
+			"specialCharacters": [216,24]
+		},
+		{
+			"id": "ElementSubtype:6:71",
+			"graphicIcon": {
+				
+				"jsDrawFile": "component/graphicIcon/graphicIconCustom.js",
+				"svgFile": "img/graphic_icon/71_vms_clv_af.svg",
+				"jsCustomTypeRender": "component/graphicIcon/custom/vms.js"
+			},
+			"alternance": false,
+			"configAlternance": false,
+			"defaultAlternanceMs": 5000,
+			"blinking": false,
+			"configBlinking": false,
+			"defaultFlashingOnMs":1000,
+			"defaultFlashingOffMs":1000,
+			"textColor": false,
+			"defaultTextColor": "#FFFFFF",
+			"textAlign": false
+		},
+		{
+			"id": "ElementSubtype:7:71",
+			"graphicIcon": {
+				
+				"jsDrawFile": "component/graphicIcon/graphicIconCustom.js",
+				"svgFile": "img/graphic_icon/71_vms_temp.svg",
+				"jsCustomTypeRender": "component/graphicIcon/custom/vms.js"
+			},
+			"alternance": false,
+			"configAlternance": false,
+			"defaultAlternanceMs": 5000,
+			"blinking": false,
+			"configBlinking": false,
+			"defaultFlashingOnMs":1000,
+			"defaultFlashingOffMs":1000,
+			"textColor": false,
+			"defaultTextColor": "#FFFFFF",
+			"textAlign": false
+		},
+		{
+			"id": "ElementSubtype:9:71",
+			"graphicIcon": {
+				
+				"jsDrawFile": "component/graphicIcon/graphicIconCustom.js",
+				"svgFile": "img/graphic_icon/71_vms_dgt_gr_txt.svg",
+				"jsCustomTypeRender": "component/graphicIcon/custom/vms.js"
+			},
+			"alternance": true,
+			"configAlternance": false,
+			"defaultAlternanceMs": 5000,
+			"blinking": false,
+			"configBlinking": false,
+			"defaultFlashingOnMs":1000,
+			"defaultFlashingOffMs":1000,
+			"textColor": false,
+			"defaultTextColor": "#FFFFFF",
+			"textAlign": false
+		},
+		{
+			"id": "ElementSubtype:11:71",
+			"graphicIcon": {
+				
+				"jsDrawFile": "component/graphicIcon/graphicIconCustom.js",
+				"svgFile": "img/graphic_icon/71_vms_clv_af.svg",
+				"jsCustomTypeRender": "component/graphicIcon/custom/vms.js"
+			},
+			"alternance": false,
+			"configAlternance": false,
+			"defaultAlternanceMs": 5000,
+			"blinking": true,
+			"configBlinking": false,
+			"defaultFlashingOnMs":1000,
+			"defaultFlashingOffMs":1000,
+			"textColor": false,
+			"defaultTextColor": "#FFFFFF",
+			"textAlign": false
+		},
+		{
+			"id": "ElementSubtype:12:71",
+			"graphicIcon": {
+				
+				"jsDrawFile": "component/graphicIcon/graphicIconCustom.js",
+				"svgFile": "img/graphic_icon/71_vms_clv_af.svg",
+				"jsCustomTypeRender": "component/graphicIcon/custom/vms.js"
+			},
+			"alternance": false,
+			"configAlternance": false,
+			"defaultAlternanceMs": 5000,
+			"blinking": true,
+			"configBlinking": false,
+			"defaultFlashingOnMs":1000,
+			"defaultFlashingOffMs":1000,
+			"textColor": false,
+			"defaultTextColor": "#FFFFFF",
+			"textAlign": false
+		},
+		{
+			"id": "ElementSubtype:16:71",
+			"graphicIcon": {
+				
+				"jsDrawFile": "component/graphicIcon/graphicIconCustom.js",
+				"svgFile": "img/graphic_icon/71_vms_dgt_txt_1line.svg",
+				"jsCustomTypeRender": "component/graphicIcon/custom/vms.js"
+			},
+			"alternance": true,
+			"configAlternance": true,
+			"defaultAlternanceMs": 5000,
+			"blinking": true,
+			"configBlinking": true,
+			"defaultFlashingOnMs":1000,
+			"defaultFlashingOffMs":1000,
+			"textColor": false,
+			"defaultTextColor": "#FFFFFF",
+			"textAlign": false
+		},
+		{
+			"id": "ElementSubtype:17:71",
+			"graphicIcon": {
+				
+				"jsDrawFile": "component/graphicIcon/graphicIconCustom.js",
+				"svgFile": "img/graphic_icon/71_vms_ab.svg",
+				"jsCustomTypeRender": "component/graphicIcon/custom/vms.js"
+			},
+			"alternance": false,
+			"configAlternance": false,
+			"defaultAlternanceMs": 5000,
+			"blinking": false,
+			"configBlinking": false,
+			"defaultFlashingOnMs":1000,
+			"defaultFlashingOffMs":1000,
+			"textColor": false,
+			"defaultTextColor": "#FFFFFF",
+			"textAlign": false
+		},
+		{
+			"id": "ElementSubtype:18:71",
+			"graphicIcon": {
+				
+				"jsDrawFile": "component/graphicIcon/graphicIconCustom.js",
+				"svgFile": "img/graphic_icon/71_vms_dgt_gr_txt.svg",
+				"jsCustomTypeRender": "component/graphicIcon/custom/vms.js"
+			},
+			"alternance": true,
+			"configAlternance": false,
+			"defaultAlternanceMs": 5000,
+			"blinking": false,
+			"configBlinking": false,
+			"defaultFlashingOnMs":1000,
+			"defaultFlashingOffMs":1000,
+			"textColor": false,
+			"defaultTextColor": "#FFFFFF",
+			"textAlign": false
+		},
+		{
+			"id": "ElementSubtype:19:71",
+			"graphicIcon": {
+				
+				"jsDrawFile": "component/graphicIcon/graphicIconCustom.js",
+				"svgFile": "img/graphic_icon/71_vms_dgt_gr_txt.svg",
+				"jsCustomTypeRender": "component/graphicIcon/custom/vms.js"
+			},
+			"decimalPrecision": 1,
+			"alternance": true,
+			"configAlternance": true,
+			"defaultAlternanceMs": 5000,
+			"blinking": true,
+			"configBlinking": true,
+			"defaultFlashingOnMs":1000,
+			"defaultFlashingOffMs":1000,
+			"textColor": false,
+			"defaultTextColor": "#FFFFFF",
+			"textAlign": true
+		},
+		{
+			"id": "ElementSubtype:20:71",
+			"graphicIcon": {
+				
+				"jsDrawFile": "component/graphicIcon/graphicIconCustom.js",
+				"svgFile": "img/graphic_icon/71_vms_nzta_txt_type_a.svg",
+				"jsCustomTypeRender": "component/graphicIcon/custom/vms.js"
+			},
+			"alternance": true,
+			"configAlternance": false,
+			"defaultAlternanceMs": 5000,
+			"blinking": false,
+			"configBlinking": false,
+			"defaultFlashingOnMs":1000,
+			"defaultFlashingOffMs":1000,
+			"textColor": false,
+			"defaultTextColor": "#FFFFFF",
+			"textAlign": false
+		},
+		{
+			"id": "ElementSubtype:21:71",
+			"graphicIcon": {
+				
+				"jsDrawFile": "component/graphicIcon/graphicIconCustom.js",
+				"svgFile": "img/graphic_icon/71_vms_nzta_txt_type_b.svg",
+				"jsCustomTypeRender": "component/graphicIcon/custom/vms.js"
+			},
+			"alternance": true,
+			"configAlternance": false,
+			"defaultAlternanceMs": 5000,
+			"blinking": false,
+			"configBlinking": false,
+			"defaultFlashingOnMs":1000,
+			"defaultFlashingOffMs":1000,
+			"textColor": false,
+			"defaultTextColor": "#FFFFFF",
+			"textAlign": false
+		},
+		{
+			"id": "ElementSubtype:22:71",
+			"graphicIcon": {
+				
+				"jsDrawFile": "component/graphicIcon/graphicIconCustom.js",
+				"svgFile": "img/graphic_icon/71_vms_dgt.svg",
+				"jsCustomTypeRender": "component/graphicIcon/custom/vms.js"
+			},
+			"alternance": true,
+			"configAlternance": false,
+			"defaultAlternanceMs": 5000,
+			"blinking": false,
+			"configBlinking": false,
+			"defaultFlashingOnMs":1000,
+			"defaultFlashingOffMs":1000,
+			"textColor": false,
+			"defaultTextColor": "#FFFFFF",
+			"textAlign": false
+		}
+	],
+	"action": {
+		"equipmentViewer": 101401,
+		"showInMapOrSynoptic": 200004
+	}
+}

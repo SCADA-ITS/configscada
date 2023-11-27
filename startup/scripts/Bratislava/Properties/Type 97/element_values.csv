@@ -1,0 +1,6 @@
+item;alias;sessionuid;road;stretchs;secc;pk;sentido;param1_route;param2_user;param3_password;param4_associated_cabinet
+1;ADPJ12P+5,148;ADPJ12P+5,148;D4;D4_2:Rusovce-Ketelec;;5+148;P;http://10.191.9.6/api/v1/;admin;R4D7Revenga;RNRJS10P
+2;ADPJ13L+5,148;ADPJ13L+5,148;D4;D4_2:Rusovce-Ketelec;;5+148;L;http://10.191.9.7/api/v1/;admin;R4D7Revenga;RNRJS10P
+3;ADPJ14P+6,438;ADPJ14P+6,438;D4;D4_2:Rusovce-Ketelec;;6+438;P;http://10.191.10.3/api/v1/;admin;R4D7Revenga;RNRJS11P
+4;ADPJ15L+6,438;ADPJ15L+6,438;D4;D4_2:Rusovce-Ketelec;;6+438;L;http://10.191.10.4/api/v1/;admin;R4D7Revenga;RNRJS11P
+5;ADPJ16P+7,558;ADPJ16P+7,558;D4;D4_2:Rusovce-Ketelec;;7+558;P;http://10.191.10.12/api/v1/;admin;R4D7Revenga;RNRJS13P

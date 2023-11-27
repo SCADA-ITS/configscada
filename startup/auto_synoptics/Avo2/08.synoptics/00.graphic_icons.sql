@@ -1,0 +1,47 @@
+-- Para los identificadores de los graphic_icons seguiremos los siguientes criterios
+-- Orden del graphic_icon dentro del mismo tipo --> 2 cifras
+-- Subtipo del elemento --> 2 cifras (0 si no tiene subtipo)
+-- Tipo del elemento --> 4 cifras
+INSERT INTO ui.graphic_icons 
+(id, name, description, alarms, measures, js_draw_file, width, height, svg_file, js_custom_type_render, keep_aspect_ratio) VALUES
+(000008, 'BARRERA', 'BARRERA', false, true, 'component/graphicIcon/graphicIconCustom.js', 25, 25, 'img/graphic_icon/08_barrier.svg', 'component/graphicIcon/custom/barrier.js',true),
+(000013, 'SEM_3GRUPOS', 'SEM_3GRUPOS', false, true, 'component/graphicIcon/graphicIconCustom.js', 25, 25, 'img/graphic_icon/13_sem_3_grupos.svg', 'component/graphicIcon/custom/trafficLightPLC.js',true),
+(000022, 'VALVULA', 'VALVULA', false, true, 'component/graphicIcon/graphicIconCustom.js', 80, 80, 'img/graphic_icon/22_valvula_mariposa.svg', 'component/graphicIcon/custom/valve.js',true),
+(000027, 'PLC', 'PLC', false, false, 'component/graphicIcon/graphicIconDefault.js', 50, 50, 'img/graphic_icon/27_plc.svg', 'null',true),
+(000033, 'TRAFO', 'TRAFO', false, false, 'component/graphicIcon/graphicIconDefault.js', 30, 30, 'img/graphic_icon/33_trafo.svg', 'null',true),
+(000053, 'SEM_2GRUPOS', 'SEM_2GRUPOS', false, true, 'component/graphicIcon/graphicIconCustom.js', 25, 25, 'img/graphic_icon/53_sem_2_grupos.svg', 'component/graphicIcon/custom/redTrafficLight.js',true),
+(000056, 'UNIFILAR', 'UNIFILAR', false, false, 'component/graphicIcon/graphicIconDefault.js', 60, 60, 'img/graphic_icon/56_unifilar.svg', 'null',true),
+(000057, 'INTERRUPTOR', 'INTERRUPTOR', false, false, 'component/graphicIcon/graphicIconDefault.js', 30, 30, 'img/graphic_icon/92_electrical_protection.svg', 'null',true),
+(000058, 'PULS', 'PULS', false, false, 'component/graphicIcon/graphicIconDefault.js', 30, 30, 'img/graphic_icon/58_pulsador.svg', 'null',true),
+(000059, 'DET_HUM', 'DET_HUM', false, false, 'component/graphicIcon/graphicIconDefault.js', 30, 30, 'img/graphic_icon/59_smoke_detector.svg', 'null',true),
+(000060, 'SIRENA', 'SIRENA', false, false, 'component/graphicIcon/graphicIconDefault.js', 30, 30, 'img/graphic_icon/60_sirena.svg', 'null',true),
+(000061, 'FIRE_DET_CT', 'FIRE_DET_CT', false, false, 'component/graphicIcon/graphicIconDefault.js', 33.333332, 33.333332, 'img/graphic_icon/61_fire_det_ct.svg', 'null',true),
+(000065, 'SAI', 'SAI', false, false, 'component/graphicIcon/graphicIconDefault.js', 60, 60, 'img/graphic_icon/65_sai.svg', 'null',true),
+(000070, 'CVM', 'CVM', false, false, 'component/graphicIcon/graphicIconDefault.js', 30, 30, 'img/graphic_icon/70_analizador_red.svg', 'null',true),
+(190071, 'VMS', 'VMS', false, true, 'component/graphicIcon/graphicIconCustom.js', 200, 70, 'img/graphic_icon/71_vms_dgt_gr_txt.svg', 'component/graphicIcon/custom/vms.js',true),
+(210071, 'VMS', 'VMS', false, true, 'component/graphicIcon/graphicIconCustom.js', 200, 87, 'img/graphic_icon/71_vms_nzta_txt_type_b.svg', 'component/graphicIcon/custom/vms.js',true),
+(000075, 'GE', 'GE', false, false, 'component/graphicIcon/graphicIconDefault.js', 60, 60, 'img/graphic_icon/75_ge.svg', 'null',true),
+(000086, 'BOMBA', 'BOMBA', false, true, 'component/graphicIcon/graphicIconCustom.js', 80, 80, 'img/graphic_icon/86_diesel_pump.svg', 'component/graphicIcon/custom/pump.js',true),
+(000087, 'TANK', 'TANK', false, true, 'component/graphicIcon/graphicIconCustom.js', 138.55498, 176.34276, 'img/graphic_icon/87_tank.svg', 'component/graphicIcon/custom/tank.js',true),
+(000088, 'SENSOR', 'SENSOR', false, false, 'component/graphicIcon/graphicIconDefault.js', 80, 80, 'img/graphic_icon/88_leak_water_sensor.svg', 'null',true),
+(00003300, 'TRAFO', 'TRAFO', false, false, 'component/graphicIcon/graphicIconDefault.js', 20, 20, 'img/graphic_icon/33_trafo.svg', 'null',true),
+(00005601, 'UNIFILAR', 'UNIFILAR', false, false, 'component/graphicIcon/graphicIconDefault.js', 30, 30, 'img/graphic_icon/56_unifilar.svg', 'null',true),
+(00006502, 'SAI', 'SAI', false, false, 'component/graphicIcon/graphicIconDefault.js', 30, 30, 'img/graphic_icon/65_sai.svg', 'null',true),
+(00007003, 'CVM', 'CVM', false, false, 'component/graphicIcon/graphicIconDefault.js', 20, 20, 'img/graphic_icon/70_analizador_red.svg', 'null',true),
+(00007504, 'GE', 'GE', false, false, 'component/graphicIcon/graphicIconDefault.js', 25, 25, 'img/graphic_icon/75_ge.svg', 'null',true),
+(00005805, 'PULS', 'PULS', false, false, 'component/graphicIcon/graphicIconDefault.js', 15, 15, 'img/graphic_icon/58_pulsador.svg', 'null',true),
+(00005906, 'DET_HUM', 'DET_HUM', false, false, 'component/graphicIcon/graphicIconDefault.js', 15, 15, 'img/graphic_icon/59_smoke_detector.svg', 'null',true),
+(00006007, 'SIRENA', 'SIRENA', false, false, 'component/graphicIcon/graphicIconDefault.js', 15, 15, 'img/graphic_icon/60_sirena.svg', 'null',true),
+(00006108, 'FIRE_DET_CT', 'FIRE_DET_CT', false, false, 'component/graphicIcon/graphicIconDefault.js', 15, 15, 'img/graphic_icon/61_fire_det_ct.svg', 'null',true),
+(00006109, 'FIRE_DET_CT', 'FIRE_DET_CT', false, false, 'component/graphicIcon/graphicIconDefault.js', 30, 30, 'img/graphic_icon/61_fire_det_ct.svg', 'null',true),
+(00002700, 'PLC', 'PLC', false, false, 'component/graphicIcon/graphicIconDefault.js', 20, 20, 'img/graphic_icon/27_plc.svg', 'null',true),
+(00005701, 'INTERRUPTOR', 'INTERRUPTOR', false, false, 'component/graphicIcon/graphicIconDefault.js', 20, 20, 'img/graphic_icon/92_electrical_protection.svg', 'null',true),
+(00006503, 'SAI', 'SAI', false, false, 'component/graphicIcon/graphicIconDefault.js', 20, 20, 'img/graphic_icon/65_sai.svg', 'null',true),
+(00007505, 'GE', 'GE', false, false, 'component/graphicIcon/graphicIconDefault.js', 40, 40, 'img/graphic_icon/75_ge.svg', 'null',true),
+(00005806, 'PULS', 'PULS', false, false, 'component/graphicIcon/graphicIconDefault.js', 20, 20, 'img/graphic_icon/58_pulsador.svg', 'null',true),
+(00005907, 'DET_HUM', 'DET_HUM', false, false, 'component/graphicIcon/graphicIconDefault.js', 20, 20, 'img/graphic_icon/59_smoke_detector.svg', 'null',true),
+(00006008, 'SIRENA', 'SIRENA', false, false, 'component/graphicIcon/graphicIconDefault.js', 20, 20, 'img/graphic_icon/60_sirena.svg', 'null',true),
+(00006110, 'FIRE_DET_CT', 'FIRE_DET_CT', false, false, 'component/graphicIcon/graphicIconDefault.js', 20, 20, 'img/graphic_icon/61_fire_det_ct.svg', 'null',true),
+(00005602, 'UNIFILAR', 'UNIFILAR', false, false, 'component/graphicIcon/graphicIconDefault.js', 40, 40, 'img/graphic_icon/56_unifilar.svg', 'null',true),
+(00008700, 'TANK', 'TANK', false, true, 'component/graphicIcon/graphicIconCustom.js', 139, 176, 'img/graphic_icon/87_tank.svg', 'component/graphicIcon/custom/tank.js',true);
+

@@ -1,0 +1,1 @@
+UPDATE conf.alarm_configs SET treatment = false WHERE alarm_config_id IN (34,35) and element_type_id = 3;

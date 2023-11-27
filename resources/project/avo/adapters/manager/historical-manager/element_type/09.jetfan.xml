@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<p:historical_element_parser_v1
+	xmlns:p="historical_element_parser_v1"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="historical_element_parser_v1 ../../../../../adapter-lib/src/main/resources/schemas/manager/historical_element_parser_v1.xsd"
+	element_type_id="9">
+	<p:target_table>hist.fan</p:target_table>
+	<p:table_space>tbl_hist</p:table_space>
+	<p:field_element_id>f_element_id</p:field_element_id>
+	<p:field_timestamp>timestamp_at</p:field_timestamp>
+	<p:cron_expression>0 * * ? * * *</p:cron_expression>
+ 	<p:fields>
+		<p:field name="fan_state">
+			<p:element_type_param>
+				<p:element_type_param_id>1</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+		<p:field name="fan_vibration">
+			<p:element_type_param>
+				<p:element_type_param_id>2</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+		<p:field name="front_bearing_temperature">
+			<p:element_type_param>
+				<p:element_type_param_id>3</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+		<p:field name="back_bearing_temperature">
+			<p:element_type_param>
+				<p:element_type_param_id>4</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+		<p:field name="fan_available">
+			<p:element_type_param>
+				<p:element_type_param_id>5</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+		<p:field name="fan_running">
+			<p:element_type_param>
+				<p:element_type_param_id>6</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+		<p:field name="local_remote">
+			<p:element_type_param>
+				<p:element_type_param_id>7</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+		<p:field name="flow">
+			<p:element_type_param>
+				<p:element_type_param_id>8</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+		<p:field name="electrical_consumption">
+			<p:element_type_param>
+				<p:element_type_param_id>9</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+		<p:field name="turning_direction">
+			<p:element_type_param>
+				<p:element_type_param_id>10</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+		<p:field name="parcial_operating_hours">
+			<p:element_type_param>
+				<p:element_type_param_id>14</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+		<p:field name="total_operating_hours">
+			<p:element_type_param>
+				<p:element_type_param_id>15</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+		<p:field name="power">
+			<p:element_type_param>
+				<p:element_type_param_id>16</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+		<p:field name="engine_reference">
+			<p:element_type_param>
+				<p:element_type_param_id>17</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+		<p:field name="engine_speed">
+			<p:element_type_param>
+				<p:element_type_param_id>18</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+		<p:field name="engine_speed_rpm">
+			<p:element_type_param>
+				<p:element_type_param_id>19</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+		<p:field name="axial_direct_order">
+			<p:element_type_param>
+				<p:element_type_param_id>20</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+		<p:field name="axial_reverse_order">
+			<p:element_type_param>
+				<p:element_type_param_id>21</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+		<p:field name="axial_local_mode">
+			<p:element_type_param>
+				<p:element_type_param_id>22</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+		<p:field name="axial_remote_mode">
+			<p:element_type_param>
+				<p:element_type_param_id>23</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+		<p:field name="emergency_mode">
+			<p:element_type_param>
+				<p:element_type_param_id>24</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+		<p:field name="open_damper">
+			<p:element_type_param>
+				<p:element_type_param_id>25</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+		<p:field name="close_damper">
+			<p:element_type_param>
+				<p:element_type_param_id>26</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+		<p:field name="n_starts">
+			<p:element_type_param>
+				<p:element_type_param_id>27</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+	</p:fields>
+</p:historical_element_parser_v1>
+

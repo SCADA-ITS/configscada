@@ -1,0 +1,3 @@
+DELETE FROM conf.element_values;
+DELETE FROM conf.element_hierarchies;
+DELETE FROM conf.elements;

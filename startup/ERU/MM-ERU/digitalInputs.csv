@@ -1,0 +1,98 @@
+name;device;channel;description;controller;xAddress;xStatusAddress;inverseLogic
+MM-SOS-1CA;SOS_C1;M1DI3;Alarma FA Sensores FA-SENSORES SOS C1;WAGO;15500;800;false
+MM-SOS-2CA;SOS_C2;M1DI3;Alarma FA Sensores FA-SENSORES SOS C2;WAGO;15501;801;false
+MM-SOS-3CA;SOS_C3;M1DI3;Alarma FA Sensores FA-SENSORES SOS C3;WAGO;15502;802;false
+MM-SOS-1MA;SOS_M1;M1DI3;Alarma FA Sensores FA-SENSORES SOS M1;WAGO;15503;803;false
+MM-SOS-2MA;SOS_M2;M1DI3;Alarma FA Sensores FA-SENSORES SOS M2;WAGO;15504;804;false
+MM-SOS-3MA;SOS_M3;M1DI3;Alarma FA Sensores FA-SENSORES SOS M3;WAGO;15505;805;false
+MM-CONT-A9;CTGBT;M1DI3;Estado contactor circuito refuerzo T.S.C A9;WAGO;15524;824;false
+MM-CONT-A11;CTGBT;M1DI5;Estado contactor circuito refuerzo T.S.C A11;WAGO;15525;825;false
+MM-CONT-A12;CTGBT;M1DI7;Estado contactor circuito refuerzo T.S.C A12;WAGO;15526;826;false
+MM-CONT-A14;CTGBT;M1DI9;Estado contactor circuito refuerzo T.S.C A14;WAGO;15527;827;false
+MM-CONT-A4;CTGBT;M1DI11;Estado contactor circuito refuerzo T.S.M A4;WAGO;15528;828;false
+MM-CONT-A6;CTGBT;M1DI13;Estado contactor circuito refuerzo T.S.M  A6;WAGO;15529;829;false
+MM-CONT-A3;CTGBT;M1DI15;Estado contactor circuito refuerzo T.S.M  A3;WAGO;15530;830;false
+MM-CONT-A5;CTGBT;M2DI1;Estado contactor circuito refuerzo T.S.M  A5;WAGO;15531;831;false
+MM-CONT-RED-RV1;CTGBT;M2DI3;Estado contactor circuito reserva RV1;WAGO;15532;832;false
+MM-CONT-RED-RV2;CTGBT;M2DI5;Estado contactor circuito reserva RV2;WAGO;15533;833;false
+MM-CONT-RED-RV3;CTGBT;M2DI7;Estado contactor circuito reserva RV3;WAGO;15534;834;false
+MM-CONT-AA7-SC;CTGBT;M2DI11;Estado contactor circuito permanente TSC AA7;WAGO;15535;835;true
+MM-CONT-AA10-SC;CTGBT;M2DI13;Estado contactor circuito permanente TSC AA10;WAGO;15536;836;true
+MM-CONT-AA2-SM;CTGBT;M2DI15;Estado contactor circuito permanente TSM AA2;WAGO;15537;837;true
+MM-CONT-AA1-SM;CTGBT;M3DI1;Estado contactor circuito permanente TSM AA1;WAGO;15538;838;true
+MM-CONT-AE13-SM;CTGBT;M3DI4;Estado contactor circuito guiado TSM AE13;WAGO;15539;839;true
+MM-CONT-AE16-SC;CTGBT;M3DI7;Estado contactor circuito guiado TSC AE16;WAGO;15540;840;true
+MM-CONT-AE17-SC;CTGBT;M3DI10;Estado contactor circuito guiado TSC AE17;WAGO;15541;841;true
+MM-CONT-AE18-SM;CTGBT;M3DI13;Estado contactor circuito guiado TSM AE18;WAGO;15542;842;true
+MM-CONT-A17-SC;CTGBT;M3DI15;Estado contactor circuito aproximacion existente TSC A17;WAGO;15543;843;false
+MM-CONT-A18-SC;CTGBT;M4DI1;Estado contactor circuito aproximacion existente TSC A18;WAGO;15544;844;false
+MM-CONT-A19-SM;CTGBT;M4DI3;Estado contactor circuito aproximacion existente TSM A19;WAGO;15545;845;false
+MM-CONT-A20-SM;CTGBT;M4DI5;Estado contactor circuito aproximacion existente TSM A20;WAGO;15546;846;false
+MM-FOT-1MA;CTGBT;M10DI10;MM-FOT-1MA Nivel Crepuscular ;WAGO;15547;847;false
+MM-VENT-VF1-CA;CTGBT;M7DI12;Estado interruptor ventilador MM-VENT-VF1-CA;WAGO;15548;848;false
+MM-VENT-VF1-CA;CTGBT;M7DI15;Estado circuito fallo arrancador ventilador MM-VENT-VF1-CA;WAGO;15549;849;false
+MM-VENT-VF2-CA;CTGBT;M8DI0;Estado interruptor ventilador MM-VENT-VF2-CA;WAGO;15550;850;false
+MM-VENT-VF2-CA;CTGBT;M8DI3;Estado circuito fallo arrancador ventilador MM-VENT-VF2-CA;WAGO;15551;851;false
+MM-VENT-VF3-CA;CTGBT;M8DI4;Estado interruptor ventilador MM-VENT-VF3-CA;WAGO;15552;852;false
+MM-VENT-VF3-CA;CTGBT;M8DI7;Estado circuito fallo arrancador ventilador MM-VENT-VF3-CA;WAGO;15553;853;false
+MM-VENT-VF4-CA;CTGBT;M8DI8;Estado interruptor ventilador MM-VENT-VF4-CA;WAGO;15554;854;false
+MM-VENT-VF4-CA;CTGBT;M8DI11;Estado circuito fallo arrancador ventilador MM-VENT-VF4-CA;WAGO;15555;855;false
+MM-VENT-VF5-CA;CTGBT;M8DI12;Estado interruptor ventilador MM-VENT-VF5-CA;WAGO;15556;856;false
+MM-VENT-VF5-CA;CTGBT;M8DI15;Estado circuito fallo arrancador ventilador MM-VENT-VF5-CA;WAGO;15557;857;false
+MM-VENT-VF6-CA;CTGBT;M9DI0;Estado interruptor ventilador MM-VENT-VF6-CA;WAGO;15558;858;false
+MM-VENT-VF6-CA;CTGBT;M9DI3;Estado circuito fallo arrancador ventilador MM-VENT-VF6-CA;WAGO;15559;859;false
+MM-VENT-VF7-CA;CTGBT;M9DI4;Estado interruptor ventilador MM-VENT-VF7-CA;WAGO;15560;860;false
+MM-VENT-VF7-CA;CTGBT;M9DI7;Estado circuito fallo arrancador ventilador MM-VENT-VF7-CA;WAGO;15561;861;false
+MM-VENT-VF8-CA;CTGBT;M9DI8;Estado interruptor ventilador MM-VENT-VF8-CA;WAGO;15562;862;false
+MM-VENT-VF8-CA;CTGBT;M9DI11;Estado circuito fallo arrancador ventilador MM-VENT-VF8-CA;WAGO;15563;863;false
+MM-VENT-VF1-MA;CTGBT;M6DI2;Estado interruptor ventilador MM-VENT-VF1-MA;WAGO;15564;864;false
+MM-VENT-VF1-MA;CTGBT;M6DI5;Estado circuito fallo arrancador ventilador MM-VENT-VF1-MA;WAGO;15565;865;false
+MM-VENT-VF2-MA;CTGBT;M6DI6;Estado interruptor ventilador MM-VENT-VF2-MA;WAGO;15566;866;false
+MM-VENT-VF2-MA;CTGBT;M6DI9;Estado circuito fallo arrancador ventilador MM-VENT-VF2-MA;WAGO;15567;867;false
+MM-VENT-VF3-MA;CTGBT;M6DI10;Estado interruptor ventilador MM-VENT-VF3-MA;WAGO;15568;868;false
+MM-VENT-VF3-MA;CTGBT;M6DI13;Estado circuito fallo arrancador ventilador MM-VENT-VF3-MA;WAGO;15569;869;false
+MM-VENT-VF4-MA;CTGBT;M6DI14;Estado interruptor ventilador MM-VENT-VF4-MA;WAGO;15570;870;false
+MM-VENT-VF4-MA;CTGBT;M7DI1;Estado circuito fallo arrancador ventilador MM-VENT-VF4-MA;WAGO;15571;871;false
+MM-VENT-VF5-MA;CTGBT;M7DI2;Estado interruptor ventilador MM-VENT-VF5-MA;WAGO;15572;872;false
+MM-VENT-VF5-MA;CTGBT;M7DI5;Estado circuito fallo arrancador ventilador MM-VENT-VF5-MA;WAGO;15573;873;false
+MM-VENT-VF6-MA;CTGBT;M7DI6;Estado interruptor ventilador MM-VENT-VF6-MA;WAGO;15574;874;false
+MM-VENT-VF6-MA;CTGBT;M7DI9;Estado circuito fallo arrancador ventilador MM-VENT-VF6-MA;WAGO;15575;875;false
+MM-VENT-VF1-CA;Rack_Exterior;M3DI0;MM-VNT-VF1-CA Alarma Temperatura Devanados Motor Ventilador;WAGO;15576;876;false
+MM-VENT-VF2-CA;Rack_Exterior;M3DI1;MM-VNT-VF2-CA Alarma Temperatura Devanados Motor Ventilador;WAGO;15577;877;false
+MM-VENT-VF3-CA;SOS_C2;M2DI2;MM-VNT-VF3-CA Alarma Temperatura Devanados Motor Ventilador;WAGO;15578;878;false
+MM-VENT-VF4-CA;SOS_C2;M2DI1;MM-VNT-VF4-CA Alarma Temperatura Devanados Motor Ventilador;WAGO;15579;879;false
+MM-VENT-VF5-CA;SOS_C2;M2DI0;MM-VNT-VF5-CA Alarma Temperatura Devanados Motor Ventilador;WAGO;15580;880;false
+MM-VENT-VF6-CA;SOS_C3;M2DI2;MM-VNT-VF6-CA Alarma Temperatura Devanados Motor Ventilador;WAGO;15581;881;false
+MM-VENT-VF7-CA;SOS_C3;M2DI1;MM-VNT-VF7-CA Alarma Temperatura Devanados Motor Ventilador;WAGO;15582;882;false
+MM-VENT-VF8-CA;SOS_C3;M2DI0;MM-VNT-VF8-CA Alarma Temperatura Devanados Motor Ventilador;WAGO;15583;883;false
+MM-VENT-VF1-MA;SOS_M1;M2DI0;MM-VNT-VF1-MA Alarma Temperatura Devanados Motor Ventilador;WAGO;15584;884;false
+MM-VENT-VF2-MA;SOS_M1;M2DI1;MM-VNT-VF2-MA Alarma Temperatura Devanados Motor Ventilador;WAGO;15585;885;false
+MM-VENT-VF3-MA;SOS_M1;M2DI2;MM-VNT-VF3-MA Alarma Temperatura Devanados Motor Ventilador;WAGO;15586;886;false
+MM-VENT-VF4-MA;SOS_M1;M2DI3;MM-VNT-VF4-MA Alarma Temperatura Devanados Motor Ventilador;WAGO;15587;887;false
+MM-VENT-VF5-MA;SOS_M1;M2DI4;MM-VNT-VF5-MA Alarma Temperatura Devanados Motor Ventilador;WAGO;15588;888;false
+MM-VENT-VF6-MA;SOS_M2;M2DI0;MM-VNT-VF6-MA Alarma Temperatura Devanados Motor Ventilador;WAGO;15589;889;false
+MM-VENT-VF1-CA;Rack_Exterior;M3DI8;MM-VNT-VF1-CA Alarma sensor Temperatura Devanados Motor Ventilador;WAGO;15590;890;false
+MM-VENT-VF2-CA;Rack_Exterior;M3DI9;MM-VNT-VF2-CA Alarma sensor Temperatura Devanados Motor Ventilador;WAGO;15591;891;false
+MM-VENT-VF3-CA;SOS_C2;M2DI10;MM-VNT-VF3-CA Alarma sensor Temperatura Devanados Motor Ventilador;WAGO;15592;892;false
+MM-VENT-VF4-CA;SOS_C2;M2DI9;MM-VNT-VF4-CA Alarma sensor Temperatura Devanados Motor Ventilador;WAGO;15593;893;false
+MM-VENT-VF5-CA;SOS_C2;M2DI8;MM-VNT-VF5-CA Alarma sensor Temperatura Devanados Motor Ventilador;WAGO;15594;894;false
+MM-VENT-VF6-CA;SOS_C3;M2DI10;MM-VNT-VF6-CA Alarma sensor Temperatura Devanados Motor Ventilador;WAGO;15595;895;false
+MM-VENT-VF7-CA;SOS_C3;M2DI9;MM-VNT-VF7-CA Alarma sensor Temperatura Devanados Motor Ventilador;WAGO;15596;896;false
+MM-VENT-VF8-CA;SOS_C3;M2DI8;MM-VNT-VF8-CA Alarma sensor Temperatura Devanados Motor Ventilador;WAGO;15597;897;false
+MM-VENT-VF1-MA;SOS_M1;M2DI8;MM-VNT-VF1-MA Alarma sensor Temperatura Devanados Motor Ventilador;WAGO;15598;898;false
+MM-VENT-VF2-MA;SOS_M1;M2DI9;MM-VNT-VF2-MA Alarma sensor Temperatura Devanados Motor Ventilador;WAGO;15599;899;false
+MM-VENT-VF3-MA;SOS_M1;M2DI10;MM-VNT-VF3-MA Alarma sensor Temperatura Devanados Motor Ventilador;WAGO;15600;900;false
+MM-VENT-VF4-MA;SOS_M1;M2DI11;MM-VNT-VF4-MA Alarma sensor Temperatura Devanados Motor Ventilador;WAGO;15601;901;false
+MM-VENT-VF5-MA;SOS_M1;M2DI12;MM-VNT-VF5-MA Alarma sensor Temperatura Devanados Motor Ventilador;WAGO;15602;902;false
+MM-VENT-VF6-MA;SOS_M2;M2DI8;MM-VNT-VF6-MA Alarma sensor Temperatura Devanados Motor Ventilador;WAGO;15603;903;false
+MM-CUAD-PRES-GAL-CA;ARM_GAL;M2DI0;MM-CUAD-PRES-GAL-CA Estado Remoto Tubo Sentido Cadiz;WAGO;15604;904;false
+MM-CUAD-PRES-GAL-CA;ARM_GAL;M2DI1;MM-CUAD-PRES-GAL-CA Estado Marcha Ventilador derecho tubo sentido Cadiz;WAGO;15605;905;false
+MM-CUAD-PRES-GAL-CA;ARM_GAL;M2DI2;MM-CUAD-PRES-GAL-CA Estado Fallo Ventilador derecho tubo sentido Cadiz;WAGO;15606;906;false
+MM-CUAD-PRES-GAL;ARM_GAL;M2DI3;MM-CUAD-PRES-GAL Estado Seta Emergencía;WAGO;15607;907;false
+MM-CUAD-PRES-GAL-MA;ARM_GAL;M2DI4;MM-CUAD-PRES-GAL-MA Estado Remoto tubo Sentido Malaga;WAGO;15608;908;false
+MM-CUAD-PRES-GAL-MA;ARM_GAL;M2DI5;MM-CUAD-PRES-GAL-MA Estado Marcha Ventilador derecho tubo sentido Malaga ;WAGO;15609;909;false
+MM-CUAD-PRES-GAL-MA;ARM_GAL;M2DI6;MM-CUAD-PRES-GAL-MA Estado Fallo Ventilador derecho tubo sentido Malaga;WAGO;15610;910;false
+MM-CUAD-PRES-GAL-CA;ARM_GAL;M2DI7;MM-CUAD-PRES-GAL-CA Estado Marcha Ventilador Izquierdo tubo sentido Cadiz;WAGO;15611;911;false
+MM-CUAD-PRES-GAL-CA;ARM_GAL;M2DI8;MM-CUAD-PRES-GAL-CA Fallo Ventilador Izquierdo tubo sentido Cadiz ;WAGO;15612;912;false
+MM-CUAD-PRES-GAL-MA;ARM_GAL;M2DI9;MM-CUAD-PRES-GAL-MA Marcha Izquierdo tubo sentido Malaga;WAGO;15613;913;false
+MM-CUAD-PRES-GAL-MA;ARM_GAL;M2DI10;MM-CUAD-PRES-GAL-MA Fallo Izquierdo tubo sentido Malaga;WAGO;15614;914;false

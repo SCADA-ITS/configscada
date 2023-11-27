@@ -1,0 +1,115 @@
+USE [smartgen];
+GO
+
+INSERT INTO dbo.sg_metadata_tables ("name","label",label_singular,label_description,mdi_icon,support_images,support_attachments,metadata) VALUES
+	 ('customers','LBL_CUSTOMERS','LBL_CUSTOMER','LBL_CUSTOMERS_DESCRIPTION',NULL,1,1,NULL),
+	 ('products','LBL_PRODUCTS','LBL_PRODUCT','LBL_PRODUCTS_DESCRIPTION',NULL,1,1,'{
+		  "formHeight": 1000,
+		  "autorefresh": 5,
+	      "autorefreshForm": true,
+		  "tabs": [
+		    {
+		      "label": "LBL_PRODUCT_SECTION_OTHERS",
+		      "position": 2,
+		      "fields": [
+		        {
+		          "name": "subcategory_id",
+		          "position": 1
+		        },
+		        {
+		          "name": "price",
+		          "position": 2
+		        }
+		      ]
+		    }
+		  ],
+		  "initialTabLabel": "LBL_PRODUCT_SECTION_MAIN",
+		  "groupImages": [
+		    {
+		      "name": "main",
+		      "label": "LBL_IMAGE_GROUP_PRODUCTS_1",
+		      "description": "LBL_IMAGE_GROUP_PRODUCTS_1_DESC",
+		      "position": 1,
+		      "height": 300
+		    }
+		  ],
+		  "groupAttachments": [
+		    {
+		      "name": "main",
+		      "label": "LBL_ATTACHMENT_GROUP_PRODUCTS_1",
+		      "description": "LBL_ATTACHMENT_GROUP_PRODUCTS_1_DESC",
+		      "position": 3,
+		      "height": 200
+		    }
+		  ],
+		  "referTables": [],
+		  "srcTemplate": "productFormTemplate.html"
+	}'),
+	 ('orders','LBL_ORDERS','LBL_ORDER','LBL_ORDERS_DESCRIPTION',NULL,1,1,NULL),
+	 ('order_details','LBL_ORDER_DETAILS','LBL_ORDER_DETAIL','LBL_ORDER_DETAILS',NULL,1,1,'{"gridId": 50}'),
+	 ('categories','LBL_CATEGORIES','LBL_CATEGORY','LBL_CATEGORIES_DESCRIPTION',NULL,1,1,'{"customJS": "smartgenCategoryForm.js"}'),
+	 ('subcategories','LBL_SUBCATEGORIES','LBL_SUBCATEGORY','LBL_SUBCATEGORIES_DESCRIPTION',NULL,1,1,NULL);
+GO	 
+---
+	
+INSERT INTO dbo.sg_metadata_table_triggers (sg_metadata_table_id,"name",groovy) VALUES
+	 (3,'tg_orders','config/groovy/backoffice/smartgen/trigger/OrderTrigger.groovy'),
+	 (4,'tg_order_details','config/groovy/backoffice/smartgen/trigger/OrderDetailTrigger.groovy'),
+	 (1,'tg_customers','config/groovy/backoffice/smartgen/trigger/CustomerTrigger.groovy');
+GO
+---
+	
+INSERT INTO dbo.sg_metadata_table_commands (sg_metadata_table_id,"name","label",label_description,mdi_icon,require_confirmation,available_in_form,available_in_table,groovy) VALUES
+	 (1,'cmd1','LBL_ACTION_1','LBL_ACTION_1','mdi mdi-ab-testing',1,1,1,'config/groovy/backoffice/smartgen/command/CustomerCommand.groovy');
+GO
+---
+
+INSERT INTO dbo.sg_metadata_columns (sg_metadata_table_id,column_name,"label",label_description,mdi_icon,needs_translation,metadata) VALUES
+	 (2,'product_name','LBL_PRODUCT',NULL,NULL,1,'{ "badgeInHeader": "mdi mdi-account" }'),
+	 (1,'fullname','LBL_FULLNAME',NULL,NULL,0,'{ "multiline": 4 }'),
+	 (1,'name','LBL_NAME',NULL,NULL,0,'{ "refName": true }'),
+	 (2,'subcategory_id',NULL,NULL,NULL,0,'{ 
+		"associatedFieldName": "category_id",
+		"badgeInHeader": "mdi mdi-cog"
+	}'),
+	 (4,'product_id',NULL,NULL,NULL,0,'{ "refGroupFieldName": "category_id" }'),
+	 (2,'category_id',NULL,NULL,NULL,0,'{ "badgeInHeader": "mdi mdi-cog" }');
+GO
+	
+---
+	
+INSERT INTO dbo.sg_metadata_column_fillers (sg_metadata_column_id,"name",groovy) VALUES
+	 (2,'fl_customers','config/groovy/backoffice/smartgen/filler/CustomerFiller.groovy');
+GO
+---
+	
+INSERT INTO dbo.sg_metadata_tasks ("name",cron_expression,groovy,params) VALUES
+	 ('CleanAttachments','0 0/1 * 1/1 * ? *','config/groovy/backoffice/common/task/CleanAttachmentTask.groovy',NULL);
+GO
+	
+	
+---
+	
+INSERT INTO dbo.sg_i18n_labels (locale_code,"label","translation") VALUES
+	 ('es_ES','LBL_CUSTOMERS','clientes'),
+	 ('es_ES','LBL_CUSTOMER','cliente'),
+	 ('es_ES','LBL_PRODUCTS','productos'),
+	 ('es_ES','LBL_PRODUCT','producto'),
+	 ('es_ES','LBL_ORDERS','pedidos'),
+	 ('es_ES','LBL_ORDER','pedido'),
+	 ('es_ES','LBL_ORDER_DETAILS','detalles de pedido'),
+	 ('es_ES','LBL_ORDER_DETAIL','detalle de pedido'),
+	 ('es_ES','LBL_CATEGORIES','categorías'),
+	 ('es_ES','LBL_CATEGORY','categoría'),
+	 ('es_ES','LBL_CATEGORIES_DETAIL','detalles de categoría'),
+	 ('es_ES','LBL_SUBCATEGORIES','subcategorías'),
+	 ('es_ES','LBL_SUBCATEGORY','subcategoría'),
+	 ('es_ES','LBL_SUBCATEGORIES_DETAIL','detalles de subcategoría'),
+	 ('es_ES','LBL_FULLNAME','Nombre completo'),
+	 ('es_ES','LBL_NAME','Nombre'),
+	 ('es_ES','LBL_SURNAME','Apellidos'),
+	 ('es_ES','LBL_IMAGE_GROUP_PRODUCTS_1','Grupo imágenes 1'),
+	 ('es_ES','LBL_IMAGE_GROUP_PRODUCTS_1_DESC','Descripción del grupo imágenes 1'),
+	 ('es_ES','LBL_ATTACHMENT_GROUP_PRODUCTS_1','Grupo de adjuntos 1'),
+	 ('es_ES','LBL_ATTACHMENT_GROUP_PRODUCTS_1_DESC','Descripción del grupos de adjuntos');
+GO

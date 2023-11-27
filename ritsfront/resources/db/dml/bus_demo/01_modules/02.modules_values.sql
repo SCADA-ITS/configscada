@@ -1,0 +1,38 @@
+INSERT INTO ui.module_values(module_id, module_param_id, value) VALUES
+
+-- MASTER DATA
+(1920, 9, '2'), 
+	-- Seccion Geográfica
+	(192001, 13, '1'), (192001, 14, 'VW_GEO_ZONAS'),
+	(192002, 13, '1'), (192002, 14, 'VW_GEO_ZONAS_SALTOS'),
+	(192003, 13, '1'), (192003, 14, 'VW_GEO_COMARCAS'),
+	-- Seccion Administrativa
+	(192004, 13, '1'), (192004, 14, 'VW_ADM_CONSORCIOS'),
+	-- Seccion Topológica
+	(192005, 13, '1'), (192005, 14, 'VW_TPL_SUPEROPERADORES'),
+	(192006, 13, '1'), (192006, 14, 'VW_TPL_LINEAS'),
+	(192007, 13, '1'), (192007, 14, 'VW_TPL_PARADAS'),
+	(192008, 13, '1'), (192008, 14, 'VW_TPL_TIN_TRANSBORDO_EXCLUSIONES'),
+	-- Seccion Monética
+	(192009, 13, '1'), (192009, 14, 'VW_MON_TITULOS'),
+	(192010, 13, '1'), (192010, 14, 'VW_MON_TARIFAS'),
+	(192011, 13, '1'), (192011, 14, 'VW_MON_EXPENDEDORAS'),
+	-- Seccion Recursos
+	(192012, 13, '1'), (192012, 14, 'VW_RCS_VEHICULOS'),
+	(192013, 13, '1'), (192013, 14, 'VW_RCS_EMPLEADOS'),
+	(192014, 13, '1'), (192014, 14, 'VW_RCS_DISPOSITIVOS'),
+	-- Seccion Planificaciones
+	(192015, 13, '1'), (192015, 14, 'VW_PLN_TURNOS'),
+	(192016, 13, '1'), (192016, 14, 'VW_PLN_EXPEDICIONES'),
+	-- Seccion Parámetros
+	(192017, 13, '1'), (192017, 14, 'VW_PRM_PARAMETROS'),
+-- PROCESSES
+(1921, 9, '3'), 
+-- VALIDATION_AND_SALES
+(1922, 9, '4'), 
+-- SHIFTS_AND_EXPEDITIONS
+(1923, 9, '5'), 
+-- LIQUIDATION_OF_DRIVING_STAFF
+(1924, 9, '6'), 
+-- REQUESTS
+(1925, 9, '7'); 

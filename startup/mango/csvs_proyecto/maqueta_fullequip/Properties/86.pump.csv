@@ -1,0 +1,15 @@
+device_name;source_name;ip;measure_port(i);alarm_port(i);url_publisher;offset_pump_on(i);offset_no_operation(i);offset_no_auto_state(i)
+RV-BEL-1;BOMBAS;192.168.88.73;502;503;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/;6410;3152;3153
+RV-BDI-1;BOMBAS;192.168.88.73;502;503;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/;6411;3154;3155
+MM-BEL-1;BOMBAS;192.168.88.73;502;503;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/;6412;3156;3157
+MM-BDI-1;BOMBAS;192.168.88.73;502;503;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/;6413;3158;3159
+LQ-BEL-1;BOMBAS;192.168.88.73;502;503;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/;6414;3160;3161
+LQ-BDI-1;BOMBAS;192.168.88.73;502;503;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/;6415;3162;3163
+CAS-BDI-1;BOMBAS;192.168.88.73;502;503;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/;6416;3164;3165
+CAS-BEL-1;BOMBAS;192.168.88.73;502;503;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/;6417;3166;3167
+CH-BEL-1;BOMBAS;192.168.88.73;502;503;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/;6418;3168;3169
+CH-BDI-1;BOMBAS;192.168.88.73;502;503;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/;6419;3170;3171
+NG-BEL-1;BOMBAS;192.168.88.73;502;503;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/;6420;3172;3173
+NG-BDI-1;BOMBAS;192.168.88.73;502;503;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/;6421;3174;3175
+COR-BEL-1;BOMBAS;192.168.88.73;502;503;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/;6422;3176;3177
+COR-BDI-1;BOMBAS;192.168.88.73;502;503;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/;6423;3178;3179

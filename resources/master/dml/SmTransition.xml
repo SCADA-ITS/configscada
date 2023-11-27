@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="SmTransition">
+	<SELECT>SELECT state_machine_id as "stateMachineId",
+				   state_id as "stateId",
+				   transition_id as "id",
+				   nexus_and as "nexusAnd",
+				   next_state_id as "nextStateId",
+				   enabled as "enabled",
+				   visible as "visible"
+			  FROM static.sm_transitions
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>
+	</INSERT>
+	<UPDATE>
+	</UPDATE>
+	<DELETE>
+	</DELETE>
+</DML>

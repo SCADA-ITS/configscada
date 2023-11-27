@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<p:json_generic_mango_v1 
+	name="" 
+	version="" 
+	xmlns:p="json_generic_mango_v1" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="json_generic_mango_v1 ../../../adapter-lib/src/main/resources/schemas/mango/json_generic_mango_v1.xsd "
+	element_type_id="2"
+  array_element_id="233,234,235,236,237,238,239,240,241,242,243,244,245,246,247,248,249,250,251,252,253,254,255,256,257,258,259,260,261,262">
+  <p:session_uid element_type_param_id="1003" param_type_id="1"></p:session_uid>
+  <p:state field="status">
+    <p:state_value source="0" input="2" disconnected="true"></p:state_value>
+    <p:state_value source="1" input="1"></p:state_value>
+  </p:state>
+  <p:alarms>
+    <p:alarm source="door_open" active_value="false" alarm_config_id="30"></p:alarm>
+    <p:alarm source="power_supply" active_value="false" alarm_config_id="31"></p:alarm>
+    <p:alarm source="batery_low" active_value="true" alarm_config_id="32"></p:alarm>
+    <p:alarm source="plc_status" active_value="false" alarm_config_id="33"></p:alarm>
+    <p:alarm source="Live" active_value="true" alarm_config_id="2220002"></p:alarm>
+  </p:alarms>
+</p:json_generic_mango_v1>

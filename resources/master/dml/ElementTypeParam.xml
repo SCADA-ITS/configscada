@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="ElementTypeParam">
+	<SELECT>SELECT element_type_param_id as "id", 
+				   element_type_id as "elementTypeId",
+				   param_type_id as "paramTypeId",
+				   element_type_param_unit_id as "elementTypeParamUnitId",
+				   data_type_id as "dataTypeId",
+				   threshold_1 as "threshold1",
+				   threshold_2 as "threshold2",
+				   alias as "alias", 
+				   description as "description", 
+				   label_alias as "labelAlias", 
+				   label_description as "labelDescription",
+				   default_value as "defaultValue",
+				   durable as "durable",
+				   enabled as "enabled", 
+				   visible as "visible"
+			  FROM master.element_type_params
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>
+	</INSERT>
+	<UPDATE>
+	</UPDATE>
+	<DELETE>
+	</DELETE>
+</DML>

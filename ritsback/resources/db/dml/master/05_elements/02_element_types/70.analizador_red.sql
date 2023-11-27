@@ -1,0 +1,202 @@
+-- 
+-- Table: master.element_types
+--
+INSERT INTO master.element_types(element_type_id, element_group_id, alias, description,label_alias, label_description, initial_element_type_state_id, connected_element_type_state_id, disconnected_element_type_state_id, enabled, visible, created_at, updated_at) VALUES
+(70, NULL, 'ANALIZADOR_RED', 'ANALIZADOR_RED', 'LBL_ELEMENT_TYPE_ANALIZADOR_RED', 'LBL_ELEMENT_TYPE_ANALIZADOR_RED_DESC', 0, 1, 2, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+--
+-- Table: master.element_type_params
+--
+INSERT INTO master.element_type_params (element_type_id, param_type_id, element_type_param_id, element_type_param_unit_id, data_type_id, default_value, alias, description, label_alias, label_description, enabled, visible, editable, created_at, updated_at) VALUES
+--CONFIG
+(70, 1, 1, NULL, 2, ' ', 'brand', 'brand', 'LBL_ELEMENT_TYPE_PARAM_BRAND' , 'LBL_ELEMENT_TYPE_PARAM_BRAND_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70, 1, 2, NULL, 2, ' ', 'model', 'model', 'LBL_ELEMENT_TYPE_PARAM_MODEL' , 'LBL_ELEMENT_TYPE_PARAM_MODEL_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70,1,1003, NULL,2, '', 'MANGO SESSION_UID', 'MANGO SESSION_UID', 'LBL_ELEMENT_TYPE_PARAM_MANGO_SESSION_UID' , 'LBL_ELEMENT_TYPE_PARAM_MANGO_SESSION_UID_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--MEASURE
+(70,2,1,13,1, '', 'corriente_fase_a', 'corriente_fase_a', 'LBL_ELEMENT_TYPE_PARAM_CORRIENTE_FASE_A' , 'LBL_ELEMENT_TYPE_PARAM_CORRIENTE_FASE_A_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70,2,2,13,1, '', 'corriente_fase_b', 'corriente_fase_b', 'LBL_ELEMENT_TYPE_PARAM_CORRIENTE_FASE_B' , 'LBL_ELEMENT_TYPE_PARAM_CORRIENTE_FASE_B_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70,2,3,13,1, '', 'corriente_fase_c', 'corriente_fase_c', 'LBL_ELEMENT_TYPE_PARAM_CORRIENTE_FASE_C' , 'LBL_ELEMENT_TYPE_PARAM_CORRIENTE_FASE_C_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70,2,4,13,1, '', 'corriente_fase_neutro', 'corriente_fase_neutro', 'LBL_ELEMENT_TYPE_PARAM_CORRIENTE_FASE_NEUTRO' , 'LBL_ELEMENT_TYPE_PARAM_CORRIENTE_FASE_NEUTRO_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70,2,5,13,1, '', 'corriente_fase_trifasica', 'corriente_fase_trifasica', 'LBL_ELEMENT_TYPE_PARAM_CORRIENTE_FASE_TRIFASICA' , 'LBL_ELEMENT_TYPE_PARAM_CORRIENTE_FASE_TRIFASICA_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70,2,6,14,1, '', 'tension_fase_a', 'tension_fase_a', 'LBL_ELEMENT_TYPE_PARAM_TENSION_FASE_A' , 'LBL_ELEMENT_TYPE_PARAM_TENSION_FASE_A_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70,2,7,14,1, '', 'tension_fase_c', 'tension_fase_c', 'LBL_ELEMENT_TYPE_PARAM_TENSION_FASE_C' , 'LBL_ELEMENT_TYPE_PARAM_TENSION_FASE_C_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70,2,8,14,1, '', 'tension_fase_b', 'tension_fase_b', 'LBL_ELEMENT_TYPE_PARAM_TENSION_FASE_B' , 'LBL_ELEMENT_TYPE_PARAM_TENSION_FASE_B_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70,2,9,14,1, '', 'tension_fase_trifasica', 'tension_fase_trifasica', 'LBL_ELEMENT_TYPE_PARAM_TENSION_FASE_TRIFASICA' , 'LBL_ELEMENT_TYPE_PARAM_TENSION_FASE_TRIFASICA_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70,2,10,14,1, '', 'tension_fase_a_b', 'tension_fase_a_b', 'LBL_ELEMENT_TYPE_PARAM_TENSION_FASE_A_B' , 'LBL_ELEMENT_TYPE_PARAM_TENSION_FASE_A_B_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70,2,11,14,1, '', 'tension_fase_b_c', 'tension_fase_b_c', 'LBL_ELEMENT_TYPE_PARAM_TENSION_FASE_B_C' , 'LBL_ELEMENT_TYPE_PARAM_TENSION_FASE_B_C_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70,2,12,14,1, '', 'tension_fase_c_a', 'tension_fase_c_a', 'LBL_ELEMENT_TYPE_PARAM_TENSION_FASE_C_A' , 'LBL_ELEMENT_TYPE_PARAM_TENSION_FASE_C_A_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70,2,13,14,1, '', 'tension_promedio_fase_neutro', 'tension_promedio_fase_neutro', 'LBL_ELEMENT_TYPE_PARAM_TENSION_PROMEDIO_FASE_NEUTRO' , 'LBL_ELEMENT_TYPE_PARAM_TENSION_PROMEDIO_FASE_NEUTRO_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70,2,14,15,1, '', 'potencia_activa_fase_a', 'potencia_activa_fase_a', 'LBL_ELEMENT_TYPE_PARAM_POTENCIA_ACTIVA_FASE_A' , 'LBL_ELEMENT_TYPE_PARAM_POTENCIA_ACTIVA_FASE_A_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70,2,15,15,1, '', 'potencia_activa_fase_b', 'potencia_activa_fase_b', 'LBL_ELEMENT_TYPE_PARAM_POTENCIA_ACTIVA_FASE_B' , 'LBL_ELEMENT_TYPE_PARAM_POTENCIA_ACTIVA_FASE_B_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70,2,16,15,1, '', 'potencia_activa_fase_c', 'potencia_activa_fase_c', 'LBL_ELEMENT_TYPE_PARAM_POTENCIA_ACTIVA_FASE_C' , 'LBL_ELEMENT_TYPE_PARAM_POTENCIA_ACTIVA_FASE_C_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70,2,17,15,1, '', 'potencia_activa_total', 'potencia_activa_total', 'LBL_ELEMENT_TYPE_PARAM_POTENCIA_ACTIVA_TOTAL' , 'LBL_ELEMENT_TYPE_PARAM_POTENCIA_ACTIVA_TOTAL_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70,2,18,16,1, '', 'potencia_reactiva_fase_a', 'potencia_reactiva_fase_a', 'LBL_ELEMENT_TYPE_PARAM_POTENCIA_REACTIVA_FASE_A' , 'LBL_ELEMENT_TYPE_PARAM_POTENCIA_REACTIVA_FASE_A_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70,2,19,16,1, '', 'potencia_reactiva_fase_b', 'potencia_reactiva_fase_b', 'LBL_ELEMENT_TYPE_PARAM_POTENCIA_REACTIVA_FASE_B' , 'LBL_ELEMENT_TYPE_PARAM_POTENCIA_REACTIVA_FASE_B_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70,2,20,16,1, '', 'potencia_reactiva_fase_c', 'potencia_reactiva_fase_c', 'LBL_ELEMENT_TYPE_PARAM_POTENCIA_REACTIVA_FASE_C' , 'LBL_ELEMENT_TYPE_PARAM_POTENCIA_REACTIVA_FASE_C_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70,2,21,16,1, '', 'potencia_reactiva_total', 'potencia_reactiva_total', 'LBL_ELEMENT_TYPE_PARAM_POTENCIA_REACTIVA_TOTAL' , 'LBL_ELEMENT_TYPE_PARAM_POTENCIA_REACTIVA_TOTAL_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70,2,22,17,1, '', 'potencia_aparente_fase_a', 'corriente_aparente_fase_a', 'LBL_ELEMENT_TYPE_PARAM_POTENCIA_APARENTE_FASE_A' , 'LBL_ELEMENT_TYPE_PARAM_POTENCIA_APARENTE_FASE_A_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70,2,23,17,1, '', 'potencia_aparente_fase_b', 'corriente_aparente_fase_b', 'LBL_ELEMENT_TYPE_PARAM_POTENCIA_APARENTE_FASE_B' , 'LBL_ELEMENT_TYPE_PARAM_POTENCIA_APARENTE_FASE_B_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70,2,24,17,1, '', 'potencia_aparente_fase_c', 'corriente_aparente_fase_c', 'LBL_ELEMENT_TYPE_PARAM_POTENCIA_APARENTE_FASE_C' , 'LBL_ELEMENT_TYPE_PARAM_POTENCIA_APARENTE_FASE_C_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70,2,25,17,1, '', 'potencia_aparente_total', 'corriente_aparente_total', 'LBL_ELEMENT_TYPE_PARAM_POTENCIA_APARENTE_TOTAL' , 'LBL_ELEMENT_TYPE_PARAM_POTENCIA_APARENTE_TOTAL_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70,2,26, NULL,3, '', 'factor_de_potencia_fase_a', 'factor_de_potencia_fase_a', 'LBL_ELEMENT_TYPE_PARAM_FACTOR_DE_POTENCIA_FASE_A' , 'LBL_ELEMENT_TYPE_PARAM_FACTOR_DE_POTENCIA_FASE_A_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70,2,27, NULL,3, '', 'factor_de_potencia_fase_b', 'factor_de_potencia_fase_b', 'LBL_ELEMENT_TYPE_PARAM_FACTOR_DE_POTENCIA_FASE_B' , 'LBL_ELEMENT_TYPE_PARAM_FACTOR_DE_POTENCIA_FASE_B_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70,2,28, NULL,3, '', 'factor_de_potencia_fase_c', 'factor_de_potencia_fase_c', 'LBL_ELEMENT_TYPE_PARAM_FACTOR_DE_POTENCIA_FASE_C' , 'LBL_ELEMENT_TYPE_PARAM_FACTOR_DE_POTENCIA_FASE_C_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70,2,29, NULL,3, '', 'factor_de_potencia_trifasico', 'factor_de_potencia_trifasico', 'LBL_ELEMENT_TYPE_PARAM_FACTOR_DE_POTENCIA_TRIFASICO' , 'LBL_ELEMENT_TYPE_PARAM_FACTOR_DE_POTENCIA_TRIFASICO_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70,2,30,18,1, '', 'frecuencia', 'frecuencia', 'LBL_ELEMENT_TYPE_PARAM_FRECUENCIA' , 'LBL_ELEMENT_TYPE_PARAM_FRECUENCIA_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70,2,31, NULL,1, '', 'reset_energia_acumulada_date_time', 'reset_energia_acumulada_date_time', 'LBL_ELEMENT_TYPE_PARAM_RESET_ENERGIA_ACUMULADA_DATE_TIME' , 'LBL_ELEMENT_TYPE_PARAM_RESET_ENERGIA_ACUMULADA_DATE_TIME_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70,2,32,19,1, '', 'energia_activa_entregada', 'energia_activa_entregada', 'LBL_ELEMENT_TYPE_PARAM_ENERGIA_ACTIVA_ENTREGADA' , 'LBL_ELEMENT_TYPE_PARAM_ENERGIA_ACTIVA_ENTREGADA_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70,2,33,19,1, '', 'energia_activa_recibida', 'energia_activa_recibida', 'LBL_ELEMENT_TYPE_PARAM_ENERGIA_ACTIVA_RECIBIDA' , 'LBL_ELEMENT_TYPE_PARAM_ENERGIA_ACTIVA_RECIBIDA_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70,2,34,19,1, '', 'energia_activa_entregada+recibida', 'energia_activa_entregada+recibida', 'LBL_ELEMENT_TYPE_PARAM_ENERGIA_ACTIVA_ENTREGADA+RECIBIDA' , 'LBL_ELEMENT_TYPE_PARAM_ENERGIA_ACTIVA_ENTREGADA+RECIBIDA_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70,2,35,19,1, '', 'energia_activa_entregada-recibida', 'energia_activa_entregada-recibida', 'LBL_ELEMENT_TYPE_PARAM_ENERGIA_ACTIVA_ENTREGADA-RECIBIDA' , 'LBL_ELEMENT_TYPE_PARAM_ENERGIA_ACTIVA_ENTREGADA-RECIBIDA_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70,2,36,20,1, '', 'energia_reactiva_entregada', 'energia_reactiva_entregada', 'LBL_ELEMENT_TYPE_PARAM_ENERGIA_REACTIVA_ENTREGADA' , 'LBL_ELEMENT_TYPE_PARAM_ENERGIA_REACTIVA_ENTREGADA_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70,2,37,20,1, '', 'energia_reactiva_recibida', 'energia_reactiva_recibida', 'LBL_ELEMENT_TYPE_PARAM_ENERGIA_REACTIVA_RECIBIDA' , 'LBL_ELEMENT_TYPE_PARAM_ENERGIA_REACTIVA_RECIBIDA_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70,2,38,20,1, '', 'energia_reactiva_entregada+recibida', 'energia_reactiva_entregada+recibida', 'LBL_ELEMENT_TYPE_PARAM_ENERGIA_REACTIVA_ENTREGADA+RECIBIDA' , 'LBL_ELEMENT_TYPE_PARAM_ENERGIA_REACTIVA_ENTREGADA+RECIBIDA_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70,2,39,20,1, '', 'energia_reactiva_entregada-recibida', 'energia_reactiva_entregada-recibida', 'LBL_ELEMENT_TYPE_PARAM_ENERGIA_REACTIVA_ENTREGADA-RECIBIDA' , 'LBL_ELEMENT_TYPE_PARAM_ENERGIA_REACTIVA_ENTREGADA-RECIBIDA_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70,2,40,21,1, '', 'energia_aparente_entregada', 'energia_aparente_entregada', 'LBL_ELEMENT_TYPE_PARAM_ENERGIA_APARENTE_ENTREGADA' , 'LBL_ELEMENT_TYPE_PARAM_ENERGIA_APARENTE_ENTREGADA_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70,2,41,21,1, '', 'energia_aparente_recibida', 'energia_aparente_recibida', 'LBL_ELEMENT_TYPE_PARAM_ENERGIA_APARENTE_RECIBIDA' , 'LBL_ELEMENT_TYPE_PARAM_ENERGIA_APARENTE_RECIBIDA_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70,2,42,21,1, '', 'energia_aparente_entregada+recibida', 'energia_aparente_entregada+recibida', 'LBL_ELEMENT_TYPE_PARAM_ENERGIA_APARENTE_ENTREGADA+RECIBIDA' , 'LBL_ELEMENT_TYPE_PARAM_ENERGIA_APARENTE_ENTREGADA+RECIBIDA_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70,2,43,21,1, '', 'energia_aparente_entregada-recibida', 'energia_aparente_entregada-recibida', 'LBL_ELEMENT_TYPE_PARAM_ENERGIA_APARENTE_ENTREGADA-RECIBIDA' , 'LBL_ELEMENT_TYPE_PARAM_ENERGIA_APARENTE_ENTREGADA-RECIBIDA_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70,2,44,15,1, '', 'ultima_demanda', 'ultima_demanda', 'LBL_ELEMENT_TYPE_PARAM_ULTIMA_DEMANDA' , 'LBL_ELEMENT_TYPE_PARAM_ULTIMA_DEMANDA_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70,2,45,15,1, '', 'demanda_actual', 'demanda_Actual', 'LBL_ELEMENT_TYPE_PARAM_DEMANDA_ACTUAL' , 'LBL_ELEMENT_TYPE_PARAM_DEMANDA_ACTUAL_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70,2,46,15,1, '', 'demanda_prevista', 'demanda_prevista', 'LBL_ELEMENT_TYPE_PARAM_DEMANDA_PREVISTA' , 'LBL_ELEMENT_TYPE_PARAM_DEMANDA_PREVISTA_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70,2,47,15,1, '', 'demanda_maxima', 'demanda_maxima', 'LBL_ELEMENT_TYPE_PARAM_DEMANDA_MAXIMA' , 'LBL_ELEMENT_TYPE_PARAM_DEMANDA_MAXIMA_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+
+(70,2,48,13,3, '', 'current_a', 'current_a', 'LBL_ELEMENT_TYPE_PARAM_CURRENT_A', 'LBL_ELEMENT_TYPE_PARAM_CURRENT_A_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70,2,49,13,3, '', 'current_b', 'current_b', 'LBL_ELEMENT_TYPE_PARAM_CURRENT_B', 'LBL_ELEMENT_TYPE_PARAM_CURRENT_B_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70,2,50,13,3, '', 'current_c', 'current_c', 'LBL_ELEMENT_TYPE_PARAM_CURRENT_C', 'LBL_ELEMENT_TYPE_PARAM_CURRENT_C_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70,2,51,13,3, '', 'current_n', 'current_n', 'LBL_ELEMENT_TYPE_PARAM_CURRENT_N', 'LBL_ELEMENT_TYPE_PARAM_CURRENT_N_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70,2,52,14,3, '', 'voltage_ab', 'voltage_ab', 'LBL_ELEMENT_TYPE_PARAM_VOLTAGE_AB', 'LBL_ELEMENT_TYPE_PARAM_VOLTAGE_AB_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70,2,53,14,3, '', 'voltage_bc', 'voltage_bc', 'LBL_ELEMENT_TYPE_PARAM_VOLTAGE_BC', 'LBL_ELEMENT_TYPE_PARAM_VOLTAGE_BC_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70,2,54,14,3, '', 'voltage_ca', 'voltage_ca', 'LBL_ELEMENT_TYPE_PARAM_VOLTAGE_CA', 'LBL_ELEMENT_TYPE_PARAM_VOLTAGE_CA_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70,2,55,15,3, '', 'active_power_total', 'active_power_total', 'LBL_ELEMENT_TYPE_PARAM_ACTIVE_POWER_TOTAL', 'LBL_ELEMENT_TYPE_PARAM_ACTIVE_POWER_TOTAL_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70,2,56,16,3, '', 'reactive_power_total', 'reactive_power_total', 'LBL_ELEMENT_TYPE_PARAM_REACTIVE_POWER_TOTAL', 'LBL_ELEMENT_TYPE_PARAM_REACTIVE_POWER_TOTAL_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70,2,57,17,3, '', 'apparent_power_total', 'apparent_power_total', 'LBL_ELEMENT_TYPE_PARAM_APPARENT_POWER_TOTAL', 'LBL_ELEMENT_TYPE_PARAM_APPARENT_POWER_TOTAL_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70,2,58,null,3, '', 'displacement_power_factor_total', 'displacement_power_factor_total', 'LBL_ELEMENT_TYPE_PARAM_DISPLACEMENT_POWER_FACTOR_TOTAL', 'LBL_ELEMENT_TYPE_PARAM_DISPLACEMENT_POWER_FACTOR_TOTAL_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70,2,59,18,3, '', 'frecuency', 'frecuency', 'LBL_ELEMENT_TYPE_PARAM_FRECUENCY', 'LBL_ELEMENT_TYPE_PARAM_FRECUENCY_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70,2,60,19,1, '', 'active_energy_delivered', 'active_energy_delivered', 'LBL_ELEMENT_TYPE_PARAM_ACTIVE_ENERGY_DELIVERED', 'LBL_ELEMENT_TYPE_PARAM_ACTIVE_ENERGY_DELIVERED_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70,2,61,20,1, '', 'reactive_energy_delivered', 'reactive_energy_delivered', 'LBL_ELEMENT_TYPE_PARAM_REACTIVE_ENERGY_DELIVERED', 'LBL_ELEMENT_TYPE_PARAM_REACTIVE_ENERGY_DELIVERED_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70,2,62,21,1, '', 'apparent_energy_delivered', 'apparent_energy_delivered', 'LBL_ELEMENT_TYPE_PARAM_APPARENT_ENERGY_DELIVERED', 'LBL_ELEMENT_TYPE_PARAM_APPARENT_ENERGY_DELIVERED_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+
+-- 
+-- Table: master.element_subtypes
+--
+INSERT INTO master.element_subtypes(element_subtype_id, element_type_id, alias, description,label_alias, label_description, enabled, visible, created_at, updated_at)
+VALUES
+(1, 70, 'Network analyzer', 'Network analyzer', 'LBL_ELEMENT_SUBTYPE_NETWORK_ANALYZER', 'LBL_ELEMENT_SUBTYPE_NETWORK_ANALYZER_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 70, 'Network analyzer modbus', 'Network analyzer modbus', 'LBL_ELEMENT_SUBTYPE_NETWORK_ANALYZER_MODBUS', 'LBL_ELEMENT_SUBTYPE_NETWORK_ANALYZER_MODBUS_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+-- 
+-- Table: master.element_subtype_active_params
+--
+INSERT INTO master.element_subtype_active_params
+(element_subtype_id, element_type_id, param_type_id, element_type_param_id, enabled, visible, created_at, updated_at)VALUES
+-- Network analyzer
+(1, 70, 2, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 70, 2, 2, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 70, 2, 3, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 70, 2, 4, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 70, 2, 5, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 70, 2, 6, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 70, 2, 7, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 70, 2, 8, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 70, 2, 9, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 70, 2, 10, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 70, 2, 11, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 70, 2, 12, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 70, 2, 13, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 70, 2, 14, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 70, 2, 15, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 70, 2, 16, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 70, 2, 17, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 70, 2, 18, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 70, 2, 19, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 70, 2, 20, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 70, 2, 21, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 70, 2, 22, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 70, 2, 23, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 70, 2, 24, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 70, 2, 25, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 70, 2, 26, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 70, 2, 27, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 70, 2, 28, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 70, 2, 29, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 70, 2, 30, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 70, 2, 31, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 70, 2, 32, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 70, 2, 33, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 70, 2, 34, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 70, 2, 35, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 70, 2, 36, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 70, 2, 37, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 70, 2, 38, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 70, 2, 39, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 70, 2, 40, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 70, 2, 41, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 70, 2, 42, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 70, 2, 43, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 70, 2, 44, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 70, 2, 45, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 70, 2, 46, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 70, 2, 47, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+-- Network analyzer modbus
+(2, 70, 2, 48, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 70, 2, 49, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 70, 2, 50, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 70, 2, 51, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 70, 2, 52, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 70, 2, 53, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 70, 2, 54, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 70, 2, 55, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 70, 2, 56, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 70, 2, 57, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 70, 2, 58, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 70, 2, 59, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 70, 2, 60, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 70, 2, 61, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 70, 2, 62, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+-- 
+-- Table: master.element_type_states
+--
+INSERT INTO master.element_type_states(element_type_id, element_type_state_id, alias, description, label_alias, label_description, enabled, visible, created_at, updated_at) VALUES
+(70, 0, 'UNKNOWN', 'Unknown state', 'LBL_ELEMENT_TYPE_STATE_UNKNOWN', 'LBL_ELEMENT_TYPE_STATE_UNKNOWN_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70, 1, 'UP', 'The state of the equipment is: comunicates', 'LBL_ELEMENT_TYPE_STATE_UP', 'LBL_ELEMENT_TYPE_STATE_UP_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70, 2, 'DOWN', 'The state of the equipment is: out of communication', 'LBL_ELEMENT_TYPE_STATE_DOWN', 'LBL_ELEMENT_TYPE_STATE_DOWN_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70, 3, 'ALARMS', 'The state of the equipment is: with alarms', 'LBL_ELEMENT_TYPE_STATE_ALARMS', 'LBL_ELEMENT_TYPE_STATE_ALARMS_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70, 4, 'MAINTENANCE', 'The state of the equipment is: on Maintenance', 'LBL_ELEMENT_TYPE_STATE_MAINTENANCE', 'LBL_ELEMENT_TYPE_STATE_MAINTENANCE_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+-- 
+-- Table: master.element_type_state_transitions
+--
+INSERT INTO master.element_type_state_transitions (element_type_id, current_element_type_state_id, next_element_type_state_id, enabled, visible, editable, created_at, updated_at) VALUES
+(70, 1, 2, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70, 1, 3, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70, 2, 1, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70, 2, 3, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70, 3, 1, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70, 3, 2, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70, 0, 1, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70, 0, 2, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+-- 
+-- Table: master.io_controller_module_type_element_types
+--
+INSERT INTO master.io_controller_module_type_element_types
+(module_type_id, element_type_id, enabled, visible, created_at, updated_at) VALUES
+(1, 70, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+--
+-- Table: conf.alarm_configs
+--
+INSERT INTO conf.alarm_configs 
+(alarm_config_id, alarm_type_id, alarm_level_id, element_type_id, element_id, element_type_state_id, mine, treatment, alias, description, label_alias, label_description, enabled, visible, created_at, updated_at)VALUES
+(217, 2, 3, 70, NULL, NULL, true, true, 'ALARM ANALIZADOR_RED NO CONNECTION', 'ALARM ANALIZADOR_RED NO CONNECTION', 'LBL_ALARM_CONFIGS_ALARM_ANALIZADOR_RED_NO_CONNECTION', 'LBL_ALARM_CONFIGS_ALARM_ANALIZADOR_RED_NO_CONNECTION_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+-- 
+-- Table: conf.element_state_alarms
+--
+INSERT INTO conf.element_state_alarms
+(element_type_id, element_type_state_id, alarm_config_id, created_at, updated_at) VALUES
+(70, 2, 217, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="AuditLogValue">
+	<SELECT>SELECT audit_log_id as "auditLogId", 
+	               log_type_id as "logTypeId",
+	               log_type_param_id as "logParamId",
+				   value as "value",
+				   enabled as "enabled", 
+				   visible as "visible"
+              FROM rt.audit_log_values
+              WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>INSERT INTO rt.audit_log_values
+				   (audit_log_id, 
+				    log_type_id, 
+				    log_type_param_id, 
+				    value, 
+				    enabled, 
+				    visible, 
+				    created_at, 
+				    updated_at)
+		    VALUES (:auditLogId,
+				    :logTypeId,
+				    :logParamId,
+				    :value,
+				    :enabled,
+				    :visible,
+				    CURRENT_TIMESTAMP,
+				    CURRENT_TIMESTAMP)
+	</INSERT>
+	<UPDATE>UPDATE rt.audit_log_values
+				SET value = :value,
+				 	enabled = :enabled,
+				 	visible = :visible,
+				 	updated_at = CURRENT_TIMESTAMP
+				WHERE audit_log_id = :auditLogId
+					AND log_type_id = :logTypeId
+					AND log_type_param_id = :logTypeParamId
+	</UPDATE>
+	<DELETE>DELETE FROM rt.audit_log_values
+				WHERE audit_log_id = :auditLogId 
+					AND log_type_id = :logTypeId 
+					AND log_type_param_id = :logParamId
+	</DELETE>
+</DML>

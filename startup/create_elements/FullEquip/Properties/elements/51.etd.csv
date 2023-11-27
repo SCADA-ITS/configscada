@@ -1,0 +1,13 @@
+item;alias;description;sessionuid;road;stretchs;pk;sentido;on_change_measure;param1_brand;param2_model
+1;RV-ETD-1CA;Revenga ETD;RV-ETD-1CA;AP7 - AUSOL I;RV-TUNEL;177+307;CA;EtdParamsAdapterTFA.groovy;Revenga;Revenga ETD
+2;RV-ETD-1MA;Revenga ETD;RV-ETD-1MA;AP7 - AUSOL I;RV-TUNEL;176+995;MA;EtdParamsAdapterTFA.groovy;Revenga;Revenga ETD
+3;MM-ETD-1CA;Revenga ETD;MM-ETD-1CA;AP7 - AUSOL I;MM-TUNEL;166+727;CA;EtdParamsAdapterTFA.groovy;Revenga;Revenga ETD
+4;MM-ETD-1MA;Revenga ETD;MM-ETD-1MA;AP7 - AUSOL I;MM-TUNEL;166+105;MA;EtdParamsAdapterTFA.groovy;Revenga;Revenga ETD
+5;STMI-ETD-1CA;Revenga ETD;STMI-ETD-1CA;AP7 - AUSOL I;STMI-TUNEL;195+534;CA;EtdParamsAdapterTFA.groovy;Revenga;Revenga ETD
+6;STMI-ETD-1MA;Revenga ETD;STMI-ETD-1MA;AP7 - AUSOL I;STMI-TUNEL;194+704;MA;EtdParamsAdapterTFA.groovy;Revenga;Revenga ETD
+7;CH-ETD-1MA;Revenga ETD;CH-ETD-1MA;AP7 - AUSOL I;CH-TUNEL;194+704;MA;EtdParamsAdapterTFA.groovy;Revenga;Revenga ETD
+8;CH-ETD-1CA;Revenga ETD;CH-ETD-1CA;AP7 - AUSOL I;CH-TUNEL;194+704;CA;EtdParamsAdapterTFA.groovy;Revenga;Revenga ETD
+9;LQ-ETD-1CA;Revenga ETD;LQ-ETD-1CA;AP7 - AUSOL I;LQ-TUNEL;173+900;MA;EtdParamsAdapterTFA.groovy;Revenga;Revenga ETD
+10;LQ-ETD-1MA;Revenga ETD;LQ-ETD-1MA;AP7 - AUSOL I;LQ-TUNEL;173+900;MA;EtdParamsAdapterTFA.groovy;Revenga;Revenga ETD
+11;EST-ETD-1CA;Revenga ETD;EST-ETD-1CA;AP7 - AUSOL II;EST-TUNEL;153+757;CA;EtdParamsAdapterTFA.groovy;Revenga;Revenga ETD
+12;EST-ETD-1MA;Revenga ETD;EST-ETD-1MA;AP7 - AUSOL II;EST-TUNEL;153+602;MA;EtdParamsAdapterTFA.groovy;Revenga;Revenga ETD

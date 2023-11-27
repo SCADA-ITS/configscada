@@ -1,0 +1,9 @@
+UPDATE conf.alarm_configs SET alarm_level_id = 5, enabled = true, treatment = True WHERE element_type_id = 25 AND alarm_config_id = 68; --LBL_ALARM_CONFIGS_ALARM_PLC_CABINET_SURGE_PROTECTION
+UPDATE conf.alarm_configs SET alarm_level_id = 5, enabled = true, treatment = True WHERE element_type_id = 25 AND alarm_config_id = 69; --LBL_ALARM_CONFIGS_ALARM_PLC_CABINET_DOOR_OPEN
+UPDATE conf.alarm_configs SET alarm_level_id = 5, enabled = true, treatment = True WHERE element_type_id = 25 AND alarm_config_id = 70; --LBL_ALARM_CONFIGS_ALARM_PLC_CABINET_LOW_POTENCIAL
+UPDATE conf.alarm_configs SET alarm_level_id = 5, enabled = true, treatment = True WHERE element_type_id = 25 AND alarm_config_id = 71; --LBL_ALARM_CONFIGS_ALARM_PLC_CABINET_INSULATION_LOSSES-1
+UPDATE conf.alarm_configs SET alarm_level_id = 5, enabled = true, treatment = True WHERE element_type_id = 25 AND alarm_config_id = 72; --LBL_ALARM_CONFIGS_ALARM_PLC_CABINET_INSULATION_LOSSES-2
+UPDATE conf.alarm_configs SET alarm_level_id = 5, enabled = true, treatment = True WHERE element_type_id = 25 AND alarm_config_id = 73; --LBL_ALARM_CONFIGS_ALARM_PLC_CABINET_TRAFOSTATION_DOOR_OPEN
+UPDATE conf.alarm_configs SET alarm_level_id = 5, enabled = true, treatment = True WHERE element_type_id = 25 AND alarm_config_id = 74; --LBL_ALARM_CONFIGS_ALARM_PLC_CABINET_NO_CONNECTION
+UPDATE conf.alarm_configs SET alarm_level_id = 5, enabled = true, treatment = True WHERE element_type_id = 25 AND alarm_config_id = 2010025; --LBL_ALARM_CONFIGS_ALARM_CABINET_OVERVOLTAGE
+UPDATE conf.alarm_configs SET alarm_level_id = 5, enabled = true, treatment = True WHERE element_type_id = 25 AND alarm_config_id = 2020025; --LBL_ALARM_CONFIGS_ALARM_CABINET_SOLAR_SYSTEM_ALARM

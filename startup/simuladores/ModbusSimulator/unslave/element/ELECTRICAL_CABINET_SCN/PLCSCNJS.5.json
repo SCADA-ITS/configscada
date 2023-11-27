@@ -1,0 +1,35 @@
+{
+  "version": "3.0.3",
+  "mode": "TCP",
+  "port": {
+    "name": "COM1",
+    "baudRate": 19200,
+    "dataBits": 8,
+    "parity": "none",
+    "stopBits": 1
+  },
+  "frameDelay": null,
+  "tcpPort": 1033,
+  "slaves": {
+    "1": {
+      "isOnline": true,
+      "registers": {
+        "DI0": 1,
+        "DI1": 0,
+        "DI2": 0,
+        "DI3": 0,
+        "DI4": 0,
+        "DI5": 0,
+        "DI6": 1,
+        "DI7": 0,
+        "DI999": {
+          "exception": 3
+        }
+      }
+    }
+  },
+  "api": {
+    "enable": true,
+    "port": 8034
+  }
+}

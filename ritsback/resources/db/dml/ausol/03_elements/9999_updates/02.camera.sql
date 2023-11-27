@@ -1,0 +1,1 @@
+UPDATE master.command_element_types SET enabled = false WHERE element_type_id = 2 and command_element_type_id = 1;

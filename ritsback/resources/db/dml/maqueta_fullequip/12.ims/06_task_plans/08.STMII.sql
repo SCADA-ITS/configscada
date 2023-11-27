@@ -1,0 +1,36 @@
+-- 
+-- Table: conf.ims_incident_task_plans
+--
+INSERT INTO conf.ims_incident_task_plans (incident_task_plan_id, incident_type_task_id, incident_type_id, stretch_id, plan_id, position, enabled, visible, created_at, updated_at) VALUES
+-- Numero el incident_task_plan_id como: <incident_type_task_id><stretch_id><position>
+
+ -- E1-MET-01
+ -- 3 - S05 SEÑALIZACIÓN
+(030121106401, 030121, 201, 1064, 371, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(030121106402, 030121, 201, 1064, 372, 2, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(030121106403, 030121, 201, 1064, 373, 3, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(030121106404, 030121, 201, 1064, 374, 4, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(030121106405, 030121, 201, 1064, 799, 5, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(030121106406, 030121, 201, 1064, 800, 6, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(030121106407, 030121, 201, 1064, 801, 7, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(030121106408, 030121, 201, 1064, 802, 8, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+ -- 6 - S17 SEÑALIZACIÓN
+(020221106401, 020221, 201, 1064, 20, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(020221106402, 020221, 201, 1064, 793, 2, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(020221106403, 020221, 201, 1064, 794, 3, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

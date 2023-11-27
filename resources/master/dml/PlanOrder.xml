@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="PlanOrder">
+	<SELECT>SELECT plan_id as "planId",
+	               plan_order_id as "id",
+	               plan_order_type_id as "planOrderTypeId",
+	               plan_order_order as "planOrderOrder",
+	               next_plan_order_id as "nextPlanOrderId",
+	               next_plan_id as "nextPlanId",
+				   alias as "alias",
+				   description as "description",
+				   enabled as "enabled",
+				   visible as "visible"
+			  FROM conf.plan_orders
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>INSERT INTO conf.plan_orders
+					   (plan_id,
+					    plan_order_id,
+					   	plan_order_type_id,
+					   	plan_order_order,
+					   	next_plan_order_id,
+					   	next_plan_id,
+					    alias,
+					    description,
+					    enabled,
+					    visible,
+					    created_at,
+					    updated_at)
+				 VALUES (:planId,
+				 		 :id=getNextId{'conf.plan_orders'$'plan_order_id'$'plan_id=planId'},
+				 		 :planOrderTypeId,
+				 		 :planOrderOrder,
+				 		 :nextPlanOrderId,
+				 		 :nextPlanId,
+				         :alias,
+				         :description,
+				         :enabled,
+				         :visible,
+				         CURRENT_TIMESTAMP,
+				         CURRENT_TIMESTAMP)
+	</INSERT>
+	<UPDATE>UPDATE conf.plan_orders
+			   SET plan_order_type_id = :planOrderTypeId,
+			   	   plan_order_order = :planOrderOrder,
+			   	   next_plan_order_id = :nextPlanOrderId,
+			   	   next_plan_id = :nextPlanId,
+			   	   alias = :alias,
+				   description = :description,
+				   enabled = :enabled,
+				   visible = :visible,
+				   updated_at = CURRENT_TIMESTAMP
+			 WHERE plan_id = :planId
+			 AND plan_order_id = :id
+	</UPDATE>
+	<DELETE>DELETE FROM conf.plan_orders
+			 WHERE plan_id = :planId
+			 AND plan_order_id = :id
+	</DELETE>
+</DML>

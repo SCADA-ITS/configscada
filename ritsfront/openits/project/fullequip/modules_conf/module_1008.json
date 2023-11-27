@@ -1,0 +1,43 @@
+{
+	"moduleAction": {
+	    "view": 100801,
+		"recognize": 100802,
+		"deactivate": 100803,
+		"mute": 100804,
+		"unmute": 100805,
+		"createMuteAlarm": 100806,
+		"createManualAlarm": 100807
+	},
+	"actionEndpoints": {
+		"recognize": "alarms/send_recognize_alarm",
+		"deactivate": "alarms/send_deactivation_alarm",
+		"mute": "alarms/send_alarm_muted_actions",
+		"unmute": "alarms/send_alarm_muted_actions",
+		"createManualAlarm": "alarms/send_alarms"
+	},
+	"restEndpoints": {
+		"alarms": "alarms",
+		"alarmsArray": "alarms",
+		"alarm": "alarms/${id}",
+		"alarmMuted": "alarms/alarm_muted/${id}"
+	},
+	"alarmTypeAuto": [ "AlarmType:1", "AlarmType:2", "AlarmType:3" ],
+	"alarmTypeManual": [ "AlarmType:4" ],
+	"levels": {
+		"critical": [ "AlarmLevel:5", "AlarmLevel:6" ],
+		"warn": [ "AlarmLevel:3", "AlarmLevel:4" ],
+		"info": [ "AlarmLevel:1", "AlarmLevel:2" ] 
+	},
+	"requiredPermissions": {
+		"edit": "SystemPermission:19"		
+	},
+	"action": {
+		"alarmConfig": 103501
+	},
+	"backOffice": {
+	    "id": 5,
+	    "tableName": "registers",
+	    "filterColumnName": "alarm_id",
+	    "filterColumnValue": null
+  	}
+}

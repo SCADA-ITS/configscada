@@ -1,0 +1,69 @@
+-- 
+-- Table: master.element_types
+--
+INSERT INTO master.element_types
+(element_type_id, alias, description,label_alias, label_description,  initial_element_type_state_id, connected_element_type_state_id, disconnected_element_type_state_id, enabled, visible, created_at, updated_at) VALUES
+(21, 'OPAC', 'OPAC', 'LBL_ELEMENT_TYPE_OPAC', 'LBL_ELEMENT_TYPE_OPAC_DESC', 0, 1, 2, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+--
+-- Table: master.element_type_params
+--
+INSERT INTO master.element_type_params (element_type_id, param_type_id, element_type_param_id, element_type_param_unit_id, data_type_id, threshold_1, threshold_2, default_value, alias, description, label_alias, label_description, enabled, visible, editable, created_at, updated_at) VALUES
+--CONFIG
+(21,1,1, NULL,2, NULL, NULL, '', 'brand', 'brand', 'LBL_ELEMENT_TYPE_PARAM_BRAND' , 'LBL_ELEMENT_TYPE_PARAM_BRAND_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(21,1,2, NULL,2, NULL, NULL, '', 'model', 'model', 'LBL_ELEMENT_TYPE_PARAM_MODEL' , 'LBL_ELEMENT_TYPE_PARAM_MODEL_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(21, 1, 1003, NULL, 2, NULL, NULL, '', 'MANGO SESSION_UID', 'MANGO SESSION_UID', 'LBL_ELEMENT_TYPE_PARAM_MANGO_SESSION_UID' , 'LBL_ELEMENT_TYPE_PARAM_MANGO_SESSION_UID_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--MEASURE
+(21, 2, 1, 30, 3, '0', '65534', '65535', 'opac_concentration', 'OPAC_concentration', 'LBL_ELEMENT_TYPE_PARAM_OPAC_CONCENTRATION' , 'LBL_ELEMENT_TYPE_PARAM_OPAC_CONCENTRATION_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+--
+-- Table: master.element_type_states
+--
+INSERT INTO master.element_type_states(element_type_id, element_type_state_id, alias, description, label_alias, label_description, enabled, visible, created_at, updated_at) VALUES
+(21, 0, 'UNKNOWN', 'Unknown state', 'LBL_ELEMENT_TYPE_STATE_UNKNOWN', 'LBL_ELEMENT_TYPE_STATE_UNKNOWN_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(21, 1, 'UP', 'The state of the equipment is: comunicates', 'LBL_ELEMENT_TYPE_STATE_UP', 'LBL_ELEMENT_TYPE_STATE_UP_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(21, 2, 'DOWN', 'The state of the equipment is: out of communication', 'LBL_ELEMENT_TYPE_STATE_DOWN', 'LBL_ELEMENT_TYPE_STATE_DOWN_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(21, 3, 'ALARMS', 'The state of the equipment is: with alarms', 'LBL_ELEMENT_TYPE_STATE_ALARMS', 'LBL_ELEMENT_TYPE_STATE_ALARMS_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(21, 4, 'MAINTENANCE', 'The state of the equipment is: on Maintenance', 'LBL_ELEMENT_TYPE_STATE_MAINTENANCE', 'LBL_ELEMENT_TYPE_STATE_MAINTENANCE_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+-- 
+-- Table: master.element_type_state_transitions
+--
+INSERT INTO master.element_type_state_transitions 
+(element_type_id, current_element_type_state_id, next_element_type_state_id, enabled, visible, editable, created_at, updated_at) VALUES
+(21, 1, 2, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(21, 1, 3, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(21, 2, 1, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(21, 2, 3, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(21, 3, 1, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(21, 3, 2, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(21, 0, 1, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(21, 0, 2, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+-- 
+-- Table: master.io_controller_module_type_element_types
+--
+INSERT INTO master.io_controller_module_type_element_types
+(module_type_id, element_type_id, enabled, visible, created_at, updated_at) VALUES
+(1, 21, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+-- 
+-- Table: conf.alarm_configs
+--
+INSERT INTO conf.alarm_configs 
+(alarm_config_id, alarm_type_id, alarm_level_id, element_type_id, element_id, element_type_state_id, mine, treatment, alias, description, label_alias, label_description, enabled, visible, created_at, updated_at)VALUES
+(56, 2, 3, 21, NULL, NULL, true, true, 'ALARM OPAC NO CONNECTION', 'ALARM OPAC NO CONNECTION', 'LBL_ALARM_CONFIGS_ALARM_OPAC_NO_CONNECTION', 'LBL_ALARM_CONFIGS_ALARM_OPAC_NO_CONNECTION_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(248, 2, 5, 21, NULL, 3, true, true, 'ALARM SENSOR', 'ALARM SENSOR', 'LBL_ALARM_CONFIGS_ALARM_OPAC_SENSOR', 'LBL_ALARM_CONFIGS_ALARM_SENSOR_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(261, 2, 3, 21, NULL, 3, true, true, 'ALARM FA', 'ALARM FA', 'LBL_ALARM_CONFIGS_ALARM_OPAC_FA', 'LBL_ALARM_CONFIGS_ALARM_FA_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2101, 2, 5, 21, NULL, 3, true, true, 'ALARM OPAC OUT OF RANGE', 'ALARM OPAC OUT OF RANGE', 'LBL_ALARM_CONFIGS_ALARM_OPAC_OUT_OF_RANGE', 'LBL_ALARM_CONFIGS_ALARM_OPAC_OUT_OF_RANGE_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2102, 2, 5, 21, NULL, 3, true, true, 'ALARM OPAC BROKEN THREAD', 'ALARM OPAC BROKEN THREAD', 'LBL_ALARM_CONFIGS_ALARM_OPAC_BROKEN_THREAD', 'LBL_ALARM_CONFIGS_ALARM_OPAC_BROKEN_THREAD_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2103, 2, 5, 21, NULL, 3, true, true, 'ALARM EQUIPMENT FAIL', 'ALARM EQUIPMENT FAIL', 'LBL_ALARM_CONFIGS_ALARM_EQUIPMENT_FAIL', 'LBL_ALARM_CONFIGS_ALARM_EQUIPMENT_FAIL_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2104, 2, 3, 21, NULL, 3, true, true, 'ALARM TEMPERATURE OUT OF RANGE', 'ALARM TEMPERATURE OUT OF RANGE', 'LBL_ALARM_CONFIGS_ALARM_TEMPERATURE_OUT_OF_RANGE', 'LBL_ALARM_CONFIGS_ALARM_TEMPERATURE_OUT_OF_RANGE_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2105, 2, 3, 21, NULL, 3, true, true, 'ALARM TEMPERATURE BROKEN THREAD', 'ALARM TEMPERATURE BROKEN THREAD', 'LBL_ALARM_CONFIGS_ALARM_TEMPERATURE_BROKEN_THREAD', 'LBL_ALARM_CONFIGS_ALARM_TEMPERATURE_BROKEN_THREAD_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+-- 
+-- Table: conf.element_state_alarms
+--
+INSERT INTO conf.element_state_alarms
+(element_type_id, element_type_state_id, alarm_config_id, created_at, updated_at) VALUES
+(21, 2, 56, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

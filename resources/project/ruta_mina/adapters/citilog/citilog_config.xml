@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<p:citilog_config_v1 name="" version=""
+	xmlns:p="citilog_config_v1"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="citilog_config_v1 ../../../adapter-lib/src/main/resources/schemas/citilog/citilog_config_v1.xsd ">
+  <p:camera_uid element_type_id="2" element_type_param_id="1004" param_type_id="1" />
+  <p:camera_alarms>
+  	<!-- Vehículo lento -->
+    <p:camera_alarm alarm="SlowVeh" lane_id="0" alarm_config_id="1910002" />
+    <p:camera_alarm alarm="SlowVeh" lane_id="1" alarm_config_id="1920002" />
+    <p:camera_alarm alarm="SlowVeh" lane_id="2" alarm_config_id="1930002" />
+    <p:camera_alarm alarm="SlowVeh" lane_id="3" alarm_config_id="1940002" />
+    <!-- Vehículo parado -->
+    <p:camera_alarm alarm="StopF" lane_id="0" alarm_config_id="1950002" />
+    <p:camera_alarm alarm="StopF" lane_id="1" alarm_config_id="1960002" />
+    <p:camera_alarm alarm="StopF" lane_id="2" alarm_config_id="1970002" />
+    <p:camera_alarm alarm="StopF" lane_id="3" alarm_config_id="1980002" />
+    <!-- Escombro -->
+    <p:camera_alarm alarm="Debris" lane_id="0" alarm_config_id="1990002" />
+    <p:camera_alarm alarm="Debris" lane_id="1" alarm_config_id="2000002" />
+    <p:camera_alarm alarm="Debris" lane_id="2" alarm_config_id="2020002" />
+    <p:camera_alarm alarm="Debris" lane_id="3" alarm_config_id="2030002" />
+    <!-- Peatón -->
+    <p:camera_alarm alarm="Pedestrian" lane_id="0" alarm_config_id="2040002" />
+    <p:camera_alarm alarm="Pedestrian" lane_id="1" alarm_config_id="2050002" />
+    <p:camera_alarm alarm="Pedestrian" lane_id="2" alarm_config_id="2060002" />
+    <p:camera_alarm alarm="Pedestrian" lane_id="3" alarm_config_id="2070002" />
+    <!-- Visibilidad -->
+    <p:camera_alarm alarm="Visibility" lane_id="0" alarm_config_id="2080002" />
+    <p:camera_alarm alarm="Visibility" lane_id="1" alarm_config_id="2090002" />
+    <p:camera_alarm alarm="Visibility" lane_id="2" alarm_config_id="2100002" />
+    <p:camera_alarm alarm="Visibility" lane_id="3" alarm_config_id="2110002" />
+    <!-- Congestión -->
+    <p:camera_alarm alarm="SlowDown" lane_id="0" alarm_config_id="2120002" />
+    <p:camera_alarm alarm="SlowDown" lane_id="1" alarm_config_id="2130002" />
+    <p:camera_alarm alarm="SlowDown" lane_id="2" alarm_config_id="2140002" />
+    <p:camera_alarm alarm="SlowDown" lane_id="3" alarm_config_id="2150002" />
+    <!-- Kamikaze -->
+    <p:camera_alarm alarm="WrongWay" lane_id="0" alarm_config_id="2160002" />
+    <p:camera_alarm alarm="WrongWay" lane_id="1" alarm_config_id="2170002" />
+    <p:camera_alarm alarm="WrongWay" lane_id="2" alarm_config_id="2180002" />
+    <p:camera_alarm alarm="WrongWay" lane_id="3" alarm_config_id="2190002" />
+  </p:camera_alarms>
+  <p:dai_uid element_type_id="52" element_type_param_id="1004" param_type_id="1" />
+  <p:dai_alarms>
+    <p:dai_alarm type="Analyzer" state="CommError" alarm_config_id="10052" />
+    <p:dai_alarm type="Analyzer" state="VideoError" alarm_config_id="10052" />
+  </p:dai_alarms>
+  <p:dai_states>
+    <p:dai_state type="Analyzer" state="OK" element_state_id="1" />
+    <p:dai_state type="Analyzer" state="NOK" element_state_id="1" />
+    <p:dai_state type="Analyzer" state="VideoError" element_state_id="2" />
+    <p:dai_state type="Analyzer" state="CommError" element_state_id="2" />
+  </p:dai_states>
+  <p:requests>
+  	<p:request type="alarms"><![CDATA[<CitiCommand Id="3" Type="ListAlarm"><ListAlarm Filter="AlarmesEnCours"/></CitiCommand>]]></p:request>
+  	<p:request type="devices"><![CDATA[<CitiCommand Id="34" Type="GetDevice"> <GetDevice Type="Analyzer" Address="ALL" State="ALL" Channel="ALL"/> </CitiCommand>]]></p:request>
+  	<p:request type="keepAlive"><![CDATA[<CitiEvent Type="LIFESIG"><LIFESIG PeriodSec="30" TimeOutSec="60" /></CitiEvent>]]></p:request>
+  </p:requests>
+</p:citilog_config_v1>

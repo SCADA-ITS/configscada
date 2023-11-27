@@ -1,0 +1,10 @@
+device_name;session_uid;url_publisher;PLC_ip;PLC_name;port(i);read_permission;write_permission;door_open_offset(i);power_supply_offset(i);batery_low_offset(i);overload_ups_offset(i)
+RNRKD02L;RNRKD02L;http:\/\/10.120.50.248:3000\/api\/v2\/generic\/;10.191.7.19;PLCRNRKD02L;502;monitor;;0;1;2;3
+RNRKD04L;RNRKD04L;http:\/\/10.120.50.248:3000\/api\/v2\/generic\/;10.191.7.22;PLCRNRKD04L;502;monitor;;0;1;2;3
+RNRSPS405JSPP;RNRSPS405JSPP;http:\/\/10.120.50.248:3000\/api\/v2\/generic\/;10.191.10.102;PLCRNRSPS405JSPP;502;monitor;;0;1;2;3
+RNRJS20P;RNRJS20P;http:\/\/10.120.50.248:3000\/api\/v2\/generic\/;10.191.11.5;PLCRNRJS20P;502;monitor;;0;1;2;3
+RNRJS16P;RNRJS16P;http:\/\/10.120.50.248:3000\/api\/v2\/generic\/;10.191.10.35;PLCRNRJS16P;502;monitor;;0;1;2;3
+RNRPK02L;RNRPK02L;http:\/\/10.120.50.248:3000\/api\/v2\/generic\/;10.191.19.6;PLCRNRPK02L;502;monitor;;0;1;2;3
+RNRPK20L;RNRPK20L;http:\/\/10.120.50.248:3000\/api\/v2\/generic\/;10.191.19.11;PLCRNRPK20L;502;monitor;;0;1;2;3
+RNRPK21P;RNRPK21P;http:\/\/10.120.50.248:3000\/api\/v2\/generic\/;10.191.19.12;PLCRNRPK21P;502;monitor;;0;1;2;3
+RNRPK22P;RNRPK22P;http:\/\/10.120.50.248:3000\/api\/v2\/generic\/;10.191.19.13;PLCRNRPK22P;502;monitor;;0;1;2;3

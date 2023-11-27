@@ -1,0 +1,13 @@
+device_name;url_publisher
+RV-CT-FIRE-DET-1;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/
+MM-CT-FIRE-DET-1;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/
+STMI-CT-FIRE-DET-1;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/
+CAS-CT-FIRE-DET-BC;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/
+CAS-CT-FIRE-DET-BM;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/
+CH-CT-FIRE-DET-1;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/
+EST-CT-FIRE-DET-1;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/
+STM2-CT-FIRE-DET-1;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/
+LQ-CT-FIRE-DET-1;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/
+NG-CT-FIRE-DET-1;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/
+COR-CT-FIRE-DET-BM;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/
+COR-CT-FIRE-DET-BC;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/

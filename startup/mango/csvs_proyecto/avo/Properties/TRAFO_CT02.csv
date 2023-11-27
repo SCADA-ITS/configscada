@@ -1,0 +1,4 @@
+device_name;plc_name;plc_ip;port(i);url_publisher;offset_alarms(i)
+CT02-TR1-SE2;CT02_PLC_G;10.133.50.37;28014;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;21701
+CT02-TR2-SE2;CT02_PLC_G;10.133.50.37;28014;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;21711
+CT02-TR3-SE2;CT02_PLC_G;10.133.50.37;28014;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;21721

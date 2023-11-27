@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="ElementTypeParamUnit">
+	<SELECT>SELECT element_type_param_unit_id as "id", 
+				   alias as "alias", 
+				   description as "description", 
+				   label_alias as "labelAlias", 
+				   label_description as "labelDescription",
+				   enabled as "enabled", 
+				   visible as "visible", 
+				   editable as "editable"
+			  FROM master.element_type_param_unit
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>
+	</INSERT>
+	<UPDATE>
+	</UPDATE>
+	<DELETE>
+	</DELETE>
+</DML>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="Element">
+	<SELECT>SELECT element_type_id as "elementTypeId", 
+				   element_subtype_id as "elementSubtypeId", 
+				   element_id as "id",
+				   location_id as "locationId",
+				   keep_values_on_disconnected as "keepValuesOnDisconnected",
+				   inherit_state_id as "inheritStateId",
+				   alias as "alias", 
+				   description as "description",
+				   on_change_alarm as "onChangeAlarm",
+				   on_change_state as "onChangeState",
+				   on_change_measure as "onChangeMeasure",
+				   on_schedule as "onSchedule",
+				   measure_change_all as "measureChangeAll", 
+				   enabled as "enabled", 
+				   visible as "visible" 
+			  FROM conf.elements
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>INSERT INTO conf.elements
+	                (element_type_id,
+	                 element_subtype_id,
+	                 element_id,
+	                 location_id,
+	                 keep_values_on_disconnected,
+	                 inherit_state_id,
+	                 alias,
+	                 description,
+	                 enabled,
+	                 visible,
+	                 created_at,
+	                 updated_at)
+					VALUES 
+					(:elementTypeId,
+					 :elementSubtypeId,			 
+					 :id=getNextId{'conf.elements'$'element_id'$'element_type_id=elementTypeId'},
+					 :locationId,
+					 :keepValuesOnDisconnected, 
+					 :inheritStateId,
+					 :alias, 
+					 :description, 
+					 :enabled, 
+					 :visible, 
+					 CURRENT_TIMESTAMP, 
+					 CURRENT_TIMESTAMP)
+	</INSERT>
+	<UPDATE>UPDATE conf.elements
+			   SET location_id = :locationId,
+				   keep_values_on_disconnected = :keepValuesOnDisconnected,
+				   inherit_state_id = :inheritStateId,
+				   alias = :alias, 
+			       description = :description, 
+			       updated_at = CURRENT_TIMESTAMP
+			 WHERE element_type_id = :elementTypeId
+			   AND element_id = :id
+	</UPDATE>
+	<DELETE>DELETE FROM conf.elements
+			 WHERE element_type_id = :elementTypeId
+			   AND element_id = :id
+	</DELETE>
+</DML>

@@ -1,0 +1,5 @@
+device_name;session_uid;host;PLC_name;PLC_port(i);url_publisher;write_permission;offset_critical_pond_level(i);bit_critical_pond_level(i);offset_medium_pond_level(i);bit_medium_pond_level(i);offset_low_pond_level(i);bit_low_pond_level(i)
+TANK-ALJ-1;TANK-ALJ-1;10.133.50.37;CT04_PLC_F;28027;http://10.133.50.38:3000/api/v2/generic/;monitor;21641;13;21641;15;21641;14
+TANK-ALJ-2;TANK-ALJ-2;10.133.50.37;CT04_PLC_F;28027;http://10.133.50.38:3000/api/v2/generic/;monitor;21601;13;21601;15;21601;14
+TANK-ALJ-3;TANK-ALJ-3;10.133.50.37;CT06_PLC_F;28041;http://10.133.50.38:3000/api/v2/generic/;monitor;21601;13;21601;15;21601;14
+TANK-ALJ-4;TANK-ALJ-4;10.133.50.37;CT07_PLC_F;28048;http://10.133.50.38:3000/api/v2/generic/;monitor;21601;13;21601;15;21601;14

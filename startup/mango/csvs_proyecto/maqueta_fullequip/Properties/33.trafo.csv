@@ -1,0 +1,10 @@
+device_name;source_name;host;measure_port(i);alarm_port(i);url_publisher;offset_fail_trafo(i);offset_excess_windings_temperature(i)
+RV-TRAFO-MT-T154;TRAFO;192.168.88.73;502;503;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/;2480;2481
+MM-TRAFO-MT-T154;TRAFO;192.168.88.73;502;503;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/;2482;2483
+LQ-TRAFO-MT-T154;TRAFO;192.168.88.73;502;503;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/;2484;2485
+CH-TRAFO-MT-T154;TRAFO;192.168.88.73;502;503;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/;2486;2487
+CAS-TRAFO-MT-T154-BC;TRAFO;192.168.88.73;502;503;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/;2488;2489
+CAS-TRAFO-MT-T154-BM;TRAFO;192.168.88.73;502;503;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/;2490;2491
+STM2-TRAFO-MT-T154;TRAFO;192.168.88.73;502;503;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/;2492;2493
+COR-TRAFO-MT-T154-BC;TRAFO;192.168.88.73;502;503;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/;2494;2495
+COR-TRAFO-MT-T154-BM;TRAFO;192.168.88.73;502;503;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/;2496;2497

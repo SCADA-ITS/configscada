@@ -1,0 +1,7 @@
+device_name;session_uid;url_publisher;read_permission;write_permission;endpoint;ip_bbdd;camera_name;seg_alarm
+RM-RAD-001;RM-RAD-001;http://192.168.88.179:3000/api/v2/generic/;monitor;;'http://localhost';localhost;Camera 1;20
+RM-RAD-002;RM-RAD-002;http://192.168.88.179:3000/api/v2/generic/;monitor;;'http://localhost';localhost;Camera 1;20
+RM-RAD-003;RM-RAD-003;http://192.168.88.179:3000/api/v2/generic/;monitor;;'http://localhost';localhost;Camera 1;20
+RM-RAD-004;RM-RAD-004;http://192.168.88.179:3000/api/v2/generic/;monitor;;'http://localhost';localhost;Camera 1;20
+RM-RAD-005;RM-RAD-005;http://192.168.88.179:3000/api/v2/generic/;monitor;;'http://localhost';localhost;Camera 1;20
+RM-RAD-006;RM-RAD-006;http://192.168.88.179:3000/api/v2/generic/;monitor;;'http://localhost';localhost;Camera 1;20

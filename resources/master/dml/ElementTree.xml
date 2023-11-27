@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="ElementTree">
+	<SELECT>SELECT element_tree_id as "id",
+				   label as "labelAlias",
+				   user_id as "userId",
+				   role_id as "roleId",
+				   enabled as "enabled",
+				   visible as "visible"
+			  FROM conf.element_trees
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>
+	</INSERT>
+	<UPDATE> 
+	</UPDATE>
+	<DELETE>
+	</DELETE>
+</DML>

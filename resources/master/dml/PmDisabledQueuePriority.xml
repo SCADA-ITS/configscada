@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="PmDisabledQueuePriority">
+	<SELECT>SELECT queue_id as "queueId",
+				   priority_id as "priorityId",
+				   element_type_id as "elementTypeId",
+				   element_id as "elementId",
+				   enabled as "enabled",
+				   visible as "visible"
+			  FROM conf.pm_disabled_queue_priorities
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>INSERT INTO conf.pm_disabled_queue_priorities
+					   (queue_id,
+					   	priority_id,
+					    element_type_id,
+					    element_id,
+					    enabled,
+					    visible,
+					    created_at,
+					    updated_at)
+				 VALUES (:queueId,
+				 		 :priorityId,
+				         :elementTypeId,
+				         :elementId,
+				         :enabled,
+				         :visible,
+				         CURRENT_TIMESTAMP,
+				         CURRENT_TIMESTAMP)
+	</INSERT>
+	<UPDATE> 
+	</UPDATE>
+	<DELETE>DELETE FROM conf.pm_disabled_queue_priorities 
+				WHERE queue_id = :queueId AND priority_id = :priorityId 
+				AND element_type_id = :elementTypeId 
+				AND element_id = :elementId
+	</DELETE>
+</DML>

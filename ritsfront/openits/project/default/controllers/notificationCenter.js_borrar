@@ -1,0 +1,560 @@
+export const NOTIFICATION_CENTER_TYPES = {
+	USER: 1,
+	ALARMS: 2,
+	EVENTS: 3,
+	CONFIG: 4
+}
+
+export default class NotificationCenter {
+
+	constructor(option) {
+
+		this.mainView = this.createView(option);
+		this.option = option;
+
+		this.viewUser = undefined;
+		this.viewAlarms = undefined;
+		this.viewEvents = undefined;
+		this.viewConfig = undefined;
+
+		this.toolbarActions = undefined;
+	}
+
+	show(option) {
+
+		if (!this.hidden()) {
+
+			return;
+		}
+
+		if (option === NOTIFICATION_CENTER_TYPES.USER) {
+			webix.ui(this.getViewUser(), $$("windowNotificationCenter").getBody());
+		}
+		else if (option === NOTIFICATION_CENTER_TYPES.ALARMS) {
+			webix.ui(this.getViewAlarms(), $$("windowNotificationCenter").getBody());
+		}
+		else if (option === NOTIFICATION_CENTER_TYPES.EVENTS) {
+			webix.ui(this.getViewEvents(), $$("windowNotificationCenter").getBody());
+		}
+		else if (option === NOTIFICATION_CENTER_TYPES.CONFIG) {
+			webix.ui(this.getViewConfig(), $$("windowNotificationCenter").getBody());
+		}
+
+		//this.showToolbarActions(option);
+
+		this.mainView.show();
+
+		this.showToolbarActions(option);
+	}
+
+	hide() {
+
+		this.mainView.hide();
+	}
+
+	hidden() {
+
+		return this.mainView.config.hidden;
+	}
+
+	createView(option) {
+
+		// for using the object inside callbacks
+		let self = this;
+
+		let head = {
+			view: "toolbar",
+			css: "notification-center-head",
+			height: 35,
+			elements: [
+				{ view: "label", css: "notification-center-title", template: "LBL_NOTIFICATION_CENTER" },
+				{
+					view: "icon",
+					css: "notification-center-close-btn",
+					icon: "mdi mdi-close",
+					on: {
+						onItemClick: function(id) {
+							self.hide();
+						}
+					}
+				}
+			],
+			borderless: 1
+		};
+
+		return webix.ui({
+			view: "window",
+			id: "windowNotificationCenter",
+			css: "notification-center-main",
+			hidden: true,
+			head: head,
+			body: {},
+			position: function(state) {
+				state.left = document.documentElement.clientWidth - 412;
+				state.top = 67;
+			},
+			on: {
+				onBeforeShow: function() {
+					//					self.showToolbarActions(option);
+				}
+			}
+		});
+
+		//this.showToolbarActions(option);
+	}
+
+	getViewUser() {
+
+		if (this.viewUser) {
+
+			return this.viewUser;
+		}
+
+		this.viewUser = {
+			view: "layout",
+			height: 375,
+			width: 400,
+			id: "viewUser",
+			css: "notification-center-background",
+			rows: [
+				{ height: 5 },
+				{},
+				{
+					view: "template",
+					id: "notificationCenterActions"
+				},
+				{ view: "template", css: "notification-center-transparent", borderless: 1, height: 15 },
+			]
+		};
+		
+		return this.viewUser;
+	}
+
+	getViewAlarms() {
+
+		if (this.viewAlarms) {
+
+			return this.viewAlarms;
+		}
+
+		var alarms_quantity_data = [{
+			"type": 1,
+			"label": "active",
+			"qty": 25
+		},
+		{
+			"type": 2,
+			"label": "unrecognized",
+			"qty": 10
+		},
+		{
+			"type": 3,
+			"label": "muted",
+			"qty": 5
+		}
+		];
+
+		this.viewAlarms = {
+			view: "layout",
+			height: 375,
+			width: 400,
+			id: "viewAlarms",
+			css: "alarm-panel",
+			rows: [
+				{ height: 5 },
+				{
+					height: 40,
+					cols: [
+						{ width: 25 },
+						{
+							view: "template",
+							css: "notification-center-transparent",
+							borderless: 1,
+							template: function(data) {
+								return `<div class='notification-center-alarm-value notification-center-alarm-value-1'>${alarms_quantity_data[0].qty}</div>`;
+							}
+						},
+						{
+							view: "template",
+							css: "notification-center-transparent",
+							borderless: 1,
+							template: function(data) {
+								return `<div class='notification-center-alarm-value notification-center-alarm-value-2'>${alarms_quantity_data[1].qty}</div>`;
+							}
+						},
+						{
+							view: "template",
+							css: "notification-center-transparent",
+							borderless: 1,
+							template: function(data) {
+								return `<div class='notification-center-alarm-value notification-center-alarm-value-3'>${alarms_quantity_data[2].qty}</div>`;
+							}
+						},
+						{ width: 25 }
+					]
+				},
+				{
+					height: 40,
+					cols: [
+						{ width: 25 },
+						{
+							view: "template",
+							css: "notification-center-transparent",
+							borderless: 1,
+							template: function(data) {
+								return `<span class='notification-center-alarm-txt'>${alarms_quantity_data[0].label}</span>`;
+							}
+						},
+						{
+							view: "template",
+							css: "notification-center-transparent",
+							borderless: 1,
+							template: function(data) {
+								return `<span class='notification-center-alarm-txt'>${alarms_quantity_data[1].label}</span>`;
+							}
+						},
+						{
+							view: "template",
+							css: "notification-center-transparent",
+							borderless: 1,
+							template: function(data) {
+								return `<span class='notification-center-alarm-txt'>${alarms_quantity_data[2].label}</span>`;
+							}
+						},
+						{ width: 25 }
+					]
+				},
+				{},
+				{
+					view: "template",
+					id: "notificationCenterActions"
+				},
+				{ view: "template", css: "notification-center-transparent", borderless: 1, height: 15 },
+			]
+		};
+
+		return this.viewAlarms;
+	}
+
+	getViewEvents() {
+
+		if (this.viewEvents) {
+
+			return this.viewEvents;
+		}
+
+		this.viewEvents = {
+
+		}
+	}
+
+	getViewConfig() {
+
+		if (this.viewConfig) {
+
+			return this.viewConfig;
+		}
+
+		this.viewConfig = {
+
+		}
+	}
+
+	showToolbarActions(option) {
+
+		if (!this.toolbarActions) {
+
+			this.toolbarActions = {
+				view: "toolbar",
+				height: 70,
+				borderless: 1,
+				css: "notification-center-transparent",
+				elements: [
+					{},
+					{ id: "btnActionUser", view: "button", width: 94, css: "notification-center-action-btn", type: "iconTop", icon: "mdi mdi-account-circle", label: "LBL_USER" },
+					{
+						id: "btnActionAlarms", view: "button", width: 94, css: "notification-center-action-btn", type: "iconTop", icon: "mdi mdi-bell", label: "LBL_ALARMS",
+						on: {
+							onFocus: function(current_view, prev_view) {
+								//webix.message(current_view.config.id);
+							}
+						}
+					},
+					{ id: "btnActionEvents", view: "button", width: 94, css: "notification-center-action-btn", type: "iconTop", icon: "mdi mdi-comment", label: "LBL_EVENTS" },
+					{ id: "btnActionConfig", view: "button", width: 94, css: "notification-center-action-btn", type: "iconTop", icon: "mdi mdi-cog", label: "LBL_CONFIG" },
+					{}
+				]
+			}
+		}
+
+		webix.ui(this.toolbarActions, $$("notificationCenterActions"));
+
+		if (option === NOTIFICATION_CENTER_TYPES.USER) {
+			$$("btnActionUser").focus();
+			$$("btnActionUser").blue();
+		}
+		else if (option === NOTIFICATION_CENTER_TYPES.ALARMS) {
+			$$("btnActionAlarms").focus();
+			$$("btnActionAlarms").blue();
+		}
+		else if (option === NOTIFICATION_CENTER_TYPES.EVENTS) {
+			$$("btnActionEvents").focus();
+			$$("btnActionEvents").blue();
+		}
+		else if (option === NOTIFICATION_CENTER_TYPES.CONFIG) {
+			$$("btnActionConfig").focus();
+			$$("btnActionConfig").blue();
+		}
+
+	}
+
+	//	createView() {
+	//
+	//		// for using the object inside callbacks
+	//		let self = this;
+	//
+	//		let main_toolbar = {
+	//			view: "toolbar",
+	//			css: "alarm-panel-title",
+	//			height: 35,
+	//			elements: [
+	//				//{ view: "icon", icon: "mdi mdi-bell" },
+	//				//				{ 
+	//				//					view: "template", 
+	//				//					css: "alarm-panel-title",
+	//				//					borderless: 1,
+	//				//				  	template: function(data) {
+	//				//						let label = "LBL_ALARM_CENTER";
+	//				//						return `<span>${label}</span>`
+	//				//					}
+	//				//				},
+	//				//{ view: "label", css: "alarm-panel-title", label: "LBL_ALARM_CENTER", maxWidth: 350 },
+	//				{},
+	//				{
+	//					view: "icon",
+	//					css: "alarm-center-close-btn",
+	//					icon: "mdi mdi-close",
+	//					on: {
+	//						onItemClick: function(id) {
+	//							self.hide();
+	//						}
+	//					}
+	//				}
+	//			],
+	//			borderless: 1
+	//		};
+	//
+	//		var alarms_quantity_data = [{
+	//			"type": 1,
+	//			"label": "active",
+	//			"qty": 25
+	//		},
+	//		{
+	//			"type": 2,
+	//			"label": "unrecognized",
+	//			"qty": 10
+	//		},
+	//		{
+	//			"type": 3,
+	//			"label": "muted",
+	//			"qty": 5
+	//		}
+	//		];
+	//
+	//		let alarms_chart = {
+	//			view: "chart",
+	//			borderless: 1,
+	//			css: "alarm-center-chart",
+	//			height: 200,
+	//			type: "barH",
+	//			value: "#qty#",
+	//			label: function(obj) {
+	//				return `<span style='color: white;'>${obj.qty}</span>`;
+	//			},
+	//			barWidth: 25,
+	//			gradient: "falling",
+	//			//radius: 2,
+	//			tooltip: {
+	//				template: "#qty#"
+	//			},
+	//			yAxis: {
+	//				template: function(obj) {
+	//					return `<span style='color: white;'>${obj.label}</span>`;
+	//				},
+	//				lines: false,
+	//			},
+	//			xAxis: {
+	//				start: 0,
+	//				end: 100,
+	//				step: 20,
+	//				lines: false,
+	//				template: function(obj) {
+	//					return `<span style='color: white;'>${obj % 20 ? "" : obj}</span>`;//(obj % 20 ? "" : obj)
+	//				}
+	//			},
+	//			padding: {
+	//				left: 90
+	//			},
+	//			data: alarms_quantity_data
+	//		};
+	//
+	//		let alarms_quantity = {
+	//			id: "alarms_quantity",
+	//			css: "alarm-center-quantity-list",
+	//			view: "list",
+	//			width: 380,
+	//			height: 300,
+	//			scroll: false,
+	//			borderless: 1,
+	//			type: {
+	//				height: 40,
+	//				templateStart: `<div item_id='id' class='alarm-center-quantity-item'>`,
+	//				template: function(data) {
+	//
+	//					return `<div class='alarm-center-quantity-value alarm-center-quantity-value-${data.type}'>${data.qty}</div><span class='alarm-center-quantity-text'>${data.label}</span>`;
+	//				},
+	//				templateEnd: `</div>`
+	//			},
+	//			select: false,
+	//			data: alarms_quantity_data,
+	//		};
+	//
+	//		let alarms_q = {
+	//			id: "alarms_q",
+	//			css: "alarm-center-q-list",
+	//			view: "list",
+	//			width: 380,
+	//			height: 300,
+	//			scroll: false,
+	//			borderless: 1,
+	//			type: {
+	//				height: 40,
+	//				template: function(data) {
+	//
+	//					return `<div class='alarm-center-q-item-${data.type}'>${data.label}<span class='alarm-center-q-text'>${data.qty}</span></div>`;
+	//				}
+	//			},
+	//			select: false,
+	//			data: alarms_quantity_data,
+	//		};
+	//
+	//		return webix.ui({
+	//			view: "window",
+	//			id: "alarmCenter",
+	//			css: "alarm-panel",
+	//			hidden: true,
+	//			head: main_toolbar,
+	//			body: {
+	//				view: "layout",
+	//				height: 375,
+	//				width: 400,
+	//				id: "alarmCenterLayout",
+	//				css: "alarm-panel",
+	//				rows: [
+	//					{
+	//						cols: [
+	//							{ width: 25 },
+	//							{ view: "label", css: "alarm-center-title", template: "LBL_ALARM_CENTER" },
+	//							{ width: 25 }
+	//						]
+	//					},
+	//					{ height: 5 },
+	//					//					alarms_quantity,
+	//					//					alarms_q,
+	//					{
+	//						height: 40,
+	//						cols: [
+	//							{ width: 25 },
+	//							{
+	//								view: "template",
+	//								css: "alarm-center-quantity-list",
+	//								borderless: 1,
+	//								template: function(data) {
+	//									return `<div class='alarm-center-quantity-value alarm-center-quantity-value-1'>${alarms_quantity_data[0].qty}</div>`;
+	//								}
+	//							},
+	//							{
+	//								view: "template",
+	//								css: "alarm-center-quantity-list",
+	//								borderless: 1,
+	//								template: function(data) {
+	//									return `<div class='alarm-center-quantity-value alarm-center-quantity-value-2'>${alarms_quantity_data[1].qty}</div>`;
+	//								}
+	//							},
+	//							{
+	//								view: "template",
+	//								css: "alarm-center-quantity-list",
+	//								borderless: 1,
+	//								template: function(data) {
+	//									return `<div class='alarm-center-quantity-value alarm-center-quantity-value-3'>${alarms_quantity_data[2].qty}</div>`;
+	//								}
+	//							},
+	//							{ width: 25 }
+	//						]
+	//					},
+	//					{
+	//						height: 40,
+	//						cols: [
+	//							{ width: 25 },
+	//							{
+	//								view: "template",
+	//								css: "alarm-center-quantity-list",
+	//								borderless: 1,
+	//								template: function(data) {
+	//									return `<span class='alarm-center-quantity-txt'>${alarms_quantity_data[0].label}</span>`;
+	//								}
+	//							},
+	//							{
+	//								view: "template",
+	//								css: "alarm-center-quantity-list",
+	//								borderless: 1,
+	//								template: function(data) {
+	//									return `<span class='alarm-center-quantity-txt'>${alarms_quantity_data[1].label}</span>`;
+	//								}
+	//							},
+	//							{
+	//								view: "template",
+	//								css: "alarm-center-quantity-list",
+	//								borderless: 1,
+	//								template: function(data) {
+	//									return `<span class='alarm-center-quantity-txt'>${alarms_quantity_data[2].label}</span>`;
+	//								}
+	//							},
+	//							{ width: 25 }
+	//						]
+	//					},
+	//					//					{
+	//					//						cols: [
+	//					//							{ width: 25 },
+	//					//							alarms_chart,
+	//					//							{ width: 25 }		
+	//					//						]
+	//					//					},
+	//					{},
+	//					{
+	//						view: "toolbar",
+	//						height: 70,
+	//						borderless: 1,
+	//						css: "alarm-center-tb-action",
+	//						elements: [
+	//							{},
+	//							{ view: "button", width: 94, css: "alarm-center-action-btn", type: "iconTop", icon: "mdi mdi-account-circle", label: "LBL_USER" },
+	//							{ view: "button", width: 94, css: "alarm-center-action-btn", type: "iconTop", icon: "mdi mdi-bell", label: "LBL_ALARMS" },
+	//							{ view: "button", width: 94, css: "alarm-center-action-btn", type: "iconTop", icon: "mdi mdi-comment", label: "LBL_EVENTS" },
+	//							{ view: "button", width: 94, css: "alarm-center-action-btn", type: "iconTop", icon: "mdi mdi-cog", label: "LBL_CONFIG" },
+	//							{}
+	//						]
+	//					},
+	//					{ view: "template", css: "alarm-center-quantity-list", borderless: 1, height: 15 },
+	//				]
+	//			},
+	//			position: function(state) {
+	//				state.left = document.documentElement.clientWidth - 412;
+	//				state.top = 67;
+	//
+	//			}
+	//		});
+	//	}
+
+
+}

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="ElementHierarchyAllowed">
+	<SELECT>SELECT parent_element_type_id as "parentElementTypeId", 
+				   child_element_type_id as "childElementTypeId", 
+				   enabled as "enabled", 
+				   visible as "visible" 
+			  FROM master.element_hierarchies_allowed
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>
+	</INSERT>
+	<DELETE>
+	</DELETE>
+</DML>

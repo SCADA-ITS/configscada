@@ -1,0 +1,11 @@
+INSERT INTO conf.management_area_elements (management_area_id, element_type_id, element_id, enabled, visible, created_at, updated_at) VALUES
+(2, 21, 24, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 21, 25, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 21, 26, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 21, 27, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 21, 28, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 21, 29, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 21, 30, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 21, 31, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 21, 32, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 21, 33, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

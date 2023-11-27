@@ -1,0 +1,25 @@
+root_device;signal;id;device;channel;description;controller;inverseLogic
+MM-VNT-VF1-MA;directSpinInput;1;CTGBT;M6DI3;MM-VNT-VF1-MA Estado giro sentido directo;WAGO;false
+MM-VNT-VF1-MA;directSpinOutput;2;CTGBT;M3DO7;MM-VNT-VF1-MA Control giro sentido directo;WAGO;false
+MM-VNT-VF1-MA;inverseSpinInput;3;CTGBT;M6DI4;MM-VNT-VF1-MA Estado giro sentido inverso;WAGO;false
+MM-VNT-VF1-MA;inverseSpinOutput;4;CTGBT;M3DO8;MM-VNT-VF1-MA Control giro sentido inverso;WAGO;false
+MM-VNT-VF2-MA;directSpinInput;1;CTGBT;M6DI7;MM-VNT-VF2-MA Estado giro sentido directo;WAGO;false
+MM-VNT-VF2-MA;directSpinOutput;2;CTGBT;M3DO9;MM-VNT-VF2-MA Control giro sentido directo;WAGO;false
+MM-VNT-VF2-MA;inverseSpinInput;3;CTGBT;M6DI8;MM-VNT-VF2-MA Estado giro sentido inverso;WAGO;false
+MM-VNT-VF2-MA;inverseSpinOutput;4;CTGBT;M3DO10;MM-VNT-VF2-MA Control giro sentido inverso;WAGO;false
+MM-VNT-VF3-MA;directSpinInput;1;CTGBT;M6DI11;MM-VNT-VF3-MA Estado giro sentido directo;WAGO;false
+MM-VNT-VF3-MA;directSpinOutput;2;CTGBT;M3DO11;MM-VNT-VF3-MA Control giro sentido directo;WAGO;false
+MM-VNT-VF3-MA;inverseSpinInput;3;CTGBT;M6DI12;MM-VNT-VF3-MA Estado giro sentido inverso;WAGO;false
+MM-VNT-VF3-MA;inverseSpinOutput;4;CTGBT;M3DO12;MM-VNT-VF3-MA Control giro sentido inverso;WAGO;false
+MM-VNT-VF4-MA;directSpinInput;1;CTGBT;M6DI15;MM-VNT-VF4-MA Estado giro sentido directo;WAGO;false
+MM-VNT-VF4-MA;directSpinOutput;2;CTGBT;M3DO13;MM-VNT-VF4-MA Control giro sentido directo;WAGO;false
+MM-VNT-VF4-MA;inverseSpinInput;3;CTGBT;M7DI0;MM-VNT-VF4-MA Estado giro sentido inverso;WAGO;false
+MM-VNT-VF4-MA;inverseSpinOutput;4;CTGBT;M3DO14;MM-VNT-VF4-MA Control giro sentido inverso;WAGO;false
+MM-VNT-VF5-MA;directSpinInput;1;CTGBT;M7DI3;MM-VNT-VF5-MA Estado giro sentido directo;WAGO;false
+MM-VNT-VF5-MA;directSpinOutput;2;CTGBT;M3DO15;MM-VNT-VF5-MA Control giro sentido directo;WAGO;false
+MM-VNT-VF5-MA;inverseSpinInput;3;CTGBT;M7DI4;MM-VNT-VF5-MA Estado giro sentido inverso;WAGO;false
+MM-VNT-VF5-MA;inverseSpinOutput;4;CTGBT;M4DO0;MM-VNT-VF5-MA Control giro sentido inverso;WAGO;false
+MM-VNT-VF6-MA;directSpinInput;1;CTGBT;M7DI7;MM-VNT-VF6-MA Estado giro sentido directo;WAGO;false
+MM-VNT-VF6-MA;directSpinOutput;2;CTGBT;M4DO1;MM-VNT-VF6-MA Control giro sentido directo;WAGO;false
+MM-VNT-VF6-MA;inverseSpinInput;3;CTGBT;M7DI8;MM-VNT-VF6-MA Estado giro sentido inverso;WAGO;false
+MM-VNT-VF6-MA;inverseSpinOutput;4;CTGBT;M4DO2;MM-VNT-VF6-MA Control giro sentido inverso;WAGO;false

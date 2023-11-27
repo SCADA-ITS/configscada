@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="./lib/webix/webix.js" type="text/javascript"></script>
+    <script src="./lib/webix/webix-locales-pro/es-ES.js" type="text/javascript"></script>
+    <script src="./lib/webix/webix-locales-pro/es-CL.js" type="text/javascript"></script>
+    <script src="./lib/webix/webix-locales-pro/en-GB.js" type="text/javascript"></script>
+    <script src="./lib/webix/webix-locales-pro/sk-SK.js" type="text/javascript"></script>
+
+    <link href="./lib/materialicons/css/materialicons.css" rel="stylesheet">
+
+    <script type="text/javascript" src="./lib/jquery/jquery-3.4.1.min.js"></script>
+
+    <script type="text/javascript" src="./data/config.js"></script>
+    <script type="text/javascript" src="./data/constants.js"></script>
+
+    <style>
+        body {
+            font-family: Roboto;
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+
+        .print-template-header {
+            width: 90%;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: space-between;
+            padding-bottom: 15px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        #dateAlarms {
+            display: flex;
+        }
+
+        #content {
+            display: flex;
+        }
+
+        #alarmName {
+            width: 600px;
+        }
+
+        #leftSide {
+            width: 600px;
+        }
+
+        #comments {
+            width: 100%;
+        }
+        #groupImage div img{
+            width: 200px;
+            height: 200px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="print-template-header">
+        <h1>Mantenimiento de alarmas</h1>
+        <img class="print-template-logo" src="./img/logo-project.svg">
+    </div>
+    <div id="dateAlarms">
+        <div id="alarmName">
+            <h2>Alarma: </h2><span id="field.alarm"></span>
+        </div>
+        <div id="activationDate">
+            <h2>Fecha de activación: </h2><span id="field.activation"></span>
+        </div>
+    </div>
+    <hr>
+    <div>
+        <div id="content">
+            <div id="leftSide">
+                <h3>Tipo de equipo: </h3><span id="field.element_type"></span>
+                <h3>Equipo: </h3><span id="field.element"></span>
+                <h3>Posibles causas: </h3><span id="field.possible_causes_id"></span>
+            </div>
+            <div id="rightSide">
+                <h3>Procedimientos para normalizar: </h3><span id="field.normalize_procedures_id"></span>
+                <h3>Resposable: </h3><span id="field.responsibilities_id"></span>
+                <h3>Mantenimiento: </h3><span id="field.revised_alarm"></span>
+            </div>
+        </div>
+        <div id="comments">
+            <h3>Comentarios: </h3><span id="field.comments"></span>
+        </div>
+        <div id="groupImage"></div>
+    </div>
+
+</body>
+
+</html>

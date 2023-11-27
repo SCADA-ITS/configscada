@@ -1,0 +1,9 @@
+device_name;session_uid;eru_name;url_publisher;read_permission;write_permission;offset_sem_state(i);offset_status(i);offset_commstatus(i)
+RV-SMF-RR-1CA;RV-SMF-RR-1CA;RV-ERU;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;25006;406;402
+RV-SMF-RR-1MA;RV-SMF-RR-1MA;RV-ERU;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;25009;412;405
+MM-SMF-RR-1CA;MM-SMF-RR-1CA;MM-ERU;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;25006;406;402
+MM-SMF-RR-1MA;MM-SMF-RR-1MA;MM-ERU;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;25009;412;405
+LQ-SMF-RR-1MA;LQ-SMF-RR-1MA;LQ-ERU;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;25009;306;405
+LQ-SMF-RR-1CA;LQ-SMF-RR-1CA;LQ-ERU;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;25006;303;402
+CH-SMF-RR-1MA;CH-SMF-RR-1MA;CH-ERU;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;25009;306;405
+CH-SMF-RR-1CA;CH-SMF-RR-1CA;CH-ERU;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;25006;303;402

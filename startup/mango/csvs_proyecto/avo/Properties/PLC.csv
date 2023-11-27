@@ -1,0 +1,9 @@
+device_name;equip_name;session_uid;PLC_name;PLC_ip;PLC_port(i);url_publisher;read_permission;write_permission;offset_master_cpu_state(i);offset_slave_cpu_state(i);offset_master_cpu_function(i);offset_slave_cpu_function(i);bit_master_cpu_state(i);bit_slave_cpu_state(i)
+PLC_CT01;PLC_CT01;PLC_CT01;CT01_PLC_F;10.133.50.37;28006;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;;0;0;1;2;4;5
+PLC_CT02;PLC_CT02;PLC_CT02;CT02_PLC_F;10.133.50.37;28013;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;;0;0;1;2;4;5
+PLC_CT03;PLC_CT03;PLC_CT03;CT03_PLC_F;10.133.50.37;28020;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;;0;0;1;2;4;5
+PLC_CT04;PLC_CT04;PLC_CT04;CT04_PLC_F;10.133.50.37;28027;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;;0;0;1;2;4;5
+PLC_CT05;PLC_CT05;PLC_CT05;CT05_PLC_F;10.133.50.37;28034;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;;0;0;1;2;4;5
+PLC_CT06;PLC_CT06;PLC_CT06;CT06_PLC_F;10.133.50.37;28041;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;;0;0;1;2;4;5
+PLC_CT07;PLC_CT07;PLC_CT07;CT07_PLC_F;10.133.50.37;28048;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;;0;0;1;2;4;5
+PLC_CT08;PLC_CT08;PLC_CT08;CT08_PLC_F;10.133.50.37;28055;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;;0;0;1;2;4;5

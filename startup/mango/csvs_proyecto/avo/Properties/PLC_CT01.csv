@@ -1,0 +1,2 @@
+device_name;PLC_name;plc_ip;port(i);url_publisher;read_permission;write_permission;offset_master_cpu_state(i);offset_slave_cpu_state(i);offset_master_cpu_function(i);offset_slave_cpu_function(i);bit_master_cpu_state(i);bit_slave_cpu_state(i);offset_process_error(i);bit_process_error(i)
+PLC_CT01;CT01_PLC_F;10.133.50.37;28006;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;;0;0;1;2;4;5;7;8

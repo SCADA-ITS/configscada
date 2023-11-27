@@ -1,0 +1,4 @@
+item;element_subtype;alias;description;sessionuid;road;stretchs;dm;sentido;param1_brand;param2_model;param4_config_json;pk
+1;19;PMV-01;PMV-01;PMV-01;RUTA-LA-MINA;S1S1;1;Asc;FIXALIA;Deva;"[{""zone"":1,""type"":""graphic"",""vms_group_id"":2},{""zone"":2,""type"":""text""}]";3+530
+2;19;PMV-02;PMV-02;PMV-02;RUTA-LA-MINA;S1S1;2;Asc;FIXALIA;Deva;"[{""zone"":1,""type"":""graphic"",""vms_group_id"":2},{""zone"":2,""type"":""text""}]";107+010
+3;19;PMV-03;PMV-03;PMV-03;RUTA-LA-MINA;S1S1;3;Asc;FIXALIA;Deva;"[{""zone"":1,""type"":""graphic"",""vms_group_id"":2},{""zone"":2,""type"":""text""}]";135+995

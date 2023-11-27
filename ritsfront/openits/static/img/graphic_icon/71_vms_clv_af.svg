@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="144"
+   height="144"
+   viewBox="0 0 38.100001 38.099999"
+   version="1.1"
+   id="svg2"
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"
+   sodipodi:docname="71_vms_clv_af.svg">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.462804"
+     inkscape:cx="264.22172"
+     inkscape:cy="61.895768"
+     inkscape:document-units="px"
+     inkscape:current-layer="zone1"
+     inkscape:document-rotation="0"
+     showgrid="false"
+     inkscape:window-width="3394"
+     inkscape:window-height="1831"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     showguides="false"
+     inkscape:guide-bbox="true"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:pagecheckerboard="0"
+     units="px">
+    <sodipodi:guide
+       position="-180.62162,108.35736"
+       orientation="0,-1"
+       id="guide44" />
+    <sodipodi:guide
+       position="-135.79389,55.67281"
+       orientation="0,-1"
+       id="guide46" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="main"
+     inkscape:groupmode="layer"
+     id="main"
+     style="display:inline">
+    <path
+       id="state"
+       style="fill:#ffcc00;fill-opacity:1;fill-rule:evenodd;stroke-width:0.534067"
+       d="M 0,0 H 38.225699 V 37.984332 H 0 Z" />
+    <path
+       id="path283"
+       style="display:inline;fill:#222222;fill-opacity:1;fill-rule:evenodd;stroke-width:0.500251"
+       d="M 1.087,1.531 H 37.047886 V 36.956553 H 1.087 Z" />
+    <g
+       inkscape:groupmode="layer"
+       id="zone1"
+       inkscape:label="zone1"
+       style="display:inline">
+      <path
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke-width:0.47308"
+         d="M 2.0259449,2.397778 H 35.778945 v 33.753 H 2.0259449 Z"
+         id="path191" />
+      <image
+         sodipodi:absref="/home/aortega/RepositorioDesarrollo/ritsfront/openits/src/main/resources/project/avo/img/pictograms/319.bmp"
+         xlink:href="../../../project/avo/img/pictograms/319.bmp"
+         width="29"
+         height="29"
+         preserveAspectRatio="none"
+         id="graphic1-1"
+         x="4.1426115"
+         y="4.929945" />
+    </g>
+  </g>
+</svg>

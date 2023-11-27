@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="ImsIncidentReportLog">
+	<SELECT>SELECT incident_report_log_id as "id",
+				   incident_report_id as "incidentReportId",
+				   user_id as "userId",
+				   log_subtype_id as "logSubtypeId",
+				   level as "level",
+				   log_timestamp as "time",
+				   enabled as "enabled", 
+				   visible as "visible"
+			  FROM rt.ims_incident_report_logs
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>INSERT INTO rt.ims_incident_report_logs
+					   (incident_report_log_id,
+					   	incident_report_id,
+					   	log_subtype_id,
+					   	user_id,
+					   	level,
+					   	log_timestamp,
+					    enabled,
+					    visible,
+					    created_at,
+					    updated_at)
+				 VALUES (:id=getNextValFromSec{'rt.last_incident_report_log_id'},
+				 		 :incidentReportId,
+				 		 :logSubtypeId,
+				 		 :userId,
+				 		 :level,
+				         :time,
+				         :enabled,
+				         :visible,
+				         CURRENT_TIMESTAMP,
+				         CURRENT_TIMESTAMP)
+	</INSERT>
+	<UPDATE>UPDATE rt.ims_incident_report_logs
+			   SET incident_report_id = :incidentReportId,
+			       user_id = :userId,
+			       log_subtype_id = :logSubtypeId,
+			       level = :level,
+			       log_timestamp = :time,
+			       enabled = :enabled,
+				   visible = :visible,
+			       updated_at = CURRENT_TIMESTAMP
+			 WHERE incident_report_log_id = :id
+	</UPDATE>
+	<DELETE>DELETE FROM rt.ims_incident_report_logs
+				WHERE incident_report_log_id = :id
+	</DELETE>
+</DML>

@@ -1,0 +1,161 @@
+DELETE FROM conf.element_io_controller_modules;
+DELETE FROM conf.io_controller_module_values;
+DELETE FROM conf.io_controller_modules;
+
+-- 
+-- Table: conf.io_controller_modules
+--
+INSERT INTO conf.io_controller_modules
+(module_type_id, module_id, alias, description, enabled, visible, created_at, updated_at) VALUES
+(1, 1, 'MANGO', 'MANGO', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 1, 'CITILOG', 'CITILOG', false, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(3, 1, 'RTMS', 'RTMS', false, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+
+-- 
+-- Table: conf.io_controller_module_values
+--
+INSERT INTO conf.io_controller_module_values
+(module_type_id, module_id, module_type_param_id, value, enabled, visible, created_at, updated_at) VALUES
+(1, 1, 1, 'true', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 1, 2, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 1, 3, 'true', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 1, 4, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 1, 5, 'true', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 1, 6, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 1, 7, 'true', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 1, 8, 'user-agent', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 1, 9, 'session-uid', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 1, 10, '/api/v2/generic', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 1, 11, '3000', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 1, 12, '20', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 1, 13, 'http://192.168.88.162:8080/rest/v1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 1, 14, 'http://192.168.88.162:8080/rest/v2/login', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 1, 15, 'admin', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 1, 16, 'frontend', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 1, 17, '/point-values/{xids}/latest-multiple-points-single-array?limit=1&unitConversion=false&useCache=true&useRendered=false', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 1, 18, 'GET', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 1, 19, '/point-values?unitConversion=false', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 1, 20, 'PUT', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 1, 23, '', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 1, 26, '300', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 1, 27, 'true', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 1, 28, '0 0/1 * 1/1 * ? *', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 1, 29, '/users/current', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 1, 30, 'GET', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(2, 1, 1, 'true', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 1, 2, '0 0/1 * 1/1 * ? *', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 1, 3, 'false', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 1, 4, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 1, 5, 'true', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 1, 6, '0 0/1 * 1/1 * ? *', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 1, 7, 'true', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 1, 8, '0/30 * * ? * * *', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--(2, 1, 9, '192.168.88.114', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 1, 9, '192.168.81.1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 1, 10, '44000', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(3, 1, 1, 'true', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(3, 1, 2, '0 0/1 * 1/1 * ? *', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(3, 1, 3, '1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+-- 
+-- Table: conf.element_io_controller_modules
+--
+INSERT INTO conf.element_io_controller_modules
+(element_type_id, element_id, module_type_id, module_id, enabled, visible, created_at, updated_at) VALUES
+(1, 1, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 1, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 11, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 12, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 13, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 20, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 21, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 22, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 30, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 31, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 32, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+--(3, 1, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--(3, 2, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--(3, 3, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--(3, 4, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(5, 1, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(5, 2, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(8, 1, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(9, 1, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(9, 2, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(9, 3, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(9, 4, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(9, 5, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(9, 6, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(9, 7, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(9, 8, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(9, 9, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(9, 10, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(9, 100, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(11, 1, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(12, 1, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(13, 1, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(14, 1, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(15, 1, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(16, 1, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(16, 2, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(16, 3, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(16, 4, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(16, 5, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(16, 6, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(16, 7, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(16, 8, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(18, 1, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(19, 1, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(20, 1, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(21, 1, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(34, 1, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(41, 1, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(42, 1, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(43, 1, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(44, 1, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(45, 1, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(46, 1, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(47, 1, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(51, 1, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(53,1, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(53,2, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(53,3, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(53,4, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(54, 1, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(57, 1, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(58, 1, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(59, 1, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(60, 1, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(61, 1, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(71, 1, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(71, 2, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(71, 3, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(71, 4, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(71, 5, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(84, 1, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(84, 2, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(84, 3, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+
+(85, 1, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(85, 2, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(85, 3, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(52, 1, 2, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(52, 2, 2, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(97, 1, 3, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(97, 2, 3, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(97, 3, 3, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(97, 4, 3, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+

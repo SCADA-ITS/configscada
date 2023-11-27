@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="ImsIncidentTypeStretch">
+	<SELECT>SELECT incident_type_id as "incidentTypeId",
+				   stretch_id as "stretchId",
+				   default_location_id as "defaultLocationId",
+				   operational_plan_url as "operationalPlanUrl",		   
+				   alias as "alias",
+				   description as "description",
+				   multi_instance as "multiInstance",
+				   check_stretch_stretch as "checkStretchStretch", 
+				   cctv_scenario_id as "cctvScenarioId",	
+				   spath_id as "spathId",   
+				   enabled as "enabled", 
+				   visible as "visible"
+			  FROM conf.ims_incident_type_stretchs
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>INSERT INTO conf.ims_incident_type_stretchs
+					   (incident_type_id,
+					   	stretch_id,
+					   	default_location_id,
+					   	operational_plan_url,
+					   	alias,
+					   	description,
+					   	multi_instance,
+					   	cctv_scenario_id,
+					   	spath_id,
+					    enabled,
+					    visible,
+					    created_at,
+					    updated_at)
+				 VALUES (:incidentTypeId,
+				 		 :stretchId,
+				 		 :defaultLocationId,
+				 		 :operationalPlanUrl,
+				 		 :alias,
+				 		 :description,
+				 		 :multiInstance,
+				 		 :cctvScenarioId,
+				 		 :spathId,
+				 		 :enabled,
+				         :visible,
+				         CURRENT_TIMESTAMP,
+				         CURRENT_TIMESTAMP)
+	</INSERT>
+	<UPDATE>UPDATE conf.ims_incident_type_stretchs
+			   SET default_location_id = :defaultLocationId,
+			   	   operational_plan_url = :operationalPlanUrl,
+			   	   alias = :alias,
+			   	   description = :description,
+			   	   multi_instance = :multiInstance,
+			   	   cctv_scenario_id = :cctvScenarioId,
+			   	   spath_id = :spathId,
+			   	   enabled = :enabled,
+				   visible = :visible,
+			       updated_at = CURRENT_TIMESTAMP
+			   WHERE incident_type_id = :incidentTypeId 
+					AND stretch_id = :stretchId 
+	</UPDATE>
+	<DELETE>DELETE FROM conf.ims_incident_type_stretchs
+			   WHERE incident_type_id = :incidentTypeId 
+					AND stretch_id = :stretchId
+	</DELETE>
+</DML>

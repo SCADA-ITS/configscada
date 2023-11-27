@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="ImsIncidentTaskPlan">
+	<SELECT>SELECT incident_task_plan_id as "id",
+				   incident_type_task_id as "incidentTypeTaskId",
+				   incident_type_id as "incidentTypeId",
+				   stretch_id as "stretchId",
+				   plan_id as "planId",
+				   position as "position",
+				   enabled as "enabled",
+				   visible as "visible"
+			  FROM conf.ims_incident_task_plans
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>INSERT INTO conf.ims_incident_task_plans
+					   (incident_task_plan_id,
+					   	incident_type_task_id,
+					   	incident_type_id,
+					   	stretch_id,
+					   	plan_id,
+					   	position,
+					    enabled,
+					    visible,
+					    created_at,
+					    updated_at)
+				 VALUES (:id=getNextId{'conf.ims_incident_task_plans'$'incident_task_plan_id'},
+				 		 :incidentTypeTaskId,
+				 		 :incidentTypeId,
+				 		 :stretchId,
+				         :planId,
+				         :position,
+				         :enabled,
+				         :visible,
+				         CURRENT_TIMESTAMP,
+				         CURRENT_TIMESTAMP)
+	</INSERT>
+	<UPDATE>UPDATE conf.ims_incident_task_plans
+			   SET incident_type_task_id = :incidentTypeTaskId,
+			       incident_type_id = :incidentTypeId,
+			       stretch_id = :stretchId,
+			       plan_id = :planId,
+			       position = :position,
+			       enabled = :enabled,
+				   visible = :visible,
+			       updated_at = CURRENT_TIMESTAMP
+			 WHERE incident_task_plan_id = :id
+	</UPDATE>
+	<DELETE>DELETE FROM conf.ims_incident_task_plans
+				WHERE incident_task_plan_id = :id
+	</DELETE>
+</DML>

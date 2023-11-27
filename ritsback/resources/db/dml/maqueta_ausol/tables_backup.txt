@@ -1,0 +1,16 @@
+conf.users
+conf.user_permissions
+conf.alarms_filtered
+conf.command_elements
+conf.command_element_values
+conf.plans
+conf.plan_orders
+conf.plan_order_values
+conf.plan_order_command_elements
+conf.plan_order_element_values
+conf.plan_nodes
+conf.plan_node_hierarchies
+conf.plan_order_conditions
+conf.plan_order_element_type_states
+conf.plan_schedules
+conf.ims_incident_task_plans

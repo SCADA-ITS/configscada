@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="55mm"
+   height="55mm"
+   viewBox="0 0 55 55"
+   version="1.1"
+   id="svg2"
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"
+   sodipodi:docname="02_camera_state_new.svg">
+  <defs
+     id="defs1087">
+    <linearGradient
+       id="linearGradient839"
+       osb:paint="solid">
+      <stop
+         style="stop-color:#008400;stop-opacity:1;"
+         offset="0"
+         id="stop837" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient2815"
+       osb:paint="solid">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop2813" />
+    </linearGradient>
+    <marker
+       style="overflow:visible"
+       id="Arrow1Lstart"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lstart"
+       inkscape:isstock="true">
+      <path
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path1111" />
+    </marker>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.3556054"
+     inkscape:cx="111.04043"
+     inkscape:cy="122.29611"
+     inkscape:document-units="mm"
+     inkscape:current-layer="main"
+     inkscape:document-rotation="0"
+     showgrid="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="1912"
+     inkscape:window-y="1079"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata1090">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Capa 1"
+     inkscape:groupmode="layer"
+     id="main">
+    <rect
+       style="fill:#ffcc00;stroke:none;stroke-width:1.3915;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;fill-opacity:1"
+       id="state"
+       width="55"
+       height="55"
+       x="0"
+       y="0"
+       ry="5" />
+    <rect
+       style="fill:#cccccc;stroke:none;stroke-width:1.265;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect1658"
+       width="45"
+       height="45"
+       x="5"
+       y="5"
+       ry="5" />
+    <image
+       preserveAspectRatio="none"
+       inkscape:svg-dpi="96"
+       width="40"
+       height="40"
+       xlink:href="data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAwIDAgNTExLjY2MSA1MTEu
+NjYxIiBoZWlnaHQ9IjUxMiIgdmlld0JveD0iMCAwIDUxMS42NjEgNTExLjY2MSIgd2lkdGg9IjUx
+MiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJtNTAzLjAxOCAz
+MDIuOTM5LTQ2LjkyNS0yNC4zMDdjLTcuODQ0LTQuMDYyLTE3LjUwMy0uOTk3LTIxLjU2NiA2Ljg0
+OGwtNDEuMTUzIDc5LjQ0NmMtNC4wNjIgNy44NDItLjk5NyAxNy41MDMgNi44NDggMjEuNTY2IDUx
+Ljk2NiAyNi45MTggNDkuMDY0IDI2LjEwMyA1NC4yNzEgMjYuMTAzIDUuNzg3IDAgMTEuMzc1LTMu
+MTUxIDE0LjIyLTguNjQ0bDQxLjE1Mi03OS40NDZjNC4wNjUtNy44NDYuOTk5LTE3LjUwMi02Ljg0
+Ny0yMS41NjZ6IiBmaWxsPSIjZDNkMWQxIi8+PHBhdGggZD0ibTI1NC42NDggMjgyLjk1LTUxLjMw
+MS0yNi41NzRjLTcuODQtNC4wNjItMTcuNTAyLS45OTgtMjEuNTY2IDYuODQ4bC01MS45MTEgMTAw
+LjIxNWMtMTEzLjc1Ni0uODMzLTExMy4zMzktLjgzMS0xMTMuNDQ3LS44MzEtOC43NzggMC0xNS45
+MzUgNy4wODYtMTYgMTUuODgzbC0uNDIzIDU3Ljc3NGMtLjA2NSA4LjgzNiA3LjA0NiAxNi4wNTIg
+MTUuODgyIDE2LjExNyAxNjAuMTM0IDEuMTczIDE0Ny45NTcuNzI4IDE1MC4wNiAxLjgxNyA2LjA5
+NyAzLjE1OCAxMy4zMDEgMi4wMTggMTguMTI2LTIuMzY5IDUuNTU0LTIuODA3IDguNzQ1LTguMzY1
+IDguNzg3LTE0LjE1Mi4wMDctMS4wMjMtMy4zNjMgNS44NDMgNjguNjQxLTEzMy4xNjIgNC4wNjQt
+Ny44NDcuOTk5LTE3LjUwMi02Ljg0OC0yMS41NjZ6IiBmaWxsPSIjNDk0OTQ5Ii8+PHBhdGggZD0i
+bTQ2OC4wODUgMjU1LjQ3OS0yODkuNTgzLTE1MC4wMDJjLTcuODQ3LTQuMDY0LTE3LjUwMi0uOTk5
+LTIxLjU2NiA2Ljg0OGwtNTEuMjYzIDk4Ljk2NGMtMTEuNzA4IDIyLjYwNS0yLjg0NCA1MC41MjEg
+MTkuNzYgNjIuMjMgMjg3LjA0MSAxNDguNjg1IDI2NC40ODMgMTM3LjkxOSAyNzAuMTU2IDEzNy45
+MTkgNS45NTIgMCAxMS40NDYtMy4zMTIgMTQuMjA3LTguNjQxbDY1LjEzOC0xMjUuNzUxYzQuMDYz
+LTcuODQ3Ljk5OC0xNy41MDMtNi44NDktMjEuNTY3eiIgZmlsbD0iIzQ5NDk0OSIvPjxwYXRoIGQ9
+Im00MjEuMTc3IDM1NS4yODljLTI3LjYyOS00Ny40NzQtMTkxLjEwNi0xMjIuMDg0LTMwMi43MDgt
+MTY4LjcwNGwtMTIuNzk2IDI0LjcwM2MtMTEuNzA4IDIyLjYwNS0yLjg0NCA1MC41MjEgMTkuNzYg
+NjIuMjNsMjYyLjc5NiAxMzYuMTI2YzcuODQ4IDQuMDY0IDE3LjUwNi45OTIgMjEuNTY2LTYuODQ4
+bDE3Ljk2MS0zNC42NzRjLTEuOTA5LTQuMjY2LTQuMDg2LTguNTQ4LTYuNTc5LTEyLjgzM3oiIGZp
+bGw9IiM1YjViNWIiLz48cGF0aCBkPSJtMzEyLjc0NyAyMzYuNjIxYy0xMi45NDMtNDAuNzYtNTYu
+NDA4LTYzLjI4NC05Ny4xNzUtNTAuMzM2LTY1LjU1MiAyMC44MTUtNzIuOTc3IDExMC45NzMtMTIu
+MTczIDE0Mi40NjkgNjEuMzMzIDMxLjc3MSAxMzAuMDc4LTI2Ljg0NyAxMDkuMzQ4LTkyLjEzM3oi
+IGZpbGw9IiNlMGUwZTAiLz48cGF0aCBkPSJtNDY1LjMzNSAxOTEuNDY5LTI3OC4zMTUtMTQ0LjE2
+NWMtMjAuNTE3LTEwLjYyOC00NS43MjQtMi42MjctNTYuMzUzIDE3Ljg5M2wtMjMuMTQyIDQ0LjY3
+N2MtMTAuNjI4IDIwLjUxNy0yLjYyNiA0NS43MjUgMTcuODkzIDU2LjM1M2wyMTEuNTQyIDEwOS41
+NzhjMjQuNDcyIDEyLjY3NiA1My40MzcgMTIuMTE0IDc3LjQ4Mi0xLjc2Nmw1Mi4wODgtMzAuMDY4
+YzIwLjQ2Mi0xMS44MSAxOS43OC00MS42MzYtMS4xOTUtNTIuNTAyeiIgZmlsbD0iI2UwZTBlMCIv
+PjxwYXRoIGQ9Im0xODQuODA1IDM1NC45NzZjLTI5LjU5NC0xNS4zMzEtNjUuOTU3LTMuNzg5LTgx
+LjI4OSAyNS44MTItMTUuMzMxIDI5LjU5NS0zLjc4OSA2NS45NTYgMjUuODEyIDgxLjI4OSAyOS41
+MyAxNS4yOTcgNjUuOTk2IDMuNzEyIDgxLjI4OS0yNS44MTEgMTUuMjk1LTI5LjUyOCAzLjcxNi02
+NS45OTUtMjUuODEyLTgxLjI5eiIgZmlsbD0iI2QzZDFkMSIvPjxwYXRoIGQ9Im0xODQuODA1IDM1
+NC45NzZjLTQwLjkxMS0yMS4xOTQtODguODggOS41MzQtODguMDYgNTQuNTY5IDMyLjk5NSA3LjQ5
+NyA3My43MTUgMTAuNDIgMTIwLjU2NiAxLjQwNC44NzUtMjIuNjQ0LTExLjA4OC00NC44NzgtMzIu
+NTA2LTU1Ljk3M3oiIGZpbGw9IiNlMGUwZTAiLz48cGF0aCBkPSJtMzM5LjA0OCAyMDcuODk3Yy0z
+MC41MTUtNDMuMTItMTMyLjM4NS05Ni4wMTctMjE0LjQ5Ny0xMzMuNTkybC0xOC4yNDEgMzUuMjE1
+Yy0xMC42OTggMjAuNjUyLTIuNjQzIDQ2LjAyNSAxOC4wMTEgNTYuNzI0bDIxMi45MzQgMTEwLjI5
+OGMyNC42MzMgMTIuNzU5IDUzLjc4OCAxMi4xOTMgNzcuOTkyLTEuNzc4bDUyLjQzMS0zMC4yNjZj
+Ni43OTgtMy45MjMgMTEuNjY2LTEwLjI2NyAxMy44MjEtMTcuNTctNTQuMDI4IDE0LjI4NS0xMTUu
+MzUyIDE5LjI2MS0xNDIuNDUxLTE5LjAzMXoiIGZpbGw9IiNkM2QxZDEiLz48cGF0aCBkPSJtMzA5
+LjEwNSAyOTIuNzYyYy0yOC4yNjctMTUuMjYyLTU5LjA2OS0yNi43NTktODUuMjM5LTI0LjQ1LTIw
+LjQ5IDEuODA4LTQxLjU5OC03LjI4NC02MS4xOTMtMjEuMDE3LTcuOTE4IDQ3LjYyMiAyOS4xNyA5
+MC4xNjggNzYuMjMxIDkwLjE2OCAyOC45My4wMDEgNTYuODc2LTE2LjIyMSA3MC4yMDEtNDQuNzAx
+eiIgZmlsbD0iI2QzZDFkMSIvPjxwYXRoIGQ9Im01MDMuMDE4IDMwMi45MzktMzIuNzE4LTE2Ljk0
+OCA0LjYzNC04Ljk0NmM0LjA2NC03Ljg0Ny45OTktMTcuNTAyLTYuODQ4LTIxLjU2NmwtMTAuMjQt
+NS4zMDQgOS44MzMtNS42NzZjMjAuNTk1LTExLjg4NyAxOS45MDktNDEuOTA5LTEuMjA0LTUyLjg0
+N2wtMjgwLjE0Ni0xNDUuMTE0Yy0yMC42NTItMTAuNjk4LTQ2LjAyNS0yLjY0NC01Ni43MjQgMTgu
+MDExbC0yMy4yOTUgNDQuOTcxYy0xMC42OTggMjAuNjUyLTIuNjQzIDQ2LjAyNSAxOC4wMTEgNTYu
+NzI0bDMuNjkzIDEuOTEzLTIyLjM0MiA0My4xMzFjLTExLjcwOCAyMi42MDUtMi44NDQgNTAuNTIx
+IDE5Ljc2IDYyLjIzbDQwLjIyMyAyMC44MzUtMjkuMjI2IDU2LjQyMWMtNy44MzggMi43OTMtMTQu
+OTAzIDcuMDYyLTIwLjg4MSAxMi41NmwtOTkuMDA5LS43MjVjLTguNzY1LS4xMS0xNi4wNTEgNy4w
+MjMtMTYuMTE3IDE1Ljg4MmwtLjQyMiA1Ny43NzRjLS4wNjUgOC44MzYgNy4wNDYgMTYuMDUyIDE1
+Ljg4MiAxNi4xMTdsOTkuMDI5LjcyNWMyOS44OTggMjguMTg5IDc4LjA0NyAxOS40OTkgOTYuNjI1
+LTE2LjM2NSAwLS42NzggMTEuNzUyLTE4LjkyNyA0LjU5MS00NC42NGwyNy44MjYtNTMuNzJjMS44
+NjgtLjEyMiAzLjczNi0uMzEzIDUuNi0uNTdsMTM4LjY3NSA3MS44MzNjMy43NzMgMS45NTQgOC4x
+NjIgMi4zMjUgMTIuMjAyIDEuMDQyIDcuNzcxLTIuNDY3IDkuNjg0LTguNTA3IDEzLjk5OS0xNi44
+MzYgMzUuNzkgMTguNTM5IDM0Ljg5NSAxOC43NDQgNDAuMDY0IDE4Ljc0NCA1Ljc4NyAwIDExLjM3
+NS0zLjE1MSAxNC4yMi04LjY0NGw0MS4xNTItNzkuNDQ2YzQuMDY1LTcuODQ2Ljk5OS0xNy41MDIt
+Ni44NDctMjEuNTY2em0tMzY4LjI5NC0xNzguNyAyMy4yOTUtNDQuOTcxYzIuNTMyLTQuODkxIDgu
+NTkyLTYuOTA2IDEzLjU5MS00LjMxNWwyNzcuMTExIDE0My41NDEtNDkuNDcyIDI4LjU1OGMtMTQu
+NjE2IDguNDM3LTMyLjI5IDguODQtNDcuMjc1IDEuMDc4bC0yMTIuOTM0LTExMC4zMDFjLTQuOTQ4
+LTIuNTYxLTYuODc5LTguNjQxLTQuMzE2LTEzLjU5em0xMTguMzM0IDE4MC4xMDJjLTM5LjM3MSAx
+Mi41MDMtNzQuMjU1LTI5LjE1OC01NS4zMzgtNjUuNjc4IDUuMjIyLTEwLjA4MSAxMy43NTQtMTcu
+NzQgMjQuMjI0LTIxLjg1MWw2Mi4xOTQgMzIuMjE2YzUuODQzIDIzLjgxMi03Ljg4IDQ3Ljk0Ni0z
+MS4wOCA1NS4zMTN6bS03OS44NDcgNDQuOTk5IDE1LjE4OC0yOS4zMjJjNi45NTkgNS44NjkgMTQu
+MzYyIDEwLjEyOSAyMi4xOTcgMTMuMTg3bC0xNC41MDQgMjhjLTYuNDcxLTUuMzM1LTE0LjE0LTku
+NDYyLTIyLjg4MS0xMS44NjV6bS0zOS4xMjQtMTIzLjMzMyAyMi4zNDItNDMuMTMxIDMyLjM4MyAx
+Ni43NzRjLTE2LjI3NiAxMy41MTktMjYuOTU5IDMzLjcyNi0yOC4xNTYgNTYuMDc2bC0yMC41MDUt
+MTAuNjIxYy02LjkzNy0zLjU5NC05LjY1Ny0xMi4xNjEtNi4wNjQtMTkuMDk4em0tMTAxLjc4MiAx
+NjguNzE4IDY0Ljg3MS40NzVjLTEuODk0IDguNDQ0LTEuOTczIDE3LjE5Ni0uMTc4IDI1Ljc3NWwt
+NjQuODgxLS40NzV6bTE1MC44MTggMjcuMjk5Yy03LjQ0MiAxNC4zNjYtMjUuMTg2IDIwLjAwMS0z
+OS41NTIgMTIuNTU5LTE0LjQtNy40NTktMjAuMDE5LTI1LjE1LTEyLjU1OS0zOS41NTIgNS4yNDMt
+MTAuMTIyIDE1LjUxMS0xNS44NjEgMjYuMDg5LTE1Ljg2MSAyMS42NDUtLjAwMSAzNi4yMTMgMjMu
+MTc5IDI2LjAyMiA0Mi44NTR6bTEwNC42MjgtMTAwLjQ2NGMxNy4zNjYtMTMuNzUyIDI3Ljg1NC0z
+NC4xNTUgMjkuNTE2LTU1LjM3MmwxOS45ODggMTAuMzU0YzI0LjYzMyAxMi43NTkgNTMuNzg4IDEy
+LjE5MyA3Ny45OTItMS43NzhsOS42OTMtNS41OTYgMTQuMjE5IDcuMzY1LTUwLjQyIDk3LjMzN3pt
+MTU5LjkwNyA1My40NjUtMTguNTExLTkuNTg4YzguNDEyLTE2LjIzOSAxOC4wMjItMzQuNzkyIDI2
+LjQzNC01MS4wMzJsMTguNTExIDkuNTg4eiIvPjxwYXRoIGQ9Im0xNzQuNjY4IDEzNC40M2MzMi44
+MzcgMTcuMDA5IDMyLjM5MiAxNy40NjQgMzcuNTk0IDE3LjQ2NCAxNi43MjcgMCAyMi4xODctMjIu
+NTM3IDcuMzcyLTMwLjIxbC0zMC4yNDgtMTUuNjY4Yy03Ljg0NS00LjA2My0xNy41MDEtLjk5OS0y
+MS41NjYgNi44NDgtNC4wNjUgNy44NDYtLjk5OSAxNy41MDIgNi44NDggMjEuNTY2eiIvPjwvc3Zn
+Pg==
+"
+       id="image987"
+       x="7.5"
+       y="7.5" />
+  </g>
+  <style
+     type="text/css"
+     id="style1985">
+	.st0{fill:url(#SVGID_1_);}
+	.st1{fill:url(#SVGID_2_);}
+	.st2{fill:url(#SVGID_3_);}
+	.st3{fill:url(#SVGID_4_);}
+	.st4{fill:url(#SVGID_5_);}
+	.st5{fill:url(#SVGID_6_);}
+	.st6{fill:url(#SVGID_7_);}
+	.st7{fill:url(#SVGID_8_);}
+	.st8{fill:url(#SVGID_9_);}
+	.st9{fill:url(#SVGID_10_);}
+</style>
+  <style
+     type="text/css"
+     id="style10">.st0{fill-rule:evenodd;clip-rule:evenodd;}</style>
+</svg>

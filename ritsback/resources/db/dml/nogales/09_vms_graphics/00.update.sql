@@ -1,0 +1,2 @@
+UPDATE master.command_element_type_params SET threshold_1 = 1 WHERE command_element_type_id = 5 and element_type_id = 71;
+UPDATE master.command_element_type_params SET threshold_2 = 255 WHERE command_element_type_id = 5 and element_type_id = 71;

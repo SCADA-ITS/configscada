@@ -1,0 +1,49 @@
+root_device;signal;id;device;channel;description;controller;inverseLogic;xAddress;xStatusAddress
+Central de alarmas CH Sentido CA;zonesAlarm;1;Siemens_OTS_CA;DI0;CH-OTS CA Alarma Zona 1;OTS;false;1000;1200
+Central de alarmas CH Sentido CA;zonesAlarm;2;Siemens_OTS_CA;DI1;CH-OTS CA Alarma Zona 2;OTS;false;1001;1201
+Central de alarmas CH Sentido CA;zonesAlarm;3;Siemens_OTS_CA;DI2;CH-OTS CA Alarma Zona 3;OTS;false;1002;1202
+Central de alarmas CH Sentido CA;zonesAlarm;4;Siemens_OTS_CA;DI3;CH-OTS CA Alarma Zona 4;OTS;false;1003;1203
+Central de alarmas CH Sentido CA;zonesAlarm;5;Siemens_OTS_CA;DI4;CH-OTS CA Alarma Zona 5;OTS;false;1004;1204
+Central de alarmas CH Sentido CA;zonesAlarm;6;Siemens_OTS_CA;DI5;CH-OTS CA Alarma Zona 6;OTS;false;1005;1205
+Central de alarmas CH Sentido CA;zonesAlarm;7;Siemens_OTS_CA;DI6;CH-OTS CA Alarma Zona 7;OTS;false;1006;1206
+Central de alarmas CH Sentido CA;zonesAlarm;8;Siemens_OTS_CA;DI7;CH-OTS CA Alarma Zona 8;OTS;false;1007;1207
+Central de alarmas CH Sentido CA;fiberFaultAlarm;1;Siemens_OTS_CA;DI2000;CH-OTS CA Alarma fibra Zona 1;OTS;false;1008;1208
+Central de alarmas CH Sentido CA;fiberFaultAlarm;2;Siemens_OTS_CA;DI2001;CH-OTS CA Alarma fibra Zona 2;OTS;false;1009;1209
+Central de alarmas CH Sentido CA;fiberFaultAlarm;3;Siemens_OTS_CA;DI2002;CH-OTS CA Alarma fibra Zona 3;OTS;false;1010;1210
+Central de alarmas CH Sentido CA;fiberFaultAlarm;4;Siemens_OTS_CA;DI2003;CH-OTS CA Alarma fibra Zona 4;OTS;false;1011;1211
+Central de alarmas CH Sentido CA;fiberFaultAlarm;5;Siemens_OTS_CA;DI2004;CH-OTS CA Alarma fibra Zona 5;OTS;false;1012;1212
+Central de alarmas CH Sentido CA;fiberFaultAlarm;6;Siemens_OTS_CA;DI2005;CH-OTS CA Alarma fibra Zona 6;OTS;false;1013;1213
+Central de alarmas CH Sentido CA;fiberFaultAlarm;7;Siemens_OTS_CA;DI2006;CH-OTS CA Alarma fibra Zona 7;OTS;false;1014;1214
+Central de alarmas CH Sentido CA;fiberFaultAlarm;8;Siemens_OTS_CA;DI2007;CH-OTS CA Alarma fibra Zona 8;OTS;false;1015;1215
+Central de alarmas CH Sentido CA;averageTemperature;1;Siemens_OTS_CA;AI4000;CH-OTS CA Temperatura media Zona 1;OTS;false;1016;1216
+Central de alarmas CH Sentido CA;averageTemperature;2;Siemens_OTS_CA;AI4002;CH-OTS CA Temperatura media Zona 2;OTS;false;1018;1217
+Central de alarmas CH Sentido CA;averageTemperature;3;Siemens_OTS_CA;AI4004;CH-OTS CA Temperatura media Zona 3;OTS;false;1020;1218
+Central de alarmas CH Sentido CA;averageTemperature;4;Siemens_OTS_CA;AI4006;CH-OTS CA Temperatura media Zona 4;OTS;false;1022;1219
+Central de alarmas CH Sentido CA;averageTemperature;5;Siemens_OTS_CA;AI4008;CH-OTS CA Temperatura media Zona 5;OTS;false;1024;1220
+Central de alarmas CH Sentido CA;averageTemperature;6;Siemens_OTS_CA;AI4010;CH-OTS CA Temperatura media Zona 6;OTS;false;1026;1221
+Central de alarmas CH Sentido CA;averageTemperature;7;Siemens_OTS_CA;AI4012;CH-OTS CA Temperatura media Zona 7;OTS;false;1028;1222
+Central de alarmas CH Sentido CA;averageTemperature;8;Siemens_OTS_CA;AI4014;CH-OTS CA Temperatura media Zona 8;OTS;false;1030;1223
+Central de alarmas CH Sentido MA;zonesAlarm;1;Siemens_OTS_MA;DI0;CH-OTS MA Alarma Zona 1;OTS;false;1032;1224
+Central de alarmas CH Sentido MA;zonesAlarm;2;Siemens_OTS_MA;DI1;CH-OTS MA Alarma Zona 2;OTS;false;1033;1225
+Central de alarmas CH Sentido MA;zonesAlarm;3;Siemens_OTS_MA;DI2;CH-OTS MA Alarma Zona 3;OTS;false;1034;1226
+Central de alarmas CH Sentido MA;zonesAlarm;4;Siemens_OTS_MA;DI3;CH-OTS MA Alarma Zona 4;OTS;false;1035;1227
+Central de alarmas CH Sentido MA;zonesAlarm;5;Siemens_OTS_MA;DI4;CH-OTS MA Alarma Zona 5;OTS;false;1036;1228
+Central de alarmas CH Sentido MA;zonesAlarm;6;Siemens_OTS_MA;DI5;CH-OTS MA Alarma Zona 6;OTS;false;1037;1229
+Central de alarmas CH Sentido MA;zonesAlarm;7;Siemens_OTS_MA;DI6;CH-OTS MA Alarma Zona 7;OTS;false;1038;1230
+Central de alarmas CH Sentido MA;zonesAlarm;8;Siemens_OTS_MA;DI7;CH-OTS MA Alarma Zona 8;OTS;false;1039;1231
+Central de alarmas CH Sentido MA;fiberFaultAlarm;1;Siemens_OTS_MA;DI2000;CH-OTS MA Alarma fibra Zona 1;OTS;false;1040;1232
+Central de alarmas CH Sentido MA;fiberFaultAlarm;2;Siemens_OTS_MA;DI2001;CH-OTS MA Alarma fibra Zona 2;OTS;false;1041;1233
+Central de alarmas CH Sentido MA;fiberFaultAlarm;3;Siemens_OTS_MA;DI2002;CH-OTS MA Alarma fibra Zona 3;OTS;false;1042;1234
+Central de alarmas CH Sentido MA;fiberFaultAlarm;4;Siemens_OTS_MA;DI2003;CH-OTS MA Alarma fibra Zona 4;OTS;false;1043;1235
+Central de alarmas CH Sentido MA;fiberFaultAlarm;5;Siemens_OTS_MA;DI2004;CH-OTS MA Alarma fibra Zona 5;OTS;false;1044;1236
+Central de alarmas CH Sentido MA;fiberFaultAlarm;6;Siemens_OTS_MA;DI2005;CH-OTS MA Alarma fibra Zona 6;OTS;false;1045;1237
+Central de alarmas CH Sentido MA;fiberFaultAlarm;7;Siemens_OTS_MA;DI2006;CH-OTS MA Alarma fibra Zona 7;OTS;false;1046;1238
+Central de alarmas CH Sentido MA;fiberFaultAlarm;8;Siemens_OTS_MA;DI2007;CH-OTS MA Alarma fibra Zona 8;OTS;false;1047;1239
+Central de alarmas CH Sentido MA;averageTemperature;1;Siemens_OTS_MA;AI4000;CH-OTS MA Temperatura media Zona 1;OTS;false;1048;1240
+Central de alarmas CH Sentido MA;averageTemperature;2;Siemens_OTS_MA;AI4002;CH-OTS MA Temperatura media Zona 2;OTS;false;1050;1241
+Central de alarmas CH Sentido MA;averageTemperature;3;Siemens_OTS_MA;AI4004;CH-OTS MA Temperatura media Zona 3;OTS;false;1052;1242
+Central de alarmas CH Sentido MA;averageTemperature;4;Siemens_OTS_MA;AI4006;CH-OTS MA Temperatura media Zona 4;OTS;false;1054;1243
+Central de alarmas CH Sentido MA;averageTemperature;5;Siemens_OTS_MA;AI4008;CH-OTS MA Temperatura media Zona 5;OTS;false;1056;1244
+Central de alarmas CH Sentido MA;averageTemperature;6;Siemens_OTS_MA;AI4010;CH-OTS MA Temperatura media Zona 6;OTS;false;1058;1245
+Central de alarmas CH Sentido MA;averageTemperature;7;Siemens_OTS_MA;AI4012;CH-OTS MA Temperatura media Zona 7;OTS;false;1060;1246
+Central de alarmas CH Sentido MA;averageTemperature;8;Siemens_OTS_MA;AI4014;CH-OTS MA Temperatura media Zona 8;OTS;false;1062;1247

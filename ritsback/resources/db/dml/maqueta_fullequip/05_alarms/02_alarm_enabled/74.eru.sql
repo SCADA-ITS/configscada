@@ -1,0 +1,4 @@
+UPDATE conf.alarm_configs SET alarm_level_id = 3, enabled = True, treatment = True WHERE element_type_id = 74 AND alarm_config_id = 218; --LBL_ALARM_CONFIGS_ALARM_ERU_NO_CONNECTION
+UPDATE conf.alarm_configs SET alarm_level_id = 2, enabled = True, treatment = True WHERE element_type_id = 74 AND alarm_config_id = 219; --LBL_ALARM_CONFIGS_ALARM_ERU_MASTER_WITH_CONTROL_AND_NO_COMMUNICATION_WITH_REDUNDANT_ERU
+UPDATE conf.alarm_configs SET alarm_level_id = 2, enabled = True, treatment = True WHERE element_type_id = 74 AND alarm_config_id = 220; --LBL_ALARM_CONFIGS_ALARM_ERU_SLAVE_WITH_CONTROL_AND_NO_COMMUNICATION_WITH_REDUNDANT_ERU
+UPDATE conf.alarm_configs SET alarm_level_id = 2, enabled = True, treatment = True WHERE element_type_id = 74 AND alarm_config_id = 221; --LBL_ALARM_CONFIGS_ALARM_ERU_SLAVE_WITH_CONTROL_AND_COMMUNICATION_WITH_REDUNDANT_ERU

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<p:controller_adapter_v1 name="" version="" xmlns:p="controller_adapter_v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="controller_adapter_v1 ../../../adapter-lib/src/main/resources/schemas/controller/controller_adapter_v1.xsd ">
+  <p:subscriptors>
+    <p:subscriptor>
+      <p:id>1</p:id>
+      <p:enabled>true</p:enabled>
+      <p:entity>GenericCommand</p:entity>
+      <p:entity_pks>
+		<p:entity_pk>type=1</p:entity_pk>
+	  </p:entity_pks>
+    </p:subscriptor>
+  </p:subscriptors>
+  <p:mods>
+    <p:mod>
+      <p:type>1</p:type>
+      <p:id>1</p:id>
+      <p:enabled>true</p:enabled>
+      <p:threads>1</p:threads>
+      <p:subscriptors_ref>
+        <p:subscriptor_id_ref>1</p:subscriptor_id_ref>
+      </p:subscriptors_ref>
+      <p:mod_params>
+		<p:mod_param_value>expire_time_s=3</p:mod_param_value>
+	  </p:mod_params>
+    </p:mod>
+  </p:mods>
+</p:controller_adapter_v1>
