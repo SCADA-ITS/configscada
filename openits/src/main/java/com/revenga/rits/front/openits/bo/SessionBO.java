@@ -31,7 +31,6 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import com.revenga.rits.front.openits.adapter.impl.GraphqlTypeAdapter;
-import com.revenga.rits.front.openits.app.AppInfra;
 import com.revenga.rits.front.openits.model.EntityChangedUI;
 import com.revenga.rits.front.openits.model.UserSessionUI;
 import com.revenga.rits.front.openits.service.CacheManager;

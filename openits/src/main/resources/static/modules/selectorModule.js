@@ -137,7 +137,6 @@ export default class SelectorModule extends GenericModule {
 
 					if (treeNode) {
 
-						console.log(treeNode);
 						let treeData = {};
 						treeData.id = treeNode.id;
 						treeData.value = treeNode.label;

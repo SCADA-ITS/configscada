@@ -30,6 +30,8 @@ export default class BackOfficeViewGenericForm extends BackOfficeView {
 		
 		this.refreshInterval = undefined;
 		this.selectedRefreshTime = currentTableData.metadata && currentTableData.metadata[BackOfficeHelper.META_TYPE_TABLE.PROPERTY.AUTOREFRESH_FORM.name] && currentTableData.metadata.autorefresh && currentTableData.metadata.autorefresh > 0 ? currentTableData.metadata.autorefresh : undefined;
+		
+		this.editable = backOffice.editable || BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, BackOfficeHelper.META_TYPE_TABLE.PROPERTY.EDITABLE, backOffice.metadata, currentTableData);
 	}
 	
 	setValues(row, formRef) {
@@ -54,15 +56,33 @@ export default class BackOfficeViewGenericForm extends BackOfficeView {
 						
 						if (key != columnId.name) {
 							
-							const columnId = BackOfficeHelper.getColumnIdFromColumnUID(key);
+							const colId = BackOfficeHelper.getColumnIdFromColumnUID(key);
 							
-							let rowData = row.data.find(e => e.columnId === columnId);
+							const column = self.currentTableData.columns.find(e => e.id === colId);
 							
-							let valueComparison = isNaN(formValues[key]) ? formValues[key] : (formValues[key] === 1 ? "true" : "false"); 
-							
-							if (rowData && valueComparison !== rowData.value) {
+							if (column) {
 								
-								newValues[key] = rowData.value;
+								let rowData = row.data.find(e => e.columnId === colId);
+							
+								let valueComparison = isNaN(formValues[key]) ? formValues[key] : (formValues[key] === 1 ? "true" : "false"); 
+								
+								if (rowData && valueComparison !== rowData.value) {
+									
+									newValues[key] = rowData.value;
+									
+									const refColumn = column.refColumn;
+									const refTable = refColumn ? self.data.find(e => e.id === refColumn.tableId) : undefined;
+									
+									if (refColumn && refTable) {
+										
+										const referencedColumnValue = BackOfficeHelper.getReferencedColumnValue(self.backOffice, column, newValues[key], self.data);
+										
+										if (referencedColumnValue) {
+											
+											newValues[key + "$ref"] = referencedColumnValue.value;	
+										} 
+									}
+								}	
 							}
 						}
 					});
@@ -609,6 +629,7 @@ export default class BackOfficeViewGenericForm extends BackOfficeView {
 							width: 130,
 							height: 41,
 							css: "dialog-accept",
+							hidden: !self.editable,
 							click:
 								function() {
 
@@ -675,7 +696,8 @@ export default class BackOfficeViewGenericForm extends BackOfficeView {
 									
 									if (self.backOffice.onAccept) {
 									
-										self.backOffice.onAccept(values);	
+										//self.backOffice.onAccept(values);	
+										self.backOffice.onAccept(requestResult.newRow);
 									}
 							
 									if (container) {

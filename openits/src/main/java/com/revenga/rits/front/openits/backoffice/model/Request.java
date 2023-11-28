@@ -1,10 +1,10 @@
-package com.revenga.rits.front.openits.model.backoffice;
+package com.revenga.rits.front.openits.backoffice.model;
 
 import java.io.Serializable;
 import java.util.List;
 
-import com.revenga.rits.front.openits.model.backoffice.Column.ColType;
-import com.revenga.rits.front.openits.model.backoffice.Table.RequestType;
+import com.revenga.rits.front.openits.backoffice.model.Column.ColType;
+import com.revenga.rits.front.openits.backoffice.model.Table.RequestType;
 
 import lombok.Data;
 
@@ -47,7 +47,7 @@ public class Request implements Serializable {
 		private ColType colType;
 	}
 	
-	private Integer id;
+	private Long id;
 	private String tableName;
 	private String columnName;
 	private Integer commandId;

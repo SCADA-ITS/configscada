@@ -3,10 +3,8 @@ package com.revenga.rits.front.openits.controller;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,9 +28,6 @@ import io.swagger.annotations.ApiParam;
 @RequestMapping(value = "/api/v1/modules", produces = { "application/json", "application/xml" })
 @Api(value = "Modules", tags = { "MODULES" })
 public class ModuleController {
-	
-//	@Autowired
-//	ModuleService moduleService;
 	
 	@Autowired
 	ModuleBO moduleBO;

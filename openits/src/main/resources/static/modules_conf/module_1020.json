@@ -127,7 +127,7 @@
 		"decoders": {
 			
 			"mjpeg": {
-				"timeCheckStreamMs": 60000,
+				"timeCheckStreamMs": 600000,
 				"timeoutConnectStreamMs": 6000,
 				"url": "ElementTypeParam:2:1:3"
 			},

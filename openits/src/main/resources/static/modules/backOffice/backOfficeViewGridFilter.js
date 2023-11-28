@@ -394,7 +394,9 @@ export default class BackOfficeViewGridFilter {
 									
 									webix.ui(getFilterColumnValueText(), columnValue);
 								}
-								else if (dbType.name === BackOfficeHelper.DB_TYPE_INTEGER ||
+								else if (dbType.name === BackOfficeHelper.DB_TYPE_SHORT || 
+										 dbType.name === BackOfficeHelper.DB_TYPE_INTEGER ||
+										 dbType.name === BackOfficeHelper.DB_TYPE_LONG ||
 										 dbType.name === BackOfficeHelper.DB_TYPE_DECIMAL) {
 									
 									webix.ui(getFilterColumnValueNumber(), columnValue);

@@ -4,7 +4,7 @@ package config.groovy.backoffice.smartgen.command;
 //package com.revenga.rits.front.openits.backoffice.groovy.command;
 
 import com.revenga.rits.front.openits.backoffice.groovy.AbstractBackOfficeCommand;
-import com.revenga.rits.front.openits.model.backoffice.Row;
+import com.revenga.rits.front.openits.backoffice.model.Row;
 
 public class CustomerCommand extends AbstractBackOfficeCommand {
 

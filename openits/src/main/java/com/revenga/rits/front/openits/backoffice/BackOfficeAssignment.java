@@ -20,15 +20,15 @@ import org.springframework.util.CollectionUtils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.revenga.rits.front.openits.backoffice.BackOfficeUtil.DMLType;
-import com.revenga.rits.front.openits.model.backoffice.Attachment;
-import com.revenga.rits.front.openits.model.backoffice.Basic;
-import com.revenga.rits.front.openits.model.backoffice.Column;
-import com.revenga.rits.front.openits.model.backoffice.Column.Filler;
-import com.revenga.rits.front.openits.model.backoffice.Row;
-import com.revenga.rits.front.openits.model.backoffice.Row.RowData;
-import com.revenga.rits.front.openits.model.backoffice.Table;
-import com.revenga.rits.front.openits.model.backoffice.Table.Command;
-import com.revenga.rits.front.openits.model.backoffice.Table.Trigger;
+import com.revenga.rits.front.openits.backoffice.model.Attachment;
+import com.revenga.rits.front.openits.backoffice.model.Basic;
+import com.revenga.rits.front.openits.backoffice.model.Column;
+import com.revenga.rits.front.openits.backoffice.model.Row;
+import com.revenga.rits.front.openits.backoffice.model.Table;
+import com.revenga.rits.front.openits.backoffice.model.Column.Filler;
+import com.revenga.rits.front.openits.backoffice.model.Row.RowData;
+import com.revenga.rits.front.openits.backoffice.model.Table.Command;
+import com.revenga.rits.front.openits.backoffice.model.Table.Trigger;
 import com.revenga.rits.front.openits.util.ConversionUtil;
 import com.revenga.rits.front.openitsdao.model.BackOffice;
 
@@ -315,9 +315,9 @@ public class BackOfficeAssignment {
 								if (rowDataId != null && NumberUtils.isCreatable(rowDataId.getValue())) {
 
 									row.setImages(getAttachments(conn, backOffice, Attachment.Type.IMAGE, table,
-											Integer.parseInt(rowDataId.getValue())));
+											Long.parseLong(rowDataId.getValue())));
 									row.setAttachments(getAttachments(conn, backOffice, Attachment.Type.OTHER, table,
-											Integer.parseInt(rowDataId.getValue())));
+											Long.parseLong(rowDataId.getValue())));
 								}
 							}
 						}
@@ -329,7 +329,7 @@ public class BackOfficeAssignment {
 		return rows;
 	}
 
-	List<Attachment> getAttachments(Connection conn, BackOffice backOffice, Attachment.Type attachmentType, Table table, Integer idValue) throws SQLException {
+	List<Attachment> getAttachments(Connection conn, BackOffice backOffice, Attachment.Type attachmentType, Table table, Long idValue) throws SQLException {
 		
 		List<Attachment> attachments = new ArrayList<>();
 		String tableSql = "";
@@ -356,7 +356,7 @@ public class BackOfficeAssignment {
 			
 			try (PreparedStatement stmt = conn.prepareStatement(sql)) {
 				
-				stmt.setInt(1, idValue);
+				stmt.setLong(1, idValue);
 				stmt.setString(2, table.getName());
 				
 				if (this.backOfficeProcessor.getBackOfficeManager().isShowSql()) {
@@ -406,7 +406,7 @@ public class BackOfficeAssignment {
 		
 			try (PreparedStatement stmt = conn.prepareStatement(sql)) {
 				
-				stmt.setInt(1, id);
+				stmt.setLong(1, id);
 				
 				if (this.backOfficeProcessor.getBackOfficeManager().isShowSql()) {
 					
@@ -422,7 +422,7 @@ public class BackOfficeAssignment {
 					attachment.setId(rs.getInt("id"));
 					attachment.setType(attachmentType);
 					attachment.setTable(table);
-					attachment.setIdValue(rs.getInt("id_value"));
+					attachment.setIdValue(rs.getLong("id_value"));
 					attachment.setGroupName(rs.getString("group_name"));
 					attachment.setFileName(rs.getString("file_name"));
 					attachment.setDescription(rs.getString("description"));
@@ -458,11 +458,11 @@ public class BackOfficeAssignment {
 				
 			try (PreparedStatement stmt = conn.prepareStatement(sql)) {
 				
-				Integer nextId = BackOfficeUtil.getNextId(conn, backOffice, targetTable);
+				Long nextId = BackOfficeUtil.getNextId(conn, backOffice, targetTable);
 				Integer fieldStmt = 1;
 				
 				stmt.setInt(fieldStmt++, attachmentInput.getTable().getMetadataId());
-				stmt.setInt(fieldStmt++, attachmentInput.getIdValue());
+				stmt.setLong(fieldStmt++, attachmentInput.getIdValue());
 				stmt.setString(fieldStmt++, attachmentInput.getGroupName());
 				stmt.setString(fieldStmt++, attachmentInput.getFileName());
 				stmt.setString(fieldStmt++, attachmentInput.getDescription());
@@ -480,7 +480,7 @@ public class BackOfficeAssignment {
 					try {
 						
 						newAttachment = (Attachment) attachmentInput.clone();
-						newAttachment.setId(nextId);
+						newAttachment.setId(Math.toIntExact(nextId));
 						
 					} catch (CloneNotSupportedException e) {
 						
@@ -518,12 +518,12 @@ public class BackOfficeAssignment {
 			try (PreparedStatement stmt = conn.prepareStatement(sql)) {
 				
 				stmt.setInt(1, attachmentInput.getTable().getMetadataId());
-				stmt.setInt(2, attachmentInput.getIdValue());
+				stmt.setLong(2, attachmentInput.getIdValue());
 				stmt.setString(3, attachmentInput.getGroupName());
 				stmt.setString(4, attachmentInput.getFileName());
 				stmt.setString(5, attachmentInput.getDescription());
 				stmt.setInt(6, attachmentInput.getPosition());
-				stmt.setInt(7, attachmentInput.getId());
+				stmt.setLong(7, attachmentInput.getId());
 				
 				if (this.backOfficeProcessor.getBackOfficeManager().isShowSql()) {
 					
@@ -564,7 +564,7 @@ public class BackOfficeAssignment {
 				
 			try (PreparedStatement stmt = conn.prepareStatement(sql)) {
 				
-				stmt.setInt(1, attachmentInput.getId());
+				stmt.setLong(1, attachmentInput.getId());
 				
 				if (this.backOfficeProcessor.getBackOfficeManager().isShowSql()) {
 					
@@ -623,9 +623,7 @@ public class BackOfficeAssignment {
 	}
 	
 	private void assignMetadataTable(Connection conn, BackOffice backOffice, Table table) throws SQLException {
-		
-//		Integer tableId = null;
-		
+			
 		final String QRY_TABLE_METADATA = String
 				.format("SELECT id, label, label_singular, label_description, mdi_icon, metadata " + 
 						"  FROM %s.sg_metadata_tables " + 
@@ -705,7 +703,6 @@ public class BackOfficeAssignment {
 						
 						if (column != null) {
 							
-							//column.setId(rs.getInt("id"));
 							column.setLabel(rs.getString("label"));
 							column.setLabelDescription(rs.getString("label_description"));
 							column.setMdiIcon(rs.getString("mdi_icon"));

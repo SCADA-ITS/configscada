@@ -26,10 +26,10 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.revenga.rits.front.openits.backoffice.BackOfficeUtil.DMLType;
-import com.revenga.rits.front.openits.model.backoffice.Attachment;
-import com.revenga.rits.front.openits.model.backoffice.Request;
-import com.revenga.rits.front.openits.model.backoffice.Request.RequestResult;
-import com.revenga.rits.front.openits.model.backoffice.Table;
+import com.revenga.rits.front.openits.backoffice.model.Attachment;
+import com.revenga.rits.front.openits.backoffice.model.Request;
+import com.revenga.rits.front.openits.backoffice.model.Table;
+import com.revenga.rits.front.openits.backoffice.model.Request.RequestResult;
 import com.revenga.rits.front.openits.service.BackOfficeManager;
 import com.revenga.rits.front.openits.util.GroovyManager;
 import com.revenga.rits.front.openitsdao.model.BackOffice;
@@ -186,7 +186,7 @@ public class BackOfficeProcessor {
 		return labelTranslated;
 	}
 	
-	public List<Attachment> getAttachments(Integer backOfficeId, Attachment.Type attachmentType, String tableName, Integer idValue) {
+	public List<Attachment> getAttachments(Integer backOfficeId, Attachment.Type attachmentType, String tableName, Long idValue) {
 
 		List<Attachment> attachments = null;
 		
@@ -253,7 +253,7 @@ public class BackOfficeProcessor {
 		return newAttachment;
 	}
 	
-	public Attachment upload(String attachmentTypeStr, String baseDir, Integer backOfficeId, String tableName, Integer id, String groupName, Integer position, MultipartFile multipartFile) {
+	public Attachment upload(String attachmentTypeStr, String baseDir, Integer backOfficeId, String tableName, Long id, String groupName, Integer position, MultipartFile multipartFile) {
 		
 		Attachment newAttachment = null;
 		BackOffice backOffice = this.backOfficeService.getById(backOfficeId);

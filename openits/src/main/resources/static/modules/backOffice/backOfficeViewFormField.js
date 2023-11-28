@@ -16,6 +16,7 @@ export default class BackOfficeViewFormField  {
 		this.setValues = form.setValues;
 		this.isVisible = true;
 		this.formId = form.formId;
+		this.editable = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, BackOfficeHelper.META_TYPE_TABLE.PROPERTY.EDITABLE, this.backOffice.metadata, this.currentTableData);
 	}
 	
 	getField(column, options) {
@@ -35,7 +36,7 @@ export default class BackOfficeViewFormField  {
 				field.label = util.getStringCapitalized(column.label ? BackOfficeHelper.translate(self.backOffice, column.label) : column.name);
 				field.disabled = false;
 				field.required = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_COLUMN, BackOfficeHelper.META_TYPE_COLUMN.PROPERTY.REQUIRED, self.backOffice.metadata, column) || !column.nullable;
-				field.readonly = !BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_COLUMN, BackOfficeHelper.META_TYPE_COLUMN.PROPERTY.EDITABLE, self.backOffice.metadata, column);
+				field.readonly = !self.editable || !BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_COLUMN, BackOfficeHelper.META_TYPE_COLUMN.PROPERTY.EDITABLE, self.backOffice.metadata, column);
 				field.hidden = !BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_COLUMN, BackOfficeHelper.META_TYPE_COLUMN.PROPERTY.FORM_VISIBLE, self.backOffice.metadata, column);
 				
 				applyOptions(field);
@@ -56,14 +57,17 @@ export default class BackOfficeViewFormField  {
 					if (!isNaN(multiline) && multiline > 0) {
 						
 						field.view = "textarea";
-						field.height = multiline * 20;	
+						field.height = multiline * 20;
+						field.css = field.readonly ? "backoffice-textarea-readonly" : undefined;	
 					}
 				}
 				
 				if (field.view === "text") {
 					
 					if (dbType.name === BackOfficeHelper.DB_TYPE_DECIMAL || 
-							 dbType.name === BackOfficeHelper.DB_TYPE_INTEGER) {
+						dbType.name === BackOfficeHelper.DB_TYPE_SHORT ||
+						dbType.name === BackOfficeHelper.DB_TYPE_INTEGER ||
+						dbType.name === BackOfficeHelper.DB_TYPE_LONG) {
 					
 						field.type = "number";
 					}
@@ -105,6 +109,7 @@ export default class BackOfficeViewFormField  {
 					
 					field.value = value;
 					
+					const refEditable = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, BackOfficeHelper.META_TYPE_TABLE.PROPERTY.EDITABLE, self.backOffice.metadata, refTable);
 					const referencedColumnValue = BackOfficeHelper.getReferencedColumnValue(self.backOffice, column, value, self.data);
 					const associatedField = self.currentTableData.columns.find(e => column.metadata && BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_COLUMN, BackOfficeHelper.META_TYPE_COLUMN.PROPERTY.ASSOCIATED_FIELD_NAME, self.backOffice.metadata, column)  === e.name);
 					const refGroupField = refTable.columns.find(e => column.metadata && BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_COLUMN, BackOfficeHelper.META_TYPE_COLUMN.PROPERTY.REF_GROUP_FIELD_NAME, self.backOffice.metadata, column) === e.name);
@@ -125,7 +130,7 @@ export default class BackOfficeViewFormField  {
 						const dbTypeRefColumn = BackOfficeHelper.getDBTypes(BackOfficeHelper.DB_TYPE_STRING);
 					
 						let fieldRef = webix.copy(dbTypeRefColumn.component);
-					
+						
 						let fieldGroup = {
 							cols: [
 								{
@@ -133,159 +138,230 @@ export default class BackOfficeViewFormField  {
 									height: 1,
 									hidden: visibleColumn
 								},
-								{ 
-									view: fieldRef.view, 
-									type: "text", 
-									name: field.name + "$ref", 
-									required: field.required, 
-									label: util.getStringCapitalized(refTable.labelSingular ? BackOfficeHelper.translate(self.backOffice, refTable.labelSingular) : (refTable.label ? BackOfficeHelper.translate(self.backOffice, refTable.label) : refTable.name)), 
-									readonly: true, 
-									labelWidth: 275, 
-									value: !this.backOffice.onCancel || disabled ? (referencedColumnValue.value ?? field.value) : undefined, 
-									printValue: referencedColumnValue.value ?? field.value,
-									printId: field.name,
-									disabled: disabled,
-									css: "backoffice-input-readonly",
-									hidden: !visibleColumn
-								},
-								{ 
-									view: field.view, 
-									name: field.name, 
-									hidden: !visibleColumn || !showIdForm, 
-									readonly: true, 
-									css: "backoffice-input-readonly",
-									value: !this.backOffice.onCancel || disabled ? field.value : undefined, 
-									width: 50,
-									on: {
-										onChange: function() {
-											
-											const persistValues = onChangeField();
-											
-											if (Array.isArray(persistValues) && persistValues.length > 0 &&
-												Array.isArray(dependentColumns) && dependentColumns.length > 0) {
-													
-												dependentColumns.forEach(dependCol => {
-													
-													const form = $$(self.formId);
-													const dependentReferencedColumnName = BackOfficeHelper.getReferencedColumnName(self.backOffice, dependCol, self.data);
-													
-													if (dependentReferencedColumnName && form) {
-														
-														let newValue = {};
-														
-														newValue[BackOfficeHelper.getColumnUID(dependCol)] = "";
-														newValue[BackOfficeHelper.getColumnUID(dependentReferencedColumnName)] = "";
-														
-														form.setValues(newValue, true);	
-													}
-												});
-											}
-												
-											const fieldEditButton = $$(field.name + "-edit");
-											
-											if (fieldEditButton) {
-												
-												if (this.getValue()) {
-													
-													fieldEditButton.enable();	
-												}
-												else {
-													
-													fieldEditButton.disable();
-												}
-											}
-										}
-									}
-								},
 								{
-									view: "icon", 
-									icon: "wxi-search",
-									tooltip: i18n.t("LBL_SEARCH"),
-									hidden: !visibleColumn || disabled,
-									on: {
-										onItemClick: function() {
-											
-											const table = self.data.find(e => e.id === refColumn.tableId);
-											let colFilter = undefined;
-											let colFilterValue = undefined;
-								
-											if (associatedField) {
-									
-												colFilter = table.columns.find(e => e.refColumn && associatedField.refColumn && e.refColumn.id === associatedField.refColumn.id);
-												
-												if (colFilter) {
-													
-													const form = $$(self.formId);
-													
-													if (form) {
-														
-														const formValues = form.getValues();
-														
-														if (formValues) {
-														
-															colFilterValue = formValues[BackOfficeHelper.getColumnUID(associatedField)];	
-														}
-													}
-												}
-											}
-											
-											if (colFilter && !colFilterValue) {
-									
-												(new MessageBox(MessageBox.WARN, i18n.t("LBL_BACKOFFICE_FIELD_IS_DEPENDENT_OF") + " " + (colFilter.label ?? colFilter.name))).show();
-											}
-											else {
-												
-												if (refGroupField) {
-													
-													updateRefFieldTree(table, refGroupField);	
-												}
-												else {
-													
-													updateRefFieldTable(table, colFilter, colFilterValue);	
-												}
-													
-											}
-										}  
-									}
-								},
-								{
-									view: "icon", 
-									icon: "wxi-plus",
-									tooltip: i18n.t("LBL_CMD_ADD"),
-									hidden: ((!visibleColumn) ? !visibleColumn: !visibleAddButton) || disabled,
-									on: {
-										onItemClick: createRefField
-									}
-								},
-								{
-									view: "icon", 
-									id: field.name + "-edit",
-									icon: "wxi-pencil",
-									tooltip: i18n.t("LBL_CMD_EDIT"),
-									hidden: ((!visibleColumn) ? !visibleColumn: !visibleEditButton) || disabled,
-									disable: !field.value,
-									on: {
-										onItemClick: function() {
-											
-											const form = $$(self.formId);
-											const table = self.data.find(e => e.id === refColumn.tableId);
-											
-											if (form && table) {
-												
-												const formValues = form.getValues();
-												
-												if (formValues && field.name && formValues[field.name]) {
-													
-													edit(table, formValues[field.name]);
-												}
-											}
-										}
-									}
+									rows: getViewFieldGroupData()
 								}
 							]
 						}
 						
+						
+						
+						function getViewFieldGroupData() {
+							
+							let viewFieldGroupData = [];
+							
+							let firstRow = {
+								
+								cols: [
+									{ 
+										view: fieldRef.view, 
+										type: "text", 
+										name: field.name + "$ref", 
+										required: field.required, 
+										label: util.getStringCapitalized(refTable.labelSingular ? BackOfficeHelper.translate(self.backOffice, refTable.labelSingular) : (refTable.label ? BackOfficeHelper.translate(self.backOffice, refTable.label) : refTable.name)), 
+										readonly: true, 
+										labelWidth: 275, 
+										value: !self.backOffice.onCancel || disabled ? (referencedColumnValue.value ?? field.value) : undefined, 
+										printValue: referencedColumnValue.value ?? field.value,
+										printId: field.name,
+										disabled: disabled,
+										css: "backoffice-input-readonly",
+										hidden: !visibleColumn
+									},
+									{ 
+										view: field.view, 
+										name: field.name, 
+										hidden: !visibleColumn || !showIdForm, 
+										readonly: true, 
+										css: "backoffice-input-readonly",
+										value: !self.backOffice.onCancel || disabled ? field.value : undefined, 
+										width: 50,
+										on: {
+											onChange: function() {
+												
+												const persistValues = onChangeField();
+												
+												if (Array.isArray(persistValues) && persistValues.length > 0 &&
+													Array.isArray(dependentColumns) && dependentColumns.length > 0) {
+														
+													dependentColumns.forEach(dependCol => {
+														
+														const form = $$(self.formId);
+														const dependentReferencedColumnName = BackOfficeHelper.getReferencedColumnName(self.backOffice, dependCol, self.data);
+														
+														if (dependentReferencedColumnName && form) {
+															
+															let newValue = {};
+															
+															newValue[BackOfficeHelper.getColumnUID(dependCol)] = "";
+															newValue[BackOfficeHelper.getColumnUID(dependentReferencedColumnName)] = "";
+															
+															form.setValues(newValue, true);	
+														}
+													});
+												}
+													
+												const fieldEditButton = $$(field.name + "-edit");
+												
+												if (fieldEditButton) {
+													
+													if (this.getValue()) {
+														
+														fieldEditButton.enable();	
+													}
+													else {
+														
+														fieldEditButton.disable();
+													}
+												}
+											}
+										}
+									},
+									{
+										view: "icon", 
+										icon: "wxi-search",
+										tooltip: i18n.t("LBL_SEARCH"),
+										hidden: !visibleColumn || disabled || !refEditable,
+										on: {
+											onItemClick: function() {
+												
+												const table = self.data.find(e => e.id === refColumn.tableId);
+												let colFilter = undefined;
+												let colFilterValue = undefined;
+									
+												if (associatedField) {
+										
+													colFilter = table.columns.find(e => e.refColumn && associatedField.refColumn && e.refColumn.id === associatedField.refColumn.id);
+													
+													if (colFilter) {
+														
+														const form = $$(self.formId);
+														
+														if (form) {
+															
+															const formValues = form.getValues();
+															
+															if (formValues) {
+															
+																colFilterValue = formValues[BackOfficeHelper.getColumnUID(associatedField)];	
+															}
+														}
+													}
+												}
+												
+												if (colFilter && !colFilterValue) {
+										
+													(new MessageBox(MessageBox.WARN, i18n.t("LBL_BACKOFFICE_FIELD_IS_DEPENDENT_OF") + " " + (colFilter.label ?? colFilter.name))).show();
+												}
+												else {
+													
+													if (refGroupField) {
+														
+														updateRefFieldTree(table, refGroupField);	
+													}
+													else {
+														
+														updateRefFieldTable(table, colFilter, colFilterValue);	
+													}
+														
+												}
+											}  
+										}
+									},
+									{
+										view: "icon", 
+										icon: "wxi-plus",
+										tooltip: i18n.t("LBL_CMD_ADD"),
+										hidden: ((!visibleColumn) ? !visibleColumn: !visibleAddButton) || disabled || !refEditable,
+										on: {
+											onItemClick: createRefField
+										}
+									},
+									{
+										view: "icon", 
+										id: field.name + "-edit",
+										icon: refEditable ? "wxi-pencil" : "wxi-eye",
+										tooltip: refEditable ? i18n.t("LBL_CMD_EDIT") : i18n.t("LBL_CMD_VIEW"),
+										hidden: ((!visibleColumn) ? !visibleColumn: !visibleEditButton) || disabled || self.backOffice.onCancel,
+										disable: !field.value,
+										on: {
+											onItemClick: function() {
+												
+												const form = $$(self.formId);
+												let table = self.data.find(e => e.id === refColumn.tableId);
+												
+												if (form && table) {
+													
+													const formValues = form.getValues();
+													
+													if (formValues && field.name && formValues[field.name]) {
+														
+														edit(table, formValues[field.name]);
+													}
+												}
+											}
+										}
+									}
+								] 
+							} 
+							
+							viewFieldGroupData.push(firstRow);
+							
+							const viewVirtualFields = getViewVirtualFields(!self.backOffice.onCancel ? field.value : undefined);
+							
+							if (viewVirtualFields) {
+							
+								viewFieldGroupData.push(viewVirtualFields);	
+							}
+							
+							return viewFieldGroupData;
+						}
+						
 						newField = fieldGroup;
+					}
+					
+					function getViewVirtualFields(idValue) {
+						
+						let viewVirtualFields;
+						
+						let virtualColumns = BackOfficeHelper.getVirtualColumns(self.backOffice, self.currentTableData, column, self.data);
+				
+						if (Array.isArray(virtualColumns) && virtualColumns.length > 0) {
+							
+							virtualColumns = virtualColumns.filter(e => e.virtualColumnMetadata.formVisible === true);
+							
+							if (Array.isArray(virtualColumns) && virtualColumns.length > 0) {
+								
+								viewVirtualFields = {
+									id: "virtual-fields-" + column.id + "-" + self.uid,
+									borderless: true,
+									//css: { "padding-left": "300px", "padding-top": "10px" },
+									template: function() {
+										
+										virtualColumns.sort((a, b) => (a.virtualColumnMetadata.position > b.virtualColumnMetadata.position) ? 1 : ((b.virtualColumnMetadata.position > a.virtualColumnMetadata.position) ? -1 : 0));
+										let value = '';
+										
+										virtualColumns.forEach(virtualColumn => {
+											
+											if (virtualColumn.virtualColumnMetadata && virtualColumn.virtualColumnMetadata.tableVisible) {
+												
+												const virtualColumnValue = BackOfficeHelper.getVirtualColumnValue(virtualColumn, idValue, self.data)
+												
+												if (virtualColumnValue) {
+													
+													value += `<li><b>${util.getStringCapitalized(virtualColumn.label ? BackOfficeHelper.translate(self.backOffice, virtualColumn.label) : virtualColumn.name)} :</b> ${virtualColumnValue.value !== undefined ? virtualColumnValue.value : ''}</li>`;
+												}
+											}
+										});
+										
+										return `<div class='backoffice-virtual-fields'><ul>${value}</ul></div>`;
+									}, 
+									height: (virtualColumns.length * 20) + 40
+								}	
+							}
+						}
+						
+						return viewVirtualFields;
 					}
 					
 					function updateRefFieldTable(table, colFilter, colFilterValue) {
@@ -386,6 +462,13 @@ export default class BackOfficeViewFormField  {
 										newValue[field.name + "$ref"] = (itemSelected.id != -1 ? itemSelected[BackOfficeHelper.getColumnUID(referencedColumnValue)] : "");
 										
 										form.setValues(newValue, true);
+										
+										const virtualFieldsView = $$("virtual-fields-" + column.id + "-" + self.uid);
+										
+										if (virtualFieldsView) {
+											
+											webix.ui(getViewVirtualFields(newValue[field.name]), virtualFieldsView);
+										}
 									}
 								}
 							}
@@ -534,7 +617,7 @@ export default class BackOfficeViewFormField  {
 					
 					function createRefField() {
 						
-						const table = self.data.find(e => e.id === refColumn.tableId);
+						let table = self.data.find(e => e.id === refColumn.tableId);
 			
 						if (table && Array.isArray(table.rows) && field.name && referencedColumnValue) {
 						
@@ -637,24 +720,43 @@ export default class BackOfficeViewFormField  {
 							
 							function onAccept(newRow) {
 								
-								if (newRow) {
+								if (newRow && Array.isArray(newRow.data)) {
 								
-									log.debug(newRow);
-									
 									self.refresh();
 									
 									const form = $$(self.formId);
 									
 									if (form) {
+										
+										const representativeField = BackOfficeHelper.getRepresentativeField(self.backOffice, table);
 									
-										if (referencedColumnValue) {
+										if (columnId && representativeField) {
 											
 											let newValue = {};
 											
-											newValue[BackOfficeHelper.getColumnUID(column)] = newRow[columnId.name];
-											newValue[BackOfficeHelper.getColumnUID(referencedColumnValue)] = newRow[BackOfficeHelper.getColumnUID(referencedColumnValue)];
+											const newIdRow = newRow.data.find(e => e.columnId == columnId.id);
+											const newRepresentativeRow = newRow.data.find(e => e.columnId == representativeField.id);
 											
-											form.setValues(newValue, true);
+											if (newIdRow && newRepresentativeRow) {
+												
+												table.rows = table.rows.filter(row => !row.data.find(d => d.columnId === columnId.id && d.value == newIdRow.value));
+												
+												table.rows.push(newRow);
+												
+												newValue[BackOfficeHelper.getColumnUID(column)] = newIdRow.value;
+												newValue[BackOfficeHelper.getColumnUID(column) + "$ref"] = newRepresentativeRow.value;
+												
+												form.setValues(newValue, true);
+											
+												const virtualFieldsView = $$("virtual-fields-" + column.id + "-" + self.uid);
+											
+												if (virtualFieldsView) {
+													
+													webix.ui(getViewVirtualFields(newIdRow.value), virtualFieldsView);
+												}	
+											}
+											
+											
 										}
 									}	
 								}
@@ -679,8 +781,10 @@ export default class BackOfficeViewFormField  {
 							} 
 						}
 					}
-					else if (dbType.name === BackOfficeHelper.DB_TYPE_INTEGER ||
-						dbType.name === BackOfficeHelper.DB_TYPE_DECIMAL) {
+					else if (dbType.name === BackOfficeHelper.DB_TYPE_SHORT ||
+							 dbType.name === BackOfficeHelper.DB_TYPE_INTEGER ||
+							 dbType.name === BackOfficeHelper.DB_TYPE_LONG ||
+							 dbType.name === BackOfficeHelper.DB_TYPE_DECIMAL) {
 
 						field.on = {
 							onKeyPress: function(code, e) {

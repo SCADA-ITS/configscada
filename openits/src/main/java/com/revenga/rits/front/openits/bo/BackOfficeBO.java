@@ -16,11 +16,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.revenga.rits.front.openits.backoffice.BackOfficeProcessor;
 import com.revenga.rits.front.openits.backoffice.BackOfficeProcessor.ShowData;
+import com.revenga.rits.front.openits.backoffice.model.Attachment;
+import com.revenga.rits.front.openits.backoffice.model.Request;
+import com.revenga.rits.front.openits.backoffice.model.Table;
+import com.revenga.rits.front.openits.backoffice.model.Request.RequestResult;
 import com.revenga.rits.front.openits.model.UserSessionUI;
-import com.revenga.rits.front.openits.model.backoffice.Attachment;
-import com.revenga.rits.front.openits.model.backoffice.Request;
-import com.revenga.rits.front.openits.model.backoffice.Request.RequestResult;
-import com.revenga.rits.front.openits.model.backoffice.Table;
 import com.revenga.rits.front.openits.service.BackOfficeManager;
 import com.revenga.rits.front.openits.service.user.SessionService;
 import com.revenga.rits.front.openits.util.ConversionUtil;
@@ -94,7 +94,7 @@ public class BackOfficeBO {
 		return backOfficeProcessor.get(backOfficeId, tableName, conditions);
 	}
 		
-	public List<Attachment> getAttachments(Integer backOfficeId, Attachment.Type attachmentType, String tableName, Integer id) {
+	public List<Attachment> getAttachments(Integer backOfficeId, Attachment.Type attachmentType, String tableName, Long id) {
 		
 		BackOfficeProcessor backOfficeProcessor = new BackOfficeProcessor(groovyManager, backOfficeService, backOfficeManager, getLocaleCode(), ShowData.NONE);
 		
@@ -108,7 +108,7 @@ public class BackOfficeBO {
 		return backOfficeProcessor.editAttachment(attachmentType, backOfficeId, tableName, attachment);	
 	}
 	
-	public Attachment upload(String attachmentType, Integer backOfficeId, String tableName, Integer id, String groupName, Integer position, MultipartFile multipartFile) {
+	public Attachment upload(String attachmentType, Integer backOfficeId, String tableName, Long id, String groupName, Integer position, MultipartFile multipartFile) {
 		
 		BackOfficeProcessor backOfficeProcessor = new BackOfficeProcessor(groovyManager, backOfficeService, backOfficeManager, getLocaleCode(), ShowData.NONE);
 		

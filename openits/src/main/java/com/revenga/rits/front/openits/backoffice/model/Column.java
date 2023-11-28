@@ -1,4 +1,4 @@
-	package com.revenga.rits.front.openits.model.backoffice;
+	package com.revenga.rits.front.openits.backoffice.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +19,7 @@ public class Column extends Basic {
 	
 	private static final long serialVersionUID = 6576786859530145231L;
 	
-	public enum ColType { INTEGER, DECIMAL, STRING, BOOLEAN, TIMESTAMP }
+	public enum ColType { SHORT, INTEGER, LONG, DECIMAL, STRING, BOOLEAN, TIMESTAMP }
 	
 	@Data
 	@EqualsAndHashCode(callSuper=false)

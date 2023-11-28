@@ -16,7 +16,7 @@ import com.revenga.rits.front.openits.backoffice.BackOfficeException;
 import com.revenga.rits.front.openits.backoffice.BackOfficeUtil;
 import com.revenga.rits.front.openits.backoffice.groovy.AbstractBackOfficeGroovy;
 import com.revenga.rits.front.openits.backoffice.groovy.AbstractBackOfficeTask;
-import com.revenga.rits.front.openits.model.backoffice.CronTask;
+import com.revenga.rits.front.openits.backoffice.model.CronTask;
 import com.revenga.rits.front.openits.service.BackOfficeManager;
 import com.revenga.rits.front.openits.util.GroovyManager;
 import com.revenga.rits.front.openitsdao.model.BackOffice;

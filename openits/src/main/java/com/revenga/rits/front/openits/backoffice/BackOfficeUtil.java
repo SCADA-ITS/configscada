@@ -25,16 +25,16 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.CollectionUtils;
 
 import com.revenga.rits.front.openits.backoffice.groovy.AbstractBackOfficeGroovy;
-import com.revenga.rits.front.openits.model.backoffice.Column;
-import com.revenga.rits.front.openits.model.backoffice.Column.ColType;
-import com.revenga.rits.front.openits.model.backoffice.GroovyBasic;
-import com.revenga.rits.front.openits.model.backoffice.Request;
-import com.revenga.rits.front.openits.model.backoffice.Request.RequestInput;
-import com.revenga.rits.front.openits.model.backoffice.Request.RequestResult;
-import com.revenga.rits.front.openits.model.backoffice.Row;
-import com.revenga.rits.front.openits.model.backoffice.Row.RowData;
-import com.revenga.rits.front.openits.model.backoffice.Table;
-import com.revenga.rits.front.openits.model.backoffice.Table.RequestType;
+import com.revenga.rits.front.openits.backoffice.model.Column;
+import com.revenga.rits.front.openits.backoffice.model.GroovyBasic;
+import com.revenga.rits.front.openits.backoffice.model.Request;
+import com.revenga.rits.front.openits.backoffice.model.Row;
+import com.revenga.rits.front.openits.backoffice.model.Table;
+import com.revenga.rits.front.openits.backoffice.model.Column.ColType;
+import com.revenga.rits.front.openits.backoffice.model.Request.RequestInput;
+import com.revenga.rits.front.openits.backoffice.model.Request.RequestResult;
+import com.revenga.rits.front.openits.backoffice.model.Row.RowData;
+import com.revenga.rits.front.openits.backoffice.model.Table.RequestType;
 import com.revenga.rits.front.openits.util.GroovyManager;
 import com.revenga.rits.front.openitsdao.model.BackOffice;
 
@@ -204,9 +204,17 @@ public class BackOfficeUtil {
 			
 			value = rs.getString(column.getName()); 
 		}
+		else if (column.getColType().equals(ColType.SHORT)) {
+			
+			value = String.valueOf(rs.getShort(column.getName()));
+		}
 		else if (column.getColType().equals(ColType.INTEGER)) {
 			
 			value = String.valueOf(rs.getInt(column.getName()));
+		}
+		else if (column.getColType().equals(ColType.LONG)) {
+			
+			value = String.valueOf(rs.getLong(column.getName()));
 		}
 		else if (column.getColType().equals(ColType.DECIMAL)) {
 			
@@ -254,9 +262,17 @@ public class BackOfficeUtil {
 		
 		if (!StringUtils.isEmpty(dataType)) {
 		
-			if (dataType.equals(("int4"))) {
+			if (dataType.equals(("int2"))) {
+				
+				col.setColType(ColType.SHORT);
+			}
+			else if (dataType.equals(("int4"))) {
 				
 				col.setColType(ColType.INTEGER);
+			}
+			else if (dataType.equals(("int8"))) {
+				
+				col.setColType(ColType.LONG);
 			}
 			else if (dataType.equals(("float8"))) {
 				
@@ -281,9 +297,17 @@ public class BackOfficeUtil {
 		
 		if (!StringUtils.isEmpty(dataType)) {
 		
-			if (StringUtils.equalsAny(dataType, "int", "tinyint", "bigint", "smallint")) {
+			if (StringUtils.equalsAny(dataType, "tinyint", "smallint")) {
+				
+				col.setColType(ColType.SHORT);
+			}
+			else if (StringUtils.equalsAny(dataType, "int")) {
 				
 				col.setColType(ColType.INTEGER);
+			}
+			else if (StringUtils.equalsAny(dataType, "bigint")) {
+				
+				col.setColType(ColType.LONG);
 			}
 			else if (StringUtils.equalsAny(dataType, "float", "decimal", "numeric")) {
 				
@@ -448,9 +472,17 @@ public class BackOfficeUtil {
 						
 						defaultValue = rs.getString(fieldName); 
 					}
+					else if (column.getColType().equals(ColType.SHORT)) {
+						
+						defaultValue = String.valueOf(rs.getShort(fieldName));
+					}
 					else if (column.getColType().equals(ColType.INTEGER)) {
 						
 						defaultValue = String.valueOf(rs.getInt(fieldName));
+					}
+					else if (column.getColType().equals(ColType.LONG)) {
+						
+						defaultValue = String.valueOf(rs.getLong(fieldName));
 					}
 					else if (column.getColType().equals(ColType.DECIMAL)) {
 						
@@ -479,7 +511,9 @@ public class BackOfficeUtil {
 			
 			defaultValue = "";
 		}
-		else if (column.getColType().equals(ColType.INTEGER)) {
+		else if (column.getColType().equals(ColType.SHORT) ||
+				 column.getColType().equals(ColType.INTEGER) ||
+				 column.getColType().equals(ColType.LONG)) {
 			
 			defaultValue = String.valueOf(0);
 		}
@@ -538,9 +572,9 @@ public class BackOfficeUtil {
 		return sql;
 	}
 	
-	public static Integer getNextId(Connection conn, BackOffice backOffice, Table table) throws SQLException {
+	public static Long getNextId(Connection conn, BackOffice backOffice, Table table) throws SQLException {
 		
-		Integer nextId = null;
+		Long nextId = null;
 		
 		Column columnId = table.getColumns().stream().filter(e -> e.getPrimaryKey().booleanValue()).findFirst().orElse(null);
 		
@@ -589,7 +623,7 @@ public class BackOfficeUtil {
 
 					if (rs.next()) {
 						
-						nextId = rs.getInt("next_id");
+						nextId = rs.getLong("next_id");
 					}
 				}
 			}
@@ -720,7 +754,7 @@ public class BackOfficeUtil {
 	}
 	
 	public static AbstractBackOfficeGroovy newGroovyInstance(GroovyManager groovyManager, GroovyBasic groovyBasic,
-			Connection conn, String schema, Table table, Integer id, RequestResult requestResult) throws Exception {
+			Connection conn, String schema, Table table, Long id, RequestResult requestResult) throws Exception {
 		
 		String groovyFile = groovyBasic.getGroovy();
 		
@@ -816,7 +850,10 @@ public class BackOfficeUtil {
 						
 						if (col != null) {
 							
-							if (col.getColType().equals(ColType.DECIMAL) || col.getColType().equals(ColType.INTEGER)) {
+							if (col.getColType().equals(ColType.DECIMAL) || 
+								col.getColType().equals(ColType.SHORT) ||
+								col.getColType().equals(ColType.INTEGER) ||
+								col.getColType().equals(ColType.LONG)) {
 								
 								items[2] = items[2].replace("'", "");
 							}

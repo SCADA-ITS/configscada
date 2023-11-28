@@ -24,11 +24,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.revenga.rits.front.openits.backoffice.model.Attachment;
+import com.revenga.rits.front.openits.backoffice.model.Request;
+import com.revenga.rits.front.openits.backoffice.model.Table;
+import com.revenga.rits.front.openits.backoffice.model.Request.RequestResult;
 import com.revenga.rits.front.openits.bo.BackOfficeBO;
-import com.revenga.rits.front.openits.model.backoffice.Attachment;
-import com.revenga.rits.front.openits.model.backoffice.Request;
-import com.revenga.rits.front.openits.model.backoffice.Request.RequestResult;
-import com.revenga.rits.front.openits.model.backoffice.Table;
 import com.revenga.rits.front.openitsdao.model.BackOffice;
 
 import io.swagger.annotations.Api;
@@ -160,7 +160,7 @@ public class BackOfficeController {
 			@ApiParam(name = "attachmentType", type = "String", example = "image", required = true) @PathVariable String attachmentType,
 			@ApiParam(name = "backOfficeId", type = "Integer", example = "1", required = true) @PathVariable Integer backOfficeId,
 			@ApiParam(name = "tableName", type = "String", example = "products", required = true) @PathVariable String tableName,
-			@ApiParam(name = "id", type = "Integer", example = "1", required = true) @PathVariable Integer id,
+			@ApiParam(name = "id", type = "Long", example = "1", required = true) @PathVariable Long id,
 			@ApiParam(name = "groupName", type = "String", example = "main", required = true) @PathVariable String groupName,
 			@ApiParam(name = "position", type = "String", example = "1", required = true) @PathVariable Integer position,
 			@RequestParam("upload") MultipartFile multipartFile) {

@@ -10,8 +10,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import javax.annotation.PostConstruct;
-
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.ArrayUtils;
@@ -684,7 +682,7 @@ public class VODataSourceAdapter {
 
 				if (objValue instanceof String) {
 
-					paramTypeGraphQL = String.format("%s:\"%s\"", paramTypeArray[paramTypePos], (String) objValue);
+					paramTypeGraphQL = String.format("%s:\"%s\"", paramTypeArray[paramTypePos], objValue);
 
 				} 
 				else if (objValue instanceof List<?>) {

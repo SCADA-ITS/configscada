@@ -11,13 +11,13 @@ import org.springframework.util.CollectionUtils;
 
 import com.revenga.rits.front.openits.backoffice.groovy.AbstractBackOfficeGroovy;
 import com.revenga.rits.front.openits.backoffice.groovy.AbstractBackOfficeTrigger;
-import com.revenga.rits.front.openits.model.backoffice.Column;
-import com.revenga.rits.front.openits.model.backoffice.Request;
-import com.revenga.rits.front.openits.model.backoffice.Request.RequestResult;
-import com.revenga.rits.front.openits.model.backoffice.Row;
-import com.revenga.rits.front.openits.model.backoffice.Table;
-import com.revenga.rits.front.openits.model.backoffice.Table.RequestType;
-import com.revenga.rits.front.openits.model.backoffice.Table.Trigger;
+import com.revenga.rits.front.openits.backoffice.model.Column;
+import com.revenga.rits.front.openits.backoffice.model.Request;
+import com.revenga.rits.front.openits.backoffice.model.Row;
+import com.revenga.rits.front.openits.backoffice.model.Table;
+import com.revenga.rits.front.openits.backoffice.model.Request.RequestResult;
+import com.revenga.rits.front.openits.backoffice.model.Table.RequestType;
+import com.revenga.rits.front.openits.backoffice.model.Table.Trigger;
 import com.revenga.rits.front.openitsdao.model.BackOffice;
 import com.revenga.rits.lib.encrypt.util.AES;
 

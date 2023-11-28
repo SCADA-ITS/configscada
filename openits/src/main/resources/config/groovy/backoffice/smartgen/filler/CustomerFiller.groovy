@@ -6,7 +6,7 @@ package config.groovy.backoffice.smartgen.filler;
 import org.apache.commons.lang3.StringUtils;
 
 import com.revenga.rits.front.openits.backoffice.groovy.AbstractBackOfficeFiller;
-import com.revenga.rits.front.openits.model.backoffice.Row;
+import com.revenga.rits.front.openits.backoffice.model.Row;
 
 public class CustomerFiller extends AbstractBackOfficeFiller {
 

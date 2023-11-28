@@ -8,11 +8,11 @@ import org.springframework.util.CollectionUtils;
 
 import com.revenga.rits.front.openits.backoffice.BackOfficeUtil;
 import com.revenga.rits.front.openits.backoffice.BackOfficeUtil.DBType;
-import com.revenga.rits.front.openits.model.backoffice.Request.RequestResult.RequestResultMessage;
-import com.revenga.rits.front.openits.model.backoffice.Row;
-import com.revenga.rits.front.openits.model.backoffice.Row.RowData;
-import com.revenga.rits.front.openits.model.backoffice.Table;
-import com.revenga.rits.front.openits.model.backoffice.Table.RequestType;
+import com.revenga.rits.front.openits.backoffice.model.Row;
+import com.revenga.rits.front.openits.backoffice.model.Table;
+import com.revenga.rits.front.openits.backoffice.model.Request.RequestResult.RequestResultMessage;
+import com.revenga.rits.front.openits.backoffice.model.Row.RowData;
+import com.revenga.rits.front.openits.backoffice.model.Table.RequestType;
 
 import lombok.Data;
 
@@ -22,7 +22,7 @@ public abstract class AbstractBackOfficeGroovy implements Cloneable {
 	protected Connection conn;
 	protected String schema;
 	protected Table table;
-	protected Integer id;
+	protected Long id;
 	protected Row oldRow;
 	protected Row newRow;
 	protected RequestResultMessage requestResultMessage;
@@ -34,7 +34,7 @@ public abstract class AbstractBackOfficeGroovy implements Cloneable {
 		this.log = log;
 	}
 	
-	protected AbstractBackOfficeGroovy(Connection conn, String schema, Table table, Integer id, Row oldRow, Row newRow,
+	protected AbstractBackOfficeGroovy(Connection conn, String schema, Table table, Long id, Row oldRow, Row newRow,
 			RequestResultMessage requestResultMessage, org.apache.logging.log4j.Logger log) {
 	
 		this.conn = conn;

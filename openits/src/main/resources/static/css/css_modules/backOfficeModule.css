@@ -116,7 +116,8 @@
     padding: 6px 12px;
 }
 
-.backoffice-input-readonly input {
+.backoffice-input-readonly input,
+.backoffice-textarea-readonly textarea {
   font-size: 14px;
   height: 100%;
   padding: 0px 12px;
@@ -129,4 +130,18 @@
 	.altBackBorderColor;*/
   -webkit-appearance: none;
   border-radius: 0;
+}
+
+.backoffice-virtual-fields {
+	padding-left: 275px;
+	padding-top: 5px;
+	font-size: 13px;
+	font-style: italic;
+	color: #9C9C9C;
+  	background: #ffffff;
+  	font-family: Roboto, sans-serif;
+}
+
+.backoffice-virtual-fields li {
+	margin: 10px 0;
 }

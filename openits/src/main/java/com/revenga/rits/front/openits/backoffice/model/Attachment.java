@@ -1,4 +1,4 @@
-package com.revenga.rits.front.openits.model.backoffice;
+package com.revenga.rits.front.openits.backoffice.model;
 
 import java.io.File;
 import java.io.Serializable;
@@ -26,7 +26,7 @@ public class Attachment implements Serializable, Cloneable {
 	@Setter(AccessLevel.NONE)
 	private Integer tableId;
 	
-	private Integer idValue;
+	private Long idValue;
 	
 	private String groupName;
 	private String fileName;
@@ -50,7 +50,7 @@ public class Attachment implements Serializable, Cloneable {
 		return null;
 	}
 	
-	public String getPath(String baseDir, Integer idValue, Integer backofficeId) {
+	public String getPath(String baseDir, Long idValue, Integer backofficeId) {
 		
 		return String.join(File.separator, baseDir, "backoffice", backofficeId.toString(),
 				this.getTable().getName(), idValue.toString(),

@@ -18,7 +18,11 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 		this.formHeight = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, BackOfficeHelper.META_TYPE_TABLE.PROPERTY.FORM_HEIGHT, backOffice.metadata, currentTableData);
 		this.formWidth = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, BackOfficeHelper.META_TYPE_TABLE.PROPERTY.FORM_WIDTH, backOffice.metadata, currentTableData);
 		this.gridFilters = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, BackOfficeHelper.META_TYPE_TABLE.PROPERTY.GRID_FILTERS, backOffice.metadata, currentTableData);
-
+		this.gridTableNames = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, BackOfficeHelper.META_TYPE_TABLE.PROPERTY.GRID_TABLES, backOffice.metadata, currentTableData);
+		this.gridTableColsOrientation = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, BackOfficeHelper.META_TYPE_TABLE.PROPERTY.GRID_TABLES_COLS_ORIENTATION, backOffice.metadata, currentTableData);
+		this.referTablesCounter = !backOffice.referTablesCounter ? 2 : backOffice.referTablesCounter;  
+		
+		
 		if (backOffice.containerId) {
 			
 			let windowTitle = util.getStringCapitalized(currentTableData.label ? BackOfficeHelper.translate(backOffice, currentTableData.label) : currentTableData.name);
@@ -34,6 +38,8 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 		
 		this.refreshInterval = undefined;
 		this.selectedRefreshTime = currentTableData.metadata && currentTableData.metadata[BackOfficeHelper.META_TYPE_TABLE.PROPERTY.AUTOREFRESH.name] && currentTableData.metadata[BackOfficeHelper.META_TYPE_TABLE.PROPERTY.AUTOREFRESH.name] > 0 ? currentTableData.metadata[BackOfficeHelper.META_TYPE_TABLE.PROPERTY.AUTOREFRESH.name] : undefined;
+		this.selectedId = undefined;
+		this.newId = undefined;
 	}
 	
 	getView() {
@@ -52,17 +58,38 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 				let dataTableContent = self.dataTable.getView(); 
 				
 				viewDataTable = {
-					cols: [
-						{
+					cols: function() {
+					
+						let cols = [];
+						
+						cols.push({
 							id: "loading-backOffice-view-" + self.uid,
 							hidden: true,
 							rows: [util.ui.getViewDrawLoading()]
-						},
-						{
-							id: "backOffice-view-" + self.uid,
-							rows: dataTableContent
-						}
-					],
+						});
+						
+						let viewContent = { id: "content-backOffice-view-" + self.uid };
+						
+						viewContent[!self.gridTableColsOrientation ? "rows" : "cols"] = [
+							{
+								id: "backOffice-view-" + self.uid,
+								rows: dataTableContent
+							},
+							{
+								id: "backOffice-view-resizer-" + self.uid,
+								view: "resizer",
+								hidden: true,
+							},
+							{
+								id: "backOffice-view-refer-tables-" + self.uid,
+								hidden: true,
+							}		
+						];
+						
+						cols.push(viewContent);
+						
+						return cols;
+					}(),
 					on: {
 						onDestruct: function() {
 	
@@ -74,9 +101,9 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 					}
 				};
 				
-				viewDataTable.cols[1].rows.push({
+				viewDataTable.cols.push({
 					view: "template",
-					height: 1,
+					width: 1,
 					borderless: true,
 					on: {
 						onAfterRender: function() {
@@ -87,6 +114,15 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 												
 								$$("slider-" + self.uid).setValue(self.currentTableData.metadata[BackOfficeHelper.META_TYPE_TABLE.PROPERTY.AUTOREFRESH.name]);
 							}
+							
+							setTimeout(function() {
+									
+								if (self.referTablesCounter > 0 && Array.isArray(self.gridTableNames) && self.gridTableNames.length > 0) {
+								
+									self.dataTable.selectByIndex(0);
+								}						
+
+							}, 10);
 						},
 						onBeforeRender: function() {
 
@@ -104,9 +140,20 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 										newDataTableData.metadata.gridCommands = self.dataTable.metadata.gridCommands;
 
 										for (let gridField of newDataTableData.metadata.gridFields) {
+											
+											const column = self.currentTableData.columns.find(e => e.name == gridField.sourceField);
+											
+											if (column) {
+											
+												const referencedColumnName = BackOfficeHelper.getReferencedColumnName(self.backOffice, column, self.data);
+												const sourceField = referencedColumnName ? (BackOfficeHelper.getColumnUID(column) + "$ref") : BackOfficeHelper.getColumnUID(column);
+												
+												gridField.sourceField = sourceField;
+												gridField.label = util.getStringCapitalized(BackOfficeHelper.translate(self.backOffice, gridField.label));	
+											}
 
-											gridField.sourceField = getNewSourceField(gridField.sourceField);
-											gridField.label = util.getStringCapitalized(BackOfficeHelper.translate(self.backOffice, gridField.label));
+											//gridField.sourceField = getNewSourceField(gridField.sourceField);
+											
 										}								
 										
 										self.dataTable = new DataTable(null, null, newDataTableData.metadata, self.dataTable.data, self.dataTable.events);
@@ -119,6 +166,12 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 
 										webix.ui(newTable, $$("backOffice-view-" + self.uid));
 										self.dataTable.callbacks();
+										
+										if (self.referTablesCounter > 0 && Array.isArray(self.gridTableNames) && self.gridTableNames.length > 0) {
+								
+											self.dataTable.selectByIndex(0);
+										}
+										
 										$$("loading-backOffice-view-" + self.uid).hide();
 									}
 								});
@@ -176,6 +229,7 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 								max: 300,
 								step: 5,
 								title: webix.template("#value# secs"),
+								hidden: !self.backOffice.moduleId,
 								on: {
 									onChange: function(newv) {
 		
@@ -198,7 +252,7 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 					clearInterval(self.refreshInterval);
 				}
 				
-				if (self.currentTableData.metadata && self.currentTableData.metadata[BackOfficeHelper.META_TYPE_TABLE.PROPERTY.AUTOREFRESH.name] && 
+				if (self.backOffice.moduleId && self.currentTableData.metadata && self.currentTableData.metadata[BackOfficeHelper.META_TYPE_TABLE.PROPERTY.AUTOREFRESH.name] && 
 					!isNaN(self.currentTableData.metadata[BackOfficeHelper.META_TYPE_TABLE.PROPERTY.AUTOREFRESH.name])) {
 						
 					if (self.selectedRefreshTime > 0) {
@@ -240,6 +294,13 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 								self.dataTable.clear();
 								self.dataTable.add(getData());
 								self.dataTable.select(selectedIds);
+								
+								if (!isNaN(self.newId)) {
+									
+									self.dataTable.select(self.newId);
+									
+									self.newId = undefined;	
+								}
 								
 								grid.hideProgress();								
 							});	
@@ -320,6 +381,76 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 				}
 			}
 			
+			function getRecord(row) {
+				
+				let record = {};
+				
+				if (Array.isArray(row.data) && row.data.length > 0) {
+						
+					row.data.forEach(rowData => {
+					
+						const column = self.currentTableData.columns.find(col => col.id === rowData.columnId);
+						
+						if (column && column.name) {
+							
+							let filterColumnName = undefined;
+				
+							if (self.backOffice.filterColumn && self.backOffice.filterColumnValue) {
+								
+								filterColumnName = self.backOffice.filterColumn.name;
+							}
+								
+							if (!filterColumnName || column.name != filterColumnName) {
+								
+								const referencedColumnValue = BackOfficeHelper.getReferencedColumnValue(self.backOffice, column, rowData.value, self.data);
+								
+								let value = rowData.value;
+								
+								if (column.colType === BackOfficeHelper.DB_TYPE_TIMESTAMP && !isNaN(value)) {
+									
+									value = new Date(parseInt(value));
+								}
+							
+								if (referencedColumnValue) {
+									
+									let referencedValue = referencedColumnValue.value;
+									
+									if (referencedColumnValue.colType === BackOfficeHelper.DB_TYPE_TIMESTAMP && !isNaN(referencedValue)) {
+									
+										referencedValue = new Date(parsetInt(referencedColumnValue.value));												
+									}
+									
+									record[BackOfficeHelper.getColumnUID(column) + "$ref"] = referencedValue ?? value;
+									
+									const virtualColumns = BackOfficeHelper.getVirtualColumns(self.backOffice, self.currentTableData, column, self.data);
+				
+									if (Array.isArray(virtualColumns) && virtualColumns.length > 0) {
+										
+										virtualColumns.sort((a, b) => (a.virtualColumnMetadata.position > b.virtualColumnMetadata.position) ? 1 : ((b.virtualColumnMetadata.position > a.virtualColumnMetadata.position) ? -1 : 0));
+										
+										virtualColumns.forEach(virtualColumn => {
+											
+											const virtualColumnValue = BackOfficeHelper.getVirtualColumnValue(virtualColumn, rowData.value, self.data);
+											
+											if (virtualColumnValue) {
+												
+												record[BackOfficeHelper.getColumnUID(virtualColumn) + "$ref"] = virtualColumnValue.value; 	
+											}
+										});
+									}
+								}
+								else {
+									
+									record[column.primaryKey ? "id" : BackOfficeHelper.getColumnUID(column)] = value;	
+								}	
+							}
+						} 
+					});
+				}
+				
+				return record;
+			}
+			
 			function getData() {
 			
 				let data = [];
@@ -328,55 +459,8 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 					
 					self.currentTableData.rows.forEach(row => {
 				
-						if (Array.isArray(row.data) && row.data.length > 0) {
-						
-							let record = {};
+						data.push(getRecord(row));
 							
-							row.data.forEach(e => {
-							
-								const column = self.currentTableData.columns.find(col => col.id === e.columnId);
-								
-								if (column && column.name) {
-									
-									let filterColumnName = undefined;
-						
-									if (self.backOffice.filterColumn && self.backOffice.filterColumnValue) {
-										
-										filterColumnName = self.backOffice.filterColumn.name;
-									}
-										
-									if (!filterColumnName || column.name != filterColumnName) {
-										
-										const referencedColumnValue = BackOfficeHelper.getReferencedColumnValue(self.backOffice, column, e.value, self.data);
-										
-										let value = e.value;
-										
-										if (column.colType === BackOfficeHelper.DB_TYPE_TIMESTAMP && !isNaN(value)) {
-											
-											value = new Date(parseInt(value));
-										}
-									
-										if (referencedColumnValue) {
-											
-											let referencedValue = referencedColumnValue.value;
-											
-											if (referencedColumnValue.colType === BackOfficeHelper.DB_TYPE_TIMESTAMP && !isNaN(referencedValue)) {
-											
-												referencedValue = new Date(parsetInt(referencedColumnValue.value));												
-											}
-											
-											record[BackOfficeHelper.getColumnUID(column) + "$ref"] = referencedValue ?? value;
-										}
-										else {
-											
-											record[column.primaryKey ? "id" : BackOfficeHelper.getColumnUID(column)] = value;	
-										}	
-									}
-								} 
-							});
-							
-							data.push(record);
-						}		
 					});
 				}
 				
@@ -386,193 +470,119 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 			function getDataTable() {
 				
 				let firstCommandIdCalculated = Object.keys(BackOfficeViewGrid.GRID_COMMANDS).length;
+				const editable = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, BackOfficeHelper.META_TYPE_TABLE.PROPERTY.EDITABLE, self.backOffice.metadata, self.currentTableData);
 				
 				function getMetadata() {
 
-						let icon;
-						let withIcon = (self.currentTableData.mdiIcon) ? "true" : "false";
+					let icon;
+					let withIcon = (self.currentTableData.mdiIcon) ? "true" : "false";
 
-						const printable = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, BackOfficeHelper.META_TYPE_TABLE.PROPERTY.PRINTABLE, self.backOffice.metadata, self.currentTableData);
-						const exportable = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, BackOfficeHelper.META_TYPE_TABLE.PROPERTY.EXPORTABLE, self.backOffice.metadata, self.currentTableData);
+					const printable = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, BackOfficeHelper.META_TYPE_TABLE.PROPERTY.PRINTABLE, self.backOffice.metadata, self.currentTableData);
+					const exportable = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, BackOfficeHelper.META_TYPE_TABLE.PROPERTY.EXPORTABLE, self.backOffice.metadata, self.currentTableData);
 
-						const defaultGridOptionValues = [
-							{ gridOption: { id: 1 }, value: "true" },
-							//					{ gridOption: { id: 2 }, value: "true" },
-							//					{ gridOption: { id: 3 }, value: "2" },
-							//					{ gridOption: { id: 4 }, value: "asc" },
-							{ gridOption: { id: 7 }, value: withIcon },
-							{ gridOption: { id: 8 }, value: "false" },
-							{ gridOption: { id: 9 }, value: "true" },
-							{ gridOption: { id: 10 }, value: "true" },
-							{ gridOption: { id: 11 }, value: "true" },
-							{ gridOption: { id: 12 }, value: "true" },
-							{ gridOption: { id: 13 }, value: "true" },
-							{ gridOption: { id: 14 }, value: "false" },
-							{ gridOption: { id: 21 }, value: "auto" },
-							{ gridOption: { id: 23 }, value: "true" },
-							{ gridOption: { id: 25 }, value: printable },
-							{ gridOption: { id: 26 }, value: exportable }
-						];
+					const defaultGridOptionValues = [
+						{ gridOption: { id: 1 }, value: "true" },
+						//					{ gridOption: { id: 2 }, value: "true" },
+						//					{ gridOption: { id: 3 }, value: "2" },
+						//					{ gridOption: { id: 4 }, value: "asc" },
+						{ gridOption: { id: 7 }, value: withIcon },
+						{ gridOption: { id: 8 }, value: "false" },
+						{ gridOption: { id: 9 }, value: "true" },
+						{ gridOption: { id: 10 }, value: "true" },
+						{ gridOption: { id: 11 }, value: "true" },
+						{ gridOption: { id: 12 }, value: "true" },
+						{ gridOption: { id: 13 }, value: "true" },
+						{ gridOption: { id: 14 }, value: "false" },
+						{ gridOption: { id: 21 }, value: "auto" },
+						{ gridOption: { id: 23 }, value: "true" },
+						{ gridOption: { id: 25 }, value: printable },
+						{ gridOption: { id: 26 }, value: exportable }
+					];
 
-						if (IS_TRUE(withIcon)) {
+					if (IS_TRUE(withIcon)) {
 
-							icon = self.currentTableData.mdiIcon;
-							defaultGridOptionValues.push({ gridOption: { id: 16 }, value: icon });
-						}
+						icon = self.currentTableData.mdiIcon;
+						defaultGridOptionValues.push({ gridOption: { id: 16 }, value: icon });
+					}
 
-						let metadata = {
-							filter: self.gridFilters,
-							label: self.currentTableData.label ?? self.currentTableData.name,
-							visible: true,
-							gridOptionValues: defaultGridOptionValues,
-							gridFields: [],
-							gridCommands: []
-						};
+					let metadata = {
+						filter: self.gridFilters,
+						label: self.currentTableData.label ?? self.currentTableData.name,
+						visible: true,
+						gridOptionValues: defaultGridOptionValues,
+						gridFields: [],
+						gridCommands: []
+					};
+					
+					if (Array.isArray(self.currentTableData.columns)) {
 
-						if (Array.isArray(self.currentTableData.columns)) {
+						self.currentTableData.columns.forEach(column => {
 
-							let idxField = 1;
+							let pos = (column.metadata) ? column.metadata[BackOfficeHelper.META_TYPE_COLUMN.PROPERTY.POSITION.name] : undefined;
 
-							self.currentTableData.columns.forEach(column => {
+							if (pos != undefined) {
 
-								let pos = (column.metadata) ? column.metadata[BackOfficeHelper.META_TYPE_COLUMN.PROPERTY.POSITION.name] : undefined;
+								column.position = pos;
+							}
+						});
 
-								if (pos != undefined) {
+						self.currentTableData.columns.sort((a, b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));
 
-									column.position = pos;
-								}
-							});
+						let gridFields = [];
+						
+						let idxField = 1;
 
-							self.currentTableData.columns.sort((a, b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));
+						self.currentTableData.columns.forEach(column => {
 
-							let gridFields = [];
-
-							self.currentTableData.columns.forEach(column => {
-
-								const visibleColumn = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_COLUMN, BackOfficeHelper.META_TYPE_COLUMN.PROPERTY.TABLE_VISIBLE, self.backOffice.metadata, column);
-								const showIdTable = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, BackOfficeHelper.META_TYPE_TABLE.PROPERTY.SHOW_ID_TABLE,  self.backOffice.metadata, self.currentTableData);
-
-								let filterColumnName = undefined;
-
-								if (self.backOffice.filterColumn && self.backOffice.filterColumnValue) {
-
-									filterColumnName = self.backOffice.filterColumn.name;
-								}
-
-								if (!filterColumnName || column.name != filterColumnName) {
-
-									const referencedColumnName = BackOfficeHelper.getReferencedColumnName(self.backOffice, column, self.data);
-									const sourceField = referencedColumnName ? (BackOfficeHelper.getColumnUID(column) + "$ref") : BackOfficeHelper.getColumnUID(column);
-
-									let dataTypeId = BackOfficeHelper.getDBTypes(referencedColumnName ? referencedColumnName.colType : column.colType).id;
-									let isBoolean = false;
-
-									if (dataTypeId == BackOfficeHelper.getDBTypes(BackOfficeHelper.DB_TYPE_BOOLEAN).id) {
-
-										dataTypeId = BackOfficeHelper.getDBTypes(BackOfficeHelper.DB_TYPE_STRING).id
-										isBoolean = true;
-									}
-
-									let label = column.label ?? column.name;
-
-									if (referencedColumnName) {
-
-										const table = self.data.find(e => e.id === referencedColumnName.tableId);
-
-										if (table) {
-
-											label = table.labelSingular ?? (table.label ?? table.name);
-										}
-									}
-
-									let gridFiltersColumn = (column.metadata) ? column.metadata[BackOfficeHelper.META_TYPE_COLUMN.PROPERTY.GRID_FILTERS.name] : undefined;
-									let gridFilter = (gridFiltersColumn != undefined) ? gridFiltersColumn : self.gridFilters;
-
-									let gridField = {
-										id: idxField,
-										extended: false,
-										filtered: gridFilter,
-										isEpochMilli: dataTypeId == BackOfficeHelper.getDBTypes(BackOfficeHelper.DB_TYPE_TIMESTAMP).id,
-										isPk: column.primaryKey === true,
-										needsTranslation: false,
-										parameterized: referencedColumnName ? true : false,
-										position: idxField,
-										required: true,
-										label: util.getStringCapitalized(label),
-										sourceField: column.primaryKey ? "id" : sourceField,
-										visible: !column.primaryKey ? visibleColumn : (visibleColumn && showIdTable),
-										gridFieldDataType: {
-											id: dataTypeId
-										}
-									};
-
-									if (isBoolean) {
-
-										gridField.gridFieldIcons = [
-											{
-												id: 1,
-												avatar: false,
-												badgeColor: false,
-												enabled: true,
-												icon: "./img/state/valid.png",
-												showValue: false,
-												value: "true",
-												labelValue: "LBL_YES"
-											},
-											{
-												id: 2,
-												avatar: false,
-												badgeColor: false,
-												enabled: true,
-												icon: "./img/state/invalid.png",
-												showValue: false,
-												value: "false",
-												labelValue: "LBL_NO"
-											},
-											{
-												id: 3,
-												avatar: false,
-												badgeColor: false,
-												enabled: true,
-												icon: "./img/state/valid.png",
-												showValue: false,
-												value: "1",
-												labelValue: "LBL_YES"
-											},
-											{
-												id: 4,
-												avatar: false,
-												badgeColor: false,
-												enabled: true,
-												icon: "./img/state/invalid.png",
-												showValue: false,
-												value: "0",
-												labelValue: "LBL_NO"
+							const gridField = getGridField(column, idxField++);
+							
+							if (gridField) {
+								
+								gridFields.push(gridField);
+								
+								if (column.refColumn) {
+									
+									const virtualColumns = BackOfficeHelper.getVirtualColumns(self.backOffice, self.currentTableData, column, self.data);
+						
+									if (Array.isArray(virtualColumns) && virtualColumns.length > 0) {
+										
+										virtualColumns.sort((a, b) => (a.virtualColumnMetadata.position > b.virtualColumnMetadata.position) ? 1 : ((b.virtualColumnMetadata.position > a.virtualColumnMetadata.position) ? -1 : 0));
+										
+										virtualColumns.forEach(virtualColumn => {
+											
+											const gridVirtualField = getGridVirtualField(virtualColumn, idxField++)
+											
+											if (gridVirtualField) {
+									
+												gridFields.push(gridVirtualField);				
 											}
-										];
+										});
 									}
 
-									gridFields.push(gridField);
-
-									idxField++;
 								}
-							});
+							}
+							
+							
+						});
 
-							metadata.gridFields = gridFields;
-						}
-
-					metadata.gridCommands.push(
-						{
-							id: BackOfficeViewGrid.GRID_COMMANDS.refresh,
-							default_: false,
-							icon: "mdi mdi-refresh",
-							label: "LBL_TABLE_REFRESH",
-							multiselect: false,
-							position: BackOfficeViewGrid.GRID_COMMANDS.refresh,
-							showText: true,
-							itemRequired: false
-						},
-						{
+						metadata.gridFields = gridFields;
+					}
+					
+					metadata.gridCommands.push({
+						id: BackOfficeViewGrid.GRID_COMMANDS.refresh,
+						default_: false,
+						icon: "mdi mdi-refresh",
+						label: "LBL_TABLE_REFRESH",
+						multiselect: false,
+						position: BackOfficeViewGrid.GRID_COMMANDS.refresh,
+						showText: true,
+						itemRequired: false
+					});
+					
+					
+					if (editable) {
+						
+						metadata.gridCommands.push({
 							id: BackOfficeViewGrid.GRID_COMMANDS.new,
 							default_: false,
 							icon: "mdi mdi-plus",
@@ -580,19 +590,25 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 							multiselect: false,
 							position: BackOfficeViewGrid.GRID_COMMANDS.new,
 							showText: false,
+							unselectAllAfter: true,
 							itemRequired: false
-						},
-						{
-							id: BackOfficeViewGrid.GRID_COMMANDS.edit,
-							default_: true,
-							icon: "mdi mdi-pencil",
-							label: "LBL_CMD_EDIT",
-							multiselect: false,
-							position: BackOfficeViewGrid.GRID_COMMANDS.edit,
-							showText: false,
-							itemRequired: true
-						},
-						{
+						});	
+					}
+
+					metadata.gridCommands.push({
+						id: BackOfficeViewGrid.GRID_COMMANDS.edit,
+						default_: true,
+						icon: editable ? "mdi mdi-pencil" : "mdi mdi-eye",
+						label: editable ? "LBL_CMD_EDIT" : "LBL_CMD_VIEW",
+						multiselect: false,
+						position: BackOfficeViewGrid.GRID_COMMANDS.edit,
+						showText: false,
+						itemRequired: true
+					});
+					
+					if (editable) {
+						
+						metadata.gridCommands.push({
 							id: BackOfficeViewGrid.GRID_COMMANDS.delete,
 							default_: false,
 							icon: "mdi mdi-delete",
@@ -601,8 +617,8 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 							position: BackOfficeViewGrid.GRID_COMMANDS.delete,
 							showText: false,
 							itemRequired: true
-						}
-					);
+						});
+					}	
 					
 					if (!self.backOffice.filterColumn) {
 					
@@ -616,7 +632,8 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 								position: BackOfficeViewGrid.GRID_COMMANDS.filter,
 								showText: true,
 								itemRequired: false
-							});
+							}
+						);
 					}
 
 					if (Array.isArray(self.currentTableData.commands) && self.currentTableData.commands.length > 0) {
@@ -663,6 +680,170 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 
 						return commandButtons;
 					}
+					
+					function getGridFieldDataType(dataTypeId) {
+						
+						let gridFieldDataTypeId = undefined;
+							
+						if (dataTypeId == BackOfficeHelper.getDBTypes(BackOfficeHelper.DB_TYPE_STRING).id ||
+						    dataTypeId == BackOfficeHelper.getDBTypes(BackOfficeHelper.DB_TYPE_BOOLEAN).id) {
+							
+							gridFieldDataTypeId = 1;
+						}
+						else if (dataTypeId == BackOfficeHelper.getDBTypes(BackOfficeHelper.DB_TYPE_SHORT).id ||
+								 dataTypeId == BackOfficeHelper.getDBTypes(BackOfficeHelper.DB_TYPE_INTEGER).id ||
+								 dataTypeId == BackOfficeHelper.getDBTypes(BackOfficeHelper.DB_TYPE_LONG).id) {
+									
+							gridFieldDataTypeId = 2;
+						}
+						else if (dataTypeId == BackOfficeHelper.getDBTypes(BackOfficeHelper.DB_TYPE_DECIMAL).id) {
+									
+							gridFieldDataTypeId = 3;
+						}
+						else if (dataTypeId == BackOfficeHelper.getDBTypes(BackOfficeHelper.DB_TYPE_TIMESTAMP).id) {
+									
+							gridFieldDataTypeId = 4;
+						}
+						
+						return gridFieldDataTypeId;
+					}
+					
+					function assignGridFieldIcons(gridField) {
+						
+						gridField.gridFieldIcons = [
+							{
+								id: 1,
+								avatar: false,
+								badgeColor: false,
+								enabled: true,
+								icon: "./img/state/valid.png",
+								showValue: false,
+								value: "true",
+								labelValue: "LBL_YES"
+							},
+							{
+								id: 2,
+								avatar: false,
+								badgeColor: false,
+								enabled: true,
+								icon: "./img/state/invalid.png",
+								showValue: false,
+								value: "false",
+								labelValue: "LBL_NO"
+							},
+							{
+								id: 3,
+								avatar: false,
+								badgeColor: false,
+								enabled: true,
+								icon: "./img/state/valid.png",
+								showValue: false,
+								value: "1",
+								labelValue: "LBL_YES"
+							},
+							{
+								id: 4,
+								avatar: false,
+								badgeColor: false,
+								enabled: true,
+								icon: "./img/state/invalid.png",
+								showValue: false,
+								value: "0",
+								labelValue: "LBL_NO"
+							}
+						];
+					}
+					
+					function getGridField(column, idxField) {
+						
+						let gridField = undefined;
+						const visibleColumn = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_COLUMN, BackOfficeHelper.META_TYPE_COLUMN.PROPERTY.TABLE_VISIBLE, self.backOffice.metadata, column);
+						const showIdTable = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, BackOfficeHelper.META_TYPE_TABLE.PROPERTY.SHOW_ID_TABLE,  self.backOffice.metadata, self.currentTableData);
+
+						let filterColumnName = undefined;
+
+						if (self.backOffice.filterColumn && self.backOffice.filterColumnValue) {
+
+							filterColumnName = self.backOffice.filterColumn.name;
+						}
+
+						if (!filterColumnName || column.name != filterColumnName) {
+
+							const referencedColumnName = BackOfficeHelper.getReferencedColumnName(self.backOffice, column, self.data);
+							const sourceField = referencedColumnName ? (BackOfficeHelper.getColumnUID(column) + "$ref") : BackOfficeHelper.getColumnUID(column);
+
+							const dataTypeId = BackOfficeHelper.getDBTypes(referencedColumnName ? referencedColumnName.colType : column.colType).id;
+							
+							let label = column.label ?? column.name;
+
+							if (referencedColumnName) {
+
+								const table = self.data.find(e => e.id === referencedColumnName.tableId);
+
+								if (table) {
+
+									label = table.labelSingular ?? (table.label ?? table.name);
+								}
+							}
+
+							const gridFiltersColumn = (column.metadata) ? column.metadata[BackOfficeHelper.META_TYPE_COLUMN.PROPERTY.GRID_FILTERS.name] : undefined;
+							const gridFilter = (gridFiltersColumn != undefined) ? gridFiltersColumn : self.gridFilters;
+							
+							gridField = {
+								id: idxField,
+								extended: false,
+								filtered: gridFilter,
+								isEpochMilli: dataTypeId == BackOfficeHelper.getDBTypes(BackOfficeHelper.DB_TYPE_TIMESTAMP).id,
+								isPk: column.primaryKey === true,
+								needsTranslation: false,
+								parameterized: referencedColumnName ? true : false,
+								position: idxField,
+								required: true,
+								label: util.getStringCapitalized(label),
+								sourceField: column.primaryKey ? "id" : sourceField,
+								visible: !column.primaryKey ? visibleColumn : (visibleColumn && showIdTable),
+								gridFieldDataType: {
+									id: getGridFieldDataType(dataTypeId)
+								}
+							};
+
+							if (dataTypeId == BackOfficeHelper.getDBTypes(BackOfficeHelper.DB_TYPE_BOOLEAN).id) {
+
+								assignGridFieldIcons(gridField);
+							}
+						}
+						
+						return gridField;
+					}
+					
+					function getGridVirtualField(virtualColumn, idxField) {
+						
+						let gridVirtualField = undefined;
+						
+						const dataTypeId = BackOfficeHelper.getDBTypes(virtualColumn.colType).id;
+						const sourceField = BackOfficeHelper.getColumnUID(virtualColumn) + "$ref";
+						const label = virtualColumn.label ?? virtualColumn.name;
+						
+						gridVirtualField = {
+							id: idxField,
+							extended: false,
+							filtered: true,
+							isEpochMilli: dataTypeId == BackOfficeHelper.getDBTypes(BackOfficeHelper.DB_TYPE_TIMESTAMP).id,
+							isPk: false,
+							needsTranslation: false,
+							parameterized: true,
+							position: idxField,
+							required: true,
+							label: util.getStringCapitalized(label),
+							sourceField: sourceField,
+							visible: virtualColumn.virtualColumnMetadata.tableVisible === true,
+							gridFieldDataType: {
+								id: getGridFieldDataType(dataTypeId)
+							}
+						};
+						
+						return gridVirtualField;
+					}
 
 					return metadata;
 				}
@@ -671,16 +852,52 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 					
 					let commandIdValue = firstCommandIdCalculated;
 					let events = {};
+					
+					events[DataTable.EventTypes.ON_SELECT_ROW] = function(rows) {
+
+						if (Array.isArray(rows) && rows.length > 0) {
+
+							// log.debug(rows[0]);
+							
+							self.selectedId = rows[0];
+							
+							if (self.referTablesCounter > 0 && Array.isArray(self.gridTableNames) && self.gridTableNames.length > 0) {
+								
+								setTimeout(function() {
+									
+									$$("backOffice-view-resizer-" + self.uid).show();
+
+									const backOfficeViewReferTablesLoading = {
+										id: "backOffice-view-refer-tables-" + self.uid,
+										rows: [util.ui.getViewDrawLoading()]
+									}
+	
+									webix.ui(backOfficeViewReferTablesLoading, $$("backOffice-view-refer-tables-" + self.uid));
+									
+									$$("content-backOffice-view-" + self.uid).resize();
+									
+									drawReferTables();						
+	
+								}, 10);
+							}
+						}
+					};	
 		
 					events[DataTable.EventTypes.ON_COMMAND_EXEC] = [];
 		
 					events[DataTable.EventTypes.ON_COMMAND_EXEC].push(
-						
 						{ commandId: BackOfficeViewGrid.GRID_COMMANDS.refresh, function: refreshGrid },
-						{ commandId: BackOfficeViewGrid.GRID_COMMANDS.new, function: cmdNew },
-						{ commandId: BackOfficeViewGrid.GRID_COMMANDS.edit, function: cmdEdit },
-						{ commandId: BackOfficeViewGrid.GRID_COMMANDS.delete, function: cmdDelete }
+						{ commandId: BackOfficeViewGrid.GRID_COMMANDS.edit, function: cmdEdit }
+						
 					);
+					
+					if (editable) {
+						
+						events[DataTable.EventTypes.ON_COMMAND_EXEC].push(
+							{ commandId: BackOfficeViewGrid.GRID_COMMANDS.new, function: cmdNew },
+							{ commandId: BackOfficeViewGrid.GRID_COMMANDS.delete, function: cmdDelete }	
+						);
+					}			
 					
 					if (!self.backOffice.filterColumn) {
 						
@@ -971,96 +1188,19 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 								util.ui.centerWindow(winId);
 							}
 							
-							function onAccept(values) {
+							function onAccept(newRow) {
 								
-								if (values && self.dataTable) {
+								if (newRow && Array.isArray(newRow.data)) {
 									
-									const columnId = self.currentTableData.columns.find(e => e.primaryKey === true);
-									
-									if (columnId) {
+									const newRowData = newRow.data.find(e => e.columnId === columnId.id);
+	
+									if (newRowData && !isNaN(newRowData.value) && self.dataTable) {
 										
-										const id = values[columnId.name];
-										const grid = $$(self.dataTable.getViewId())
+										self.newId = parseInt(newRowData.value);
 										
-										if (grid && id) {
-										
-											webix.extend(grid, webix.ProgressBar);
-			
-											grid.showProgress({
-								
-												hide: false, type: "bottom"
-											});
-											
-											const keys = Object.keys(values);
-									
-											let row = {};
-											let rowData = [];
-		
-											if (Array.isArray(keys) && keys.length > 0) {
-												
-												keys.forEach(key => {
-													
-													const rowFieldName = (key == columnId.name ? "id" : key);
-																									
-													row[rowFieldName] = (values[key] ? values[key] : undefined);
-													
-													if (key !== columnId.name) {
-														
-														if (self.currentTableData.id == BackOfficeHelper.getTableIdFromColumnUID(key)) {
-														
-															const colId = parseInt(BackOfficeHelper.getColumnIdFromColumnUID(key));
-															
-															const column = self.currentTableData.columns.find(e => e.id === colId);
-															
-															if (column) {
-																
-																rowData.push({
-																	columnId: colId,
-																	value: row[rowFieldName]
-																});	
-															}
-														}	
-													}
-													else {
-														
-														rowData.push({
-															columnId: columnId.id,
-															value: row[rowFieldName]
-														});
-													}
-												});
-											}
-											
-											if (Array.isArray(rowData) && rowData.length > 0) {
-												
-												let indexRow = self.currentTableData.rows.findIndex(row => row.data.find(e => e.columnId == columnId.id).value == id);
-											
-												if (indexRow > -1) {
-													
-													self.currentTableData.rows.splice(indexRow, 1);
-												}
-												
-												self.currentTableData.rows.push({
-													
-													data: rowData
-												});	
-											}
-											
-											if (self.dataTable.getItem(id)) {
-												
-												self.dataTable.update(row);	
-											}
-											else {
-												
-												self.dataTable.add(row);
-											}
-											
-											self.dataTable.select(id);
-											
-											grid.hideProgress();
-										}
+										self.refresh(); 
 									}
-								}								
+								}
 							}
 						}
 					}
@@ -1072,6 +1212,86 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 			}
 
 			return viewDataTable;
+		}
+		
+		function drawReferTables() {
+				
+			if (self.selectedId && Array.isArray(self.currentTableData.referTableNames) && 
+				Array.isArray(self.gridTableNames) && self.gridTableNames.length > 0 && 
+				self.gridTableNames.length <= self.currentTableData.referTableNames.length) {
+					
+				let viewBackOfficeViewGridCells = [];
+				
+				let referTablesCounter = 0;
+				
+				self.gridTableNames.forEach(gridTableName => {
+					
+					const module = window.em.getByField(EntityType.MODULE, "id", BackOfficeModule.Config.MODULE_ID);
+
+					if (module) {
+						
+						const refTable = self.data.find(e => e.name === gridTableName);
+						
+						if (refTable) {
+							
+							const refTableColumn = refTable.columns.find(column => column.refColumn && column.refColumn.tableId === self.currentTableData.id)
+							
+							if (refTableColumn) {
+								
+								const args = {
+									backOffice: {
+										id: self.backOffice.id,
+										tableName: gridTableName,
+										filterColumnName: refTableColumn.name,
+										filterColumnValue: self.selectedId,
+										filterColumn: refTableColumn,
+										referTablesCounter: self.referTablesCounter - 1
+									},
+									onLoad: onLoad
+								}
+		
+								util.module.open(module, {id: BackOfficeModule.Config.MODULE_ACTION_OPEN_ID }, VIEW_TYPE_CUSTOM, drawContent, args);
+							}
+							
+							function drawContent(view) {
+							
+								viewBackOfficeViewGridCells.push({
+									header: refTable.label,
+									body: view
+								});
+								
+								if (self.gridTableNames.length == ++referTablesCounter) {
+					
+									if (Array.isArray(viewBackOfficeViewGridCells) && viewBackOfficeViewGridCells.length > 0) {
+								
+										const tabs = {
+											view: "tabview",
+											id: "tab-refer-tables-" + self.uid,
+											borderless: true,
+											css: "secondary-tab",
+											cells: viewBackOfficeViewGridCells,
+											tabbar: {
+												tabMargin: 6
+											}
+										}
+										
+										const backOfficeViewReferTablesLoading = {
+											id: "backOffice-view-refer-tables-" + self.uid,
+											rows: [tabs]
+										}
+										
+										webix.ui(backOfficeViewReferTablesLoading, $$("backOffice-view-refer-tables-" + self.uid));
+									}
+								}
+							}
+							
+							function onLoad() {
+						
+							}
+						}
+					}
+				});
+			}
 		}
 		
 		return view;

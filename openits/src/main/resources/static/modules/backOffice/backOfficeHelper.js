@@ -12,9 +12,11 @@ const REST_GRIDS_ID = "grids/${id}";
 
 export default class BackOfficeHelper {
 
-	static get DB_TYPE_STRING() { return "STRING" }
+	static get DB_TYPE_SHORT() { return "SHORT" }
 	static get DB_TYPE_INTEGER() { return "INTEGER" }
+	static get DB_TYPE_LONG() { return "LONG" }
 	static get DB_TYPE_DECIMAL() { return "DECIMAL" }
+	static get DB_TYPE_STRING() { return "STRING" }
 	static get DB_TYPE_TIMESTAMP() { return "TIMESTAMP" }
 	static get DB_TYPE_BOOLEAN() { return "BOOLEAN" }
 
@@ -46,11 +48,15 @@ export default class BackOfficeHelper {
 				AUTOREFRESH: { name: "autorefresh" },
 				AUTOREFRESH_FORM: { name: "autorefresh" },
 				REFER_TABLES: { name: "referTables" },
+				GRID_TABLES: { name: "gridTables" },
+				GRID_TABLES_COLS_ORIENTATION: { name: "gridTablesColsOrientation", default: false },
 				GROUP_IMAGES: { name: "groupImages" },
 				GROUP_ATTACHMENTS: { name: "groupAttachments" },
 				PRINTABLE: { name: "printable", default: true },
 				EXPORTABLE: { name: "exportable", default: true },
-				CUSTOM_JS: { name: "customJS" }
+				CUSTOM_JS: { name: "customJS" },
+				EDITABLE: { name: "editable", default: true },
+				VIRTUAL_COLS: { name: "virtualCols" }
 			}
 		}
 	}
@@ -98,15 +104,17 @@ export default class BackOfficeHelper {
 			log.warn("No locale js file for: " + i18n.localeCode + " Set default locale to en-US")
 		}
 
-		dbType[BackOfficeHelper.DB_TYPE_STRING] = { id: 1, name: BackOfficeHelper.DB_TYPE_STRING, component: { view: "text", required: false, labelWidth: 275 } };
+		dbType[BackOfficeHelper.DB_TYPE_SHORT] = { id: 1, name: BackOfficeHelper.DB_TYPE_SHORT, component: { view: "text", required: false, labelWidth: 275 } };
 		dbType[BackOfficeHelper.DB_TYPE_INTEGER] = { id: 2, name: BackOfficeHelper.DB_TYPE_INTEGER, component: { view: "text", required: false, labelWidth: 275 } };
-		dbType[BackOfficeHelper.DB_TYPE_DECIMAL] = { id: 3, name: BackOfficeHelper.DB_TYPE_DECIMAL, component: { view: "text", required: false, labelWidth: 275 } };
+		dbType[BackOfficeHelper.DB_TYPE_LONG] = { id: 3, name: BackOfficeHelper.DB_TYPE_LONG, component: { view: "text", required: false, labelWidth: 275 } };
+		dbType[BackOfficeHelper.DB_TYPE_DECIMAL] = { id: 4, name: BackOfficeHelper.DB_TYPE_DECIMAL, component: { view: "text", required: false, labelWidth: 275 } };
+		dbType[BackOfficeHelper.DB_TYPE_STRING] = { id: 5, name: BackOfficeHelper.DB_TYPE_STRING, component: { view: "text", required: false, labelWidth: 275 } };
 
 		if (locale) {
-			dbType[BackOfficeHelper.DB_TYPE_TIMESTAMP] = { id: 4, name: BackOfficeHelper.DB_TYPE_TIMESTAMP, component: { view: "datepicker", timepicker: true, required: false, labelWidth: 275, format: (locale.dateFormat + " " + locale.timeFormat) } };
+			dbType[BackOfficeHelper.DB_TYPE_TIMESTAMP] = { id: 6, name: BackOfficeHelper.DB_TYPE_TIMESTAMP, component: { view: "datepicker", timepicker: true, required: false, labelWidth: 275, format: (locale.dateFormat + " " + locale.timeFormat) } };
 		}
 		
-		dbType[BackOfficeHelper.DB_TYPE_BOOLEAN] = { id: 5, name: BackOfficeHelper.DB_TYPE_BOOLEAN, component: { view: "checkbox", required: false, labelWidth: 275 } };
+		dbType[BackOfficeHelper.DB_TYPE_BOOLEAN] = { id: 7, name: BackOfficeHelper.DB_TYPE_BOOLEAN, component: { view: "checkbox", required: false, labelWidth: 275 } };
 
 		return dbType[name];
 	}
@@ -451,7 +459,9 @@ export default class BackOfficeHelper {
 				if (rowData && rowData.value) {
 
 					if (column.colType === BackOfficeHelper.DB_TYPE_TIMESTAMP ||
-						column.colType === BackOfficeHelper.DB_TYPE_INTEGER) {
+						column.colType === BackOfficeHelper.DB_TYPE_SHORT ||
+						column.colType === BackOfficeHelper.DB_TYPE_INTEGER ||
+						column.colType === BackOfficeHelper.DB_TYPE_LONG) {
 
 						value = parseInt(rowData.value);
 					}
@@ -527,7 +537,9 @@ export default class BackOfficeHelper {
 
 									if (values[key]) {
 
-										if (column.colType === BackOfficeHelper.DB_TYPE_INTEGER) {
+										if (column.colType === BackOfficeHelper.DB_TYPE_SHORT ||
+											column.colType === BackOfficeHelper.DB_TYPE_INTEGER ||
+											column.colType === BackOfficeHelper.DB_TYPE_LONG) {
 
 											newValue = parseInt(values[key]);
 										}
@@ -563,5 +575,72 @@ export default class BackOfficeHelper {
 		}
 
 		return requestInput;
+	}
+	
+	static getVirtualColumns(backOffice, table, fkColumn, data) {
+
+		let virtualColumns = undefined;
+		let virtualColumnsMetadata = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, 
+																	BackOfficeHelper.META_TYPE_TABLE.PROPERTY.VIRTUAL_COLS, 
+																	backOffice.metadata, table);
+		
+		const refTable = data.find(e => fkColumn.refColumn && e.id === fkColumn.refColumn.tableId);
+		
+		if (refTable && Array.isArray(virtualColumnsMetadata) && virtualColumnsMetadata.length > 0) {
+			
+			virtualColumns = [];
+			
+			virtualColumnsMetadata = virtualColumnsMetadata.filter(e => e.tableName === refTable.name);
+			
+			virtualColumnsMetadata.forEach(virtualColumnMetadata => {
+				
+				const refTableColumn = refTable.columns.find(col => col.name === virtualColumnMetadata.columnName);
+				
+				if (refTableColumn) {
+					
+					let virtualColumn = webix.copy(refTableColumn);
+					
+					virtualColumn.virtualColumnMetadata = virtualColumnMetadata;
+					
+					virtualColumns.push(virtualColumn);	
+				}
+			});
+		}
+		
+		return virtualColumns;	
+	}
+	
+	static getVirtualColumnValue(virtualColumn, valueId, data) {
+		
+		let virtualColumnValue = undefined;
+		
+		const refTable = data.find(e => e.id === virtualColumn.tableId);
+		
+		if (refTable) {
+			
+			const refTableColumnPk = refTable.columns.find(e => e.primaryKey === true);
+			
+			if (refTableColumnPk) {
+				
+				virtualColumnValue = webix.copy(virtualColumn);
+
+				if (Array.isArray(refTable.rows) && refTable.rows.length > 0) {
+	
+					const row = refTable.rows.find(row => row.data.find(dat => dat.columnId === refTableColumnPk.id && dat.value == valueId) != null);
+	
+					if (row) {
+	
+						const rowColumnValue = row.data.find(dat => dat.columnId === virtualColumn.id);
+	
+						if (rowColumnValue) {
+	
+							virtualColumnValue.value = rowColumnValue.value;
+						}
+					}
+				}
+			} 
+		}
+
+		return virtualColumnValue;
 	}
 }

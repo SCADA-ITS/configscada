@@ -1,4 +1,4 @@
-package com.revenga.rits.front.openits.model.backoffice;
+package com.revenga.rits.front.openits.backoffice.model;
 
 import java.io.Serializable;
 

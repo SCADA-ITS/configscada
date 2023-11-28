@@ -384,8 +384,6 @@ export default class BackOfficeViewForm extends BackOfficeViewGenericForm {
 				return infoView;
 			}
 			
-			
-			
 			function pushReferTables() {
 				
 				if (Array.isArray(self.currentTableData.referTableNames) && self.currentTableData.referTableNames.length > 0) {
