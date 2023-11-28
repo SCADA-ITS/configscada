@@ -34,7 +34,7 @@ BEGIN
 	CREATE TABLE smartgen.sg_metadata_table_images (
 		id serial NOT NULL,
 		sg_metadata_table_id int NOT NULL,
-		id_value int NOT NULL,
+		id_value bigint NOT NULL,
 		group_name varchar(100) NOT NULL,
 		file_name varchar(200) NOT NULL,
 		description varchar(200) NULL,
@@ -55,7 +55,7 @@ BEGIN
 	CREATE TABLE smartgen.sg_metadata_table_attachments (
 		id serial NOT NULL,
 		sg_metadata_table_id int NOT NULL,
-		id_value int NOT NULL,
+		id_value bigint NOT NULL,
 		group_name varchar(100) NOT NULL,
 		file_name varchar(200) NOT NULL,
 		description varchar(200) NULL,
