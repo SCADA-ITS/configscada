@@ -12,6 +12,7 @@ INSERT INTO ui.synoptic_layers
 (id, synoptic_id, name, label, visible) VALUES 
 (93104200, 931, 'NRL', 'LBL_NRL', true),
 (93107124, 931, 'VMS', 'LBL_VMS', true),
+(93107125, 931, 'VMS', 'LBL_VMS', true),
 (93102300, 931, 'INCIDENT', 'LBL_INCIDENT', true);
 
 INSERT INTO ui.synoptic_commands 
@@ -33,5 +34,7 @@ INSERT INTO ui.synoptic_layer_elements
 (93104200, 'Element:42:36', 00004200, 'RKDJSRP1', 696, 898, false, NULL, true, false, NULL, true),
 (93107124, 'Element:71:177', 240071, 'NRLJSRP2', 1714, 753, false, NULL, true, false, NULL, true),
 (93107124, 'Element:71:178', 240071, 'NRLJSRL1', 226, 313, false, NULL, true, false, NULL, true),
+(93107125, 'Element:71:180', 250071, 'NRLJSRL2', 1403, 377, false, NULL, true, false, NULL, true),
+(93107125, 'Element:71:179', 250071, 'NRLJSRP1', 1714, 873, false, NULL, true, false, NULL, true),
 (93102300, 'Element:23:1', 000023, 'Imanager', 1803, 51, false, NULL, true, false, NULL, true);
 

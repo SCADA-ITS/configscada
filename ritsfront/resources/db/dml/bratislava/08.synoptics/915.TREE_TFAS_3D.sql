@@ -10,7 +10,8 @@ INSERT INTO ui.synoptics
 -- Id subTipo (00 si tiene tipo, iterador si no)  --> 2 cifras
 INSERT INTO ui.synoptic_layers 
 (id, synoptic_id, name, label, visible) VALUES 
-(91506800, 915, 'TFAs3D', 'LBL_SYNOPTIC_TFAS_3D', true);
+(91506800, 915, 'TFAs3D', 'LBL_SYNOPTIC_TFAS_3D', true),
+(91502300, 915, 'INCIDENT', 'LBL_INCIDENT', true);
 
 INSERT INTO ui.synoptic_commands 
 (id, synoptic_id, position, label, icon, "default", module_action_id, args, view_type_id, multiselect, show_text, item_required, context) VALUES 
@@ -40,5 +41,6 @@ INSERT INTO ui.synoptic_layer_elements
 (91506800, 'Element:68:4', 000068, '3DDH01L-15+847', 1007, 785, false, NULL, true, false, NULL, true),
 (91506800, 'Element:68:3', 000068, '3DDH01P-15+847', 656, 897, false, NULL, true, false, NULL, true),
 (91506800, 'Element:68:2', 000068, '3DDH02P-26+416', 656, 971, false, NULL, true, false, NULL, true),
-(91506800, 'Element:68:1', 000068, '3DDH03L-30+245', 1399, 980, false, NULL, true, false, NULL, true);
+(91506800, 'Element:68:1', 000068, '3DDH03L-30+245', 1399, 980, false, NULL, true, false, NULL, true),
+(91502300, 'Element:23:1', 000023, 'Imanager', 1825, 39, false, NULL, true, false, NULL, true);
 

@@ -10,7 +10,8 @@ INSERT INTO ui.synoptics
 -- Id subTipo (00 si tiene tipo, iterador si no)  --> 2 cifras
 INSERT INTO ui.synoptic_layers 
 (id, synoptic_id, name, label, visible) VALUES 
-(92007100, 920, 'S1F2_0-6_P', 'LBL_SYNOPTIC_S1F2_0-6_P', true);
+(92007100, 920, 'S1F2_0-6_P', 'LBL_SYNOPTIC_S1F2_0-6_P', true),
+(92002300, 920, 'INCIDENT', 'LBL_INCIDENT', true);
 
 INSERT INTO ui.synoptic_commands 
 (id, synoptic_id, position, label, icon, "default", module_action_id, args, view_type_id, multiselect, show_text, item_required, context) VALUES 
@@ -26,5 +27,6 @@ INSERT INTO ui.synoptic_layer_elements
 (92007100, 'Element:71:120', 060071, 'NRSPS400BPS', 652, 966, false, NULL, true, false, NULL, true),--se pide por parte del cliente borrar este equipo del scada
 (92007100, 'Element:71:47', 010071, 'NRLJS405P', 814, 160, false, NULL, true, false, NULL, true),
 (92007100, 'Element:71:45', 010071, 'NRLJS404P', 1040, 88, false, NULL, true, false, NULL, true),
-(92007100, 'Element:71:43', 010071, 'NRLJS403P', 813, 15, false, NULL, true, false, NULL, true);--se pide por parte del cliente borrar este equipo del scada
+(92007100, 'Element:71:43', 010071, 'NRLJS403P', 813, 15, false, NULL, true, false, NULL, true),
+(92002300, 'Element:23:1', 000023, 'Imanager', 1821, 67, false, NULL, true, false, NULL, true);
 
