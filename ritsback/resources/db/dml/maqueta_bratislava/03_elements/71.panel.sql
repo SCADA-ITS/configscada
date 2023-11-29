@@ -160,7 +160,9 @@ INSERT INTO conf.elements (element_type_id, element_subtype_id, element_id, loca
 (71, 23, 175, 1750071, NULL, NULL, 'PSJS486La', 'PSJS486La', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (71, 23, 176, 1760071, NULL, NULL, 'PSJS486Lb', 'PSJS486Lb', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (71, 24, 177, 1770071, NULL, NULL, 'NRLJSRP2', 'NRLJSRP2', NULL, NULL, 'VMS_METEO_TRAFICO.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(71, 24, 178, 1780071, NULL, NULL, 'NRLJSRL1', 'NRLJSRL1', NULL, NULL, 'VMS_METEO_TRAFICO.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(71, 24, 178, 1780071, NULL, NULL, 'NRLJSRL1', 'NRLJSRL1', NULL, NULL, 'VMS_METEO_TRAFICO.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(71, 25, 179, 1790071, NULL, NULL, 'NRLJSRP1', 'NRLJSRP1', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 25, 180, 1800071, NULL, NULL, 'NRLJSRL2', 'NRLJSRL2', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_type_id, element_id, element_value_state_id, value, enabled, visible, created_at, updated_at) VALUES
 (71, 1, 1, 1, NULL, 'Lacroix', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -1295,7 +1297,21 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 (71, 3, 1, 178, NULL, 'NTCIP_Lacroix', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (71, 4, 1, 178, NULL, '[{"zone":1,"type":"graphic","vms_group_id":24},{"zone":2,"type":"text"},{"zone":3,"type":"text"},{"zone":4,"type":"text"},{"zone":5,"type":"text"}]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (71, 6, 1, 178, NULL, 'RNRLJSRL1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(71, 1003, 1, 178, NULL, 'NRLJSRL1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(71, 1003, 1, 178, NULL, 'NRLJSRL1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+
+(71, 1, 1, 179, NULL, 'Lacroix', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 2, 1, 179, NULL, 'CONTADOR_VEHICULOS', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 3, 1, 179, NULL, 'NTCIP_Lacroix', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 4, 1, 179, NULL, '[{"zone":1,"type":"graphic","vms_group_id":25},{"zone":2,"type":"graphic","vms_group_id":25},{"zone":3,"type":"text"},{"zone":4,"type":"text"}]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 6, 1, 179, NULL, 'RNRLJSRP1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 1003, 1, 179, NULL, 'NRLJSRP1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+
+(71, 1, 1, 180, NULL, 'Lacroix', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 2, 1, 180, NULL, 'CONTADOR_VEHICULOS', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 3, 1, 180, NULL, 'NTCIP_Lacroix', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 4, 1, 180, NULL, '[{"zone":1,"type":"graphic","vms_group_id":25},{"zone":2,"type":"graphic","vms_group_id":25},{"zone":3,"type":"text"},{"zone":4,"type":"text"}]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 6, 1, 180, NULL, 'RNRLJSRL2', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 1003, 1, 180, NULL, 'NRLJSRL2', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO conf.element_io_controller_modules (element_type_id, element_id, module_type_id, module_id, enabled, visible, created_at, updated_at) VALUES
 (71, 1, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -1459,4 +1475,6 @@ INSERT INTO conf.element_io_controller_modules (element_type_id, element_id, mod
 (71, 175, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (71, 176, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (71, 177, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(71, 178, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(71, 178, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 179, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 180, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

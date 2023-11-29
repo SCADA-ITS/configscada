@@ -33,5 +33,6 @@ element_type;element_subtype;alias;svg_file;js_custom_type_render;keepRatio;
 71;17;VMS;71_vms_ab.svg;vms.js;true;
 71;23;VMS;71_vms_rotapanel.svg;vms.js;true
 71;24;VMS;71_vms_meteo_trafico.svg;vms.js;true
+71;25;VMS;71_vms_contador_vehiculos.svg;vms.js;true
 89;;GATE;89_gate_bratislava.svg;vms.js;true;
 97;;RTMS;51_etd.svg;;true;
