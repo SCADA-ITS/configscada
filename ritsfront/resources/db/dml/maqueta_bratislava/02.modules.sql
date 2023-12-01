@@ -34,7 +34,8 @@ INSERT INTO ui.modules
 (929, 4, 'TREE_S4-S5_L', 'TREE_S4-S5_L', 1, NULL, 'modules/synopticModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 (930, 4, 'TREE_S4-S5_P', 'TREE_S4-S5_P', 1, NULL, 'modules/synopticModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 (931, 4, 'TREE_AS', 'TREE_AS', 1, NULL, 'modules/synopticModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
-(932, 4, 'TREE_BRIGE', 'TREE_BRIGE', 1, NULL, 'modules/synopticModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL);
+(932, 4, 'TREE_BRIGE', 'TREE_BRIGE', 1, NULL, 'modules/synopticModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(933, 4, 'TREE_D4-R7', 'TREE_D4-R7', 1, NULL, 'modules/synopticModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL);
 
 INSERT INTO ui.module_values 
 (module_id, module_param_id, value) VALUES 
@@ -69,6 +70,7 @@ INSERT INTO ui.module_values
 (928, 4, '928'),
 (929, 4, '929'),
 (930, 4, '930'),
+(933, 4, '933'),
 (931, 4, '931'),
 (932, 4, '932');
 
@@ -313,6 +315,7 @@ INSERT INTO ui.window_values
 (930, 12, 'LBL_SYNOPTIC_S4-S5_P'),
 (930, 14, 'true'),
 
+
 (931, 4, '825'),
 (931, 8, 'true'),
 (931, 9, 'img/module/default.png'),
@@ -327,5 +330,14 @@ INSERT INTO ui.window_values
 (932, 10, 'img/module/default.png'),
 (932, 11, '#464646'),
 (932, 12, 'LBL_SYNOPTIC_BRIGE'),
-(932, 14, 'true');
+(932, 14, 'true'),
+
+(933, 4, '825'),
+(933, 8, 'true'),
+(933, 9, 'img/module/default.png'),
+(933, 10, 'img/module/default.png'),
+(933, 11, '#464646'),
+(933, 12, 'LBL_SYNOPTIC_D4-R7'),
+(933, 14, 'true');
+
 
