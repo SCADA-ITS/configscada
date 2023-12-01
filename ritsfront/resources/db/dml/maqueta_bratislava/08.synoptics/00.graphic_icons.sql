@@ -38,6 +38,7 @@ INSERT INTO ui.graphic_icons
 (170071, 'VMS', 'VMS', false, true, 'component/graphicIcon/graphicIconCustom.js', 65, 65, 'img/graphic_icon/71_vms_ab.svg', 'component/graphicIcon/custom/vms.js',true),
 (230071, 'VMS', 'VMS', false, true, 'component/graphicIcon/graphicIconCustom.js', 46.177891, 85, 'img/graphic_icon/71_vms_rotapanel.svg', 'component/graphicIcon/custom/vms.js',true),
 (240071, 'VMS', 'VMS', false, true, 'component/graphicIcon/graphicIconCustom.js', 120, 85, 'img/graphic_icon/71_vms_meteo_trafico.svg', 'component/graphicIcon/custom/vms.js',true),
+(250071, 'VMS', 'VMS', false, true, 'component/graphicIcon/graphicIconCustom.js', 120, 85, 'img/graphic_icon/71_vms_contador_vehiculos.svg', 'component/graphicIcon/custom/vms.js',true),
 (000089, 'GATE', 'GATE', false, false, 'component/graphicIcon/graphicIconDefault.js', 30, 30, 'img/graphic_icon/89_gate.svg', null,true),
 (000097, 'RTMS', 'RTMS', false, false, 'component/graphicIcon/graphicIconDefault.js', 70, 70, 'img/graphic_icon/51_etd.svg', null,true),
 (00002500, 'EC', 'EC', false, false, 'component/graphicIcon/graphicIconDefault.js', 35, 35, 'img/graphic_icon/25_electrical_cabinet.svg', null,true),

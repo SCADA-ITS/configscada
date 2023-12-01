@@ -18,27 +18,27 @@ DROP TABLE IF EXISTS dbo.customers;
 GO
 
 CREATE TABLE dbo.customers (
-	customer_id int IDENTITY(1,1) NOT NULL,
-	fullname varchar(200) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
-	name varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
-	surname varchar(200) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	customer_id bigint IDENTITY(1,1) NOT NULL,
+	fullname varchar(200) NULL,
+	name varchar(100) NULL,
+	surname varchar(200) NULL,
 	CONSTRAINT pk_customers PRIMARY KEY (customer_id)
 );
 GO
 ---
 
 CREATE TABLE dbo.categories (
-	category_id int IDENTITY(1,1) NOT NULL,
-	name varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	category_id bigint IDENTITY(1,1) NOT NULL,
+	name varchar(100) NULL,
 	CONSTRAINT pk_categories PRIMARY KEY (category_id)
 );
 GO
 ---
 
 CREATE TABLE dbo.subcategories (
-	subcategory_id int IDENTITY(1,1) NOT NULL,
-	category_id int NULL,
-	name varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	subcategory_id bigint IDENTITY(1,1) NOT NULL,
+	category_id bigint NULL,
+	name varchar(100) NULL,
 	CONSTRAINT pk_subcategories PRIMARY KEY (subcategory_id)
 );
 GO
@@ -53,10 +53,10 @@ GO
 ---
 
 CREATE TABLE dbo.products (
-	product_id int IDENTITY(1,1) NOT NULL,
-	product_name varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
-	category_id int NULL,
-	subcategory_id int NULL,
+	product_id bigint IDENTITY(1,1) NOT NULL,
+	product_name varchar(100) NULL,
+	category_id bigint NULL,
+	subcategory_id bigint NULL,
 	price float DEFAULT 0 NULL,
 	stock int DEFAULT 0 NULL,
 	available bit NULL,
@@ -80,9 +80,9 @@ GO
 ---
 
 CREATE TABLE dbo.orders (
-	order_id int IDENTITY(1,1) NOT NULL,
-	customer_id int NOT NULL,
-	comments varchar(1000) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	order_id bigint IDENTITY(1,1) NOT NULL,
+	customer_id bigint NOT NULL,
+	comments varchar(1000) NULL,
 	created_at datetimeoffset DEFAULT getdate() NOT NULL,
 	CONSTRAINT pk_orders PRIMARY KEY (order_id)
 );
@@ -99,9 +99,9 @@ GO
 ---
 
 CREATE TABLE dbo.order_details (
-	order_detail_id int IDENTITY(1,1) NOT NULL,
-	order_id int NULL,
-	product_id int NULL,
+	order_detail_id bigint IDENTITY(1,1) NOT NULL,
+	order_id bigint NULL,
+	product_id bigint NULL,
 	qty int DEFAULT 0 NULL,
 	CONSTRAINT pk_order_details PRIMARY KEY (order_detail_id)
 );

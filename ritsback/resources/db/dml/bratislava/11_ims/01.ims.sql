@@ -15,6 +15,6 @@ INSERT INTO static.ims_incident_states (incident_state_id, "final", alias, descr
 --
 INSERT INTO static.ims_incident_levels 
 (incident_level_id, priority, alias, description, label_alias, label_description, enabled, visible, created_at, updated_at) VALUES
-(1, 0, 'LEVEL_1', 'Traffic incidence', 'LBL_INCIDENT_LEVEL_1_TRAFFIC', null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(2, 0, 'LEVEL_1', 'Weather incidence', 'LBL_INCIDENT_LEVEL_1_WEATHER', null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(3, 0, 'LEVEL_1', 'Road incidence', 'LBL_INCIDENT_LEVEL_1_ROAD', null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(1, 0, 'LEVEL_1', 'Stav dopravy', 'LBL_INCIDENT_LEVEL_1_TRAFFIC', null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 0, 'LEVEL_1', 'typ incidentu - meteo', 'LBL_INCIDENT_LEVEL_1_WEATHER', null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(3, 0, 'LEVEL_1', 'Cestná nehoda', 'LBL_INCIDENT_LEVEL_1_ROAD', null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

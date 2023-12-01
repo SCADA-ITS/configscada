@@ -10,7 +10,8 @@ INSERT INTO ui.synoptics
 -- Id subTipo (00 si tiene tipo, iterador si no)  --> 2 cifras
 INSERT INTO ui.synoptic_layers 
 (id, synoptic_id, name, label, visible) VALUES 
-(90904700, 909, 'TU', 'LBL_SYNOPTIC_EC_TU', true);
+(90904700, 909, 'TU', 'LBL_SYNOPTIC_EC_TU', true),
+(90902300, 909, 'INCIDENT', 'LBL_INCIDENT', true);
 
 INSERT INTO ui.synoptic_commands 
 (id, synoptic_id, position, label, icon, "default", module_action_id, args, view_type_id, multiselect, show_text, item_required, context) VALUES 
@@ -40,5 +41,6 @@ INSERT INTO ui.synoptic_layer_elements
 (90904700, 'Element:47:13', 000047, 'TUJS09P', 1487, 377, false, NULL, true, false, NULL, true),
 (90904700, 'Element:47:12', 000047, 'TUJS08P', 1487, 337, false, NULL, true, false, NULL, true),
 (90904700, 'Element:47:18', 000047, 'TUSR02P', 1499, 118, false, NULL, true, false, NULL, true),
-(90904700, 'Element:47:17', 000047, 'TUSR01P', 1499, 78, false, NULL, true, false, NULL, true);
+(90904700, 'Element:47:17', 000047, 'TUSR01P', 1499, 78, false, NULL, true, false, NULL, true),
+(90902300, 'Element:23:1', 000023, 'Imanager', 1832, 28, false, NULL, true, false, NULL, true);
 

@@ -12,7 +12,8 @@ INSERT INTO ui.synoptic_layers
 (id, synoptic_id, name, label, visible) VALUES 
 (93203900, 932, 'HORIZONTAL_ACCESS', 'LBL_HORIZONTAL_ACCESS', true),
 (93204000, 932, 'PRESENCE_DETECTION', 'LBL_PRESENCE_DETECTION', true),
-(93208900, 932, 'GATE', 'LBL_GATE', true);
+(93208900, 932, 'GATE', 'LBL_GATE', true),
+(93202300, 932, 'INCIDENT', 'LBL_INCIDENT', true);
 
 INSERT INTO ui.synoptic_commands 
 (id, synoptic_id, position, label, icon, "default", module_action_id, args, view_type_id, multiselect, show_text, item_required, context) VALUES 
@@ -51,5 +52,6 @@ INSERT INTO ui.synoptic_layer_elements
 (93208900, 'Element:89:4', 000089, 'Dvere_4', 598, 476, false, NULL, true, false, NULL, true),
 (93208900, 'Element:89:3', 000089, 'Dvere_3', 540, 476, false, NULL, true, false, NULL, true),
 (93208900, 'Element:89:2', 000089, 'Dvere_2', 173, 476, false, NULL, true, false, NULL, true),
-(93208900, 'Element:89:1', 000089, 'Dvere_1', 138, 669, false, NULL, true, false, NULL, true);
+(93208900, 'Element:89:1', 000089, 'Dvere_1', 138, 669, false, NULL, true, false, NULL, true),
+(93202300, 'Element:23:1', 000023, 'Imanager', 1830, 28, false, NULL, true, false, NULL, true);
 

@@ -10,7 +10,8 @@ INSERT INTO ui.synoptics
 -- Id subTipo (00 si tiene tipo, iterador si no)  --> 2 cifras
 INSERT INTO ui.synoptic_layers 
 (id, synoptic_id, name, label, visible) VALUES 
-(91100200, 911, 'SYNOPTIC_CAMERAS', 'LBL_SYNOPTIC_CAM', true);
+(91100200, 911, 'SYNOPTIC_CAMERAS', 'LBL_SYNOPTIC_CAM', true),
+(91102300, 911, 'INCIDENT', 'LBL_INCIDENT', true);
 
 INSERT INTO ui.synoptic_commands 
 (id, synoptic_id, position, label, icon, "default", module_action_id, args, view_type_id, multiselect, show_text, item_required, context) VALUES 
@@ -249,5 +250,6 @@ INSERT INTO ui.synoptic_layer_elements
 (91100200, 'Element:2:21', 000002, 'KDKD02P', 310, 317, false, NULL, true, false, NULL, true),
 (91100200, 'Element:2:20', 000002, 'KDKD01L', 262, 317, false, NULL, true, false, NULL, true),
 (91100200, 'Element:2:178', 000002, 'KDJS04.1', 458, 1044, false, NULL, true, false, NULL, true),
-(91100200, 'Element:2:184', 000002, 'KDJS10.1', 745, 1044, false, NULL, true, false, NULL, true);
+(91100200, 'Element:2:184', 000002, 'KDJS10.1', 745, 1044, false, NULL, true, false, NULL, true),
+(91102300, 'Element:23:1', 000023, 'Imanager', 1848, 17, false, NULL, true, false, NULL, true);
 

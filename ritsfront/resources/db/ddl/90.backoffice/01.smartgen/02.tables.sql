@@ -3,7 +3,7 @@ BEGIN
   IF EXISTS (SELECT 1 FROM pg_tablespace WHERE spcname = 'tbl_smartgen') THEN
 
 		create table smartgen.customers (
-			customer_id serial not null,
+			customer_id bigserial not null,
 			fullname varchar(200) null,
 			name varchar(100) null,
 			surname varchar(200) null,
@@ -11,14 +11,14 @@ BEGIN
 		) tablespace tbl_smartgen;
 		
 		create table smartgen.categories (
-			category_id serial not null,
+			category_id bigserial not null,
 			name varchar(100) null,
 			constraint pk_categories primary key (category_id)
 		) tablespace tbl_smartgen;
 		
 		create table smartgen.subcategories (
-			subcategory_id serial not null,
-			category_id int null,
+			subcategory_id bigserial not null,
+			category_id bigint null,
 			name varchar(100) null,
 			constraint pk_subcategories primary key (subcategory_id)
 		) tablespace tbl_smartgen;
@@ -30,10 +30,10 @@ BEGIN
 		alter table smartgen.subcategories add constraint fk_subcategories_category_id foreign key (category_id) references smartgen.categories(category_id) ON DELETE CASCADE;
 		
 		create table smartgen.products (
-			product_id serial not null,
+			product_id bigserial not null,
 			product_name varchar(100) null,
-			category_id int null,
-			subcategory_id int null,
+			category_id bigint null,
+			subcategory_id bigint null,
 			price float default 0, 
 			stock int default 0,
 			available bool null,
@@ -53,8 +53,8 @@ BEGIN
 		alter table smartgen.products add constraint fk_products_subcategory_id foreign key (subcategory_id) references smartgen.subcategories(subcategory_id) ON DELETE CASCADE;
 		
 		create table smartgen.orders (
-			order_id serial not null,
-			customer_id int not null,
+			order_id bigserial not null,
+			customer_id bigint not null,
 			comments varchar(1000) null,
 			created_at timestamptz default current_timestamp not null,
 			constraint pk_orders primary key (order_id)
@@ -67,9 +67,9 @@ BEGIN
 		alter table smartgen.orders add constraint fk_orders_customer_id foreign key (customer_id) references smartgen.customers(customer_id) ON DELETE CASCADE;
 		
 		create table smartgen.order_details (
-			order_detail_id serial not null,
-			order_id int null,
-			product_id int null,
+			order_detail_id bigserial not null,
+			order_id bigint null,
+			product_id bigint null,
 			qty int default 0,
 			constraint pk_order_details primary key (order_detail_id)
 		) tablespace tbl_smartgen;

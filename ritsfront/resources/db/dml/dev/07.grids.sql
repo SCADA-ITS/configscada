@@ -50,8 +50,8 @@ INSERT INTO ui.grids(id, adapter_id, "label", enabled, visible) VALUES
 INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", required, parameterized, extended, filtered, "label", label_tooltip, source_field, is_pk, is_epoch_milli, align, needs_translation, grouping_summary, width_px, grid_field_group_operation_id, enabled, visible, adjust, header_vertical, fixed_column, replacement_function, precision_filter) VALUES
 --BACKOFFICE smartgen
 (460, 50, 1, 1, true, false, false, false, 'LBL_ID', 'LBL_ID', 'id', true, false, null, false, false, 500, NULL, true, false, NULL, NULL, NULL, NULL, NULL),
-(461, 50, 2, 2, true, false, false, false, 'LBL_ORDER', 'LBL_ORDER', 'products$product_name', false, false, NULL, false, false, 150, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
-(462, 50, 2, 3, true, false, false, false, 'LBL_QTY', 'LBL_QTY', 'order_details$qty', false, false, NULL, false, false, 200, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(461, 50, 2, 2, true, false, false, false, 'LBL_ORDER', 'LBL_ORDER', 'product_id', false, false, NULL, false, false, 150, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(462, 50, 2, 3, true, false, false, false, 'LBL_QTY', 'LBL_QTY', 'qty', false, false, NULL, false, false, 200, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
 
 --BRATISLAVA
 (1, 1, 1, 1, true, false, false, false, 'LBL_ID', 'LBL_ID', 'id', true, false, null, false, false, 500, NULL, true, false, NULL, NULL, NULL, NULL, NULL),

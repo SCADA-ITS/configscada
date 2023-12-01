@@ -68,6 +68,7 @@ INSERT INTO ui.equip_viewers (id, name, description, "label", icon, show_info_ta
 ('ElementSubtype:17:71', 'PANEL', 'PANEL', 'LBL_ELEMENT_TYPE_PANEL', NULL, true, false, true, null, 300, 3, null,170071,null),
 ('ElementSubtype:23:71', 'PANEL', 'PANEL', 'LBL_ELEMENT_TYPE_PANEL', NULL, true, false, true, null, 300, 3, null,230071,null),
 ('ElementSubtype:24:71', 'PANEL', 'PANEL', 'LBL_ELEMENT_TYPE_PANEL', NULL, true, false, true, null, 300, 3, null,240071,null),
+('ElementSubtype:25:71', 'PANEL', 'PANEL', 'LBL_ELEMENT_TYPE_PANEL', NULL, true, false, false, null, 300, 3, null,250071,null),
 ('ElementType:89','GATE','GATE','LBL_ELEMENT_TYPE_GATE',null,True,False,False,null,225.0,3,null,000089,True),
 ('ElementType:97', 'RTMS', 'RTMS', 'LBL_ELEMENT_TYPE_RTMS', NULL, true, true, false, null, 300, 3, null,000097, null);
 
@@ -175,6 +176,7 @@ INSERT INTO ui.equip_viewer_tabs (equip_viewer_id, module_action_id, alias, desc
 ('ElementSubtype:15:71', 100501, 'Alarms module', 'Alarms module', 'LBL_ALARMS', NULL, 2, true),
 ('ElementSubtype:17:71', 100501, 'Alarms module', 'Alarms module', 'LBL_ALARMS', NULL, 2, true),
 ('ElementSubtype:24:71', 100501, 'Alarms module', 'Alarms module', 'LBL_ALARMS', NULL, 2, true),
+('ElementSubtype:25:71', 100501, 'Alarms module', 'Alarms module', 'LBL_ALARMS', NULL, 2, true),
 ('ElementType:89',100501,'Alarms module' ,'Alarms module', 'LBL_ALARMS', null,  1, True ),
 ('ElementType:97', 100501, 'Alarms', 'Alarms', 'LBL_ALARMS', NULL, 2, true);
 
@@ -224,6 +226,7 @@ INSERT INTO ui.equip_viewer_grp_measures (id, equip_viewer_id, name, description
 (177101, 'ElementSubtype:17:71', 'Values element type panel', 'Values element type panel', 'LBL_ELEMENT_MEASURES', NULL, 1, true),
 (237101, 'ElementSubtype:23:71', 'Values element type panel', 'Values element type panel', 'LBL_ELEMENT_MEASURES', NULL, 1, true),
 (247101, 'ElementSubtype:24:71', 'Values element type panel', 'Values element type panel', 'LBL_ELEMENT_MEASURES', NULL, 1, true),
+(257101, 'ElementSubtype:25:71', 'Values element type panel', 'Values element type panel', 'LBL_ELEMENT_MEASURES', NULL, 1, true),
 (00008901, 'ElementType:89', 'Measures', 'Measures', 'LBL_GRP_MEASURES', null, 1, True),
 (97, 'ElementType:97', 'Values element type RTMS', 'Values element type RTMS', 'LBL_ELEMENT_MEASURES', NULL, 1, true);
 
@@ -556,5 +559,10 @@ INSERT INTO ui.equip_viewer_configs (id, equip_viewer_id, vo_entities_id, "posit
 (247102, 'ElementSubtype:24:71', 'ElementTypeParam:71:1:2' , 2, true),
 (247103, 'ElementSubtype:24:71', 'ElementTypeParam:71:1:3' , 3, true),
 (247104, 'ElementSubtype:24:71', 'ElementTypeParam:71:1:6' , 4, true),
+
+(257101, 'ElementSubtype:25:71', 'ElementTypeParam:71:1:1' , 1, true),
+(257102, 'ElementSubtype:25:71', 'ElementTypeParam:71:1:2' , 2, true),
+(257103, 'ElementSubtype:25:71', 'ElementTypeParam:71:1:3' , 3, true),
+(257104, 'ElementSubtype:25:71', 'ElementTypeParam:71:1:6' , 4, true),
 
 (9701, 'ElementType:97', 'ElementTypeParam:97:1:4', 1, true);

@@ -38,7 +38,7 @@ BEGIN
 	INSERT INTO smartgen.sg_metadata_tables (id, name, label, label_singular, label_description, mdi_icon, support_images, support_attachments, metadata) VALUES
 	(1, 'customers', 'LBL_CUSTOMERS', 'LBL_CUSTOMER', 'LBL_CUSTOMERS_DESCRIPTION', NULL, true, true, NULL),
 	(2, 'products', 'LBL_PRODUCTS', 'LBL_PRODUCT', 'LBL_PRODUCTS_DESCRIPTION', NULL, true, true, 
-	-- metadata
+	-- metadata products
 	'{
 		  "formHeight": 1000,
 		  "autorefresh": 5,
@@ -81,7 +81,27 @@ BEGIN
 		  "referTables": [],
 		  "srcTemplate": "productFormTemplate.html"
 	}'),
-	(3, 'orders', 'LBL_ORDERS', 'LBL_ORDER', 'LBL_ORDERS_DESCRIPTION', NULL, true, true, NULL),
+	(3, 'orders', 'LBL_ORDERS', 'LBL_ORDER', 'LBL_ORDERS_DESCRIPTION', NULL, true, true, 
+	-- metadata orders
+	'{
+		"virtualCols": [
+			{
+				"tableName": "customers",
+				"columnName": "fullname",
+				"position": 1,
+				"tableVisible": true,
+				"formVisible": true
+			},
+			{
+				"tableName": "customers",
+				"columnName": "surname",
+				"position": 2,
+				"tableVisible": true,
+				"formVisible": true
+			}
+		]
+	}'
+	),
 	(4, 'order_details', 'LBL_ORDER_DETAILS', 'LBL_ORDER_DETAIL', 'LBL_ORDER_DETAILS', NULL, true, true, '{"gridId": 50}'),
 	(5, 'categories', 'LBL_CATEGORIES', 'LBL_CATEGORY', 'LBL_CATEGORIES_DESCRIPTION', NULL, true, true, '{"customJS": "smartgenCategoryForm.js"}'),
 	(6, 'subcategories', 'LBL_SUBCATEGORIES', 'LBL_SUBCATEGORY', 'LBL_SUBCATEGORIES_DESCRIPTION', NULL, true, true, NULL);

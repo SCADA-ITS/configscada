@@ -11,12 +11,11 @@ VALUES(1, 'bus_demo', NULL, NULL, 'jdbc:sqlserver://192.168.243.30;databaseName=
 	"showIdForm": false,
 	"showIdTable": false,
 	"showIdSearch": false,
-	"gridFilters": true
+	"gridFilters": true,
+	"editable": false
 }',
 -- default_metadata_column
 '{
-    "required": false,
-    "editable": true,
     "refAddButton": false
 }',
 true);

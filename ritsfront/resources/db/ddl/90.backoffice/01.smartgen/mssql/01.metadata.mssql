@@ -28,14 +28,14 @@ GO
 
 CREATE TABLE dbo.sg_metadata_tables (
 	id int IDENTITY(1,1) NOT NULL,
-	name varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
-	label varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
-	label_singular varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
-	label_description varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
-	mdi_icon varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	name varchar(100) NOT NULL,
+	label varchar(100) NULL,
+	label_singular varchar(100) NULL,
+	label_description varchar(100) NULL,
+	mdi_icon varchar(100) NULL,
 	support_images bit NOT NULL,
 	support_attachments bit NOT NULL,
-	metadata varchar(2000) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	metadata varchar(2000) NULL,
 	CONSTRAINT pk_sg_metadata_tables PRIMARY KEY (id)
 );
 GO
@@ -51,10 +51,10 @@ GO
 CREATE TABLE dbo.sg_metadata_table_images (
 	id int IDENTITY(1,1) NOT NULL,
 	sg_metadata_table_id int NOT NULL,
-	id_value int NOT NULL,
-	group_name varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
-	file_name varchar(200) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
-	description varchar(200) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	id_value bigint NOT NULL,
+	group_name varchar(100) NOT NULL,
+	file_name varchar(200) NOT NULL,
+	description varchar(200) NULL,
 	[position] int NOT NULL,
 	CONSTRAINT pk_sg_metadata_table_images PRIMARY KEY (id)
 );
@@ -76,10 +76,10 @@ GO
 CREATE TABLE dbo.sg_metadata_table_attachments (
 	id int IDENTITY(1,1) NOT NULL,
 	sg_metadata_table_id int NOT NULL,
-	id_value int NOT NULL,
-	group_name varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
-	file_name varchar(200) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
-	description varchar(200) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	id_value bigint NOT NULL,
+	group_name varchar(100) NOT NULL,
+	file_name varchar(200) NOT NULL,
+	description varchar(200) NULL,
 	[position] int NOT NULL,
 	CONSTRAINT pk_sg_metadata_table_attachments PRIMARY KEY (id)
 );
@@ -101,8 +101,8 @@ GO
 CREATE TABLE dbo.sg_metadata_table_triggers (
 	id int IDENTITY(1,1) NOT NULL,
 	sg_metadata_table_id int NOT NULL,
-	name varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
-	groovy varchar(200) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+	name varchar(100) NULL,
+	groovy varchar(200) NOT NULL,
 	CONSTRAINT pk_sg_metadata_table_triggers PRIMARY KEY (id)
 );
 GO
@@ -123,14 +123,14 @@ GO
 CREATE TABLE dbo.sg_metadata_table_commands (
 	id int IDENTITY(1,1) NOT NULL,
 	sg_metadata_table_id int NOT NULL,
-	name varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
-	label varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
-	label_description varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
-	mdi_icon varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	name varchar(100) NOT NULL,
+	label varchar(100) NULL,
+	label_description varchar(100) NULL,
+	mdi_icon varchar(100) NULL,
 	require_confirmation bit NOT NULL,
 	available_in_form bit NOT NULL,
 	available_in_table bit NOT NULL,
-	groovy varchar(200) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+	groovy varchar(200) NOT NULL,
 	CONSTRAINT pk_sg_metadata_table_commands PRIMARY KEY (id)
 );
 GO
@@ -154,12 +154,12 @@ GO
 CREATE TABLE dbo.sg_metadata_columns (
 	id int IDENTITY(1,1) NOT NULL,
 	sg_metadata_table_id int NOT NULL,
-	column_name varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
-	label varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
-	label_description varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
-	mdi_icon varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	column_name varchar(100) NOT NULL,
+	label varchar(100) NULL,
+	label_description varchar(100) NULL,
+	mdi_icon varchar(100) NULL,
 	needs_translation bit NOT NULL,
-	metadata varchar(2000) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	metadata varchar(2000) NULL,
 	CONSTRAINT pk_sg_metadata_columns PRIMARY KEY (id)
 );
 GO
@@ -182,8 +182,8 @@ GO
 CREATE TABLE dbo.sg_metadata_column_fillers (
 	id int IDENTITY(1,1) NOT NULL,
 	sg_metadata_column_id int NOT NULL,
-	name varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
-	groovy varchar(200) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+	name varchar(100) NULL,
+	groovy varchar(200) NOT NULL,
 	CONSTRAINT pk_sg_metadata_column_fillers PRIMARY KEY (id)
 );
 GO
@@ -202,10 +202,10 @@ GO
 
 CREATE TABLE dbo.sg_metadata_tasks (
 	id int IDENTITY(1,1) NOT NULL,
-	name varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
-	cron_expression varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
-	groovy varchar(200) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
-	params varchar(2000) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	name varchar(100) NULL,
+	cron_expression varchar(100) NOT NULL,
+	groovy varchar(200) NOT NULL,
+	params varchar(2000) NULL,
 	CONSTRAINT pk_sg_metadata_tasks PRIMARY KEY (id)
 );
 GO
@@ -217,9 +217,9 @@ GO
 
 CREATE TABLE dbo.sg_i18n_labels (
 	id int IDENTITY(1,1) NOT NULL,
-	locale_code varchar(10) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
-	label varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
-	[translation] varchar(200) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+	locale_code varchar(10) NOT NULL,
+	label varchar(100) NOT NULL,
+	[translation] varchar(200) NOT NULL,
 	created_at datetimeoffset NOT NULL,
 	updated_at datetimeoffset NOT NULL,
 	CONSTRAINT pk_sg_i18n_labels PRIMARY KEY (id)
