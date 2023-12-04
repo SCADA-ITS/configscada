@@ -43,5 +43,8 @@ INSERT INTO ui.graphic_icons
 (000097, 'RTMS', 'RTMS', false, false, 'component/graphicIcon/graphicIconDefault.js', 70, 70, 'img/graphic_icon/51_etd.svg', null,true),
 (00002500, 'EC', 'EC', false, false, 'component/graphicIcon/graphicIconDefault.js', 35, 35, 'img/graphic_icon/25_electrical_cabinet.svg', null,true),
 (00004200, 'EC', 'EC', false, false, 'component/graphicIcon/graphicIconDefault.js', 50, 50, 'img/graphic_icon/25_electrical_cabinet.svg', null,true),
-(13007100, 'VMS', 'VMS', false, true, 'component/graphicIcon/graphicIconCustom.js', 75, 30, 'img/graphic_icon/71_vms_overweight.svg', 'component/graphicIcon/custom/vms.js',true);
+(13007100, 'VMS', 'VMS', false, true, 'component/graphicIcon/graphicIconCustom.js', 75, 30, 'img/graphic_icon/71_vms_overweight.svg', 'component/graphicIcon/custom/vms.js',true),
+(01007100, 'VMS', 'VMS', false, true, 'component/graphicIcon/graphicIconCustom.js', 120, 60, 'img/graphic_icon/71_vms_ac_bd_3lcs.svg', 'component/graphicIcon/custom/vms.js',true),
+(02007101, 'VMS', 'VMS', false, true, 'component/graphicIcon/graphicIconCustom.js', 200, 60, 'img/graphic_icon/71_vms_ac_bd_5lcs.svg', 'component/graphicIcon/custom/vms.js',true),
+(03007102, 'VMS', 'VMS', false, true, 'component/graphicIcon/graphicIconCustom.js', 80, 60, 'img/graphic_icon/71_vms_ac_bd_2lcs.svg', 'component/graphicIcon/custom/vms.js',true);
 
