@@ -1252,9 +1252,9 @@ export default class AlarmModule extends GenericModule {
 											height: 27,
 											on: {
 												onItemClick: function() {
-													let mod = util.module.getFromModuleAction(BackOfficeModule.Config.MODULE_ACTION_OPEN_ID);
+													let mod = util.module.getFromModuleAction(BackOfficeModule.Config.MODULE_ACTION_OPEN);
 
-													let moduleAction = { id: BackOfficeModule.Config.MODULE_ACTION_OPEN_ID };
+													let moduleAction = { id: BackOfficeModule.Config.MODULE_ACTION_OPEN };
 
 													let args = {
 														backOffice: getBackOffice()

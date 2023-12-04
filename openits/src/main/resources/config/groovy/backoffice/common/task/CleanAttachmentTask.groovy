@@ -213,7 +213,7 @@ public class CleanAttachmentTask extends AbstractBackOfficeTask {
 		
 		Set<String> tables = new HashSet<>();
 		
-		String qryTables = "SELECT name FROM %s.sg_metadata_tables WHERE support_images = %s OR support_attachments = %s"; 
+		String qryTables = "SELECT name FROM %s.sg_metadata_tables WHERE sql_view IS NULL AND (support_images = %s OR support_attachments = %s)"; 
 		
 		if (this.dbType.equals(DBType.POSTGRESQL)) {
 			

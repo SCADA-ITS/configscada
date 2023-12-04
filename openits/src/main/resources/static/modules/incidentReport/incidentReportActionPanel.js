@@ -1220,9 +1220,9 @@ export default class IncidentReportActionPanel {
 
 		function openMoreInfo() {
 
-			let mod = util.module.getFromModuleAction(BackOfficeModule.Config.MODULE_ACTION_OPEN_ID);
+			let mod = util.module.getFromModuleAction(BackOfficeModule.Config.MODULE_ACTION_OPEN);
 
-			let moduleAction = { id: BackOfficeModule.Config.MODULE_ACTION_OPEN_ID };
+			let moduleAction = { id: BackOfficeModule.Config.MODULE_ACTION_OPEN };
 
 			let args = {
 				backOffice: getBackOffice()

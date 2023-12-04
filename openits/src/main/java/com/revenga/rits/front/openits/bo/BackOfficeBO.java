@@ -14,12 +14,13 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.revenga.rits.front.openits.backoffice.BackOfficeContext;
 import com.revenga.rits.front.openits.backoffice.BackOfficeProcessor;
 import com.revenga.rits.front.openits.backoffice.BackOfficeProcessor.ShowData;
 import com.revenga.rits.front.openits.backoffice.model.Attachment;
 import com.revenga.rits.front.openits.backoffice.model.Request;
-import com.revenga.rits.front.openits.backoffice.model.Table;
 import com.revenga.rits.front.openits.backoffice.model.Request.RequestResult;
+import com.revenga.rits.front.openits.backoffice.model.Table;
 import com.revenga.rits.front.openits.model.UserSessionUI;
 import com.revenga.rits.front.openits.service.BackOfficeManager;
 import com.revenga.rits.front.openits.service.user.SessionService;
@@ -27,6 +28,7 @@ import com.revenga.rits.front.openits.util.ConversionUtil;
 import com.revenga.rits.front.openits.util.GroovyManager;
 import com.revenga.rits.front.openitsdao.model.BackOffice;
 import com.revenga.rits.front.openitsdao.service.BackOfficeService;
+import com.revenga.rits.front.openitsdao.service.GridService;
 
 @Service
 public class BackOfficeBO {
@@ -46,14 +48,23 @@ public class BackOfficeBO {
 	BackOfficeManager backOfficeManager;
 	
 	@Autowired
+	GridService gridService;
+	
+	@Autowired
 	private Environment env;
 	
 	private String baseDir; 
+	
+	
+	
+	private BackOfficeContext backOfficeCtx;
 	
 	@PostConstruct
 	private void postConstruct() {
 		
 		this.baseDir = env.getProperty(FILE_BASEDIR);
+		
+		this.backOfficeCtx = new BackOfficeContext(groovyManager, backOfficeService, backOfficeManager, gridService);
 	}
 	
 	public List<BackOffice> getList() {
@@ -68,91 +79,91 @@ public class BackOfficeBO {
 	
 	public String translate(Integer id, String label) {
 		
-		BackOfficeProcessor backOfficeProcessor = new BackOfficeProcessor(groovyManager, backOfficeService, backOfficeManager, getLocaleCode(), ShowData.NONE);
+		BackOfficeProcessor backOfficeProcessor = new BackOfficeProcessor(this.backOfficeCtx, getLocaleCode(), ShowData.NONE);
 		
 		return backOfficeProcessor.translate(id, label);
 	}
 	
 	public List<Table> reload(Integer id) {
 		
-		BackOfficeProcessor backOfficeProcessor = new BackOfficeProcessor(groovyManager, backOfficeService, backOfficeManager, getLocaleCode(), ShowData.NONE);
+		BackOfficeProcessor backOfficeProcessor = new BackOfficeProcessor(this.backOfficeCtx, getLocaleCode(), ShowData.NONE);
 		
 		return backOfficeProcessor.getAll(id);
 	}
 	
 	public List<Table> get(Integer backOfficeId, String tableName) {
 		
-		BackOfficeProcessor backOfficeProcessor = new BackOfficeProcessor(groovyManager, backOfficeService, backOfficeManager, getLocaleCode(), ShowData.ONLY_RELATIONS, tableName);
+		BackOfficeProcessor backOfficeProcessor = new BackOfficeProcessor(this.backOfficeCtx, getLocaleCode(), ShowData.ONLY_RELATIONS, tableName);
 		
 		return backOfficeProcessor.get(backOfficeId, tableName, null);
 	}
 
 	public List<Table> get(Integer backOfficeId, String tableName, String conditions) {
 		
-		BackOfficeProcessor backOfficeProcessor = new BackOfficeProcessor(groovyManager, backOfficeService, backOfficeManager, getLocaleCode(), ShowData.ALL, tableName);
+		BackOfficeProcessor backOfficeProcessor = new BackOfficeProcessor(this.backOfficeCtx, getLocaleCode(), ShowData.ALL, tableName);
 		
 		return backOfficeProcessor.get(backOfficeId, tableName, conditions);
 	}
 		
 	public List<Attachment> getAttachments(Integer backOfficeId, Attachment.Type attachmentType, String tableName, Long id) {
 		
-		BackOfficeProcessor backOfficeProcessor = new BackOfficeProcessor(groovyManager, backOfficeService, backOfficeManager, getLocaleCode(), ShowData.NONE);
+		BackOfficeProcessor backOfficeProcessor = new BackOfficeProcessor(this.backOfficeCtx, getLocaleCode(), ShowData.NONE);
 		
 		return backOfficeProcessor.getAttachments(backOfficeId, attachmentType, tableName, id);	
 	}
 	
 	public Attachment editAttachment(String attachmentType, Integer backOfficeId, String tableName, Attachment attachment) {
 		
-		BackOfficeProcessor backOfficeProcessor = new BackOfficeProcessor(groovyManager, backOfficeService, backOfficeManager, getLocaleCode(), ShowData.NONE);
+		BackOfficeProcessor backOfficeProcessor = new BackOfficeProcessor(this.backOfficeCtx, getLocaleCode(), ShowData.NONE);
 		
 		return backOfficeProcessor.editAttachment(attachmentType, backOfficeId, tableName, attachment);	
 	}
 	
 	public Attachment upload(String attachmentType, Integer backOfficeId, String tableName, Long id, String groupName, Integer position, MultipartFile multipartFile) {
 		
-		BackOfficeProcessor backOfficeProcessor = new BackOfficeProcessor(groovyManager, backOfficeService, backOfficeManager, getLocaleCode(), ShowData.NONE);
+		BackOfficeProcessor backOfficeProcessor = new BackOfficeProcessor(this.backOfficeCtx, getLocaleCode(), ShowData.NONE);
 		
 		return backOfficeProcessor.upload(attachmentType, this.baseDir, backOfficeId, tableName, id, groupName, position, multipartFile);	
 	}
 	
 	public byte[] downloadImage(Integer backOfficeId, String tableName, Integer imageId) {
 		
-		BackOfficeProcessor backOfficeProcessor = new BackOfficeProcessor(groovyManager, backOfficeService, backOfficeManager, getLocaleCode(), ShowData.NONE);
+		BackOfficeProcessor backOfficeProcessor = new BackOfficeProcessor(this.backOfficeCtx, getLocaleCode(), ShowData.NONE);
 		
 		return backOfficeProcessor.downloadImage(baseDir, backOfficeId, tableName, imageId);
 	}
 	
 	public Resource downloadAttachment(Integer backOfficeId, String tableName, Integer imageId) {
 		
-		BackOfficeProcessor backOfficeProcessor = new BackOfficeProcessor(groovyManager, backOfficeService, backOfficeManager, getLocaleCode(), ShowData.NONE);
+		BackOfficeProcessor backOfficeProcessor = new BackOfficeProcessor(this.backOfficeCtx, getLocaleCode(), ShowData.NONE);
 		
 		return backOfficeProcessor.downloadAttachment(baseDir, backOfficeId, tableName, imageId);
 	}
 	
 	public Attachment deleteAttachment(String attachment, Integer backOfficeId, String tableName, Integer imageId) {
 		
-		BackOfficeProcessor backOfficeProcessor = new BackOfficeProcessor(groovyManager, backOfficeService, backOfficeManager, getLocaleCode(), ShowData.NONE);
+		BackOfficeProcessor backOfficeProcessor = new BackOfficeProcessor(this.backOfficeCtx, getLocaleCode(), ShowData.NONE);
 		
 		return backOfficeProcessor.deleteAttachment(attachment, baseDir, backOfficeId, tableName, imageId);
 	}
 
 	public RequestResult persist(Integer backOfficeId, Request request) {
 		
-		BackOfficeProcessor backOfficeProcessor = new BackOfficeProcessor(groovyManager, backOfficeService, backOfficeManager, getLocaleCode(), ShowData.NONE);
+		BackOfficeProcessor backOfficeProcessor = new BackOfficeProcessor(this.backOfficeCtx, getLocaleCode(), ShowData.NONE);
 		
 		return backOfficeProcessor.persist(backOfficeId, request);
 	}
 	
 	public RequestResult command(Integer backOfficeId, Request request) {
 		
-		BackOfficeProcessor backOfficeProcessor = new BackOfficeProcessor(groovyManager, backOfficeService, backOfficeManager, getLocaleCode(), ShowData.ALL);
+		BackOfficeProcessor backOfficeProcessor = new BackOfficeProcessor(this.backOfficeCtx, getLocaleCode(), ShowData.ALL);
 		
 		return backOfficeProcessor.command(backOfficeId, request);
 	}
 	
 	public RequestResult filler(Integer backOfficeId, Request request) {
 		
-		BackOfficeProcessor backOfficeProcessor = new BackOfficeProcessor(groovyManager, backOfficeService, backOfficeManager, getLocaleCode(), ShowData.ALL);
+		BackOfficeProcessor backOfficeProcessor = new BackOfficeProcessor(this.backOfficeCtx, getLocaleCode(), ShowData.ALL);
 		
 		return backOfficeProcessor.filler(backOfficeId, request);
 	}

@@ -328,6 +328,55 @@ public class BackOfficeUtil {
 		}
 	}
 	
+	public static void setColTypeJdbc(Column col, int sqlType) {
+		
+		switch (sqlType) {
+		
+			case java.sql.Types.TINYINT:
+			case java.sql.Types.SMALLINT:
+				
+				col.setColType(ColType.SHORT);
+				break;
+				
+			case java.sql.Types.INTEGER:
+				
+				col.setColType(ColType.INTEGER);
+				break;
+				
+			case java.sql.Types.BIGINT:
+				
+				col.setColType(ColType.LONG);
+				break;
+				
+			case java.sql.Types.FLOAT:
+			case java.sql.Types.DECIMAL:
+			case java.sql.Types.NUMERIC:
+				
+				col.setColType(ColType.DECIMAL);
+				break;
+				
+			case java.sql.Types.VARCHAR:
+			case java.sql.Types.CHAR:
+			case java.sql.Types.NVARCHAR:
+				
+				col.setColType(ColType.STRING);
+				break;
+				
+			case java.sql.Types.DATE:
+			case java.sql.Types.TIMESTAMP:
+				
+				col.setColType(ColType.TIMESTAMP);
+				break;
+				
+			case java.sql.Types.BIT:
+				
+				col.setColType(ColType.BOOLEAN);
+				break;
+				
+			default:
+		}
+	}
+	
 	public static String getDml(Connection conn, BackOffice backOffice, Table table, Request request) throws SQLException {
 		
 		String sql = null;
@@ -873,6 +922,11 @@ public class BackOfficeUtil {
 									}
 								}
 							}
+						}
+						
+						if (!StringUtils.isEmpty(table.getSqlView())) {
+							
+							items[0] = String.format("A.%s", items[0]);
 						}
 					}
 					

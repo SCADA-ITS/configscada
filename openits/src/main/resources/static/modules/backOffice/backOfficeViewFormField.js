@@ -16,7 +16,7 @@ export default class BackOfficeViewFormField  {
 		this.setValues = form.setValues;
 		this.isVisible = true;
 		this.formId = form.formId;
-		this.editable = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, BackOfficeHelper.META_TYPE_TABLE.PROPERTY.EDITABLE, this.backOffice.metadata, this.currentTableData);
+		this.editable = !form.currentTableData.sqlView && BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, BackOfficeHelper.META_TYPE_TABLE.PROPERTY.EDITABLE, this.backOffice.metadata, this.currentTableData);
 	}
 	
 	getField(column, options) {
@@ -638,17 +638,8 @@ export default class BackOfficeViewFormField  {
 												const columnIdValue = data.value; 
 									
 												edit(table, columnIdValue, function () {
-													
-													let persistValues = [];
-													
-													persistValues.push({
-														colName: columnId.name,
-														oldValue: columnIdValue,
-														newValue: undefined,
-														colType: columnId.colType
-													});
-								
-													BackOfficeHelper.deleteData(self.backOffice, table, persistValues, columnIdValue).then((requestResult) => {
+																				
+													BackOfficeHelper.deleteData(self.backOffice, table, columnIdValue).then((requestResult) => {
 														
 														if (requestResult.requestResultMessage.error) {
 															
@@ -704,7 +695,7 @@ export default class BackOfficeViewFormField  {
 									onLoad: onLoad
 								}
 		
-								util.module.open(module, {id: BackOfficeModule.Config.MODULE_ACTION_OPEN_ID }, VIEW_TYPE_CUSTOM, drawContent, args);	
+								util.module.open(module, {id: BackOfficeModule.Config.MODULE_ACTION_OPEN }, VIEW_TYPE_CUSTOM, drawContent, args);	
 							}
 						
 							function drawContent(view) {

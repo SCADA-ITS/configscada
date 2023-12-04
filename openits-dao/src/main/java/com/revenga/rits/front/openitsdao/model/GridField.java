@@ -1,11 +1,21 @@
 package com.revenga.rits.front.openitsdao.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import java.util.Set;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import java.util.List;
 
 
 /**
@@ -76,20 +86,20 @@ public class GridField implements Serializable {
 	private Integer precisionFilter;
 
 	//bi-directional many-to-one association to GridFieldIcon
-	@OneToMany(mappedBy="gridField")
-	private List<GridFieldIcon> gridFieldIcons;
+	@OneToMany(mappedBy="gridField", fetch=FetchType.EAGER)
+	private Set<GridFieldIcon> gridFieldIcons;
 	
 	//bi-directional many-to-one association to GridFieldBalloon
-	@OneToMany(mappedBy="gridField")
-	private List<GridFieldBalloon> gridFieldBalloons;
+	@OneToMany(mappedBy="gridField", fetch=FetchType.EAGER)
+	private Set<GridFieldBalloon> gridFieldBalloons;
 	
 	//bi-directional many-to-one association to GridFieldReference
-	@OneToMany(mappedBy="gridField")
-	private List<GridFieldReference> gridFieldReferences;
+	@OneToMany(mappedBy="gridField", fetch=FetchType.EAGER)
+	private Set<GridFieldReference> gridFieldReferences;
 
 	//bi-directional many-to-one association to GridFieldReplacement
-	@OneToMany(mappedBy="gridField")
-	private List<GridFieldReplacement> gridFieldReplacements;
+	@OneToMany(mappedBy="gridField", fetch=FetchType.EAGER)
+	private Set<GridFieldReplacement> gridFieldReplacements;
 
 	//uni-directional many-to-one association to GridFieldDataType
 	@ManyToOne
@@ -245,11 +255,11 @@ public class GridField implements Serializable {
 		this.widthPx = widthPx;
 	}
 
-	public List<GridFieldIcon> getGridFieldIcons() {
+	public Set<GridFieldIcon> getGridFieldIcons() {
 		return this.gridFieldIcons;
 	}
 
-	public void setGridFieldIcons(List<GridFieldIcon> gridFieldIcons) {
+	public void setGridFieldIcons(Set<GridFieldIcon> gridFieldIcons) {
 		this.gridFieldIcons = gridFieldIcons;
 	}
 
@@ -267,11 +277,11 @@ public class GridField implements Serializable {
 		return gridFieldIcon;
 	}
 	
-	public List<GridFieldBalloon> getGridFieldBalloons() {
+	public Set<GridFieldBalloon> getGridFieldBalloons() {
 		return this.gridFieldBalloons;
 	}
 
-	public void setGridFieldBalloons(List<GridFieldBalloon> gridFieldBalloons) {
+	public void setGridFieldBalloons(Set<GridFieldBalloon> gridFieldBalloons) {
 		this.gridFieldBalloons = gridFieldBalloons;
 	}
 
@@ -289,11 +299,11 @@ public class GridField implements Serializable {
 		return gridFieldBalloon;
 	}
 
-	public List<GridFieldReference> getGridFieldReferences() {
+	public Set<GridFieldReference> getGridFieldReferences() {
 		return this.gridFieldReferences;
 	}
 
-	public void setGridFieldReferences(List<GridFieldReference> gridFieldReferences) {
+	public void setGridFieldReferences(Set<GridFieldReference> gridFieldReferences) {
 		this.gridFieldReferences = gridFieldReferences;
 	}
 
@@ -311,11 +321,11 @@ public class GridField implements Serializable {
 		return gridFieldReference;
 	}
 
-	public List<GridFieldReplacement> getGridFieldReplacements() {
+	public Set<GridFieldReplacement> getGridFieldReplacements() {
 		return this.gridFieldReplacements;
 	}
 
-	public void setGridFieldReplacements(List<GridFieldReplacement> gridFieldReplacements) {
+	public void setGridFieldReplacements(Set<GridFieldReplacement> gridFieldReplacements) {
 		this.gridFieldReplacements = gridFieldReplacements;
 	}
 

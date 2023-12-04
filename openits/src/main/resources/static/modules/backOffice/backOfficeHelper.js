@@ -266,13 +266,12 @@ export default class BackOfficeHelper {
 		return response ? response.json() : undefined;
 	}
 
-	static async deleteData(backOffice, table, requestInput, id) {
+	static async deleteData(backOffice, table, id) {
 
 		let response;
 
 		const body = {
 			id: id,
-			requestInput: requestInput,
 			requestType: BackOfficeHelper.REQUEST_TYPE_DELETE,
 			tableName: table.name
 		}
@@ -325,7 +324,7 @@ export default class BackOfficeHelper {
 		return response ? response.json() : undefined;
 	}
 
-	static async getDataTableMetadata(gridId) {
+	static async getGrid(gridId) {
 
 		let response;
 

@@ -10,7 +10,8 @@ export default class BackOfficeModule extends GenericModule {
 			DEFAULT_FORM_WIDTH: 900,
 			DEFAULT_FORM_HEIGHT: 700,
 			MODULE_ID: 1044,
-			MODULE_ACTION_OPEN_ID: 104401
+			MODULE_ACTION_OPEN: 104401,
+			MODULE_ACTION_NEW: 104402
 		}
 	}
 
@@ -28,12 +29,33 @@ export default class BackOfficeModule extends GenericModule {
 		
 		$$("loading-" + self.uid).show();
 		
-		if (self.moduleAction && self.moduleAction.id === BackOfficeModule.Config.MODULE_ACTION_OPEN_ID) {
-
-			backOffice = self.args.backOffice;
-			backOffice.containerId = self.args.containerId; 
+		if (self.moduleAction) {
+			
+			assignFromModuleAction();
 		}
 		else {
+			
+			assignFromModule();
+		}
+		
+		runBackOfficeManager();
+		
+		function assignFromModuleAction() {
+			
+			if (self.moduleAction.id === BackOfficeModule.Config.MODULE_ACTION_OPEN ||
+				self.moduleAction.id === BackOfficeModule.Config.MODULE_ACTION_NEW) {
+			
+				backOffice = self.args.backOffice;
+				backOffice.containerId = self.args.containerId;
+				backOffice.moduleActionId = self.moduleAction.id;		
+			}
+			else {
+				
+				log.warn("Unknown moduleAction = " + self.moduleAction.id);
+			} 
+		}
+		
+		function assignFromModule() {
 			
 			let id = undefined;
 			let tableName = undefined;
@@ -42,35 +64,35 @@ export default class BackOfficeModule extends GenericModule {
 			let filters = [];
 			let filtersRequired = false;
 			
-			const moduleValueId = this.module.moduleValues.find(e => e.moduleParam.id === MODULE_PARAM_TYPE_GENERIC_BACKOFFICE_WINDOW_ID);
+			const moduleValueId = self.module.moduleValues.find(e => e.moduleParam.id === MODULE_PARAM_TYPE_GENERIC_BACKOFFICE_WINDOW_ID);
 			
 			if (moduleValueId) {
 				
 				id = moduleValueId.value;
 			}
 			
-			const moduleValueTableName = this.module.moduleValues.find(e => e.moduleParam.id === MODULE_PARAM_TYPE_GENERIC_BACKOFFICE_WINDOW_TABLE_NAME);
+			const moduleValueTableName = self.module.moduleValues.find(e => e.moduleParam.id === MODULE_PARAM_TYPE_GENERIC_BACKOFFICE_WINDOW_TABLE_NAME);
 			
 			if (moduleValueTableName) {
 				
 				tableName = moduleValueTableName.value;
 			}
 			
-			const moduleValueFilterColumnName = this.module.moduleValues.find(e => e.moduleParam.id === MODULE_PARAM_TYPE_GENERIC_BACKOFFICE_WINDOW_FILTER_COLUMN_NAME); 
+			const moduleValueFilterColumnName = self.module.moduleValues.find(e => e.moduleParam.id === MODULE_PARAM_TYPE_GENERIC_BACKOFFICE_WINDOW_FILTER_COLUMN_NAME); 
 			
 			if (moduleValueFilterColumnName) {
 				
 				filterColumnName = moduleValueFilterColumnName.value;
 			}
 			
-			const moduleValueFilterColumnValue = this.module.moduleValues.find(e => e.moduleParam.id === MODULE_PARAM_TYPE_GENERIC_BACKOFFICE_WINDOW_FILTER_COLUMN_VALUE); 
+			const moduleValueFilterColumnValue = self.module.moduleValues.find(e => e.moduleParam.id === MODULE_PARAM_TYPE_GENERIC_BACKOFFICE_WINDOW_FILTER_COLUMN_VALUE); 
 			
 			if (moduleValueFilterColumnValue) {
 				
 				filterColumnValue = moduleValueFilterColumnValue.value;
 			}
 			
-			const moduleValueFilters = this.module.moduleValues.find(e => e.moduleParam.id === MODULE_PARAM_TYPE_GENERIC_BACKOFFICE_WINDOW_FILTERS); 
+			const moduleValueFilters = self.module.moduleValues.find(e => e.moduleParam.id === MODULE_PARAM_TYPE_GENERIC_BACKOFFICE_WINDOW_FILTERS); 
 			
 			if (moduleValueFilters && moduleValueFilters.value) {
 				
@@ -87,7 +109,7 @@ export default class BackOfficeModule extends GenericModule {
 				}
 			}
 			
-			const moduleValueFilterRequired = this.module.moduleValues.find(e => e.moduleParam.id === MODULE_PARAM_TYPE_GENERIC_BACKOFFICE_WINDOW_FILTERS_REQUIRED); 
+			const moduleValueFilterRequired = self.module.moduleValues.find(e => e.moduleParam.id === MODULE_PARAM_TYPE_GENERIC_BACKOFFICE_WINDOW_FILTERS_REQUIRED); 
 			
 			if (moduleValueFilterRequired) {
 				
@@ -107,55 +129,60 @@ export default class BackOfficeModule extends GenericModule {
 			}
 		}
 		
-		if (backOffice.id && backOffice.tableName) {
+		function runBackOfficeManager() {
 			
-			BackOfficeHelper.getBackOfficeData(backOffice).then((backOfficeData) => {
-				
-				if (backOfficeData) {
+			if (backOffice.id && backOffice.tableName) {
+			
+				BackOfficeHelper.getBackOfficeData(backOffice).then((backOfficeData) => {
 					
-					backOffice.metadata = {
+					if (backOfficeData) {
 						
-						defaultMetadataBackoffice: JSON.parse(backOfficeData.defaultMetadataBackoffice),
-						defaultMetadataTable: JSON.parse(backOfficeData.defaultMetadataTable),
-						defaultMetadataColumn: JSON.parse(backOfficeData.defaultMetadataColumn)
-					}	
-				}
-			
-				BackOfficeHelper.getData(backOffice).then((data) => {
-					
-					let backOfficeManager = new BackOfficeManager(backOffice, data);
-			
-					$$("loading-" + self.uid).hide();
-					
-					let isCreating = false;
-					backOfficeManager.getView(onCreate, onGetView);
-					
-					function onCreate() {
-				
-						const container = $$(backOffice.containerId);
+						backOffice.metadata = {
 							
-						if (container) {
-							
-							isCreating = true;
-							
-							container.close();
-						}
+							defaultMetadataBackoffice: JSON.parse(backOfficeData.defaultMetadataBackoffice),
+							defaultMetadataTable: JSON.parse(backOfficeData.defaultMetadataTable),
+							defaultMetadataColumn: JSON.parse(backOfficeData.defaultMetadataColumn)
+						}	
 					}
-					
-					function onGetView(backOfficeManagerView) {
-					
-						if (backOfficeManagerView && !isCreating) {
+				
+					BackOfficeHelper.getData(backOffice).then((data) => {
 						
-							webix.ui(backOfficeManagerView, $$(self.uid));
-												
-							if (self.args.onLoad) {
+						let backOfficeManager = new BackOfficeManager(backOffice, data);
+				
+						$$("loading-" + self.uid).hide();
+						
+						let isCreating = false;
+						backOfficeManager.getView(onCreate, onGetView);
+						
+						function onCreate() {
+					
+							const container = $$(backOffice.containerId);
 								
-								self.args.onLoad();
-							}	
-						}		
-					}
-				});	
-			});
+							if (container) {
+								
+								isCreating = true;
+								
+								container.close();
+							}
+						}
+						
+						function onGetView(backOfficeManagerView) {
+						
+							if (backOfficeManagerView && !isCreating) {
+							
+								webix.ui(backOfficeManagerView, $$(self.uid));
+													
+								if (self.args.onLoad) {
+									
+									self.args.onLoad();
+								}	
+							}		
+						}
+					});	
+				});
+			}	
 		}
+		
+		
 	}
 }

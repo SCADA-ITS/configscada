@@ -3,6 +3,7 @@ package com.revenga.rits.front.openits.backoffice;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -23,14 +24,16 @@ import com.revenga.rits.front.openits.backoffice.BackOfficeUtil.DMLType;
 import com.revenga.rits.front.openits.backoffice.model.Attachment;
 import com.revenga.rits.front.openits.backoffice.model.Basic;
 import com.revenga.rits.front.openits.backoffice.model.Column;
-import com.revenga.rits.front.openits.backoffice.model.Row;
-import com.revenga.rits.front.openits.backoffice.model.Table;
 import com.revenga.rits.front.openits.backoffice.model.Column.Filler;
+import com.revenga.rits.front.openits.backoffice.model.Row;
 import com.revenga.rits.front.openits.backoffice.model.Row.RowData;
+import com.revenga.rits.front.openits.backoffice.model.Table;
 import com.revenga.rits.front.openits.backoffice.model.Table.Command;
 import com.revenga.rits.front.openits.backoffice.model.Table.Trigger;
 import com.revenga.rits.front.openits.util.ConversionUtil;
 import com.revenga.rits.front.openitsdao.model.BackOffice;
+import com.revenga.rits.front.openitsdao.model.Grid;
+import com.revenga.rits.front.openitsdao.service.GridService;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -93,6 +96,51 @@ public class BackOfficeAssignment {
 		return cols;
 	}
 	
+	List<Column> assignColumnsView(Connection conn, Table view) throws SQLException {
+		
+		List<Column> cols = view.getColumns();
+		
+		String sql = view.getSqlView();
+				
+		try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+			
+			if (this.backOfficeProcessor.getBackOfficeManager().isShowSql()) {
+				
+				log.debug(stmt);					
+			}
+
+			ResultSet rs = stmt.executeQuery();
+			
+			ResultSetMetaData rsmd = rs.getMetaData();
+			
+			for (int colIdx = 1; colIdx <= rsmd.getColumnCount(); colIdx++) {
+				
+				String columnName = rsmd.getColumnName(colIdx);
+				
+				Column col = new Column(view, columnName);
+				
+				col.setPosition(colIdx);
+				col.setNullable(true);
+				col.setPrimaryKey(StringUtils.equals(columnName, "id"));
+				col.setIdentity(StringUtils.equals(columnName, "id"));
+				col.setDefaultValue(null);
+				
+				int sqlType = rsmd.getColumnType(colIdx);
+				
+				BackOfficeUtil.setColTypeJdbc(col, sqlType);
+				
+				if (col.getColType() == null) {
+					
+					log.warn("Field " + view.getName() + "." + col.getName() + " has no supported data type: "	+ sqlType);
+				}
+				
+				cols.add(col);
+			}
+		}
+		
+		return cols;
+	}
+	
 	List<Table> assignReferTables(Connection conn, BackOffice backOffice, Table table) throws SQLException {
 		
 		List<Table> referTables = null;
@@ -105,7 +153,7 @@ public class BackOfficeAssignment {
 			
 			for (Table referTable : referTables) {
 				
-				this.backOfficeProcessor.getTable(conn, backOffice, referTable.getName(), null, null);
+				this.backOfficeProcessor.getTable(conn, backOffice, referTable.getName(), null, null, null);
 			}
 		}
 		
@@ -136,7 +184,7 @@ public class BackOfficeAssignment {
 					
 					if (sourceTableName.equals(table.getName())) {
 						
-						Table referTable = this.backOfficeProcessor.getTable(conn, backOffice, targetTableName, null, null);
+						Table referTable = this.backOfficeProcessor.getTable(conn, backOffice, targetTableName, null, null, null);
 						
 						if (referTable != null) {
 							
@@ -173,7 +221,7 @@ public class BackOfficeAssignment {
 			
 			for (String tableName : referTableNames) {
 				
-				this.backOfficeProcessor.getTable(conn, backOffice, tableName, table, null);
+				this.backOfficeProcessor.getTable(conn, backOffice, tableName, table, null, null);
 			}
 		}
 		else {
@@ -198,7 +246,7 @@ public class BackOfficeAssignment {
 					
 					tableReferenceName = tableReferenceName.replace(backOffice.getSchema() + ".", "");
 					
-					Table referTable = this.backOfficeProcessor.getTable(conn, backOffice, tableReferenceName, table, null);
+					Table referTable = this.backOfficeProcessor.getTable(conn, backOffice, tableReferenceName, table, null, null);
 					
 					if (referTable != null) {
 					
@@ -223,8 +271,15 @@ public class BackOfficeAssignment {
 			
 			if (!CollectionUtils.isEmpty(columnNames)) {
 				
-				sql = String.format("SELECT %s FROM %s.%s", String.join(",", columnNames), backOffice.getSchema(),
-						table.getName());
+				if (StringUtils.isEmpty(table.getSqlView())) {
+					
+					sql = String.format("SELECT %s FROM %s.%s", String.join(",", columnNames), backOffice.getSchema(),
+							table.getName());
+				}
+				else {
+					
+					sql = table.getSqlView();
+				}
 				
 				if (parentTable != null) {
 					
@@ -263,7 +318,14 @@ public class BackOfficeAssignment {
 					
 					if (!StringUtils.isEmpty(conditions)) {
 						
-						sql += (!sql.contains("WHERE") ? " WHERE " : " AND ") + BackOfficeUtil.getConditions(conn, table, conditions);
+						if (StringUtils.isEmpty(table.getSqlView())) {
+
+							sql += (!sql.contains("WHERE") ? " WHERE " : " AND ") + BackOfficeUtil.getConditions(conn, table, conditions);
+						}
+						else {
+						
+							sql = String.format("SELECT A.* FROM (%s) A WHERE %s", sql, BackOfficeUtil.getConditions(conn, table, conditions));
+						}
 					}
 					
 					try (Statement stmt = conn.createStatement()) {
@@ -450,7 +512,7 @@ public class BackOfficeAssignment {
 			targetTableName = "sg_metadata_table_attachments";
 		}
 		
-		Table targetTable = this.backOfficeProcessor.getTable(conn, backOffice, targetTableName, null, null);
+		Table targetTable = this.backOfficeProcessor.getTable(conn, backOffice, targetTableName, null, null, null);
 		
 		if (targetTable != null) {
 			
@@ -625,7 +687,7 @@ public class BackOfficeAssignment {
 	private void assignMetadataTable(Connection conn, BackOffice backOffice, Table table) throws SQLException {
 			
 		final String QRY_TABLE_METADATA = String
-				.format("SELECT id, label, label_singular, label_description, mdi_icon, metadata " + 
+				.format("SELECT id, label, label_singular, label_description, mdi_icon, metadata, grid_id " + 
 						"  FROM %s.sg_metadata_tables " + 
 						" WHERE name = ?", 
 						backOffice.getSchema());	
@@ -648,6 +710,15 @@ public class BackOfficeAssignment {
 				table.setLabelDescription(rs.getString("label_description"));
 				table.setMdiIcon(rs.getString("mdi_icon"));
 				table.setMetadataId(rs.getInt("id"));
+				Integer gridId = (rs.getInt("grid_id"));
+				
+				if (rs.wasNull()) {
+			        
+					gridId = null;
+			    }
+				
+				table.setGridId(gridId);
+				
 				String metadata = rs.getString("metadata");
 				
 				if (!StringUtils.isEmpty(metadata)) {
@@ -660,6 +731,18 @@ public class BackOfficeAssignment {
 						
 						log.error(e.getMessage());
 						log.debug(ExceptionUtils.getStackTrace(e));
+					}
+				}
+				
+				GridService gridService = this.backOfficeProcessor.getGridService();
+				
+				if (gridId != null && gridService != null) {
+					
+					Grid grid = gridService.getById(gridId);
+					
+					if (grid != null) {
+						
+						table.setGrid(grid);
 					}
 				}
 			}

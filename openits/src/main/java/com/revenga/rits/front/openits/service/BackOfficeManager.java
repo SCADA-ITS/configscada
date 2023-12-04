@@ -38,6 +38,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import com.revenga.rits.front.openits.app.AppInfra;
+import com.revenga.rits.front.openits.backoffice.BackOfficeContext;
 import com.revenga.rits.front.openits.backoffice.BackOfficeProcessor;
 import com.revenga.rits.front.openits.backoffice.BackOfficeProcessor.ShowData;
 import com.revenga.rits.front.openits.backoffice.model.Basic;
@@ -48,6 +49,7 @@ import com.revenga.rits.front.openits.util.ConversionUtil;
 import com.revenga.rits.front.openits.util.GroovyManager;
 import com.revenga.rits.front.openitsdao.model.BackOffice;
 import com.revenga.rits.front.openitsdao.service.BackOfficeService;
+import com.revenga.rits.front.openitsdao.service.GridService;
 import com.revenga.rits.lib.encrypt.util.AES;
 
 import lombok.Getter;
@@ -73,6 +75,9 @@ public class BackOfficeManager extends FrontManager {
 	@Autowired
 	@Getter
 	GroovyManager groovyManager;
+	
+	@Autowired
+	GridService gridService;
 	
 	@Autowired
 	private Environment env;
@@ -216,8 +221,10 @@ public class BackOfficeManager extends FrontManager {
 				
 				if (backOffice.getEnabled().booleanValue()) {
 					
-					BackOfficeProcessor backOfficeProcessor = new BackOfficeProcessor(groovyManager, backOfficeService, this, null, ShowData.NONE);
-					
+					BackOfficeProcessor backOfficeProcessor = new BackOfficeProcessor(
+							new BackOfficeContext(groovyManager, backOfficeService, this, gridService), null,
+							ShowData.NONE);
+
 					Instant timeRef = Instant.now();
 					
 					List<Table> t = backOfficeProcessor.getAll(backOffice.getId());

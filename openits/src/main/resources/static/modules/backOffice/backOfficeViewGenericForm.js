@@ -31,7 +31,7 @@ export default class BackOfficeViewGenericForm extends BackOfficeView {
 		this.refreshInterval = undefined;
 		this.selectedRefreshTime = currentTableData.metadata && currentTableData.metadata[BackOfficeHelper.META_TYPE_TABLE.PROPERTY.AUTOREFRESH_FORM.name] && currentTableData.metadata.autorefresh && currentTableData.metadata.autorefresh > 0 ? currentTableData.metadata.autorefresh : undefined;
 		
-		this.editable = backOffice.editable || BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, BackOfficeHelper.META_TYPE_TABLE.PROPERTY.EDITABLE, backOffice.metadata, currentTableData);
+		this.editable = !currentTableData.sqlView && (backOffice.editable || BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, BackOfficeHelper.META_TYPE_TABLE.PROPERTY.EDITABLE, backOffice.metadata, currentTableData));
 	}
 	
 	setValues(row, formRef) {
@@ -129,7 +129,8 @@ export default class BackOfficeViewGenericForm extends BackOfficeView {
 								
 								if (self.currentTableData.metadata && self.currentTableData.metadata[BackOfficeHelper.META_TYPE_TABLE.PROPERTY.AUTOREFRESH_FORM.name] &&
 									self.currentTableData.metadata.autorefresh && 
-									!isNaN(self.currentTableData.metadata.autorefresh)) {
+									!isNaN(self.currentTableData.metadata.autorefresh) &&
+									!self.backOffice.onCancel) {
 									
 									$$("slider-" + self.uid).setValue(self.currentTableData.metadata.autorefresh);
 
@@ -410,7 +411,7 @@ export default class BackOfficeViewGenericForm extends BackOfficeView {
 
 		buttonsGrid.cols.push({});
 		
-		if (self.currentTableData.metadata && self.currentTableData.metadata[BackOfficeHelper.META_TYPE_TABLE.PROPERTY.AUTOREFRESH_FORM.name] && self.currentTableData.metadata.autorefresh > 0) {
+		if (!self.backOffice.onCancel && self.currentTableData.metadata && self.currentTableData.metadata[BackOfficeHelper.META_TYPE_TABLE.PROPERTY.AUTOREFRESH_FORM.name] && self.currentTableData.metadata.autorefresh > 0) {
 			
 			buttonsGrid.cols.push({
 				id: "slider-" + self.uid,
@@ -446,6 +447,196 @@ export default class BackOfficeViewGenericForm extends BackOfficeView {
 		let viewToolbarActions = {};
 		
 		const container = $$(self.backOffice.containerId);
+		
+		const cancelButtonView = {
+			view: "button",
+			value: i18n.t("LBL_CANCEL"),
+			width: 130,
+			height: 41,
+			css: "dialog-cancel",
+			click: function() {
+					
+				if (self.backOffice.onCancel) {
+					
+					self.backOffice.onCancel()
+				}
+				
+				if (container) {
+					
+					container.close();	
+				}
+			}
+		}
+		
+		const acceptButtonView = {
+			id: "btn-accept-" + self.uid,
+			view: "button",
+			value: i18n.t("LBL_ACCEPT"),
+			disabled: !self.backOffice.onCancel,
+			width: 130,
+			height: 41,
+			css: "dialog-accept",
+			hidden: !self.editable,
+			click: function() {
+
+				let validation = $$(self.formId).validate({ disabled: true });
+
+				if (validation) {
+
+					persistUpdate();
+
+				} else {
+
+					$$(self.formId).show();
+				}
+			}
+		}
+		
+		const printButtonView = {
+			view: "button",
+			value: i18n.t("LBL_TABLE_PRINT"),
+			width: 130,
+			height: 41,
+			css: "dialog-finish",
+			hidden: (self.currentTableData.metadata && self.currentTableData.metadata.srcTemplate) ? false : true,
+			click:
+				function() {
+
+					if (self.currentTableData.metadata && self.currentTableData.metadata.srcTemplate) {
+
+						let inputData = {};
+						inputData.tables = [];									
+						inputData.groupImages = {};
+						inputData.fields = {};
+
+						let options = {
+							srcTemplate: self.currentTableData.metadata.srcTemplate
+						};
+
+						if (Array.isArray(self.currentTableData.columns) && self.currentTableData.columns.length > 0) {
+
+							for (let column of self.currentTableData.columns) {
+
+								let val;
+								let label = column.name;
+								const refColumn = column.refColumn;
+
+								let col = self.currentTableData.rows[0].data.find(d => d.columnId === column.id);
+
+								if (col) {
+								
+									val = (column.colType === "TIMESTAMP") ? new Date(parseInt(col.value)).toLocaleString() : col.value;													
+
+									if (refColumn) {
+
+										const referencedColumnValue = BackOfficeHelper.getReferencedColumnValue(self.backOffice, column, col.value, self.data);
+
+										if (referencedColumnValue) {
+
+											val = referencedColumnValue.value;
+										}
+									}
+								}
+
+								inputData.fields[label] = val;
+							}
+
+							if (Array.isArray(self.currentTableData.referTableNames) && self.currentTableData.referTableNames.length > 0) {
+
+								const columnId = self.currentTableData.columns.find(e => e.primaryKey === true);
+
+								if (columnId) {
+
+									self.currentTableData.referTableNames.forEach(referTableName => {
+
+										const referTable = self.data.find(e => e.name === referTableName);
+
+										if (referTable) {
+
+											let tableObj = {};
+
+											tableObj.data = [];
+											tableObj.caption = referTable.label ?? referTable.name;
+											tableObj.tableName = referTable.name;
+
+											if (Array.isArray(referTable.rows) && referTable.rows.length > 0) {
+
+												for (let row of referTable.rows) {
+
+													let aux = {}
+
+													for (let dat of row.data) {
+
+														let d = referTable.columns.find(e => e.id === dat.columnId);
+
+														if (d) {
+
+															let lab;
+															let referencedColumnName = BackOfficeHelper.getReferencedColumnName(self.backOffice, d, self.data);
+															let referencedColumnValue = BackOfficeHelper.getReferencedColumnValue(self.backOffice, d, dat.value, self.data);
+
+															if (referencedColumnName) {
+
+																let table = self.data.find(e => e.id === referencedColumnName.tableId);
+
+																if (table) {
+
+																	lab = table.labelSingular ?? (table.label ?? table.name);
+																}
+															}
+
+															aux[d.name] = {
+																value: (referencedColumnValue && referencedColumnValue.value) ? referencedColumnValue.value : dat.value,
+																header: lab ?? d.name
+															};
+														}
+													}
+
+													tableObj.data.push(aux);
+												}
+
+											} else {
+
+												let aux = {};
+
+												for (let col of referTable.columns) {
+
+													aux[col.name] = undefined;
+												}
+
+												tableObj.data.push(aux);
+											}
+
+											inputData.tables.push(tableObj);
+										}
+									});
+								}
+							}
+
+							if (Array.isArray(self.currentTableData.rows[0].images) && self.currentTableData.rows[0].images.length > 0) {
+								
+								inputData.groupImages.name = "groupImage" + self.currentTableData.rows[0].images[0].idValue;
+								inputData.groupImages.data = [];
+
+								for (let image of self.currentTableData.rows[0].images) {
+
+									inputData.groupImages.data.push({
+										src: `backoffice/${self.backOffice.id}/attachments/image/${self.currentTableData.name}/${image.id}`,
+										fileName: image.fileName
+									});
+								}
+							}
+						}
+
+						let printPreview = new PrintPreview(PrintPreview.TYPE_TEMPLATE, inputData, options);
+						printPreview.show();
+
+					} else {
+
+						new MessageBox(MessageBox.ERROR, i18n.t("LBL_NO_SRC_TEMPLATE_CONFIG"), null, null, null).show();
+					}
+				}
+		}
 
 		viewToolbarActions = {
 			id: "buttons-" + self.uid,
@@ -453,200 +644,254 @@ export default class BackOfficeViewGenericForm extends BackOfficeView {
 			css: { "margin-top": "1px !important" },
 			rows: [
 				{
-					cols: [
-						{ width: 15 },
-						{
-							view: "button",
-							value: i18n.t("LBL_CANCEL"),
-							width: 130,
-							height: 41,
-							css: "dialog-cancel",
-							click:
-								function() {
-									
-									if (self.backOffice.onCancel) {
-										
-										self.backOffice.onCancel()
-									}
-									
-									if (container) {
-										
-										container.close();	
-									}
-								}
-						},
-						{},
-						{
-							view: "button",
-							value: i18n.t("LBL_TABLE_PRINT"),
-							width: 130,
-							height: 41,
-							css: "dialog-finish",
-							hidden: (self.currentTableData.metadata && self.currentTableData.metadata.srcTemplate) ? false : true,
-							click:
-								function() {
-
-									if (self.currentTableData.metadata && self.currentTableData.metadata.srcTemplate) {
-
-										let inputData = {};
-										inputData.tables = [];									
-										inputData.groupImages = {};
-										inputData.fields = {};
-
-										let options = {
-											srcTemplate: self.currentTableData.metadata.srcTemplate
-										};
-
-										if (Array.isArray(self.currentTableData.columns) && self.currentTableData.columns.length > 0) {
-
-											for (let column of self.currentTableData.columns) {
-
-												let val;
-												let label = column.name;
-												const refColumn = column.refColumn;
-
-												let col = self.currentTableData.rows[0].data.find(d => d.columnId === column.id);
-
-												if (col) {
-												
-													val = (column.colType === "TIMESTAMP") ? new Date(parseInt(col.value)).toLocaleString() : col.value;													
-
-													if (refColumn) {
-
-														const referencedColumnValue = BackOfficeHelper.getReferencedColumnValue(self.backOffice, column, col.value, self.data);
-
-														if (referencedColumnValue) {
-
-															val = referencedColumnValue.value;
-														}
-													}
-												}
-
-												inputData.fields[label] = val;
-											}
-
-											if (Array.isArray(self.currentTableData.referTableNames) && self.currentTableData.referTableNames.length > 0) {
-
-												const columnId = self.currentTableData.columns.find(e => e.primaryKey === true);
-
-												if (columnId) {
-
-													self.currentTableData.referTableNames.forEach(referTableName => {
-
-														const referTable = self.data.find(e => e.name === referTableName);
-
-														if (referTable) {
-
-															let tableObj = {};
-
-															tableObj.data = [];
-															tableObj.caption = referTable.label ?? referTable.name;
-															tableObj.tableName = referTable.name;
-
-															if (Array.isArray(referTable.rows) && referTable.rows.length > 0) {
-
-																for (let row of referTable.rows) {
-
-																	let aux = {}
-
-																	for (let dat of row.data) {
-
-																		let d = referTable.columns.find(e => e.id === dat.columnId);
-
-																		if (d) {
-
-																			let lab;
-																			let referencedColumnName = BackOfficeHelper.getReferencedColumnName(self.backOffice, d, self.data);
-																			let referencedColumnValue = BackOfficeHelper.getReferencedColumnValue(self.backOffice, d, dat.value, self.data);
-
-																			if (referencedColumnName) {
-
-																				let table = self.data.find(e => e.id === referencedColumnName.tableId);
-
-																				if (table) {
-
-																					lab = table.labelSingular ?? (table.label ?? table.name);
-																				}
-																			}
-
-																			aux[d.name] = {
-																				value: (referencedColumnValue && referencedColumnValue.value) ? referencedColumnValue.value : dat.value,
-																				header: lab ?? d.name
-																			};
-																		}
-																	}
-
-																	tableObj.data.push(aux);
-																}
-
-															} else {
-
-																let aux = {};
-
-																for (let col of referTable.columns) {
-
-																	aux[col.name] = undefined;
-																}
-
-																tableObj.data.push(aux);
-															}
-
-															inputData.tables.push(tableObj);
-														}
-													});
-												}
-											}
-
-											if (Array.isArray(self.currentTableData.rows[0].images) && self.currentTableData.rows[0].images.length > 0) {
-												
-												inputData.groupImages.name = "groupImage" + self.currentTableData.rows[0].images[0].idValue;
-												inputData.groupImages.data = [];
-
-												for (let image of self.currentTableData.rows[0].images) {
-
-													inputData.groupImages.data.push({
-														src: `backoffice/${self.backOffice.id}/attachments/image/${self.currentTableData.name}/${image.id}`,
-														fileName: image.fileName
-													});
-												}
-											}
-										}
-
-										let printPreview = new PrintPreview(PrintPreview.TYPE_TEMPLATE, inputData, options);
-										printPreview.show();
-
-									} else {
-
-										new MessageBox(MessageBox.ERROR, i18n.t("LBL_NO_SRC_TEMPLATE_CONFIG"), null, null, null).show();
-									}
-								}
-						},										
-						{
-							id: "btn-accept-" + self.uid,
-							view: "button",
-							value: i18n.t("LBL_ACCEPT"),
-							disabled: !self.backOffice.onCancel,
-							width: 130,
-							height: 41,
-							css: "dialog-accept",
-							hidden: !self.editable,
-							click:
-								function() {
-
-									let validation = $$(self.formId).validate({ disabled: true });
-
-									if (validation) {
-
-										persistUpdate();
-
-									} else {
-
-										$$(self.formId).show();
-									}
-								}
-						},
-						{ width: 15 }
-					]
+					cols: function() {
+						
+						let cols = [];
+						
+						cols.push({ width: 15 });
+						
+						if (self.editable) {
+						
+							cols.push(cancelButtonView);	
+						}
+						
+						cols.push({});
+						
+						if (!self.backOffice.onCancel && self.currentTableData.metadata && self.currentTableData.metadata.srcTemplate) {
+							
+							cols.push(printButtonView);
+							cols.push({ width: 5 });
+						}
+						
+						if (self.editable) {
+							
+							cols.push(acceptButtonView);
+						}
+						else {
+							
+							cols.push(cancelButtonView);
+						}
+						
+						cols.push({ width: 15 });
+						
+						return cols;
+					}(),
+//					cols: [
+//						{ width: 15 },
+//						{
+//							view: "button",
+//							value: i18n.t("LBL_CANCEL"),
+//							width: 130,
+//							height: 41,
+//							css: "dialog-cancel",
+//							hidden: !self.editable,
+//							click:
+//								function() {
+//									
+//									if (self.backOffice.onCancel) {
+//										
+//										self.backOffice.onCancel()
+//									}
+//									
+//									if (container) {
+//										
+//										container.close();	
+//									}
+//								}
+//						},
+//						{},
+//						{
+//							view: "button",
+//							value: i18n.t("LBL_TABLE_PRINT"),
+//							width: 130,
+//							height: 41,
+//							css: "dialog-finish",
+//							hidden: (self.currentTableData.metadata && self.currentTableData.metadata.srcTemplate) ? false : true,
+//							click:
+//								function() {
+//
+//									if (self.currentTableData.metadata && self.currentTableData.metadata.srcTemplate) {
+//
+//										let inputData = {};
+//										inputData.tables = [];									
+//										inputData.groupImages = {};
+//										inputData.fields = {};
+//
+//										let options = {
+//											srcTemplate: self.currentTableData.metadata.srcTemplate
+//										};
+//
+//										if (Array.isArray(self.currentTableData.columns) && self.currentTableData.columns.length > 0) {
+//
+//											for (let column of self.currentTableData.columns) {
+//
+//												let val;
+//												let label = column.name;
+//												const refColumn = column.refColumn;
+//
+//												let col = self.currentTableData.rows[0].data.find(d => d.columnId === column.id);
+//
+//												if (col) {
+//												
+//													val = (column.colType === "TIMESTAMP") ? new Date(parseInt(col.value)).toLocaleString() : col.value;													
+//
+//													if (refColumn) {
+//
+//														const referencedColumnValue = BackOfficeHelper.getReferencedColumnValue(self.backOffice, column, col.value, self.data);
+//
+//														if (referencedColumnValue) {
+//
+//															val = referencedColumnValue.value;
+//														}
+//													}
+//												}
+//
+//												inputData.fields[label] = val;
+//											}
+//
+//											if (Array.isArray(self.currentTableData.referTableNames) && self.currentTableData.referTableNames.length > 0) {
+//
+//												const columnId = self.currentTableData.columns.find(e => e.primaryKey === true);
+//
+//												if (columnId) {
+//
+//													self.currentTableData.referTableNames.forEach(referTableName => {
+//
+//														const referTable = self.data.find(e => e.name === referTableName);
+//
+//														if (referTable) {
+//
+//															let tableObj = {};
+//
+//															tableObj.data = [];
+//															tableObj.caption = referTable.label ?? referTable.name;
+//															tableObj.tableName = referTable.name;
+//
+//															if (Array.isArray(referTable.rows) && referTable.rows.length > 0) {
+//
+//																for (let row of referTable.rows) {
+//
+//																	let aux = {}
+//
+//																	for (let dat of row.data) {
+//
+//																		let d = referTable.columns.find(e => e.id === dat.columnId);
+//
+//																		if (d) {
+//
+//																			let lab;
+//																			let referencedColumnName = BackOfficeHelper.getReferencedColumnName(self.backOffice, d, self.data);
+//																			let referencedColumnValue = BackOfficeHelper.getReferencedColumnValue(self.backOffice, d, dat.value, self.data);
+//
+//																			if (referencedColumnName) {
+//
+//																				let table = self.data.find(e => e.id === referencedColumnName.tableId);
+//
+//																				if (table) {
+//
+//																					lab = table.labelSingular ?? (table.label ?? table.name);
+//																				}
+//																			}
+//
+//																			aux[d.name] = {
+//																				value: (referencedColumnValue && referencedColumnValue.value) ? referencedColumnValue.value : dat.value,
+//																				header: lab ?? d.name
+//																			};
+//																		}
+//																	}
+//
+//																	tableObj.data.push(aux);
+//																}
+//
+//															} else {
+//
+//																let aux = {};
+//
+//																for (let col of referTable.columns) {
+//
+//																	aux[col.name] = undefined;
+//																}
+//
+//																tableObj.data.push(aux);
+//															}
+//
+//															inputData.tables.push(tableObj);
+//														}
+//													});
+//												}
+//											}
+//
+//											if (Array.isArray(self.currentTableData.rows[0].images) && self.currentTableData.rows[0].images.length > 0) {
+//												
+//												inputData.groupImages.name = "groupImage" + self.currentTableData.rows[0].images[0].idValue;
+//												inputData.groupImages.data = [];
+//
+//												for (let image of self.currentTableData.rows[0].images) {
+//
+//													inputData.groupImages.data.push({
+//														src: `backoffice/${self.backOffice.id}/attachments/image/${self.currentTableData.name}/${image.id}`,
+//														fileName: image.fileName
+//													});
+//												}
+//											}
+//										}
+//
+//										let printPreview = new PrintPreview(PrintPreview.TYPE_TEMPLATE, inputData, options);
+//										printPreview.show();
+//
+//									} else {
+//
+//										new MessageBox(MessageBox.ERROR, i18n.t("LBL_NO_SRC_TEMPLATE_CONFIG"), null, null, null).show();
+//									}
+//								}
+//						},										
+//						{
+//							id: "btn-accept-" + self.uid,
+//							view: "button",
+//							value: i18n.t("LBL_ACCEPT"),
+//							disabled: !self.backOffice.onCancel,
+//							width: 130,
+//							height: 41,
+//							css: "dialog-accept",
+//							hidden: !self.editable,
+//							click:
+//								function() {
+//
+//									let validation = $$(self.formId).validate({ disabled: true });
+//
+//									if (validation) {
+//
+//										persistUpdate();
+//
+//									} else {
+//
+//										$$(self.formId).show();
+//									}
+//								}
+//						},
+//						{
+//							view: "button",
+//							value: i18n.t("LBL_CANCEL"),
+//							width: 130,
+//							height: 41,
+//							css: "dialog-cancel",
+//							hidden: self.editable,
+//							click:
+//								function() {
+//									
+//									if (self.backOffice.onCancel) {
+//										
+//										self.backOffice.onCancel()
+//									}
+//									
+//									if (container) {
+//										
+//										container.close();	
+//									}
+//								}
+//						},
+//						{ width: 15 }
+//					]
 				}
 			]
 		}

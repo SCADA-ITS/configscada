@@ -11,6 +11,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -28,12 +29,13 @@ import org.springframework.web.multipart.MultipartFile;
 import com.revenga.rits.front.openits.backoffice.BackOfficeUtil.DMLType;
 import com.revenga.rits.front.openits.backoffice.model.Attachment;
 import com.revenga.rits.front.openits.backoffice.model.Request;
-import com.revenga.rits.front.openits.backoffice.model.Table;
 import com.revenga.rits.front.openits.backoffice.model.Request.RequestResult;
+import com.revenga.rits.front.openits.backoffice.model.Table;
 import com.revenga.rits.front.openits.service.BackOfficeManager;
 import com.revenga.rits.front.openits.util.GroovyManager;
 import com.revenga.rits.front.openitsdao.model.BackOffice;
 import com.revenga.rits.front.openitsdao.service.BackOfficeService;
+import com.revenga.rits.front.openitsdao.service.GridService;
 import com.revenga.rits.lib.encrypt.util.AES;
 
 import lombok.Getter;
@@ -53,26 +55,30 @@ public class BackOfficeProcessor {
 	GroovyManager groovyManager;
 	BackOfficeService backOfficeService;
 	BackOfficeManager backOfficeManager;
+	GridService gridService;
 	String localeCode;
 	ShowData showData;
 	String requestTableName;
 	
 	private Map<String, Table> referencedTables = new HashMap<>();
 	
-	public BackOfficeProcessor(GroovyManager groovyManager, BackOfficeService backOfficeService, BackOfficeManager backOfficeManager, String localeCode, ShowData showData) {
+	public BackOfficeProcessor(BackOfficeContext backOfficeCtx, String localeCode, ShowData showData) {
 		
-		this.groovyManager = groovyManager;
-		this.backOfficeService = backOfficeService;
-		this.backOfficeManager = backOfficeManager;
-		this.localeCode = localeCode;
-		this.showData = showData;
+		init(backOfficeCtx, localeCode, showData, null);
 	}
 	
-	public BackOfficeProcessor(GroovyManager groovyManager, BackOfficeService backOfficeService, BackOfficeManager backOfficeManager, String localeCode, ShowData showData, String requestTableName) {
+	public BackOfficeProcessor(BackOfficeContext backOfficeCtx, String localeCode, ShowData showData, String requestTableName) {
 		
-		this.groovyManager = groovyManager;
-		this.backOfficeService = backOfficeService;
-		this.backOfficeManager = backOfficeManager;
+		init(backOfficeCtx, localeCode, showData, requestTableName);
+	}
+	
+	private void init(BackOfficeContext backOfficeCtx, String localeCode, ShowData showData, String requestTableName) {
+		
+		this.groovyManager = backOfficeCtx.getGroovyManager();
+		this.backOfficeService = backOfficeCtx.getBackOfficeService();
+		this.backOfficeManager = backOfficeCtx.getBackOfficeManager();
+		this.gridService = backOfficeCtx.getGridService();
+		
 		this.localeCode = localeCode;
 		this.showData = showData;
 		this.requestTableName = requestTableName;
@@ -111,9 +117,11 @@ public class BackOfficeProcessor {
 						
 						if (!this.referencedTables.containsKey(tableName)) {
 							
-							getTable(conn, backOffice, tableName, null, null);
+							getTable(conn, backOffice, tableName, null, null, null);
 						}
 					}
+					
+					getViews(backOffice, conn);
 					
 					if (!CollectionUtils.isEmpty(this.referencedTables)) {
 						
@@ -132,6 +140,40 @@ public class BackOfficeProcessor {
 		
 		return tables;
 	}
+	
+	private List<Table> getViews(BackOffice backOffice, Connection conn) throws SQLException {
+		
+		List<Table> views = null;
+		
+		String sql = String.format("SELECT name, sql_view " +
+					 			   "  FROM %s.sg_metadata_tables " +
+					 			   " WHERE sql_view IS NOT NULL", backOffice.getSchema());
+		
+		try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+			
+			ResultSet rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				
+				if (views == null) {
+					
+					views = new ArrayList<>();
+				}
+				
+				String viewName = rs.getString("name");
+				String sqlView = rs.getString("sql_view");
+				
+				if (!this.referencedTables.containsKey(viewName)) {
+					
+					Table view = getTable(conn, backOffice, viewName, null, null, sqlView);
+					
+					views.add(view);
+				}
+			}
+		}
+		
+		return views;
+	}
 
 	public List<Table> get(Integer backOfficeId, String tableName, String conditions) {
 
@@ -146,7 +188,7 @@ public class BackOfficeProcessor {
 			try (Connection conn = DriverManager.getConnection(backOffice.getJdbc(), backOffice.getUser(),
 					AES.decrypt(backOffice.getPassword()))) {
 			
-				getTable(conn, backOffice, tableName, null, conditions);
+				getTable(conn, backOffice, tableName, null, conditions, null);
 				
 				if (!CollectionUtils.isEmpty(this.referencedTables)) {
 				
@@ -508,7 +550,7 @@ public class BackOfficeProcessor {
 		return (new BackOfficeFiller(this)).onChange(backOfficeId, request);
 	}
 		
-	public Table getTable(Connection conn, BackOffice backOffice, String tableName, Table parentTable, String conditions) throws SQLException {
+	public Table getTable(Connection conn, BackOffice backOffice, String tableName, Table parentTable, String conditions, String sqlView) throws SQLException {
 		
 		Table table = this.referencedTables.get(tableName);
 		
@@ -550,7 +592,17 @@ public class BackOfficeProcessor {
 				
 				this.referencedTables.put(tableName, table);
 				
-				backOfficeAssignment.assignColumns(conn, backOffice, table);
+				if (StringUtils.isEmpty(sqlView)) {
+					
+					backOfficeAssignment.assignColumns(conn, backOffice, table);
+					
+				}
+				else {
+					
+					table.setSqlView(sqlView);
+					
+					backOfficeAssignment.assignColumnsView(conn, table);
+				}
 				
 				setTableAssignments(conn, backOfficeAssignment, backOffice, table, parentTable, conditions);
 				
@@ -568,6 +620,71 @@ public class BackOfficeProcessor {
 		return table;
 	}
 	
+	public Table getView(Connection conn, BackOffice backOffice, String viewName, String sql, String conditions) throws SQLException {
+		
+		Table view = this.referencedTables.get(viewName);
+		
+		if (view == null) {
+			
+			BackOfficeAssignment backOfficeAssignment = new BackOfficeAssignment(this);
+			
+			if (this.backOfficeManager.containsTable(backOffice, viewName)) {
+				
+				Table tableRepository = this.backOfficeManager.getTable(backOffice, viewName);
+				
+				if (tableRepository != null) {
+					
+					try {
+						
+						view = (Table) tableRepository.clone();
+						
+					} catch (CloneNotSupportedException e) {
+						
+						log.error(e.getMessage());
+						log.debug(ExceptionUtils.getStackTrace(e));
+					}
+				}
+				
+				if (view != null) {
+					
+					view.getRows().clear();
+						
+					this.referencedTables.put(viewName, view);
+					
+					setTableAssignments(conn, backOfficeAssignment, backOffice, view, null, conditions);
+					
+					backOfficeAssignment.translateMetadata(conn, backOffice, view);
+				}
+			}
+			else {
+				
+				view = new Table(viewName);
+				
+				view.setSqlView(sql);				
+				
+				this.referencedTables.put(viewName, view);
+				
+				
+				
+				
+				
+				
+				setTableAssignments(conn, backOfficeAssignment, backOffice, view, null, conditions);
+				
+				backOfficeAssignment.assignMetadata(conn, backOffice, view);			
+				
+				this.backOfficeManager.putTable(backOffice, view);
+			}
+			
+			if (view != null) {
+				
+				traceTable(view);
+			}
+		}
+		
+		return view;
+	}
+	
 	private void setTableAssignments(Connection conn, BackOfficeAssignment backOfficeAssignment, BackOffice backOffice,
 			Table table, Table parentTable, String conditions) throws SQLException {
 		
@@ -579,7 +696,7 @@ public class BackOfficeProcessor {
 			backOfficeAssignment.assignRows(conn, backOffice, table, parentTable, conditions);
 		}
 		
-		if (StringUtils.equals(this.requestTableName, table.getName())) {
+		if (StringUtils.equals(this.requestTableName, table.getName()) && StringUtils.isEmpty(table.getSqlView())) {
 			
 			backOfficeAssignment.assignReferencedByTables(conn, backOffice, table);
 		}

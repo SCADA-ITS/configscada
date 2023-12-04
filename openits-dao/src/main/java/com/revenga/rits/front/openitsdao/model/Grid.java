@@ -1,8 +1,17 @@
 package com.revenga.rits.front.openitsdao.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
+
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 
 /**
@@ -26,16 +35,16 @@ public class Grid implements Serializable {
 	private Boolean visible;
 
 	//bi-directional many-to-one association to GridCommand
-	@OneToMany(mappedBy="grid")
-	private List<GridCommand> gridCommands;
+	@OneToMany(mappedBy="grid", fetch=FetchType.EAGER)
+	private Set<GridCommand> gridCommands;
 
 	//bi-directional many-to-one association to GridField
-	@OneToMany(mappedBy="grid")
-	private List<GridField> gridFields;
+	@OneToMany(mappedBy="grid", fetch=FetchType.EAGER)
+	private Set<GridField> gridFields;
 
 	//bi-directional many-to-one association to GridOptionValue
-	@OneToMany(mappedBy="grid")
-	private List<GridOptionValue> gridOptionValues;
+	@OneToMany(mappedBy="grid", fetch=FetchType.EAGER)
+	private Set<GridOptionValue> gridOptionValues;
 
 	//uni-directional many-to-one association to Adapter
 	@ManyToOne
@@ -76,11 +85,11 @@ public class Grid implements Serializable {
 		this.visible = visible;
 	}
 
-	public List<GridCommand> getGridCommands() {
+	public Set<GridCommand> getGridCommands() {
 		return this.gridCommands;
 	}
 
-	public void setGridCommands(List<GridCommand> gridCommands) {
+	public void setGridCommands(Set<GridCommand> gridCommands) {
 		this.gridCommands = gridCommands;
 	}
 
@@ -98,11 +107,11 @@ public class Grid implements Serializable {
 		return gridCommand;
 	}
 
-	public List<GridField> getGridFields() {
+	public Set<GridField> getGridFields() {
 		return this.gridFields;
 	}
 
-	public void setGridFields(List<GridField> gridFields) {
+	public void setGridFields(Set<GridField> gridFields) {
 		this.gridFields = gridFields;
 	}
 
@@ -120,11 +129,11 @@ public class Grid implements Serializable {
 		return gridField;
 	}
 
-	public List<GridOptionValue> getGridOptionValues() {
+	public Set<GridOptionValue> getGridOptionValues() {
 		return this.gridOptionValues;
 	}
 
-	public void setGridOptionValues(List<GridOptionValue> gridOptionValues) {
+	public void setGridOptionValues(Set<GridOptionValue> gridOptionValues) {
 		this.gridOptionValues = gridOptionValues;
 	}
 

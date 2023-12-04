@@ -14,6 +14,7 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.revenga.rits.front.openitsdao.model.Grid;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -106,6 +107,13 @@ public class Table extends Basic {
 	private String labelSingular;
 	@JsonProperty("labelSingular")
 	private String labelSingularTranslated;
+	
+	private String sqlView;
+	
+	@JsonIgnore
+	private Integer gridId;
+	
+	private Grid grid;
 	
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
