@@ -29,7 +29,7 @@ VALUES
 		"command": {
 					"commandElementTypeId": "CommandElementType:2:71",
 					"commandElementValues": [{
-						"value": "[{\"zone\":1,\"alternance_ms\":0,\"flashing_on_ms\":0,\"flashing_off_ms\":0,\"graphics\":[{\"id\":1,\"value\":10317,\"alternance\":0}],\"texts\":[]},{\"zone\":5,\"alternance_ms\":0,\"flashing_on_ms\":0,\"flashing_off_ms\":0,\"graphics\":[{\"id\":1,\"value\":10317,\"alternance\":0}],\"texts\":[]},{\"zone\":9,\"alternance_ms\":0,\"flashing_on_ms\":0,\"flashing_off_ms\":0,\"graphics\":[{\"id\":1,\"value\":10315,\"alternance\":0}],\"texts\":[]},{\"zone\":3,\"alternance_ms\":0,\"flashing_on_ms\":0,\"flashing_off_ms\":0,\"graphics\":[{\"id\":1,\"value\":10080,\"alternance\":0}],\"texts\":[]},{\"zone\":7,\"alternance_ms\":0,\"flashing_on_ms\":0,\"flashing_off_ms\":0,\"graphics\":[{\"id\":1,\"value\":10080,\"alternance\":0}],\"texts\":[]}]",
+						"value": "[{\"zone\":1,\"alternance_ms\":0,\"flashing_on_ms\":0,\"flashing_off_ms\":0,\"graphics\":[{\"id\":1,\"value\":10317,\"alternance\":0}],\"texts\":[]},{\"zone\":5,\"alternance_ms\":0,\"flashing_on_ms\":0,\"flashing_off_ms\":0,\"graphics\":[{\"id\":1,\"value\":10317,\"alternance\":0}],\"texts\":[]},{\"zone\":9,\"alternance_ms\":0,\"flashing_on_ms\":0,\"flashing_off_ms\":0,\"graphics\":[{\"id\":1,\"value\":10317,\"alternance\":0}],\"texts\":[]},{\"zone\":3,\"alternance_ms\":0,\"flashing_on_ms\":0,\"flashing_off_ms\":0,\"graphics\":[{\"id\":1,\"value\":10080,\"alternance\":0}],\"texts\":[]},{\"zone\":7,\"alternance_ms\":0,\"flashing_on_ms\":0,\"flashing_off_ms\":0,\"graphics\":[{\"id\":1,\"value\":10080,\"alternance\":0}],\"texts\":[]}]",
 						"commandElementTypeParamId": "CommandElementTypeParam:2:71:1"
 					},
 					{
