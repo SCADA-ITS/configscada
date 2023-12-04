@@ -37,10 +37,12 @@ INSERT INTO ui.selector_tree_nodes
     (31, 1, 'LBL_SYNOPTIC_S3_P', 928),
     (32, 1, 'LBL_SYNOPTIC_S4-S5_L', 929),
     (33, 1, 'LBL_SYNOPTIC_S4-S5_P', 930),
-(34, 1, 'LBL_TREE_AS_PARENT', NULL),
-    (35, 1, 'LBL_SYNOPTIC_AS', 931),
-(36, 1, 'LBL_TREE_BRIGE_PARENT', NULL),
-    (37, 1, 'LBL_SYNOPTIC_BRIGE', 932);
+(34, 1, 'LBL_TREE_LMS', NULL),
+    (35, 1, 'LBL_SYNOPTIC_D4-R7', 933),
+(36, 1, 'LBL_TREE_AS_PARENT', NULL),
+    (37, 1, 'LBL_SYNOPTIC_AS', 931),
+(38, 1, 'LBL_TREE_BRIGE_PARENT', NULL),
+    (39, 1, 'LBL_SYNOPTIC_BRIGE', 932);
 
 INSERT INTO ui.selector_tree_hierarchies 
 (selector_tree_id, node_parent_id, node_child_id) VALUES 
@@ -74,5 +76,6 @@ INSERT INTO ui.selector_tree_hierarchies
 (1, 21, 32),
 (1, 21, 33),
 (1, 34, 35),
-(1, 36, 37);
+(1, 36, 37),
+(1, 38, 39);
 

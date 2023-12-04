@@ -4,9 +4,9 @@ DELETE FROM master.ims_incident_groups;
 -- Table: conf.ims_incident_types
 --
 INSERT INTO master.ims_incident_groups (incident_group_id,alias,description,label_alias,label_description,enabled,visible,created_at,updated_at) VALUES
-(1,'Traffic status','Traffic status','LBL_IMS_INCIDENT_GROUP_TYPE_TRAFFIC_STATUS', 'LBL_IMS_INCIDENT_GROUP_TYPE_TRAFFIC_STATUS_DESC',true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
-(2,'Weather data','Weather data','LBL_IMS_INCIDENT_GROUP_TYPE_WEATHER_DATA', 'LBL_IMS_INCIDENT_GROUP_TYPE_WEATHER_DATA_DESC',true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
-(3,'Road incidents','Road incidents','LBL_IMS_INCIDENT_GROUP_TYPE_ROAD_INCIDENTS', 'LBL_IMS_INCIDENT_GROUP_TYPE_ROAD_INCIDENTS_DESC',true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
+(1,'Stav dopravy','Stav dopravy','LBL_IMS_INCIDENT_GROUP_TYPE_TRAFFIC_STATUS', 'LBL_IMS_INCIDENT_GROUP_TYPE_TRAFFIC_STATUS_DESC',true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+(2,'typ incidentu - meteo','typ incidentu - meteo','LBL_IMS_INCIDENT_GROUP_TYPE_WEATHER_DATA', 'LBL_IMS_INCIDENT_GROUP_TYPE_WEATHER_DATA_DESC',true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+(3,'Cestná nehoda','Cestná nehoda','LBL_IMS_INCIDENT_GROUP_TYPE_ROAD_INCIDENTS', 'LBL_IMS_INCIDENT_GROUP_TYPE_ROAD_INCIDENTS_DESC',true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
 
 INSERT INTO conf.ims_incident_types (incident_type_id, incident_group_id, ini_incident_state_id, alias, description, incident_level_id, default_user_id, auto_confirm_incident, cancel_incident, valid_for_min, enabled, visible, created_at, updated_at) VALUES
 (0101, 1, 1, 'T-1', 'HUSTOTA DOPRAVY VYSOKÁ',  1, 6, 30, false, 5, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
