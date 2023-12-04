@@ -21,6 +21,8 @@ BEGIN
 		mdi_icon varchar null,
 		support_images bool NOT NULL,
 		support_attachments bool NOT NULL,
+		sql_view varchar(4000) null,
+		grid_id int NULL,
 		metadata varchar null,
 		CONSTRAINT pk_sg_metadata_tables PRIMARY KEY (id)
 	);

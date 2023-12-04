@@ -12,6 +12,7 @@ INSERT INTO ui.modules(id, module_type_id, "name", description, default_view_typ
 (1901, 9, 'Customers backoffice', 'Customers backoffice', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 (1902, 9, 'Products backoffice', 'Products backoffice', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 (1903, 9, 'Order 1', 'Order 1', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(1904, 9, 'Categories', 'Categories', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 
 -- GIP
 (1920, 9, 'Locations', 'Locations', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
@@ -50,6 +51,9 @@ INSERT INTO ui.module_values(module_id, module_param_id, value) VALUES
 (1903, 14, 'orders'),
 (1903, 15, 'customer_id'),
 (1903, 16, '3'),
+
+(1904, 13, '1'),
+(1904, 14, 'vw_subcategories'),
 
 (1920, 13, '2'),
 (1920, 14, 'locations'),

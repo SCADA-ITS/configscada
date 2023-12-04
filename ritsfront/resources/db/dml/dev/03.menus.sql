@@ -47,6 +47,7 @@ INSERT INTO ui.menu_items(menu_group_id, "position", module_id, "label", icon, "
 (5, 3, 1902, 'LBL_PRODUCTS', 'img/menu/default.png', 'Products', 'Products', true, true),
 (5, 4, null, '', null, '', null, true, true),
 (5, 5, 1903, 'LBL_ORDERS_1', 'img/menu/default.png', 'Order 1', 'Order 1', true, true),
+(5, 6, 1904, 'LBL_SUBCATEGORIES', 'img/menu/default.png', 'Subcategories', 'Subcategories', true, true),
 
 -- GIP
 (6, 1, 1921, 'LBL_INCIDENTS', 'img/menu/default.png', 'Incident', 'Incident', true, true),

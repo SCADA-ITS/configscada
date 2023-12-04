@@ -210,6 +210,7 @@ INSERT INTO ui.module_actions(id, module_id, name, description, system_permissio
 (104206, 1042, 'viewPanels', 'view panel', null, null),
 (104301, 1043, 'restart', 'restart processes', 'SystemPermission:24', null),
 (104401, 1044, 'open', 'open backoffice', null, null),
+(104402, 1044, 'new', 'new row backoffice', null, null),
 (104501, 1045, 'alarms', 'show alarms charts', null, null),
 (104502, 1045, 'states', 'show states charts', null, null),
 (104503, 1045, 'elementValues', 'show elementValues charts', null, null),
