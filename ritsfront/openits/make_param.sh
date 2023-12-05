@@ -8,6 +8,8 @@ if [ -n "$1" ]; then #
 	cp -r static $1
 	echo Copy project files ...
 	cp -r project $1
+	echo Copy config files ...
+	cp -r config $1
 else
 
 	echo "No parameters found."
