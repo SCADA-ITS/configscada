@@ -757,7 +757,7 @@ INSERT INTO ui.map_layer_element_zooms (map_layer_element_id, zoom_lower, zoom_u
 
 INSERT INTO ui.map_commands
 (id, map_id, "position", "label", icon, "default", module_action_id, args, view_type_id, multiselect, show_text, item_required,  context) VALUES
-(0, 1, 0, 'LBL_ALARMS', 'mdi mdi-pencil', false, 100501, NULL, 2, true, NULL, true, true),
-(1, 1, 1, 'LBL_ELEMENT', 'mdi mdi-pencil', true, 101401, NULL, 2, false, NULL, false, true),
-(2, 1, 2, 'LBL_COMMAND_EQUIPMENT', 'mdi mdi-pencil', false, 101701, NULL, 2, true, NULL, true, true);
+(0, 1, 0, 'LBL_CMD_ALARMS', 'mdi mdi-pencil', false, 100501, NULL, 2, true, NULL, true, true),
+(1, 1, 1, 'LBL_CMD_ELEMENT', 'mdi mdi-pencil', true, 101401, NULL, 2, false, NULL, false, true),
+(2, 1, 2, 'LBL_CMD_EQUIPMENT', 'mdi mdi-pencil', false, 101701, NULL, 2, true, NULL, true, true);
 
