@@ -80,7 +80,7 @@ class InputAdapter_VMS {
 		String result = construirVMS(value, element);
 		
 		if (result == null || result.equals("")){
-			return false;
+			return true;
 		}else{
 			ElementValue elementValue = new ElementValue();
 			elementValue.setElementTypeId(element.getElementTypeId());
@@ -119,7 +119,7 @@ class InputAdapter_VMS {
 		
 		if(!(contentByte.get(2) & 0xFF).equals(COD_EST_PMV)){
 			log.error("Trama recibida no es de estado del panel");
-			return true;
+			return "";
 		}
 		
 		if((contentByte.get(3) & 0xFF).equals(EST_ALT)){
