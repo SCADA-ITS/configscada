@@ -15,7 +15,7 @@ INSERT INTO master.ims_task_types (task_type_id, alias, description, label_alias
 INSERT INTO master.ims_task_type_params
 (task_type_id, task_type_param_id, param_type_id, data_type_id, threshold_1, threshold_2, task_type_param_unit_id, alias, description, label_alias, label_description, enabled, visible, created_at, updated_at)
 VALUES
-(1, 1, 1, 2, null, null, null, 'SignallingsToSpath', 'Json with signallings to spath', 'LBL_IMS_TASK_TYPE_PARAM_SIGNALING_TO_SPATH', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 1, 1, 2, null, null, null, 'SignallingsToSpath', 'Json with signallings to spath', 'LBL_IMS_TASK_TYPE_PARAM_IMS_SIGNALING_TO_SPATH', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 (2, 1, 2, 1, null, null, null, 'mode', 'mode', 'LBL_IMS_TASK_TYPE_PARAM_IMS_TUNNEL_LIGHTING_MODE', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (2, 2, 2, 1, null, null, null, 'regime', 'regime', 'LBL_IMS_TASK_TYPE_PARAM_IMS_TUNNEL_LIGHTING_REGIME', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
