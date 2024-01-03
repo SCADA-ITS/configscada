@@ -29,7 +29,7 @@ INSERT INTO ui.menu_items(id, menu_group_id, "position", module_id, "label", ico
 (405, 4, 6, 1041, 'LBL_TRAVEL_TIMES', 'img/menu/travel_times.png', 'Menu item travel times', 'Menu item travel times', true, true),
 
 --TOOLS
-(500, 5, 1, 403, 'LBL_MENU_ITEM_REPORTS', 'img/menu/default.png', 'Menu item Reports', 'Menu item Reports', true, true),
+(500, 5, 1, 403, 'LBL_MENU_ITEM_REPORTS', 'img/menu/report.png', 'Menu item Reports', 'Menu item Reports', true, true),
 (501, 5, 2, 1045, 'LBL_HISTORICAL_CHARTS', 'img/menu/chart-menu.png', 'Historical charts', 'Historical Charts', true, true),
 (502, 5, 3, 407, 'LBL_MENU_ITEM_RECORDS', 'img/menu/default.png', 'Menu item Grabaciones', 'Menu item Grabaciones', true, true),
 (503, 5, 4, 408, 'LBL_MENU_ITEM_INCIDENCIAS_DAI', 'img/menu/default.png', 'Menu Incidencias DAI', 'Menu Incidencias DAI', true, true),

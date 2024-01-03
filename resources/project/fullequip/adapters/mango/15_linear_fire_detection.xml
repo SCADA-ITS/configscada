@@ -32,7 +32,7 @@
     </p:field>
   </p:fields>
   <p:alarms>
-    <p:alarm source="alarm_zone" active_value="true" alarm_config_id="256"></p:alarm>
-    <p:alarm source="fiber_fault" active_value="true" alarm_config_id="257"></p:alarm>
+    <p:alarm source="alarm_zone" active_value="true" alarm_config_id="020015"></p:alarm>
+    <p:alarm source="fiber_fault" active_value="true" alarm_config_id="030015"></p:alarm>
   </p:alarms>
 </p:json_generic_mango_v1>

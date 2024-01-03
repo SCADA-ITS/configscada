@@ -18,7 +18,7 @@
 		</p:field>
 	</p:fields>
 	<p:alarms>
-		<p:alarm source="redun_comm" active_value="true" alarm_config_id="220"></p:alarm>
-		<p:alarm source="peripheral_ctrl" active_value="true" alarm_config_id="221"></p:alarm>
+		<p:alarm source="redun_comm" active_value="true" alarm_config_id="030074"></p:alarm>
+		<p:alarm source="peripheral_ctrl" active_value="true" alarm_config_id="040074"></p:alarm>
 	</p:alarms>
 </p:json_generic_mango_v1>

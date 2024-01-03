@@ -12,12 +12,12 @@
 	</p:state>
 	<p:alarms>
 		<p:alarm source="sos_door_open" active_value="true"
-			alarm_config_id="42"></p:alarm>
+			alarm_config_id="020011"></p:alarm>
 		<p:alarm source="fa_board" active_value="true"
-			alarm_config_id="43"></p:alarm>
+			alarm_config_id="030011"></p:alarm>
 		<p:alarm source="left_extinguisher_door_open"
-			active_value="true" alarm_config_id="44"></p:alarm>
+			active_value="true" alarm_config_id="040011"></p:alarm>
 		<p:alarm source="right_extinguisher_door_open"
-			active_value="true" alarm_config_id="45"></p:alarm>
+			active_value="true" alarm_config_id="050011"></p:alarm>
 	</p:alarms>
 </p:json_generic_mango_v1>

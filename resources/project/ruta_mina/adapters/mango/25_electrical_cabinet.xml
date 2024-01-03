@@ -12,6 +12,6 @@
     <p:state_value source="1" input="1"></p:state_value>
   </p:state>
   <p:alarms>
-    <p:alarm source="door_open" active_value="true" alarm_config_id="69"></p:alarm>
+    <p:alarm source="door_open" active_value="true" alarm_config_id="030025"></p:alarm>
   </p:alarms>
 </p:json_generic_mango_v1>

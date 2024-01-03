@@ -133,10 +133,9 @@
     </p:field>
   </p:fields>
   <p:alarms>
-    <p:alarm source="grp_alarma_temperatura" active_value="true" alarm_config_id="223"></p:alarm>
-    <p:alarm source="grp_alarma_general" active_value="true" alarm_config_id="224"></p:alarm>
-    <p:alarm source="grp_motor_encendido" active_value="true" alarm_config_id="225"></p:alarm>
-    <p:alarm source="grp_nivel_combust_rsv" active_value="true" alarm_config_id="226"></p:alarm>
+    <p:alarm source="grp_alarma_temperatura" active_value="true" alarm_config_id="020075"></p:alarm>
+    <p:alarm source="grp_alarma_general" active_value="true" alarm_config_id="030075"></p:alarm>
+    <p:alarm source="grp_motor_encendido" active_value="true" alarm_config_id="040075"></p:alarm>
   </p:alarms>
 </p:json_generic_mango_v1>
 

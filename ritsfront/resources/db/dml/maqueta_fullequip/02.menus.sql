@@ -28,19 +28,18 @@ INSERT INTO ui.menu_items(id, menu_group_id, "position", module_id, "label", ico
 (402, 4, 3, null, '', null, '', null, true, true),
 (403, 4, 4, 1040, 'LBL_MENU_ITEM_VMS_SIGNALING', 'img/menu/signaling-menu.png', 'Menu item VMS Signaling', 'Menu item VMS Signaling', true, true),
 (404, 4, 5, 1039, 'LBL_SIGNALING_QUEUES', 'img/menu/queue-menu.png', 'Menu item queue signaling', 'Menu item queue signaling', true, true),
-(405, 4, 6, 1041, 'LBL_TRAVEL_TIMES', 'img/menu/travel_times.png', 'Menu item travel times', 'Menu item travel times', true, true),
+(405, 4, 6, 1041, 'LBL_MENU_ITEM_TRAVEL_TIMES', 'img/menu/travel_times.png', 'Menu item travel times', 'Menu item travel times', true, true),
 
 --TOOLS
-(500, 5, 1, 403, 'LBL_MENU_ITEM_REPORTS', 'img/menu/default.png', 'Menu item Reports', 'Menu item Reports', true, true),
+(500, 5, 1, 403, 'LBL_MENU_ITEM_REPORTS', 'img/menu/report.png', 'Menu item Reports', 'Menu item Reports', true, true),
 (501, 5, 2, 1045, 'LBL_HISTORICAL_CHARTS', 'img/menu/chart-menu.png', 'Historical charts', 'Historical Charts', true, true),
 --(502, 5, 3, 407, 'LBL_MENU_ITEM_RECORDS', 'img/menu/default.png', 'Menu item Grabaciones', 'Menu item Grabaciones', true, true),
 --(503, 5, 4, 408, 'LBL_MENU_ITEM_INCIDENCIAS_DAI', 'img/menu/default.png', 'Menu Incidencias DAI', 'Menu Incidencias DAI', true, true),
 (504, 5, 5, 1920, 'LBL_GIP', 'img/menu/default.png', 'NOGALES_GIP', 'Nogales GIP', true, true),
-(505, 5, 6, 6011, 'LBL_GIP_INCIDENT', 'img/menu/default.png', 'NOGALES_GIP_INCIDENT', 'Nogales GIP', true, true),
---(506, 5, 7, 7000, 'LBL_MY_GIP', 'img/menu/default.png', 'MY_GIP', 'MY_GIP', true, true); 
-(506, 5, 7, 1006, 'LBL_MENU_ITEM_AUDITS', 'img/menu/default.png', 'Auditorias', 'Auditorias', true, true),
-(507, 5, 8, 1921, 'LBL_MENU_ITEM_ALARM_BACKOFFICE', 'img/menu/default.png', 'ALARM_BACKOFFICE', 'Alarms backoffice', true, true),
-(508, 5, 9, 1922, 'LBL_ELEMENTS_GIP', 'img/menu/default.png', 'ELEMENTS_GIP', 'Elements GIP', true, true),
+(506, 5, 6, 1006, 'LBL_MENU_ITEM_AUDITS', 'img/menu/default.png', 'Auditorias', 'Auditorias', true, true),
+(505, 5, 7, 6011, 'LBL_MENU_ITEM_BACKOFFICE_INCIDENT', 'img/menu/backofficeincident.png', 'NOGALES_GIP_INCIDENT', 'Nogales GIP', true, true),
+(507, 5, 8, 1921, 'LBL_MENU_ITEM_BACKOFFICE_ALARM', 'img/menu/backofficealarm.png', 'ALARM_BACKOFFICE', 'Alarms backoffice', true, true),
+(508, 5, 9, 1922, 'LBL_MENU_ITEM_BACKOFFICE_ELEMENT', 'img/menu/backofficeelement.png', 'ELEMENTS_GIP', 'Elements GIP', true, true),
 
 
 (500001, 5000, 3, 1047, 'LBL_MENU_HELP_CONTENTS', 'img/menu/default.png', 'Help contents', 'Menu item help contents', true, true);

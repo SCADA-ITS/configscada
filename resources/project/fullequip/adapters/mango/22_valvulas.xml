@@ -21,6 +21,6 @@
     </p:field>
   </p:fields>
   <p:alarms>
-    <p:alarm source="state" active_value="true" alarm_config_id="10040022"></p:alarm>
+    <p:alarm source="state" active_value="true" alarm_config_id="030022"></p:alarm>
   </p:alarms>
 </p:json_generic_mango_v1>

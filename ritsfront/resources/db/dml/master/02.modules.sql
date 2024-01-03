@@ -324,7 +324,7 @@ INSERT INTO ui.window_values(module_id, window_param_id, value) VALUES
 (1006, 8, 'true'),
 (1006, 10, 'img/module/logs-color.png'),
 (1006, 11, '#464646'),
-(1006, 12, 'LBL_AUDIT_LOGS'),
+(1006, 12, 'LBL_MENU_ITEM_AUDITS'),
 (1006, 14, 'true'),
 
 (1008, 4, '622'),
@@ -539,7 +539,7 @@ INSERT INTO ui.window_values(module_id, window_param_id, value) VALUES
 (1041, 8, 'true'),
 (1041, 10, 'img/module/travel_times.png'),
 (1041, 11, '#464646'),
-(1041, 12, 'LBL_TRAVEL_TIMES'),
+(1041, 12, 'LBL_MENU_ITEM_TRAVEL_TIMES'),
 (1041, 14, 'true'),
 
 (1042, 4, '622'),
@@ -547,7 +547,7 @@ INSERT INTO ui.window_values(module_id, window_param_id, value) VALUES
 (1042, 8, 'true'),
 (1042, 10, 'img/module/travel_times.png'),
 (1042, 11, '#464646'),
-(1042, 12, 'LBL_TRAVEL_TIME'),
+(1042, 12, 'LBL_MENU_ITEM_TRAVEL_TIMES'),
 (1042, 14, 'true'),
 
 (1043, 8, 'true'),

@@ -35,9 +35,9 @@
     </p:field>
   </p:fields>
   <p:alarms>
-  	<p:alarm source="alarm_emergency_button" active_value="true" alarm_config_id="3206"></p:alarm> 
-    <p:alarm source="alarm_pres_fan_1" active_value="true" alarm_config_id="3207"></p:alarm>
-    <p:alarm source="alarm_pres_fan_2" active_value="true" alarm_config_id="3208"></p:alarm>
+  	<p:alarm source="alarm_emergency_button" active_value="true" alarm_config_id="060032"></p:alarm> 
+    <p:alarm source="alarm_pres_fan_1" active_value="true" alarm_config_id="070032"></p:alarm>
+    <p:alarm source="alarm_pres_fan_2" active_value="true" alarm_config_id="080032"></p:alarm>
      
   </p:alarms>
 </p:json_generic_mango_v1>

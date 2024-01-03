@@ -20,6 +20,6 @@
 		</p:field>
 	</p:fields>
 	<p:alarms>
-		<p:alarm source="redun_comm" active_value="true" alarm_config_id="219"></p:alarm>
+		<p:alarm source="redun_comm" active_value="true" alarm_config_id="020074"></p:alarm>
 	</p:alarms>
 </p:json_generic_mango_v1>

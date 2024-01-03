@@ -12,7 +12,7 @@
     <p:state_value source="1" input="1"></p:state_value>
   </p:state>
   <p:alarms>
-		<p:alarm source="alarm_general" active_value="true" alarm_config_id="9303"></p:alarm>
-		<p:alarm source="group_on" active_value="true" alarm_config_id="9304"></p:alarm>
+		<p:alarm source="alarm_general" active_value="true" alarm_config_id="020093"></p:alarm>
+		<p:alarm source="group_on" active_value="true" alarm_config_id="030093"></p:alarm>
 	</p:alarms>
 </p:json_generic_mango_v1>

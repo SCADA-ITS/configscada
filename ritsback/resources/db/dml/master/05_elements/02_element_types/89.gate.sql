@@ -51,12 +51,12 @@ INSERT INTO master.io_controller_module_type_element_types
 --
 INSERT INTO conf.alarm_configs
 (alarm_config_id, alarm_type_id, alarm_level_id, element_type_id, element_id, element_type_state_id, mine, treatment, alias, description, label_alias, label_description, enabled, visible, created_at, updated_at) VALUES
-(8901, 2, 3, 89, NULL, NULL, true, true, 'ALARM GATE DISCONNECTED', 'ALARM GATE DISCONNECTED', 'LBL_ALARM_CONFIGS_GATE_DISCONNECTED', 'LBL_ALARM_CONFIGS_ALARM_GATE_DISCONNECTED_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(8902, 2, 3, 89, NULL, 3, true, true, 'ALARM GATE OPEN', 'ALARM GATE OPEN', 'LBL_ALARM_CONFIGS_GATE_OPEN', 'LBL_ALARM_CONFIGS_ALARM_GATE_OPEN_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(010089, 2, 3, 89, NULL, NULL, true, true, 'ALARM GATE DISCONNECTED', 'ALARM GATE DISCONNECTED', 'LBL_ALARM_CONFIGS_GATE_DISCONNECTED', 'LBL_ALARM_CONFIGS_ALARM_GATE_DISCONNECTED_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(020089, 2, 3, 89, NULL, 3, true, true, 'ALARM GATE OPEN', 'ALARM GATE OPEN', 'LBL_ALARM_CONFIGS_GATE_OPEN', 'LBL_ALARM_CONFIGS_ALARM_GATE_OPEN_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 -- 
 -- Table: conf.element_state_alarms
 --
 INSERT INTO conf.element_state_alarms
 (element_type_id, element_type_state_id, alarm_config_id, created_at, updated_at) VALUES
-(89, 2, 8901, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(89, 2, 010089, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

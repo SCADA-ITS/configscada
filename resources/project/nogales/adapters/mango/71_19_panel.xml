@@ -45,9 +45,9 @@
 		</p:field>
 	</p:fields>
 	<p:alarms>
-		<p:alarm source="temp_critical_error" active_value="true" alarm_config_id="71348"></p:alarm>
-		<p:alarm source="door_open_error" active_value="true" alarm_config_id="337"></p:alarm>
-		<p:alarm source="photocell_error" active_value="true" alarm_config_id="71346"></p:alarm>
-		<p:alarm source="pixel_error" active_value="true" alarm_config_id="71350"></p:alarm>
+		<p:alarm source="door_open_error" active_value="true" alarm_config_id="020071"></p:alarm>
+		<p:alarm source="pixel_error" active_value="true" alarm_config_id="040071"></p:alarm>
+		<p:alarm source="photocell_error" active_value="true" alarm_config_id="050071"></p:alarm>
+		<p:alarm source="temp_critical_error" active_value="true" alarm_config_id="070071"></p:alarm>
 	</p:alarms>
 </p:json_generic_mango_v1>

@@ -12,6 +12,6 @@
     <p:state_value source="1" input="1"></p:state_value>
   </p:state>
   <p:alarms>
-		<p:alarm source="leak_water" active_value="true" alarm_config_id="8802"></p:alarm>
+		<p:alarm source="leak_water" active_value="true" alarm_config_id="020088"></p:alarm>
 	</p:alarms>
 </p:json_generic_mango_v1>

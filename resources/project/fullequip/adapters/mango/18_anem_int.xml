@@ -28,7 +28,7 @@
     </p:field>
   </p:fields>
   <p:alarms>
-    <p:alarm source="alarm_sensor" active_value="true" alarm_config_id="245"></p:alarm>
-    <p:alarm source="alarm_fa" active_value="true" alarm_config_id="259"></p:alarm>
+    <p:alarm source="alarm_sensor" active_value="true" alarm_config_id="020018"></p:alarm>
+    <p:alarm source="alarm_fa" active_value="true" alarm_config_id="030018"></p:alarm>
   </p:alarms>
 </p:json_generic_mango_v1>

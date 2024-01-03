@@ -48,8 +48,7 @@ INSERT INTO master.element_hierarchies_allowed
 --
 INSERT INTO conf.alarm_configs
 (alarm_config_id, alarm_type_id, alarm_level_id, element_type_id, element_id, element_type_state_id, mine, treatment, alias, description, label_alias, label_description, enabled, visible, created_at, updated_at) VALUES
-(010056, 2, 3, 56, NULL, 3, true, true, 'ALARM UNIFILAR INTERRUPTOR OUT OF COMMUNICATIONS', 'ALARM UNIFILAR INTERRUPTOR OUT OF COMMUNICATIONS', 'LBL_UNIFILAR_INTERRUPTOR_OUT_OF_COMMUNICATIONS', '', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(020056, 2, 3, 56, NULL, 3, true, true, 'ALARM UNIFILAR INTERRUPTOR ALARMED', 'ALARM UNIFILAR INTERRUPTOR ALARMED', 'LBL_ALARM_UNIFILAR_INTERRUPTOR_ALARMED', '', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(010056, 2, 3, 56, NULL, 3, true, true, 'ALARM UNIFILAR INTERRUPTOR ALARMED', 'ALARM UNIFILAR INTERRUPTOR ALARMED', 'LBL_ALARM_CONFIGS_ALARM_UNIFILAR_INTERRUPTOR_ALARMED', '', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 -- 
 -- Table: master.io_controller_module_type_element_types

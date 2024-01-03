@@ -21,9 +21,9 @@
     </p:field>
   </p:fields>
    <p:alarms>
-     <p:alarm source="barrier_fail_command" active_value="true" alarm_config_id="0810"></p:alarm>
-     <p:alarm source="barrier_down_veh_det" active_value="true" alarm_config_id="0807"></p:alarm>
-     <p:alarm source="barrier_no_return" active_value="true" alarm_config_id="0808"></p:alarm>
-     <p:alarm source="barrier_down_no_red_sem" active_value="true" alarm_config_id="0809"></p:alarm> 
+     <p:alarm source="barrier_down_veh_det" active_value="true" alarm_config_id="070008"></p:alarm>
+     <p:alarm source="barrier_no_return" active_value="true" alarm_config_id="080008"></p:alarm>
+     <p:alarm source="barrier_down_no_red_sem" active_value="true" alarm_config_id="090008"></p:alarm> 
+     <p:alarm source="barrier_fail_command" active_value="true" alarm_config_id="100008"></p:alarm>
   </p:alarms>
 </p:json_generic_mango_v1>

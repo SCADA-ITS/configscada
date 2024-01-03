@@ -153,7 +153,7 @@ INSERT INTO ui.module_values(module_id, module_param_id, value) VALUES
 (970, 6, '1'),
 (971, 6, '2'),
 
-(1040, 8, '{"treeCustom": [1,2]}'),
+(1040, 8, '{"treeCustom": [1]}'),
 (1005, 8, '{"treeCustom": [4]}'),
 
 

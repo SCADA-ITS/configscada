@@ -63,11 +63,11 @@ INSERT INTO master.io_controller_module_type_element_types
 --
 INSERT INTO conf.alarm_configs
 (alarm_config_id, alarm_type_id, alarm_level_id, element_type_id, element_id, element_type_state_id, mine, treatment, alias, description, label_alias, label_description, enabled, visible, created_at, updated_at) VALUES
-(10010038, 2, 3, 38, NULL, NULL, true, true, 'ALARM BUS_VAO DISCONNECTED', 'ALARM BUS_VAO DISCONNECTED', 'LBL_ALARM_CONFIGS_ALARM_BUS_VAO_DISCONNECTED', 'LBL_ALARM_CONFIGS_ALARM_BUS_VAO_DISCONNECTED_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(010038, 2, 3, 38, NULL, NULL, true, true, 'ALARM BUS_VAO DISCONNECTED', 'ALARM BUS_VAO DISCONNECTED', 'LBL_ALARM_CONFIGS_ALARM_BUS_VAO_DISCONNECTED', 'LBL_ALARM_CONFIGS_ALARM_BUS_VAO_DISCONNECTED_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 -- 
 -- Table: conf.element_state_alarms
 --
 INSERT INTO conf.element_state_alarms
 (element_type_id, element_type_state_id, alarm_config_id, created_at, updated_at) VALUES
-(38, 2, 10010038, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(38, 2, 010038, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

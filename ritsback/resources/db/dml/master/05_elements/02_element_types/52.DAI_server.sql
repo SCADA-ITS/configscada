@@ -57,12 +57,12 @@ INSERT INTO master.io_controller_module_type_element_types
 --
 INSERT INTO conf.alarm_configs
 (alarm_config_id, alarm_type_id, alarm_level_id, element_type_id, element_id, element_type_state_id, mine, treatment, alias, description, label_alias, label_description, enabled, visible, created_at, updated_at) VALUES
-(170, 2, 3, 52, NULL, NULL, true, true, 'ALARM SERVER DAI NO CONNECTION', 'ALARM SERVER DAI NO CONNECTION', 'LBL_ALARM_CONFIGS_SERVER_DAI_NO_CONNECTION', '', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(171, 2, 3, 52, NULL, 3, true, true, 'ALARM SERVER DAI INCIDENT', 'ALARM SERVER DAI INCIDENT', 'LBL_ALARM_CONFIGS_SERVER_DAI_INCIDENT', '', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(010052, 2, 3, 52, NULL, NULL, true, true, 'ALARM SERVER DAI NO CONNECTION', 'ALARM SERVER DAI NO CONNECTION', 'LBL_ALARM_CONFIGS_SERVER_DAI_NO_CONNECTION', '', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(020052, 2, 3, 52, NULL, 3, true, true, 'ALARM SERVER DAI INCIDENT', 'ALARM SERVER DAI INCIDENT', 'LBL_ALARM_CONFIGS_SERVER_DAI_INCIDENT', '', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 -- 
 -- Table: conf.element_state_alarms
 --
 INSERT INTO conf.element_state_alarms
 (element_type_id, element_type_state_id, alarm_config_id, created_at, updated_at) VALUES
-(52, 2, 170, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(52, 2, 010052, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

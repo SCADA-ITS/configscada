@@ -21,8 +21,8 @@
     </p:field>
   </p:fields>
   <p:alarms>
-		<p:alarm source="no_operation" active_value="true" alarm_config_id="8602"></p:alarm>
-		<p:alarm source="no_auto_state" active_value="true" alarm_config_id="8603"></p:alarm>
-		<p:alarm source="pump_on" active_value="true" alarm_config_id="8604"></p:alarm>
+		<p:alarm source="no_operation" active_value="true" alarm_config_id="020086"></p:alarm>
+		<p:alarm source="no_auto_state" active_value="true" alarm_config_id="030086"></p:alarm>
+		<p:alarm source="pump_on" active_value="true" alarm_config_id="040086"></p:alarm>
 	</p:alarms>
 </p:json_generic_mango_v1>

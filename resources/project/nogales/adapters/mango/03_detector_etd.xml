@@ -12,11 +12,11 @@
     <p:state_value source="1" input="1"></p:state_value>
   </p:state>
   <p:alarms>
-        <p:alarm source="fail_data" active_value="true" alarm_config_id="34"></p:alarm>
-        <p:alarm source="congestion" active_value="true" alarm_config_id="36"></p:alarm>
-        <p:alarm source="fail_piezo" active_value="true" alarm_config_id="040037"></p:alarm>
-        <p:alarm source="fail_loop_1" active_value="true" alarm_config_id="040038"></p:alarm>
-        <p:alarm source="fail_loop_2" active_value="true" alarm_config_id="040039"></p:alarm>
+        <p:alarm source="fail_data" active_value="true" alarm_config_id="020004"></p:alarm>
+        <p:alarm source="congestion" active_value="true" alarm_config_id="030004"></p:alarm>
+        <p:alarm source="fail_piezo" active_value="true" alarm_config_id="040004"></p:alarm>
+        <p:alarm source="fail_loop_1" active_value="true" alarm_config_id="050004"></p:alarm>
+        <p:alarm source="fail_loop_2" active_value="true" alarm_config_id="060004"></p:alarm>
   </p:alarms>
     
 </p:json_generic_mango_v1>

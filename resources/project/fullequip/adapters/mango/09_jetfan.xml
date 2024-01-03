@@ -39,12 +39,12 @@
     </p:field>
   </p:fields>
     <p:alarms>
-    <p:alarm source="windings_temperature_alarm" active_value="true" alarm_config_id="020009"></p:alarm>
-    <p:alarm source="windings_sensor_alarm" active_value="true" alarm_config_id="010009"></p:alarm>
+    <p:alarm source="windings_sensor_alarm" active_value="true" alarm_config_id="020009"></p:alarm>
+    <p:alarm source="windings_temperature_alarm" active_value="true" alarm_config_id="030009"></p:alarm>
     <p:alarm source="fan_switch" active_value="true" alarm_config_id="060009"></p:alarm>
     <p:alarm source="fan_gear" active_value="true" alarm_config_id="070009"></p:alarm>
-    <p:alarm source="vibration_sensor_alarm" active_value="true" alarm_config_id="280009"></p:alarm>
-    <p:alarm source="front_motor_bearing_sensor_alarm" active_value="true" alarm_config_id="290009"></p:alarm>
-    <p:alarm source="back_motor_bearing_sensor_alarm" active_value="true" alarm_config_id="300009"></p:alarm>
+    <p:alarm source="vibration_sensor_alarm" active_value="true" alarm_config_id="130009"></p:alarm>
+    <p:alarm source="front_motor_bearing_sensor_alarm" active_value="true" alarm_config_id="140009"></p:alarm>
+    <p:alarm source="back_motor_bearing_sensor_alarm" active_value="true" alarm_config_id="150009"></p:alarm>
   </p:alarms>
 </p:json_generic_mango_v1>

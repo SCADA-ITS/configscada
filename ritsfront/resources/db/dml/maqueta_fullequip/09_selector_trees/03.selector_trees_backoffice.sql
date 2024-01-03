@@ -1,6 +1,6 @@
 INSERT INTO ui.selector_trees(id, "label", default_module_id, enabled, visible) VALUES
-(2, 'LBL_GIP', 6011, true, true),
-(4, 'LBL_ELEMENTS_GIP', 6045, true, true),
+(2, 'LBL_SELECTOR_TREE_INCIDENTS_BACKOFFICE', 6011, true, true),
+(4, 'LBL_SELECTOR_TREE_ELEMENTS_BACKOFFICE', 6045, true, true),
 (5, 'LBL_SELECTOR_TREE_ALARMS_BACKOFFICE', 6044, true, true);
 
 INSERT INTO ui.selector_tree_nodes(id, selector_tree_id, "label", image, module_id, enabled, visible) VALUES

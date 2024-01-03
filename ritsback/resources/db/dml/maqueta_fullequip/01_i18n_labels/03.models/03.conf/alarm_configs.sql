@@ -18,7 +18,6 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 --Deposito
 ('es_ES', 1, 'LBL_WATER_LEVEL_LESS_90', 'Depósito de agua PCI nivel bajo <90%', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_DIESEL_LEVEL_LESS_60', 'Depósito diesel bomba PCI nivel bajo <60%', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_CRITICAL_POND_LEVEL', 'Depósito diesel trasiego nivel bajo <40%', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
  
 --Estación meteorologica
 ('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_WS_LOW_TEMPERATURE', 'Baja temperatura (<5º)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -30,9 +29,6 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 
 --section
 ('es_ES', 1, 'LBL_ALARM_CONDITIONS_CRITICAL_HEAVY_TRAFFIC', 'Tráfico intenso', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-
---Local tecnico
-('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_CT_EXCESS_TEMPERATURE', 'Cuarto técnico temperatura >35º', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --NO
 ('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_NO2_HIGH_CONCENTRATION', 'Detector NO  alta concentarción  (0.4 ppm < NO2 <5 ppm)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -54,36 +50,6 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_HIGH_VIBRATION', 'Nivel alto de vibración (>= 7.1 m/s y <= 11.2) ', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_MAX_VIBRATION', 'Nivel máximo de vibración (>= 11.2) ', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_MAX_FRONT_BEARING_TEMP', 'Ventilador exceso temperatura en motor delantero (>80ºC)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_MAX_BACK_BEARING_TEMP', 'Ventilador exceso temperatura en motor trasero (>80ºC)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-
-
-
---en_GB
-INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) VALUES
-('en_GB', 1, 'LBL_ALARM_CONFIGS_ALARM_WS_MODERATE_PRECIPITATION', 'Moderate precipitation (<=10 mm/h)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('en_GB', 1, 'LBL_ALARM_CONFIGS_ALARM_WS_STRONG_WIND', 'Strign wind (>60 km/h)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('en_GB', 1, 'LBL_ALARM_CONFIGS_ALARM_WS_LOW_TEMPERATURE', 'Low temperature (<5º) ', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('en_GB', 1, 'LBL_ALARM_CONFIGS_ALARM_CO_HIGH_CONCENTRATION', 'High concentration of CO (50 ppm< CO <200 ppm) ', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('en_GB', 1, 'LBL_ALARM_CONFIGS_ALARM_CO_EXCESIVE_CONCENTRATION', 'Excesive concentration of CO (>200 ppm) ', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('en_GB', 1, 'LBL_ALARM_CONFIGS_ALARM_NO2_HIGH_CONCENTRATION', 'High concentration of NO (0.4 ppm < NO2 <5 ppm) ', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('en_GB', 1, 'LBL_ALARM_CONFIGS_ALARM_NO2_EXCESIVE_CONCENTRATION', 'Excesive concentration of NO (>5 ppm) ', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('en_GB', 1, 'LBL_ALARM_CONFIGS_ALARM_OPAC_REDUCED_VISIBILITY', 'Reduced visibility (0.005 m-1 < k <0.012 m-1) ', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('en_GB', 1, 'LBL_ALARM_CONFIGS_ALARM_OPAC_EXCESSIVE_OPACITY', 'Excesive opacity (k > 0.012 m-1)) ', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-
---section
-('en_GB', 1, 'LBL_ALARM_CONDITIONS_CRITICAL_HEAVY_TRAFFIC', 'Critical heavy traffic', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-
-('en_GB', 1, 'LBL_ALARM_CONFIGS_ALARM_HIGH_VIBRATION', 'High vibration, >= 7.1 m/s and  <= 11.2 ', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('en_GB', 1, 'LBL_ALARM_CONFIGS_ALARM_MAX_VIBRATION', 'Maxi vibration  >= 11.2 ', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('en_GB', 1, 'LBL_ALARM_CONFIGS_ALARM_MAX_BACK_BEARING_TEMP', 'Back motor bearing temperature greater than 80ºC', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-
---es_CL
-INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) VALUES
---section
-('es_CL', 1, 'LBL_ALARM_CONDITIONS_CRITICAL_HEAVY_TRAFFIC', 'Tráfico intenso', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-
-('es_CL', 1, 'LBL_ALARM_CONFIGS_ALARM_WS_NORMAL_INTENSITY', 'Intensidad de precicipitaciones entre 0.5 y 5 mm/h', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('es_CL', 1, 'LBL_ALARM_CONFIGS_ALARM_WS_VISIBILITY', 'Visibilidad < 250 m', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('es_CL', 1, 'LBL_ALARM_CONFIGS_ALARM_WS_WIND_SPEED', 'Velocidad del viento > 50 km/h', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_MAX_BACK_BEARING_TEMP', 'Ventilador exceso temperatura en motor trasero (>80ºC)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);;
 
 

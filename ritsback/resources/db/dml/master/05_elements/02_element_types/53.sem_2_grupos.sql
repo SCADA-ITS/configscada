@@ -85,8 +85,7 @@ INSERT INTO master.io_controller_module_type_element_types
 --
 INSERT INTO conf.alarm_configs 
 (alarm_config_id, alarm_type_id, alarm_level_id, element_type_id, element_id, element_type_state_id, mine, treatment, alias, description, label_alias, label_description, enabled, visible, created_at, updated_at)VALUES
-(174, 2, 3, 53, NULL, NULL, true, true, 'ALARM SEM NO CONNECTION', 'ALARM SEM NO CONNECTION', 'LBL_ALARM_CONFIGS_ALARM_SEM_NO_CONNECTION', 'LBL_ALARM_CONFIGS_ALARM_SEM_NO_CONNECTION_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(346, 2, 5, 53, NULL, 3, true, true, 'ALARM SEM FAIL', 'ALARM SEM FAIL', 'LBL_ALARM_CONFIGS_ALARM_SEM_FAIL', 'LBL_ALARM_CONFIGS_ALARM_SEM_FAIL_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(010053, 2, 3, 53, NULL, NULL, true, true, 'ALARM SEM NO CONNECTION', 'ALARM SEM NO CONNECTION', 'LBL_ALARM_CONFIGS_ALARM_SEM_NO_CONNECTION', 'LBL_ALARM_CONFIGS_ALARM_SEM_NO_CONNECTION_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 
 -- 
@@ -94,4 +93,4 @@ INSERT INTO conf.alarm_configs
 --
 INSERT INTO conf.element_state_alarms
 (element_type_id, element_type_state_id, alarm_config_id, created_at, updated_at) VALUES
-(53, 2, 174, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(53, 2, 010053, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

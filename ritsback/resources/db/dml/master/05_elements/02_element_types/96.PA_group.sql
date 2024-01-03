@@ -58,12 +58,12 @@ INSERT INTO master.io_controller_module_type_element_types
 --
 INSERT INTO conf.alarm_configs 
 (alarm_config_id, alarm_type_id, alarm_level_id, element_type_id, element_id, element_type_state_id, mine, treatment, alias, description, label_alias, label_description, enabled, visible, created_at, updated_at)VALUES
-(0010096, 2, 3, 96, NULL, NULL, true, true, 'ALARM PA ZONE NO CONNECTION', 'ALARM PA ZONE NO CONNECTION', 'LBL_ALARM_CONFIGS_ALARM_PA_GROUP_NO_CONNECTION', 'LBL_ALARM_CONFIGS_ALARM_PA_SYSTEM_NO_CONNECTION_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(0020096, 2, 3, 96, NULL, 3, true, true, 'ALARM ZONE', 'ALARM ZONE', 'LBL_ALARM_CONFIGS_ALARM_PA_ZONE', 'LBL_ALARM_CONFIGS_ALARM_PA_GROUP_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(010096, 2, 3, 96, NULL, NULL, true, true, 'ALARM PA ZONE NO CONNECTION', 'ALARM PA ZONE NO CONNECTION', 'LBL_ALARM_CONFIGS_ALARM_PA_GROUP_NO_CONNECTION', 'LBL_ALARM_CONFIGS_ALARM_PA_SYSTEM_NO_CONNECTION_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(020096, 2, 3, 96, NULL, 3, true, true, 'ALARM ZONE', 'ALARM ZONE', 'LBL_ALARM_CONFIGS_ALARM_PA_GROUP', 'LBL_ALARM_CONFIGS_ALARM_PA_GROUP_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 -- 
 -- Table: conf.element_state_alarms
 --
 INSERT INTO conf.element_state_alarms
 (element_type_id, element_type_state_id, alarm_config_id, created_at, updated_at) VALUES
-(96, 2, 0010096, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(96, 2, 010096, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

@@ -28,7 +28,7 @@ INSERT INTO master.element_type_state_transitions
 --
 INSERT INTO conf.alarm_configs
 (alarm_config_id, alarm_type_id, alarm_level_id, element_type_id, element_id, element_type_state_id, mine, treatment, alias, description, label_alias, label_description, enabled, visible, created_at, updated_at) VALUES
-(2301, 2, 5, 23, NULL, 3, true, true, 'ALARM ENABLE INCIDENTS', 'ALARM ENABLE INCIDENTS', 'LBL_ALARM_CONFIGS_ALARM_ENABLE_INCIDENTS', 'LBL_ALARM_CONFIGS_ALARM_ENABLE_INCIDENTS', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(010023, 2, 5, 23, NULL, 3, true, true, 'ALARM ENABLE INCIDENTS', 'ALARM ENABLE INCIDENTS', 'LBL_ALARM_CONFIGS_ALARM_ENABLE_INCIDENTS', 'LBL_ALARM_CONFIGS_ALARM_ENABLE_INCIDENTS', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 -- 
 -- Table: master.command_element_types

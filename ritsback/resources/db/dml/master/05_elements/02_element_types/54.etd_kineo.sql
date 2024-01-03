@@ -59,11 +59,11 @@ INSERT INTO master.element_hierarchies_allowed
 --
 INSERT INTO conf.alarm_configs
 (alarm_config_id, alarm_type_id, alarm_level_id, element_type_id, element_id, element_type_state_id, mine, treatment, alias, description, label_alias, label_description, enabled, visible, created_at, updated_at) VALUES
-(175, 2, 4, 54, NULL, NULL, true, false, 'ALARM ATC NO CONNECTION', 'ALARM ATC NO CONNECTION', 'LBL_ALARM_CONFIGS_ALARM_ATC_NO_CONNECTION', 'LBL_ALARM_CONFIGS_ALARM_ATC_NO_CONNECTION_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(010054, 2, 4, 54, NULL, NULL, true, false, 'ALARM ATC NO CONNECTION', 'ALARM ATC NO CONNECTION', 'LBL_ALARM_CONFIGS_ALARM_ATC_NO_CONNECTION', 'LBL_ALARM_CONFIGS_ALARM_ATC_NO_CONNECTION_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 -- 
 -- Table: conf.element_state_alarms
 --
 INSERT INTO conf.element_state_alarms
 (element_type_id, element_type_state_id, alarm_config_id, created_at, updated_at) VALUES
-(54, 2, 175, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(54, 2, 010054, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

@@ -46,8 +46,6 @@ INSERT INTO master.element_type_state_transitions
 --
 INSERT INTO master.command_element_types
 (command_element_type_id, element_type_id, alias, description, label_alias, label_description, on_change, enabled, visible, created_at, updated_at) VALUES
---(1, 84, 'CIRCUIT OFF', 'Circuit off', 'LBL_COMMAND_ELEMENT_TYPE_CIRCUIT_OFF', null, 'TunnelIlluminationSystem/CircuitsOff', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
---(2, 84, 'CIRCUIT ON', 'Cicuit on', 'LBL_COMMAND_ELEMENT_TYPE_CIRCUIT_ON', null, 'TunnelIlluminationSystem/CircuitsOn', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 (1, 84, 'CIRCUIT OFF', 'Circuit off', 'LBL_COMMAND_ELEMENT_TYPE_CIRCUIT_OFF', null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (2, 84, 'CIRCUIT ON', 'Cicuit on', 'LBL_COMMAND_ELEMENT_TYPE_CIRCUIT_ON', null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
@@ -63,14 +61,12 @@ INSERT INTO master.io_controller_module_type_element_types
 --
 INSERT INTO conf.alarm_configs
 (alarm_config_id, alarm_type_id, alarm_level_id, element_type_id, element_id, element_type_state_id, mine, treatment, alias, description, label_alias, label_description, enabled, visible, created_at, updated_at) VALUES
-(8401, 2, 3, 84, NULL, NULL, true, true, 'ALARM CIRCUIT DISCONNECTED', 'ALARM CIRCUIT DISCONNECTED', 'LBL_ALARM_CONFIGS_ALARM_CIRCUIT_DISCONNECTED', 'LBL_ALARM_CONFIGS_ALARM_CIRCUIT_DISCONNECTED_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(10010084, 2, 3, 84, NULL, 3, true, true, 'ALARM ESTADO GENERAL', 'ALARM ESTADO GENERAL', 'LBL_ALARM_CONFIGS_ALARM_ESTADO_GENERAL', 'LBL_ALARM_CONFIGS_ALARM_ESTADO_GENERAL_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(10020084, 2, 3, 84, NULL, 3, true, true, 'ALARM PROTECCION AUTOMATICO', 'ALARM PROTECCION AUTOMATICO', 'LBL_ALARM_CONFIGS_ALARM_PROT_AUT', 'LBL_ALARM_CONFIGS_ALARM_PROT_AUT_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(10030084, 2, 3, 84, NULL, 3, true, true, 'ALARM LIGHT ON', 'ALARM LIGHT ON', 'LBL_ALARM_CONFIGS_ALARM_LIGHT_ON', 'LBL_ALARM_CONFIGS_ALARM_LIGHT_ON', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(010084, 2, 3, 84, NULL, NULL, true, true, 'ALARM CIRCUIT DISCONNECTED', 'ALARM CIRCUIT DISCONNECTED', 'LBL_ALARM_CONFIGS_ALARM_CIRCUIT_DISCONNECTED', 'LBL_ALARM_CONFIGS_ALARM_CIRCUIT_DISCONNECTED_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(020084, 2, 3, 84, NULL, 3, true, true, 'ALARM PROTECCION AUTOMATICO', 'ALARM PROTECCION AUTOMATICO', 'LBL_ALARM_CONFIGS_ALARM_PROT_AUT', 'LBL_ALARM_CONFIGS_ALARM_PROT_AUT_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 -- 
 -- Table: conf.element_state_alarms
 --
 INSERT INTO conf.element_state_alarms
 (element_type_id, element_type_state_id, alarm_config_id, created_at, updated_at) VALUES
-(84, 2, 8401, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(84, 2, 010084, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
