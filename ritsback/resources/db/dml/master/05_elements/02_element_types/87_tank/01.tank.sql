@@ -10,7 +10,7 @@ VALUES(87, 'TANK', 'TANK','LBL_ELEMENT_TYPE_TANK', 'LBL_ELEMENT_TYPE_TANK_DESC',
 
 INSERT INTO master.element_type_params (element_type_id, param_type_id, element_type_param_id, element_type_param_unit_id, data_type_id, default_value, alias, description, label_alias, label_description, enabled, visible, editable, created_at, updated_at) VALUES
 (87, 1, 1, NULL, 2, ' ', 'PK', 'PK', 'LBL_ELEMENT_TYPE_PARAM_PK' , 'LBL_ELEMENT_TYPE_PARAM_PK_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(87, 1, 2, 1, 2, ' ', 'entrance_tunnel_distance', 'entrance_tunnel_distance', 'LBL_ELEMENT_TYPE_ENTRANCE_TUNNEL_DISTANCE' , 'LBL_ELEMENT_TYPE_ENTRANCE_TUNNEL_DISTANCE_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(87, 1, 2, 1, 2, ' ', 'entrance_tunnel_distance', 'entrance_tunnel_distance', 'LBL_ELEMENT_TYPE_PARAM_ENTRANCE_TUNNEL_DISTANCE' , 'LBL_ELEMENT_TYPE_ENTRANCE_TUNNEL_DISTANCE_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (87, 1, 3, NULL, 2, ' ', 'road', 'road', 'LBL_ELEMENT_TYPE_PARAM_ROAD' , 'LBL_ELEMENT_TYPE_PARAM_ROAD_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (87, 1, 4, NULL, 2, ' ', 'alias_section', 'alias_section', 'LBL_ELEMENT_TYPE_PARAM_ALIAS_SECTION' , 'LBL_ELEMENT_TYPE_PARAM_ALIAS_SECTION_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (87, 1, 1003, NULL, 2, ' ', 'MANGO SESSION_UID', 'MANGO SESSION_UID', 'LBL_ELEMENT_TYPE_PARAM_MANGO_SESSION_UID' , 'LBL_ELEMENT_TYPE_PARAM_MANGO_SESSION_UID_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),

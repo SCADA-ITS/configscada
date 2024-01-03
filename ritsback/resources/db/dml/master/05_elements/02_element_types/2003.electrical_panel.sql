@@ -3,7 +3,7 @@
 --
 INSERT INTO master.element_types
 (element_type_id, element_group_id, alias, description,label_alias, label_description, initial_element_type_state_id, connected_element_type_state_id, disconnected_element_type_state_id, enabled, visible, created_at, updated_at) VALUES
-(2003, NULL, 'Electrical panel', 'Electrical panel', 'LBL_ELEMENT_TYPE_ELECTRICAL_PANEL', 'LBL_ELEMENT_TYPE_ELECTRILCA_PANEL_DESC', 0, 1, 2, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(2003, NULL, 'Electrical panel', 'Electrical panel', 'LBL_ELEMENT_TYPE_ELECTRICAL_PANEL', 'LBL_ELEMENT_TYPE_ELECTRICAL_PANEL_DESC', 0, 1, 2, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 
 -- Table: master.element_type_states.ventilation

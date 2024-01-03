@@ -26,6 +26,8 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 	 ('es_ES',1,'LBL_SYSTEM_PARAM_MAX_UNRECOGNIZED_ALARMS_ALLOWED', 'Número máximo de alarmas permitidas sin reconocer en el sistema', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	 ('es_ES',1,'LBL_SYSTEM_PARAM_TRAVEL_TIME_PERIOD_TIME_MINUTES', 'Período de calculo de los tiempos de recorrido (min)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	 ('es_ES',1,'LBL_SYSTEM_PARAM_MAX_SESSIONS', 'Número de sesiones máximas permitidas en el sistema', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	 ('es_ES',1,'LBL_SYSTEM_PARAM_AUDIT_LOGS', 'Número de logs de auditorías máximas permitidas en el sistema', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
 
 --en_GB
 	 ('en_GB',1,'LBL_SYSTEM_PARAM_USER_LOGIN_RETRIES','Maximum number of login attempts',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
@@ -44,6 +46,7 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 	 ('en_GB',1,'LBL_SYSTEM_PARAM_MAX_UNRECOGNIZED_ALARMS_ALLOWED', 'Maximum number of alarms allowed without recognize in the system', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	 ('en_GB',1,'LBL_SYSTEM_PARAM_TRAVEL_TIME_PERIOD_TIME_MINUTES', 'Travel time calculation period (min)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	 ('en_GB',1,'LBL_SYSTEM_PARAM_MAX_SESSIONS', 'Maximum number of allowed sessions in the system', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	 ('en_GB',1,'LBL_SYSTEM_PARAM_AUDIT_LOGS', 'Maximum number of audit logs allowed in the system', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	
 --sk_SK
 
@@ -63,4 +66,5 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 	 ('es_CL',1,'LBL_SYSTEM_PARAM_DB_GIT_MESSAGE', 'Mensaje del commit de la versión actual', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	 ('es_CL',1,'LBL_SYSTEM_PARAM_MAX_UNRECOGNIZED_ALARMS_ALLOWED', 'Número máximo de alarmas permitidas sin reconocer en el sistema', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	 ('es_CL',1,'LBL_SYSTEM_PARAM_TRAVEL_TIME_PERIOD_TIME_MINUTES', 'Período de calculo de los tiempos de recorrido (min)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-	 ('es_CL',1,'LBL_SYSTEM_PARAM_MAX_SESSIONS', 'Número de sesiones máximas permitidas en el sistema', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+	 ('es_CL',1,'LBL_SYSTEM_PARAM_MAX_SESSIONS', 'Número de sesiones máximas permitidas en el sistema', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	 ('es_CL',1,'LBL_SYSTEM_PARAM_AUDIT_LOGS', 'Número de logs de auditorías máximas permitidas en el sistema', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
