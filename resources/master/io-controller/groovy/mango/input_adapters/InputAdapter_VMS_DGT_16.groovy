@@ -58,7 +58,7 @@ class InputAdapter_VMS {
 	boolean content(Element element, String value, List<ElementValue> elementValues) {
 		boolean intermitence = false;
 		
-		if(value == null || value.equals(CMD_VALUE_POWER_OFF_DGT)) {
+		if(value == null || value.equals(CMD_VALUE_POWER_OFF_DGT) || value.equals("")) {
 			ElementValue elementValue = new ElementValue();
 			elementValue.setElementTypeId(element.getElementTypeId());
 			elementValue.setElementTypeParamId(PARAM_MEASURE_DATAJSON);
@@ -72,7 +72,7 @@ class InputAdapter_VMS {
 		String result = construirVMS(value, element, intermitence);
 		
 		if (result == null || result.equals("")){
-			return false;
+			return true;
 		}else{
 			ElementValue elementValue = new ElementValue();
 			elementValue.setElementTypeId(element.getElementTypeId());

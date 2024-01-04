@@ -66,7 +66,7 @@ class InputAdapter_VMS {
 	}
 	
 	boolean content(Element element, String value, List<ElementValue> elementValues) {
-		if(value == null || value.equals(CMD_VALUE_POWER_OFF_DGT)) {
+		if(value == null || value.equals(CMD_VALUE_POWER_OFF_DGT) || value.equals("")) {
 			ElementValue elementValue = new ElementValue();
 			elementValue.setElementTypeId(element.getElementTypeId());
 			elementValue.setElementTypeParamId(PARAM_MEASURE_DATAJSON);
