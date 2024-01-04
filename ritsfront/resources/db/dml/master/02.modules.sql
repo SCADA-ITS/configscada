@@ -430,7 +430,7 @@ INSERT INTO ui.window_values(module_id, window_param_id, value) VALUES
 (1024, 8, 'true'),
 (1024, 10, 'img/module/plan-color.png'),
 (1024, 11, '#464646'),
-(1024, 12, 'LBL_PLANS_MANAGER'),
+(1024, 12, 'LBL_MENU_ITEM_PLAN_MANAGER'),
 (1024, 14, 'true'),
 
 (1025, 4, '615'),
