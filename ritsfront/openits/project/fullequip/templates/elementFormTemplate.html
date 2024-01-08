@@ -17,8 +17,10 @@
 	<script type="text/javascript" src="./data/constants.js"></script>
 
 	<style>
-		.print-template {
-			padding: 5px;
+		body {
+			font-family: Roboto;
+			padding-left: 15px;
+			padding-right: 15px;
 		}
 
 		.print-template-header {
@@ -26,6 +28,7 @@
 			box-sizing: border-box;
 			display: flex;
 			justify-content: space-between;
+			padding-bottom: 15px;
 		}
 
 		.print-template-logo {
@@ -33,18 +36,13 @@
 			flex-direction: row;
 		}
 
-		.print-data {
-			width: 90%;
-			padding: inherit;
-		}
-
-		.print-user-data {
-			display: flex;
-			justify-content: space-between;
-		}
-
-		.print-section {
-			margin: 40px 5px;
+		.print-parte-number {
+			height: 50px;
+			font-style: italic;
+			display: inherit;
+			align-items: center;
+			border: 1px solid var(--global-grey);
+			background-color: var(--global-grey);
 		}
 
 		.print-separators {
@@ -54,147 +52,97 @@
 			font-weight: bold;
 			color: var(--blue-text-default);
 		}
+        #content {
+            width: 90%;
+        }
 
-		.print-texts {
-			width: 100%;
-			font-family: Roboto;
-			font-weight: bold;
-			color: var(--blue-text-default);
+        .date-container {
+            display: flex;
+			justify-content: space-between;
 		}
 
-		.print-texts h2 {
+		h2 {
 			font-style: italic;
 			font-size: 14px;
 		}
 
-		.print-texts span {
-			font-size: 18px;
+        #comments-container {
+            border: 1px solid #ccc;
+            width: 500px; /* Ancho deseado */
+            height: 80px; /* Alto deseado */
+            margin-bottom: 50px; /* Añade un margen inferior */       
 		}
 
-		.print-parte-number {
-			height: 50px;
-			padding-left: 10px;
-			font-style: italic;
-			display: inherit;
-			align-items: center;
-			border: 1px solid var(--global-grey);
-			background-color: var(--global-grey);
-		}
-		
 		#groupImage div img{
             width: 200px;
             height: 200px;
         }
-		
 	</style>
 </head>
 
 <body>
 	<div id="template" class="print-template">
-
 		<div class="print-template-header">
 			<h1>Parte de trabajo</h1>
 			<img class="print-template-logo" src="./img/logo-project.svg">
 		</div>
-		
-		<div class="parte-block">
-			<div style="height: 30px;">
-				<h2 class="print-parte-number">Número de parte: <span id="field.id"></span></h2>
-			</div>
 
-			<div class="print-data">
-				<section class="print-section">
-					<div>
-						<span class="print-separators">Tiempo de trabajo</span>
-						<hr>
-					</div>
-					<div class="print-user-data">
-						<div class="print-texts">
-							<h2>Fecha inicio:</h2>
-							<span id="field.arrival_date"></span>
-						</div>
-						<div class="print-texts">
-							<h2>Fecha fin:</h2>
-							<span id="field.release_date"></span>
-						</div>						
-				</section>
-				<section class="print-section">
-					<div>
-						<span class="print-separators">Datos del usuario</span>
-						<hr>
-					</div>
-					<div class="print-user-data">
-						<div class="print-texts">
-							<h2>Operario:</h2>
-							<span id="field.users_names"></span>
-						</div>
-				</section>
-
-				<section class="print-section">
-					<div>
-						<span class="print-separators">Datos del equipo</span>
-						<hr>
-					</div>
-					<div class="print-user-data">
-
-						<!--<div class="print-texts">
-							<h2>Tipo:</h2>
-							<span id="field.element_type_id"></span>
-						</div>-->
-
-						<div class="print-texts">
-							<h2>Equipo:</h2>
-							<span id="field.elements_id"></span>
-						</div>
-						<!--<div class="print-texts">
-							<h2>Localización:</h2>
-							<span id="field.location_id"></span>
-						</div>-->
-
-					</div>
-				</section>
-				<section class="print-section">
-					<div>
-						<span class="print-separators">Datos de trabajo</span>
-						<hr>
-					</div>
-					<div class="print-user-data">
-
-						<div class="print-texts">
-							<h2>Causa:</h2>
-							<span id="field.cause_id"></span>
-						</div>
-
-						<div class="print-texts">
-							<h2>Acción:</h2>
-							<span id="field.action_id"></span>
-						</div>
-						<div class="print-texts">
-							<h2>Impacto en la vía:</h2>
-							<span id="field.road_imapcts_id"></span>
-						</div>
-
-					</div>
-				</section>
-				<section class="print-section">
-					<div class="print-user-data">
-						
-						<div class="print-texts">
-							<h2>Commentarios:</h2>
-							<span id="field.comments"></span>
-	
-						</div>
-					</div>
-				</section>
-
-
-				<h2>Imagenes de evidencias:</h2>
-				<div id="groupImage"></div>
-
-			</div>
-
+		<div style="height: 30px; text-align: left; font-size: 14px;">
+			<h1 class="print-parte-number">Número de parte: <span id="field.id"></span></h1>
 		</div>
 	</div>
+	<div id="content">
+		<div style="margin-top: 50px;">
+			<span class="print-separators">Tiempo de trabajo</span>
+			<hr>
+		</div>
+		<div style="height: 30px;" class="date-container">
+			<h2>Fecha inicio:</h2>
+			<span style="margin-top: 10px;" id="field.arrival_date"></span>
+			<h2>Fecha fin:</h2>
+			<span style="margin-top: 10px;" id="field.release_date"></span>	
+		</div>
+		<div style="margin-top: 50px;">
+			<span class="print-separators">Datos del operario</span>
+			<hr>
+		</div>
+		<div style="height: 30px; width: 400px;" class="date-container">
+			<h2>Operario:</h2>
+			<span style="margin-top: 10px; " id="field.users_names"></span>	
+		</div>
+		<div style="margin-top: 50px;">
+			<span style="margin-top: 10px;" class="print-separators">Datos del equipo</span>
+			<hr>
+		</div>
+		<div style="height: 30px; width: 400px;" class="date-container">
+			<h2>Equipo:</h2>
+			<span style="margin-top: 10px;" id="field.elements_id"></span>	
+		</div>
+
+		<div style="margin-top: 50px;">
+			<span class="print-separators">Datos de trabajo</span>
+			<hr>
+		</div>
+		<div style="height: 30px;" class="date-container">
+			<h2>Causa:</h2>
+			<span style="margin-top: 10px;" id="field.cause_id"></span>
+			<h2>Acción:</h2>
+			<span style="margin-top: 10px;" id="field.action_id"></span>
+			<h2>Impacto en la vía:</h2>
+			<span style="margin-top: 10px;" id="field.road_imapcts_id"></span>
+		</div>
+        <div style="height: 30px; margin-top: 50px; justify-content: left" class="date-container">
+            <h2>Comentarios:</h2>
+            <div style="margin-top: 10px;"id="comments-container">
+                <span id="field.comments"></span>
+            </div>
+        </div>
+		<div style="margin-top: 80px;" class="date-container">
+            <h2>Imagenes de evidencias:</h2>
+		</div>
+		<div style="margin-top: 30px;" id="groupImage"></div>
+	</div>
+
 </body>
 
 </html>
