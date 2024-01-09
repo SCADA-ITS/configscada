@@ -8,7 +8,6 @@ INSERT INTO ui.module_values(module_id, module_param_id, value) VALUES
 (406, 5, 'http://192.168.1.240:9000/#/dashboard?user=operador1&pass=operador1'),
 (407, 5, 'http://192.168.0.150:82/recording?mtkn=1:1m864T:w9sGMtdQAZZAsfQmm0XRiRjmGDI'),
 (408, 5, 'http://192.168.0.150:82/incidents?mtkn=1:1m864T:w9sGMtdQAZZAsfQmm0XRiRjmGDI'),
-(409, 5, 'http://192.168.0.150:82/asterisk/search/?mtkn=1:1m864T:w9sGMtdQAZZAsfQmm0XRiRjmGDI'),
 
 (500, 8, '{"treeCustom": [4]}'),
 

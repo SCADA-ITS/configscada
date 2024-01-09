@@ -9,10 +9,10 @@ INSERT INTO master.element_types(element_type_id, element_group_id, alias, descr
 --
 INSERT INTO master.element_type_params (element_type_id, param_type_id, element_type_param_id, element_type_param_unit_id, data_type_id, default_value, alias, description, label_alias, label_description, enabled, visible, editable, created_at, updated_at) VALUES
 --CONFIG
-(96, 1, 1, NULL, 2, ' ', 'brand', 'brand', 'LBL_ELEMENT_TYPE_PARAM_BRAND' , 'LBL_ELEMENT_TYPE_PARAM_BRAND_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(96, 1, 2, NULL, 2, ' ', 'model', 'model', 'LBL_ELEMENT_TYPE_PARAM_MODEL' , 'LBL_ELEMENT_TYPE_PARAM_MODEL_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(96, 1, 5, null, 1, ' ', 'group_id', 'group_id', 'LBL_ELEMENT_TYPE_PARAM_GROUP_ID' , 'LBL_ELEMENT_TYPE_PARAM_GROUP_ID_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(96, 1, 6, null, 2, ' ', 'group_zones', 'group_zones', 'LBL_ELEMENT_TYPE_PARAM_PA_GROUP_GROUP_ZONES' , 'LBL_ELEMENT_TYPE_PARAM_PA_GROUP_GROUP_ZONES_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(96, 1, 1, NULL, 2, NULL, 'brand', 'brand', 'LBL_ELEMENT_TYPE_PARAM_BRAND' , 'LBL_ELEMENT_TYPE_PARAM_BRAND_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(96, 1, 2, NULL, 2, NULL, 'model', 'model', 'LBL_ELEMENT_TYPE_PARAM_MODEL' , 'LBL_ELEMENT_TYPE_PARAM_MODEL_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(96, 1, 5, null, 1, NULL, 'group_id', 'group_id', 'LBL_ELEMENT_TYPE_PARAM_GROUP_ID' , 'LBL_ELEMENT_TYPE_PARAM_GROUP_ID_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(96, 1, 6, null, 2, NULL, 'group_zones', 'group_zones', 'LBL_ELEMENT_TYPE_PARAM_PA_GROUP_GROUP_ZONES' , 'LBL_ELEMENT_TYPE_PARAM_PA_GROUP_GROUP_ZONES_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (96, 1, 1003, null, 2, '', 'MANGO SESSION_UID', 'MANGO SESSION_UID', 'LBL_ELEMENT_TYPE_PARAM_MANGO_SESSION_UID' , 'LBL_ELEMENT_TYPE_PARAM_MANGO_SESSION_UID_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 --MEASURE
 (96, 2, 1, null, 5, NULL, 'zone_activated', 'zone_activated', 'LBL_ELEMENT_TYPE_PARAM_PA_GROUP_ZONE_ACTIVATED' , 'LBL_ELEMENT_TYPE_PARAM_PA_GROUP_ZONE_ACTIVATED_DESC', true, true, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),

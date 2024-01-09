@@ -6,7 +6,6 @@ INSERT INTO ui.modules(id, module_type_id, "name", description, default_view_typ
 (406, 5, 'Videowall', 'Videowall', 1, null, 'modules/externalApp.js', 'getView', NULL, NULL, NULL, true, true, NULL),
 (407, 5, 'Grabaciones', 'Grabaciones', 1, null, 'modules/externalApp.js', 'getView', NULL, NULL, NULL, true, true, NULL),
 (408, 5, 'DAI Rio Verde', 'DAI Rio Verde', 1, null, 'modules/externalApp.js', 'getView', NULL, NULL, NULL, true, true, NULL),
-(409, 5, 'Asterisk', 'Asterisk', 1, null, 'modules/externalApp.js', 'getView', NULL, NULL, NULL, true, true, NULL),
 
 (910, 1, 'EquipmentForm', 'Equipment form', 2, null, 'modules/equipmentFormModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 

@@ -10,6 +10,7 @@
 --
 INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) VALUES
 --es_ES
+('es_ES', 1, 'LBL_CRON_EXPRESSION_IS_NULL_DESCRIPTION', 'Campo de expresion cron vacio', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_NEW_PLANSCHEDULE_DESCRIPTION', 'Creación de un nuevo plan programado', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_NEW_SCHEDULER', 'Nueva programación', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_NEW_SCHEDULER_DESCRIPTION', 'Seleccione los valores temporales deseados', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -26,6 +27,7 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_ES', 1, 'LBL_PLANSCHEDULE_CONFIRM_PLAY_DESCRIPTION', '¿Realmente desea ejecutar el plan?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
     
 --en_GB	 
+('en_GB', 1, 'LBL_CRON_EXPRESSION_IS_NULL_DESCRIPTION', 'Cron expression description is null', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_NEW_PLANSCHEDULE_DESCRIPTION', 'Creation of new scheduled plan', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_NEW_SCHEDULER', 'New scheduler', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_NEW_SCHEDULER_DESCRIPTION', 'Creation of new schedule for a plan', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -33,6 +35,7 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('en_GB', 1, 'LBL_PLAN_ID', 'ID', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_PLAN_SCHEDULER', 'Plan scheduler', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_PLANSCHEDULE', 'Create new scheduled plan', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_PLANSCAHEDULE_CONFIRM_DELETE_DESCRIPTION', 'Are you sure you want to delete the schedule?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_PLANSCHEDULE_CONFIRM_DELETE_DESCRIPTION', 'Are you sure you want to remove the plan schedule?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 ('en_GB', 1, 'LBL_PLANSCHEDULE_CONFIRM_DISABLE_DESCRIPTION', 'Are you sure you want to disable the plan schedule?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 ('en_GB', 1, 'LBL_PLANSCHEDULE_CONFIRM_ENABLE_DESCRIPTION', 'Are you sure you want to enable the plan schedule?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -58,11 +61,15 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('sk_SK', 1, 'LBL_PLANSCHEDULE_CONFIRM_PLAY_DESCRIPTION', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --es_CL	 
+('es_CL', 1, 'LBL_CRON_EXPRESSION_IS_NULL_DESCRIPTION', 'Campo de expresion cron vacio', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_NEW_PLANSCHEDULE_DESCRIPTION', 'Creación de un nuevo plan programado', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_NEW_SCHEDULER', 'Nueva programación', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_NEW_SCHEDULER_DESCRIPTION', 'Seleccione los valores temporales deseados', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_PLAN_CRON', 'Programación', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_PLAN_ID', 'ID', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_PLAN_SCHEDULER', 'Planificaciones', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_PLANSCHEDULE', 'Crear nuevo plan programado', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('es_CL', 1, 'LBL_PLANSCHEDULE_CONFIRM_DELETE_DESCRIPTION', '¿Está seguro que desea borrar la planificación?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_PLANSCAHEDULE_CONFIRM_DELETE_DESCRIPTION', '¿Está seguro que desea borrar la planificación?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_PLANSCHEDULE_CONFIRM_DISABLE_DESCRIPTION', '¿Está seguro que desea deshabilitar la planificación?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_PLANSCHEDULE_CONFIRM_ENABLE_DESCRIPTION', '¿Está seguro que desea habilitar la planificación?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_PLANSCHEDULE_CONFIRM_PAUSE', 'Pausar plan', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),

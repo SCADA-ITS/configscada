@@ -9,12 +9,12 @@ INSERT INTO master.element_types(element_type_id, element_group_id, alias, descr
 --
 INSERT INTO master.element_type_params (element_type_id, param_type_id, element_type_param_id, element_type_param_unit_id, data_type_id, default_value, alias, description, label_alias, label_description, enabled, visible, editable, created_at, updated_at) VALUES
 --CONFIG
-(10,1,1, NULL,2, ' ', 'brand', 'brand', 'LBL_ELEMENT_TYPE_PARAM_BRAND' , 'LBL_ELEMENT_TYPE_PARAM_BRAND_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(10,1,2, NULL,2, ' ', 'model', 'model', 'LBL_ELEMENT_TYPE_PARAM_MODEL' , 'LBL_ELEMENT_TYPE_PARAM_MODEL_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(10,1,3, NULL,2, ' ', 'data_config', 'data_config', 'LBL_ELEMENT_TYPE_PARAM_DATA_CONFIG' , 'LBL_ELEMENT_TYPE_PARAM_DATA_CONFIG_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(10,1,1003, NULL,2, '', 'MANGO SESSION_UID', 'MANGO SESSION_UID', 'LBL_ELEMENT_TYPE_PARAM_MANGO_SESSION_UID' , 'LBL_ELEMENT_TYPE_PARAM_MANGO_SESSION_UID_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(10,1,1, NULL,2, NULL, 'brand', 'brand', 'LBL_ELEMENT_TYPE_PARAM_BRAND' , 'LBL_ELEMENT_TYPE_PARAM_BRAND_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(10,1,2, NULL,2, NULL, 'model', 'model', 'LBL_ELEMENT_TYPE_PARAM_MODEL' , 'LBL_ELEMENT_TYPE_PARAM_MODEL_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(10,1,3, NULL,2, NULL, 'data_config', 'data_config', 'LBL_ELEMENT_TYPE_PARAM_DATA_CONFIG' , 'LBL_ELEMENT_TYPE_PARAM_DATA_CONFIG_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(10,1,1003, NULL,2, NULL, 'MANGO SESSION_UID', 'MANGO SESSION_UID', 'LBL_ELEMENT_TYPE_PARAM_MANGO_SESSION_UID' , 'LBL_ELEMENT_TYPE_PARAM_MANGO_SESSION_UID_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 --MEASURE
-(10,2,1,NULL,2, '', 'data_json', 'data_json', 'LBL_ELEMENT_TYPE_PARAM_DATA_JSON' , 'LBL_ELEMENT_TYPE_PARAM_DATA_JSON_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(10,2,1,NULL,2, NULL, 'data_json', 'data_json', 'LBL_ELEMENT_TYPE_PARAM_DATA_JSON' , 'LBL_ELEMENT_TYPE_PARAM_DATA_JSON_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 -- 
 -- Table: master.element_type_states

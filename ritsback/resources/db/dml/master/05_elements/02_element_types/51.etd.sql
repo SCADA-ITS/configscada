@@ -10,11 +10,11 @@ VALUES(51, 'ETD', 'Data adquisition station type of equipment', 'LBL_ELEMENT_TYP
 INSERT INTO master.element_type_params
 (element_type_id, param_type_id, element_type_param_id, element_type_param_unit_id, data_type_id, default_value, alias, description, label_alias, label_description, enabled, visible, editable, created_at, updated_at) VALUES
 --CONFIG
-(51,1,1, NULL,2, ' ', 'brand', 'brand', 'LBL_ELEMENT_TYPE_PARAM_BRAND' , 'LBL_ELEMENT_TYPE_PARAM_BRAND_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(51,1,2, NULL,2, ' ', 'model', 'model', 'LBL_ELEMENT_TYPE_PARAM_MODEL' , 'LBL_ELEMENT_TYPE_PARAM_MODEL_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(51,1,1003, NULL,2, ' ', 'MANGO SESSION_UID', 'MANGO SESSION_UID', 'LBL_ELEMENT_TYPE_PARAM_MANGO_SESSION_UID', 'LBL_ELEMENT_TYPE_PARAM_MANGO_SESSION_UID_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(51,1,1, NULL,2, NULL, 'brand', 'brand', 'LBL_ELEMENT_TYPE_PARAM_BRAND' , 'LBL_ELEMENT_TYPE_PARAM_BRAND_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(51,1,2, NULL,2, NULL, 'model', 'model', 'LBL_ELEMENT_TYPE_PARAM_MODEL' , 'LBL_ELEMENT_TYPE_PARAM_MODEL_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(51,1,1003, NULL,2, NULL, 'MANGO SESSION_UID', 'MANGO SESSION_UID', 'LBL_ELEMENT_TYPE_PARAM_MANGO_SESSION_UID', 'LBL_ELEMENT_TYPE_PARAM_MANGO_SESSION_UID_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 --MEASURE
-(51,2,1, NULL,2, ' ', 'etd_info', 'etd_info', 'LBL_ELEMENT_TYPE_PARAM_ETD_INFO' , 'LBL_ELEMENT_TYPE_PARAM_ETD_INFO_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(51,2,1, NULL,2, NULL, 'etd_info', 'etd_info', 'LBL_ELEMENT_TYPE_PARAM_ETD_INFO' , 'LBL_ELEMENT_TYPE_PARAM_ETD_INFO_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 --
 -- Table: master.element_type_states

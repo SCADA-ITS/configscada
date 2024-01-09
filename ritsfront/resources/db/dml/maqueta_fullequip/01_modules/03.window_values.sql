@@ -41,13 +41,6 @@ INSERT INTO ui.window_values(module_id, window_param_id, value) VALUES
 (408, 12, 'LBL_MENU_ITEM_INCIDENCIAS_DAI'),
 (408, 14, 'true'),
 
-(409, 8, 'true'),
-(409, 9, 'img/module/default.png'),
-(409, 10, 'img/module/default.png'),
-(409, 11, '#464646'),
-(409, 12, 'LBL_ASTERISK'),
-(409, 14, 'true'),
-
 (600, 8, 'true'),
 (600, 9, 'img/module/default.png'),
 (600, 10, 'img/module/default.png'),

@@ -9,11 +9,11 @@ VALUES(85, 'DALI', 'DALI','LBL_ELEMENT_TYPE_DALI', 'LBL_ELEMENT_TYPE_DALI_DESC',
 --
 INSERT INTO master.element_type_params (element_type_id, param_type_id, element_type_param_id, element_type_param_unit_id, data_type_id, default_value, alias, description, label_alias, label_description, enabled, visible, editable, created_at, updated_at) VALUES
 --CONFIG
-(85, 1, 1, NULL, 2, ' ', 'config_json', 'config json', 'LBL_ELEMENT_TYPE_PARAM_DALI_CONFIG' , 'LBL_ELEMENT_TYPE_PARAM_DALI_CONFIG_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(85, 1, 1003, NULL, 2, ' ', 'MANGO_SESSION_UID', 'MANGO SESSION_UID', 'LBL_ELEMENT_TYPE_PARAM_MANGO_SESSION_UID' , 'LBL_ELEMENT_TYPE_PARAM_MANGO_SESSION_UID_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(85, 1, 1, NULL, 2, NULL, 'config_json', 'config json', 'LBL_ELEMENT_TYPE_PARAM_DALI_CONFIG' , 'LBL_ELEMENT_TYPE_PARAM_DALI_CONFIG_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(85, 1, 1003, NULL, 2, NULL, 'MANGO_SESSION_UID', 'MANGO SESSION_UID', 'LBL_ELEMENT_TYPE_PARAM_MANGO_SESSION_UID' , 'LBL_ELEMENT_TYPE_PARAM_MANGO_SESSION_UID_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 --MEASURE
 (85, 2, 1, null, 1, NULL, 'dali_regime', 'current dali illumination regime', 'LBL_ELEMENT_TYPE_PARAM_DALI_ILUMINATION_REGIME', 'LBL_ELEMENT_TYPE_PARAM_DALI_ILUMINATION_REGIME_DESC', true, true, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(85, 2, 2, NULL, 2, '', 'data_json_group', 'data json group', 'LBL_ELEMENT_TYPE_PARAM_DALI_DATA' , 'LBL_ELEMENT_TYPE_PARAM_DALI_DATA_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(85, 2, 2, NULL, 2, NULL, 'data_json_group', 'data json group', 'LBL_ELEMENT_TYPE_PARAM_DALI_DATA' , 'LBL_ELEMENT_TYPE_PARAM_DALI_DATA_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 
 --

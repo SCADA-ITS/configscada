@@ -1,5 +1,5 @@
 INSERT INTO ui.pas_libraries(id, name, description, label, enabled, visible) VALUES
-(1, 'Librería de señalización ', null, 'LBL_PAS_LIB_AUSOL', true, true);
+(1, 'Librería de señalización ', null, 'LBL_PAS_LIBRARY', true, true);
 
 INSERT INTO ui.pas_messages(id, alias, description, message, audio, enabled, visible) VALUES
 (1, 'Mensaje de test', 'Mensaje de test', '1', './resources/pasystem/messages/TESTCASTELLANO.mp3', true, true),

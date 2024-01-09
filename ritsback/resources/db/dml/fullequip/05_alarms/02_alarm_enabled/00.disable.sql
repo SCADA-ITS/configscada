@@ -1,1 +1,0 @@
-update conf.alarm_configs set enabled = false

@@ -9,8 +9,8 @@
 -- Table: master.i18n_labels
 --
 
--- es_ES
 INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) VALUES
+-- es_ES
 ('es_ES', 1, 'LBL_HELP_CONTENTS', 'Contenido', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_MENU_HELP_CONTENTS', 'Contenido', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 

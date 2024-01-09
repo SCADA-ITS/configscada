@@ -9,7 +9,3 @@
 -- Table: master.i18n_labels
 --
 
--- es_ES
-INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) VALUES
-('es_ES', 1, 'LBL_PAS_LIB_AUSOL', 'Librería de señalización', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-

@@ -10,8 +10,8 @@
 --
 
 
--- es_ES
 INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) VALUES
+-- es_ES
 ('es_ES', 1, 'LBL_FANS', 'Ventiladores', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_FAN_COMMAND_NOT_ALLOWED_WITH_THIS_STATE', 'No es posible la comandancia de ventiladores con este estado', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_MODE_VENT_AUTO', 'Automático', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -23,6 +23,7 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_ES', 1, 'LBL_SEND_FAN_START_DIRECT', 'Poner ventilador en marcha directa', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_SEND_FAN_START_REVERSE', 'Poner ventilador en marcha inversa', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_SEND_FAN_STOP', 'Parar ventilador', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_SEND_VENTILATION_REGIME_CONFIRM_DESCRIPTION', '¿Esta seguro de cambiar el régimen de ventilación?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_SEND_VENTILATION_START_CONFIRM_DESCRIPTION', '¿Esta seguro de arrancar la ventilación del tunel?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_SEND_VENTILATION_STOP_CONFIRM_DESCRIPTION', '¿Esta seguro de parar la ventilación del tunel?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_START', 'Arrancar', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -46,6 +47,7 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('en_GB', 1, 'LBL_SEND_FAN_START_DIRECT', 'Send fan in start direct', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_SEND_FAN_START_REVERSE', 'Send fan in start reverse', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_SEND_FAN_STOP', 'Stop fan', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_SEND_VENTILATION_REGIME_CONFIRM_DESCRIPTION', 'Are you sure to change the ventilation regime?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_SEND_VENTILATION_START_CONFIRM_DESCRIPTION', 'Are you sure to start the tunnel ventilation?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_SEND_VENTILATION_STOP_CONFIRM_DESCRIPTION', 'Are you sure to stop the tunnel ventilation?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_START', 'Arrancar', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -66,12 +68,20 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_CL', 1, 'LBL_MODE_VENT_AUTO_VENTILATION_DESCRIPTION', 'Control automático - Ventilación sanitaria', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_MODE_VENT_MANUAL', 'Manual', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_MODE_VENT_MANUAL_VENTILATION_DESCRIPTION', 'Control manual de la ventilación', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_SEND_FAN_START_DIRECT', 'Poner ventilador en marcha directa', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_SEND_FAN_START_REVERSE', 'Poner ventilador en marcha inversa', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_SEND_FAN_STOP', 'Parar ventilador', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_SEND_VENTILATION_REGIME_CONFIRM_DESCRIPTION', '¿Esta seguro de cambiar el régimen de ventilación?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_SEND_VENTILATION_START_CONFIRM_DESCRIPTION', '¿Esta seguro de arrancar la ventilación del tunel?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_SEND_VENTILATION_STOP_CONFIRM_DESCRIPTION', '¿Esta seguro de parar la ventilación del tunel?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_START', 'Arrancar', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_START_DESCRIPTION', 'Arrancar la ventilación', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_STOP_DESCRIPTION', 'Parar la ventilación', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('es_CL', 1, 'LBL_VENTILATION_CHANGE_MODE_NOT_ALLOWED', 'No es posible cambiar a este modo', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+('es_CL', 1, 'LBL_VENTILATION_CHANGE_MODE_CONFIRM_DESCRIPTION', '¿Esta seguro de cambiar el modo de ventilación?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_VENTILATION_CHANGE_MODE_NOT_ALLOWED', 'No es posible cambiar a este modo', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_VENTILATION_CHANGE_STATUS', 'Enviar', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_VENTILATION_CHANGE_STATUS_CONFIRM_DESCRIPTION', '¿Esta seguro de cambiar el valor de los ventiladores?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_VENTILATIONS', 'Zonas de ventilación', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 
 

@@ -10,20 +10,13 @@
 --
 --es_ES
 INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) VALUES
-	
-	('es_ES', 1, 'LBL_CONFIRM_IN', 'Confirmar en', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+('es_ES', 1, 'LBL_CONFIRM_IN', 'Confirmar en', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --en_GB
-INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) VALUES
-	
-	('en_GB', 1, 'LBL_CONFIRM_IN', 'Confirm in', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+('en_GB', 1, 'LBL_CONFIRM_IN', 'Confirm in', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	
 --sk_SK
-INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) VALUES
-	
-	('sk_SK', 1, 'LBL_CONFIRM_IN', 'Potvrdiť v', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+('sk_SK', 1, 'LBL_CONFIRM_IN', 'Potvrdiť v', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	
 -- es_CL
-INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) VALUES
-	
-	('es_CL', 1, 'LBL_CONFIRM_IN', 'Confirmar en', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+('es_CL', 1, 'LBL_CONFIRM_IN', 'Confirmar en', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

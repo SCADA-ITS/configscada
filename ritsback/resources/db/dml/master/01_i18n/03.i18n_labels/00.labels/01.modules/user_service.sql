@@ -37,7 +37,7 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('sk_SK', 1, 'LBL_SESSION_WITHOUT_COMM', 'bez komunikácie', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --es_CL
-('es_CL', 1, 'LBL_SESSION_WITHOUT_COMM', 'Sesión cerrada por pérdida de comunicación', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_SESSION_WITHOUT_COMM', 'Sesión cerrada por pérdida de comunicación.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_AUTHORIZED', 'Usuario autorizado', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_DENY_PASSWORD_EXPIRED', 'Contraseña caducada', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_DENY_LOCKED', 'Usuario bloqueado', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),

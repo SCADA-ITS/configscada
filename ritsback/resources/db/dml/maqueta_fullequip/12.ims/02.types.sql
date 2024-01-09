@@ -8,7 +8,7 @@ INSERT INTO master.ims_incident_groups (incident_group_id,alias,description,labe
 (2,'Weather data','Weather data','LBL_IMS_INCIDENT_GROUP_TYPE_WEATHER_DATA', 'LBL_IMS_INCIDENT_GROUP_TYPE_WEATHER_DATA_DESC',true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 (3,'Road incidents','Road incidents','LBL_IMS_INCIDENT_GROUP_TYPE_ROAD_INCIDENTS', 'LBL_IMS_INCIDENT_GROUP_TYPE_ROAD_INCIDENTS_DESC',true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
 
-
+ 
 -- 
 -- Table: conf.ims_incident_types
 --

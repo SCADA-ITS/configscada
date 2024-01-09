@@ -9,9 +9,9 @@ INSERT INTO master.element_types(element_type_id, element_group_id, alias, descr
 --
 INSERT INTO master.element_type_params (element_type_id, param_type_id, element_type_param_id, element_type_param_unit_id, data_type_id, default_value, alias, description, label_alias, label_description, enabled, visible, editable, created_at, updated_at) VALUES
 --CONFIG
-(16, 1, 5, null, 1, ' ', 'zone_id', 'zone_id', 'LBL_ELEMENT_TYPE_PARAM_PA_ZONE_ZONE_ID' , 'LBL_ELEMENT_TYPE_PARAM_PA_ZONE_ZONE_ID_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(16, 1, 6, null, 2, ' ', 'group_zones', 'group_zones', 'LBL_ELEMENT_TYPE_PARAM_PA_ZONE_GROUP_ZONES' , 'LBL_ELEMENT_TYPE_PARAM_PA_ZONE_GROUP_ZONES_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(16, 1, 1003, null, 2, '', 'MANGO SESSION_UID', 'MANGO SESSION_UID', 'LBL_ELEMENT_TYPE_PARAM_MANGO_SESSION_UID' , 'LBL_ELEMENT_TYPE_PARAM_MANGO_SESSION_UID_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(16, 1, 5, null, 1, NULL, 'zone_id', 'zone_id', 'LBL_ELEMENT_TYPE_PARAM_PA_ZONE_ZONE_ID' , 'LBL_ELEMENT_TYPE_PARAM_PA_ZONE_ZONE_ID_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(16, 1, 6, null, 2, NULL, 'group_zones', 'group_zones', 'LBL_ELEMENT_TYPE_PARAM_PA_ZONE_GROUP_ZONES' , 'LBL_ELEMENT_TYPE_PARAM_PA_ZONE_GROUP_ZONES_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(16, 1, 1003, null, 2, NULL, 'MANGO SESSION_UID', 'MANGO SESSION_UID', 'LBL_ELEMENT_TYPE_PARAM_MANGO_SESSION_UID' , 'LBL_ELEMENT_TYPE_PARAM_MANGO_SESSION_UID_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 --MEASURE
 (16, 2, 1, null, 5, NULL, 'zone_activated', 'zone_activated', 'LBL_ELEMENT_TYPE_PARAM_PA_ZONE_ZONE_ACTIVATED' , 'LBL_ELEMENT_TYPE_PARAM_PA_ZONE_ZONE_ACTIVATED_DESC', true, true, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (16, 2, 1001, null, 2, NULL, 'message_id', 'message_id', 'LBL_ELEMENT_TYPE_PARAM_PA_ZONE_MESSAGE_ID' , 'LBL_ELEMENT_TYPE_PARAM_PA_ZONE_MESSAGE_ID_DESC', true, true, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),

@@ -583,7 +583,7 @@ INSERT INTO ui.grid_field_icons(grid_field_id, icon, value, show_value, badge_co
 
 (100205, './img/grid/confirmed.png', 'true', false, false, false, true, 'LBL_GRID_FIELD_ALARM_THRESHOLDS'),
 (100205, './img/grid/empty.png', 'false', false, false, false, true, ''),
-
+ 
 (100206, './img/grid/alarm_level_1.png', 'LEVEL_MAINTENANCE', false, false, false, true, 'LBL_GRID_FIELD_ALARM_LEVEL_MAINTENANCE'),
 (100206, './img/grid/alarm_level_2.png', 'LEVEL_0', false, false, false, true, 'LBL_GRID_FIELD_ALARM_LEVEL_0'),
 (100206, './img/grid/alarm_level_3.png', 'LEVEL_1', false, false, false, true, 'LBL_GRID_FIELD_ALARM_LEVEL_1'),
