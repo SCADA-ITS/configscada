@@ -2,7 +2,7 @@
 -- Id iterado --> 3 cifras
 INSERT INTO ui.synoptics 
 (id, name, description, label, icon, base_layer, exclusive_layers) VALUES 
-(901, 'SINOPTICO_DESPEÑAPERROS_TUNNEL', 'SINOPTICO_DESPEÑAPERROS_TUNNEL', 'LBL_SYNOPTICS_SINOPTICO_DESPEÑAPERROS_TUNNEL', NULL, 'img/synoptics/DGT_Despeñaperros.svg', false);
+(901, 'SINOPTICO_DESPEÑAPERROS_TUNNEL', 'SINOPTICO_DESPEÑAPERROS_TUNNEL', 'LBL_SYNOPTICS_SINOPTICO_DESPEÑAPERROS_TUNNEL', NULL, 'img/synoptics/PLANTA_SCADA_tunel_DESPENAPERROS.svg', false);
 
 -- Para los identificadores de synoptic_layers seguiremos los siguientes criterios
 -- Id Synoptico                                   --> 3 cifras
