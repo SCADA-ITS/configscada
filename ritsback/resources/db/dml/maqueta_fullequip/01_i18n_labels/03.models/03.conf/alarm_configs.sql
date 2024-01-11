@@ -28,6 +28,9 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_MAX_FRONT_BEARING_TEMP', 'Ventilador exceso temperatura en motor delantero (>80ºC)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_MAX_BACK_BEARING_TEMP', 'Ventilador exceso temperatura en motor trasero (>80ºC)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
+--ElementType:15 -> FireZone
+('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_MIN_TEMP', 'Temperatura <= 3ºC', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
 --ElementType:19 -> CO
 ('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_CO_HIGH_CONCENTRATION', 'Detector CO  alta concentración (50 ppm< CO <200 ppm)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_CO_EXCESIVE_CONCENTRATION', 'Detector CO excesiva concentración (>200 ppm)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -70,6 +73,9 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('en_GB', 1, 'LBL_ALARM_CONFIGS_ALARM_MAX_FRONT_BEARING_TEMP', 'Max front bearing temperature (>80ºC)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_ALARM_CONFIGS_ALARM_MAX_BACK_BEARING_TEMP', 'Max back bearing temperature (>80ºC)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
+--ElementType:15 -> FireZone
+('en_GB', 1, 'LBL_ALARM_CONFIGS_ALARM_MIN_TEMP', 'Temperature <= 3ºC', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
 --ElementType:19 -> CO
 ('en_GB', 1, 'LBL_ALARM_CONFIGS_ALARM_CO_HIGH_CONCENTRATION', 'High concentration (50 ppm< CO <200 ppm)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_ALARM_CONFIGS_ALARM_CO_EXCESIVE_CONCENTRATION', 'Excesive concentration (>200 ppm)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -111,6 +117,9 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_CL', 1, 'LBL_ALARM_CONFIGS_ALARM_MAX_VIBRATION', 'Nivel máximo de vibración (>= 11.2) ', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_ALARM_CONFIGS_ALARM_MAX_FRONT_BEARING_TEMP', 'Ventilador exceso temperatura en motor delantero (>80ºC)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_ALARM_CONFIGS_ALARM_MAX_BACK_BEARING_TEMP', 'Ventilador exceso temperatura en motor trasero (>80ºC)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+--ElementType:15 -> FireZone
+('es_CL', 1, 'LBL_ALARM_CONFIGS_ALARM_MIN_TEMP', 'Temperatura <= 3ºC', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --ElementType:19 -> CO
 ('es_CL', 1, 'LBL_ALARM_CONFIGS_ALARM_CO_HIGH_CONCENTRATION', 'Detector CO  alta concentración (50 ppm< CO <200 ppm)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),

@@ -1280,7 +1280,7 @@ INSERT INTO ui.window_values(module_id, window_param_id, value) VALUES
 (1920, 8, 'true'),
 (1920, 10, 'img/module/default.png'),
 (1920, 11, '#464646'),
-(1920, 12, 'LBL_NOGALES_GIP'),
+(1920, 12, 'LBL_MENU_ITEM_GIP'),
 (1920, 14, 'true'),
 
 (6011, 4, '825'),

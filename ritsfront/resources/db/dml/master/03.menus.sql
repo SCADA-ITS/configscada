@@ -13,4 +13,4 @@ INSERT INTO ui.menu_items(menu_group_id, "position", module_id, "label", icon, "
 
 -- MENU HELP 
 (5000, 1, 1043, 'LBL_MENU_ITEM_TASK_MANAGER', 'img/menu/task-menu.png', 'Task manager', 'Menu item Task manager', true, true),
-(5000, 4, 1036, 'LBL_MENU_ITEM_ABOUT', 'img/menu/default.png', 'Menu item about', 'Menu item about', true, true);
+(5000, 4, 1036, 'LBL_MENU_ITEM_ABOUT', 'img/menu/help.png', 'Menu item about', 'Menu item about', true, true);

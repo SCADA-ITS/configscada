@@ -33,14 +33,12 @@ INSERT INTO ui.menu_items(id, menu_group_id, "position", module_id, "label", ico
 --TOOLS
 (500, 5, 1, 403, 'LBL_MENU_ITEM_REPORTS', 'img/menu/report.png', 'Menu item Reports', 'Menu item Reports', true, true),
 (501, 5, 2, 1045, 'LBL_HISTORICAL_CHARTS', 'img/menu/chart-menu.png', 'Historical charts', 'Historical Charts', true, true),
---(502, 5, 3, 407, 'LBL_MENU_ITEM_RECORDS', 'img/menu/default.png', 'Menu item Grabaciones', 'Menu item Grabaciones', true, true),
---(503, 5, 4, 408, 'LBL_MENU_ITEM_INCIDENCIAS_DAI', 'img/menu/default.png', 'Menu Incidencias DAI', 'Menu Incidencias DAI', true, true),
-(504, 5, 5, 1920, 'LBL_GIP', 'img/menu/default.png', 'NOGALES_GIP', 'Nogales GIP', true, true),
-(506, 5, 6, 1006, 'LBL_MENU_ITEM_AUDITS', 'img/menu/default.png', 'Auditorias', 'Auditorias', true, true),
-(505, 5, 7, 6011, 'LBL_MENU_ITEM_BACKOFFICE_INCIDENT', 'img/menu/backofficeincident.png', 'NOGALES_GIP_INCIDENT', 'Nogales GIP', true, true),
-(507, 5, 8, 1921, 'LBL_MENU_ITEM_BACKOFFICE_ALARM', 'img/menu/backofficealarm.png', 'ALARM_BACKOFFICE', 'Alarms backoffice', true, true),
-(508, 5, 9, 1922, 'LBL_MENU_ITEM_BACKOFFICE_ELEMENT', 'img/menu/backofficeelement.png', 'ELEMENTS_GIP', 'Elements GIP', true, true),
+(504, 5, 5, 1920, 'LBL_MENU_ITEM_GIP', 'img/menu/backofficeincident.png', 'NOGALES_GIP', 'Nogales GIP', true, true),
+(506, 5, 6, 1006, 'LBL_MENU_ITEM_AUDITS', 'img/menu/logs-menu.png', 'Auditorias', 'Auditorias', true, true),
+(505, 5, 7, 6011, 'LBL_MENU_ITEM_BACKOFFICE_INCIDENT', 'img/menu/incident.png', 'NOGALES_GIP_INCIDENT', 'Nogales GIP', true, true),
+(507, 5, 8, 1921, 'LBL_MENU_ITEM_BACKOFFICE_ALARM', 'img/menu/alarm-monitor-menu-1.png', 'ALARM_BACKOFFICE', 'Alarms backoffice', true, true),
+(508, 5, 9, 1922, 'LBL_MENU_ITEM_BACKOFFICE_ELEMENT', 'img/menu/task-menu.png', 'ELEMENTS_GIP', 'Elements GIP', true, true),
 
 
-(500001, 5000, 3, 1047, 'LBL_MENU_HELP_CONTENTS', 'img/menu/default.png', 'Help contents', 'Menu item help contents', true, true);
+(500001, 5000, 3, 1047, 'LBL_MENU_HELP_CONTENTS', 'img/menu/help.png', 'Help contents', 'Menu item help contents', true, true);
 

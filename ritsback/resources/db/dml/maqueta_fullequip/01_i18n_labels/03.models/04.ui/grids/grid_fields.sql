@@ -185,7 +185,7 @@ INSERT INTO master.i18n_labels (locale_code, module_id, "label", "translation", 
 -- Zona de megafonía
 ('es_ES',1,'LBL_MESSAGE_ID','ID mensaje',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 ('es_ES',1,'LBL_MESSAGE_TEXT','Mensaje',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
-('es_ES',1,'LBL_TAG_MESSAGE','Etiqueta',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+('es_ES',1,'LBL_MESSAGE_TAG','Etiqueta',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 
 --en_GB
 --Analizador de red
@@ -363,7 +363,7 @@ INSERT INTO master.i18n_labels (locale_code, module_id, "label", "translation", 
 -- Zona de megafonía
 ('en_GB',1,'LBL_MESSAGE_ID','ID message',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 ('en_GB',1,'LBL_MESSAGE_TEXT','Message',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
-('en_GB',1,'LBL_TAG_MESSAGE','Label',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+('en_GB',1,'LBL_MESSAGE_TAG','Label',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 
 --es_CL
 --Analizador de red
@@ -541,4 +541,4 @@ INSERT INTO master.i18n_labels (locale_code, module_id, "label", "translation", 
 -- Zona de megafonía
 ('es_CL',1,'LBL_MESSAGE_ID','ID mensaje',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 ('es_CL',1,'LBL_MESSAGE_TEXT','Mensaje',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
-('es_CL',1,'LBL_TAG_MESSAGE','Etiqueta',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
+('es_CL',1,'LBL_MESSAGE_TAG','Etiqueta',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
