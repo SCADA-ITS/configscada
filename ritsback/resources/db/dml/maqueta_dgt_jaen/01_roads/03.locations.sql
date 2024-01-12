@@ -227,4 +227,14 @@ INSERT INTO conf.locations (location_id, location_type_id, alias, description, l
 (0590071, 1, ' pk ', ' pk ', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (0600071, 1, ' pk ', ' pk ', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (0610071, 1, ' pk ', ' pk ', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(0620071, 1, ' pk ', ' pk ', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(0620071, 1, ' pk ', ' pk ', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(0010089, 1, ' pk ', ' pk ', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(0020089, 1, ' pk ', ' pk ', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(0030089, 1, ' pk ', ' pk ', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(0040089, 1, ' pk ', ' pk ', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(0050089, 1, ' pk ', ' pk ', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(0060089, 1, ' pk ', ' pk ', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(0070089, 1, ' pk ', ' pk ', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(0080089, 1, ' pk ', ' pk ', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(0090089, 1, ' pk ', ' pk ', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(0100089, 1, ' pk ', ' pk ', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
