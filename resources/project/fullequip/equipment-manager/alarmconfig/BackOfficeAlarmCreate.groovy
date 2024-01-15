@@ -30,7 +30,7 @@ class BackOfficeAlarmCreate {
         this.log = log;
     }
 
-	 boolean process(Alarm alarm) {
+	boolean process(Alarm alarm) {
         def sql = null
         try {
             sql = Sql.newInstance(CONNECTION_URL, DB_USER, DB_PASSWORD, DRIVER)
@@ -65,7 +65,9 @@ class BackOfficeAlarmCreate {
             def insertSql = 'INSERT INTO ' + DB_SCHEMA + '.' + DB_TABLE + '(alarm_id, activation, alarm, element_type, element) VALUES (?,?,?,?,?);'
             def params = [alarm_id, activation, alarm_name, element_type, element]
             def keys = sql.executeInsert insertSql, params
-            
+
+            log.debug("Alarm " + alarm_id + " inserted on BackOffice.");
+           
             return true;
 
         } catch (SQLException e) {

@@ -1,1 +1,1 @@
-UPDATE conf.alarm_configs SET on_create_execute='BackOfficeAlarmCreate.groovy' WHERE enabled=true;
+UPDATE conf.alarm_configs SET on_create_execute='BackOfficeAlarmCreate.groovy' WHERE enabled=true and alarm_level_id > 3;
