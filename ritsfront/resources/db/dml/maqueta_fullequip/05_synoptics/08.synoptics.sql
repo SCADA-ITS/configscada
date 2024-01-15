@@ -103,7 +103,7 @@ INSERT INTO ui.synoptics  (id, name, description, label, icon, base_layer, exclu
 (78, 'mm_general', 'mm_general', 'LBL_SYNOPTIC_MM_TUN_GENERAL', NULL, 'img/synoptics/Ausol_MM_General.svg', false),
 (79, 'mm_illumination', 'mm_illumination', 'LBL_SYNOPTIC_MM_TUN_ILLUMINATION', NULL, 'img/synoptics/Ausol_MM_Ilumination.svg', false),
 (80, 'mm_pci', 'mm_pci', 'LBL_SYNOPTIC_MM_TUN_PCI', NULL, 'img/synoptics/Ausol_MM_PCI.svg', false),
-(81, 'mm_ventilation', 'mm_ventilation', 'LBL_SYNOPTIC_MM_TUN_VENTITLATION', NULL, 'img/synoptics/Ausol_MM_Ventilation.svg', false),
+(81, 'mm_ventilation', 'mm_ventilation', 'LBL_SYNOPTIC_MM_TUN_VENTILATION', NULL, 'img/synoptics/Ausol_MM_Ventilation.svg', false),
 
 (82, 'mm_uf_cgbt', 'mm_uf_cgbt', 'LBL_SYNOPTIC_MM_UF_CGBT', NULL, 'img/synoptics/Ausol_MM_UF_CGBT.svg', false),
 (83, 'mm_uf_csa', 'mm_uf_csa', 'LBL_SYNOPTIC_MM_UF_CSA', NULL, 'img/synoptics/Ausol_MM_UF_CSA.svg', false),

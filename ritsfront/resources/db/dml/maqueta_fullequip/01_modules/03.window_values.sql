@@ -3,7 +3,7 @@ INSERT INTO ui.window_values(module_id, window_param_id, value) VALUES
 (2018, 8, 'true'),
 (2018, 10, 'img/module/default.png'),
 (2018, 11, '#464646'),
-(2018, 12, 'LBL_TREE_SELECT_MODULE'),
+(2018, 12, 'LBL_MENU_ITEM_SYNOPTIC'),
 (2018, 14, 'true'),
 
 (402, 8, 'true'),
@@ -766,7 +766,7 @@ INSERT INTO ui.window_values(module_id, window_param_id, value) VALUES
 (680, 9, 'img/module/default.png'),
 (680, 10, 'img/module/default.png'),
 (680, 11, '#464646'),
-(680, 12, 'LBL_SYNOPTIC_MM_TUN_VENTITLATION'),
+(680, 12, 'LBL_SYNOPTIC_MM_TUN_VENTILATION'),
 (680, 14, 'true'),
 
 (681, 4, '825'),
@@ -1294,13 +1294,13 @@ INSERT INTO ui.window_values(module_id, window_param_id, value) VALUES
 (1921, 8, 'true'),
 (1921, 10, 'img/module/default.png'),
 (1921, 11, '#464646'),
-(1921, 12, 'LBL_ALARMS_BACKOFFICE'),
+(1921, 12, 'LBL_MENU_ITEM_BACKOFFICE_ALARM'),
 (1921, 14, 'true'),
 
 (1922, 8, 'true'),
 (1922, 10, 'img/module/default.png'),
 (1922, 11, '#464646'),
-(1922, 12, 'LBL_ELEMENTS_GIP'),
+(1922, 12, 'LBL_MENU_ITEM_BACKOFFICE_ELEMENT'),
 (1922, 14, 'true'),
 
 (6041, 4, '825'),

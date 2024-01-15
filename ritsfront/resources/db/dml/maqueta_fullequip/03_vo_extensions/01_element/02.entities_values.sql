@@ -357,25 +357,25 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 ('Element:70:11', 33, 'http://192.168.0.152:3030/d/iLfR_egVl/est-ared-1?orgId=1&refresh=30s&theme=light&from=now-24h&to=now&kiosk=tv'),
 ('Element:70:13', 33, 'http://192.168.0.152:3030/d/iLfR_egxz/ng-ared-bm?orgId=1&refresh=30s&theme=light&from=now-24h&to=now&kiosk=tv'),
 
-('Element:2001:1', 25, '22'),
-('Element:2001:2', 25, '27'),
-('Element:2001:3', 25, '98'),
-('Element:2001:4', 25, '57'),
-('Element:2001:5', 25, '104'),
-('Element:2001:6', 25, '105'),
-('Element:2001:7', 25, '100'),
-('Element:2001:8', 25, '139'),
+('Element:2001:1', 25, '109'),
+('Element:2001:2', 25, '81'),
+('Element:2001:3', 25, '67'),
+('Element:2001:4', 25, '9'),
+('Element:2001:5', 25, '23'),
+('Element:2001:6', 25, '39'),
+('Element:2001:7', 25, '121'),
+('Element:2001:8', 25, '95'),
 
-('Element:2002:1', 25, '81'),
-('Element:2002:2', 25, '83'),
-('Element:2002:3', 25, '23'),
-('Element:2002:4', 25, '88'),
-('Element:2002:5', 25, '103'),
-('Element:2002:6', 25, '116'),
-('Element:2002:7', 25, '127'),
-('Element:2002:8', 25, '126'),
-('Element:2002:9', 25, '132'),
-('Element:2002:10', 25, '136');
+('Element:2002:1', 25, '107'),
+('Element:2002:2', 25, '79'),
+('Element:2002:3', 25, '133'),
+('Element:2002:4', 25, '65'),
+('Element:2002:5', 25, '7'),
+('Element:2002:6', 25, '21'),
+('Element:2002:7', 25, '37'),
+('Element:2002:8', 25, '119'),
+('Element:2002:9', 25, '55'),
+('Element:2002:10', 25, '93');
 
 
 

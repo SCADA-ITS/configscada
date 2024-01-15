@@ -401,7 +401,7 @@ INSERT INTO ui.window_values(module_id, window_param_id, value) VALUES
 (1018, 8, 'true'),
 (1018, 10, 'img/module/default.png'),
 (1018, 11, '#464646'),
-(1018, 12, 'LBL_TREE_SELECT_MODULE'),
+(1018, 12, 'LBL_MENU_ITEM_SYNOPTIC'),
 (1018, 14, 'true'),
 
 (1019, 4, '600'),
