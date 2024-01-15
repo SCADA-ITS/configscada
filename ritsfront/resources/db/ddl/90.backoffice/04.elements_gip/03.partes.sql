@@ -14,55 +14,55 @@ BEGIN
         constraint pk_locations primary key (id)
     ) tablespace tbl_elements_gip;
 
-    CREATE TABLE elements_gip.elements(
+    CREATE TABLE elements_gip.elementos(
         id serial not null,
         element_type_id int4 not null,
         alias varchar null,
         location_id int4 null,
-        constraint pk_elements primary key(id)
+        constraint pk_elementos primary key(id)
     ) tablespace tbl_elements_gip;
 
-    ALTER TABLE elements_gip.elements add constraint fk_element_type_id foreign key (element_type_id) references elements_gip.element_types (id) ON DELETE CASCADE;
-    ALTER TABLE elements_gip.elements add constraint fk_location_id foreign key (location_id) references elements_gip.locations (id) ON DELETE CASCADE;
+    ALTER TABLE elements_gip.elementos add constraint fk_element_type_id foreign key (element_type_id) references elements_gip.element_types (id) ON DELETE CASCADE;
+    ALTER TABLE elements_gip.elementos add constraint fk_location_id foreign key (location_id) references elements_gip.locations (id) ON DELETE CASCADE;
 
-     CREATE TABLE elements_gip.actions(
+     CREATE TABLE elements_gip.acciones(
         id serial not null,
         alias varchar null,
-        constraint pk_action primary key (id)
+        constraint pk_acciones primary key (id)
     ) tablespace tbl_elements_gip;  
 
-     CREATE TABLE elements_gip.causes(
+     CREATE TABLE elements_gip.causas(
         id serial not null,
         alias varchar null,
-        constraint pk_causes primary key (id)
+        constraint pk_causas primary key (id)
     ) tablespace tbl_elements_gip; 
 
-     CREATE TABLE elements_gip.road_impacts(
+     CREATE TABLE elements_gip.afecciones(
         id serial not null,
         alias varchar null,
-        constraint pk_road_impacts primary key (id)
+        constraint pk_afecciones primary key (id)
     ) tablespace tbl_elements_gip;       
 
 
     CREATE TABLE elements_gip.partes_trabajos(
         id serial not null,
         id_element varchar null,
-        elements_id int4 null,
-        action_id int4 null,
-        cause_id int4 null,
-        users_names varchar null,
-        comments varchar null,
-        road_imapcts_id int4 null,
-		arrival_date timestamptz null,
-		release_date timestamptz null,
+        elementos_id int4 null,
+        acciones_id int4 null,
+        causas_id int4 null,
+        usuarios varchar null,
+        comentarios varchar null,
+        afecciones_id int4 null,
+		inicio timestamptz null,
+		fin timestamptz null,
         constraint pk_partes_trabajos primary key (id)
 
     ) tablespace tbl_elements_gip;
 
 
-    ALTER TABLE elements_gip.partes_trabajos add constraint fk_element_id foreign key (elements_id) references elements_gip.elements (id) ON DELETE CASCADE;
-    ALTER TABLE elements_gip.partes_trabajos add constraint fk_action_id foreign key (action_id) references elements_gip.actions (id) ON DELETE CASCADE;
-    ALTER TABLE elements_gip.partes_trabajos add constraint fk_cause_id foreign key (cause_id) references elements_gip.causes (id) ON DELETE CASCADE;
-    ALTER TABLE elements_gip.partes_trabajos add constraint fk_road_impact foreign key (road_imapcts_id) references elements_gip.road_impacts (id) ON DELETE CASCADE;
+    ALTER TABLE elements_gip.partes_trabajos add constraint fk_element_id foreign key (elementos_id) references elements_gip.elementos (id) ON DELETE CASCADE;
+    ALTER TABLE elements_gip.partes_trabajos add constraint fk_acciones_id foreign key (acciones_id) references elements_gip.acciones (id) ON DELETE CASCADE;
+    ALTER TABLE elements_gip.partes_trabajos add constraint fk_causas_id foreign key (causas_id) references elements_gip.causas (id) ON DELETE CASCADE;
+    ALTER TABLE elements_gip.partes_trabajos add constraint fk_road_impact foreign key (afecciones_id) references elements_gip.afecciones (id) ON DELETE CASCADE;
   END IF;
 END $$;

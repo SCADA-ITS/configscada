@@ -207,10 +207,10 @@ INSERT INTO ui.module_values(module_id, module_param_id, value) VALUES
 (6044, 13, '5'), (6044, 14, 'registers'),
 
 (6045, 13, '4'), (6045, 14, 'partes_trabajos'),
-(6046, 13, '4'), (6046, 14, 'elements'),
-(6047, 13, '4'), (6047, 14, 'actions'),
-(6048, 13, '4'), (6048, 14, 'causes'),
-(6049, 13, '4'), (6049, 14, 'road_impacts'),
+(6046, 13, '4'), (6046, 14, 'elementos'),
+(6047, 13, '4'), (6047, 14, 'acciones'),
+(6048, 13, '4'), (6048, 14, 'causas'),
+(6049, 13, '4'), (6049, 14, 'afecciones'),
 (1922, 9, '4');
 
 
