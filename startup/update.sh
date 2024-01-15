@@ -23,19 +23,20 @@ read -p "Seleccione una opcion (1-4): " opcion
 
 if [ "$opcion" == 1 ] || [ "$opcion" == 2 ]; then
 #Compilo el back
+echo -e "\n\nCompiling backrits..."
 cd ~/repositorio/ritsback/_ritsback
 mvn install
 
 sleep 4
 
 #Recopilo los binarios del back en un fichero comprimido
-echo Deleting old binaries...
+echo -e "\n\nDeleting old binaries..."
 sudo rm -f ~/dev03/backrits/*.jar
 
-echo Deleting trace files...
+echo -e "\n\nDeleting trace files..."
 sudo rm -Rf ~/dev03/backrits/logs/*
 
-echo Copying new binaries...
+echo -e "\n\nCopying new binaries..."
 cp ~/repositorio/ritsback/data-loader/target/data-loader.jar ~/dev03/backrits/data-loader.jar
 cp ~/repositorio/ritsback/equipment-manager/target/equipment-manager.jar ~/dev03/backrits/equipment-manager.jar
 cp ~/repositorio/ritsback/ep-pub-stomp/target/ep-pub-stomp.jar ~/dev03/backrits/ep-pub-stomp.jar
@@ -49,25 +50,28 @@ cp ~/repositorio/ritsback/virtual-equipment-manager/target/virtual-equipment-man
 cp ~/repositorio/ritsback/io-external-manager/target/io-external-manager.jar ~/dev03/backrits/io-external-manager.jar
 cp ~/repositorio/ritsback/server-launcher/target/server-launcher.jar ~/dev03/backrits/server-launcher.jar
         
-echo Deleting old resource files...
+echo -e "\n\nDeleting old resource files..."
 sudo rm -Rf ~/dev03/backrits/resources/*
 
-echo Copying new resources...
+echo -e "\n\nCopying new resources..."
 cp -R ~/repositorio/rits/resources/master/* ~/dev03/backrits/resources
 cp -R ~/repositorio/rits/resources/project/$PROJECT/* ~/dev03/backrits/resources
 cp -R ~/repositorio/rits/resources/project/$PROJECT/start.sh ~/dev03/backrits/start.sh
 
 #Comprimo el fichero para mandarlo por sftp
+echo -e "\n\nCompressing backrits..."
 cd ~/dev03
 tar zcvf backrits.tar.gz backrits
    
 #Subo el archivo a la maquina remota
+echo -e "\n\nUploading backrits to remote machine..."
 sftp $USER@$REMOTE_HOST<<EOF
    put backrits.tar.gz
    quit
 EOF
  
 #Entro por ssh y actualizo los ficheros del back
+echo -e "\n\nUpdating backrits on remote machine..."
 ssh $USER@$REMOTE_HOST<<EOF
    mv /home/$USER/backrits.tar.gz /home/$USER/app/
    cd /home/$USER/app
@@ -78,12 +82,14 @@ ssh $USER@$REMOTE_HOST<<EOF
 EOF
 	
 #Ejecuto scripts de BBDD de back
+echo -e "\n\nExecuting SQL back scripts..."
 cd ~/repositorio/rits/ritsback/resources/db
 ./make_param.sh $PROJECTBBDD $REMOTE_BBDD 5430
 fi
 
 if [ "$opcion" == 1 ] || [ "$opcion" == 3 ]; then
 #Copio recursos del front
+echo -e "\n\nCopying front resources..."
 sed -i "s|\(spring.datasource.url=jdbc:postgresql://\).*|\1$REMOTE_BBDD:5430/rits|" ~/repositorio/ritsfront/openits/src/main/resources/application.properties
 sed -i "s|\(ws://\).*\(:61614\)|\1$REMOTE_HOST\2|" ~/repositorio/ritsfront/openits/src/main/resources/project/$PROJECT/data/config.js
 rm -R ~/repositorio/ritsfront/openits/src/main/resources/project
@@ -92,6 +98,7 @@ cp -r ~/repositorio/rits/ritsfront/openits/static ~/repositorio/ritsfront/openit
 cp -r ~/repositorio/rits/ritsfront/openits/project ~/repositorio/ritsfront/openits/src/main/resources/
 
 #Compilo el front
+echo -e "\n\nCompiling front..."
 cd
 cd repositorio/ritsfront/_ritsfront
 mvn install
@@ -99,6 +106,7 @@ mvn install
 sleep 10 
 
 #Subo el archivo a la maquina remota
+echo -e "\n\nUploading openits.jar to remote machine..."
 cd ~/repositorio/ritsfront/openits/target
 sftp $USER@$REMOTE_HOST<<EOF
    put openits.jar
@@ -106,6 +114,7 @@ sftp $USER@$REMOTE_HOST<<EOF
 EOF
 
 #Entro por ssh y actualizo los ficheros del front 
+echo -e "\n\nUpdating frontrits on remote machine..."
 ssh $USER@$REMOTE_HOST<<EOF
    cd app/frontrits
    rm -rf openits.jar
@@ -114,7 +123,8 @@ ssh $USER@$REMOTE_HOST<<EOF
    exit
 EOF
 
-#Ejecuto scripts de BBDD de front 
+#Ejecuto scripts de BBDD de front
+echo -e "\n\nExecuting SQL front scripts..."
 cd ~/repositorio/rits/ritsfront/resources/db
 ./make_param.sh $PROJECTBBDD $REMOTE_BBDD 5430 $REMOTE_HOST
 fi
