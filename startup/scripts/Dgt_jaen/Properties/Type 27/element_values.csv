@@ -1,28 +1,28 @@
 item;alias;description;sessionuid;road;stretchs;pk;sentido
-1;M-11-DP;M-11-DP;M-11-DP;Despeñaperros;DESPEÑAPERROS;;NA
-3;ES-13-DP;ES-13-DP;ES-13-DP;Despeñaperros;DESPEÑAPERROS;;Córdoba
-2;ES-12-DP;ES-12-DP;ES-12-DP;Despeñaperros;DESPEÑAPERROS;;Córdoba
-4;ES-14-DP;ES-14-DP;ES-14-DP;Despeñaperros;DESPEÑAPERROS;;Córdoba
-5;ES-15-DP;ES-15-DP;ES-15-DP;Despeñaperros;DESPEÑAPERROS;;Córdoba
-6;ES-16-DP;ES-16-DP;ES-16-DP;Despeñaperros;DESPEÑAPERROS;;Córdoba
-7;ES-17-DP;ES-17-DP;ES-17-DP;Despeñaperros;DESPEÑAPERROS;;Córdoba
-8;ES-18-DP;ES-18-DP;ES-18-DP;Despeñaperros;DESPEÑAPERROS;;Córdoba
-9;ES-19-DP;ES-19-DP;ES-19-DP;Despeñaperros;DESPEÑAPERROS;;Córdoba
-10;ES-20-DP;ES-20-DP;ES-20-DP;Despeñaperros;DESPEÑAPERROS;;Córdoba
-11;ES-20-B-DP;ES-20-B-DP;ES-20-B-DP;Despeñaperros;DESPEÑAPERROS;;Córdoba
-12;ES-21-DP;ES-21-DP;ES-21-DP;Despeñaperros;DESPEÑAPERROS;;Córdoba
-13;M-01-DP;M-01-DP;M-01-DP;Despeñaperros;DESPEÑAPERROS;;NA
-14;ES-02-DP;ES-02-DP;ES-02-DP;Despeñaperros;DESPEÑAPERROS;;Madrid
-16;ES-04-DP;ES-04-DP;ES-04-DP;Despeñaperros;DESPEÑAPERROS;;Madrid
-15;ES-03-DP;ES-03-DP;ES-03-DP;Despeñaperros;DESPEÑAPERROS;;Madrid
-17;ES-05-DP;ES-05-DP;ES-05-DP;Despeñaperros;DESPEÑAPERROS;;Madrid
-18;ES-06-DP;ES-06-DP;ES-06-DP;Despeñaperros;DESPEÑAPERROS;;Madrid
-19;ES-07-DP;ES-07-DP;ES-07-DP;Despeñaperros;DESPEÑAPERROS;;Madrid
-20;ES-08-DP;ES-08-DP;ES-08-DP;Despeñaperros;DESPEÑAPERROS;;Madrid
-21;ES-09-DP;ES-09-DP;ES-09-DP;Despeñaperros;DESPEÑAPERROS;;Madrid
-22;ES-10-DP;ES-10-DP;ES-10-DP;Despeñaperros;DESPEÑAPERROS;;Madrid
-23;ES-01-GA1;ES-01-GA1;ES-01-GA1;Despeñaperros;DESPEÑAPERROS;;NA
-24;ES-01-GA2;ES-01-GA2;ES-01-GA2;Despeñaperros;DESPEÑAPERROS;;NA
-25;ES-01-GA3;ES-01-GA3;ES-01-GA3;Despeñaperros;DESPEÑAPERROS;;NA
-26;ES-01-GA4;ES-01-GA4;ES-01-GA4;Despeñaperros;DESPEÑAPERROS;;NA
-27;ES-01-GA5;ES-01-GA5;ES-01-GA5;Despeñaperros;DESPEÑAPERROS;;NA
+1;M-11-DP;M-11-DP;M-11-DP;Autovía A-4;Despeñaperros;;NA
+3;ES-12-DP;ES-12-DP;ES-12-DP;Autovía A-4;Despeñaperros;;Córdoba
+2;ES-13-DP;ES-13-DP;ES-13-DP;Autovía A-4;Despeñaperros;;Córdoba
+4;ES-14-DP;ES-14-DP;ES-14-DP;Autovía A-4;Despeñaperros;;Córdoba
+5;ES-15-DP;ES-15-DP;ES-15-DP;Autovía A-4;Despeñaperros;;Córdoba
+6;ES-16-DP;ES-16-DP;ES-16-DP;Autovía A-4;Despeñaperros;;Córdoba
+7;ES-17-DP;ES-17-DP;ES-17-DP;Autovía A-4;Despeñaperros;;Córdoba
+8;ES-18-DP;ES-18-DP;ES-18-DP;Autovía A-4;Despeñaperros;;Córdoba
+9;ES-19-DP;ES-19-DP;ES-19-DP;Autovía A-4;Despeñaperros;;Córdoba
+10;ES-20-DP;ES-20-DP;ES-20-DP;Autovía A-4;Despeñaperros;;Córdoba
+11;ES-20-B-DP;ES-20-B-DP;ES-20-B-DP;Autovía A-4;Despeñaperros;;Córdoba
+12;ES-21-DP;ES-21-DP;ES-21-DP;Autovía A-4;Despeñaperros;;Córdoba
+13;M-01-DP;M-01-DP;M-01-DP;Autovía A-4;Despeñaperros;;NA
+14;ES-02-DP;ES-02-DP;ES-02-DP;Autovía A-4;Despeñaperros;;Madrid
+16;ES-03-DP;ES-03-DP;ES-03-DP;Autovía A-4;Despeñaperros;;Madrid
+15;ES-04-DP;ES-04-DP;ES-04-DP;Autovía A-4;Despeñaperros;;Madrid
+17;ES-05-DP;ES-05-DP;ES-05-DP;Autovía A-4;Despeñaperros;;Madrid
+18;ES-06-DP;ES-06-DP;ES-06-DP;Autovía A-4;Despeñaperros;;Madrid
+19;ES-07-DP;ES-07-DP;ES-07-DP;Autovía A-4;Despeñaperros;;Madrid
+20;ES-08-DP;ES-08-DP;ES-08-DP;Autovía A-4;Despeñaperros;;Madrid
+21;ES-09-DP;ES-09-DP;ES-09-DP;Autovía A-4;Despeñaperros;;Madrid
+22;ES-10-DP;ES-10-DP;ES-10-DP;Autovía A-4;Despeñaperros;;Madrid
+23;ES-01-GA1;ES-01-GA1;ES-01-GA1;Autovía A-4;Despeñaperros;;NA
+24;ES-01-GA2;ES-01-GA2;ES-01-GA2;Autovía A-4;Despeñaperros;;NA
+25;ES-01-GA3;ES-01-GA3;ES-01-GA3;Autovía A-4;Despeñaperros;;NA
+26;ES-01-GA4;ES-01-GA4;ES-01-GA4;Autovía A-4;Despeñaperros;;NA
+27;ES-01-GA5;ES-01-GA5;ES-01-GA5;Autovía A-4;Despeñaperros;;NA

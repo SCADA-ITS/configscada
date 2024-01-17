@@ -1,7 +1,7 @@
 INSERT INTO conf.elements (element_type_id, element_subtype_id, element_id, location_id, keep_values_on_disconnected, inherit_state_id, alias, description, on_change_alarm, on_change_state, on_change_measure, on_schedule, enabled, visible, alert, alarm_count, created_at, updated_at) VALUES
 (27, NULL, 1, 0010027, NULL, NULL, 'M-11-DP', 'M-11-DP', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(27, NULL, 3, 0030027, NULL, NULL, 'ES-13-DP', 'ES-13-DP', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(27, NULL, 2, 0020027, NULL, NULL, 'ES-12-DP', 'ES-12-DP', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(27, NULL, 3, 0030027, NULL, NULL, 'ES-12-DP', 'ES-12-DP', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(27, NULL, 2, 0020027, NULL, NULL, 'ES-13-DP', 'ES-13-DP', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (27, NULL, 4, 0040027, NULL, NULL, 'ES-14-DP', 'ES-14-DP', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (27, NULL, 5, 0050027, NULL, NULL, 'ES-15-DP', 'ES-15-DP', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (27, NULL, 6, 0060027, NULL, NULL, 'ES-16-DP', 'ES-16-DP', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -13,8 +13,8 @@ INSERT INTO conf.elements (element_type_id, element_subtype_id, element_id, loca
 (27, NULL, 12, 0120027, NULL, NULL, 'ES-21-DP', 'ES-21-DP', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (27, NULL, 13, 0130027, NULL, NULL, 'M-01-DP', 'M-01-DP', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (27, NULL, 14, 0140027, NULL, NULL, 'ES-02-DP', 'ES-02-DP', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(27, NULL, 16, 0160027, NULL, NULL, 'ES-04-DP', 'ES-04-DP', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(27, NULL, 15, 0150027, NULL, NULL, 'ES-03-DP', 'ES-03-DP', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(27, NULL, 16, 0160027, NULL, NULL, 'ES-03-DP', 'ES-03-DP', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(27, NULL, 15, 0150027, NULL, NULL, 'ES-04-DP', 'ES-04-DP', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (27, NULL, 17, 0170027, NULL, NULL, 'ES-05-DP', 'ES-05-DP', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (27, NULL, 18, 0180027, NULL, NULL, 'ES-06-DP', 'ES-06-DP', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (27, NULL, 19, 0190027, NULL, NULL, 'ES-07-DP', 'ES-07-DP', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -30,9 +30,9 @@ INSERT INTO conf.elements (element_type_id, element_subtype_id, element_id, loca
 INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_type_id, element_id, element_value_state_id, value, enabled, visible, created_at, updated_at) VALUES
 (27, 1003, 1, 1, NULL, 'M-11-DP', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
-(27, 1003, 1, 3, NULL, 'ES-13-DP', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(27, 1003, 1, 3, NULL, 'ES-12-DP', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
-(27, 1003, 1, 2, NULL, 'ES-12-DP', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(27, 1003, 1, 2, NULL, 'ES-13-DP', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (27, 1003, 1, 4, NULL, 'ES-14-DP', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
@@ -56,9 +56,9 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 
 (27, 1003, 1, 14, NULL, 'ES-02-DP', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
-(27, 1003, 1, 16, NULL, 'ES-04-DP', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(27, 1003, 1, 16, NULL, 'ES-03-DP', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
-(27, 1003, 1, 15, NULL, 'ES-03-DP', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(27, 1003, 1, 15, NULL, 'ES-04-DP', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (27, 1003, 1, 17, NULL, 'ES-05-DP', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 

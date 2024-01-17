@@ -1,4 +1,4 @@
-item;alias;description;sessionuid;road;stretchs;pk;sentido
-1;LIST-DP-2;LIST-DP-2;LIST-DP-2;Despeñaperros;DESPEÑAPERROS;;;
-2;LIST-CZ;LIST-CZ;LIST-CZ;Despeñaperros;DESPEÑAPERROS;;;
-3;LIST-DP-1;LIST-DP-1;LIST-DP-1;Despeñaperros;DESPEÑAPERROS;;;
+item;alias;description;sessionuid;road;stretchs;pk;sentido;
+1;LIST-DP-2;LIST-DP-2;LIST-DP-2;Autovía A-4;Despeñaperros;;;
+2;LIST-CZ;LIST-CZ;LIST-CZ;Autovía A-4;Despeñaperros;;;
+3;LIST-DP-1;LIST-DP-1;LIST-DP-1;Autovía A-4;Despeñaperros;;;

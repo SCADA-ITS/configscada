@@ -59,8 +59,8 @@ INSERT INTO conf.elements (element_type_id, element_subtype_id, element_id, loca
 (71, 11, 58, 0580071, NULL, NULL, 'SV-1-05-DP-D', 'SV-1-05-DP-D', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (71, 11, 59, 0590071, NULL, NULL, 'SV-1-05-DP-C', 'SV-1-05-DP-C', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (71, 11, 60, 0600071, NULL, NULL, 'SV-1-05-DP-I', 'SV-1-05-DP-I', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(71, 18, 61, 0610071, NULL, NULL, 'DESP-PMV-1-SEV', 'DESP-PMV-1-SEV', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(71, 18, 62, 0620071, NULL, NULL, 'DESP-PMV-1-MAD', 'DESP-PMV-1-MAD', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(71, 18, 61, 0610071, NULL, NULL, 'PMV-2-01-DP', 'PMV-2-01-DP', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 18, 62, 0620071, NULL, NULL, 'PMV-1-01-DP', 'PMV-1-01-DP', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_type_id, element_id, element_value_state_id, value, enabled, visible, created_at, updated_at) VALUES
 (71, 1, 1, 1, NULL, '-', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -366,12 +366,12 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 (71, 1, 1, 61, NULL, '-', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (71, 2, 1, 61, NULL, 'DGT', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (71, 4, 1, 61, NULL, '[{"zone":1,"type":"graphic","vms_group_id":18},{"zone":2,"type":"text","maxCharsPerLine":12}]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(71, 1003, 1, 61, NULL, 'DESP-PMV-1-SEV', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 1003, 1, 61, NULL, 'PMV-2-01-DP', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (71, 1, 1, 62, NULL, '-', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (71, 2, 1, 62, NULL, 'DGT', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (71, 4, 1, 62, NULL, '[{"zone":1,"type":"graphic","vms_group_id":18},{"zone":2,"type":"text","maxCharsPerLine":12}]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(71, 1003, 1, 62, NULL, 'DESP-PMV-1-MAD', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(71, 1003, 1, 62, NULL, 'PMV-1-01-DP', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO conf.element_io_controller_modules (element_type_id, element_id, module_type_id, module_id, enabled, visible, created_at, updated_at) VALUES
 (71, 1, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 

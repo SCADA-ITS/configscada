@@ -1,0 +1,9 @@
+item;alias;description;sessionuid;road;stretchs;pk;sentido;on_change_measure
+1;SCO-2-01-DP;SCO-2-01-DP;SCO-2-01-DP;Autovía A-4;Despeñaperros;;Córdoba;SendValuesToVentilation.groovy
+2;SCO-2-02-DP;SCO-2-02-DP;SCO-2-02-DP;Autovía A-4;Despeñaperros;;Córdoba;SendValuesToVentilation.groovy
+3;SCO-2-03-DP;SCO-2-03-DP;SCO-2-03-DP;Autovía A-4;Despeñaperros;;Córdoba;SendValuesToVentilation.groovy
+4;SCO-2-04-DP;SCO-2-04-DP;SCO-2-04-DP;Autovía A-4;Despeñaperros;;Córdoba;SendValuesToVentilation.groovy
+5;SCO-1-01-DP;SCO-1-01-DP;SCO-1-01-DP;Autovía A-4;Despeñaperros;;Madrid;SendValuesToVentilation.groovy
+6;SCO-1-02-DP;SCO-1-02-DP;SCO-1-02-DP;Autovía A-4;Despeñaperros;;Madrid;SendValuesToVentilation.groovy
+7;SCO-1-03-DP;SCO-1-03-DP;SCO-1-03-DP;Autovía A-4;Despeñaperros;;Madrid;SendValuesToVentilation.groovy
+8;SCO-1-04-DP;SCO-1-04-DP;SCO-1-04-DP;Autovía A-4;Despeñaperros;;Madrid;SendValuesToVentilation.groovy
