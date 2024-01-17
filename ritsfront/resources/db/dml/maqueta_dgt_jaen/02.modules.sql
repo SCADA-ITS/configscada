@@ -8,6 +8,8 @@ WHERE id=1018;
 
 INSERT INTO ui.module_values 
 (module_id, module_param_id, value) VALUES 
+(403, 5, 'http://192.168.88.202:8080/jasperserver?j_username=jasperadmin&j_password=jasperadmin&userLocale=es_ES'),
+
 (901, 4, '901');
 
 INSERT INTO ui.window_values 

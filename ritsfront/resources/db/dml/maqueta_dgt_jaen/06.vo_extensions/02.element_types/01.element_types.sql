@@ -1,4 +1,5 @@
 INSERT INTO ui.vo_entities(id, vo_entity_type_id, enabled, visible) VALUES
+('ElementType:2', 'ElementTypeUI', true, true),
 ('ElementType:9', 'ElementTypeUI', true, true),
 ('ElementType:11', 'ElementTypeUI', true, true),
 ('ElementType:13', 'ElementTypeUI', true, true),
@@ -8,12 +9,18 @@ INSERT INTO ui.vo_entities(id, vo_entity_type_id, enabled, visible) VALUES
 ('ElementType:21', 'ElementTypeUI', true, true),
 ('ElementType:27', 'ElementTypeUI', true, true),
 ('ElementType:29', 'ElementTypeUI', true, true),
+('ElementType:32', 'ElementTypeUI', true, true),
+('ElementType:65', 'ElementTypeUI', true, true),
 ('ElementType:66', 'ElementTypeUI', true, true),
 ('ElementType:71', 'ElementTypeUI', true, true),
 ('ElementType:89', 'ElementTypeUI', true, true),
 ('ElementType:98', 'ElementTypeUI', true, true);
 
 INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
+('ElementType:2', 1, '2'),
+('ElementType:2', 2, 'graphic_icon/02_scamera_dai.svg'),
+('ElementType:2', 14, 'grid/element_type_02.png'),
+
 ('ElementType:9', 1, '9'),
 ('ElementType:9', 2, 'graphic_icon/09_fan.svg'),
 ('ElementType:9', 14, 'grid/element_type_09.png'),
@@ -51,6 +58,14 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 ('ElementType:29', 1, '29'),
 ('ElementType:29', 2, 'graphic_icon/29_fibrolaser_ct.svg'),
 ('ElementType:29', 14, 'grid/element_type_29.png'),
+
+('ElementType:32', 1, '32'),
+('ElementType:32', 2, 'graphic_icon/32_presurizacion.svg'),
+('ElementType:32', 14, 'grid/element_type_32.png'),
+
+('ElementType:65', 1, '65'),
+('ElementType:65', 2, 'graphic_icon/65_sai.svg'),
+('ElementType:65', 14, 'grid/element_type_65.png'),
 
 ('ElementType:66', 1, '66'),
 ('ElementType:66', 2, 'graphic_icon/66_vane.svg'),

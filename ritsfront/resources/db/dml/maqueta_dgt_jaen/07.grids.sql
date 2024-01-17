@@ -1,4 +1,5 @@
 INSERT INTO ui.grids(id, adapter_id, "label", enabled, visible) VALUES
+(2, 2, 'LBL_ELEMENT_TYPE_CAMERA', true, true),
 (9, 2, 'LBL_ELEMENT_TYPE_FAN', true, true),
 (11, 2, 'LBL_ELEMENT_TYPE_SOS', true, true),
 (13, 2, 'LBL_ELEMENT_TYPE_SEM', true, true),
@@ -8,6 +9,8 @@ INSERT INTO ui.grids(id, adapter_id, "label", enabled, visible) VALUES
 (21, 2, 'LBL_ELEMENT_TYPE_OPAC', true, true),
 (27, 2, 'LBL_ELEMENT_TYPE_PLC', true, true),
 (29, 2, 'LBL_ELEMENT_TYPE_FIBROLASER_CT', true, true),
+(32, 2, 'LBL_ELEMENT_TYPE_PRESURIZACION', true, true),
+(65, 2, 'LBL_ELEMENT_TYPE_SAI', true, true),
 (66, 2, 'LBL_ELEMENT_TYPE_VANE', true, true),
 (71, 2, 'LBL_ELEMENT_TYPE_PANEL', true, true),
 (89, 2, 'LBL_ELEMENT_TYPE_GATE', true, true),
@@ -18,6 +21,12 @@ INSERT INTO ui.grids(id, adapter_id, "label", enabled, visible) VALUES
 
 INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", required, parameterized, extended, filtered, "label", label_tooltip, source_field, is_pk, is_epoch_milli, align, needs_translation, grouping_summary, width_px, grid_field_group_operation_id, enabled, visible, adjust, header_vertical, fixed_column, replacement_function, precision_filter) VALUES
 --el id lo definimos como: <tipo><numero de fila 4 numeros>
+(020001, 2, 1, 1, true, false, false, false, 'LBL_GRID_FIELD_ID', 'LBL_GRID_FIELD_ID', 'id', true, false, null, false, false, 500, NULL, true, false, NULL, NULL, NULL, NULL, NULL),
+(020002, 2, 1, 2, true, false, false, true, 'LBL_GRID_FIELD_NAME', 'LBL_GRID_FIELD_NAME', 'alias', false, false, NULL, false, false, 170, NULL, true, true, NULL, NULL, true, NULL, NULL),
+(020003, 2, 1, 3, true, false, false, false, 'LBL_GRID_FIELD_DESCRIPTION', 'LBL_GRID_FIELD_DESCRIPTION', 'description', false, false, NULL, false, false, 170, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(020004, 2, 1, 4, true, true, false, false, NULL, NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(020005, 2, 1, 5, true, true, false, true, 'LBL_GRID_FIELD_STATE_LABEL', 'LBL_GRID_FIELD_STATE_LABEL', 'stateLabel', false, false, NULL, true, false, 150, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+
 (090001, 9, 1, 1, true, false, false, false, 'LBL_GRID_FIELD_ID', 'LBL_GRID_FIELD_ID', 'id', true, false, null, false, false, 500, NULL, true, false, NULL, NULL, NULL, NULL, NULL),
 (090002, 9, 1, 2, true, false, false, true, 'LBL_GRID_FIELD_NAME', 'LBL_GRID_FIELD_NAME', 'alias', false, false, NULL, false, false, 170, NULL, true, true, NULL, NULL, true, NULL, NULL),
 (090003, 9, 1, 3, true, false, false, false, 'LBL_GRID_FIELD_DESCRIPTION', 'LBL_GRID_FIELD_DESCRIPTION', 'description', false, false, NULL, false, false, 170, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
@@ -78,6 +87,18 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (290004, 29, 1, 4, true, true, false, false, NULL, NULL, 'state', false, false, null, false, false, 35, NULL, true, true, NULL, NULL, NULL, NULL,NULL),
 (290005, 29, 1, 5, true, true, false, true, 'LBL_GRID_FIELD_STATE_LABEL', 'LBL_GRID_FIELD_STATE_LABEL', 'stateLabel', false, false, null, true, false, 150, NULL, true, true, NULL, NULL, NULL, NULL,NULL),
 
+(320001, 32, 1, 1, true, false, false, false, 'LBL_GRID_FIELD_ID', 'LBL_GRID_FIELD_ID', 'id', true, false, null, false, false, 500, NULL, true, false, NULL, NULL, NULL, NULL, NULL),
+(320002, 32, 1, 2, true, false, false, true, 'LBL_GRID_FIELD_NAME', 'LBL_GRID_FIELD_NAME', 'alias', false, false, NULL, false, false, 170, NULL, true, true, NULL, NULL, true, NULL, NULL),
+(320003, 32, 1, 3, true, false, false, false, 'LBL_GRID_FIELD_DESCRIPTION', 'LBL_GRID_FIELD_DESCRIPTION', 'description', false, false, NULL, false, false, 170, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(320004, 32, 1, 4, true, true, false, false, NULL, NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(320005, 32, 1, 5, true, true, false, true, 'LBL_GRID_FIELD_STATE_LABEL', 'LBL_GRID_FIELD_STATE_LABEL', 'stateLabel', false, false, NULL, true, false, 150, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+
+(650001, 65, 1, 1, true, false, false, false, 'LBL_GRID_FIELD_ID', 'LBL_GRID_FIELD_ID', 'id', true, false, null, false, false, 500, NULL, true, false, NULL, NULL, NULL, NULL, NULL),
+(650002, 65, 1, 2, true, false, false, true, 'LBL_GRID_FIELD_NAME', 'LBL_GRID_FIELD_NAME', 'alias', false, false, NULL, false, false, 170, NULL, true, true, NULL, NULL, true, NULL, NULL),
+(650003, 65, 1, 3, true, false, false, false, 'LBL_GRID_FIELD_DESCRIPTION', 'LBL_GRID_FIELD_DESCRIPTION', 'description', false, false, NULL, false, false, 170, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(650004, 65, 1, 4, true, true, false, false, NULL, NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(650005, 65, 1, 5, true, true, false, true, 'LBL_GRID_FIELD_STATE_LABEL', 'LBL_GRID_FIELD_STATE_LABEL', 'stateLabel', false, false, NULL, true, false, 150, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+
 (660001, 66, 1, 1, true, false, false, false, 'LBL_GRID_FIELD_ID', 'LBL_GRID_FIELD_ID', 'id', true, false, null, false, false, 500, NULL, true, false, NULL, NULL, NULL, NULL, NULL),
 (660002, 66, 1, 2, true, false, false, true, 'LBL_GRID_FIELD_NAME', 'LBL_GRID_FIELD_NAME', 'alias', false, false, NULL, false, false, 170, NULL, true, true, NULL, NULL, true, NULL, NULL),
 (660003, 66, 1, 3, true, false, false, false, 'LBL_GRID_FIELD_DESCRIPTION', 'LBL_GRID_FIELD_DESCRIPTION', 'description', false, false, NULL, false, false, 170, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
@@ -119,6 +140,22 @@ INSERT INTO ui.grid_field_icons(grid_field_id, icon, value, show_value, badge_co
 (100307, './img/incident_level/incident_level_4.png', 'ImsIncidentLevel:4', false, false, false, true, 'LBL_ICON_IMS_INCIDENT_LEVEL_4');
 
 INSERT INTO ui.grid_option_values(grid_id, grid_option_id, value) VALUES
+(2, 1, 'true'),
+(2, 2, 'true'),
+(2, 7, 'true'),
+(2, 8, 'true'),
+(2, 9, 'false'),
+(2, 10, 'true'),
+(2, 11, 'true'),
+(2, 12, 'true'),
+(2, 13, 'true'),
+(2, 14, 'false'),
+(2, 15, 'false'),
+(2, 16, 'img/grid/element_type_02.png'),
+(2, 17, 'true'),
+(2, 25, 'true'),
+(2, 26, 'true'),
+
 (9, 1, 'true'),
 (9, 2, 'true'),
 (9, 7, 'true'),
@@ -264,6 +301,38 @@ INSERT INTO ui.grid_option_values(grid_id, grid_option_id, value) VALUES
 (29, 25, 'true'),
 (29, 26, 'true'),
 
+(32, 1, 'true'),
+(32, 2, 'true'),
+(32, 7, 'true'),
+(32, 8, 'true'),
+(32, 9, 'false'),
+(32, 10, 'true'),
+(32, 11, 'true'),
+(32, 12, 'true'),
+(32, 13, 'true'),
+(32, 14, 'false'),
+(32, 15, 'false'),
+(32, 16, 'img/grid/element_type_32.png'),
+(32, 17, 'true'),
+(32, 25, 'true'),
+(32, 26, 'true'),
+
+(65, 1, 'true'),
+(65, 2, 'true'),
+(65, 7, 'true'),
+(65, 8, 'true'),
+(65, 9, 'false'),
+(65, 10, 'true'),
+(65, 11, 'true'),
+(65, 12, 'true'),
+(65, 13, 'true'),
+(65, 14, 'false'),
+(65, 15, 'false'),
+(65, 16, 'img/grid/element_type_65.png'),
+(65, 17, 'true'),
+(65, 25, 'true'),
+(65, 26, 'true'),
+
 (66, 1, 'true'),
 (66, 2, 'true'),
 (66, 7, 'true'),
@@ -318,6 +387,10 @@ INSERT INTO ui.grid_option_values(grid_id, grid_option_id, value) VALUES
 (3012, 9, 'true');
 
 INSERT INTO ui.grid_commands(grid_id, "position", "label", icon, "default", module_action_id, args, view_type_id, multiselect, show_text, item_required) VALUES
+(2, 1, 'LBL_CMD_VIEW', 'mdi mdi-eye', true, 101401, NULL, NULL, false, false, false),
+(2, 2, 'LBL_CMD_SHOW_IN_MAP', 'mdi mdi-map-search', false, 200004, null, null, false, false, true),
+(2, 3, 'LBL_CMD_SHOW_ALARMS', 'mdi mdi-bell', false, 100501, null, 2, true, true, true),
+
 (9, 1, 'LBL_CMD_VIEW', 'mdi mdi-eye', true, 101401, NULL, NULL, false, false, false),
 (9, 2, 'LBL_CMD_SHOW_IN_MAP', 'mdi mdi-map-search', false, 200004, null, null, false, false, true),
 (9, 3, 'LBL_CMD_SHOW_ALARMS', 'mdi mdi-bell', false, 100501, null, 2, true, true, true),
@@ -354,6 +427,14 @@ INSERT INTO ui.grid_commands(grid_id, "position", "label", icon, "default", modu
 (29, 2, 'LBL_CMD_SHOW_IN_MAP', 'mdi mdi-map-search', false, 200004, null, null, false, false, true),
 (29, 3, 'LBL_CMD_SHOW_ALARMS', 'mdi mdi-bell', false, 100501, null, 2, true, true, true),
 
+(32, 1, 'LBL_CMD_VIEW', 'mdi mdi-eye', true, 101401, null, null, false, false, true),
+(32, 2, 'LBL_CMD_SHOW_IN_MAP', 'mdi mdi-map-search', false, 200004, null, null, false, false, true),
+(32, 3, 'LBL_CMD_SHOW_ALARMS', 'mdi mdi-bell', false, 100501, null, 2, true, true, true),
+
+(65, 1, 'LBL_CMD_VIEW', 'mdi mdi-eye', true, 101401, NULL, NULL, false, false, false),
+(65, 2, 'LBL_CMD_SHOW_IN_MAP', 'mdi mdi-map-search', false, 200004, null, null, false, false, true),
+(65, 3, 'LBL_CMD_SHOW_ALARMS', 'mdi mdi-bell', false, 100501, null, 2, true, true, true),
+
 (66, 1, 'LBL_CMD_VIEW', 'mdi mdi-eye', true, 101401, NULL, NULL, false, false, false),
 (66, 2, 'LBL_CMD_SHOW_IN_MAP', 'mdi mdi-map-search', false, 200004, null, null, false, false, true),
 (66, 3, 'LBL_CMD_SHOW_ALARMS', 'mdi mdi-bell', false, 100501, null, 2, true, true, true),
@@ -375,6 +456,12 @@ INSERT INTO ui.grid_commands(grid_id, "position", "label", icon, "default", modu
 
 
 INSERT INTO ui.grid_field_icons(grid_field_id, icon, value, show_value, badge_color, avatar, enabled, label_value) VALUES
+(020004, './img/state/stateUnknown.png', 'ElementTypeState:2:0', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_UNKNOWN'),
+(020004, './img/state/stateUp.png', 'ElementTypeState:2:1', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_UP'),
+(020004, './img/state/stateDown.png', 'ElementTypeState:2:2', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_DOWN'),
+(020004, './img/state/stateAlarm.png', 'ElementTypeState:2:3', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_ALARMS'),
+(020004, './img/state/stateMaintenance.png', 'ElementTypeState:2:4', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_MAINTENANCE'),
+
 (090004, './img/state/stateUnknown.png', 'ElementTypeState:9:0', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_UNKNOWN'),
 (090004, './img/state/stateUp.png', 'ElementTypeState:9:1', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_UP'),
 (090004, './img/state/stateDown.png', 'ElementTypeState:9:2', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_DOWN'),
@@ -428,6 +515,18 @@ INSERT INTO ui.grid_field_icons(grid_field_id, icon, value, show_value, badge_co
 (290004, './img/state/stateDown.png', 'ElementTypeState:29:2', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_DOWN'),
 (290004, './img/state/stateAlarm.png', 'ElementTypeState:29:3', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_ALARMS'),
 (290004, './img/state/stateMaintenance.png', 'ElementTypeState:29:4', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_MAINTENANCE'),
+
+(320004, './img/state/stateUnknown.png', 'ElementTypeState:32:0', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_UNKNOWN'),
+(320004, './img/state/stateUp.png', 'ElementTypeState:32:1', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_UP'),
+(320004, './img/state/stateDown.png', 'ElementTypeState:32:2', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_DOWN'),
+(320004, './img/state/stateAlarm.png', 'ElementTypeState:32:3', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_ALARMS'),
+(320004, './img/state/stateMaintenance.png', 'ElementTypeState:32:4', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_MAINTENANCE'),
+
+(650004, './img/state/stateUnknown.png', 'ElementTypeState:65:0', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_UNKNOWN'),
+(650004, './img/state/stateUp.png', 'ElementTypeState:65:1', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_UP'),
+(650004, './img/state/stateDown.png', 'ElementTypeState:65:2', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_DOWN'),
+(650004, './img/state/stateAlarm.png', 'ElementTypeState:65:3', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_ALARMS'),
+(650004, './img/state/stateMaintenance.png', 'ElementTypeState:65:4', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_MAINTENANCE'),
 
 (660004, './img/state/stateUnknown.png', 'ElementTypeState:66:0', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_UNKNOWN'),
 (660004, './img/state/stateUp.png', 'ElementTypeState:66:1', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_UP'),
