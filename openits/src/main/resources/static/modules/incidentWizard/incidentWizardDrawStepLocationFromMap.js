@@ -4,8 +4,8 @@ import MessageBox from "../../component/messageBox.js";
 import MapLayer  from "../../component/map/mapLayer.js";
 import SearchDialogBox from "../../component/searchDialogBox.js";
 
-const POINTER_HAND = 'pointer'
-const POINTER_DEFAULT = ''
+const POINTER_HAND = 'pointer';
+const POINTER_DEFAULT = '';
 const TREE_PANEL_WIDTH = 275;
 const PICTOGRAM_INCIDENT_TYPE_PATH = "incident_type";
 const PICTOGRAM_INCIDENT_TYPE_UNKNOWN = "incident_type/undefined.png";
@@ -491,7 +491,13 @@ export default class IncidentWizardDrawStepLocationFromMap extends IncidentWizar
 													}
 													else {
 														
-														(new MessageBox(MessageBox.WARN, i18n.t("LBL_NO_LOCATIONS_AVAILABLE_SELECTED_AREA"))).show();
+														(new MessageBox(MessageBox.WARN, i18n.t("LBL_NO_LOCATIONS_AVAILABLE_SELECTED_AREA"), null, function() {
+
+															if (self.parent.args && self.parent.args.containerId) {
+
+																$$(self.parent.args.containerId).close();
+															}
+														})).show();													
 													}
 												}
 												
@@ -517,7 +523,13 @@ export default class IncidentWizardDrawStepLocationFromMap extends IncidentWizar
 										onReadyLocations();
 									}
 									
-									(new MessageBox(MessageBox.WARN, i18n.t("LBL_NO_LOCATIONS_AVAILABLE_SELECTED_AREA"))).show();
+									(new MessageBox(MessageBox.WARN, i18n.t("LBL_NO_LOCATIONS_AVAILABLE_SELECTED_AREA"), null, function() {
+
+										if (self.parent.args && self.parent.args.containerId) {
+
+											$$(self.parent.args.containerId).close();
+										}
+									})).show();															
 								}
 							}
 						}
