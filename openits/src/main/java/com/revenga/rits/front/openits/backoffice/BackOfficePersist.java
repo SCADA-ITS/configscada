@@ -141,8 +141,8 @@ public class BackOfficePersist extends BackOfficeAction {
 			
 			for (Trigger trigger : triggers) {
 				
-				AbstractBackOfficeGroovy backOfficeGroovy = BackOfficeUtil.newGroovyInstance(
-						this.backOfficeProcessor.getGroovyManager(), trigger, conn, backOffice.getSchema(), table,
+				AbstractBackOfficeGroovy backOfficeGroovy = BackOfficeUtil.newGroovyInstance(this.backOfficeProcessor.getEnv(),
+						this.backOfficeProcessor.getGroovyManager(), trigger, conn, backOffice, table,
 						request.getId(), requestResult);
 				
 				if (backOfficeGroovy instanceof AbstractBackOfficeTrigger) {

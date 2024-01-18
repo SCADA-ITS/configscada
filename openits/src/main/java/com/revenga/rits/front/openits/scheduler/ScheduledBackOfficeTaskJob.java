@@ -11,6 +11,7 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.quartz.SchedulerContext;
 import org.quartz.SchedulerException;
+import org.springframework.core.env.Environment;
 
 import com.revenga.rits.front.openits.backoffice.BackOfficeException;
 import com.revenga.rits.front.openits.backoffice.BackOfficeUtil;
@@ -56,13 +57,13 @@ public class ScheduledBackOfficeTaskJob implements Job {
 					BackOffice backOffice = backOfficeManager.getBackOffice(jobDetail.getKey().getName());
 					CronTask cronTask = backOfficeManager.getCronTask(jobDetail.getKey().getName());
 					GroovyManager groovyManager = backOfficeManager.getGroovyManager();
-					String baseDir = backOfficeManager.getBaseDir();
+					Environment env = backOfficeManager.getEnv();
 					
 					log.debug(String.format("%s task for backoffice %d executing...", cronTask.getName(), backOffice.getId()));
 					
-					if (ObjectUtils.allNotNull(backOffice, cronTask, groovyManager, baseDir)) {
+					if (ObjectUtils.allNotNull(backOffice, cronTask, groovyManager, env)) {
 						
-						onExecute(backOffice, cronTask, groovyManager, baseDir);
+						onExecute(backOffice, cronTask, groovyManager, env);
 					}
 					
 					log.debug(String.format("%s task for backoffice %d finished", cronTask.getName(), backOffice.getId()));
@@ -79,15 +80,15 @@ public class ScheduledBackOfficeTaskJob implements Job {
 	}
 
 	@NonNull
-	private boolean onExecute(BackOffice backOffice, CronTask cronTask, GroovyManager groovyManager, String baseDir) {
+	private boolean onExecute(BackOffice backOffice, CronTask cronTask, GroovyManager groovyManager, Environment env) {
 		
 		boolean res = false;
 		
 		try (Connection conn = DriverManager.getConnection(backOffice.getJdbc(), backOffice.getUser(),
 				AES.decrypt(backOffice.getPassword()))) {
 			
-			AbstractBackOfficeGroovy backOfficeGroovy = BackOfficeUtil.newGroovyInstance(
-					groovyManager, cronTask, conn, backOffice.getSchema(), null,
+			AbstractBackOfficeGroovy backOfficeGroovy = BackOfficeUtil.newGroovyInstance(env,
+					groovyManager, cronTask, conn, backOffice, null,
 					null, null);
 			
 			if (backOfficeGroovy instanceof AbstractBackOfficeTask) {
@@ -95,7 +96,6 @@ public class ScheduledBackOfficeTaskJob implements Job {
 				AbstractBackOfficeTask backOfficeTaskCloned = (AbstractBackOfficeTask) backOfficeGroovy.clone();
 				
 				backOfficeTaskCloned.setBackOffice(backOffice);
-				backOfficeTaskCloned.setBaseDir(baseDir);
 				backOfficeTaskCloned.setParams(cronTask.getParams());
 				
 				res = backOfficeTaskCloned.onExecute();

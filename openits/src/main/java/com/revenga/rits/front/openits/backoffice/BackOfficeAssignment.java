@@ -121,8 +121,8 @@ public class BackOfficeAssignment {
 				
 				col.setPosition(colIdx);
 				col.setNullable(true);
-				col.setPrimaryKey(StringUtils.equals(columnName, "id"));
-				col.setIdentity(StringUtils.equals(columnName, "id"));
+				col.setPrimaryKey(StringUtils.equalsIgnoreCase(columnName, "id"));
+				col.setIdentity(StringUtils.equalsIgnoreCase(columnName, "id"));
 				col.setDefaultValue(null);
 				
 				int sqlType = rsmd.getColumnType(colIdx);

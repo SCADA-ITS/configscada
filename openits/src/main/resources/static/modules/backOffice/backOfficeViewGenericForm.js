@@ -68,7 +68,18 @@ export default class BackOfficeViewGenericForm extends BackOfficeView {
 								
 								if (rowData && valueComparison !== rowData.value) {
 									
-									newValues[key] = rowData.value;
+									if (column.colType === BackOfficeHelper.DB_TYPE_TIMESTAMP) {
+					
+										newValues[key] = new Date(parseInt(rowData.value));
+									}
+									else if (column.colType === BackOfficeHelper.DB_TYPE_BOOLEAN) {
+									
+										newValues[key] = IS_TRUE(rowData.value);
+									}
+									else {
+										
+										newValues[key] = rowData.value;	
+									}
 									
 									const refColumn = column.refColumn;
 									const refTable = refColumn ? self.data.find(e => e.id === refColumn.tableId) : undefined;
@@ -381,20 +392,25 @@ export default class BackOfficeViewGenericForm extends BackOfficeView {
 											
 												log.info(requestResult.requestResultMessage.info + "\n" + requestResult.requestResultMessage.infoDescription);
 											
-												(new MessageBox (MessageBox.INFO, i18n.t("LBL_BACKOFFICE_INFO_ON_COMMAND") + " " + requestResult.requestResultMessage.info + ":" + requestResult.requestResultMessage.infoDescription, null, null, null)).show();
+												(new MessageBox (MessageBox.INFO, i18n.t("LBL_BACKOFFICE_INFO_ON_COMMAND") + " " + requestResult.requestResultMessage.info + (requestResult.requestResultMessage.infoDescription ? " => " +requestResult.requestResultMessage.infoDescription : ""), null, null, null)).show();
 											}
 											else if (requestResult.requestResultMessage.warn) {
 											
 												log.warn(requestResult.requestResultMessage.info + "\n" + requestResult.requestResultMessage.infoDescription);
 											
-												(new MessageBox (MessageBox.WARN, i18n.t("LBL_BACKOFFICE_WARN_ON_COMMAND") + " " + requestResult.requestResultMessage.warn + ":" + requestResult.requestResultMessage.warnDescription, null, null, null)).show();
+												(new MessageBox (MessageBox.WARN, requestResult.requestResultMessage.warn + (requestResult.requestResultMessage.warnDescription ? " => " + requestResult.requestResultMessage.warnDescription : ""), null, null, null)).show();
 											}
 										}
 										else {
 											
 											log.error(requestResult.requestResultMessage.error + "\n" + requestResult.requestResultMessage.errorDescription);
 											
-											(new MessageBox (MessageBox.ERROR, i18n.t("LBL_BACKOFFICE_ERROR_ON_COMMAND") + " " + (self.currentTableData.label ?? self.currentTableData.name), requestResult.requestResultMessage.error + "\n" + requestResult.requestResultMessage.errorDescription, null, null)).show();
+											const options = {
+												textMultiline: requestResult.requestResultMessage.error + "\n" + requestResult.requestResultMessage.errorDescription,
+												requireRead: false
+											};
+											
+											(new MessageBox (MessageBox.ERROR, i18n.t("LBL_BACKOFFICE_ERROR_ON_COMMAND") + " " + (self.currentTableData.label ?? self.currentTableData.name), options, null, null)).show();
 										}
 									});
 								}
@@ -525,7 +541,7 @@ export default class BackOfficeViewGenericForm extends BackOfficeView {
 
 								if (col) {
 								
-									val = (column.colType === "TIMESTAMP") ? new Date(parseInt(col.value)).toLocaleString() : col.value;													
+									val = (column.colType === BackOfficeHelper.DB_TYPE_TIMESTAMP) ? new Date(parseInt(col.value)).toLocaleString() : col.value;													
 
 									if (refColumn) {
 

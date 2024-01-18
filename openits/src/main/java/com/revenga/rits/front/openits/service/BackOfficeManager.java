@@ -4,7 +4,6 @@ import static org.quartz.CronScheduleBuilder.cronSchedule;
 import static org.quartz.JobBuilder.newJob;
 import static org.quartz.TriggerBuilder.newTrigger;
 
-import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -62,7 +61,6 @@ public class BackOfficeManager extends FrontManager {
 	private static final String BACKOFFICE_ENABLED = AppInfra.getProperty("backoffice.enabled");
 	private static final String BACKOFFICE_SHOW_SQL = AppInfra.getProperty("backoffice.show_sql");
 	private static final String BACKOFFICE_TRACE_TABLE = AppInfra.getProperty("backoffice.trace_table");
-	private static final String FILE_BASEDIR = "file.basedir";
 	
 	private Map<Pair<Integer, String>, Map<String, String>> translations = new HashMap<>();
 	private Map<Pair<Integer, String>, Table> tables = new HashMap<>();
@@ -80,6 +78,7 @@ public class BackOfficeManager extends FrontManager {
 	GridService gridService;
 	
 	@Autowired
+	@Getter	
 	private Environment env;
 	
 	private List<BackOffice> backOffices;
@@ -90,22 +89,12 @@ public class BackOfficeManager extends FrontManager {
 	@Getter
 	private boolean traceTable;
 	
-	@Getter
-	private String baseDir;
-	
 	@PostConstruct
 	private void afterLoad() {
 		
 		this.enabled = StringUtils.equals(BACKOFFICE_ENABLED, Boolean.TRUE.toString()); 
 		this.showSql = StringUtils.equals(BACKOFFICE_SHOW_SQL, Boolean.TRUE.toString());
 		this.traceTable = StringUtils.equals(BACKOFFICE_TRACE_TABLE, Boolean.TRUE.toString());
-		
-		File directory = new File(env.getProperty(FILE_BASEDIR));
-		
-		if (directory.exists() && directory.isDirectory()) {
-			
-			this.baseDir = directory.getAbsolutePath();
-		}
 	}
 	
 	public Table getTable(BackOffice backOffice, String tableName) {
@@ -222,7 +211,7 @@ public class BackOfficeManager extends FrontManager {
 				if (backOffice.getEnabled().booleanValue()) {
 					
 					BackOfficeProcessor backOfficeProcessor = new BackOfficeProcessor(
-							new BackOfficeContext(groovyManager, backOfficeService, this, gridService), null,
+							new BackOfficeContext(this.env, groovyManager, backOfficeService, this, gridService), null,
 							ShowData.NONE);
 
 					Instant timeRef = Instant.now();

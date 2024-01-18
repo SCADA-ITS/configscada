@@ -122,8 +122,8 @@ public class BackOfficeFiller extends BackOfficeAction {
 			for (Filler filler : fillers) {
 				
 				AbstractBackOfficeGroovy backOfficeGroovy = BackOfficeUtil.newGroovyInstance(
-						this.backOfficeProcessor.getGroovyManager(), filler, conn, backOffice.getSchema(), table,
-						request.getId(), requestResult);
+						this.backOfficeProcessor.getEnv(), this.backOfficeProcessor.getGroovyManager(), filler, conn,
+						backOffice, table, request.getId(), requestResult);
 				
 				if (backOfficeGroovy instanceof AbstractBackOfficeFiller) {
 					

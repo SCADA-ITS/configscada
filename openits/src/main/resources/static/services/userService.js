@@ -38,6 +38,7 @@ export default class UserService extends GenericModule {
 		
 		let lblUserName = self.userData.name;
 		let lblUserArea = undefined;
+		let lblUserAreaDescription = undefined;
 		
 		const sessionData = util.user.getSessionData();
 		
@@ -49,7 +50,8 @@ export default class UserService extends GenericModule {
 				
 				if (managementArea) {
 					
-					lblUserArea = managementArea.alias; 
+					lblUserArea = managementArea.alias;
+					lblUserAreaDescription = managementArea.description;  
 				}
 			}
 		}
@@ -73,14 +75,6 @@ export default class UserService extends GenericModule {
 			}
 				
 		}
-		
-//		let labelUser = { 
-//			id: "label-user-service",
-//			view: "label", 
-//			label: lblUser, 
-//			align: "right",
-//			maxWidth: calculatedWidth ? calculatedWidth + 15 : 350 
-//		};
 
 		let cssStyleInvertTimer = (window.lightMode) ? "time-template light-templates" : "time-template";
 
@@ -94,7 +88,7 @@ export default class UserService extends GenericModule {
 				 
 				if (lblUserArea) {
 					
-					html = `<div class='toolbar-user' title='${lblUserName}'>${lblUserName}</div><div class='toolbar-user' title='${lblUserArea}'>${lblUserArea}</div>`;
+					html = `<div class='toolbar-user' title='${lblUserName}'>${lblUserName}</div><div class='toolbar-user' title='${lblUserAreaDescription ?? lblUserArea}'>${lblUserArea}</div>`;
 				}
 				
 				return html;

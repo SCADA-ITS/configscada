@@ -1,26 +1,31 @@
 package com.revenga.rits.front.openits.backoffice.groovy;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.List;
 
+import org.springframework.core.env.Environment;
 import org.springframework.util.CollectionUtils;
 
-import com.revenga.rits.front.openits.backoffice.BackOfficeUtil;
 import com.revenga.rits.front.openits.backoffice.BackOfficeUtil.DBType;
-import com.revenga.rits.front.openits.backoffice.model.Row;
-import com.revenga.rits.front.openits.backoffice.model.Table;
 import com.revenga.rits.front.openits.backoffice.model.Request.RequestResult.RequestResultMessage;
+import com.revenga.rits.front.openits.backoffice.model.Row;
 import com.revenga.rits.front.openits.backoffice.model.Row.RowData;
+import com.revenga.rits.front.openits.backoffice.model.Table;
 import com.revenga.rits.front.openits.backoffice.model.Table.RequestType;
+import com.revenga.rits.front.openitsdao.model.BackOffice;
 
 import lombok.Data;
 
 @Data
 public abstract class AbstractBackOfficeGroovy implements Cloneable {
 
+	protected Environment env;
 	protected Connection conn;
-	protected String schema;
+	protected BackOffice backOffice;
 	protected Table table;
 	protected Long id;
 	protected Row oldRow;
@@ -32,28 +37,6 @@ public abstract class AbstractBackOfficeGroovy implements Cloneable {
 	protected AbstractBackOfficeGroovy(org.apache.logging.log4j.Logger log) {
 
 		this.log = log;
-	}
-	
-	protected AbstractBackOfficeGroovy(Connection conn, String schema, Table table, Long id, Row oldRow, Row newRow,
-			RequestResultMessage requestResultMessage, org.apache.logging.log4j.Logger log) {
-	
-		this.conn = conn;
-		this.schema = schema;
-		this.table = table;
-		this.id = id;
-		this.oldRow = oldRow;
-		this.newRow = newRow;
-		this.requestResultMessage = requestResultMessage;
-		this.log = log;
-		
-		try {
-			
-			this.dbType = BackOfficeUtil.getDBType(this.conn);
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 	
 	protected String getFieldValue(Row row, String fieldName) {
@@ -102,10 +85,26 @@ public abstract class AbstractBackOfficeGroovy implements Cloneable {
 		}
 	}
 	
+	protected String readFromInputStream(InputStream inputStream) throws IOException {
+		
+		StringBuilder resultStringBuilder = new StringBuilder();
+		
+		try (BufferedReader br = new BufferedReader(new InputStreamReader(inputStream))) {
+			
+			String line;
+			
+			while ((line = br.readLine()) != null) {
+				resultStringBuilder.append(line).append("\n");
+			}
+		}
+		
+		return resultStringBuilder.toString();
+	}
+
 	public void trace(RequestType persistenceType) {
 		
 		String prefix = String.format("Trigger %s on %s.%s: ", persistenceType,
-				this.schema, this.table);
+				this.backOffice.getSchema(), this.table);
 		
 		log.debug(prefix + "Executing...");
 		

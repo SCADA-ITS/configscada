@@ -33,7 +33,7 @@ import com.revenga.rits.front.openitsdao.service.GridService;
 @Service
 public class BackOfficeBO {
 
-	private static final String FILE_BASEDIR = "file.basedir";
+	
 	
 	@Autowired
 	BackOfficeService backOfficeService;
@@ -53,18 +53,12 @@ public class BackOfficeBO {
 	@Autowired
 	private Environment env;
 	
-	private String baseDir; 
-	
-	
-	
 	private BackOfficeContext backOfficeCtx;
 	
 	@PostConstruct
 	private void postConstruct() {
 		
-		this.baseDir = env.getProperty(FILE_BASEDIR);
-		
-		this.backOfficeCtx = new BackOfficeContext(groovyManager, backOfficeService, backOfficeManager, gridService);
+		this.backOfficeCtx = new BackOfficeContext(env, groovyManager, backOfficeService, backOfficeManager, gridService);
 	}
 	
 	public List<BackOffice> getList() {
@@ -123,28 +117,28 @@ public class BackOfficeBO {
 		
 		BackOfficeProcessor backOfficeProcessor = new BackOfficeProcessor(this.backOfficeCtx, getLocaleCode(), ShowData.NONE);
 		
-		return backOfficeProcessor.upload(attachmentType, this.baseDir, backOfficeId, tableName, id, groupName, position, multipartFile);	
+		return backOfficeProcessor.upload(attachmentType, backOfficeId, tableName, id, groupName, position, multipartFile);	
 	}
 	
 	public byte[] downloadImage(Integer backOfficeId, String tableName, Integer imageId) {
 		
 		BackOfficeProcessor backOfficeProcessor = new BackOfficeProcessor(this.backOfficeCtx, getLocaleCode(), ShowData.NONE);
 		
-		return backOfficeProcessor.downloadImage(baseDir, backOfficeId, tableName, imageId);
+		return backOfficeProcessor.downloadImage(backOfficeId, tableName, imageId);
 	}
 	
 	public Resource downloadAttachment(Integer backOfficeId, String tableName, Integer imageId) {
 		
 		BackOfficeProcessor backOfficeProcessor = new BackOfficeProcessor(this.backOfficeCtx, getLocaleCode(), ShowData.NONE);
 		
-		return backOfficeProcessor.downloadAttachment(baseDir, backOfficeId, tableName, imageId);
+		return backOfficeProcessor.downloadAttachment(backOfficeId, tableName, imageId);
 	}
 	
 	public Attachment deleteAttachment(String attachment, Integer backOfficeId, String tableName, Integer imageId) {
 		
 		BackOfficeProcessor backOfficeProcessor = new BackOfficeProcessor(this.backOfficeCtx, getLocaleCode(), ShowData.NONE);
 		
-		return backOfficeProcessor.deleteAttachment(attachment, baseDir, backOfficeId, tableName, imageId);
+		return backOfficeProcessor.deleteAttachment(attachment, backOfficeId, tableName, imageId);
 	}
 
 	public RequestResult persist(Integer backOfficeId, Request request) {

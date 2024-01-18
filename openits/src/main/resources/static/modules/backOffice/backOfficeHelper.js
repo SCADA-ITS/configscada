@@ -56,7 +56,8 @@ export default class BackOfficeHelper {
 				EXPORTABLE: { name: "exportable", default: true },
 				CUSTOM_JS: { name: "customJS" },
 				EDITABLE: { name: "editable", default: true },
-				VIRTUAL_COLS: { name: "virtualCols" }
+				VIRTUAL_COLS: { name: "virtualCols" },
+				MANAGEMENT_AREA_FILTERS: { name: "managementAreaFilters" }
 			}
 		}
 	}
@@ -161,6 +162,7 @@ export default class BackOfficeHelper {
 
 	static async getData(backOffice) {
 
+		let data;
 		let response;
 		let url = appConfig.restUrl +
 					util.fillTemplate(REST_BACKOFFICE_TABLE, { backOfficeId: backOffice.id, tableName: backOffice.tableName });
@@ -169,9 +171,9 @@ export default class BackOfficeHelper {
 
 		if (backOffice.filterColumnName && backOffice.filterColumnValue) {
 
-			conditions = backOffice.filterColumnName + "='" + backOffice.filterColumnValue + "'";
+			addCondition(backOffice.filterColumnName + "='" + backOffice.filterColumnValue + "'");
 			
-			response = await webix.ajax().headers(CONTENT_TYPE_JSON).post(url, conditions);
+			response = await webix.ajax().headers(CONTENT_TYPE_JSON).post(url, conditions ? conditions.join(" AND ") : undefined);
 		}
 		else {
 		
@@ -185,26 +187,21 @@ export default class BackOfficeHelper {
 					
 					filters = backOffice.filters.filter(e => e.userId == userData.id);
 					
-					let conditionsArr = [];
-					
 					if (Array.isArray(filters) && filters.length > 0) {
 						
 						filters.forEach(filter => {
-						
-							conditionsArr.push(filter.filterField + " " + filter.filterOperator + " '" + filter.filterValue + "'");
+							
+							addCondition(filter.filterField + " " + filter.filterOperator + " '" + filter.filterValue + "'");
 						})	
-					}
-					
-					if (Array.isArray(conditionsArr) && conditionsArr.length > 0) {
-				
-						conditions = conditionsArr.join(" AND ");
 					}
 				}
 			}
 			
-			if (conditions || !backOffice.filtersRequired) {
+			
+			
+			if ((Array.isArray(conditions) && conditions.length > 0) || !backOffice.filtersRequired) {
 					
-				response = await webix.ajax().headers(CONTENT_TYPE_JSON).post(url, conditions);
+				response = await webix.ajax().headers(CONTENT_TYPE_JSON).post(url, conditions ? conditions.join(" AND ") : undefined);
 			}
 			else {
 				
@@ -214,8 +211,81 @@ export default class BackOfficeHelper {
 				response = await webix.ajax().get(url);
 			}
 		}
+		
+		data = response ? response.json() : undefined;
+		
+		filtersRowsByUserManagementArea();
+		
+		
+		
+		function addCondition(conditionExpression) {
+			
+			if (!conditions) {
+				
+				conditions = [];
+			}
+			
+			conditions.push(conditionExpression);
+		}
+		
+		function filtersRowsByUserManagementArea() {
+					
+			const sessionData = webix.storage.session.get(SESSION_STORAGE_SESSION_DATA);
+				
+			if (sessionData) {
+			
+				const managementAreaId = sessionData.managementAreaId;
+				
+				if (managementAreaId) {
+					
+					let currentTableData = data.find(e => e.name === backOffice.tableName);
+					
+					if (currentTableData) {
+						
+						const managementAreaFilters = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, BackOfficeHelper.META_TYPE_TABLE.PROPERTY.MANAGEMENT_AREA_FILTERS, backOffice.metadata, currentTableData);
+					
+						if (Array.isArray(managementAreaFilters) && managementAreaFilters.length > 0) {
+							
+							const managementAreaFilter = managementAreaFilters.find(e => e.managementAreaId === managementAreaId);
+	
+							if (managementAreaFilter && Array.isArray(managementAreaFilter.filters) && managementAreaFilter.filters.length > 0) {
+										
+								let rowsFiltered = [];
+								
+								if (Array.isArray(currentTableData.rows) && currentTableData.rows.length > 0) {
+							
+									currentTableData.rows.forEach(row => {
+										
+										let matchRow = true;
+								
+										managementAreaFilter.filters.every(filter => {
+											
+											const column = currentTableData.columns.find(e => e.name == filter.filterField);
+											
+											if (column) {
+												
+												matchRow &= (row.data.find(rowData => rowData.columnId === column.id && rowData.value == filter.filterValue) != undefined);
+											}
+											
+											return matchRow;
+										})
+										
+										if (matchRow) {
+											
+											rowsFiltered.push(row);
+										}
+									})		
+								}
+								
+								currentTableData.rows = rowsFiltered;	
+							}
+						}	
+					}
+				}
+			}
+		}
 
-		return response ? response.json() : undefined;
+		return data; 
 	}
 	
 	static translate(backOffice, label) {

@@ -13,8 +13,6 @@ public abstract class AbstractBackOfficeTask extends AbstractBackOfficeGroovy {
 
 	protected BackOffice backOffice;
 	protected Map<String, Object> params;
-	protected String baseDir;
-	
 	
 	protected AbstractBackOfficeTask(org.apache.logging.log4j.Logger log) {
 

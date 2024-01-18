@@ -22,18 +22,19 @@ import java.util.stream.Collectors;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.core.env.Environment;
 import org.springframework.util.CollectionUtils;
 
 import com.revenga.rits.front.openits.backoffice.groovy.AbstractBackOfficeGroovy;
 import com.revenga.rits.front.openits.backoffice.model.Column;
+import com.revenga.rits.front.openits.backoffice.model.Column.ColType;
 import com.revenga.rits.front.openits.backoffice.model.GroovyBasic;
 import com.revenga.rits.front.openits.backoffice.model.Request;
-import com.revenga.rits.front.openits.backoffice.model.Row;
-import com.revenga.rits.front.openits.backoffice.model.Table;
-import com.revenga.rits.front.openits.backoffice.model.Column.ColType;
 import com.revenga.rits.front.openits.backoffice.model.Request.RequestInput;
 import com.revenga.rits.front.openits.backoffice.model.Request.RequestResult;
+import com.revenga.rits.front.openits.backoffice.model.Row;
 import com.revenga.rits.front.openits.backoffice.model.Row.RowData;
+import com.revenga.rits.front.openits.backoffice.model.Table;
 import com.revenga.rits.front.openits.backoffice.model.Table.RequestType;
 import com.revenga.rits.front.openits.util.GroovyManager;
 import com.revenga.rits.front.openitsdao.model.BackOffice;
@@ -317,7 +318,7 @@ public class BackOfficeUtil {
 				
 				col.setColType(ColType.STRING);
 			}
-			else if (StringUtils.equalsAny(dataType, "datetime2", "date", "datetimeoffset")) {
+			else if (StringUtils.equalsAny(dataType, "datetime", "datetime2", "date", "datetimeoffset")) {
 				
 				col.setColType(ColType.TIMESTAMP);
 			}
@@ -802,8 +803,8 @@ public class BackOfficeUtil {
 		}
 	}
 	
-	public static AbstractBackOfficeGroovy newGroovyInstance(GroovyManager groovyManager, GroovyBasic groovyBasic,
-			Connection conn, String schema, Table table, Long id, RequestResult requestResult) throws Exception {
+	public static AbstractBackOfficeGroovy newGroovyInstance(Environment env, GroovyManager groovyManager, GroovyBasic groovyBasic,
+			Connection conn, BackOffice backOffice, Table table, Long id, RequestResult requestResult) throws Exception {
 		
 		String groovyFile = groovyBasic.getGroovy();
 		
@@ -857,8 +858,9 @@ public class BackOfficeUtil {
 					backOfficeGroovyCloned.setLog(log);					
 				}
 				
+				backOfficeGroovyCloned.setEnv(env);
 				backOfficeGroovyCloned.setConn(conn);
-				backOfficeGroovyCloned.setSchema(schema);
+				backOfficeGroovyCloned.setBackOffice(backOffice);
 				backOfficeGroovyCloned.setTable(table);
 				backOfficeGroovyCloned.setId(id);
 				backOfficeGroovyCloned.setDbType(BackOfficeUtil.getDBType(conn));

@@ -1332,7 +1332,7 @@ export default class DataTable {
 
 		if (resultSearch) {
 
-			searchBar.width = 300;
+			searchBar.width = 200;
 			toolbar.elements.push(searchBar);
 		}
 

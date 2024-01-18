@@ -108,8 +108,8 @@ public class BackOfficeCommand extends BackOfficeAction {
 	private void executeCommand(Connection conn, BackOffice backOffice, Table table, Command command, Request request,
 			RequestResult requestResult) throws Exception {
 
-		AbstractBackOfficeGroovy backOfficeGroovy = BackOfficeUtil.newGroovyInstance(
-				this.backOfficeProcessor.getGroovyManager(), command, conn, backOffice.getSchema(), table,
+		AbstractBackOfficeGroovy backOfficeGroovy = BackOfficeUtil.newGroovyInstance(this.backOfficeProcessor.getEnv(),
+				this.backOfficeProcessor.getGroovyManager(), command, conn, backOffice, table,
 				request.getId(), requestResult);
 		
 		if (backOfficeGroovy instanceof AbstractBackOfficeCommand) {
@@ -123,7 +123,7 @@ public class BackOfficeCommand extends BackOfficeAction {
 			if (!commandResult) {
 				
 				throw new BackOfficeException(
-						String.format("Filler %s on table: %s.%s with operation: %s fails.", command.getGroovy(),
+						String.format("Command %s on table: %s.%s with operation: %s fails.", command.getGroovy(),
 								backOffice.getSchema(), table.getName(), request.getRequestType()));
 			}
 		}

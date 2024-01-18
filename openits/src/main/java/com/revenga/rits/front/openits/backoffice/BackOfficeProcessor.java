@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.springframework.core.env.Environment;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.util.CollectionUtils;
@@ -45,6 +46,8 @@ import lombok.extern.log4j.Log4j2;
 @Getter
 public class BackOfficeProcessor {
 	
+	private static final String FILE_BASEDIR = "file.basedir";
+	
 	public enum ShowData {
 		
 		ALL,
@@ -59,6 +62,9 @@ public class BackOfficeProcessor {
 	String localeCode;
 	ShowData showData;
 	String requestTableName;
+	
+	private Environment env;
+	private String baseDir;
 	
 	private Map<String, Table> referencedTables = new HashMap<>();
 	
@@ -82,6 +88,9 @@ public class BackOfficeProcessor {
 		this.localeCode = localeCode;
 		this.showData = showData;
 		this.requestTableName = requestTableName;
+		
+		this.env = backOfficeCtx.getEnv();
+		this.baseDir = backOfficeCtx.getEnv().getProperty(FILE_BASEDIR);
 	}
 	
 	public List<Table> getAll(Integer backOfficeId) {
@@ -295,7 +304,7 @@ public class BackOfficeProcessor {
 		return newAttachment;
 	}
 	
-	public Attachment upload(String attachmentTypeStr, String baseDir, Integer backOfficeId, String tableName, Long id, String groupName, Integer position, MultipartFile multipartFile) {
+	public Attachment upload(String attachmentTypeStr, Integer backOfficeId, String tableName, Long id, String groupName, Integer position, MultipartFile multipartFile) {
 		
 		Attachment newAttachment = null;
 		BackOffice backOffice = this.backOfficeService.getById(backOfficeId);
@@ -330,7 +339,7 @@ public class BackOfficeProcessor {
 		return newAttachment;
 	}
 	
-	public byte[] downloadImage(String baseDir, Integer backOfficeId, String tableName, Integer imageId) {
+	public byte[] downloadImage(Integer backOfficeId, String tableName, Integer imageId) {
 		
 		byte[] fileBytes = null;
 		
@@ -357,7 +366,7 @@ public class BackOfficeProcessor {
 		return fileBytes;
 	}
 	
-	public Resource downloadAttachment(String baseDir, Integer backOfficeId, String tableName, Integer imageId) {
+	public Resource downloadAttachment(Integer backOfficeId, String tableName, Integer imageId) {
 		
 		Resource resource = null;
 		Attachment attachmentFound = getAttachment(backOfficeId, Attachment.Type.OTHER, tableName, imageId);
@@ -370,7 +379,7 @@ public class BackOfficeProcessor {
 		return resource;
 	}
 	
-	public Attachment deleteAttachment(String attachmentTypeStr, String baseDir, Integer backOfficeId, String tableName, Integer imageId) {
+	public Attachment deleteAttachment(String attachmentTypeStr, Integer backOfficeId, String tableName, Integer imageId) {
 		
 		Attachment deletedAttachment = null;
 		

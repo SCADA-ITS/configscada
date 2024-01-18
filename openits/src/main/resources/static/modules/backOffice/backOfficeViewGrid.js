@@ -447,7 +447,7 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 						label: "LBL_TABLE_REFRESH",
 						multiselect: false,
 						position: BackOfficeViewGrid.GRID_COMMANDS.refresh,
-						showText: true,
+						showText: false,
 						itemRequired: false
 					});
 					
@@ -1193,7 +1193,7 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 											view: "tabview",
 											id: "tab-refer-tables-" + self.uid,
 											borderless: true,
-											css: "secondary-tab",
+											css: "auxiliary-tab",
 											cells: viewBackOfficeViewGridCells,
 											tabbar: {
 												tabMargin: 6

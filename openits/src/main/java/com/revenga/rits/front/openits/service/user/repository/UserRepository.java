@@ -48,6 +48,7 @@ public class UserRepository extends GenericRepository {
 	private static final String FIELD_USER_LOCALE = "locale";
 	private static final String FIELD_USER_ROLE = "role";
 	private static final String FIELD_USER_USER_PERMISSIONS = "userPermissions";
+	private static final String FIELD_USER_MANAGEMENT_AREAS = "managementAreas";
 	
 	private static final String FIELD_INPUT_USER_ROLE_ID = "roleId";
 	private static final String FIELD_INPUT_USER_NAME = "name";
@@ -112,6 +113,7 @@ public class UserRepository extends GenericRepository {
 			
 			cache(I18nLocaleRepository.class);
 			cache(SystemPermissionRepository.class);
+			cache(ManagementAreaRepository.class);
 			
 			for (Map<String, Object> entity : entities) {
 				
@@ -124,6 +126,8 @@ public class UserRepository extends GenericRepository {
 			}
 			
 			fillUserPermissions(entities);
+			
+			fillUserManagementAreas(entities);
 		}
 	}
 	
@@ -176,6 +180,60 @@ public class UserRepository extends GenericRepository {
 				if (!CollectionUtils.isEmpty(systemPermissions)) {
 					
 					user.put(FIELD_USER_USER_PERMISSIONS, systemPermissions);
+				}
+			}
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	private void fillUserManagementAreas(List<Map<String, Object>> users) {
+	
+		ManagementAreaUserRepository userManagementAreaRepository = new ManagementAreaUserRepository(this.conn);
+		
+		for (Map<String, Object> user : users) {
+			
+			List<Map<String, Object>> managementAreas = new ArrayList<>();
+			
+			Object userIdObj = user.get(FIELD_USER_ID);
+			
+			if (userIdObj instanceof Long) {
+				
+				Long userId = (Long) userIdObj;
+
+				List<Map<String, Object>> userManagementAreas = userManagementAreaRepository
+						.gets(new ImmutablePair<String, Object>(ManagementAreaUserRepository.PK_MANAGEMENT_AREA_USER_USER_ID, userId));
+
+				if (!CollectionUtils.isEmpty(userManagementAreas)) {
+					
+					List<Map<String, Object>> managementAreaList = cache(ManagementAreaRepository.class);
+					
+					if (!CollectionUtils.isEmpty(managementAreaList)) {
+						
+						for (Map<String, Object> userManagementArea : userManagementAreas) {
+							
+							Object managementAreaIdObj = userManagementArea.get(ManagementAreaRepository.FIELD_MANAGEMENT_AREA_ID);
+							
+							if (managementAreaIdObj instanceof Long) {
+								
+								Long managementAreaId = (Long) managementAreaIdObj;
+								
+								Map<String, Object> managementArea = managementAreaList.stream()
+										.filter(e -> managementAreaId
+												.equals(e.get(ManagementAreaRepository.FIELD_MANAGEMENT_AREA_ID)))
+										.findFirst().orElse(null);
+								
+								if (managementArea != null) {
+									
+									managementAreas.add(managementArea);
+								}
+							}
+						}
+					}
+				}
+				
+				if (!CollectionUtils.isEmpty(managementAreas)) {
+					
+					user.put(FIELD_USER_MANAGEMENT_AREAS, managementAreas);
 				}
 			}
 		}

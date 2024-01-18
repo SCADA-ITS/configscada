@@ -27,7 +27,10 @@ export default class BackOfficeModule extends GenericModule {
 		let self = this;
 		let backOffice = undefined; 
 		
-		$$("loading-" + self.uid).show();
+		if ($$("loading-" + self.uid)) {
+		
+			$$("loading-" + self.uid).show();	
+		}
 		
 		if (self.moduleAction) {
 			
@@ -149,7 +152,10 @@ export default class BackOfficeModule extends GenericModule {
 						
 						let backOfficeManager = new BackOfficeManager(backOffice, data);
 				
-						$$("loading-" + self.uid).hide();
+						if ($$("loading-" + self.uid)) {
+							
+							$$("loading-" + self.uid).hide();	
+						}
 						
 						let isCreating = false;
 						backOfficeManager.getView(onCreate, onGetView);

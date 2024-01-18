@@ -31,11 +31,11 @@ export default class BackOfficeManager {
 				
 				if (Array.isArray(currentTableData.rows)) {
 					
-					if (currentTableData.rows.length === 1) {
+					if (currentTableData.rows.length === 1 && self.backOffice.referTablesCounter === undefined) {
 					
 						loadForm(currentTableData, onGetView);	
 					}
-					else if (currentTableData.rows.length === 0) {
+					else if (currentTableData.rows.length === 0 && self.backOffice.referTablesCounter === undefined) {
 						
 						if (onCreate) {
 				
