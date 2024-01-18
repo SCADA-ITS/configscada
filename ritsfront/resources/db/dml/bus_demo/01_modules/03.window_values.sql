@@ -7,6 +7,7 @@ INSERT INTO ui.window_values(module_id, window_param_id, value) VALUES
 (1920, 11, '#464646'),
 (1920, 12, 'LBL_MASTER_DATA'),
 (1920, 14, 'true'),
+(1920, 17, 'true'),
 -- PROCESSES
 (1921, 4, '825'),
 (1921, 5, '1400'),
@@ -15,6 +16,7 @@ INSERT INTO ui.window_values(module_id, window_param_id, value) VALUES
 (1921, 11, '#464646'),
 (1921, 12, 'LBL_PROCESSES'),
 (1921, 14, 'true'),
+(1921, 17, 'true'),
 -- VALIDATION_AND_SALES
 (1922, 4, '825'),
 (1922, 5, '1400'),
@@ -23,6 +25,7 @@ INSERT INTO ui.window_values(module_id, window_param_id, value) VALUES
 (1922, 11, '#464646'),
 (1922, 12, 'LBL_VALIDATION_AND_SALES'),
 (1922, 14, 'true'),
+(1922, 17, 'true'),
 -- SHIFTS_AND_EXPEDITIONS
 (1923, 4, '825'),
 (1923, 5, '1400'),
@@ -31,6 +34,7 @@ INSERT INTO ui.window_values(module_id, window_param_id, value) VALUES
 (1923, 11, '#464646'),
 (1923, 12, 'LBL_SHIFTS_AND_EXPEDITIONS'),
 (1923, 14, 'true'),
+(1923, 17, 'true'),
 -- LIQUIDATION_OF_DRIVING_STAFF
 (1924, 4, '825'),
 (1924, 5, '1400'),
@@ -39,6 +43,7 @@ INSERT INTO ui.window_values(module_id, window_param_id, value) VALUES
 (1924, 11, '#464646'),
 (1924, 12, 'LBL_LIQUIDATION_OF_DRIVING_STAFF'),
 (1924, 14, 'true'),
+(1924, 17, 'true'),
 -- REQUESTS
 (1925, 4, '825'),
 (1925, 5, '1400'),
@@ -46,4 +51,5 @@ INSERT INTO ui.window_values(module_id, window_param_id, value) VALUES
 (1925, 10, 'img/module/default.png'),
 (1925, 11, '#464646'),
 (1925, 12, 'LBL_REQUESTS'),
-(1925, 14, 'true');
+(1925, 14, 'true'),
+(1925, 17, 'true');

@@ -30,6 +30,8 @@ INSERT INTO ui.modules(id, module_type_id, "name", description, default_view_typ
 	(192017, 9, 'BUS DEMO - Parámetros', 'BUS DEMO - Parámetros', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, null),
 -- PROCESOS
 (1921, 8, 'Selector Tree Module. Procesos', 'Selector Tree Module. Procesos', 1, null, 'modules/selectorModule.js', 'getView', 'loadData', NULL, NULL, true, true, null),
+	(192101, 9, 'BUS DEMO - Asignación dispositivo a vehículo', 'BUS DEMO - Asignación dispositivo a vehículo', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, null),
+	(192102, 9, 'BUS DEMO - Importación recaudación personal de conducción', 'BUS DEMO - Importación recaudación personal de conducción', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, null),
 -- VALIDACIONES Y VENTAS
 (1922, 8, 'Selector Tree Module. Validaciones y ventas', 'Selector Tree Module. Validaciones y ventas', 1, null, 'modules/selectorModule.js', 'getView', 'loadData', NULL, NULL, true, true, null),
 -- TURNOS Y EXPEDICIONES

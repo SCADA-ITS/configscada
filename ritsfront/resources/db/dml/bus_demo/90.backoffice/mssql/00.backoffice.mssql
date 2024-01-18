@@ -16,43 +16,206 @@ SET NOCOUNT ON
 	SET IDENTITY_INSERT dbo.sg_metadata_tables ON;  
 	GO   
 	
-	INSERT INTO dbo.sg_metadata_tables (id, name, label, label_singular, label_description, mdi_icon, support_images, support_attachments, metadata) VALUES
-		(101, 'VW_GEO_ZONAS', 'LBL_MUGI_ZONES', 'LBL_MUGI_ZONE', 'LBL_MUGI_ZONES_DESCRIPTION', NULL, 1, 1, '{ "referTables": ["VW_GEO_MUNICIPIOS"], "gridTables": ["VW_GEO_MUNICIPIOS"] }'),
-		(102, 'VW_GEO_PAISES', 'LBL_COUNTRIES', 'LBL_COUNTRY', 'LBL_COUNTRIES_DESCRIPTION', NULL, 1, 1, null),
-		(103, 'VW_GEO_COMARCAS', 'LBL_REGIONS', 'LBL_REGION', 'LBL_REGIONS_DESCRIPTION', NULL, 1, 1, null),
-		(104, 'VW_GEO_PROVINCIAS', 'LBL_PROVINCES', 'LBL_PROVINCE', 'LBL_PROVINCES_DESCRIPTION', NULL, 1, 1, null),
-		(105, 'VW_GEO_MUNICIPIOS', 'LBL_MUGI_ZONES', 'LBL_MUGI_ZONE', 'LBL_MUGI_ZONES_DESCRIPTION', NULL, 1, 1, null),
-		(106, 'VW_GEO_ZONAS_SALTOS', 'LBL_MUGI_ZONE_BREAKS', 'LBL_MUGI_ZONE_BREAK', 'LBL_MUGI_ZONE_BREAKS_DESCRIPTION', NULL, 1, 1, null),
-		(107, 'VW_ADM_CONSORCIOS', 'LBL_CONSURTIUMS', 'LBL_CONSURTIUM', 'LBL_CONSURTIUMS_DESCRIPTION', NULL, 1, 1, null),
-		(108, 'VW_ADM_SOPORTES', 'LBL_MEDIUMS', 'LBL_MEDIUM', 'LBL_MEDIUMS_DESCRIPTION', NULL, 1, 1, null),
-		(109, 'VW_ADM_CONCESION_TIPOS', 'LBL_TYPE_CONCESSIONS', 'LBL_TYPE_CONCESSION', 'LBL_TYPE_CONCESSIONS_DESCRIPTION', NULL, 1, 1, null),
-		(110, 'VW_TPL_SUPEROPERADORES', 'LBL_SUPEROPERATORS', 'LBL_SUPEROPERATOR', 'LBL_SUPEROPERATORS_DESCRIPTION', NULL, 1, 1, null),
-		(111, 'VW_TPL_LINEAS', 'LBL_LINES', 'LBL_LINE', 'LBL_LINES_DESCRIPTION', NULL, 1, 1, '{ "gridTables": ["VW_TPL_ITINERARIOS"] }'),
-		(112, 'VW_TPL_PARADAS', 'LBL_BUS_STOPS', 'LBL_BUS_STOP', 'LBL_BUS_STOPS_DESCRIPTION', NULL, 1, 1, null),
-		(113, 'VW_TPL_TIN_TRANSBORDO_EXCLUSIONES', 'LBL_TRANSHIPMENT_EXCLUSIONS', 'LBL_TRANSHIPMENT_EXCLUSION', 'LBL_TRANSHIPMENT_EXCLUSIONS_DESCRIPTION', NULL, 1, 1, null),
-		(114, 'VW_TPL_EMPRESAS', 'LBL_OPERATORS', 'LBL_OPERATOR', 'LBL_OPERATORS_DESCRIPTION', NULL, 1, 1, null),
-		(115, 'VW_TPL_ITINERARIOS', 'LBL_ROUTES', 'LBL_ROUTE', 'LBL_ROUTES_DESCRIPTION', NULL, 1, 1, '{ "gridTables": ["VW_TPL_ITINERARIOS_PARADAS"], "gridTablesColsOrientation": true }'),
-		(116, 'VW_TPL_ITINERARIOS_PARADAS', 'LBL_ROUTES_BUS_STOPS', 'LBL_ROUTES_BUS_STOP', 'LBL_ROUTES_BUS_STOPS_DESCRIPTION', NULL, 1, 1, null),
-		(117, 'VW_TPL_ITINERARIO_PUNTOS', 'LBL_ROUTES_POINTS', 'LBL_ROUTES_POINT', 'LBL_ROUTES_POINTS_DESCRIPTION', NULL, 1, 1, null),
-		(118, 'VW_TPL_GRUPOS', 'LBL_GROUPS', 'LBL_GROUP', 'LBL_GROUPS_DESCRIPTION', NULL, 1, 1, null),
-		(119, 'VW_TPL_GRUPOS_PARADAS', 'LBL_GROUPS_BUS_STOPS', 'LBL_GROUPS_BUS_STOP', 'LBL_GROUPS_BUS_STOPS_DESCRIPTION', NULL, 1, 1, null),
-		(120, 'VW_TXT_LETREROS', 'LBL_TXT_LETREROS', 'LBL_TXT_LETRERO', 'LBL_TXT_LETREROS_DESCRIPTION', NULL, 1, 1, null),
-		(121, 'VW_MON_TITULOS', 'LBL_TICKET_TYPES', 'LBL_TICKET_TYPE', 'LBL_TICKET_TYPES_DESCRIPTION', NULL, 1, 1, null),
-		(122, 'VW_MON_TARIFAS', 'LBL_TRAVEL_FARES', 'LBL_TRAVEL_FARE', 'LBL_TRAVEL_FARES_DESCRIPTION', NULL, 1, 1, null),
-		(123, 'VW_MON_TARIFAS_TITULOS', 'LBL_TRAVEL_FARES_TICKET_TYPES', 'LBL_TRAVEL_FARES_TICKET_TYPE', 'LBL_TRAVEL_FARES_TICKET_TYPES_DESCRIPTION', NULL, 1, 1, null),
-		(124, 'VW_MON_TARIFAS_TRAMOS', 'LBL_TRAVEL_FARES_SECTIONS', 'LBL_TRAVEL_FARES_SECTION', 'LBL_TRAVEL_FARES_SECTIONS_DESCRIPTION', NULL, 1, 1, null),
-		(125, 'VW_MON_EXPENDEDORAS', 'LBL_ORIGIN_DESTINATION_PRESALES', 'LBL_ORIGIN_DESTINATION_PRESALE', 'LBL_ORIGIN_DESTINATION_PRESALES_DESCRIPTION', NULL, 1, 1, null),
-		(126, 'VW_MON_MEX_TLN_ORIGENES_DESTINOS', 'LBL_MEX_TLN_ORIGENES_DESTINOS', 'LBL_MEX_TLN_ORIGENES_DESTINO', 'LBL_MEX_TLN_ORIGENES_DESTINOS_DESCRIPTION', NULL, 1, 1, null),
-		(127, 'VW_RCS_CROQUIS', 'LBL_RCS_CROQUIS', 'LBL_RCS_CROQUIS_S', 'LBL_RCS_CROQUIS_DESCRIPTION', NULL, 1, 1, null),
-		(128, 'VW_RCS_VEHICULOS', 'LBL_RCS_VEHICULOS', 'LBL_RCS_VEHICULO', 'LBL_RCS_VEHICULOS_DESCRIPTION', NULL, 1, 1, null),
-		(129, 'VW_RCS_EMPLEADOS', 'LBL_RCS_EMPLEADOS', 'LBL_RCS_EMPLEADO', 'LBL_RCS_EMPLEADOS_DESCRIPTION', NULL, 1, 1, null),
-		(130, 'VW_RCS_DISPOSITIVOS', 'LBL_RCS_DISPOSITIVOS', 'LBL_RCS_DISPOSITIVO', 'LBL_RCS_DISPOSITIVOS_DESCRIPTION', NULL, 1, 1, null),
-		(131, 'VW_CRN_CALENDARIOS', 'LBL_CRN_CALENDARIOS', 'LBL_CRN_CALENDARIO', 'LBL_CRN_CALENDARIOS_DESCRIPTION', NULL, 1, 1, null),
-		(132, 'VW_CRN_HORARIOS', 'LBL_CRN_HORARIOS', 'LBL_CRN_HORARIO', 'LBL_CRN_HORARIOS_DESCRIPTION', NULL, 1, 1, null),
-		(133, 'VW_PLN_TURNOS', 'LBL_PLN_TURNOS', 'LBL_PLN_TURNO', 'LBL_PLN_TURNOS_DESCRIPTION', NULL, 1, 1, null),
-		(134, 'VW_PLN_TURNO_FECHAS_HORAS', 'LBL_PLN_TURNO_FECHAS_HORAS', 'LBL_PLN_TURNO_FECHAS_HORA', 'LBL_PLN_TURNO_FECHAS_HORAS_DESCRIPTION', NULL, 1, 1, null),
-		(135, 'VW_PLN_EXPEDICIONES', 'LBL_PLN_EXPEDICIONES', 'LBL_PLN_EXPEDICION', 'LBL_PLN_EXPEDICIONES_DESCRIPTION', NULL, 1, 1, null),
-		(136, 'VW_PRM_PARAMETROS', 'LBL_PRM_PARAMETROS', 'LBL_PRM_PARAMETRO', 'LBL_PRM_PARAMETROS_DESCRIPTION', NULL, 1, 1, null);
+	INSERT INTO dbo.sg_metadata_tables (id, name, label, label_singular, label_description, mdi_icon, support_images, support_attachments, sql_view, grid_id, metadata) VALUES
+		(101, 'VW_GEO_ZONAS', 'LBL_MUGI_ZONES', 'LBL_MUGI_ZONE', 'LBL_MUGI_ZONES_DESCRIPTION', NULL, 1, 1, NULL, NULL,
+		-- metadata VW_GEO_ZONAS 
+			'{
+				"referTables": ["VW_GEO_MUNICIPIOS"], 
+				"gridTables": ["VW_GEO_MUNICIPIOS"] 
+			}'),
+		(102, 'VW_GEO_PAISES', 'LBL_COUNTRIES', 'LBL_COUNTRY', 'LBL_COUNTRIES_DESCRIPTION', NULL, 1, 1, NULL, NULL, null),
+		(103, 'VW_GEO_COMARCAS', 'LBL_REGIONS', 'LBL_REGION', 'LBL_REGIONS_DESCRIPTION', NULL, 1, 1, NULL, NULL, 
+		-- metadata VW_GEO_COMARCAS 
+			'{
+				"gridTables": ["VW_GEO_MUNICIPIOS"] 
+			}'),
+		(104, 'VW_GEO_PROVINCIAS', 'LBL_PROVINCES', 'LBL_PROVINCE', 'LBL_PROVINCES_DESCRIPTION', NULL, 1, 1, NULL, NULL, null),
+		(105, 'VW_GEO_MUNICIPIOS', 'LBL_MUGI_ZONES', 'LBL_MUGI_ZONE', 'LBL_MUGI_ZONES_DESCRIPTION', NULL, 1, 1, NULL, NULL, null),
+		(106, 'VW_GEO_ZONAS_SALTOS', 'LBL_MUGI_ZONE_BREAKS', 'LBL_MUGI_ZONE_BREAK', 'LBL_MUGI_ZONE_BREAKS_DESCRIPTION', NULL, 1, 1, NULL, NULL, null),
+		(107, 'VW_ADM_CONSORCIOS', 'LBL_CONSURTIUMS', 'LBL_CONSURTIUM', 'LBL_CONSURTIUMS_DESCRIPTION', NULL, 1, 1, NULL, NULL, 
+		-- metadata VW_ADM_CONSORCIOS 
+			'{
+				"gridTables": ["VW_ADM_CONCESION_TIPOS", "VW_ADM_SOPORTES"] 
+			}'),
+		(108, 'VW_ADM_SOPORTES', 'LBL_MEDIUMS', 'LBL_MEDIUM', 'LBL_MEDIUMS_DESCRIPTION', NULL, 1, 1, NULL, NULL, null),
+		(109, 'VW_ADM_CONCESION_TIPOS', 'LBL_TYPE_CONCESSIONS', 'LBL_TYPE_CONCESSION', 'LBL_TYPE_CONCESSIONS_DESCRIPTION', NULL, 1, 1, NULL, NULL, null),
+		(110, 'VW_TPL_SUPEROPERADORES', 'LBL_SUPEROPERATORS', 'LBL_SUPEROPERATOR', 'LBL_SUPEROPERATORS_DESCRIPTION', NULL, 1, 1, NULL, NULL,
+		-- metadata VW_TPL_SUPEROPERADORES 
+			'{
+				"gridTables": ["VW_TPL_EMPRESAS"] 
+			}'), 
+		(111, 'VW_TPL_LINEAS', 'LBL_LINES', 'LBL_LINE', 'LBL_LINES_DESCRIPTION', NULL, 1, 1, NULL, NULL, 
+		-- metadata VW_TPL_LINEAS
+			'{
+				"managementAreaFilters": [
+					{
+						"managementAreaId": "ManagementArea:1",
+						"filters": [
+							{"filterField": "MTF_TEM_ID", "filterValue": 2}
+						]
+					},
+					{
+						"managementAreaId": "ManagementArea:2",
+						"filters": [
+							{"filterField": "MTF_TEM_ID", "filterValue": 4}
+						]
+					},
+					{
+						"managementAreaId": "ManagementArea:3",
+						"filters": [
+							{"filterField": "MTF_TEM_ID", "filterValue": 6}
+						]
+					}
+				],
+				"gridTables": ["VW_TPL_ITINERARIOS"]
+			 }'),
+		(112, 'VW_TPL_PARADAS', 'LBL_BUS_STOPS', 'LBL_BUS_STOP', 'LBL_BUS_STOPS_DESCRIPTION', NULL, 1, 1, NULL, NULL, null),
+		(113, 'VW_TPL_TIN_TRANSBORDO_EXCLUSIONES', 'LBL_TRANSHIPMENT_EXCLUSIONS', 'LBL_TRANSHIPMENT_EXCLUSION', 'LBL_TRANSHIPMENT_EXCLUSIONS_DESCRIPTION', NULL, 1, 1, NULL, NULL, null),
+		(114, 'VW_TPL_EMPRESAS', 'LBL_OPERATORS', 'LBL_OPERATOR', 'LBL_OPERATORS_DESCRIPTION', NULL, 1, 1, NULL, NULL, null),
+		(115, 'VW_TPL_ITINERARIOS', 'LBL_ROUTES', 'LBL_ROUTE', 'LBL_ROUTES_DESCRIPTION', NULL, 1, 1, NULL, NULL,
+		-- metadata VW_TPL_ITINERARIOS 
+			'{ 
+				"gridTables": ["VW_TPL_ITINERARIOS_PARADAS"], 
+				"gridTablesColsOrientation": true 
+			}'),
+		(116, 'VW_TPL_ITINERARIOS_PARADAS', 'LBL_ROUTES_BUS_STOPS', 'LBL_ROUTES_BUS_STOP', 'LBL_ROUTES_BUS_STOPS_DESCRIPTION', NULL, 1, 1, NULL, NULL, null),
+		(117, 'VW_TPL_ITINERARIO_PUNTOS', 'LBL_ROUTES_POINTS', 'LBL_ROUTES_POINT', 'LBL_ROUTES_POINTS_DESCRIPTION', NULL, 1, 1, NULL, NULL, null),
+		(118, 'VW_TPL_GRUPOS', 'LBL_GROUPS', 'LBL_GROUP', 'LBL_GROUPS_DESCRIPTION', NULL, 1, 1, NULL, NULL, null),
+		(119, 'VW_TPL_GRUPOS_PARADAS', 'LBL_GROUPS_BUS_STOPS', 'LBL_GROUPS_BUS_STOP', 'LBL_GROUPS_BUS_STOPS_DESCRIPTION', NULL, 1, 1, NULL, NULL, null),
+		(120, 'VW_TXT_LETREROS', 'LBL_TXT_LETREROS', 'LBL_TXT_LETRERO', 'LBL_TXT_LETREROS_DESCRIPTION', NULL, 1, 1, NULL, NULL, null),
+		(121, 'VW_MON_TITULOS', 'LBL_TICKET_TYPES', 'LBL_TICKET_TYPE', 'LBL_TICKET_TYPES_DESCRIPTION', NULL, 1, 1, NULL, NULL, null),
+		(122, 'VW_MON_TARIFAS', 'LBL_TRAVEL_FARES', 'LBL_TRAVEL_FARE', 'LBL_TRAVEL_FARES_DESCRIPTION', NULL, 1, 1, NULL, NULL, null),
+		(123, 'VW_MON_TARIFAS_TITULOS', 'LBL_TRAVEL_FARES_TICKET_TYPES', 'LBL_TRAVEL_FARES_TICKET_TYPE', 'LBL_TRAVEL_FARES_TICKET_TYPES_DESCRIPTION', NULL, 1, 1, NULL, NULL, null),
+		(124, 'VW_MON_TARIFAS_TRAMOS', 'LBL_TRAVEL_FARES_SECTIONS', 'LBL_TRAVEL_FARES_SECTION', 'LBL_TRAVEL_FARES_SECTIONS_DESCRIPTION', NULL, 1, 1, NULL, NULL, null),
+		(125, 'VW_MON_EXPENDEDORAS', 'LBL_ORIGIN_DESTINATION_PRESALES', 'LBL_ORIGIN_DESTINATION_PRESALE', 'LBL_ORIGIN_DESTINATION_PRESALES_DESCRIPTION', NULL, 1, 1, NULL, NULL, null),
+		(126, 'VW_MON_MEX_TLN_ORIGENES_DESTINOS', 'LBL_MEX_TLN_ORIGENES_DESTINOS', 'LBL_MEX_TLN_ORIGENES_DESTINO', 'LBL_MEX_TLN_ORIGENES_DESTINOS_DESCRIPTION', NULL, 1, 1, NULL, NULL, null),
+		(127, 'VW_RCS_CROQUIS', 'LBL_RCS_CROQUIS', 'LBL_RCS_CROQUIS_S', 'LBL_RCS_CROQUIS_DESCRIPTION', NULL, 1, 1, NULL, NULL, null),
+		(128, 'VW_RCS_VEHICULOS', 'LBL_RCS_VEHICULOS', 'LBL_RCS_VEHICULO', 'LBL_RCS_VEHICULOS_DESCRIPTION', NULL, 1, 1, NULL, NULL,
+		-- metadata VW_RCS_VEHICULOS
+			'{
+				"managementAreaFilters": [
+					{
+						"managementAreaId": "ManagementArea:1",
+						"filters": [
+							{"filterField": "RVE_TEM_ID", "filterValue": 2}
+						]
+					},
+					{
+						"managementAreaId": "ManagementArea:2",
+						"filters": [
+							{"filterField": "RVE_TEM_ID", "filterValue": 4}
+						]
+					},
+					{
+						"managementAreaId": "ManagementArea:3",
+						"filters": [
+							{"filterField": "RVE_TEM_ID", "filterValue": 6}
+						]
+					}
+				]
+			 }'),
+		(129, 'VW_RCS_EMPLEADOS', 'LBL_RCS_EMPLEADOS', 'LBL_RCS_EMPLEADO', 'LBL_RCS_EMPLEADOS_DESCRIPTION', NULL, 1, 1, NULL, NULL,
+		-- metadata VW_RCS_EMPLEADOS
+			'{
+				"managementAreaFilters": [
+					{
+						"managementAreaId": "ManagementArea:1",
+						"filters": [
+							{"filterField": "REM_TEM_ID", "filterValue": 2}
+						]
+					},
+					{
+						"managementAreaId": "ManagementArea:2",
+						"filters": [
+							{"filterField": "REM_TEM_ID", "filterValue": 4}
+						]
+					},
+					{
+						"managementAreaId": "ManagementArea:3",
+						"filters": [
+							{"filterField": "REM_TEM_ID", "filterValue": 6}
+						]
+					}
+				]
+			 }'),
+		(130, 'VW_RCS_DISPOSITIVOS', 'LBL_RCS_DISPOSITIVOS', 'LBL_RCS_DISPOSITIVO', 'LBL_RCS_DISPOSITIVOS_DESCRIPTION', NULL, 1, 1, NULL, NULL, null),
+		(131, 'VW_CRN_CALENDARIOS', 'LBL_CRN_CALENDARIOS', 'LBL_CRN_CALENDARIO', 'LBL_CRN_CALENDARIOS_DESCRIPTION', NULL, 1, 1, NULL, NULL, null),
+		(132, 'VW_CRN_HORARIOS', 'LBL_CRN_HORARIOS', 'LBL_CRN_HORARIO', 'LBL_CRN_HORARIOS_DESCRIPTION', NULL, 1, 1, NULL, NULL, null),
+		(133, 'VW_PLN_TURNOS', 'LBL_PLN_TURNOS', 'LBL_PLN_TURNO', 'LBL_PLN_TURNOS_DESCRIPTION', NULL, 1, 1, NULL, NULL,
+		-- metadata VW_PLN_TURNOS
+			'{
+				"managementAreaFilters": [
+					{
+						"managementAreaId": "ManagementArea:1",
+						"filters": [
+							{"filterField": "PTR_TEM_ID", "filterValue": 2}
+						]
+					},
+					{
+						"managementAreaId": "ManagementArea:2",
+						"filters": [
+							{"filterField": "PTR_TEM_ID", "filterValue": 4}
+						]
+					},
+					{
+						"managementAreaId": "ManagementArea:3",
+						"filters": [
+							{"filterField": "PTR_TEM_ID", "filterValue": 6}
+						]
+					}
+				],
+				"gridTables": ["VW_PLN_EXPEDICIONES"]
+			 }'),
+		(134, 'VW_PLN_TURNO_FECHAS_HORAS', 'LBL_PLN_TURNO_FECHAS_HORAS', 'LBL_PLN_TURNO_FECHAS_HORA', 'LBL_PLN_TURNO_FECHAS_HORAS_DESCRIPTION', NULL, 1, 1, NULL, NULL, 
+		-- metadata VW_PLN_TURNO_FECHAS_HORAS
+			'{
+				"managementAreaFilters": [
+					{
+						"managementAreaId": "ManagementArea:1",
+						"filters": [
+							{"filterField": "PTRFH_TEM_ID", "filterValue": 2}
+						]
+					},
+					{
+						"managementAreaId": "ManagementArea:2",
+						"filters": [
+							{"filterField": "PTRFH_TEM_ID", "filterValue": 4}
+						]
+					},
+					{
+						"managementAreaId": "ManagementArea:3",
+						"filters": [
+							{"filterField": "PTRFH_TEM_ID", "filterValue": 6}
+						]
+					}
+				]
+			 }'),
+		(135, 'VW_PLN_EXPEDICIONES', 'LBL_PLN_EXPEDICIONES', 'LBL_PLN_EXPEDICION', 'LBL_PLN_EXPEDICIONES_DESCRIPTION', NULL, 1, 1, NULL, NULL, null),
+		(136, 'VW_PRM_PARAMETROS', 'LBL_PRM_PARAMETROS', 'LBL_PRM_PARAMETRO', 'LBL_PRM_PARAMETROS_DESCRIPTION', NULL, 1, 1, NULL, NULL, null),
+		(137, 'TKDISVEH_DISPOSITIVOS', 'LBL_ASSIGN_DEVICE_VEHICLE', 'LBL_ASSIGN_DEVICE_VEHICLE', 'LBL_ASSIGN_DEVICE_VEHICLE_DESCRIPTION', NULL, 1, 1, 
+			-- sql_view TKDISVEH_DISPOSITIVOS
+			'SELECT ID, RVE_CODIGO, RVE_NOMBRE, 
+			        ASSIGNMENT_DAT, RDS_ID, RDS_RDT_ID, 
+			        RDS_RDT_CODIGO, RDS_RDT_NOMBRE, 
+			        RDS_CODIGO, RDS_NOMBRE, RDS_SERIE_NRO, 
+			        RDS_GARANTIA_PERIODO, RDS_F_COMPRA 
+			   FROM dbo.TKDISVEH_DISPOSITIVOS'
+			, NULL, null),
+		(138, 'CUSTOM_IMPORTACIONES_RECAUDACION_CONDUCTOR', 'LBL_IMPORT_OF_CASH_COLLECTION_DRIVING_STAFF', 'LBL_IMPORT_OF_CASH_COLLECTION_DRIVING_STAFF', 'LBL_IMPORT_OF_CASH_COLLECTION_DRIVING_STAFF_DESCRIPTION', NULL, 1, 1, NULL, NULL, 
+			-- metadata CUSTOM_IMPORTACIONES_RECAUDACION_CONDUCTOR
+			'{
+				"editable": true,
+				"formHeight": 850,
+				"groupAttachments": [
+				    {
+				      "name": "main",
+				      "label": "LBL_ATTACHMENT_GROUP_CUSTOM_IMPORTACIONES_RECAUDACION_CONDUCTOR",
+				      "description": "LBL_ATTACHMENT_GROUP_CUSTOM_IMPORTACIONES_RECAUDACION_CONDUCTOR_DESC",
+				      "position": 1,
+				      "height": 100
+				    }
+				  ]
+			 }');
 	
 	SET IDENTITY_INSERT dbo.sg_metadata_tables OFF;  
 	GO
@@ -327,9 +490,54 @@ SET NOCOUNT ON
 		(136004, 136, 'PRM_DESCRIP', 'LBL_PRM_DESCRIP', NULL, NULL, 0, '{ "refName": true }'),
 		(136005, 136, 'PRM_VALOR_TIPO', 'LBL_PRM_VALOR_TIPO', NULL, NULL, 0, null),
 		(136006, 136, 'PRM_VALOR_TIPO_TXT', 'LBL_PRM_VALOR_TIPO_TXT', NULL, NULL, 0, null),
-		(136007, 136, 'PRM_VALOR', 'LBL_PRM_VALOR', NULL, NULL, 0, null);
+		(136007, 136, 'PRM_VALOR', 'LBL_PRM_VALOR', NULL, NULL, 0, null),
+		
+	-- TKDISVEH_DISPOSITIVOS
+		(137001, 137, 'RVE_CODIGO', 'LBL_RVE_CODIGO', NULL, NULL, 0, null),
+		(137002, 137, 'RVE_NOMBRE', 'LBL_RVE_NOMBRE', NULL, NULL, 0, '{ "tableVisible": false, "formVisible": false }'),
+		(137003, 137, 'ASSIGNMENT_DAT', 'LBL_ASSIGNMENT_DAT', NULL, NULL, 0, null),
+		(137004, 137, 'RDS_ID', 'LBL_RDS_ID', NULL, NULL, 0, '{ "tableVisible": false, "formVisible": false }'),
+		(137005, 137, 'RDS_RDT_ID', 'LBL_RDS_RDT_ID', NULL, NULL, 0, '{ "tableVisible": false, "formVisible": false }'),
+		(137006, 137, 'RDS_RDT_CODIGO', 'LBL_RDS_RDT_CODIGO', NULL, NULL, 0, null),
+		(137007, 137, 'RDS_RDT_NOMBRE', 'LBL_RDS_RDT_NOMBRE', NULL, NULL, 0, null),
+		(137008, 137, 'RDS_CODIGO', 'LBL_RDS_CODIGO', NULL, NULL, 0, null),
+		(137009, 137, 'RDS_NOMBRE', 'LBL_RDS_NOMBRE', NULL, NULL, 0, '{ "tableVisible": false, "formVisible": false }'),
+		(137010, 137, 'RDS_SERIE_NRO', 'LBL_RDS_SERIE_NRO', NULL, NULL, 0, null),
+		(137011, 137, 'RDS_GARANTIA_PERIODO', 'LBL_RDS_GARANTIA_PERIODO', NULL, NULL, 0, null),
+		(137012, 137, 'RDS_F_COMPRA', 'LBL_RDS_F_COMPRA', NULL, NULL, 0, null),
+		
+	-- CUSTOM_IMPORTACIONES_RECAUDACION_CONDUCTOR	
+		(138001, 138, 'FICHERO', 'LBL_FILE', NULL, NULL, 0, '{ "formVisible": false }'),
+		(138002, 138, 'FECHA_PROCESADO', 'LBL_FECHA_PROCESADO', NULL, NULL, 0, '{ "editable": false }'),
+		(138003, 138, 'CONTENIDO', 'LBL_CONTENT', NULL, NULL, 0, '{ "multiline": 10, "editable": false, "tableVisible": false }');
 	GO
 	
 	SET IDENTITY_INSERT dbo.sg_metadata_columns OFF;  
 	GO
+	
+-- 
+-- dbo.sg_metadata_table_commands
+--
 
+	SET IDENTITY_INSERT dbo.sg_metadata_table_commands ON;  
+	GO
+	
+	INSERT INTO dbo.sg_metadata_table_commands (id, sg_metadata_table_id, name, label, label_description, mdi_icon, require_confirmation, available_in_form, available_in_table, groovy) VALUES
+	(1, 138, 'ImportCashCollectionDrivingStaffCommand', 'LBL_CMD_IMPORT_CASH_COLLECTION_DRIVING_STAFF', 'LBL_CMD_IMPORT_CASH_COLLECTION_DRIVING_STAFF_DESC', 'mdi mdi-cog', 1, 1, 0, 'config/groovy/backoffice/bus_demo/command/ImportCashCollectionDrivingStaffCommand.groovy');
+	
+	SET IDENTITY_INSERT dbo.sg_metadata_table_commands OFF;  
+	GO
+	
+-- 
+-- dbo.sg_metadata_tasks
+--
+
+	SET IDENTITY_INSERT dbo.sg_metadata_tasks ON;  
+	GO
+	
+	INSERT INTO dbo.sg_metadata_tasks (id, name, cron_expression, groovy, params) VALUES
+	(1, 'CleanAttachments', '0 0/1 * 1/1 * ? *', 'config/groovy/backoffice/common/task/CleanAttachmentTask.groovy', NULL);
+
+
+	SET IDENTITY_INSERT dbo.sg_metadata_tasks OFF;  
+	GO

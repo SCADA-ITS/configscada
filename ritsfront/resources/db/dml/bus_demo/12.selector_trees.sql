@@ -1,6 +1,6 @@
 INSERT INTO ui.selector_trees(id, "label", default_module_id, enabled, visible) VALUES
 (2, 'LBL_MASTER_DATA', 192001, true, true),
-(3, 'LBL_PROCESSES', 192001, true, true),
+(3, 'LBL_PROCESSES', 192101, true, true),
 (4, 'LBL_VALIDATION_AND_SALES', 192001, true, true),
 (5, 'LBL_SHIFTS_AND_EXPEDITIONS', 192001, true, true),
 (6, 'LBL_LIQUIDATION_OF_DRIVING_STAFF', 192001, true, true),
@@ -42,8 +42,8 @@ INSERT INTO ui.selector_tree_nodes(id, selector_tree_id, "label", image, module_
 		
 -- PROCESSES
 (301, 3, 'LBL_PROCESSES', null, null, true, true),
-	(30101, 3, 'LBL_ASSIGN_DEVICE_VEHICLE', null, 192001, true, true),
-	(30102, 3, 'LBL_IMPORT_OF_CASH_COLLECTION_DRIVING_STAFF', null, 192001, true, true),
+	(30101, 3, 'LBL_ASSIGN_DEVICE_VEHICLE', null, 192101, true, true),
+	(30102, 3, 'LBL_IMPORT_OF_CASH_COLLECTION_DRIVING_STAFF', null, 192102, true, true),
 	(30103, 3, 'LBL_SCHEDULES', null, 192001, true, true),
 	(30104, 3, 'LBL_PARAMETER_SETTING', null, null, true, true),
 		(3010401, 3, 'LBL_PROCESSES', null, 192001, true, true),
