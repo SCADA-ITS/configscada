@@ -46,6 +46,7 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_ES', 1, 'LBL_USER_PERMISSIONS', 'Permisos', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_USER_ROLE', 'Rol', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_USER_WITH_ALL_PERMISSIONS_ASIGNED', 'Usuario con todos los permisos asignados', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_MANAGEMENT_AREAS', 'Áreas de gestión', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 -- en_GB
 ('en_GB', 1, 'LBL_ALLOW_MULTIPLE_SESSIONS', 'Allow multiple sessions', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -84,6 +85,7 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('en_GB', 1, 'LBL_USER_PERMISSIONS', 'Permissions', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_USER_ROLE', 'Role', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_USER_WITH_ALL_PERMISSIONS_ASIGNED', 'User with all permissions asigned', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_MANAGEMENT_AREAS', 'Management areas', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 -- sk_SK
 ('sk_SK', 1, 'LBL_ALLOW_MULTIPLE_SESSIONS','Povoliť viacnásobné prihlásenie',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
@@ -155,4 +157,5 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_CL', 1, 'LBL_USER_PASSWORD_CONFIRM', 'Confirmar contraseña', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_USER_PERMISSIONS', 'Permisos', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_USER_ROLE', 'Rol', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('es_CL', 1, 'LBL_USER_WITH_ALL_PERMISSIONS_ASIGNED', 'Usuario con todos los permisos asignados', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+('es_CL', 1, 'LBL_USER_WITH_ALL_PERMISSIONS_ASIGNED', 'Usuario con todos los permisos asignados', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_MANAGEMENT_AREAS', 'Áreas de gestión', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

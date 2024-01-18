@@ -241,8 +241,8 @@ INSERT INTO ui.data_sources(id, data_source_type_id, "name", description, entity
 (233, 3, 'sendChangeElementState', 'sendChangeElementState', 'ElementStateVO', 'id', true, true),
 (234, 4, 'service_get_users', 'service_get_users', 'UserVO', 'id', true, true),
 (235, 4, 'service_get_roles', 'service_get_roles', 'RoleVO', 'id', true, true),
-(236, 1, 'getUserByName', 'getUserByName', 'UserVO', 'id', true, true);
-
+(236, 1, 'getUserByName', 'getUserByName', 'UserVO', 'id', true, true),
+(237, 1, 'getManagementAreas', 'getManagementAreas', 'ManagementAreasVO', 'id', true, true);
 
 INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) VALUES
 (1, 1, 'http://192.168.88.163:8082/graphql'),
@@ -1413,4 +1413,9 @@ INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) V
 (236, 1, 'http://192.168.88.163:8082/graphql'),
 (236, 2, 'getUserByName'),
 (236, 3, 'name'),
-(236, 4, NULL);
+(236, 4, NULL),
+
+(237, 1, 'http://192.168.88.163:8082/graphql'),
+(237, 2, 'getManagementAreas'),
+(237, 3, ''),
+(237, 4, NULL);
