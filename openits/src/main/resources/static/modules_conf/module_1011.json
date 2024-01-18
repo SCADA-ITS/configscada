@@ -14,6 +14,10 @@
 	"restEndpoints": {
 		"user": "users/${id}",
 		"userRole": "users/role/${id}",
-		"permissions": "users/systemPermissions"
+		"permissions": "users/systemPermissions",
+		"managementAreas" : "management_areas"
+	},
+	"requiredPermissions": {
+		"edit": "SystemPermission:2"
 	}
 }

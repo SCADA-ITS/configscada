@@ -302,6 +302,8 @@ public class VODataSourceAdapter {
 	
 	public static final int DATA_SOURCE_SEND_CHANGE_ELEMENT_STATE = getPropertyInt("send_change_element_state");
 	
+	public static final int DATA_SOURCE_GET_MANAGEMENT_AREAS = getPropertyInt("get_management_areas");
+	
 	private static int getPropertyInt(final String prop) {
 		
 		String value = AppInfra.getProperty(prop);

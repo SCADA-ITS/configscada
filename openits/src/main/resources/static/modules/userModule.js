@@ -22,8 +22,10 @@ export default class UserModule extends GenericModule {
 		this.newUser = null;
 		this.userPermissions = [];
 		this.rolPermissions = [];
+		this.managementAreasAvailables = [];
 		this.userSystem = false;
 		this.userData = util.user.getUserData();
+		this.editPermission = util.module.isAllowedPermission(this.config.requiredPermissions.edit);
 	}
 
 
@@ -38,7 +40,6 @@ export default class UserModule extends GenericModule {
 				this.userSystem = true;
 			}
 		}
-
 
 		if (this.userSystem &&
 			(this.moduleAction.id === this.config.moduleAction.edit ||
@@ -63,12 +64,11 @@ export default class UserModule extends GenericModule {
 									{
 										id: this.uid,
 										rows: [],
-										hidden: false
+										hidden: true
 									},
 									{
 										id: "loading-" + this.uid,
-										rows: [getViewDrawLoading()],
-										hidden: true
+										rows: [util.ui.getViewDrawLoading()]
 									},
 									{ width: 6 }
 								]
@@ -77,20 +77,6 @@ export default class UserModule extends GenericModule {
 						]
 					}
 				]
-			};
-
-
-			function getViewDrawLoading() {
-
-				return {
-					view: "template",
-					template: function() {
-
-						let icon = "<img src='img/loading.svg' align='center'>";
-
-						return "<div class='empty-app-inner'>" + icon + "<span class='empty-app-inner-text'>" + i18n.t("LBL_LOADING_DATA") + "</span></div>";
-					}
-				}
 			};
 		}
 
@@ -102,31 +88,31 @@ export default class UserModule extends GenericModule {
 
 		let self = this;
 
-		if (this.moduleAction.id === this.config.moduleAction.add) {
+		if (self.moduleAction.id === self.config.moduleAction.add) {
 
 			add();
 		}
-		else if (this.moduleAction.id === this.config.moduleAction.edit ||
-			this.moduleAction.id === this.config.moduleAction.changePassword) {
+		else if (self.moduleAction.id === self.config.moduleAction.edit ||
+			self.moduleAction.id === self.config.moduleAction.changePassword) {
 
 			edit();
 		}
-		else if (this.moduleAction.id === this.config.moduleAction.remove) {
+		else if (self.moduleAction.id === self.config.moduleAction.remove) {
 
 			remove();
 		}
-		else if (this.moduleAction.id === this.config.moduleAction.lock) {
+		else if (self.moduleAction.id === self.config.moduleAction.lock) {
 
 			lock();
 		}
 
-		if (this.dtPermissions) {
+		if (self.dtPermissions) {
 
-			this.dtPermissions.callbacks();
+			self.dtPermissions.callbacks();
 
-			if (this.moduleAction.id === this.config.moduleAction.changePassword) {
+			if (self.moduleAction.id === self.config.moduleAction.changePassword) {
 
-				this.dtPermissions.disable();
+				self.dtPermissions.disable();
 			}
 		}
 
@@ -141,8 +127,33 @@ export default class UserModule extends GenericModule {
 
 				util.ui.setTitle(container.config.id, i18n.t("LBL_USER_ADD"));
 			}
+			
+			webix.ajax().get(appConfig.restUrl + self.config.restEndpoints.managementAreas).then(function(managementAreasResponse) {
 
-			drawComponents();
+				if (managementAreasResponse != null) {
+
+					let mAreas = managementAreasResponse.json();
+
+					if (Array.isArray(mAreas) && mAreas.length > 0) {
+
+						mAreas.sort((a, b) => (b.alias < a.alias) ? 1 : ((a.alias < b.alias) ? -1 : 0));
+
+						for (let area of mAreas) {
+
+							self.managementAreasAvailables.push({
+								id: area.id,
+								value: area.alias,
+								disabled: (self.userData.managementAreas && self.userData.managementAreas.find(a => a.id === area.id)) ? false : true,
+								alias: area.alias,
+								description: area.description,
+								visible: area.visible
+							});
+						}
+					}
+
+					drawComponents();
+				}
+			});
 		};
 
 
@@ -157,41 +168,66 @@ export default class UserModule extends GenericModule {
 
 					if (data != null) {
 
-						self.oldUser = data.json();
+						webix.ajax().get(appConfig.restUrl + self.config.restEndpoints.managementAreas).then(function(managementAreasResponse) {
 
-						if (self.oldUser.role.rolePermissions) {
+							self.oldUser = data.json();
 
-							self.oldUser.role.rolePermissions.forEach(e => {
-								self.rolPermissions.push(e);
-							});
-						}
+							if (self.oldUser.role.rolePermissions) {
 
-						if (self.oldUser.userPermissions) {
-
-							self.oldUser.userPermissions.forEach(e => {
-								self.userPermissions.push(e)
-							});
-						}
-
-						let container = $$(self.args.containerId);
-
-						if (container) {
-							
-							util.ui.setTitle(container.config.id, i18n.t("LBL_USER_EDIT") + " - " + self.oldUser.name);
-						}
-
-						drawComponents();
-						setVal(self.oldUser);
-
-						if (self.dtPermissions) {
-
-							self.dtPermissions.callbacks();
-							
-							if (self.moduleAction.id === self.config.moduleAction.changePassword) {
-
-								self.dtPermissions.disable();
+								self.oldUser.role.rolePermissions.forEach(e => {
+									self.rolPermissions.push(e);
+								});
 							}
-						}
+
+							if (self.oldUser.userPermissions) {
+
+								self.oldUser.userPermissions.forEach(e => {
+									self.userPermissions.push(e)
+								});
+							}
+
+							if (managementAreasResponse != null) {
+
+								let mAreas = managementAreasResponse.json();
+
+								if (Array.isArray(mAreas) && mAreas.length > 0) {
+
+									mAreas.sort((a, b) => (b.alias < a.alias) ? 1 : ((a.alias < b.alias) ? -1 : 0));
+
+									for (let area of mAreas) {
+
+										self.managementAreasAvailables.push({
+											id: area.id,
+											value: area.alias,
+											disabled: (self.userData.managementAreas && self.userData.managementAreas.find(a => a.id === area.id)) ? false : true,
+											alias: area.alias,
+											description: area.description,
+											visible: area.visible
+										});
+									}
+								}
+							}
+
+							let container = $$(self.args.containerId);
+
+							if (container) {
+
+								util.ui.setTitle(container.config.id, i18n.t("LBL_USER_EDIT") + " - " + self.oldUser.name);
+							}
+
+							drawComponents();
+							setVal(self.oldUser);
+
+							if (self.dtPermissions) {
+
+								self.dtPermissions.callbacks();
+
+								if (self.moduleAction.id === self.config.moduleAction.changePassword) {
+
+									self.dtPermissions.disable();
+								}
+							}
+						});
 					}
 				});
 			}
@@ -381,6 +417,7 @@ export default class UserModule extends GenericModule {
 			if (Array.isArray(users) && users.length > 0) {
 
 				arrayUsers = users;
+				
 			} else {
 
 				arrayUsers.push(users);
@@ -415,6 +452,7 @@ export default class UserModule extends GenericModule {
 					user.userPermissions.forEach(e => {
 						permissions.push(e.id);
 					});
+					
 				} else {
 
 					permissions = [];
@@ -446,7 +484,6 @@ export default class UserModule extends GenericModule {
 			};
 
 			$$("loading-" + self.uid).hide();
-
 			webix.ui(viewMain, $$(self.uid));
 
 
@@ -512,6 +549,11 @@ export default class UserModule extends GenericModule {
 				tabs.cells.push({
 					header: i18n.t("LBL_USER_PERMISSIONS"),
 					body: getDataTable()
+				});
+				
+				tabs.cells.push({
+					header: i18n.t("LBL_MANAGEMENT_AREAS"),
+					body: getManagementAreas()
 				});
 
 				return tabs;
@@ -639,10 +681,7 @@ export default class UserModule extends GenericModule {
 									self.newUser = newUser;
 									setVal();
 								});
-
 							}
-
-						
 						}
 					};
 
@@ -882,7 +921,7 @@ export default class UserModule extends GenericModule {
 								} else {
 
 									let toDelete = [];
-									let userPermissions = self.userPermissions;
+ 									let userPermissions = self.userPermissions;
 
 									self.dtPermissions.rowsSelected.forEach(e => {
 
@@ -947,6 +986,124 @@ export default class UserModule extends GenericModule {
 					}
 					
 					return dataTable;
+				}
+				
+				function getManagementAreas() {
+
+					let dbList = {};
+
+					dbList = {
+						id: "dblist-" + self.uid,
+						css: "bordered-layout-without-border-top",
+						disabled: !self.editPermission,
+						rows: [getDbList()]
+					};
+
+					function getDbList() {
+
+						let viewDbList = {};
+						let mAreasSelected = "";					
+
+						if (self.oldUser && Array.isArray(self.oldUser.managementAreas) && self.oldUser.managementAreas.length > 0) {
+
+							for (let i = 0; i < self.oldUser.managementAreas.length; i++) {
+
+								if (i === self.oldUser.managementAreas.length - 1) {
+
+									mAreasSelected += self.oldUser.managementAreas[i].id;
+
+								} else {
+
+									mAreasSelected += self.oldUser.managementAreas[i].id + ",";
+								}
+							}
+						}
+
+						viewDbList = {
+							cols: [
+								{ width: 10 },
+								{
+									rows: [
+										{ height: 10 },
+										{
+											id: "view-dbllist-" + self.uid,
+											view: "dbllist",
+											css: "dbllist",
+											labelLeft: i18n.t("LBL_AVAILABLE"),
+											labelRight: i18n.t("LBL_SELECTED"),
+											data: self.managementAreasAvailables,
+											value: mAreasSelected,
+											on: {
+												onChange: function() {
+
+													this.blockEvent();
+
+													let selectedItems = this.getValue();
+
+													if (selectedItems != "") {
+
+														for (let selectedItem of selectedItems.split(",")) {
+
+															if (self.oldUser && Array.isArray(self.oldUser.managementAreas) && self.oldUser.managementAreas.length > 0) {
+
+																let itemToSelect = self.oldUser.managementAreas.find(item => item.id === selectedItem);
+
+																if (itemToSelect) {
+
+																	this.select(itemToSelect.id, true);
+
+																} else {
+
+																	let itemToUnSelect = self.managementAreasAvailables.find(item => item.id === selectedItem && item.disabled);
+
+																	if (itemToUnSelect) {
+
+																		this.select(selectedItem, false);
+																	}
+																}
+																
+															} else {
+
+																let itemToUnSelect = self.managementAreasAvailables.find(item => item.id === selectedItem && item.disabled);
+
+																if (itemToUnSelect) {
+
+																	this.select(selectedItem, false);
+																}
+															}
+														}
+
+													} else {
+							
+														if (self.oldUser && Array.isArray(self.oldUser.managementAreas) && self.oldUser.managementAreas.length > 0) {
+
+															for (let oldUserMArea of self.oldUser.managementAreas) {
+
+																let itemToSelect = self.managementAreasAvailables.find(item => item.id === oldUserMArea.id && item.disabled);
+
+																if (itemToSelect) {
+
+																	this.select(itemToSelect.id, true);
+																}
+															}
+														}
+													}
+
+													this.unblockEvent();
+												}
+											}
+										},
+										{ height: 10 }
+									]
+								},
+								{ width: 10 }
+							]
+						};
+
+						return viewDbList;
+					}
+
+					return dbList;
 				}
 			};
 
@@ -1031,9 +1188,23 @@ export default class UserModule extends GenericModule {
 																permissionsIds.push(permission.id);
 															}
 														});
-	
+														
+														let areasSelectedIds = $$("view-dbllist-" + self.uid).getValue().split(",");
+														let areasToSave = [];														
+
+														areasSelectedIds.forEach(id => {
+
+															let managementArea = self.managementAreasAvailables.find(a => a.id === id);
+
+															if (managementArea) {
+
+																areasToSave.push(managementArea.id);
+															}
+														});
+
 														let body = adapterUserToUpdate(values);
 														body[0].user.userPermissionIds = permissionsIds;
+														body[0].user.managementAreaIds = areasToSave;
 	
 														if (self.moduleAction.id === self.config.moduleAction.add) {
 	
@@ -1044,6 +1215,33 @@ export default class UserModule extends GenericModule {
 	
 														} else if (self.moduleAction.id === self.config.moduleAction.edit || self.moduleAction.id === self.config.moduleAction.changePassword) {
 	
+															if (self.oldUser.id === self.userData.id) {
+
+																let oldSessionData = webix.storage.session.get(SESSION_STORAGE_SESSION_DATA);
+
+																if (Array.isArray(oldSessionData.user.managementAreas) && oldSessionData.user.managementAreas.length > 0) {
+
+																	oldSessionData.user.managementAreas = [];
+																}
+
+																areasSelectedIds.forEach(id => {
+
+																	let managementArea = self.managementAreasAvailables.find(a => a.id === id);
+
+																	if (managementArea) {
+
+																		oldSessionData.user.managementAreas.push({
+																			id: managementArea.id,
+																			alias: managementArea.alias,
+																			description: managementArea.description,
+																			visible: managementArea.visible
+																		});
+																	}
+																});
+
+																webix.storage.session.put(SESSION_STORAGE_SESSION_DATA, oldSessionData);
+															}
+															
 															body[0].user.id = self.oldUser.id;
 	
 															webix.ajax().headers(CONTENT_TYPE_JSON).put(appConfig.restUrl + self.config.actionEndpoints.edit, body[0]).then(function(data) {
@@ -1062,7 +1260,6 @@ export default class UserModule extends GenericModule {
 	
 														let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_REQUIRED_FIELDS_NOT_COMPLETED_DESCRIPTION"), null, null, null);
 														ms.show();
-	
 													}
 													
 												} else {
