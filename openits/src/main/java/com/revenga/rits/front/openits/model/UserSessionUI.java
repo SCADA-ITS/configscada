@@ -33,6 +33,7 @@ public class UserSessionUI implements Serializable {
 	public static final String USER_FIELD_PASSWORD_EXPIRED_AT = "passwordExpiredAt";
 	public static final String USER_FIELD_ALLOW_MULTIPLE_SESSIONS = "allowMultipleSessions";
 	public static final String USER_FIELD_SESSION_EXPIRE_TIME_S = "sessionExpireTimeS";
+	public static final String USER_FIELD_MANAGEMENT_AREAS = "managementAreas";
 	public static final String USER_LOCALE = "locale";
 	public static final String USER_LOCALE_CODE = "code";
 	

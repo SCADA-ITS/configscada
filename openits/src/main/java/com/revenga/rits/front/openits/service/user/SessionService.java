@@ -513,7 +513,9 @@ public class SessionService {
 
 		if (!CollectionUtils.isEmpty(userSessions)) {
 
-			for (UserSessionUI userSession : userSessions) {
+			for (UserSessionUI us : userSessions) {
+				
+				UserSessionUI userSession = this.sessions.get(us.getSessionId());
 
 				Map<String, Object> currentUser = userSession.getUser();
 
@@ -526,13 +528,9 @@ public class SessionService {
 						continue;
 					}
 
-					Object currentValue = currentUserfield.getValue();
 					Object newValue = user.get(key);
 
-					if (currentValue != null && !(currentValue instanceof Map) && !currentValue.equals(newValue)) {
-
-						currentUser.put(key, newValue);
-					}
+					currentUser.put(key, newValue);
 				}
 				
 				setAccess(currentUser, userSession);
@@ -624,6 +622,23 @@ public class SessionService {
 			else if (userNoMultipleSessions) {
 
 				userSession.setAccess(UserSessionUI.DENY_MULTI_SESSION_NOT_ALLOWED);
+			}
+			else {
+				
+				if (userSession.getManagementAreaId() != null) {
+					
+					Object managementAreasObject = user.get(UserSessionUI.USER_FIELD_MANAGEMENT_AREAS);
+					
+					if (managementAreasObject instanceof List) {
+						
+						List<Map<String, Object>> managementAreas = (List<Map<String, Object>>) managementAreasObject;
+						
+						if (managementAreas.stream().filter(e -> e.get(UserSessionUI.USER_FIELD_ID).equals(userSession.getManagementAreaId())).findFirst().orElse(null) == null) {
+							
+							userSession.setAccess(UserSessionUI.UNAUTHORIZED);
+						}
+					}
+				}
 			}
 		}
 	}
