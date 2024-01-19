@@ -32,6 +32,11 @@ class SignallingCommand_71_2 {
 	static final String SIGNALLING = "signalling";
 	static final String CROSS_ORDER = "cross_order";
 	static final String ARROW_ORDER = "arrow_order";
+	static final String BIT_A = "bit_A_order";
+	static final String BIT_B = "bit_B_order";
+	static final String BIT_C = "bit_C_order";
+	static final String BIT_D = "bit_D_order";
+
 	static final boolean ACTIVATION_ON = true;
 	static final boolean ACTIVATION_OFF = false;
 		
@@ -73,6 +78,11 @@ class SignallingCommand_71_2 {
 	static final String ascii = "15,B0,C1,C2,C4,C7,C9,CB,CD,CE,D3,D4,D6,D7,DA,DC,DD,DF,E1,E2,E4,E7,E9,EB,ED,EE,F3,F4,F6,F7,FA,FC,FD,102,103,104,105,106,107,10C,10D,10E,10F,110,111,119,11,11B,139,13A,13D,13E,141,143,147,148,150,151,154,155,158,159,15A,15B,15E,15F,160,161,162,163,164,165,16E,16F,170,171,179,17A,17B,17C,17D,17E,2C7,2D8,2D9,2DB,2DC,2DD";
 	static final Long ZERO = 0L;
 
+	//Element Types ID
+	static final Long CLV = 11L;
+	static final Long AF = 12L;
+
+
 	//PICTO VALUES
 	static final Long ARROW = 1L;
 	static final Long CROSS = 2L;
@@ -100,7 +110,65 @@ class SignallingCommand_71_2 {
 			String message = "";
 			Element element = EntitiesManager.getInstance().getElement(signallingCommand.elementTypeId, signallingCommand.elementId);
 			
-			if (element.elementSubtypeId == 11 || element.elementSubtypeId == 12){
+			if (element.elementSubtypeId == CLV){
+				List bitValue = [];
+				def signalling = [
+					10: [0,0,0,1],
+					20: [1,0,0,1],
+					30: [1,0,0,0],
+					40: [0,1,0,0],
+					50: [1,1,0,0],
+					60: [0,0,1,0],
+					70: [1,0,1,0],
+					80: [0,1,1,0],
+					90: [1,1,1,0],
+					100: [0,1,0,1],
+					110: [1,1,0,1],
+					120: [0,0,1,1],
+					130: [1,0,1,1],
+					140: [1,0,1,1]
+				]
+				
+				// Iterar sobre las entradas del diccionario y cambiar 0 y 1 por true y false
+				signalling.each { clave, valores ->
+					signalling[clave] = valores.collect { it == 1 ? true : false }
+				}
+
+				Object object = mapper.readValue(signallingCommand.signallingParams.get(0).getValue(), Zone[].class);		
+				//Recorro cada zona del panel
+				for (int i = 0; i < object.size(); i++){
+					if(object[i].getGraphics()){
+						Long pictoValue = getGraphic(element, i+1, object[i].getGraphics()[0].getValue())
+						def position = signalling.find { clave, valor -> pictoValue == clave }?.key
+
+						if (position != null) {
+							// Acceder al valor asociado usando el nombre del diccionario
+							bitValue = signalling[position]
+						}
+
+						xidPointValueTimeModel = signallingCommandUtils.getXidPointValueTimeModel(signallingCommand, dataSourceXid + "_" +  BIT_A, bitValue[0]);
+						xidPointValueTimeModels.add(xidPointValueTimeModel);
+						xidPointValueTimeModel = signallingCommandUtils.getXidPointValueTimeModel(signallingCommand, dataSourceXid + "_" +  BIT_B, bitValue[1]);
+						xidPointValueTimeModels.add(xidPointValueTimeModel);
+						xidPointValueTimeModel = signallingCommandUtils.getXidPointValueTimeModel(signallingCommand, dataSourceXid + "_" +  BIT_C, bitValue[2]);
+						xidPointValueTimeModels.add(xidPointValueTimeModel);
+						xidPointValueTimeModel = signallingCommandUtils.getXidPointValueTimeModel(signallingCommand, dataSourceXid + "_" +  BIT_D, bitValue[3]);
+						xidPointValueTimeModels.add(xidPointValueTimeModel);
+
+					}else{
+						log.error("No hay gráfico en el objeto")
+					}
+				}
+				
+			
+				mapper.setSerializationInclusion(Include.NON_NULL);
+				message = mapper.writeValueAsString(xidPointValueTimeModels);
+				if (driver != null) {
+				
+					driver.send(message);
+				}
+
+			}else if (element.elementSubtypeId == AF){
 				
 				Object object = mapper.readValue(signallingCommand.signallingParams.get(0).getValue(), Zone[].class);		
 				//Recorro cada zona del panel
@@ -122,8 +190,7 @@ class SignallingCommand_71_2 {
 
 						}
 					}else{
-						xidPointValueTimeModel = signallingCommandUtils.getXidPointValueTimeModel(signallingCommand, dataSourceXid + "_" +  CONTENT, ZERO);
-						xidPointValueTimeModels.add(xidPointValueTimeModel);
+						log.error("No hay gráfico en el objeto")
 					}
 				}
 				

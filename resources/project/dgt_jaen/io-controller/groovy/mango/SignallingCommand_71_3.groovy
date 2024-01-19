@@ -25,11 +25,19 @@ class SignallingCommand_71_3 {
 	static final String SIGNALLING = "signalling";
 	static final String CROSS_ORDER = "cross_order";
 	static final String ARROW_ORDER = "arrow_order";
+	static final String BIT_A = "bit_a_order";
+	static final String BIT_B = "bit_b_order";
+	static final String BIT_C = "bit_c_order";
+	static final String BIT_D = "bit_d_order";
 	static final String MULTI = "";
 	static final String CMD_VALUE_POWER_OFF_DGT = "02201A305C2D03";
 	static final boolean SWICHT_OFF = false;
 	static final Long SHUTDOWN = 0L;
-	static final Long PARAM_CONFIG_PROTOCOLO = 2L;
+	static final Long PARAM_CONFIG_PROTOCOLO = 3L;
+
+	//Element Types ID
+	static final Long CLV = 11L;
+	static final Long AF = 12L;
 
 	GroovyShell shell;
 	def signallingCommandUtils;
@@ -49,7 +57,25 @@ class SignallingCommand_71_3 {
 			XidPointValueTimeModel xidPointValueTimeModel;		
 			Element element = EntitiesManager.getInstance().getElement(signallingCommand.elementTypeId, signallingCommand.elementId);
 			
-			if(element.elementSubtypeId == 11 || element.elementSubtypeId == 12){
+			if(element.elementSubtypeId == CLV){
+				ElementValue protocolo = EntitiesManager.getInstance().getElementValueConfig(element, PARAM_CONFIG_PROTOCOLO);
+
+				if(protocolo != null && protocolo.getValue().equals("Modbus")){
+					xidPointValueTimeModel = signallingCommandUtils.getXidPointValueTimeModel(signallingCommand, dataSourceXid + "_" + BIT_A, SWICHT_OFF);
+					xidPointValueTimeModels.add(xidPointValueTimeModel);
+					xidPointValueTimeModel = signallingCommandUtils.getXidPointValueTimeModel(signallingCommand, dataSourceXid + "_" + BIT_B, SWICHT_OFF);
+					xidPointValueTimeModels.add(xidPointValueTimeModel);
+					xidPointValueTimeModel = signallingCommandUtils.getXidPointValueTimeModel(signallingCommand, dataSourceXid + "_" + BIT_C, SWICHT_OFF);
+					xidPointValueTimeModels.add(xidPointValueTimeModel);
+					xidPointValueTimeModel = signallingCommandUtils.getXidPointValueTimeModel(signallingCommand, dataSourceXid + "_" + BIT_D, SWICHT_OFF);
+					xidPointValueTimeModels.add(xidPointValueTimeModel);
+				}else{
+					log.error("No se encuentra protocolo");	
+					return true;			
+				}
+				
+			}else if(element.elementSubtypeId == AF){
+				
 				ElementValue protocolo = EntitiesManager.getInstance().getElementValueConfig(element, PARAM_CONFIG_PROTOCOLO);
 				
 				if(protocolo != null && protocolo.getValue().equals("Modbus")){
