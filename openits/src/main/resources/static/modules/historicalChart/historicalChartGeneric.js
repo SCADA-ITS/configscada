@@ -276,7 +276,7 @@ export default class HistoricalChartGeneric {
 						view: "daterangepicker",
 						name: "date",
 						width: 500,
-						label: i18n.t("LBL_DATE"),
+						label: i18n.t("LBL_HISTORICAL_CHART_DATES_SELECTED"),
 						value: { start: new Date(), end: webix.Date.add(new Date(), self.initCountdown, self.initRange) },
 						timepicker: true,
 						format: format,
