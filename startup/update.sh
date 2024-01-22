@@ -90,6 +90,7 @@ fi
 if [ "$opcion" == 1 ] || [ "$opcion" == 3 ]; then
 #Copio recursos del front
 echo -e "\n\nCopying front resources..."
+sed -i "s|\(spring.profiles.active=\).*|\1$PROJECT|" ~/repositorio/ritsfront/openits/src/main/resources/application.properties
 sed -i "s|\(spring.datasource.url=jdbc:postgresql://\).*|\1$REMOTE_BBDD:5430/rits|" ~/repositorio/ritsfront/openits/src/main/resources/application.properties
 sed -i "s|\(ws://\).*\(:61614\)|\1$REMOTE_HOST\2|" ~/repositorio/ritsfront/openits/src/main/resources/project/$PROJECT/data/config.js
 rm -R ~/repositorio/ritsfront/openits/src/main/resources/project
