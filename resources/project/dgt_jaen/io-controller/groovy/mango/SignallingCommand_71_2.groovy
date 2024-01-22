@@ -82,10 +82,9 @@ class SignallingCommand_71_2 {
 	static final Long CLV = 11L;
 	static final Long AF = 12L;
 
-
 	//PICTO VALUES
-	static final Long ARROW = 1L;
-	static final Long CROSS = 2L;
+	static final Long ARROW = 1;
+	static final Long CROSS = 2;
 			
 	GroovyShell shell;
 	def signallingCommandUtils;
@@ -169,26 +168,34 @@ class SignallingCommand_71_2 {
 				}
 
 			}else if (element.elementSubtypeId == AF){
+				List bitValue = [];
+				def signalling = [
+					(ARROW): [1, 0],
+					(CROSS): [0, 1]
+				]
+
+				// Iterar sobre las entradas del diccionario y cambiar 0 y 1 por true y false
+				signalling.each { clave, valores ->
+					signalling[clave] = valores.collect { it == 1 ? true : false }
+				}
 				
 				Object object = mapper.readValue(signallingCommand.signallingParams.get(0).getValue(), Zone[].class);		
 				//Recorro cada zona del panel
 				for (int i = 0; i < object.size(); i++){
 					if(object[i].getGraphics()){
 						Long pictoValue = getGraphic(element, i+1, object[i].getGraphics()[0].getValue())
-						
-						if(pictoValue == ARROW){
-							xidPointValueTimeModel = signallingCommandUtils.getXidPointValueTimeModel(signallingCommand, dataSourceXid + "_" +  ARROW_ORDER, ACTIVATION_ON);
-							xidPointValueTimeModels.add(xidPointValueTimeModel);
-							xidPointValueTimeModel = signallingCommandUtils.getXidPointValueTimeModel(signallingCommand, dataSourceXid + "_" +  CROSS_ORDER, ACTIVATION_OFF);
-							xidPointValueTimeModels.add(xidPointValueTimeModel);
+						def position = signalling.find {clave, valor -> pictoValue == clave}?.key
 
-						}else if(pictoValue == CROSS){
-							xidPointValueTimeModel = signallingCommandUtils.getXidPointValueTimeModel(signallingCommand, dataSourceXid + "_" +  CROSS_ORDER, ACTIVATION_ON);
-							xidPointValueTimeModels.add(xidPointValueTimeModel);
-							xidPointValueTimeModel = signallingCommandUtils.getXidPointValueTimeModel(signallingCommand, dataSourceXid + "_" +  ARROW_ORDER, ACTIVATION_OFF);
-							xidPointValueTimeModels.add(xidPointValueTimeModel);
-
+						if (position != null) {
+							// Acceder al valor asociado usando el nombre del diccionario
+							bitValue = signalling[position]
 						}
+						
+						xidPointValueTimeModel = signallingCommandUtils.getXidPointValueTimeModel(signallingCommand, dataSourceXid + "_" +  ARROW_ORDER, bitValue[0]);
+						xidPointValueTimeModels.add(xidPointValueTimeModel);
+						xidPointValueTimeModel = signallingCommandUtils.getXidPointValueTimeModel(signallingCommand, dataSourceXid + "_" +  CROSS_ORDER, bitValue[1]);
+						xidPointValueTimeModels.add(xidPointValueTimeModel);
+
 					}else{
 						log.error("No hay gráfico en el objeto")
 					}
@@ -197,7 +204,7 @@ class SignallingCommand_71_2 {
 			
 				mapper.setSerializationInclusion(Include.NON_NULL);
 				message = mapper.writeValueAsString(xidPointValueTimeModels);
-				
+
 				if (driver != null) {
 				
 					driver.send(message);

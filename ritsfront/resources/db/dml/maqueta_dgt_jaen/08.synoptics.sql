@@ -86,7 +86,7 @@ INSERT INTO ui.synoptic_layer_elements
 (90107112, 'Element:71:19', 120071, 'AF-1-02-DP-D', 334, 912, false, NULL, true, false, NULL, true),
 (90107112, 'Element:71:20', 120071, 'AF-1-02-DP-C', 334, 817, false, NULL, true, false, NULL, true),
 (90107112, 'Element:71:21', 120071, 'AF-1-02-DP-I', 334, 717, false, NULL, true, false, NULL, true),
-(90107112, 'Element:71:17', 120071, 'AF-1-01-DP-C', 72, 817, false, NULL, true, false, NULL, true),
+(90107112, 'Element:71:17', 120071, 'AF-1-01-DP-C', 71, 817, false, NULL, true, false, NULL, true),
 (90107112, 'Element:71:18', 120071, 'AF-1-01-DP-I', 71, 716, false, NULL, true, false, NULL, true),
 (90107112, 'Element:71:16', 120071, 'AF-1-01-DP-D', 71, 911, false, NULL, true, false, NULL, true),
 (90107118, 'Element:71:61', 180071, 'PMV-2-01-DP', 762, 298, false, NULL, true, false, NULL, true),
