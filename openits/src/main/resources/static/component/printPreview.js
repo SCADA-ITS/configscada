@@ -569,6 +569,13 @@ export default class PrintPreview {
 
 											if (templateWinId) {
 
+												let content = $$(templateWinId).getNode().querySelector('#template');
+
+												if (content && content.clientHeight && content.clientHeight > 750) {
+
+													util.ui.resizeWindow(templateWinId, 1200, content.clientHeight);
+												}
+
 												$$(templateWinId).hide();
 
 												webix.delay(function() {
