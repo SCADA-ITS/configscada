@@ -83,66 +83,48 @@
 <body>
 	<div id="template" class="print-template">
 		<div class="print-template-header">
-			<h1>Parte de trabajo</h1>
 			<img class="print-template-logo" src="./img/logo-project.svg">
 		</div>
 
-		<div style="height: 30px; text-align: left; font-size: 14px;">
-			<h1 class="print-parte-number">Número de parte: <span id="field.id"></span></h1>
-		</div>
-		<div id="content">
-			<div style="margin-top: 50px;">
-				<span class="print-separators">Tiempo de trabajo</span>
-				<hr>
-			</div>
-			<div style="height: 30px;" class="date-container">
-				<h2>Fecha inicio:</h2>
-				<span style="margin-top: 10px;" id="field.inicio"></span>
-				<h2>Fecha fin:</h2>
-				<span style="margin-top: 10px;" id="field.fin"></span>	
-			</div>
-			<div style="margin-top: 50px;">
-				<span class="print-separators">Datos del operario</span>
-				<hr>
-			</div>
-			<div style="height: 30px; width: 400px;" class="date-container">
-				<h2>Operario:</h2>
-				<span style="margin-top: 10px; " id="field.usuarios"></span>	
-			</div>
-			<div style="margin-top: 50px;">
-				<span style="margin-top: 10px;" class="print-separators">Datos del equipo</span>
-				<hr>
-			</div>
-			<div style="height: 30px; width: 400px;" class="date-container">
-				<h2>Equipo:</h2>
-				<span style="margin-top: 10px;" id="field.elementos_id"></span>	
-			</div>
-	
-			<div style="margin-top: 50px;">
-				<span class="print-separators">Datos de trabajo</span>
-				<hr>
-			</div>
-			<div style="height: 30px;" class="date-container">
-				<h2>Causa:</h2>
-				<span style="margin-top: 10px;" id="field.causas_id"></span>
-				<h2>Acción:</h2>
-				<span style="margin-top: 10px;" id="field.acciones_id"></span>
-				<h2>Impacto en la vía:</h2>
-				<span style="margin-top: 10px;" id="field.afecciones_id"></span>
-			</div>
-			<div style="height: 30px; margin-top: 50px; justify-content: left" class="date-container">
-				<h2>Comentarios:</h2>
-				<div style="margin-top: 10px;"id="comments-container">
-					<span id="field.comentarios"></span>
-				</div>
-			</div>
-			<div style="margin-top: 80px;" class="date-container">
-				<h2>Imagenes de evidencias:</h2>
-			</div>
-			<div style="margin-top: 30px;" id="groupImage"></div>
+		<div style="height: 20px; text-align: left; font-size: 12px;">
+			<h1 class="print-parte-number">Información parte de trabajo: <span id="field.id"></span></h1>
 		</div>
 	</div>
-	
+	<div id="content">
+		<div style="margin-top: 50px;height: 30px;" class="date-container">
+			<h2>Alias equipo:</h2>
+			<span style="margin-top: 10px; " id="field.elementos_id"></span>	
+			<h2>Operario:</h2>
+			<span style="margin-top: 10px; " id="field.usuarios"></span>	
+			<h2>Fecha inicio:</h2>
+			<span style="margin-top: 10px;" id="field.inicio"></span>
+			<h2>Fecha resolución:</h2>
+			<span style="margin-top: 10px;" id="field.fin"></span>	
+		</div>
+
+		<div style="margin-top: 30px;">
+			<span class="print-separators">Datos de trabajo</span>
+			<hr>
+		</div>
+		<div style="height: 30px;" class="date-container">
+			<h2>Causa:</h2>
+			<span style="margin-top: 10px;" id="field.causas_id"></span>
+			<h2>Acción:</h2>
+			<span style="margin-top: 10px;" id="field.acciones_id"></span>
+			<h2>Impacto en la vía:</h2>
+			<span style="margin-top: 10px;" id="field.afecciones_id"></span>
+		</div>
+        <div style="height: 20px; margin-top: 30px; justify-content: left" class="date-container">
+            <h2>Comentarios:</h2>
+            <div style="margin-top: 10px;margin-left: 10px;"id="comments-container">
+                <span id="field.comentarios"></span>
+            </div>
+        </div>
+		<div style="margin-top: 80px;" class="date-container">
+            <h2>Imagenes de evidencias:</h2>
+		</div>
+		<div style="margin-top: 15px;" id="groupImage"></div>
+	</div>
 
 </body>
 
