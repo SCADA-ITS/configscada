@@ -23,9 +23,6 @@ class SignallingCommand_71_2 {
 	//Commands params
 	static final Long PARAM_CONFIG_JSONCONFIG = 4L;
 	static final Long PARAM_CONFIG_PROTOCOLO = 2L;
-	static final Long PARAM_MEASURE = 2L;
-	static final Long PARAM_MEASURE_BEACONS = 5L;
-	static final Long PARAM_MEASURE_PIXEL_SERVICE = 6L;
 	
 	// XIDs
 	static final String CONTENT = "content";
