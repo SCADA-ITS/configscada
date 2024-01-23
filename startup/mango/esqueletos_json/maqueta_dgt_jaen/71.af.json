@@ -80,7 +80,7 @@
             "intervalLoggingType": "INSTANT",
             "purgeType": "YEARS",
             "pointLocator": {
-                "range": "INPUT_STATUS",
+                "range": "HOLDING_REGISTER",
                 "modbusDataType": "BINARY",
                 "writeType": "SETTABLE",
                 "additive": 0.0,
@@ -138,7 +138,7 @@
             "intervalLoggingType": "INSTANT",
             "purgeType": "YEARS",
             "pointLocator": {
-                "range": "INPUT_STATUS",
+                "range": "HOLDING_REGISTER",
                 "modbusDataType": "BINARY",
                 "writeType": "SETTABLE",
                 "additive": 0.0,
@@ -196,7 +196,7 @@
             "intervalLoggingType": "INSTANT",
             "purgeType": "YEARS",
             "pointLocator": {
-                "range": "COIL_STATUS",
+                "range": "HOLDING_REGISTER",
                 "modbusDataType": "BINARY",
                 "writeType": "SETTABLE",
                 "additive": 0.0,
@@ -254,7 +254,7 @@
             "intervalLoggingType": "INSTANT",
             "purgeType": "YEARS",
             "pointLocator": {
-                "range": "COIL_STATUS",
+                "range": "HOLDING_REGISTER",
                 "modbusDataType": "BINARY",
                 "writeType": "SETTABLE",
                 "additive": 0.0,

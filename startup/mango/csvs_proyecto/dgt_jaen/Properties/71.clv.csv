@@ -1,4 +1,4 @@
-device_name;url_publisher;source_name;host;port(i);offset_bit_A_state(i);offset_bit_B_state(i);offset_bit_C_state(i);offset_bit_D_state(i);offset_bit_A_order(i);offset_bit_B_order(i);offset_bit_C_order(i);offset_bit_D_state(i)
+device_name;url_publisher;source_name;host;port(i);offset_bit_A_state(i);offset_bit_B_state(i);offset_bit_C_state(i);offset_bit_D_state(i);offset_bit_A_order(i);offset_bit_B_order(i);offset_bit_C_order(i);offset_bit_D_order(i)
 SV-1-01-DP-D;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;ES-02-DP;172.21.41.10;502;6;7;8;9;518;519;520;521
 SV-1-01-DP-C;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;ES-02-DP;172.21.41.10;502;10;11;12;13;522;523;524;525
 SV-1-01-DP-I;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;ES-02-DP;172.21.41.10;502;14;15;16;17;526;527;528;529

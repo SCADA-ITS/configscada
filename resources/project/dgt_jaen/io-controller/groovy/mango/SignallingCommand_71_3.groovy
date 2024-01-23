@@ -88,15 +88,6 @@ class SignallingCommand_71_3 {
 					return true;			
 				}
 
-			}else if(element.elementSubtypeId == 16){
-				ElementValue protocolo = EntitiesManager.getInstance().getElementValueConfig(element, PARAM_CONFIG_PROTOCOLO);
-				
-				if(protocolo != null && protocolo.getValue().equals("DGT")){
-					xidPointValueTimeModel = signallingCommandUtils.getXidPointValueTimeModel(signallingCommand, dataSourceXid + "_" + SIGNALLING, CMD_VALUE_POWER_OFF_DGT);
-				}else{
-					xidPointValueTimeModel = signallingCommandUtils.getXidPointValueTimeModel(signallingCommand, dataSourceXid + "_" + CONTENT, MULTI);
-				}
-				xidPointValueTimeModels.add(xidPointValueTimeModel);
 			}else if(element.elementSubtypeId == 18){
 				ElementValue protocolo = EntitiesManager.getInstance().getElementValueConfig(element, PARAM_CONFIG_PROTOCOLO);
 				
