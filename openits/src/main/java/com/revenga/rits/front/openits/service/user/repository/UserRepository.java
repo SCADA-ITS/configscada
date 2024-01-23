@@ -62,6 +62,7 @@ public class UserRepository extends GenericRepository {
 	private static final String FIELD_INPUT_USER_EMAIL = "email";
 	private static final String FIELD_INPUT_USER_LOCALE_ID = "localeId";
 	private static final String FIELD_INPUT_USER_USER_PERMISSION_IDS = "userPermissionIds";
+	private static final String FIELD_INPUT_USER_MANAGEMENT_AREA_IDS = "managementAreaIds";
 	
 	private static final String QRY_USERS = String.format("SELECT user_id, role_id, name_, password_, password_expired_at, " +
 														  "       session_expire_time_s, locked_until, preset, allow_multiple_sessions, " +
@@ -365,6 +366,39 @@ public class UserRepository extends GenericRepository {
 							}
 						}
 						
+						// management_areas
+						Object managementAreaIdsObj = input.get(FIELD_INPUT_USER_MANAGEMENT_AREA_IDS);
+						
+						if (managementAreaIdsObj instanceof List) {
+							
+							List<String> managementAreaIdsStr = (List<String>) managementAreaIdsObj;
+							
+							if (!CollectionUtils.isEmpty(managementAreaIdsStr)) {
+								
+								ManagementAreaRepository managementAreaRepository = new ManagementAreaRepository(this.conn);
+								ManagementAreaUserRepository managementAreaUserRepository = new ManagementAreaUserRepository(this.conn);
+								
+								for (String managementAreaIdStr : managementAreaIdsStr) {
+									
+									Map<String, Object> managementAreaUser = new HashMap<>();
+									
+									String[] ids = managementAreaRepository.getId(managementAreaIdStr);
+											
+									if (!ArrayUtils.isEmpty(ids) && NumberUtils.isCreatable(ids[0])) {
+									
+										String managementAreaUserRepositoryIdStr = managementAreaUserRepository.getIdStr(String.valueOf(id), ids[0]);
+										
+										if (!StringUtils.isEmpty(managementAreaUserRepositoryIdStr)) {
+									
+											managementAreaUser.put(FIELD_ID, managementAreaUserRepositoryIdStr);
+											
+											managementAreaUserRepository.create(managementAreaUser);
+										}
+									}
+								}
+							}
+						}
+						
 						newUser = get(new ImmutablePair<String, Object>(PK_USER_ID, id));
 					}
 				}
@@ -576,6 +610,61 @@ public class UserRepository extends GenericRepository {
 								}
 							}
 							
+							// Treatment management areas
+							
+							if (input.get(FIELD_INPUT_USER_MANAGEMENT_AREA_IDS) instanceof List) {
+								
+								List<String> managementAreaIdsStr = (List<String>) input.get(FIELD_INPUT_USER_MANAGEMENT_AREA_IDS);
+								
+								if (managementAreaIdsStr != null) {
+									
+									ManagementAreaUserRepository managementAreaUserRepository = new ManagementAreaUserRepository(this.conn);
+									
+									// Delete old user management areas
+									List<Map<String, Object>> userManagementAreas = (List<Map<String, Object>>) user.get(FIELD_USER_MANAGEMENT_AREAS);
+									
+									if (!CollectionUtils.isEmpty(userManagementAreas)) {
+										
+										for (Map<String, Object> userManagementArea : userManagementAreas) {
+											
+											String userManagementAreaIdStr = managementAreaUserRepository.getIdStr(
+													String.valueOf(user.get(FIELD_USER_ID)), String.valueOf(userManagementArea.get(
+															ManagementAreaUserRepository.FIELD_MANAGEMENT_AREA_USER_MANAGEMENT_AREA_ID)));
+
+											if (!StringUtils.isEmpty(userManagementAreaIdStr)) {
+
+												managementAreaUserRepository.delete(userManagementAreaIdStr);
+											}
+										}
+									}
+									
+									// Create new user management area
+									if (!CollectionUtils.isEmpty(managementAreaIdsStr)) {
+										
+										ManagementAreaRepository managementAreaRepository = new ManagementAreaRepository(this.conn);
+										
+										for (String managementAreaIdStr : managementAreaIdsStr) {
+											
+											Map<String, Object> userManagementArea = new HashMap<>();
+											
+											String[] ids = managementAreaRepository.getId(managementAreaIdStr);
+													
+											if (!ArrayUtils.isEmpty(ids) && NumberUtils.isCreatable(ids[0])) {
+											
+												String userManagementAreaRepositoryIdStr = managementAreaUserRepository.getIdStr(String.valueOf(id), ids[0]);
+												
+												if (!StringUtils.isEmpty(userManagementAreaRepositoryIdStr)) {
+											
+													userManagementArea.put(FIELD_ID, userManagementAreaRepositoryIdStr);
+													
+													managementAreaUserRepository.create(userManagementArea);
+												}
+											}
+										}
+									}
+								}
+							}
+							
 							if (stmt.executeUpdate() > 0) {
 								
 								updatedUser = get(new ImmutablePair<String, Object>(PK_USER_ID, id));			
@@ -658,6 +747,28 @@ public class UserRepository extends GenericRepository {
 								if (!StringUtils.isEmpty(userPermissionIdStr)) {
 									
 									userPermissionRepository.delete(userPermissionIdStr);
+								}
+							}
+						}
+						
+						// Delete old user management areas
+						ManagementAreaUserRepository managementAreaUserRepository = new ManagementAreaUserRepository(
+								this.conn);
+
+						List<Map<String, Object>> userManagementAreas = (List<Map<String, Object>>) user
+								.get(FIELD_USER_MANAGEMENT_AREAS);
+
+						if (!CollectionUtils.isEmpty(userManagementAreas)) {
+
+							for (Map<String, Object> userManagementArea : userManagementAreas) {
+
+								String userManagementAreaIdStr = managementAreaUserRepository.getIdStr(
+										String.valueOf(user.get(FIELD_USER_ID)), String.valueOf(userManagementArea.get(
+												ManagementAreaUserRepository.FIELD_MANAGEMENT_AREA_USER_MANAGEMENT_AREA_ID)));
+
+								if (!StringUtils.isEmpty(userManagementAreaIdStr)) {
+
+									managementAreaUserRepository.delete(userManagementAreaIdStr);
 								}
 							}
 						}

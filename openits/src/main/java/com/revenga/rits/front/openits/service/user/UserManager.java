@@ -17,6 +17,7 @@ import com.revenga.rits.front.openits.app.AppInfra;
 import com.revenga.rits.front.openits.service.user.repository.GenericRepository.EntityPersistenceException;
 import com.revenga.rits.front.openits.service.user.repository.I18nLabelRepository;
 import com.revenga.rits.front.openits.service.user.repository.I18nLocaleRepository;
+import com.revenga.rits.front.openits.service.user.repository.ManagementAreaRepository;
 import com.revenga.rits.front.openits.service.user.repository.RoleRepository;
 import com.revenga.rits.front.openits.service.user.repository.SystemPermissionRepository;
 import com.revenga.rits.front.openits.service.user.repository.UserRepository;
@@ -465,5 +466,17 @@ public class UserManager {
 		}
 		
 		return i18nLabel;
+	}
+	
+	// MANAGEMENT_AREAS
+	
+	public List<Map<String, Object>> getManagementAreas() {
+		
+		ManagementAreaRepository managementAreaRepository = new ManagementAreaRepository(this.conn);
+		
+		@SuppressWarnings("unchecked")
+		List<Map<String, Object>> managementAreas = managementAreaRepository.gets();
+		
+		return managementAreas;
 	}
 }
