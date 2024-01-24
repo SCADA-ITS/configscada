@@ -41,10 +41,10 @@ BEGIN
 		"srcTemplate": "elementFormTemplate.html"}');
 
 
-	INSERT INTO elements_gip.sg_metadata_columns (id, sg_metadata_table_id, column_name, "label", label_description, mdi_icon, needs_translation, metadata) VALUES
-	(101, 1, 'id', 'LBL_ID', null, 'mdi mdi-identifier', false, '{"position": 1, "editable":false, "refName": true}'),
-	(102, 1, 'id_element',null, null, null, false, '{"formVisible":false, "tableVisible":false}');
-	--(103, 1, 'Elements',null, null, null, false, null);
+	INSERT INTO elements_gip.sg_metadata_columns (id, sg_metadata_table_id, column_name, "label", label_description, needs_translation, metadata) VALUES
+	(101, 1, 'id', 'LBL_ID', null, false, '{"position": 1, "editable":false, "refName": true}'),
+	(102, 1, 'id_element',null, null, false, '{"formVisible":false, "tableVisible":false}');
+	--(103, 1, 'Elements',null, null, false, null);
 
 
 	--INSERT INTO elements_gip.sg_metadata_column_fillers (id, sg_metadata_column_id, "name", groovy) VALUES

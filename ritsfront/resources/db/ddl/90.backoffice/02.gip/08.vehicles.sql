@@ -18,8 +18,14 @@ BEGIN
 		create table gip.vehicle_models (
 			id serial not null,
 			alias varchar null,
+			vehicle_brand_id int not null,
 			constraint pk_vehicle_models primary key (id)
 		) tablespace tbl_gip;
+		
+		create index idx_vehicle_models_vehicle_brand_id on gip.vehicle_models
+			using btree (vehicle_brand_id);
+		
+		alter table gip.vehicle_models add constraint fk_vehicle_models_vehicle_brand_id foreign key (vehicle_brand_id) references gip.vehicle_brands(id) ON DELETE CASCADE;
 		
 		create table gip.vehicle_damages (
 			id serial not null,

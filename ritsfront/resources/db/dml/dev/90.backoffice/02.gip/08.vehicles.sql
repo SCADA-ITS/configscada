@@ -12,15 +12,15 @@ BEGIN
 		INSERT INTO gip.vehicle_brands (alias) VALUES('BMV');
 		
 		
-		INSERT INTO gip.vehicle_models (alias) VALUES('X1');
-		INSERT INTO gip.vehicle_models (alias) VALUES('X2');
-		INSERT INTO gip.vehicle_models (alias) VALUES('X3');
-		INSERT INTO gip.vehicle_models (alias) VALUES('X2');
+		INSERT INTO gip.vehicle_models (alias, vehicle_brand_id) VALUES('X1', 2);
+		INSERT INTO gip.vehicle_models (alias, vehicle_brand_id) VALUES('X2', 2);
+		INSERT INTO gip.vehicle_models (alias, vehicle_brand_id) VALUES('X3', 2);
+		INSERT INTO gip.vehicle_models (alias, vehicle_brand_id) VALUES('X2', 2);
 		
-		INSERT INTO gip.vehicle_models (alias) VALUES('A1');
-		INSERT INTO gip.vehicle_models (alias) VALUES('A2');
-		INSERT INTO gip.vehicle_models (alias) VALUES('A3');
-		INSERT INTO gip.vehicle_models (alias) VALUES('A2');
+		INSERT INTO gip.vehicle_models (alias, vehicle_brand_id) VALUES('A1', 1);
+		INSERT INTO gip.vehicle_models (alias, vehicle_brand_id) VALUES('A2', 1);
+		INSERT INTO gip.vehicle_models (alias, vehicle_brand_id) VALUES('A3', 1);
+		INSERT INTO gip.vehicle_models (alias, vehicle_brand_id) VALUES('A2', 1);
 		
 		
 		INSERT INTO gip.vehicle_damages (alias) VALUES('Con daños');

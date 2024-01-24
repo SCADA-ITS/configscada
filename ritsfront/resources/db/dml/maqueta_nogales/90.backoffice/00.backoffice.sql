@@ -138,31 +138,31 @@ BEGIN
 	(39, 'vehicles', 'LBL_VEHICLES', 'LBL_VEHICLE', 'LBL_VEHICLES_DESCRIPTION', NULL, false, false, NULL);
 
 	
-	INSERT INTO nogales_gip.sg_metadata_columns (id, sg_metadata_table_id, column_name, "label", label_description, mdi_icon, needs_translation, metadata) VALUES
-	(1201, 12, 'incident_report_id', 'LBL_ID', NULL, 'mdi mdi-identifier', true, '{"position": 1, "editable": false, "refName": true}'),
-	(1202, 12, 'incident_type', 'LBL_INCIDENT_TYPE', NULL, 'mdi mdi-exclamation-thick', true, '{"position": 2, "editable": false,  "badgeInHeader": "mdi mdi-exclamation-thick"}'),
-	(1203, 12, 'incident_sub_type', 'LBL_INCIDENT_SUB_TYPE', NULL, 'mdi mdi-exclamation-thick', false, '{"position": 3, "editable": false, "badgeInHeader": "mdi mdi-exclamation-thick"}'),
-	(1204, 12, 'level', 'LBL_LEVEL', NULL, 'mdi mdi-elevation-rise', true, '{"position": 4, "editable": false}'),
-	(1205, 12, 'location', 'LBL_LOCATION', NULL, 'mdi mdi-map-marker', false, '{ "position": 5, "editable": false, "badgeInHeader": "mdi mdi-map-marker"}'),
-	(1206, 12, 'type_detection', 'LBL_TYPE_DETECTION', NULL, 'mdi mdi-nut', true, '{"position": 6, "editable": false}'),
-	(1207, 12, 'source_id', 'LBL_SOURCE_FIELD', NULL, NULL, false, '{"position": 7 }'),
-	(1208, 12, 'element_id', 'LBL_ELEMENT_FIELD', NULL, NULL, false, '{"position": 8 }'),
-	(1209, 12, 'user_n', 'LBL_USER', NULL, NULL, false, '{"position": 9 }'),
-	(1210, 12, 'phone', 'LBL_PHONE', NULL, NULL, false, '{"position": 10 }'),
-    (1211, 12, 'comment', 'LBL_COMMENT', NULL, NULL, false, '{ "multiline": 5, "position": 11 }'),
-	(1212, 12, 'created_at', 'LBL_CREATE_AT', NULL, NULL, false, '{"position": 12 }'),
+	INSERT INTO nogales_gip.sg_metadata_columns (id, sg_metadata_table_id, column_name, "label", label_description, needs_translation, metadata) VALUES
+	(1201, 12, 'incident_report_id', 'LBL_ID', NULL, true, '{"position": 1, "editable": false, "refName": true}'),
+	(1202, 12, 'incident_type', 'LBL_INCIDENT_TYPE', NULL, true, '{"position": 2, "editable": false,  "badgeInHeader": "mdi mdi-exclamation-thick"}'),
+	(1203, 12, 'incident_sub_type', 'LBL_INCIDENT_SUB_TYPE', NULL, false, '{"position": 3, "editable": false, "badgeInHeader": "mdi mdi-exclamation-thick"}'),
+	(1204, 12, 'level', 'LBL_LEVEL', NULL, true, '{"position": 4, "editable": false}'),
+	(1205, 12, 'location', 'LBL_LOCATION', NULL, false, '{ "position": 5, "editable": false, "badgeInHeader": "mdi mdi-map-marker"}'),
+	(1206, 12, 'type_detection', 'LBL_TYPE_DETECTION', NULL, true, '{"position": 6, "editable": false}'),
+	(1207, 12, 'source_id', 'LBL_SOURCE_FIELD', NULL, false, '{"position": 7 }'),
+	(1208, 12, 'element_id', 'LBL_ELEMENT_FIELD', NULL, false, '{"position": 8 }'),
+	(1209, 12, 'user_n', 'LBL_USER', NULL, false, '{"position": 9 }'),
+	(1210, 12, 'phone', 'LBL_PHONE', NULL, false, '{"position": 10 }'),
+    (1211, 12, 'comment', 'LBL_COMMENT', NULL, false, '{ "multiline": 5, "position": 11 }'),
+	(1212, 12, 'created_at', 'LBL_CREATE_AT', NULL, false, '{"position": 12 }'),
 
-	(3901, 39, 'incident_report_id', NULL, NULL, NULL, true, '{"position": 1}'),
-	(3902, 39, 'vehicle_type_id', NULL, NULL, NULL, true, '{"position": 2}'),
-	(3903, 39, 'vehicle_brand_id', NULL, NULL, NULL, true, '{"position": 3}'),
-	(3904, 39, 'vehicle_model_id', NULL, NULL, NULL, true, '{"position": 4, "associatedFieldName": "vehicle_brand_id"}'),
+	(3901, 39, 'incident_report_id', NULL, NULL, true, '{"position": 1}'),
+	(3902, 39, 'vehicle_type_id', NULL, NULL, true, '{"position": 2}'),
+	(3903, 39, 'vehicle_brand_id', NULL, NULL, true, '{"position": 3}'),
+	(3904, 39, 'vehicle_model_id', NULL, NULL, true, '{"position": 4, "associatedFieldName": "vehicle_brand_id"}'),
 
-	(3905, 39, 'patent', 'LBL_PATENT', NULL, NULL, true, '{"position":5}'),
-	(3906, 39, 'color', 'LBL_COLOR', NULL, NULL, true, '{"position": 6}'),
-	(3907, 39, 'vehicle_damage_id', NULL, NULL, NULL, true, '{"position": 7}'),
-	(3908, 39, 'attended_id', NULL, NULL, NULL, true, '{"position": 8}'),
-	(3909, 39, 'assistance_type_id', NULL, NULL, NULL, true, '{"position":9}'),
-	(3910, 39, 'transfer_place_id', NULL, NULL, NULL, true, '{"position": 10}'),
-	(3911, 39, 'comment', 'LBL_COMMENT', NULL, NULL, false, '{ "multiline": 5, "position": 11}');
+	(3905, 39, 'patent', 'LBL_PATENT', NULL, true, '{"position":5}'),
+	(3906, 39, 'color', 'LBL_COLOR', NULL, true, '{"position": 6}'),
+	(3907, 39, 'vehicle_damage_id', NULL, NULL, true, '{"position": 7}'),
+	(3908, 39, 'attended_id', NULL, NULL, true, '{"position": 8}'),
+	(3909, 39, 'assistance_type_id', NULL, NULL, true, '{"position":9}'),
+	(3910, 39, 'transfer_place_id', NULL, NULL, true, '{"position": 10}'),
+	(3911, 39, 'comment', 'LBL_COMMENT', NULL, false, '{ "multiline": 5, "position": 11}');
   END IF;
 END $$;

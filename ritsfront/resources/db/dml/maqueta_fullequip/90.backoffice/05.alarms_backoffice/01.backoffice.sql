@@ -59,24 +59,24 @@ BEGIN
 	-- 
   	-- alarms_backoffice.sg_metadata_columns
   	--
-	INSERT INTO alarms_backoffice.sg_metadata_columns (sg_metadata_table_id, column_name, "label", label_description, mdi_icon, needs_translation, metadata) VALUES
+	INSERT INTO alarms_backoffice.sg_metadata_columns (sg_metadata_table_id, column_name, "label", label_description, needs_translation, metadata) VALUES
 	
-	(1, 'name', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_NORMALIZE_PROCEDURES', NULL, NULL, false, NULL),
+	(1, 'name', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_NORMALIZE_PROCEDURES', NULL, false, NULL),
 
-	(2, 'name', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_POSSIBLE_CAUSES', NULL, NULL, false, NULL),
+	(2, 'name', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_POSSIBLE_CAUSES', NULL, false, NULL),
 
-	(3, 'name', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_RESPONSIBILITIES', NULL, NULL, false, NULL),
+	(3, 'name', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_RESPONSIBILITIES', NULL, false, NULL),
 
-	(4, 'alarm_id', NULL, NULL, NULL, true, '{"formVisible": false, "tableVisible": false}'),
-	(4, 'activation', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ACTIVATION', NULL, NULL, true, '{"editable": false}'),
-	(4, 'alarm', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ALARM', NULL, NULL, true, '{"editable": false}'),
-	(4, 'element_type', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ELEMENT_TYPE', NULL, NULL, true, '{"editable": false}'),
-	(4, 'element', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ELEMENT', NULL, NULL, true, '{"editable": false}'),
-	(4, 'possible_causes_id', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_POSSIBLE_CAUSES', NULL, NULL, false, '{"refEditButton": false}'),
-	(4, 'normalize_procedures_id', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_NORMALIZE_PROCEDURES', NULL, NULL, false, '{"refEditButton": false}'),
-	(4, 'responsibilities_id', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_RESPONSIBILITIES', NULL, NULL, false, '{"refEditButton": false}'),
-	(4, 'comments', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_COMMENTS', NULL, NULL, false, '{"multiline": 5}'),
-	(4, 'revised_alarm', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_REVISED_ALARMS', NULL, NULL, false, NULL);
+	(4, 'alarm_id', NULL, NULL, true, '{"formVisible": false, "tableVisible": false}'),
+	(4, 'activation', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ACTIVATION', NULL, true, '{"editable": false}'),
+	(4, 'alarm', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ALARM', NULL, true, '{"editable": false}'),
+	(4, 'element_type', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ELEMENT_TYPE', NULL, true, '{"editable": false}'),
+	(4, 'element', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ELEMENT', NULL, true, '{"editable": false}'),
+	(4, 'possible_causes_id', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_POSSIBLE_CAUSES', NULL, false, '{"refEditButton": false}'),
+	(4, 'normalize_procedures_id', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_NORMALIZE_PROCEDURES', NULL, false, '{"refEditButton": false}'),
+	(4, 'responsibilities_id', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_RESPONSIBILITIES', NULL, false, '{"refEditButton": false}'),
+	(4, 'comments', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_COMMENTS', NULL, false, '{"multiline": 5}'),
+	(4, 'revised_alarm', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_REVISED_ALARMS', NULL, false, NULL);
 
   END IF;
   

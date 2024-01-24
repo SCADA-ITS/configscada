@@ -128,7 +128,6 @@ BEGIN
 		column_name varchar NOT NULL,
 		label varchar NULL,
 		label_description varchar NULL,
-		mdi_icon varchar NULL,
 		needs_translation bool NOT NULL,
 		metadata varchar null,
 		CONSTRAINT pk_sg_metadata_columns PRIMARY KEY (id)

@@ -126,18 +126,18 @@ BEGIN
 	-- 
   	-- smartgen.sg_metadata_columns
   	--
-	INSERT INTO smartgen.sg_metadata_columns (id, sg_metadata_table_id, column_name, "label", label_description, mdi_icon, needs_translation, metadata) VALUES
-	(1, 2, 'product_name', 'LBL_PRODUCT', NULL, NULL, true, '{ "badgeInHeader": "mdi mdi-account" }'),
-	(2, 1, 'fullname', 'LBL_FULLNAME', NULL, NULL, false, '{ "multiline": 4 }'),
-	(3, 1, 'name', 'LBL_NAME', NULL, NULL, false, '{ "refName": true }'),
-	(4, 2, 'subcategory_id', NULL, NULL, NULL, false, 
+	INSERT INTO smartgen.sg_metadata_columns (id, sg_metadata_table_id, column_name, "label", label_description, needs_translation, metadata) VALUES
+	(1, 2, 'product_name', 'LBL_PRODUCT', NULL, true, '{ "badgeInHeader": "mdi mdi-account" }'),
+	(2, 1, 'fullname', 'LBL_FULLNAME', NULL, false, '{ "multiline": 4 }'),
+	(3, 1, 'name', 'LBL_NAME', NULL, false, '{ "refName": true }'),
+	(4, 2, 'subcategory_id', NULL, NULL, false, 
 	-- metadata
 	'{ 
 		"associatedFieldName": "category_id",
 		"badgeInHeader": "mdi mdi-cog"
 	}'),
-	(5, 4, 'product_id', NULL, NULL, NULL, false, '{ "refGroupFieldName": "category_id" }'),
-	(6, 2, 'category_id', NULL, NULL, NULL, false, '{ "badgeInHeader": "mdi mdi-cog" }');
+	(5, 4, 'product_id', NULL, NULL, false, '{ "refGroupFieldName": "category_id" }'),
+	(6, 2, 'category_id', NULL, NULL, false, '{ "badgeInHeader": "mdi mdi-cog" }');
 	
 	-- 
   	-- smartgen.sg_metadata_table_triggers
