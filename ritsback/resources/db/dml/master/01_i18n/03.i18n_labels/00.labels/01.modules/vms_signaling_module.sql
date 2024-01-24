@@ -34,6 +34,7 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_ES', 1, 'LBL_DIALOG_SAVE_CHANGES_DESCRIPTION', '¿Desea guardar los cambios realizados?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_DIALOG_UNDO_CHANGES', 'Deshacer cambios', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_DIALOG_UNDO_CHANGES_DESCRIPTION', '¿Está seguro que desea deshacer los cambios?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_EDIT_TEXT', 'Editor de texto', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_FLASHING_OFF_SECS', 'Intermitencia off seg', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_FLASHING_ON_SECS', 'Intermitencia on seg', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_GRAPHIC_EDITOR', 'Editor de gráficos', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -79,8 +80,6 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_ES', 1, 'LBL_VMS_SELECTED', 'Seleccion', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_VMS_SETTINGS', 'Parametros de configuracion', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_VMS_SINGLE_MODE', 'Estático', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('es_ES', 1, 'LBL_EDIT_TEXT', 'Editor de texto', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-
 
 -- en_GB 	 
 ('en_GB', 1, 'LBL_ALTERNANCE_SECS', 'Alternate secs', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -98,6 +97,7 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('en_GB', 1, 'LBL_DIALOG_SAVE_CHANGES_DESCRIPTION', 'Do you want to save the changes made?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_DIALOG_UNDO_CHANGES', 'Undo changes', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_DIALOG_UNDO_CHANGES_DESCRIPTION', 'Are you sure you want to undo the changes?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_EDIT_TEXT', 'Text editor', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_FLASHING_OFF_SECS', 'flashing off secs', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_FLASHING_ON_SECS', 'flashing on secs', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_GRAPHIC_EDITOR', 'Graphic editor', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -143,7 +143,6 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('en_GB', 1, 'LBL_VMS_SELECTED', 'Selected', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_VMS_SETTINGS', 'Settings parameters', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_VMS_SINGLE_MODE', 'Static', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('en_GB', 1, 'LBL_EDIT_TEXT', 'Text editor', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 -- sk_SK
 ('sk_SK', 1, 'LBL_CATEGORIES', 'Kategórie', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -153,6 +152,7 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('sk_SK', 1, 'LBL_DIALOG_DELETE_VMS_SIGNALING_DESCRIPTION','Naozaj si želáte vymazať vybratú položku?',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 ('sk_SK', 1, 'LBL_DIALOG_NEW_VMS_CONFIG','Zadať nové konfigurácie',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 ('sk_SK', 1, 'LBL_DIALOG_NEW_VMS_CONFIG_DESCRIPTION','Naozaj si želáte zadať nové konfigurácie k značke?',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_EDIT_TEXT', 'Textový editor', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('sk_SK', 1, 'LBL_GRAPHIC_EDITOR','Grafický editor',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 ('sk_SK', 1, 'LBL_GRAPHIC_EDITOR_DESCRIPTION','Tu nájdete všetky úpravy signálov',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 ('sk_SK', 1, 'LBL_LINE','Pruh',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
@@ -184,7 +184,6 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('sk_SK', 1, 'LBL_VMS_SELECTED','Vybraté',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 ('sk_SK', 1, 'LBL_VMS_SETTINGS','VMS - LED panel nastavenie',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 ('sk_SK', 1, 'LBL_VMS_SINGLE_MODE','Statický',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
-('sk_SK', 1, 'LBL_EDIT_TEXT', 'Textový editor', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 -- es_CL
 ('es_CL', 1, 'LBL_ALIGN_LEFT', 'Izquierda', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -202,6 +201,7 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_CL', 1, 'LBL_DIALOG_SAVE_CHANGES_DESCRIPTION', '¿Desea guardar los cambios realizados?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_DIALOG_UNDO_CHANGES', 'Deshacer cambios', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_DIALOG_UNDO_CHANGES_DESCRIPTION', '¿Está seguro que desea deshacer los cambios?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_EDIT_TEXT', 'Editor de texto', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_FLASHING_OFF_SECS', 'Intermitencia off seg', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_FLASHING_ON_SECS', 'Intermitencia on seg', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_GRAPHIC_EDITOR', 'Editor de gráficos', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -246,8 +246,7 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_CL', 1, 'LBL_VMS_MULTI_SIGNALING_DESCRIPTION', 'Seleccion de PMVs a señalizar', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_VMS_SELECTED', 'Seleccion', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_VMS_SETTINGS', 'Parametros de configuracion', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('es_CL', 1, 'LBL_VMS_SINGLE_MODE', 'Estático', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('es_CL', 1, 'LBL_EDIT_TEXT', 'Editor de texto', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+('es_CL', 1, 'LBL_VMS_SINGLE_MODE', 'Estático', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 
 

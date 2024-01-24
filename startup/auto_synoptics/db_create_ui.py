@@ -231,7 +231,7 @@ if synopticsArray:
 
         synopticCommand.id= str(i)
         synopticCommand.position= '2'
-        synopticCommand.label= 'LBL_COMMAND_EQUIPMENT'
+        synopticCommand.label= 'LBL_CMD_EQUIPMENT'
         synopticCommand.default= VALUE_FALSE
         synopticCommand.module_action_id= '101701'
         synopticCommand.multiselect= VALUE_TRUE
