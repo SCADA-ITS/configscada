@@ -41,11 +41,17 @@
 @import url(./css_services/otherServices.css);
 
 /* Ligth Mode */
-@import url(./css_ligth_mode/lightMode.css);
+@import url(./css_light_mode/lightMode.css);
 
 /* Webix mods */
 @import url(./css_webix/webixMods.css);
 
+/* Others */
+@import url(./css_others/login.css);
+@import url(./css_others/alarms.css);
+@import url(./css_others/global.css);
+@import url(./css_others/map.css);
+@import url(./css_others/synoptic.css);
 
 :root {
   --blue-strong: rgb(15, 23, 36);

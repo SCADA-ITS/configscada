@@ -1,4 +1,5 @@
-.move-me {
+/*
+ .move-me {
   display: inline-block;
   position: relative;
   margin: 0 0 10px 0;
@@ -126,12 +127,12 @@
 .tagsButton{
   top: 6px;
   left: .3em;
-  /* height:30px; */
+  height:30px; 
   /* border-radius:60px; */
-  font-size:24px;
+  /* font-size:24px;*/
   /* line-height:25px; */
-  box-shadow:0px 3px 0px 1px rgba(200,200,200,0.5);
-}
+  /*box-shadow:0px 3px 0px 1px rgba(200,200,200,0.5);
+} 
 
 .tagsButtonMap{
   top: 70px;
@@ -139,3 +140,4 @@
   font-size:18px;
   box-shadow:0px 3px 0px 1px rgba(200,200,200,0.5);
 }
+
