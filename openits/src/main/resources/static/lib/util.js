@@ -109,6 +109,9 @@ export let util = {
 				width = util.module.getWindowParamValue(module, WindowParam.WIDTH, width);
 				modal = util.module.getWindowParamValue(module, WindowParam.MODAL, modal) === 'true';
 			}
+			
+			width = (width > window.screen.availWidth * 0.9) ? window.screen.availWidth * 0.9 : width;
+			height = (height > window.screen.availHeight * 0.85) ? window.screen.availHeight * 0.85 : height;
 
 			let moduleOpenedId = util.module.getModuleOpenedId(module.id);
 

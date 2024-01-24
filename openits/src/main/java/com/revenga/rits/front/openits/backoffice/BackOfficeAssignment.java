@@ -752,7 +752,7 @@ public class BackOfficeAssignment {
 	private void assignMetadataColumns(Connection conn, BackOffice backOffice, Table table) throws SQLException {
 		
 		final String QRY_COLUMN_METADATA = String
-				.format("SELECT cols.id, cols.label, cols.label_description, cols.mdi_icon, " + 
+				.format("SELECT cols.id, cols.label, cols.label_description, " + 
 						"       cols.column_name, cols.metadata, cols.needs_translation " + 
 						"  FROM %s.sg_metadata_tables t, " +
 						"       %s.sg_metadata_columns cols " +
@@ -788,7 +788,7 @@ public class BackOfficeAssignment {
 							
 							column.setLabel(rs.getString("label"));
 							column.setLabelDescription(rs.getString("label_description"));
-							column.setMdiIcon(rs.getString("mdi_icon"));
+							
 							column.setNeedsTranslation(rs.getBoolean("needs_translation"));
 							column.setMetadataId(rs.getInt("id"));
 							

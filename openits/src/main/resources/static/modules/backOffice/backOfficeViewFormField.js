@@ -420,7 +420,8 @@ export default class BackOfficeViewFormField  {
 
 												for (let aditionalColumn of aditionalColumnsValues) {
 
-													obj[BackOfficeHelper.getColumnUID(aditionalColumn)] = row.data.find(data => data.columnId === aditionalColumn.id).value;
+													let val = row.data.find(data => data.columnId === aditionalColumn.id).value;
+													obj[BackOfficeHelper.getColumnUID(aditionalColumn)] = BackOfficeHelper.getReferencedColumnValue(self.backOffice, aditionalColumn, val, self.data).value;
 												}
 											}
 																							
