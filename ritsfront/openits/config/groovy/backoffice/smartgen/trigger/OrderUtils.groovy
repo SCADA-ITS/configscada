@@ -20,7 +20,7 @@ public class OrderUtils {
 	public static Integer getAvailableStock(Integer productId, AbstractBackOfficeTrigger backOfficeTrigger) throws SQLException {
 		
 		Integer availableStock = null;
-		final String qry = String.format("SELECT stock FROM %s.products WHERE product_id = ?", backOfficeTrigger.getSchema());	
+		final String qry = String.format("SELECT stock FROM %s.products WHERE product_id = ?", backOfficeTrigger.getBackOffice().getSchema());	
 		
 		PreparedStatement stmt = null;
 		
@@ -49,7 +49,7 @@ public class OrderUtils {
 	
 	public static void updateAvailableStock(Integer productId, Integer stock, AbstractBackOfficeTrigger backOfficeTrigger) throws SQLException, BackOfficeException {
 		
-		final String qry = String.format("UPDATE %s.products SET stock = ? WHERE product_id = ?", backOfficeTrigger.getSchema());	
+		final String qry = String.format("UPDATE %s.products SET stock = ? WHERE product_id = ?", backOfficeTrigger.getBackOffice().getSchema());	
 		
 		PreparedStatement stmt = null;
 		
@@ -80,4 +80,3 @@ public class OrderUtils {
 		}
 	}
 }
-

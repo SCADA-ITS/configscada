@@ -35,11 +35,11 @@ public class OrderTrigger extends AbstractBackOfficeTrigger {
 
 	private void updateProductStock() throws Exception {
 		
-		Integer orderId = this.id;
+		Long orderId = this.id;
 		
 		Map<Integer, Integer> productStocks = new HashMap<>();
 		
-		final String qry = String.format("SELECT product_id, qty FROM %s.order_details WHERE order_id = ?", this.schema);	
+		final String qry = String.format("SELECT product_id, qty FROM %s.order_details WHERE order_id = ?", this.backOffice.getSchema());	
 		
 		if (orderId != null) {
 			
@@ -48,7 +48,7 @@ public class OrderTrigger extends AbstractBackOfficeTrigger {
 			try {
 				
 				stmt = this.conn.prepareStatement(qry);
-				stmt.setInt(1, orderId);
+				stmt.setLong(1, orderId);
 				
 				ResultSet rs = stmt.executeQuery();
 				
@@ -91,4 +91,3 @@ public class OrderTrigger extends AbstractBackOfficeTrigger {
 		}
 	}
 }
-

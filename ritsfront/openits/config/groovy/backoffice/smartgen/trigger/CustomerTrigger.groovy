@@ -35,7 +35,7 @@ public class CustomerTrigger extends AbstractBackOfficeTrigger {
 
 	private void updateProductStock() throws Exception {
 		
-		Integer customerId = this.id;
+		Long customerId = this.id;
 		
 		Map<Integer, Integer> productStocks = new HashMap<>();
 		
@@ -45,7 +45,7 @@ public class CustomerTrigger extends AbstractBackOfficeTrigger {
 										 "      %s.customers cus " + 
 										 " WHERE o.order_id = od.order_id " + 
 										 "   AND cus.customer_id = o.customer_id " +
-										 "   AND cus.customer_id = ?", this.schema, this.schema, this.schema);	
+										 "   AND cus.customer_id = ?", this.backOffice.getSchema(), this.backOffice.getSchema(), this.backOffice.getSchema());	
 
 		PreparedStatement stmt = null;
 		
@@ -53,7 +53,7 @@ public class CustomerTrigger extends AbstractBackOfficeTrigger {
 			
 			stmt = this.conn.prepareStatement(qry);
 			
-			stmt.setInt(1, customerId);
+			stmt.setLong(1, customerId);
 			
 			ResultSet rs = stmt.executeQuery();
 			
