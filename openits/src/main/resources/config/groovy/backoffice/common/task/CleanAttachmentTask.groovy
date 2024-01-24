@@ -29,6 +29,10 @@ import com.revenga.rits.front.openits.backoffice.groovy.AbstractBackOfficeTask;
 
 public class CleanAttachmentTask extends AbstractBackOfficeTask {
 
+	private static final String FILE_BASEDIR = "file.basedir";
+	
+	private String baseDir;
+	
 	public CleanAttachmentTask(org.apache.logging.log4j.Logger log) {
 		super(log);
 	}
@@ -50,9 +54,21 @@ public class CleanAttachmentTask extends AbstractBackOfficeTask {
 				throw new BackOfficeException("Backoffice is not initialized");
 			}
 			
-			if (this.baseDir == null) {
+			if (this.env == null) {
 				
-				throw new BackOfficeException("Base dir is not configured");
+				throw new BackOfficeException("env is not configured");
+			}
+			
+			File directory = new File(env.getProperty(FILE_BASEDIR));
+			
+			if (directory.exists() && directory.isDirectory()) {
+				
+				this.baseDir = directory.getAbsolutePath();
+			}
+			
+			if (StringUtils.isEmpty(this.baseDir)) {
+				
+				throw new BackOfficeException("Base dir is empty");
 			}
 			
 			Set<String> tableNames = getTableNames();
@@ -135,7 +151,7 @@ public class CleanAttachmentTask extends AbstractBackOfficeTask {
 				
 				map.put(tableName, new HashSet<>());
 				
-				List<String> listPathArray = Arrays.asList(this.getBaseDir(), "backoffice", backOffice.getId().toString(), tableName);
+				List<String> listPathArray = Arrays.asList(this.baseDir, "backoffice", backOffice.getId().toString(), tableName);
 				
 				String path = String.join(File.separator, listPathArray.toArray(new String[listPathArray.size()]));
 				
@@ -188,7 +204,7 @@ public class CleanAttachmentTask extends AbstractBackOfficeTask {
 						
 						for (Integer id : tableIdsToDelete) {
 							
-							List<String> listPathArray = Arrays.asList(this.getBaseDir(), "backoffice", backOffice.getId().toString(), tableName, id.toString());
+							List<String> listPathArray = Arrays.asList(this.baseDir, "backoffice", backOffice.getId().toString(), tableName, id.toString());
 							String path = String.join(File.separator, listPathArray.toArray(new String[listPathArray.size()]));
 							
 							pathsToDelete.add(new File(path).toPath());
