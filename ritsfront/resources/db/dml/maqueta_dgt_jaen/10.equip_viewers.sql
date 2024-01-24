@@ -6,4 +6,29 @@ INSERT INTO ui.equip_viewers (id, name, description, "label", icon, show_info_ta
 INSERT INTO ui.equip_viewer_tabs (equip_viewer_id, module_action_id, alias, description, "label", icon, "position", visible) VALUES
 ('ElementSubtype:11:71', 100501, 'Alarms module', 'Alarms module', 'LBL_ALARMS', NULL, 1, true),
 ('ElementSubtype:12:71', 100501, 'Alarms module', 'Alarms module', 'LBL_ALARMS', NULL, 1, true),
-('ElementSubtype:18:71', 100501, 'Alarms module', 'Alarms module', 'LBL_ALARMS', NULL, 1, true);;
+('ElementSubtype:18:71', 100501, 'Alarms module', 'Alarms module', 'LBL_ALARMS', NULL, 1, true);
+
+INSERT INTO ui.equip_viewer_grp_measures (id, equip_viewer_id, name, description, "label", icon, "position", visible) VALUES
+(7111, 'ElementSubtype:11:71', 'Medidas', 'Medidas', 'LBL_ELEMENT_MEASURES', NULL, 1, true),
+(7112, 'ElementSubtype:12:71', 'Medidas', 'Medidas', 'LBL_ELEMENT_MEASURES', NULL, 1, true),
+(7118, 'ElementSubtype:18:71', 'Medidas', 'Medidas', 'LBL_ELEMENT_MEASURES', NULL, 1, true);
+
+INSERT INTO ui.equip_viewer_measures (equip_viewer_grp_measure_id, vo_entities_id, "position", visible) VALUES
+(7111, 'ElementTypeParam:71:1:1', 1, true),
+(7111, 'ElementTypeParam:71:1:3', 2, true),
+
+(7112, 'ElementTypeParam:71:1:1', 1, true),
+(7112, 'ElementTypeParam:71:1:3', 2, true),
+
+(7118, 'ElementTypeParam:71:1:1', 1, true),
+(7118, 'ElementTypeParam:71:1:3', 2, true);
+
+INSERT INTO ui.equip_viewer_configs (id, equip_viewer_id, vo_entities_id, "position", visible) VALUES
+(711101, 'ElementSubtype:11:71', 'ElementTypeParam:71:1:1' , 1, true),
+(711102, 'ElementSubtype:11:71', 'ElementTypeParam:71:1:3' , 2, true),
+
+(711201, 'ElementSubtype:12:71', 'ElementTypeParam:71:1:1' , 1, true),
+(711202, 'ElementSubtype:12:71', 'ElementTypeParam:71:1:3' , 2, true),
+
+(711801, 'ElementSubtype:18:71', 'ElementTypeParam:71:1:1' , 1, true),
+(711802, 'ElementSubtype:18:71', 'ElementTypeParam:71:1:3' , 2, true);

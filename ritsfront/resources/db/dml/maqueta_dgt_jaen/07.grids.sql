@@ -112,9 +112,8 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (710003, 71, 1, 3, true, false, false, false, 'LBL_GRID_FIELD_DESCRIPTION', 'LBL_GRID_FIELD_DESCRIPTION', 'description', false, false, NULL, false, false, 180, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
 (710004, 71, 1, 4, true, true, false, false, NULL, NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
 (710005, 71, 1, 5, true, true, false, true, 'LBL_GRID_FIELD_STATE_LABEL', 'LBL_GRID_FIELD_STATE_LABEL', 'stateLabel', false, false, NULL, true, false, 150, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
-(710009, 71, 1, 9, true, false, true, false, 'LBL_GRID_FIELD_BRAND', 'LBL_GRID_FIELD_BRAND', 'ElementTypeParam:71:1:1', false, false, 'left', false, false, 100, NULL, true, true, NULL, false, NULL, NULL, NULL),
-(710010, 71, 1, 10, true, false, true, false, 'LBL_GRID_FIELD_MODEL', 'LBL_GRID_FIELD_MODEL', 'ElementTypeParam:71:1:2', false, false, 'left', false, false, 150, NULL, true, true, NULL, false, NULL, NULL, NULL),
-(710011, 71, 1, 11, true, false, true, false, 'LBL_ELEMENT_TYPE_PARAM_TRAVEL_TIME_ENABLED', 'LBL_ELEMENT_TYPE_PARAM_TRAVEL_TIME_ENABLED', 'ElementTypeParam:71:2:10', false, false, 'left', true, false, 150, NULL, true, true, NULL, false, NULL, null, NULL),
+(710009, 71, 1, 9, true, false, true, false, 'LBL_GRID_FIELD_BRAND', 'LBL_GRID_FIELD_BRAND', 'ElementTypeParam:71:1:1', false, false, 'left', false, false, 150, NULL, true, true, NULL, false, NULL, NULL, NULL),
+(710011, 71, 1, 11, true, false, true, false, 'LBL_ELEMENT_TYPE_PARAM_PROTOCOL', 'LBL_ELEMENT_TYPE_PARAM_PROTOCOL', 'ElementTypeParam:71:1:3', false, false, 'left', true, false, 100, NULL, true, true, NULL, false, NULL, null, NULL),
 
 (890001, 89, 1, 1, true, false, false, false, 'LBL_GRID_FIELD_ID', 'LBL_GRID_FIELD_ID', 'id', true, false, null, false, false, 500, NULL, true, false, NULL, NULL, NULL, NULL,NULL),
 (890002, 89, 1, 2, true, false, false, true, 'LBL_GRID_FIELD_NAME', 'LBL_GRID_FIELD_NAME', 'alias', false, false, null, false, false, 150, NULL, true, true, NULL, NULL, true, NULL,NULL),
