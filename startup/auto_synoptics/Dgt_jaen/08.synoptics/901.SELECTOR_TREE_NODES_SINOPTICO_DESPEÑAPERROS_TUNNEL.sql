@@ -11,12 +11,14 @@ INSERT INTO ui.synoptics
 INSERT INTO ui.synoptic_layers 
 (id, synoptic_id, name, label, visible) VALUES 
 (90100000, 901, 'SYNOPTIC_LAYERS_CONTROL_DE_ACCESSOS', 'LBL_SYNOPTIC_LAYERS_CONTROL_DE_ACCESSOS', true),
+(90101300, 901, 'SYNOPTIC_LAYERS_SEMAFOROS', 'LBL_SYNOPTIC_LAYERS_SEMAFOROS', true),
 (90107111, 901, 'SYNOPTIC_LAYERS_PANELES_CLV', 'LBL_SYNOPTIC_LAYERS_PANELES_CLV', true),
 (90107112, 901, 'SYNOPTIC_LAYERS_PANELES_AF', 'LBL_SYNOPTIC_LAYERS_PANELES_AF', true),
 (90107118, 901, 'SYNOPTIC_LAYERS_PANELES_GT', 'LBL_SYNOPTIC_LAYERS_PANELES_GT', true);
 
 INSERT INTO ui.synoptic_layer_relationships 
 (synoptic_id, parent_layer_id, child_layer_id) VALUES 
+(901, 90100000, 90101300),
 (901, 90100000, 90107111),
 (901, 90100000, 90107112),
 (901, 90100000, 90107118);
@@ -29,6 +31,16 @@ INSERT INTO ui.synoptic_commands
 
 INSERT INTO ui.synoptic_layer_elements 
 (layer_id, element_id, graphic_icon_id, label, x, y,  horizontal_flip, rotate, tooltip, show_text, text_color, selectable) VALUES 
+(90101300, 'Element:13:5', 000013, 'SMF-1-05-DP', 1513, 961, false, NULL, true, false, NULL, true),
+(90101300, 'Element:13:4', 000013, 'SMF-1-04-DP', 1209, 961, false, NULL, true, false, NULL, true),
+(90101300, 'Element:13:3', 000013, 'SMF-1-03-DP', 662, 961, false, NULL, true, false, NULL, true),
+(90101300, 'Element:13:2', 000013, 'SMF-1-02-DP', 334, 961, false, NULL, true, false, NULL, true),
+(90101300, 'Element:13:1', 000013, 'SMF-1-01-DP', 71, 961, false, NULL, true, false, NULL, true),
+(90101300, 'Element:13:10', 000013, 'SMF-2-05-DP', 334, 130, false, NULL, true, false, NULL, true),
+(90101300, 'Element:13:9', 000013, 'SMF-2-04-DP', 662, 130, false, NULL, true, false, NULL, true),
+(90101300, 'Element:13:8', 000013, 'SMF-2-03-DP', 1209, 130, false, NULL, true, false, NULL, true),
+(90101300, 'Element:13:7', 000013, 'SMF-2-02-DP', 1513, 130, false, NULL, true, false, NULL, true),
+(90101300, 'Element:13:6', 000013, 'SMF-2-01-DP', 1807, 130, false, NULL, true, false, NULL, true),
 (90107111, 'Element:71:44', 110071, 'SV-2-05-DP-C', 334, 291, false, NULL, true, false, NULL, true),
 (90107111, 'Element:71:45', 110071, 'SV-2-05-DP-I', 334, 390, false, NULL, true, false, NULL, true),
 (90107111, 'Element:71:43', 110071, 'SV-2-05-DP-D', 334, 191, false, NULL, true, false, NULL, true),

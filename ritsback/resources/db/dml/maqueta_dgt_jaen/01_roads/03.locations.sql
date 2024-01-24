@@ -126,6 +126,8 @@ INSERT INTO conf.locations (location_id, location_type_id, alias, description, l
 (0060013, 1, ' pk ', ' pk ', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (0070013, 1, ' pk ', ' pk ', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (0080013, 1, ' pk ', ' pk ', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(0090013, 1, ' pk ', ' pk ', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(0100013, 1, ' pk ', ' pk ', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (0010014, 1, ' pk ', ' pk ', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (0010018, 1, ' pk ', ' pk ', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (0020018, 1, ' pk ', ' pk ', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
