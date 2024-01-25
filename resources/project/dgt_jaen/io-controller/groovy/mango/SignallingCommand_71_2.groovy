@@ -120,9 +120,7 @@ class SignallingCommand_71_2 {
 					90: [1,1,1,0],
 					100: [0,1,0,1],
 					110: [1,1,0,1],
-					120: [0,0,1,1],
-					130: [1,0,1,1],
-					140: [1,0,1,1]
+					120: [0,0,1,1]
 				]
 				
 				// Iterar sobre las entradas del diccionario y cambiar 0 y 1 por true y false

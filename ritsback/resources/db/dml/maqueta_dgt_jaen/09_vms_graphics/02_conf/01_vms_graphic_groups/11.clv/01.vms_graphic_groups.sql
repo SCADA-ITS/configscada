@@ -45,5 +45,4 @@ INSERT INTO conf.vms_graphic_graphic_group_values (graphic_type_id, graphic_id, 
 (1, 320,  11, '90' ,true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (1, 321,  11, '100' ,true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (1, 322,  11, '110' ,true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(1, 323,  11, '120' ,true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(1, 324,  11, '130' ,true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP); 
+(1, 323,  11, '120' ,true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP); 
