@@ -1,11 +1,11 @@
-item;alias;description;sessionuid;road;stretchs;pk;sentido
-1;SMF-1-01-DP;SMF-1-01-DP;SMF-1-01-DP;Autovía A-4;Despeñaperros;;Madrid
-2;SMF-1-02-DP;SMF-1-02-DP;SMF-1-02-DP;Autovía A-4;Despeñaperros;;Madrid
-3;SMF-1-03-DP;SMF-1-03-DP;SMF-1-03-DP;Autovía A-4;Despeñaperros;;Madrid
-4;SMF-1-04-DP;SMF-1-04-DP;SMF-1-04-DP;Autovía A-4;Despeñaperros;;Madrid
-5;SMF-1-05-DP;SMF-1-05-DP;SMF-1-05-DP;Autovía A-4;Despeñaperros;;Madrid
-6;SMF-2-01-DP;SMF-2-01-DP;SMF-2-01-DP;Autovía A-4;Despeñaperros;;Córdoba
-7;SMF-2-02-DP;SMF-2-02-DP;SMF-2-02-DP;Autovía A-4;Despeñaperros;;Córdoba
-8;SMF-2-03-DP;SMF-2-03-DP;SMF-2-03-DP;Autovía A-4;Despeñaperros;;Córdoba
-9;SMF-2-04-DP;SMF-2-04-DP;SMF-2-04-DP;Autovía A-4;Despeñaperros;;Córdoba
-10;SMF-2-05-DP;SMF-2-05-DP;SMF-2-05-DP;Autovía A-4;Despeñaperros;;Córdoba
+item;alias;description;sessionuid;road;stretchs;pk;sentido;on_change_measure
+1;SMF-1-01-DP;SMF-1-01-DP;SMF-1-01-DP;Autovía A-4;Despeñaperros;;Madrid;ChangeMeasureHistorical.groovy
+2;SMF-1-02-DP;SMF-1-02-DP;SMF-1-02-DP;Autovía A-4;Despeñaperros;;Madrid;ChangeMeasureHistorical.groovy
+3;SMF-1-03-DP;SMF-1-03-DP;SMF-1-03-DP;Autovía A-4;Despeñaperros;;Madrid;ChangeMeasureHistorical.groovy
+4;SMF-1-04-DP;SMF-1-04-DP;SMF-1-04-DP;Autovía A-4;Despeñaperros;;Madrid;ChangeMeasureHistorical.groovy
+5;SMF-1-05-DP;SMF-1-05-DP;SMF-1-05-DP;Autovía A-4;Despeñaperros;;Madrid;ChangeMeasureHistorical.groovy
+6;SMF-2-01-DP;SMF-2-01-DP;SMF-2-01-DP;Autovía A-4;Despeñaperros;;Córdoba;ChangeMeasureHistorical.groovy
+7;SMF-2-02-DP;SMF-2-02-DP;SMF-2-02-DP;Autovía A-4;Despeñaperros;;Córdoba;ChangeMeasureHistorical.groovy
+8;SMF-2-03-DP;SMF-2-03-DP;SMF-2-03-DP;Autovía A-4;Despeñaperros;;Córdoba;ChangeMeasureHistorical.groovy
+9;SMF-2-04-DP;SMF-2-04-DP;SMF-2-04-DP;Autovía A-4;Despeñaperros;;Córdoba;ChangeMeasureHistorical.groovy
+10;SMF-2-05-DP;SMF-2-05-DP;SMF-2-05-DP;Autovía A-4;Despeñaperros;;Córdoba;ChangeMeasureHistorical.groovy

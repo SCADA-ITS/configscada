@@ -436,7 +436,3 @@ INSERT INTO conf.element_io_controller_modules (element_type_id, element_id, mod
 (71, 60, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (71, 61, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (71, 62, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-
-UPDATE master.element_subtype_active_commands
-SET enabled=false
-WHERE element_type_id=71 AND element_subtype_id IN(11,12,18) AND command_element_type_id NOT IN(2,3);
