@@ -98,6 +98,13 @@ public class BackOfficeBO {
 		
 		return backOfficeProcessor.get(backOfficeId, tableName, conditions);
 	}
+	
+	public RequestResult importTable(Integer backOfficeId, String tableName, MultipartFile multipartFile) {
+		
+		BackOfficeProcessor backOfficeProcessor = new BackOfficeProcessor(this.backOfficeCtx, getLocaleCode(), ShowData.NONE);
+		
+		return backOfficeProcessor.importTable(backOfficeId, tableName, multipartFile);
+	}
 		
 	public List<Attachment> getAttachments(Integer backOfficeId, Attachment.Type attachmentType, String tableName, Long id) {
 		

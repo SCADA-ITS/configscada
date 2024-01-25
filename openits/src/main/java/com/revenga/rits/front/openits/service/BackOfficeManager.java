@@ -61,6 +61,7 @@ public class BackOfficeManager extends FrontManager {
 	private static final String BACKOFFICE_ENABLED = AppInfra.getProperty("backoffice.enabled");
 	private static final String BACKOFFICE_SHOW_SQL = AppInfra.getProperty("backoffice.show_sql");
 	private static final String BACKOFFICE_TRACE_TABLE = AppInfra.getProperty("backoffice.trace_table");
+	private static final String BACKOFFICE_CSV_ASCII_SEPARATOR = AppInfra.getProperty("backoffice.csv_ascii_separator");
 	
 	private Map<Pair<Integer, String>, Map<String, String>> translations = new HashMap<>();
 	private Map<Pair<Integer, String>, Table> tables = new HashMap<>();
@@ -89,12 +90,20 @@ public class BackOfficeManager extends FrontManager {
 	@Getter
 	private boolean traceTable;
 	
+	@Getter
+	private char csvCharSeparator = ';';
+	
 	@PostConstruct
 	private void afterLoad() {
 		
 		this.enabled = StringUtils.equals(BACKOFFICE_ENABLED, Boolean.TRUE.toString()); 
 		this.showSql = StringUtils.equals(BACKOFFICE_SHOW_SQL, Boolean.TRUE.toString());
 		this.traceTable = StringUtils.equals(BACKOFFICE_TRACE_TABLE, Boolean.TRUE.toString());
+		
+		if (BACKOFFICE_CSV_ASCII_SEPARATOR != null) {
+			
+			this.csvCharSeparator = (char) Integer.parseInt(BACKOFFICE_CSV_ASCII_SEPARATOR);
+		}
 	}
 	
 	public Table getTable(BackOffice backOffice, String tableName) {

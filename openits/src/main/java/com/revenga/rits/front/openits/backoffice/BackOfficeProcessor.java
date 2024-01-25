@@ -237,6 +237,11 @@ public class BackOfficeProcessor {
 		return labelTranslated;
 	}
 	
+	public RequestResult importTable(Integer backOfficeId, String tableName, MultipartFile multipartFile) {
+		
+		return (new BackOfficePersist(this)).importTable(backOfficeId, tableName, multipartFile);
+	}
+	
 	public List<Attachment> getAttachments(Integer backOfficeId, Attachment.Type attachmentType, String tableName, Long idValue) {
 
 		List<Attachment> attachments = null;

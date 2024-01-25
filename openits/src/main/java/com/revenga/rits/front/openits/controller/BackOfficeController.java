@@ -26,8 +26,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.revenga.rits.front.openits.backoffice.model.Attachment;
 import com.revenga.rits.front.openits.backoffice.model.Request;
-import com.revenga.rits.front.openits.backoffice.model.Table;
 import com.revenga.rits.front.openits.backoffice.model.Request.RequestResult;
+import com.revenga.rits.front.openits.backoffice.model.Table;
 import com.revenga.rits.front.openits.bo.BackOfficeBO;
 import com.revenga.rits.front.openitsdao.model.BackOffice;
 
@@ -96,6 +96,15 @@ public class BackOfficeController {
 			@ApiParam(name = "tableName", type = "String", example = "orders", required = true) @PathVariable String tableName) {
 		
 		return new ResponseEntity<>(backOfficeBO.get(backOfficeId, tableName), HttpStatus.OK);
+	}
+	
+	@PostMapping("/{backOfficeId}/table/{tableName}/import")
+	public ResponseEntity<RequestResult> importTable(
+			@ApiParam(name = "backOfficeId", type = "Integer", example = "1", required = true) @PathVariable Integer backOfficeId,
+			@ApiParam(name = "tableName", type = "String", example = "orders", required = true) @PathVariable String tableName,
+			@RequestParam("upload") MultipartFile multipartFile) {
+
+		return new ResponseEntity<>(backOfficeBO.importTable(backOfficeId, tableName, multipartFile), HttpStatus.OK);
 	}
 	
 	@GetMapping(path = "/{backOfficeId}/attachments/image/{tableName}/{imageId}", produces = MediaType.IMAGE_JPEG_VALUE)
