@@ -282,7 +282,7 @@
                 "executionDelaySeconds": 0,
                 "logCount": 5,
                 "logSize": 1.0,
-                "script": "if (red_order.value == true && amber_order.value == false && green_order.value == false) {\n return 1\n } else if (red_order.value == false && amber_order.value == true && green_order.value == false) {\n return 2\n } else if(red_order.value == false && amber_order.value == false && green_order.value == true){\n return 4\n }else{\n return 7\n }",
+                "script": "if (red_order.value == true && amber_order.value == false && green_order.value == false) {\n return 1\n } else if (red_order.value == false && amber_order.value == true && green_order.value == false) {\n return 0\n } else if(red_order.value == false && amber_order.value == false && green_order.value == true){\n return 4\n }else{\n return 7\n }",
                 "settable": false,
                 "updateCronPattern": ""
             },

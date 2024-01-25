@@ -16,10 +16,10 @@ import com.revenga.rits.back.data.core.util.ResourcesUtil;
 
 /**
  * 
- * SignallingCommand_13_2: SEM ORANGE_LIGHT signalling command 
+ * SignallingCommand_13_4: SEM ORANGE_LIGHT signalling command 
  * 
  */
-class SignallingCommand_13_2 {
+class SignallingCommand_13_4 {
 
 	GroovyShell shell;
 	def signallingCommandUtils;
@@ -30,13 +30,12 @@ class SignallingCommand_13_2 {
 	static final String RED_ORDER = "red_order";
 	
 	//Values
-	static final boolean ON = true;
 	static final boolean OFF = false;
 
 	
 	org.apache.logging.log4j.Logger log;
 	
-	SignallingCommand_13_2(org.apache.logging.log4j.Logger log) {
+	SignallingCommand_13_4(org.apache.logging.log4j.Logger log) {
 	
 		shell = new GroovyShell();
 		signallingCommandUtils = shell.parse(new File(ResourcesUtil.getPath("io-controller/groovy/mango/SignallingCommandUtils.groovy")));
@@ -54,7 +53,7 @@ class SignallingCommand_13_2 {
 			xidPointValueTimeModels.add(xidPointValueTimeModel);
 
 			xidPointValueTimeModel = signallingCommandUtils.getXidPointValueTimeModel(signallingCommand, 
-					dataSourceXid + "_" + AMBER_ORDER, ON);						
+					dataSourceXid + "_" + AMBER_ORDER, OFF);						
 			xidPointValueTimeModels.add(xidPointValueTimeModel);
 
 			xidPointValueTimeModel = signallingCommandUtils.getXidPointValueTimeModel(signallingCommand, 
