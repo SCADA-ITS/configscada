@@ -62,6 +62,12 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_ES', 1, 'LBL_TABLE_FILTER', 'Filtrar', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_VIEW_GRID_FILTER_TITLE', 'Aplicar filtros', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_VIEW_GRID_FILTER_TITLE_DESCRIPTION', 'Filtros a aplicar a la tabla. Seleccione si desea guardarlos de forma permanente para esta entidad', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_TABLE_IMPORT', 'Importar', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_UNSUPPORTED_FILE_TYPE', 'Tipo de archivo no soportado', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_UPLOADING_ERROR', 'Error al cargar los datos', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_DATA_LOADED_SUCCESSFULLY', 'Datos cargados correctamente', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_UPDATED_RECORDS', 'registros actualizados.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_UNSPECIFIED_ERROR', 'Error no especificado.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 -- en_GB
 ('en_GB', 1, 'LBL_ARE_YOU_SURE_UNDO_FILTERS', 'Are you sure undo filters?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -115,6 +121,12 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('en_GB', 1, 'LBL_TABLE_FILTER', 'Filter', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_VIEW_GRID_FILTER_TITLE', 'Aply filters', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_VIEW_GRID_FILTER_TITLE_DESCRIPTION', 'Filters to apply on table. Select if you want to save for this entry', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_TABLE_IMPORT', 'Import', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_UNSUPPORTED_FILE_TYPE', 'Unsopported file type', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_UPLOADING_ERROR', 'Uploading error', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_DATA_LOADED_SUCCESSFULLY', 'Data loaded successfully', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_UPDATED_RECORDS', 'updated records.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_UNSPECIFIED_ERROR', 'Unspecified error.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 -- es_CL
 ('es_CL', 1, 'LBL_ARE_YOU_SURE_UNDO_FILTERS', '¿Desea revertir los filtros establecidos?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -167,4 +179,10 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_CL', 1, 'LBL_SELECT_VALUE', 'Seleccionar valor', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_TABLE_FILTER', 'Filtrar', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_VIEW_GRID_FILTER_TITLE', 'Aplicar filtros', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('es_CL', 1, 'LBL_VIEW_GRID_FILTER_TITLE_DESCRIPTION', 'Filtros a aplicar a la tabla. Seleccione si desea guardarlos de forma permanente para esta entidad', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+('es_CL', 1, 'LBL_VIEW_GRID_FILTER_TITLE_DESCRIPTION', 'Filtros a aplicar a la tabla. Seleccione si desea guardarlos de forma permanente para esta entidad', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_TABLE_IMPORT', 'Importar', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_UNSUPPORTED_FILE_TYPE', 'Tipo de archivo no soportado', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_UPLOADING_ERROR', 'Error al cargar los datos', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_DATA_LOADED_SUCCESSFULLY', 'Datos cargados correctamente', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_UPDATED_RECORDS', 'registros actualizados.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_UNSPECIFIED_ERROR', 'Error no especificado.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
