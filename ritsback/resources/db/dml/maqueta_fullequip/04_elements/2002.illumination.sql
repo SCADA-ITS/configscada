@@ -12,5 +12,5 @@ INSERT INTO conf.elements
 (2002, NULL, 7, 1053, NULL,  NULL, 'Corominas', 'Iluminación tunel Corominas', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (2002, NULL, 8, 1064, NULL,  NULL, 'Sta. Maria II', 'Iluminación tunel Sta. Maria II', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (2002, NULL, 9, 1075, NULL,  NULL, 'Estepona', 'Iluminación tunel de Estepona', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(2002, NULL, 10, 1078, NULL,  NULL, 'Nagüeles', 'Iluminación tunel de Nagüeles', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(2002, NULL, 10, 1078, NULL,  NULL, 'Nagüeles', 'Iluminación tunel de Nagüeles', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 

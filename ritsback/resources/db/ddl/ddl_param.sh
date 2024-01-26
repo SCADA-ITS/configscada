@@ -6,6 +6,6 @@ current_file=0
 for eachfile in $yourfilenames; do
 	current_file=$((current_file+1))
 	echo -ne "DDL($current_file / $files_count): $eachfile                                                                           \r"
-	psql postgresql://rits:rits@$1:$2/rits -b -f $eachfile >/dev/null
+	psql -v ON_ERROR_STOP=1 postgresql://rits:rits@$1:$2/rits -b -f $eachfile >/dev/null
 done
 echo
