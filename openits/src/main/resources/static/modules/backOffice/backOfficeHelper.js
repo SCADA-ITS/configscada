@@ -54,6 +54,7 @@ export default class BackOfficeHelper {
 				GROUP_ATTACHMENTS: { name: "groupAttachments" },
 				PRINTABLE: { name: "printable", default: true },
 				EXPORTABLE: { name: "exportable", default: true },
+				IMPORTABLE: { name: "importable", default: true },
 				CUSTOM_JS: { name: "customJS" },
 				EDITABLE: { name: "editable", default: true },
 				VIRTUAL_COLS: { name: "virtualCols" },

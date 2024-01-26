@@ -6,9 +6,11 @@ import DataTable from "../../component/datatable.js";
 import MessageBox from "../../component/messageBox.js";
 import { util } from "../../lib/util.js";
 
+const REST_BACKOFFICE_UPLOAD_CSV = "backoffice/${backOfficeId}/table/${tableName}/import";
+
 export default class BackOfficeViewGrid extends BackOfficeView {
 	
-	static get GRID_COMMANDS() { return { refresh: 1, filter: 2, new: 3, edit: 4, delete: 5 } }
+	static get GRID_COMMANDS() { return { refresh: 1, filter: 2, new: 3, edit: 4, delete: 5, import: 6} }
 
 	constructor(backOffice, data, currentTableData) {
 
@@ -40,6 +42,7 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 		this.selectedRefreshTime = currentTableData.metadata && currentTableData.metadata[BackOfficeHelper.META_TYPE_TABLE.PROPERTY.AUTOREFRESH.name] && currentTableData.metadata[BackOfficeHelper.META_TYPE_TABLE.PROPERTY.AUTOREFRESH.name] > 0 ? currentTableData.metadata[BackOfficeHelper.META_TYPE_TABLE.PROPERTY.AUTOREFRESH.name] : undefined;
 		this.selectedId = undefined;
 		this.newId = undefined;
+		this.auxWin= undefined;
 	}
 	
 	getView() {
@@ -295,6 +298,87 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 				}
 			}
 			
+			function cmdImport() {
+
+				uploaderDestructor();
+
+				function uploaderDestructor() {
+
+					if ($$("uploader-container-" + self.uid)) {
+
+						$$("uploader-container-" + self.uid).destructor();
+					}
+				}
+
+				webix.ui({
+					id: "uploader-container-" + self.uid,
+					height: 1,
+					rows: [
+						{
+							view: "uploader",
+							id: "uploader-" + self.uid,
+							height: 1,
+							accept: "text/csv",
+							autosend: true,
+							multiple: false,
+							apiOnly: true,
+							on: {
+								onBeforeFileAdd: function(item) {
+
+									let res = true;
+
+									if (item.type === "csv") {
+
+										this.config.upload = appConfig.restUrl + util.fillTemplate(REST_BACKOFFICE_UPLOAD_CSV, { backOfficeId: self.backOffice.id, tableName: self.currentTableData.name });
+
+									} else {
+
+										res = false;
+
+										let suportedErrorMessage = new MessageBox(MessageBox.ERROR, i18n.t("LBL_UNSUPPORTED_FILE_TYPE"), null, uploaderDestructor, uploaderDestructor);
+										suportedErrorMessage.show();
+									}
+
+									return res;
+								},
+								onFileUpload: function(item) {
+
+									if (item.requestResultMessage.error != "") {
+
+										let options = {
+											textMultiline: item.requestResultMessage.error
+										};
+
+										let errorMessage = new MessageBox(MessageBox.ERROR, i18n.t("LBL_UPLOADING_ERROR"), options, uploaderDestructor, uploaderDestructor);
+										errorMessage.show();
+
+									} else if (item.requestResultMessage.info === "success") {
+
+										let msg = i18n.t("LBL_DATA_LOADED_SUCCESSFULLY") + ": " + item.requestResultMessage.infoDescription + " " + i18n.t("LBL_UPDATED_RECORDS");
+										let successMessage = new MessageBox(MessageBox.INFO, msg, null, uploaderDestructor, uploaderDestructor);
+										successMessage.show();
+
+										self.refresh();
+									}
+								},
+								onFileUploadError: function() {
+
+									let options = {
+										textMultiline: i18n.t("LBL_UNSPECIFIED_ERROR")
+									};
+
+									let errorMessage = new MessageBox(MessageBox.ERROR, i18n.t("LBL_UPLOADING_ERROR"), options, uploaderDestructor, uploaderDestructor);
+									errorMessage.show();
+								}
+							}
+						}
+					]
+				});
+
+				$$("uploader-" + self.uid).fileDialog();
+			}
+			
+			
 			function getRecord(row) {
 				
 				let record = {};
@@ -385,7 +469,8 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 				
 				let firstCommandIdCalculated = Object.keys(BackOfficeViewGrid.GRID_COMMANDS).length;
 				const editable = !self.currentTableData.sqlView && BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, BackOfficeHelper.META_TYPE_TABLE.PROPERTY.EDITABLE, self.backOffice.metadata, self.currentTableData);
-				
+				const importable = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, BackOfficeHelper.META_TYPE_TABLE.PROPERTY.IMPORTABLE, self.backOffice.metadata, self.currentTableData);					
+					
 				function getMetadata() {
 
 					let icon;
@@ -393,7 +478,7 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 
 					const printable = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, BackOfficeHelper.META_TYPE_TABLE.PROPERTY.PRINTABLE, self.backOffice.metadata, self.currentTableData);
 					const exportable = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, BackOfficeHelper.META_TYPE_TABLE.PROPERTY.EXPORTABLE, self.backOffice.metadata, self.currentTableData);
-
+					
 					const defaultGridOptionValues = [
 						{ gridOption: { id: 1 }, value: "true" },
 						//					{ gridOption: { id: 2 }, value: "true" },
@@ -506,6 +591,20 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 								itemRequired: false
 							}
 						);
+					}
+					
+					if (importable) {
+
+						metadata.gridCommands.push({												
+							id: BackOfficeViewGrid.GRID_COMMANDS.import,
+							default_: false,
+							icon: "mdi mdi-file-import",
+							label: "LBL_TABLE_IMPORT",
+							multiselect: false,
+ 							position: BackOfficeViewGrid.GRID_COMMANDS.import,
+							showText: false,
+							itemRequired: false
+						});
 					}
 
 					if (Array.isArray(self.currentTableData.commands) && self.currentTableData.commands.length > 0) {
@@ -856,6 +955,12 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 						);
 					}
 					
+					if (importable) {
+
+						events[DataTable.EventTypes.ON_COMMAND_EXEC].push(
+							{ commandId: BackOfficeViewGrid.GRID_COMMANDS.import, function: cmdImport }
+						);
+					}						
 					
 					if (Array.isArray(self.currentTableData.commands) && self.currentTableData.commands.length > 0) {
 						
