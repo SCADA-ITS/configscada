@@ -1,5 +1,5 @@
 INSERT INTO ui.grids(id, adapter_id, "label", enabled, visible) VALUES
-(52, 2, 'LBL_ELEMENT_TYPE_DAI_SERVER', true, true);
+(52, 2, 'LBL_DAI_SERVER', true, true);
 
 INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", required, parameterized, extended, filtered, "label", label_tooltip, source_field, is_pk, is_epoch_milli, align, needs_translation, grouping_summary, width_px, grid_field_group_operation_id, enabled, visible, adjust, header_vertical, fixed_column, replacement_function) VALUES
 --el id lo definimos como: <tipo><numero de fila 4 numeros>

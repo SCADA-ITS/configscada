@@ -114,7 +114,7 @@ class InputAdapter_VMS {
 		p.load(new FileReader(propertiesPath));
 		
 		if(!(contentByte.get(2) & 0xFF).equals(COD_EST_PMV)){
-			log.error("Trama recibida no es de estado del panel");
+			log.debug("Trama recibida no es de estado del panel");
 			return "";
 		}
 		
