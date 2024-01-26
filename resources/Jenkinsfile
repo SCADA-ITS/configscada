@@ -1,0 +1,67 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Verificar repositorios') {
+            steps {
+                script {
+                    dir('rits') {
+                        git(
+                            url: "ssh://git@192.168.88.194:3004/~/rits.git",
+                            branch: "master",
+                            changelog: true,
+                            poll: true
+                        )
+                    }
+                }
+                script {
+                    dir('ritsback') {
+                        git(
+                            url: "ssh://git@192.168.88.194:3004/~/ritsback.git",
+                            branch: "master",
+                            changelog: true,
+                            poll: true
+                        )
+                    }
+                }
+                script {
+                    dir('ritsfront') {
+                        git(
+                            url: "ssh://git@192.168.88.194:3004/~/ritsfront.git",
+                            branch: "master",
+                            changelog: true,
+                            poll: true
+                        )
+                    }
+                }
+            }
+        }
+        stage('Ejecutar scripts') {
+            steps {
+                script {
+                    def carpetas = ['maqueta_fullequip', 'maqueta_ruta_mina']
+                    def rutaBase = 'rits/ritsback/resources/db'
+
+                    parallel carpetas.collectEntries { carpeta ->
+                        ["Ejecutando en $carpeta": {
+                            echo "Ejecutando script en la carpeta: $carpeta"
+
+                            // Cambia el directorio de trabajo a la carpeta actual
+                            dir("${rutaBase}") {
+                                echo "Ruta actual: ${pwd()}"
+                                sh "./make_param.sh $carpeta localhost 5430"
+                            }
+                        }]
+                    }
+                }
+            }
+        }
+        stage('Notificación Email'){
+           steps {
+              emailext body: '''$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:
+
+              Check console output at $BUILD_URL to view the results.''', subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!', to: 'jenkins.openits@gmail.com'
+           }
+		}
+    }
+}
