@@ -1,5 +1,9 @@
 #!/bin/bash
 
+project="$1"
+psqlHost="$2"
+psqlPort="$3"
+
 echo Executing sql scripts to generate Environment... \(errors that occur are shown below\)
 cd ddl
 /bin/bash ./ddl_param.sh $psqlHost $psqlPort
