@@ -66,7 +66,7 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_ES', 1, 'LBL_UNSUPPORTED_FILE_TYPE', 'Tipo de archivo no soportado', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_UPLOADING_ERROR', 'Error al cargar los datos', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_DATA_LOADED_SUCCESSFULLY', 'Datos cargados correctamente', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('es_ES', 1, 'LBL_UPDATED_RECORDS', 'registros actualizados.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_INSERTED_RECORDS', 'registros inserteados.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_UNSPECIFIED_ERROR', 'Error no especificado.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 -- en_GB
@@ -125,7 +125,7 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('en_GB', 1, 'LBL_UNSUPPORTED_FILE_TYPE', 'Unsopported file type', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_UPLOADING_ERROR', 'Uploading error', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_DATA_LOADED_SUCCESSFULLY', 'Data loaded successfully', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('en_GB', 1, 'LBL_UPDATED_RECORDS', 'updated records.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_INSERTED_RECORDS', 'inserted records.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_UNSPECIFIED_ERROR', 'Unspecified error.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 -- es_CL
@@ -184,5 +184,5 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_CL', 1, 'LBL_UNSUPPORTED_FILE_TYPE', 'Tipo de archivo no soportado', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_UPLOADING_ERROR', 'Error al cargar los datos', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_DATA_LOADED_SUCCESSFULLY', 'Datos cargados correctamente', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('es_CL', 1, 'LBL_UPDATED_RECORDS', 'registros actualizados.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_INSERTED_RECORDS', 'registros insertados.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_UNSPECIFIED_ERROR', 'Error no especificado.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

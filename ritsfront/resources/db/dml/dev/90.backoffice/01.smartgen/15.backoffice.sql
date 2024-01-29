@@ -36,7 +36,11 @@ BEGIN
   	-- smartgen.sg_metadata_tables
   	--
 	INSERT INTO smartgen.sg_metadata_tables (id, name, label, label_singular, label_description, mdi_icon, support_images, support_attachments, sql_view, grid_id, metadata) VALUES
-	(1, 'customers', 'LBL_CUSTOMERS', 'LBL_CUSTOMER', 'LBL_CUSTOMERS_DESCRIPTION', NULL, true, true, NULL, NULL, NULL),
+	(1, 'customers', 'LBL_CUSTOMERS', 'LBL_CUSTOMER', 'LBL_CUSTOMERS_DESCRIPTION', NULL, true, true, NULL, NULL,
+	-- metadata products
+	'{
+		  "importable": true	
+	}'),
 	(2, 'products', 'LBL_PRODUCTS', 'LBL_PRODUCT', 'LBL_PRODUCTS_DESCRIPTION', NULL, true, true, NULL, NULL, 
 	-- metadata products
 	'{
@@ -156,8 +160,9 @@ BEGIN
 	-- 
   	-- smartgen.sg_metadata_table_commands
   	--
-	INSERT INTO smartgen.sg_metadata_table_commands (id, sg_metadata_table_id, "name", "label", label_description, mdi_icon, require_confirmation, available_in_form, available_in_table, groovy) VALUES
-	(1, 1, 'cmd1', 'LBL_ACTION_1', 'LBL_ACTION_1', 'mdi mdi-ab-testing', true, true, true, 'config/groovy/backoffice/smartgen/command/CustomerCommand.groovy');
+	INSERT INTO smartgen.sg_metadata_table_commands (id, sg_metadata_table_id, "name", "label", label_description, mdi_icon, require_confirmation, available_in_form, available_in_table, groovy, custom_js) VALUES
+	(1, 1, 'cmd1', 'LBL_ACTION_1', 'LBL_ACTION_1', 'mdi mdi-ab-testing', true, true, true, 'config/groovy/backoffice/smartgen/command/CustomerCommand.groovy', null),
+	(2, 1, 'cmd2', 'LBL_ACTION_2', 'LBL_ACTION_2', 'mdi mdi-ab-testing', true, true, false, 'config/groovy/backoffice/smartgen/command/CustomerCommandParam.groovy', 'customerCommandParams.js');
 
 	INSERT INTO smartgen.sg_metadata_tasks (id, "name", cron_expression, groovy, params) VALUES
 	(1, 'CleanAttachments', '0 0/1 * 1/1 * ? *', 'config/groovy/backoffice/common/task/CleanAttachmentTask.groovy', NULL);

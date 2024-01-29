@@ -133,6 +133,7 @@ CREATE TABLE dbo.sg_metadata_table_commands (
 	available_in_form bit NOT NULL,
 	available_in_table bit NOT NULL,
 	groovy varchar(200) NOT NULL,
+	custom_js varchar(200) NULL,
 	CONSTRAINT pk_sg_metadata_table_commands PRIMARY KEY (id)
 );
 GO

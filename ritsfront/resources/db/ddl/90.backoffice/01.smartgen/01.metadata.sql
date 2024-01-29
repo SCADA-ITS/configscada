@@ -106,6 +106,7 @@ BEGIN
 		available_in_form bool NOT NULL,
 		available_in_table bool NOT NULL,
 		groovy varchar(200) NOT NULL,
+		custom_js varchar(200) NULL,
 		CONSTRAINT pk_sg_metadata_table_commands PRIMARY KEY (id)
 	);
 
