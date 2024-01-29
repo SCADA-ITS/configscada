@@ -1,37 +1,26 @@
 pipeline {
     agent any
+    
+    environment {
+        RUTA_BASE_BACK = 'rits/ritsback/resources/db'
+        RUTA_BASE_FRONT = 'rits/ritsfront/resources/db'
+    }
 
     stages {
         stage('Verificar repositorios') {
             steps {
                 script {
-                    dir('rits') {
-                        git(
-                            url: "ssh://git@192.168.88.194:3004/~/rits.git",
-                            branch: "master",
-                            changelog: true,
-                            poll: true
-                        )
-                    }
-                }
-                script {
-                    dir('ritsback') {
-                        git(
-                            url: "ssh://git@192.168.88.194:3004/~/ritsback.git",
-                            branch: "master",
-                            changelog: true,
-                            poll: true
-                        )
-                    }
-                }
-                script {
-                    dir('ritsfront') {
-                        git(
-                            url: "ssh://git@192.168.88.194:3004/~/ritsfront.git",
-                            branch: "master",
-                            changelog: true,
-                            poll: true
-                        )
+                    def repos = ['rits', 'ritsback', 'ritsfront']
+        
+                    for (repo in repos) {
+                        dir(repo) {
+                            git(
+                                url: "ssh://git@192.168.88.194:3004/~/${repo}.git",
+                                branch: 'master',
+                                changelog: true,
+                                poll: true
+                            )
+                        }
                     }
                 }
             }
@@ -40,16 +29,14 @@ pipeline {
             steps {
                 script {
                     def carpetas = ['maqueta_fullequip', 'maqueta_ruta_mina', 'maqueta_ruta_mina', 'maqueta_dev', 'maqueta_dgt_jaen', 'maqueta_nogales']
-                    def rutaBase = 'rits/ritsback/resources/db'
 
                     parallel carpetas.collectEntries { carpeta ->
                         ["Ejecutando en $carpeta": {
                             echo "Ejecutando script en la carpeta: $carpeta"
 
                             // Cambia el directorio de trabajo a la carpeta actual
-                            dir("${rutaBase}") {
-                                echo "Ruta actual: ${pwd()}"
-                                sh "./make_param.sh $carpeta localhost 5430"
+                            dir("${RUTA_BASE_BACK}") {
+                                sh "./make_param_jenkins.sh $carpeta localhost 5430"
                             }
                         }]
                     }
@@ -60,36 +47,42 @@ pipeline {
             steps {
                 script {
                     def carpetas = ['maqueta_fullequip', 'maqueta_ruta_mina', 'maqueta_ruta_mina', 'maqueta_dev', 'maqueta_dgt_jaen', 'maqueta_nogales']
-                    def rutaBase = 'rits/ritsfront/resources/db'
 
                     parallel carpetas.collectEntries { carpeta ->
                         ["Ejecutando en $carpeta": {
                             echo "Ejecutando script en la carpeta: $carpeta"
 
                             // Cambia el directorio de trabajo a la carpeta actual
-                            dir("${rutaBase}") {
-                                echo "Ruta actual: ${pwd()}"
-                                sh "./make_param.sh $carpeta localhost 5430"
+                            dir("${RUTA_BASE_FRONT}") {
+                                sh "./make_param_jenkins.sh $carpeta localhost 5430"
                             }
                         }]
                     }
                 }
             }
         }
-        stage('Notificación Email'){
-           steps {
-              emailext body: '''$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:
-
-              Check console output at $BUILD_URL to view the results.''', subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!', to: 'jenkins.openits@gmail.com'
-           }
-		}
     }
     
-	post {
+    post {
+        success {
+            emailext (
+                body: """$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:
+    
+                Revisar la salida de la consola en: $BUILD_URL para más detalles.""",
+                subject: "$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!",
+                to: "jenkins.openits@gmail.com"
+            )
+        }
         failure {
-            emailext body: '''$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:
-
-        	Check console output at $BUILD_URL to view the results.''', subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!', to: 'jenkins.openits@gmail.com'
+            emailext (
+                body: """$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:
+    
+                Error en scripts para el commit $GIT_COMMIT --> Autor = $GIT_AUTHOR_NAME
+    
+                Revisar la salida de la consola en: $BUILD_URL para más detalles.""",
+                subject: "$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!",
+                to: "jenkins.openits@gmail.com"
+            )
         }
     }
 }

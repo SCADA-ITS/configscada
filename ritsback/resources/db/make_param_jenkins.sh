@@ -35,4 +35,3 @@ if [ $? -ne 0 ]; then
     exit 1  # Sale del script con un código de salida diferente de 0
 fi
     
-	
