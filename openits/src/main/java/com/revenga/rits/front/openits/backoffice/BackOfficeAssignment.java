@@ -893,7 +893,8 @@ public class BackOfficeAssignment {
 		final String QRY_TABLE_COMMANDS = String.format(
 				"SELECT cmds.id, cmds.name, cmds.label, cmds.label_description, " + 
 				"       cmds.mdi_icon, cmds.require_confirmation, " + 
-				"       cmds.available_in_form, cmds.available_in_table, cmds.groovy " +
+				"       cmds.available_in_form, cmds.available_in_table, " + 
+				"       cmds.groovy, cmds.custom_js " +
 				"  FROM %s.sg_metadata_tables t, " +
 				"       %s.sg_metadata_table_commands cmds " +
 				" WHERE cmds.sg_metadata_table_id = t.id " +
@@ -923,6 +924,7 @@ public class BackOfficeAssignment {
 				command.setAvailableInTable(rs.getBoolean("available_in_table"));
 				command.setRequireConfirmation(rs.getBoolean("require_confirmation"));
 				command.setGroovy(rs.getString("groovy"));
+				command.setCustomJS(rs.getString("custom_js"));
 				
 				table.getCommands().add(command);				
 			}

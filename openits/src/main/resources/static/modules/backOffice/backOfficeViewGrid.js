@@ -342,23 +342,23 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 									return res;
 								},
 								onFileUpload: function(item) {
+									
+									if (item.requestResultMessage.info === "success") {
 
-									if (item.requestResultMessage.error != "") {
+										let msg = i18n.t("LBL_DATA_LOADED_SUCCESSFULLY") + ": " + item.requestResultMessage.infoDescription + " " + i18n.t("LBL_INSERTED_RECORDS");
+										let successMessage = new MessageBox(MessageBox.INFO, msg, null, uploaderDestructor, uploaderDestructor);
+										successMessage.show();
 
+										self.refresh();
+									}
+									else {
+									
 										let options = {
 											textMultiline: item.requestResultMessage.error
 										};
 
 										let errorMessage = new MessageBox(MessageBox.ERROR, i18n.t("LBL_UPLOADING_ERROR"), options, uploaderDestructor, uploaderDestructor);
-										errorMessage.show();
-
-									} else if (item.requestResultMessage.info === "success") {
-
-										let msg = i18n.t("LBL_DATA_LOADED_SUCCESSFULLY") + ": " + item.requestResultMessage.infoDescription + " " + i18n.t("LBL_UPDATED_RECORDS");
-										let successMessage = new MessageBox(MessageBox.INFO, msg, null, uploaderDestructor, uploaderDestructor);
-										successMessage.show();
-
-										self.refresh();
+										errorMessage.show();	
 									}
 								},
 								onFileUploadError: function() {
@@ -1014,7 +1014,7 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 									
 										if (id && (Array.isArray(requestInput) && requestInput.length > 0)) {
 											
-											BackOfficeHelper.command(self.backOffice, self.currentTableData, cmd.id, requestInput, id).then((requestResult) => {
+											BackOfficeHelper.command(self.backOffice, self.currentTableData, cmd.id, requestInput, undefined, id).then((requestResult) => {
 														
 												if (!requestResult.requestResultMessage.error) {
 													

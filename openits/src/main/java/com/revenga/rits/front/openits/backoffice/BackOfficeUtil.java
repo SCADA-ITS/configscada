@@ -804,7 +804,7 @@ public class BackOfficeUtil {
 	}
 	
 	public static AbstractBackOfficeGroovy newGroovyInstance(Environment env, GroovyManager groovyManager, GroovyBasic groovyBasic,
-			Connection conn, BackOffice backOffice, Table table, Long id, RequestResult requestResult) throws Exception {
+			Connection conn, BackOffice backOffice, Table table, Request request, RequestResult requestResult) throws Exception {
 		
 		String groovyFile = groovyBasic.getGroovy();
 		
@@ -862,7 +862,13 @@ public class BackOfficeUtil {
 				backOfficeGroovyCloned.setConn(conn);
 				backOfficeGroovyCloned.setBackOffice(backOffice);
 				backOfficeGroovyCloned.setTable(table);
-				backOfficeGroovyCloned.setId(id);
+				
+				if (request != null) {
+					
+					backOfficeGroovyCloned.setId(request.getId());
+					backOfficeGroovyCloned.setRequestParams(request.getRequestParams());
+				}
+				
 				backOfficeGroovyCloned.setDbType(BackOfficeUtil.getDBType(conn));
 				
 				if (requestResult != null) {

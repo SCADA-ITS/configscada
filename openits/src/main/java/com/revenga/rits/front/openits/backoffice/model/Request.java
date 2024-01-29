@@ -2,6 +2,7 @@ package com.revenga.rits.front.openits.backoffice.model;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 import com.revenga.rits.front.openits.backoffice.model.Column.ColType;
 import com.revenga.rits.front.openits.backoffice.model.Table.RequestType;
@@ -54,4 +55,5 @@ public class Request implements Serializable {
 	private RequestType requestType;
 	
 	private List<RequestInput> requestInput;
+	private Map<String, Object> requestParams;
 }

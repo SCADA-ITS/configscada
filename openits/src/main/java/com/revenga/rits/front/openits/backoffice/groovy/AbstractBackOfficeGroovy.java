@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.core.env.Environment;
 import org.springframework.util.CollectionUtils;
@@ -16,6 +17,7 @@ import com.revenga.rits.front.openits.backoffice.model.Row;
 import com.revenga.rits.front.openits.backoffice.model.Row.RowData;
 import com.revenga.rits.front.openits.backoffice.model.Table;
 import com.revenga.rits.front.openits.backoffice.model.Table.RequestType;
+import com.revenga.rits.front.openits.util.ConversionUtil;
 import com.revenga.rits.front.openitsdao.model.BackOffice;
 
 import lombok.Data;
@@ -27,6 +29,7 @@ public abstract class AbstractBackOfficeGroovy implements Cloneable {
 	protected Connection conn;
 	protected BackOffice backOffice;
 	protected Table table;
+	protected Map<String, Object> requestParams;
 	protected Long id;
 	protected Row oldRow;
 	protected Row newRow;
@@ -99,6 +102,11 @@ public abstract class AbstractBackOfficeGroovy implements Cloneable {
 		}
 		
 		return resultStringBuilder.toString();
+	}
+	
+	protected Object getParamsObject(Class<?> clazz) {
+		
+		return ConversionUtil.mapToObject(clazz, this.requestParams);		
 	}
 
 	public void trace(RequestType persistenceType) {

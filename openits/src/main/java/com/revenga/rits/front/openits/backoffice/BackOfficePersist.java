@@ -167,7 +167,7 @@ public class BackOfficePersist extends BackOfficeAction {
 						
 						if (!CollectionUtils.isEmpty(lines) && lines.size() > 1) {
 							
-							importLines(conn, requestResult, lines, tableName);
+							importLines(conn, backOffice, requestResult, lines, tableName);
 						}
 						else {
 							
@@ -192,7 +192,7 @@ public class BackOfficePersist extends BackOfficeAction {
 		return requestResult;
 	}
 	
-	private void importLines(Connection conn, RequestResult requestResult, List<String> lines, String tableName) throws SQLException {
+	private void importLines(Connection conn, BackOffice backOffice, RequestResult requestResult, List<String> lines, String tableName) throws SQLException {
 		
 		String separator = String.valueOf(this.backOfficeProcessor.getBackOfficeManager().getCsvCharSeparator()); 
 		
@@ -206,7 +206,7 @@ public class BackOfficePersist extends BackOfficeAction {
 		
 		paramsLine = String.join(", ", paramsLine.split(","));
 		
-		String sql = String.format("INSERT INTO %s(%s) VALUES(%s)", tableName, fieldsLine, paramsLine);
+		String sql = String.format("INSERT INTO %s.%s(%s) VALUES(%s)", backOffice.getName(), tableName, fieldsLine,	paramsLine);
 		
 		int lineOffset = 1;
 		String line = "";
@@ -237,6 +237,9 @@ public class BackOfficePersist extends BackOfficeAction {
 			if (lineCheck) {
 				
 				conn.commit();
+				
+				requestResult.getRequestResultMessage().setInfo("success");
+				requestResult.getRequestResultMessage().setInfoDescription(String.valueOf(lines.size()));
 			}
 			else {
 				
@@ -271,7 +274,7 @@ public class BackOfficePersist extends BackOfficeAction {
 				
 				AbstractBackOfficeGroovy backOfficeGroovy = BackOfficeUtil.newGroovyInstance(this.backOfficeProcessor.getEnv(),
 						this.backOfficeProcessor.getGroovyManager(), trigger, conn, backOffice, table,
-						request.getId(), requestResult);
+						request, requestResult);
 				
 				if (backOfficeGroovy instanceof AbstractBackOfficeTrigger) {
 					

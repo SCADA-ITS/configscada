@@ -110,7 +110,7 @@ public class BackOfficeCommand extends BackOfficeAction {
 
 		AbstractBackOfficeGroovy backOfficeGroovy = BackOfficeUtil.newGroovyInstance(this.backOfficeProcessor.getEnv(),
 				this.backOfficeProcessor.getGroovyManager(), command, conn, backOffice, table,
-				request.getId(), requestResult);
+				request, requestResult);
 		
 		if (backOfficeGroovy instanceof AbstractBackOfficeCommand) {
 			

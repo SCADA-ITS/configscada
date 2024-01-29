@@ -91,6 +91,7 @@ public class Table extends Basic {
 		private Boolean requireConfirmation;
 		private Boolean availableInForm;
 		private Boolean availableInTable;
+		private String customJS;
 		
 		public Command(String name) {
 			

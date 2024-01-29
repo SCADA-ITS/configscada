@@ -54,7 +54,7 @@ export default class BackOfficeHelper {
 				GROUP_ATTACHMENTS: { name: "groupAttachments" },
 				PRINTABLE: { name: "printable", default: true },
 				EXPORTABLE: { name: "exportable", default: true },
-				IMPORTABLE: { name: "importable", default: true },
+				IMPORTABLE: { name: "importable", default: false },
 				CUSTOM_JS: { name: "customJS" },
 				EDITABLE: { name: "editable", default: true },
 				VIRTUAL_COLS: { name: "virtualCols" },
@@ -355,13 +355,14 @@ export default class BackOfficeHelper {
 		return response ? response.json() : undefined;
 	}
 
-	static async command(backOffice, table, commandId, requestInput, id) {
+	static async command(backOffice, table, commandId, requestInput, requestParams, id) {
 
 		let response;
 
 		const body = {
 			id: id,
 			requestInput: requestInput,
+			requestParams: requestParams,
 			requestType: BackOfficeHelper.REQUEST_TYPE_COMMAND,
 			tableName: table.name,
 			commandId: commandId

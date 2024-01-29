@@ -123,7 +123,7 @@ public class BackOfficeFiller extends BackOfficeAction {
 				
 				AbstractBackOfficeGroovy backOfficeGroovy = BackOfficeUtil.newGroovyInstance(
 						this.backOfficeProcessor.getEnv(), this.backOfficeProcessor.getGroovyManager(), filler, conn,
-						backOffice, table, request.getId(), requestResult);
+						backOffice, table, request, requestResult);
 				
 				if (backOfficeGroovy instanceof AbstractBackOfficeFiller) {
 					

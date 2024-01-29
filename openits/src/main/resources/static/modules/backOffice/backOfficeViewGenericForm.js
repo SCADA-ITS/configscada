@@ -344,13 +344,52 @@ export default class BackOfficeViewGenericForm extends BackOfficeView {
 				on: {
 					onItemClick: function() {
 						
-						if (cmd.requireConfirmation) {
-						
-							(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_BACKOFFICE_CONFIRM_COMMAND") + " " + (cmd.label ?? cmd.name) + "?", null, executeCommand, null)).show();	
+						if (cmd.customJS) {
+							
+							const lazy = async _ => {
+					
+								let jsFile = util.getContextPath() + "/templates/" + cmd.customJS;
+				
+								const mod = await import(jsFile);
+								
+								const form = $$(self.formId);
+									
+								if (form) {
+									
+									const values = form.getValues();
+					
+									if (typeof(values) === 'object') {
+										
+										const requestInput = BackOfficeHelper.getRequestInput(values, self.currentTableData, true);
+										
+										const backOfficeViewCustomCommand = new mod.default(self.backOffice, self.data, self.currentTableData, requestInput, cmd, executeCommand);
+										
+										
+										
+										const backOfficeViewCustomCommandView = backOfficeViewCustomCommand.getView();
+								
+										const winIdBackOfficeViewCustomCommand = util.ui.loadWindow(i18n.t(cmd.label) + " " + (self.currentTableData.labelSingular ?? (self.currentTableData.label ?? self.currentTableData.name)), 
+																									backOfficeViewCustomCommandView, 
+																									backOfficeViewCustomCommand.formHeight, 
+																									backOfficeViewCustomCommand.formWidth, true);
+																									
+										backOfficeViewCustomCommand.containerId = winIdBackOfficeViewCustomCommand;
+									}	
+								}
+							}
+							
+							lazy();
 						}
 						else {
 							
-							executeCommand();
+							if (cmd.requireConfirmation) {
+						
+								(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_BACKOFFICE_CONFIRM_COMMAND") + " " + (cmd.label ?? cmd.name) + "?", null, executeCommand, null)).show();	
+							}
+							else {
+								
+								executeCommand();
+							}	
 						}
 					}
 				}
@@ -360,7 +399,7 @@ export default class BackOfficeViewGenericForm extends BackOfficeView {
 			button.tooltip = i18n.t(cmd.labelDescription ?? cmd.name);
 			button.icon = cmd.mdiIcon;
 			
-			function executeCommand() {
+			function executeCommand(requestParams) {
 			
 				const form = $$(self.formId);
 									
@@ -382,7 +421,7 @@ export default class BackOfficeViewGenericForm extends BackOfficeView {
 							
 								if (id && (Array.isArray(requestInput) && requestInput.length > 0)) {
 							
-									BackOfficeHelper.command(self.backOffice, self.currentTableData, cmd.id, requestInput, id).then((requestResult) => {
+									BackOfficeHelper.command(self.backOffice, self.currentTableData, cmd.id, requestInput, requestParams, id).then((requestResult) => {
 												
 										if (!requestResult.requestResultMessage.error) {
 											
@@ -692,222 +731,6 @@ export default class BackOfficeViewGenericForm extends BackOfficeView {
 						
 						return cols;
 					}(),
-//					cols: [
-//						{ width: 15 },
-//						{
-//							view: "button",
-//							value: i18n.t("LBL_CANCEL"),
-//							width: 130,
-//							height: 41,
-//							css: "dialog-cancel",
-//							hidden: !self.editable,
-//							click:
-//								function() {
-//									
-//									if (self.backOffice.onCancel) {
-//										
-//										self.backOffice.onCancel()
-//									}
-//									
-//									if (container) {
-//										
-//										container.close();	
-//									}
-//								}
-//						},
-//						{},
-//						{
-//							view: "button",
-//							value: i18n.t("LBL_TABLE_PRINT"),
-//							width: 130,
-//							height: 41,
-//							css: "dialog-finish",
-//							hidden: (self.currentTableData.metadata && self.currentTableData.metadata.srcTemplate) ? false : true,
-//							click:
-//								function() {
-//
-//									if (self.currentTableData.metadata && self.currentTableData.metadata.srcTemplate) {
-//
-//										let inputData = {};
-//										inputData.tables = [];									
-//										inputData.groupImages = {};
-//										inputData.fields = {};
-//
-//										let options = {
-//											srcTemplate: self.currentTableData.metadata.srcTemplate
-//										};
-//
-//										if (Array.isArray(self.currentTableData.columns) && self.currentTableData.columns.length > 0) {
-//
-//											for (let column of self.currentTableData.columns) {
-//
-//												let val;
-//												let label = column.name;
-//												const refColumn = column.refColumn;
-//
-//												let col = self.currentTableData.rows[0].data.find(d => d.columnId === column.id);
-//
-//												if (col) {
-//												
-//													val = (column.colType === "TIMESTAMP") ? new Date(parseInt(col.value)).toLocaleString() : col.value;													
-//
-//													if (refColumn) {
-//
-//														const referencedColumnValue = BackOfficeHelper.getReferencedColumnValue(self.backOffice, column, col.value, self.data);
-//
-//														if (referencedColumnValue) {
-//
-//															val = referencedColumnValue.value;
-//														}
-//													}
-//												}
-//
-//												inputData.fields[label] = val;
-//											}
-//
-//											if (Array.isArray(self.currentTableData.referTableNames) && self.currentTableData.referTableNames.length > 0) {
-//
-//												const columnId = self.currentTableData.columns.find(e => e.primaryKey === true);
-//
-//												if (columnId) {
-//
-//													self.currentTableData.referTableNames.forEach(referTableName => {
-//
-//														const referTable = self.data.find(e => e.name === referTableName);
-//
-//														if (referTable) {
-//
-//															let tableObj = {};
-//
-//															tableObj.data = [];
-//															tableObj.caption = referTable.label ?? referTable.name;
-//															tableObj.tableName = referTable.name;
-//
-//															if (Array.isArray(referTable.rows) && referTable.rows.length > 0) {
-//
-//																for (let row of referTable.rows) {
-//
-//																	let aux = {}
-//
-//																	for (let dat of row.data) {
-//
-//																		let d = referTable.columns.find(e => e.id === dat.columnId);
-//
-//																		if (d) {
-//
-//																			let lab;
-//																			let referencedColumnName = BackOfficeHelper.getReferencedColumnName(self.backOffice, d, self.data);
-//																			let referencedColumnValue = BackOfficeHelper.getReferencedColumnValue(self.backOffice, d, dat.value, self.data);
-//
-//																			if (referencedColumnName) {
-//
-//																				let table = self.data.find(e => e.id === referencedColumnName.tableId);
-//
-//																				if (table) {
-//
-//																					lab = table.labelSingular ?? (table.label ?? table.name);
-//																				}
-//																			}
-//
-//																			aux[d.name] = {
-//																				value: (referencedColumnValue && referencedColumnValue.value) ? referencedColumnValue.value : dat.value,
-//																				header: lab ?? d.name
-//																			};
-//																		}
-//																	}
-//
-//																	tableObj.data.push(aux);
-//																}
-//
-//															} else {
-//
-//																let aux = {};
-//
-//																for (let col of referTable.columns) {
-//
-//																	aux[col.name] = undefined;
-//																}
-//
-//																tableObj.data.push(aux);
-//															}
-//
-//															inputData.tables.push(tableObj);
-//														}
-//													});
-//												}
-//											}
-//
-//											if (Array.isArray(self.currentTableData.rows[0].images) && self.currentTableData.rows[0].images.length > 0) {
-//												
-//												inputData.groupImages.name = "groupImage" + self.currentTableData.rows[0].images[0].idValue;
-//												inputData.groupImages.data = [];
-//
-//												for (let image of self.currentTableData.rows[0].images) {
-//
-//													inputData.groupImages.data.push({
-//														src: `backoffice/${self.backOffice.id}/attachments/image/${self.currentTableData.name}/${image.id}`,
-//														fileName: image.fileName
-//													});
-//												}
-//											}
-//										}
-//
-//										let printPreview = new PrintPreview(PrintPreview.TYPE_TEMPLATE, inputData, options);
-//										printPreview.show();
-//
-//									} else {
-//
-//										new MessageBox(MessageBox.ERROR, i18n.t("LBL_NO_SRC_TEMPLATE_CONFIG"), null, null, null).show();
-//									}
-//								}
-//						},										
-//						{
-//							id: "btn-accept-" + self.uid,
-//							view: "button",
-//							value: i18n.t("LBL_ACCEPT"),
-//							disabled: !self.backOffice.onCancel,
-//							width: 130,
-//							height: 41,
-//							css: "dialog-accept",
-//							hidden: !self.editable,
-//							click:
-//								function() {
-//
-//									let validation = $$(self.formId).validate({ disabled: true });
-//
-//									if (validation) {
-//
-//										persistUpdate();
-//
-//									} else {
-//
-//										$$(self.formId).show();
-//									}
-//								}
-//						},
-//						{
-//							view: "button",
-//							value: i18n.t("LBL_CANCEL"),
-//							width: 130,
-//							height: 41,
-//							css: "dialog-cancel",
-//							hidden: self.editable,
-//							click:
-//								function() {
-//									
-//									if (self.backOffice.onCancel) {
-//										
-//										self.backOffice.onCancel()
-//									}
-//									
-//									if (container) {
-//										
-//										container.close();	
-//									}
-//								}
-//						},
-//						{ width: 15 }
-//					]
 				}
 			]
 		}
