@@ -1,3 +1,8 @@
+--ElementType:9
+UPDATE master.element_subtype_active_commands
+SET enabled=false
+WHERE element_type_id=9 AND element_subtype_id=4 AND command_element_type_id NOT IN(1,2,3);
+
 --ElementType:13
 UPDATE master.command_element_types
 SET enabled=false

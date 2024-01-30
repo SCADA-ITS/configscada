@@ -1,4 +1,5 @@
 element_type;element_subtype;alias;svg_file;js_custom_type_render;keepRatio
+9;4;JETFAN;09_jetfan.svg;jetfan.js;true
 13;;SEM;13_sem_3_grupos.svg;trafficLight.js;true
 71;11;PMV;71_vms_clv_af.svg;vms.js;true
 71;12;PMV;71_vms_clv_af.svg;vms.js;true

@@ -32,6 +32,9 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (090003, 9, 1, 3, true, false, false, false, 'LBL_GRID_FIELD_DESCRIPTION', 'LBL_GRID_FIELD_DESCRIPTION', 'description', false, false, NULL, false, false, 170, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
 (090004, 9, 1, 4, true, true, false, false, NULL, NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
 (090005, 9, 1, 5, true, true, false, true, 'LBL_GRID_FIELD_STATE_LABEL', 'LBL_GRID_FIELD_STATE_LABEL', 'stateLabel', false, false, NULL, true, false, 150, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(090006, 9, 1, 6, true, false, false, false, 'LBL_GRID_FIELD_FAN_STATE', 'LBL_GRID_FIELD_TRAFFIC_LIGHT_GROUP', 'ElementTypeParam:9:2:1', false, false, 'left', true, false, 200, NULL, true, true, NULL, NULL, NULL, NULL, 0),
+(090007, 9, 1, 7, true, false, false, false, 'LBL_GRID_FIELD_FAN_LOCAL', 'LBL_GRID_FIELD_TRAFFIC_LIGHT_GROUP', 'ElementTypeParam:9:2:28', false, false, 'left', true, false, 200, NULL, true, true, NULL, NULL, NULL, NULL, 0),
+(090008, 9, 1, 8, true, false, false, false, 'LBL_GRID_FIELD_FAN_REMOTE', 'LBL_GRID_FIELD_TRAFFIC_LIGHT_GROUP', 'ElementTypeParam:9:2:29', false, false, 'left', true, false, 200, NULL, true, true, NULL, NULL, NULL, NULL, 0),
 
 (110001, 11, 1, 1, true, false, false, false, 'LBL_GRID_FIELD_ID', 'LBL_GRID_FIELD_ID', 'id', true, false, null, false, false, 500, NULL, true, false, NULL, NULL, NULL, NULL, NULL),
 (110002, 11, 1, 2, true, false, false, true, 'LBL_GRID_FIELD_NAME', 'LBL_GRID_FIELD_NAME', 'alias', false, false, NULL, false, false, 150, NULL, true, true, NULL, NULL, true, NULL, NULL),

@@ -11,17 +11,20 @@ INSERT INTO ui.synoptics
 INSERT INTO ui.synoptic_layers 
 (id, synoptic_id, name, label, visible) VALUES 
 (90100000, 901, 'SYNOPTIC_LAYERS_CONTROL_DE_ACCESSOS', 'LBL_SYNOPTIC_LAYERS_CONTROL_DE_ACCESSOS', true),
+(90100001, 901, 'SYNOPTIC_LAYERS_VENTILACION', 'LBL_SYNOPTIC_LAYERS_VENTILACION', true),
 (90101300, 901, 'SYNOPTIC_LAYERS_SEMAFOROS', 'LBL_SYNOPTIC_LAYERS_SEMAFOROS', true),
 (90107111, 901, 'SYNOPTIC_LAYERS_PANELES_CLV', 'LBL_SYNOPTIC_LAYERS_PANELES_CLV', true),
 (90107112, 901, 'SYNOPTIC_LAYERS_PANELES_AF', 'LBL_SYNOPTIC_LAYERS_PANELES_AF', true),
-(90107118, 901, 'SYNOPTIC_LAYERS_PANELES_GT', 'LBL_SYNOPTIC_LAYERS_PANELES_GT', true);
+(90107118, 901, 'SYNOPTIC_LAYERS_PANELES_GT', 'LBL_SYNOPTIC_LAYERS_PANELES_GT', true),
+(90100904, 901, 'SYNOPTIC_LAYERS_JETFAN', 'LBL_SYNOPTIC_LAYERS_JETFAN', true);
 
 INSERT INTO ui.synoptic_layer_relationships 
 (synoptic_id, parent_layer_id, child_layer_id) VALUES 
 (901, 90100000, 90101300),
 (901, 90100000, 90107111),
 (901, 90100000, 90107112),
-(901, 90100000, 90107118);
+(901, 90100000, 90107118),
+(901, 90100001, 90100904);
 
 INSERT INTO ui.synoptic_commands 
 (id, synoptic_id, position, label, icon, "default", module_action_id, args, view_type_id, multiselect, show_text, item_required, context) VALUES 
@@ -102,5 +105,11 @@ INSERT INTO ui.synoptic_layer_elements
 (90107112, 'Element:71:18', 120071, 'AF-1-01-DP-I', 71, 706, false, NULL, true, false, NULL, true),
 (90107112, 'Element:71:16', 120071, 'AF-1-01-DP-D', 71, 903, false, NULL, true, false, NULL, true),
 (90107118, 'Element:71:61', 180071, 'PMV-2-01-DP', 762, 304, false, NULL, true, false, NULL, true),
-(90107118, 'Element:71:62', 180071, 'PMV-1-01-DP', 810, 776, false, NULL, true, false, NULL, true);
+(90107118, 'Element:71:62', 180071, 'PMV-1-01-DP', 810, 776, false, NULL, true, false, NULL, true),
+(90100904, 'Element:9:33', 040009, 'VEN-3-23-DP-2', 1661, 359, false, NULL, true, false, NULL, true),
+(90100904, 'Element:9:31', 040009, 'VEN-3-21-DP-2', 1586, 359, false, NULL, true, false, NULL, true),
+(90100904, 'Element:9:32', 040009, 'VEN-3-22-DP-2', 1586, 259, false, NULL, true, false, NULL, true),
+(90100904, 'Element:9:34', 040009, 'VEN-3-24-DP-2', 1661, 259, false, NULL, true, false, NULL, true),
+(90100904, 'Element:9:35', 040009, 'VEN-3-25-DP-2', 1739, 359, false, NULL, true, false, NULL, true),
+(90100904, 'Element:9:36', 040009, 'VEN-3-26-DP-2', 1739, 259, false, NULL, true, false, NULL, true);
 
