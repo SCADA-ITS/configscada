@@ -378,14 +378,14 @@
 				"jsCustomTypeRender": "component/graphicIcon/custom/vms.js"
 			},
 			"alternance": true,
-			"configAlternance": false,
+			"configAlternance": true,
 			"defaultAlternanceMs": 5000,
 			"blinking": false,
 			"configBlinking": false,
 			"defaultFlashingOnMs":1000,
 			"defaultFlashingOffMs":1000,
-			"textColor": false,
-			"defaultTextColor": "#FFFFFF",
+			"textColor": true,
+			"defaultTextColor": "#FFBF00",
 			"textAlign": false
 		}
 	],

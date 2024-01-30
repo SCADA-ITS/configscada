@@ -8,5 +8,7 @@ INSERT INTO ui.graphic_icons
 (000013, 'SEM', 'SEM', false, true, 'component/graphicIcon/graphicIconCustom.js', 40, 40, 'img/graphic_icon/13_sem_3_grupos.svg', 'component/graphicIcon/custom/trafficLight.js',true),
 (110071, 'PMV', 'PMV', false, true, 'component/graphicIcon/graphicIconCustom.js', 40, 40, 'img/graphic_icon/71_vms_clv_af.svg', 'component/graphicIcon/custom/vms.js',true),
 (120071, 'PMV', 'PMV', false, true, 'component/graphicIcon/graphicIconCustom.js', 40, 40, 'img/graphic_icon/71_vms_clv_af.svg', 'component/graphicIcon/custom/vms.js',true),
-(180071, 'PMV', 'PMV', false, true, 'component/graphicIcon/graphicIconCustom.js', 165.9552, 55.870712, 'img/graphic_icon/71_vms_dgt_gr_txt.svg', 'component/graphicIcon/custom/vms.js',true);
+(180071, 'PMV', 'PMV', false, true, 'component/graphicIcon/graphicIconCustom.js', 165.9552, 55.870712, 'img/graphic_icon/71_vms_dgt_gr_txt.svg', 'component/graphicIcon/custom/vms.js',true),
+(220071, 'PMV', 'PMV', false, true, 'component/graphicIcon/graphicIconCustom.js', 300, 100,'img/graphic_icon/71_vms_dgt.svg', 'component/graphicIcon/custom/vms.js', true);
+
 
