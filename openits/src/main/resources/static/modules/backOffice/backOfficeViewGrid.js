@@ -53,12 +53,81 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 		function getDataTableView() {
 
 			let viewDataTable;
-			
+			const importable = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, BackOfficeHelper.META_TYPE_TABLE.PROPERTY.IMPORTABLE, self.backOffice.metadata, self.currentTableData);								
+							
 			self.dataTable = getDataTable();
-			
+					
 			if (self.dataTable) {
 				
-				let dataTableContent = self.dataTable.getView(); 
+				let dataTableContent = self.dataTable.getView();
+
+				if (importable) {
+
+					dataTableContent.push({
+						id: "uploader-container-" + self.uid,
+						height: 1,
+						rows: [
+							{
+								view: "uploader",
+								id: "uploader-" + self.uid,
+								height: 1,
+								accept: "text/csv",
+								autosend: true,
+								multiple: false,
+								apiOnly: true,
+								on: {
+									onBeforeFileAdd: function(item) {
+
+										let res = true;
+
+										if (item.type === "csv") {
+
+											this.config.upload = appConfig.restUrl + util.fillTemplate(REST_BACKOFFICE_UPLOAD_CSV, { backOfficeId: self.backOffice.id, tableName: self.currentTableData.name });
+
+										} else {
+
+											res = false;
+
+											let suportedErrorMessage = new MessageBox(MessageBox.ERROR, i18n.t("LBL_UNSUPPORTED_FILE_TYPE"), null, null, null);
+											suportedErrorMessage.show();
+										}
+
+										return res;
+									},
+									onFileUpload: function(item) {
+
+										if (item.requestResultMessage.info === "success") {
+
+											let msg = i18n.t("LBL_DATA_LOADED_SUCCESSFULLY") + ": " + item.requestResultMessage.infoDescription + " " + i18n.t("LBL_INSERTED_RECORDS");
+											let successMessage = new MessageBox(MessageBox.INFO, msg, null, null, null);
+											successMessage.show();
+
+											self.refresh();
+										}
+										else {
+
+											let options = {
+												textMultiline: item.requestResultMessage.error
+											};
+
+											let errorMessage = new MessageBox(MessageBox.ERROR, i18n.t("LBL_UPLOADING_ERROR"), options, null, null);
+											errorMessage.show();
+										}
+									},
+									onFileUploadError: function() {
+
+										let options = {
+											textMultiline: i18n.t("LBL_UNSPECIFIED_ERROR")
+										};
+
+										let errorMessage = new MessageBox(MessageBox.ERROR, i18n.t("LBL_UPLOADING_ERROR"), options, null, null);
+										errorMessage.show();
+									}
+								}
+							}
+						]
+					});
+				}
 				
 				viewDataTable = {
 					cols: function() {
@@ -300,82 +369,10 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 			
 			function cmdImport() {
 
-				uploaderDestructor();
+				if ($$("uploader-" + self.uid)) {
 
-				function uploaderDestructor() {
-
-					if ($$("uploader-container-" + self.uid)) {
-
-						$$("uploader-container-" + self.uid).destructor();
-					}
+					$$("uploader-" + self.uid).fileDialog();
 				}
-
-				webix.ui({
-					id: "uploader-container-" + self.uid,
-					height: 1,
-					rows: [
-						{
-							view: "uploader",
-							id: "uploader-" + self.uid,
-							height: 1,
-							accept: "text/csv",
-							autosend: true,
-							multiple: false,
-							apiOnly: true,
-							on: {
-								onBeforeFileAdd: function(item) {
-
-									let res = true;
-
-									if (item.type === "csv") {
-
-										this.config.upload = appConfig.restUrl + util.fillTemplate(REST_BACKOFFICE_UPLOAD_CSV, { backOfficeId: self.backOffice.id, tableName: self.currentTableData.name });
-
-									} else {
-
-										res = false;
-
-										let suportedErrorMessage = new MessageBox(MessageBox.ERROR, i18n.t("LBL_UNSUPPORTED_FILE_TYPE"), null, uploaderDestructor, uploaderDestructor);
-										suportedErrorMessage.show();
-									}
-
-									return res;
-								},
-								onFileUpload: function(item) {
-									
-									if (item.requestResultMessage.info === "success") {
-
-										let msg = i18n.t("LBL_DATA_LOADED_SUCCESSFULLY") + ": " + item.requestResultMessage.infoDescription + " " + i18n.t("LBL_INSERTED_RECORDS");
-										let successMessage = new MessageBox(MessageBox.INFO, msg, null, uploaderDestructor, uploaderDestructor);
-										successMessage.show();
-
-										self.refresh();
-									}
-									else {
-									
-										let options = {
-											textMultiline: item.requestResultMessage.error
-										};
-
-										let errorMessage = new MessageBox(MessageBox.ERROR, i18n.t("LBL_UPLOADING_ERROR"), options, uploaderDestructor, uploaderDestructor);
-										errorMessage.show();	
-									}
-								},
-								onFileUploadError: function() {
-
-									let options = {
-										textMultiline: i18n.t("LBL_UNSPECIFIED_ERROR")
-									};
-
-									let errorMessage = new MessageBox(MessageBox.ERROR, i18n.t("LBL_UPLOADING_ERROR"), options, uploaderDestructor, uploaderDestructor);
-									errorMessage.show();
-								}
-							}
-						}
-					]
-				});
-
-				$$("uploader-" + self.uid).fileDialog();
 			}
 			
 			
@@ -469,8 +466,7 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 				
 				let firstCommandIdCalculated = Object.keys(BackOfficeViewGrid.GRID_COMMANDS).length;
 				const editable = !self.currentTableData.sqlView && BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, BackOfficeHelper.META_TYPE_TABLE.PROPERTY.EDITABLE, self.backOffice.metadata, self.currentTableData);
-				const importable = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, BackOfficeHelper.META_TYPE_TABLE.PROPERTY.IMPORTABLE, self.backOffice.metadata, self.currentTableData);					
-					
+
 				function getMetadata() {
 
 					let icon;
