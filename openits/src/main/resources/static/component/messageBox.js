@@ -135,7 +135,7 @@ export default class MessageBox {
 											let checkbox = $$("checkbox-" + self.uid);
 											let percentage = (textareaNode.scrollTop + textareaNode.offsetHeight) / textareaNode.scrollHeight;
 
-											if (percentage > 1) {
+											if (percentage > 1 && checkbox) {
 
 												checkbox.enable();
 
