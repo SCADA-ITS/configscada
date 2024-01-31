@@ -323,6 +323,11 @@ export let util = {
 		loadInTab(module, moduleAction, mod, args) {
 
 			if (window.isExternal) {
+				
+				if (args && !args.viewTypeId) {
+
+					args.viewTypeId = VIEW_TYPE_WINDOW;
+				}
 
 				return this.loadInWindow(module, moduleAction, mod, args);
 			}
