@@ -152,7 +152,7 @@ pipeline {
         }
     }
 
-    post {
+  /*  post {
         always {
             script {
 				sh 'echo Ejecución always'
@@ -176,5 +176,5 @@ pipeline {
                         mimeType: 'text/html'
             }
         }
-    }
+    }*/
 }
