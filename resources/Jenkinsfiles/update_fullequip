@@ -1,0 +1,212 @@
+pipeline {
+    agent any
+    
+    environment {
+        SSH_HOST = '192.168.88.70'
+        SSH_SERVICE = 'app'
+        PASSWORD_CREDENTIALS_ID = 'ssh_fullequip'  // Reemplaza con el ID de tus credenciales
+    }
+
+    stages {
+        stage('Descargar repositorios') {
+			sh 'echo Descargando repositorios de git'
+			
+            steps {
+                script {
+                    def repos = ['rits', 'ritsback', 'ritsfront']
+        
+                    for (repo in repos) {
+                        dir(repo) {
+                            git(
+                                url: "ssh://git@192.168.88.194:3004/~/${repo}.git",
+                                branch: 'master',
+                                changelog: true,
+                                poll: true
+                            )
+                        }
+                    }
+                }
+            }
+        }
+        stage('Build back') {
+			sh 'echo Compilando back'
+			
+            steps {
+                script {
+                    dir("ritsback/_ritsback") {
+                        
+                        sh 'mvn clean install'
+                    }
+                }
+            }
+        }
+        stage('Deploy back') {
+			sh 'echo Desplegando back'
+			
+            steps {
+                script {
+                    def directorio = 'app/backrits/resources'
+        
+                    if (!fileExists(directorio)) {
+                        echo "El directorio no existe. Creándolo..."
+                        sh "mkdir -p ${directorio}"
+                        echo "Directorio creado exitosamente."
+                    } else {
+                        echo "El directorio ya existe."
+                    }
+        
+                    echo "Deleting old binaries..."
+                    sh 'rm -Rf app/backrits/*.jar'
+                    
+                    echo "Deleting trace files..."
+                    sh 'rm -Rf app/backrits/logs/*'
+                    
+                    echo "Copying new binaries..."
+                    sh 'cp ritsback/data-loader/target/data-loader.jar app/backrits/data-loader.jar'
+                    sh 'cp ritsback/equipment-manager/target/equipment-manager.jar app/backrits/equipment-manager.jar'
+                    sh 'cp ritsback/ep-pub-stomp/target/ep-pub-stomp.jar app/backrits/ep-pub-stomp.jar'
+                    sh 'cp ritsback/historical-manager/target/historical-manager.jar app/backrits/historical-manager.jar'
+                    sh 'cp ritsback/io-controller/target/io-controller.jar app/backrits/io-controller.jar'
+                    sh 'cp ritsback/plan-manager/target/plan-manager.jar app/backrits/plan-manager.jar'
+                    sh 'cp ritsback/service-graphql/target/service-graphql.jar app/backrits/service-graphql.jar'
+                    sh 'cp ritsback/incident-manager/target/incident-manager.jar app/backrits/incident-manager.jar'
+                    sh 'cp ritsback/traffic-manager/target/traffic-manager.jar app/backrits/traffic-manager.jar'
+                    sh 'cp ritsback/virtual-equipment-manager/target/virtual-equipment-manager.jar app/backrits/virtual-equipment-manager.jar'
+                    sh 'cp ritsback/io-external-manager/target/io-external-manager.jar app/backrits/io-external-manager.jar'
+                    sh 'cp ritsback/server-launcher/target/server-launcher.jar app/backrits/server-launcher.jar'
+                    
+                    echo "Deleting old resource files..."
+                    sh 'rm -Rf app/backrits/resources/*'
+                    
+                    echo "Copying new resources"
+                    sh 'cp -R rits/resources/master/* app/backrits/resources'
+                    sh 'cp -R rits/resources/project/fullequip/* app/backrits/resources'
+                    sh 'cp rits/resources/project/fullequip/start.sh app/backrits/start.sh'
+                    
+                    dir('app') {
+                        sh 'tar zcvf backrits.tar.gz backrits'
+                    }
+                }
+                script {
+                    echo "Update remote files..."
+                    
+                    def user = 'revenga'
+                    def host = '192.168.88.70'
+
+                    echo "Uploading backrits to remote machine..."
+                    sh "scp app/backrits.tar.gz $user@$host:/home/$user/app/"
+
+                    echo "Updating backrits on remote machine..."
+                    sh "ssh $user@$host 'cd /home/$user/app && rm -rf backrits && tar zxvf backrits.tar.gz && sleep 15 && exit'"
+                }
+                
+                script {
+                    def rutaBase = 'rits/ritsback/resources/db'
+                    
+                    echo "Execute back scripts..."
+                    
+                    dir("${rutaBase}") {
+                        sh "./make_param_jenkins.sh maqueta_fullequip 192.168.88.71 5430"
+                    }
+                }
+            }
+        } 
+        
+        stage('Resources front') {
+			sh 'echo Copiando recursos de front'
+            steps {
+                script {
+                    echo "Copying front resources..."
+                    
+                    dir('ritsfront/openits/src/main/resources/') {
+                        sh 'rm -rf project'
+                        sh "cp ${WORKSPACE}/rits/ritsfront/openits/*.properties ./"
+                        sh "cp -r ${WORKSPACE}/rits/ritsfront/openits/static ./"
+                        sh "cp -r ${WORKSPACE}/rits/ritsfront/openits/project ./"
+                        
+                        sh '''sed -i 's/\\(spring.profiles.active=\\).*/\\1fullequip/' application.properties'''
+                        sh '''sed -i 's|\\(spring.datasource.url=jdbc:postgresql://\\).*|\\1192.168.88.71:5430/rits|' application.properties'''
+                        sh '''sed -i 's|\\(ws://\\).*\\(:61614\\)|\\1192.168.88.70\\2|' project/fullequip/data/config.js'''
+                    }
+                }
+            }
+        }
+        
+        stage('Build front') {
+			sh 'Compilando front'
+            steps {
+                script {
+                    dir("ritsfront/_ritsfront") {
+                        
+                        sh 'mvn clean install'
+                    }
+                }
+            }
+        }
+        
+        stage('Deploy front') {
+			sh 'Desplegando front'
+			
+            steps {
+                script {
+                    echo "Update remote files..."
+                    
+                    def user = 'revenga'
+                    def host = '192.168.88.70'
+    
+                    echo "Uploading backrits to remote machine..."
+                    sh "scp ritsfront/openits/target/openits.jar $user@$host:/home/$user/app"
+    
+                    echo "Updating backrits on remote machine..."
+                    sh "ssh $user@$host \"cd /home/$user/app/frontrits && rm -rf openits.jar && mv /home/$user/app/openits.jar ./ && sed -i 's|\\(active=\\).*\\( -jar\\)|\\1fullequip\\2|' ~/app/start.sh\""
+                }
+                script {
+                    def rutaBase = 'rits/ritsfront/resources/db'
+                    
+                    echo "Execute front scripts..."
+                    
+                    dir("${rutaBase}") {
+                        sh "./make_param.sh maqueta_fullequip 192.168.88.71 5430 192.168.88.70"
+                    }
+                }
+            }
+        } 
+        
+        stage('Restart app') {
+			sh 'Relanzando aplicación remotamente tras ser actualizada'
+            steps {
+                withCredentials([usernamePassword(credentialsId: PASSWORD_CREDENTIALS_ID, usernameVariable: 'SSH_USER', passwordVariable: 'SSH_PASSWORD')]) {
+                    script {
+                        sh 'sshpass -p $SSH_PASSWORD ssh -t -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST "echo $SSH_PASSWORD | sudo -S service $SSH_SERVICE restart"'
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            script {
+				sh 'echo Ejecución always'
+				
+				stringVariable += "Detalles del error:<br/>"
+				stringVariable += currentBuild.rawBuild.getLog(1000)
+			
+                // Obtener información sobre todos los commits desde el último build
+                emailext subject: "${JOB_NAME} - Build #${BUILD_NUMBER} - ${currentBuild.currentResult}",
+                        body: """
+                        <html>
+                            <body>
+                                <h2>RESULTADO ACTUALIZACIÓN MAQUETA FULLEQUIP</h2>
+                                <p>Job: ${JOB_NAME}</p>
+                                <p>Número de Ejecución: ${BUILD_NUMBER}</p>
+                                <p>Estado de la Ejecución: ${currentBuild.currentResult}</p>
+                            </body>
+                        </html>
+                        """,
+                        to: 'jenkins.openits@gmail.com',
+                        mimeType: 'text/html'
+            }
+        }
+    }
+}

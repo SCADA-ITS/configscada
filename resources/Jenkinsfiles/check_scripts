@@ -1,0 +1,142 @@
+def stringVariable = ""
+
+pipeline {
+    agent any
+
+    stages {
+		stage('Descargar repositorios') {
+            steps {
+                script {
+					sh 'echo Descargando repositorios de git'
+				
+                    def repos = ['rits', 'ritsback', 'ritsfront']
+        
+                    for (repo in repos) {
+                        dir(repo) {
+                            git(
+                                url: "ssh://git@192.168.88.194:3004/~/${repo}.git",
+                                branch: 'master',
+                                changelog: true,
+                                poll: true
+                            )
+                        }
+                    }
+                }
+            }
+        }
+		
+		stage('Loggear últimos commit') {
+            steps {
+                script {
+					sh 'echo Obteniendo información de los cambios desde la última ejecución'
+				
+					def changeLogSets = currentBuild.changeSets
+
+					for (int i = 0; i < changeLogSets.size(); i++) {
+						def entries = changeLogSets[i].items
+						
+						for (int j = 0; j < entries.length; j++) {
+							def entry = entries[j]
+							
+							echo "${entry.commitId} by ${entry.author} on ${new Date(entry.timestamp)}: ${entry.msg}"
+							
+							stringVariable += '<div style="background-color: #f0f0f0; padding: 10px;">'
+							stringVariable += "<strong>Commit: ${entry.commitId}</strong><br/>"
+							stringVariable += "Commit message: ${entry.msg}<br/>"
+							stringVariable += "Autor: ${entry.author}<br/>"
+							stringVariable += "Fecha: ${new Date(entry.timestamp)}<br/><br/>"
+							
+							def files = new ArrayList(entry.affectedFiles)
+							
+							stringVariable += "Ficheros afectados:<br/>"
+							for (int k = 0; k < files.size(); k++) {
+							
+								def file = files[k]
+								                        
+								stringVariable += " - ${file.editType.name} ${file.path}<br/>"
+							}
+							
+							stringVariable += "</div>"
+						}
+					}
+				}
+            }
+        }
+		
+		stage('Comprobar scripts back'){
+            steps {
+                script {
+					sh 'echo Probando scripts de back'
+					
+					def rutaBase = 'rits/ritsback/resources/db'
+					def proyectos = ['maqueta_dev', 'maqueta_dgt_jaen', 'maqueta_fullequip', 'maqueta_nogales', 'maqueta_ruta_mina', 'nogales', 'ruta_mina']
+                    
+                    dir("${rutaBase}") {
+						for (proyecto in proyectos) {
+							sh "./make_param_jenkins.sh ${proyecto} localhost 5430"
+						}
+                    }
+				}
+			}
+		}
+		
+		stage('Comprobar scripts front'){
+            steps {
+                script {
+					sh 'echo Probando scripts de front'
+					
+					def rutaBase = 'rits/ritsfront/resources/db'
+					def proyectos = ['dev', 'maqueta_dgt_jaen', 'maqueta_fullequip', 'maqueta_nogales', 'maqueta_ruta_mina', 'nogales', 'ruta_mina']
+                    
+                    dir("${rutaBase}") {
+						for (proyecto in proyectos) {
+							sh "./make_param_jenkins.sh ${proyecto} localhost 5430"
+						}
+                    }
+				}
+			}
+		}
+	
+        
+    }
+
+    post {
+        always {
+            script {
+				sh 'echo Envío de notifación de resultado de ejecución'
+				
+				if (currentBuild.currentResult == hudson.model.Result.FAILURE){
+					stringVariable += "<br/>Información de logs para identificación de error:<br/>"
+					def logs = currentBuild.rawBuild.getLog(1000)
+				
+					for (int i = 0; i<logs.size(); i++){
+						stringVariable += " * "
+						stringVariable += logs.get(i)
+						stringVariable += "<br/>"
+					}
+				}
+			
+                // Obtener información sobre todos los commits desde el último build
+                emailext subject: "${JOB_NAME} - Build #${BUILD_NUMBER} - ${currentBuild.currentResult}",
+                        body: """
+                        <html>
+                            <body>
+                                <h2>Detalles de la Ejecución</h2>
+                                <p>Job: ${JOB_NAME}</p>
+                                <p>Número de Ejecución: ${BUILD_NUMBER}</p>
+                                <p>Estado de la Ejecución: ${currentBuild.currentResult}</p>
+
+                                <h2>Información de los Commits</h2>
+                                
+								<p>Detalles de Cambios en la Última Ejecución:</p>
+								<p>${stringVariable}</p>
+								
+                            </body>
+                        </html>
+                        """,
+                        to: 'jenkins.openits@gmail.com',
+                        mimeType: 'text/html'
+            }
+        }
+    }
+}
