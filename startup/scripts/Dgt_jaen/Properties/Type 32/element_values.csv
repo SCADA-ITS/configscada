@@ -1,10 +1,10 @@
-item;alias;description;sessionuid;road;stretchs;pk;sentido
-1;VEN-GA1-S;VEN-GA1-S;VEN-GA1-S;Autovía A-4;Despeñaperros;;Córdoba
-2;VEN-GA1-N;VEN-GA1-N;VEN-GA1-N;Autovía A-4;Despeñaperros;;Madrid
-3;VEN-GA2-S;VEN-GA2-S;VEN-GA2-S;Autovía A-4;Despeñaperros;;Córdoba
-4;VEN-GA2-N;VEN-GA2-N;VEN-GA2-N;Autovía A-4;Despeñaperros;;Madrid
-5;VEN-GA3-S;VEN-GA3-S;VEN-GA3-S;Autovía A-4;Despeñaperros;;Córdoba
-6;VEN-GA3-N;VEN-GA3-N;VEN-GA3-N;Autovía A-4;Despeñaperros;;Madrid
-7;VEN-GA4-S;VEN-GA4-S;VEN-GA4-S;Autovía A-4;Despeñaperros;;Córdoba
-8;VEN-GA4-N;VEN-GA4-N;VEN-GA4-N;Autovía A-4;Despeñaperros;;Madrid
-9;VEN-GA5;VEN-GA5;VEN-GA5;Autovía A-4;Despeñaperros;;NA
+item;element_subtype;alias;description;sessionuid;road;stretchs;pk;sentido
+1;3;VEN-GA1-S;VEN-GA1-S;VEN-GA1-S;Autovía A-4;Despeñaperros;248+200;Córdoba
+2;3;VEN-GA1-N;VEN-GA1-N;VEN-GA1-N;Autovía A-4;Despeñaperros;248+200;Madrid
+3;3;VEN-GA2-S;VEN-GA2-S;VEN-GA2-S;Autovía A-4;Despeñaperros;247+700;Córdoba
+4;3;VEN-GA2-N;VEN-GA2-N;VEN-GA2-N;Autovía A-4;Despeñaperros;247+700;Madrid
+5;3;VEN-GA3-S;VEN-GA3-S;VEN-GA3-S;Autovía A-4;Despeñaperros;247+350;Córdoba
+6;3;VEN-GA3-N;VEN-GA3-N;VEN-GA3-N;Autovía A-4;Despeñaperros;247+350;Madrid
+7;3;VEN-GA4-S;VEN-GA4-S;VEN-GA4-S;Autovía A-4;Despeñaperros;246+700;Córdoba
+8;3;VEN-GA4-N;VEN-GA4-N;VEN-GA4-N;Autovía A-4;Despeñaperros;246+700;Madrid
+9;3;VEN-GA5;VEN-GA5;VEN-GA5;Autovía A-4;Despeñaperros;;NA

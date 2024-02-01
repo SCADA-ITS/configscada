@@ -1,13 +1,13 @@
 INSERT INTO conf.elements (element_type_id, element_subtype_id, element_id, location_id, keep_values_on_disconnected, inherit_state_id, alias, description, on_change_alarm, on_change_state, on_change_measure, on_schedule, enabled, visible, alert, alarm_count, created_at, updated_at) VALUES
-(32, NULL, 1, 0010032, NULL, NULL, 'VEN-GA1-S', 'VEN-GA1-S', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(32, NULL, 2, 0020032, NULL, NULL, 'VEN-GA1-N', 'VEN-GA1-N', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(32, NULL, 3, 0030032, NULL, NULL, 'VEN-GA2-S', 'VEN-GA2-S', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(32, NULL, 4, 0040032, NULL, NULL, 'VEN-GA2-N', 'VEN-GA2-N', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(32, NULL, 5, 0050032, NULL, NULL, 'VEN-GA3-S', 'VEN-GA3-S', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(32, NULL, 6, 0060032, NULL, NULL, 'VEN-GA3-N', 'VEN-GA3-N', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(32, NULL, 7, 0070032, NULL, NULL, 'VEN-GA4-S', 'VEN-GA4-S', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(32, NULL, 8, 0080032, NULL, NULL, 'VEN-GA4-N', 'VEN-GA4-N', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(32, NULL, 9, 0090032, NULL, NULL, 'VEN-GA5', 'VEN-GA5', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(32, 3, 1, 0010032, NULL, NULL, 'VEN-GA1-S', 'VEN-GA1-S', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(32, 3, 2, 0020032, NULL, NULL, 'VEN-GA1-N', 'VEN-GA1-N', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(32, 3, 3, 0030032, NULL, NULL, 'VEN-GA2-S', 'VEN-GA2-S', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(32, 3, 4, 0040032, NULL, NULL, 'VEN-GA2-N', 'VEN-GA2-N', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(32, 3, 5, 0050032, NULL, NULL, 'VEN-GA3-S', 'VEN-GA3-S', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(32, 3, 6, 0060032, NULL, NULL, 'VEN-GA3-N', 'VEN-GA3-N', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(32, 3, 7, 0070032, NULL, NULL, 'VEN-GA4-S', 'VEN-GA4-S', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(32, 3, 8, 0080032, NULL, NULL, 'VEN-GA4-N', 'VEN-GA4-N', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(32, 3, 9, 0090032, NULL, NULL, 'VEN-GA5', 'VEN-GA5', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_type_id, element_id, element_value_state_id, value, enabled, visible, created_at, updated_at) VALUES
 (32, 1003, 1, 1, NULL, 'VEN-GA1-S', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
