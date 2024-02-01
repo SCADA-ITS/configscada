@@ -1,10 +1,10 @@
 INSERT INTO ui.selector_trees(id, "label", default_module_id, enabled, visible) VALUES
-(1, 'LBL_GIP', 6040, true, true);
+(1, 'LBL_SELECTOR_TREE_INCIDENTS_BACKOFFICE', 6011, true, true);
 
 INSERT INTO ui.selector_tree_nodes(id, selector_tree_id, "label", image, module_id, enabled, visible) VALUES
 (01, 1, 'LBL_MASTER', null, null, true, true),
 	(0101, 1, 'LBL_ROAD_CONDITION', null, null, true, true),
-		(010101, 1, 'LBL_CONDITION', null, 6041, true, true),
+		(010101, 1, 'LBL_CONDITION', null, 6008, true, true),
 		(010102, 1, 'LBL_LUMINOSITIES', null, 6019, true, true),
 		(010103, 1, 'LBL_ATMOSPHERIC_STATES', null, 6005, true, true),
 		(010104, 1, 'LBL_CAUSES', null, 6007, true, true),
