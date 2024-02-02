@@ -144,7 +144,6 @@ INSERT INTO ui.synoptic_layer_elements
 (90100904, 'Element:9:34', 040009, 'VEN-3-24-DP-2', 1661, 259, false, NULL, true, false, NULL, true),
 (90100904, 'Element:9:35', 040009, 'VEN-3-25-DP-2', 1739, 359, false, NULL, true, false, NULL, true),
 (90100904, 'Element:9:36', 040009, 'VEN-3-26-DP-2', 1739, 259, false, NULL, true, false, NULL, true),
-(90103203, 'Element:32:9', 030032, 'VEN-GA5', 1785, 558, false, NULL, true, false, NULL, true),
 (90103203, 'Element:32:7', 030032, 'VEN-GA4-S', 1634, 511, false, NULL, true, false, NULL, true),
 (90103203, 'Element:32:8', 030032, 'VEN-GA4-N', 1548, 586, false, NULL, true, false, NULL, true),
 (90103203, 'Element:32:5', 030032, 'VEN-GA3-S', 1224, 511, false, NULL, true, false, NULL, true),

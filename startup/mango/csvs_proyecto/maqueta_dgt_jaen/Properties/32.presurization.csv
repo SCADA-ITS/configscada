@@ -1,0 +1,9 @@
+device_name;PLC_name;PLC_ip;port(i);url_publisher;offset_fan_low_speed_state(i);offset_fan_high_speed_state(i);offset_grid_gate_closure_state(i);offset_fan_activation_order(i);offset_grid_gate_closure_order(i)
+PRES-GA1-N;ES-01-GA-1;192.168.88.204;512;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;0;2;7;514;519
+PRES-GA1-S;ES-01-GA-1;192.168.88.204;512;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;1;3;6;512;518
+PRES-GA2-N;ES-01-GA-2;192.168.88.204;513;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;0;2;7;514;519
+PRES-GA2-S;ES-01-GA-2;192.168.88.204;513;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;1;3;6;512;518
+PRES-GA3-N;ES-01-GA-3;192.168.88.204;514;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;0;2;7;514;519
+PRES-GA3-S;ES-01-GA-3;192.168.88.204;514;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;1;3;6;512;518
+PRES-GA4-N;ES-01-GA-4;192.168.88.204;515;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;0;2;7;514;519
+PRES-GA4-S;ES-01-GA-4;192.168.88.204;515;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;1;3;6;512;518
