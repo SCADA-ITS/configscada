@@ -282,9 +282,7 @@ INSERT INTO conf.element_tree_nodes(element_tree_node_id, element_tree_id, "labe
         (040189005, 04, '', 89, 05, 05, NULL, true, true),
         (040189006, 04, '', 89, 06, 06, NULL, true, true),
         (040189007, 04, '', 89, 07, 07, NULL, true, true),
-        (040189008, 04, '', 89, 08, 08, NULL, true, true),
-        (040189009, 04, '', 89, 09, 09, NULL, true, true),
-        (040189010, 04, '', 89, 10, 10, NULL, true, true);
+        (040189008, 04, '', 89, 08, 08, NULL, true, true);
 
 INSERT INTO conf.element_tree_node_hierarchies (element_tree_node_hierarchy_id, element_tree_id, node_parent_id, node_child_id, enabled, visible) VALUES  
 --Camaras      
@@ -584,7 +582,5 @@ INSERT INTO conf.element_tree_node_hierarchies (element_tree_node_hierarchy_id, 
     (040189005, 04, 040189, 040189005, true, true),
     (040189006, 04, 040189, 040189006, true, true),
     (040189007, 04, 040189, 040189007, true, true),
-    (040189008, 04, 040189, 040189008, true, true),
-    (040189009, 04, 040189, 040189009, true, true),
-    (040189010, 04, 040189, 040189010, true, true);
+    (040189008, 04, 040189, 040189008, true, true);
 

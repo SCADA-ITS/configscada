@@ -1,11 +1,9 @@
 item;alias;description;sessionuid;road;stretchs;pk;sentido
-1;PUE-GA1-S;PUE-GA1-S;PUE-GA1-S;Autovía A-4;Despeñaperros;;Córdoba
-2;PUE-GA1-N;PUE-GA1-N;PUE-GA1-N;Autovía A-4;Despeñaperros;;Madrid
-3;PUE-GA2-S;PUE-GA2-S;PUE-GA2-S;Autovía A-4;Despeñaperros;;Córdoba
-4;PUE-GA2-N;PUE-GA2-N;PUE-GA2-N;Autovía A-4;Despeñaperros;;Madrid
-5;PUE-GA3-S;PUE-GA3-S;PUE-GA3-S;Autovía A-4;Despeñaperros;;Córdoba
-6;PUE-GA3-N;PUE-GA3-N;PUE-GA3-N;Autovía A-4;Despeñaperros;;Madrid
-7;PUE-GA4-S;PUE-GA4-S;PUE-GA4-S;Autovía A-4;Despeñaperros;;Córdoba
-8;PUE-GA4-N;PUE-GA4-N;PUE-GA4-N;Autovía A-4;Despeñaperros;;Madrid
-9;PUE-GA5-S;PUE-GA5-S;PUE-GA5-S;Autovía A-4;Despeñaperros;;Córdoba
-10;PUE-GA5-N;PUE-GA5-N;PUE-GA5-N;Autovía A-4;Despeñaperros;;NA
+1;PUE-GA1-S;PUE-GA1-S;PUE-GA1-S;Autovía A-4;Despeñaperros;248+200;Córdoba
+2;PUE-GA1-N;PUE-GA1-N;PUE-GA1-N;Autovía A-4;Despeñaperros;248+200;Madrid
+3;PUE-GA2-S;PUE-GA2-S;PUE-GA2-S;Autovía A-4;Despeñaperros;247+700;Córdoba
+4;PUE-GA2-N;PUE-GA2-N;PUE-GA2-N;Autovía A-4;Despeñaperros;247+700;Madrid
+5;PUE-GA3-S;PUE-GA3-S;PUE-GA3-S;Autovía A-4;Despeñaperros;247+350;Córdoba
+6;PUE-GA3-N;PUE-GA3-N;PUE-GA3-N;Autovía A-4;Despeñaperros;247+350;Madrid
+7;PUE-GA4-S;PUE-GA4-S;PUE-GA4-S;Autovía A-4;Despeñaperros;246+700;Córdoba
+8;PUE-GA4-N;PUE-GA4-N;PUE-GA4-N;Autovía A-4;Despeñaperros;246+700;Madrid

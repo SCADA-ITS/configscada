@@ -121,9 +121,11 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 
 (890001, 89, 1, 1, true, false, false, false, 'LBL_GRID_FIELD_ID', 'LBL_GRID_FIELD_ID', 'id', true, false, null, false, false, 500, NULL, true, false, NULL, NULL, NULL, NULL,NULL),
 (890002, 89, 1, 2, true, false, false, true, 'LBL_GRID_FIELD_NAME', 'LBL_GRID_FIELD_NAME', 'alias', false, false, null, false, false, 150, NULL, true, true, NULL, NULL, true, NULL,NULL),
-(890003, 89, 1, 3, true, false, false, false, 'LBL_GRID_FIELD_DESCRIPTION', 'LBL_GRID_FIELD_DESCRIPTION', 'description', false, false, null, false, false, 200, NULL, true, true, NULL, NULL, NULL, NULL,NULL),
+(890003, 89, 1, 3, true, false, false, false, 'LBL_GRID_FIELD_DESCRIPTION', 'LBL_GRID_FIELD_DESCRIPTION', 'description', false, false, null, false, false, 150, NULL, true, true, NULL, NULL, NULL, NULL,NULL),
 (890004, 89, 1, 4, true, true, false, false, NULL, NULL, 'state', false, false, null, false, false, 35, NULL, true, true, NULL, NULL, NULL, NULL,NULL),
-(890005, 89, 1, 5, true, true, false, true, 'LBL_GRID_FIELD_STATE_LABEL', 'LBL_GRID_FIELD_STATE_LABEL', 'stateLabel', false, false, null, true, false, 150, NULL, true, true, NULL, NULL, NULL, NULL,NULL);
+(890005, 89, 1, 5, true, true, false, true, 'LBL_GRID_FIELD_STATE_LABEL', 'LBL_GRID_FIELD_STATE_LABEL', 'stateLabel', false, false, null, true, false, 150, NULL, true, true, NULL, NULL, NULL, NULL,NULL),
+(890006, 89, 1, 9, true, false, false, false, 'LBL_GRID_FIELD_DOOR_OPEN', 'LBL_GRID_FIELD_DOOR_OPEN', 'ElementTypeParam:89:2:1', false, false, 'left', false, false, 100, NULL, true, true, NULL, false, NULL, NULL, NULL);
+
 
 
 INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", required, parameterized, extended, filtered, "label", label_tooltip, source_field, is_pk, is_epoch_milli, align, needs_translation, grouping_summary, width_px, grid_field_group_operation_id, enabled, visible, adjust, header_vertical, fixed_column, replacement_function, precision_filter) VALUES
@@ -578,4 +580,9 @@ INSERT INTO ui.grid_field_replacements(grid_field_id, "label", value, enabled) V
 (130006, 'LBL_GRID_FIELD_REPLACEMENTS_APAGADO', '0', true),
 (130006, 'LBL_GRID_FIELD_REPLACEMENTS_ROJO', '1', true),
 (130006, 'LBL_GRID_FIELD_REPLACEMENTS_AMBAR', '2', true),
-(130006, 'LBL_GRID_FIELD_REPLACEMENTS_VERDE', '4', true);
+(130006, 'LBL_GRID_FIELD_REPLACEMENTS_VERDE', '4', true),
+
+(890006, 'LBL_GRID_FIELD_ABIERTA', '0', true),
+(890006, 'LBL_GRID_FIELD_CERRADA', '1', true);
+
+

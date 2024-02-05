@@ -1,0 +1,9 @@
+device_name;PLC_name;PLC_ip;port(i);url_publisher;offset_close_door_state(i)
+PUE-GA1-N;ES-01-GA-1;192.168.88.204;512;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;4
+PUE-GA1-S;ES-01-GA-1;192.168.88.204;512;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;5
+PUE-GA2-N;ES-01-GA-2;192.168.88.204;513;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;5
+PUE-GA2-S;ES-01-GA-2;192.168.88.204;513;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;4
+PUE-GA3-N;ES-01-GA-3;192.168.88.204;514;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;5
+PUE-GA3-S;ES-01-GA-3;192.168.88.204;514;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;4
+PUE-GA4-N;ES-01-GA-4;192.168.88.204;515;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;5
+PUE-GA4-S;ES-01-GA-4;192.168.88.204;515;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;4

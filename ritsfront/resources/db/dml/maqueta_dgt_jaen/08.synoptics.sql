@@ -17,7 +17,9 @@ INSERT INTO ui.synoptic_layers
 (90107112, 901, 'SYNOPTIC_LAYERS_PANELES_AF', 'LBL_SYNOPTIC_LAYERS_PANELES_AF', true),
 (90107118, 901, 'SYNOPTIC_LAYERS_PANELES_GT', 'LBL_SYNOPTIC_LAYERS_PANELES_GT', true),
 (90100904, 901, 'SYNOPTIC_LAYERS_JETFAN', 'LBL_SYNOPTIC_LAYERS_JETFAN', true),
-(90103203, 901, 'SYNOPTIC_LAYERS_PRESURIZATION', 'LBL_SYNOPTIC_LAYERS_PRESURIZATION', true);
+(90100002, 901, 'SYNOPTIC_LAYERS_PRESURIZATION', 'LBL_SYNOPTIC_LAYERS_PRESURIZATION', true),
+(90103203, 901, 'SYNOPTIC_LAYERS_PRESURIZATION', 'LBL_SYNOPTIC_LAYERS_PRESURIZATION', true),
+(90108900, 901, 'SYNOPTIC_LAYERS_GATE', 'LBL_SYNOPTIC_LAYERS_GATE', true);
 
 INSERT INTO ui.synoptic_layer_relationships 
 (synoptic_id, parent_layer_id, child_layer_id) VALUES 
@@ -26,7 +28,8 @@ INSERT INTO ui.synoptic_layer_relationships
 (901, 90100000, 90107112),
 (901, 90100000, 90107118),
 (901, 90100001, 90100904),
-(901, 90100001, 90103203);
+(901, 90100002, 90103203),
+(901, 90103203, 90108900);
 
 INSERT INTO ui.synoptic_commands 
 (id, synoptic_id, position, label, icon, "default", module_action_id, args, view_type_id, multiselect, show_text, item_required, context) VALUES 
@@ -144,12 +147,20 @@ INSERT INTO ui.synoptic_layer_elements
 (90100904, 'Element:9:34', 040009, 'VEN-3-24-DP-2', 1661, 259, false, NULL, true, false, NULL, true),
 (90100904, 'Element:9:35', 040009, 'VEN-3-25-DP-2', 1739, 359, false, NULL, true, false, NULL, true),
 (90100904, 'Element:9:36', 040009, 'VEN-3-26-DP-2', 1739, 259, false, NULL, true, false, NULL, true),
-(90103203, 'Element:32:7', 030032, 'VEN-GA4-S', 1634, 511, false, NULL, true, false, NULL, true),
-(90103203, 'Element:32:8', 030032, 'VEN-GA4-N', 1548, 586, false, NULL, true, false, NULL, true),
-(90103203, 'Element:32:5', 030032, 'VEN-GA3-S', 1224, 511, false, NULL, true, false, NULL, true),
-(90103203, 'Element:32:6', 030032, 'VEN-GA3-N', 1135, 586, false, NULL, true, false, NULL, true),
-(90103203, 'Element:32:3', 030032, 'VEN-GA2-S', 899, 511, false, NULL, true, false, NULL, true),
-(90103203, 'Element:32:4', 030032, 'VEN-GA2-N', 818, 586, false, NULL, true, false, NULL, true),
-(90103203, 'Element:32:1', 030032, 'VEN-GA1-S', 539, 511, false, NULL, true, false, NULL, true),
-(90103203, 'Element:32:2', 030032, 'VEN-GA1-N', 468, 586, false, NULL, true, false, NULL, true);
+(90103203, 'Element:32:7', 030032, 'PRES-GA4-S', 1634, 511, false, NULL, true, false, NULL, true),
+(90103203, 'Element:32:8', 030032, 'PRES-GA4-N', 1548, 586, false, NULL, true, false, NULL, true),
+(90103203, 'Element:32:5', 030032, 'PRES-GA3-S', 1224, 511, false, NULL, true, false, NULL, true),
+(90103203, 'Element:32:6', 030032, 'PRES-GA3-N', 1135, 586, false, NULL, true, false, NULL, true),
+(90103203, 'Element:32:3', 030032, 'PRES-GA2-S', 899, 511, false, NULL, true, false, NULL, true),
+(90103203, 'Element:32:4', 030032, 'PRES-GA2-N', 818, 586, false, NULL, true, false, NULL, true),
+(90103203, 'Element:32:1', 030032, 'PRES-GA1-S', 539, 511, false, NULL, true, false, NULL, true),
+(90103203, 'Element:32:2', 030032, 'PRES-GA1-N', 468, 586, false, NULL, true, false, NULL, true),
+(90108900, 'Element:89:6', 000089, 'PUE-GA3-N', 1175, 586, false, NULL, true, false, NULL, true),
+(90108900, 'Element:89:8', 000089, 'PUE-GA4-N', 1588, 586, false, NULL, true, false, NULL, true),
+(90108900, 'Element:89:7', 000089, 'PUE-GA4-S', 1594, 511, false, NULL, true, false, NULL, true),
+(90108900, 'Element:89:5', 000089, 'PUE-GA3-S', 1184, 511, false, NULL, true, false, NULL, true),
+(90108900, 'Element:89:4', 000089, 'PUE-GA2-N', 858, 586, false, NULL, true, false, NULL, true),
+(90108900, 'Element:89:3', 000089, 'PUE-GA2-S', 859, 511, false, NULL, true, false, NULL, true),
+(90108900, 'Element:89:1', 000089, 'PUE-GA1-S', 508, 586, false, NULL, true, false, NULL, true),
+(90108900, 'Element:89:2', 000089, 'PUE-GA1-N', 499, 511, false, NULL, true, false, NULL, true);
 
