@@ -179,7 +179,7 @@ pipeline {
         }
     }
 
-   /* post {
+    post {
         always {
             script {
 				sh 'echo Envío de notifación de resultado de ejecución'
@@ -211,5 +211,5 @@ pipeline {
                         mimeType: 'text/html'
             }
         }
-    }*/
+    }
 }
