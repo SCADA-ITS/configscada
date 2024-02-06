@@ -10,6 +10,8 @@ INSERT INTO ui.graphic_icons
 (120071, 'PMV', 'PMV', false, true, 'component/graphicIcon/graphicIconCustom.js', 40, 40, 'img/graphic_icon/71_vms_clv_af.svg', 'component/graphicIcon/custom/vms.js',true),
 (180071, 'PMV', 'PMV', false, true, 'component/graphicIcon/graphicIconCustom.js', 165.9552, 55.870712, 'img/graphic_icon/71_vms_dgt_gr_txt.svg', 'component/graphicIcon/custom/vms.js',true),
 (220071, 'PMV', 'PMV', false, true, 'component/graphicIcon/graphicIconCustom.js', 300, 100,'img/graphic_icon/71_vms_dgt.svg', 'component/graphicIcon/custom/vms.js', true),
-(030032, 'PRESURIZACION', 'PRESURIZACION', false, false, 'component/graphicIcon/graphicIconDefault.js', 40, 40, 'img/graphic_icon/32_presurizacion.svg', 'null',true),
-(000089, 'GATE', 'GATE', false, false, 'component/graphicIcon/graphicIconDefault.js', 40, 40, 'img/graphic_icon/89_gate.svg', 'null',true);
+(030032, 'PRESURIZACION', 'PRESURIZACION', false, false, 'component/graphicIcon/graphicIconDefault.js', 40, 40, 'img/graphic_icon/32_presurizacion_vent.svg', 'component/graphicIcon/custom/vms.js',true),
+(000089, 'GATE', 'GATE', false, false, 'component/graphicIcon/graphicIconDefault.js', 40, 40, 'img/graphic_icon/89_gate.svg', 'null',true),
+(000019, 'CO', 'CO', false, false, 'component/graphicIcon/graphicIconDefault.js', 40, 50.909107, 'img/graphic_icon/19_co.svg', 'null',true),
+(000021, 'CO', 'CO', false, false, 'component/graphicIcon/graphicIconDefault.js', 40, 50.909107, 'img/graphic_icon/21_opac.svg', 'null',true);
 

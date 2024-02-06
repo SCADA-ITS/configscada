@@ -19,7 +19,10 @@ INSERT INTO ui.synoptic_layers
 (90100904, 901, 'SYNOPTIC_LAYERS_JETFAN', 'LBL_SYNOPTIC_LAYERS_JETFAN', true),
 (90100002, 901, 'SYNOPTIC_LAYERS_PRESURIZATION', 'LBL_SYNOPTIC_LAYERS_PRESURIZATION', true),
 (90103203, 901, 'SYNOPTIC_LAYERS_PRESURIZATION', 'LBL_SYNOPTIC_LAYERS_PRESURIZATION', true),
-(90108900, 901, 'SYNOPTIC_LAYERS_GATE', 'LBL_SYNOPTIC_LAYERS_GATE', true);
+(90108900, 901, 'SYNOPTIC_LAYERS_GATE', 'LBL_SYNOPTIC_LAYERS_GATE', true),
+(90100003, 901, 'SYNOPTIC_LAYERS_AMBIENTALES', 'LBL_SYNOPTIC_LAYERS_AMBIENTALES', true),
+(90101900, 901, 'SYNOPTIC_LAYERS_CO', 'LBL_SYNOPTIC_LAYERS_CO', true),
+(90102100, 901, 'SYNOPTIC_LAYERS_OPAC', 'LBL_SYNOPTIC_LAYERS_OPAC', true);
 
 INSERT INTO ui.synoptic_layer_relationships 
 (synoptic_id, parent_layer_id, child_layer_id) VALUES 
@@ -29,7 +32,9 @@ INSERT INTO ui.synoptic_layer_relationships
 (901, 90100000, 90107118),
 (901, 90100001, 90100904),
 (901, 90100002, 90103203),
-(901, 90103203, 90108900);
+(901, 90103203, 90108900),
+(901, 90100003, 90101900),
+(901, 90100003, 90102100);
 
 INSERT INTO ui.synoptic_commands 
 (id, synoptic_id, position, label, icon, "default", module_action_id, args, view_type_id, multiselect, show_text, item_required, context) VALUES 
@@ -162,5 +167,21 @@ INSERT INTO ui.synoptic_layer_elements
 (90108900, 'Element:89:4', 000089, 'PUE-GA2-N', 858, 586, false, NULL, true, false, NULL, true),
 (90108900, 'Element:89:3', 000089, 'PUE-GA2-S', 859, 511, false, NULL, true, false, NULL, true),
 (90108900, 'Element:89:1', 000089, 'PUE-GA1-S', 508, 586, false, NULL, true, false, NULL, true),
-(90108900, 'Element:89:2', 000089, 'PUE-GA1-N', 499, 511, false, NULL, true, false, NULL, true);
+(90108900, 'Element:89:2', 000089, 'PUE-GA1-N', 499, 511, false, NULL, true, false, NULL, true),
+(90101900, 'Element:19:2', 000019, 'SCO-1-02-DP', 884, 1024, false, NULL, true, false, NULL, true),
+(90101900, 'Element:19:3', 000019, 'SCO-1-03-DP', 1188, 1024, false, NULL, true, false, NULL, true),
+(90101900, 'Element:19:4', 000019, 'SCO-1-04-DP', 1574, 1025, false, NULL, true, false, NULL, true),
+(90101900, 'Element:19:8', 000019, 'SCO-2-04-DP', 457, 55, false, NULL, true, false, NULL, true),
+(90101900, 'Element:19:7', 000019, 'SCO-2-03-DP', 782, 55, false, NULL, true, false, NULL, true),
+(90101900, 'Element:19:6', 000019, 'SCO-2-02-DP', 1110, 55, false, NULL, true, false, NULL, true),
+(90101900, 'Element:19:5', 000019, 'SCO-2-01-DP', 1434, 55, false, NULL, true, false, NULL, true),
+(90101900, 'Element:19:1', 000019, 'SCO-1-01-DP', 500, 1024, false, NULL, true, false, NULL, true),
+(90102100, 'Element:21:2', 000021, 'OP-1-02-DP', 924, 1024, false, NULL, true, false, NULL, true),
+(90102100, 'Element:21:3', 000021, 'OP-1-03-DP', 1228, 1024, false, NULL, true, false, NULL, true),
+(90102100, 'Element:21:4', 000021, 'OP-1-04-DP', 1614, 1025, false, NULL, true, false, NULL, true),
+(90102100, 'Element:21:8', 000021, 'OP-2-04-DP', 497, 55, false, NULL, true, false, NULL, true),
+(90102100, 'Element:21:7', 000021, 'OP-2-03-DP', 822, 55, false, NULL, true, false, NULL, true),
+(90102100, 'Element:21:6', 000021, 'OP-2-02-DP', 1150, 55, false, NULL, true, false, NULL, true),
+(90102100, 'Element:21:5', 000021, 'OP-2-01-DP', 1474, 55, false, NULL, true, false, NULL, true),
+(90102100, 'Element:21:1', 000021, 'OP-1-01-DP', 540, 1024, false, NULL, true, false, NULL, true);
 

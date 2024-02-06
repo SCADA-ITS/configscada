@@ -4,5 +4,7 @@ element_type;element_subtype;alias;svg_file;js_custom_type_render;keepRatio
 71;11;PMV;71_vms_clv_af.svg;vms.js;true
 71;12;PMV;71_vms_clv_af.svg;vms.js;true
 71;18;PMV;71_vms_dgt_gr_txt.svg;vms.js;true
-32;3;PRESURIZACION;32_presurizacion.svg;;true
+32;3;PRESURIZACION;32_presurizacion_vent.svg;vms.js;true
 89;;GATE;89_gate.svg;;true
+19;;CO;19_co.svg;;true
+21;;CO;21_opac.svg;;true
