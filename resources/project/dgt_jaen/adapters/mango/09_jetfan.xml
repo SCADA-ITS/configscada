@@ -23,6 +23,20 @@
         <p:param_type_id>2</p:param_type_id>
       </p:input>
     </p:field>
+    <p:field>
+      <p:source>fan_manual</p:source>
+      <p:input>
+        <p:element_type_param_id>28</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:input>
+    </p:field>
+    <p:field>
+      <p:source>fan_auto</p:source>
+      <p:input>
+        <p:element_type_param_id>29</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:input>
+    </p:field>
   </p:fields>
     <p:alarms>
     <p:alarm source="fan_fail" active_value="true" alarm_config_id="040009"></p:alarm>
