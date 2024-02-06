@@ -9,20 +9,36 @@ INSERT INTO conf.elements (element_type_id, element_subtype_id, element_id, loca
 (21, NULL, 8, 0080021, NULL, NULL, 'OP-2-04-DP', 'OP-2-04-DP', NULL, NULL, 'SendValuesToVentilation.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_type_id, element_id, element_value_state_id, value, enabled, visible, created_at, updated_at) VALUES
+(21, 1, 1, 1, NULL, 'Duran', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(21, 2, 1, 1, NULL, 'Sondeltox', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (21, 1003, 1, 1, NULL, 'OP-1-01-DP', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
+(21, 1, 1, 2, NULL, 'Duran', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(21, 2, 1, 2, NULL, 'Sondeltox', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (21, 1003, 1, 2, NULL, 'OP-1-02-DP', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
+(21, 1, 1, 3, NULL, 'Duran', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(21, 2, 1, 3, NULL, 'Sondeltox', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (21, 1003, 1, 3, NULL, 'OP-1-03-DP', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
+(21, 1, 1, 4, NULL, 'Duran', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(21, 2, 1, 4, NULL, 'Sondeltox', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (21, 1003, 1, 4, NULL, 'OP-1-04-DP', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
+(21, 1, 1, 5, NULL, 'Duran', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(21, 2, 1, 5, NULL, 'Sondeltox', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (21, 1003, 1, 5, NULL, 'OP-2-01-DP', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
+(21, 1, 1, 6, NULL, 'Duran', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(21, 2, 1, 6, NULL, 'Sondeltox', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (21, 1003, 1, 6, NULL, 'OP-2-02-DP', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
+(21, 1, 1, 7, NULL, 'Duran', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(21, 2, 1, 7, NULL, 'Sondeltox', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (21, 1003, 1, 7, NULL, 'OP-2-03-DP', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
+(21, 1, 1, 8, NULL, 'Duran', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(21, 2, 1, 8, NULL, 'Sondeltox', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (21, 1003, 1, 8, NULL, 'OP-2-04-DP', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO conf.element_io_controller_modules (element_type_id, element_id, module_type_id, module_id, enabled, visible, created_at, updated_at) VALUES
