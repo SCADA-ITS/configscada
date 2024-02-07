@@ -8,3 +8,4 @@ element_type;element_subtype;alias;svg_file;js_custom_type_render;keepRatio
 89;;GATE;89_gate.svg;;true
 19;;CO;19_co.svg;;true
 21;;CO;21_opac.svg;;true
+18;;ANEM;18_anemometro.svg;inAnemometer.js;true
