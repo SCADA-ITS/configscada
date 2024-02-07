@@ -1,0 +1,19 @@
+[Unit]
+Description=Revenga OpenITS
+After=network.target
+ConditionPathExists=/run/systemd/system	
+
+[Service]
+Environment="RITS_RESOURCES=/home/admin/app/backrits/resources"
+Environment="RITS_LOGS=/home/admin/app/backrits/logs"
+ExecStartPre=/bin/sleep 60
+ExecStart=/usr/bin/sh /home/admin/app/start.sh
+ExecStop=/usr/bin/sh /home/admin/app/stop.sh
+Restart=on-failure
+User=admin
+LimitNPROC=infinity
+LimitNOFILE=infinity
+LimitMEMLOCK=infinity
+
+[Install]
+WantedBy=multi-user.target
