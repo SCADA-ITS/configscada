@@ -6,6 +6,7 @@ INSERT INTO ui.graphic_icons
 (id, name, description, alarms, measures, js_draw_file, width, height, svg_file, js_custom_type_render, keep_aspect_ratio) VALUES
 (040009, 'JETFAN', 'JETFAN', false, true, 'component/graphicIcon/graphicIconCustom.js', 40, 42.250332, 'img/graphic_icon/09_jetfan.svg', 'component/graphicIcon/custom/jetfan.js',true),
 (000013, 'SEM', 'SEM', false, true, 'component/graphicIcon/graphicIconCustom.js', 40, 40, 'img/graphic_icon/13_sem_3_grupos.svg', 'component/graphicIcon/custom/trafficLight.js',true),
+(000018, 'ANEM', 'ANEM', false, true, 'component/graphicIcon/graphicIconCustom.js', 40, 50, 'img/graphic_icon/18_anemometro.svg', 'component/graphicIcon/custom/inAnemometer.js',true),
 (000019, 'CO', 'CO', false, false, 'component/graphicIcon/graphicIconDefault.js', 40, 50.909107, 'img/graphic_icon/19_co.svg', 'null',true),
 (000021, 'OPAC', 'OPAC', false, false, 'component/graphicIcon/graphicIconDefault.js', 40, 50.909107, 'img/graphic_icon/21_opac.svg', 'null',true),
 (030032, 'PRESURIZACION', 'PRESURIZACION', false, false, 'component/graphicIcon/graphicIconDefault.js', 40, 40, 'img/graphic_icon/32_presurizacion_vent.svg', 'component/graphicIcon/custom/vms.js',true),
