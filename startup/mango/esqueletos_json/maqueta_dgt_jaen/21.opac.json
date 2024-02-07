@@ -103,7 +103,7 @@
             "multistateNumeric":false,
             "registerCount":0,
             "range":"INPUT_REGISTER",
-            "modbusDataType":"FOUR_BYTE_FLOAT",
+            "modbusDataType":"TWO_BYTE_INT_UNSIGNED",
             "bit":0,
             "additive":0
          },
