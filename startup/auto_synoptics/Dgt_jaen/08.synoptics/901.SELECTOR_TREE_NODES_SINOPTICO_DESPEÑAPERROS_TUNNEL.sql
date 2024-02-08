@@ -16,7 +16,15 @@ INSERT INTO ui.synoptic_layers
 (90107111, 901, 'SYNOPTIC_LAYERS_PANELES_CLV', 'LBL_SYNOPTIC_LAYERS_PANELES_CLV', true),
 (90107112, 901, 'SYNOPTIC_LAYERS_PANELES_AF', 'LBL_SYNOPTIC_LAYERS_PANELES_AF', true),
 (90107118, 901, 'SYNOPTIC_LAYERS_PANELES_GT', 'LBL_SYNOPTIC_LAYERS_PANELES_GT', true),
-(90100904, 901, 'SYNOPTIC_LAYERS_JETFAN', 'LBL_SYNOPTIC_LAYERS_JETFAN', true);
+(90100904, 901, 'SYNOPTIC_LAYERS_JETFAN', 'LBL_SYNOPTIC_LAYERS_JETFAN', true),
+(90100002, 901, 'SYNOPTIC_LAYERS_PRESURIZATION', 'LBL_SYNOPTIC_LAYERS_PRESURIZATION', true),
+(90103203, 901, 'SYNOPTIC_LAYERS_PRESURIZATION', 'LBL_SYNOPTIC_LAYERS_PRESURIZATION', true),
+(90108900, 901, 'SYNOPTIC_LAYERS_GATE', 'LBL_SYNOPTIC_LAYERS_GATE', true),
+(90100003, 901, 'SYNOPTIC_LAYERS_AMBIENTALES', 'LBL_SYNOPTIC_LAYERS_AMBIENTALES', true),
+(90101400, 901, 'SYNOPTIC_LAYERS_LUMINANCIMETER', 'LBL_SYNOPTIC_LAYERS_LUMINANCIMETER', true),
+(90101800, 901, 'SYNOPTIC_LAYERS_ANEMOMETER', 'LBL_SYNOPTIC_LAYERS_ANEMOMETER', true),
+(90101900, 901, 'SYNOPTIC_LAYERS_CO', 'LBL_SYNOPTIC_LAYERS_CO', true),
+(90102100, 901, 'SYNOPTIC_LAYERS_OPAC', 'LBL_SYNOPTIC_LAYERS_OPAC', true);
 
 INSERT INTO ui.synoptic_layer_relationships 
 (synoptic_id, parent_layer_id, child_layer_id) VALUES 
@@ -24,7 +32,13 @@ INSERT INTO ui.synoptic_layer_relationships
 (901, 90100000, 90107111),
 (901, 90100000, 90107112),
 (901, 90100000, 90107118),
-(901, 90100001, 90100904);
+(901, 90100001, 90100904),
+(901, 90100002, 90103203),
+(901, 90103203, 90108900),
+(901, 90100003, 90101400),
+(901, 90100003, 90101800),
+(901, 90100003, 90101900),
+(901, 90100003, 90102100);
 
 INSERT INTO ui.synoptic_commands 
 (id, synoptic_id, position, label, icon, "default", module_action_id, args, view_type_id, multiselect, show_text, item_required, context) VALUES 
@@ -141,5 +155,46 @@ INSERT INTO ui.synoptic_layer_elements
 (90100904, 'Element:9:32', 040009, 'VEN-3-22-DP-2', 1586, 259, false, NULL, true, false, NULL, true),
 (90100904, 'Element:9:34', 040009, 'VEN-3-24-DP-2', 1661, 259, false, NULL, true, false, NULL, true),
 (90100904, 'Element:9:35', 040009, 'VEN-3-25-DP-2', 1739, 359, false, NULL, true, false, NULL, true),
-(90100904, 'Element:9:36', 040009, 'VEN-3-26-DP-2', 1739, 259, false, NULL, true, false, NULL, true);
+(90100904, 'Element:9:36', 040009, 'VEN-3-26-DP-2', 1739, 259, false, NULL, true, false, NULL, true),
+(90103203, 'Element:32:7', 030032, 'PRES-GA4-S', 1634, 511, false, NULL, true, false, NULL, true),
+(90103203, 'Element:32:8', 030032, 'PRES-GA4-N', 1548, 586, false, NULL, true, false, NULL, true),
+(90103203, 'Element:32:5', 030032, 'PRES-GA3-S', 1224, 511, false, NULL, true, false, NULL, true),
+(90103203, 'Element:32:6', 030032, 'PRES-GA3-N', 1135, 586, false, NULL, true, false, NULL, true),
+(90103203, 'Element:32:3', 030032, 'PRES-GA2-S', 899, 511, false, NULL, true, false, NULL, true),
+(90103203, 'Element:32:4', 030032, 'PRES-GA2-N', 818, 586, false, NULL, true, false, NULL, true),
+(90103203, 'Element:32:1', 030032, 'PRES-GA1-S', 539, 511, false, NULL, true, false, NULL, true),
+(90103203, 'Element:32:2', 030032, 'PRES-GA1-N', 468, 586, false, NULL, true, false, NULL, true),
+(90108900, 'Element:89:6', 000089, 'PUE-GA3-N', 1175, 586, false, NULL, true, false, NULL, true),
+(90108900, 'Element:89:8', 000089, 'PUE-GA4-N', 1588, 586, false, NULL, true, false, NULL, true),
+(90108900, 'Element:89:7', 000089, 'PUE-GA4-S', 1594, 511, false, NULL, true, false, NULL, true),
+(90108900, 'Element:89:5', 000089, 'PUE-GA3-S', 1184, 511, false, NULL, true, false, NULL, true),
+(90108900, 'Element:89:4', 000089, 'PUE-GA2-N', 858, 586, false, NULL, true, false, NULL, true),
+(90108900, 'Element:89:3', 000089, 'PUE-GA2-S', 859, 511, false, NULL, true, false, NULL, true),
+(90108900, 'Element:89:1', 000089, 'PUE-GA1-S', 508, 586, false, NULL, true, false, NULL, true),
+(90108900, 'Element:89:2', 000089, 'PUE-GA1-N', 499, 511, false, NULL, true, false, NULL, true),
+(90101400, 'Element:14:1', 000014, 'LUM-0-03-DP', 1876, 540, false, NULL, true, false, NULL, true),
+(90101800, 'Element:18:4', 000018, 'AN-1-04-DP', 1592, 873, false, NULL, true, false, NULL, true),
+(90101800, 'Element:18:3', 000018, 'AN-1-03-DP', 1207, 873, false, NULL, true, false, NULL, true),
+(90101800, 'Element:18:2', 000018, 'AN-1-02-DP', 905, 873, false, NULL, true, false, NULL, true),
+(90101800, 'Element:18:1', 000018, 'AN-1-01-DP', 521, 873, false, NULL, true, false, NULL, true),
+(90101800, 'Element:18:8', 000018, 'AN-2-04-DP', 477, 201, false, NULL, true, false, NULL, true),
+(90101800, 'Element:18:7', 000018, 'AN-2-03-DP', 802, 201, false, NULL, true, false, NULL, true),
+(90101800, 'Element:18:6', 000018, 'AN-2-02-DP', 1132, 201, false, NULL, true, false, NULL, true),
+(90101800, 'Element:18:5', 000018, 'AN-2-01-DP', 1454, 201, false, NULL, true, false, NULL, true),
+(90101900, 'Element:19:2', 000019, 'SCO-1-02-DP', 884, 1024, false, NULL, true, false, NULL, true),
+(90101900, 'Element:19:3', 000019, 'SCO-1-03-DP', 1188, 1024, false, NULL, true, false, NULL, true),
+(90101900, 'Element:19:4', 000019, 'SCO-1-04-DP', 1574, 1025, false, NULL, true, false, NULL, true),
+(90101900, 'Element:19:8', 000019, 'SCO-2-04-DP', 457, 55, false, NULL, true, false, NULL, true),
+(90101900, 'Element:19:7', 000019, 'SCO-2-03-DP', 782, 55, false, NULL, true, false, NULL, true),
+(90101900, 'Element:19:6', 000019, 'SCO-2-02-DP', 1110, 55, false, NULL, true, false, NULL, true),
+(90101900, 'Element:19:5', 000019, 'SCO-2-01-DP', 1434, 55, false, NULL, true, false, NULL, true),
+(90101900, 'Element:19:1', 000019, 'SCO-1-01-DP', 500, 1024, false, NULL, true, false, NULL, true),
+(90102100, 'Element:21:2', 000021, 'OP-1-02-DP', 924, 1024, false, NULL, true, false, NULL, true),
+(90102100, 'Element:21:3', 000021, 'OP-1-03-DP', 1228, 1024, false, NULL, true, false, NULL, true),
+(90102100, 'Element:21:4', 000021, 'OP-1-04-DP', 1614, 1025, false, NULL, true, false, NULL, true),
+(90102100, 'Element:21:8', 000021, 'OP-2-04-DP', 497, 55, false, NULL, true, false, NULL, true),
+(90102100, 'Element:21:7', 000021, 'OP-2-03-DP', 822, 55, false, NULL, true, false, NULL, true),
+(90102100, 'Element:21:6', 000021, 'OP-2-02-DP', 1150, 55, false, NULL, true, false, NULL, true),
+(90102100, 'Element:21:5', 000021, 'OP-2-01-DP', 1474, 55, false, NULL, true, false, NULL, true),
+(90102100, 'Element:21:1', 000021, 'OP-1-01-DP', 540, 1024, false, NULL, true, false, NULL, true);
 

@@ -40,7 +40,6 @@
   </p:fields>
     <p:alarms>
     <p:alarm source="fan_fail" active_value="true" alarm_config_id="040009"></p:alarm>
-    <p:alarm source="fan_starter_shot" active_value="true" alarm_config_id="070009"></p:alarm>
     <p:alarm source="fan_emergency_stop" active_value="true" alarm_config_id="170009"></p:alarm>
   </p:alarms>
 </p:json_generic_mango_v1>
