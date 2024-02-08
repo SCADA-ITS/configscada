@@ -1,8 +1,13 @@
+def stringVariable = ""
+
 pipeline {
     agent any
-	
-    parameters {
-        string(name: 'projectInput', defaultValue: 'maqueta_fullequip', description: 'Proyecto del que queremos crear versión')
+    
+    environment {
+        VERSION_NUMBER = '1.0.0'
+        PROJECT_NAME = 'Ausol'
+        
+        
     }
     
     stages {
@@ -27,6 +32,45 @@ pipeline {
             }
         }
         
+        stage('Loggear últimos commit') {
+            steps {
+                script {
+					sh 'echo Obteniendo información de los cambios desde la última ejecución'
+				
+					def changeLogSets = currentBuild.changeSets
+
+					for (int i = 0; i < changeLogSets.size(); i++) {
+						def entries = changeLogSets[i].items
+						
+						for (int j = 0; j < entries.length; j++) {
+							def entry = entries[j]
+							
+							echo "${entry.commitId} by ${entry.author} on ${new Date(entry.timestamp)}: ${entry.msg}"
+							
+							stringVariable += '<div style="background-color: #f0f0f0; padding: 10px;">'
+							stringVariable += "<strong>Commit: ${entry.commitId}</strong><br/>"
+							stringVariable += "Commit message: ${entry.msg}<br/>"
+							stringVariable += "Autor: ${entry.author}<br/>"
+							stringVariable += "Fecha: ${new Date(entry.timestamp)}<br/><br/>"
+							
+							def files = new ArrayList(entry.affectedFiles)
+							
+							stringVariable += "Ficheros afectados:<br/>"
+							for (int k = 0; k < files.size(); k++) {
+							
+								def file = files[k]
+								                        
+								stringVariable += " - ${file.editType.name} ${file.path}<br/>"
+							}
+							
+							stringVariable += "</div>"
+							stringVariable += "<br/>"
+						}
+					}
+				}
+            }
+        }
+        
         stage('Empaquetando back') {
             steps {
             	script {
@@ -44,20 +88,16 @@ pipeline {
                     def directorio = 'app/backrits/resources'
         
                     if (!fileExists(directorio)) {
-                        echo "El directorio no existe. Creándolo..."
+                        sh 'echo El directorio no existe. Creándolo...'
                         sh "mkdir -p ${directorio}"
-                        echo "Directorio creado exitosamente."
+                        sh 'echo Directorio creado exitosamente.'
                     } else {
-                        echo "El directorio ya existe."
+                        sh 'echo El directorio ya existe.'
                     }
         
-                    echo "Deleting old binaries..."
                     sh 'rm -Rf app/backrits/*.jar'
-                    
-                    echo "Deleting trace files..."
                     sh 'rm -Rf app/backrits/logs/*'
                     
-                    echo "Copying new binaries..."
                     sh 'cp ritsback/data-loader/target/data-loader.jar app/backrits/data-loader.jar'
                     sh 'cp ritsback/equipment-manager/target/equipment-manager.jar app/backrits/equipment-manager.jar'
                     sh 'cp ritsback/ep-pub-stomp/target/ep-pub-stomp.jar app/backrits/ep-pub-stomp.jar'
@@ -71,13 +111,10 @@ pipeline {
                     sh 'cp ritsback/io-external-manager/target/io-external-manager.jar app/backrits/io-external-manager.jar'
                     sh 'cp ritsback/server-launcher/target/server-launcher.jar app/backrits/server-launcher.jar'
                     
-                    echo "Deleting old resource files..."
                     sh 'rm -Rf app/backrits/resources/*'
-                    
-                    echo "Copying new resources"
                     sh 'cp -R rits/resources/master/* app/backrits/resources'
-                    sh 'cp -R rits/resources/project/${params.projectInput}/* app/backrits/resources'
-                    sh 'cp rits/resources/project/fullequip/start.sh app/backrits/start.sh'               
+                    sh 'cp -R rits/resources/project/* app/backrits/resources'
+                    sh 'cp rits/resources/Jenkinsfiles/install/* app'               
                 }
             }
         } 
@@ -104,71 +141,98 @@ pipeline {
                     }
                 }
                 
-                script {
+                script {	
+					def directorio = 'app/frontrits'
+					
+					if (!fileExists(directorio)) {
+                        sh 'echo El directorio no existe. Creándolo...'
+                        sh "mkdir -p ${directorio}"
+                        sh 'echo Directorio creado exitosamente.'
+                    } else {
+                        sh 'echo El directorio ya existe.'
+                    }
+                    
 					sh 'echo Copiando recursos y procesos en su ubicación'
 					
-					sh 'cp ritsfront/data-loader/target/data-loader.jar app/backrits/data-loader.jar'
+					sh 'cp ritsfront/openits/target/openits.jar app/frontrits/'
 				}
             }
         }
         
-        stage('Deploy front') {
-			sh 'Desplegando front'
-			
+        stage('Empaquetando scripts de BBDD') {
             steps {
                 script {
-                    echo "Update remote files..."
-                    
-                    def user = 'revenga'
-                    def host = '192.168.88.70'
-    
-                    echo "Uploading backrits to remote machine..."
-                    sh "scp ritsfront/openits/target/openits.jar $user@$host:/home/$user/app"
-    
-                    echo "Updating backrits on remote machine..."
-                    sh "ssh $user@$host \"cd /home/$user/app/frontrits && rm -rf openits.jar && mv /home/$user/app/openits.jar ./ && sed -i 's|\\(active=\\).*\\( -jar\\)|\\1fullequip\\2|' ~/app/start.sh\""
-                }
-                script {
-                    def rutaBase = 'rits/ritsfront/resources/db'
-                    
-                    echo "Execute front scripts..."
-                    
-                    dir("${rutaBase}") {
-                        sh "./make_param.sh maqueta_fullequip 192.168.88.71 5430 192.168.88.70"
+                    def directorio = 'app/db_scripts'
+					
+					if (!fileExists(directorio)) {
+                        sh 'echo El directorio no existe. Creándolo...'
+                        sh "mkdir -p ${directorio}/ritsback/ddl"
+                        sh "mkdir -p ${directorio}/ritsback/dml/master"
+                        sh "mkdir -p ${directorio}/ritsfront/ddl"
+                        sh "mkdir -p ${directorio}/ritsfront/dml/master"
+                        sh "mkdir -p ${directorio}"
+                        sh 'echo Directorio creado exitosamente.'
+                    } else {
+                        sh 'echo El directorio ya existe.'
                     }
+                    
+                	sh 'cp -r rits/ritsback/resources/db/ddl/* app/db_scripts/ritsback/ddl/'
+                	sh 'cp -r rits/ritsback/resources/db/dml/master/* app/db_scripts/ritsback/dml/master'
+                	sh 'cp -r rits/ritsback/resources/db/dml/* app/db_scripts/ritsback/dml/'
+                	
+                	
+                	sh 'cp -r rits/ritsfront/resources/db/ddl/* app/db_scripts/ritsfront/ddl/'
+                	sh 'cp -r rits/ritsfront/resources/db/dml/master/* app/db_scripts/ritsfront/dml/master'
+                	sh 'cp -r rits/ritsfront/resources/db/dml/* app/db_scripts/ritsfront/dml/'
                 }
             }
-        } 
+        }
         
-        stage('Restart app') {
-			sh 'Relanzando aplicación remotamente tras ser actualizada'
+        stage('Crear fichero de version') {
             steps {
-                withCredentials([usernamePassword(credentialsId: PASSWORD_CREDENTIALS_ID, usernameVariable: 'SSH_USER', passwordVariable: 'SSH_PASSWORD')]) {
-                    script {
-                        sh 'sshpass -p $SSH_PASSWORD ssh -t -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST "echo $SSH_PASSWORD | sudo -S service $SSH_SERVICE restart"'
+                script {
+                    def resourcesDir = 'app'
+                    def tarFileName = "openits_${env.VERSION_NUMBER}.tar.gz"
+                    def storageDir = 'versiones'
+
+                    sh "tar -czf $tarFileName $resourcesDir"
+
+                    sh "mkdir -p $storageDir/${env.VERSION_NUMBER}"
+                    sh "mv $tarFileName $storageDir/${env.VERSION_NUMBER}/"
+                    
+                    writeFile file: "$storageDir/${env.VERSION_NUMBER}/${env.VERSION_NUMBER}_version.txt", text: crearFicheroVersion(stringVariable)
+                }
+                
+                script {
+                    def repos = ['rits', 'ritsback', 'ritsfront']
+        
+                    for (repo in repos) {
+                        dir(repo) {
+                            // Definir el nombre del tag
+                            def nombreTag = "${env.PROJECT_NAME}_${env.VERSION_NUMBER}"
+                        
+                            sh "git tag ${nombreTag}"
+                            sh "git push origin ${nombreTag}"
+                        }
                     }
                 }
             }
         }
     }
 
-  /*  post {
+    post {
         always {
             script {
-				sh 'echo Ejecución always'
-				
-				stringVariable += "Detalles del error:<br/>"
-				stringVariable += currentBuild.rawBuild.getLog(1000)
-			
                 // Obtener información sobre todos los commits desde el último build
                 emailext subject: "${JOB_NAME} - Build #${BUILD_NUMBER} - ${currentBuild.currentResult}",
                         body: """
                         <html>
                             <body>
-                                <h2>RESULTADO ACTUALIZACIÓN MAQUETA FULLEQUIP</h2>
+                                <h2>NUEVA VERSIÓN OPENITS</h2>
                                 <p>Job: ${JOB_NAME}</p>
-                                <p>Número de Ejecución: ${BUILD_NUMBER}</p>
-                                <p>Estado de la Ejecución: ${currentBuild.currentResult}</p>
+                                <p>Se ha creado la versión ${env.VERSION_NUMBER}</p>
+                                <p>Puede consultar el listado actual de versiones en la siguiente URL:</p>
+                                <p>http://its-revenga.equilibra.es:8500/job/create_version/1/execution/node/3/ws/versiones/</p>
                             </body>
                         </html>
                         """,
@@ -176,5 +240,20 @@ pipeline {
                         mimeType: 'text/html'
             }
         }
-    }*/
+    }
+}
+
+// Función para obtener información de la versión
+def crearFicheroVersion(String stringVariable) {
+    // Aquí puedes obtener la información de la versión de tu sistema de control de versiones,
+    // de tu archivo de configuración, de una variable de entorno, etc.
+    def project = env.PROJECT_NAME
+    def version = env.VERSION_NUMBER
+    def date = new Date().format('yyyy-MM-dd HH:mm:ss')
+
+    return "${project}_${version}\n\n \
+        Version: ${version}\n \
+        Proyecto: ${project}\n \
+        Fecha:${date}\n\n \
+        Cambios respecto a la versión anterior:\n" + stringVariable
 }
