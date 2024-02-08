@@ -2,5 +2,4 @@ UPDATE conf.alarm_configs
 SET enabled=true
 WHERE alarm_config_id in(010009,  --LBL_ALARM_CONFIGS_ALARM_JETFAN_DISCONNECTED
                          040009,  --LBL_ALARM_CONFIGS_ALARM_JETFAN_FAIL
-                         070009,  --LBL_ALARM_CONFIGS_ALARM_JETFAN_GEAR
                          170009); --LBL_ALARM_CONFIGS_ALARM_JETFAN_EMERGENCY_STOP

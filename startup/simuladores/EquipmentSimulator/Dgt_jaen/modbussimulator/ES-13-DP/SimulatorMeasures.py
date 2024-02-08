@@ -28,7 +28,7 @@ def main():
     file = '/home/admin/app/modbussimulator/ES-13-DP/ES-13-DP_measures.properties'
     # Lee la configuración desde el archivo properties
     config = configparser.ConfigParser()
-    config.read(file = '/home/admin/app/modbussimulator/ES-02-DP/ES-02-DP_measures.properties')
+    config.read(file)
     
     ip = config.get('Modbus', 'ip')
     puerto = int(config.get('Modbus', 'puerto'))

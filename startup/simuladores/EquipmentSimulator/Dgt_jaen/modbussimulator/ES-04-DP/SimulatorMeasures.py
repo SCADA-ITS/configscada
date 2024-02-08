@@ -1,7 +1,6 @@
 import configparser
 import random
 import time
-import os
 from pymodbus.client import ModbusTcpClient
 
 pair_list = []
@@ -26,8 +25,7 @@ def cambiar_holding_register(ip, puerto, init_register, addresses):
         client.close()
 
 def main():
-    file = '/home/admin/app/modbussimulator/ES-02-DP/ES-02-DP_traffic_measures.properties'
-
+    file = '/home/admin/app/modbussimulator/ES-04-DP/ES-04-DP_measures.properties'
     # Lee la configuración desde el archivo properties
     config = configparser.ConfigParser()
     config.read(file)
@@ -48,8 +46,6 @@ def main():
                     lines = field_value.split('\n')
                     min = 0;
                     max = 0;
-                    int_vel = 0;
-                    int_lon = 0;
                     mod = "";
                     
                     if key.rstrip(" \t\n") == 'initregister':
@@ -70,43 +66,21 @@ def main():
                                     max = int(value)
                                 elif name.rstrip(" \t\n") == 'mod':
                                     mod = value
-                                elif name.rstrip(" \t\n") == 'int_vel':
-                                    int_vel = value
-                                elif name.rstrip(" \t\n") == 'int_lon':
-                                    int_lon = value
                     
-                        pair_list.append({"min_range":min, "max_range":max, "mod":mod, "int_vel": int_vel, "int_lon": int_lon, "name":key})
+                        pair_list.append({"min_range":min, "max_range":max, "mod":mod, "name":key})
                 
                 for i in range(int(num_equipments)):
                     for pair in pair_list:
-                        if(int(pair['int_vel']) == 1):
-                          if(pair['name'] == 'vehvel3'):
-                              addresses.append(intensidadVel) 
-                          else:
-                              aux = round(random.randint(0, intensidadVel))
-                              intensidadVel = intensidadVel - aux
-                              addresses.append(aux) 
-                        elif(int(pair['int_lon']) == 1):
-                          if(pair['name'] == 'vehlong2'):
-                              addresses.append(intensidadLong) 
-                          else:
-                              aux2 = round(random.randint(0, intensidadLong))
-                              intensidadLong = intensidadLong - aux2
-                              addresses.append(aux2) 
-                        elif(pair['mod'] == ""):
+                        if(pair['mod'] == ""):
                             random_measure = round(random.randint(pair['min_range'], pair['max_range']))
-                            #print("Creando medida " + str(pair['name']) + " para equipo " + nodo + "[" + str(i + 1) + 
+                            #print("Creando medida " + str(pair['name']) + "para equipo " + nodo + "[" + str(i + 1) + 
                             #      "] con rango entre " + str(pair['min_range']) + ' y ' + str(pair['max_range']) +
                             #      " = " + str(random_measure))
                             addresses.append(random_measure);   
                         else:
                             parts = pair['mod'].split(',')
                             random_measure = round(random.randint(1, len(parts)))
-                            addresses.append(int(parts[random_measure - 1]))     
-                             
-                        if(pair['name'] == 'intensidad_total'):
-                            intensidadVel = random_measure     
-                            intensidadLong = random_measure                                   
+                            addresses.append(int(parts[random_measure - 1]))                                                         
 
                 cambiar_holding_register(ip, puerto, init_register, addresses)
         time.sleep(10)
