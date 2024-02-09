@@ -210,7 +210,6 @@ INSERT INTO conf.element_tree_nodes(element_tree_node_id, element_tree_id, "labe
         (040165004, 04, '', 65, 04, 04, NULL, true, true),
     (040166, 04, 'Veleta', NULL, NULL, 13, NULL, true, true),
         (040166001, 04, '', 66, 01, 01, NULL, true, true),
-        (040166002, 04, '', 66, 02, 02, NULL, true, true),
     (040171, 04, 'PMV', NULL, NULL, 14, NULL, true, true),
         (040171001, 04, '', 71, 01, 01, NULL, true, true),
         (040171002, 04, '', 71, 02, 02, NULL, true, true),
@@ -508,7 +507,6 @@ INSERT INTO conf.element_tree_node_hierarchies (element_tree_node_hierarchy_id, 
 --veleta
 (040166, 04, 0401, 040166, true, true),
     (040166001, 04, 040166, 040166001, true, true),
-    (040166002, 04, 040166, 040166002, true, true),
 --paneles
 (040171, 04, 0401, 040171, true, true),
     (040171001, 04, 040171, 040171001, true, true),

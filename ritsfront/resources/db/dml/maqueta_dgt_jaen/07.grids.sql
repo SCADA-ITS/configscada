@@ -109,8 +109,8 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (660003, 66, 1, 3, true, false, false, false, 'LBL_GRID_FIELD_DESCRIPTION', 'LBL_GRID_FIELD_DESCRIPTION', 'description', false, false, NULL, false, false, 170, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
 (660004, 66, 1, 4, true, true, false, false, NULL, NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
 (660005, 66, 1, 5, true, true, false, true, 'LBL_GRID_FIELD_STATE_LABEL', 'LBL_GRID_FIELD_STATE_LABEL', 'stateLabel', false, false, NULL, true, false, 150, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
-(660010, 66, 3, 10, true, false, false, false, 'LBL_GUST_WIND_SPEED', 'LBL_WIND_SPEED', 'ElementTypeParam:66:2:2', false, false, 'left', false, false, 240, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
-(660011, 66, 2, 11, true, false, false, false, 'LBL_GUST_WIND_DIRECTION', 'LBL_WIND_DIRECTION', 'ElementTypeParam:66:2:1', false, false, 'left', false, false, 240, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(660010, 66, 2, 10, true, false, false, false, 'LBL_GRID_FIELD_WIND_SPEED', 'LBL_GRID_FIELD_WIND_SPEED', 'ElementTypeParam:66:2:5: ', false, false, 'left', false, false, 240, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(660011, 66, 2, 11, true, false, false, false, 'LBL_GRID_FIELD_WIND_DIRECTION', 'LBL_GRID_FIELD_WIND_DIRECTION', 'ElementTypeParam:66:2:1', false, false, 'left', false, false, 240, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
 
 (710001, 71, 1, 1, true, false, false, false, 'LBL_GRID_FIELD_ID', 'LBL_GRID_FIELD_ID', 'id', true, false, null, false, false, 500, NULL, true, false, NULL, NULL, NULL, NULL, NULL),
 (710002, 71, 1, 2, true, false, false, true, 'LBL_GRID_FIELD_NAME', 'LBL_GRID_FIELD_NAME', 'alias', false, false, NULL, false, false, 180, NULL, true, true, NULL, NULL, true, NULL, NULL),

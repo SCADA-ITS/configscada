@@ -27,6 +27,9 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
     --Opacímetro
     ('es_ES',1,'LBL_OPAC_CONCENTRATION','Concentración Opac ',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 
+    --Veleta
+    ('es_ES',1,'LBL_GRID_FIELD_WIND_SPEED','Velocidad del viento (m/s)',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+    ('es_ES',1,'LBL_GRID_FIELD_WIND_DIRECTION','Dirección del viento (°)',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 
 --en_GB
     ('en_GB', 1, 'LBL_GRID_FIELD_TRAFFIC_LIGHT_GROUP', 'Semaphoric group', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -45,6 +48,9 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
     --Opacímetro
     ('en_GB',1,'LBL_OPAC_CONCENTRATION','Opac Concentration',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 
+    --Veleta
+    ('en_GB',1,'LBL_GRID_FIELD_WIND_SPEED','Wind speed (m/s)',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+    ('en_GB',1,'LBL_GRID_FIELD_WIND_DIRECTION','Wind direction (°)',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 
 --es_CL
     ('es_CL', 1, 'LBL_GRID_FIELD_TRAFFIC_LIGHT_GROUP', 'Grupo semafórico', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -61,5 +67,10 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
     ('es_CL',1,'LBL_CO_CONCENTRATION','Concentración Co ',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 
     --Opacímetro
-    ('es_CL',1,'LBL_OPAC_CONCENTRATION','Concentración Opac ',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
+    ('es_CL',1,'LBL_OPAC_CONCENTRATION','Concentración Opac ',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+
+    --Veleta
+    ('es_CL',1,'LBL_GRID_FIELD_WIND_SPEED','Velocidad del viento (m/s)',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+    ('es_CL',1,'LBL_GRID_FIELD_WIND_DIRECTION','Dirección del viento (°)',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
+
 

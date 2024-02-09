@@ -24,7 +24,8 @@ INSERT INTO ui.synoptic_layers
 (90101400, 901, 'SYNOPTIC_LAYERS_LUMINANCIMETER', 'LBL_SYNOPTIC_LAYERS_LUMINANCIMETER', true),
 (90101800, 901, 'SYNOPTIC_LAYERS_ANEMOMETER', 'LBL_SYNOPTIC_LAYERS_ANEMOMETER', true),
 (90101900, 901, 'SYNOPTIC_LAYERS_CO', 'LBL_SYNOPTIC_LAYERS_CO', true),
-(90102100, 901, 'SYNOPTIC_LAYERS_OPAC', 'LBL_SYNOPTIC_LAYERS_OPAC', true);
+(90102100, 901, 'SYNOPTIC_LAYERS_OPAC', 'LBL_SYNOPTIC_LAYERS_OPAC', true),
+(90106600, 901, 'SYNOPTIC_LAYERS_VANE', 'LBL_SYNOPTIC_LAYERS_VANE', true);
 
 INSERT INTO ui.synoptic_layer_relationships 
 (synoptic_id, parent_layer_id, child_layer_id) VALUES 
@@ -38,7 +39,8 @@ INSERT INTO ui.synoptic_layer_relationships
 (901, 90100003, 90101400),
 (901, 90100003, 90101800),
 (901, 90100003, 90101900),
-(901, 90100003, 90102100);
+(901, 90100003, 90102100),
+(901, 90100003, 90106600);
 
 INSERT INTO ui.synoptic_commands 
 (id, synoptic_id, position, label, icon, "default", module_action_id, args, view_type_id, multiselect, show_text, item_required, context) VALUES 
@@ -196,5 +198,6 @@ INSERT INTO ui.synoptic_layer_elements
 (90102100, 'Element:21:7', 000021, 'OP-2-03-DP', 822, 55, false, NULL, true, false, NULL, true),
 (90102100, 'Element:21:6', 000021, 'OP-2-02-DP', 1150, 55, false, NULL, true, false, NULL, true),
 (90102100, 'Element:21:5', 000021, 'OP-2-01-DP', 1474, 55, false, NULL, true, false, NULL, true),
-(90102100, 'Element:21:1', 000021, 'OP-1-01-DP', 540, 1024, false, NULL, true, false, NULL, true);
+(90102100, 'Element:21:1', 000021, 'OP-1-01-DP', 540, 1024, false, NULL, true, false, NULL, true),
+(90106600, 'Element:66:1', 000066, 'ANX-VEL-1-02-DP', 1876, 481, false, NULL, true, false, NULL, true);
 
