@@ -6,12 +6,12 @@ services:
     ports:
       - "6379:6379"
       - "9000:9000"
-    restart: always
     volumes:
       - ./haproxy:/usr/local/etc/haproxy  
     depends_on:
       - keydb-1
       - keydb-2
+    restart: unless-stopped
       
   keydb-1:
     image: eqalpha/keydb:x86_64_v6.0.18
@@ -19,6 +19,7 @@ services:
     command: keydb-server --port 6371 --requirepass rits --masterauth rits --server-threads 8 --active-replica yes --replicaof keydb-2 6372 --timeout 600
     ports:
       - "6371:6371"
+    restart: unless-stopped
 
   keydb-2:
     image: eqalpha/keydb:x86_64_v6.0.18
@@ -26,9 +27,9 @@ services:
     command: keydb-server --port 6372 --requirepass rits --masterauth rits --server-threads 8 --active-replica yes --replicaof keydb-1 6371 --timeout 600
     ports:
       - "6372:6372"
+    restart: unless-stopped
 
   activemq:
-  
     image: ivonet/activemq
     ports:
     - "8161:8161"
@@ -46,14 +47,5 @@ services:
     - ACTIVEMQ_USER_PASSWORD=user
     volumes:
       - ./activemq/log/activemq:/var/log/activemq
-      
-  timescaledb:
-    image: timescale/timescaledb:latest-pg12
-    ports:
-      - "5430:5432"
-    environment:
-      - POSTGRES_USER=rits
-      - POSTGRES_PASSWORD=rits
-    volumes:
-      - ./timescaledb:/var/lib/postgresql/data
+    restart: unless-stopped
         
