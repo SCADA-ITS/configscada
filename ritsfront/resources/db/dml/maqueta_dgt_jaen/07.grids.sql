@@ -459,6 +459,8 @@ INSERT INTO ui.grid_commands(grid_id, "position", "label", icon, "default", modu
 (3012, 2, 'LBL_SEND_FAN_START_REVERSE', 'mdi mdi-rotate-left', false, NULL, '[{"command": "CommandElementType:3:2000", "ids": "CommandElementTypeParam:3:2000:1"}]', NULL, true, false, true, null, false),
 (3012, 3, 'LBL_SEND_FAN_STOP', 'mdi mdi-stop', false, NULL, '[{"command": "CommandElementType:1:2000", "ids": "CommandElementTypeParam:1:2000:1"}]', NULL, true, false, true, null, false);
 
+DELETE FROM ui.grid_commands
+WHERE grid_id = 1012 AND label in ('LBL_SEND_FAN_RESET_PARTIAL_HOURS', 'LBL_SEND_FAN_RESET_TOTAL_HOURS', 'LBL_SEND_FAN_RESET_ALARMS');
 
 INSERT INTO ui.grid_field_icons(grid_field_id, icon, value, show_value, badge_color, avatar, enabled, label_value) VALUES
 (020004, './img/state/stateUnknown.png', 'ElementTypeState:2:0', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_UNKNOWN'),
