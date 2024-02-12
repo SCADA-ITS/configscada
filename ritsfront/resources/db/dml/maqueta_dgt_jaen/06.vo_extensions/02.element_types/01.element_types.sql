@@ -60,7 +60,7 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 ('ElementType:29', 14, 'grid/element_type_29.png'),
 
 ('ElementType:32', 1, '32'),
-('ElementType:32', 2, 'graphic_icon/32_presurizacion.svg'),
+('ElementType:32', 2, 'graphic_icon/32_presurizacion_vent.svg'),
 ('ElementType:32', 14, 'grid/element_type_32.png'),
 
 ('ElementType:65', 1, '65'),

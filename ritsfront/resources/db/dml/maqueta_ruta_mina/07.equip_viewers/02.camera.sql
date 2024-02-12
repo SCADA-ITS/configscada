@@ -1,8 +1,8 @@
 INSERT INTO ui.equip_viewers (id, name, description, "label", icon, show_info_tab, show_childs, show_actions, initial_tab, measure_width, measure_max_rows, measure_only, graphic_icon_id, info_tab_mode, no_show_properties) VALUES
-('ElementSubtype:1:2', 'CAMERA_FIX', 'CAMERA_FIX', 'LBL_ELEMENT_TYPE_CAMERA', NULL, false, false, false, 2, 300, 3, null, 211,1,null),
-('ElementSubtype:2:2', 'CAMERA_DOMO', 'CAMERA_DOMO', 'LBL_ELEMENT_TYPE_CAMERA', NULL, false, false, false, 2, 300, 3, null, 211,1,null),
-('ElementSubtype:3:2', 'CAMERA_DOMO', 'CAMERA_DOMO', 'LBL_ELEMENT_TYPE_CAMERA', NULL, false, false, false, 2, 300, 3, null, 2,1,null),
-('ElementSubtype:4:2', 'CAMERA_SANCTIONING', 'CAMERA_SANCTIONING', 'LBL_ELEMENT_TYPE_CAMERA', NULL, true, false, false, 2, 300, 3, null, 22, 1, null);
+('ElementSubtype:1:2', 'CAMERA_FIX', 'CAMERA_FIX', 'LBL_ELEMENT_TYPE_CAMERA', NULL, false, false, false, 2, 300, 3, null, 020002,1,null),
+('ElementSubtype:2:2', 'CAMERA_DOMO', 'CAMERA_DOMO', 'LBL_ELEMENT_TYPE_CAMERA', NULL, false, false, false, 2, 300, 3, null, 020002,1,null),
+('ElementSubtype:3:2', 'CAMERA_DOMO', 'CAMERA_DOMO', 'LBL_ELEMENT_TYPE_CAMERA', NULL, false, false, false, 2, 300, 3, null, 030002,1,null),
+('ElementSubtype:4:2', 'CAMERA_SANCTIONING', 'CAMERA_SANCTIONING', 'LBL_ELEMENT_TYPE_CAMERA', NULL, true, false, false, 2, 300, 3, null, 040002, 1, null);
 
 
 

@@ -109,8 +109,8 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (660003, 66, 1, 3, true, false, false, false, 'LBL_GRID_FIELD_DESCRIPTION', 'LBL_GRID_FIELD_DESCRIPTION', 'description', false, false, NULL, false, false, 170, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
 (660004, 66, 1, 4, true, true, false, false, NULL, NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
 (660005, 66, 1, 5, true, true, false, true, 'LBL_GRID_FIELD_STATE_LABEL', 'LBL_GRID_FIELD_STATE_LABEL', 'stateLabel', false, false, NULL, true, false, 150, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
-(660010, 66, 3, 10, true, false, false, false, 'LBL_GUST_WIND_SPEED', 'LBL_WIND_SPEED', 'ElementTypeParam:66:2:2', false, false, 'left', false, false, 240, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
-(660011, 66, 2, 11, true, false, false, false, 'LBL_GUST_WIND_DIRECTION', 'LBL_WIND_DIRECTION', 'ElementTypeParam:66:2:1', false, false, 'left', false, false, 240, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(660010, 66, 2, 10, true, false, false, false, 'LBL_GRID_FIELD_WIND_SPEED', 'LBL_GRID_FIELD_WIND_SPEED', 'ElementTypeParam:66:2:5: ', false, false, 'left', false, false, 240, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(660011, 66, 2, 11, true, false, false, false, 'LBL_GRID_FIELD_WIND_DIRECTION', 'LBL_GRID_FIELD_WIND_DIRECTION', 'ElementTypeParam:66:2:1', false, false, 'left', false, false, 240, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
 
 (710001, 71, 1, 1, true, false, false, false, 'LBL_GRID_FIELD_ID', 'LBL_GRID_FIELD_ID', 'id', true, false, null, false, false, 500, NULL, true, false, NULL, NULL, NULL, NULL, NULL),
 (710002, 71, 1, 2, true, false, false, true, 'LBL_GRID_FIELD_NAME', 'LBL_GRID_FIELD_NAME', 'alias', false, false, NULL, false, false, 180, NULL, true, true, NULL, NULL, true, NULL, NULL),
@@ -459,6 +459,8 @@ INSERT INTO ui.grid_commands(grid_id, "position", "label", icon, "default", modu
 (3012, 2, 'LBL_SEND_FAN_START_REVERSE', 'mdi mdi-rotate-left', false, NULL, '[{"command": "CommandElementType:3:2000", "ids": "CommandElementTypeParam:3:2000:1"}]', NULL, true, false, true, null, false),
 (3012, 3, 'LBL_SEND_FAN_STOP', 'mdi mdi-stop', false, NULL, '[{"command": "CommandElementType:1:2000", "ids": "CommandElementTypeParam:1:2000:1"}]', NULL, true, false, true, null, false);
 
+DELETE FROM ui.grid_commands
+WHERE grid_id = 1012 AND label in ('LBL_SEND_FAN_RESET_PARTIAL_HOURS', 'LBL_SEND_FAN_RESET_TOTAL_HOURS', 'LBL_SEND_FAN_RESET_ALARMS');
 
 INSERT INTO ui.grid_field_icons(grid_field_id, icon, value, show_value, badge_color, avatar, enabled, label_value) VALUES
 (020004, './img/state/stateUnknown.png', 'ElementTypeState:2:0', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_UNKNOWN'),

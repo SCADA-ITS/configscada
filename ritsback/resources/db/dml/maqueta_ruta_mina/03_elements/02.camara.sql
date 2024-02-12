@@ -1,6 +1,6 @@
 INSERT INTO conf.elements (element_type_id, element_subtype_id, element_id, location_id, keep_values_on_disconnected, inherit_state_id, alias, description, on_change_alarm, on_change_state, on_change_measure, on_schedule, enabled, visible, alert, alarm_count, created_at, updated_at) VALUES
-(2, 1, 1, 0010002, NULL, NULL, 'RM-PTZ-001', 'RM-PTZ-001', 'null', NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(2, 1, 2, 0020002, NULL, NULL, 'RM-PTZ-002', 'RM-PTZ-002', 'null', NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 2, 1, 0010002, NULL, NULL, 'RM-PTZ-001', 'RM-PTZ-001', 'null', NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 2, 2, 0020002, NULL, NULL, 'RM-PTZ-002', 'RM-PTZ-002', 'null', NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 2, 3, 0030002, NULL, NULL, 'RM-PTZ-003', 'RM-PTZ-003', 'null', NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 2, 4, 0040002, NULL, NULL, 'RM-PTZ-004', 'RM-PTZ-004', 'null', NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 2, 5, 0050002, NULL, NULL, 'RM-PTZ-005', 'RM-PTZ-005', 'null', NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 

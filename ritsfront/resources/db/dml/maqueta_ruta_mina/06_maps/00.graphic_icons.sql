@@ -1,4 +1,4 @@
-INSERT INTO ui.graphic_icons (id, "name", description, alarms, measures, js_draw_file, width, height, svg_pattern_var, svg_file, js_custom_type_render) VALUES
+/*INSERT INTO ui.graphic_icons (id, "name", description, alarms, measures, js_draw_file, width, height, svg_pattern_var, svg_file, js_custom_type_render) VALUES
 (2, 'CAM', 'CAM', false, false, 'component/graphicIcon/graphicIconDefault.js', 30, 30, null, 'img/graphic_icon/02_camera.svg', null),
 (201, 'CAM', 'CAM', false, false, 'component/graphicIcon/graphicIconDefault.js', 50, 50, null, 'img/graphic_icon/02_camera.svg', null),
 
@@ -25,5 +25,5 @@ INSERT INTO ui.graphic_icons (id, "name", description, alarms, measures, js_draw
 (71, 'PANEL GR_TXT', 'PANEL GR_TXT', false, true, 'component/graphicIcon/graphicIconCustom.js', 200, 60, null, 'img/graphic_icon/71_vms_dgt_gr_txt.svg', 'component/graphicIcon/custom/vms.js'),
 
 (95, 'SYNC_SERVER', 'SYNC_SERVER', false, false, 'component/graphicIcon/graphicIconDefault.js', 30, 30, null, 'img/graphic_icon/95_sync_server.svg', null),
-(950, 'SYNC_SERVER', 'SYNC_SERVER', false, false, 'component/graphicIcon/graphicIconDefault.js', 30, 30, null, 'img/graphic_icon/95_sync_server.svg', null);
+(950, 'SYNC_SERVER', 'SYNC_SERVER', false, false, 'component/graphicIcon/graphicIconDefault.js', 30, 30, null, 'img/graphic_icon/95_sync_server.svg', null);*/
 
