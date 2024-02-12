@@ -1,27 +1,295 @@
 #!/bin/bash
 
-readonly REMOTE_HOST="192.168.88.56" 
-readonly REMOTE_BBDD="192.168.88.56" 
-readonly PROJECT="fullequip" 
-readonly PROJECTBBDD="maqueta_fullequip" 
-readonly USER="admin" 
+REMOTE_HOST="" 
+REMOTE_BBDD="" 
+PROJECT="" 
+PROJECTBBDD="" 
+USER="" 
 
 #Limpio la pantalla~/
 clear
 
-mostrar_menu() {
-    echo "==== Menú ===="
-    echo "1. Actualizar TODO"
-    echo "2. Actualizar back y ejecutar scripts de BBDD de back"
-    echo "3. Actualizar front y ejecutar scripts de BBDD de front"
-    echo "4. Salir"
+ctrl_c() {
+   clear
+   exit 1
 }
 
-mostrar_menu
-read -p "Seleccione una opcion (1-4): " opcion
+mostrar_menu() {
+	selection=$(dialog \
+	  --backtitle "SCADA OPENITS" \
+	  --title "Instalación" \
+	  --stdout --menu "\nIndique la acción que desea realizar:" 15 70 5 \
+	  "1" "Actualizar TODO" \
+	  "2" "Actualizar back y ejecutar scripts de BBDD de back" \
+ 	  "3" "Actualizar front y ejecutar scripts de BBDD de front" \
+ 	  "4" "Ejecutar scripts de BBDD" \
+ 	  "5" "Salir")
+ 	  
+ 	if [ -z "$selection" ]; then
+	   clear
+	   exit 1
+	fi
+}
 
+rellenar_parametros() {
+	while true; do
+	  dialog --backtitle "SCADA OPENITS" \
+	    --title "Nombre del proyecto" \
+	    --inputbox "Indique el nombre del proyecto que está instalando" 8 40 2>/tmp/input_result
+	
+	  if [ $? -ne 0 ]; then
+	     clear
+	     exit 0
+	  fi
+	
+	  declare -g PROJECT=$(cat /tmp/input_result)
+	
+	  if [ -n "$project" ]; then
+	     dialog \
+	         --msgbox "!El nombre del proyecto no puede estar vacío! Por favor, ingrésalo de nuevo." \
+	         15 70
+	  else
+	     break
+	  fi
+	done
 
-if [ "$opcion" == 1 ] || [ "$opcion" == 2 ]; then
+	while true; do
+	  dialog --backtitle "SCADA OPENITS" \
+	    --title "Usuario de la aplicación" \
+	    --inputbox "Indique el usuario de la aplicación" 8 40 2>/tmp/input_result
+	
+	  if [ $? -ne 0 ]; then
+	     clear
+	     exit 0
+	  fi
+	
+	  declare -g USER=$(cat /tmp/input_result)
+	
+	  if [ -n "$project" ]; then
+	     dialog \
+	         --msgbox "!El usuario no puede estar vacío! Por favor, ingrésalo de nuevo." \
+	         15 70
+	  else
+	     break
+	  fi
+	done
+	
+	while true; do
+	  dialog --backtitle "SCADA OPENITS" \
+	    --title "IP aplicación" \
+	    --inputbox "Indique la IP de la maquina donde está la aplicación" 8 40 2>/tmp/input_result
+	
+	  if [ $? -ne 0 ]; then
+	     clear
+	     exit 0
+	  fi
+	
+	  declare -g REMOTE_HOST=$(cat /tmp/input_result)
+	
+	  if [ -n "$project" ]; then
+	     dialog \
+	         --msgbox "!La IP no puede estar vacía! Por favor, ingrésala de nuevo." \
+	         15 70
+	  else
+	     break
+	  fi
+	done
+	
+	while true; do
+	  dialog --backtitle "SCADA OPENITS" \
+	    --title "UP BBDD" \
+	    --inputbox "Indique la IP de la maquina donde está la BBDD" 8 40 2>/tmp/input_result
+	
+	  if [ $? -ne 0 ]; then
+	     clear
+	     exit 0
+	  fi
+	
+	  declare -g REMOTE_BBDD=$(cat /tmp/input_result)
+	
+	  if [ -n "$project" ]; then
+	     dialog \
+	         --msgbox "!La IP no puede estar vacía! Por favor, ingrésala de nuevo." \
+	         15 70
+	  else
+	     break
+	  fi
+	done
+	
+	maqueta=$(dialog \
+	  --backtitle "SCADA OPENITS" \
+	  --title "Instalación" \
+	  --stdout --menu "\n¿Esta actualizando maqueta o producción?" 15 70 2 \
+	  "1" "Maqueta" \
+	  "2" "Producción")
+ 	  
+ 	if [ -z "$maqueta" ]; then
+	   clear
+	   exit 1
+	fi
+	
+	case $maqueta in
+	   1)
+	   	echo "Entra en 1"
+	   		declare -g PROJECTBBDD="maqueta_$PROJECT"
+	   		;;
+	   2)
+	   	echo "Entra en 2"
+	   		declare -g PROJECTBBDD=$PROJECT
+	   		;;
+	esac	
+	
+	clear
+}
+
+update_progress() {
+    progress=$((current_file * 100 / files_count))
+    echo "$progress"
+}
+
+show_progress() {
+   local info="$1"
+   local progress="$2"
+   dialog --title "Ejecutando...." --gauge "\nEjecutando scripts de BBDD $1" 15 70 "$progress"
+}
+
+fill_db_back() {
+  psql postgresql://rits:rits@$REMOTE_BBDD:5430/rits -c "SELECT 1;" >/dev/null 2>&1
+
+  if [ $? -eq 0 ]; then  
+     #Empezamos con los scripts de ddl
+     cd ~/repositorio/rits/ritsback/resources/db/ddl
+  
+     yourfilenames=`find . -name '*.sql' -print0 | sort -z | xargs -r0`
+     files_count=`echo $yourfilenames | wc -w`
+     current_file=0
+     for eachfile in $yourfilenames; do
+     	current_file=$((current_file+1))
+		progress=$(update_progress)
+	
+	    if ((progress >= last_progress + 10)); then
+		   show_progress ". Creando tablas..." "$progress" &
+		   last_progress="$progress"
+		fi
+	
+	    psql postgresql://rits:rits@$REMOTE_BBDD:5430/rits -b -f $eachfile >/dev/null
+	 done
+  
+     wait
+     last_progress=0
+
+     #Continuamos con los scripts de master 
+     cd ~/repositorio/rits/ritsback/resources/db/dml/master
+  
+     yourfilenames=`find . -name '*.sql' -print0 | sort -z | xargs -r0`
+     files_count=`echo $yourfilenames | wc -w`
+     current_file=0
+     for eachfile in $yourfilenames; do
+        current_file=$((current_file+1))
+	  	progress=$(update_progress)
+	  	
+        if ((progress >= last_progress + 5)); then
+	       show_progress ". Rellenando tablas master..." "$progress" &
+	       last_progress="$progress"
+	  	fi
+
+        psql postgresql://rits:rits@$REMOTE_BBDD:5430/rits -b -f $eachfile >/dev/null
+     done
+  
+     wait
+     last_progress=0
+
+     #Continuamos con los scripts de proyecto 
+     cd ~/repositorio/rits/ritsback/resources/db/dml/$PROJECTBBDD
+  
+     yourfilenames=`find . -name '*.sql' -print0 | sort -z | xargs -r0`
+     files_count=`echo $yourfilenames | wc -w`
+     current_file=0
+     for eachfile in $yourfilenames; do
+     	current_file=$((current_file+1))
+	    progress=$(update_progress)
+	  	
+        if ((progress >= last_progress + 5)); then
+	       show_progress ". Rellenando tablas de proyecto..." "$progress" &
+	       last_progress="$progress"
+	    fi
+
+        psql postgresql://rits:rits@$REMOTE_BBDD:5430/rits -b -f $eachfile >/dev/null
+     done
+  fi
+}
+
+fill_db_front() {
+  psql postgresql://rits:rits@$REMOTE_BBDD:5430/rits -c "SELECT 1;" >/dev/null 2>&1
+
+  if [ $? -eq 0 ]; then  
+     #Empezamos con los scripts de ddl
+     cd ~/repositorio/rits/ritsfront/resources/db/ddl
+  
+     yourfilenames=`find . -name '*.sql' -print0 | sort -z | xargs -r0`
+     files_count=`echo $yourfilenames | wc -w`
+     current_file=0
+     for eachfile in $yourfilenames; do
+     	current_file=$((current_file+1))
+		progress=$(update_progress)
+	
+	    if ((progress >= last_progress + 10)); then
+		   #show_progress ". Creando tablas..." "$progress" &
+		   last_progress="$progress"
+		fi
+	
+	    psql postgresql://rits:rits@$REMOTE_BBDD:5430/rits -b -f $eachfile >/dev/null
+	 done
+  
+     wait
+     last_progress=0
+
+     #Continuamos con los scripts de master 
+     cd ~/repositorio/rits/ritsfront/resources/db/dml/master
+  
+     yourfilenames=`find . -name '*.sql' -print0 | sort -z | xargs -r0`
+     files_count=`echo $yourfilenames | wc -w`
+     current_file=0
+     for eachfile in $yourfilenames; do
+        current_file=$((current_file+1))
+	  	progress=$(update_progress)
+	  	
+        if ((progress >= last_progress + 5)); then
+	       #show_progress ". Rellenando tablas master..." "$progress" &
+	       last_progress="$progress"
+	  	fi
+
+        psql postgresql://rits:rits@$REMOTE_BBDD:5430/rits -b -f $eachfile >/dev/null
+     done
+  
+     wait
+     last_progress=0
+
+     #Continuamos con los scripts de proyecto 
+     cd ~/repositorio/rits/ritsfront/resources/db/dml/$PROJECTBBDD
+
+     yourfilenames=`find . -name '*.sql' -print0 | sort -z | xargs -r0`
+     files_count=`echo $yourfilenames | wc -w`
+     current_file=0
+     for eachfile in $yourfilenames; do
+     	current_file=$((current_file+1))
+	    progress=$(update_progress)
+	  	
+        if ((progress >= last_progress + 5)); then
+	       #show_progress ". Rellenando tablas de proyecto..." "$progress" &
+	       last_progress="$progress"
+	    fi
+
+        psql postgresql://rits:rits@$REMOTE_BBDD:5430/rits -b -f $eachfile >/dev/null
+     done
+  fi
+  
+  psql postgresql://rits:rits@$REMOTE_BBDD:5430/rits -c "UPDATE ui.data_source_values SET value='http://$REMOTE_HOST:8082/graphql' WHERE data_source_param_id = 1;"
+  psql postgresql://rits:rits@$REMOTE_BBDD:5430/rits -c "UPDATE ui.data_source_values SET value='ws://$REMOTE_HOST:61614' WHERE data_source_param_id = 5;"
+  psql postgresql://rits:rits@$REMOTE_BBDD:5430/rits -c "UPDATE ui.data_source_values SET value='http://$REMOTE_HOST:8082/graphql' WHERE data_source_param_id = 8;"
+}
+
+back() {
 #Compilo el back
 echo -e "\n\nCompiling backrits..."
 cd ~/repositorio/ritsback/_ritsback
@@ -80,14 +348,9 @@ ssh $USER@$REMOTE_HOST<<EOF
    sleep 15
    exit 
 EOF
-	
-#Ejecuto scripts de BBDD de back
-echo -e "\n\nExecuting SQL back scripts..."
-cd ~/repositorio/rits/ritsback/resources/db
-./make_param.sh $PROJECTBBDD $REMOTE_BBDD 5430
-fi
+}
 
-if [ "$opcion" == 1 ] || [ "$opcion" == 3 ]; then
+front() {
 #Copio recursos del front
 echo -e "\n\nCopying front resources..."
 sed -i "s|\(spring.profiles.active=\).*|\1$PROJECT|" ~/repositorio/ritsfront/openits/src/main/resources/application.properties
@@ -123,13 +386,33 @@ ssh $USER@$REMOTE_HOST<<EOF
    sed -i 's|\(active=\).*\( -jar\)|\1$PROJECT\2|' ~/app/start.sh
    exit
 EOF
+}
 
-#Ejecuto scripts de BBDD de front
-echo -e "\n\nExecuting SQL front scripts..."
-cd ~/repositorio/rits/ritsfront/resources/db
-./make_param.sh $PROJECTBBDD $REMOTE_BBDD 5430 $REMOTE_HOST
+# Verificar si dialog está instalado
+if ! command -v dialog &> /dev/null; then
+    echo "Se ha detectado que no tiene dialog instalado en su sistema y es necesario para mostrar las opciones de actualización. Se procederá a instalar a continuación."
+    sleep 2
+
+    sudo apt update
+    sudo apt install dialog
 fi
 
-if [ "$opcion" == 4 ]; then
-exit
+trap ctrl_c SIGINT
+
+mostrar_menu;clear
+rellenar_parametros;clear
+
+if [ "$selection" == 1 ] || [ "$selection" == 2 ]; then
+   back;clear
 fi
+
+if [ "$selection" == 1 ] || [ "$selection" == 3 ]; then
+   front;clear
+fi
+
+if [ "$selection" == 5 ]; then
+   exit
+fi
+
+fill_db_back;clear
+fill_db_front
