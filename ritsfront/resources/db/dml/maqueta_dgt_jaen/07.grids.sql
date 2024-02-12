@@ -13,10 +13,7 @@ INSERT INTO ui.grids(id, adapter_id, "label", enabled, visible) VALUES
 (65, 2, 'LBL_ELEMENT_TYPE_SAI', true, true),
 (66, 2, 'LBL_ELEMENT_TYPE_VANE', true, true),
 (71, 2, 'LBL_ELEMENT_TYPE_PANEL', true, true),
-(89, 2, 'LBL_ELEMENT_TYPE_GATE', true, true),
-
-(3012, NULL, 'LBL_VENTILATION_MANAGER_FANS', true, true);
-
+(89, 2, 'LBL_ELEMENT_TYPE_GATE', true, true);
 
 
 INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", required, parameterized, extended, filtered, "label", label_tooltip, source_field, is_pk, is_epoch_milli, align, needs_translation, grouping_summary, width_px, grid_field_group_operation_id, enabled, visible, adjust, header_vertical, fixed_column, replacement_function, precision_filter) VALUES
@@ -126,17 +123,9 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (890004, 89, 1, 4, true, true, false, false, NULL, NULL, 'state', false, false, null, false, false, 35, NULL, true, true, NULL, NULL, NULL, NULL,NULL),
 (890005, 89, 1, 5, true, true, false, true, 'LBL_GRID_FIELD_STATE_LABEL', 'LBL_GRID_FIELD_STATE_LABEL', 'stateLabel', false, false, null, true, false, 150, NULL, true, true, NULL, NULL, NULL, NULL,NULL);
 
-
-
-INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", required, parameterized, extended, filtered, "label", label_tooltip, source_field, is_pk, is_epoch_milli, align, needs_translation, grouping_summary, width_px, grid_field_group_operation_id, enabled, visible, adjust, header_vertical, fixed_column, replacement_function, precision_filter) VALUES
-(301201, 3012, 1, 1, true, false, false, false, 'LBL_GRID_FIELD_ID', 'LBL_GRID_FIELD_ID', 'id', true, false, NULL, false, false, 1, NULL, true, false, NULL, NULL, NULL, NULL, NULL),
-(301202, 3012, 1, 2, true, false, false, false, '', '', 'state', false, false, NULL, false, false, 30, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
-(301203, 3012, 1, 3, true, false, false, false, 'LBL_FAN_ALIAS', 'LBL_FAN_ALIAS', 'alias', false, false, NULL, false, false, 200, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
-(301204, 3012, 1, 4, true, false, false, false, 'LBL_FAN_STATE', 'LBL_FAN_STATE', 'ElementTypeParam:9:2:1', false, false, NULL, true, false, 200, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
-(301205, 3012, 1, 5, true, false, false, false, '', '', 'tubeCmdToSend', false, false, NULL, false, false, 1, NULL, true, false, NULL, NULL, NULL, NULL, NULL),
-(301206, 3012, 1, 6, true, false, false, false, '', '', 'tubeCmdParamIds', false, false, NULL, false, false, 1, NULL, true, false, NULL, NULL, NULL, NULL, NULL),
-(301208, 3012, 1, 8, true, false, false, false, 'LBL_FAN_TOTAL_HOURS', 'LBL_FAN_TOTAL_HOURS', 'ElementTypeParam:9:2:15', false, false, NULL, false, false, 150, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
-(301209, 3012, 1, 9, true, false, false, false, 'LBL_FAN_TO_SEND', 'LBL_FAN_TO_SEND', 'tubeCmdToSendAlias', false, false, NULL, false, false, 250, NULL, true, true, true, NULL, NULL, NULL, NULL);
+UPDATE ui.grid_fields
+SET enabled=false, visible=false
+WHERE id in(101205,101209,101210);
 
 INSERT INTO ui.grid_field_icons(grid_field_id, icon, value, show_value, badge_color, avatar, enabled, label_value) VALUES
 (100307, './img/incident_level/incident_level_1.png', 'ImsIncidentLevel:1', false, false, false, true, 'LBL_ICON_IMS_INCIDENT_LEVEL_1'),
@@ -385,11 +374,7 @@ INSERT INTO ui.grid_option_values(grid_id, grid_option_id, value) VALUES
 (89, 17, 'true'),
 (89, 20, 'true'),
 (89, 25, 'true'),
-(89, 26, 'true'),
-
-(3012, 7, 'false'),
-(3012, 8, 'false'),
-(3012, 9, 'true');
+(89, 26, 'true');
 
 INSERT INTO ui.grid_commands(grid_id, "position", "label", icon, "default", module_action_id, args, view_type_id, multiselect, show_text, item_required) VALUES
 (2, 1, 'LBL_CMD_VIEW', 'mdi mdi-eye', true, 101401, NULL, NULL, false, false, false),
@@ -454,10 +439,13 @@ INSERT INTO ui.grid_commands(grid_id, "position", "label", icon, "default", modu
 
 (1003, 6, 'LBL_CMD_SHOW_IN_MAP', 'mdi mdi-map-search', false, 200003, null, 2, false, false, true);
 
-INSERT INTO ui.grid_commands(grid_id, "position", "label", icon, "default", module_action_id, args, view_type_id, multiselect, show_text, item_required, grouped, unselect_all_after) VALUES
-(3012, 1, 'LBL_SEND_FAN_START_DIRECT', 'mdi mdi-rotate-right', false, NULL, '[{"command": "CommandElementType:2:2000", "ids": "CommandElementTypeParam:2:2000:1"}]', NULL, true, false, true, null, false),
-(3012, 2, 'LBL_SEND_FAN_START_REVERSE', 'mdi mdi-rotate-left', false, NULL, '[{"command": "CommandElementType:3:2000", "ids": "CommandElementTypeParam:3:2000:1"}]', NULL, true, false, true, null, false),
-(3012, 3, 'LBL_SEND_FAN_STOP', 'mdi mdi-stop', false, NULL, '[{"command": "CommandElementType:1:2000", "ids": "CommandElementTypeParam:1:2000:1"}]', NULL, true, false, true, null, false);
+UPDATE ui.grid_commands
+SET args='[{"command": "CommandElementType:2:2000", "ids": "CommandElementTypeParam:2:2000:1"}]'
+WHERE grid_id = 1012 and label = ('LBL_SEND_FAN_START_DIRECT');
+
+UPDATE ui.grid_commands
+SET args='[{"command": "CommandElementType:3:2000", "ids": "CommandElementTypeParam:3:2000:1"}]'
+WHERE grid_id = 1012 and label = ('LBL_SEND_FAN_START_REVERSE');
 
 DELETE FROM ui.grid_commands
 WHERE grid_id = 1012 AND label in ('LBL_SEND_FAN_RESET_PARTIAL_HOURS', 'LBL_SEND_FAN_RESET_TOTAL_HOURS', 'LBL_SEND_FAN_RESET_ALARMS');
@@ -553,26 +541,12 @@ INSERT INTO ui.grid_field_icons(grid_field_id, icon, value, show_value, badge_co
 (890004, './img/state/stateAlarm.png', 'ElementTypeState:89:3', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_ALARMS'),
 (890004, './img/state/stateMaintenance.png', 'ElementTypeState:89:4', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_MAINTENANCE'),
 
-(301202, './img/state/stateUnknown.png', 'ElementTypeState:9:0', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_UNKNOWN'),
-(301202, './img/state/stateUp.png', 'ElementTypeState:9:1', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_UP'),
-(301202, './img/state/stateDown.png', 'ElementTypeState:9:2', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_DOWN'),
-(301202, './img/state/stateAlarm.png', 'ElementTypeState:9:3', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_ALARMS'),
-(301202, './img/state/stateMaintenance.png', 'ElementTypeState:9:4', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_MAINTENANCE'),
-
 (100307, './img/incident_level/incident_level_1.png', 'ImsIncidentLevel:1', false, false, false, true, 'LBL_ICON_IMS_INCIDENT_LEVEL_1'),
 (100307, './img/incident_level/incident_level_2.png', 'ImsIncidentLevel:2', false, false, false, true, 'LBL_ICON_IMS_INCIDENT_LEVEL_2'),
 (100307, './img/incident_level/incident_level_3.png', 'ImsIncidentLevel:3', false, false, false, true, 'LBL_ICON_IMS_INCIDENT_LEVEL_3'),
-(100307, './img/incident_level/incident_level_4.png', 'ImsIncidentLevel:4', false, false, false, true, 'LBL_ICON_IMS_INCIDENT_LEVEL_4'),
-
-(301204, NULL, NULL, false, true, false, true, NULL);
-
+(100307, './img/incident_level/incident_level_4.png', 'ImsIncidentLevel:4', false, false, false, true, 'LBL_ICON_IMS_INCIDENT_LEVEL_4');
 
 INSERT INTO ui.grid_field_replacements(grid_field_id, "label", value, enabled) VALUES
---Ventilación
-(301204, 'LBL_GRID_FR_FAN_STATE_STOP', '0', true),
-(301204, 'LBL_GRID_FR_FAN_STATE_START', '1', true),
-(301204, 'LBL_GRID_FR_FAN_STATE_REVERSE', '2', true),
-
 (090008, 'LBL_GRID_FIELD_REPLACEMENTS_YES', '1', true),
 (090008, 'LBL_GRID_FIELD_REPLACEMENTS_NO', '0', true),
 
