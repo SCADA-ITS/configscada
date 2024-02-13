@@ -68,7 +68,9 @@ INSERT INTO conf.elements (element_type_id, element_subtype_id, element_id, loca
 (2, 4, 67, 0670002, NULL, NULL, 'RM-RAD-003', 'RM-RAD-003', 'null', NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 4, 68, 0680002, NULL, NULL, 'RM-RAD-004', 'RM-RAD-004', 'null', NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 4, 69, 0690002, NULL, NULL, 'RM-RAD-005', 'RM-RAD-005', 'null', NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(2, 4, 70, 0700002, NULL, NULL, 'RM-RAD-006', 'RM-RAD-006', 'null', NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(2, 4, 70, 0700002, NULL, NULL, 'RM-RAD-006', 'RM-RAD-006', 'null', NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 2, 71, 0710002, NULL, NULL, 'RM-DVI-001', 'RM-DVI-001', 'null', NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 2, 72, 0720002, NULL, NULL, 'RM-DVI-002', 'RM-DVI-002', 'null', NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_type_id, element_id, element_value_state_id, value, enabled, visible, created_at, updated_at) VALUES
 (2, 1, 1, 1, NULL, 'Bosch', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -728,7 +730,25 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 (2, 9, 1, 70, NULL, '10.50.21.4', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 10, 1, 70, NULL, 'ITS_Admin', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 11, 1, 70, NULL, 'VO1-cam22.', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(2, 1003, 1, 70, NULL, 'RM-RAD-006', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(2, 1003, 1, 70, NULL, 'RM-RAD-006', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+
+(2, 1, 1, 71, NULL, 'Bosch', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 2, 1, 71, NULL, 'NDP-7512-Z30', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 3, 1, 71, NULL, 'http://10.133.50.38/ICEP-DOM-001', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 7, 1, 71, NULL, 'PTZ', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 9, 1, 71, NULL, '10.50.21.4', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 10, 1, 71, NULL, 'ITS_Admin', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 11, 1, 71, NULL, 'VO1-cam22.', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 1003, 1, 71, NULL, 'RM-DVI-001', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+
+(2, 1, 1, 72, NULL, 'Bosch', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 2, 1, 72, NULL, 'NDP-7512-Z30', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 3, 1, 72, NULL, 'http://10.133.50.38/ICEP-DOM-001', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 7, 1, 72, NULL, 'PTZ', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 9, 1, 72, NULL, '10.50.21.4', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 10, 1, 72, NULL, 'ITS_Admin', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 11, 1, 72, NULL, 'VO1-cam22.', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 1003, 1, 72, NULL, 'RM-DVI-002', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO conf.element_io_controller_modules (element_type_id, element_id, module_type_id, module_id, enabled, visible, created_at, updated_at) VALUES
 (2, 1, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -800,4 +820,6 @@ INSERT INTO conf.element_io_controller_modules (element_type_id, element_id, mod
 (2, 67, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 68, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 69, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(2, 70, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(2, 70, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 71, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 72, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

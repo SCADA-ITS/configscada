@@ -62,3 +62,5 @@ RM-PTZ-032;RM-PTZ-032;http:\/\/192.168.88.179:3000\/api\/v2\/generic\/;monitor;;
 RM-PTZ-033;RM-PTZ-033;http:\/\/192.168.88.179:3000\/api\/v2\/generic\/;monitor;;'http://10.20.6.4'
 RM-PTZ-034;RM-PTZ-034;http:\/\/192.168.88.179:3000\/api\/v2\/generic\/;monitor;;'http://10.20.6.5'
 RM-PTZ-035;RM-PTZ-035;http:\/\/192.168.88.179:3000\/api\/v2\/generic\/;monitor;;'http://10.20.6.6'
+RM-DVI-001;RM-DVI-001;http:\/\/192.168.88.179:3000\/api\/v2\/generic\/;monitor;;'http://10.20.1.7'
+RM-DVI-002;RM-DVI-002;http:\/\/192.168.88.179:3000\/api\/v2\/generic\/;monitor;;'http://10.20.1.9'
