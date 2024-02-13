@@ -128,8 +128,8 @@ INSERT INTO ui.equip_viewers (id, name, description, "label", icon, show_info_ta
 ('ElementType:88', 'LEAK_WATER_SENSOR', 'LEAK_WATER_SENSOR', 'LBL_ELEMENT_TYPE_LEAK_WATER_SENSOR', NULL, true, false, false, null, 450, 3, null, 88, true, false),
 ('ElementType:89', 'GATE', 'GATE', 'LBL_ELEMENT_TYPE_GATE', NULL, true, false, false, null, 450, 3, null, 89, true, false),
 ('ElementType:93', 'TRANSFER_GROUP', 'TRANSFER_GROUP', 'LBL_ELEMENT_TYPE_TRANSFER_GROUP', NULL, true, false, false, null, 450, 3, null, 93, true, false),
-('ElementType:2001', 'Ventilation manager', 'Ventilation manager', 'LBL_ELEMENT_TYPE_VENTILATION', NULL, false, false, false, null, 300, 3, null, null, null, false),
-('ElementType:2002', 'Lighting manager', 'Lighting manager', 'LBL_ELEMENT_TYPE_ILUMINATION', NULL, false, false, false, null, 300, 3, null, null, null, false);
+('ElementType:2001', 'Ventilation manager', 'Ventilation manager', 'LBL_ELEMENT_TYPE_VENTILATION', NULL, false, false, false, null, 300, 3, null, null, true, false),
+('ElementType:2002', 'Lighting manager', 'Lighting manager', 'LBL_ELEMENT_TYPE_ILUMINATION', NULL, false, false, false, null, 300, 3, null, null, true, false);
 
 INSERT INTO ui.equip_viewer_tabs (equip_viewer_id, module_action_id, alias, description, "label", icon, "position", visible) VALUES
 ('ElementType:1', 100501, 'Alarms module', 'Alarms module', 'LBL_ALARMS', NULL, 1, true),
