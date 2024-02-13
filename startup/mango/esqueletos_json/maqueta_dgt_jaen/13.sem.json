@@ -402,7 +402,7 @@
                 }
             ],
             "xid": "PUB_{device_name}",
-            "publishType": "ALL",
+            "publishType": "CHANGES_ONLY",
             "alarmLevels": {
                 "POINT_DISABLED_EVENT": "DO_NOT_LOG",
                 "RESULT_WARNINGS_EVENT": "DO_NOT_LOG",
