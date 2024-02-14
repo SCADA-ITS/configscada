@@ -1,2 +1,0 @@
-device_name;url_publisher;source_name;host;port(i);offset_wind_speed(i);offset_wind_direction(i)
-ANX-VEL-1-02-DP;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;M-11-DP;192.168.88.204;525;0;1

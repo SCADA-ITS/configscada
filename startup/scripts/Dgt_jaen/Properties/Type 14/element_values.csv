@@ -1,2 +1,0 @@
-item;alias;description;sessionuid;road;stretchs;pk;sentido;on_change_measure
-1;LUM-0-03-DP;LUM-0-03-DP;LUM-0-03-DP;Autovía A-4;Despeñaperros;;NA;SendValuesToIllumination.groovy

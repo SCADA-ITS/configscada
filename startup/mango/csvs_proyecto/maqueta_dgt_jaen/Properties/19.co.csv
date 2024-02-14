@@ -1,9 +1,0 @@
-device_name;PLC_name;PLC_ip;port(i);url_publisher;offset_co_concentration(i)
-SCO-1-01-DP;ES-04-DP;192.168.88.204;516;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;1
-SCO-1-02-DP;ES-06-DP;192.168.88.204;517;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;0
-SCO-1-03-DP;ES-08-DP;192.168.88.204;518;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;1
-SCO-1-04-DP;ES-10-DP;192.168.88.204;519;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;1
-SCO-2-01-DP;ES-14-DP;192.168.88.204;520;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;1
-SCO-2-02-DP;ES-16-DP;192.168.88.204;521;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;1
-SCO-2-03-DP;ES-18-DP;192.168.88.204;522;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;1
-SCO-2-04-DP;ES-20-DP;192.168.88.204;523;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;1

@@ -1,9 +1,0 @@
-item;alias;description;sessionuid;road;stretchs;pk;sentido;on_change_measure;param1_brand;param2_model
-1;OP-1-01-DP;OP-1-01-DP;OP-1-01-DP;Autovía A-4;Despeñaperros;;Madrid;SendValuesToVentilation.groovy;Duran;Sondeltox
-2;OP-1-02-DP;OP-1-02-DP;OP-1-02-DP;Autovía A-4;Despeñaperros;;Madrid;SendValuesToVentilation.groovy;Duran;Sondeltox
-3;OP-1-03-DP;OP-1-03-DP;OP-1-03-DP;Autovía A-4;Despeñaperros;;Madrid;SendValuesToVentilation.groovy;Duran;Sondeltox
-4;OP-1-04-DP;OP-1-04-DP;OP-1-04-DP;Autovía A-4;Despeñaperros;;Madrid;SendValuesToVentilation.groovy;Duran;Sondeltox
-5;OP-2-01-DP;OP-2-01-DP;OP-2-01-DP;Autovía A-4;Despeñaperros;;Córdoba;SendValuesToVentilation.groovy;Duran;Sondeltox
-6;OP-2-02-DP;OP-2-02-DP;OP-2-02-DP;Autovía A-4;Despeñaperros;;Córdoba;SendValuesToVentilation.groovy;Duran;Sondeltox
-7;OP-2-03-DP;OP-2-03-DP;OP-2-03-DP;Autovía A-4;Despeñaperros;;Córdoba;SendValuesToVentilation.groovy;Duran;Sondeltox
-8;OP-2-04-DP;OP-2-04-DP;OP-2-04-DP;Autovía A-4;Despeñaperros;;Córdoba;SendValuesToVentilation.groovy;Duran;Sondeltox
