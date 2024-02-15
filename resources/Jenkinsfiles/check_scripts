@@ -9,7 +9,7 @@ pipeline {
                 script {
 					sh 'echo Descargando repositorios de git'
 				
-                    def repos = ['rits', 'ritsback', 'ritsfront']
+                    def repos = ['rits']
         
                     for (repo in repos) {
                         dir(repo) {
@@ -70,10 +70,18 @@ pipeline {
 					sh 'echo Probando scripts de back'
 					
 					def rutaBase = 'rits/ritsback/resources/db'
-					def proyectos = ['maqueta_dev', 'maqueta_dgt_jaen', 'maqueta_fullequip', 'maqueta_nogales', 'maqueta_ruta_mina', 'nogales', 'ruta_mina']
+					def directorios = new File("${WORKSPACE}/${rutaBase}/dml").listFiles()
+					def proyectos = []
+					
+					directorios.each { directorio ->
+                        proyectos.add(directorio.name)
+                    }
+                    proyectos.removeAll([".gitignore", "bus_demo", "master"])
                     
                     dir("${rutaBase}") {
 						for (proyecto in proyectos) {
+						    sh "echo Probando scripts de back para el proyecto ${proyecto}."
+						    
 							sh "./make_param_jenkins.sh ${proyecto} localhost 5430"
 						}
                     }
@@ -87,7 +95,13 @@ pipeline {
 					sh 'echo Probando scripts de front'
 					
 					def rutaBase = 'rits/ritsfront/resources/db'
-					def proyectos = ['dev', 'maqueta_dgt_jaen', 'maqueta_fullequip', 'maqueta_nogales', 'maqueta_ruta_mina', 'nogales', 'ruta_mina']
+					def directorios = new File("${WORKSPACE}/${rutaBase}/dml").listFiles()
+					def proyectos = []
+					
+					directorios.each { directorio ->
+                        proyectos.add(directorio.name)
+                    }
+                    proyectos.removeAll([".gitignore", "bus_demo", "master"])
                     
                     dir("${rutaBase}") {
 						for (proyecto in proyectos) {
@@ -106,7 +120,7 @@ pipeline {
             script {
 				sh 'echo Envío de notifación de resultado de ejecución'
 				
-				if (currentBuild.currentResult == hudson.model.Result.FAILURE){
+				if ("${currentBuild.currentResult}" == "FAILURE"){
 					stringVariable += "<br/>Información de logs para identificación de error:<br/>"
 					def logs = currentBuild.rawBuild.getLog(1000)
 				
@@ -135,7 +149,7 @@ pipeline {
                             </body>
                         </html>
                         """,
-                        to: 'jenkins.openits@gmail.com',
+                        to: 'jenkins.openits@revenga.com',
                         mimeType: 'text/html'
             }
         }
