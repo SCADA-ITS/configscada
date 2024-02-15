@@ -44,7 +44,7 @@ public class UserRepository extends GenericRepository {
 	private static final String FIELD_USER_ALLOW_MULTIPLE_SESSIONS = "allowMultipleSessions";
 	private static final String FIELD_USER_FULL_NAME = "fullName";
 	private static final String FIELD_USER_EMAIL = "email";
-	private static final String FIELD_USER_OPTIONS = "options";
+	private static final String FIELD_USER_LDAP = "ldap";
 	
 	private static final String FIELD_USER_LOCALE = "locale";
 	private static final String FIELD_USER_ROLE = "role";
@@ -62,18 +62,18 @@ public class UserRepository extends GenericRepository {
 	private static final String FIELD_INPUT_USER_FULL_NAME = "fullName";
 	private static final String FIELD_INPUT_USER_EMAIL = "email";
 	private static final String FIELD_INPUT_USER_LOCALE_ID = "localeId";
-	private static final String FIELD_INPUT_USER_OPTIONS = "options";
+	private static final String FIELD_INPUT_USER_LDAP = "ldap";
 	private static final String FIELD_INPUT_USER_USER_PERMISSION_IDS = "userPermissionIds";
 	private static final String FIELD_INPUT_USER_MANAGEMENT_AREA_IDS = "managementAreaIds";
 	
 	private static final String QRY_USERS = String.format("SELECT user_id, role_id, name_, password_, password_expired_at, " +
 														  "       session_expire_time_s, locked_until, preset, allow_multiple_sessions, " +
-														  "       full_name, email, locale_code, options " +
+														  "       full_name, email, locale_code, ldap " +
 														  "  FROM %s", TABLE_NAME);
 	
 	private static final String INSERT_USER = String.format("INSERT INTO %s(user_id, role_id, name_, password_, password_expired_at, " +
 														     "       session_expire_time_s, locked_until, preset, allow_multiple_sessions, " +
-														     "       full_name, email, locale_code, options, enabled, visible, created_at, updated_at) " +
+														     "       full_name, email, locale_code, ldap, enabled, visible, created_at, updated_at) " +
 														     " VALUES (?, ?, ?, ?, ?, " +
 														     "         ?, ?, ?, ?, " +
 														     "         ?, ?, ?, ?, ?, ?, ?, ?)", TABLE_NAME);
@@ -81,7 +81,7 @@ public class UserRepository extends GenericRepository {
 	private static final String UPDATE_USER = String.format("UPDATE %s " + 
 															 "   SET role_id = ?, name_ = ?, password_ = ?, password_expired_at = ?, " +
 															 "       session_expire_time_s = ?, locked_until = ?, preset = ?, allow_multiple_sessions = ?, " +
-															 "       full_name = ?, email = ?, locale_code = ?, options = ? " +
+															 "       full_name = ?, email = ?, locale_code = ?, ldap = ? " +
 															 " WHERE user_id = ?", TABLE_NAME);
 	
 	private static final String DELETE_USER = String.format("DELETE FROM %s " + 
@@ -321,8 +321,8 @@ public class UserRepository extends GenericRepository {
 						}
 					}
 					
-					// options
-					stmt.setString(paramIdx++, (String) input.get(FIELD_INPUT_USER_OPTIONS));
+					// ldap
+					stmt.setBoolean(paramIdx++, (Boolean) input.get(FIELD_INPUT_USER_LDAP));
 					
 					// enabled
 					stmt.setBoolean(paramIdx++, true);
@@ -558,8 +558,8 @@ public class UserRepository extends GenericRepository {
 							}
 							
 							// options
-							stmt.setString(paramIdx++, (String) (input.get(FIELD_INPUT_USER_OPTIONS) != null ? 
-									input.get(FIELD_INPUT_USER_OPTIONS) : user.get(FIELD_USER_OPTIONS)));
+							stmt.setBoolean(paramIdx++, (Boolean) (input.get(FIELD_INPUT_USER_LDAP) != null ? 
+									input.get(FIELD_INPUT_USER_LDAP) : user.get(FIELD_USER_LDAP)));
 							
 							// user_id
 							stmt.setLong(paramIdx++, id);

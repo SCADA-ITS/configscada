@@ -433,7 +433,10 @@ public abstract class GenericRepository {
 	
 	public void fill(Map<String, Object> entity) {
 		
-		this.fill(Arrays.asList(entity));
+		if (!MapUtils.isEmpty(entity)) {
+			
+			this.fill(Arrays.asList(entity));
+		}
 	}
 	
 	public abstract void fill(List<Map<String, Object>> entities);

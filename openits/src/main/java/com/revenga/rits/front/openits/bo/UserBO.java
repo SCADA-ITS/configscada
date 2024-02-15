@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -188,12 +189,15 @@ public class UserBO extends GenericBO {
 	private Map<String, Object> decryptPasswordField(Map<String, Object> userMap) {
 		
 		try {
-
-			String password = (String) userMap.get(UserSessionUI.USER_FIELD_PASSWORD);
 			
-			if (!StringUtils.isEmpty(password)) {
+			if (!MapUtils.isEmpty(userMap)) {
 				
-				userMap.put(UserSessionUI.USER_FIELD_PASSWORD, AES.decrypt(password));
+				String password = (String) userMap.get(UserSessionUI.USER_FIELD_PASSWORD);
+				
+				if (!StringUtils.isEmpty(password)) {
+					
+					userMap.put(UserSessionUI.USER_FIELD_PASSWORD, AES.decrypt(password));
+				}
 			}
 			
 		} catch (Exception e) {
