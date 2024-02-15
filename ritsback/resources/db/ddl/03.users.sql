@@ -135,6 +135,7 @@
 		full_name varchar NULL,
 		email varchar NULL,
 		locale_code varchar NOT NULL,
+		ldap bool NULL,
 		enabled bool NULL,
 		visible bool NULL,
 		created_at timestamptz NOT NULL,
