@@ -52,7 +52,7 @@ public class HelpBO extends GenericBO {
 	private static final String ORIGINAL_IMAGES_FOLDER = "images";
 	
 	private static final String HELP_CUSTOM_MODULE_FOLDER = "help/module_%d";
-	private static final String HELP_CUSTOM_TAG_FOLDER = "help/tag_%d";
+	private static final String HELP_CUSTOM_TAG_FOLDER = "help/tag_%s";
 	
 	private static final String ACTIVE_PROFILE = "spring.profiles.active";
 	

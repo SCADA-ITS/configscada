@@ -947,7 +947,7 @@ export let util = {
 			const features = `toolbar=no,scrollbars=no,location=no,statusbar=no,menubar=no,noreferrer=yes,resizable=0,width=1000,height=800,left=${(window.screen.availWidth - 1000) / 2},top=${(window.screen.availHeight - 800) / 2}`;
 			let url = HELP_PATH + HELP_FILE;
 			
-			if (module) {
+			if (tag) {
 				
 				url = appConfig.restUrl + util.fillTemplate(ENDPOINT_GET_TAG_HELP, { tag: tag });	
 			}

@@ -83,7 +83,7 @@ export default class VmsSignalingContent {
 				getViewHeader(),
 				realTimePanel,
 				{
-					css: { "border-top": "1px solid #DADEE0", "border-top-width": "1px !important" }
+					css: { "border-top": "1px solid #DADEE0", "border-top-width": "1px !important", "height": "1px !important" }
 				},
 				{
 					cols: [

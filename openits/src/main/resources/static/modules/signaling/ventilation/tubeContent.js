@@ -790,6 +790,7 @@ export default class TubeContent {
 												value: getCurrentRegime() ? getCurrentRegime().id : undefined,
 												options: availableRegimes,
 												disabled: !self.parent.commandEquipmentPermission,
+												css: "richselect-regimen",
 												on: {
 													onChange(newv, oldv) {
 

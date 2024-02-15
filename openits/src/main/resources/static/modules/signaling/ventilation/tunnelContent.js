@@ -136,7 +136,7 @@ export default class TunnelContent {
 						view,
 						{	
 							hidden: !self.parent.commandEquipmentPermission,
-							top: 34, right: 186,
+							top: 34, right: 295,
 							rows: [
 								{},
 								{
@@ -195,7 +195,7 @@ export default class TunnelContent {
 												}
 											}
 										},
-										{ width: 12 },
+//										{ width: 12 },
 										{
 											id: "view-content-ventilation-start-" + self.uid,
 											view: "button",

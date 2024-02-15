@@ -266,3 +266,7 @@ audio {
 	font-size: 18px !important; 
 	cursor: pointer;	
 }
+
+.richselect-regimen {
+	margin-top: -3px !Important;
+}

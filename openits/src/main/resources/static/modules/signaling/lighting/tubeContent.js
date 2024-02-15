@@ -484,11 +484,12 @@ export default class TubeContent {
 									{
 										id: "label-regimen-3-" + self.parent.uid,
 										//width: 180,
-										height: 28,
+										height: 28,							
 										view: "richselect",
 										value: self.getCurrentRegime() ? self.getCurrentRegime().id : undefined,
 										options: availableRegimes,
 										disabled: !self.parent.commandEquipmentPermission,
+										css: "richselect-regimen",
 										on: {
 											onChange(newv, oldv) {
 

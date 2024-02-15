@@ -220,7 +220,7 @@
 	background-color: #666666;
 } 
 
-.form-area-combo .webix_el_combo span.webix_input_icon, .webix_el_richselect span.webix_input_icon {
+.form-area-combo .webix_el_combo span.webix_input_icon,  .form-area-combo.webix_el_richselect span.webix_input_icon {
 	
 	height: 32px !important;
     padding-top: 13px !important;
