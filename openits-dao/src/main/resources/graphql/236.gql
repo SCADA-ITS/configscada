@@ -9,6 +9,7 @@
   allowMultipleSessions
   fullName
   email
+  ldap
   locale {
     id
     code

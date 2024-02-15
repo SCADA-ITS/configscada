@@ -525,6 +525,7 @@ export default class UserControlPanel extends GenericControlPanel {
 							{
 								view: "button",
 								width: 125,
+								hidden: util.user.getUserData().ldap === true,
 								label: i18n.t("LBL_CHANGE_PASSWORD"),
 								tooltip: i18n.t("LBL_CHANGE_PASSWORD_DESCRIPTION"),
 								type: "iconTop",

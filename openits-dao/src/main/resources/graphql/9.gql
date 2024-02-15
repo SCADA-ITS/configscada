@@ -9,4 +9,5 @@
   allowMultipleSessions
   fullName
   email
+  options
 }

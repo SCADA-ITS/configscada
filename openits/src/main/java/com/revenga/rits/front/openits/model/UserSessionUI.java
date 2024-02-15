@@ -29,6 +29,7 @@ public class UserSessionUI implements Serializable {
 	public static final String USER_FIELD_ID = "id";
 	public static final String USER_FIELD_USER = "name";
 	public static final String USER_FIELD_PASSWORD = "password";
+	public static final String USER_FIELD_FULL_NAME = "fullName";
 	public static final String USER_FIELD_LOCKED_UNTIL = "lockedUntil";
 	public static final String USER_FIELD_PASSWORD_EXPIRED_AT = "passwordExpiredAt";
 	public static final String USER_FIELD_ALLOW_MULTIPLE_SESSIONS = "allowMultipleSessions";
@@ -36,6 +37,21 @@ public class UserSessionUI implements Serializable {
 	public static final String USER_FIELD_MANAGEMENT_AREAS = "managementAreas";
 	public static final String USER_LOCALE = "locale";
 	public static final String USER_LOCALE_CODE = "code";
+	public static final String USER_OPTIONS = "options";
+	public static final String USER_OPTIONS_LDAP = "ldap";
+	public static final String USER_OPTIONS_LDAP_USER_CONNECTION_STRING = "ldapUserConnectionString";
+	
+	public static final String USER_INPUT_FIELD_ID = "id";
+	public static final String USER_INPUT_FIELD_NAME = "name";
+	public static final String USER_INPUT_FIELD_PASSWORD = "password";
+	public static final String USER_INPUT_FIELD_PRESET = "preset";
+	public static final String USER_INPUT_FIELD_ALLOW_MULTIPLE_SESSIONS = "allowMultipleSessions";
+	public static final String USER_INPUT_FIELD_EMAIL = "email";
+	public static final String USER_INPUT_FIELD_FULLNAME = "fullName";
+	public static final String USER_INPUT_FIELD_LDAP = "ldap";
+	public static final String USER_INPUT_FIELD_LOCALE_ID = "localeId";
+	public static final String USER_INPUT_FIELD_ROLE_ID = "roleId";
+	
 	
 	public static final Integer SECURE_TOKEN_LENGTH = 20;
 	
@@ -48,4 +64,5 @@ public class UserSessionUI implements Serializable {
 	private Boolean serverAvailable = true;
 	private String nodeName;
 	private String managementAreaId;
+	private Boolean editing = false;
 }

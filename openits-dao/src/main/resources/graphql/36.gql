@@ -9,6 +9,7 @@
   allowMultipleSessions
   fullName
   email
+  ldap
   locale {
     id
   }
@@ -20,6 +21,9 @@
     }
   }
   userPermissions {
+    id
+  }
+  managementAreas {
     id
   }
 }

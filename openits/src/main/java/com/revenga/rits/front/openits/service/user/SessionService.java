@@ -44,12 +44,15 @@ import org.springframework.stereotype.Service;
 import com.revenga.rits.front.openits.adapter.impl.GraphqlTypeAdapter;
 import com.revenga.rits.front.openits.adapter.impl.VO2UIAdapter;
 import com.revenga.rits.front.openits.adapter.impl.VODataSourceAdapter;
+import com.revenga.rits.front.openits.app.AppInfra;
 import com.revenga.rits.front.openits.bo.AuditLogBO;
 import com.revenga.rits.front.openits.bo.SystemParamBO;
 import com.revenga.rits.front.openits.bo.UserBO;
 import com.revenga.rits.front.openits.model.EntityChangedUI;
 import com.revenga.rits.front.openits.model.UserSessionUI;
 import com.revenga.rits.front.openits.service.user.UserServer.SessionOperation;
+import com.revenga.rits.front.openits.util.LDAPManager;
+import com.revenga.rits.front.openits.util.LDAPManager.LDAPUser;
 import com.revenga.rits.lib.encrypt.util.AES;
 
 import lombok.extern.log4j.Log4j2;
@@ -66,7 +69,9 @@ public class SessionService {
 
 	private final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 	
+	private static final Boolean USERMGR_ENABLED = Boolean.valueOf(AppInfra.getProperty("usermgr.enabled"));
 	private static final String AUTH_ENCRYPTED_PASSWORD = "auth.encryptedPassword";
+	private static final Boolean LDAP_ENABLED = Boolean.valueOf(AppInfra.getProperty("ldap.enabled"));
 	
 	private static final String HEADER_AUTHOTIZATION = "authorization";
 	private static final String DEFAULT_ACCOUNT_LOCKED_ISO_DATE = "2099-12-31T23:59:59.999Z";
@@ -114,6 +119,9 @@ public class SessionService {
 	
 	@Autowired
 	UserBO userBO;
+	
+	@Autowired
+	UserManager userManager;
 	
 	@SuppressWarnings("unused")
 	private class AuditLogLevel {
@@ -279,9 +287,35 @@ public class SessionService {
 		
 		if (sessions.size() < maxSessions || maxSessions == null || maxSessions <= 0) {
 			
+			LDAPUser ldapUser = null;
+			
+			// Request LDAP service if it's enabled in config.properties
+			if (LDAP_ENABLED.booleanValue()) {
+				
+				ldapUser = LDAPManager.login(userName, password);
+			}
+			
+			// Request user to db 
 			Map<String, Object> user = userBO.getByName(userName);
 			
+			// Create user in db if it's ldap user and not exists
+			if (user == null && ldapUser != null) {
+				
+				Map<String, Object> newLdapUser = createLdapUser(ldapUser, password); 
+				
+				if (newLdapUser != null) {
+					
+					user = userBO.getByName(userName);
+				}
+			}
+			
 			if (user != null) {
+				
+				// Update user if ldap password is not equals to user db
+				if (ldapUser != null && !StringUtils.equals((String) user.get(UserSessionUI.USER_FIELD_PASSWORD), password)) {
+						
+					updateLdapUser(ldapUser, (String) user.get(UserSessionUI.USER_FIELD_ID), password);
+				}
 				
 				if (Boolean.parseBoolean(env.getProperty(AUTH_ENCRYPTED_PASSWORD))) {
 					
@@ -295,14 +329,15 @@ public class SessionService {
 						log.debug(ExceptionUtils.getStackTrace(e));
 					}
 				}
-				
+								
 				if (isLockedUser(user)) {
 					
 					userSession.setAccess(UserSessionUI.DENY_LOCKED);
 				}
+				
 				else {
 					
-					if (password.equals(user.get(UserSessionUI.USER_FIELD_PASSWORD))) {
+					if (password.equals(user.get(UserSessionUI.USER_FIELD_PASSWORD)) || ldapUser != null) {
 						
 						user = vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_USER, user);
 						
@@ -516,6 +551,8 @@ public class SessionService {
 			for (UserSessionUI us : userSessions) {
 				
 				UserSessionUI userSession = this.sessions.get(us.getSessionId());
+				
+				userSession.setEditing(true);
 
 				Map<String, Object> currentUser = userSession.getUser();
 
@@ -534,6 +571,8 @@ public class SessionService {
 				}
 				
 				setAccess(currentUser, userSession);
+				
+				userSession.setEditing(false);
 			}
 			
 			for (UserSessionUI us : userSessions) {
@@ -619,7 +658,7 @@ public class SessionService {
 				userSession.setAccess(UserSessionUI.DENY_PASSWORD_EXPIRED);
 			}
 			// User without permission for multiple sessions
-			else if (userNoMultipleSessions) {
+			else if (userNoMultipleSessions && !userSession.getEditing().booleanValue()) {
 
 				userSession.setAccess(UserSessionUI.DENY_MULTI_SESSION_NOT_ALLOWED);
 			}
@@ -719,6 +758,158 @@ public class SessionService {
 			
 		return locked;
 	}
+	
+	private Map<String, Object> getUserToPersistFromLDAPUser(LDAPUser ldapUser, String password) {
+	
+		Map<String, Object> newLdapUser = new HashMap<>();
+		
+		try {
+			
+			newLdapUser.put(UserSessionUI.USER_INPUT_FIELD_NAME, ldapUser.getLogin());
+			
+			if (Boolean.parseBoolean(env.getProperty(AUTH_ENCRYPTED_PASSWORD))) {
+				
+				newLdapUser.put(UserSessionUI.USER_INPUT_FIELD_PASSWORD, AES.encrypt(password));
+			}
+			else {
+				
+				newLdapUser.put(UserSessionUI.USER_INPUT_FIELD_PASSWORD, password);
+			}
+			
+			newLdapUser.put(UserSessionUI.USER_INPUT_FIELD_PRESET, false);
+			newLdapUser.put(UserSessionUI.USER_INPUT_FIELD_ALLOW_MULTIPLE_SESSIONS, false);
+			newLdapUser.put(UserSessionUI.USER_INPUT_FIELD_EMAIL, StringUtils.defaultIfEmpty(ldapUser.getEmail(), ""));
+			newLdapUser.put(UserSessionUI.USER_INPUT_FIELD_FULLNAME, StringUtils.defaultIfEmpty(String.format("%s %s", ldapUser.getFirstName(), ldapUser.getLastName()), ""));
+			newLdapUser.put(UserSessionUI.USER_INPUT_FIELD_LDAP, true);
+			newLdapUser.put(UserSessionUI.USER_INPUT_FIELD_ROLE_ID, ldapUser.getRoleId());
+			newLdapUser.put(UserSessionUI.USER_INPUT_FIELD_LOCALE_ID, ldapUser.getLocaleId());
+			
+		} catch (Exception e) {
+
+			log.error(e.getMessage());
+			log.debug(ExceptionUtils.getStackTrace(e));
+		}
+		
+		return newLdapUser;
+	}
+	
+	private Map<String, Object> createLdapUser(LDAPUser ldapUser, String password) {
+		
+		Map<String, Object> createdUser = null;
+		Map<String, Object> newLdapUser = getUserToPersistFromLDAPUser(ldapUser, password);
+		Map<String, Object> input = new HashMap<>();
+		
+		if (!MapUtils.isEmpty(newLdapUser)) {
+			
+			input.put("user", newLdapUser);
+			
+			if (USERMGR_ENABLED.booleanValue()) {
+				
+				createdUser = userManager.createUser(input);
+			}
+			else {
+				
+				createdUser = voDataSourceAdapter.put(VODataSourceAdapter.DATA_SOURCE_CREATE_USER, input); 
+			}
+		}
+			
+		return createdUser;
+	}
+	
+	private Map<String, Object> updateLdapUser(LDAPUser ldapUser, String id, String password) {
+		
+		Map<String, Object> updatedUser = null;
+		Map<String, Object> updLdapUser = getUserToPersistFromLDAPUser(ldapUser, password);
+		Map<String, Object> input = new HashMap<>();
+		
+		if (!MapUtils.isEmpty(updLdapUser)) {
+			
+			updLdapUser.put(UserSessionUI.USER_INPUT_FIELD_ID, id);
+			
+			input.put("user", updLdapUser);
+			
+			if (USERMGR_ENABLED.booleanValue()) {
+				
+				updatedUser = userManager.updateUser(input);
+			}
+			else {
+				
+				updatedUser = voDataSourceAdapter.put(VODataSourceAdapter.DATA_SOURCE_UPDATE_USER, input); 
+			}
+		}
+			
+		return updatedUser;
+	}
+	
+//	private boolean authLdap(Map<String, Object> user, String password) {
+//		
+//		boolean ldapAllowed = true;
+//		
+//		Map<String, Object> userOptions = getUserOptions(user); 
+//		
+//		if (!MapUtils.isEmpty(userOptions)) {
+//			
+//			ldapAllowed = false;
+//			
+//			String ldapUserConnectionString = (String) userOptions.get(UserSessionUI.USER_OPTIONS_LDAP_USER_CONNECTION_STRING);
+//			
+//			LDAPDirectoryType ldapDirectoryType = List.of(LDAPDirectoryType.values()).stream()
+//					.filter(e -> StringUtils.containsIgnoreCase(LDAP_DIRECTORY_TYPE, e.getType())).findFirst()
+//					.orElse(null);
+//			
+//			if (ldapDirectoryType != null) {
+//				
+//				try (LDAPConnection ldapConnection = LDAPManagerOld.getConnection(ldapUserConnectionString, password, LDAP_URL, ldapDirectoryType)) {
+//					
+//					LDAPUserOld ldapUser = ldapConnection.getUser();
+//					
+//					if (ldapUser != null) {
+//						
+//						// Overwrite user password to next step verification
+//						user.put(UserSessionUI.USER_FIELD_PASSWORD, password);
+//						user.put(UserSessionUI.USER_FIELD_FULL_NAME, ldapUser.getCommonName());
+//						
+//						ldapAllowed = true;
+//					}
+//				
+//				} catch (Exception e) {
+//					
+//					
+//					log.error(e.getMessage());
+//					log.debug(ExceptionUtils.getStackTrace(e));
+//				}
+//			}
+//			else {
+//				
+//				log.error("Unsupported type of LDAP Server: Soported types are: " + LDAPDirectoryType.values().toString());			
+//			}
+//		}
+//		
+//		return ldapAllowed;
+//	}
+	
+	
+//	private Map<String, Object> getUserOptions(Map<String, Object> user) {
+//		
+//		Map<String, Object> userOptions = null;
+//		
+//		try {
+//			
+//			Object options = user.get(UserSessionUI.USER_OPTIONS); 
+//			
+//			if (options != null) {
+//				
+//				userOptions = ConversionUtil.stringToMap((String) options);
+//			}
+//			
+//		} catch (JsonProcessingException e) {
+//			
+//			log.error(e.getMessage());
+//			log.debug(ExceptionUtils.getStackTrace(e));
+//		}
+//		
+//		return userOptions;
+//	}
 
 	private boolean allowLoginRetry(Map<String, Object> user, String sessionId) {
 
