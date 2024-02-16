@@ -117,10 +117,7 @@ pipeline {
     }
 }
 
-// Función para obtener información de la versión
 def crearFicheroVersion(String stringVariable) {
-    // Aquí puedes obtener la información de la versión de tu sistema de control de versiones,
-    // de tu archivo de configuración, de una variable de entorno, etc.
     def project = "OpenITS"
     def version = env.VERSION_NUMBER
     def date = new Date().format('yyyy-MM-dd HH:mm:ss')
