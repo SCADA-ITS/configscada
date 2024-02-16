@@ -8,19 +8,13 @@ pipeline {
             steps {
                 script {
 					sh 'echo Descargando repositorios de git'
-				
-                    def repos = ['rits']
-        
-                    for (repo in repos) {
-                        dir(repo) {
-                            git(
-                                url: "ssh://git@192.168.88.194:3004/~/${repo}.git",
-                                branch: 'master',
-                                changelog: true,
-                                poll: true
-                            )
-                        }
-                    }
+
+                    git(
+                        url: "ssh://git@192.168.88.194:3004/~/rits.git",
+                        branch: 'master',
+                        changelog: true,
+                        poll: true
+                    )
                 }
             }
         }
