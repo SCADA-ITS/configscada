@@ -1,6 +1,15 @@
 SET client_min_messages TO WARNING;
+DO $$
+BEGIN
+    IF EXISTS (
+        SELECT schema_name 
+        FROM information_schema.schemata 
+        WHERE schema_name = 'hist'
+    ) THEN
+        DROP SCHEMA hist CASCADE;
+    END IF;
+END $$;
 
-DROP SCHEMA hist CASCADE;
 CREATE SCHEMA hist;
 
 -- 
