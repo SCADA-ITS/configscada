@@ -86,12 +86,14 @@ export default class VmsSignalingContent {
 					css: { "border-top": "1px solid #DADEE0", "border-top-width": "1px !important", "height": "1px !important" }
 				},
 				{
+					height: 350,
 					cols: [
 						{ width: 20 },
 						getSignallingTabs(),
 						{ width: 20 }
 					]
 				},
+				{},
 				{
 					cols: [
 						{ width: 20 },

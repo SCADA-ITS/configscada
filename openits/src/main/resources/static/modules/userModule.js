@@ -105,17 +105,7 @@ export default class UserModule extends GenericModule {
 
 			lock();
 		}
-
-		if (self.dtPermissions) {
-
-			self.dtPermissions.callbacks();
-
-			if (self.moduleAction.id === self.config.moduleAction.changePassword) {
-
-				self.dtPermissions.disable();
-			}
-		}
-
+		
 
 		function add() {
 
@@ -152,6 +142,11 @@ export default class UserModule extends GenericModule {
 					}
 
 					drawComponents();
+					
+					if (self.dtPermissions) {
+
+						self.dtPermissions.callbacks();
+					}
 				}
 			});
 		};
@@ -573,11 +568,11 @@ export default class UserModule extends GenericModule {
 									{
 										rows: [
 											{},
-											{ view: "text", id: "name-" + self.uid, name: "name", required: true, label: i18n.t("LBL_USER_NAME"), labelWidth: 275, disabled: (self.moduleAction.id === self.config.moduleAction.changePassword) || (self.oldUser.ldap === true) },
-											{ view: "text", id: "password-" + self.uid, name: "password", type: "password", required: true, label: i18n.t("LBL_USER_PASSWORD"), labelWidth: 275, disabled: self.oldUser.ldap === true },
-											{ view: "text", id: "password_conf-" + self.uid, name: "confirmPass", type: "password", required: true, label: i18n.t("LBL_USER_PASSWORD_CONFIRM"), labelWidth: 275, disabled: self.oldUser.ldap === true },
-											{ view: "text", id: "fullName-" + self.uid, name: "fullName", label: i18n.t("LBL_USER_FULL_NAME"), labelWidth: 275, disabled: self.moduleAction.id === (self.config.moduleAction.changePassword) || (self.oldUser.ldap === true) },
-											{ view: "text", id: "email-" + self.uid, name: "email", type: "email", label: i18n.t("LBL_USER_EMAIL"), labelWidth: 275, disabled: (self.moduleAction.id === self.config.moduleAction.changePassword) || (self.oldUser.ldap === true) },
+											{ view: "text", id: "name-" + self.uid, name: "name", required: true, label: i18n.t("LBL_USER_NAME"), labelWidth: 275, disabled: (self.moduleAction.id === self.config.moduleAction.changePassword) || (self.oldUser && self.oldUser.ldap === true) },
+											{ view: "text", id: "password-" + self.uid, name: "password", type: "password", required: true, label: i18n.t("LBL_USER_PASSWORD"), labelWidth: 275, disabled: (self.oldUser && self.oldUser.ldap === true) },
+											{ view: "text", id: "password_conf-" + self.uid, name: "confirmPass", type: "password", required: true, label: i18n.t("LBL_USER_PASSWORD_CONFIRM"), labelWidth: 275, disabled: (self.oldUser && self.oldUser.ldap === true) },
+											{ view: "text", id: "fullName-" + self.uid, name: "fullName", label: i18n.t("LBL_USER_FULL_NAME"), labelWidth: 275, disabled: (self.moduleAction.id === self.config.moduleAction.changePassword) || (self.oldUser && self.oldUser.ldap === true) },
+											{ view: "text", id: "email-" + self.uid, name: "email", type: "email", label: i18n.t("LBL_USER_EMAIL"), labelWidth: 275, disabled: (self.moduleAction.id === self.config.moduleAction.changePassword) || (self.oldUser && self.oldUser.ldap === true) },
 											{
 												cols: [
 													{ view: "text", id: "localeId-" + self.uid, name: "localeId", hidden: true },
@@ -995,7 +990,7 @@ export default class UserModule extends GenericModule {
 					dbList = {
 						id: "dblist-" + self.uid,
 						css: "bordered-layout-without-border-top",
-						disabled: !self.editPermission,
+						disabled: !self.editPermission || (self.moduleAction.id === self.config.moduleAction.changePassword),
 						rows: [getDbList()]
 					};
 
@@ -1396,7 +1391,7 @@ export default class UserModule extends GenericModule {
 
 			} else {
 
-				$$(form.id).setValues(newUser)
+				$$(form.id).setValues(newUser);
 			}
 		};
 	};
