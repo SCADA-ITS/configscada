@@ -5,9 +5,6 @@ pipeline {
     
     environment {
         VERSION_NUMBER = '1.0.0'
-        PROJECT_NAME = 'Ausol'
-        
-        
     }
     
     stages {
@@ -71,135 +68,12 @@ pipeline {
             }
         }
         
-        stage('Empaquetando back') {
-            steps {
-            	script {
-					sh 'echo Compilando back'
-					
-                    dir("ritsback/_ritsback") {
-                        
-                        sh 'mvn clean install'
-                    }
-                }
-                
-                script {
-					sh 'echo Copiando recursos y procesos en su ubicación'
-					
-                    def directorio = 'app/backrits/resources'
-        
-                    if (!fileExists(directorio)) {
-                        sh 'echo El directorio no existe. Creándolo...'
-                        sh "mkdir -p ${directorio}"
-                        sh 'echo Directorio creado exitosamente.'
-                    } else {
-                        sh 'echo El directorio ya existe.'
-                    }
-        
-                    sh 'rm -Rf app/backrits/*.jar'
-                    sh 'rm -Rf app/backrits/logs/*'
-                    
-                    sh 'cp ritsback/data-loader/target/data-loader.jar app/backrits/data-loader.jar'
-                    sh 'cp ritsback/equipment-manager/target/equipment-manager.jar app/backrits/equipment-manager.jar'
-                    sh 'cp ritsback/ep-pub-stomp/target/ep-pub-stomp.jar app/backrits/ep-pub-stomp.jar'
-                    sh 'cp ritsback/historical-manager/target/historical-manager.jar app/backrits/historical-manager.jar'
-                    sh 'cp ritsback/io-controller/target/io-controller.jar app/backrits/io-controller.jar'
-                    sh 'cp ritsback/plan-manager/target/plan-manager.jar app/backrits/plan-manager.jar'
-                    sh 'cp ritsback/service-graphql/target/service-graphql.jar app/backrits/service-graphql.jar'
-                    sh 'cp ritsback/incident-manager/target/incident-manager.jar app/backrits/incident-manager.jar'
-                    sh 'cp ritsback/traffic-manager/target/traffic-manager.jar app/backrits/traffic-manager.jar'
-                    sh 'cp ritsback/virtual-equipment-manager/target/virtual-equipment-manager.jar app/backrits/virtual-equipment-manager.jar'
-                    sh 'cp ritsback/io-external-manager/target/io-external-manager.jar app/backrits/io-external-manager.jar'
-                    sh 'cp ritsback/server-launcher/target/server-launcher.jar app/backrits/server-launcher.jar'
-                    
-                    sh 'rm -Rf app/backrits/resources/*'
-                    sh 'cp -R rits/resources/master/* app/backrits/resources'
-                    sh 'cp -R rits/resources/project/* app/backrits/resources'
-                    sh 'cp rits/resources/Jenkinsfiles/install/* app'               
-                }
-            }
-        } 
-        
-        stage('Empaquetando front') {
-            steps {
-                script {
-					sh 'echo Copiando recursos de front'
-					
-                    dir('ritsfront/openits/src/main/resources/') {
-                        sh 'rm -rf project'
-                        sh "cp ${WORKSPACE}/rits/ritsfront/openits/*.properties ./"
-                        sh "cp -r ${WORKSPACE}/rits/ritsfront/openits/static ./"
-                        sh "cp -r ${WORKSPACE}/rits/ritsfront/openits/project ./"
-                    }
-                }
-                
-                script {
-					sh 'echo Compilando front'
-					
-                    dir("ritsfront/_ritsfront") {
-                        
-                        sh 'mvn clean install'
-                    }
-                }
-                
-                script {	
-					def directorio = 'app/frontrits'
-					
-					if (!fileExists(directorio)) {
-                        sh 'echo El directorio no existe. Creándolo...'
-                        sh "mkdir -p ${directorio}"
-                        sh 'echo Directorio creado exitosamente.'
-                    } else {
-                        sh 'echo El directorio ya existe.'
-                    }
-                    
-					sh 'echo Copiando recursos y procesos en su ubicación'
-					
-					sh 'cp ritsfront/openits/target/openits.jar app/frontrits/'
-				}
-            }
-        }
-        
-        stage('Empaquetando scripts de BBDD') {
-            steps {
-                script {
-                    def directorio = 'app/db_scripts'
-					
-					if (!fileExists(directorio)) {
-                        sh 'echo El directorio no existe. Creándolo...'
-                        sh "mkdir -p ${directorio}/ritsback/ddl"
-                        sh "mkdir -p ${directorio}/ritsback/dml/master"
-                        sh "mkdir -p ${directorio}/ritsfront/ddl"
-                        sh "mkdir -p ${directorio}/ritsfront/dml/master"
-                        sh "mkdir -p ${directorio}"
-                        sh 'echo Directorio creado exitosamente.'
-                    } else {
-                        sh 'echo El directorio ya existe.'
-                    }
-                    
-                	sh 'cp -r rits/ritsback/resources/db/ddl/* app/db_scripts/ritsback/ddl/'
-                	sh 'cp -r rits/ritsback/resources/db/dml/master/* app/db_scripts/ritsback/dml/master'
-                	sh 'cp -r rits/ritsback/resources/db/dml/* app/db_scripts/ritsback/dml/'
-                	
-                	
-                	sh 'cp -r rits/ritsfront/resources/db/ddl/* app/db_scripts/ritsfront/ddl/'
-                	sh 'cp -r rits/ritsfront/resources/db/dml/master/* app/db_scripts/ritsfront/dml/master'
-                	sh 'cp -r rits/ritsfront/resources/db/dml/* app/db_scripts/ritsfront/dml/'
-                }
-            }
-        }
-        
         stage('Crear fichero de version') {
             steps {
                 script {
-                    def resourcesDir = 'app'
-                    def tarFileName = "openits_${env.VERSION_NUMBER}.tar.gz"
                     def storageDir = 'versiones'
-
-                    sh "tar -czf $tarFileName $resourcesDir"
-
-                    sh "mkdir -p $storageDir/${env.VERSION_NUMBER}"
-                    sh "mv $tarFileName $storageDir/${env.VERSION_NUMBER}/"
                     
+                    sh "mkdir -p $storageDir/${env.VERSION_NUMBER}"                 
                     writeFile file: "$storageDir/${env.VERSION_NUMBER}/${env.VERSION_NUMBER}_version.txt", text: crearFicheroVersion(stringVariable)
                 }
                 
@@ -209,7 +83,7 @@ pipeline {
                     for (repo in repos) {
                         dir(repo) {
                             // Definir el nombre del tag
-                            def nombreTag = "${env.PROJECT_NAME}_${env.VERSION_NUMBER}"
+                            def nombreTag = "OpenITS_${env.VERSION_NUMBER}"
                         
                             sh "git tag ${nombreTag}"
                             sh "git push origin ${nombreTag}"
@@ -232,7 +106,7 @@ pipeline {
                                 <p>Job: ${JOB_NAME}</p>
                                 <p>Se ha creado la versión ${env.VERSION_NUMBER}</p>
                                 <p>Puede consultar el listado actual de versiones en la siguiente URL:</p>
-                                <p>http://its-revenga.equilibra.es:8500/job/create_version/1/execution/node/3/ws/versiones/</p>
+                                <p>http://192.168.88.195:8080/job/${JOB_NAME}/1/execution/node/3/ws/versiones/</p>
                             </body>
                         </html>
                         """,
@@ -247,7 +121,7 @@ pipeline {
 def crearFicheroVersion(String stringVariable) {
     // Aquí puedes obtener la información de la versión de tu sistema de control de versiones,
     // de tu archivo de configuración, de una variable de entorno, etc.
-    def project = env.PROJECT_NAME
+    def project = "OpenITS"
     def version = env.VERSION_NUMBER
     def date = new Date().format('yyyy-MM-dd HH:mm:ss')
 
