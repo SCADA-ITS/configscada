@@ -146,20 +146,23 @@ public class LDAPManager {
 		LdapContext ctxAdmin = null;
 
 		try {
+			
+			if (NetUtil.ldapListening(LDAP_URL)) {
+			
+				Hashtable<String, String> props = new Hashtable<>();
 
-			Hashtable<String, String> props = new Hashtable<>();
+				props.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
+				props.put(Context.PROVIDER_URL, LDAP_URL);
+				props.put(Context.SECURITY_AUTHENTICATION, "simple");
+				props.put(Context.SECURITY_PRINCIPAL, dn);
 
-			props.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
-			props.put(Context.PROVIDER_URL, LDAP_URL);
-			props.put(Context.SECURITY_AUTHENTICATION, "simple");
-			props.put(Context.SECURITY_PRINCIPAL, dn);
+				if (!StringUtils.isEmpty(password)) {
 
-			if (!StringUtils.isEmpty(password)) {
+					props.put(Context.SECURITY_CREDENTIALS, password);
+				}
 
-				props.put(Context.SECURITY_CREDENTIALS, password);
+				ctxAdmin = new InitialLdapContext(props, null);
 			}
-
-			ctxAdmin = new InitialLdapContext(props, null);
 
 		} catch (Exception e) {
 

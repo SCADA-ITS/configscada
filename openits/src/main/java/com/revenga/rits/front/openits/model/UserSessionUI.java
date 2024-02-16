@@ -37,9 +37,6 @@ public class UserSessionUI implements Serializable {
 	public static final String USER_FIELD_MANAGEMENT_AREAS = "managementAreas";
 	public static final String USER_LOCALE = "locale";
 	public static final String USER_LOCALE_CODE = "code";
-	public static final String USER_OPTIONS = "options";
-	public static final String USER_OPTIONS_LDAP = "ldap";
-	public static final String USER_OPTIONS_LDAP_USER_CONNECTION_STRING = "ldapUserConnectionString";
 	
 	public static final String USER_INPUT_FIELD_ID = "id";
 	public static final String USER_INPUT_FIELD_NAME = "name";

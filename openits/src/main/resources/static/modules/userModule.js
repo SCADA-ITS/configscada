@@ -576,7 +576,7 @@ export default class UserModule extends GenericModule {
 											{
 												cols: [
 													{ view: "text", id: "localeId-" + self.uid, name: "localeId", hidden: true },
-													{ view: "text", id: "locale-" + self.uid, name: "localeName", required: true, label: i18n.t("LBL_USER_LOCALE"), disabled: true, labelWidth: 275, },
+													{ view: "text", id: "locale-" + self.uid, name: "localeName", required: true, label: i18n.t("LBL_USER_LOCALE"), readonly: true, labelWidth: 275, },
 													{
 														view: "icon", icon: "wxi-search", disabled: self.moduleAction.id === self.config.moduleAction.changePassword,
 														on: {
@@ -594,7 +594,7 @@ export default class UserModule extends GenericModule {
 											{
 												cols: [
 													{ view: "text", id: "roleId-" + self.uid, name: "roleId", hidden: true },
-													{ view: "text", id: "role-" + self.uid, name: "role", required: true, label: i18n.t("LBL_USER_ROLE"), disabled: true, labelWidth: 275 },
+													{ view: "text", id: "role-" + self.uid, name: "role", required: true, label: i18n.t("LBL_USER_ROLE"), readonly: true, labelWidth: 275 },
 													{
 														view: "icon", icon: "wxi-search", disabled: self.moduleAction.id === self.config.moduleAction.changePassword,
 														on: {
