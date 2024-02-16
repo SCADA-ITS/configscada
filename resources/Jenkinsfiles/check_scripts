@@ -63,7 +63,7 @@ pipeline {
                 script {
 					sh 'echo Probando scripts de back'
 					
-					def rutaBase = 'rits/ritsback/resources/db'
+					def rutaBase = 'ritsback/resources/db'
 					def directorios = new File("${WORKSPACE}/${rutaBase}/dml").listFiles()
 					def proyectos = []
 					
@@ -88,7 +88,7 @@ pipeline {
                 script {
 					sh 'echo Probando scripts de front'
 					
-					def rutaBase = 'rits/ritsfront/resources/db'
+					def rutaBase = 'ritsfront/resources/db'
 					def directorios = new File("${WORKSPACE}/${rutaBase}/dml").listFiles()
 					def proyectos = []
 					
@@ -143,7 +143,7 @@ pipeline {
                             </body>
                         </html>
                         """,
-                        to: 'jenkins.openits@revenga.com',
+                        to: 'jenkins.openits@gmail.com',
                         mimeType: 'text/html'
             }
         }
