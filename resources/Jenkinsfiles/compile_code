@@ -25,6 +25,45 @@ pipeline {
             }
         }
         
+        stage('Loggear últimos commit') {
+            steps {
+                script {
+					sh 'echo Obteniendo información de los cambios desde la última ejecución'
+				
+					def changeLogSets = currentBuild.changeSets
+
+					for (int i = 0; i < changeLogSets.size(); i++) {
+						def entries = changeLogSets[i].items
+						
+						for (int j = 0; j < entries.length; j++) {
+							def entry = entries[j]
+							
+							echo "${entry.commitId} by ${entry.author} on ${new Date(entry.timestamp)}: ${entry.msg}"
+							
+							stringVariable += '<div style="background-color: #f0f0f0; padding: 10px;">'
+							stringVariable += "<strong>Commit: ${entry.commitId}</strong><br/>"
+							stringVariable += "Commit message: ${entry.msg}<br/>"
+							stringVariable += "Autor: ${entry.author}<br/>"
+							stringVariable += "Fecha: ${new Date(entry.timestamp)}<br/><br/>"
+							
+							def files = new ArrayList(entry.affectedFiles)
+							
+							stringVariable += "Ficheros afectados:<br/>"
+							for (int k = 0; k < files.size(); k++) {
+							
+								def file = files[k]
+								                        
+								stringVariable += " - ${file.editType.name} ${file.path}<br/>"
+							}
+							
+							stringVariable += "</div>"
+							stringVariable += "<br/>"
+						}
+					}
+				}
+            }
+        }
+        
         stage('Build back') {
             steps {
                 script {
@@ -73,10 +112,15 @@ pipeline {
                         body: """
                         <html>
                             <body>
-                                <h2>RESULTADO ACTUALIZACIÓN MAQUETA FULLEQUIP</h2>
+                                <h2>RESULTADO DE COMPILACIÓN TRAS CAMBIOS EN EL CÓDIGO</h2>
                                 <p>Job: ${JOB_NAME}</p>
                                 <p>Número de Ejecución: ${BUILD_NUMBER}</p>
                                 <p>Estado de la Ejecución: ${currentBuild.currentResult}</p>
+                                
+                                <h2>Información de los Commits</h2>
+                                
+								<p>Detalles de Cambios en la Última Ejecución:</p>
+								<p>${stringVariable}</p>
                             </body>
                         </html>
                         """,
