@@ -1,8 +1,9 @@
 #!/bin/bash
 user=""
-project=""
+project="fullequip"
 path=""
 ip_address_db=""
+
 
 ctrl_c() {
    clear
@@ -164,7 +165,7 @@ install_openits() {
         sleep 2
 
 	mkdir -p $path/app/haproxy
-	cp $path/app/haproxy.cfg $path/app/haproxy/
+	mv $path/app/haproxy.cfg $path/app/haproxy/
         clear
 
 	cd $path/app/
@@ -185,6 +186,7 @@ install_openits() {
 
    sed -i "s/admin/$user/g" "/home/$user/app/app.service"
    sudo mv $path/app/app.service /etc/systemd/system/
+   sudo mv $path/app/backrits/resources/start.sh /home/$user/app/
 
    ip_default_value=$(hostname -I | awk '{print $1}')
 
@@ -234,13 +236,17 @@ install_openits() {
 
    rm /tmp/input_result
 
+   start_sh="$path/app/start.sh"
    jdbc_properties="$path/app/backrits/resources/jdbc.properties"
    redis_properties="$path/app/backrits/resources/redis.properties"
    stomp_properties="$path/app/backrits/resources/adapters/pub-stomp/pub_stomp_adapter_v1.xml"
 
-   sed -i "s/jdbc.url=jdbc:postgresql:\/\/172.17.0.1:5430\/rits/jdbc.url=jdbc:postgresql:\/\/$ip_address_db:5430\/rits/" "$jdbc_properties"
+   sed -i "s|/home/[^[:space:]]*/app/backrits/server-launcher.jar|/home/$user/app/backrits/server-launcher.jar|" "$start_sh"
+   sed -i "s|/home/[^[:space:]]*/app/frontrits/openits.jar|/home/$user/app/frontrits/openits.jar|" "$start_sh"
+
+   sed -i "s/jdbc.url=jdbc:postgresql:\/\/.*$/jdbc.url=jdbc:postgresql:\/\/$ip_address_db:5430\/rits/" "$jdbc_properties"
    sed -i "s|^redis.host=.*$|redis.host=$ip_address|" "$redis_properties"
-   sed -i "s|<p:broker>ws://localhost:61614</p:broker>|<p:broker>ws://$ip_address:61614</p:broker>|" "$stomp_properties"
+   sed -i "s|<p:broker>ws://.*$|<p:broker>ws://$ip_address:61614</p:broker>|" "$stomp_properties"
 
    clear
 
@@ -270,38 +276,38 @@ install_openits() {
    sleep 2
    clear
 
-   while true; do
-     dialog --backtitle "SCADA OPENITS" \
-       --title "Nombre del proyecto" \
-       --inputbox "Indique el nombre del proyecto que está instalando" 8 40 2>/tmp/input_result
+   #while true; do
+   #  dialog --backtitle "SCADA OPENITS" \
+   #    --title "Nombre del proyecto" \
+   #    --inputbox "Indique el nombre del proyecto que está instalando" 8 40 2>/tmp/input_result
 
-     if [ $? -ne 0 ]; then
-        clear
-        exit 0
-     fi
+   #  if [ $? -ne 0 ]; then
+   #     clear
+   #     exit 0
+   #  fi
 
-     declare -g project=$(cat /tmp/input_result)
+   #  declare -g project=$(cat /tmp/input_result)
 
-     if [ -n "$project" ]; then
-       directory="BOOT-INF/classes"
+   #  if [ -n "$project" ]; then
+   #    directory="BOOT-INF/classes"
 
-       if [ -d "$directory/project/$project" ]; then
-          break
-       else
-          dialog \
-            --msgbox "El fichero de instalación no contiene recursos para un proyecto de nombre $project. Ingrese otro nombre" \
-            15 70
-       fi
-     else
-       dialog \
-         --msgbox "!El nombre del proyecto no puede estar vacío! Por favor, ingrésalo de nuevo." \
-         15 70
-     fi
-   done
+   ##    if [ -d "$directory/project/$project" ]; then
+   #       break
+   #    else
+   #       dialog \
+   #         --msgbox "El fichero de instalación no contiene recursos para un proyecto de nombre $project. Ingrese otro nombre" \
+   #         15 70
+   #    fi
+   #  else
+    #   dialog \
+    #     --msgbox "!El nombre del proyecto no puede estar vacío! Por favor, ingrésalo de nuevo." \
+    #     15 70
+    # fi
+   #done
 
    application_properties="$directory/application.properties"
-   data_properties="$directory/project/$project/data/config.js"
-   sed -i "s/jdbc.url=jdbc:postgresql:\/\/172.17.0.1:5430\/rits/jdbc.url=jdbc:postgresql:\/\/$ip_address_db:5430\/rits/" "$application_properties"
+   data_properties="$directory/project/fullequip/data/config.js"
+   sed -i "s/spring.datasource.url=jdbc:postgresql:\/\/.*$/spring.datasource.url=jdbc:postgresql:\/\/$ip_address_db:5430\/rits/" "$application_properties"
    sed -i "s/ws:\/\/[^:]*:61614/ws:\/\/$ip_address:61614/g" "$data_properties"
 
    jar uvf openits.jar $directory > "$tempfile" 2>&1 &
@@ -394,7 +400,7 @@ fill_db() {
      last_progress=0
 
      #Continuamos con los scripts de proyecto 
-     cd $path/app/db_scripts/ritsback/dml/maqueta_$project
+     cd $path/app/db_scripts/ritsback/dml/maqueta_fullequip
   
      yourfilenames=`find . -name '*.sql' -print0 | sort -z | xargs -r0`
      files_count=`echo $yourfilenames | wc -w`
