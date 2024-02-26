@@ -374,6 +374,48 @@ fill_db() {
 
           psql postgresql://rits:rits@$ip_address_db:5430/rits -b -f $eachfile >/dev/null
      done
+
+     wait
+     last_progress=0
+
+     #Empezamos con los scripts de ddl_rt
+     cd $path/app/db_scripts/ritsback/ddl_rt
+  
+     yourfilenames=`find . -name '*.sql' -print0 | sort -z | xargs -r0`
+     files_count=`echo $yourfilenames | wc -w`
+     current_file=0
+     for eachfile in $yourfilenames; do
+          current_file=$((current_file+1))
+	  progress=$(update_progress)
+
+          if ((progress >= last_progress + 10)); then
+	     show_progress ". Ajustando tablas rt..." "$progress" &
+	     last_progress="$progress"
+	  fi
+
+          psql postgresql://rits:rits@$ip_address_db:5430/rits -b -f $eachfile >/dev/null
+     done
+
+     wait
+     last_progress=0
+
+          #Empezamos con los scripts de ddl_hist
+     cd $path/app/db_scripts/ritsback/ddl_hist
+  
+     yourfilenames=`find . -name '*.sql' -print0 | sort -z | xargs -r0`
+     files_count=`echo $yourfilenames | wc -w`
+     current_file=0
+     for eachfile in $yourfilenames; do
+          current_file=$((current_file+1))
+	  progress=$(update_progress)
+
+          if ((progress >= last_progress + 10)); then
+	     show_progress ". Ajustando tablas hist..." "$progress" &
+	     last_progress="$progress"
+	  fi
+
+          psql postgresql://rits:rits@$ip_address_db:5430/rits -b -f $eachfile >/dev/null
+     done
   
      wait
      last_progress=0
