@@ -12,8 +12,8 @@ INSERT INTO conf.roles
 
 INSERT INTO conf.users
 (user_id, role_id, name_, password_, password_expired_at, session_expire_time_s, locked_until, preset, allow_multiple_sessions, full_name, email, locale_code, enabled, visible, created_at, updated_at) VALUES
-(1000, 1000, 'system', 'system', NULL, 86400, NULL, false, true, 'system', 'system@revenga.com', 'en_NZ', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(2000, 1000, 'root', 'root', NULL, NULL, NULL, true, true, 'root', 'system@rits.com', 'es_ES', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(1000, 1000, 'system', 'LLjK9seqPVh5w+stntPrPg==', NULL, 86400, NULL, false, true, 'system', 'system@revenga.com', 'en_NZ', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2000, 1000, 'root', 'jbx7UfBNOs4npveLA8HSgA==', NULL, NULL, NULL, true, true, 'root', 'system@rits.com', 'es_ES', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO conf.user_permissions
 (user_id, system_permission_id, enabled, visible, created_at, updated_at) VALUES
