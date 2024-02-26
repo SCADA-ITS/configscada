@@ -240,9 +240,11 @@ install_openits() {
    jdbc_properties="$path/app/backrits/resources/jdbc.properties"
    redis_properties="$path/app/backrits/resources/redis.properties"
    stomp_properties="$path/app/backrits/resources/adapters/pub-stomp/pub_stomp_adapter_v1.xml"
+   server_launcher="$path/app/backrits/resources/adapters/server-launcher/server_launcher_adapter_v1.xml"
 
    sed -i "s|/home/[^[:space:]]*/app/backrits/server-launcher.jar|/home/$user/app/backrits/server-launcher.jar|" "$start_sh"
    sed -i "s|/home/[^[:space:]]*/app/frontrits/openits.jar|/home/$user/app/frontrits/openits.jar|" "$start_sh"
+   sed -i "s|/home/[^/]\+/app/backrits/|/home/$user/app/backrits/|" "$server_launcher"
 
    sed -i "s/jdbc.url=jdbc:postgresql:\/\/.*$/jdbc.url=jdbc:postgresql:\/\/$ip_address_db:5430\/rits/" "$jdbc_properties"
    sed -i "s|^redis.host=.*$|redis.host=$ip_address|" "$redis_properties"
