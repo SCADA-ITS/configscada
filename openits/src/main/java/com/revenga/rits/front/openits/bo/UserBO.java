@@ -1,5 +1,6 @@
 package com.revenga.rits.front.openits.bo;
 
+import java.time.Instant;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -188,22 +189,24 @@ public class UserBO extends GenericBO {
 	
 	private Map<String, Object> decryptPasswordField(Map<String, Object> userMap) {
 		
-		try {
+		if (!MapUtils.isEmpty(userMap)) {
 			
-			if (!MapUtils.isEmpty(userMap)) {
+			String password = (String) userMap.get(UserSessionUI.USER_FIELD_PASSWORD);
+			
+			if (!StringUtils.isEmpty(password)) {
 				
-				String password = (String) userMap.get(UserSessionUI.USER_FIELD_PASSWORD);
+				// Initialize User field password with random string value
+				userMap.put(UserSessionUI.USER_FIELD_PASSWORD, String.valueOf(Instant.now().toEpochMilli()));
 				
-				if (!StringUtils.isEmpty(password)) {
+				// Set with decrypted password 
+				try {
 					
 					userMap.put(UserSessionUI.USER_FIELD_PASSWORD, AES.decrypt(password));
+					
+				} catch (Exception e) {
+					// Nothing 
 				}
 			}
-			
-		} catch (Exception e) {
-			
-			log.error(e.getMessage());
-			log.debug(ExceptionUtils.getStackTrace(e));
 		}
 		
 		return userMap;

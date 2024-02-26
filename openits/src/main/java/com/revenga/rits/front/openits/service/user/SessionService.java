@@ -316,19 +316,6 @@ public class SessionService {
 						
 					updateLdapUser(ldapUser, (String) user.get(UserSessionUI.USER_FIELD_ID), password);
 				}
-				
-				if (Boolean.parseBoolean(env.getProperty(AUTH_ENCRYPTED_PASSWORD))) {
-					
-					try {
-						
-						password = AES.encrypt(password);
-						
-					} catch (Exception e) {
-						
-						log.error(e.getMessage());
-						log.debug(ExceptionUtils.getStackTrace(e));
-					}
-				}
 								
 				if (isLockedUser(user)) {
 					
