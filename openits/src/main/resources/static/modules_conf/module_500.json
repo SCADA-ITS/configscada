@@ -11,6 +11,6 @@
 		"elementId": "elements/${id}",
 		"elementsTreeByUser": "elements/trees/${id}"
 	},
-	"treeElements": true,
+	"treeElements": false,
 	"treeCustom": false
 }

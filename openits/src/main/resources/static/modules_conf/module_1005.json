@@ -19,12 +19,12 @@
 	"topic": "/topic/alarm.>",
 	"gridNoRecognized": 1004,
 	"gridRecognized": 1005,
-	"treeElements": true,
+	"treeElements": false,
 	"treeCustom": true,
 	"levels": {
-		"critical": [ "AlarmLevel:5", "AlarmLevel:6" ],
-		"warn": [ "AlarmLevel:3", "AlarmLevel:4" ],
-		"info": [ "AlarmLevel:1", "AlarmLevel:2" ] 
+		"critical": [ "AlarmLevel:3", "AlarmLevel:6" ],
+		"warn": [ "AlarmLevel:2", "AlarmLevel:5" ],
+		"info": [ "AlarmLevel:1", "AlarmLevel:4" ] 
 	},
 	"alarmTypeAuto": [ "AlarmType:1", "AlarmType:2", "AlarmType:3" ],
 	"alarmTypeManual": [ "AlarmType:4" ],

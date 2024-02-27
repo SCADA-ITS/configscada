@@ -24,9 +24,9 @@
 	"alarmTypeAuto": [ "AlarmType:1", "AlarmType:2", "AlarmType:3" ],
 	"alarmTypeManual": [ "AlarmType:4" ],
 	"levels": {
-		"critical": [ "AlarmLevel:5", "AlarmLevel:6" ],
-		"warn": [ "AlarmLevel:3", "AlarmLevel:4" ],
-		"info": [ "AlarmLevel:1", "AlarmLevel:2" ] 
+		"critical": [ "AlarmLevel:3", "AlarmLevel:6" ],
+		"warn": [ "AlarmLevel:2", "AlarmLevel:5" ],
+		"info": [ "AlarmLevel:1", "AlarmLevel:4" ] 
 	},
 	"requiredPermissions": {
 		"edit": "SystemPermission:19"		

@@ -3,7 +3,7 @@
 	    "tunnel": 102701,
 	    "tube": 102702,
 		"fan": 102703,
-		"tubeFromEquipment": 102704
+		"tubeFromEquipment": 102704		
 	},
 	"containerAction": {
 	    "tunnel": 101401
@@ -30,7 +30,7 @@
 	"adapters": {
 		"element": "ws.element.update"
 	},
-	"gridId": 1012,
+	"gridId": 3012,
 	"elementTypeTunnel": "ElementType:2001",
 	"elementTypeTube": "ElementType:2000",
 	"elementTypeFan": "ElementType:9",
@@ -38,7 +38,7 @@
 	"viewEquipmentMeasures": {
 		"enabled": true,
 		"options": {
-			"combo": true,
+			"combo": false,
 			"width": 320,
 			"rows": 1,
 			"equipmentViewer":101401

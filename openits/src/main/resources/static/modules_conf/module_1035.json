@@ -9,13 +9,12 @@
 	 	"updateAlarmConfig": "alarms/updateAlarmConfig",
 		"alarmConfig": "alarms/alarm_configs/${id}",
 		"deleteAlarmConfig": "alarms/deleteAlarmConfig/${id}",
-		"elementTypeStates": "element_types/${id}/elementTypeStates",
-		"alarmsByAlarmConfig": "alarms/by_alarm_config/${alarmConfigId}"
+		"elementTypeStates": "element_types/${id}/elementTypeStates"
 	 },
 	 "levels": {
-		"critical": [ "AlarmLevel:5", "AlarmLevel:6" ],
-		"warn": [ "AlarmLevel:3", "AlarmLevel:4" ],
-		"info": [ "AlarmLevel:1", "AlarmLevel:2" ] 
+		"critical": [ "AlarmLevel:3", "AlarmLevel:6" ],
+		"warn": [ "AlarmLevel:2", "AlarmLevel:5" ],
+		"info": [ "AlarmLevel:1", "AlarmLevel:4" ] 
 	},
 	"alarmType": {
 		"alarmTypeAuto": [ "AlarmType:1", "AlarmType:2", "AlarmType:3" ],
