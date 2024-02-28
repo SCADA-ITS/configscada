@@ -44,7 +44,6 @@ export default class BackOfficeHelper {
 				GRID_FILTERS: { name: "gridFilters", default: false },
 				INITIAL_TAB_LABEL: { name: "initialTabLabel" },
 				TABS: { name: "tabs" },
-				GRID_ID: { name: "gridId" },
 				AUTOREFRESH: { name: "autorefresh" },
 				AUTOREFRESH_FORM: { name: "autorefresh" },
 				REFER_TABLES: { name: "referTables" },
