@@ -1,10 +1,12 @@
 package com.revenga.rits.front.openits.bo;
 
+import java.time.Instant;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -187,19 +189,24 @@ public class UserBO extends GenericBO {
 	
 	private Map<String, Object> decryptPasswordField(Map<String, Object> userMap) {
 		
-		try {
-
+		if (!MapUtils.isEmpty(userMap)) {
+			
 			String password = (String) userMap.get(UserSessionUI.USER_FIELD_PASSWORD);
 			
 			if (!StringUtils.isEmpty(password)) {
 				
-				userMap.put(UserSessionUI.USER_FIELD_PASSWORD, AES.decrypt(password));
+				// Initialize User field password with random string value
+				userMap.put(UserSessionUI.USER_FIELD_PASSWORD, String.valueOf(Instant.now().toEpochMilli()));
+				
+				// Set with decrypted password 
+				try {
+					
+					userMap.put(UserSessionUI.USER_FIELD_PASSWORD, AES.decrypt(password));
+					
+				} catch (Exception e) {
+					// Nothing 
+				}
 			}
-			
-		} catch (Exception e) {
-			
-			log.error(e.getMessage());
-			log.debug(ExceptionUtils.getStackTrace(e));
 		}
 		
 		return userMap;

@@ -50,7 +50,6 @@ import com.revenga.rits.front.openits.bo.UserBO;
 import com.revenga.rits.front.openits.model.EntityChangedUI;
 import com.revenga.rits.front.openits.model.UserSessionUI;
 import com.revenga.rits.front.openits.service.user.UserServer.SessionOperation;
-import com.revenga.rits.lib.encrypt.util.AES;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -66,8 +65,7 @@ public class SessionService {
 
 	private final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 	
-	private static final String AUTH_ENCRYPTED_PASSWORD = "auth.encryptedPassword";
-	
+
 	private static final String HEADER_AUTHOTIZATION = "authorization";
 	private static final String DEFAULT_ACCOUNT_LOCKED_ISO_DATE = "2099-12-31T23:59:59.999Z";
 	private static final Integer DEFAULT_VALID_SESSION_SECS = 600;
@@ -282,20 +280,7 @@ public class SessionService {
 			Map<String, Object> user = userBO.getByName(userName);
 			
 			if (user != null) {
-				
-				if (Boolean.parseBoolean(env.getProperty(AUTH_ENCRYPTED_PASSWORD))) {
-					
-					try {
-						
-						password = AES.encrypt(password);
-						
-					} catch (Exception e) {
-						
-						log.error(e.getMessage());
-						log.debug(ExceptionUtils.getStackTrace(e));
-					}
-				}
-				
+								
 				if (isLockedUser(user)) {
 					
 					userSession.setAccess(UserSessionUI.DENY_LOCKED);
