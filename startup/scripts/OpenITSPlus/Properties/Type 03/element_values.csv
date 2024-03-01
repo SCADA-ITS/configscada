@@ -1,0 +1,9 @@
+item;alias;description;sessionuid;road;stretchs;pk;sentido;param1_direction;param2_order;param3_mask_validation;param4_delay
+33;LQ-SEC-1-DET-1CA-IN;LQ-SEC-1-DET-1CA-IN;LQ-SEC-1-DET-1CA-IN;Carretera Tunel;Carretera;173+900;MA;true;3;0;0
+34;LQ-SEC-1-DET-2CA-IN;LQ-SEC-1-DET-2CA-IN;LQ-SEC-1-DET-2CA-IN;Carretera Tunel;Carretera;173+900;MA;true;4;0;0
+35;LQ-SEC-2-DET-3MA-OUT;LQ-SEC-2-DET-3MA-OUT;LQ-SEC-2-DET-3MA-OUT;Carretera Tunel;Carretera;173+900;MA;true;1;0;0
+36;LQ-SEC-2-DET-4MA-OUT;LQ-SEC-2-DET-4MA-OUT;LQ-SEC-2-DET-4MA-OUT;Carretera Tunel;Carretera;173+900;MA;true;2;0;0
+37;LQ-SEC-1-DET-1MA-IN;LQ-SEC-1-DET-1MA-IN;LQ-SEC-1-DET-1MA-IN;Carretera Tunel;Carretera;173+900;MA;true;1;0;0
+38;LQ-SEC-1-DET-2MA-IN;LQ-SEC-1-DET-2MA-IN;LQ-SEC-1-DET-2MA-IN;Carretera Tunel;Carretera;173+900;MA;true;2;0;0
+39;LQ-SEC-2-DET-3CA-OUT;LQ-SEC-2-DET-3CA-OUT;LQ-SEC-2-DET-3CA-OUT;Carretera Tunel;Carretera;173+900;MA;true;3;0;0
+40;LQ-SEC-2-DET-4CA-OUT;LQ-SEC-2-DET-4CA-OUT;LQ-SEC-2-DET-4CA-OUT;Carretera Tunel;Carretera;173+900;MA;true;4;0;0

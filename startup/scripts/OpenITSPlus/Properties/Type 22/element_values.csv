@@ -1,0 +1,19 @@
+item;alias;description;sessionuid;road;stretchs;pk;sentido
+1;LQ-VM-1MA;LQ-VM-1MA;LQ-VM-1MA;Carretera Tunel;Carretera;173+900;MA
+2;LQ-VM-2MA;LQ-VM-2MA;LQ-VM-2MA;Carretera Tunel;Carretera;173+900;MA
+3;LQ-VM-3MA;LQ-VM-3MA;LQ-VM-3MA;Carretera Tunel;Carretera;173+900;MA
+4;LQ-VM-5MA;LQ-VM-5MA;LQ-VM-5MA;Carretera Tunel;Carretera;173+900;MA
+5;LQ-VC-1MA;LQ-VC-1MA;LQ-VC-1MA;Carretera Tunel;Carretera;173+900;MA
+6;LQ-VM-1CA;LQ-VM-1CA;LQ-VM-1CA;Carretera Tunel;Carretera;173+900;CA
+7;LQ-VM-2CA;LQ-VM-2CA;LQ-VM-2CA;Carretera Tunel;Carretera;173+900;CA
+8;LQ-VM-3CA;LQ-VM-3CA;LQ-VM-3CA;Carretera Tunel;Carretera;173+900;CA
+9;LQ-VM-4CA;LQ-VM-4CA;LQ-VM-4CA;Carretera Tunel;Carretera;173+900;CA
+10;LQ-VM-5CA;LQ-VM-5CA;LQ-VM-5CA;Carretera Tunel;Carretera;173+900;CA
+11;LQ-VM-6CA;LQ-VM-6CA;LQ-VM-6CA;Carretera Tunel;Carretera;173+900;CA
+12;LQ-VC-1CA;LQ-VC-1CA;LQ-VC-1CA;Carretera Tunel;Carretera;173+900;CA
+13;LQ-VM-7CA;LQ-VM-7CA;LQ-VM-7CA;Carretera Tunel;Carretera;173+900;CA
+14;LQ-VM-6MA;LQ-VM-6MA;LQ-VM-6MA;Carretera Tunel;Carretera;173+900;MA
+15;LQ-VM-4MA;LQ-VM-4MA;LQ-VM-4MA;Carretera Tunel;Carretera;173+900;MA
+16;LQ-VC-2MA;LQ-VC-2MA;LQ-VC-2MA;Carretera Tunel;Carretera;173+900;MA
+17;LQ-VC-3MA;LQ-VC-3MA;LQ-VC-3MA;Carretera Tunel;Carretera;173+900;MA
+18;LQ-VC-DALJ;LQ-VC-DALJ;LQ-VC-DALJ;Carretera Tunel;Carretera;173+900;MA

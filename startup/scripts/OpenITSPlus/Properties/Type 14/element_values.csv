@@ -1,0 +1,3 @@
+item;alias;description;sessionuid;road;stretchs;pk;sentido;on_change_measure;param2_entrance_tunnel_distance
+5;LQ-LUM-1CA;LQ-LUM-1CA;LQ-LUM-1CA;Carretera Tunel;Carretera;173+594;CA;SendValuesToIllumination.groovy;0
+6;LQ-LUM-1MA;LQ-LUM-1MA;LQ-LUM-1MA;Carretera Tunel;Carretera;172+557;MA;SendValuesToIllumination.groovy;0

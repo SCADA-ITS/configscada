@@ -1,0 +1,10 @@
+item;alias;description;sessionuid;road;stretchs;pk;sentido;on_change_measure
+9;LQ-OPC-1CA;LQ-OPC-1CA;LQ-OPC-1CA;Carretera Tunel;Carretera;172+100;CA;SendValuesToVentilation.groovy
+10;LQ-OPC-2CA;LQ-OPC-2CA;LQ-OPC-2CA;Carretera Tunel;Carretera;172+100;CA;SendValuesToVentilation.groovy
+11;LQ-OPC-3CA;LQ-OPC-3CA;LQ-OPC-3CA;Carretera Tunel;Carretera;172+100;CA;SendValuesToVentilation.groovy
+12;LQ-OPC-4CA;LQ-OPC-4CA;LQ-OPC-4CA;Carretera Tunel;Carretera;172+100;CA;SendValuesToVentilation.groovy
+13;LQ-OPC-5CA;LQ-OPC-5CA;LQ-OPC-5CA;Carretera Tunel;Carretera;172+100;CA;SendValuesToVentilation.groovy
+14;LQ-OPC-1MA;LQ-OPC-1MA;LQ-OPC-1MA;Carretera Tunel;Carretera;173+900;MA;SendValuesToVentilation.groovy
+15;LQ-OPC-2MA;LQ-OPC-2MA;LQ-OPC-2MA;Carretera Tunel;Carretera;173+900;MA;SendValuesToVentilation.groovy
+16;LQ-OPC-3MA;LQ-OPC-3MA;LQ-OPC-3MA;Carretera Tunel;Carretera;173+900;MA;SendValuesToVentilation.groovy
+17;LQ-OPC-4MA;LQ-OPC-4MA;LQ-OPC-4MA;Carretera Tunel;Carretera;173+900;MA;SendValuesToVentilation.groovy

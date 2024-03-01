@@ -1,0 +1,27 @@
+item;element_subtype;alias;description;sessionuid;road;stretchs;pk;sentido;on_change_alarm;on_change_state;on_change_measure
+1;1;LQ-VENT-VF1-CA;LQ-VENT-VF1-CA;LQ-VENT-VF1-CA;Carretera Tunel;Carretera;173+397;CA;SendAlarmsToVentilation.groovy;SendFanStateToVentilation.groovy;SendValuesToVentilation.groovy
+2;1;LQ-VENT-VF2-CA;LQ-VENT-VF2-CA;LQ-VENT-VF2-CA;Carretera Tunel;Carretera;173+397;CA;SendAlarmsToVentilation.groovy;SendFanStateToVentilation.groovy;SendValuesToVentilation.groovy
+3;1;LQ-VENT-VF3-CA;LQ-VENT-VF3-CA;LQ-VENT-VF3-CA;Carretera Tunel;Carretera;173+307;CA;SendAlarmsToVentilation.groovy;SendFanStateToVentilation.groovy;SendValuesToVentilation.groovy
+4;1;LQ-VENT-VF4-CA;LQ-VENT-VF4-CA;LQ-VENT-VF4-CA;Carretera Tunel;Carretera;173+307;CA;SendAlarmsToVentilation.groovy;SendFanStateToVentilation.groovy;SendValuesToVentilation.groovy
+5;1;LQ-VENT-VF5-CA;LQ-VENT-VF5-CA;LQ-VENT-VF5-CA;Carretera Tunel;Carretera;173+217;CA;SendAlarmsToVentilation.groovy;SendFanStateToVentilation.groovy;SendValuesToVentilation.groovy
+6;1;LQ-VENT-VF6-CA;LQ-VENT-VF6-CA;LQ-VENT-VF6-CA;Carretera Tunel;Carretera;173+217;CA;SendAlarmsToVentilation.groovy;SendFanStateToVentilation.groovy;SendValuesToVentilation.groovy
+7;1;LQ-VENT-VF7-CA;LQ-VENT-VF7-CA;LQ-VENT-VF7-CA;Carretera Tunel;Carretera;173+127;CA;SendAlarmsToVentilation.groovy;SendFanStateToVentilation.groovy;SendValuesToVentilation.groovy
+8;1;LQ-VENT-VF8-CA;LQ-VENT-VF8-CA;LQ-VENT-VF8-CA;Carretera Tunel;Carretera;173+127;CA;SendAlarmsToVentilation.groovy;SendFanStateToVentilation.groovy;SendValuesToVentilation.groovy
+9;1;LQ-VENT-VF9-CA;LQ-VENT-VF9-CA;LQ-VENT-VF9-CA;Carretera Tunel;Carretera;173+037;CA;SendAlarmsToVentilation.groovy;SendFanStateToVentilation.groovy;SendValuesToVentilation.groovy
+10;1;LQ-VENT-VF10-CA;LQ-VENT-VF10-CA;LQ-VENT-VF10-CA;Carretera Tunel;Carretera;173+037;CA;SendAlarmsToVentilation.groovy;SendFanStateToVentilation.groovy;SendValuesToVentilation.groovy
+11;1;LQ-VENT-VF11-CA;LQ-VENT-VF11-CA;LQ-VENT-VF11-CA;Carretera Tunel;Carretera;172+947;CA;SendAlarmsToVentilation.groovy;SendFanStateToVentilation.groovy;SendValuesToVentilation.groovy
+12;1;LQ-VENT-VF12-CA;LQ-VENT-VF12-CA;LQ-VENT-VF12-CA;Carretera Tunel;Carretera;172+947;CA;SendAlarmsToVentilation.groovy;SendFanStateToVentilation.groovy;SendValuesToVentilation.groovy
+13;1;LQ-VENT-VF13-CA;LQ-VENT-VF13-CA;LQ-VENT-VF13-CA;Carretera Tunel;Carretera;172+857;CA;SendAlarmsToVentilation.groovy;SendFanStateToVentilation.groovy;SendValuesToVentilation.groovy
+14;1;LQ-VENT-VF14-CA;LQ-VENT-VF14-CA;LQ-VENT-VF14-CA;Carretera Tunel;Carretera;172+857;CA;SendAlarmsToVentilation.groovy;SendFanStateToVentilation.groovy;SendValuesToVentilation.groovy
+15;1;LQ-VENT-VF15-CA;LQ-VENT-VF15-CA;LQ-VENT-VF15-CA;Carretera Tunel;Carretera;172+767;CA;SendAlarmsToVentilation.groovy;SendFanStateToVentilation.groovy;SendValuesToVentilation.groovy
+16;1;LQ-VENT-VF16-CA;LQ-VENT-VF16-CA;LQ-VENT-VF16-CA;Carretera Tunel;Carretera;172+767;CA;SendAlarmsToVentilation.groovy;SendFanStateToVentilation.groovy;SendValuesToVentilation.groovy
+17;1;LQ-VENT-VF1-MA;LQ-VENT-VF1-MA;LQ-VENT-VF1-MA;Carretera Tunel;Carretera;172+727;MA;SendAlarmsToVentilation.groovy;SendFanStateToVentilation.groovy;SendValuesToVentilation.groovy
+18;1;LQ-VENT-VF2-MA;LQ-VENT-VF2-MA;LQ-VENT-VF2-MA;Carretera Tunel;Carretera;172+727;MA;SendAlarmsToVentilation.groovy;SendFanStateToVentilation.groovy;SendValuesToVentilation.groovy
+19;1;LQ-VENT-VF3-MA;LQ-VENT-VF3-MA;LQ-VENT-VF3-MA;Carretera Tunel;Carretera;172+807;MA;SendAlarmsToVentilation.groovy;SendFanStateToVentilation.groovy;SendValuesToVentilation.groovy
+20;1;LQ-VENT-VF4-MA;LQ-VENT-VF4-MA;LQ-VENT-VF4-MA;Carretera Tunel;Carretera;172+807;MA;SendAlarmsToVentilation.groovy;SendFanStateToVentilation.groovy;SendValuesToVentilation.groovy
+21;1;LQ-VENT-VF5-MA;LQ-VENT-VF5-MA;LQ-VENT-VF5-MA;Carretera Tunel;Carretera;172+887;MA;SendAlarmsToVentilation.groovy;SendFanStateToVentilation.groovy;SendValuesToVentilation.groovy
+22;1;LQ-VENT-VF6-MA;LQ-VENT-VF6-MA;LQ-VENT-VF6-MA;Carretera Tunel;Carretera;172+887;MA;SendAlarmsToVentilation.groovy;SendFanStateToVentilation.groovy;SendValuesToVentilation.groovy
+23;1;LQ-VENT-VF7-MA;LQ-VENT-VF7-MA;LQ-VENT-VF7-MA;Carretera Tunel;Carretera;172+967;MA;SendAlarmsToVentilation.groovy;SendFanStateToVentilation.groovy;SendValuesToVentilation.groovy
+24;1;LQ-VENT-VF8-MA;LQ-VENT-VF8-MA;LQ-VENT-VF8-MA;Carretera Tunel;Carretera;172+967;MA;SendAlarmsToVentilation.groovy;SendFanStateToVentilation.groovy;SendValuesToVentilation.groovy
+25;1;LQ-VENT-VF9-MA;LQ-VENT-VF9-MA;LQ-VENT-VF9-MA;Carretera Tunel;Carretera;173+047;MA;SendAlarmsToVentilation.groovy;SendFanStateToVentilation.groovy;SendValuesToVentilation.groovy
+26;1;LQ-VENT-VF10-MA;LQ-VENT-VF10-MA;LQ-VENT-VF10-MA;Carretera Tunel;Carretera;173+047;MA;SendAlarmsToVentilation.groovy;SendFanStateToVentilation.groovy;SendValuesToVentilation.groovy

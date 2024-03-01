@@ -1,0 +1,3 @@
+item;stretch_type;alias;description;pk_ini;pk_end;lanes;road
+1000;Element;Mapa;Mapa georeferenciado;0.0;0.0;0;Carretera Mapa
+1001;Element;Carretera;Túnel 1;0.0;0.0;0;Carretera Tunel
