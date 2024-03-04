@@ -1,9 +1,11 @@
 import GraphicIconCustomTypeValue from "../graphicIconCustomTypeValue.js";
 import GraphicIcon from "../graphicIcon.js";
+import GraphicIconCustomType from "../graphicIconCustomType.js";
 
 const ELEMENT_TYPE_ID = "ElementType:18";
 
 const PARAM_COMMAND_VALUE_ID = "ElementTypeParam:18:2:1";
+const PARAM_ANE_FLIP = "ElementTypeParam:18:1:3";
 
 const G_ID_ARROW = "arrow";
 
@@ -20,6 +22,10 @@ export default class InAnemometer extends GraphicIconCustomTypeValue {
 		this.elementTypeId = ELEMENT_TYPE_ID;
 		
         this.gArrow = this.g.select("#" + G_ID_ARROW);
+		if (IS_TRUE(this.getValue(PARAM_ANE_FLIP))) {
+			
+			this.flip();	
+		}		
 	}
 	
 	render(elementInfo) {
