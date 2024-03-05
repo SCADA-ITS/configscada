@@ -1,7 +1,7 @@
 item;alias;description;sessionuid;road;stretchs;pk;sentido;on_change_state
-42;LQ-CT-CGBT-HUM-1;LQ-CT-CGBT-HUM-1;LQ-CT-CGBT-HUM-1;Carretera Tunel;Carretera;173+900;CA;
-43;LQ-CT-CGBT-HUM-2;LQ-CT-CGBT-HUM-2;LQ-CT-CGBT-HUM-2;Carretera Tunel;Carretera;173+900;CA;
-44;LQ-CT-ITS-HUM-1;LQ-CT-ITS-HUM-1;LQ-CT-ITS-HUM-1;Carretera Tunel;Carretera;173+900;CA;
-45;LQ-CT-ITS-HUM-2;LQ-CT-ITS-HUM-2;LQ-CT-ITS-HUM-2;Carretera Tunel;Carretera;173+900;CA;
-46;LQ-CT-PCI-HUM-1;LQ-CT-PCI-HUM-1;LQ-CT-PCI-HUM-1;Carretera Tunel;Carretera;173+900;CA;
-47;LQ-CT-PCI-HUM-2;LQ-CT-PCI-HUM-2;LQ-CT-PCI-HUM-2;Carretera Tunel;Carretera;173+900;CA;
+1;LQ-CT-CGBT-HUM-1;LQ-CT-CGBT-HUM-1;LQ-CT-CGBT-HUM-1;Carretera Tunel;Carretera;173+900;CA;
+2;LQ-CT-CGBT-HUM-2;LQ-CT-CGBT-HUM-2;LQ-CT-CGBT-HUM-2;Carretera Tunel;Carretera;173+900;CA;
+3;LQ-CT-ITS-HUM-1;LQ-CT-ITS-HUM-1;LQ-CT-ITS-HUM-1;Carretera Tunel;Carretera;173+900;CA;
+4;LQ-CT-ITS-HUM-2;LQ-CT-ITS-HUM-2;LQ-CT-ITS-HUM-2;Carretera Tunel;Carretera;173+900;CA;
+5;LQ-CT-PCI-HUM-1;LQ-CT-PCI-HUM-1;LQ-CT-PCI-HUM-1;Carretera Tunel;Carretera;173+900;CA;
+6;LQ-CT-PCI-HUM-2;LQ-CT-PCI-HUM-2;LQ-CT-PCI-HUM-2;Carretera Tunel;Carretera;173+900;CA;

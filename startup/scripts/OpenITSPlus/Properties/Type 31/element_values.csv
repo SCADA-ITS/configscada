@@ -1,2 +1,2 @@
 item;alias;description;sessionuid;road;stretchs;pk;sentido;on_change_measure
-2;LQ-FOT-1MA;LQ-FOT-1MA;LQ-FOT-1MA;Carretera Tunel;Carretera;173+900;MA;SendValuesToIllumination.groovy
+1;LQ-FOT-1MA;LQ-FOT-1MA;LQ-FOT-1MA;Carretera Tunel;Carretera;173+900;MA;SendValuesToIllumination.groovy

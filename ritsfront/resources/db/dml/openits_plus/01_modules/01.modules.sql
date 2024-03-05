@@ -1,3 +1,5 @@
+UPDATE ui.modules SET autoload=true WHERE id=1018;
+
 INSERT INTO ui.modules 
 (id, module_type_id, "name", description, default_view_type_id, default_system_permission_id, js_file, js_method_draw, js_method_callbacks, data_query, wss_topic, enabled, visible, autoload) VALUES 
 (901, 4, 'SELECTOR_TREE_NODES_SINOPTICOS_CT', 'SELECTOR_TREE_NODES_SINOPTICOS_CT', 1, NULL, 'modules/synopticModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),

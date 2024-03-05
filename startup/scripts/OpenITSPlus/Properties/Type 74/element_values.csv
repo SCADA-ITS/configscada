@@ -1,3 +1,3 @@
 item;alias;description;sessionuid;road;stretchs;pk;sentido;param5_eru_type;param6_redundante_eru_type;param7_redundant_eru_alias
-9;LQ-ERU-1-MASTER;LQ-ERU-1-MASTER;LQ-ERU-1-MASTER;Carretera Tunel;Carretera;173+626;CA;Redundante;Maestra;LQ-ERU-1-SLAVE
-10;LQ-ERU-1-SLAVE;LQ-ERU-1-SLAVE;LQ-ERU-1-SLAVE;Carretera Tunel;Carretera;173+626;CA;Redundante;Esclava;LQ-ERU-1-MASTER
+1;LQ-ERU-1-MASTER;LQ-ERU-1-MASTER;LQ-ERU-1-MASTER;Carretera Tunel;Carretera;173+626;CA;Redundante;Maestra;LQ-ERU-1-SLAVE
+2;LQ-ERU-1-SLAVE;LQ-ERU-1-SLAVE;LQ-ERU-1-SLAVE;Carretera Tunel;Carretera;173+626;CA;Redundante;Esclava;LQ-ERU-1-MASTER
