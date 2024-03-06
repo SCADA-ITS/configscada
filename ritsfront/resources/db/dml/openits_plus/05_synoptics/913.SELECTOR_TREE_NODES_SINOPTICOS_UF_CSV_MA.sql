@@ -20,17 +20,17 @@ INSERT INTO ui.synoptic_commands
 
 INSERT INTO ui.synoptic_layer_elements 
 (layer_id, element_id, graphic_icon_id, label, x, y,  horizontal_flip, rotate, tooltip, show_text, text_color, selectable) VALUES 
-(91305700, 'Element:57:63', 000057, 'LQ-VENT-INT-VF4-MA', 714, 443, false, NULL, true, false, NULL, true),
-(91305700, 'Element:57:62', 000057, 'LQ-VENT-INT-VF3-MA', 564, 443, false, NULL, true, false, NULL, true),
-(91305700, 'Element:57:120', 000057, 'LQ-VENT-INT-VF2-MA', 415, 443, false, NULL, true, false, NULL, true),
-(91305700, 'Element:57:61', 000057, 'LQ-VENT-INT-VF1-MA', 265, 443, false, NULL, true, false, NULL, true),
-(91305700, 'Element:57:71', 000057, 'LQ-INT-CSV-1', 115, 443, false, NULL, true, false, NULL, true),
-(91305700, 'Element:57:70', 000057, 'LQ-MAG-CSV-1', 939, 313, false, NULL, true, false, NULL, true),
-(91305700, 'Element:57:72', 000057, 'LQ-MAGDIF-RCAL-CV1', 1762, 443, false, NULL, true, false, NULL, true),
-(91305700, 'Element:57:69', 000057, 'LQ-VENT-INT-VF10-MA', 1612, 443, false, NULL, true, false, NULL, true),
-(91305700, 'Element:57:68', 000057, 'LQ-VENT-INT-VF9-MA', 1463, 443, false, NULL, true, false, NULL, true),
-(91305700, 'Element:57:67', 000057, 'LQ-VENT-INT-VF8-MA', 1313, 443, false, NULL, true, false, NULL, true),
-(91305700, 'Element:57:66', 000057, 'LQ-VENT-INT-VF7-MA', 1163, 443, false, NULL, true, false, NULL, true),
-(91305700, 'Element:57:65', 000057, 'LQ-VENT-INT-VF6-MA', 1014, 443, false, NULL, true, false, NULL, true),
-(91305700, 'Element:57:64', 000057, 'LQ-VENT-INT-VF5-MA', 863, 443, false, NULL, true, false, NULL, true);
+(91305700, 'Element:57:63', 000057, 'TUN-VENT-INT-VF4-MA', 714, 443, false, NULL, true, false, NULL, true),
+(91305700, 'Element:57:62', 000057, 'TUN-VENT-INT-VF3-MA', 564, 443, false, NULL, true, false, NULL, true),
+(91305700, 'Element:57:120', 000057, 'TUN-VENT-INT-VF2-MA', 415, 443, false, NULL, true, false, NULL, true),
+(91305700, 'Element:57:61', 000057, 'TUN-VENT-INT-VF1-MA', 265, 443, false, NULL, true, false, NULL, true),
+(91305700, 'Element:57:71', 000057, 'TUN-INT-CSV-1', 115, 443, false, NULL, true, false, NULL, true),
+(91305700, 'Element:57:70', 000057, 'TUN-MAG-CSV-1', 939, 313, false, NULL, true, false, NULL, true),
+(91305700, 'Element:57:72', 000057, 'TUN-MAGDIF-RCAL-CV1', 1762, 443, false, NULL, true, false, NULL, true),
+(91305700, 'Element:57:69', 000057, 'TUN-VENT-INT-VF10-MA', 1612, 443, false, NULL, true, false, NULL, true),
+(91305700, 'Element:57:68', 000057, 'TUN-VENT-INT-VF9-MA', 1463, 443, false, NULL, true, false, NULL, true),
+(91305700, 'Element:57:67', 000057, 'TUN-VENT-INT-VF8-MA', 1313, 443, false, NULL, true, false, NULL, true),
+(91305700, 'Element:57:66', 000057, 'TUN-VENT-INT-VF7-MA', 1163, 443, false, NULL, true, false, NULL, true),
+(91305700, 'Element:57:65', 000057, 'TUN-VENT-INT-VF6-MA', 1014, 443, false, NULL, true, false, NULL, true),
+(91305700, 'Element:57:64', 000057, 'TUN-VENT-INT-VF5-MA', 863, 443, false, NULL, true, false, NULL, true);
 

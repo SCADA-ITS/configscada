@@ -20,11 +20,11 @@ INSERT INTO ui.synoptic_commands
 
 INSERT INTO ui.synoptic_layer_elements 
 (layer_id, element_id, graphic_icon_id, label, x, y,  horizontal_flip, rotate, tooltip, show_text, text_color, selectable) VALUES 
-(90805700, 'Element:57:121', 010057, 'LQ-MAG-GAL', 979, 382, false, NULL, true, false, NULL, true),
-(90805700, 'Element:57:127', 010057, 'LQ-MAGDIF-PRES-GAL', 1557, 512, false, NULL, true, false, NULL, true),
-(90805700, 'Element:57:126', 010057, 'LQ-MAGDIF-GF9-COMM', 1227, 512, false, NULL, true, false, NULL, true),
-(90805700, 'Element:57:125', 010057, 'LQ-MAGDIF-GF6-GAL', 1062, 512, false, NULL, true, false, NULL, true),
-(90805700, 'Element:57:124', 010057, 'LQ-MAGDIF-GE1-LUM', 732, 512, false, NULL, true, false, NULL, true),
-(90805700, 'Element:57:123', 010057, 'LQ-MAGDIF-GA2-LUM', 566, 512, false, NULL, true, false, NULL, true),
-(90805700, 'Element:57:122', 010057, 'LQ-MAGDIF-GA1-LUM', 401, 512, false, NULL, true, false, NULL, true);
+(90805700, 'Element:57:121', 010057, 'TUN-MAG-GAL', 979, 382, false, NULL, true, false, NULL, true),
+(90805700, 'Element:57:127', 010057, 'TUN-MAGDIF-PRES-GAL', 1557, 512, false, NULL, true, false, NULL, true),
+(90805700, 'Element:57:126', 010057, 'TUN-MAGDIF-GF9-COMM', 1227, 512, false, NULL, true, false, NULL, true),
+(90805700, 'Element:57:125', 010057, 'TUN-MAGDIF-GF6-GAL', 1062, 512, false, NULL, true, false, NULL, true),
+(90805700, 'Element:57:124', 010057, 'TUN-MAGDIF-GE1-LUM', 732, 512, false, NULL, true, false, NULL, true),
+(90805700, 'Element:57:123', 010057, 'TUN-MAGDIF-GA2-LUM', 566, 512, false, NULL, true, false, NULL, true),
+(90805700, 'Element:57:122', 010057, 'TUN-MAGDIF-GA1-LUM', 401, 512, false, NULL, true, false, NULL, true);
 

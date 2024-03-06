@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    version="1.1"
    id="svg2"
    xml:space="preserve"
@@ -14,9 +7,31 @@
    height="1080"
    viewBox="0 0 1920 1080"
    sodipodi:docname="Ausol_LQ_CT_Plano.svg"
-   inkscape:version="0.92.4 (5da689c313, 2019-01-14)"><metadata
+   inkscape:version="1.2.2 (1:1.2.2+202212051550+b0a8486541)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"><metadata
      id="metadata739" /><defs
-     id="defs737" /><sodipodi:namedview
+     id="defs737"><rect
+       x="604.14693"
+       y="67.78814"
+       width="130.81922"
+       height="46.381359"
+       id="rect1074" /><rect
+       x="604.14691"
+       y="67.788139"
+       width="185.52543"
+       height="38.0565"
+       id="rect1074-2" /><rect
+       x="604.14691"
+       y="67.788139"
+       width="185.52544"
+       height="38.056499"
+       id="rect1074-2-1" /></defs><sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
      borderopacity="1"
@@ -25,22 +40,25 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="1920"
-     inkscape:window-height="1017"
+     inkscape:window-width="1848"
+     inkscape:window-height="920"
      id="namedview736"
      showgrid="false"
-     inkscape:zoom="1.6817101"
-     inkscape:cx="898.66279"
-     inkscape:cy="264.29583"
-     inkscape:window-x="1912"
-     inkscape:window-y="-8"
+     inkscape:zoom="0.84085505"
+     inkscape:cx="1200.5636"
+     inkscape:cy="396.62008"
+     inkscape:window-x="72"
+     inkscape:window-y="27"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg2" /><g
+     inkscape:current-layer="main"
+     inkscape:showpageshadow="2"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1" /><g
      id="main"
      transform="matrix(0.0967643,0,0,-0.0967628,0.00699631,1218.85)"><metadata
        id="metadata8"><rdf:RDF><cc:Work
            rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
-             rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title></dc:title></cc:Work></rdf:RDF></metadata><defs
+             rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title /></cc:Work></rdf:RDF></metadata><defs
        id="defs6"><clipPath
          clipPathUnits="userSpaceOnUse"
          id="clipPath18"><path
@@ -949,13 +967,20 @@
              d="m 7925,4648 h 4288 l -19,-57 z"
              style="fill:#bababa;fill-opacity:1;fill-rule:nonzero;stroke:#bababa;stroke-width:12.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
              id="path730"
-             inkscape:connector-curvature="0" /></g></g></g><g
+             inkscape:connector-curvature="0" /></g></g></g><text
+       xml:space="preserve"
+       transform="matrix(10.33439,0,0,-10.33455,3047.1265,7341.8144)"
+       id="text1072-9-2"
+       style="font-size:26.6667px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';white-space:pre;shape-inside:url(#rect1074-2-1);display:inline;fill:#000000;stroke-width:0.377953"><tspan
+         x="604.14648"
+         y="91.809211"
+         id="tspan1963">TUBO SUR</tspan></text><g
        id="g732"
        transform="translate(-124.01268,-103.3455)"><g
          id="g734"
          clip-path="url(#clipPath738)"><text
    transform="matrix(1,0,0,-1,8392,3030)"
-   style="font-variant:normal;font-weight:normal;font-size:121.06400299px;font-family:Arial;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+   style="font-variant:normal;font-weight:normal;font-size:121.064px;font-family:Arial;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
    id="text742"><tspan
      x="0 87.408211 161.37831 195.0341 282.44232 376.6301 457.37979"
      y="0"
@@ -967,7 +992,7 @@
          id="g746"
          clip-path="url(#clipPath750)"><text
    transform="scale(1,-1)"
-   style="font-variant:normal;font-weight:normal;font-size:121.06400299px;font-family:Arial;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+   style="font-variant:normal;font-weight:normal;font-size:121.064px;font-family:Arial;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
    id="text754"
    x="9422.6826"
    y="-2926.6541"><tspan
@@ -978,7 +1003,7 @@
 
 <text
    transform="scale(1,-1)"
-   style="font-variant:normal;font-weight:normal;font-size:121.06400299px;font-family:Arial;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+   style="font-variant:normal;font-weight:normal;font-size:121.064px;font-family:Arial;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
    id="text758"
    x="10032.027"
    y="-2927.6541"><tspan
@@ -989,7 +1014,7 @@
 
 <text
    transform="scale(1,-1)"
-   style="font-variant:normal;font-weight:normal;font-size:121.06400299px;font-family:Arial;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+   style="font-variant:normal;font-weight:normal;font-size:121.064px;font-family:Arial;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
    id="text762"
    x="11646.704"
    y="-2926.6541"><tspan
@@ -1891,49 +1916,35 @@
    d="M 0,12595 H 19841 V 1435 H 0 v 11160"
    style="fill:none;stroke:#808080;stroke-width:12;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
    id="path1450"
-   inkscape:connector-curvature="0" /><text
-   transform="matrix(1,0,0,-1,9137,11884)"
-   style="font-variant:normal;font-weight:normal;font-size:345.89801025px;font-family:Arial;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-   id="text1454"><tspan
-     x="0 192.31929 384.63858 480.79822 749.90686 942.22614 1019.0155 1211.3348 1307.4944"
-     y="0"
-     id="tspan1452">La Quinta</tspan></text>
+   inkscape:connector-curvature="0" />
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 <text
-   transform="matrix(1,0,0,-1,2810,10916)"
-   style="font-variant:normal;font-weight:normal;font-size:172.94900513px;font-family:Arial;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-   id="text1458"><tspan
-     x="0 115.35698 240.22617 288.30597 393.97781 509.33481"
-     y="0"
-     id="tspan1456">BC TSC</tspan></text>
-
-
-<text
-   transform="matrix(1,0,0,-1,2811,3809)"
-   style="font-variant:normal;font-weight:normal;font-size:172.94900513px;font-family:Arial;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-   id="text1462"><tspan
-     x="0 115.35698 240.22617 288.30597 393.97781 509.33481"
-     y="0"
-     id="tspan1460">BC TSM</tspan></text>
-
-
-<text
-   transform="matrix(1,0,0,-1,16416,10916)"
-   style="font-variant:normal;font-weight:normal;font-size:172.94900513px;font-family:Arial;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-   id="text1466"><tspan
-     x="0 115.35698 259.42349 307.50333 413.17517 528.53217"
-     y="0"
-     id="tspan1464">BM TSC</tspan></text>
-
-
-<text
-   transform="matrix(1,0,0,-1,16418,3809)"
-   style="font-variant:normal;font-weight:normal;font-size:172.94900513px;font-family:Arial;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-   id="text1470"><tspan
-     x="0 115.35698 259.42349 307.50333 413.17517 528.53217"
-     y="0"
-     id="tspan1468">BM TSM</tspan></text>
-
-
-</g></g></g></svg>
+   xml:space="preserve"
+   transform="matrix(10.33439,0,0,-10.33455,3011.0596,12866.658)"
+   id="text1072"
+   style="font-size:37.3333px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';white-space:pre;shape-inside:url(#rect1074);fill:#000000;stroke-width:0.377953"><tspan
+     x="604.14648"
+     y="101.4172"
+     id="tspan1967"><tspan
+       style="font-weight:bold;-inkscape-font-specification:'Arial Bold'"
+       id="tspan1965">TÚNEL</tspan></tspan></text><text
+   xml:space="preserve"
+   transform="matrix(10.33439,0,0,-10.33455,2802.0282,11791.486)"
+   id="text1072-9"
+   style="font-size:26.6667px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';white-space:pre;shape-inside:url(#rect1074-2);display:inline;fill:#000000;stroke-width:0.377953"><tspan
+     x="604.14648"
+     y="91.809211"
+     id="tspan1969">TUBO NORTE</tspan></text></g></g></g></svg>

@@ -21,8 +21,8 @@ INSERT INTO ui.synoptic_commands
 
 INSERT INTO ui.synoptic_layer_elements 
 (layer_id, element_id, graphic_icon_id, label, x, y,  horizontal_flip, rotate, tooltip, show_text, text_color, selectable) VALUES 
-(90105500, 'Element:55:3', 000055, 'LQ-PCI-1', 1097, 823, false, NULL, true, false, NULL, true),
-(90105500, 'Element:55:2', 000055, 'LQ-CITS-1', 881, 824, false, NULL, true, false, NULL, true),
-(90105500, 'Element:55:1', 000055, 'LQ-CGBT-1', 774, 825, false, NULL, true, false, NULL, true),
-(90107500, 'Element:75:1', 000075, 'LQ-GEL-1MA', 989, 825, false, NULL, true, false, NULL, true);
+(90105500, 'Element:55:3', 000055, 'TUN-PCI-1', 1097, 823, false, NULL, true, false, NULL, true),
+(90105500, 'Element:55:2', 000055, 'TUN-CITS-1', 881, 824, false, NULL, true, false, NULL, true),
+(90105500, 'Element:55:1', 000055, 'TUN-CGBT-1', 774, 825, false, NULL, true, false, NULL, true),
+(90107500, 'Element:75:1', 000075, 'TUN-GEL-1MA', 989, 825, false, NULL, true, false, NULL, true);
 
