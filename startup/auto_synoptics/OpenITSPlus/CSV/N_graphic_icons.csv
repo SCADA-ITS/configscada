@@ -25,7 +25,7 @@ element_type;element_subtype;alias;svg_file;js_custom_type_render;keepRatio
 29;;FIBRO_CT;29_fibrolaser_ct.svg;;true
 30;;RADIO;30_radio.svg;;true
 31;;FOTOCELULA;31_pho.svg;;true
-32;;PRESUR;32_presurizacion.svg;;true
+32;;PRESUR;32_presurizacion_vent.svg;;true
 33;;TRAFO;33_trafo.svg;;true
 48;;TOXIC_CONTROL;48_toxic_control.svg;;true
 51;;ETD;51_etd.svg;;true

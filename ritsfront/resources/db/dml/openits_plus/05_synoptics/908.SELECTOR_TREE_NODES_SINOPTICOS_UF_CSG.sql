@@ -18,3 +18,13 @@ INSERT INTO ui.synoptic_commands
 (22, 908, 1, 'LBL_ELEMENT', 'mdi mdi-pencil', true, 101401, NULL, 2, false, NULL, true, true),
 (23, 908, 2, 'LBL_CMD_EQUIPMENT', 'mdi mdi-pencil', false, 101701, NULL, 2, true, NULL, false, true);
 
+INSERT INTO ui.synoptic_layer_elements 
+(layer_id, element_id, graphic_icon_id, label, x, y,  horizontal_flip, rotate, tooltip, show_text, text_color, selectable) VALUES 
+(90805700, 'Element:57:121', 010057, 'LQ-MAG-GAL', 979, 382, false, NULL, true, false, NULL, true),
+(90805700, 'Element:57:127', 010057, 'LQ-MAGDIF-PRES-GAL', 1557, 512, false, NULL, true, false, NULL, true),
+(90805700, 'Element:57:126', 010057, 'LQ-MAGDIF-GF9-COMM', 1227, 512, false, NULL, true, false, NULL, true),
+(90805700, 'Element:57:125', 010057, 'LQ-MAGDIF-GF6-GAL', 1062, 512, false, NULL, true, false, NULL, true),
+(90805700, 'Element:57:124', 010057, 'LQ-MAGDIF-GE1-LUM', 732, 512, false, NULL, true, false, NULL, true),
+(90805700, 'Element:57:123', 010057, 'LQ-MAGDIF-GA2-LUM', 566, 512, false, NULL, true, false, NULL, true),
+(90805700, 'Element:57:122', 010057, 'LQ-MAGDIF-GA1-LUM', 401, 512, false, NULL, true, false, NULL, true);
+

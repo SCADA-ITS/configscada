@@ -1,10 +1,10 @@
 item;alias;description;sessionuid;road;stretchs;pk;sentido;on_change_measure;param2_entrance_tunnel_distance
-9;LQ-NO-1CA;LQ-NO-1CA;LQ-NO-1CA;Carretera Tunel;Carretera;172+100;CA;SendValuesToVentilation.groovy;0
-10;LQ-NO-2CA;LQ-NO-2CA;LQ-NO-2CA;Carretera Tunel;Carretera;172+100;CA;SendValuesToVentilation.groovy;0
-11;LQ-NO-3CA;LQ-NO-3CA;LQ-NO-3CA;Carretera Tunel;Carretera;172+100;CA;SendValuesToVentilation.groovy;0
-12;LQ-NO-4CA;LQ-NO-4CA;LQ-NO-4CA;Carretera Tunel;Carretera;172+100;CA;SendValuesToVentilation.groovy;0
-13;LQ-NO-5CA;LQ-NO-5CA;LQ-NO-5CA;Carretera Tunel;Carretera;172+100;CA;SendValuesToVentilation.groovy;0
-14;LQ-NO-1MA;LQ-NO-1MA;LQ-NO-1MA;Carretera Tunel;Carretera;173+900;MA;SendValuesToVentilation.groovy;0
-15;LQ-NO-2MA;LQ-NO-2MA;LQ-NO-2MA;Carretera Tunel;Carretera;173+900;MA;SendValuesToVentilation.groovy;0
-16;LQ-NO-3MA;LQ-NO-3MA;LQ-NO-3MA;Carretera Tunel;Carretera;173+900;MA;SendValuesToVentilation.groovy;0
-17;LQ-NO-4MA;LQ-NO-4MA;LQ-NO-4MA;Carretera Tunel;Carretera;173+900;MA;SendValuesToVentilation.groovy;0
+1;LQ-NO-1CA;LQ-NO-1CA;LQ-NO-1CA;Carretera Tunel;Carretera;172+100;CA;SendValuesToVentilation.groovy;0
+2;LQ-NO-2CA;LQ-NO-2CA;LQ-NO-2CA;Carretera Tunel;Carretera;172+100;CA;SendValuesToVentilation.groovy;0
+3;LQ-NO-3CA;LQ-NO-3CA;LQ-NO-3CA;Carretera Tunel;Carretera;172+100;CA;SendValuesToVentilation.groovy;0
+4;LQ-NO-4CA;LQ-NO-4CA;LQ-NO-4CA;Carretera Tunel;Carretera;172+100;CA;SendValuesToVentilation.groovy;0
+5;LQ-NO-5CA;LQ-NO-5CA;LQ-NO-5CA;Carretera Tunel;Carretera;172+100;CA;SendValuesToVentilation.groovy;0
+6;LQ-NO-1MA;LQ-NO-1MA;LQ-NO-1MA;Carretera Tunel;Carretera;173+900;MA;SendValuesToVentilation.groovy;0
+7;LQ-NO-2MA;LQ-NO-2MA;LQ-NO-2MA;Carretera Tunel;Carretera;173+900;MA;SendValuesToVentilation.groovy;0
+8;LQ-NO-3MA;LQ-NO-3MA;LQ-NO-3MA;Carretera Tunel;Carretera;173+900;MA;SendValuesToVentilation.groovy;0
+9;LQ-NO-4MA;LQ-NO-4MA;LQ-NO-4MA;Carretera Tunel;Carretera;173+900;MA;SendValuesToVentilation.groovy;0

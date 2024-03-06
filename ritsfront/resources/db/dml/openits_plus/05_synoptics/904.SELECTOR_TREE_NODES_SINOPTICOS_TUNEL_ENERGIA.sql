@@ -55,8 +55,8 @@ INSERT INTO ui.synoptic_layer_elements
 (90408700, 'Element:87:1', 000087, 'LQ-DEP-DIESEL-PCI', 1548, 172, false, NULL, true, false, NULL, true),
 (90407000, 'Element:70:1', 000070, 'LQ-ARED-1', 1008, 368, false, NULL, true, false, NULL, true),
 (90409300, 'Element:93:1', 000093, 'LQ-DEP-GE', 1478, 197, false, NULL, true, false, NULL, true),
-(90407500, 'Element:75:1', 00007500, 'LQ-GEL-1MA', 1363, 273, false, NULL, true, false, NULL, true),
-(90405700, 'Element:57:78', 000057, 'LQ-EKOR-RPG-UCT', 1136, 83, false, NULL, true, false, NULL, true),
+(90407500, 'Element:75:1', 010075, 'LQ-GEL-1MA', 1363, 273, false, NULL, true, false, NULL, true),
+(90405700, 'Element:57:78', 020057, 'LQ-EKOR-RPG-UCT', 1136, 83, false, NULL, true, false, NULL, true),
 (90405700, 'Element:57:79', 000057, 'LQ-MAG-CGBT-MT', 1136, 228, false, NULL, true, false, NULL, true),
 (90405700, 'Element:57:35', 000057, 'LQ-INT-CGBT-COM-GRUPO', 1303, 347, false, NULL, true, false, NULL, true),
 (90405700, 'Element:57:34', 000057, 'LQ-INT-CGBT-COM-RED', 1208, 347, false, NULL, true, false, NULL, true),
@@ -75,10 +75,11 @@ INSERT INTO ui.synoptic_layer_elements
 (90405700, 'Element:57:83', 000057, 'LQ-MAG-CSG-GAL', 1250, 716, false, NULL, true, false, NULL, true),
 (90405700, 'Element:57:82', 000057, 'LQ-MAG-CS-ITS1', 1143, 716, false, NULL, true, false, NULL, true),
 (90405700, 'Element:57:81', 000057, 'LQ-CIR-CSSAI', 1028, 717, false, NULL, true, false, NULL, true),
+(90406500, 'Element:65:1', 010065, 'LQ-SAI-1', 1247, 529, false, NULL, true, false, NULL, true),
 (90403300, 'Element:33:1', 000033, 'LQ-TRAFO-MT-T154', 1126, 147, false, NULL, true, false, NULL, true),
-(90405600, 'Element:56:3', 00005601, 'LQ-CSA-RED', 1062, 493, false, NULL, true, false, NULL, true),
-(90405600, 'Element:56:5', 00005601, 'LQ-CSV-TSC', 1398, 495, false, NULL, true, false, NULL, true),
-(90405600, 'Element:56:4', 00005601, 'LQ-CSV-TSM', 1313, 495, false, NULL, true, false, NULL, true),
-(90405600, 'Element:56:1', 00005601, 'LQ-CS-ITS1', 1132, 792, false, NULL, true, false, NULL, true),
-(90405600, 'Element:56:2', 00005601, 'LQ-CSA-SAI', 1016, 791, false, NULL, true, false, NULL, true);
+(90405600, 'Element:56:3', 010056, 'LQ-CSA-RED', 1062, 493, false, NULL, true, false, NULL, true),
+(90405600, 'Element:56:5', 010056, 'LQ-CSV-TSC', 1398, 495, false, NULL, true, false, NULL, true),
+(90405600, 'Element:56:4', 010056, 'LQ-CSV-TSM', 1313, 495, false, NULL, true, false, NULL, true),
+(90405600, 'Element:56:1', 010056, 'LQ-CS-ITS1', 1132, 792, false, NULL, true, false, NULL, true),
+(90405600, 'Element:56:2', 010056, 'LQ-CSA-SAI', 1016, 791, false, NULL, true, false, NULL, true);
 

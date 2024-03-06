@@ -58,6 +58,6 @@ INSERT INTO ui.synoptic_layer_elements
 (91105700, 'Element:57:92', 000057, 'LQ-MAGDIF-BF10', 274, 206, false, NULL, true, false, NULL, true),
 (91105700, 'Element:57:91', 000057, 'LQ-INT-ITS1', 176, 206, false, NULL, true, false, NULL, true),
 (91105700, 'Element:57:90', 000057, 'LQ-MAG-ITS1', 977, 78, false, NULL, true, false, NULL, true),
-(91108400, 'Element:84:28', 010084, 'LQ-CONT-BF16', 1742, 308, false, NULL, true, false, NULL, true),
-(91108400, 'Element:84:27', 010084, 'LQ-CONT-BF15', 1644, 308, false, NULL, true, false, NULL, true);
+(91108400, 'Element:84:28', 000057, 'LQ-CONT-BF16', 1742, 308, false, NULL, true, false, NULL, true),
+(91108400, 'Element:84:27', 000057, 'LQ-CONT-BF15', 1644, 308, false, NULL, true, false, NULL, true);
 

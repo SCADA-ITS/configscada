@@ -1,6 +1,5 @@
 item;element_subtype;alias;description;sessionuid;road;stretchs;pk;sentido
 1;1;LQ-SMF-AA-1MA;LQ-SMF-AA-1MA;LQ-SMF-AA-1MA;Carretera Tunel;Carretera;172+655;MA
-2;1;LQ-SMF-AA-2MA;LQ-SMF-AA-2MA;LQ-SMF-AA-2MA;Carretera Tunel;Carretera;172+655;MA
-3;1;LQ-SMF-AA-1CA;LQ-SMF-AA-1CA;LQ-SMF-AA-1CA;Carretera Tunel;Carretera;173+490;CA
-4;2;LQ-SMF-RR-1MA;LQ-SMF-RR-1MA;LQ-SMF-RR-1MA;Carretera Tunel;Carretera;172+655;MA
-5;2;LQ-SMF-RR-1CA;LQ-SMF-RR-1CA;LQ-SMF-RR-1CA;Carretera Tunel;Carretera;173+490;CA
+2;1;LQ-SMF-AA-1CA;LQ-SMF-AA-1CA;LQ-SMF-AA-1CA;Carretera Tunel;Carretera;173+490;CA
+3;2;LQ-SMF-RR-1MA;LQ-SMF-RR-1MA;LQ-SMF-RR-1MA;Carretera Tunel;Carretera;172+655;MA
+4;2;LQ-SMF-RR-1CA;LQ-SMF-RR-1CA;LQ-SMF-RR-1CA;Carretera Tunel;Carretera;173+490;CA
