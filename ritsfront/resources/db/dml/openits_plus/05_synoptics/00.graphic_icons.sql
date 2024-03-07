@@ -50,6 +50,7 @@ INSERT INTO ui.graphic_icons
 (000032, 'PRESUR', 'PRESUR', false, false, 'component/graphicIcon/graphicIconDefault.js', 50, 50, 'img/graphic_icon/32_presurizacion_vent.svg', 'null',true),
 (000033, 'TRAFO', 'TRAFO', false, false, 'component/graphicIcon/graphicIconDefault.js', 50, 50, 'img/graphic_icon/33_trafo.svg', 'null',true),
 (000048, 'TOXIC_CONTROL', 'TOXIC_CONTROL', false, false, 'component/graphicIcon/graphicIconDefault.js', 50, 50, 'img/graphic_icon/48_toxic_control.svg', 'null',true),
+(000049, 'ELEVATOR', 'ELEVATOR', false, false, 'component/graphicIcon/graphicIconDefault.js', 40, 40, 'img/graphic_icon/49_elevator.svg', 'null',true),
 (000051, 'ETD', 'ETD', false, false, 'component/graphicIcon/graphicIconDefault.js', 50, 50, 'img/graphic_icon/51_etd.svg', 'null',true),
 (000052, 'DAI', 'DAI', false, false, 'component/graphicIcon/graphicIconDefault.js', 50, 50, 'img/graphic_icon/52_dai_server.svg', 'null',true),
 (000053, 'SEM', 'SEM', false, false, 'component/graphicIcon/graphicIconDefault.js', 50, 50, 'img/graphic_icon/53_sem_2_grupos.svg', 'null',true),
@@ -61,7 +62,9 @@ INSERT INTO ui.graphic_icons
 (010057, 'MAG_DIF', 'MAG_DIF', false, false, 'component/graphicIcon/graphicIconDefault.js', 20, 20, 'img/graphic_icon/57_switch.svg', 'null',true),
 (020057, 'MAG_DIF', 'MAG_DIF', false, false, 'component/graphicIcon/graphicIconDefault.js', 50, 50, 'img/graphic_icon/92_electrical_protection.svg', 'null',true),
 (000058, 'PULS', 'PULS', false, false, 'component/graphicIcon/graphicIconDefault.js', 37.5, 37.5, 'img/graphic_icon/58_pulsador.svg', 'null',true),
+(010058, 'PULS', 'PULS', false, false, 'component/graphicIcon/graphicIconDefault.js', 25, 25, 'img/graphic_icon/58_pulsador.svg', 'null',true),
 (000059, 'DET_HUM', 'DET_HUM', false, false, 'component/graphicIcon/graphicIconDefault.js', 37.5, 37.5, 'img/graphic_icon/59_smoke_detector.svg', 'null',true),
+(010059, 'DET_HUM', 'DET_HUM', false, false, 'component/graphicIcon/graphicIconDefault.js', 25, 25, 'img/graphic_icon/59_smoke_detector.svg', 'null',true),
 (000060, 'SIRENA', 'SIRENA', false, false, 'component/graphicIcon/graphicIconDefault.js', 37.5, 37.5, 'img/graphic_icon/60_sirena.svg', 'null',true),
 (000061, 'FIRE_CENT', 'FIRE_CENT', false, false, 'component/graphicIcon/graphicIconDefault.js', 40, 40, 'img/graphic_icon/61_fire_det_ct.svg', 'null',true),
 (000065, 'SAI', 'SAI', false, false, 'component/graphicIcon/graphicIconDefault.js', 50, 50, 'img/graphic_icon/65_sai.svg', 'null',true),
@@ -74,6 +77,7 @@ INSERT INTO ui.graphic_icons
 (010075, 'GE', 'GE', false, false, 'component/graphicIcon/graphicIconDefault.js', 35, 35, 'img/graphic_icon/75_ge.svg', 'null',true),
 (000084, 'LIGHT_CIRCUIT', 'LIGHT_CIRCUIT', false, false, 'component/graphicIcon/graphicIconDefault.js', 50, 50, 'img/graphic_icon/84_switch_light_bulb.svg', 'null',true),
 (010084, 'LIGHT_CIRCUIT', 'LIGHT_CIRCUIT', false, false, 'component/graphicIcon/graphicIconDefault.js', 30, 30, 'img/graphic_icon/84_switch_light_bulb.svg', 'null',true),
+(020084, 'LIGHT_CIRCUIT', 'LIGHT_CIRCUIT', false, false, 'component/graphicIcon/graphicIconDefault.js', 25, 25, 'img/graphic_icon/84_switch_light_bulb.svg', 'null',true),
 (000085, 'DALI', 'DALI', false, false, 'component/graphicIcon/graphicIconDefault.js', 320, 19, 'img/graphic_icon/85_bus_dali.svg', 'null',false),
 (010085, 'DALI', 'DALI', false, false, 'component/graphicIcon/graphicIconDefault.js', 250, 19, 'img/graphic_icon/85_bus_dali.svg', 'null',false),
 (020085, 'DALI', 'DALI', false, false, 'component/graphicIcon/graphicIconDefault.js', 290, 19, 'img/graphic_icon/85_bus_dali.svg', 'null',false),
@@ -82,6 +86,7 @@ INSERT INTO ui.graphic_icons
 (010087, 'TANK', 'TANK', false, false, 'component/graphicIcon/graphicIconDefault.js', 30, 45, 'img/graphic_icon/87_tank.svg', 'null',false),
 (000088, 'LEAK_WATER', 'LEAK_WATER', false, false, 'component/graphicIcon/graphicIconDefault.js', 30, 30, 'img/graphic_icon/88_leak_water_sensor.svg', 'null',true),
 (000089, 'GATE', 'GATE', false, false, 'component/graphicIcon/graphicIconDefault.js', 50, 50, 'img/graphic_icon/89_gate.svg', 'null',true),
+(010089, 'GATE', 'GATE', false, false, 'component/graphicIcon/graphicIconDefault.js', 40, 40, 'img/graphic_icon/89_gate.svg', 'null',true),
 (000093, 'TRANSFER_GROUP', 'TRANSFER_GROUP', false, false, 'component/graphicIcon/graphicIconDefault.js', 35, 35, 'img/graphic_icon/93_transfer_group.svg', 'null',true),
 (000096, 'CALL_SYSTEM', 'CALL_SYSTEM', false, false, 'component/graphicIcon/graphicIconDefault.js', 50, 50, 'img/graphic_icon/02_camera.svg', 'null',true);
 

@@ -5,7 +5,7 @@
 INSERT INTO conf.roles
 (role_id, alias, description, preset, enabled, visible, created_at, updated_at) VALUES
 (1, 'Administrador', 'Administrador del sistema', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(2, 'Visualizador', 'Visualizador del sistema', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(2, 'Operador', 'Operador del sistema', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 -- 
 -- Table: conf.role_permissions
@@ -69,8 +69,22 @@ INSERT INTO conf.role_permissions
 --
 INSERT INTO conf.users
 (user_id, role_id, name_, password_, password_expired_at, session_expire_time_s, locked_until, preset, allow_multiple_sessions, full_name, email, locale_code,  enabled, visible, created_at, updated_at) VALUES
+--Administradores
 (1, 1, 'admin', 'PTp8841/XyOkxeVUCyNf+w==', NULL, NULL, NULL, true, true, 'System admin', 'admin@revenga.com', 'es_ES', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(6, 2, 'admin_en', 'PTp8841/XyOkxeVUCyNf+w==', NULL, NULL, NULL, true, true, 'System admin en_GB', 'admin_GB@revenga.com', 'en_GB', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(2, 1, 'admin_en', 'PTp8841/XyOkxeVUCyNf+w==', NULL, NULL, NULL, true, true, 'System admin en_GB', 'admin_GB@revenga.com', 'en_GB', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+--Operadores
+(3, 2, 'oper_tun', 'PTp8841/XyOkxeVUCyNf+w==', NULL, NULL, NULL, true, true, 'Operator traffic tunel', 'oper_tun@revenga.com', 'es_ES', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(4, 2, 'oper_tun_en', 'PTp8841/XyOkxeVUCyNf+w==', NULL, NULL, NULL, true, true, 'Operator traffic tunel en_GB', 'oper_tun_GB@revenga.com', 'en_GB', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(5, 2, 'oper_map', 'PTp8841/XyOkxeVUCyNf+w==', NULL, NULL, NULL, true, true, 'Operator traffic map', 'oper_map@revenga.com', 'es_ES', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(6, 2, 'oper_map_en', 'PTp8841/XyOkxeVUCyNf+w==', NULL, NULL, NULL, true, true, 'Operator traffic map en_GB', 'oper_map_GB@revenga.com', 'en_GB', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(7, 2, 'oper_hosp', 'PTp8841/XyOkxeVUCyNf+w==', NULL, NULL, NULL, true, true, 'Operator hospital', 'oper_hosp@revenga.com', 'es_ES', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(8, 2, 'oper_hosp_en', 'PTp8841/XyOkxeVUCyNf+w==', NULL, NULL, NULL, true, true, 'Operator hospital en_GB', 'oper_hosp_GB@revenga.com', 'en_GB', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(9, 2, 'oper_nuc', 'PTp8841/XyOkxeVUCyNf+w==', NULL, NULL, NULL, true, true, 'Operator nuclear system', 'oper_nuc@revenga.com', 'es_ES', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(10, 2, 'oper_nuc_en', 'PTp8841/XyOkxeVUCyNf+w==', NULL, NULL, NULL, true, true, 'Operator nuclear system en_GB', 'oper_nuc_GB@revenga.com', 'en_GB', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 
 

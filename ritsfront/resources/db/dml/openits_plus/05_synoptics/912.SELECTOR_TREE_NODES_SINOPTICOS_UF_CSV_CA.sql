@@ -2,7 +2,7 @@
 -- Id iterado --> 3 cifras
 INSERT INTO ui.synoptics 
 (id, name, description, label, icon, base_layer, exclusive_layers) VALUES 
-(912, 'SELECTOR_TREE_NODES_SINOPTICOS_UF_CSV_CA', 'SELECTOR_TREE_NODES_SINOPTICOS_UF_CSV_CA', 'LBL_SELECTOR_TREE_NODES_SINOPTICOS_UF_CSV_CA', NULL, 'img/synoptics/Ausol_LQ_UF_CSV_CA.svg', false);
+(912, 'SELECTOR_TREE_NODES_SINOPTICOS_UF_CSV_CA', 'SELECTOR_TREE_NODES_SINOPTICOS_UF_CSV_CA', 'LBL_SELECTOR_TREE_NODES_SINOPTICOS_UF_CSV_CA', NULL, 'img/synoptics/TUN_UF_CSV_CA.svg', false);
 
 -- Para los identificadores de synoptic_layers seguiremos los siguientes criterios
 -- Id Synoptico                                   --> 3 cifras

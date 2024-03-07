@@ -1,140 +1,28 @@
-UPDATE ui.modules SET autoload=true WHERE id=1018;
+UPDATE ui.modules SET enabled=false WHERE id=1018;
 
 INSERT INTO ui.modules 
-(id, module_type_id, "name", description, default_view_type_id, default_system_permission_id, js_file, js_method_draw, js_method_callbacks, data_query, wss_topic, enabled, visible, autoload) VALUES 
-(901, 4, 'SELECTOR_TREE_NODES_SINOPTICOS_CT', 'SELECTOR_TREE_NODES_SINOPTICOS_CT', 1, NULL, 'modules/synopticModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
-(902, 4, 'SELECTOR_TREE_NODES_SINOPTICOS_TUNEL', 'SELECTOR_TREE_NODES_SINOPTICOS_TUNEL', 1, NULL, 'modules/synopticModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
-(903, 4, 'SELECTOR_TREE_NODES_SINOPTICOS_TUNEL', 'SELECTOR_TREE_NODES_SINOPTICOS_TUNEL', 1, NULL, 'modules/synopticModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
-(904, 4, 'SELECTOR_TREE_NODES_SINOPTICOS_TUNEL', 'SELECTOR_TREE_NODES_SINOPTICOS_TUNEL', 1, NULL, 'modules/synopticModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
-(905, 4, 'SELECTOR_TREE_NODES_SINOPTICOS_TUNEL', 'SELECTOR_TREE_NODES_SINOPTICOS_TUNEL', 1, NULL, 'modules/synopticModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
-(906, 4, 'SELECTOR_TREE_NODES_SINOPTICOS_TUNEL', 'SELECTOR_TREE_NODES_SINOPTICOS_TUNEL', 1, NULL, 'modules/synopticModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
-(907, 4, 'SELECTOR_TREE_NODES_SINOPTICOS_TUNEL', 'SELECTOR_TREE_NODES_SINOPTICOS_TUNEL', 1, NULL, 'modules/synopticModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
-(908, 4, 'SELECTOR_TREE_NODES_SINOPTICOS_UF', 'SELECTOR_TREE_NODES_SINOPTICOS_UF', 1, NULL, 'modules/synopticModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
-(909, 4, 'SELECTOR_TREE_NODES_SINOPTICOS_UF', 'SELECTOR_TREE_NODES_SINOPTICOS_UF', 1, NULL, 'modules/synopticModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
-(910, 4, 'SELECTOR_TREE_NODES_SINOPTICOS_UF', 'SELECTOR_TREE_NODES_SINOPTICOS_UF', 1, NULL, 'modules/synopticModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
-(911, 4, 'SELECTOR_TREE_NODES_SINOPTICOS_UF', 'SELECTOR_TREE_NODES_SINOPTICOS_UF', 1, NULL, 'modules/synopticModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
-(912, 4, 'SELECTOR_TREE_NODES_SINOPTICOS_UF', 'SELECTOR_TREE_NODES_SINOPTICOS_UF', 1, NULL, 'modules/synopticModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
-(913, 4, 'SELECTOR_TREE_NODES_SINOPTICOS_UF', 'SELECTOR_TREE_NODES_SINOPTICOS_UF', 1, NULL, 'modules/synopticModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL);
+(id, module_type_id, management_areas, "name", description, default_view_type_id, default_system_permission_id, js_file, js_method_draw, js_method_callbacks, data_query, wss_topic, enabled, visible, autoload) VALUES 
+--Management Area 1
+(900, 8, '["ManagementArea:1"]', 'Selector Tree Module', 'Selector Tree Module', 1, null, 'modules/selectorModule.js', 'getView', 'loadData', NULL, NULL, true, true, true),
+(901, 4, '["ManagementArea:1"]', 'SELECTOR_TREE_NODES_SINOPTICOS_CT', 'SELECTOR_TREE_NODES_SINOPTICOS_CT', 1, NULL, 'modules/synopticModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(902, 4, '["ManagementArea:1"]', 'SELECTOR_TREE_NODES_SINOPTICOS_TUNEL', 'SELECTOR_TREE_NODES_SINOPTICOS_TUNEL', 1, NULL, 'modules/synopticModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(903, 4, '["ManagementArea:1"]', 'SELECTOR_TREE_NODES_SINOPTICOS_TUNEL', 'SELECTOR_TREE_NODES_SINOPTICOS_TUNEL', 1, NULL, 'modules/synopticModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(904, 4, '["ManagementArea:1"]', 'SELECTOR_TREE_NODES_SINOPTICOS_TUNEL', 'SELECTOR_TREE_NODES_SINOPTICOS_TUNEL', 1, NULL, 'modules/synopticModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(905, 4, '["ManagementArea:1"]', 'SELECTOR_TREE_NODES_SINOPTICOS_TUNEL', 'SELECTOR_TREE_NODES_SINOPTICOS_TUNEL', 1, NULL, 'modules/synopticModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(906, 4, '["ManagementArea:1"]', 'SELECTOR_TREE_NODES_SINOPTICOS_TUNEL', 'SELECTOR_TREE_NODES_SINOPTICOS_TUNEL', 1, NULL, 'modules/synopticModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(907, 4, '["ManagementArea:1"]', 'SELECTOR_TREE_NODES_SINOPTICOS_TUNEL', 'SELECTOR_TREE_NODES_SINOPTICOS_TUNEL', 1, NULL, 'modules/synopticModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(908, 4, '["ManagementArea:1"]', 'SELECTOR_TREE_NODES_SINOPTICOS_UF', 'SELECTOR_TREE_NODES_SINOPTICOS_UF', 1, NULL, 'modules/synopticModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(909, 4, '["ManagementArea:1"]', 'SELECTOR_TREE_NODES_SINOPTICOS_UF', 'SELECTOR_TREE_NODES_SINOPTICOS_UF', 1, NULL, 'modules/synopticModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(910, 4, '["ManagementArea:1"]', 'SELECTOR_TREE_NODES_SINOPTICOS_UF', 'SELECTOR_TREE_NODES_SINOPTICOS_UF', 1, NULL, 'modules/synopticModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(911, 4, '["ManagementArea:1"]', 'SELECTOR_TREE_NODES_SINOPTICOS_UF', 'SELECTOR_TREE_NODES_SINOPTICOS_UF', 1, NULL, 'modules/synopticModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(912, 4, '["ManagementArea:1"]', 'SELECTOR_TREE_NODES_SINOPTICOS_UF', 'SELECTOR_TREE_NODES_SINOPTICOS_UF', 1, NULL, 'modules/synopticModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(913, 4, '["ManagementArea:1"]', 'SELECTOR_TREE_NODES_SINOPTICOS_UF', 'SELECTOR_TREE_NODES_SINOPTICOS_UF', 1, NULL, 'modules/synopticModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 
-INSERT INTO ui.module_values 
-(module_id, module_param_id, value) VALUES 
-(901, 4, '901'),
-(902, 4, '902'),
-(903, 4, '903'),
-(904, 4, '904'),
-(905, 4, '905'),
-(906, 4, '906'),
-(907, 4, '907'),
-(908, 4, '908'),
-(909, 4, '909'),
-(910, 4, '910'),
-(911, 4, '911'),
-(912, 4, '912'),
-(913, 4, '913');
+--Management Area 2
+(970, 3, '["ManagementArea:2"]', 'MAP', 'MAP', 1, null, 'modules/mapModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 
-INSERT INTO ui.window_values 
-(module_id, window_param_id, value) VALUES 
-(901, 4, '825'),
-(901, 8, 'true'),
-(901, 9, 'img/module/default.png'),
-(901, 10, 'img/module/default.png'),
-(901, 11, '#464646'),
-(901, 12, 'LBL_SELECTOR_TREE_NODES_SINOPTICOS_CT'),
-(901, 14, 'true'),
-
-(902, 4, '825'),
-(902, 8, 'true'),
-(902, 9, 'img/module/default.png'),
-(902, 10, 'img/module/default.png'),
-(902, 11, '#464646'),
-(902, 12, 'LBL_SELECTOR_TREE_NODES_SINOPTICOS_TUNEL'),
-(902, 14, 'true'),
-
-(903, 4, '825'),
-(903, 8, 'true'),
-(903, 9, 'img/module/default.png'),
-(903, 10, 'img/module/default.png'),
-(903, 11, '#464646'),
-(903, 12, 'LBL_SELECTOR_TREE_NODES_SINOPTICOS_TUNEL'),
-(903, 14, 'true'),
-
-(904, 4, '825'),
-(904, 8, 'true'),
-(904, 9, 'img/module/default.png'),
-(904, 10, 'img/module/default.png'),
-(904, 11, '#464646'),
-(904, 12, 'LBL_SELECTOR_TREE_NODES_SINOPTICOS_TUNEL'),
-(904, 14, 'true'),
-
-(905, 4, '825'),
-(905, 8, 'true'),
-(905, 9, 'img/module/default.png'),
-(905, 10, 'img/module/default.png'),
-(905, 11, '#464646'),
-(905, 12, 'LBL_SELECTOR_TREE_NODES_SINOPTICOS_TUNEL'),
-(905, 14, 'true'),
-
-(906, 4, '825'),
-(906, 8, 'true'),
-(906, 9, 'img/module/default.png'),
-(906, 10, 'img/module/default.png'),
-(906, 11, '#464646'),
-(906, 12, 'LBL_SELECTOR_TREE_NODES_SINOPTICOS_TUNEL'),
-(906, 14, 'true'),
-
-(907, 4, '825'),
-(907, 8, 'true'),
-(907, 9, 'img/module/default.png'),
-(907, 10, 'img/module/default.png'),
-(907, 11, '#464646'),
-(907, 12, 'LBL_SELECTOR_TREE_NODES_SINOPTICOS_TUNEL'),
-(907, 14, 'true'),
-
-(908, 4, '825'),
-(908, 8, 'true'),
-(908, 9, 'img/module/default.png'),
-(908, 10, 'img/module/default.png'),
-(908, 11, '#464646'),
-(908, 12, 'LBL_SELECTOR_TREE_NODES_SINOPTICOS_UF'),
-(908, 14, 'true'),
-
-(909, 4, '825'),
-(909, 8, 'true'),
-(909, 9, 'img/module/default.png'),
-(909, 10, 'img/module/default.png'),
-(909, 11, '#464646'),
-(909, 12, 'LBL_SELECTOR_TREE_NODES_SINOPTICOS_UF'),
-(909, 14, 'true'),
-
-(910, 4, '825'),
-(910, 8, 'true'),
-(910, 9, 'img/module/default.png'),
-(910, 10, 'img/module/default.png'),
-(910, 11, '#464646'),
-(910, 12, 'LBL_SELECTOR_TREE_NODES_SINOPTICOS_UF'),
-(910, 14, 'true'),
-
-(911, 4, '825'),
-(911, 8, 'true'),
-(911, 9, 'img/module/default.png'),
-(911, 10, 'img/module/default.png'),
-(911, 11, '#464646'),
-(911, 12, 'LBL_SELECTOR_TREE_NODES_SINOPTICOS_UF'),
-(911, 14, 'true'),
-
-(912, 4, '825'),
-(912, 8, 'true'),
-(912, 9, 'img/module/default.png'),
-(912, 10, 'img/module/default.png'),
-(912, 11, '#464646'),
-(912, 12, 'LBL_SELECTOR_TREE_NODES_SINOPTICOS_UF'),
-(912, 14, 'true'),
-
-(913, 4, '825'),
-(913, 8, 'true'),
-(913, 9, 'img/module/default.png'),
-(913, 10, 'img/module/default.png'),
-(913, 11, '#464646'),
-(913, 12, 'LBL_SELECTOR_TREE_NODES_SINOPTICOS_UF'),
-(913, 14, 'true');
-
+--Management Area 3
+(800, 8, '["ManagementArea:3"]', 'Selector Tree Module', 'Selector Tree Module', 1, null, 'modules/selectorModule.js', 'getView', 'loadData', NULL, NULL, true, true, true),
+(801, 4, '["ManagementArea:3"]', 'SELECTOR_TREE_NODES_SINOPTICOS_HOSPITAL_L1', 'SELECTOR_TREE_NODES_SINOPTICOS_HOSPITAL_L1', 1, NULL, 'modules/synopticModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(802, 4, '["ManagementArea:3"]', 'SELECTOR_TREE_NODES_SINOPTICOS_HOSPITAL_L2', 'SELECTOR_TREE_NODES_SINOPTICOS_HOSPITAL_L2', 1, NULL, 'modules/synopticModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(803, 4, '["ManagementArea:3"]', 'SELECTOR_TREE_NODES_SINOPTICOS_HOSPITAL_L3', 'SELECTOR_TREE_NODES_SINOPTICOS_HOSPITAL_L3', 1, NULL, 'modules/synopticModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL);

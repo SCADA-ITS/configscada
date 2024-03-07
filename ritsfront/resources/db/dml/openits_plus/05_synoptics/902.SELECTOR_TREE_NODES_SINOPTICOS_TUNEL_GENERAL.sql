@@ -2,7 +2,7 @@
 -- Id iterado --> 3 cifras
 INSERT INTO ui.synoptics 
 (id, name, description, label, icon, base_layer, exclusive_layers) VALUES 
-(902, 'SELECTOR_TREE_NODES_SINOPTICOS_TUNEL_GENERAL', 'SELECTOR_TREE_NODES_SINOPTICOS_TUNEL_GENERAL', 'LBL_SELECTOR_TREE_NODES_SINOPTICOS_TUNEL_GENERAL', NULL, 'img/synoptics/Ausol_LQ_General.svg', false);
+(902, 'SELECTOR_TREE_NODES_SINOPTICOS_TUNEL_GENERAL', 'SELECTOR_TREE_NODES_SINOPTICOS_TUNEL_GENERAL', 'LBL_SELECTOR_TREE_NODES_SINOPTICOS_TUNEL_GENERAL', NULL, 'img/synoptics/TUN_General.svg', false);
 
 -- Para los identificadores de synoptic_layers seguiremos los siguientes criterios
 -- Id Synoptico                                   --> 3 cifras
@@ -122,8 +122,8 @@ INSERT INTO ui.synoptic_layer_elements
 (90205300, 'Element:53:2', 000053, 'TUN-SMF-AA-1CA', 1814, 233, false, NULL, true, false, NULL, true),
 (90201300, 'Element:13:1', 000013, 'TUN-SMF-RAV-1MA', 93, 876, false, NULL, true, false, NULL, true),
 (90201300, 'Element:13:2', 000013, 'TUN-SMF-RAV-1CA', 1764, 233, false, NULL, true, false, NULL, true),
-(90203200, 'Element:32:4', 000032, 'TUN-CUAD-PRES-GAL-MA', 604, 589, false, NULL, true, false, NULL, true),
-(90203200, 'Element:32:3', 000032, 'TUN-CUAD-PRES-GAL-CA', 673, 519, false, NULL, true, false, NULL, true),
+(90203200, 'Element:32:2', 000032, 'TUN-CUAD-PRES-GAL-MA', 604, 589, false, NULL, true, false, NULL, true),
+(90203200, 'Element:32:1', 000032, 'TUN-CUAD-PRES-GAL-CA', 673, 519, false, NULL, true, false, NULL, true),
 (90208900, 'Element:89:1', 000089, 'TUN-PTA1-GAL', 624, 521, false, NULL, true, false, NULL, true),
 (90208900, 'Element:89:2', 000089, 'TUN-PTA2-GAL', 654, 589, false, NULL, true, false, NULL, true),
 (90201500, 'Element:15:20', 080015, 'TUN-ZI-9MA', 1680, 645, false, NULL, true, false, NULL, true),

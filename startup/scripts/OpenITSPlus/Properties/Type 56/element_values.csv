@@ -1,7 +1,7 @@
 item;alias;description;sessionuid;road;stretchs;pk;sentido
-1;LQ-CS-ITS1;Sinoptico Mando y Proteccion C.S. ITS1;LQ-CS-ITS1;Carretera Tunel;Carretera;16+980;CA
-2;LQ-CSA-SAI;Sinoptico Mando y Proteccion C.S.A SAI;LQ-CSA-SAI;Carretera Tunel;Carretera;16+980;CA
-3;LQ-CSA-RED;Sinoptico Mando y Proteccion C.S.A RED;LQ-CSA-RED;Carretera Tunel;Carretera;16+980;CA
-4;LQ-CSV-TSM;Sinoptico Mando y Proteccion C.S.V TSM;LQ-CSV-TSM;Carretera Tunel;Carretera;16+980;CA
-5;LQ-CSV-TSC;Sinoptico Mando y Proteccion C.S.V TSC;LQ-CSV-TSC;Carretera Tunel;Carretera;16+980;CA
-6;LQ-CSA;Sinoptico Mando y Proteccion C.S.A;LQ-CSA;Carretera Tunel;Carretera;16+980;CA
+1;TUN-CS-ITS1;Sinoptico Mando y Proteccion C.S. ITS1;TUN-CS-ITS1;Carretera Tunel;Carretera;16+980;CA
+2;TUN-CSA-SAI;Sinoptico Mando y Proteccion C.S.A SAI;TUN-CSA-SAI;Carretera Tunel;Carretera;16+980;CA
+3;TUN-CSA-RED;Sinoptico Mando y Proteccion C.S.A RED;TUN-CSA-RED;Carretera Tunel;Carretera;16+980;CA
+4;TUN-CSV-TSM;Sinoptico Mando y Proteccion C.S.V TSM;TUN-CSV-TSM;Carretera Tunel;Carretera;16+980;CA
+5;TUN-CSV-TSC;Sinoptico Mando y Proteccion C.S.V TSC;TUN-CSV-TSC;Carretera Tunel;Carretera;16+980;CA
+6;TUN-CSA;Sinoptico Mando y Proteccion C.S.A;TUN-CSA;Carretera Tunel;Carretera;16+980;CA
