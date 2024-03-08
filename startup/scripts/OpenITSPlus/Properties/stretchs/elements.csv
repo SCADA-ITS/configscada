@@ -4,3 +4,4 @@ item;stretch_type;alias;description;pk_ini;pk_end;lanes;road
 1002;Element;Hosp P1;Planta 1 del Hospital;0.0;0.0;0;Nicklaus Childrens Hospital
 1003;Element;Hosp P2;Planta 2 del Hospital;0.0;0.0;0;Nicklaus Childrens Hospital
 1004;Element;Hosp P3;Planta 3 del Hospital;0.0;0.0;0;Nicklaus Childrens Hospital
+1005;Element;Central;Central;0.0;0.0;0;Planta Nuclear

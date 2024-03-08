@@ -82,6 +82,8 @@ INSERT INTO ui.graphic_icons
 (010085, 'DALI', 'DALI', false, false, 'component/graphicIcon/graphicIconDefault.js', 250, 19, 'img/graphic_icon/85_bus_dali.svg', 'null',false),
 (020085, 'DALI', 'DALI', false, false, 'component/graphicIcon/graphicIconDefault.js', 290, 19, 'img/graphic_icon/85_bus_dali.svg', 'null',false),
 (000086, 'PUMP', 'PUMP', false, false, 'component/graphicIcon/graphicIconDefault.js', 37.5, 37.5, 'img/graphic_icon/86_pump.svg', 'null',true),
+(010086, 'PUMP', 'PUMP', false, false, 'component/graphicIcon/graphicIconDefault.js', 85, 85, 'img/graphic_icon/86_pump.svg', 'null',true),
+(020086, 'PUMP', 'PUMP', false, false, 'component/graphicIcon/graphicIconDefault.js', 130, 130, 'img/graphic_icon/86_pump.svg', 'null',true),
 (000087, 'TANK', 'TANK', false, false, 'component/graphicIcon/graphicIconDefault.js', 65, 82.5, 'img/graphic_icon/87_tank.svg', 'null',false),
 (010087, 'TANK', 'TANK', false, false, 'component/graphicIcon/graphicIconDefault.js', 30, 45, 'img/graphic_icon/87_tank.svg', 'null',false),
 (000088, 'LEAK_WATER', 'LEAK_WATER', false, false, 'component/graphicIcon/graphicIconDefault.js', 30, 30, 'img/graphic_icon/88_leak_water_sensor.svg', 'null',true),

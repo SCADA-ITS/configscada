@@ -60,8 +60,8 @@ element_type_id;element
 59;smoke_detector
 60;sirena
 61;fire_det_ct
-62;temp_probe
-63;air_conditioner
+62;reactor
+63;generador
 64;vms_snow
 65;sai
 66;vane

@@ -39,6 +39,8 @@ element_type;element_subtype;alias;svg_file;js_custom_type_render;keepRatio
 59;;DET_HUM;59_smoke_detector.svg;;true
 60;;SIRENA;60_sirena.svg;;true
 61;;FIRE_CENT;61_fire_det_ct.svg;;true
+62;;REACTOR;62_reactor.svg;;true
+63;;GENERADOR;63_generador.svg;;true
 65;;SAI;65_sai.svg;;true
 66;;VANE;66_vane.svg;;true
 70;;CVM;70_analizador_red.svg;;true

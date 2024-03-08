@@ -142,5 +142,12 @@ INSERT INTO ui.window_values (module_id, window_param_id, value) VALUES
 (803, 10, 'img/module/default.png'),
 (803, 11, '#464646'),
 (803, 12, 'LBL_SELECTOR_TREE_NODES_SINOPTICOS_HOSPITAL_L3'),
-(803, 14, 'true');
+(803, 14, 'true'),
+
+--Managemente Area 4
+(700, 8, 'true'),
+(700, 10, 'img/module/default.png'),
+(700, 11, '#464646'),
+(700, 12, 'LBL_MENU_ITEM_SYNOPTIC'),
+(700, 14, 'true');
 

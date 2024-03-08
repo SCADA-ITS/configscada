@@ -22,5 +22,9 @@ INSERT INTO ui.module_values (module_id, module_param_id, value) VALUES
 (800, 9, '2'),
 (801, 4, '801'),
 (802, 4, '802'),
-(803, 4, '803');
+(803, 4, '803'),
+
+--Management Area 4
+(700, 9, '3'),
+(701, 4, '701');
 

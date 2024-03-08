@@ -25,4 +25,8 @@ INSERT INTO ui.modules
 (800, 8, '["ManagementArea:3"]', 'Selector Tree Module', 'Selector Tree Module', 1, null, 'modules/selectorModule.js', 'getView', 'loadData', NULL, NULL, true, true, true),
 (801, 4, '["ManagementArea:3"]', 'SELECTOR_TREE_NODES_SINOPTICOS_HOSPITAL_L1', 'SELECTOR_TREE_NODES_SINOPTICOS_HOSPITAL_L1', 1, NULL, 'modules/synopticModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 (802, 4, '["ManagementArea:3"]', 'SELECTOR_TREE_NODES_SINOPTICOS_HOSPITAL_L2', 'SELECTOR_TREE_NODES_SINOPTICOS_HOSPITAL_L2', 1, NULL, 'modules/synopticModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
-(803, 4, '["ManagementArea:3"]', 'SELECTOR_TREE_NODES_SINOPTICOS_HOSPITAL_L3', 'SELECTOR_TREE_NODES_SINOPTICOS_HOSPITAL_L3', 1, NULL, 'modules/synopticModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL);
+(803, 4, '["ManagementArea:3"]', 'SELECTOR_TREE_NODES_SINOPTICOS_HOSPITAL_L3', 'SELECTOR_TREE_NODES_SINOPTICOS_HOSPITAL_L3', 1, NULL, 'modules/synopticModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+
+--Management Area 4
+(700, 8, '["ManagementArea:4"]', 'Selector Tree Module', 'Selector Tree Module', 1, null, 'modules/selectorModule.js', 'getView', 'loadData', NULL, NULL, true, true, true),
+(701, 4, '["ManagementArea:4"]', 'SELECTOR_TREE_NODES_SINOPTICOS_CENTRAL_NUCLEAR', 'SELECTOR_TREE_NODES_SINOPTICOS_CENTRAL_NUCLEAR', 1, NULL, 'modules/synopticModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL);
