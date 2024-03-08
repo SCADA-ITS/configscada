@@ -1,6 +1,5 @@
-INSERT INTO ui.selector_trees 
-(id, default_module_id, label) VALUES 
-(1, 901, 'LBL_SINOPTICOS_TUNEL') 
+INSERT INTO ui.selector_trees (id, default_module_id, label) VALUES 
+(1, 901, 'LBL_SINOPTICOS_TUNEL'), 
 (2, 801, 'LBL_SINOPTICOS_HOSPITAL');
 
 INSERT INTO ui.selector_tree_nodes 
