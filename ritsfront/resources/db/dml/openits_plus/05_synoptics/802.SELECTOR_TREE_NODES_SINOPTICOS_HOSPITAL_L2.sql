@@ -11,6 +11,7 @@ INSERT INTO ui.synoptics
 INSERT INTO ui.synoptic_layers 
 (id, synoptic_id, name, label, visible) VALUES 
 (80208400, 802, 'SYNOPTIC_LAYERS_ILUMINACION', 'LBL_SYNOPTIC_LAYERS_ILUMINACION', true),
+(80203100, 802, 'SYNOPTIC_LAYERS_ILUMINACION', 'LBL_SYNOPTIC_LAYERS_ILUMINACION', true),
 (80208900, 802, 'SYNOPTIC_LAYERS_CTROL_ACCESOS', 'LBL_SYNOPTIC_LAYERS_CTROL_ACCESOS', true),
 (80204900, 802, 'SYNOPTIC_LAYERS_ASCENSORES', 'LBL_SYNOPTIC_LAYERS_ASCENSORES', true),
 (80200020, 802, 'SYNOPTIC_LAYERS_DET_INCENDIOS', 'LBL_SYNOPTIC_LAYERS_DET_INCENDIOS', true),
@@ -30,11 +31,37 @@ INSERT INTO ui.synoptic_commands
 
 INSERT INTO ui.synoptic_layer_elements 
 (layer_id, element_id, graphic_icon_id, label, x, y,  horizontal_flip, rotate, tooltip, show_text, text_color, selectable) VALUES 
+(80208400, 'Element:84:44', 020084, 'HOSP-ILUM-L2-P7', 989, 393, false, NULL, true, false, NULL, true),
+(80208400, 'Element:84:42', 020084, 'HOSP-ILUM-L2-P5', 914, 109, false, NULL, true, false, NULL, true),
+(80208400, 'Element:84:41', 020084, 'HOSP-ILUM-L2-P4', 699, 327, false, NULL, true, false, NULL, true),
+(80208400, 'Element:84:40', 020084, 'HOSP-ILUM-L2-P3', 339, 519, false, NULL, true, false, NULL, true),
+(80208400, 'Element:84:39', 020084, 'HOSP-ILUM-L2-P2', 389, 327, false, NULL, true, false, NULL, true),
+(80208400, 'Element:84:43', 020084, 'HOSP-ILUM-L2-P6', 915, 327, false, NULL, true, false, NULL, true),
+(80208400, 'Element:84:38', 020084, 'HOSP-ILUM-L2-P1', 289, 99, false, NULL, true, false, NULL, true),
+(80203100, 'Element:31:2', 010031, 'HOSP-FOT', 91, 19, false, NULL, true, false, NULL, true),
 (80204900, 'Element:49:7', 000049, 'HOSP-ELEV-CE', 1031, 439, false, NULL, true, false, NULL, true),
 (80204900, 'Element:49:2', 000049, 'HOSP-ELEV-CO', 406, 353, false, NULL, true, false, NULL, true),
 (80204900, 'Element:49:3', 000049, 'HOSP-ELEV-SO', 306, 553, false, NULL, true, false, NULL, true),
 (80204900, 'Element:49:6', 000049, 'HOSP-ELEV-NE', 883, 266, false, NULL, true, false, NULL, true),
 (80204900, 'Element:49:4', 000049, 'HOSP-ELEV-NC', 729, 345, false, NULL, true, false, NULL, true),
 (80204900, 'Element:49:1', 000049, 'HOSP-ELEV-NO', 339, 229, false, NULL, true, false, NULL, true),
-(80204900, 'Element:49:5', 000049, 'HOSP-ELEV-SC', 459, 613, false, NULL, true, false, NULL, true);
+(80204900, 'Element:49:5', 000049, 'HOSP-ELEV-SC', 459, 613, false, NULL, true, false, NULL, true),
+(80205800, 'Element:58:19', 010058, 'HOSP-PUL-L2-MIN', 306, 339, false, NULL, true, false, NULL, true),
+(80205800, 'Element:58:18', 010058, 'HOSP-PUL-L2-VAR', 321, 199, false, NULL, true, false, NULL, true),
+(80205800, 'Element:58:20', 010058, 'HOSP-PUL-L2-CENT1', 509, 302, false, NULL, true, false, NULL, true),
+(80205800, 'Element:58:21', 010058, 'HOSP-PUL-L2-CENT2', 729, 302, false, NULL, true, false, NULL, true),
+(80205800, 'Element:58:24', 010058, 'HOSP-PUL-L2-GAS', 940, 109, false, NULL, true, false, NULL, true),
+(80205800, 'Element:58:25', 010058, 'HOSP-PUL-L2-PED', 889, 199, false, NULL, true, false, NULL, true),
+(80205800, 'Element:58:26', 010058, 'HOSP-PUL-L2-CAR', 959, 385, false, NULL, true, false, NULL, true),
+(80205800, 'Element:58:22', 010058, 'HOSP-PUL-L2-CENT3', 714, 393, false, NULL, true, false, NULL, true),
+(80205800, 'Element:58:23', 010058, 'HOSP-PUL-L2-TOW', 489, 669, false, NULL, true, false, NULL, true),
+(80205900, 'Element:59:27', 010059, 'HOSP-HUM-L2-GAS', 959, 179, false, NULL, true, false, NULL, true),
+(80205900, 'Element:59:28', 010059, 'HOSP-HUM-L2-PED', 879, 229, false, NULL, true, false, NULL, true),
+(80205900, 'Element:59:22', 010059, 'HOSP-HUM-L2-MIN', 239, 414, false, NULL, true, false, NULL, true),
+(80205900, 'Element:59:21', 010059, 'HOSP-HUM-L2-VAR', 249, 189, false, NULL, true, false, NULL, true),
+(80205900, 'Element:59:24', 010059, 'HOSP-HUM-L2-CENT2', 714, 259, false, NULL, true, false, NULL, true),
+(80205900, 'Element:59:23', 010059, 'HOSP-HUM-L2-CENT1', 509, 179, false, NULL, true, false, NULL, true),
+(80205900, 'Element:59:25', 010059, 'HOSP-HUM-L2-CENT3', 689, 454, false, NULL, true, false, NULL, true),
+(80205900, 'Element:59:29', 010059, 'HOSP-HUM-L2-CAR', 858, 429, false, NULL, true, false, NULL, true),
+(80205900, 'Element:59:26', 010059, 'HOSP-HUM-L2-TOW', 674, 599, false, NULL, true, false, NULL, true);
 
