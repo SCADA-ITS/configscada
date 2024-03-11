@@ -11,6 +11,7 @@ INSERT INTO ui.synoptics
 INSERT INTO ui.synoptic_layers 
 (id, synoptic_id, name, label, visible) VALUES 
 (80108400, 801, 'SYNOPTIC_LAYERS_ILUMINACION', 'LBL_SYNOPTIC_LAYERS_ILUMINACION', true),
+(80103100, 801, 'SYNOPTIC_LAYERS_ILUMINACION', 'LBL_SYNOPTIC_LAYERS_ILUMINACION', true),
 (80108900, 801, 'SYNOPTIC_LAYERS_CTROL_ACCESOS', 'LBL_SYNOPTIC_LAYERS_CTROL_ACCESOS', true),
 (80104900, 801, 'SYNOPTIC_LAYERS_ASCENSORES', 'LBL_SYNOPTIC_LAYERS_ASCENSORES', true),
 (80100019, 801, 'SYNOPTIC_LAYERS_DET_INCENDIOS', 'LBL_SYNOPTIC_LAYERS_DET_INCENDIOS', true),
@@ -42,6 +43,7 @@ INSERT INTO ui.synoptic_layer_elements
 (80108900, 'Element:89:4', 010089, 'HOSP-PTA-S', 1150, 518, false, NULL, true, false, NULL, true),
 (80108900, 'Element:89:3', 010089, 'HOSP-PTA-N', 1155, 275, false, NULL, true, false, NULL, true),
 (80108900, 'Element:89:5', 010089, 'HOSP-PTA-O', 610, 662, false, NULL, true, false, NULL, true),
+(80103100, 'Element:31:2', 010031, 'HOSP-FOT', 71, 25, false, NULL, true, false, NULL, true),
 (80104900, 'Element:49:1', 000049, 'HOSP-ELEV-NO', 539, 194, false, NULL, true, false, NULL, true),
 (80104900, 'Element:49:6', 000049, 'HOSP-ELEV-NE', 992, 247, false, NULL, true, false, NULL, true),
 (80104900, 'Element:49:4', 000049, 'HOSP-ELEV-NC', 846, 324, false, NULL, true, false, NULL, true),
