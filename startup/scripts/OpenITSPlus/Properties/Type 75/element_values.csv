@@ -1,2 +1,3 @@
 item;element_subtype;alias;description;sessionuid;road;stretchs;pk;sentido
 1;1;TUN-GEL-1MA;TUN-GEL-1MA;TUN-GEL-1MA;Carretera Tunel;Carretera;173+100;CA
+2;NULL;PN-GRUPO_ELECTROGENO;PN-GRUPO_ELECTROGENO;PN-GRUPO_ELECTROGENO;Planta Nuclear;Central;;

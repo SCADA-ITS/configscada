@@ -29,9 +29,12 @@ INSERT INTO ui.synoptic_commands
 
 INSERT INTO ui.synoptic_layer_elements 
 (layer_id, element_id, graphic_icon_id, label, x, y,  horizontal_flip, rotate, tooltip, show_text, text_color, selectable) VALUES 
-(70108600, 'Element:86:7', 020086, 'PN-BB-VAP', 977, 268, false, NULL, true, false, NULL, true),
-(70108600, 'Element:86:6', 010086, 'PN-BB-REF', 342, 616, false, NULL, true, false, NULL, true),
-(70108600, 'Element:86:4', 010086, 'PN-BB-CON', 1363, 741, false, NULL, true, false, NULL, true),
-(70108600, 'Element:86:5', 010086, 'PN-BB-RET', 936, 599, false, NULL, true, false, NULL, true),
-(70108600, 'Element:86:3', 010086, 'PN-BB-MAR', 1752, 758, false, NULL, true, false, NULL, true);
+(70108600, 'Element:86:7', 020086, 'PN-BB-VAP', 966, 266, false, NULL, true, false, NULL, true),
+(70108600, 'Element:86:6', 030086, 'PN-BB-REF', 343, 628, false, NULL, true, false, NULL, true),
+(70108600, 'Element:86:5', 010086, 'PN-BB-RET', 937, 606, false, NULL, true, false, NULL, true),
+(70108600, 'Element:86:3', 010086, 'PN-BB-MAR', 1733, 754, false, NULL, true, false, NULL, true),
+(70108600, 'Element:86:4', 010086, 'PN-BB-CON', 1356, 749, false, NULL, true, false, NULL, true),
+(70106300, 'Element:63:1', 000063, 'PN-GENERADOR', 524, 314, false, NULL, true, false, NULL, true),
+(70107500, 'Element:75:2', 000075, 'PN-GRUPO_ELECTROGENO', 1140, 266, false, NULL, true, false, NULL, true),
+(70106200, 'Element:62:1', 000062, 'PN-REACTOR', 27, 394, false, NULL, true, false, NULL, true);
 
