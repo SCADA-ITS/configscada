@@ -106,7 +106,7 @@ pipeline {
                                 <p>Job: ${JOB_NAME}</p>
                                 <p>Se ha creado la versión ${env.VERSION_NUMBER}</p>
                                 <p>Puede consultar el listado actual de versiones en la siguiente URL:</p>
-                                <p>http://192.168.88.195:8080/job/${JOB_NAME}/1/execution/node/3/ws/versiones/</p>
+                                <p>http://192.168.88.195:8080/job/${JOB_NAME}/${BUILD_NUMBER}/execution/node/3/ws/versiones/</p>
                             </body>
                         </html>
                         """,
