@@ -106,26 +106,28 @@
 .control-panel-main .user-fullname {
 	background-color: transparent;
 	color: var(--blue-soft);
-	text-align: center;
+	text-align: left;
 	display: block;
 	font-size: 20px;
 	font-weight: 300;
+	padding-left: 20px;
 }
 
 .control-panel-main .user-email {	
 	background-color: transparent;
 	color: var(--blue-soft);
-	text-align: center;
+	text-align: left;
 	display: block;
 	font-size: 15px;
 	font-weight: 100;
+	padding-left: 20px;
 }
 
 .control-panel-main .user-avatar {	
 	background-color: transparent;
-    width: 150px !important;
-    height: 150px !important;
-    margin-left: 122px !important;
+    width: 75px !important;
+    height: 75px !important;
+    margin-left: 20px !important;
     margin-top: 20px !important;
 }
 
@@ -270,13 +272,19 @@
 .control-panel-notification .value-event {	
 	font-size: 15px;
 	color: var(--blue-soft);
-	box-shadow: 0 2.1rem 0.5rem rgb(255 153 0) !important;
+	box-shadow: 0 2.1rem 0.5rem rgb(255 153 0);
 }
 
 .control-panel-notification .value-event:hover {	
 	font-weight: bold;
 	color: var(--blue-soft);
 	cursor: pointer;
-	box-shadow: 0 2.0rem 0.8rem rgb(255 153 0) !important;
+	box-shadow: 0 2.0rem 0.8rem rgb(255 153 0);
+}
+
+.non-management-area:hover {
+	cursor: inherit !important;
+	font-weight: 500 !important;
+	box-shadow: 0 2.1rem 0.5rem rgb(255 153 0) !important;	
 }
  

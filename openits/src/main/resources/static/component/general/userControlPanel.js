@@ -346,116 +346,135 @@ export default class UserControlPanel extends GenericControlPanel {
 				rows: [
 					{ height: 20 },
 					{
-						view: "template",
-						css: "user-avatar",
-						template: function() {
+						cols: [
+							{
+								view: "template",
+								css: "user-avatar",
+								template: function() {
 
-							return `<img src="${util.generateAvatar(userData.name, 150, 110)}"/>`;
-						},
-						borderless: true
+									return `<img src="${util.generateAvatar(userData.name, 75, 50)}"/>`;
+								},
+								borderless: true
+							},
+							{
+								rows: [
+									{
+										view: "label",
+										label: function() {
 
-					},
-					{
-						view: "label",
-						label: `<span class="user-fullname ${lightMode}">${userData.fullName}</span>`,
-						borderless: true
-					},
-					{
-						view: "label",
-						label: `<span class="user-email ${lightMode}">${userData.email}</span>`,
-						borderless: true
-					},
-					{
-						view: "label",
-						css: cssStyleLightCPNotification,
-						align: "center",
-						tooltip: i18n.t("LBL_CHANGE_MANAGEMENT_AREA"),
-						hidden: !lblUserArea,
-						width: 350,
-						height: 50,
-						label: function() {
+											let textWidth = util.ui.calculateTextWidth(userData.fullName, "Roboto", "20", "0.2");
+											let ellipsis = "";
 
-							return `<div>
-										<span class="value-event ${lightMode}">${lblUserArea}</span>
-									</div>`
-						}(),
-						on: {
-							onItemClick: function(id) {
-								
-								if (sessionData.user && Array.isArray(sessionData.user.managementAreas) && sessionData.user.managementAreas.length > 0) {
-									
-									let dialog = webix.copy(SearchDialogBox.CUSTOM);
-									let label = i18n.t("LBL_CHANGE_MANAGEMENT_AREA");
-		
-									dialog.data = [];
-		
-									dialog.pkField = "id"
-									dialog.fields = ["alias=LBL_ALIAS", "description=LBL_DESCRIPTION"];
-									dialog.height = 500;
-									dialog.width = 800;
-		
-									if (sessionData.managementAreaId) {
-										
-										dialog.data.push({
-											id: -1,
-											alias: i18n.t("LBL_WO_MANAGEMENT_AREA")
-										});	
-									}
-									
-									sessionData.user.managementAreas.sort((a, b) => (a.alias > b.alias) ? 1 : ((b.alias > a.alias) ? -1 : 0));
-										
-									sessionData.user.managementAreas.forEach(p => {
-	
-										if (sessionData.managementAreaId != p.id) {
-											dialog.data.push({
-												id: p.id,
-												alias: p.alias,
-												description: p.description
-											})	
-										}
-									});
-		
-									let s = new SearchDialogBox(label, dialog, function(items) {
-		
-										if (Array.isArray(items) && items.length === 1) {
-		
-											let item = items[0];
-		
-											if (item && item.id) {
-												
-												if (sessionData.managementAreaId != item.id) {
-													
-													let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_QUESTION_CONFIRM_CHANGE_MANAGEMENT_AREA"), null, onAccept, null);
-													ms.show();
-								
-													function onAccept() {
-								
-														webix.ajax().get(appConfig.restUrl + util.fillTemplate("auth/setManagementArea/${managementAreaId}", { managementAreaId: item.id })).then(
-															function(response) {
-																
-																if (response) {
-												
-																	let userSession = response.json();
-																	
-																	if (userSession) {
-															
-																		webix.storage.session.put(SESSION_STORAGE_SESSION_DATA, userSession);
-																		
-																		window.location = "./home.html";
+											if (textWidth >= 275) {
+
+												ellipsis = `style='max-width: 275px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis'`;
+											}
+
+											return `<span class="user-fullname ${lightMode}" ${ellipsis}>${userData.fullName}</span>`;
+										}(),
+										tooltip: userData.fullName,
+										borderless: true
+									},
+									{
+										view: "label",
+										label: `<span class="user-email ${lightMode}">${userData.email}</span>`,
+										tooltip: userData.email,
+										borderless: true
+									},
+									{
+										hidden: lblUserArea,
+										width: 300,
+										height: 50,										
+									},
+									{
+										view: "label",
+										css: cssStyleLightCPNotification,
+										align: "center",
+										tooltip: (sessionData.user && Array.isArray(sessionData.user.managementAreas) && sessionData.user.managementAreas.length === 1) ? lblUserArea : i18n.t("LBL_CHANGE_MANAGEMENT_AREA"),
+										hidden: !lblUserArea,
+										width: 300,
+										height: 50,
+										label: function() {
+
+											let cssClass = (sessionData.user && Array.isArray(sessionData.user.managementAreas) && sessionData.user.managementAreas.length === 1) ? "non-management-area" : "";
+
+											return `<div style="text-align: left; padding-left: 20px;">
+												<span class="value-event ${lightMode} ${cssClass}">${lblUserArea}</span>
+													</div>`;
+										}(),
+										on: {
+											onItemClick: function(id) {
+
+												if (sessionData.user && Array.isArray(sessionData.user.managementAreas) && sessionData.user.managementAreas.length > 1) {
+
+													let dialog = webix.copy(SearchDialogBox.CUSTOM);
+													let label = i18n.t("LBL_CHANGE_MANAGEMENT_AREA");
+
+													dialog.data = [];
+
+													dialog.pkField = "id"
+													dialog.fields = ["alias=LBL_ALIAS", "description=LBL_DESCRIPTION"];
+													dialog.height = 500;
+													dialog.width = 800;
+
+													sessionData.user.managementAreas.sort((a, b) => (a.alias > b.alias) ? 1 : ((b.alias > a.alias) ? -1 : 0));
+
+													sessionData.user.managementAreas.forEach(p => {
+
+														if (sessionData.managementAreaId != p.id) {
+															dialog.data.push({
+																id: p.id,
+																alias: p.alias,
+																description: p.description
+															})
+														}
+													});
+
+													let s = new SearchDialogBox(label, dialog, function(items) {
+
+														if (Array.isArray(items) && items.length === 1) {
+
+															let item = items[0];
+
+															if (item && item.id) {
+
+																if (sessionData.managementAreaId != item.id) {
+
+																	let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_QUESTION_CONFIRM_CHANGE_MANAGEMENT_AREA"), null, onAccept, null);
+																	ms.show();
+
+																	function onAccept() {
+
+																		webix.ajax().get(appConfig.restUrl + util.fillTemplate("auth/setManagementArea/${managementAreaId}", { managementAreaId: item.id })).then(
+																			function(response) {
+
+																				if (response) {
+
+																					let userSession = response.json();
+
+																					if (userSession) {
+
+																						webix.storage.session.put(SESSION_STORAGE_SESSION_DATA, userSession);
+
+																						window.location = "./home.html";
+																					}
+																				}
+																			}
+																		);
 																	}
 																}
 															}
-														);
-													}
+														}
+													});
+
+													s.show();
 												}
 											}
 										}
-									});
-		
-									s.show();	
-								}
+									}
+								]
 							}
-						}
+						]
 					},
 					{ height: 20 },
 					{
@@ -581,7 +600,7 @@ export default class UserControlPanel extends GenericControlPanel {
 				]
 			},
 			position: function(state) {
-				state.left = document.documentElement.clientWidth - panelWidth - 15;
+				state.left = document.documentElement.clientWidth - panelWidth - 20;
 				state.top = 89;
 			},
 			on: {

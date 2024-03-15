@@ -368,11 +368,11 @@ function access(loginData) {
 
 function selectManagementArea(managementAreas) {
 	
-	const woManagementAreaId = 9999999;
-	
-	if (Array.isArray(managementAreas) && managementAreas.length > 0) {
+	if (Array.isArray(managementAreas) && managementAreas.length > 1) {
 		
 		managementAreas.sort((a, b) => (a.alias > b.alias) ? 1 : ((b.alias > a.alias) ? -1 : 0));
+		
+		let initManagementAreaId = managementAreas[0].id; 
 		
 		let formManagementAreas = {
 			id: "login-form-" + uid,
@@ -388,19 +388,14 @@ function selectManagementArea(managementAreas) {
 					view: "richselect",
 					id: "mgr-area-select-" + uid,
 					inputHeigth: 100,
-					value: woManagementAreaId,
+					value: initManagementAreaId,
 					css: "form-area-combo",
 					options:{
 						css: "form-area-combo-list",
 					    data: function() {
 						
 							let options = [];
-							
-							options.push({
-								id: woManagementAreaId,
-								value: translateLabel("LBL_WO_MANAGEMENT_AREA")
-							});
-							
+														
 							managementAreas.forEach(managementArea => {
 								
 								options.push({
@@ -448,7 +443,7 @@ function selectManagementArea(managementAreas) {
 									
 									const managementAreaId = $$("mgr-area-select-" + uid).getValue(); 
 									
-									if (managementAreaId && managementAreaId != woManagementAreaId) {
+									if (managementAreaId) {
 										
 										webix.ajax().get(appConfig.restUrl + util.fillTemplate("auth/setManagementArea/${managementAreaId}", { managementAreaId: managementAreaId })).then(
 											function(response) {
@@ -482,7 +477,31 @@ function selectManagementArea(managementAreas) {
 		webix.ui(formManagementAreas, $$("login-form-" + uid));
 		
 		webix.UIManager.setFocus($$("accept-area-select-" + uid));
-	}
+
+	} else {
+
+		if (managementAreas[0] && managementAreas[0].id) {
+
+			let managementAreaId = managementAreas[0].id;
+
+			webix.ajax().get(appConfig.restUrl + util.fillTemplate("auth/setManagementArea/${managementAreaId}", { managementAreaId: managementAreaId })).then(
+				function(response) {
+
+					if (response) {
+
+						let userSession = response.json();
+
+						if (userSession) {
+
+							webix.storage.session.put(SESSION_STORAGE_SESSION_DATA, userSession);
+
+							window.location = "./home.html";
+						}
+					}
+				}
+			);
+		}
+	} 
 }
 
 function selectManagementArea2(managementAreas) {
