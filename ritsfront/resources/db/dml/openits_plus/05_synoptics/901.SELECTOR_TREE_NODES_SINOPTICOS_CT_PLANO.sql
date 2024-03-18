@@ -24,5 +24,5 @@ INSERT INTO ui.synoptic_layer_elements
 (90105500, 'Element:55:3', 000055, 'TUN-PCI-1', 1097, 823, false, NULL, true, false, NULL, true),
 (90105500, 'Element:55:2', 000055, 'TUN-CITS-1', 881, 824, false, NULL, true, false, NULL, true),
 (90105500, 'Element:55:1', 000055, 'TUN-CGBT-1', 774, 825, false, NULL, true, false, NULL, true),
-(90107500, 'Element:75:1', 000075, 'TUN-GEL-1MA', 989, 825, false, NULL, true, false, NULL, true);
+(90107500, 'Element:75:1', 0010075, 'TUN-GEL-1MA', 989, 825, false, NULL, true, false, NULL, true);
 

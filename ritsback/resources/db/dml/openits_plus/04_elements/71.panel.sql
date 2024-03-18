@@ -12,7 +12,25 @@ INSERT INTO conf.elements (element_type_id, element_subtype_id, element_id, loca
 (71, 18, 11, 0110071, NULL, NULL, 'MAP-DGT-9', 'MAP-DGT-9', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (71, 18, 12, 0120071, NULL, NULL, 'MAP-DGT-10', 'MAP-DGT-10', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (71, 18, 13, 0130071, NULL, NULL, 'MAP-DGT-11', 'MAP-DGT-11', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(71, 18, 14, 0140071, NULL, NULL, 'MAP-DGT-12', 'MAP-DGT-12', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(71, 18, 14, 0140071, NULL, NULL, 'MAP-DGT-12', 'MAP-DGT-12', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 11, 15, 0150071, NULL, NULL, 'TUN-CLV-1', 'TUN-CLV-1', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 11, 16, 0160071, NULL, NULL, 'TUN-CLV-2', 'TUN-CLV-2', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 11, 17, 0170071, NULL, NULL, 'TUN-CLV-3', 'TUN-CLV-3', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 11, 18, 0180071, NULL, NULL, 'TUN-CLV-4', 'TUN-CLV-4', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 11, 19, 0190071, NULL, NULL, 'TUN-CLV-5', 'TUN-CLV-5', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 11, 20, 0200071, NULL, NULL, 'TUN-CLV-6', 'TUN-CLV-6', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 11, 21, 0210071, NULL, NULL, 'TUN-CLV-7', 'TUN-CLV-7', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 11, 22, 0220071, NULL, NULL, 'TUN-CLV-8', 'TUN-CLV-8', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 12, 23, 0230071, NULL, NULL, 'TUN-AF-1', 'TUN-AF-1', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 12, 24, 0240071, NULL, NULL, 'TUN-AF-2', 'TUN-AF-2', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 12, 25, 0250071, NULL, NULL, 'TUN-AF-3', 'TUN-AF-3', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 12, 26, 0260071, NULL, NULL, 'TUN-AF-4', 'TUN-AF-4', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 12, 27, 0270071, NULL, NULL, 'TUN-AF-5', 'TUN-AF-5', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 12, 28, 0280071, NULL, NULL, 'TUN-AF-6', 'TUN-AF-6', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 12, 29, 0290071, NULL, NULL, 'TUN-AF-7', 'TUN-AF-7', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 12, 30, 0300071, NULL, NULL, 'TUN-AF-8', 'TUN-AF-8', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 16, 31, 0310071, NULL, NULL, 'TUN-PMVI-1', 'TUN-PMVI-1', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 16, 32, 0320071, NULL, NULL, 'TUN-PMVI-2', 'TUN-PMVI-2', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_type_id, element_id, element_value_state_id, value, enabled, visible, created_at, updated_at) VALUES
 (71, 1, 1, 1, NULL, 'Fixalia', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -83,7 +101,97 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 (71, 1, 1, 14, NULL, 'Fixalia', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (71, 2, 1, 14, NULL, 'DGT', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (71, 4, 1, 14, NULL, '[{"zone":1,"type":"graphic","vms_group_id":18},{"zone":2,"type":"text","maxCharsPerLine":12}]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(71, 1003, 1, 14, NULL, 'MAP-DGT-12', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(71, 1003, 1, 14, NULL, 'MAP-DGT-12', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+
+(71, 1, 1, 15, NULL, 'Fixalia', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 2, 1, 15, NULL, 'DGT', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 4, 1, 15, NULL, '[{zone":1,"type":"graphic","vms_group_id":11}]"', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 1003, 1, 15, NULL, 'TUN-CLV-1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+
+(71, 1, 1, 16, NULL, 'Fixalia', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 2, 1, 16, NULL, 'DGT', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 4, 1, 16, NULL, '[{zone":1,"type":"graphic","vms_group_id":11}]"', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 1003, 1, 16, NULL, 'TUN-CLV-2', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+
+(71, 1, 1, 17, NULL, 'Fixalia', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 2, 1, 17, NULL, 'DGT', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 4, 1, 17, NULL, '[{zone":1,"type":"graphic","vms_group_id":11}]"', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 1003, 1, 17, NULL, 'TUN-CLV-3', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+
+(71, 1, 1, 18, NULL, 'Fixalia', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 2, 1, 18, NULL, 'DGT', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 4, 1, 18, NULL, '[{zone":1,"type":"graphic","vms_group_id":11}]"', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 1003, 1, 18, NULL, 'TUN-CLV-4', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+
+(71, 1, 1, 19, NULL, 'Fixalia', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 2, 1, 19, NULL, 'DGT', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 4, 1, 19, NULL, '[{zone":1,"type":"graphic","vms_group_id":11}]"', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 1003, 1, 19, NULL, 'TUN-CLV-5', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+
+(71, 1, 1, 20, NULL, 'Fixalia', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 2, 1, 20, NULL, 'DGT', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 4, 1, 20, NULL, '[{zone":1,"type":"graphic","vms_group_id":11}]"', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 1003, 1, 20, NULL, 'TUN-CLV-6', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+
+(71, 1, 1, 21, NULL, 'Fixalia', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 2, 1, 21, NULL, 'DGT', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 4, 1, 21, NULL, '[{zone":1,"type":"graphic","vms_group_id":11}]"', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 1003, 1, 21, NULL, 'TUN-CLV-7', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+
+(71, 1, 1, 22, NULL, 'Fixalia', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 2, 1, 22, NULL, 'DGT', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 4, 1, 22, NULL, '[{zone":1,"type":"graphic","vms_group_id":11}]"', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 1003, 1, 22, NULL, 'TUN-CLV-8', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+
+(71, 1, 1, 23, NULL, 'Fixalia', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 2, 1, 23, NULL, 'DGT', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 4, 1, 23, NULL, '[{zone":1,"type":"graphic","vms_group_id":12}]"', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 1003, 1, 23, NULL, 'TUN-AF-1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+
+(71, 1, 1, 24, NULL, 'Fixalia', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 2, 1, 24, NULL, 'DGT', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 4, 1, 24, NULL, '[{zone":1,"type":"graphic","vms_group_id":12}]"', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 1003, 1, 24, NULL, 'TUN-AF-2', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+
+(71, 1, 1, 25, NULL, 'Fixalia', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 2, 1, 25, NULL, 'DGT', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 4, 1, 25, NULL, '[{zone":1,"type":"graphic","vms_group_id":12}]"', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 1003, 1, 25, NULL, 'TUN-AF-3', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+
+(71, 1, 1, 26, NULL, 'Fixalia', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 2, 1, 26, NULL, 'DGT', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 4, 1, 26, NULL, '[{zone":1,"type":"graphic","vms_group_id":12}]"', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 1003, 1, 26, NULL, 'TUN-AF-4', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+
+(71, 1, 1, 27, NULL, 'Fixalia', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 2, 1, 27, NULL, 'DGT', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 4, 1, 27, NULL, '[{zone":1,"type":"graphic","vms_group_id":12}]"', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 1003, 1, 27, NULL, 'TUN-AF-5', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+
+(71, 1, 1, 28, NULL, 'Fixalia', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 2, 1, 28, NULL, 'DGT', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 4, 1, 28, NULL, '[{zone":1,"type":"graphic","vms_group_id":12}]"', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 1003, 1, 28, NULL, 'TUN-AF-6', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+
+(71, 1, 1, 29, NULL, 'Fixalia', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 2, 1, 29, NULL, 'DGT', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 4, 1, 29, NULL, '[{zone":1,"type":"graphic","vms_group_id":12}]"', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 1003, 1, 29, NULL, 'TUN-AF-7', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+
+(71, 1, 1, 30, NULL, 'Fixalia', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 2, 1, 30, NULL, 'DGT', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 4, 1, 30, NULL, '[{zone":1,"type":"graphic","vms_group_id":12}]"', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 1003, 1, 30, NULL, 'TUN-AF-8', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+
+(71, 1, 1, 31, NULL, 'Fixalia', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 2, 1, 31, NULL, 'DGT', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 4, 1, 31, NULL, '[{zone":1,"type":"text","maxCharsPerLine":12}]"', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 1003, 1, 31, NULL, 'TUN-PMVI-1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+
+(71, 1, 1, 32, NULL, 'Fixalia', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 2, 1, 32, NULL, 'DGT', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 4, 1, 32, NULL, '[{zone":1,"type":"text","maxCharsPerLine":12}]"', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 1003, 1, 32, NULL, 'TUN-PMVI-2', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO conf.element_io_controller_modules (element_type_id, element_id, module_type_id, module_id, enabled, visible, created_at, updated_at) VALUES
 (71, 1, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -99,4 +207,22 @@ INSERT INTO conf.element_io_controller_modules (element_type_id, element_id, mod
 (71, 11, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (71, 12, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (71, 13, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(71, 14, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(71, 14, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 15, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 16, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 17, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 18, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 19, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 20, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 21, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 22, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 23, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 24, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 25, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 26, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 27, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 28, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 29, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 30, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 31, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 32, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

@@ -44,7 +44,10 @@ element_type;element_subtype;alias;svg_file;js_custom_type_render;keepRatio
 65;;SAI;65_sai.svg;;true
 66;;VANE;66_vane.svg;;true
 70;;CVM;70_analizador_red.svg;;true
-71;;PMV;71_vms_dgt.svg;;true
+71;18;PMV;71_vms_dgt.svg;;true
+71;11;CLV;71_vms_clv_af.svg;;true
+71;12;AF;71_vms_clv_af.svg;;true
+71;16;PMVI;71_vms_dgt_txt_1line.svg;;true
 74;;ERU;74_eru.svg;;true
 75;;GE;75_ge.svg;;true
 84;;LIGHT_CIRCUIT;84_switch_light_bulb.svg;;true
