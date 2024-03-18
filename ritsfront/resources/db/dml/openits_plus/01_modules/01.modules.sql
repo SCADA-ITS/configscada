@@ -19,7 +19,7 @@ INSERT INTO ui.modules
 (913, 4, '["ManagementArea:1"]', 'SELECTOR_TREE_NODES_SINOPTICOS_UF', 'SELECTOR_TREE_NODES_SINOPTICOS_UF', 1, NULL, 'modules/synopticModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 
 --Management Area 2
-(970, 3, '["ManagementArea:2"]', 'MAP', 'MAP', 1, null, 'modules/mapModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(970, 3, '["ManagementArea:2"]', 'MAP', 'MAP', 1, null, 'modules/mapModule.js', 'getView', 'loadData', NULL, NULL, true, true, true),
 
 --Management Area 3
 (800, 8, '["ManagementArea:3"]', 'Selector Tree Module', 'Selector Tree Module', 1, null, 'modules/selectorModule.js', 'getView', 'loadData', NULL, NULL, true, true, true),
