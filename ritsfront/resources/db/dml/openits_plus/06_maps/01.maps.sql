@@ -6,7 +6,8 @@ INSERT INTO ui.map_layers (id, base_layer, map_id, "name", description, "label",
 (9800071, NULL, 1, 'Layer Paneles', 'Layer Paneles', 'LBL_ELEMENT_TYPE_PANEL', NULL, true);
 
 INSERT INTO ui.graphic_icons (id, "name", description, alarms, measures, js_draw_file, width, height, svg_pattern_var, svg_file, js_custom_type_render) VALUES
-(040002, 'CAM_FIX', 'CAM_FIX', false, true, 'component/graphicIcon/graphicIconDefault.js', 50, 50,null,  'img/graphic_icon/02_camera.svg',true),
+(040002, 'CAM_FIX', 'CAM_FIX', false, true, 'component/graphicIcon/graphicIconDefault.js', 30, 30,null,  'img/graphic_icon/02_camera.svg',true),
+(050002, 'CAM_FIX', 'CAM_FIX', false, true, 'component/graphicIcon/graphicIconDefault.js', 50, 50,null,  'img/graphic_icon/02_camera.svg',true),
 (100071, 'PMV', 'PMV', false, true, 'component/graphicIcon/graphicIconCustom.js', 240, 120, null, 'img/graphic_icon/71_vms_dgt.svg', 'component/graphicIcon/custom/vms.js');
 
 INSERT INTO ui.map_layer_elements (id, layer_id, element_id, graphic_icon_id, "label", longitude, latitude, horizontal_flip, rotate, tooltip, z_index_front, show_text, text_color,selectable) VALUES 
@@ -63,16 +64,16 @@ INSERT INTO ui.map_layer_element_zooms (map_layer_element_id, zoom_lower, zoom_u
 (22, 10, 13, 100071,  -4.779144444444444, 36.512477777777775, false, null, true, false, '#00000'),
 
 
-(1, 13.5, 16, 040002,  -4.9816611111111115, 36.52065555555555,  false, null, true, false, '#00000'),
-(2, 13.5, 16, 040002,  -4.940216666666667, 36.52036944444444,  false, null, true, false, '#00000'),
-(3, 13.5, 16, 040002,  -5.025908333333333, 36.498425,  false, null, true, false, '#00000'),
-(4, 13.5, 16, 040002,  -4.9876, 36.50830555555556, false, null, true, false, '#00000'),
-(5, 13.5, 16, 040002,  -5.073833333333333, 36.48894166666667,  false, null, true, false, '#00000'),
-(6, 13.5, 16, 040002,  -4.94933611111111, 36.49995555555556, false, null, true, false, '#00000'),
-(7, 13.5, 16, 040002,  -4.740575, 36.51081388888889,  false, null, true, false, '#00000'),
-(8, 13.5, 16, 040002,  -4.709702777777778, 36.51083333333333, false, null, true, false, '#00000'),
-(9, 13.5, 16, 040002,  -4.757883333333333, 36.51029444444445,  false, null, true, false, '#00000'),
-(10, 13.5, 16, 040002,  -4.779144444444444, 36.519477777777775, false, null, true, false, '#00000'),
+(1, 13.5, 16, 050002,  -4.9816611111111115, 36.52065555555555,  false, null, true, false, '#00000'),
+(2, 13.5, 16, 050002,  -4.940216666666667, 36.52036944444444,  false, null, true, false, '#00000'),
+(3, 13.5, 16, 050002,  -5.025908333333333, 36.498425,  false, null, true, false, '#00000'),
+(4, 13.5, 16, 050002,  -4.9876, 36.50830555555556, false, null, true, false, '#00000'),
+(5, 13.5, 16, 050002,  -5.073833333333333, 36.48894166666667,  false, null, true, false, '#00000'),
+(6, 13.5, 16, 050002,  -4.94933611111111, 36.49995555555556, false, null, true, false, '#00000'),
+(7, 13.5, 16, 050002,  -4.740575, 36.51081388888889,  false, null, true, false, '#00000'),
+(8, 13.5, 16, 050002,  -4.709702777777778, 36.51083333333333, false, null, true, false, '#00000'),
+(9, 13.5, 16, 050002,  -4.757883333333333, 36.51029444444445,  false, null, true, false, '#00000'),
+(10, 13.5, 16, 050002,  -4.779144444444444, 36.519477777777775, false, null, true, false, '#00000'),
 
 (11, 13.5, 16, 100071,  -4.9716611111111115, 36.52465555555555,  false, null, true, false, '#00000'),
 (12, 13.5, 16, 100071,  -4.950216666666667, 36.52436944444444,  false, null, true, false, '#00000'),
