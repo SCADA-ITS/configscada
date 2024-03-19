@@ -17,6 +17,7 @@ import com.revenga.rits.back.data.core.model.ElementTypeParam;
 import com.revenga.rits.back.data.core.model.VmsGraphicGraphicGroupValue;
 import com.revenga.rits.back.data.core.util.ResourcesUtil;
 import com.revenga.rits.back.io.controller.service.EntitiesManager;
+import org.apache.commons.collections4.CollectionUtils;
 
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
@@ -339,13 +340,14 @@ class InputAdapter_VMS {
 
 			values = obtenerGraphic(element,Integer.parseInt(message.get(idGraphic)),numZone);
 			
-			
-			if (message_alt.size() > 1) {
-				alternances = obtenerGraphic(element,Integer.parseInt(message_alt.get(idGraphic)),numZone);
+			if (values != -1){
+				if (message_alt.size() > 1) {
+					alternances = obtenerGraphic(element,Integer.parseInt(message_alt.get(idGraphic)),numZone);
+				}
+				
+				Graphic graphic = new Graphic(1, values, alternances);
+				graphics.add(graphic);
 			}
-			
-			Graphic graphic = new Graphic(1, values, alternances);
-			graphics.add(graphic);
 		
 		}
 		
@@ -357,12 +359,20 @@ class InputAdapter_VMS {
 			Long group = jsonObject.vms_group_id[numZone - 1];
 			
 			List<VmsGraphicGraphicGroupValue> vmsGraphicGraphicGroupValue = EntitiesManager.getInstance().getByGroup(group);
-			for(VmsGraphicGraphicGroupValue groupValue : vmsGraphicGraphicGroupValue){
-				if(!groupValue.getValue().equals("VOLATILE")){
-					if(pictoValue.equals(Integer.parseInt(groupValue.getValue()))){
-						return groupValue.getGraphicId();
+			
+			if (!CollectionUtils.isEmpty(vmsGraphicGraphicGroupValue)) {
+				for(VmsGraphicGraphicGroupValue groupValue : vmsGraphicGraphicGroupValue){
+					if(!groupValue.getValue().equals("VOLATILE")){
+						if(pictoValue.equals(Integer.parseInt(groupValue.getValue()))){
+							return groupValue.getGraphicId();
+						}
 					}
 				}
+				log.debug("Trama recibida no está completa, o llegan varias tramas juntas. Se ignoran.");
+				return -1;
+			}else{
+				log.debug("Trama recibida no está completa, o llegan varias tramas juntas. Se ignoran.");
+				return -1;
 			}
 		}
 	}
