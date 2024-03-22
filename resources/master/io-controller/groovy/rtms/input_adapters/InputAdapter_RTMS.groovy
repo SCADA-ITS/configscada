@@ -118,7 +118,12 @@ class InputAdapter_RTMS {
 		try {
 	
 			dt = sdf.parse(date);
-			epochMillis = dt.getTime();
+			
+			//El RTMS nos devuelve el valor del inicio del período en la fecha, sin embargo no podemos
+			//categorizar el dato con esa fecha, puesto que lo correcto es categorizar el dato
+			//con la fecha de cierre del período. Por este motivo se suman tantos segundos como 
+			//dura el período a la fecha.
+			epochMillis = dt.getTime() + 60000*Integer.parseInt(PERIOD_VALUE); 
 			
 		} catch (ParseException e) {
 			
