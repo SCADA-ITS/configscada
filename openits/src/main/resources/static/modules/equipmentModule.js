@@ -30,10 +30,19 @@ export default class EquipmentModule extends GenericModule {
 
 		let self = this;
 		let entity = this.module.moduleValues.find(e => e.moduleParam.id === MODULE_PARAM_ENTITY_TYPE).value;
+		let elements = window.em.getAll(EntityType.ELEMENT);
 		let jsonEquipmentTypesWithGridAssigned = window.em.getAll(EntityType[entity]);
 		let jsonEquipmentTypesWithGridAssignedCopy = undefined;
 
 		jsonEquipmentTypesWithGridAssigned = jsonEquipmentTypesWithGridAssigned.filter(e => e.visible === true && e.grid != undefined && e.grid !== "");
+
+		for (let equipmentTypesWithGridAssigned of jsonEquipmentTypesWithGridAssigned) {
+
+			if (!elements.find(e => e.elementType && e.elementType.id && e.elementType.id === equipmentTypesWithGridAssigned.id)) {
+
+				jsonEquipmentTypesWithGridAssigned = jsonEquipmentTypesWithGridAssigned.filter(e => e.id != equipmentTypesWithGridAssigned.id);
+			}
+		}
 
 		jsonEquipmentTypesWithGridAssignedCopy = webix.copy(jsonEquipmentTypesWithGridAssigned);
 
