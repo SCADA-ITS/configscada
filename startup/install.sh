@@ -1,9 +1,9 @@
 #!/bin/bash
+
 user=""
-project="fullequip"
+project=""
 path=""
 ip_address_db=""
-
 
 ctrl_c() {
    clear
@@ -21,6 +21,32 @@ select_user() {
       num_users=$((num_users+1))
       options="$options $num_users $user"
    done
+
+   # Verificar si el usuario "revenga" existe
+   if id "revenga" &>/dev/null; then
+      revenga_exists=true
+   else
+      revenga_exists=false
+   fi
+
+   # Si el usuario "revenga" no existe, se crea automáticamente
+   if [ "$revenga_exists" = false ]; then
+      # Definir el nombre de usuario y la contraseña
+      username="revenga"
+      password="Revenga.19"
+
+      # Script de expect
+      echo -e "$password\n$password" | sudo -S expect -c "
+      set timeout -1
+      spawn adduser --gecos \"\" $username
+      expect \"New password:\"
+      send \"$password\r\"
+      expect \"Retype new password:\"
+      send \"$password\r\"
+      expect eof
+      "
+      sudo usermod -aG sudo revenga
+   fi
 
    selection=$(dialog --title "Selección de usuario" --stdout --menu "\nIndique el usuario que se utilizará para la instalación (Debe estar en minúsculas y sin símbolos)" 20 50 $num_users $options)
    echo $selection 
@@ -134,6 +160,9 @@ install_openits() {
 
    sudo mkdir -p $path
    sudo chown -R $USER:$USER $path
+   rutaTxt="$path/app/db_scripts/project.txt"
+   project=$(<"rutaTxt")
+   project=$(echo "$project" |tr -d '\r\n')
 
    while true; do
       if ls openits* 1>/dev/null 2>&1; then
@@ -308,7 +337,7 @@ install_openits() {
    #done
 
    application_properties="$directory/application.properties"
-   data_properties="$directory/project/fullequip/data/config.js"
+   data_properties="$directory/project/$project/data/config.js"
    sed -i "s/spring.datasource.url=jdbc:postgresql:\/\/.*$/spring.datasource.url=jdbc:postgresql:\/\/$ip_address_db:5430\/rits/" "$application_properties"
    sed -i "s/ws:\/\/[^:]*:61614/ws:\/\/$ip_address:61614/g" "$data_properties"
 
@@ -347,7 +376,8 @@ show_progress() {
 }
 
 fill_db() {
-  psql postgresql://rits:rits@$ip_address_db:5430/rits -c "SELECT 1;" >/dev/null 2>&1
+   sudo chown -R 70:admin $path/timescaledb
+   psql postgresql://rits:rits@$ip_address_db:5430/rits -c "SELECT 1;" >/dev/null 2>&1
 
   if [ $? -eq 0 ]; then 
      directories=("tbl_conf" "tbl_static" "tbl_master" "tbl_rt" "tbl_hist" "tbl_ui")
@@ -381,7 +411,7 @@ fill_db() {
      last_progress=0
 
      #Empezamos con los scripts de ddl_rt
-     cd $path/app/db_scripts/ritsback/ddl_rt
+     cd $path/app/db_scripts/ritsback/ddlrt
   
      yourfilenames=`find . -name '*.sql' -print0 | sort -z | xargs -r0`
      files_count=`echo $yourfilenames | wc -w`
@@ -401,8 +431,8 @@ fill_db() {
      wait
      last_progress=0
 
-          #Empezamos con los scripts de ddl_hist
-     cd $path/app/db_scripts/ritsback/ddl_hist
+      #Empezamos con los scripts de ddl_hist
+     cd $path/app/db_scripts/ritsback/ddlhist
   
      yourfilenames=`find . -name '*.sql' -print0 | sort -z | xargs -r0`
      files_count=`echo $yourfilenames | wc -w`
@@ -444,7 +474,7 @@ fill_db() {
      last_progress=0
 
      #Continuamos con los scripts de proyecto 
-     cd $path/app/db_scripts/ritsback/dml/maqueta_fullequip
+     cd $path/app/db_scripts/ritsback/dml/project
   
      yourfilenames=`find . -name '*.sql' -print0 | sort -z | xargs -r0`
      files_count=`echo $yourfilenames | wc -w`
@@ -460,6 +490,69 @@ fill_db() {
 
           psql postgresql://rits:rits@$ip_address_db:5430/rits -b -f $eachfile >/dev/null
      done
+     #front
+     #Empezamos con los scripts de ddl
+     cd $path/app/db_scripts/ritsfront/ddl
+     yourfilenames=`find . -name '*.sql' -print0 | sort -z | xargs -r0`
+     files_count=`echo $yourfilenames | wc -w`
+     current_file=0
+     for eachfile in $yourfilenames; do
+     	current_file=$((current_file+1))
+		progress=$(update_progress)
+	
+	    if ((progress >= last_progress + 10)); then
+		   #show_progress ". Creando tablas..." "$progress" &
+		   last_progress="$progress"
+		fi
+	
+	    psql postgresql://rits:rits@$ip_address_db:5430/rits -b -f $eachfile >/dev/null
+	 done
+  
+     wait
+     last_progress=0
+      #front
+     #Continuamos con los scripts de master 
+     cd $path/app/db_scripts/ritsfront/dml/master
+  
+     yourfilenames=`find . -name '*.sql' -print0 | sort -z | xargs -r0`
+     files_count=`echo $yourfilenames | wc -w`
+     current_file=0
+     for eachfile in $yourfilenames; do
+        current_file=$((current_file+1))
+	  	progress=$(update_progress)
+	  	
+        if ((progress >= last_progress + 5)); then
+	       #show_progress ". Rellenando tablas master..." "$progress" &
+	       last_progress="$progress"
+	  	fi
+
+        psql postgresql://rits:rits@$ip_address_db:5430/rits -b -f $eachfile >/dev/null
+     done
+  
+     wait
+     last_progress=0
+
+     #Continuamos con los scripts de proyecto 
+     cd $path/app/db_scripts/ritsfront/dml/project
+
+     yourfilenames=`find . -name '*.sql' -print0 | sort -z | xargs -r0`
+     files_count=`echo $yourfilenames | wc -w`
+     current_file=0
+     for eachfile in $yourfilenames; do
+     	current_file=$((current_file+1))
+	    progress=$(update_progress)
+	  	
+        if ((progress >= last_progress + 5)); then
+	       #show_progress ". Rellenando tablas de proyecto..." "$progress" &
+	       last_progress="$progress"
+	    fi
+
+        psql postgresql://rits:rits@$ip_address_db:5430/rits -b -f $eachfile >/dev/null
+     done
+     
+     psql postgresql://rits:rits@$ip_address_db:5430/rits -c "UPDATE ui.data_source_values SET value='http://$ip_address:8082/graphql' WHERE data_source_param_id = 1;"
+     psql postgresql://rits:rits@$ip_address_db:5430/rits -c "UPDATE ui.data_source_values SET value='ws://$ip_address:61614' WHERE data_source_param_id = 5;"
+     psql postgresql://rits:rits@$ip_address_db:5430/rits -c "UPDATE ui.data_source_values SET value='http://$ip_address:8082/graphql' WHERE data_source_param_id = 8;"
 
      wait
 
@@ -467,9 +560,19 @@ fill_db() {
      #rm -rf $path/openits_*.tar.gz
      
      clear
+     # Obtener una lista de todos los usuarios (excluyendo root)
+      USUARIOS=$(awk -F: '$3 >= 1000 && $1 != "root" {print $1}' /etc/passwd)
+      # Establecer permisos de lectura y ejecución (755) para los directorios de los usuarios existentes
+      for USUARIO in $USUARIOS
+      do
+          if [ -d "/home/$USUARIO" ]; then
+              sudo chmod -R 755 "/home/$USUARIO"
+          fi
+      done
      systemctl enable app
      systemctl start app
      sudo chown -R $user:$user $path
+     sudo chown -R 70:admin $path/timescaledb
      dialog --backtitle "SCADA OPENITS" --title "Instalación completada" --msgbox "\nEnhorabuena ha completado satisfactoriamente la instalación de la aplicación OPENITS en la máquina actual. La maquina se reiniciará." 15 70
      clear
      sudo reboot
@@ -478,9 +581,18 @@ fill_db() {
      #rm -rf $path/openits_*.tar.gz
 
      clear
+          # Obtener una lista de todos los usuarios (excluyendo root)
+      USUARIOS=$(awk -F: '$3 >= 1000 && $1 != "root" {print $1}' /etc/passwd)
+      for USUARIO in $USUARIOS
+      do
+          if [ -d "/home/$USUARIO" ]; then
+              sudo chmod -R 755 "/home/$USUARIO"
+          fi
+      done
      systemctl enable app
      systemctl start app
      sudo chown -R $user:$user $path
+     sudo chown -R 70:admin $path/timescaledb
      dialog --backtitle "SCADA OPENITS" --title "Instalación completada sin acceso a la BBDD" --msgbox "\nEnhorabuena ha completado satisfactoriamente la instalación de la aplicación OPENITS en la máquina actual. Si necesita rellenar la BBDD puede hacerlo de forma automática a posteriori con el fichero de instalación correspondiente. La máquina se reiniciará." 15 70
      clear
      sudo reboot
@@ -492,7 +604,8 @@ trap ctrl_c SIGINT
 
 sudo apt install dialog
 sudo apt update
-
+sudo apt-get install expect
+sudo apt update
 msg_bienvenida="
 Bienvenido al programa de instalación de SCADA OpenITS Revenga.
 
