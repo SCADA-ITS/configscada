@@ -76,13 +76,16 @@ export default class I18n {
 		let self = this;
 		let lblTranslated = "";
 		
-		if (txt != undefined && txt.trim().includes(" ") && !values) {
+		if (typeof txt === "string" && txt !== "") {
+			
+			if (txt.trim().includes(" ") && !values) {
 
-			lblTranslated = translateText(txt);
-
-		} else {
-
-			lblTranslated = translateLabel(txt, values);
+				lblTranslated = translateText(txt);
+	
+			} else {
+	
+				lblTranslated = translateLabel(txt, values);
+			}	
 		}
 
 		function translateText(txt) {
