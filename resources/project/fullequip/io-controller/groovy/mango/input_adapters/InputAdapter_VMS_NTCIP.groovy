@@ -175,7 +175,7 @@ class InputAdapter_VMS {
 			for(int n_zone = 1; n_zone <= num_zones; n_zone++){
 				ElementValue alternance_element = EntitiesManager.getInstance().getElementValue(element, PARAM_MEASURE_DATAJSON, PARAM_TYPE_MEASURE);
 				
-				if (alternance_element.getValue() != "[]" && alternance_element.getValue() != ""){
+				if (alternance_element.getValue() != null && alternance_element.getValue() != "[]" && alternance_element.getValue() != ""){
 					
 					def jsonObject = new JsonSlurper().parseText(alternance_element.getValue());
 					Long alternance_json = jsonObject[n_zone - 1].alternance_ms
@@ -394,7 +394,10 @@ class InputAdapter_VMS {
 		}
 		
 		public int obtenerGraphic(Element element, Integer pictoValue, Integer numZone){
-		
+			
+			if (pictoValue == 0){
+				pictoValue = 255
+			}
 			ElementValue elementDataJson = EntitiesManager.getInstance().getElementValueConfig(element, PARAM_CONFIG_JSONCONFIG);
 			
             def jsonObject = new JsonSlurper().parseText(elementDataJson.getValue());
