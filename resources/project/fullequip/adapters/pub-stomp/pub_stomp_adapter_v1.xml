@@ -59,6 +59,11 @@
 			<p:enabled>true</p:enabled>
 			<p:entity>SetBlockIncidentReportsPublishCommand</p:entity>
 		</p:subscriptor>
+		<p:subscriptor>
+			<p:id>13</p:id>
+			<p:enabled>true</p:enabled>
+			<p:entity>SetPmQueuePublishCommand</p:entity>
+		</p:subscriptor>
 	</p:subscriptors>
 	<p:publishers>
 		<p:publisher>
@@ -176,6 +181,18 @@
 					</p:subscriptors_ref>
 					<p:custom_path>false</p:custom_path>
 					<p:path>/topic/incidentReport.{id}</p:path>
+				</p:topic>
+				<p:topic>
+					<p:id>12</p:id>
+					<p:enabled>true</p:enabled>
+					<p:entity>ElementVO</p:entity>
+					<p:publisher_class>PmQueuePublisher</p:publisher_class>
+					<p:merge_wait_time>500</p:merge_wait_time>
+					<p:subscriptors_ref>
+						<p:subscriptor_id_ref>13</p:subscriptor_id_ref>
+					</p:subscriptors_ref>
+					<p:custom_path>false</p:custom_path>
+					<p:path>/topic/pm_queue.{id}</p:path>
 				</p:topic>
 			</p:topics>
 		</p:publisher>
