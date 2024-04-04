@@ -31,7 +31,7 @@ INSERT INTO conf.element_values
 (element_type_id, element_type_param_id, param_type_id, element_id, value, enabled, visible, created_at, updated_at) VALUES
 (2,1,1,1,'Foscam',true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), 
 (2,2,1,1,'C1',true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), 
-(2,3,1,1,'http://192.168.243.40:88/cgi-bin/CGIProxy.fcgi?cmd=snapPicture2&usr=admin&pwd=xxx',true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), 
+(2,3,1,1,'http://109.206.96.58:8080/cam_1.cgi',true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), 
 (2,4,1,1,'124',true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), 
 (2,5,1,1,'RKDJS24PI',true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 (2,6,1,1,
@@ -67,6 +67,7 @@ INSERT INTO conf.element_values
 --]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 12, 1, 1, '{"up":0.02,"down":-0.02,"right":0.02,"left":-0.02,"zoom_in":0.02,"zoom_out":-0.02}', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2,1003,1,1,'CAM_1',true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+(2,16,1,1,'http://109.206.96.58:8080/cam_1.jpg?',true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 
 (2,1,1,2,'Foscam',true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), 
 (2,2,1,2,'C1',true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), 
