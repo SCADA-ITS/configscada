@@ -171,7 +171,7 @@ export default class DecoderSNAP extends Decoder {
 					self.timeElapsedWOConn = 0;
 					self.initTimeElapsedWOConn = 0;
 										
-					self.img.src = getNewUrl();
+					self.img.src = self.getNewUrl(url);
 				}
 				else {
 					
@@ -188,7 +188,7 @@ export default class DecoderSNAP extends Decoder {
 					}
 					else {
 						
-						self.img.src = getNewUrl();
+						self.img.src = self.getNewUrl(url);
 					}
 				}
 			}
@@ -196,29 +196,29 @@ export default class DecoderSNAP extends Decoder {
 			self.loading = true;
 	    }
 
-		function getNewUrl() {
-						
-			let newUrl = url;
-			
-			let urlParams = new URLSearchParams(url);
-			
-			if (Array.from(urlParams).length > 0 && url.indexOf("?") !== -1) {
-				
-				newUrl += "&rnd=";  
-			}
-			else if (url.indexOf("?") === -1) {
-				
-				newUrl += "?rnd=";
-			}
-			
-			/*let timeService = window.sm.getService(Services.TIME_SERVICE);
-			//let date = timeService.getEpoch();
-			
-			newUrl += date;*/
-			newUrl += Math.random();
-			
-			return newUrl;
-		}			
+//		function getNewUrl() {
+//						
+//			let newUrl = url;
+//			
+//			let urlParams = new URLSearchParams(url);
+//			
+//			if (Array.from(urlParams).length > 0 && url.indexOf("?") !== -1) {
+//				
+//				newUrl += "&rnd=";  
+//			}
+//			else if (url.indexOf("?") === -1) {
+//				
+//				newUrl += "?rnd=";
+//			}
+//			
+//			/*let timeService = window.sm.getService(Services.TIME_SERVICE);
+//			//let date = timeService.getEpoch();
+//			
+//			newUrl += date;*/
+//			newUrl += Math.random();
+//			
+//			return newUrl;
+//		}			
 	}
 	
 	stop() {

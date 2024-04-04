@@ -222,9 +222,7 @@ export default class CamViewer {
 					viewButtons.cols.push(viewButtonCamControls);
 				}
 				
-				if (self.decoderType === Decoder.SNAP && 
-					self.config.camConf.decoders[self.decoderType] && 
-					self.config.camConf.decoders[self.decoderType].snapshot === true) {
+				if (self.element.elementValues.find(e => e.elementTypeParam.id === self.config.camConf.url_snapshot)) {
 				
 					let viewButtonTakeSnapshot = getButtonTakeSnapshot();
 					
@@ -286,9 +284,7 @@ export default class CamViewer {
 					viewButtons.cols.push(viewButtonCamControls);
 				}
 				
-				if (self.decoderType === Decoder.SNAP && 
-					self.config.camConf.decoders[self.decoderType] && 
-					self.config.camConf.decoders[self.decoderType].snapshot === true) {
+				if (self.element.elementValues.find(e => e.elementTypeParam.id === self.config.camConf.url_snapshot)) {
 				
 					let viewButtonTakeSnapshot = getButtonTakeSnapshot();
 				
@@ -433,14 +429,14 @@ export default class CamViewer {
 							
 							if (timeService) {
 								
-								const elementValueUrl = self.element.elementValues.find(e => e.elementTypeParam.id === self.config.camConf.decoders[self.decoderType].url);
+								const elementValueUrlSnapshot = self.element.elementValues.find(e => e.elementTypeParam.id === self.config.camConf.url_snapshot);
 
-								if (elementValueUrl) {
-						
-									const url = elementValueUrl.value;
+								if (elementValueUrlSnapshot && elementValueUrlSnapshot.value) {					
+									
+									let newUrl = self.decoder.getNewUrl(elementValueUrlSnapshot.value);
 									const title = i18n.t("LBL_SNAPSHOT") + " - " + self.element.alias + " (" + util.toLocaleString(timeService.getEpoch() / 1000) + ")";
 									
-									util.ui.showImagePopup(url, title);
+									util.ui.showImagePopup(newUrl, title);
 								}
 							}
 						}
