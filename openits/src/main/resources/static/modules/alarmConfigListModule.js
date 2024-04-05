@@ -114,7 +114,18 @@ export default class AlarmConfigListModule extends GenericGridModule {
 			function getList() {
 
 				let elementTypes = window.em.getAll(EntityType.ELEMENT_TYPE);
-				let elementTypesFiltered = webix.copy(elementTypes.filter(e => e.visible === true && e.grid));
+				let elements = window.em.getAll(EntityType.ELEMENT);
+				let elementTypesFiltered = undefined;
+				
+				elementTypesFiltered = webix.copy(elementTypes.filter(e => e.visible === true && e.grid != undefined && e.grid !== ""));
+				
+				for (let equipmentTypesWithGridAssigned of elementTypesFiltered) {
+
+					if (!elements.find(e => e.elementType && e.elementType.id && e.elementType.id === equipmentTypesWithGridAssigned.id)) {
+
+						elementTypesFiltered = elementTypesFiltered.filter(e => e.id != equipmentTypesWithGridAssigned.id);
+					}
+				}
 
 				elementTypesFiltered.forEach(item => {
 

@@ -691,12 +691,21 @@ export default class AlarmMonitorModule extends GenericModule {
 
 				let viewListEquipments = {};
 				let elementTypes = window.em.getAll(EntityType.ELEMENT_TYPE);
+				let elements = window.em.getAll(EntityType.ELEMENT);
 				let elementTypesFiltered = undefined;
 				let elementTypeView = [];
 
 				view.rows = [];
 
-				elementTypesFiltered = elementTypes.filter(e => e.visible === true && e.grid);
+				elementTypesFiltered = elementTypes.filter(e => e.visible === true && e.grid != undefined && e.grid !== "");
+				
+				for (let equipmentTypesWithGridAssigned of elementTypesFiltered) {
+
+					if (!elements.find(e => e.elementType && e.elementType.id && e.elementType.id === equipmentTypesWithGridAssigned.id)) {
+
+						elementTypesFiltered = elementTypesFiltered.filter(e => e.id != equipmentTypesWithGridAssigned.id);
+					}
+				}
 
 				if (Array.isArray(elementTypesFiltered) && elementTypesFiltered.length > 0) {
 
