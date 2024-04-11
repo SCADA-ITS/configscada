@@ -70,4 +70,24 @@ export default class Decoder {
 
 		return viewNoImage;
 	}
+	
+	getNewUrl(url) {
+
+		let newUrl = url;
+
+		let urlParams = new URLSearchParams(url);
+
+		if (Array.from(urlParams).length > 0 && url.indexOf("?") !== -1) {
+
+			newUrl += "&rnd=";
+		}
+		else if (url.indexOf("?") === -1) {
+
+			newUrl += "?rnd=";
+		}
+
+		newUrl += Math.random();
+
+		return newUrl;
+	}
 }

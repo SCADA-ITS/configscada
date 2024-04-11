@@ -222,12 +222,15 @@ export default class CamViewer {
 					viewButtons.cols.push(viewButtonCamControls);
 				}
 				
-				let viewButtonTakeSnapshoot = getButtonTakeSnapshoot();
+				if (self.element.elementValues.find(e => e.elementTypeParam.id === self.config.camConf.url_snapshot)) {
 				
-				viewButtonTakeSnapshoot.height = SIZE_MULTI;
-				viewButtonTakeSnapshoot.width = SIZE_MULTI;
-				viewButtonTakeSnapshoot.css = "cam-viewer-button";
-				viewButtons.cols.push(viewButtonTakeSnapshoot);
+					let viewButtonTakeSnapshot = getButtonTakeSnapshot();
+					
+					viewButtonTakeSnapshot.height = SIZE_MULTI;
+					viewButtonTakeSnapshot.width = SIZE_MULTI;
+					viewButtonTakeSnapshot.css = "cam-viewer-button";
+					viewButtons.cols.push(viewButtonTakeSnapshot);	
+				}
 
 				if (!self.fullScreen) {
 
@@ -281,12 +284,15 @@ export default class CamViewer {
 					viewButtons.cols.push(viewButtonCamControls);
 				}
 				
-				let viewButtonTakeSnapshoot = getButtonTakeSnapshoot();
+				if (self.element.elementValues.find(e => e.elementTypeParam.id === self.config.camConf.url_snapshot)) {
 				
-				viewButtonTakeSnapshoot.height = SIZE_SINGLE;
-				viewButtonTakeSnapshoot.width = SIZE_SINGLE;
-				viewButtonTakeSnapshoot.css = "cam-viewer-button-small";
-				viewButtons.cols.push(viewButtonTakeSnapshoot);
+					let viewButtonTakeSnapshot = getButtonTakeSnapshot();
+				
+					viewButtonTakeSnapshot.height = SIZE_SINGLE;
+					viewButtonTakeSnapshot.width = SIZE_SINGLE;
+					viewButtonTakeSnapshot.css = "cam-viewer-button-small";
+					viewButtons.cols.push(viewButtonTakeSnapshot);		
+				}
 
 				if (!self.fullScreen) {
 
@@ -406,11 +412,11 @@ export default class CamViewer {
 				return viewButtonFullScreen;
 			}
 			
-			function getButtonTakeSnapshoot() {
+			function getButtonTakeSnapshot() {
 
-				let viewButtonTakeSnapshoot;
+				let viewButtonTakeSnapshot;
 
-				viewButtonTakeSnapshoot = {
+				viewButtonTakeSnapshot = {
 
 					view: "button",
 					type: "icon",
@@ -423,21 +429,21 @@ export default class CamViewer {
 							
 							if (timeService) {
 								
-								const elementValueUrl = self.element.elementValues.find(e => e.elementTypeParam.id === self.config.camConf.decoders[self.decoderType].url);
+								const elementValueUrlSnapshot = self.element.elementValues.find(e => e.elementTypeParam.id === self.config.camConf.url_snapshot);
 
-								if (elementValueUrl) {
-						
-									const url = elementValueUrl.value;
+								if (elementValueUrlSnapshot && elementValueUrlSnapshot.value) {					
+									
+									let newUrl = self.decoder.getNewUrl(elementValueUrlSnapshot.value);
 									const title = i18n.t("LBL_SNAPSHOT") + " - " + self.element.alias + " (" + util.toLocaleString(timeService.getEpoch() / 1000) + ")";
 									
-									util.ui.showImagePopup(url, title);
+									util.ui.showImagePopup(newUrl, title);
 								}
 							}
 						}
 					}
 				}
 
-				return viewButtonTakeSnapshoot;
+				return viewButtonTakeSnapshot;
 			}
 
 			function getButtonExpandCam() {
