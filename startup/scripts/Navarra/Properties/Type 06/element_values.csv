@@ -1,0 +1,4 @@
+item;alias;description;sessionuid;road;stretchs;pk;param1_direction;param2_pk_ini;param3_pk_end;param4_name;param5_vms
+1;TT_01;TT_01;;N-121A;N-121A C;;false;25.9;39.9;Ventas de Arnaiz;PMV-01
+2;TT_02;TT_02;;N-121A;N-121A C;;false;25.9;49.9;Belate;PMV-01,PMV-02
+3;TT_03;TT_03;;N-121A;N-121A C;;false;25.9;60.9;Etxalar;PMV-01,PMV-02,PMV-03

@@ -3,7 +3,7 @@
 --
 INSERT INTO master.element_types
 (element_type_id, alias, description, label_alias, label_description,  initial_element_type_state_id, connected_element_type_state_id, disconnected_element_type_state_id, enabled, visible, created_at, updated_at)VALUES
-(1, 'WEATHER_STATION', 'Meteorological data collection','LBL_ELEMENT_TYPE_WEATHER_STATION', 'LBL_ELEMENT_TYPE_WEATHER_STATION_DESC', 0, 1, 2, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(1, 'WEATHER_STATION', 'Weather station','LBL_ELEMENT_TYPE_WEATHER_STATION', 'LBL_ELEMENT_TYPE_WEATHER_STATION_DESC', 0, 1, 2, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 --
 -- Table: master.element_type_params

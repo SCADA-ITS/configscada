@@ -1,0 +1,7 @@
+device_name;session_uid;url_publisher
+RAD-001;RAD-001;http://192.168.88.130:3000/api/v2/generic/
+RAD-002;RAD-002;http://192.168.88.130:3000/api/v2/generic/
+RAD-003;RAD-003;http://192.168.88.130:3000/api/v2/generic/
+RAD-004;RAD-004;http://192.168.88.130:3000/api/v2/generic/
+RAD-005;RAD-005;http://192.168.88.130:3000/api/v2/generic/
+RAD-006;RAD-006;http://192.168.88.130:3000/api/v2/generic/

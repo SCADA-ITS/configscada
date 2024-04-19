@@ -1,0 +1,9 @@
+item;stretch_type;alias;description;pk_ini;pk_end;lanes;road
+1;Element;N-113 C;N-113 C;78+700;78+700;2;N-113
+2;Element;N-113 D;N-113 D;91+358;91+358;2;N-113
+3;Element;A-15 C;A-15 C;0;0;2;A-15
+4;Element;A-15 D;A-15 D;127+670;127+670;2;A-15
+5;Element;N-121A C;N-121A C;32+560;60+230;2;N-121A
+6;Element;N-121A D;N-121A D;25+900;25+900;2;N-121A
+7;Element;A-1 C;A-1 C;401+560;401+560;2;A-1
+8;Element;A-1 D;A-1 D;0;0;2;A-1

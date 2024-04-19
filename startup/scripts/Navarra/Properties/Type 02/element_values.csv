@@ -1,0 +1,12 @@
+item;element_subtype;alias;description;sessionuid;road;stretchs;pk;on_change_alarm;param1_brand;param2_model;param3_stream_mjpeg;param6_preset;param7_features;param9_onvif_hostname;param10_onvif_username;param11_onvif_password;param12_onvif_ptz_params;sentido;data_proxy
+1;3;ANPR-001;ANPR-001;ANPR-001;A-15;A-15 D;2+295;null;Bosch;NDP-7512-Z30;;;PTZ;;;;;;
+2;3;ANPR-002;ANPR-002;ANPR-002;N-113;N-113 D;2+520;null;Bosch;NDP-7512-Z30;;;PTZ;;;;;;
+3;3;ANPR-003;ANPR-003;ANPR-003;N-121A;N-121A C;2+595;null;Bosch;NDP-7512-Z30;;;PTZ;;;;;;
+4;3;ANPR-004;ANPR-004;ANPR-004;A-1;A-1 C;62+400;null;Bosch;NDP-7512-Z30;;;PTZ;;;;;;
+5;3;ANPR-005;ANPR-005;ANPR-005;N-121A;N-121A C;62+395;null;Bosch;NDP-7512-Z30;;;PTZ;;;;;;
+6;4;RAD-001;RAD-001;RAD-001;A-15;A-15 D;127+670;null;Bosch;NDP-7512-Z30;;;PTZ;;;;;;
+7;4;RAD-002;RAD-002;RAD-002;N-113;N-113 D;91+358;null;Bosch;NDP-7512-Z30;;;PTZ;;;;;;
+8;4;RAD-003;RAD-003;RAD-003;N-121A;N-121A C;32+560;null;Bosch;NDP-7512-Z30;;;PTZ;;;;;;
+9;4;RAD-004;RAD-004;RAD-004;A-1;A-1 C;401+560;null;Bosch;NDP-7512-Z30;;;PTZ;;;;;;
+10;4;RAD-005;RAD-005;RAD-005;N-121A;N-121A D;25+900;null;Bosch;NDP-7512-Z30;;;PTZ;;;;;;
+11;4;RAD-006;RAD-006;RAD-006;N-121A;N-121A C;60+230;null;Bosch;NDP-7512-Z30;;;PTZ;;;;;;
