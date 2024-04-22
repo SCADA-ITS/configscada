@@ -60,7 +60,7 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_CL', 1, 'LBL_TREE_AVO_S2_T3_LEVEL_2', 'Zona 3 - Tramo 3', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_TREE_AVO_S2_T4_LEVEL_2', 'Zona 3 - Tramo 4', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_TREE_AVO_S2_T5_LEVEL_2', 'Zona 3 - Tramo 5', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('es_ES', 1, 'LBL_DGT_DATOS', 'DGT', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+('es_ES', 1, 'LBL_DGT_DATOS', 'Datos de transitos', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 
 
