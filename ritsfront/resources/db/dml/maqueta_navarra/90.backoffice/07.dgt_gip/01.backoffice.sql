@@ -3,7 +3,7 @@ BEGIN
   IF EXISTS (SELECT 1 FROM pg_namespace WHERE nspname = 'dgt_gip') THEN
 	
   	INSERT INTO ui.backoffices (id, "name", description, "label", jdbc, "user", "password", "schema", default_metadata_backoffice, default_metadata_table, default_metadata_column, enabled) 
-	VALUES(7, 'dgt_gip', NULL, NULL, 'jdbc:postgresql://192.168.88.52:5430/rits', 'rits', 'uMuD7Uy0gpCRL4Jo1w6SOQ==', 'dgt_gip',
+	VALUES(7, 'dgt_gip', NULL, NULL, 'jdbc:postgresql://192.168.88.131:5430/rits', 'rits', 'uMuD7Uy0gpCRL4Jo1w6SOQ==', 'dgt_gip',
 	-- default_metadata_backoffice
 	'{}',
 	-- default_metadata_table
