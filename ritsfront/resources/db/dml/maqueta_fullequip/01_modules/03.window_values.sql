@@ -1,45 +1,9 @@
 INSERT INTO ui.window_values(module_id, window_param_id, value) VALUES
-
 (2018, 8, 'true'),
 (2018, 10, 'img/module/default.png'),
 (2018, 11, '#464646'),
 (2018, 12, 'LBL_MENU_ITEM_SYNOPTIC'),
 (2018, 14, 'true'),
-
-(402, 8, 'true'),
-(402, 9, 'img/module/default.png'),
-(402, 10, 'img/module/default.png'),
-(402, 11, '#464646'),
-(402, 12, 'LBL_MENU_ITEM_IMD_VEH_H'),
-(402, 14, 'true'),
-
-(405, 8, 'true'),
-(405, 9, 'img/module/default.png'),
-(405, 10, 'img/module/default.png'),
-(405, 11, '#464646'),
-(405, 12, 'LBL_MENU_ITEM_VEL_MED_KM_H'),
-(405, 14, 'true'),
-
-(406, 8, 'true'),
-(406, 9, 'img/module/default.png'),
-(406, 10, 'img/module/default.png'),
-(406, 11, '#464646'),
-(406, 12, 'LBL_MENU_ITEM_VIDEOWALL'),
-(406, 14, 'true'),
-
-(407, 8, 'true'),
-(407, 9, 'img/module/default.png'),
-(407, 10, 'img/module/default.png'),
-(407, 11, '#464646'),
-(407, 12, 'LBL_MENU_ITEM_RECORDS'),
-(407, 14, 'true'),
-
-(408, 8, 'true'),
-(408, 9, 'img/module/default.png'),
-(408, 10, 'img/module/default.png'),
-(408, 11, '#464646'),
-(408, 12, 'LBL_MENU_ITEM_INCIDENCIAS_DAI'),
-(408, 14, 'true'),
 
 (600, 8, 'true'),
 (600, 9, 'img/module/default.png'),

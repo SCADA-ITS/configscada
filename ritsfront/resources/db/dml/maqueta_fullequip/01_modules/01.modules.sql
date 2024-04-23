@@ -1,12 +1,6 @@
 UPDATE ui.modules SET autoload=true WHERE id=1018;
 
 INSERT INTO ui.modules(id, module_type_id, "name", description, default_view_type_id, default_system_permission_id, js_file, js_method_draw, js_method_callbacks, data_query, wss_topic, enabled, visible, autoload) VALUES
-(402, 5, 'IMD', 'IMD', 1, null, 'modules/externalApp.js', 'getView', NULL, NULL, NULL, true, true, NULL),
-(405, 5, 'Vel. Media', 'Vel. Media', 1, null, 'modules/externalApp.js', 'getView', NULL, NULL, NULL, true, true, NULL),
-(406, 5, 'Videowall', 'Videowall', 1, null, 'modules/externalApp.js', 'getView', NULL, NULL, NULL, true, true, NULL),
-(407, 5, 'Grabaciones', 'Grabaciones', 1, null, 'modules/externalApp.js', 'getView', NULL, NULL, NULL, true, true, NULL),
-(408, 5, 'DAI Rio Verde', 'DAI Rio Verde', 1, null, 'modules/externalApp.js', 'getView', NULL, NULL, NULL, true, true, NULL),
-
 (910, 1, 'EquipmentForm', 'Equipment form', 2, null, 'modules/equipmentFormModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 
 (2018, 8, 'Selector Tree Module', 'Selector Tree Module', 1, null, 'modules/selectorModule.js', 'getView', 'loadData', NULL, NULL, true, true, true),

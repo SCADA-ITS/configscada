@@ -8,7 +8,7 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 (6, 2, 1, 1, NULL, '25.9', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (6, 3, 1, 1, NULL, '39.9', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (6, 4, 1, 1, NULL, 'V.Arnaiz', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(6, 5, 1, 1, NULL, 'PMV-01', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(6, 5, 1, 1, NULL, 'PMV-01,PMV-02,PMV-03', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (6, 1, 1, 2, NULL, 'false', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (6, 2, 1, 2, NULL, '25.9', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -20,7 +20,7 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 (6, 2, 1, 3, NULL, '25.9', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (6, 3, 1, 3, NULL, '60.9', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (6, 4, 1, 3, NULL, 'Etxalar', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(6, 5, 1, 3, NULL, 'PMV-01,PMV-02,PMV-03', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(6, 5, 1, 3, NULL, 'PMV-01', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO conf.element_io_controller_modules (element_type_id, element_id, module_type_id, module_id, enabled, visible, created_at, updated_at) VALUES
 (6, 1, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 

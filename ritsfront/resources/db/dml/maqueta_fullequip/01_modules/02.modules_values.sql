@@ -1,14 +1,6 @@
 INSERT INTO ui.module_values(module_id, module_param_id, value) VALUES
 (2018, 9, '3'),
 
-
-(402, 5, 'http://192.168.0.152:3030/d/8G4fxmI7z/imd-veh-h?orgId=1&refresh=30s&kiosk=tv&theme=light'),
-(403, 5, 'http://192.168.88.71:8080/jasperserver?j_username=jasperadmin&j_password=jasperadmin&userLocale=es_ES'),
-(405, 5, 'http://192.168.0.152:3030/d/rPsBxmSnz/velocidad-media-km-h?orgId=1&refresh=30s&kiosk=tv&theme=light'),
-(406, 5, 'http://192.168.1.240:9000/#/dashboard?user=operador1&pass=operador1'),
-(407, 5, 'http://192.168.0.150:82/recording?mtkn=1:1m864T:w9sGMtdQAZZAsfQmm0XRiRjmGDI'),
-(408, 5, 'http://192.168.0.150:82/incidents?mtkn=1:1m864T:w9sGMtdQAZZAsfQmm0XRiRjmGDI'),
-
 (500, 8, '{"treeCustom": [4]}'),
 
 (600, 4, '1'),
