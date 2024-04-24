@@ -53,6 +53,8 @@ INSERT INTO conf.stretch_locations (stretch_id, location_id, position, enabled, 
 INSERT INTO conf.stretch_locations (stretch_id, location_id, position, enabled, visible, created_at, updated_at) VALUES
 (1000, 1000, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (1000, 1001, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(1000, 1002, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(1000, 1002, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+ 
+(1000, 60002, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 

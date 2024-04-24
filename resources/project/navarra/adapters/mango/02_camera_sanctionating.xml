@@ -19,6 +19,8 @@
     </p:field>
   </p:fields>
   <p:alarms>
-    <p:alarm source="overspeed_alarm" active_value="true" alarm_config_id="070002"></p:alarm>
+    <p:alarm source="road_alarm" active_value="true" alarm_config_id="3000002"></p:alarm>
+    <p:alarm source="sport_alarm" active_value="true" alarm_config_id="3010002"></p:alarm>
+    <p:alarm source="low_alarm" active_value="true" alarm_config_id="3020002"></p:alarm>
   </p:alarms>
 </p:json_generic_mango_v1>
