@@ -41,6 +41,8 @@ BEGIN
 		"srcTemplate": "elementFormTemplate.html"}');
 
 
+
+
 	INSERT INTO dgt_gip.sg_metadata_columns (id, sg_metadata_table_id, column_name, "label", label_description, needs_translation, metadata) VALUES
 	(101, 1, 'conductor', 'LBL_conductor', NULL, true, '{"position": 1, "editable": false, "badgeInHeader": "mdi mid-cog"}'),
 	(102, 1, 'itv', 'LBL_itv', NULL, true, '{"position": 2, "editable": false}'),
@@ -50,8 +52,11 @@ BEGIN
 	(106, 1, 'categoria_vehiculo', 'LBL_categoria_vehiculo', NULL, true, '{"position": 6, "editable": false}'),
 	(107, 1, 'nacionalidad_vehiculo', 'LBL_nacionalidad_vehiculo', NULL, true, '{"position": 7, "editable": false}'),
 	(108, 1, 'matricula', 'LBL_matricula', NULL, true, '{"position": 8, "editable": true, "badgeInHeader": "mdi mid-cog"}'),
-	(110, 1, 'valoracion', 'LBL_valoracion', NULL, true, '{"position": 10, "editable": false}'),
+	(110, 1, 'valoracion', 'LBL_valoracion', NULL, true, '{"position": 10, "editable": false,"formVisible":false}'),
 	(111, 1, 'fecha', 'LBL_fecha', NULL, true, '{"position": 10, "editable": false}');
+
+	INSERT INTO dgt_gip.sg_metadata_table_commands (id, sg_metadata_table_id, "name", "label", label_description, mdi_icon, require_confirmation, available_in_form, available_in_table, groovy, custom_js) VALUES
+	(110, 1, 'Confirmar datos', 'LBL_CONFIRMAR_DATOS', 'LBL_CONFIRMAR_DATOS',null , true, true, false, 'config/groovy/backoffice/dgt_gip/command/ConfirmCommand.groovy', null);
 
 
   END IF;
