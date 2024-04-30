@@ -15,7 +15,7 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 
 
 --CAMARA
-('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_CAMERA_LOW', 'Alarma vehículos lentos', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_CAMERA_LOW', 'Alarma vehículo detenido', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_CAMERA_ROAD', 'Alarma asistencia en carretera', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_CAMERA_SPORT', 'Alarma prueba deportiva', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
