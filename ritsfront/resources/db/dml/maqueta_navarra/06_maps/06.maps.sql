@@ -1,5 +1,5 @@
 INSERT INTO ui.maps (id, name, description, "label", icon, longitude, latitude, zoom, zoom_max, zoom_min, limit_init_lon, limit_init_lat, limit_end_lon, limit_end_lat, custom_provider_url, default_zoom_search, dark_mode) VALUES 
-(1, 'MAP', 'Map', 'LBL_MENU_ITEM_MAP', NULL, -1.650000, 42.816667, 8, 16, 8, 0, 39.8, -2.5, 45.8, null, null, true);
+(1, 'MAP', 'Map', 'LBL_MENU_ITEM_MAP', NULL, -1.650000, 42.816667, 9, 16, 9, 0, 39.8, -2.5, 45.8, null, null, true);
 
 INSERT INTO ui.graphic_icons (id, "name", description, alarms, measures, js_draw_file, width, height, svg_pattern_var, svg_file, js_custom_type_render, keep_aspect_ratio) VALUES
 (1000, 'INCIDENT_REPORT', 'INCIDENT_REPORT', false, true, 'component/graphicIcon/graphicIconCustom.js', 70, 120, null, 'img/graphic_icon/incident_report.svg', 'component/graphicIcon/custom/incidentReport.js', null);
@@ -31,11 +31,25 @@ INSERT INTO ui.map_layer_elements (id, layer_id, element_id, graphic_icon_id, "l
 (73, 71,'Element:71:3', 71,'RM-PMV-003', -1.6156152456909012, 42.962597921264624, false, null, true, false, null, true );
 
 INSERT INTO ui.map_layer_element_zooms (map_layer_element_id, zoom_lower, zoom_upper, graphic_icon_id, longitude, latitude, horizontal_flip, rotate, tooltip, show_text, text_color, z_index_front) VALUES
-(12, 8, 16, 4, -1.535958218701191, 43.00390401589307, false, null, true, false, '#000000', null),
-(14, 8, 16, 4, -1.51727473219286, 43.04474750891408, false, null, true, false, '#000000', null),
-(16, 8, 16, 4, -1.4948137745177775, 43.12624220385988, false, null, true, false, '#000000', null),
-(18, 8, 16, 4, -1.5675353610219448, 43.16574064391471, false, null, true, false, '#000000', null),
-(20, 8, 16, 4, -1.5762278186881505, 43.25350104774429, false, null, true, false, '#000000', null);
+(12, 9, 10, 4, -1.135958218701191, 42.7190401589307, false, null, true, false, '#000000', null),
+(14, 9, 10, 4, -1.135958218701191, 42.8990401589307, false, null, true, false, '#000000', null),
+(16, 9, 10, 4, -1.135958218701191, 43.08624220385988, false, null, true, false, '#000000', null),
+(18, 9, 10, 4, -1.135958218701191, 43.27574064391471, false, null, true, false, '#000000', null),
+(20, 9, 10, 4, -1.135958218701191, 43.45350104774429, false, null, true, false, '#000000', null),
+
+(71, 9, 10, 71, -1.7029627033453338, 43.276149012514715, false, null, true, false, '#000000', null),
+(72, 9, 10, 71, -1.6141449610235126, 43.1356503997735, false, null, true, false, '#000000', null),
+(73, 9, 10, 71, -1.6156152456909012, 42.962597921264624, false, null, true, false, '#000000', null),
+
+(12, 11, 16, 401, -1.535958218701191, 43.00390401589307, false, null, true, false, '#000000', null),
+(14, 11, 16, 401, -1.51727473219286, 43.04474750891408, false, null, true, false, '#000000', null),
+(16, 11, 16, 401, -1.4948137745177775, 43.12624220385988, false, null, true, false, '#000000', null),
+(18, 11, 16, 401, -1.5675353610219448, 43.17574064391471, false, null, true, false, '#000000', null),
+(20, 11, 16, 401, -1.5762278186881505, 43.25350104774429, false, null, true, false, '#000000', null),
+
+(71, 11, 16, 7101, -1.7029627033453338, 43.276149012514715, false, null, true, false, '#000000', null),
+(72, 11, 16, 7101, -1.6141449610235126, 43.1356503997735, false, null, true, false, '#000000', null),
+(73, 11, 16, 7101, -1.6156152456909012, 42.962597921264624, false, null, true, false, '#000000', null);
  
 INSERT INTO ui.map_commands
 (id, map_id, "position", "label", icon, "default", module_action_id, args, view_type_id, multiselect, show_text, item_required,  context) VALUES

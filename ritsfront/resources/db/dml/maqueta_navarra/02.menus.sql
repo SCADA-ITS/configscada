@@ -1,3 +1,5 @@
+UPDATE ui.menu_items SET enabled = false WHERE module_id = 1037;
+
 INSERT INTO ui.menu_groups(id, "label", icon, "name", description, enabled, visible, position) VALUES
 (1, 'LBL_MENU_MAPS_AND_SYNOPTICS', 'img/menu/default.png', 'Menu Maps & Synoptics', 'Menu Maps & Synoptics', true, true, 1),
 (2, 'LBL_MENU_EQUIPMENT', 'img/menu/default.png', 'Equipment', 'Equipment', true, true, 2),

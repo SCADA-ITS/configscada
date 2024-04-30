@@ -1,7 +1,7 @@
 INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 ('ElementType:2', 1, '2'),
-('ElementType:2', 2, 'element_type_02.svg'),
-('ElementType:2', 14, 'grid/element_type_02.png'),
+('ElementType:2', 2, '02_camera_sanctioning2.svg'),
+('ElementType:2', 14, 'grid/02_camera_sanctioning2.png'),
 
 ('ElementType:3', 1, '3'),
 ('ElementType:3', 2, 'element_type_03.svg'),

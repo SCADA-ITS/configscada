@@ -10,7 +10,16 @@
 --
 
 INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) VALUES
+
+
+
+
 --CAMARA
+('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_CAMERA_LOW', 'Alarma vehículos lentos', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_CAMERA_ROAD', 'Alarma asistencia en carretera', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_CAMERA_SPORT', 'Alarma prueba deportiva', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+
 ('es_CL', 1, 'LBL_ALARM_CONFIGS_ALARM_DAI_KAMIKAZE_LANE_0_RM', 'Alarma dai kamikaze en arcen creciente', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_ALARM_CONFIGS_ALARM_DAI_KAMIKAZE_LANE_1_RM', 'Alarma dai kamikaze en carril lento creciente', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_ALARM_CONFIGS_ALARM_DAI_KAMIKAZE_LANE_2_RM', 'Alarma dai kamikaze en carril lento decreciente', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
