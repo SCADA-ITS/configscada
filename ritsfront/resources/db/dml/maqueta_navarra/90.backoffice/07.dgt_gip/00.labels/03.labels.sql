@@ -10,7 +10,7 @@ BEGIN
 	('es_ES', 'LBL_itv', 'Validez ITV', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	('es_ES', 'LBL_seguro', 'Validez seguro', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	('es_ES', 'LBL_marca_vehiculo', 'Marca vehículo', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-	('es_ES', 'LBL_modelo_vehiculo', 'Modelo vehículo', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_ES', 'LBL_modelo_vehiculo_id', 'Modelo vehículo', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	('es_ES', 'LBL_categoria_vehiculo', 'Categoria vehículo', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	('es_ES', 'LBL_nacionalidad_vehiculo', 'Nacionalidad vehículo', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	('es_ES', 'LBL_matricula', 'Matrícula', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),

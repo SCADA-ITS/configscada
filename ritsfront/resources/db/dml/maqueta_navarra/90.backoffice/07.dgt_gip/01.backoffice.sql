@@ -48,7 +48,7 @@ BEGIN
 	(102, 1, 'itv', 'LBL_itv', NULL, true, '{"position": 2, "editable": false}'),
 	(103, 1, 'seguro', 'LBL_seguro', NULL, true, '{"position": 3, "editable": false}'),
 	(104, 1, 'marca_vehiculo_id', 'LBL_marca_vehiculo', NULL, true, '{"position": 4, "editable": true, "refEditButton": true}'),
-	(105, 1, 'modelo_vehiculo_id', 'LBL_modelo_vehiculo', NULL, true, '{"position": 5, "editable": true, "associatedFieldName": "marca_vehiculo_id"}'),
+	(105, 1, 'modelo_vehiculo_id', 'LBL_modelo_vehiculo_id', NULL, true, '{"position": 5, "editable": true, "associatedFieldName": "marca_vehiculo_id"}'),
 	(106, 1, 'categoria_vehiculo', 'LBL_categoria_vehiculo', NULL, true, '{"position": 6, "editable": false}'),
 	(107, 1, 'nacionalidad_vehiculo', 'LBL_nacionalidad_vehiculo', NULL, true, '{"position": 7, "editable": false}'),
 	(108, 1, 'matricula', 'LBL_matricula', NULL, true, '{"position": 8, "editable": true, "badgeInHeader": "mdi mdi-information"}'),
