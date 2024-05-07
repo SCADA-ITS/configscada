@@ -78,6 +78,7 @@ INSERT INTO ui.vo_entities(id, vo_entity_type_id, enabled, visible) VALUES
 ('Element:52:1', 'ElementUI', true, true),
 ('Element:52:2', 'ElementUI', true, true),
 
+('ElementType:69', 'ElementTypeUI', true, true),
 
 
 ('ElementType:71', 'ElementTypeUI', true, true),
