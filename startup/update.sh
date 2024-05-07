@@ -299,36 +299,36 @@ sleep 4
 
 #Recopilo los binarios del back en un fichero comprimido
 echo -e "\n\nDeleting old binaries..."
-sudo rm -f ~/dev03/backrits/*.jar
+sudo rm -f ~/app/backrits/*.jar
 
 echo -e "\n\nDeleting trace files..."
-sudo rm -Rf ~/dev03/backrits/logs/*
+sudo rm -Rf ~/app/backrits/logs/*
 
 echo -e "\n\nCopying new binaries..."
-cp ~/repositorio/ritsback/data-loader/target/data-loader.jar ~/dev03/backrits/data-loader.jar
-cp ~/repositorio/ritsback/equipment-manager/target/equipment-manager.jar ~/dev03/backrits/equipment-manager.jar
-cp ~/repositorio/ritsback/ep-pub-stomp/target/ep-pub-stomp.jar ~/dev03/backrits/ep-pub-stomp.jar
-cp ~/repositorio/ritsback/historical-manager/target/historical-manager.jar ~/dev03/backrits/historical-manager.jar
-cp ~/repositorio/ritsback/io-controller/target/io-controller.jar ~/dev03/backrits/io-controller.jar
-cp ~/repositorio/ritsback/plan-manager/target/plan-manager.jar ~/dev03/backrits/plan-manager.jar
-cp ~/repositorio/ritsback/service-graphql/target/service-graphql.jar ~/dev03/backrits/service-graphql.jar
-cp ~/repositorio/ritsback/incident-manager/target/incident-manager.jar ~/dev03/backrits/incident-manager.jar
-cp ~/repositorio/ritsback/traffic-manager/target/traffic-manager.jar ~/dev03/backrits/traffic-manager.jar
-cp ~/repositorio/ritsback/virtual-equipment-manager/target/virtual-equipment-manager.jar ~/dev03/backrits/virtual-equipment-manager.jar
-cp ~/repositorio/ritsback/io-external-manager/target/io-external-manager.jar ~/dev03/backrits/io-external-manager.jar
-cp ~/repositorio/ritsback/server-launcher/target/server-launcher.jar ~/dev03/backrits/server-launcher.jar
+cp ~/repositorio/ritsback/data-loader/target/data-loader.jar ~/app/backrits/data-loader.jar
+cp ~/repositorio/ritsback/equipment-manager/target/equipment-manager.jar ~/app/backrits/equipment-manager.jar
+cp ~/repositorio/ritsback/ep-pub-stomp/target/ep-pub-stomp.jar ~/app/backrits/ep-pub-stomp.jar
+cp ~/repositorio/ritsback/historical-manager/target/historical-manager.jar ~/app/backrits/historical-manager.jar
+cp ~/repositorio/ritsback/io-controller/target/io-controller.jar ~/app/backrits/io-controller.jar
+cp ~/repositorio/ritsback/plan-manager/target/plan-manager.jar ~/app/backrits/plan-manager.jar
+cp ~/repositorio/ritsback/service-graphql/target/service-graphql.jar ~/app/backrits/service-graphql.jar
+cp ~/repositorio/ritsback/incident-manager/target/incident-manager.jar ~/app/backrits/incident-manager.jar
+cp ~/repositorio/ritsback/traffic-manager/target/traffic-manager.jar ~/app/backrits/traffic-manager.jar
+cp ~/repositorio/ritsback/virtual-equipment-manager/target/virtual-equipment-manager.jar ~/app/backrits/virtual-equipment-manager.jar
+cp ~/repositorio/ritsback/io-external-manager/target/io-external-manager.jar ~/app/backrits/io-external-manager.jar
+cp ~/repositorio/ritsback/server-launcher/target/server-launcher.jar ~/app/backrits/server-launcher.jar
         
 echo -e "\n\nDeleting old resource files..."
-sudo rm -Rf ~/dev03/backrits/resources/*
+sudo rm -Rf ~/app/backrits/resources/*
 
 echo -e "\n\nCopying new resources..."
-cp -R ~/repositorio/rits/resources/master/* ~/dev03/backrits/resources
-cp -R ~/repositorio/rits/resources/project/$PROJECT/* ~/dev03/backrits/resources
-cp -R ~/repositorio/rits/resources/project/$PROJECT/start.sh ~/dev03/backrits/start.sh
+cp -R ~/repositorio/rits/resources/master/* ~/app/backrits/resources
+cp -R ~/repositorio/rits/resources/project/$PROJECT/* ~/app/backrits/resources
+cp -R ~/repositorio/rits/resources/project/$PROJECT/start.sh ~/app/backrits/start.sh
 
 #Comprimo el fichero para mandarlo por sftp
 echo -e "\n\nCompressing backrits..."
-cd ~/dev03
+cd ~/app
 tar zcvf backrits.tar.gz backrits
    
 #Subo el archivo a la maquina remota
@@ -360,6 +360,7 @@ rm -R ~/repositorio/ritsfront/openits/src/main/resources/project
 cp ~/repositorio/rits/ritsfront/openits/*.properties ~/repositorio/ritsfront/openits/src/main/resources/
 cp -r ~/repositorio/rits/ritsfront/openits/static ~/repositorio/ritsfront/openits/src/main/resources/
 cp -r ~/repositorio/rits/ritsfront/openits/project ~/repositorio/ritsfront/openits/src/main/resources/
+cp -r ~/repositorio/rits/ritsfront/openits/config ~/repositorio/ritsfront/openits/src/main/resources/
 
 #Compilo el front
 echo -e "\n\nCompiling front..."
