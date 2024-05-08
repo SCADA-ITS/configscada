@@ -1,4 +1,4 @@
 device_name;session_uid;host;port(i);url_publisher;offset(i)
-RM-PMV-001;RM-PMV-001;10.30.2.1;2222;http:\/\/192.168.88.179:3000\/api\/v2\/generic\/;0
-RM-PMV-002;RM-PMV-002;10.30.5.1;2222;http:\/\/192.168.88.179:3000\/api\/v2\/generic\/;1
-RM-PMV-003;RM-PMV-003;10.30.6.1;2222;http:\/\/192.168.88.179:3000\/api\/v2\/generic\/;2
+RM-PMV-001;RM-PMV-001;10.30.2.1;2222;http:\/\/10.140.31.20:3000\/api\/v2\/generic\/;0
+RM-PMV-002;RM-PMV-002;10.30.5.1;2222;http:\/\/10.140.31.20:3000\/api\/v2\/generic\/;1
+RM-PMV-003;RM-PMV-003;10.30.6.1;2222;http:\/\/10.140.31.20:3000\/api\/v2\/generic\/;2

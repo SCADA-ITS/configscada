@@ -1,4 +1,4 @@
 device_name;session_uid;ip;port(i);url_publisher;num_polling_out_comm;time_polling_ms;readCommunity;writeCommunity;read_permission;write_permission
-RM-PMV-001;RM-PMV-001;10.30.2.1;9735;http:\/\/192.168.88.179:3000\/api\/v2\/generic\/;2;10000;public;public;monitor;
-RM-PMV-002;RM-PMV-002;10.30.5.1;9735;http:\/\/192.168.88.179:3000\/api\/v2\/generic\/;2;10000;public;public;monitor;
-RM-PMV-003;RM-PMV-003;10.30.6.1;9735;http:\/\/192.168.88.179:3000\/api\/v2\/generic\/;2;10000;public;public;monitor;
+RM-PMV-001;RM-PMV-001;10.30.2.1;9735;http:\/\/10.140.31.20:3000\/api\/v2\/generic\/;2;10000;public;public;monitor;
+RM-PMV-002;RM-PMV-002;10.30.5.1;9735;http:\/\/10.140.31.20:3000\/api\/v2\/generic\/;2;10000;public;public;monitor;
+RM-PMV-003;RM-PMV-003;10.30.6.1;9735;http:\/\/10.140.31.20:3000\/api\/v2\/generic\/;2;10000;public;public;monitor;
