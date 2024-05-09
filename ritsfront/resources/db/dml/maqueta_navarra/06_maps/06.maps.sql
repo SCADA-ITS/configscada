@@ -5,9 +5,9 @@ INSERT INTO ui.graphic_icons (id, "name", description, alarms, measures, js_draw
 (1000, 'INCIDENT_REPORT', 'INCIDENT_REPORT', false, true, 'component/graphicIcon/graphicIconCustom.js', 70, 120, null, 'img/graphic_icon/incident_report.svg', 'component/graphicIcon/custom/incidentReport.js', null);
 
 INSERT INTO ui.map_layers (id, base_layer, map_id, "name", description, "label", icon, visible) VALUES 
-(2, NULL, 1, 'CCTV', 'CCTV', 'LBL_CCTV', NULL, true),
-(4, NULL, 1, 'SECC', 'SECC', 'LBL_SECC', NULL, true),
-(71, NULL, 1, 'PMV', 'PMV', 'LBL_PMV', NULL, true);
+(2, NULL, 1, 'RADAR', 'RADAR', 'LBL_ELEMENT_TYPE_CAMERA', NULL, true),
+(4, NULL, 1, 'SECC', 'SECC', 'LBL_ELEMENT_TYPE_SECTION', NULL, true),
+(71, NULL, 1, 'PMV', 'PMV', 'LBL_ELEMENT_TYPE_PANEL', NULL, true);
 
 INSERT INTO ui.map_incidents(id, incident_graphic_icon_id, incident_report_module_action_id, incident_wizard_module_action_id) VALUES
 (1, 1000, 100401, 101301);
@@ -41,11 +41,11 @@ INSERT INTO ui.map_layer_element_zooms (map_layer_element_id, zoom_lower, zoom_u
 (72, 9, 10, 71, -1.6141449610235126, 43.1356503997735, false, null, true, false, '#000000', null),
 (73, 9, 10, 71, -1.6156152456909012, 42.962597921264624, false, null, true, false, '#000000', null),
 
-(12, 11, 16, 401, -1.535958218701191, 43.00390401589307, false, null, true, false, '#000000', null),
-(14, 11, 16, 401, -1.51727473219286, 43.04474750891408, false, null, true, false, '#000000', null),
-(16, 11, 16, 401, -1.4948137745177775, 43.12624220385988, false, null, true, false, '#000000', null),
-(18, 11, 16, 401, -1.5675353610219448, 43.17574064391471, false, null, true, false, '#000000', null),
-(20, 11, 16, 401, -1.5762278186881505, 43.25350104774429, false, null, true, false, '#000000', null),
+(12, 11, 16, 401, -1.135958218701191, 42.7190401589307,  false, null, true, false, '#000000', null),
+(14, 11, 16, 401, -1.135958218701191, 42.8990401589307, false, null, true, false, '#000000', null),
+(16, 11, 16, 401, -1.135958218701191, 43.08624220385988, false, null, true, false, '#000000', null),
+(18, 11, 16, 401, -1.135958218701191, 43.27574064391471, false, null, true, false, '#000000', null),
+(20, 11, 16, 401, -1.135958218701191, 43.45350104774429, false, null, true, false, '#000000', null),
 
 (71, 11, 16, 7101, -1.7029627033453338, 43.276149012514715, false, null, true, false, '#000000', null),
 (72, 11, 16, 7101, -1.6141449610235126, 43.1356503997735, false, null, true, false, '#000000', null),

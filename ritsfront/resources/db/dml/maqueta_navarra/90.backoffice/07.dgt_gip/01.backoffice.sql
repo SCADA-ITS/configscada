@@ -56,7 +56,7 @@ BEGIN
 	(111, 1, 'fecha', 'LBL_fecha', NULL, true, '{"position": 10, "editable": false}');
 
 	INSERT INTO dgt_gip.sg_metadata_table_commands (id, sg_metadata_table_id, "name", "label", label_description, mdi_icon, require_confirmation, available_in_form, available_in_table, groovy, custom_js) VALUES
-	(1, 1, 'Confirmar datos', 'LBL_CONFIRMAR_DATOS', 'LBL_CONFIRMAR_DATOS', 'mdi mdi-checkbox-marked', true, true, false, 'config/groovy/backoffice/dgt_gip/command/ConfirmCommand.groovy', null);
+	(1, 1, 'Confirmar datos', 'LBL_CONFIRMAR_DATOS', 'LBL_CONFIRMAR_DATOS', 'mdi mdi-car', true, true, false, 'config/groovy/backoffice/dgt_gip/command/ConfirmCommand.groovy', null);
 
 
   END IF;
