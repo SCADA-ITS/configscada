@@ -93,21 +93,27 @@ export default class VmsSignalingQueuesModule extends GenericModule {
 	loadData() {
 
 		let self = this;
+		let plans;
+		let promises = [];
 		let elementType = window.em.getByField(EntityType.ELEMENT_TYPE, "id", self.config.elementTypeId);
 
-		webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.elementsQueuesByElementTypeId, { id: self.config.elementTypeId })).then(function(elementTypeElementsResponse) {
+		promises.push(webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.elementsQueuesByElementTypeId, { id: self.config.elementTypeId })));
+		promises.push(webix.ajax().get(appConfig.restUrl + self.config.restEndpoints.planLibrary));
 
-			if (elementTypeElementsResponse != null) {
+		webix.promise.all(promises).then(function(responses) {
 
-				let elements = elementTypeElementsResponse.json();
+			if (responses.length === 2) {
+
+				let elements = responses[0].json();
+				plans = responses[1].json();
 
 				if (Array.isArray(elements) && elements.length > 0) {
-					
-					loadGraphicIcons(elements, onReady);	
+
+					loadGraphicIcons(elements, onReady);
 				}
-				
+
 				function onReady() {
-					
+
 					for (let element of elements) {
 
 						self.elementsIds.push(element.id);
@@ -121,17 +127,16 @@ export default class VmsSignalingQueuesModule extends GenericModule {
 							}
 						}
 					}
-					
+
 					webix.ui(drawContent(), $$(self.uid));
 
-				
 					if (self.dataTable) {
-	
+
 						self.dataTable.callbacks();
 					}
-					
+
 					connectWS();
-				}		
+				}
 			}
 		});
 		
@@ -284,6 +289,22 @@ export default class VmsSignalingQueuesModule extends GenericModule {
 						
 						animated = item.animated;	
 					}
+					
+					let origin = (commandElement.source) ? commandElement.source : "-";
+
+					if (origin.startsWith("ImsIncidentReport:")) {
+
+						origin = i18n.t("LBL_INCIDENT") + ": " + origin.replace("ImsIncidentReport:", "");
+					} 
+					else if (origin.startsWith("Plan:")) {
+
+						let planOrigin = plans.find(plan => plan.id === origin);
+
+						if (planOrigin) {
+
+							origin = i18n.t("LBL_PLAN") + ": " + planOrigin.alias;
+						}
+					}
 
 					queue.push({
 						id: commandElement.id,
@@ -294,7 +315,7 @@ export default class VmsSignalingQueuesModule extends GenericModule {
 						initialDate: new Date(commandElement.startTime),
 						endDate: new Date(commandElement.endTime),
 						priorityType: priorityLabel,
-						origin: (commandElement.source) ? commandElement.source : "-",
+						origin: origin,
 						position: commandPosition,
 						elementId: element.id,
 						enable: (commandElement.enable) ? i18n.t("LBL_QUEUE_ITEM_ACTIVE") : "",
