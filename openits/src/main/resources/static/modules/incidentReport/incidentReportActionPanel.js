@@ -35,9 +35,9 @@ export default class IncidentReportActionPanel {
 
 		let self = this;
 		let currentUser = window.em.getByField(EntityType.USER, "id", self.incidentReport.currentUser.id);
-		let currentUserRole = currentUser.role.id;
+		let currentUserRole = (currentUser && currentUser.role) ? currentUser.role.id : undefined;
 		let sameRole = (self.userData.role.id === currentUserRole);
-		let sameUser = (self.userData.id === currentUser.id);
+		let sameUser = currentUser ? (self.userData.id === currentUser.id) : undefined;
 		let changeAssignIncident = ((self.autoAssignPermissions && sameRole && !sameUser) || self.assignAnotherPermissions) ? true : false;
 		let onlyAutoassignIncident = (self.autoAssignPermissions && !self.assignAnotherPermissions) ? true : false;
 		let drawCounterLabel = false;
