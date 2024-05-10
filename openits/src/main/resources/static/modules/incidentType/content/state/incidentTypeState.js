@@ -171,7 +171,7 @@ export default class IncidentTypeState {
 								isPk: false,
 								label: "",
 								labelTooltip: "LBL_NAME",
-								needsTranslation: false,
+								needsTranslation: true,
 								parameterized: false,
 								position: 2,
 								required: true,
