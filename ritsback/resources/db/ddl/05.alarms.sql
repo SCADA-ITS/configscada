@@ -79,6 +79,8 @@
 		label_alias varchar NULL,
 		label_description varchar NULL,
 		on_create_execute varchar NULL,
+		min_time_alarmed int8 NULL,
+		threshold_time int8 NULL,
 		enabled bool NULL,
 		visible bool NULL,
 		created_at timestamptz NOT NULL,
