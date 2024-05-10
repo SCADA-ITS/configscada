@@ -23,10 +23,12 @@ export default class VmsSignalingQueuesModule extends GenericModule {
 
 		this.dataTable = undefined;
 		this.data = [];
-		this.idStompSubscriptor = [];
+		this.idStompSubscriptor = undefined;
 		this.elementsIds = [];
 
 		this.initialPanelLoad = new Map();
+		
+		this.onMessageInterval = undefined;
 
 		this.dataToUpdate = [];
 
@@ -66,17 +68,22 @@ export default class VmsSignalingQueuesModule extends GenericModule {
 					]
 				}
 			],
-			onDestruct: function() {
+			on: {
+				
+				onDestruct: function() {
 
-				let stompSubscriptorService = window.sm.getService(Services.STOMP_SUBSCRIPTOR_SERVICE);
-
-				if (stompSubscriptorService && Array.isArray(self.idStompSubscriptor) && self.idStompSubscriptor.length > 0) {
-
-					for (let subscriptorId of self.idStompSubscriptor) {
-
-						stompSubscriptorService.unsubscribe(subscriptorId);
+					let stompSubscriptorService = window.sm.getService(Services.STOMP_SUBSCRIPTOR_SERVICE);
+	
+					if (stompSubscriptorService && self.idStompSubscriptor) {
+	
+						stompSubscriptorService.unsubscribe(self.idStompSubscriptor);
 					}
-				}
+					
+					if (self.onMessageInterval) {
+							
+						clearInterval(self.onMessageInterval);	
+					}
+				}	
 			}
 		}
 
@@ -86,15 +93,26 @@ export default class VmsSignalingQueuesModule extends GenericModule {
 	loadData() {
 
 		let self = this;
+		let plans;
+		let promises = [];
 		let elementType = window.em.getByField(EntityType.ELEMENT_TYPE, "id", self.config.elementTypeId);
 
-		webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.elementsQueuesByElementTypeId, { id: self.config.elementTypeId })).then(function(elementTypeElementsResponse) {
+		promises.push(webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.elementsQueuesByElementTypeId, { id: self.config.elementTypeId })));
+		promises.push(webix.ajax().get(appConfig.restUrl + self.config.restEndpoints.planLibrary));
 
-			if (elementTypeElementsResponse != null) {
+		webix.promise.all(promises).then(function(responses) {
 
-				let elements = elementTypeElementsResponse.json();
+			if (responses.length === 2) {
+
+				let elements = responses[0].json();
+				plans = responses[1].json();
 
 				if (Array.isArray(elements) && elements.length > 0) {
+
+					loadGraphicIcons(elements, onReady);
+				}
+
+				function onReady() {
 
 					for (let element of elements) {
 
@@ -109,18 +127,91 @@ export default class VmsSignalingQueuesModule extends GenericModule {
 							}
 						}
 					}
+
+					webix.ui(drawContent(), $$(self.uid));
+
+					if (self.dataTable) {
+
+						self.dataTable.callbacks();
+					}
+
+					connectWS();
 				}
-
-				webix.ui(drawContent(), $$(self.uid));
-
-				if (self.dataTable) {
-
-					self.dataTable.callbacks();
-				}
-
-				connectWS();
 			}
 		});
+		
+		function loadGraphicIcons(elements, onReady) {
+			
+			let itemsReady = 0;
+			let itemsProcessed = 0;
+			
+			if (Array.isArray(elements) && elements.length > 0) {
+				
+				elements.forEach(element => {
+					
+					if (element.queue && Array.isArray(element.queue.commandElements) && element.queue.commandElements.length > 0) {
+						
+						itemsReady += element.queue.commandElements.length;
+					}
+				});
+				
+				if (itemsReady > 0) {
+					
+					elements.forEach(element => {
+					
+						if (element.queue && Array.isArray(element.queue.commandElements) && element.queue.commandElements.length > 0) {
+					
+							element.queue.commandElements.sort((a, b) => (a.enable ? 0 : 1) - (b.enable ? 0 : 1) || a.startTime - b.startTime);
+							
+							for (let commandElement of element.queue.commandElements) {
+								
+								let priority = elementType.priorities.find(e => e.id === commandElement.priority.id);
+	
+								const svgId = webix.uid();
+								
+								util.ui.createSvg(svgId);
+								
+								drawGraphicIcon(svgId, element, commandElement, priority, function(graphicIconInstance) {
+	
+									graphicIconInstance.stop();
+	
+									let svgHTML = util.ui.getHTMLSvg(svgId);
+									
+									if (svgHTML) {
+										
+										util.ui.removeSvg(svgId);
+										
+										let animated = false;
+										
+										if (graphicIconInstance.getConfiguration) {
+											
+											const graphicIconConfig = graphicIconInstance.getConfiguration();
+											
+											if (graphicIconConfig) {
+												
+												animated = graphicIconConfig.isAnimated;
+											} 
+											
+										}
+										
+										self.initialPanelLoad.set(commandElement.id, { svgId: svgId, divHTML: svgHTML, animated: animated });
+									}
+									
+									if (++itemsProcessed == itemsReady) {
+										
+										onReady();
+									}
+								});
+							}
+						}	
+					});
+				}
+				else {
+					
+					onReady();
+				}
+			}
+		}
 
 		function load(element) {
 
@@ -150,60 +241,25 @@ export default class VmsSignalingQueuesModule extends GenericModule {
 
 					if (Array.isArray(commandElement.commandElementValues) && commandElement.commandElementValues.length > 0) {
 
-						let svgId = webix.uid();
-
 						panel = {
+
 							template: function() {
-
-								let divHTML = `<div>
-										<svg id=${"vms-composer-svg-" + svgId}></svg>
-										</div>`;
-
-								if (self.initialPanelLoad.has(svgId)) {
-
-									divHTML = self.initialPanelLoad.get(svgId);
-
-								} else {
-
-									let config = self.config;
-
-									drawGraphicIcon(svgId, element, commandElement, priority, function(graphicIconInstance) {
-
-										graphicIconInstance.stop();
-										config.graphicIconInstance = graphicIconInstance;
-										let svgHTML = $$("table-" + self.uid).getNode().querySelector('#vms-composer-svg-' + svgId);
-
-										if (svgHTML && svgHTML.outerHTML) {
-
-											self.initialPanelLoad.set(svgId, svgHTML.outerHTML);
-										}
-
-										if (graphicIconInstance.getConfiguration) {
-
-											let animated = graphicIconInstance.getConfiguration();
-
-											if (animated.isAnimated) {
-
-												let datatable = $$("dt-" + self.dataTable.uid);
-												let itemToUpdate = datatable.config.data.find(dat => dat.id === commandElement.id);
-
-												itemToUpdate.animated = i18n.t("LBL_QUEUE_ITEM_ANIMATED");
-												
-												datatable.render(commandElement.id, itemToUpdate, "update");
-											}
-										}
-									});
+								
+								const item = self.initialPanelLoad.get(commandElement.id);
+								
+								if (item) {
+									
+									return item.divHTML;
 								}
-
-								return divHTML;
 							},
-							tooltip: function(obj) {
-
-								let svgHTML = $$("table-" + self.uid).getNode().querySelector('#vms-composer-svg-' + svgId);
-
-								return `<div style='transform: scale(3)'>
-										${svgHTML.outerHTML}
-										</div>`;
+							tooltip: function() {
+								
+								const item = self.initialPanelLoad.get(commandElement.id);
+								
+								if (item) {
+									
+									return `<div style='transform: scale(3)'>${item.divHTML}</div>`;
+								}
 							}
 						};
 					}
@@ -224,21 +280,46 @@ export default class VmsSignalingQueuesModule extends GenericModule {
 							}
 						};
 					}
+					
+					let animated = false;
+					
+					const item = self.initialPanelLoad.get(commandElement.id);
+					
+					if (item) {
+						
+						animated = item.animated;	
+					}
+					
+					let origin = (commandElement.source) ? commandElement.source : "-";
+
+					if (origin.startsWith("ImsIncidentReport:")) {
+
+						origin = i18n.t("LBL_INCIDENT") + ": " + origin.replace("ImsIncidentReport:", "");
+					} 
+					else if (origin.startsWith("Plan:")) {
+
+						let planOrigin = plans.find(plan => plan.id === origin);
+
+						if (planOrigin) {
+
+							origin = i18n.t("LBL_PLAN") + ": " + planOrigin.alias;
+						}
+					}
 
 					queue.push({
 						id: commandElement.id,
 						labelAlias: element.alias,
-						state: i18n.t(element.elementTypeState.labelAlias),
+						state: element.elementState ? util.element.getAliasState(element.elementState) : i18n.t(element.elementTypeState.labelAlias),
 						conflict: (commandElement.conflict) ? i18n.t("LBL_CONFLICT") : "",
 						message: panel,
-						initialDate: commandElement.startTime,
-						endDate: commandElement.endTime,
+						initialDate: new Date(commandElement.startTime),
+						endDate: new Date(commandElement.endTime),
 						priorityType: priorityLabel,
-						origin: (commandElement.source) ? commandElement.source : "-",
+						origin: origin,
 						position: commandPosition,
 						elementId: element.id,
 						enable: (commandElement.enable) ? i18n.t("LBL_QUEUE_ITEM_ACTIVE") : "",
-						animated: ""
+						animated: animated ? i18n.t("LBL_QUEUE_ITEM_ANIMATED") : ""
 					});
 				}
 			}
@@ -263,7 +344,7 @@ export default class VmsSignalingQueuesModule extends GenericModule {
 			const defaultGridOptionValues = [
 				{ gridOption: { id: 1 }, value: "true" },
 				{ gridOption: { id: 2 }, value: "true" },
-				{ gridOption: { id: 3 }, value: 4 },
+				{ gridOption: { id: 3 }, value: 3 },
 				{ gridOption: { id: 4 }, value: "asc" },
 				{ gridOption: { id: 5 }, value: undefined },
 				{ gridOption: { id: 6 }, value: undefined },
@@ -749,175 +830,91 @@ export default class VmsSignalingQueuesModule extends GenericModule {
 		}
 		function connectWS() {
 
+			let onMessageData = new Set();
 			let stompSubscriptorService = window.sm.getService(Services.STOMP_SUBSCRIPTOR_SERVICE);
-
+			
 			if (stompSubscriptorService) {
-
-				if (Array.isArray(self.elementsIds) && self.elementsIds.length > 0) {
-
-					self.elementsIds.forEach(elementId => {
-
-						let topic = self.vmsSignalingModuleConfig.topics.elementQueue + "." + elementId;
-						let subscriptorId = stompSubscriptorService.subscribe(appConfig.stompUrl, topic, onMessage);
-						self.idStompSubscriptor.push(subscriptorId);
-					});
-				}
-			}
-
-			function onMessage(data) {
-
-				if (data && data.id) {
-
-					let sameId = self.dataToUpdate.find(e => e === data.id);
-
-					if (!sameId) {
-
-						self.dataToUpdate.push(data.id);
+				
+				let topic = self.vmsSignalingModuleConfig.topics.elementQueue + ".>";
+				
+				self.onMessageInterval = setInterval(function() {
+					
+					if (!self.idStompSubscriptor) {
+					
+						self.idStompSubscriptor = stompSubscriptorService.subscribe(appConfig.stompUrl, topic, onMessage);		
 					}
+						
+					if (onMessageData.size > 0) {
+						
+						let elementIds = Array.from(onMessageData);
 
-					if (self.dataToUpdate.length === 1 && !sameId && !self.setTimeOut) {
-
-						self.setTimeOut = true;
-
-						setTimeout(function() {
-
-							let datatable = $$("dt-" + self.dataTable.uid);
-							let dataToUpdateCopy = webix.copy(self.dataToUpdate);
-							self.dataToUpdate = [];
-
-							webix.extend(datatable, webix.ProgressBar);
-
-							datatable.showProgress({
-								hide: false, type: "bottom"
-							});
-
-							webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.restEndpoints.element, JSON.stringify(dataToUpdateCopy)).then(function(elementsResponse) {
-
-								if (elementsResponse != null) {
+						onMessageData.clear();
+						
+						webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.restEndpoints.element, JSON.stringify(elementIds)).then(
+							function(elementsResponse) {
+								
+								if (elementsResponse) {
 
 									let elements = elementsResponse.json();
 
 									if (Array.isArray(elements) && elements.length > 0) {
-
-										let queuesToAdd = [];
-										let queuesToDelete = [];
-										let queuesToUpdate = [];
-
+										
 										elements.forEach(element => {
-
-											let oldQueuesOfElement = self.data.filter(queue => queue.elementId === element.id);
-											let newQueuesOfElement = load(element);
-
-											oldQueuesOfElement.forEach(queue => {
-
-												let q = newQueuesOfElement.find(q => q.id === queue.id);
-
-												if (!q) {
-
-													queuesToDelete.push(queue);
-													self.data.splice(self.data.indexOf(queue), 1);
-
-												} else {
-
-													queue.endDate = new Date(queue.endDate);
-													queue.initialDate = new Date(queue.initialDate);
-													queuesToUpdate.push(q);
-												}
-											});
-
-											newQueuesOfElement.forEach(queue => {
-
-												let q = oldQueuesOfElement.find(q => q.id === queue.id);
-
-												if (!q) {
-
-													self.data.push(queue);
-													queue.endDate = new Date(queue.endDate);
-													queue.initialDate = new Date(queue.initialDate);
-													queuesToAdd.push(queue);
-
-												} else {
-
-													queue.endDate = new Date(queue.endDate);
-													queue.initialDate = new Date(queue.initialDate);
-													queuesToUpdate.push(queue);
-												}
-											});
-										});
-
-										if (Array.isArray(queuesToDelete) && queuesToDelete.length > 0) {
-
-											self.dataTable.delete(queuesToDelete);
-										}
-
-										if (Array.isArray(queuesToAdd) && queuesToAdd.length > 0) {
-
-											self.dataTable.add(queuesToAdd);
-										}
-
-										datatable.eachRow(function(row) {
-
-											let rowToUpdate = queuesToUpdate.find(q => q.id === row);
-
-											if (rowToUpdate) {
-
-												let iconConflictHTML = null;
-												let iconActiveHTML = null;
-												let conflictCellNodeHTML = datatable.getItemNode({ row: row, column: "conflict" });
-												let activeCellNodeHTML = datatable.getItemNode({ row: row, column: "enable" });
-												let itemToUpdate = datatable.config.data.find(dat => dat.id === row);
-
-												if (conflictCellNodeHTML) {
-
-													iconConflictHTML = conflictCellNodeHTML.querySelector(".table-field-icons");
-												}
-
-												if (activeCellNodeHTML) {
-
-													iconActiveHTML = activeCellNodeHTML.querySelector(".table-field-icons");
-												}
-
-												if (rowToUpdate.conflict != "" && iconConflictHTML === null) {
-
-													if (itemToUpdate) {
-
-														itemToUpdate.conflict = i18n.t("LBL_CONFLICT");
-													}
-
-												} else if (rowToUpdate.conflict === "" && iconConflictHTML) {
-
-													if (itemToUpdate) {
-
-														itemToUpdate.conflict = "";
-													}
-												}
-
-												if (itemToUpdate) {
-
-													itemToUpdate.position = rowToUpdate.position;
-													itemToUpdate.state = rowToUpdate.state;
-												}
-
-												if ((rowToUpdate.enable === i18n.t("LBL_QUEUE_ITEM_ACTIVE") && iconActiveHTML === null) || (rowToUpdate.enable === "" && iconActiveHTML)) {
-
-													self.dataTable.update(rowToUpdate);
-												}
+											
+											let idxDelete = self.data.findIndex(e => e.elementId === element.id);
+											
+											if (idxDelete !== -1) {
+												
+												del(element);
+												add(element);
+											}
+											else {
+												
+												add(element)
 											}
 										});
+										
 									}
 								}
+							}
+						);
+					}
+		
+				}, UPDATE_INTERVAL_MILLIS);
+				
+				function onMessage(data) {
+				
+					if (data && data.id) {
+					
+						onMessageData.add(data.id);
+					}
+				}
+				
+				function del(element) {
+						
+					let rowsToDelete = self.data.filter(e => e.elementId === element.id);
+					
+					if (Array.isArray(rowsToDelete) && rowsToDelete.length > 0) {
+						
+						self.dataTable.delete(rowsToDelete);
+						
+						self.data = self.data.filter(e => e.elementId !== element.id);
+					}
+				}
+				
+				function add(element) {
+					
+					loadGraphicIcons([element], onReady);
+					
+					function onReady() {
+						
+						let queuesOfElements = load(element);
 
-								if (datatable) {
+						if (Array.isArray(queuesOfElements) && queuesOfElements.length > 0) {
 
-									datatable.hide();
-									datatable.show();
-								}
-
-								datatable.hideProgress();
-								self.setTimeOut = false;
-							});
-
-						}, UPDATE_INTERVAL_MILLIS);
+							self.data.push(...queuesOfElements);
+							self.dataTable.add(queuesOfElements);
+						}	
 					}
 				}
 			}

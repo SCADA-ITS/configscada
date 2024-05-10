@@ -2,7 +2,8 @@
 	"elementTypeId": "ElementType:71",
 	"restEndpoints": {
 		"elementsQueuesByElementTypeId": "element_types/${id}/elements",
-		"element": "elements"
+		"element": "elements",
+		"planLibrary": "plans/plan_library"
 	},
 	"action": {
 		"vmsSignalingModule": 1026
