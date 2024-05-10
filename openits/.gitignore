@@ -30,3 +30,4 @@ build/
 ### VS Code ###
 .vscode/
 /.mvn/
+/hs_err_pid34757.log
