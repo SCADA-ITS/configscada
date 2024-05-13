@@ -17,6 +17,9 @@ public class RoleBO extends GenericBO {
 	
 	private static final Boolean USERMGR_ENABLED = Boolean.valueOf(AppInfra.getProperty("usermgr.enabled"));
 	
+	public static final String FIELD_ID = "id";
+	public static final String FIELD_ALIAS = "alias";
+	
 	@Autowired
 	GraphqlAdapter graphqlAdapter;
 	
