@@ -213,6 +213,7 @@ export default class BackOfficeViewFormImage  {
 					getUploader(),
 					getButtonEdit(),
 					getButtonDelete(),
+					getButtonPreview(),
 					{}
 				]
 			}
@@ -577,6 +578,57 @@ export default class BackOfficeViewFormImage  {
 				
 				return viewButtonDelete;
 			}
+
+			
+			function getButtonPreview() {
+
+				let viewButtonPreview;
+
+				viewButtonPreview = {
+					id: "btn-preview-" + self.uid,
+					view: "button",
+					type: "icon",
+					css: "toolbar-button-text",
+					width: 130,
+					label: i18n.t("LBL_CMD_PREVIEW"),
+					disabled: !self.currentImage,
+					tooltip: i18n.t("LBL_CMD_PREVIEW"),
+					icon: "mdi mdi-image-area",
+					on: {
+						onItemClick: function() {
+
+							const features = `toolbar=no,scrollbars=no,location=no,statusbar=no,menubar=no,noreferrer=yes,resizable=0,width=${window.screen.availWidth},height=${window.screen.availHeight},left=0,top=0`;
+
+							let image = {
+								id: "image-preview-" + self.uid,
+								template: function(obj) {
+
+									return `<img src="${obj.src}" title="${obj.title}" class="backoffice-image-content" ondragstart="return false" onclick="window.open('${obj.src}', '_blank', '${features}')"/>`;
+								},
+								data: {
+									src: appConfig.restUrl + util.fillTemplate(REST_BACKOFFICE_DOWNLOAD_IMAGE, { backOfficeId: self.backOffice.id, tableName: self.tableName, imageId: self.currentImage.id }),
+									title: self.currentImage.fileName
+								},
+								on: {
+									onAfterRender: function() {
+
+										let img = $$(this.config.id).getNode().querySelector('img');
+										let winId = this.getTopParentView().config.id;
+
+										util.ui.resizeWindow(winId, img.width, img.height);
+										util.ui.centerWindow(winId);
+									}
+								}
+							};
+
+							util.ui.loadWindow(self.currentImage.fileName, image, 500, 500, true);
+						}
+					}
+				}
+
+				return viewButtonPreview;
+			}
+			
 			
 			function reOrder(imagesToUpdate, selectedId) {
 				

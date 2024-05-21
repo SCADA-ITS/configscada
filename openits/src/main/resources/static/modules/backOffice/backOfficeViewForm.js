@@ -246,7 +246,7 @@ export default class BackOfficeViewForm extends BackOfficeViewGenericForm {
 									
 									const rowDataId = self.currentTableData.rows[0].data.find(data => data.columnId === self.currentTableData.columns.find(col => col.primaryKey === true).id);
 									
-									let backOfficeViewFormAttachment = new BackOfficeViewFormAttachment(self.backOffice, item.value.groupAttachment, self.currentTableData.name, rowDataId.value, item.value.attachments, onChangeAttachment);
+									let backOfficeViewFormAttachment = new BackOfficeViewFormAttachment(self.backOffice, item.value.groupAttachment, self.currentTableData, rowDataId.value, item.value.attachments, onChangeAttachment);
 									
 									fields.push(backOfficeViewFormAttachment.getView());
 									

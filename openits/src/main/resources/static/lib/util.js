@@ -1639,6 +1639,11 @@ export let util = {
 
 			return (window.location.pathname.indexOf("external.html") !== -1);
 		},
+		
+		isModal(containerId){				
+					
+			return (containerId && containerId.startsWith("win_")) ? true : false;
+		},
 
 		changeColorTheme(theme) {
 

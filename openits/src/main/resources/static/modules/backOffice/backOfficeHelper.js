@@ -50,14 +50,17 @@ export default class BackOfficeHelper {
 				GRID_TABLES: { name: "gridTables" },
 				GRID_TABLES_COLS_ORIENTATION: { name: "gridTablesColsOrientation", default: false },
 				GROUP_IMAGES: { name: "groupImages" },
-				GROUP_ATTACHMENTS: { name: "groupAttachments" },
+				GROUP_ATTACHMENTS: { name: "groupAttachments" },				
 				PRINTABLE: { name: "printable", default: true },
 				EXPORTABLE: { name: "exportable", default: true },
 				IMPORTABLE: { name: "importable", default: false },
 				CUSTOM_JS: { name: "customJS" },
 				EDITABLE: { name: "editable", default: true },
 				VIRTUAL_COLS: { name: "virtualCols" },
-				MANAGEMENT_AREA_FILTERS: { name: "managementAreaFilters" }
+				MANAGEMENT_AREA_FILTERS: { name: "managementAreaFilters" },
+				FILE_PREVIEW_HEIGHT: {name: "filePreviewHeight", default: 450},
+				FILE_PREVIEW_WIDTH: {name: "filePreviewWidth", default: 750},
+				TABLE_RATIO_PERCENT: {name: "tableRatioPercent", default: 50}  				
 			}
 		}
 	}
@@ -79,7 +82,8 @@ export default class BackOfficeHelper {
 				MULTILINE: { name: "multiline" },
 				ASSOCIATED_FIELD_NAME: { name: "associatedFieldName" },
 				REF_GROUP_FIELD_NAME: { name: "refGroupFieldName" },
-				BADGE_IN_HEADER: { name: "badgeInHeader" }
+				BADGE_IN_HEADER: { name: "badgeInHeader" },
+				SHOW_IN_FILTER: {name: "showInFilter", default: true}
 			}
 		}
 	}
@@ -128,9 +132,9 @@ export default class BackOfficeHelper {
 			metaType.name === BackOfficeHelper.META_TYPE_TABLE.name ||
 			metaType.name === BackOfficeHelper.META_TYPE_COLUMN.name) {
 
-			if (defaultMetadata) {
+			value = prop.default ?? value;
 
-				value = prop.default;
+			if (defaultMetadata) {
 
 				if (defaultMetadata[metaType.DEFAULT_METADATA] && defaultMetadata[metaType.DEFAULT_METADATA][prop.name] !== undefined) {
 
