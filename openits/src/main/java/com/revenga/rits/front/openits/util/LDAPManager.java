@@ -3,7 +3,9 @@ package com.revenga.rits.front.openits.util;
 import static javax.naming.directory.SearchControls.SUBTREE_SCOPE;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Hashtable;
+import java.util.Map;
 
 import javax.naming.Context;
 import javax.naming.NamingEnumeration;
@@ -13,6 +15,7 @@ import javax.naming.directory.SearchResult;
 import javax.naming.ldap.InitialLdapContext;
 import javax.naming.ldap.LdapContext;
 
+import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import com.revenga.rits.front.openits.app.AppInfra;
@@ -30,8 +33,9 @@ public class LDAPManager {
 	private static final String LDAP_ATTRIB_FIRSTNAME = AppInfra.getProperty("ldap.attrib.firstname");
 	private static final String LDAP_ATTRIB_LASTNAME = AppInfra.getProperty("ldap.attrib.lastname");
 	private static final String LDAP_ATTRIB_EMAIL = AppInfra.getProperty("ldap.attrib.email");
-	private static final String LDAP_USER_DEFAULT_ROLE_ID = AppInfra.getProperty("ldap.user.default_role_id");
-	private static final String LDAP_USER_DEFAULT_LOCALE_ID = AppInfra.getProperty("ldap.user.default_locale_id");
+	private static final String LDAP_ATTRIB_MEMBER_OF = AppInfra.getProperty("ldap.attrib.memberOf");
+	public static final String LDAP_USER_DEFAULT_ROLE_ID = AppInfra.getProperty("ldap.user.default_role_id");
+	public static final String LDAP_USER_DEFAULT_LOCALE_ID = AppInfra.getProperty("ldap.user.default_locale_id");
 
 	@Data
 	public static class LDAPUser implements Serializable {
@@ -57,6 +61,16 @@ public class LDAPManager {
 			this.localeId = localeId;
 		}
 		
+		public LDAPUser(String dn, String login, String firstName, String lastName, String email, String roleId) {
+			
+			super();
+			
+			init(dn, login, firstName, lastName, email);
+			
+			this.roleId = roleId;
+			this.localeId = LDAP_USER_DEFAULT_LOCALE_ID;
+		}
+		
 		public LDAPUser(String dn, String login, String firstName, String lastName, String email) {
 			
 			super();
@@ -80,7 +94,7 @@ public class LDAPManager {
 	
 	private LDAPManager() {}
 
-	public static LDAPUser login(String login, String password) {
+	public static LDAPUser login(String login, String password, Map<String, String> rolMap) {
 
 		LDAPUser ldapUser = null;
 
@@ -93,7 +107,7 @@ public class LDAPManager {
 				SearchControls controls = new SearchControls();
 				controls.setSearchScope(SUBTREE_SCOPE);
 				controls.setReturningAttributes(new String[] { LDAP_ATTRIB_LOGIN, LDAP_ATTRIB_FIRSTNAME,
-						LDAP_ATTRIB_LASTNAME, LDAP_ATTRIB_EMAIL });
+						LDAP_ATTRIB_LASTNAME, LDAP_ATTRIB_EMAIL, LDAP_ATTRIB_MEMBER_OF });
 
 				NamingEnumeration<SearchResult> answer;
 
@@ -124,8 +138,47 @@ public class LDAPManager {
 									String email = (attr.get(LDAP_ATTRIB_EMAIL) != null
 											? (String) attr.get(LDAP_ATTRIB_EMAIL).get()
 											: null);
+									
+									if (!MapUtils.isEmpty(rolMap)) {
+										
+										NamingEnumeration<?> memberOf = attr.get(LDAP_ATTRIB_MEMBER_OF).getAll();
+										
+										while (memberOf.hasMore() && ldapUser == null) {
+											
+											String memberOfItem = (String) memberOf.next();
+											
+											if (!StringUtils.isEmpty(memberOfItem)) {
+											
+												String[] memberOfItemArray = memberOfItem.split(",");
+												
+												if (Arrays.asList(memberOfItemArray).stream()
+														.filter(e -> e.toLowerCase().contains("cn=users") /* Active Directory */
+																|| e.toLowerCase().contains("ou=groups") /* OpenLDAP */)
+														.findFirst().orElse(null) != null) {
 
-									ldapUser = new LDAPUser(dnUser, login, firstName, lastName, email);
+													String cnGroup = Arrays.asList(memberOfItemArray).stream()
+															.filter(e -> e.toLowerCase().contains("cn=")
+																	&& !e.toLowerCase().contains("cn=users"))
+															.findFirst().orElse(null);
+													
+													if (!StringUtils.isEmpty(cnGroup)) {
+														
+														String roleId = rolMap.get(cnGroup.replace("cn=", "").toLowerCase());
+														
+														if (!StringUtils.isEmpty(roleId)) {
+															
+															ldapUser = new LDAPUser(dnUser, login, firstName, lastName, email, roleId);
+														}
+													}
+												}
+											}
+										}
+									}
+									
+									if (ldapUser == null) {
+									
+										ldapUser = new LDAPUser(dnUser, login, firstName, lastName, email);
+									}
 								}
 							}
 						}

@@ -46,6 +46,7 @@ import com.revenga.rits.front.openits.adapter.impl.VO2UIAdapter;
 import com.revenga.rits.front.openits.adapter.impl.VODataSourceAdapter;
 import com.revenga.rits.front.openits.app.AppInfra;
 import com.revenga.rits.front.openits.bo.AuditLogBO;
+import com.revenga.rits.front.openits.bo.RoleBO;
 import com.revenga.rits.front.openits.bo.SystemParamBO;
 import com.revenga.rits.front.openits.bo.UserBO;
 import com.revenga.rits.front.openits.model.EntityChangedUI;
@@ -116,6 +117,9 @@ public class SessionService {
 	
 	@Autowired
 	AuditLogBO auditLogBO;
+	
+	@Autowired
+	RoleBO roleBO;
 	
 	@Autowired
 	UserBO userBO;
@@ -292,7 +296,22 @@ public class SessionService {
 			// Request LDAP service if it's enabled in config.properties
 			if (LDAP_ENABLED.booleanValue()) {
 				
-				ldapUser = LDAPManager.login(userName, password);
+				List<Map<String, Object>> roles = roleBO.getList();
+				
+				Map<String, String> rolMap = null;
+				
+				if (!CollectionUtils.isEmpty(roles)) {
+					
+					rolMap = roles.stream().collect(Collectors.toMap(role -> ((String) role.get(RoleBO.FIELD_ALIAS)).toLowerCase(),
+							role -> (String) role.get(RoleBO.FIELD_ID)));
+				}
+				
+				ldapUser = LDAPManager.login(userName, password, rolMap);
+				
+				if (ldapUser != null && StringUtils.equals(ldapUser.getRoleId(), LDAPManager.LDAP_USER_DEFAULT_ROLE_ID)) {
+					
+					log.warn("LDAP user: " + userName + " is assigned to default role: " + LDAPManager.LDAP_USER_DEFAULT_ROLE_ID);
+				}
 			}
 			
 			// Request user to db 
@@ -310,6 +329,11 @@ public class SessionService {
 			}
 			
 			if (user != null) {
+				
+				if (LDAP_ENABLED.booleanValue() && ldapUser == null && ((Boolean) user.get(UserSessionUI.USER_INPUT_FIELD_LDAP)).booleanValue()) {
+					
+					log.warn("LDAP server not available. Validating user " + userName + " in local db...");
+				}
 				
 				// Update user if ldap password is not equals to user db
 				if (ldapUser != null && !StringUtils.equals((String) user.get(UserSessionUI.USER_FIELD_PASSWORD), password)) {
