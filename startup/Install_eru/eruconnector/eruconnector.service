@@ -1,0 +1,12 @@
+[Unit]
+After=network.target
+
+[Service]
+ExecStart=/home/eru/eruconnector/connector.sh
+StandartInput=tty
+StandardOutput=tty
+TTYPath=/dev/tty1
+Restart=always
+
+[Install]
+WantedBy=default.target
