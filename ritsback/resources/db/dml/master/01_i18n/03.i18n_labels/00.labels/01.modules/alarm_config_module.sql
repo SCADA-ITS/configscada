@@ -27,6 +27,8 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_ES', 1, 'LBL_NEW_THRESHOLD', 'Nuevo umbral', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_QUESTION_DELETE_ALARM_CONFIG_DESCRIPTION', '¿Desea eliminar la configuración de alarma?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_TREATMENT_REQUIRED', 'Requerido tratamiento', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_MIN_TIME_ALARMED', 'Permanencia mínima de alarma (secs)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_THRESHOLD_TIME', 'Tiempo activación umbral (secs)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --en_GB
 ('en_GB', 1, 'LBL_ADD_ALARM_CONFIG', 'Add alarm settings', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -48,6 +50,8 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('en_GB', 1, 'LBL_NEW_THRESHOLD', 'New threshold', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_QUESTION_DELETE_ALARM_CONFIG_DESCRIPTION', 'Do you want to delete the alarm settings?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_TREATMENT_REQUIRED', 'Treatment required', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_MIN_TIME_ALARMED', 'Minimum alarm duration (secs)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_THRESHOLD_TIME', 'Threshold activation time (secs)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --sk_SK
 ('sk_SK', 1, 'LBL_ADD_ALARM_CONFIG', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -69,6 +73,8 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('sk_SK', 1, 'LBL_NEW_THRESHOLD', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('sk_SK', 1, 'LBL_QUESTION_DELETE_ALARM_CONFIG_DESCRIPTION', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('sk_SK', 1, 'LBL_TREATMENT_REQUIRED', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_MIN_TIME_ALARMED', 'Minimálne trvanie alarmu (sek)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_THRESHOLD_TIME', 'Čas aktivácie prahu (sek)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --es_CL
 ('es_CL', 1, 'LBL_ADD_ALARM_CONFIG', 'Añadir configuración de alarma', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -87,5 +93,7 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_CL', 1, 'LBL_ELEMENT_TYPE_STATE_WITH_ALARM', 'Cambio de estado', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_NEW_THRESHOLD', 'Nuevo umbral', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_QUESTION_DELETE_ALARM_CONFIG_DESCRIPTION', '¿Desea eliminar la configuración de alarma?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('es_CL', 1, 'LBL_TREATMENT_REQUIRED', 'Requerido tratamiento', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+('es_CL', 1, 'LBL_TREATMENT_REQUIRED', 'Requerido tratamiento', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_MIN_TIME_ALARMED', 'Permanencia mínima de alarma (secs)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_THRESHOLD_TIME', 'Tiempo activación umbral (secs)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
