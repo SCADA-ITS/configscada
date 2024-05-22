@@ -375,6 +375,24 @@ export default class AlarmConfigModule extends GenericModule {
 												required: false
 											},
 											{
+												view: "counter",
+												id: "min-time-alarmed-" + self.uid,
+												name: "minTimeAlarmed",
+												label: i18n.t("LBL_MIN_TIME_ALARMED"),
+												labelWidth: 275,
+												step: 1,
+												min:0 												
+											},
+											{
+												view: "counter",
+												id: "threshold-time-" + self.uid,
+												name: "thresholdTime",
+												label: i18n.t("LBL_THRESHOLD_TIME"),
+												labelWidth: 275,
+												step: 1,
+												min: 0
+											},
+											{
 												view: "checkbox",
 												id: "treatment-" + self.uid,
 												name: "treatment",
@@ -1234,7 +1252,9 @@ export default class AlarmConfigModule extends GenericModule {
 															elementTypeStateId: formValues.elementTypeStateId != NO_VALUE ? formValues.elementTypeStateId : undefined, 
 															alarmConfigMeasures: [],
 															alarmConfigStates: [],
-															elementSubtypeId: formValues.elementSubtypeId != NO_VALUE ? formValues.elementSubtypeId : undefined
+															elementSubtypeId: formValues.elementSubtypeId != NO_VALUE ? formValues.elementSubtypeId : undefined,
+															minTimeAlarmed: formValues.minTimeAlarmed,
+															thresholdTime: formValues.thresholdTime
 														}
 													};
 
@@ -1300,7 +1320,9 @@ export default class AlarmConfigModule extends GenericModule {
 															mine: true,
 															treatment: (formValues.treatment) ? true : false,
 															alarmConfigMeasures: [],
-															elementSubtypeId: formValues.elementSubtypeId !== NO_VALUE ? formValues.elementSubtypeId : undefined
+															elementSubtypeId: formValues.elementSubtypeId !== NO_VALUE ? formValues.elementSubtypeId : undefined,
+															minTimeAlarmed: formValues.minTimeAlarmed,
+															thresholdTime: formValues.thresholdTime
 														}
 													}
 
@@ -1443,7 +1465,9 @@ export default class AlarmConfigModule extends GenericModule {
 						elementTypeId: alarmConfigData.elementType.id,
 						elementTypeLabelAlias: i18n.t(alarmConfigData.elementType.labelAlias),
 						treatment: (alarmConfigData.treatment) ? true : false,
-						changeEquipmentState: (alarmConfigData.elementTypeState) ? true : false, 
+						changeEquipmentState: (alarmConfigData.elementTypeState) ? true : false,
+						minTimeAlarmed :alarmConfigData.minTimeAlarmed,
+						thresholdTime: alarmConfigData.thresholdTime 
 					});
 
 					let alarmLevel = alarmLevelOptionsArr.find(alarmLvl => alarmConfigData.alarmLevel && alarmLvl.id === alarmConfigData.alarmLevel.id);

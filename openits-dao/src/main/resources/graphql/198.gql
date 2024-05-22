@@ -39,6 +39,8 @@
   }
   mine
   treatment
+  minTimeAlarmed
+  thresholdTime
   alarmConfigMeasures {
     id
     elementTypeParam {
