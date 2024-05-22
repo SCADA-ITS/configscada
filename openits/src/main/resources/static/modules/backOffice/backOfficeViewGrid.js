@@ -190,7 +190,7 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 							
 							setTimeout(function() {
 
-								let isModal = util.ui.isModal(self.backOffice.containerId);
+								let isModal = self.backOffice.embedInForm ?? false;
 
 								if (self.referTablesCounter > 0 && Array.isArray(self.gridTables) && self.gridTables.length > 0 && !isModal) {
 																		

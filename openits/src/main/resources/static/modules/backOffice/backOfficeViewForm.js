@@ -413,7 +413,8 @@ export default class BackOfficeViewForm extends BackOfficeViewGenericForm {
 											filterColumnValue: idValue,
 											containerId: self.backOffice.containerId,
 											filterColumn: referColumn,
-											metadata: self.backOffice.metadata												
+											metadata: self.backOffice.metadata,
+											embedInForm: true									
 										};
 										
 										let backOfficeViewGrid = new BackOfficeViewGrid(newBackOffice, self.data, self.data.find(e => e.id === referColumn.tableId));
