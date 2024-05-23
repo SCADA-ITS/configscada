@@ -34,12 +34,14 @@ CREATE SCHEMA rt;
 
 	CREATE INDEX idx_audit_logs_log_type_id ON rt.audit_logs USING btree (log_type_id);
 	CREATE INDEX idx_audit_logs_log_subtype_id ON rt.audit_logs USING btree (log_subtype_id);
+	CREATE INDEX idx_audit_logs_log_level_id ON rt.audit_logs USING btree (log_level_id);
 	CREATE INDEX idx_audit_logs_user_id ON rt.audit_logs USING btree (user_id);
 
 
 	ALTER TABLE rt.audit_logs ADD CONSTRAINT fk_audit_logs_log_type FOREIGN KEY (log_type_id) REFERENCES master.log_types(log_type_id);
 	ALTER TABLE rt.audit_logs ADD CONSTRAINT fk_audit_logs_log_subtype FOREIGN KEY (log_subtype_id) REFERENCES master.log_subtypes(log_subtype_id);
 	ALTER TABLE rt.audit_logs ADD CONSTRAINT fk_audit_logs_levels FOREIGN KEY (log_level_id) REFERENCES master.log_levels(log_level_id);
+	ALTER TABLE rt.audit_logs ADD CONSTRAINT fk_audit_logs_users FOREIGN KEY (user_id) REFERENCES conf.users(user_id);
 
 	ALTER TABLE rt.audit_logs SET TABLESPACE tbl_rt;	
 	
@@ -84,6 +86,9 @@ CREATE SCHEMA rt;
 	);
 	
 	ALTER TABLE rt.element_states ADD CONSTRAINT fk_element_states_elements FOREIGN KEY (element_type_id, element_id) REFERENCES conf.elements(element_type_id, element_id);
+	ALTER TABLE rt.element_states ADD CONSTRAINT fk_element_states_elements_element_type_states_previous FOREIGN KEY (element_type_id, previous_state_id) REFERENCES master.element_type_states(element_type_id, element_type_state_id);
+	ALTER TABLE rt.element_states ADD CONSTRAINT fk_element_states_elements_element_type_states_current FOREIGN KEY (element_type_id, current_state_id) REFERENCES master.element_type_states(element_type_id, element_type_state_id);
+
 	ALTER TABLE rt.element_states SET TABLESPACE tbl_rt;
 	
 -- 

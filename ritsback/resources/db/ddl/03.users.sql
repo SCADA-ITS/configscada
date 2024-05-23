@@ -113,6 +113,7 @@
 
 	CREATE INDEX idx_role_permissions_system_permission_id ON conf.role_permissions USING btree (system_permission_id);
 
+	ALTER TABLE conf.role_permissions ADD CONSTRAINT fk_role_permissions_role FOREIGN KEY (role_id) REFERENCES conf.roles(role_id);
 	ALTER TABLE conf.role_permissions ADD CONSTRAINT fk_role_permissions_system_permission FOREIGN KEY (system_permission_id) REFERENCES master.system_permissions(system_permission_id);
 	
 	ALTER TABLE conf.role_permissions SET TABLESPACE tbl_conf;
@@ -167,6 +168,7 @@
 
 	CREATE INDEX idx_user_permissions_system_permission_id ON conf.user_permissions USING btree (system_permission_id);
 
+	ALTER TABLE conf.user_permissions ADD CONSTRAINT fk_user_permissions_user FOREIGN KEY (user_id) REFERENCES conf.users(user_id);
 	ALTER TABLE conf.user_permissions ADD CONSTRAINT fk_user_permissions_system_permission FOREIGN KEY (system_permission_id) REFERENCES master.system_permissions(system_permission_id);
 	
 	ALTER TABLE conf.user_permissions SET TABLESPACE tbl_conf;
