@@ -29,13 +29,23 @@ INSERT INTO conf.io_controller_module_values
 (1, 1, 10, '/api/v2/generic', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (1, 1, 11, '3000', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (1, 1, 12, '20', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+-- Mango 3
 (1, 1, 13, 'http://192.168.88.162:8080/rest/v1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (1, 1, 14, 'http://192.168.88.162:8080/rest/v2/login', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+-- Mango 5
+--(1, 1, 13, 'http://192.168.243.222:8080/rest/v3', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--(1, 1, 14, 'http://192.168.243.222:8080/rest/v3/login', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (1, 1, 15, 'admin', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (1, 1, 16, 'frontend', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+-- Mango 3
 (1, 1, 17, '/point-values/{xids}/latest-multiple-points-single-array?limit=1&unitConversion=false&useCache=true&useRendered=false', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+-- Mango 5
+--(1, 1, 17, '/point-values/single-array/latest/{xids}?fields=VALUE&limit=1&useCache=CACHE_ONLY', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (1, 1, 18, 'GET', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+-- Mango 3
 (1, 1, 19, '/point-values?unitConversion=false', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+-- Mango 5
+--(1, 1, 19, '/point-values/{xid}?unitConversion=false', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (1, 1, 20, 'PUT', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (1, 1, 23, '', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (1, 1, 26, '300', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -43,6 +53,9 @@ INSERT INTO conf.io_controller_module_values
 (1, 1, 28, '0 0/1 * 1/1 * ? *', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (1, 1, 29, '/users/current', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (1, 1, 30, 'GET', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+-- Mango 5
+--(1, 1, 31, '/data-points', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--(1, 1, 32, 'GET', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 (2, 1, 1, 'true', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (2, 1, 2, '0 0/1 * 1/1 * ? *', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
