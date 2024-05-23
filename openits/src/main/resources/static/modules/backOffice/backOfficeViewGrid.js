@@ -20,7 +20,8 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 		this.formHeight = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, BackOfficeHelper.META_TYPE_TABLE.PROPERTY.FORM_HEIGHT, backOffice.metadata, currentTableData);
 		this.formWidth = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, BackOfficeHelper.META_TYPE_TABLE.PROPERTY.FORM_WIDTH, backOffice.metadata, currentTableData);
 		this.gridFilters = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, BackOfficeHelper.META_TYPE_TABLE.PROPERTY.GRID_FILTERS, backOffice.metadata, currentTableData);
-		this.gridTableNames = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, BackOfficeHelper.META_TYPE_TABLE.PROPERTY.GRID_TABLES, backOffice.metadata, currentTableData);
+		this.gridTables = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, BackOfficeHelper.META_TYPE_TABLE.PROPERTY.GRID_TABLES, backOffice.metadata, currentTableData);
+		this.tableRatioPercent = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, BackOfficeHelper.META_TYPE_TABLE.PROPERTY.TABLE_RATIO_PERCENT, backOffice.metadata, currentTableData);
 		this.gridTableColsOrientation = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, BackOfficeHelper.META_TYPE_TABLE.PROPERTY.GRID_TABLES_COLS_ORIENTATION, backOffice.metadata, currentTableData);
 		this.referTablesCounter = !backOffice.referTablesCounter ? 2 : backOffice.referTablesCounter;  
 		
@@ -188,12 +189,46 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 							}
 							
 							setTimeout(function() {
-									
-								if (self.referTablesCounter > 0 && Array.isArray(self.gridTableNames) && self.gridTableNames.length > 0) {
-								
-									self.dataTable.selectByIndex(0);
-								}						
 
+								let isModal = self.backOffice.embedInForm ?? false;
+
+								if (self.referTablesCounter > 0 && Array.isArray(self.gridTables) && self.gridTables.length > 0 && !isModal) {
+																		
+									let ratio = 100;
+									let withPercentCounter = 0;
+									
+									if (Array.isArray(self.gridTables) && self.gridTables.length > 0) {
+
+										for (let gTable of self.gridTables) {
+
+											if (gTable.ratioPercent) {
+
+												ratio = ratio - gTable.ratioPercent;
+												withPercentCounter++;
+											}
+										}
+									}
+									
+									if (!self.gridTableColsOrientation) {
+
+										ratio = ratio / (1 + self.gridTables.length - withPercentCounter);
+									}									
+
+									let windowContent = $$("content-backOffice-view-" + self.uid);
+									let tableContent = $$("backOffice-view-" + self.uid);
+
+									tableContent.define("height", windowContent.$height * (ratio/100));
+									tableContent.resize();
+									
+									if (Array.isArray(self.currentTableData.rows) && self.currentTableData.rows.length > 0) {
+
+										self.dataTable.selectByIndex(0);
+
+									} else {
+
+										drawReferTables();
+									}
+								} 
 							}, 10);
 						},
 					}	
@@ -279,13 +314,29 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 	
 								self.dataTable.clear();
 								self.dataTable.add(getData());
-								self.dataTable.select(selectedIds);
 								
+								let items = self.dataTable.getAllItems();
+
 								if (!isNaN(self.newId)) {
-									
+
 									self.dataTable.select(self.newId);
-									
-									self.newId = undefined;	
+									self.newId = undefined;
+
+								} else if (Array.isArray(items) && items.length > 0) {
+
+									if (items.find(item => item.id === selectedIds[0])) {
+
+										self.dataTable.select(selectedIds[0]);
+
+									} else {
+
+										self.dataTable.selectByIndex(0);
+									}
+
+								} else {
+
+									self.selectedId = null;
+									drawReferTables();
 								}
 								
 								grid.hideProgress();								
@@ -906,7 +957,7 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 							
 							self.selectedId = rows[0];
 							
-							if (self.referTablesCounter > 0 && Array.isArray(self.gridTableNames) && self.gridTableNames.length > 0) {
+							if (self.referTablesCounter > 0 && Array.isArray(self.gridTables) && self.gridTables.length > 0) {
 								
 								setTimeout(function() {
 									
@@ -1242,21 +1293,22 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 		
 		function drawReferTables() {
 				
-			if (self.selectedId && Array.isArray(self.currentTableData.referTableNames) && 
-				Array.isArray(self.gridTableNames) && self.gridTableNames.length > 0 && 
-				self.gridTableNames.length <= self.currentTableData.referTableNames.length) {
+			if (Array.isArray(self.currentTableData.referTableNames) && 
+				Array.isArray(self.gridTables) && self.gridTables.length > 0 && 
+				self.gridTables.length <= self.currentTableData.referTableNames.length) {
 					
 				let viewBackOfficeViewGridCells = [];
 				
 				let referTablesCounter = 0;
 				
-				self.gridTableNames.forEach(gridTableName => {
+				self.gridTables.forEach(gridTable => {
 					
 					const module = window.em.getByField(EntityType.MODULE, "id", BackOfficeModule.Config.MODULE_ID);
 
 					if (module) {
 						
-						const refTable = self.data.find(e => e.name === gridTableName);
+						const tableName = (gridTable.name) ? gridTable.name : gridTable;
+						const refTable = self.data.find(e => e.name === tableName);
 						
 						if (refTable) {
 							
@@ -1267,9 +1319,9 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 								const args = {
 									backOffice: {
 										id: self.backOffice.id,
-										tableName: gridTableName,
+										tableName: tableName,
 										filterColumnName: refTableColumn.name,
-										filterColumnValue: self.selectedId,
+										filterColumnValue: self.selectedId ?? webix.uid(),
 										filterColumn: refTableColumn,
 										referTablesCounter: self.referTablesCounter - 1
 									},
@@ -1286,7 +1338,7 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 									body: view
 								});
 								
-								if (self.gridTableNames.length == ++referTablesCounter) {
+								if (self.gridTables.length == ++referTablesCounter) {
 					
 									if (Array.isArray(viewBackOfficeViewGridCells) && viewBackOfficeViewGridCells.length > 0) {
 								

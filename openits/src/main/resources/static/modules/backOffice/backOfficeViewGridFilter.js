@@ -485,12 +485,13 @@ export default class BackOfficeViewGridFilter {
 							}];
 							
 							const columnsAvailable = self.currentTableData.columns.filter(e => e.primaryKey !== true);
-							
+														
 							for (let column of columnsAvailable) {
 
+								const showInFilter = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_COLUMN, BackOfficeHelper.META_TYPE_COLUMN.PROPERTY.SHOW_IN_FILTER, column.metadata, column);
 								const dbType = BackOfficeHelper.getDBTypes(column.colType);
 								
-								if (dbType) {
+								if (dbType && showInFilter) {
 									
 									let label = column.label ?? column.name;
 									

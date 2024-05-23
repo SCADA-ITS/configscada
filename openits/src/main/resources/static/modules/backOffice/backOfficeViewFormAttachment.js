@@ -11,11 +11,12 @@ const REST_BACKOFFICE_EDIT_ATTACHMENT = "backoffice/${backOfficeId}/attachments/
 
 export default class BackOfficeViewFormAttachment {
 
-	constructor(backOffice, groupAttachment, tableName, rowId, attachments, onChange) {
+	constructor(backOffice, groupAttachment, currentTableData, rowId, attachments, onChange) {
 
 		this.backOffice = backOffice;
 		this.groupAttachment = groupAttachment;
-		this.tableName = tableName;
+		this.tableName = currentTableData.name;
+		this.currentTableData = currentTableData;
 		this.rowId = rowId;
 		
 		this.attachments = attachments;
@@ -289,6 +290,7 @@ export default class BackOfficeViewFormAttachment {
 					getUploader(),
 					getButtonEdit(),
 					getButtonDelete(),
+					getButtonPreview(),
 					{}
 				]
 			}
@@ -552,6 +554,55 @@ export default class BackOfficeViewFormAttachment {
 				}
 				
 				return viewButtonDelete;
+			}
+			
+			
+			function getButtonPreview() {
+
+				let viewButtonPreview;
+
+				viewButtonPreview = {
+					id: "btn-preview-" + self.uid,
+					view: "button",
+					type: "icon",
+					css: "toolbar-button-text",
+					width: 130,
+					label: i18n.t("LBL_CMD_PREVIEW"),
+					disabled: !self.currentAttachment,
+					tooltip: i18n.t("LBL_CMD_PREVIEW"),
+					icon: "mdi mdi-file-document",
+					on: {
+						onItemClick: function() {
+							
+							const url = appConfig.restUrl +
+								util.fillTemplate(REST_BACKOFFICE_DOWNLOAD_ATTACHMENT, {
+									backOfficeId: self.backOffice.id,
+									tableName: self.tableName,
+									attachmentId: self.currentAttachment.id
+								});
+								
+							let filePreviewHeight = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, BackOfficeHelper.META_TYPE_TABLE.PROPERTY.FILE_PREVIEW_HEIGHT, self.backOffice.metadata, self.currentTableData);
+							let filePreviewWidth = BackOfficeHelper.getMetadata(BackOfficeHelper.META_TYPE_TABLE, BackOfficeHelper.META_TYPE_TABLE.PROPERTY.FILE_PREVIEW_WIDTH, self.backOffice.metadata, self.currentTableData);
+							
+							fetch(url)
+								.then(res => res.text())
+								.then(content => {
+									
+									let multiline = {
+										id: "textarea-" + self.uid,
+										view: "textarea",
+										readonly: true,
+										value: content,
+										scroll: true
+									};
+								
+									util.ui.loadWindow(self.currentAttachment.fileName, multiline, filePreviewHeight, filePreviewWidth, true);
+								});
+						}
+					}
+				}
+
+				return viewButtonPreview;
 			}
 			
 			return viewActions;

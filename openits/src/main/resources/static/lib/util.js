@@ -1640,6 +1640,7 @@ export let util = {
 			return (window.location.pathname.indexOf("external.html") !== -1);
 		},
 
+
 		changeColorTheme(theme) {
 
 			let color;
