@@ -31,7 +31,7 @@ export default class BackOfficeManager {
 				
 				if (Array.isArray(currentTableData.rows)) {
 					
-					if (currentTableData.rows.length === 1 && self.backOffice.referTablesCounter === undefined) {
+					if (self.backOffice.isModal && self.backOffice.referTablesCounter === undefined) {
 					
 						loadForm(currentTableData, onGetView);	
 					}
