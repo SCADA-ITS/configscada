@@ -1322,7 +1322,7 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 										id: self.backOffice.id,
 										tableName: tableName,
 										filterColumnName: refTableColumn.name,
-										filterColumnValue: self.selectedId ?? webix.uid(),
+										filterColumnValue: self.selectedId ?? -1,
 										filterColumn: refTableColumn,
 										referTablesCounter: self.referTablesCounter - 1
 									},

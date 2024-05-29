@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.List;
 
+import org.apache.commons.lang3.SerializationUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.util.CollectionUtils;
 
@@ -56,7 +57,9 @@ public class BackOfficeFiller extends BackOfficeAction {
 					
 					if (colFiller != null) {
 				
-						Table table = (Table) tableRepository.clone();
+						//Table table = (Table) tableRepository.clone();
+						
+						Table table = SerializationUtils.clone(tableRepository);
 						
 						if (table != null) {
 							

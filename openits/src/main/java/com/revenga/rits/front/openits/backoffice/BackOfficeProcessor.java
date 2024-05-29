@@ -19,6 +19,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.SerializationException;
+import org.apache.commons.lang3.SerializationUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.core.env.Environment;
@@ -580,9 +582,11 @@ public class BackOfficeProcessor {
 					
 					try {
 						
-						table = (Table) tableRepository.clone();
+						table = SerializationUtils.clone(tableRepository);
 						
-					} catch (CloneNotSupportedException e) {
+						//table = (Table) tableRepository.clone();
+						
+					} catch (SerializationException e) {
 						
 						log.error(e.getMessage());
 						log.debug(ExceptionUtils.getStackTrace(e));
@@ -650,9 +654,11 @@ public class BackOfficeProcessor {
 					
 					try {
 						
-						view = (Table) tableRepository.clone();
+						//view = (Table) tableRepository.clone();
 						
-					} catch (CloneNotSupportedException e) {
+						view = SerializationUtils.clone(tableRepository);
+						
+					} catch (SerializationException e) {
 						
 						log.error(e.getMessage());
 						log.debug(ExceptionUtils.getStackTrace(e));
