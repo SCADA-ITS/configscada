@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.List;
 
+import org.apache.commons.lang3.SerializationUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.util.CollectionUtils;
 
@@ -55,7 +56,9 @@ public class BackOfficeCommand extends BackOfficeAction {
 					
 					if (cmd != null) {
 				
-						Table table = (Table) tableRepository.clone();
+						// Table table = (Table) tableRepository.clone();
+						
+						Table table = SerializationUtils.clone(tableRepository);
 						
 						Column columnId = table.getColumns().stream().filter(e -> e.getPrimaryKey().booleanValue()).findFirst().orElse(null);				
 						if (table != null && columnId != null) {

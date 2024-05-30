@@ -166,7 +166,7 @@ export default class BackOfficeHelper {
 
 	static async getData(backOffice) {
 
-		let data;
+		let data = [];
 		let response;
 		let url = appConfig.restUrl +
 					util.fillTemplate(REST_BACKOFFICE_TABLE, { backOfficeId: backOffice.id, tableName: backOffice.tableName });
@@ -215,8 +215,18 @@ export default class BackOfficeHelper {
 				response = await webix.ajax().get(url);
 			}
 		}
-		
-		data = response ? response.json() : undefined;
+
+		if (response != null) {
+
+			try {
+
+				data = JSON.parse(response.text());
+
+			} catch (error) {
+
+				console.log(error);
+			}
+		}
 		
 		filtersRowsByUserManagementArea();
 		
@@ -240,7 +250,7 @@ export default class BackOfficeHelper {
 			
 				const managementAreaId = sessionData.managementAreaId;
 				
-				if (managementAreaId) {
+				if (managementAreaId && Array.isArray(data)) {
 					
 					let currentTableData = data.find(e => e.name === backOffice.tableName);
 					

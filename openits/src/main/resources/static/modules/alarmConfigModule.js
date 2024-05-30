@@ -384,15 +384,6 @@ export default class AlarmConfigModule extends GenericModule {
 												min:0 												
 											},
 											{
-												view: "counter",
-												id: "threshold-time-" + self.uid,
-												name: "thresholdTime",
-												label: i18n.t("LBL_THRESHOLD_TIME"),
-												labelWidth: 275,
-												step: 1,
-												min: 0
-											},
-											{
 												view: "checkbox",
 												id: "treatment-" + self.uid,
 												name: "treatment",
@@ -646,8 +637,38 @@ export default class AlarmConfigModule extends GenericModule {
 					self.tableMeasures = new DataTable(null, null, metadata, data, events);
 
 					let table = {
-						css: { "box-sizing": "border-box", "border-bottom": "1px solid #e2e2e2", "border-left": "1px solid #e2e2e2", "border-right": "1px solid #e2e2e2" },
-						rows: self.tableMeasures.getView()
+						id: "table",
+						css: "bordered-layout-without-border-top",
+						cols: [
+							{ width: 10 },
+							{
+								rows: [
+									{ height: 10 },
+									{
+										cols: [
+											{ gravity: 1 },
+											{
+												view: "counter",
+												id: "threshold-time-" + self.uid,
+												gravity: 2,
+												label: i18n.t("LBL_THRESHOLD_TIME"),
+												labelWidth: 250,
+												step: 1,
+												min: 0
+											},
+											{ gravity: 1 }
+										]
+									},
+									{ height: 10 },
+									{
+										css: { "box-sizing": "border-box", "border": "1px solid #e2e2e2" },
+										rows: self.tableMeasures.getView()
+									},
+									{ height: 10 }
+								]
+							},
+							{ width: 10 }
+						]
 					};
 
 					function getParamWindow(measures) {
@@ -1237,6 +1258,7 @@ export default class AlarmConfigModule extends GenericModule {
 												let alarmConfigStatesArr = [];
 												let formValues = $$("form-" + self.uid).getValues();
 												let dbListValues = $$("view-dbllist-" + self.uid).getValue();
+												let thresholdTimeValue = $$("threshold-time-" + self.uid).getValue();
 
 												if (self.moduleAction.id === self.config.moduleAction.edit) {
 
@@ -1254,7 +1276,7 @@ export default class AlarmConfigModule extends GenericModule {
 															alarmConfigStates: [],
 															elementSubtypeId: formValues.elementSubtypeId != NO_VALUE ? formValues.elementSubtypeId : undefined,
 															minTimeAlarmed: formValues.minTimeAlarmed,
-															thresholdTime: formValues.thresholdTime
+															thresholdTime: thresholdTimeValue
 														}
 													};
 
@@ -1455,6 +1477,7 @@ export default class AlarmConfigModule extends GenericModule {
 			let elementTypeStateSelect = $$("element_type_state-" + self.uid);
 			let labelAliasSelect = $$("label_alias-" + self.uid);
 			let elementSubtype = $$("element_type_subtype-" + self.uid);
+			let thresholdTime = $$("threshold-time-" + self.uid);
 
 			if (form) {
 
@@ -1466,8 +1489,7 @@ export default class AlarmConfigModule extends GenericModule {
 						elementTypeLabelAlias: i18n.t(alarmConfigData.elementType.labelAlias),
 						treatment: (alarmConfigData.treatment) ? true : false,
 						changeEquipmentState: (alarmConfigData.elementTypeState) ? true : false,
-						minTimeAlarmed :alarmConfigData.minTimeAlarmed,
-						thresholdTime: alarmConfigData.thresholdTime 
+						minTimeAlarmed :alarmConfigData.minTimeAlarmed 
 					});
 
 					let alarmLevel = alarmLevelOptionsArr.find(alarmLvl => alarmConfigData.alarmLevel && alarmLvl.id === alarmConfigData.alarmLevel.id);
@@ -1503,6 +1525,11 @@ export default class AlarmConfigModule extends GenericModule {
 
 							elementSubtype.setValue(subtype.id);
 						}
+					}
+					
+					if (thresholdTime) {
+
+						thresholdTime.setValue(alarmConfigData.thresholdTime);
 					}
 
 				} else {

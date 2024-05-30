@@ -956,8 +956,9 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 							// log.debug(rows[0]);
 							
 							self.selectedId = rows[0];
+							let isModal = self.backOffice.embedInForm ?? false;
 							
-							if (self.referTablesCounter > 0 && Array.isArray(self.gridTables) && self.gridTables.length > 0) {
+							if (self.referTablesCounter > 0 && Array.isArray(self.gridTables) && self.gridTables.length > 0 && !isModal) {
 								
 								setTimeout(function() {
 									
@@ -1321,7 +1322,7 @@ export default class BackOfficeViewGrid extends BackOfficeView {
 										id: self.backOffice.id,
 										tableName: tableName,
 										filterColumnName: refTableColumn.name,
-										filterColumnValue: self.selectedId ?? webix.uid(),
+										filterColumnValue: self.selectedId ?? -1,
 										filterColumn: refTableColumn,
 										referTablesCounter: self.referTablesCounter - 1
 									},
