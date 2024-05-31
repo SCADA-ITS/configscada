@@ -24,7 +24,8 @@ INSERT INTO ui.grid_options(id, name, description, enabled, visible) VALUES
 (23, 'show_selected', 'bool', true, true),
 (24, 'show_header', 'bool', true, true),
 (25, 'show_print', 'bool', true, true),
-(26, 'show_export', 'bool', true, true);
+(26, 'show_export', 'bool', true, true),
+(27, 'help_tag', 'string', true, true);
 
 INSERT INTO ui.grid_field_data_types(id, name, format, description) VALUES
 (1, 'string', NULL, 'string'),

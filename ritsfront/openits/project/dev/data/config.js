@@ -16,5 +16,8 @@ const APP_TITLE = "OpenITS - DEV";
 // APP properties
 const APP_DEVMODE_ON = true;
 
+// Help available
+const APP_HELP_ENABLED = true;
+
 // Ligth Mode
 //const APP_LIGTH_MODE = true;
