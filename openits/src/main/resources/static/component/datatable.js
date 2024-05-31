@@ -38,7 +38,8 @@ const GridOptions = {
 	SHOW_SELECTED: 23,
 	SHOW_HEADER: 24,
 	SHOW_PRINT: 25,
-	SHOW_EXPORT: 26
+	SHOW_EXPORT: 26,
+	HELP_TAG: 27
 };
 
 const RowAdjustement = {
@@ -48,7 +49,7 @@ const RowAdjustement = {
 	CUSTOM: "custom"
 };
 
-const DefOptionValues = { 1: true, 2: true, 7: true, 8: true, 9: false, 10: true, 11: true, 12: true, 13: true, 14: false, 15: false, 17: true, 20: true, 21: RowAdjustement.CUSTOM, 22: 34, 23: true, 24: true, 25: false, 26: false};
+const DefOptionValues = { 1: true, 2: true, 7: true, 8: true, 9: false, 10: true, 11: true, 12: true, 13: true, 14: false, 15: false, 17: true, 20: true, 21: RowAdjustement.CUSTOM, 22: 34, 23: true, 24: true, 25: false, 26: false, 27: false};
 
 const _TRUE = "true";
 const _FALSE = "false";
@@ -1116,6 +1117,7 @@ export default class DataTable {
 		let resultSelRows = this.getGridOptions(GridOptions.SHOW_SELECTED);
 		let resultPrint = this.getGridOptions(GridOptions.SHOW_PRINT);
 		let resultExport = this.getGridOptions(GridOptions.SHOW_EXPORT);
+		let resultHelp = this.getGridOptions(GridOptions.HELP_TAG);
 
 		let showOnlySearchBar = !resultCommons && !resultCommands && resultSearch;
 		let resultFilter = undefined;
@@ -1189,13 +1191,11 @@ export default class DataTable {
 			if (resultFilter) {
 
 				toolbar.elements.push({ id: "tb_btn-showfilters-" + this.uid, view: "icon", icon: "wxi-filter", value: i18n.t("LBL_FILTERS"), tooltip: true });
-
 			}
 
 			if (dataGridId && resultRefresh) {
 
 				toolbar.elements.push({ id: "tb_btn-refresh-" + this.uid, view: "icon", icon: "mdi mdi-refresh", value: i18n.t("LBL_TABLE_REFRESH"), tooltip: true });
-
 			}
 
 			if(resultPrint){
@@ -1215,7 +1215,12 @@ export default class DataTable {
 
 			if (showLegend) {
 
-				toolbar.elements.push({ id: "tb_btn-icons-" + this.uid, view: "icon", icon: "mdi mdi-map-legend", value: i18n.t("LBL_TABLE_LEGEND"), tooltip: true })
+				toolbar.elements.push({ id: "tb_btn-icons-" + this.uid, view: "icon", icon: "mdi mdi-map-legend", value: i18n.t("LBL_TABLE_LEGEND"), tooltip: true });
+			}
+			
+			if (resultHelp) {
+
+				toolbar.elements.push({ id: "tb_btn-help-" + this.uid, view: "icon", icon: "mdi mdi-help", value: i18n.t("LBL_HELP"), tooltip: true });
 			}
 		}
 
@@ -2331,6 +2336,22 @@ export default class DataTable {
 			});
 		}
 	}
+	
+	showHelp() {
+
+		let self = this;
+		let helpButton = $$("tb_btn-help-" + self.uid);
+		let grid = $$("dt-" + self.uid);
+		let tagHelp = self.getGridOptions(GridOptions.HELP_TAG);
+
+		if (!webix.isUndefined(grid) && !webix.isUndefined(helpButton) && tagHelp) {
+
+			helpButton.attachEvent("onItemClick", function() {
+
+				util.module.showTagHelp(tagHelp);
+			});
+		}
+	}
 
 	callbacks() {
 
@@ -2353,6 +2374,7 @@ export default class DataTable {
 		this.rowColors();
 		this.clickShowFilters();
 		this.openIconList();
+		this.showHelp();
 
 		this.restoreSelected();
 		this.sortDatatable();
