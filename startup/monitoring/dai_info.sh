@@ -69,15 +69,20 @@ for host in "${HOSTS[@]}"; do
 "
     LOG_MESSAGE+="Tamaño fichero log grabador:     $FILE_SIZE_GB
 "
-    ssh dai@$host "docker ps | grep socketmanager > /dev/null"
+	# Verificar el estado de los contenedores Docker
+    CONTAINERS=("ffmpeg" "visionanlt" "doublecheck" "dai_web" "dai_celeryworker" "websocket" "dai_celerybeat" "relay" "dai_nginx" "tunelia" "filemanager" "dai_db" "grabador_nginx" "grabador_web" "grabador_celerybeat" "grabador_celeryworker" "grabador_db" "grabador_redis" "recorder" "socketmanager")
+	
+	LOG_MESSAGE+="LISTADO DE PROCESOS CAIDOS (Todo OK si no aparece ninguno:
+	"
+	for container in "${CONTAINERS[@]}"; do
+		ssh dai@$host "docker ps | grep $container > /dev/null"
 
-    if [ $? -eq 0 ]; then
-       LOG_MESSAGE+="Estado del proceso socketmanager = OK
-"
-    else
-       LOG_MESSAGE+="Estado del proceso socketmanager = DOWN 
-"
-    fi
+		if [ $? -eq 1 ]; then
+		   container_con_espacios=$(echo "$container" | sed 's/_/ /g')
+		   LOG_MESSAGE+="Estado del proceso $container_con_espacios = DOWN 
+	"
+		fi
+	done
 
 	ssh dai@$host 'df -h' | grep 'vg-ubuntu' > /dev/null
 	
