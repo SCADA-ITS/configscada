@@ -11,7 +11,26 @@
 			  FROM conf.locations
 			  WHERE enabled = true or enabled is null
 	</SELECT>
-	<INSERT>
+	<INSERT>INSERT INTO conf.locations
+						(location_id,
+						 location_type_id,
+						 alias,
+						 lane,
+						 description,
+						 enabled,
+						 visible,
+						 created_at,
+						 updated_at)
+					VALUES
+						(:id=getNextId{'conf.locations'$'location_id'},
+					 	:locationTypeId,
+					 	:alias,
+					 	:lane,
+					 	:description,
+					 	:enabled,
+					 	:visible,
+					 	CURRENT_TIMESTAMP,
+					 	CURRENT_TIMESTAMP)
 	</INSERT>
 	<UPDATE> 
 	</UPDATE>

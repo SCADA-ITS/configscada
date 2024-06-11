@@ -12,7 +12,24 @@
 			  FROM conf.element_io_controller_modules
 			  WHERE enabled = true or enabled is null
 	</SELECT>
-	<INSERT>
+	<INSERT>INSERT INTO conf.element_io_controller_modules
+					(element_type_id,
+					 element_id,
+					 module_type_id,
+					 module_id,
+					 enabled,
+					 visible,
+					 created_at,
+					 updated_at)
+					VALUES 
+					(:elementTypeId,
+					 :elementId,
+					 :moduleTypeId,
+					 :moduleId,
+					 :enabled,
+					 :visible,
+					 CURRENT_TIMESTAMP,
+					 CURRENT_TIMESTAMP)
 	</INSERT>
 	<UPDATE>
 	</UPDATE>

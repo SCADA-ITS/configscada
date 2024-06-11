@@ -9,7 +9,22 @@
 			  FROM conf.stretch_locations
 			  WHERE enabled = true or enabled is null
 	</SELECT>
-	<INSERT>
+	<INSERT>INSERT INTO conf.stretch_locations
+						(stretch_id,
+						 location_id,
+						 position,
+						 enabled,
+						 visible,
+						 created_at,
+						 updated_at)
+					VALUES
+						(:stretchId,
+					 	:locationId,
+					 	:position,
+					 	:enabled,
+					 	:visible,
+					 	CURRENT_TIMESTAMP,
+					 	CURRENT_TIMESTAMP)
 	</INSERT>
 	<UPDATE> 
 	</UPDATE>
