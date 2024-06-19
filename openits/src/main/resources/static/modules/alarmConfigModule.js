@@ -644,25 +644,24 @@ export default class AlarmConfigModule extends GenericModule {
 							{
 								rows: [
 									{ height: 10 },
-									{
-										cols: [
-											{ gravity: 1 },
-											{
-												view: "counter",
-												id: "threshold-time-" + self.uid,
-												gravity: 2,
-												label: i18n.t("LBL_THRESHOLD_TIME"),
-												labelWidth: 250,
-												step: 1,
-												min: 0
-											},
-											{ gravity: 1 }
-										]
-									},
 									{ height: 10 },
 									{
 										css: { "box-sizing": "border-box", "border": "1px solid #e2e2e2" },
 										rows: self.tableMeasures.getView()
+									},
+									{ height: 10 },
+									{
+										cols: [
+											{},
+											{
+												view: "counter",
+												id: "threshold-time-" + self.uid,
+												label: i18n.t("LBL_THRESHOLD_TIME"),
+												labelWidth: 250,
+												step: 1,
+												min: 0
+											}
+										]
 									},
 									{ height: 10 }
 								]
@@ -1517,7 +1516,13 @@ export default class AlarmConfigModule extends GenericModule {
 						labelAliasSelect.disable();
 					}
 					
-					if(Array.isArray(elementType.elementSubtypes) && elementType.elementSubtypes.length > 0 && Array.isArray(self.args.selectedRows) && self.args.selectedRows.length > 0){
+					if (thresholdTime) {
+
+						thresholdTime.setValue(alarmConfigData.thresholdTime);
+					}
+					
+					if(Array.isArray(elementType.elementSubtypes) && elementType.elementSubtypes.length > 0 && 
+						Array.isArray(self.args.selectedRows) && self.args.selectedRows.length > 0 && alarmConfigData.elementSubtype){
 						
 						let subtype = elementType.elementSubtypes.find(subtype => subtype.id === alarmConfigData.elementSubtype.id); 
 						
@@ -1525,11 +1530,6 @@ export default class AlarmConfigModule extends GenericModule {
 
 							elementSubtype.setValue(subtype.id);
 						}
-					}
-					
-					if (thresholdTime) {
-
-						thresholdTime.setValue(alarmConfigData.thresholdTime);
 					}
 
 				} else {
