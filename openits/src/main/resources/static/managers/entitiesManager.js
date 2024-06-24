@@ -63,7 +63,7 @@ export default class EntitiesManager {
 	static get ENTITY_STATE_LOADED() { return 1 }
 	static get ACTION_CREATED() { return 1 }
 	static get ACTION_UPDATED() { return 2 }
-	static get ACTION_DELETED() { return 2 }
+	static get ACTION_DELETED() { return 3 }
 
 	constructor() {
 
