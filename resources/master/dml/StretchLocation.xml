@@ -28,6 +28,8 @@
 	</INSERT>
 	<UPDATE> 
 	</UPDATE>
-	<DELETE>
+	<DELETE>DELETE FROM conf.stretch_locations
+			 WHERE stretch_id = :stretchId
+			 AND  location_id = :locationId
 	</DELETE>
 </DML>

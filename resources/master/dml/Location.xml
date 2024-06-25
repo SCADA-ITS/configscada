@@ -32,8 +32,15 @@
 					 	CURRENT_TIMESTAMP,
 					 	CURRENT_TIMESTAMP)
 	</INSERT>
-	<UPDATE> 
+	<UPDATE>UPDATE conf.locations
+			   SET location_type_id = :locationTypeId,
+				   lane = :lane,
+				   alias = :alias, 
+			       description = :description, 
+			       updated_at = CURRENT_TIMESTAMP
+			 WHERE location_id = :id
 	</UPDATE>
-	<DELETE>
+	<DELETE>DELETE FROM conf.locations
+			 WHERE location_id = :id
 	</DELETE>
 </DML>

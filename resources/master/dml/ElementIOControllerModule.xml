@@ -33,6 +33,10 @@
 	</INSERT>
 	<UPDATE>
 	</UPDATE>
-	<DELETE>
+	<DELETE>DELETE FROM conf.element_io_controller_modules
+			 WHERE module_type_id = :moduleTypeId
+			 AND  module_id = :moduleId
+			 AND  element_type_id= :elementTypeId
+			 AND  element_id= :elementId
 	</DELETE>
 </DML>
