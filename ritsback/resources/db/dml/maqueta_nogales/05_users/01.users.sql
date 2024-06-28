@@ -40,8 +40,8 @@ INSERT INTO conf.role_permissions
 --
 INSERT INTO conf.users
 (user_id, role_id, name_, password_, password_expired_at, session_expire_time_s, locked_until, preset, allow_multiple_sessions, full_name, email, locale_code, enabled, visible, created_at, updated_at) VALUES
-(1, 1, 'admin', 'admin', NULL, NULL, NULL, true, true, 'System admin', 'admin@rits.com', 'es_CL', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(2, 2, 'oper', 'oper', NULL, 300, NULL, true, true, 'System operator', 'oper@rits.com', 'es_CL', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(1, 1, 'admin', 'PTp8841/XyOkxeVUCyNf+w==', NULL, NULL, NULL, true, true, 'System admin', 'admin@rits.com', 'es_CL', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 2, 'oper', 'MR6Du+y0wfkaYpReBdYHkw==', NULL, 300, NULL, true, true, 'System operator', 'oper@rits.com', 'es_CL', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 -- 
 -- Table: conf.user_permissions

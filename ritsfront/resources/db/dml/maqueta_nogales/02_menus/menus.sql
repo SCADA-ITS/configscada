@@ -1,7 +1,7 @@
 INSERT INTO ui.menu_groups(id, "label", icon, "name", description, enabled, visible, position) VALUES
 (1, 'LBL_MENU_MAPS_AND_SYNOPTICS', 'img/menu/default.png', 'Menu Maps & Synoptics', 'Menu Maps & Synoptics', true, true, 1),
 (2, 'LBL_MENU_EQUIPMENT', 'img/menu/default.png', 'Equipment', 'Equipment', true, true, 2),
-(3, 'LBL_MENU_MANAGEMENT', 'img/menu/default.png', 'Management', 'Management', true, true, 3),
+(3, 'LBL_MENU_MANAGER', 'img/menu/default.png', 'Management', 'Management', true, true, 3),
 (4, 'LBL_MENU_TOOLS', 'img/menu/default.png', 'Tools', 'Tools', true, true, 4);
 
 INSERT INTO ui.menu_items(id, menu_group_id, "position", module_id, "label", icon, "name", description, enabled, visible) VALUES
