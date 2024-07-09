@@ -83,6 +83,10 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 	--SystemPermission:24
 	('es_ES', 1, 'LBL_SYSTEM_PERMISSION_RESTART_SYSTEM_PROCESSES', 'Reiniciar procesos', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	('es_ES', 1, 'LBL_SYSTEM_PERMISSION_RESTART_SYSTEM_PROCESSES_DESC', 'Permite reiniciar procesos del sistema', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	--SystemPermission:25
+	('es_ES', 1, 'LBL_SYSTEM_PERMISSION_EDIT_EQUIPMENTS', 'Editar equipos', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_ES', 1, 'LBL_SYSTEM_PERMISSION_EDIT_EQUIPMENTS_DESC', 'Permite crear, editar, clonar y eliminar equipos del sistema', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
 
 --en_GB
 	--SystemPermission:1
@@ -157,6 +161,9 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 	--SystemPermission:24
 	('en_GB', 1, 'LBL_SYSTEM_PERMISSION_RESTART_SYSTEM_PROCESSES', 'Restart processes', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	('en_GB', 1, 'LBL_SYSTEM_PERMISSION_RESTART_SYSTEM_PROCESSES_DESC', 'Allows you to restart system processes', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	--SystemPermission:25
+	('en_GB', 1, 'LBL_SYSTEM_PERMISSION_EDIT_EQUIPMENTS', 'Edit equipments', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('en_GB', 1, 'LBL_SYSTEM_PERMISSION_EDIT_EQUIPMENTS_DESC', 'User can create, edit, clone and delete equipments', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --sk_SK
 	--SystemPermission:1
@@ -231,7 +238,10 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 	--SystemPermission:24
 	('sk_SK', 1, 'LBL_SYSTEM_PERMISSION_RESTART_SYSTEM_PROCESSES', 'reštartovať procesy', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	('sk_SK', 1, 'LBL_SYSTEM_PERMISSION_RESTART_SYSTEM_PROCESSES_DESC', 'Umožňuje reštartovať systémové procesy', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-
+	--SystemPermission:25
+	('sk_SK', 1, 'LBL_SYSTEM_PERMISSION_EDIT_EQUIPMENTS', 'Upraviť tímy', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('sk_SK', 1, 'LBL_SYSTEM_PERMISSION_EDIT_EQUIPMENTS_DESC', 'Umožňuje vytvárať, upravovať, klonovať a mazať počítače zo systému', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	
 --es_CL
 	--SystemPermission:1
 	('es_CL', 1, 'LBL_SYSTEM_PERMISSION_LOGIN', 'Iniciar Sesión', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -304,4 +314,7 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 	('es_CL', 1, 'LBL_SYSTEM_PERMISSION_SHOW_SYSTEM_PROCESSES_DESC', 'Permite ver los procesos del sistema y el rendimiento de los mismos', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	--SystemPermission:24
 	('es_CL', 1, 'LBL_SYSTEM_PERMISSION_RESTART_SYSTEM_PROCESSES', 'Reiniciar procesos', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-	('es_CL', 1, 'LBL_SYSTEM_PERMISSION_RESTART_SYSTEM_PROCESSES_DESC', 'Permite reiniciar procesos del sistema', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+	('es_CL', 1, 'LBL_SYSTEM_PERMISSION_RESTART_SYSTEM_PROCESSES_DESC', 'Permite reiniciar procesos del sistema', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	--SystemPermission:25
+	('es_CL', 1, 'LBL_SYSTEM_PERMISSION_EDIT_EQUIPMENTS', 'Editar equipos', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_CL', 1, 'LBL_SYSTEM_PERMISSION_EDIT_EQUIPMENTS_DESC', 'Permite crear, editar, clonar y eliminar equipos del sistema', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

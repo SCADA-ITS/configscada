@@ -29,6 +29,7 @@ INSERT INTO master.i18n_labels (locale_code, module_id, "label", "translation", 
 ('es_ES', 1, 'LBL_GRID_TRAVEL_TIMES', 'Tiempos de recorrido', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_GRID_USERS', 'Usuarios', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_GRID_VENTILATION_MANAGER_FANS', 'Ventiladores de gestor de ventilación', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_GRID_EQUIPMENT_EDITOR', 'Editor de equipamiento', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --en_GB
 ('en_GB', 1, 'LBL_GRID_ALARMS', 'Alarms', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -49,6 +50,7 @@ INSERT INTO master.i18n_labels (locale_code, module_id, "label", "translation", 
 ('en_GB', 1, 'LBL_GRID_TRAVEL_TIMES', 'Travel times', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_GRID_USERS', 'Usuarios', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_GRID_VENTILATION_MANAGER_FANS', 'Ventiladores de gestor de ventilación', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_GRID_EQUIPMENT_EDITOR', 'Equipment editor', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --sk_SK
 ('sk_SK', 1, 'LBL_GRID_ALARMS', 'Alarmy', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -69,6 +71,7 @@ INSERT INTO master.i18n_labels (locale_code, module_id, "label", "translation", 
 ('sk_SK', 1, 'LBL_GRID_TRAVEL_TIMES', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('sk_SK', 1, 'LBL_GRID_USERS', 'Užívatelia', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('sk_SK', 1, 'LBL_GRID_VENTILATION_MANAGER_FANS', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_GRID_EQUIPMENT_EDITOR', 'Editor zariadenia', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --es_CL
 ('es_CL', 1, 'LBL_GRID_ALARMS', 'Alarmas', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -88,5 +91,6 @@ INSERT INTO master.i18n_labels (locale_code, module_id, "label", "translation", 
 ('es_CL', 1, 'LBL_GRID_ROLES', 'Roles', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_GRID_TRAVEL_TIMES', 'Tiempos de recorrido', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_GRID_USERS', 'Usuarios', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('es_CL', 1, 'LBL_GRID_VENTILATION_MANAGER_FANS', 'Ventiladores de gestor de ventilación', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+('es_CL', 1, 'LBL_GRID_VENTILATION_MANAGER_FANS', 'Ventiladores de gestor de ventilación', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_GRID_EQUIPMENT_EDITOR', 'Editor de equipamiento', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 

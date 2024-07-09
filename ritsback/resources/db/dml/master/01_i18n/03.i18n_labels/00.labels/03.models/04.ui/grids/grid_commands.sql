@@ -51,6 +51,7 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_ES', 1, 'LBL_TABLE_REFRESH','Refrescar',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_TABLE_ROLES','Roles antiguos',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_TABLE_USERS','Usuarios antiguos',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_CMD_CLONE', 'Clonar', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	 
 
 -- en_GB
@@ -94,6 +95,7 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('en_GB', 1, 'LBL_TABLE_REFRESH','Refresh',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_TABLE_ROLES','Old roles',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_TABLE_USERS','Old users',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_CMD_CLONE', 'Clone', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
  	 
 
 -- sk_SK
@@ -125,6 +127,7 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('sk_SK', 1, 'LBL_CMD_LOCK_UNLOCK','blokovať/odblokovať užívateľa',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 ('sk_SK', 1, 'LBL_CMD_ACTIVE_ALARM','Aktívny filtrovaný alarm',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 ('sk_SK', 1, 'LBL_CMD_MUTE_ALARM','Stlmiť alarm',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_CMD_CLONE', 'Klonovať', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 -- es_CL
 ('es_CL', 1, 'LBL_CMD_ACTIVE_ALARM', 'Activar Alarma Silenciada', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -166,4 +169,5 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_CL', 1, 'LBL_TABLE_PRINT','Imprimir',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_TABLE_REFRESH','Refrescar',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_TABLE_ROLES','Roles antiguos',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
-('es_CL', 1, 'LBL_TABLE_USERS','Usuarios antiguos',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
+('es_CL', 1, 'LBL_TABLE_USERS','Usuarios antiguos',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_CMD_CLONE', 'Clonar', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

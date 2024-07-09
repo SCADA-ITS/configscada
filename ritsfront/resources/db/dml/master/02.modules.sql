@@ -116,6 +116,8 @@ INSERT INTO ui.modules(id, module_type_id, "name", description, default_view_typ
 (1045, 1, 'Historical chart', 'Historical chart', 1, null, 'modules/historicalChart/historicalChartModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 (1046, 1, 'Equipment command module', 'Equipment command module', 1, null, 'modules/equipmentCommandModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 (1047, 1, 'Help viewer module', 'Help viewer module', 2, null, 'modules/help/helpViewerModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(1048, 1, 'Equipment editor list  module', 'Equipment editor list module', 1, null, 'modules/equipmentEditor/equipmentEditorListModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(1049, 1, 'Equipment editor module', 'Equipment editor module', 2, null, 'modules/equipmentEditor/equipmentEditorModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 
 (2000, 1, 'Map launcher Module', 'Map launcher Module', 1, null, 'modules/mapLauncherModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL);
 
@@ -217,7 +219,11 @@ INSERT INTO ui.module_actions(id, module_id, name, description, system_permissio
 (104504, 1045, 'equipmentViewer', 'show chart from equipmentViewer', null, null),
 (104601, 1046, 'maintenanceMode', 'Change maintenance mode on/off', null, null),
 (104602, 1046, 'initEquipment', 'Initialize equipment', null, null),
-(104701, 1047, 'viewModuleHelp', 'View module help ', null, null);
+(104701, 1047, 'viewModuleHelp', 'View module help', null, null),
+(104901, 1049, 'add', 'add new equipment', 'SystemPermission:25', null),
+(104902, 1049, 'edit', 'edit equipment', 'SystemPermission:25', null),
+(104903, 1049, 'delete', 'delete equipment', 'SystemPermission:25', null),
+(104904, 1049, 'clone', 'clone equipment', 'SystemPermission:25', null);
 
 
 
@@ -585,6 +591,14 @@ INSERT INTO ui.window_values(module_id, window_param_id, value) VALUES
 (1047, 11, '#464646'),
 (1047, 12, 'LBL_HELP_CONTENTS'),
 (1047, 14, 'true'),
-(1047, 17, 'true');
+(1047, 17, 'true'),
+
+(1049, 4, '620'),
+(1049, 5, '737'),
+(1049, 8, 'true'),
+(1049, 10, 'img/module/default.png'),
+(1049, 11, '#464646'),
+(1049, 12, 'LBL_EQUIPMENT_EDITOR'),
+(1049, 14, 'false');
 
 

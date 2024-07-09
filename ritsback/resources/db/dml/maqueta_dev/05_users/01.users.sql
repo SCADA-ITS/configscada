@@ -35,6 +35,7 @@ INSERT INTO conf.role_permissions
 (1, 22, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (1, 23, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (1, 24, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 25, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (2, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 -- 
@@ -61,4 +62,12 @@ INSERT INTO conf.users
 -- 
 -- Table: conf.user_permissions
 --
-
+INSERT INTO conf.user_permissions
+(user_id, system_permission_id, enabled, visible, created_at, updated_at) VALUES
+(1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 17, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 18, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 19, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 20, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 23, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 24, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

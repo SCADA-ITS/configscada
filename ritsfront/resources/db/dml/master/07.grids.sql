@@ -51,7 +51,8 @@ INSERT INTO ui.grids(id, adapter_id, "label", enabled, visible) VALUES
 (1012, NULL, 'LBL_GRID_VENTILATION_MANAGER_FANS', true, true),
 (1013, NULL, 'LBL_GRID_LIGHTING_MANAGER_CIRCUITS', true, true),
 (1022, 11, 'LBL_GRID_PLAN_MONITOR', true, true),
-(1023, 2, 'LBL_GRID_TRAVEL_TIMES', true, true);
+(1023, 2, 'LBL_GRID_TRAVEL_TIMES', true, true),
+(1026, 12, 'LBL_GRID_EQUIPMENT_EDITOR', true, true);
 
 INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", required, parameterized, extended, filtered, "label", label_tooltip, source_field, is_pk, is_epoch_milli, align, needs_translation, grouping_summary, width_px, grid_field_group_operation_id, enabled, visible, adjust, header_vertical, fixed_column, replacement_function, precision_filter) VALUES
 (100001, 1000, 1, 1, true, false, false, false, 'LBL_GRID_FIELD_ID', 'LBL_GRID_FIELD_ID', 'id', true, false, null, false, false, 500, NULL, true, false, NULL, NULL, NULL, NULL, NULL),
@@ -215,7 +216,14 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (102504, 1025, 1, 4, true, true, false, true, 'LBL_GRID_FIELD_LOG_SUBTYPE', 'LBL_GRID_FIELD_LOG_SUBTYPE', 'logSubtypeLabelAlias', false, false, null, true, false, 200, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
 (102505, 1025, 1, 5, true, true, false, true, 'LBL_GRID_FIELD_NAME', 'LBL_GRID_FIELD_NAME', 'userName', false, false, null, false, false, 200, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
 (102506, 1025, 1, 6, true, false, false, true, 'LBL_GRID_FIELD_LOG_TYPE_PARAM_PROCESSES_PROCESS', 'LBL_GRID_FIELD_LOG_TYPE_PARAM_PROCESSES_PROCESS', 'LogTypeParam:5:1', false, false, null, false, false, 300, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
-(102507, 1025, 1, 7, true, false, false, true, 'LBL_GRID_FIELD_LOG_TYPE_PARAM_PROCESSES_RUNNING_SINCE', 'LBL_GRID_FIELD_LOG_TYPE_PARAM_PROCESSES_RUNNING_SINCE', 'LogTypeParam:5:2', false, false, null, false, false, 300, NULL, true, true, NULL, NULL, NULL, NULL, NULL);
+(102507, 1025, 1, 7, true, false, false, true, 'LBL_GRID_FIELD_LOG_TYPE_PARAM_PROCESSES_RUNNING_SINCE', 'LBL_GRID_FIELD_LOG_TYPE_PARAM_PROCESSES_RUNNING_SINCE', 'LogTypeParam:5:2', false, false, null, false, false, 300, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+
+(102601, 1026, 1, 1, true, false, false, false, '', '', 'id', true, false, NULL, false, false, 35, NULL, true, false, NULL, NULL, NULL, NULL, NULL),
+(102602, 1026, 1, 4, true, true, false, true, 'LBL_GRID_FIELD_ELEMENT_TYPE_ALIAS', 'LBL_GRID_FIELD_ELEMENT_TYPE_ALIAS', 'elementTypeLabelAlias', false, false, NULL, true, false, 350, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(102603, 1026, 1, 5, true, true, false, true, 'LBL_GRID_FIELD_ELEMENT_SUBTYPE', 'LBL_GRID_FIELD_ELEMENT_SUBTYPE', 'elementSubtypeLabelAlias', false, false, NULL, true, false, 350, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(102604, 1026, 1, 3, true, true, false, true, 'LBL_DESCRIPTION', 'LBL_DESCRIPTION', 'description', false, false, NULL, true, false, 500, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(102605, 1026, 1, 2, true, true, false, true, 'LBL_GRID_FIELD_ELEMENT_ALIAS', 'LBL_GRID_FIELD_ELEMENT_ALIAS', 'alias', false, false, NULL, true, false, 350, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(102606, 1026, 1, 6, true, true, false, true, 'LBL_GRID_FIELD_LOCATION', 'LBL_GRID_FIELD_LOCATION', 'locationAlias', false, false, NULL, true, false, 200, NULL, true, true, NULL, NULL, NULL, NULL, NULL);
 
 
 
@@ -502,7 +510,32 @@ INSERT INTO ui.grid_option_values(grid_id, grid_option_id, value) VALUES
 (1025, 16, 'img/grid/task_automatism.png'),
 (1025, 17, 'true'),
 (1025, 25, 'true'),
-(1025, 26, 'true');
+(1025, 26, 'true'),
+
+(1026, 1, 'true'),
+(1026, 2, 'true'),
+(1026, 3, '102602'),
+(1026, 4, 'asc'),
+(1026, 5, NULL),
+(1026, 6, NULL),
+(1026, 7, 'true'),
+(1026, 8, 'false'),
+(1026, 9, 'false'),
+(1026, 10, 'true'),
+(1026, 11, 'true'),
+(1026, 12, 'true'),
+(1026, 13, 'true'),
+(1026, 14, 'false'),
+(1026, 15, 'false'),
+(1026, 16, 'img/menu/equipment-menu.png'),
+(1026, 17, 'true'),
+(1026, 20, 'true'),
+(1026, 21, 'custom'),
+(1026, 22, NULL),
+(1026, 23, NULL),
+(1026, 24, NULL),
+(1026, 25, 'true'),
+(1026, 26, 'true');
 
 INSERT INTO ui.grid_commands(grid_id, "position", "label", icon, "default", module_action_id, args, view_type_id, multiselect, show_text, item_required, grouped, unselect_all_after) VALUES
 (1000, 1, 'LBL_CMD_ADD', 'mdi mdi-plus', false, 101101, null, 2, false, false, false, null, null),
@@ -567,7 +600,12 @@ INSERT INTO ui.grid_commands(grid_id, "position", "label", icon, "default", modu
 (1023, 3, 'LBL_CMD_DELETE', 'mdi mdi-delete', false, 104203, null, 2, true, false, true, null, null),
 (1023, 4, 'LBL_CMD_VIEW_PANEL', 'mdi mdi-message', false, 104206, null, 2, false, false, true, null, null),
 (1023, 5, 'LBL_CMD_ASSIGN_PANEL', 'mdi mdi-message-plus-outline', false, 104204, null, 2, false, false, true, null, null),
-(1023, 6, 'LBL_CMD_UNASSIGN_ALL_PANELS', 'mdi mdi-message-minus-outline', false, 104205, null, 2, false, false, true, null, null);
+(1023, 6, 'LBL_CMD_UNASSIGN_ALL_PANELS', 'mdi mdi-message-minus-outline', false, 104205, null, 2, false, false, true, null, null),
+
+(1026, 2, 'LBL_CMD_ADD', 'mdi mdi-plus', false, 104901, null, 2, false, false, false, null, null),
+(1026, 3, 'LBL_CMD_EDIT', 'mdi mdi-pencil', true, 104902, null, 2, false, false, true, null, null),
+(1026, 4, 'LBL_CMD_DELETE', 'mdi mdi-delete', false, 104903, null, 2, true, false, true, null, null),
+(1026, 1, 'LBL_CMD_CLONE', 'mdi mdi-plus-box-multiple', false, 104904, null, 2, true, false, true, null, null);
 
 INSERT INTO ui.grid_field_icons(grid_field_id, icon, value, show_value, badge_color, avatar, enabled, label_value) VALUES
 (100002, NULL, NULL, true, false, true, true, NULL),
