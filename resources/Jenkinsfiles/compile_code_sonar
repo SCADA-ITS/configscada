@@ -64,27 +64,18 @@ pipeline {
             }
         }
         
-        stage('Build back') {
+        stage('Sonarback') {
             steps {
                 script {
                 
 					sh 'echo Compilando back'
                     dir("ritsback/_ritsback") {
-                        
-                        sh 'mvn clean install'
+                       withSonarQubeEnv('sonarqube') { 
+                        	sh 'mvn sonar:sonar'
+                       }
                     }
                 }
             }
-        }
-        
-        stage('Sonarback') {
-        	steps {
-        		script {
-        			withSonarQubeEnv('sonarqube') {
-						sh 'mvn sonar:sonar'
-					}	
-        		}
-        	}
         }
     }
 
