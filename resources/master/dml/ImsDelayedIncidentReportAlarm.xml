@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="ImsDelayedIncidentReportAffectionStretch">
+	<SELECT>SELECT delayed_incident_report_id as "delayedIncidentReportId", 
+	               stretch_id as "stretchId",
+	               enabled as "enabled", 
+				   visible as "visible"
+              FROM rt.ims_delayed_incident_report_affection_stretchs
+              WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>INSERT INTO rt.ims_delayed_incident_report_affection_stretchs
+				   (delayed_incident_report_id, 
+				    stretch_id, 
+				    enabled,
+				    visible,
+				    created_at, 
+				    updated_at)
+		    VALUES (:delayedIncidentReportId
+		  		  , :stretchId
+		  		  , :enabled
+		  		  , :visible
+		  		  , CURRENT_TIMESTAMP
+		  		  , CURRENT_TIMESTAMP)
+	</INSERT>
+	<UPDATE>
+	</UPDATE>
+	<DELETE>DELETE FROM rt.ims_delayed_incident_report_affection_stretchs
+			 WHERE delayed_incident_report_id = :delayedIncidentReportId
+			 		AND stretch_id = :stretchId
+	</DELETE>
+</DML>

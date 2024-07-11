@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="ImsDelayedIncidentReportAlarm">
+	<SELECT>SELECT delayed_incident_report_id as "delayedIncidentReportId", 
+	               alarm_config_id as "alarmConfigId",
+	               element_type_id as "elementTypeId",
+	               element_id as "elementId",
+	               activation as "activation",
+	               enabled as "enabled", 
+				   visible as "visible"
+              FROM rt.ims_delayed_incident_report_alarms
+              WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>INSERT INTO rt.ims_delayed_incident_report_alarms
+				   (delayed_incident_report_id, 
+				    alarm_config_id, 
+				    element_type_id, 
+				    element_id, 
+				    activation,
+				    enabled,
+				    visible,
+				    created_at, 
+				    updated_at)
+		    VALUES (:delayedIncidentReportId
+		  		  , :alarmConfigId
+		  		  , :elementTypeId
+		  		  , :elementId
+		  		  , :activation
+		  		  , :enabled
+		  		  , :visible
+		  		  , CURRENT_TIMESTAMP
+		  		  , CURRENT_TIMESTAMP)
+	</INSERT>
+	<UPDATE>
+	</UPDATE>
+	<DELETE>DELETE FROM rt.ims_delayed_incident_report_alarms
+			 WHERE delayed_incident_report_id = :delayedIncidentReportId
+			 		AND alarm_config_id = :alarmConfigId
+			 		AND element_type_id = :elementTypeId
+			 		AND element_id = :elementId 		
+	</DELETE>
+</DML>

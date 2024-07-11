@@ -110,6 +110,27 @@ ALTER TABLE master.ims_incident_groups SET TABLESPACE tbl_master;
 	
 	ALTER TABLE master.ims_incident_alarm_condition_alarm_types SET TABLESPACE tbl_master;
 	
+	-- 
+-- Table: master.delayed_incident_state_types
+-- Descripción: Tipos de estados de ejecución de incidencias diferidas
+-- Scope: master
+--
+	CREATE TABLE master.ims_delayed_incident_state_types (
+		delayed_incident_state_type_id int8 NOT NULL,
+  		alias varchar NULL,
+		description varchar NULL,
+		label_alias varchar NULL,
+		label_description varchar NULL,
+		enabled bool NULL,
+		visible bool NULL,
+		created_at timestamptz NOT NULL,
+		updated_at timestamptz NOT NULL,
+		CONSTRAINT pk_ims_delayed_incident_state_types PRIMARY KEY (delayed_incident_state_type_id)
+	);
+
+	ALTER TABLE master.ims_delayed_incident_state_types SET TABLESPACE tbl_master;
+	
+	
 ---------------------------------------------------------
 --
 -- TABLES FOR STATIC SCHEMA

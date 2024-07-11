@@ -79,6 +79,11 @@
 			<p:enabled>true</p:enabled>
 			<p:entity>SetBackwardIncidentReportCommand</p:entity>
 		</p:subscriptor>
+		<p:subscriptor>
+			<p:id>16</p:id>
+			<p:enabled>true</p:enabled>
+			<p:entity>SetImsDelayedIncidentActionsCommand</p:entity>
+		</p:subscriptor>
 	</p:subscriptors>
 	<p:executors>
 		<p:executor>
@@ -101,6 +106,7 @@
 				<p:subscriptor_id_ref>12</p:subscriptor_id_ref>
 				<p:subscriptor_id_ref>14</p:subscriptor_id_ref>
 				<p:subscriptor_id_ref>15</p:subscriptor_id_ref>
+				<p:subscriptor_id_ref>16</p:subscriptor_id_ref>
 			</p:subscriptors_ref>
 		</p:executor>
 		<p:executor>

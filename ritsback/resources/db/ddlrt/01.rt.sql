@@ -386,6 +386,78 @@ CREATE SCHEMA rt;
 	
 	ALTER TABLE rt.ims_incident_param_values SET TABLESPACE tbl_rt;
 	
+		-- 
+-- Table: rt.ims_delayed_incident_reports
+-- Descripción: Delayed Incident Reports
+-- Scope: rt
+--
+	
+	CREATE SEQUENCE rt.last_delayed_incident_report_id START 1;
+	
+	CREATE TABLE rt.ims_delayed_incident_reports (
+	    id int8 DEFAULT nextval('rt.last_delayed_incident_report_id'),
+	    incident_type_id int8 NOT NULL,
+	    location_id int8 NULL,
+	    user_id int8 NULL,
+	    road_impact_id int8 NULL,
+	    delayed_incident_state_type_id int8 NOT NULL DEFAULT 0,
+	    cron_expression varchar(255) NULL,
+	    enabled bool NULL,
+		visible bool NULL,
+	    last_Update timestamptz NOT NULL DEFAULT now(),
+	    created_at timestamptz NOT NULL DEFAULT now(),
+	    updated_at timestamptz NOT NULL DEFAULT now(),
+	    PRIMARY KEY (id)
+	);
+
+	ALTER TABLE rt.ims_delayed_incident_reports ADD CONSTRAINT fk_ims_delayed_incident_reports_incident_type FOREIGN KEY (incident_type_id) REFERENCES conf.ims_incident_types(incident_type_id);
+	ALTER TABLE rt.ims_delayed_incident_reports ADD CONSTRAINT fk_ims_delayed_incident_reports_location FOREIGN KEY (location_id) REFERENCES conf.locations(location_id);
+	ALTER TABLE rt.ims_delayed_incident_reports ADD CONSTRAINT fk_ims_delayed_incident_reports_user FOREIGN KEY (user_id) REFERENCES conf.users(user_id);
+	ALTER TABLE rt.ims_delayed_incident_reports ADD CONSTRAINT fk_ims_delayed_incident_reports_road_impact FOREIGN KEY (road_impact_id) REFERENCES master.road_impacts(road_impact_id);
+	ALTER TABLE rt.ims_delayed_incident_reports ADD CONSTRAINT fk_ims_delayed_incident_state_type FOREIGN KEY (delayed_incident_state_type_id) REFERENCES master.ims_delayed_incident_state_types(delayed_incident_state_type_id);
+		-- 
+-- Table: rt.ims_delayed_incident_report_alarms
+-- Descripción: Alarmas que han producido reportes
+-- Scope: rt
+--
+	
+	CREATE TABLE rt.ims_delayed_incident_report_alarms (
+	    delayed_incident_report_id int8 NOT NULL,
+		alarm_config_id int8 NOT NULL,
+		element_type_id int8 NOT NULL,
+		element_id int8 NOT NULL,
+		activation timestamptz NULL,
+		enabled bool NULL,
+		visible bool NULL,
+  		created_at timestamptz NOT NULL,
+		updated_at timestamptz NOT NULL,
+		CONSTRAINT pk_ims_delayed_incident_report_alarms  PRIMARY KEY (delayed_incident_report_id, alarm_config_id, element_type_id, element_id)
+	);
+	
+	CREATE INDEX idx_ims_delayed_incident_report_alarms_delayed_incident_reports ON rt.ims_delayed_incident_report_alarms USING btree (delayed_incident_report_id);
+
+	ALTER TABLE rt.ims_delayed_incident_report_alarms ADD CONSTRAINT fk_ims_delayed_incident_report_alarms_ims_delayed_incident_reports FOREIGN KEY (delayed_incident_report_id) REFERENCES rt.ims_delayed_incident_reports(id);
+	ALTER TABLE rt.ims_delayed_incident_report_alarms ADD CONSTRAINT fk_ims_delayed_incident_report_alarms_alarm_configs FOREIGN KEY (alarm_config_id) REFERENCES conf.alarm_configs(alarm_config_id);
+	ALTER TABLE rt.ims_delayed_incident_report_alarms ADD CONSTRAINT fk_ims_delayed_incident_report_alarms_elements FOREIGN KEY (element_type_id, element_id) REFERENCES conf.elements(element_type_id, element_id);
+	
+	ALTER TABLE rt.ims_delayed_incident_report_alarms SET TABLESPACE tbl_rt;
+	
+		-- 
+-- Table: rt.ims_delayed_incident_report_affection_stretchs
+-- Descripción: Tramos afectados por incidencias
+-- Scope: rt
+	
+	CREATE TABLE rt.ims_delayed_incident_report_affection_stretchs (
+		delayed_incident_report_id int8 NOT NULL,
+		stretch_id int8 NOT NULL,
+		enabled bool NULL,
+		visible bool NULL,
+		created_at timestamptz NOT NULL,
+		updated_at timestamptz NOT NULL,
+	    
+		CONSTRAINT pk_ims_delayed_incident_report_affection_stretchs PRIMARY KEY (delayed_incident_report_id, stretch_id)
+	);
+	
 	-- 
 -- Table: rt.element_values
 -- Descripción: Parámetros de los equipos

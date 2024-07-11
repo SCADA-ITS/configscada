@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="ImsDelayedIncidentReport">
+    <SELECT>SELECT i.id as "id",
+                   i.incident_type_id as "incidentTypeId",
+                   i.location_id as "locationId",
+                   i.user_id as "userId",
+                   i.road_impact_id as "roadImpactId",
+                   i.delayed_incident_state_type_id as "delayedIncidentStateTypeId",
+                   i.cron_expression as "cronExpression",
+                   i.enabled as "enabled", 
+                   i.visible as "visible",
+                   i.created_at as "createdAt",
+                   i.last_update as "lastUpdate"
+              FROM rt.ims_delayed_incident_reports i	  
+              WHERE i.enabled = true or i.enabled is null 
+    </SELECT>
+    <INSERT>INSERT INTO rt.ims_delayed_incident_reports
+                       (id,
+                        incident_type_id,
+                        location_id,
+                        user_id,
+                        road_impact_id,
+                        cron_expression,
+                        enabled,
+                        visible,
+                        created_at,
+                        last_update)
+                 VALUES (:id=getNextValFromSec{'rt.last_delayed_incident_report_id'},
+                         :incidentTypeId,
+                         :locationId,
+                         :userId,
+                         :roadImpactId,
+                         :cronExpression,
+                         :enabled,
+                         :visible,
+                         CURRENT_TIMESTAMP,
+                         CURRENT_TIMESTAMP)
+    </INSERT>
+    <UPDATE>
+    </UPDATE>
+    <DELETE>DELETE FROM rt.ims_delayed_incident_reports
+                WHERE id = :id
+    </DELETE>
+</DML>
