@@ -243,7 +243,10 @@ INSERT INTO ui.data_sources(id, data_source_type_id, "name", description, entity
 (235, 4, 'service_get_roles', 'service_get_roles', 'RoleVO', 'id', true, true),
 (236, 1, 'getUserByName', 'getUserByName', 'UserVO', 'id', true, true),
 (237, 1, 'getManagementAreas', 'getManagementAreas', 'ManagementAreasVO', 'id', true, true),
-(238, 1, 'getIOControllerModules', 'getIOControllerModules', 'IOControllerModuleVO', 'id', true, true);
+(238, 1, 'getIOControllerModules', 'getIOControllerModules', 'IOControllerModuleVO', 'id', true, true),
+(239, 3, 'createLocation', 'createLocation', 'LocationVO', 'id', true, true),
+(240, 3, 'updateLocation', 'updateLocation', 'LocationVO', 'id', true, true),
+(241, 3, 'deleteLocation', 'deleteLocation', 'LocationVO', 'id', true, true);
 
 INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) VALUES
 (1, 1, 'http://192.168.88.163:8082/graphql'),
@@ -1424,4 +1427,22 @@ INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) V
 (238, 1, 'http://192.168.88.163:8082/graphql'),
 (238, 2, 'getIOControllerModules'),
 (238, 3, ''),
-(238, 4, NULL);
+(238, 4, NULL),
+
+(239, 8, 'http://192.168.88.163:8082/graphql'),
+(239, 9, 'createLocation'),
+(239, 10, 'location'),
+(239, 11, 'LocationVO!'),
+(239, 12, NULL),
+
+(240, 8, 'http://192.168.88.163:8082/graphql'),
+(240, 9, 'updateLocation'),
+(240, 10, 'location'),
+(240, 11, 'LocationVO!'),
+(240, 12, NULL),
+
+(241, 8, 'http://192.168.88.163:8082/graphql'),
+(241, 9, 'deleteLocation'),
+(241, 10, 'locationId'),
+(241, 11, 'String!'),
+(241, 12, NULL);
