@@ -105,7 +105,7 @@ pipeline {
             		def response = sh(script: 
             		'''#!/bin/bash
             		
-            		sleep 1
+            		sleep 60
             		
             		SONARQUBE_URL="http://192.168.88.195:9000"
     				SONARQUBE_PROJECT_KEY="ritsback_master"
