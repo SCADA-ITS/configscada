@@ -83,7 +83,7 @@ pipeline {
                 script {
                 
 					sh 'echo Compilando front'
-                    dir("ritsback/_ritsfront") {
+                    dir("ritsfront/_ritsfront") {
                        withSonarQubeEnv('sonarqube') { 
                         	sh 'mvn sonar:sonar -Dsonar.projectName=ritsfront_master -Dsonar.projectKey=ritsfront_master'
                        }
