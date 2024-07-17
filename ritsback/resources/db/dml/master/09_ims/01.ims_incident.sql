@@ -55,8 +55,7 @@ INSERT INTO master.ims_incident_alarm_condition_alarm_types (incident_alarm_cond
 INSERT INTO master.ims_delayed_incident_state_types (delayed_incident_state_type_id, alias, description, label_alias, label_description, enabled, visible, created_at, updated_at) VALUES
 (0, 'INITIALIZED', 'initialized', 'LBL_INITIALIZED', null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (1, 'RUNNING', 'running', 'LBL_RUNNING', null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(2, 'STOPPED', 'stopped', 'LBL_STOPPED', null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(3, 'CANCELLED', 'cancelled', 'LBL_CANCELLED', null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(2, 'STOPPED', 'stopped', 'LBL_STOPPED', null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 -- 
 -- Table: static.ims_incident_type_states
 --

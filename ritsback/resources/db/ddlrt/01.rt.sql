@@ -398,6 +398,7 @@ CREATE SCHEMA rt;
 	    id int8 DEFAULT nextval('rt.last_delayed_incident_report_id'),
 	    incident_type_id int8 NOT NULL,
 	    location_id int8 NULL,
+	    affection_stretch_id int8 NOT NULL,
 	    user_id int8 NULL,
 	    road_impact_id int8 NULL,
 	    delayed_incident_state_type_id int8 NOT NULL DEFAULT 0,
@@ -415,6 +416,7 @@ CREATE SCHEMA rt;
 	ALTER TABLE rt.ims_delayed_incident_reports ADD CONSTRAINT fk_ims_delayed_incident_reports_user FOREIGN KEY (user_id) REFERENCES conf.users(user_id);
 	ALTER TABLE rt.ims_delayed_incident_reports ADD CONSTRAINT fk_ims_delayed_incident_reports_road_impact FOREIGN KEY (road_impact_id) REFERENCES master.road_impacts(road_impact_id);
 	ALTER TABLE rt.ims_delayed_incident_reports ADD CONSTRAINT fk_ims_delayed_incident_state_type FOREIGN KEY (delayed_incident_state_type_id) REFERENCES master.ims_delayed_incident_state_types(delayed_incident_state_type_id);
+	ALTER TABLE rt.ims_delayed_incident_reports ADD CONSTRAINT fk_ims_delayed_incident_affection_stretch FOREIGN KEY (affection_stretch_id) REFERENCES conf.stretchs(stretch_id);
 		-- 
 -- Table: rt.ims_delayed_incident_report_alarms
 -- Descripción: Alarmas que han producido reportes
@@ -441,22 +443,6 @@ CREATE SCHEMA rt;
 	ALTER TABLE rt.ims_delayed_incident_report_alarms ADD CONSTRAINT fk_ims_delayed_incident_report_alarms_elements FOREIGN KEY (element_type_id, element_id) REFERENCES conf.elements(element_type_id, element_id);
 	
 	ALTER TABLE rt.ims_delayed_incident_report_alarms SET TABLESPACE tbl_rt;
-	
-		-- 
--- Table: rt.ims_delayed_incident_report_affection_stretchs
--- Descripción: Tramos afectados por incidencias
--- Scope: rt
-	
-	CREATE TABLE rt.ims_delayed_incident_report_affection_stretchs (
-		delayed_incident_report_id int8 NOT NULL,
-		stretch_id int8 NOT NULL,
-		enabled bool NULL,
-		visible bool NULL,
-		created_at timestamptz NOT NULL,
-		updated_at timestamptz NOT NULL,
-	    
-		CONSTRAINT pk_ims_delayed_incident_report_affection_stretchs PRIMARY KEY (delayed_incident_report_id, stretch_id)
-	);
 	
 	-- 
 -- Table: rt.element_values
