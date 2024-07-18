@@ -23,7 +23,7 @@ import java.util.List;
 class BackOfficeInitIncident {
 
 	org.apache.logging.log4j.Logger log
-	private static final String CONNECTION_URL = "jdbc:postgresql://192.168.88.190:5430/rits";
+	private static final String CONNECTION_URL = "jdbc:postgresql://192.168.88.191:5430/rits";
 	private static final String DB_USER = "rits";
 	private static final String DB_PASSWORD = "rits";
 	private static final String DB_SCHEMA = "nogales_gip";

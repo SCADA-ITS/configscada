@@ -45,42 +45,6 @@ BEGIN
 	'{
 		"formHeight": 800,
     	"formWidth": 1000,
-		"tabs": [
-		    {
-		      "label": "LBL_ROAD_CONDITIONS",
-		      "position": 2,
-		      "fields": [
-		        {
-		          "name": "condition_id",
-		          "position": 1
-		        },
-		        {
-		          "name": "luminosity_id",
-		          "position": 2
-		        },
-		        {
-		          "name": "atmospheric_state_id",
-		          "position": 3
-		        },
-		        {
-		          "name": "cause_id",
-		          "position": 4
-		        },
-		        {
-		          "name": "maneuver_id",
-		          "position": 5
-		        },
-		        {
-		          "name": "road_impact_id",
-		          "position": 6
-		        },
-		        {
-		          "name": "infrastructure_damage_id",
-		          "position": 7
-		        }
-		      ]
-		    }
-		 ],
 	  	 "groupImages": [
 	      	{
 		      "name": "photos",
@@ -137,6 +101,7 @@ BEGIN
 	(38, 'vehicle_types', 'LBL_VEHICLE_TYPES', 'LBL_VEHICLE_TYPE', 'LBL_VEHICLE_TYPES_DESCRIPTION', NULL, false, false, NULL),
 	(39, 'vehicles', 'LBL_VEHICLES', 'LBL_VEHICLE', 'LBL_VEHICLES_DESCRIPTION', NULL, false, false, NULL);
 
+	--update nogales_gip.sg_metadata_tables set grid_id = 9005 where id = 4;
 	
 	INSERT INTO nogales_gip.sg_metadata_columns (id, sg_metadata_table_id, column_name, "label", label_description, needs_translation, metadata) VALUES
 	(1201, 12, 'incident_report_id', 'LBL_ID', NULL, true, '{"position": 1, "editable": false, "refName": true}'),
@@ -151,12 +116,28 @@ BEGIN
 	(1210, 12, 'phone', 'LBL_PHONE', NULL, false, '{"position": 10 }'),
     (1211, 12, 'comment', 'LBL_COMMENT', NULL, false, '{ "multiline": 5, "position": 11 }'),
 	(1212, 12, 'created_at', 'LBL_CREATE_AT', NULL, false, '{"position": 12 }'),
+	
+	(2701, 4, 'incident_report_id', NULL, NULL, false, '{"position": 1 }'),
+	(2702, 4, 'action_id', NULL, NULL, false, '{"position": 2 }'),
+	(2703, 4, 'typology_id', NULL, NULL, false, '{"position": 3 }'),
+	(2704, 4, 'resource_id', NULL, NULL, false, '{"position": 4 }'),
+	(2705, 4, 'notice_date', 'LBL_NOTICE_DATE', NULL, false, '{"position": 5 }'),
+	(2706, 4, 'arrival_date', 'LBL_ARRIVAL_DATE', NULL, false, '{"position": 6 }'),
+	(2707, 4, 'release_date', 'LBL_RELEASE_DATE', NULL, false, '{"position": 7 }'),
+	(2708, 4, 'comment', 'LBL_COMMENT', NULL, false, '{ "multiline": 8, "position": 8 }'),
+	
+	(3301, 33, 'incident_report_id', NULL, NULL, false, '{"position": 1 }'),
+	(3302, 33, 'count', 'LBL_COUNT', NULL, false, '{"position": 2 }'),
+	(3303, 33, 'clousing_count', 'LBL_CLOUSING_COUNT', NULL, false, '{"position": 3 }'),
+	(3304, 33, 'lane_action_id', 'LBL_LANE_ACTION', NULL, false, '{"position": 4 }'),
+	(3305, 33, 'lane_id', 'LBL_LANE', NULL, false, '{"position": 5 }'),
+	(3306, 33, 'start_action', 'LBL_START_ACTION', NULL, false, '{"position": 6 }'),
+	(3307, 33, 'comment', 'LBL_COMMENT', NULL, false, '{ "multiline": 8, "position": 7 }'),
 
 	(3901, 39, 'incident_report_id', NULL, NULL, true, '{"position": 1}'),
 	(3902, 39, 'vehicle_type_id', NULL, NULL, true, '{"position": 2}'),
 	(3903, 39, 'vehicle_brand_id', NULL, NULL, true, '{"position": 3}'),
 	(3904, 39, 'vehicle_model_id', NULL, NULL, true, '{"position": 4, "associatedFieldName": "vehicle_brand_id"}'),
-
 	(3905, 39, 'patent', 'LBL_PATENT', NULL, true, '{"position":5}'),
 	(3906, 39, 'color', 'LBL_COLOR', NULL, true, '{"position": 6}'),
 	(3907, 39, 'vehicle_damage_id', NULL, NULL, true, '{"position": 7}'),

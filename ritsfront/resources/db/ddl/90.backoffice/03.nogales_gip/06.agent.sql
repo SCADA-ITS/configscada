@@ -12,10 +12,10 @@ BEGIN
 		create table nogales_gip.interrupt_agents (
 			id serial not null,
 			incident_id int null,
-			comment varchar null,
+			comentarios varchar null,
 			agents_id int null,
-			start_interrupt timestamptz default current_timestamp,
-			end_interrupt timestamptz null,
+			inicio timestamptz default current_timestamp,
+			final timestamptz null,
 			constraint pk_interrupt_agents primary key (id)
 		) tablespace tbl_nogales_gip;
 		
