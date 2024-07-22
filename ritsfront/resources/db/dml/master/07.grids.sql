@@ -221,9 +221,8 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (102601, 1026, 1, 1, true, false, false, false, '', '', 'id', true, false, NULL, false, false, 35, NULL, true, false, NULL, NULL, NULL, NULL, NULL),
 (102602, 1026, 1, 4, true, true, false, true, 'LBL_GRID_FIELD_ELEMENT_TYPE_ALIAS', 'LBL_GRID_FIELD_ELEMENT_TYPE_ALIAS', 'elementTypeLabelAlias', false, false, NULL, true, false, 350, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
 (102603, 1026, 1, 5, true, true, false, true, 'LBL_GRID_FIELD_ELEMENT_SUBTYPE', 'LBL_GRID_FIELD_ELEMENT_SUBTYPE', 'elementSubtypeLabelAlias', false, false, NULL, true, false, 350, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
-(102604, 1026, 1, 3, true, true, false, true, 'LBL_DESCRIPTION', 'LBL_DESCRIPTION', 'description', false, false, NULL, true, false, 500, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
-(102605, 1026, 1, 2, true, true, false, true, 'LBL_GRID_FIELD_ELEMENT_ALIAS', 'LBL_GRID_FIELD_ELEMENT_ALIAS', 'alias', false, false, NULL, true, false, 350, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
-(102606, 1026, 1, 6, true, true, false, true, 'LBL_GRID_FIELD_LOCATION', 'LBL_GRID_FIELD_LOCATION', 'locationAlias', false, false, NULL, true, false, 200, NULL, true, true, NULL, NULL, NULL, NULL, NULL);
+(102604, 1026, 1, 3, true, false, false, true, 'LBL_DESCRIPTION', 'LBL_DESCRIPTION', 'description', false, false, NULL, true, false, 500, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(102605, 1026, 1, 2, true, false, false, true, 'LBL_GRID_FIELD_ELEMENT_ALIAS', 'LBL_GRID_FIELD_ELEMENT_ALIAS', 'alias', false, false, NULL, true, false, 350, NULL, true, true, NULL, NULL, NULL, NULL, NULL);
 
 
 
@@ -525,7 +524,7 @@ INSERT INTO ui.grid_option_values(grid_id, grid_option_id, value) VALUES
 (1026, 11, 'true'),
 (1026, 12, 'true'),
 (1026, 13, 'true'),
-(1026, 14, 'false'),
+(1026, 14, 'true'),
 (1026, 15, 'false'),
 (1026, 16, 'img/menu/equipment-menu.png'),
 (1026, 17, 'true'),

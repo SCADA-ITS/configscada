@@ -118,6 +118,7 @@ INSERT INTO ui.modules(id, module_type_id, "name", description, default_view_typ
 (1047, 1, 'Help viewer module', 'Help viewer module', 2, null, 'modules/help/helpViewerModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 (1048, 1, 'Equipment editor list  module', 'Equipment editor list module', 1, null, 'modules/equipmentEditor/equipmentEditorListModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 (1049, 1, 'Equipment editor module', 'Equipment editor module', 2, null, 'modules/equipmentEditor/equipmentEditorModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(1050, 1, 'Location editor module', 'Location editor module', 2, null, 'modules/location/locationModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 
 (2000, 1, 'Map launcher Module', 'Map launcher Module', 1, null, 'modules/mapLauncherModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL);
 
@@ -223,7 +224,11 @@ INSERT INTO ui.module_actions(id, module_id, name, description, system_permissio
 (104901, 1049, 'add', 'add new equipment', 'SystemPermission:25', null),
 (104902, 1049, 'edit', 'edit equipment', 'SystemPermission:25', null),
 (104903, 1049, 'delete', 'delete equipment', 'SystemPermission:25', null),
-(104904, 1049, 'clone', 'clone equipment', 'SystemPermission:25', null);
+(104904, 1049, 'clone', 'clone equipment', 'SystemPermission:25', null),
+(105001, 1050, 'add', 'add new location', null, null),
+(105002, 1050, 'edit', 'edit location', null, null),
+(105003, 1050, 'delete', 'delete location', null, null),
+(105004, 1050, 'select', 'select location', null, null);
 
 
 
