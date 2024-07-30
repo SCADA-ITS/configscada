@@ -11,10 +11,25 @@
 			  FROM conf.cctv_scenario_nodes
 			  WHERE enabled = true or enabled is null
 	</SELECT>
-	<INSERT>
+	<INSERT>INSERT INTO conf.cctv_scenario_nodes
+				   (node_id, 
+				    alias, 
+				    description,
+				    scenario_id,
+				    management_area_id,
+				    enabled,
+				    visible)
+		    VALUES (:id=getNextId{'conf.cctv_scenario_nodes'$'node_id'}
+		  		  , :alias
+		  		  , :description
+		  		  , :scenarioId
+		  		  , :managementAreaId
+		  		  , :enabled
+		  		  , :visible)
 	</INSERT>
-	<UPDATE> 
+	<UPDATE>
 	</UPDATE>
-	<DELETE>
+	<DELETE>DELETE FROM conf.cctv_scenario_nodes
+			 WHERE node_id = :id
 	</DELETE>
 </DML>

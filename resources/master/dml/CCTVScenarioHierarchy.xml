@@ -8,10 +8,24 @@
 			  FROM conf.cctv_scenario_node_hierarchies
 			  WHERE enabled = true or enabled is null
 	</SELECT>
-	<INSERT>
+	<INSERT>INSERT INTO conf.cctv_scenario_node_hierarchies
+				   (node_parent_id, 
+				    node_child_id,
+				    enabled,
+				    visible)
+		    VALUES (:nodeParentId
+		  		  , :nodeChildId
+		  		  , :enabled
+		  		  , :visible)
 	</INSERT>
-	<UPDATE> 
+	<UPDATE>UPDATE conf.cctv_scenario_node_hierarchies
+			   SET node_child_id = :nodeChildId,
+			       enabled = :enabled,
+			       visible = :visible
+			 WHERE node_parent_id = :nodeParentId
 	</UPDATE>
-	<DELETE>
+	<DELETE>DELETE FROM conf.cctv_scenario_node_hierarchies
+			 WHERE node_parent_id = :nodeParentId
+			   AND node_child_id = :nodeChildId
 	</DELETE>
 </DML>

@@ -10,10 +10,29 @@
 			  FROM conf.cctv_scenario_elements
 			  WHERE enabled = true or enabled is null
 	</SELECT>
-	<INSERT>
+	<INSERT>INSERT INTO conf.cctv_scenario_elements
+				   (scenario_id, 
+				    element_type_id, 
+				    element_id,
+				    n_order,
+				    enabled,
+				    visible)
+		    VALUES (:id
+		  		  , :elementTypeId
+		  		  , :elementId
+		  		  , :nOrder
+		  		  , :enabled
+		  		  , :visible)
 	</INSERT>
-	<UPDATE> 
+	<UPDATE>UPDATE conf.cctv_scenario_elements
+			   SET element_type_id = :elementTypeId,
+			   	   element_id = :elementId,
+			       n_order = :nOrder,
+			       enabled = :enabled,
+			       visible = :visible
+			 WHERE scenario_id = :id
 	</UPDATE>
-	<DELETE>
+	<DELETE>DELETE FROM conf.cctv_scenario_elements
+			 WHERE scenario_id = :id
 	</DELETE>
 </DML>
