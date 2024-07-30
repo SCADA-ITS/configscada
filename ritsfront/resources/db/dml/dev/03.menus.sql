@@ -61,6 +61,7 @@ INSERT INTO ui.menu_items(menu_group_id, "position", module_id, "label", icon, "
 
 -- CONFIG
 (4000, 7, 1048, 'LBL_MENU_ITEM_EQUIPMENT_EDITOR', 'img/menu/equipment-menu.png', 'Menu item equipment Editor', 'Menu item equipment Editor', true, true),
+(4000, 7, 1050, 'LBL_MENU_ITEM_LOCATION_EDITOR', 'img/menu/locations-menu.png', 'Menu item location editor', 'Menu item location editor', true, true),
 
 -- HELP
 (5000, 3, 1047, 'LBL_MENU_HELP_CONTENTS', 'img/menu/default.png', 'Help contents', 'Menu item help contents', true, true);

@@ -22,17 +22,20 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_ES', 1, 'LBL_LOCATION_WIZARD_NEW_HEADER_STEP_2', 'Marque localizaciones en el mapa e incluya los datos', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_CONFIG_LOCATION', 'Configuración de localización', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_LOCATION_WIZARD_NEW_HEADER_STEP_CONFIG_LOCATION', 'Localizaciones y datos', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('es_ES', 1, 'LBL_LOCATION_WIZARD_EDIT_HEADER_STEP_2', 'Seleccione localizaciones en el mapa y modifique los datos', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('es_ES', 1, 'LBL_LOCATION_WIZARD_SELECT_HEADER_STEP_2', 'Seleccione localizaciones en el mapa', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_LOCATION_WIZARD_EDIT_HEADER_STEP_2', 'Seleccione localización en el mapa', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_LOCATION_WIZARD_SELECT_HEADER_STEP_2', 'Seleccione localización en el mapa', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_LOCATION_WIZARD_SELECT_HEADER_STEP_SELECT_LOCATION', 'Seleccione localizaciones en el mapa', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_EDIT_LOCATION', 'Edición de localización', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('es_ES', 1, 'LBL_LOCATION_WIZARD_EDIT_HEADER_STEP_CONFIG_LOCATION', 'Seleccione localizaciones en el mapa y modifique los datos', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_LOCATION_WIZARD_EDIT_HEADER_STEP_CONFIG_LOCATION', 'Seleccione localización en el mapa', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_LOCATION_WIZARD_EDIT_HEADER_STEP_1', 'Seleccionar localización o nueva área', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_LOCATION_WIZARD_HEADER_STEP_EDIT_AREA', 'Seleccionar localización existente o marcar nueva área en el mapa', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_SELECT_AREA_OR_LOCATION', 'Selección de localización o área', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_LOCATION_WIZARD_DELETE_HEADER_STEP_2', 'Seleccione la localización a eliminar', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_LOCATION_SAVE_DESCRIPTION', '¿Desea guardar los cambios realizados?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_LOCATION_ADD_MARKS', 'Añadir marcadores', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_LOCATION_WIZARD_NEW_HEADER_DESCRIPTION', 'Seleccione un área para crear una nueva localización.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_LOCATION_WIZARD_EDIT_HEADER_DESCRIPTION', 'Seleccione un área para editar una localización existente.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_LOCATION_WIZARD_SELECT_HEADER_DESCRIPTION', 'Seleccione un área y seleccione una localización.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 -- en_GB
 ('en_GB', 1, 'LBL_LOCATION_WIZARD_NEW_HEADER', 'Create location', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -56,6 +59,9 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('en_GB', 1, 'LBL_LOCATION_WIZARD_DELETE_HEADER_STEP_2', 'Select location to delete', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_LOCATION_SAVE_DESCRIPTION', 'Do you want to save the changes?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_LOCATION_ADD_MARKS', 'Add marks', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_LOCATION_WIZARD_NEW_HEADER_DESCRIPTION', 'Select an area to create a new location.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_LOCATION_WIZARD_EDIT_HEADER_DESCRIPTION', 'Select an area to edit an existing location.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_LOCATION_WIZARD_SELECT_HEADER_DESCRIPTION', 'Select an area and a location.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 -- es_CL
 ('es_CL', 1, 'LBL_LOCATION_WIZARD_NEW_HEADER', 'Crear localización', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -78,4 +84,7 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_CL', 1, 'LBL_LOCATION_WIZARD_DELETE_HEADER', 'Eliminar localización', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_LOCATION_WIZARD_DELETE_HEADER_STEP_2', 'Seleccione la localización a eliminar', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_LOCATION_SAVE_DESCRIPTION', '¿Desea guardar los cambios realizados?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('es_CL', 1, 'LBL_LOCATION_ADD_MARKS', 'Añadir marcadores', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+('es_CL', 1, 'LBL_LOCATION_ADD_MARKS', 'Añadir marcadores', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_LOCATION_WIZARD_NEW_HEADER_DESCRIPTION', 'Seleccione un área para crear una nueva localización.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_LOCATION_WIZARD_EDIT_HEADER_DESCRIPTION', 'Seleccione un área para editar una localización existente.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_LOCATION_WIZARD_SELECT_HEADER_DESCRIPTION', 'Seleccione un área y seleccione una localización.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
