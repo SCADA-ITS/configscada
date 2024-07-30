@@ -40,6 +40,7 @@ def void grtxt(SignallingCommand signallingCommand, String dataSourceXid, MangoD
 	for (int i = 0; i < object.size(); i++){
 		if(object[i].getGraphics()){
 			for(int k = 0; k < object[i].getGraphics().size(); k++){	
+
 				if(object[i].getFlashing_on_ms()){
 					flash = object[i].getFlashing_on_ms()*0.01;
 					multi_main_graphic+= "[flt" + flash + "o" + flash + "]";
@@ -65,6 +66,7 @@ def void grtxt(SignallingCommand signallingCommand, String dataSourceXid, MangoD
 			
 		if(object[i].getTexts()){
 			for(int j = 0; j < object[i].getTexts().size(); j++){
+
 				if(object[i].getAlign()){
 					if(object[i].getFlashing_on_ms()&&j==0){
 						flash = object[i].getFlashing_on_ms()*0.01;
@@ -118,7 +120,8 @@ def void grtxt(SignallingCommand signallingCommand, String dataSourceXid, MangoD
 	}else{	
 		multi = multi_main_graphic + multi_main_text + NEW_PAGE + multi_alternate_graphic + multi_alternate_text;
 	}
-	
+    multi = multi.replace("Ñ","N");
+    
 	pmv.activarVMSNTCIP(multi, dataSourceXid, signallingCommand, driver, pixelServiceB, beaconsB, 255);
 }
 

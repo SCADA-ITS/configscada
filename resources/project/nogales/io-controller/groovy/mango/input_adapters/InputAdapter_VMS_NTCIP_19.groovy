@@ -42,8 +42,7 @@ class InputAdapter_VMS {
 	static final Long PARAM_MEASURE_DATAJSON = 3L;
 	static final Long PARAM_MEASURE_ENABLED = 7L;
 	static final Long PARAM_TYPE_MEASURE = 2L;
-	static final String JSON_EXCESO_GALIBO = "[{\"zone\":1,\"alternance_ms\":5000, \"flashing_on_ms\":0, \"flashing_off_ms\":0,\"graphics\":[{\"id\":1,\"value\":23}]},{\"zone\":2,\"alternance_ms\":5000, \"flashing_on_ms\":0, \"flashing_off_ms\":0,\"align\": \"left\",\"texts\":[{\"id\":1,\"value\":\"PRECAUCION\",\"alternance\":\"\",\"color\":\"#E2943A\"},{\"id\":2,\"value\":\"EXCESO DE\",\"alternance\":\"\",\"color\":\"#E2943A\"},{\"id\":3,\"value\":\"GALIBO\",\"alternance\":\"\",\"color\":\"#E2943A\"}]}]";
-	
+
 	InputAdapter_VMS(org.apache.logging.log4j.Logger log) {
 
 		this.log = log;
@@ -54,29 +53,24 @@ class InputAdapter_VMS {
 		String result = "";
 		
 		ElementValue enableGalibo = EntitiesManager.getInstance().getElementValue(element, PARAM_MEASURE_ENABLED, PARAM_TYPE_MEASURE);
-		
-		if(enableGalibo != null && enableGalibo.getValue().equals("true")){
-			result = JSON_EXCESO_GALIBO;
-		}else{
-			if(value == null || value.equals("")) {
-				ElementValue elementValue = new ElementValue();
-				elementValue.setElementTypeId(element.getElementTypeId());
-				elementValue.setElementTypeParamId(PARAM_MEASURE_DATAJSON);
-				elementValue.setParamTypeId(PARAM_TYPE_MEASURE);
-				elementValue.setElementId(element.getId());
-				elementValue.setValue("[]");
-				elementValues.add(elementValue);
-				return true;
-			}
-			value = (new String(value.getBytes(), "ISO-8859-1")).replace("ï¿½", "Ñ");
-	
-			if(value.indexOf(INTERMITENCE_TAG) != -1){
-				value = value.replace(INTERMITENCE_TAG, "").replace(END_INTERMITENCE_TAG, "");
-				intermitence = true;
-			}
-			
-			result = construirVMS(value, element, intermitence);
+
+		if(value == null || value.equals("")) {
+			ElementValue elementValue = new ElementValue();
+			elementValue.setElementTypeId(element.getElementTypeId());
+			elementValue.setElementTypeParamId(PARAM_MEASURE_DATAJSON);
+			elementValue.setParamTypeId(PARAM_TYPE_MEASURE);
+			elementValue.setElementId(element.getId());
+			elementValue.setValue("[]");
+			elementValues.add(elementValue);
+			return true;
 		}
+
+		if(value.indexOf(INTERMITENCE_TAG) != -1){
+			value = value.replace(INTERMITENCE_TAG, "").replace(END_INTERMITENCE_TAG, "");
+			intermitence = true;
+		}
+		
+		result = construirVMS(value, element, intermitence);
 		
 		if (result == null || result.equals("")){
 			return false;
@@ -175,7 +169,9 @@ class InputAdapter_VMS {
 			for(int n_zone = 1; n_zone <= num_zones; n_zone++){
 				ElementValue alternance_element = EntitiesManager.getInstance().getElementValue(element, PARAM_MEASURE_DATAJSON, PARAM_TYPE_MEASURE);
 				
-				if (alternance_element.getValue() != "[]" && alternance_element.getValue() != ""){
+				log.debug("Jony alternance_element: " + alternance_element);
+				log.debug("Jony alternance_elementvalue: " + alternance_element.getValue());
+				if (alternance_element.getValue() && alternance_element.getValue() != "[]" && alternance_element.getValue() != ""){
 					
 					def jsonObject = new JsonSlurper().parseText(alternance_element.getValue());
 					Long alternance_json = jsonObject[n_zone - 1].alternance_ms
@@ -226,6 +222,7 @@ class InputAdapter_VMS {
 		try {
 			ObjectMapper Obj = new ObjectMapper();
 			String json = Obj.writeValueAsString(zones);
+			log.debug("Jony resultado final: " + json);
 			return json;
 		}catch(Exception e) {
 			log.debug(e.getMessage());
@@ -235,7 +232,7 @@ class InputAdapter_VMS {
 
 	boolean defaultPagehOnTime(Element element, String value, List<ElementValue> elementValues) {
 		
-		String result;
+		/*String result;
 		String[] value_aux = value.split('\\.0')
 		ElementValue elementDataJson = EntitiesManager.getInstance().getElementValue(element, PARAM_MEASURE_DATAJSON, PARAM_TYPE_MEASURE);
 
@@ -257,7 +254,8 @@ class InputAdapter_VMS {
 			elementValues.add(elementValue);
 		
 			return true;
-		}
+		}*/
+		return true;
 	}
 
 	public String insertAlternance(String alternance, Element element) {

@@ -1,23 +1,10 @@
-UPDATE conf.alarm_configs SET alarm_level_id = 6, enabled = True, treatment = True WHERE element_type_id = 71 AND alarm_config_id = 336; --LBL_ALARM_CONFIGS_ALARM_PMV_NO_CONNECTION
-UPDATE conf.alarm_configs SET alarm_level_id = 5, enabled = True, treatment = True WHERE element_type_id = 71 AND alarm_config_id = 337; --LBL_ALARM_CONFIGS_ALARM_PMV_DOOR_OPEN
-UPDATE conf.alarm_configs SET alarm_level_id = 3, enabled = False, treatment = True WHERE element_type_id = 71 AND alarm_config_id = 338; --LBL_ALARM_CONFIGS_ALARM_PMV_DISPLAY_ERROR
-UPDATE conf.alarm_configs SET alarm_level_id = 3, enabled = False, treatment = True WHERE element_type_id = 71 AND alarm_config_id = 340; --LBL_ALARM_CONFIGS_ALARM_PMV_PIXEL_TEST_BOARD_FAIL_0
-UPDATE conf.alarm_configs SET alarm_level_id = 3, enabled = False, treatment = True WHERE element_type_id = 71 AND alarm_config_id = 341; --LBL_ALARM_CONFIGS_ALARM_PMV_PIXEL_TEST_BOARD_FAIL_1
-UPDATE conf.alarm_configs SET alarm_level_id = 3, enabled = False, treatment = True WHERE element_type_id = 71 AND alarm_config_id = 342; --LBL_ALARM_CONFIGS_ALARM_PMV_PIXEL_TEST_BOARD_FAIL_2
-UPDATE conf.alarm_configs SET alarm_level_id = 3, enabled = False, treatment = True WHERE element_type_id = 71 AND alarm_config_id = 343; --LBL_ALARM_CONFIGS_ALARM_PMV_PIXEL_TEST_BOARD_FAIL_3
-UPDATE conf.alarm_configs SET alarm_level_id = 3, enabled = False, treatment = True WHERE element_type_id = 71 AND alarm_config_id = 344; --LBL_ALARM_CONFIGS_ALARM_PMV_PIXEL_TEST_BOARD_FAIL_4
-UPDATE conf.alarm_configs SET alarm_level_id = 3, enabled = False, treatment = True WHERE element_type_id = 71 AND alarm_config_id = 345; --LBL_ALARM_CONFIGS_ALARM_PMV_PIXEL_TEST_BOARD_FAIL_5
-UPDATE conf.alarm_configs SET alarm_level_id = 5, enabled = False, treatment = True WHERE element_type_id = 71 AND alarm_config_id = 375; --LBL_ALARM_CONFIGS_ALARM_VMS_INTERNAL_POWER_FAULT
-UPDATE conf.alarm_configs SET alarm_level_id = 5, enabled = False, treatment = True WHERE element_type_id = 71 AND alarm_config_id = 376; --LBL_ALARM_CONFIGS_ALARM_VMS_EXTERNAL_COMMS_FAULT
-UPDATE conf.alarm_configs SET alarm_level_id = 5, enabled = False, treatment = True WHERE element_type_id = 71 AND alarm_config_id = 377; --LBL_ALARM_CONFIGS_ALARM_VMS_MESSAGE_FAULT
-UPDATE conf.alarm_configs SET alarm_level_id = 5, enabled = False, treatment = True WHERE element_type_id = 71 AND alarm_config_id = 378; --LBL_ALARM_CONFIGS_ALARM_VMS_CONTROLLER_FAULT
-UPDATE conf.alarm_configs SET alarm_level_id = 5, enabled = False, treatment = True WHERE element_type_id = 71 AND alarm_config_id = 379; --LBL_ALARM_CONFIGS_ALARM_VMS_TEMPERATURE_WARNING
-UPDATE conf.alarm_configs SET alarm_level_id = 5, enabled = False, treatment = True WHERE element_type_id = 71 AND alarm_config_id = 380; --LBL_ALARM_CONFIGS_ALARM_VMS_FAN_FAULT
-UPDATE conf.alarm_configs SET alarm_level_id = 5, enabled = False, treatment = True WHERE element_type_id = 71 AND alarm_config_id = 381; --LBL_ALARM_CONFIGS_ALARM_VMS_OTHER_FAULT
-UPDATE conf.alarm_configs SET alarm_level_id = 5, enabled = True, treatment = True WHERE element_type_id = 71 AND alarm_config_id = 71346; --LBL_ALARM_CONFIGS_PMV_PHOTOCELL_ERROR
-UPDATE conf.alarm_configs SET alarm_level_id = 5, enabled = False, treatment = True WHERE element_type_id = 71 AND alarm_config_id = 71347; --LBL_ALARM_CONFIGS_WARNING_TEMPERATURE_ERROR
-UPDATE conf.alarm_configs SET alarm_level_id = 5, enabled = True, treatment = True WHERE element_type_id = 71 AND alarm_config_id = 71348; --LBL_ALARM_CONFIGS_CRITICAL_TEMPERATURE_ERROR
-UPDATE conf.alarm_configs SET alarm_level_id = 3, enabled = False, treatment = True WHERE element_type_id = 71 AND alarm_config_id = 71349; --LBL_ALARM_CONFIGS_ALARM_PMV_OVERTEMPERATURE
-UPDATE conf.alarm_configs SET alarm_level_id = 3, enabled = True, treatment = True WHERE element_type_id = 71 AND alarm_config_id = 71350; --LBL_ALARM_CONFIGS_ALARM_PMV_PIXEL_ERROR
-UPDATE conf.alarm_configs SET alarm_level_id = 3, enabled = False, treatment = True WHERE element_type_id = 71 AND alarm_config_id = 71351; --LBL_ALARM_CONFIGS_ALARM_PMV_LUXES_SENSOR_ERROR
-UPDATE conf.alarm_configs SET alarm_level_id = 3, enabled = False, treatment = True WHERE element_type_id = 71 AND alarm_config_id = 71353; --LBL_ALARM_CONFIGS_ALARM_PMV_IMAGE_MODIFICATION_STATE
+UPDATE conf.alarm_configs SET alarm_level_id = 3, enabled = True, treatment = True WHERE element_type_id = 71 AND alarm_config_id = 10071; --LBL_ALARM_CONFIGS_ALARM_PMV_NO_CONNECTION
+UPDATE conf.alarm_configs SET alarm_level_id = 3, enabled = True, treatment = True WHERE element_type_id = 71 AND alarm_config_id = 20071; --LBL_ALARM_CONFIGS_ALARM_PMV_DOOR_OPEN
+UPDATE conf.alarm_configs SET alarm_level_id = 3, enabled = True, treatment = True WHERE element_type_id = 71 AND alarm_config_id = 40071; --LBL_ALARM_CONFIGS_ALARM_PMV_PIXEL_ERROR
+UPDATE conf.alarm_configs SET alarm_level_id = 3, enabled = True, treatment = True WHERE element_type_id = 71 AND alarm_config_id = 50071; --LBL_ALARM_CONFIGS_PMV_PHOTOCELL_ERROR
+UPDATE conf.alarm_configs SET alarm_level_id = 3, enabled = True, treatment = True WHERE element_type_id = 71 AND alarm_config_id = 60071; --LBL_ALARM_CONFIGS_WARNING_TEMPERATURE_ERROR
+UPDATE conf.alarm_configs SET alarm_level_id = 3, enabled = True, treatment = True WHERE element_type_id = 71 AND alarm_config_id = 70071; --LBL_ALARM_CONFIGS_CRITICAL_TEMPERATURE_ERROR
+
+
+
+
