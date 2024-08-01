@@ -176,7 +176,7 @@ INSERT INTO ui.data_sources(id, data_source_type_id, "name", description, entity
 (168, 1, 'get_cctv_scenario', 'get_cctv_scenario', 'CCTVScenarioVO', 'id', true, true),
 (169, 1, 'get_cctv_scenario_hierarchies', 'get_cctv_scenario_hierarchies', 'CCTVScenarioHierarchyVO', 'id', true, true),
 (170, 1, 'get_plan_hierarchies', 'get_plan_hierarchies', 'PlanHierarchyVO', 'id', true, true),
-(171, 1, 'get_plan_nodes', 'get_plan_nodes', 'PlanNodeyVO', 'id', true, true),
+(171, 1, 'get_plan_nodes', 'get_plan_nodes', 'PlanNodeVO', 'id', true, true),
 (172, 3, 'createPlanNode', 'createPlanNode', 'PlanNodeVO', 'id', true, true),
 (173, 3, 'deletePlanNode', 'deletePlanNode', 'PlanNodeVO', 'id', true, true),
 (174, 3, 'changeIncidentReport', 'changeLocationIncidentReport', 'ImsIncidentReportVO', 'id', true, true),
@@ -246,7 +246,15 @@ INSERT INTO ui.data_sources(id, data_source_type_id, "name", description, entity
 (238, 1, 'getIOControllerModules', 'getIOControllerModules', 'IOControllerModuleVO', 'id', true, true),
 (239, 3, 'createLocation', 'createLocation', 'LocationVO', 'id', true, true),
 (240, 3, 'updateLocation', 'updateLocation', 'LocationVO', 'id', true, true),
-(241, 3, 'deleteLocation', 'deleteLocation', 'LocationVO', 'id', true, true);
+(241, 3, 'deleteLocation', 'deleteLocation', 'LocationVO', 'id', true, true),
+(242, 3, 'createCCTVScenarioNode', 'createCCTVScenarioNode', 'CCTVScenarioNodeVO', 'id', true, true),
+(243, 3, 'deleteCCTVScenarioNode', 'deleteCCTVScenarioNode', 'CCTVScenarioNodeVO', 'id', true, true),
+(244, 3, 'createCCTVScenario', 'createCCTVScenario', 'CCTVScenarioVO', 'id', true, true),
+(245, 3, 'updateCCTVScenario', 'updateCCTVScenario', 'CCTVScenarioVO', 'id', true, true),
+(246, 3, 'deleteCCTVScenario', 'deleteCCTVScenario', 'CCTVScenarioVO', 'id', true, true),
+(247, 1, 'get_cctv_scenario_nodes', 'get_cctv_scenario_nodes', 'CCTVScenarioNodeVO', 'id', true, true),
+(248, 1, 'get_cctv_scenarios', 'get_cctv_scenarios', 'CCTVScenarioVO', 'id', true, true);
+
 
 INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) VALUES
 (1, 1, 'http://192.168.88.163:8082/graphql'),
@@ -1445,4 +1453,44 @@ INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) V
 (241, 9, 'deleteLocation'),
 (241, 10, 'locationId'),
 (241, 11, 'String!'),
-(241, 12, NULL);
+(241, 12, NULL),
+
+(242, 8, 'http://192.168.88.163:8082/graphql'),
+(242, 9, 'createCCTVScenarioNode'),
+(242, 10, 'cctvScenarioNode'),
+(242, 11, 'CCTVScenarioNodeVO!'),
+(242, 12, NULL),
+
+(243, 8, 'http://192.168.88.163:8082/graphql'),
+(243, 9, 'deleteCCTVScenarioNode'),
+(243, 10, 'cctvScenarioNodeId'),
+(243, 11, 'String!'),
+(243, 12, NULL),
+
+(244, 8, 'http://192.168.88.163:8082/graphql'),
+(244, 9, 'createCCTVScenario'),
+(244, 10, 'cctvScenario'),
+(244, 11, 'CCTVScenarioVO!'),
+(244, 12, NULL),
+
+(245, 8, 'http://192.168.88.163:8082/graphql'),
+(245, 9, 'updateCCTVScenario'),
+(245, 10, 'cctvScenario'),
+(245, 11, 'CCTVScenarioVO!'),
+(245, 12, NULL),
+
+(246, 8, 'http://192.168.88.163:8082/graphql'),
+(246, 9, 'deleteCCTVScenario'),
+(246, 10, 'cctvScenarioId'),
+(246, 11, 'String!'),
+(246, 12, NULL),
+
+(247, 1, 'http://localhost:8082/graphql'),
+(247, 2, 'getCCTVScenarioNodes'),
+(247, 3, ''),
+(247, 4, NULL),
+
+(248, 1, 'http://192.168.88.163:8082/graphql'),
+(248, 2, 'getCCTVScenarios'),
+(248, 3, ''),
+(248, 4, NULL);
