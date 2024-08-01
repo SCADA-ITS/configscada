@@ -23,7 +23,8 @@ BEGIN
 			incident_type varchar null,
 			incident_sub_type varchar null,
 			level varchar null,
-			location varchar null,
+			km_start varchar null,
+			km_end varchar null,
 			user_n varchar null,
 			phone  varchar null,
 			
