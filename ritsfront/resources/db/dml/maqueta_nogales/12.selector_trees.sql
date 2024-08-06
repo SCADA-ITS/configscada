@@ -39,7 +39,7 @@ INSERT INTO ui.selector_tree_nodes(id, selector_tree_id, "label", image, module_
 		(010707, 1, 'LBL_TRANSFER_PLACES', null, 6030, true, true),
 
 	(0108, 1, 'LBL_PARTICIPANTS', null, null, true, true),
-		(010801, 1, 'LBL_PARTICIPANT_TYPES', null, 6023, true, true),
+		--(010801, 1, 'LBL_PARTICIPANT_TYPES', null, 6023, true, true),
 		(010802, 1, 'LBL_GENDERS', null, 6010, true, true),
 		(010803, 1, 'LBL_STAGES', null, 6029, true, true),
 		(010804, 1, 'LBL_USER_TYPES', null, 6033, true, true),
@@ -97,7 +97,7 @@ INSERT INTO ui.selector_tree_hierarchies(selector_tree_id,  node_parent_id, node
 	(1, 0107, 010707, true, true),
 
 (1, 01, 0108, true, true),
-	(1, 0108, 010801, true, true),
+	--(1, 0108, 010801, true, true),
 	(1, 0108, 010802, true, true),
 	(1, 0108, 010803, true, true),
 	(1, 0108, 010804, true, true),

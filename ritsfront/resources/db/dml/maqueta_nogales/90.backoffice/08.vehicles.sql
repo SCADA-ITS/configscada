@@ -3,7 +3,8 @@ BEGIN
   IF EXISTS (SELECT 1 FROM pg_namespace WHERE nspname = 'nogales_gip') THEN
 		  	
 		INSERT INTO nogales_gip.vehicle_types (alias) VALUES('Coche');
-		INSERT INTO nogales_gip.vehicle_types (alias) VALUES('Bus');
+		INSERT INTO nogales_gip.vehicle_types (alias) VALUES('Bus 2 Ejes');
+		INSERT INTO nogales_gip.vehicle_types (alias) VALUES('Camión 2 Ejes');
 		INSERT INTO nogales_gip.vehicle_types (alias) VALUES('Moto');
 		
 		
@@ -86,6 +87,7 @@ BEGIN
 		INSERT INTO nogales_gip.vehicle_brands (alias) VALUES('Volkswagen');
 		INSERT INTO nogales_gip.vehicle_brands (alias) VALUES('Volvo');
 		INSERT INTO nogales_gip.vehicle_brands (alias) VALUES('Wartburg');
+		INSERT INTO nogales_gip.vehicle_brands (alias) VALUES('Fotón');
 
 		
 		INSERT INTO nogales_gip.vehicle_models (brand_id, alias) VALUES(1,	'500');
@@ -1096,6 +1098,7 @@ BEGIN
 		INSERT INTO nogales_gip.vehicle_models (brand_id, alias) VALUES(53,	'Mini');
 		INSERT INTO nogales_gip.vehicle_models (brand_id, alias) VALUES(53,	'Countryman');
 		INSERT INTO nogales_gip.vehicle_models (brand_id, alias) VALUES(53,	'Paceman');
+		INSERT INTO nogales_gip.vehicle_models (brand_id, alias) VALUES(80,	'Aumark');
 
 			
 		INSERT INTO nogales_gip.vehicle_damages (alias) VALUES('Con daños');

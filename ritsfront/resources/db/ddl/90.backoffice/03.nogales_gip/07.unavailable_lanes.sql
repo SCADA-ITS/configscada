@@ -31,12 +31,12 @@ BEGIN
 		create table nogales_gip.unavailable_lanes (
 			id serial not null,
 			incident_id int null,
-			comment varchar null,
 			--count varchar null,
 			--clousing_count varchar null,
 			lane_action_id int null,
 			lane_id int null,
 			start_action timestamptz default current_timestamp,
+			comment varchar null,
 			constraint pk_unavailable_lanes primary key (id)
 		) tablespace tbl_nogales_gip;
 		

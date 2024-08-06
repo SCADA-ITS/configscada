@@ -25,13 +25,13 @@ BEGIN
 		create table nogales_gip.assigned_resources (
 			id serial not null,
 			incident_id int null,
-			comment varchar null,
 			action_id int null,
 			typology_id int null,
 			resource_id int null,
 			notice_date timestamptz default current_timestamp,
 			arrival_date timestamptz null,
 			release_date timestamptz null,
+			comment varchar null,
 			constraint pk_assigned_resorces primary key (id)
 		) tablespace tbl_nogales_gip;
 		

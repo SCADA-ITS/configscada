@@ -12,7 +12,7 @@ BEGIN
 		create table nogales_gip.interrupt_agents (
 			id serial not null,
 			incident_id int null,
-			comentarios varchar null,
+			comment varchar null,
 			agents_id int null,
 			inicio timestamptz default current_timestamp,
 			final timestamptz null,

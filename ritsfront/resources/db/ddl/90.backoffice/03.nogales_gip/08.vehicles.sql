@@ -55,7 +55,6 @@ BEGIN
 		create table nogales_gip.vehicles (
 			id serial not null,
 			incident_id int null,
-			comment varchar null,
 			vehicle_type_id int null,
 			vehicle_brand_id int null,
 			vehicle_model_id int null,
@@ -65,6 +64,7 @@ BEGIN
 			attended_id int null,
 			assistance_type_id int null,
 			transfer_place_id int null,
+			comment varchar null,
 			constraint pk_vehicles primary key (id)
 		) tablespace tbl_nogales_gip;
 		

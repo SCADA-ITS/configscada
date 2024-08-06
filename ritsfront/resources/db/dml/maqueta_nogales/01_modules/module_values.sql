@@ -25,7 +25,6 @@ INSERT INTO ui.module_values(module_id, module_param_id, value) VALUES
 (6020, 13, '3'), (6020, 14, 'maneuvers'),
 (6021, 13, '3'), (6021, 14, 'participant_assistance_types'),
 (6022, 13, '3'), (6022, 14, 'participant_transfer_places'),
-(6023, 13, '3'), (6023, 14, 'participant_types'),
 (6024, 13, '3'), (6024, 14, 'participants'),
 (6025, 13, '3'), (6025, 14, 'pdas'),
 (6026, 13, '3'), (6026, 14, 'resources'),

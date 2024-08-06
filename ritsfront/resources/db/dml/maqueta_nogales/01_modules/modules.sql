@@ -25,7 +25,6 @@ INSERT INTO ui.modules(id, module_type_id, "name", description, default_view_typ
 (6020, 9, 'NOGALES GIP - maneuvers', 'Nogales GIP - maneuvers', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 (6021, 9, 'NOGALES GIP - participant_assistance_types', 'Nogales GIP - participant_assistance_types', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 (6022, 9, 'NOGALES GIP - participant_transfer_places', 'Nogales GIP - participant_transfer_places', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
-(6023, 9, 'NOGALES GIP - participant_types', 'Nogales GIP - participant_types', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 (6024, 9, 'NOGALES GIP - participants', 'Nogales GIP - participants', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 (6025, 9, 'NOGALES GIP - pdas', 'Nogales GIP - pdas', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 (6026, 9, 'NOGALES GIP - resources', 'Nogales GIP - resources', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
