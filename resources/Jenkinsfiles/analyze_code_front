@@ -85,7 +85,7 @@ pipeline {
 					sh 'echo Compilando front'
                     dir("ritsfront/_ritsfront") {
                        withSonarQubeEnv('sonarqube') { 
-                        	sh 'mvn sonar:sonar -Dsonar.projectName=ritsfront_master -Dsonar.projectKey=ritsfront_master'
+                        	sh 'mvn sonar:sonar -Dsonar.nodejs.executable=/home/revenga/.nvm/versions/node/v18.20.4/bin/node -Dsonar.projectName=ritsfront_master -Dsonar.projectKey=ritsfront_master'
                        }
                     }
                 }
