@@ -58,6 +58,19 @@ LOG_MESSAGE="*INFORME DE ESTADO MAQUINAS DAIs*
 
 # Iterar sobre cada host
 for host in "${HOSTS[@]}"; do
+
+    ssh -o ConnectTimeout=5 dai@$host "exit"
+
+    if [ $? -ne 0 ]; then
+       LOG_MESSAGE+="*MÁQUINA NO ACCESIBLE ($host) --> REVISAR* 
+---------------------------------------------------------------------------
+
+"
+       continue
+    fi
+
+    HOSTNAME_LOG=$(ssh dai@$host "hostname")
+
     # Obtener el tamaño del fichero de log en GB
     FILE_SIZE_GB=$(get_log_file_size "$host")
 
@@ -72,26 +85,26 @@ for host in "${HOSTS[@]}"; do
 	# Verificar el estado de los contenedores Docker
     CONTAINERS=("ffmpeg" "visionanlt" "doublecheck" "dai_web" "dai_celeryworker" "websocket" "dai_celerybeat" "relay" "dai_nginx" "tunelia" "filemanager" "dai_db" "grabador_nginx" "grabador_web" "grabador_celerybeat" "grabador_celeryworker" "grabador_db" "grabador_redis" "recorder" "socketmanager")
 	
-	LOG_MESSAGE+="LISTADO DE PROCESOS CAIDOS (Todo OK si no aparece ninguno:
-	"
 	for container in "${CONTAINERS[@]}"; do
 		ssh dai@$host "docker ps | grep $container > /dev/null"
 
 		if [ $? -eq 1 ]; then
 		   container_con_espacios=$(echo "$container" | sed 's/_/ /g')
-		   LOG_MESSAGE+="Estado del proceso $container_con_espacios = DOWN 
-	"
+		   LOG_MESSAGE+="
+Proceso $container_con_espacios --> REVISAR" 
 		fi
 	done
 
 	ssh dai@$host 'df -h' | grep 'vg-ubuntu' > /dev/null
 	
 	if [ $? -eq 0 ]; then
-		LOG_MESSAGE+="Disco duro libre:    $(ssh dai@$host 'df -h' | grep 'vg-ubuntu' | awk '{print $4}')
+		LOG_MESSAGE+="
+Disco duro libre:    $(ssh dai@$host 'df -h' | grep 'vg-ubuntu' | awk '{print $4}')
 
 "
 	else
-		LOG_MESSAGE+="Disco duro libre:    $(ssh dai@$host 'df -h' | grep 'sda4' | awk '{print $4}')
+		LOG_MESSAGE+="
+Disco duro libre:    $(ssh dai@$host 'df -h' | grep 'sda4' | awk '{print $4}')
 
 "
 	fi
