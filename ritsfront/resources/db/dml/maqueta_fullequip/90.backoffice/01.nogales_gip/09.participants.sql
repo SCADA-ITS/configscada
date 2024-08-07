@@ -2,9 +2,6 @@ DO $$
 BEGIN
   IF EXISTS (SELECT 1 FROM pg_namespace WHERE nspname = 'nogales_gip') THEN
 		
-		
-		INSERT INTO nogales_gip.participant_types (alias) VALUES('No ocupa vehiculo');
-		
 		INSERT INTO nogales_gip.genders (alias) VALUES('Femenino');
 		INSERT INTO nogales_gip.genders (alias) VALUES('Masculino');
 		
