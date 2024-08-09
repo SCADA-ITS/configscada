@@ -164,15 +164,10 @@ pipeline {
                     sh 'echo Ejecutando scripts de front...'
                     
                     dir("${rutaBase}") {
-                        //sh '''sed -i 's|\\(psql -v ON_ERROR_STOP=1 postgresql://rits:\\).*|\\1${PASSWORD}@$1:$2/rits -b -f $eachfile >/dev/null|' ddl/ddl_param_jenkins.sh'''
-                        //sh '''sed -i 's|\\(psql -v ON_ERROR_STOP=1 postgresql://rits:\\).*|\\1${PASSWORD}@$1:$2/rits -b -f $eachfile >/dev/null|' dml/master/dml_param_jenkins.sh'''
-                        //sh '''sed -i 's|\\(psql -v ON_ERROR_STOP=1 postgresql://rits:\\).*|\\1${PASSWORD}@$1:$2/rits -b -f $eachfile >/dev/null|' dml/maqueta_fullequip/dml_param_jenkins.sh'''
                         sh '''sed -i 's/rits:rits/rits:${PASSWORD}/' ddl/ddl_param_jenkins.sh'''
                         sh '''sed -i 's/rits:rits/rits:${PASSWORD}/' dml/master/dml_param_jenkins.sh'''
                         sh '''sed -i 's/rits:rits/rits:${PASSWORD}/' dml/maqueta_fullequip/dml_param_jenkins.sh'''
                         sh '''sed -i 's/rits:rits/rits:${PASSWORD}/' make_param_jenkins.sh'''
-                        sh '''sed -i "s/value='/value=''/" make_param_jenkins.sh'''
-                        sh '''sed -i "s/' WHERE/'' WHERE/" make_param_jenkins.sh'''
                         sh "./make_param_jenkins.sh maqueta_fullequip 192.168.88.71 5430 192.168.88.70"
                     }
                 }
@@ -184,15 +179,14 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: PASSWORD_CREDENTIALS_ID, usernameVariable: 'SSH_USER', passwordVariable: 'SSH_PASSWORD')]) {
                     script {
 						sh 'echo Relanzando aplicación remotamente tras ser actualizada'
-						
-                        sh 'sshpass -p $SSH_PASSWORD ssh -t -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST "echo $SSH_PASSWORD | sudo -S service $SSH_SERVICE restart"'
+                        sh "sshpass -p $SSH_PASSWORD ssh -t -t -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST 'echo \\$SSH_PASSWORD | sudo -S service $SSH_SERVICE restart'"
                     }
                 }
             }
         }
     }
 
-    /*post {
+    post {
         always {
             script {
 				sh 'echo Envío de notifación de resultado de ejecución'
@@ -224,5 +218,5 @@ pipeline {
                         mimeType: 'text/html'
             }
         }
-    }*/
+    }
 }
