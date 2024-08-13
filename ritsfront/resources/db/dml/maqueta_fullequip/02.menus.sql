@@ -39,6 +39,10 @@ INSERT INTO ui.menu_items(id, menu_group_id, "position", module_id, "label", ico
 (507, 5, 8, 1921, 'LBL_MENU_ITEM_BACKOFFICE_ALARM', 'img/menu/alarm-monitor-menu-1.png', 'ALARM_BACKOFFICE', 'Alarms backoffice', true, true),
 (508, 5, 9, 1922, 'LBL_MENU_ITEM_BACKOFFICE_ELEMENT', 'img/menu/task-menu.png', 'ELEMENTS_GIP', 'Elements GIP', true, true),
 
+-- CONFIG
+(600, 4000, 7, 1048, 'LBL_MENU_ITEM_EQUIPMENT_EDITOR', 'img/menu/equipment-menu.png', 'Menu item equipment Editor', 'Menu item equipment Editor', true, true),
+(601, 4000, 7, 1050, 'LBL_MENU_ITEM_LOCATION_EDITOR', 'img/menu/locations-menu.png', 'Menu item location editor', 'Menu item location editor', true, true),
+
 
 (500001, 5000, 3, 1047, 'LBL_MENU_HELP_CONTENTS', 'img/menu/help.png', 'Help contents', 'Menu item help contents', true, true);
 
