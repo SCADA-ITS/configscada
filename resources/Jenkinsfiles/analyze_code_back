@@ -9,7 +9,7 @@ pipeline {
         stage('Descargar repositorios') {
             steps {
                 script {
-					sh 'echo Descargando repositorios de git'
+                    sh 'echo Descargando repositorios de git'
                 
                     def repos = ['ritsback']
         
@@ -30,45 +30,45 @@ pipeline {
         stage('Loggear últimos commit') {
             steps {
                 script {
-					sh 'echo Obteniendo información de los cambios desde la última ejecución'
-				
-					def changeLogSets = currentBuild.changeSets
+                    sh 'echo Obteniendo información de los cambios desde la última ejecución'
+                
+                    def changeLogSets = currentBuild.changeSets
 
                     if (changeLogSets.size() == 0) {
                         echo "No ha habido cambios en el repositorio. No es necesario analizar el código."
                         skipRemainingStages = true
                     }
                     
-                	echo "El número de commits desde la última ejecución ha sido: " + changeLogSets.size();
+                    echo "El número de commits desde la última ejecución ha sido: " + changeLogSets.size();
 
-					for (int i = 0; i < changeLogSets.size(); i++) {
-						def entries = changeLogSets[i].items
-						
-						for (int j = 0; j < entries.length; j++) {
-							def entry = entries[j]
-							
-							echo "${entry.commitId} by ${entry.author} on ${new Date(entry.timestamp)}: ${entry.msg}"
-							
-							stringVariable += '<div style="background-color: #f0f0f0; padding: 10px;">'
-							stringVariable += "<strong>Commit: ${entry.commitId}</strong><br/>"
-							stringVariable += "Commit message: ${entry.msg}<br/>"
-							stringVariable += "Autor: ${entry.author}<br/>"
-							stringVariable += "Fecha: ${new Date(entry.timestamp)}<br/><br/>"
-							
-							def files = new ArrayList(entry.affectedFiles)
-							
-							stringVariable += "Ficheros afectados:<br/>"
-							for (int k = 0; k < files.size(); k++) {
-							
-								def file = files[k]
-								                        
-								stringVariable += " - ${file.editType.name} ${file.path}<br/>"
-							}
-							
-							stringVariable += "</div><br/>"
-						}
-					}
-				}
+                    for (int i = 0; i < changeLogSets.size(); i++) {
+                        def entries = changeLogSets[i].items
+                        
+                        for (int j = 0; j < entries.length; j++) {
+                            def entry = entries[j]
+                            
+                            echo "${entry.commitId} by ${entry.author} on ${new Date(entry.timestamp)}: ${entry.msg}"
+                            
+                            stringVariable += '<div style="background-color: #f0f0f0; padding: 10px;">'
+                            stringVariable += "<strong>Commit: ${entry.commitId}</strong><br/>"
+                            stringVariable += "Commit message: ${entry.msg}<br/>"
+                            stringVariable += "Autor: ${entry.author}<br/>"
+                            stringVariable += "Fecha: ${new Date(entry.timestamp)}<br/><br/>"
+                            
+                            def files = new ArrayList(entry.affectedFiles)
+                            
+                            stringVariable += "Ficheros afectados:<br/>"
+                            for (int k = 0; k < files.size(); k++) {
+                            
+                                def file = files[k]
+                                                        
+                                stringVariable += " - ${file.editType.name} ${file.path}<br/>"
+                            }
+                            
+                            stringVariable += "</div><br/>"
+                        }
+                    }
+                }
             }
         }
         
@@ -81,11 +81,10 @@ pipeline {
             
             steps {
                 script {
-                
-					sh 'echo Compilando back'
+                    sh 'echo Compilando back'
                     dir("ritsback/_ritsback") {
                        withSonarQubeEnv('sonarqube') { 
-                        	sh 'mvn sonar:sonar -Dsonar.projectName=ritsback_master -Dsonar.projectKey=ritsback_master'
+                            sh 'mvn sonar:sonar -Dsonar.nodejs.executable=/home/revenga/.nvm/versions/node/v18.20.4/bin/node -Dsonar.projectName=ritsback_master -Dsonar.projectKey=ritsback_master'
                        }
                     }
                 }
@@ -93,28 +92,29 @@ pipeline {
         }
         
         stage("Quality Gate") {
-            when {
+           /* when {
                 expression {
                     !skipRemainingStages
                 }
-            }
+            }*/
             
             steps {
                 script {
-                    
-            		def response = sh(script: 
-            		'''#!/bin/bash
+                    def response = sh(script: 
+                    '''#!/bin/bash
             		
             		sleep 60
             		
-            		SONARQUBE_URL="http://192.168.88.195:9000"
-    				SONARQUBE_PROJECT_KEY="ritsback_master"
-    				SONARQUBE_TOKEN="sqa_5b5b6a8e918ba033d74479f9a64a6d0816d23efb"
-    				
-    				STATUS=$(curl -s -u ${SONARQUBE_TOKEN}: "${SONARQUBE_URL}/api/qualitygates/project_status?projectKey=${SONARQUBE_PROJECT_KEY}" | jq -r '.projectStatus.status')
+                    SONARQUBE_URL="http://192.168.88.195:9000"
+                    SONARQUBE_PROJECT_KEY="ritsback_master"
+                    SONARQUBE_TOKEN="sqa_5b5b6a8e918ba033d74479f9a64a6d0816d23efb"
+        
+                    STATUS=$(curl -s -u ${SONARQUBE_TOKEN}: "${SONARQUBE_URL}/api/qualitygates/project_status?projectKey=${SONARQUBE_PROJECT_KEY}" | jq -r '.projectStatus.status')
                     CONDITIONS=$(curl -s -u ${SONARQUBE_TOKEN}: "${SONARQUBE_URL}/api/qualitygates/project_status?projectKey=${SONARQUBE_PROJECT_KEY}" | jq -r '.projectStatus.conditions')
                     
                     if [ "$STATUS" = "ERROR" ]; then
+                        stringSonar+="<h2>Métricas de sonar incumplidas</h2>"
+                        
                         metrics=$(echo "$CONDITIONS" | jq -c '.[]')
                         
                         while IFS= read -r metric; do
@@ -134,89 +134,102 @@ pipeline {
                                  stringSonar+="<br/>"
                                  stringSonar+=" Valor actual: "
                                  stringSonar+="$(echo -e "$NOW")"
-                                 stringSonar+="<br/>"
+                                 stringSonar+="<br/><br/>"
                               fi
                         done <<< "$metrics"
-                        stringSonar+="</div><br/>"
+                        stringSonar+="</div>"
                     fi
                     
-                    echo -e $stringSonar
-                    ''', returnStdout: true);
+                    PAGE_SIZE=500
+                    PAGE=1
+                    MAX_ISSUES=1000
+                    TOTAL_ISSUES=0
+                    ALL_ISSUES="[]"
+        
+                    stringSonar+='<div style="background-color: #f0f0f0; padding: 10px;">'
+                    stringSonar+="<h2>ISSUES ABIERTAS EN ORDEN DE IMPORTANCIA:</h2><br/>"
+        
+                    while :; do
+                        RESPONSE=$(curl -s -u ${SONARQUBE_TOKEN}: "${SONARQUBE_URL}/api/issues/search?projectKey=${SONARQUBE_PROJECT_KEY}&p=${PAGE}&ps=${PAGE_SIZE}")
+        
+                        ISSUES=$(echo "$RESPONSE" | jq '.issues')
+                        
+                        ISSUES_COUNT=$(echo "$ISSUES" | jq 'length')
+        
+                        ALL_ISSUES=$(echo "$ALL_ISSUES $ISSUES" | jq -s '.[0] + .[1]')
+        
+                        TOTAL_ISSUES=$(echo "$ALL_ISSUES" | jq 'length')
+        
+                        if [ "$TOTAL_ISSUES" -ge "$MAX_ISSUES" ]; then
+                            break
+                        fi
+        
+                        if [ "$ISSUES_COUNT" -eq 0 ]; then
+                            break
+                        fi
+        
+                        PAGE=$((PAGE+1))
+                    done
+        
+                    FILTERED_ISSUES=$(echo "$ALL_ISSUES" | jq --arg PROJECT_KEY "$SONARQUBE_PROJECT_KEY" '[.[] | select(.component | startswith($PROJECT_KEY))]')
+        
+                    SORTED_ISSUES=$(echo "$FILTERED_ISSUES" | jq 'sort_by(.severity)')
+        
+                    ISSUE_NUMBER=1
+        
+                    while IFS= read -r ISSUE; do
+                        STATUS=$(echo "$ISSUE" | jq -r '.status')
+        
+                        if [ "$STATUS" == "OPEN" ]; then
+                            COMPONENT=$(echo "$ISSUE" | jq -r '.component')
+                            RULE=$(echo "$ISSUE" | jq -r '.rule')
+                            SEVERITY=$(echo "$ISSUE" | jq -r '.severity')
+                            
+                            stringSonar+="NÚMERO DE ISSUE: $ISSUE_NUMBER<br/>"
+                            stringSonar+="Component: $COMPONENT<br/>"
+                            stringSonar+="Rule: $RULE<br/>"
+                            stringSonar+="Severity: $SEVERITY<br/><br/>"
+                            
+                            ISSUE_NUMBER=$((ISSUE_NUMBER+1))
+                        fi
+                    done <<< "$(echo "$SORTED_ISSUES" | jq -c '.[]')"
+        
+                    stringSonar+="</div><br/>"
+                    echo -e "$stringSonar"
+                    ''', returnStdout: true).trim();
                     
+                    // Asignar la salida capturada a la variable stringSonar
                     stringSonar = response;
+                    
+                    if (!"${stringSonar}".equals("")){
+                        error("Quality Gates no superadas. Issues pendientes.")
+                    }
                 }
             }
         }
     }
 
     post {
-        always {
+        failure {
             script {
-                if (currentBuild.currentResult == 'FAILURE') {
-                    stringVariable += "<br/>Información de logs para identificación de error:<br/>"
-                    def logs = currentBuild.rawBuild.getLog(1000)
-                    logs.each { log ->
-                        stringVariable += " * ${log}<br/>"
-                    }
-                }
                 
-                if (skipRemainingStages){
-                    // Enviar correo con los detalles
-                    emailext subject: "${JOB_NAME} - Build #${BUILD_NUMBER} - ${currentBuild.currentResult}",
-                            body: """
-                            <html>
-                                <body>
-                                    <h2>NO HA HABIDO CAMBIOS EN EL CÓDIGO DESDE EL ÚLTIMO ANÁLISIS. NO SE REALIZA COMPROBACIÓN EN SONAR NI LA COMPILACIÓN DEL CÓDIGO</h2>
-                                    <p>Job: ${JOB_NAME}</p>
-                                    <p>Número de Ejecución: ${BUILD_NUMBER}</p>
-                                    <p>Estado de la Ejecución: ${currentBuild.currentResult}</p>
-                                </body>
-                            </html>
-                            """,
-                            to: 'jenkins.openits@gmail.com',
-                            mimeType: 'text/html'
-                }else if (!"${stringSonar}".equals("")) {
-                    // Enviar correo con los detalles
-                    emailext subject: "${JOB_NAME} - Build #${BUILD_NUMBER} - ${currentBuild.currentResult}",
-                            body: """
-                            <html>
-                                <body>
-                                    <h2>RESULTADO DE COMPILACIÓN TRAS CAMBIOS EN EL CÓDIGO</h2>
-                                    <p>Job: ${JOB_NAME}</p>
-                                    <p>Número de Ejecución: ${BUILD_NUMBER}</p>
-                                    <p>Estado de la Ejecución: ${currentBuild.currentResult}</p>
-                                    
-                                    <h2>Métricas de sonar incumplidas</h2> 
-                                    <p>${stringSonar}</p>
-                                
-                                    <h2>Información de los Commits</h2>
-                                    <p>Detalles de Cambios en la Última Ejecución:</p>
-                                    <p>${stringVariable}</p>
-                                </body>
-                            </html>
-                            """,
-                            to: 'jenkins.openits@gmail.com',
-                            mimeType: 'text/html'
-                }else{
-                    // Enviar correo con los detalles
-                    emailext subject: "${JOB_NAME} - Build #${BUILD_NUMBER} - ${currentBuild.currentResult}",
-                            body: """
-                            <html>
-                                <body>
-                                    <h2>RESULTADO DE COMPILACIÓN TRAS CAMBIOS EN EL CÓDIGO</h2>
-                                    <p>Job: ${JOB_NAME}</p>
-                                    <p>Número de Ejecución: ${BUILD_NUMBER}</p>
-                                    <p>Estado de la Ejecución: ${currentBuild.currentResult}</p>
-                                    
-                                    <h2>Información de los Commits</h2>
-                                    <p>Detalles de Cambios en la Última Ejecución:</p>
-                                    <p>${stringVariable}</p>
-                                </body>
-                            </html>
-                            """,
-                            to: 'jenkins.openits@gmail.com',
-                            mimeType: 'text/html'    
-                }
+                emailext subject: "JENKINS_DESARROLLO_BACK - ${JOB_NAME} - Build #${BUILD_NUMBER}",
+                body: """
+                <html>
+                    <body>
+                        <h2>ANÁLISIS CALIDAD DE CÓDIGO DEL BACK TRAS CAMBIOS EN EL CÓDIGO</h2>
+                        <p>Job: ${JOB_NAME}</p>
+                        <p>Número de Ejecución: ${BUILD_NUMBER}</p>
+                        
+                        <p>${stringSonar}</p>
+                    
+                        <h2>Información de los Commits:</h2>
+                        <p>${stringVariable}</p>
+                    </body>
+                </html>
+                """,
+                to: 'jenkins.openits@gmail.com',
+                mimeType: 'text/html'
             }
         }
     }

@@ -110,23 +110,21 @@ pipeline {
     }
 
     post {
-        always {
+        failure {
             script {
 				sh 'echo Envío de notifación de resultado de ejecución'
 				
-				if ("${currentBuild.currentResult}" == "FAILURE"){
-					stringVariable += "<br/>Información de logs para identificación de error:<br/>"
-					def logs = currentBuild.rawBuild.getLog(1000)
-				
-					for (int i = 0; i<logs.size(); i++){
-						stringVariable += " * "
-						stringVariable += logs.get(i)
-						stringVariable += "<br/>"
-					}
+				stringVariable += "<br/>Información de logs para identificación de error:<br/>"
+				def logs = currentBuild.rawBuild.getLog(1000)
+			
+				for (int i = 0; i<logs.size(); i++){
+					stringVariable += " * "
+					stringVariable += logs.get(i)
+					stringVariable += "<br/>"
 				}
 			
                 // Obtener información sobre todos los commits desde el último build
-                emailext subject: "${JOB_NAME} - Build #${BUILD_NUMBER} - ${currentBuild.currentResult}",
+                emailext subject: "JENKINS_ITS - ${JOB_NAME} - Build #${BUILD_NUMBER}",
                         body: """
                         <html>
                             <body>
