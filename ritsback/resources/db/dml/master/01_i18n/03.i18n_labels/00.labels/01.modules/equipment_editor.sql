@@ -32,6 +32,8 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_ES', 1, 'LBL_CLONE_EQUIPMENT', 'Clonar equipo', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_CLONE_EQUIPMENT_DESCRIPTION', 'Formulario para clonar equipo.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_NO_PARENT_TO_SHOW', 'No existen padres que mostrar.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_CMD_SELECT', 'Seleccionar', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_EQUIPMENT_EDITOR', 'Editor de equipamiento', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 -- en_GB
 ('en_GB', 1, 'LBL_CLONING_EQUIPMENTS', 'Cloning equipments', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -54,6 +56,8 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('en_GB', 1, 'LBL_CLONE_EQUIPMENT', 'Clone equipment', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_CLONE_EQUIPMENT_DESCRIPTION', 'Form to clone equipment.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_NO_PARENT_TO_SHOW', 'There are no parents to show.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_CMD_SELECT', 'Select', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_EQUIPMENT_EDITOR', 'Equipment editor', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 -- es_CL
 ('es_CL', 1, 'LBL_CLONING_EQUIPMENTS', 'Clonando equipos', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -75,4 +79,6 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_CL', 1, 'LBL_EDIT_EQUIPMENT_DESCRIPTION', 'Formulario para editar datos del equipo.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_CLONE_EQUIPMENT', 'Clonar equipo', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_CLONE_EQUIPMENT_DESCRIPTION', 'Formulario para clonar equipo', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('es_CL', 1, 'LBL_NO_PARENT_TO_SHOW', 'No existen padres que mostrar.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+('es_CL', 1, 'LBL_NO_PARENT_TO_SHOW', 'No existen padres que mostrar.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_CMD_SELECT', 'Seleccionar', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_EQUIPMENT_EDITOR', 'Editor de equipamiento', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
