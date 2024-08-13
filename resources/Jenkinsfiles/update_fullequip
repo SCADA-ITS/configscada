@@ -203,7 +203,7 @@ pipeline {
 				}
 			
                 // Obtener información sobre todos los commits desde el último build
-                emailext subject: "${JOB_NAME} - Build #${BUILD_NUMBER} - ${currentBuild.currentResult}",
+                emailext subject: "JENKINS_PUESTA_EN_MARCHA - ${JOB_NAME} - Build #${BUILD_NUMBER} - ${currentBuild.currentResult}",
                         body: """
                         <html>
                             <body>
