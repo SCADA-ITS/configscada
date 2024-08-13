@@ -1,4 +1,5 @@
 def stringVariable = ""
+def skipRemainingStages = false
 
 pipeline {
     agent any
@@ -25,7 +26,14 @@ pipeline {
 					sh 'echo Obteniendo información de los cambios desde la última ejecución'
 				
 					def changeLogSets = currentBuild.changeSets
-
+					
+                    if (changeLogSets.size() == 0) {
+                        echo "No ha habido cambios en el repositorio. No es necesario analizar los scripts."
+                        skipRemainingStages = true
+                    }
+                    
+                    echo "El número de commits desde la última ejecución ha sido: " + changeLogSets.size();
+                    
 					for (int i = 0; i < changeLogSets.size(); i++) {
 						def entries = changeLogSets[i].items
 						
@@ -59,6 +67,12 @@ pipeline {
         }
 		
 		stage('Comprobar scripts back'){
+            when {
+                expression {
+                    !skipRemainingStages
+                }
+            }
+            
             steps {
                 script {
 					sh 'echo Probando scripts de back'
@@ -84,6 +98,12 @@ pipeline {
 		}
 		
 		stage('Comprobar scripts front'){
+            when {
+                expression {
+                    !skipRemainingStages
+                }
+            }
+            
             steps {
                 script {
 					sh 'echo Probando scripts de front'
