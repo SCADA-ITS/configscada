@@ -7,17 +7,24 @@ pipeline {
         SSH_HOST = '192.168.88.70'
         SSH_SERVICE = 'app'
         PASSWORD_CREDENTIALS_ID = 'ssh_fullequip'  // Reemplaza con el ID de tus credenciales
-        PASSWORD = '1nF0%24%2444S.%40D%40'
+        PASSWORD_CREDENTIALS_ID_BBDD = 'fullequip_bbdd'
     }
 
     stages {
-        stage('Descargar repositorios') {
+        stage('Comprobar si ha habido cambios') {
             steps {
                 script {
-					sh 'echo Descargando repositorios de git'
-                
+                    // Obtiene la fecha actual y calcula el primer día del mes actual y del mes anterior
+                    def date = new Date()
+                    def firstDayOfCurrentMonth = date.format('yyyy-MM') + '-01'
+                    
+                    // Obtén el primer día del mes anterior
+                    def cal = Calendar.getInstance()
+                    cal.setTime(date)
+                    cal.add(Calendar.MONTH, -1)
+                    def firstDayOfLastMonth = cal.time.format('yyyy-MM') + '-01'
                     def repos = ['rits', 'ritsback', 'ritsfront']
-        
+                    def contador = 0
                     for (repo in repos) {
                         dir(repo) {
                             git(
@@ -26,11 +33,26 @@ pipeline {
                                 changelog: true,
                                 poll: true
                             )
+                            // Comprobar commits desde el primer día del mes anterior hasta hoy
+                            def changes = sh(script: "git log --since='${firstDayOfLastMonth}' --until='${firstDayOfCurrentMonth}' --oneline", returnStdout: true).trim()
+                            if (changes) {
+                                echo "Se han encontrado cambios desde ${firstDayOfLastMonth} en el repositorio ${repo}, se ejecutará el pipeline."
+                                contador +=1
+                            } else {
+                                echo "No se han encontrado cambios desde ${firstDayOfLastMonth} en el repositorio ${repo}, el pipeline no se ejecutará."
+                            }
                         }
                     }
+                    if (contador != 0){
+                        env.CHANGES_FOUND = "true"
+                    }else{
+                        env.CHANGES_FOUND = "false"
+                    }
+                    echo "La variable de entorno CHANGES_FOUND tiene como valor: ${env.CHANGES_FOUND}"
                 }
             }
         }
+
         stage('Build back') {
             steps {
                 script {
@@ -43,6 +65,7 @@ pipeline {
                 }
             }
         }
+        
         stage('Deploy back') {
             steps {
                 script {
@@ -99,17 +122,20 @@ pipeline {
                     sh "scp app/backrits.tar.gz $user@$host:/home/$user/app/"
                     sh "ssh $user@$host 'cd /home/$user/app && rm -rf backrits && tar zxvf backrits.tar.gz && sleep 15 && exit'"
                 }
-                
-                script {
-                    def rutaBase = 'rits/ritsback/resources/db'
-                    
-                    sh 'echo Ejecutando scripts de back...'
-                    
-                    dir("${rutaBase}") {
-                        sh '''sed -i 's|\\(psql -v ON_ERROR_STOP=1 postgresql://rits:\\).*|\\1${PASSWORD}@$1:$2/rits -b -f $eachfile >/dev/null|' ddl/ddl_param_jenkins.sh'''
-                        sh '''sed -i 's|\\(psql -v ON_ERROR_STOP=1 postgresql://rits:\\).*|\\1${PASSWORD}@$1:$2/rits -b -f $eachfile >/dev/null|' dml/master/dml_param_jenkins.sh'''
-                        sh '''sed -i 's|\\(psql -v ON_ERROR_STOP=1 postgresql://rits:\\).*|\\1${PASSWORD}@$1:$2/rits -b -f $eachfile >/dev/null|' dml/maqueta_fullequip/dml_param_jenkins.sh'''
-                       sh "./make_param_jenkins.sh maqueta_fullequip 192.168.88.71 5430"
+
+                withCredentials([usernamePassword(credentialsId: PASSWORD_CREDENTIALS_ID_BBDD, usernameVariable: 'BBDD_USER', passwordVariable: 'BBDD_PASSWORD')]) {
+                    script {
+                        def rutaBase = 'rits/ritsback/resources/db'
+                        String encodedPassword = URLEncoder.encode(BBDD_PASSWORD, "UTF-8")
+
+                        sh 'echo Ejecutando scripts de back...'
+                        
+                        dir("${rutaBase}") {
+                            sh "sed -i 's/rits:rits/$BBDD_USER:${encodedPassword}/' ddl/ddl_param_jenkins.sh"
+                            sh "sed -i 's/rits:rits/$BBDD_USER:${encodedPassword}/' dml/master/dml_param_jenkins.sh"
+                            sh "sed -i 's/rits:rits/$BBDD_USER:${encodedPassword}/' dml/maqueta_fullequip/dml_param_jenkins.sh"
+                            sh "./make_param_jenkins.sh maqueta_fullequip 192.168.88.71 5430"
+                        }
                     }
                 }
             }
@@ -117,18 +143,22 @@ pipeline {
         
         stage('Resources front') {
             steps {
-                script {
-					sh 'echo Copiando recursos de front'
-                    
-                    dir('ritsfront/openits/src/main/resources/') {
-                        sh 'rm -rf project'
-                        sh "cp ${WORKSPACE}/rits/ritsfront/openits/*.properties ./"
-                        sh "cp -r ${WORKSPACE}/rits/ritsfront/openits/static ./"
-                        sh "cp -r ${WORKSPACE}/rits/ritsfront/openits/project ./"
+                withCredentials([usernamePassword(credentialsId: PASSWORD_CREDENTIALS_ID_BBDD, usernameVariable: 'BBDD_USER', passwordVariable: 'BBDD_PASSWORD')]) {
+                    script {
+                        sh 'echo Copiando recursos de front'
                         
-                        sh '''sed -i 's/\\(spring.profiles.active=\\).*/\\1fullequip/' application.properties'''
-                        sh '''sed -i 's|\\(spring.datasource.url=jdbc:postgresql://\\).*|\\1192.168.88.71:5430/rits|' application.properties'''
-                        sh '''sed -i 's|\\(ws://\\).*\\(:61614\\)|\\1192.168.88.70\\2|' project/fullequip/data/config.js'''
+                        dir('ritsfront/openits/src/main/resources/') {
+                            sh 'rm -rf project'
+                            sh "cp ${WORKSPACE}/rits/ritsfront/openits/*.properties ./"
+                            sh "cp -r ${WORKSPACE}/rits/ritsfront/openits/static ./"
+                            sh "cp -r ${WORKSPACE}/rits/ritsfront/openits/project ./"
+                            
+                            sh '''sed -i 's/\\(spring.profiles.active=\\).*/\\1fullequip/' application.properties'''
+                            sh '''sed -i 's|\\(spring.datasource.url=jdbc:postgresql://\\).*|\\1192.168.88.71:5430/rits|' application.properties'''
+                            sh '''sed -i 's|\\(spring.datasource.password=\\).*|\\1'''+ "$BBDD_PASSWORD" +'''|' application.properties'''
+                            sh "cat application.properties"
+                            sh '''sed -i 's|\\(ws://\\).*\\(:61614\\)|\\1192.168.88.70\\2|' project/fullequip/data/config.js'''
+                        }
                     }
                 }
             }
@@ -158,17 +188,21 @@ pipeline {
                     sh "scp ritsfront/openits/target/openits.jar $user@$host:/home/$user/app"
                     sh "ssh $user@$host \"cd /home/$user/app/frontrits && rm -rf openits.jar && mv /home/$user/app/openits.jar ./ && sed -i 's|\\(active=\\).*\\( -jar\\)|\\1fullequip\\2|' ~/app/start.sh\""
                 }
-                script {
-                    def rutaBase = 'rits/ritsfront/resources/db'
-                    
-                    sh 'echo Ejecutando scripts de front...'
-                    
-                    dir("${rutaBase}") {
-                        sh '''sed -i 's/rits:rits/rits:${PASSWORD}/' ddl/ddl_param_jenkins.sh'''
-                        sh '''sed -i 's/rits:rits/rits:${PASSWORD}/' dml/master/dml_param_jenkins.sh'''
-                        sh '''sed -i 's/rits:rits/rits:${PASSWORD}/' dml/maqueta_fullequip/dml_param_jenkins.sh'''
-                        sh '''sed -i 's/rits:rits/rits:${PASSWORD}/' make_param_jenkins.sh'''
-                        sh "./make_param_jenkins.sh maqueta_fullequip 192.168.88.71 5430 192.168.88.70"
+                
+                withCredentials([usernamePassword(credentialsId: PASSWORD_CREDENTIALS_ID_BBDD, usernameVariable: 'BBDD_USER', passwordVariable: 'BBDD_PASSWORD')]) {
+                    script {
+                        def rutaBase = 'rits/ritsfront/resources/db'
+                        String encodedPassword = URLEncoder.encode(BBDD_PASSWORD, "UTF-8")
+
+                        sh 'echo Ejecutando scripts de front...'
+                        
+                        dir("${rutaBase}") {
+                            sh "sed -i 's/rits:rits/$BBDD_USER:${encodedPassword}/' ddl/ddl_param_jenkins.sh"
+                            sh "sed -i 's/rits:rits/$BBDD_USER:${encodedPassword}/' dml/master/dml_param_jenkins.sh"
+                            sh "sed -i 's/rits:rits/$BBDD_USER:${encodedPassword}/' dml/maqueta_fullequip/dml_param_jenkins.sh"
+                            sh "sed -i 's/rits:rits/$BBDD_USER:${encodedPassword}/' make_param_jenkins.sh"
+                            sh "./make_param_jenkins.sh maqueta_fullequip 192.168.88.71 5430 192.168.88.70"
+                        }
                     }
                 }
             }
@@ -179,7 +213,8 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: PASSWORD_CREDENTIALS_ID, usernameVariable: 'SSH_USER', passwordVariable: 'SSH_PASSWORD')]) {
                     script {
 						sh 'echo Relanzando aplicación remotamente tras ser actualizada'
-                        sh "sshpass -p $SSH_PASSWORD ssh -t -t -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST 'echo \\$SSH_PASSWORD | sudo -S service $SSH_SERVICE restart'"
+                        sh 'sshpass -p "$SSH_PASSWORD" ssh -t -t -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST' + " 'echo \\$SSH_PASSWORD | sudo -S service $SSH_SERVICE restart'"
+
                     }
                 }
             }
