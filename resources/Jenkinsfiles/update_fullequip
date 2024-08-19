@@ -8,6 +8,7 @@ pipeline {
         SSH_SERVICE = 'app'
         PASSWORD_CREDENTIALS_ID = 'ssh_fullequip'  // Reemplaza con el ID de tus credenciales
         PASSWORD_CREDENTIALS_ID_BBDD = 'fullequip_bbdd'
+        PASSWORD_CREDENTIALS_ID_BBDD_UTF8 = 'fullequip_bbdd_utf8'
     }
 
     stages {
@@ -48,12 +49,14 @@ pipeline {
                     }else{
                         env.CHANGES_FOUND = "false"
                     }
-                    echo "La variable de entorno CHANGES_FOUND tiene como valor: ${env.CHANGES_FOUND}"
                 }
             }
         }
 
         stage('Build back') {
+            when {
+                expression { return env.CHANGES_FOUND == 'true' }
+            }
             steps {
                 script {
                 
@@ -67,6 +70,9 @@ pipeline {
         }
         
         stage('Deploy back') {
+            when {
+                expression { return env.CHANGES_FOUND == 'true' }
+            }
             steps {
                 script {
 					sh 'echo Desplegando back'
@@ -123,17 +129,18 @@ pipeline {
                     sh "ssh $user@$host 'cd /home/$user/app && rm -rf backrits && tar zxvf backrits.tar.gz && sleep 15 && exit'"
                 }
 
-                withCredentials([usernamePassword(credentialsId: PASSWORD_CREDENTIALS_ID_BBDD, usernameVariable: 'BBDD_USER', passwordVariable: 'BBDD_PASSWORD')]) {
+                withCredentials([string(credentialsId: PASSWORD_CREDENTIALS_ID_BBDD_UTF8, variable: 'BBDD_PASSWORD_UTF8')]) {
                     script {
                         def rutaBase = 'rits/ritsback/resources/db'
-                        String encodedPassword = URLEncoder.encode(BBDD_PASSWORD, "UTF-8")
 
                         sh 'echo Ejecutando scripts de back...'
                         
                         dir("${rutaBase}") {
-                            sh "sed -i 's/rits:rits/$BBDD_USER:${encodedPassword}/' ddl/ddl_param_jenkins.sh"
-                            sh "sed -i 's/rits:rits/$BBDD_USER:${encodedPassword}/' dml/master/dml_param_jenkins.sh"
-                            sh "sed -i 's/rits:rits/$BBDD_USER:${encodedPassword}/' dml/maqueta_fullequip/dml_param_jenkins.sh"
+                            sh '''
+                                sed -i 's/rits:rits/rits:'''+ "$BBDD_PASSWORD_UTF8" +'''/' ddl/ddl_param_jenkins.sh
+                                sed -i 's/rits:rits/rits:'''+ "$BBDD_PASSWORD_UTF8" +'''/' dml/master/dml_param_jenkins.sh
+                                sed -i 's/rits:rits/rits:'''+ "$BBDD_PASSWORD_UTF8" +'''/' dml/maqueta_fullequip/dml_param_jenkins.sh
+                            '''
                             sh "./make_param_jenkins.sh maqueta_fullequip 192.168.88.71 5430"
                         }
                     }
@@ -142,6 +149,9 @@ pipeline {
         } 
         
         stage('Resources front') {
+            when {
+                expression { return env.CHANGES_FOUND == 'true' }
+            }
             steps {
                 withCredentials([usernamePassword(credentialsId: PASSWORD_CREDENTIALS_ID_BBDD, usernameVariable: 'BBDD_USER', passwordVariable: 'BBDD_PASSWORD')]) {
                     script {
@@ -153,11 +163,12 @@ pipeline {
                             sh "cp -r ${WORKSPACE}/rits/ritsfront/openits/static ./"
                             sh "cp -r ${WORKSPACE}/rits/ritsfront/openits/project ./"
                             
-                            sh '''sed -i 's/\\(spring.profiles.active=\\).*/\\1fullequip/' application.properties'''
-                            sh '''sed -i 's|\\(spring.datasource.url=jdbc:postgresql://\\).*|\\1192.168.88.71:5430/rits|' application.properties'''
-                            sh '''sed -i 's|\\(spring.datasource.password=\\).*|\\1'''+ "$BBDD_PASSWORD" +'''|' application.properties'''
-                            sh "cat application.properties"
-                            sh '''sed -i 's|\\(ws://\\).*\\(:61614\\)|\\1192.168.88.70\\2|' project/fullequip/data/config.js'''
+                            sh '''
+                                sed -i 's/\\(spring.profiles.active=\\).*/\\1fullequip/' application.properties
+                                sed -i 's|\\(spring.datasource.url=jdbc:postgresql://\\).*|\\1192.168.88.71:5430/rits|' application.properties
+                                sed -i 's|\\(spring.datasource.password=\\).*|\\1'''+ "$BBDD_PASSWORD" +'''|' application.properties
+                                sed -i 's|\\(ws://\\).*\\(:61614\\)|\\1192.168.88.70\\2|' project/fullequip/data/config.js
+                            '''
                         }
                     }
                 }
@@ -165,6 +176,9 @@ pipeline {
         }
         
         stage('Build front') {
+            when {
+                expression { return env.CHANGES_FOUND == 'true' }
+            }
             steps {
                 script {
 					sh 'echo Compilando front'
@@ -178,6 +192,9 @@ pipeline {
         }
         
         stage('Deploy front') {
+            when {
+                expression { return env.CHANGES_FOUND == 'true' }
+            }
             steps {
                 script {
 					sh 'echo Desplegando front'
@@ -189,18 +206,19 @@ pipeline {
                     sh "ssh $user@$host \"cd /home/$user/app/frontrits && rm -rf openits.jar && mv /home/$user/app/openits.jar ./ && sed -i 's|\\(active=\\).*\\( -jar\\)|\\1fullequip\\2|' ~/app/start.sh\""
                 }
                 
-                withCredentials([usernamePassword(credentialsId: PASSWORD_CREDENTIALS_ID_BBDD, usernameVariable: 'BBDD_USER', passwordVariable: 'BBDD_PASSWORD')]) {
+                withCredentials([string(credentialsId: PASSWORD_CREDENTIALS_ID_BBDD_UTF8, variable: 'BBDD_PASSWORD_UTF8')]) {
                     script {
                         def rutaBase = 'rits/ritsfront/resources/db'
-                        String encodedPassword = URLEncoder.encode(BBDD_PASSWORD, "UTF-8")
 
                         sh 'echo Ejecutando scripts de front...'
                         
                         dir("${rutaBase}") {
-                            sh "sed -i 's/rits:rits/$BBDD_USER:${encodedPassword}/' ddl/ddl_param_jenkins.sh"
-                            sh "sed -i 's/rits:rits/$BBDD_USER:${encodedPassword}/' dml/master/dml_param_jenkins.sh"
-                            sh "sed -i 's/rits:rits/$BBDD_USER:${encodedPassword}/' dml/maqueta_fullequip/dml_param_jenkins.sh"
-                            sh "sed -i 's/rits:rits/$BBDD_USER:${encodedPassword}/' make_param_jenkins.sh"
+                            sh '''
+                                sed -i 's/rits:rits/rits:'''+ "$BBDD_PASSWORD_UTF8" +'''/' ddl/ddl_param_jenkins.sh
+                                sed -i 's/rits:rits/rits:'''+ "$BBDD_PASSWORD_UTF8" +'''/' dml/master/dml_param_jenkins.sh
+                                sed -i 's/rits:rits/rits:'''+ "$BBDD_PASSWORD_UTF8" +'''/' dml/maqueta_fullequip/dml_param_jenkins.sh
+                                sed -i 's/rits:rits/rits:'''+ "$BBDD_PASSWORD_UTF8" +'''/' make_param_jenkins.sh
+                            '''
                             sh "./make_param_jenkins.sh maqueta_fullequip 192.168.88.71 5430 192.168.88.70"
                         }
                     }
@@ -209,6 +227,9 @@ pipeline {
         } 
         
         stage('Restart app') {
+            when {
+                expression { return env.CHANGES_FOUND == 'true' }
+            }
             steps {
                 withCredentials([usernamePassword(credentialsId: PASSWORD_CREDENTIALS_ID, usernameVariable: 'SSH_USER', passwordVariable: 'SSH_PASSWORD')]) {
                     script {
