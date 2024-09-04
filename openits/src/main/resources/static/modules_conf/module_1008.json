@@ -29,7 +29,7 @@
 		"info": [ "AlarmLevel:1", "AlarmLevel:2" ] 
 	},
 	"requiredPermissions": {
-		"edit": "SystemPermission:19"		
+		"edit": "SystemPermission:22"		
 	},
 	"action": {
 		"alarmConfig": 103501

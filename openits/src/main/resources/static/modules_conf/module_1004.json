@@ -45,13 +45,12 @@
 		{ "position": 4, "icon": "ico webix_icon mdi mdi-road", "label": "LBL_INCIDENT_ROAD", "objField": "fieldRoad" },
 		{ "position": 5, "icon": "ico webix_icon mdi mdi-map-marker", "label": "LBL_INCIDENT_LOCATION", "objField": "fieldLocation" },
 		{ "position": 6, "icon": "ico webix_icon mdi mdi-road", "label": "LBL_INCIDENT_REPORT_STRETCH", "objField": "fieldStretch" },
-		{ "position": 7, "icon": "ico webix_icon mdi mdi-road", "label": "LBL_INCIDENT_REPORT_RELATED_STRETCHS_ROAD", "objField": "fieldStretchs" },
-		{ "position": 8, "icon": "ico webix_icon mdi mdi-selection", "label": "LBL_INCIDENT_ROAD_IMPACT", "objField": "fieldRoadImpact" },
-		{ "position": 9, "icon": "ico webix_icon mdi mdi-account", "label": "LBL_INCIDENT_USER_ASSIGNED", "objField": "fieldUser" },
-		{ "position": 10, "icon": "ico webix_icon mdi mdi-clock-time-three-outline", "label": "LBL_INCIDENT_CREATED", "objField": "fieldGenerateAt" },
-		{ "position": 11, "icon": "ico webix_icon mdi mdi-refresh", "label": "LBL_INCIDENT_LAST_UPDATED", "objField": "fieldLastUpdated" },
-		{ "position": 12, "icon": "ico webix_icon mdi mdi-calendar", "label": "LBL_INCIDENT_VALID_UNTIL", "objField": "fieldValidUntil" },
-		{ "position": 13, "icon": "ico webix_icon mdi mdi-exclamation-thick", "label": "LBL_INCIDENT_CAUSE", "objField": "fieldCause" }
+		{ "position": 7, "icon": "ico webix_icon mdi mdi-selection", "label": "LBL_INCIDENT_ROAD_IMPACT", "objField": "fieldRoadImpact" },
+		{ "position": 8, "icon": "ico webix_icon mdi mdi-account", "label": "LBL_INCIDENT_USER_ASSIGNED", "objField": "fieldUser" },
+		{ "position": 9, "icon": "ico webix_icon mdi mdi-clock-time-three-outline", "label": "LBL_INCIDENT_CREATED", "objField": "fieldGenerateAt" },
+		{ "position": 10, "icon": "ico webix_icon mdi mdi-refresh", "label": "LBL_INCIDENT_LAST_UPDATED", "objField": "fieldLastUpdated" },
+		{ "position": 11, "icon": "ico webix_icon mdi mdi-calendar", "label": "LBL_INCIDENT_VALID_UNTIL", "objField": "fieldValidUntil" },
+		{ "position": 12, "icon": "ico webix_icon mdi mdi-exclamation-thick", "label": "LBL_INCIDENT_CAUSE", "objField": "fieldCause" }
 	],
 	"logIncidentType": "LogType:1",
 	"logIncidentSubTypes":["LogSubtype:17"],
@@ -60,8 +59,8 @@
 	"iReportLogValuesParamIdState": "LogTypeParam:1:1",
 	"iReportLogValuesParamIdComment": "LogTypeParam:1:2",
 	"action": {
-		"cctvScenario": 102002,
-		"loadIncidentInMap": 200003
+		"cctvScenario": null,
+		"loadIncidentInMap": null
 	},
 	"locationTypes":["LocationType:2"],
 	"stretchTypes":["StretchType:2"],
@@ -78,7 +77,7 @@
 	},
 	"executeTaskPlanDelaySecs": 2,
 	"systemParamConfirmIncident": "SystemParam:7",
-	"showOperationalPlan": true,
-	"showDocuments": true,
-	"showAttachments": true
+	"showOperationalPlan": false,
+	"showDocuments": false,
+	"showAttachments": false
 }

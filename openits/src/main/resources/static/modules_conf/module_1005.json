@@ -36,6 +36,6 @@
 		"locate": 200004
 	},
 	"requiredPermissions": {
-		"edit": "SystemPermission:19"		
+		"edit": "SystemPermission:22"		
 	}
 }
