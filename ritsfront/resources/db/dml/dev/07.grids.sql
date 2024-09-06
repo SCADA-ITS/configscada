@@ -564,7 +564,13 @@ INSERT INTO ui.grid_field_icons(grid_field_id, icon, value, show_value, badge_co
 (100307, './img/incident_level/incident_level_1.png', 'ImsIncidentLevel:1', false, false, false, true, 'LBL_ICON_IMS_INCIDENT_LEVEL_1'),
 (100307, './img/incident_level/incident_level_2.png', 'ImsIncidentLevel:2', false, false, false, true, 'LBL_ICON_IMS_INCIDENT_LEVEL_2'),
 (100307, './img/incident_level/incident_level_3.png', 'ImsIncidentLevel:3', false, false, false, true, 'LBL_ICON_IMS_INCIDENT_LEVEL_3'),
-(100307, './img/incident_level/incident_level_4.png', 'ImsIncidentLevel:4', false, false, false, true, 'LBL_ICON_IMS_INCIDENT_LEVEL_4');
+(100307, './img/incident_level/incident_level_4.png', 'ImsIncidentLevel:4', false, false, false, true, 'LBL_ICON_IMS_INCIDENT_LEVEL_4'),
+
+(105102, './img/incident_level/incident_level_1.png', 'ImsIncidentLevel:1', false, false, false, true, 'LBL_ICON_IMS_INCIDENT_LEVEL_1'),
+(105102, './img/incident_level/incident_level_2.png', 'ImsIncidentLevel:2', false, false, false, true, 'LBL_ICON_IMS_INCIDENT_LEVEL_2'),
+(105102, './img/incident_level/incident_level_3.png', 'ImsIncidentLevel:3', false, false, false, true, 'LBL_ICON_IMS_INCIDENT_LEVEL_3'),
+(105102, './img/incident_level/incident_level_4.png', 'ImsIncidentLevel:4', false, false, false, true, 'LBL_ICON_IMS_INCIDENT_LEVEL_4');
+
 
 INSERT INTO ui.grid_option_values(grid_id, grid_option_id, value) VALUES
 (50, 1, 'true'),

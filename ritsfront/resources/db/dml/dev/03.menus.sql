@@ -29,6 +29,8 @@ INSERT INTO ui.menu_items(menu_group_id, "position", module_id, "label", icon, "
 (2, 21, 1030, 'LBL_MENU_ITEM_PAS_SIGNALLING', 'img/menu/pas-menu.png', 'Menu item PAS Signaling', 'Menu item PAS Signaling', true, true),
 (2, 22, null, '', null, '', null, true, true),
 (2, 23, 1020, 'LBL_CCTV', 'img/menu/camera-menu.png', 'Menu item CCTV', 'Menu item CCTV', true, true),
+(2, 24, 1051, 'LBL_INCIDENT_MONITOR_MODULE', 'img/menu/incident-menu.png', 'Menu incident Monitor Module', 'Menu incident Monitor Module', true, true),
+
 
 -- OTHERS
 --(3, 1, 402, 'LBL_CONTROL_PANEL', 'img/menu/control-panel-menu.png', 'Menu item Control Panel', 'Menu item  CCTV', true, true),

@@ -253,7 +253,12 @@ INSERT INTO ui.data_sources(id, data_source_type_id, "name", description, entity
 (245, 3, 'updateCCTVScenario', 'updateCCTVScenario', 'CCTVScenarioVO', 'id', true, true),
 (246, 3, 'deleteCCTVScenario', 'deleteCCTVScenario', 'CCTVScenarioVO', 'id', true, true),
 (247, 1, 'get_cctv_scenario_nodes', 'get_cctv_scenario_nodes', 'CCTVScenarioNodeVO', 'id', true, true),
-(248, 1, 'get_cctv_scenarios', 'get_cctv_scenarios', 'CCTVScenarioVO', 'id', true, true);
+(248, 1, 'get_cctv_scenarios', 'get_cctv_scenarios', 'CCTVScenarioVO', 'id', true, true),
+(249, 1, 'getImsDelayedIncidentReports', 'getImsDelayedIncidentReports', 'ImsDelayedIncidentReportVO', 'id', true, true),
+(250, 1, 'getImsDelayedIncidentReport', 'getImsDelayedIncidentReports', 'ImsDelayedIncidentReportVO', 'id', true, true),
+(251, 3, 'sendImsDelayedIncidentActions', 'sendImsDelayedIncidentActions', 'ImsDelayedIncidentActionVO', 'id', true, true);
+
+
 
 
 INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) VALUES
@@ -1010,8 +1015,8 @@ INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) V
 
 (159, 8, 'http://192.168.88.163:8082/graphql'),
 (159, 9, 'createIncidentReport'),
-(159, 10, 'incidentTypeId,locationId,alarmIds,affectionStretchIds,userId,roadImpactId'),
-(159, 11, 'String!,String!,[String!],[String!],String!,String'),
+(159, 10, 'incidentTypeId,locationId,alarmIds,affectionStretchIds,userId,roadImpactId, cronExpression'),
+(159, 11, 'String!,String!,[String!],[String!],String!,String,String'),
 (159, 12, NULL),
 
 (160, 1, 'http://192.168.88.163:8082/graphql'),
@@ -1493,4 +1498,20 @@ INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) V
 (248, 1, 'http://192.168.88.163:8082/graphql'),
 (248, 2, 'getCCTVScenarios'),
 (248, 3, ''),
-(248, 4, NULL);
+(248, 4, NULL),
+
+(249, 1, 'http://localhost:8082/graphql'),
+(249, 2, 'getImsDelayedIncidentReports'),
+(249, 3, ''),
+(249, 4, NULL),
+
+(250, 1, 'http://localhost:8082/graphql'),
+(250, 2, 'getImsDelayedIncidentReport'),
+(250, 3, 'delayedIncidentReportId'),
+(250, 4, NULL),
+
+(251, 8, 'http://localhost:8082/graphql'),
+(251, 9, 'sendImsDelayedIncidentActions'),
+(251, 10, 'imsDelayedIncidentActions'),
+(251, 11, '[ImsDelayedIncidentActionVO!]!'),
+(251, 12, NULL);

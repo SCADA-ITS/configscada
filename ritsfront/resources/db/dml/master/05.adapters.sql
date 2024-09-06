@@ -14,7 +14,8 @@ INSERT INTO ui.adapters(id, adapter_type_id, "name", description, enabled, visib
 (9, 1, 'ALARMS FILTERED TO GRID DATA', 'ALARMS FILTERED TO GRID DATA', true, true),
 (10, 2, 'ELEMENT HIERCHIES TO TREE DATA', 'ELEMENT HIERCHIES TO TREE DATA', true, true),
 (11, 1, 'PLANS TO GRID DATA', 'PLANS TO GRID DATA', true, true),
-(12, 1, 'ELEMENTS LIST TO GRID DATA', 'ELEMENTS LIST TO GRID DATA', true, true);
+(12, 1, 'ELEMENTS LIST TO GRID DATA', 'ELEMENTS LIST TO GRID DATA', true, true),
+(13, 1, 'IDELAYED_ INCIDENT REPORTS TO GRID DATA', 'DELAYED_ INCIDENT REPORTS TO GRID DATA', true, true);
 
 INSERT INTO ui.adapter_params(id, adapter_id, pos, param, enabled, visible) VALUES
 (1, 2, 1, 'elementTypeId', true, true),
@@ -47,4 +48,5 @@ INSERT INTO ui.adapter_data_sources(adapter_id, data_source_id, adapter_data_sou
 (10, 3, 2, 'ws.element.getList'),
 (11, 153, 1, 'config/groovy/adapter/grid/AdapterGridPlanMonitor.groovy'),
 (11, 165, 2, 'ws.plan.getList'),
-(12, 183, 1, 'config/groovy/adapter/grid/AdapterGridGeneric.groovy');
+(12, 183, 1, 'config/groovy/adapter/grid/AdapterGridGeneric.groovy'),
+(13, 249, 1, 'config/groovy/adapter/grid/AdapterGridGeneric.groovy');

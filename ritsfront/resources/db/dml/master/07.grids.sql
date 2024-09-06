@@ -52,7 +52,9 @@ INSERT INTO ui.grids(id, adapter_id, "label", enabled, visible) VALUES
 (1013, NULL, 'LBL_GRID_LIGHTING_MANAGER_CIRCUITS', true, true),
 (1022, 11, 'LBL_GRID_PLAN_MONITOR', true, true),
 (1023, 2, 'LBL_GRID_TRAVEL_TIMES', true, true),
-(1026, 12, 'LBL_GRID_EQUIPMENT_EDITOR', true, true);
+(1026, 12, 'LBL_GRID_EQUIPMENT_EDITOR', true, true),
+(1051, 13, 'LBL_GRID_DELAYED_INCIDENTS', true, true);
+
 
 INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", required, parameterized, extended, filtered, "label", label_tooltip, source_field, is_pk, is_epoch_milli, align, needs_translation, grouping_summary, width_px, grid_field_group_operation_id, enabled, visible, adjust, header_vertical, fixed_column, replacement_function, precision_filter) VALUES
 (100001, 1000, 1, 1, true, false, false, false, 'LBL_GRID_FIELD_ID', 'LBL_GRID_FIELD_ID', 'id', true, false, null, false, false, 500, NULL, true, false, NULL, NULL, NULL, NULL, NULL),
@@ -222,8 +224,18 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (102602, 1026, 1, 4, true, true, false, true, 'LBL_GRID_FIELD_ELEMENT_TYPE_ALIAS', 'LBL_GRID_FIELD_ELEMENT_TYPE_ALIAS', 'elementTypeLabelAlias', false, false, NULL, true, false, 350, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
 (102603, 1026, 1, 5, true, true, false, true, 'LBL_GRID_FIELD_ELEMENT_SUBTYPE', 'LBL_GRID_FIELD_ELEMENT_SUBTYPE', 'elementSubtypeLabelAlias', false, false, NULL, true, false, 350, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
 (102604, 1026, 1, 3, true, false, false, true, 'LBL_DESCRIPTION', 'LBL_DESCRIPTION', 'description', false, false, NULL, true, false, 500, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
-(102605, 1026, 1, 2, true, false, false, true, 'LBL_GRID_FIELD_ELEMENT_ALIAS', 'LBL_GRID_FIELD_ELEMENT_ALIAS', 'alias', false, false, NULL, true, false, 350, NULL, true, true, NULL, NULL, NULL, NULL, NULL);
+(102605, 1026, 1, 2, true, false, false, true, 'LBL_GRID_FIELD_ELEMENT_ALIAS', 'LBL_GRID_FIELD_ELEMENT_ALIAS', 'alias', false, false, NULL, true, false, 350, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
 
+(105101, 1051, 2, 1, true, false, false, false, 'LBL_GRID_FIELD_ID', 'LBL_GRID_FIELD_ID', 'id', true, false, NULL, false, false, 50, NULL, true, false, NULL, NULL, NULL, NULL, NULL),
+(105102, 1051, 1, 2, true, false, false, false, '', 'INCIDENT_LEVEL_ID', 'incidentTypeIncidentLevelId', false, false, NULL, false, false, 50, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(105103, 1051, 1, 3, true, false, true, false, 'LBL_GRID_FIELD_INCIDENT_LEVEL_LABEL_ALIAS', 'LBL_GRID_FIELD_INCIDENT_LEVEL_LABEL_ALIAS', 'incidentTypeIncidentLevelLabelAlias', false, false, NULL, true, false, 150, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(105104, 1051, 1, 4, true, false, false, false, 'LBL_GRID_FIELD_INCIDENT_TYPE_ALIAS', 'LBL_GRID_FIELD_INCIDENT_TYPE_ALIAS', 'incidentTypeAlias', false, false, NULL, false, false, 260, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(105105, 1051, 1, 5, true, false, true, false, 'LBL_GRID_FIELD_INCIDENT_TYPE_DESCRIPTION', 'LBL_GRID_FIELD_INCIDENT_TYPE_DESCRIPTION', 'incidentTypeDescription', false, false, NULL, false, false, 300, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(105106, 1051, 1, 6, true, false, false, false, 'LBL_GRID_FIELD_AFFECTION_STRETCH', 'LBL_GRID_FIELD_AFFECTION_STRETCH', 'affectionStretchAlias', false, false, NULL, false, false, 260, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(105107, 1051, 1, 7, true, false, true, false, 'LBL_GRID_FIELD_LOCATION', 'LBL_GRID_FIELD_LOCATION', 'locationAlias', false, false, NULL, false, false, 150, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(105108, 1051, 1, 8, true, false, false, false, 'LBL_GRID_FIELD_INCIDENT_STATE_LAVEL_ALIAS', 'LBL_GRID_FIELD_INCIDENT_STATE_LAVEL_ALIAS', 'delayedIncidentStateLabelAlias', false, false, NULL, true, false, 150, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(105109, 1051, 1, 9, true, false, false, false, 'LBL_GRID_FIELD_CRONEXPRESION', 'LBL_GRID_FIELD_CRONEXPRESION', 'cronExpression', false, false, NULL, true, false, 250, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(105110, 1051, 1, 10, true, false, false, false, 'LBL_GRID_FIELD_NEXT_EXEC', 'LBL_GRID_FIELD_NEXT_EXEC', 'cronExpression', false, false, NULL, false, false, 175, NULL, true, true, NULL, NULL, NULL, 'getNextExec', NULL);
 
 
 INSERT INTO ui.grid_option_values(grid_id, grid_option_id, value) VALUES
@@ -534,7 +546,33 @@ INSERT INTO ui.grid_option_values(grid_id, grid_option_id, value) VALUES
 (1026, 23, NULL),
 (1026, 24, NULL),
 (1026, 25, 'true'),
-(1026, 26, 'true');
+(1026, 26, 'true'),
+
+
+(1051, 1, 'true'),
+(1051, 2, 'true'),
+(1051, 3, '105101'),
+(1051, 4, 'desc'),
+(1051, 5, NULL),
+(1051, 6, NULL),
+(1051, 7, 'true'),
+(1051, 8, 'true'),
+(1051, 9, 'true'),
+(1051, 10, 'true'),
+(1051, 11, 'true'),
+(1051, 12, 'true'),
+(1051, 13, 'true'),
+(1051, 14, 'false'),
+(1051, 15, 'false'),
+(1051, 16, 'img/grid/default.png'),
+(1051, 17, 'true'),
+(1051, 18, NULL),
+(1051, 19, NULL),
+(1051, 20, 'true'),
+(1051, 21, NULL),
+(1051, 22, NULL),
+(1051, 25, 'true'),
+(1051, 26, 'true');
 
 INSERT INTO ui.grid_commands(grid_id, "position", "label", icon, "default", module_action_id, args, view_type_id, multiselect, show_text, item_required, grouped, unselect_all_after) VALUES
 (1000, 1, 'LBL_CMD_ADD', 'mdi mdi-plus', false, 101101, null, 2, false, false, false, null, null),
@@ -604,7 +642,13 @@ INSERT INTO ui.grid_commands(grid_id, "position", "label", icon, "default", modu
 (1026, 2, 'LBL_CMD_ADD', 'mdi mdi-plus', false, 104901, null, 2, false, false, false, null, null),
 (1026, 3, 'LBL_CMD_EDIT', 'mdi mdi-pencil', true, 104902, null, 2, false, false, true, null, null),
 (1026, 4, 'LBL_CMD_DELETE', 'mdi mdi-delete', false, 104903, null, 2, true, false, true, null, null),
-(1026, 1, 'LBL_CMD_CLONE', 'mdi mdi-plus-box-multiple', false, 104904, null, 2, true, false, true, null, null);
+(1026, 1, 'LBL_CMD_CLONE', 'mdi mdi-plus-box-multiple', false, 104904, null, 2, true, false, true, null, null),
+
+(1051, 1, 'LBL_CMD_ADD', 'mdi mdi-plus', false, 101306, null, 2, true, false, false, null, null),
+(1051, 2, 'LBL_CMD_EDIT', 'mdi mdi-pencil', true, 105201, NULL, 2, false, false, true, null, null),
+(1051, 4, 'LBL_CMD_ENABLE', 'mdi mdi-radiobox-marked', false, 105202, NULL, 2, true, true, true, null, null),
+(1051, 5, 'LBL_CMD_DISABLE', 'mdi mdi-radiobox-blank', false, 105203, NULL, 2, true, true, true, null, null),
+(1051, 3, 'LBL_CMD_DELETE', 'mdi mdi-delete', false, 105204, NULL, 2, true, false, true, null, null);
 
 INSERT INTO ui.grid_field_icons(grid_field_id, icon, value, show_value, badge_color, avatar, enabled, label_value) VALUES
 (100002, NULL, NULL, true, false, true, true, NULL),
@@ -716,7 +760,9 @@ INSERT INTO ui.grid_field_icons(grid_field_id, icon, value, show_value, badge_co
 (102304, './img/state/stateUnknown.png', 'ElementTypeState:6:0', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_UNKNOWN'),
 (102304, './img/state/valid.png', 'ElementTypeState:6:1', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_VALID'),
 (102304, './img/state/invalid.png', 'ElementTypeState:6:2', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_INVALID'),
-(102304, './img/state/stateAlarm.png', 'ElementTypeState:6:3', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_ALARMS');
+(102304, './img/state/stateAlarm.png', 'ElementTypeState:6:3', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_ALARMS'),
+
+(105108, NULL, NULL, false, true, false, true, NULL);
 
 INSERT INTO ui.grid_field_balloons(grid_field_id, color, value, enabled) VALUES
 (100003, '#F39C12', 'System', true),

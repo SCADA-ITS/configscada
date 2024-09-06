@@ -120,6 +120,9 @@ INSERT INTO ui.modules(id, module_type_id, "name", description, default_view_typ
 (1049, 1, 'Equipment editor module', 'Equipment editor module', 2, null, 'modules/equipmentEditor/equipmentEditorModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 (1050, 1, 'Location editor module', 'Location editor module', 2, null, 'modules/location/locationModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 
+(1051, 1, 'Incident reports', 'Incident report', 1, 'SystemPermission:12', 'modules/incidentMonitorModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(1052, 1, 'Delayed incident report', 'Delayed incident report', 1, null, 'modules/delayedIncidentModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+
 (2000, 1, 'Map launcher Module', 'Map launcher Module', 1, null, 'modules/mapLauncherModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL);
 
 
@@ -157,6 +160,7 @@ INSERT INTO ui.module_actions(id, module_id, name, description, system_permissio
 (101303, 1013, 'fromIncidentsNoMap', 'launch wizard from incidents list without map', 'SystemPermission:9', null),
 (101304, 1013, 'fromIncidentsMap', 'launch wizard from incident list with map', 'SystemPermission:9', null),
 (101305, 1013, 'fromAlarms', 'launch wizard from alarms monitor', 'SystemPermission:9', null),
+(101306, 1013, 'delayedIncidents', 'launch wizard for delayed incidents', 'SystemPermission:9', null),
 (101401, 1014, 'view', 'launch equipment viewer', null, null),
 (101402, 1014, 'view_from_alarm', 'launch equipment viewer from alarm', null, null),
 (101601, 1016, 'mute', 'mute alarms', null, null),
@@ -228,7 +232,11 @@ INSERT INTO ui.module_actions(id, module_id, name, description, system_permissio
 (105001, 1050, 'add', 'add new location', null, null),
 (105002, 1050, 'edit', 'edit location', null, null),
 (105003, 1050, 'delete', 'delete location', null, null),
-(105004, 1050, 'select', 'select location', null, null);
+(105004, 1050, 'select', 'select location', null, null),
+(105201, 1052, 'edit', 'edit delayed report', null, null),
+(105202, 1052, 'enable', 'enable delayed report', null, null),
+(105203, 1052, 'disable', 'disable delayed report', null, null),
+(105204, 1052, 'delete', 'delete delayed report', null, null);
 
 
 
@@ -604,6 +612,19 @@ INSERT INTO ui.window_values(module_id, window_param_id, value) VALUES
 (1049, 10, 'img/module/default.png'),
 (1049, 11, '#464646'),
 (1049, 12, 'LBL_EQUIPMENT_EDITOR'),
-(1049, 14, 'false');
+(1049, 14, 'false'),
 
+(1051, 8, 'true'),
+(1051, 10, 'img/module/incident-color.png'),
+(1051, 11, '#464646'),
+(1051, 12, 'LBL_MENU_ITEM_INCIDENT_MONITOR'),
+(1051, 14, 'true'),
+
+(1052, 4, '500'),
+(1052, 5, '950'),
+(1052, 8, 'true'),
+(1052, 10, 'img/module/default.png'),
+(1052, 11, '#464646'),
+(1052, 12, 'LBL_DLAYED_INCIDENT'),
+(1052, 14, 'false');
 
