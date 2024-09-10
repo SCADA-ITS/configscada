@@ -625,6 +625,6 @@ INSERT INTO ui.window_values(module_id, window_param_id, value) VALUES
 (1052, 8, 'true'),
 (1052, 10, 'img/module/default.png'),
 (1052, 11, '#464646'),
-(1052, 12, 'LBL_DLAYED_INCIDENT'),
+(1052, 12, 'LBL_DELAYED_INCIDENT'),
 (1052, 14, 'false');
 
