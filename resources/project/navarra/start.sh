@@ -1,26 +1,11 @@
-#!#!/bin/bash
-sleep 10
-echo Loading DATA-LOADER ...
-nohup java -jar /app/backrits/data-loader.jar -Dfile.encoding=UTF-8 &
-echo Waiting 40 secs...
-sleep 40
-echo Loading EP-PUB-STOMP ...
-nohup java -jar /app/backrits/ep-pub-stomp.jar -Dfile.encoding=UTF-8 --xml.adapter=pub_stomp_adapter_v1.xml &
-echo Loading EQUIPMENT-MANAGER ...
-nohup java -jar /app/backrits/equipment-manager.jar -Dfile.encoding=UTF-8 --xml.adapter=equipment_manager_adapter_v1.xml &
-echo Loading SERVICE-GRAPHQL ...
-nohup java -jar /app/backrits/service-graphql.jar -Dfile.encoding=UTF-8 --xml.adapter=service_graphql_adapter_v1.xml &
-echo Loading PLAN-MANAGER
-nohup java -jar /app/backrits/plan-manager.jar -Dfile.encoding=UTF-8 --xml.adapter=plan_manager_adapter_v1.xml &
-echo Waiting 10 secs...
-sleep 10
-echo Loading IO-CONTROLLER ...
-nohup java -jar /app/backrits/io-controller.jar -Dfile.encoding=UTF-8 --xml.adapter=controller_adapter_v1.xml &
-echo Loading INCIDENT-MANAGER ...
-nohup java -jar /app/backrits/incident-manager.jar -Dfile.encoding=UTF-8 --xml.adapter=incident_manager_adapter_v1.xml &
-echo Loading TRAFFIC-MANAGER ...
-nohup java -jar /app/backrits/traffic-manager.jar -Dfile.encoding=UTF-8 --xml.adapter=traffic_manager_adapter_v1.xml &
-echo Loading HISTORICAL-MANAGER ...
-java -jar /app/backrits/historical-manager.jar -Dfile.encoding=UTF-8 --xml.adapter=historical_manager_adapter_v1.xml &
-echo Loading IO-EXTERNAL-MANAGER
-java -jar /app/backrits/io-external-manager.jar -Dfile.encoding=UTF-8 --xml.adapter=io_external_manager_adapter_v1.xml
+#!/bin/bash
+echo Kill old process
+pkill --signal SIGKILL -f backrits
+pkill --signal SIGKILL -f frontrits
+
+
+echo Loading SERVER-LAUNCHER-MANAGER
+nohup java -jar /home/revenga/app/backrits/server-launcher.jar  -Dfile.encoding=UTF-8 --xml.adapter=server_launcher_manager_adapter_v1.xml --xml.server_launcher_adapter=server_launcher_adapter_v1.xml &
+sleep 5
+echo Loading FRONT
+nohup java -Dspring.profiles.active=navarra -jar /home/revenga/app/frontrits/openits.jar
