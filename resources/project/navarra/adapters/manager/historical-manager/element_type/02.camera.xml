@@ -4,12 +4,12 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="historical_element_parser_v1 ../../../../../adapter-lib/src/main/resources/schemas/manager/historical_element_parser_v1.xsd"
 	element_type_id="2">
-	<p:target_table>hist.barrier</p:target_table>
+	<p:target_table>hist.camera</p:target_table>
 	<p:table_space>tbl_hist</p:table_space>
 	<p:field_element_id>f_element_id</p:field_element_id>
 	<p:field_timestamp>timestamp_at</p:field_timestamp>
 	<p:fields>
-		<p:field name="camera">
+		<p:field name="speed">
 			<p:element_type_param>
 				<p:element_type_param_id>8</p:element_type_param_id>
 				<p:param_type_id>2</p:param_type_id>

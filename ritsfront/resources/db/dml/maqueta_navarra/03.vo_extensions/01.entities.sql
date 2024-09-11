@@ -28,6 +28,20 @@ INSERT INTO ui.vo_entities(id, vo_entity_type_id, enabled, visible) VALUES
 ('ElementTypeParam:3:2:21', 'ElementTypeParamUI', true, true),
 
 ('ElementType:4', 'ElementTypeUI', true, true),
+('ElementTypeParam:4:2:1', 'ElementTypeParamUI', true, true),
+('ElementTypeParam:4:2:2', 'ElementTypeParamUI', true, true),
+('ElementTypeParam:4:2:4', 'ElementTypeParamUI', true, true),
+('ElementTypeParam:4:2:6', 'ElementTypeParamUI', true, true),
+('ElementTypeParam:4:2:7', 'ElementTypeParamUI', true, true),
+('ElementTypeParam:4:2:18', 'ElementTypeParamUI', true, true),
+('ElementTypeParam:4:2:80', 'ElementTypeParamUI', true, true),
+('ElementTypeParam:4:2:81', 'ElementTypeParamUI', true, true),
+('ElementTypeParam:4:2:82', 'ElementTypeParamUI', true, true),
+('ElementTypeParam:4:2:83', 'ElementTypeParamUI', true, true),
+('ElementTypeParam:4:2:60', 'ElementTypeParamUI', true, true),
+('ElementTypeParam:4:2:61', 'ElementTypeParamUI', true, true),
+('ElementTypeParam:4:2:62', 'ElementTypeParamUI', true, true),
+('ElementTypeParam:4:2:100', 'ElementTypeParamUI', true, true),
 
 ('ElementType:51', 'ElementTypeUI', true, true),
 

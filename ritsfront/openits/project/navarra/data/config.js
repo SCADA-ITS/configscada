@@ -18,3 +18,6 @@ const APP_DEVMODE_ON = true;
 
 // Ligth Mode
 const APP_LIGTH_MODE = true;
+
+// Help available
+const APP_HELP_ENABLED = true;
