@@ -1,5 +1,5 @@
 INSERT INTO ui.equip_viewers (id, name, description, "label", icon, show_info_tab, show_childs, show_actions, initial_tab, measure_width, measure_max_rows, measure_only, graphic_icon_id, info_tab_mode, no_show_properties,  show_historical_chart, chart_interval_min, chart_interval_time_min) VALUES
-('ElementSubtype:4:2', 'CAMERA_SANCTIONING', 'CAMERA_SANCTIONING', 'LBL_ELEMENT_TYPE_CAMERA', NULL, true, false, false, null, 300, 3, null, 2, 1, null, true, 1, 10);
+('ElementSubtype:4:2', 'CAMERA_SANCTIONING', 'CAMERA_SANCTIONING', 'LBL_ELEMENT_TYPE_CAMERA', NULL, true, false, false, null, 300, 3, null, 2, 1, null, false, null, null);
 
 INSERT INTO ui.equip_viewer_tabs (id, equip_viewer_id, module_action_id, alias, description, "label", icon, "position", visible) VALUES
 (1, 'ElementSubtype:4:2', 100501, 'Alarms module', 'Alarms module', 'LBL_ALARMS', NULL, 2, true),

@@ -28,10 +28,13 @@ INSERT INTO ui.menu_items(id, menu_group_id, "position", module_id, "label", ico
 -- TOOLS
 (0401, 4, 1, 403, 'LBL_MENU_ITEM_REPORTS', 'img/menu/report.png', 'Menu item Reports', 'Menu item Reports', true, true),
 (0402, 4, 2, 1923, 'LBL_MENU_ITEM_BACKOFFICE_DGT', 'img/menu/task-menu.png', 'DGT_GIP', 'Dgt GIP', true, true),
+(0403, 4, 3, 1045, 'LBL_HISTORICAL_CHARTS', 'img/menu/chart-menu.png', 'Historical charts', 'Historical Charts', true, true),
 
 -- CONFIG
 (600, 4000, 7, 1048, 'LBL_MENU_ITEM_EQUIPMENT_EDITOR', 'img/menu/equipment-menu.png', 'Menu item equipment Editor', 'Menu item equipment Editor', true, true),
-(601, 4000, 7, 1050, 'LBL_MENU_ITEM_LOCATION_EDITOR', 'img/menu/locations-menu.png', 'Menu item location editor', 'Menu item location editor', true, true);
+(601, 4000, 7, 1050, 'LBL_MENU_ITEM_LOCATION_EDITOR', 'img/menu/locations-menu.png', 'Menu item location editor', 'Menu item location editor', true, true),
+
+(500001, 5000, 3, 1047, 'LBL_MENU_HELP_CONTENTS', 'img/menu/help.png', 'Help contents', 'Menu item help contents', true, true);
 
 
 
