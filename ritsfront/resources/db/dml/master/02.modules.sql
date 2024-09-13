@@ -617,7 +617,7 @@ INSERT INTO ui.window_values(module_id, window_param_id, value) VALUES
 (1051, 8, 'true'),
 (1051, 10, 'img/module/incident-color.png'),
 (1051, 11, '#464646'),
-(1051, 12, 'LBL_MENU_ITEM_INCIDENT_MONITOR'),
+(1051, 12, 'LBL_MENU_ITEM_INCIDENT_REPORTS'),
 (1051, 14, 'true'),
 
 (1052, 4, '500'),

@@ -8,8 +8,8 @@ const appConfig = {
 		const wssUrl = 'wss://openits.server/ws';
 	
 		return document.location.protocol === "https:" ? wssUrl : wsUrl;	
-	}()	,
-	osrm: 'http://192.168.88.179:5000/route/v1/driving/${ini};${end}?overview=full&geometries=geojson'
+	}() ,
+	osrm: 'http://192.168.88.130:5000/route/v1/driving/${ini};${end}?overview=full&geometries=geojson'
 }
 
 const APP_TITLE = "OpenITS - NAVARRA";

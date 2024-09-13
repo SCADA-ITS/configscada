@@ -1,5 +1,5 @@
 INSERT INTO ui.maps (id, name, description, "label", icon, longitude, latitude, zoom, zoom_max, zoom_min, limit_init_lon, limit_init_lat, limit_end_lon, limit_end_lat, custom_provider_url, default_zoom_search, dark_mode) VALUES 
-(2, 'Navarra', 'Navarra', 'LBL_MAP', NULL, -1.649, 42.81207, 12, 18, 6, -2.92, 43.41, -0.42, 41.73, 'http://192.168.88.179:8100/geoserver/wms', NULL, false);
+(2, 'Navarra', 'Navarra', 'LBL_MAP', NULL, -1.65, 42.816667, 9, 16, 9, 0, 39.8, -2.5, 45.8, 'http://192.168.88.130:8100/geoserver/wms', null, true);
 
 INSERT INTO ui.map_layers (id, base_layer, map_id, "name", description, "label", icon, visible) VALUES 
 (1002, NULL, 2, 'RADAR', 'RADAR', 'LBL_ELEMENT_TYPE_CAMERA', NULL, true),
@@ -25,25 +25,25 @@ INSERT INTO ui.map_layer_elements (id, layer_id, element_id, graphic_icon_id, "l
 (1073, 1071,'Element:71:3', 71,'RM-PMV-003', -1.6156152456909012, 42.962597921264624, false, null, true, false, null, true );
 
 INSERT INTO ui.map_layer_element_zooms (map_layer_element_id, zoom_lower, zoom_upper, graphic_icon_id, longitude, latitude, horizontal_flip, rotate, tooltip, show_text, text_color, z_index_front) VALUES
-(12, 9, 10, 4, -1.135958218701191, 42.7190401589307, false, null, true, false, '#000000', null),
-(14, 9, 10, 4, -1.135958218701191, 42.8990401589307, false, null, true, false, '#000000', null),
-(16, 9, 10, 4, -1.135958218701191, 43.08624220385988, false, null, true, false, '#000000', null),
-(18, 9, 10, 4, -1.135958218701191, 43.27574064391471, false, null, true, false, '#000000', null),
-(20, 9, 10, 4, -1.135958218701191, 43.45350104774429, false, null, true, false, '#000000', null),
+(1012, 9, 10, 4, -1.135958218701191, 42.7190401589307, false, null, true, false, '#000000', null),
+(1014, 9, 10, 4, -1.135958218701191, 42.8990401589307, false, null, true, false, '#000000', null),
+(1016, 9, 10, 4, -1.135958218701191, 43.08624220385988, false, null, true, false, '#000000', null),
+(1018, 9, 10, 4, -1.135958218701191, 43.27574064391471, false, null, true, false, '#000000', null),
+(1020, 9, 10, 4, -1.135958218701191, 43.45350104774429, false, null, true, false, '#000000', null),
 
-(71, 9, 10, 71, -1.7029627033453338, 43.276149012514715, false, null, true, false, '#000000', null),
-(72, 9, 10, 71, -1.6141449610235126, 43.1356503997735, false, null, true, false, '#000000', null),
-(73, 9, 10, 71, -1.6156152456909012, 42.962597921264624, false, null, true, false, '#000000', null),
+(1071, 9, 10, 71, -1.7029627033453338, 43.276149012514715, false, null, true, false, '#000000', null),
+(1072, 9, 10, 71, -1.6141449610235126, 43.1356503997735, false, null, true, false, '#000000', null),
+(1073, 9, 10, 71, -1.6156152456909012, 42.962597921264624, false, null, true, false, '#000000', null),
 
-(12, 11, 16, 401, -1.135958218701191, 42.7190401589307,  false, null, true, false, '#000000', null),
-(14, 11, 16, 401, -1.135958218701191, 42.8990401589307, false, null, true, false, '#000000', null),
-(16, 11, 16, 401, -1.135958218701191, 43.08624220385988, false, null, true, false, '#000000', null),
-(18, 11, 16, 401, -1.135958218701191, 43.27574064391471, false, null, true, false, '#000000', null),
-(20, 11, 16, 401, -1.135958218701191, 43.45350104774429, false, null, true, false, '#000000', null),
+(1012, 11, 16, 401, -1.135958218701191, 42.7190401589307,  false, null, true, false, '#000000', null),
+(1014, 11, 16, 401, -1.135958218701191, 42.8990401589307, false, null, true, false, '#000000', null),
+(1016, 11, 16, 401, -1.135958218701191, 43.08624220385988, false, null, true, false, '#000000', null),
+(1018, 11, 16, 401, -1.135958218701191, 43.27574064391471, false, null, true, false, '#000000', null),
+(1020, 11, 16, 401, -1.135958218701191, 43.45350104774429, false, null, true, false, '#000000', null),
 
-(71, 11, 16, 7101, -1.7029627033453338, 43.276149012514715, false, null, true, false, '#000000', null),
-(72, 11, 16, 7101, -1.6141449610235126, 43.1356503997735, false, null, true, false, '#000000', null),
-(73, 11, 16, 7101, -1.6156152456909012, 42.962597921264624, false, null, true, false, '#000000', null);
+(1071, 11, 16, 7101, -1.7029627033453338, 43.276149012514715, false, null, true, false, '#000000', null),
+(1072, 11, 16, 7101, -1.6141449610235126, 43.1356503997735, false, null, true, false, '#000000', null),
+(1073, 11, 16, 7101, -1.6156152456909012, 42.962597921264624, false, null, true, false, '#000000', null);
  
 INSERT INTO ui.map_commands
 (id, map_id, "position", "label", icon, "default", module_action_id, args, view_type_id, multiselect, show_text, item_required,  context) VALUES
