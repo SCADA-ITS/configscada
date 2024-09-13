@@ -21,12 +21,12 @@
 			"lat": 42.816667
 		},
 		"limits": {
-			"startLAT": 44.41,
-			"startLON": -4.92,
-			"endLAT": 40.73,
-			"endLON": 0.58
+			"startLAT": 43.41,
+			"startLON": -2.92,
+			"endLAT": 41.73,
+			"endLON": -0.42
 		},
-		"zoom": 10
+		"zoom": 8
 	},
 	"steps": {
 		"newLocation": [
