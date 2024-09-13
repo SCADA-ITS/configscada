@@ -6,6 +6,9 @@ INSERT INTO ui.map_layers (id, base_layer, map_id, "name", description, "label",
 (1004, NULL, 2, 'SECC', 'SECC', 'LBL_ELEMENT_TYPE_SECTION', NULL, true),
 (1071, NULL, 2, 'PMV', 'PMV', 'LBL_ELEMENT_TYPE_PANEL', NULL, true);
 
+INSERT INTO ui.map_incidents(id, incident_graphic_icon_id, incident_report_module_action_id, incident_wizard_module_action_id) VALUES
+(2, 1000, 100401, 101301);
+
 INSERT INTO ui.map_layer_elements (id, layer_id, element_id, graphic_icon_id, "label", longitude, latitude, horizontal_flip, rotate, tooltip, show_text, text_color, selectable) VALUES 
 (1006, 1002,'Element:2:6', 2,'RM-RAD-001', -1.9017311745236636, 43.01375916591506, false, null, true, false, null, true ),
 (1007, 1002,'Element:2:7', 2,'RM-RAD-002', -1.7942441187488551, 42.08257298179288, false, null, true, false, null, true ),
