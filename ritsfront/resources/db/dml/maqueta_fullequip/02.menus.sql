@@ -23,7 +23,7 @@ INSERT INTO ui.menu_items(id, menu_group_id, "position", module_id, "label", ico
 (302, 3, 3, 1030, 'LBL_MENU_ITEM_PAS_SIGNALLING', 'img/menu/pas-menu.png', 'Menu item PAS Signaling', 'Menu item PAS Signaling', true, true),
 (303, 3, 4, 1027, 'LBL_MENU_ITEM_VENTILATION_MANAGER', 'img/menu/ventilation-menu.png', 'Menu item Ventilation Manager', 'Menu item Ventilation Manager', true, true),
 --MANAGER
-(400, 4, 1, 1003, 'LBL_MENU_ITEM_INCIDENT_REPORTS', 'img/menu/incident-menu.png', 'Menu item incindet report', 'Menu item incident report', true, true),
+(400, 4, 1, 1051, 'LBL_MENU_ITEM_INCIDENT_REPORTS', 'img/menu/incident-menu.png', 'Menu item incindet report', 'Menu item incident report', true, true),
 (401, 4, 2, 1024, 'LBL_MENU_ITEM_PLAN_MANAGER', 'img/menu/plan-menu.png', 'Menu item Plan Manager', 'Menu item Plan Manager', true, true),
 (402, 4, 3, null, '', null, '', null, true, true),
 (403, 4, 4, 1040, 'LBL_MENU_ITEM_VMS_SIGNALING', 'img/menu/signaling-menu.png', 'Menu item VMS Signaling', 'Menu item VMS Signaling', true, true),
