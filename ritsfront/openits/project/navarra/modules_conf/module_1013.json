@@ -1,0 +1,106 @@
+{
+	"moduleAction": {
+	    "fromMap": 101301,
+		"fromSynoptic": 101302,
+		"fromIncidentsNoMap": 101303,
+		"fromIncidentsMap": 101304,
+		"fromAlarms": 101305,
+		"delayedIncidents": 101306
+	},
+	"actionEndpoints": {
+		"create": "incidents/reports/create"
+	},
+	"restEndpoints": {
+		"locationsByStretch": "locations/locations/stretch/${id}",
+		"locations": "locations",
+		"location": "locations/${id}",
+		"locationsStretchs": "locations/stretchs",
+		"stretchsByIncidentType": "locations/stretchs/incidentType/${id}",
+		"stretchsByLocation": "locations/${id}/stretchs",
+		"incidentTypesByStretch": "incidents/stretch/${id}",
+		"incidentTypes": "incidents/imsIncidentTypes",
+		"incidentType": "incidents/imsIncidentType/${id}",
+		"incidentTypeStretchs": "incidents/incidentTypeStretchs/${incidentTypeId}/${stretchId}",
+		"incidentTypeStretchsList": "incidents/incidentTypeStretchs",
+		"stretchByStretchs": "locations/stretchs/stretchByStretchs/${id}",
+		"incidentReportsSummary": "incidents/reports/summary",
+		"incidentReportSummary": "incidents/reports/${id}/summary"
+	},
+	"ws": {
+		"incidentReports": "/topic/incidentReport.>"
+	},
+	"incidentCreateTimeoutMs": 30000,
+	"steps": {
+		"fromIncidentsNoMap": [
+			{
+				"position": 1,
+				"headerLabel": "LBL_INCIDENT_WIZARD_FROM_INCIDENT_NO_MAP_HEADER",
+				"headerLabelDescription": "LBL_INCIDENT_WIZARD_FROM_INCIDENT_NO_MAP_HEADER_STEP_INCIDENT_TYPE",
+				"labelAlias": "LBL_INCIDENT_TYPE",
+				"stepLabel": "LBL_INCIDENT_WIZARD_FROM_INCIDENT_NO_MAP_STEP_INCIDENT_TYPE",
+				"active": true,
+				"drawFunction": "drawStepIncidentType",
+				"validateFunction": "validateStepIncidentType",
+				"resetFunction": "resetStepIncidentType"
+			},
+			{
+				"position": 2,
+				"headerLabel": "LBL_INCIDENT_WIZARD_FROM_INCIDENT_NO_MAP_HEADER",
+				"headerLabelDescription": "LBL_INCIDENT_WIZARD_FROM_INCIDENT_NO_MAP_HEADER_STEP_STRETCH_AND_LOCATION",
+				"labelAlias": "LBL_STRETCH_AND_LOCATION",
+				"stepLabel": "LBL_INCIDENT_WIZARD_FROM_INCIDENT_NO_MAP_STEP_STRETCH_AND_LOCATION",
+				"active": false,
+				"drawFunction": "drawStepStretchAndLocation",
+				"validateFunction": "validateStepStretchAndLocation",
+				"resetFunction": "resetStepStretchAndLocationFromIncidentType"
+			},
+			{
+				"position": 3,
+				"headerLabel": "LBL_INCIDENT_WIZARD_FROM_INCIDENT_NO_MAP_HEADER",
+				"headerLabelDescription": "LBL_INCIDENT_WIZARD_FROM_INCIDENT_NO_MAP_HEADER_STEP_SUMMARY",
+				"labelAlias": "LBL_SUMMARY",
+				"stepLabel": "LBL_INCIDENT_WIZARD_FROM_INCIDENT_NO_MAP_STEP_SUMMARY",
+				"stepLabelDescription": null,
+				"active": false,
+				"drawFunction": "drawStepSummary",
+				"validateFunction": "validateStepSummary",
+				"resetFunction": "resetStepSummary"
+			}
+		],
+		"fromMap": [
+			{
+				"position": 1,
+				"headerLabel": "LBL_INCIDENT_WIZARD_FROM_INCIDENT_MAP_HEADER",
+				"headerLabelDescription": "LBL_INCIDENT_WIZARD_FROM_INCIDENT_MAP_HEADER_STEP_LOCATION",
+				"labelAlias": "LBL_LOCATION",
+				"stepLabel": "LBL_INCIDENT_WIZARD_FROM_INCIDENT_MAP_STEP_1",
+				"active": true,
+				"drawFunction": "drawStepLocationFromMap",
+				"validateFunction": "validateStepLocationFromMap",
+				"resetFunction": "resetStepLocationFromMap"
+			},
+			{
+				"position": 2,
+				"headerLabel": "LBL_INCIDENT_WIZARD_FROM_INCIDENT_MAP_HEADER",
+				"headerLabelDescription": "LBL_INCIDENT_WIZARD_FROM_INCIDENT_MAP_HEADER_STEP_SUMMARY",
+				"labelAlias": "LBL_SUMMARY",
+				"stepLabel": "LBL_INCIDENT_WIZARD_FROM_INCIDENT_MAP_STEP_SUMMARY",
+				"stepLabelDescription": null,
+				"active": false,
+				"drawFunction": "drawStepSummary",
+				"validateFunction": "validateStepSummary",
+				"resetFunction": "resetStepSummary"
+			}
+		]
+	},
+	"locationTypes": ["LocationType:1", "LocationType:2"],
+	"stretchTypes":  ["StretchType:2"],
+		"requiredPermissions": {
+		"autoassign": "SystemPermission:15",
+		"assignAnother": "SystemPermission:16"
+	},
+	"action": {
+		"assign": 100404
+	},
+	"roadImpact": false
+}
