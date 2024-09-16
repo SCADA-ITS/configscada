@@ -16,7 +16,7 @@ export default class LocationAction {
 
 		let bodyToCreate = {
 			location: {
-				locationTypeId: "LocationType:1",
+				locationTypeId: "LocationType:2",
 				alias: body.location.alias,
 				description: body.location.description,
 				coordinates: body.location.coordinates,
@@ -146,7 +146,7 @@ export default class LocationAction {
 				let body = {
 					location: {
 						id: formValues.nameId,
-						locationTypeId: "LocationType:1",
+						locationTypeId: "LocationType:2",
 						alias: formValues.name,
 						description: formValues.description,
 						coordinates: coordinatesArray,
