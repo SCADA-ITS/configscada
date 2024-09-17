@@ -6,9 +6,15 @@ from pathlib import Path
 def main():
     # Ruta del archivo de informe JSON
     report_file = Path("report.json")
+    ip=sys.argv[1]
+    user=sys.argv[2]
+    password=sys.argv[3]
     
     # Ejecuta pytest y genera un informe en JSON
     result = pytest.main([
+        f"--ip={ip}",
+        f"--user={user}",
+        f"--password={password}",
         "--disable-warnings",
         "--tb=short",
         "--json-report",
