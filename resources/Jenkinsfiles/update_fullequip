@@ -131,10 +131,18 @@ pipeline {
 
                 withCredentials([string(credentialsId: PASSWORD_CREDENTIALS_ID_BBDD_UTF8, variable: 'BBDD_PASSWORD_UTF8')]) {
                     script {
-                        def rutaBase = 'rits/ritsback/resources/db'
-
                         sh 'echo Ejecutando scripts de back...'
-                        
+
+                        def rutaDdlRt = 'rits/ritsback/resources/db/ddlrt'
+                        dir("${rutaDdlRt}"){
+                            sh '''
+                                sed -i 's/rits:rits/rits:'''+ "$BBDD_PASSWORD_UTF8" +'''/' ddl_param_jenkins.sh
+                            '''
+                            
+                            sh "./ddl_param_jenkins.sh 192.168.88.71 5430"
+                        }
+
+                        def rutaBase = 'rits/ritsback/resources/db'                        
                         dir("${rutaBase}") {
                             sh '''
                                 sed -i 's/rits:rits/rits:'''+ "$BBDD_PASSWORD_UTF8" +'''/' ddl/ddl_param_jenkins.sh
