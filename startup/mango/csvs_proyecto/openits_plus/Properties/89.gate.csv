@@ -1,0 +1,6 @@
+device_name;source_name;ip;measure_port(i);alarm_port(i);url_publisher;offset_gate_open(i)
+TUN-PTA1-GAL;PUERTAS;192.168.88.74;502;503;http:\/\/192.168.88.52:3000\/api\/v2\/generic\/;3227
+TUN-PTA2-GAL;PUERTAS;192.168.88.74;502;503;http:\/\/192.168.88.52:3000\/api\/v2\/generic\/;3228
+HOSP-PTA-N;PUERTAS;192.168.88.74;502;503;http:\/\/192.168.88.52:3000\/api\/v2\/generic\/;3229
+HOSP-PTA-S;PUERTAS;192.168.88.74;502;503;http:\/\/192.168.88.52:3000\/api\/v2\/generic\/;3230
+HOSP-PTA-O;PUERTAS;192.168.88.74;502;503;http:\/\/192.168.88.52:3000\/api\/v2\/generic\/;3231
