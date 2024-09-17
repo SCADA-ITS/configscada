@@ -7,7 +7,7 @@
 	<p:processes>
 		<p:proc id="1" enabled="true">
 			<p:name>EP-PUB-STOMP</p:name>
-			<p:path>/home/revenga/app/backrits/</p:path>
+			<p:path>/home/admin/app/backrits/</p:path>
 			<p:executable>ep-pub-stomp.jar</p:executable>
 			<p:xml_adapter>pub_stomp_adapter_v1.xml</p:xml_adapter>
 			<p:restart_on_fail>true</p:restart_on_fail>
@@ -20,7 +20,7 @@
 		</p:proc>
 		<p:proc id="2" enabled="true">
 			<p:name>EQUIPMENT-MANAGER</p:name>
-			<p:path>/home/revenga/app/backrits/</p:path>
+			<p:path>/home/admin/app/backrits/</p:path>
 			<p:executable>equipment-manager.jar</p:executable>
 			<p:xml_adapter>equipment_manager_adapter_v1.xml</p:xml_adapter>
 			<p:restart_on_fail>true</p:restart_on_fail>
@@ -30,7 +30,7 @@
 		</p:proc>
 		<p:proc id="3" enabled="true">
 			<p:name>SERVICE-GRAPHQL</p:name>
-			<p:path>/home/revenga/app/backrits/</p:path>
+			<p:path>/home/admin/app/backrits/</p:path>
 			<p:executable>service-graphql.jar</p:executable>
 			<p:xml_adapter>service_graphql_adapter_v1.xml</p:xml_adapter>
 			<p:restart_on_fail>true</p:restart_on_fail>
@@ -40,7 +40,7 @@
 		</p:proc>
 		<p:proc id="4" enabled="true">
 			<p:name>PLAN-MANAGER</p:name>
-			<p:path>/home/revenga/app/backrits/</p:path>
+			<p:path>/home/admin/app/backrits/</p:path>
 			<p:executable>plan-manager.jar</p:executable>
 			<p:xml_adapter>plan_manager_adapter_v1.xml</p:xml_adapter>
 			<p:restart_on_fail>true</p:restart_on_fail>
@@ -52,7 +52,7 @@
 		</p:proc>
 		<p:proc id="5" enabled="true">
 			<p:name>IO-CONTROLLER</p:name>
-			<p:path>/home/revenga/app/backrits/</p:path>
+			<p:path>/home/admin/app/backrits/</p:path>
 			<p:executable>io-controller.jar</p:executable>
 			<p:xml_adapter>controller_adapter_v1.xml</p:xml_adapter>
 			<p:restart_on_fail>true</p:restart_on_fail>
@@ -64,7 +64,7 @@
 		</p:proc>
 		<p:proc id="6" enabled="true">
 			<p:name>INCIDENT-MANAGER</p:name>
-			<p:path>/home/revenga/app/backrits/</p:path>
+			<p:path>/home/admin/app/backrits/</p:path>
 			<p:executable>incident-manager.jar</p:executable>
 			<p:xml_adapter>incident_manager_adapter_v1.xml</p:xml_adapter>
 			<p:restart_on_fail>true</p:restart_on_fail>
@@ -76,7 +76,7 @@
 		</p:proc>
 		<p:proc id="7" enabled="true">
 			<p:name>TRAFFIC-MANAGER</p:name>
-			<p:path>/home/revenga/app/backrits/</p:path>
+			<p:path>/home/admin/app/backrits/</p:path>
 			<p:executable>traffic-manager.jar</p:executable>
 			<p:xml_adapter>traffic_manager_adapter_v1.xml</p:xml_adapter>
 			<p:restart_on_fail>true</p:restart_on_fail>
@@ -88,7 +88,7 @@
 		</p:proc>
 		<p:proc id="8" enabled="true">
 			<p:name>HISTORICAL-MANAGER</p:name>
-			<p:path>/home/revenga/app/backrits/</p:path>
+			<p:path>/home/admin/app/backrits/</p:path>
 			<p:executable>historical-manager.jar</p:executable>
 			<p:xml_adapter>historical_manager_adapter_v1.xml</p:xml_adapter>
 			<p:restart_on_fail>true</p:restart_on_fail>
@@ -100,7 +100,7 @@
 		</p:proc>
 		<p:proc id="9" enabled="true">
 			<p:name>IO-EXTERNAL-MANAGER</p:name>
-			<p:path>/home/revenga/app/backrits/</p:path>
+			<p:path>/home/admin/app/backrits/</p:path>
 			<p:executable>io-external-manager.jar</p:executable>
 			<p:xml_adapter>--xml.adapter=io_external_manager_adapter_v1.xml</p:xml_adapter>
 			<p:restart_on_fail>true</p:restart_on_fail>
