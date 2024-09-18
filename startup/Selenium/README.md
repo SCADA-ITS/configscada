@@ -2,6 +2,8 @@
 Este archivo tiene como función explicar como ejecutar los test disponibles, tanto globalmente como unitariamente
 
 ## Requisitos
+Versión de python: 3.8.10
+
 Necesitamos instalar los siguientes módulos con pip: 
 * pytest
 * selenium
