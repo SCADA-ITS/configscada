@@ -4,10 +4,12 @@ from selenium.webdriver.support import expected_conditions as EC
 from datetime import datetime
 import time
 import csv
+import os
 
 def write_to_csv(filename, alarm_data):
+    python_filename = os.path.basename(__file__)[:-3]
     columnas_csv = ["fecha", "alarma", "equipo", "nivel"]
-    with open(f'{filename}.csv', mode='w', newline='', encoding='utf-8') as file:
+    with open(f'{python_filename}_{filename}.csv', mode='w', newline='', encoding='utf-8') as file:
         writer = csv.writer(file)
         writer.writerow(columnas_csv)
         writer.writerows(alarm_data)
