@@ -1,0 +1,8 @@
+device_name;source_name;ip;measure_port(i);port(i);url_publisher;offset_floor(i)
+HOSP-ELEV-NO;ELEVATORS;192.168.88.74;502;503;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/;15000
+HOSP-ELEV-CO;ELEVATORS;192.168.88.74;502;503;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/;15001
+HOSP-ELEV-SO;ELEVATORS;192.168.88.74;502;503;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/;15002
+HOSP-ELEV-NC;ELEVATORS;192.168.88.74;502;503;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/;15003
+HOSP-ELEV-SC;ELEVATORS;192.168.88.74;502;503;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/;15004
+HOSP-ELEV-NE;ELEVATORS;192.168.88.74;502;503;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/;15005
+HOSP-ELEV-CE;ELEVATORS;192.168.88.74;502;503;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/;15006

@@ -50,7 +50,7 @@ INSERT INTO ui.graphic_icons
 (000032, 'PRESUR', 'PRESUR', false, false, 'component/graphicIcon/graphicIconDefault.js', 50, 50, 'img/graphic_icon/32_presurizacion_vent.svg', 'null',true),
 (000033, 'TRAFO', 'TRAFO', false, false, 'component/graphicIcon/graphicIconDefault.js', 50, 50, 'img/graphic_icon/33_trafo.svg', 'null',true),
 (000048, 'TOXIC_CONTROL', 'TOXIC_CONTROL', false, false, 'component/graphicIcon/graphicIconDefault.js', 50, 50, 'img/graphic_icon/48_toxic_control.svg', 'null',true),
-(000049, 'ELEVATOR', 'ELEVATOR', false, false, 'component/graphicIcon/graphicIconDefault.js', 40, 40, 'img/graphic_icon/49_elevator.svg', 'null',true),
+(000049, 'ELEVATOR', 'ELEVATOR', false, true, 'component/graphicIcon/graphicIconCustom.js', 40, 40, 'img/graphic_icon/49_elevator.svg', 'component/graphicIcon/custom/elevator.js',true),
 (000051, 'ETD', 'ETD', false, false, 'component/graphicIcon/graphicIconDefault.js', 50, 50, 'img/graphic_icon/51_etd.svg', 'null',true),
 (000052, 'DAI', 'DAI', false, false, 'component/graphicIcon/graphicIconDefault.js', 50, 50, 'img/graphic_icon/52_dai_server.svg', 'null',true),
 (000053, 'SEM', 'SEM', false, false, 'component/graphicIcon/graphicIconDefault.js', 50, 50, 'img/graphic_icon/53_sem_2_grupos.svg', 'null',true),
