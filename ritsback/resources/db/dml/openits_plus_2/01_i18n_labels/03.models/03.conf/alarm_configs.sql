@@ -43,6 +43,10 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_OPAC_REDUCED_VISIBILITY', 'Opacímetros visibilidad reducida (0.005 m-1 < k <0.012 m-1)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_OPAC_EXCESSIVE_OPACITY', 'Opacímetro visibilidad muy reducida (k > 0.012 m-1))', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
+--ElementType:49 -> Elevador
+('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_ELEVATOR_NO_CONNECTION', 'Elevador Fuera de Comunicacion', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+
 --ElementType:65 -> SAI
 ('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_SAI_AUTONOMY_LESS_50', 'SAI con autonomía <50%', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_SAI_AUTONOMY_LESS_5', 'SAI con autonomía <5%', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
