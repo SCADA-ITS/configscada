@@ -1,0 +1,5 @@
+item;road_type;alias;description
+1;MOTORWAY;Carretera Mapa;Carretera en mapa georeferenciado
+2;MOTORWAY;Carretera Tunel;Carretera con túnel
+3;MOTORWAY;Nicklaus Childrens Hospital;Hospital para niños con enfermedades raras
+4;MOTORWAY;Planta Nuclear;Planta de energía nuclear
