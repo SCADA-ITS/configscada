@@ -74,7 +74,9 @@ INSERT INTO ui.module_values(module_id, module_param_id, value) VALUES
 (1925, 14, 'lanes'),
 
 (1926, 13, '2'),
-(1926, 14, 'participants');
+(1926, 14, 'participants'),
+
+(1050, 8, '{"mapId": 1}');
 
 
 INSERT INTO ui.window_values(module_id, window_param_id, value) VALUES

@@ -26,7 +26,8 @@
 		limit_end_lat float4 null,
 		custom_provider_url varchar null, 
 		default_zoom_search int null,
-		dark_mode boolean NOT NULL
+		dark_mode boolean NOT NULL,
+		custom_provider varchar null
 	);
 	
 	ALTER TABLE ui.maps SET TABLESPACE tbl_ui;
