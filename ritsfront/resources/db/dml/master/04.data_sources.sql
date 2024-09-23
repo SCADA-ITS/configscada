@@ -256,8 +256,8 @@ INSERT INTO ui.data_sources(id, data_source_type_id, "name", description, entity
 (248, 1, 'get_cctv_scenarios', 'get_cctv_scenarios', 'CCTVScenarioVO', 'id', true, true),
 (249, 1, 'getImsDelayedIncidentReports', 'getImsDelayedIncidentReports', 'ImsDelayedIncidentReportVO', 'id', true, true),
 (250, 1, 'getImsDelayedIncidentReport', 'getImsDelayedIncidentReports', 'ImsDelayedIncidentReportVO', 'id', true, true),
-(251, 3, 'sendImsDelayedIncidentActions', 'sendImsDelayedIncidentActions', 'ImsDelayedIncidentActionVO', 'id', true, true);
-
+(251, 3, 'sendImsDelayedIncidentActions', 'sendImsDelayedIncidentActions', 'ImsDelayedIncidentActionVO', 'id', true, true),
+(252, 1, 'getLocationTypes', 'getLocationTypes', 'LocationTypeVO', 'id', true, true);
 
 
 
@@ -1514,4 +1514,9 @@ INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) V
 (251, 9, 'sendImsDelayedIncidentActions'),
 (251, 10, 'imsDelayedIncidentActions'),
 (251, 11, '[ImsDelayedIncidentActionVO!]!'),
-(251, 12, NULL);
+(251, 12, NULL),
+
+(252, 1, 'http://192.168.88.163:8082/graphql'),
+(252, 2, 'getLocationTypes'),
+(252, 3, ''),
+(252, 4, NULL);
