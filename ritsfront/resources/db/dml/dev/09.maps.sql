@@ -1,10 +1,11 @@
-INSERT INTO ui.maps (id, name, description, "label", icon, longitude, latitude, zoom, zoom_max, zoom_min, limit_init_lon, limit_init_lat, limit_end_lon, limit_end_lat, custom_provider_url, default_zoom_search, dark_mode, custom_provider) VALUES 
-(1, 'ausol', 'autopista del sol', 'LBL_MAP', NULL, -4.968995252952193, 36.513236353017206, 15, 18, 12, -5.496230111341672, 36.69560304914391, -4.286333943790312, 36.302938945943, null, 6, true, 
-	'{ 
-		"map": {"enabled": true, "type": "WMS", "serverType": "geoserver", "url": "http://192.168.243.30:8080/geoserver/wms", "mainLayer": { "name": "osm", "alias": "LBL_MAIN_LAYER", "description": "LBL_MAIN_LAYER_DESCRIPTION"}, "layers": [{"name": "osm:red_viaria_pk_malaga", "alias": "LBL_PKS_LAYER", "description": "LBL_PKS_LAYER_DESCRIPTION"}, {"name": "osm:red_viaria_tramo_malaga", "alias": "LBL_STRETCHS_LAYER", "description": "LBL_STRETCHS_LAYER_DESCRIPTION"}]}, 
-		"router": {"enabled": true, "type": "OSRM", "url": "http://192.168.243.30:5000/route/v1/driving/${ini};${end}?overview=full&geometries=geojson"}
-	}');
---(2, 'AVO', 'v', 'LBL_MAP', NULL, -70.6508, -33.4373, 15, 18, 12, -70.8522, -33.3248, -70.3455, -33.7358, 'http://192.168.88.162:8100/geoserver/wms', 6, true);
+INSERT INTO ui.maps (id, name, description, "label", icon, longitude, latitude, zoom, zoom_max, zoom_min, limit_init_lon, limit_init_lat, limit_end_lon, limit_end_lat, custom_provider_url, default_zoom_search, dark_mode, custom_provider) VALUES
+(1, 'ausol', 'autopista del sol', 'LBL_MAP', NULL, -4.968995252952193, 36.513236353017206, 15, 18, 12, -5.496230111341672, 36.69560304914391, -4.286333943790312, 36.302938945943, null, 6, true, null); 
+-- Geoserver config
+--(1, 'ausol', 'autopista del sol', 'LBL_MAP', NULL, -4.968995252952193, 36.513236353017206, 15, 18, 12, -5.496230111341672, 36.69560304914391, -4.286333943790312, 36.302938945943, null, 6, true, 
+--	'{ 
+--		"map": {"enabled": true, "type": "WMS", "serverType": "geoserver", "url": "http://192.168.243.30:8080/geoserver/wms", "mainLayer": { "name": "osm", "alias": "LBL_MAIN_LAYER", "description": "LBL_MAIN_LAYER_DESCRIPTION"}, "layers": [{"name": "osm:red_viaria_pk_malaga", "alias": "LBL_PKS_LAYER", "description": "LBL_PKS_LAYER_DESCRIPTION"}, {"name": "osm:red_viaria_tramo_malaga", "alias": "LBL_STRETCHS_LAYER", "description": "LBL_STRETCHS_LAYER_DESCRIPTION"}]}, 
+--		"router": {"enabled": true, "type": "OSRM", "url": "http://192.168.243.30:5000/route/v1/driving/${ini};${end}?overview=full&geometries=geojson"}
+--	}');
 
 
 
