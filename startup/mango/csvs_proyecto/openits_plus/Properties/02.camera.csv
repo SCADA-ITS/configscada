@@ -1,0 +1,11 @@
+device_name;session_uid;url_publisher;endpoint
+MAP-TV-1;MAP-TV-1;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/;'http://109.206.96.58'
+MAP-TV-2;MAP-TV-2;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/;'http://109.206.96.58'
+MAP-TV-3;MAP-TV-3;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/;'http://109.206.96.58'
+MAP-TV-4;MAP-TV-4;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/;'http://109.206.96.58'
+MAP-TV-5;MAP-TV-5;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/;'http://109.206.96.58'
+MAP-TV-6;MAP-TV-6;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/;'http://109.206.96.58'
+MAP-TV-7;MAP-TV-7;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/;'http://109.206.96.58'
+MAP-TV-8;MAP-TV-8;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/;'http://109.206.96.58'
+MAP-TV-9;MAP-TV-9;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/;'http://109.206.96.58'
+MAP-TV-10;MAP-TV-10;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/;'http://109.206.96.58'

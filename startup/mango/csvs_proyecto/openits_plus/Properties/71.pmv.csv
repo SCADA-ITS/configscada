@@ -1,0 +1,13 @@
+device_name;session_uid;ip;port(i);url_publisher
+MAP-DGT-1;MAP-DGT-1;192.168.88.30;10000;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/
+MAP-DGT-2;MAP-DGT-2;192.168.88.30;10001;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/
+MAP-DGT-3;MAP-DGT-3;192.168.88.30;10002;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/
+MAP-DGT-4;MAP-DGT-4;192.168.88.30;10003;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/
+MAP-DGT-5;MAP-DGT-5;192.168.88.30;10004;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/
+MAP-DGT-6;MAP-DGT-6;192.168.88.30;10005;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/
+MAP-DGT-7;MAP-DGT-7;192.168.88.30;10006;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/
+MAP-DGT-8;MAP-DGT-8;192.168.88.30;10007;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/
+MAP-DGT-9;MAP-DGT-9;192.168.88.30;10008;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/
+MAP-DGT-10;MAP-DGT-10;192.168.88.30;10009;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/
+MAP-DGT-11;MAP-DGT-11;192.168.88.30;10010;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/
+MAP-DGT-12;MAP-DGT-12;192.168.88.30;10011;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/
