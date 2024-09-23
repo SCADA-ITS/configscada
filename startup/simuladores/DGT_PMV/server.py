@@ -125,31 +125,23 @@ def error(port, data):
 
 def port_connections(PORT):
     try:
-        # Create a TCP/IP socket
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        print(f"Running at port {PORT}...")
-
-        # Bind the socket to the port
+        logger.info(f"Running at port {PORT}...")
         server_address = (HOST, PORT)
         logger.info(f'Starting up on {server_address[0]} port {server_address[1]}')
         sock.bind(server_address)
 
-        # Listen for incoming connections
         sock.listen(1)
 
         while True:
-            # Wait for a connection
             logger.info(f'Waiting for a connection on port {PORT} ...')
             connection, client_address = sock.accept()
             logger.warning(f'New connection from {client_address[0]}:{client_address[1]} on port {PORT}')
-
-            # Receive the data in small chunks and retransmit it
-            while True:
-                try:
+            try:
+                while True:
                     data = connection.recv(1024)
                     data = data.hex()
                     code = data[0:6]
-
                     if code == KEEP_ALIVE_RECEIVED:
                         keep_alive_request(connection, PORT, data)
                     elif code == SIGNALLING_PETITION_RECEIVED:
@@ -163,11 +155,10 @@ def port_connections(PORT):
                         error(PORT, data)
                         break
 
-                except ConnectionResetError:
-                    # Handle connection reset by peer
-                    print(f"Connection reset by peer. Reconnecting on port {PORT}...")
-                    connection.close()
-                    break
+            except ConnectionResetError:
+                logger.exception(f"Connection reset by peer. Reconnecting on port {PORT}...")
+                connection.close()
+                break
 
     except KeyboardInterrupt:
         print(f"Closing port {PORT}...")
@@ -179,5 +170,4 @@ def port_connections(PORT):
         print(f'Port {PORT} closed.')
     except OSError as err:
         print(err)
-
 port_connections(PORT)

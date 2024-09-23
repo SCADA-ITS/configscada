@@ -8,7 +8,7 @@ INSERT INTO ui.map_layers (id, base_layer, map_id, "name", description, "label",
 INSERT INTO ui.graphic_icons (id, "name", description, alarms, measures, js_draw_file, width, height, svg_pattern_var, svg_file, js_custom_type_render) VALUES
 (040002, 'CAM_FIX', 'CAM_FIX', false, true, 'component/graphicIcon/graphicIconDefault.js', 30, 30,null,  'img/graphic_icon/02_camera.svg',true),
 (050002, 'CAM_FIX', 'CAM_FIX', false, true, 'component/graphicIcon/graphicIconDefault.js', 50, 50,null,  'img/graphic_icon/02_camera.svg',true),
-(100071, 'PMV', 'PMV', false, true, 'component/graphicIcon/graphicIconCustom.js', 240, 120, null, 'img/graphic_icon/71_vms_dgt.svg', 'component/graphicIcon/custom/vms.js');
+(100071, 'PMV', 'PMV', false, true, 'component/graphicIcon/graphicIconCustom.js', 240, 120, null, 'img/graphic_icon/71_vms_dgt_gr_txt.svg', 'component/graphicIcon/custom/vms.js');
 
 INSERT INTO ui.map_layer_elements (id, layer_id, element_id, graphic_icon_id, "label", longitude, latitude, horizontal_flip, rotate, tooltip, z_index_front, show_text, text_color,selectable) VALUES 
 (1, 9700002, 'Element:2:25', 040002, 'MAP-TV-1', -4.9716611111111115, 36.52565555555555, false, null, true, 1, true, '#000000',true),

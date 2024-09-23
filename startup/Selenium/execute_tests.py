@@ -9,12 +9,13 @@ def main():
     ip=sys.argv[1]
     user=sys.argv[2]
     password=sys.argv[3]
-    
+    state=sys.argv[4]
     # Ejecuta pytest y genera un informe en JSON
     result = pytest.main([
         f"--ip={ip}",
         f"--user={user}",
         f"--password={password}",
+        f"--state={state}",
         "--disable-warnings",
         "--tb=short",
         "--json-report",

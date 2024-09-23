@@ -1,7 +1,7 @@
 
 INSERT INTO conf.element_values
 (element_type_id, element_type_param_id, param_type_id, element_id, value, enabled, visible, created_at, updated_at) VALUES
-(2000, 1, 1, 7,
+(2000, 1, 1, 8,
 '{	
 	"windDirectionId": "ElementTypeParam:18:2:1",
 	"measuresValidityPeriod_s": 60,
@@ -9,48 +9,48 @@ INSERT INTO conf.element_values
 	"ventilationRegimes": [{
 				"id": 1,
 				"alias": "REGIMEN_PARADO",
-				"description": "Regimen 0 tunel para el sentido Norte",
+				"description": "Regimen 0 tunel para el sentido Sur",
 				"labelAlias": "LBL_REGIME_0",
 				"fans": 0
 			},
 			{
 				"id": 2,
 				"alias": "REGIMEN_BAJO",
-				"description": "Regimen bajo tunel para el sentido Norte",
+				"description": "Regimen bajo tunel para el sentido Sur",
 				"labelAlias": "LBL_REGIME_1",
-				"fans": 2
+				"fans": 3
 			},
 			{
 				"id": 3,
 				"alias": "REGIMEN_MEDIO",
-				"description": "Regimen medio tunel para el sentido Norte",
+				"description": "Regimen medio tunel para el sentido Sur",
 				"labelAlias": "LBL_REGIME_2",
-				"fans": 3
+				"fans": 4
 			},
 			{
 				"id": 4,
 				"alias": "REGIMEN_ALTO",
-				"description": "Regimen alto tunel para el sentido Norte",
+				"description": "Regimen alto tunel para el sentido Sur",
 				"labelAlias": "LBL_REGIME_3",
-				"fans": 4
+				"fans": 6
 			},
 			{
 				"id": 5,
 				"alias": "EMERGENCIA E1-AMB-01",
-				"description": "Emergencia E1-AMB-01 tunel para el sentido Norte",
+				"description": "Emergencia E1-AMB-01 tunel para el sentido Sur",
 				"labelAlias": "LBL_REGIME_EMERGENCIA_E1_AMB_01",
-				"fans": 4,
+				"fans": 6,
 				"incidentTypeId": "ImsIncidentType:22",
-				"locationId": "Location:1002"
+				"locationId": "Location:1001"
 			},
 			{
 				"id": 6,
 				"alias": "EMERGENCIA E1-AMB-02",
-				"description": "Emergencia E1-AMB-02 tunel para el sentido Norte",
+				"description": "Emergencia E1-AMB-02 tunel para el sentido Sur",
 				"labelAlias": "LBL_REGIME_EMERGENCIA_E1_AMB_02",
-				"fans": 4,
+				"fans": 6,
 				"incidentTypeId": "ImsIncidentType:23",
-				"locationId": "Location:1002"
+				"locationId": "Location:1001"
 			}],
 	"smConfigs": [
 		{
