@@ -15,6 +15,8 @@ def pytest_addoption(parser):
     parser.addoption(
         "--password", action="store", default=None, help="Contraseña el login",
     )
+    parser.addoption(
+        "--state", action="store", default=None, help="Estado a buscar")
 
 @pytest.fixture(scope="function")
 def ip(request):
@@ -25,6 +27,9 @@ def user(request):
 @pytest.fixture(scope="function")
 def password(request):
     return request.config.getoption("--password")
+@pytest.fixture(scope="function")
+def state(request):
+    return request.config.getoption("--state")
 
 @pytest.fixture(scope="function") 
 def firefox_browser(request, ip, user, password):  
