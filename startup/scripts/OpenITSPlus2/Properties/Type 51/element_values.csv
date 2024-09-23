@@ -1,0 +1,3 @@
+item;alias;description;sessionuid;road;stretchs;pk;sentido;on_change_measure;param1_brand;param2_model
+1;TUN-ETD-1CA;Revenga ETD;TUN-ETD-1CA;Carretera Tunel;Carretera;173+900;MA;EtdParamsAdapterTFA.groovy;Revenga;Revenga ETD
+2;TUN-ETD-1MA;Revenga ETD;TUN-ETD-1MA;Carretera Tunel;Carretera;173+900;MA;EtdParamsAdapterTFA.groovy;Revenga;Revenga ETD

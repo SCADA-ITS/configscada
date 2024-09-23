@@ -22,8 +22,8 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_ES', 1, 'LBL_ETV_ARRANCADA', 'Bomba arrancada', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --Diferencial/Interruptor
-('es_ES', 1, 'LBL_ETV_BAJADO', 'Bajado', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('es_ES', 1, 'LBL_ETV_SUBIDO', 'Subido', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_ETV_BAJADO', 'Apagado', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_ETV_SUBIDO', 'Encendido', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --ERU
 ('es_ES', 1, 'LBL_ETV_WITH_CONTROL', 'Con control de periféricos', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),

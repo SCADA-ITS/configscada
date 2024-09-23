@@ -13,33 +13,34 @@ Necesitamos instalar los siguientes módulos con pip:
 ### Linux
 Para ejecutar todos los test disponibles necesitamos lanzar el siguiente comando:
 
-```python3 execute_tests.py <Ip> <usuario> <contraseña>```
+```python3 execute_tests.py <Ip> <usuario> <contraseña> <estado>```
 
 Ejemplo:
 
-```python3 execute_tests.py 192.168.88.201 admin Revenga.19```
+```python3 execute_tests.py 192.168.88.201 admin Revenga.19 "Desconocido"```
 
 Para ejecutar un test en especifico necesitamos lanzar el siguiente comando:
 
-```pytest tests/test_03_jasper.py --ip=<Ip> --user=<usuario> --password=<contraseña> -s```
+```pytest tests/test_03_jasper.py --ip=<Ip> --user=<usuario> --password=<contraseña> --state="<estado> -s```
 
 Ejemplo:
 
-```pytest tests/test_03_jasper.py --ip=192.168.88.201 --user=admin --password=Revenga.19 -s```
+```pytest tests/test_03_jasper.py --ip=192.168.88.201 --user=admin --password=Revenga.19 --state="Desconocido, No comunica" -s```
 
 ### Windows
 Para ejecutar todos los test disponibles necesitamos lanzar el siguiente comando:
 
-```python.exe execute_tests.py <Ip> <usuario> <contraseña>```
+```python.exe execute_tests.py <Ip> <usuario> <contraseña> <estado>```
 
 Ejemplo:
 
-```python.exe execute_tests.py 192.168.88.201 admin Revenga.19```
+```python.exe execute_tests.py 192.168.88.201 admin Revenga.19 "No comunica"```
 
 Para ejecutar un test en especifico necesitamos lanzar el siguiente comando:
 
-```pytest.exe tests/test_03_jasper.py --ip=<Ip> --user=<usuario> --password=<contraseña> -s```
+```pytest.exe tests/test_03_jasper.py --ip=<Ip> --user=<usuario> --password=<contraseña> --state="<estado>" -s```
 
 Ejemplo:
 
-```pytest.exe tests/test_03_jasper.py --ip=192.168.88.201 --user=admin --password=Revenga.19 -s```
+```pytest.exe tests/test_03_jasper.py --ip=192.168.88.201 --user=admin --password=Revenga.19 --state="Desconocido" -s```
+

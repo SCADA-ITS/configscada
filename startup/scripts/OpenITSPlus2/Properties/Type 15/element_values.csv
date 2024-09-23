@@ -1,0 +1,21 @@
+item;alias;description;sessionuid;road;stretchs;pk;sentido;param5_pk_ini;param6_pk_end
+1;TUN-ZI-1CA;Boca Cadiz - Zona Incendios 1;TUN-ZI-1CA;Carretera Tunel;Carretera;147+535;CA;147+535;147+535
+2;TUN-ZI-2CA;Boca Cadiz - Zona Incendios 2;TUN-ZI-2CA;Carretera Tunel;Carretera;147+381;CA;147+381;147+535
+3;TUN-ZI-3CA;Boca Cadiz - Zona Incendios 3;TUN-ZI-3CA;Carretera Tunel;Carretera;147+226;CA;147+226;147+381
+4;TUN-ZI-4CA;Boca Cadiz - Zona Incendios 4;TUN-ZI-4CA;Carretera Tunel;Carretera;147+070;CA;147+070;147+226
+5;TUN-ZI-5CA;Boca Cadiz - Zona Incendios 5;TUN-ZI-5CA;Carretera Tunel;Carretera;146+917;CA;146+917;147+070
+6;TUN-ZI-6CA;Boca Cadiz - Zona Incendios 6;TUN-ZI-6CA;Carretera Tunel;Carretera;146+763;CA;146+763;146+917
+7;TUN-ZI-7CA;Boca Cadiz - Zona Incendios 7;TUN-ZI-7CA;Carretera Tunel;Carretera;146+608;CA;146+608;146+763
+8;TUN-ZI-8CA;Boca Cadiz - Zona Incendios 8;TUN-ZI-8CA;Carretera Tunel;Carretera;147+070;CA;147+070;147+226
+9;TUN-ZI-9CA;Boca Cadiz - Zona Incendios 9;TUN-ZI-9CA;Carretera Tunel;Carretera;146+917;CA;146+917;147+070
+10;TUN-ZI-10CA;Boca Cadiz - Zona Incendios 10;TUN-ZI-10CA;Carretera Tunel;Carretera;146+763;CA;146+763;146+917
+11;TUN-ZI-11CA;Boca Cadiz - Zona Incendios 11;TUN-ZI-11CA;Carretera Tunel;Carretera;146+608;CA;146+608;146+763
+12;TUN-ZI-1MA;Boca Malaga - Zona Incendios 1;TUN-ZI-1MA;Carretera Tunel;Carretera;147+561;MA;147+561;147+561
+13;TUN-ZI-2MA;Boca Malaga - Zona Incendios 2;TUN-ZI-2MA;Carretera Tunel;Carretera;146+655;MA;146+655;146+506
+14;TUN-ZI-3MA;Boca Malaga - Zona Incendios 3;TUN-ZI-3MA;Carretera Tunel;Carretera;146+808;MA;146+808;146+655
+15;TUN-ZI-4MA;Boca Malaga - Zona Incendios 4;TUN-ZI-4MA;Carretera Tunel;Carretera;146+961;MA;146+961;146+808
+16;TUN-ZI-5MA;Boca Malaga - Zona Incendios 5;TUN-ZI-5MA;Carretera Tunel;Carretera;147+114;MA;147+114;146+961
+17;TUN-ZI-6MA;Boca Malaga - Zona Incendios 6;TUN-ZI-6MA;Carretera Tunel;Carretera;147+267;MA;147+267;147+114
+18;TUN-ZI-7MA;Boca Malaga - Zona Incendios 7;TUN-ZI-7MA;Carretera Tunel;Carretera;147+420;MA;147+420;147+267
+19;TUN-ZI-8MA;Boca Malaga - Zona Incendios 8;TUN-ZI-8MA;Carretera Tunel;Carretera;147+267;MA;147+267;147+114
+20;TUN-ZI-9MA;Boca Malaga - Zona Incendios 9;TUN-ZI-9MA;Carretera Tunel;Carretera;147+420;MA;147+420;147+267

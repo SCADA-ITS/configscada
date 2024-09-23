@@ -1,0 +1,19 @@
+item;alias;description;sessionuid;road;stretchs;pk;sentido
+1;TUN-VM-1MA;TUN-VM-1MA;TUN-VM-1MA;Carretera Tunel;Carretera;173+900;MA
+2;TUN-VM-2MA;TUN-VM-2MA;TUN-VM-2MA;Carretera Tunel;Carretera;173+900;MA
+3;TUN-VM-3MA;TUN-VM-3MA;TUN-VM-3MA;Carretera Tunel;Carretera;173+900;MA
+4;TUN-VM-5MA;TUN-VM-5MA;TUN-VM-5MA;Carretera Tunel;Carretera;173+900;MA
+5;TUN-VC-1MA;TUN-VC-1MA;TUN-VC-1MA;Carretera Tunel;Carretera;173+900;MA
+6;TUN-VM-1CA;TUN-VM-1CA;TUN-VM-1CA;Carretera Tunel;Carretera;173+900;CA
+7;TUN-VM-2CA;TUN-VM-2CA;TUN-VM-2CA;Carretera Tunel;Carretera;173+900;CA
+8;TUN-VM-3CA;TUN-VM-3CA;TUN-VM-3CA;Carretera Tunel;Carretera;173+900;CA
+9;TUN-VM-4CA;TUN-VM-4CA;TUN-VM-4CA;Carretera Tunel;Carretera;173+900;CA
+10;TUN-VM-5CA;TUN-VM-5CA;TUN-VM-5CA;Carretera Tunel;Carretera;173+900;CA
+11;TUN-VM-6CA;TUN-VM-6CA;TUN-VM-6CA;Carretera Tunel;Carretera;173+900;CA
+12;TUN-VC-1CA;TUN-VC-1CA;TUN-VC-1CA;Carretera Tunel;Carretera;173+900;CA
+13;TUN-VM-7CA;TUN-VM-7CA;TUN-VM-7CA;Carretera Tunel;Carretera;173+900;CA
+14;TUN-VM-6MA;TUN-VM-6MA;TUN-VM-6MA;Carretera Tunel;Carretera;173+900;MA
+15;TUN-VM-4MA;TUN-VM-4MA;TUN-VM-4MA;Carretera Tunel;Carretera;173+900;MA
+16;TUN-VC-2MA;TUN-VC-2MA;TUN-VC-2MA;Carretera Tunel;Carretera;173+900;MA
+17;TUN-VC-3MA;TUN-VC-3MA;TUN-VC-3MA;Carretera Tunel;Carretera;173+900;MA
+18;TUN-VC-DALJ;TUN-VC-DALJ;TUN-VC-DALJ;Carretera Tunel;Carretera;173+900;MA

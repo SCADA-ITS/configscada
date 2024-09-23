@@ -30,3 +30,8 @@ INSERT INTO ui.modules
 --Management Area 4
 (700, 8, '["ManagementArea:4"]', 'Selector Tree Module', 'Selector Tree Module', 1, null, 'modules/selectorModule.js', 'getView', 'loadData', NULL, NULL, true, true, true),
 (701, 4, '["ManagementArea:4"]', 'SELECTOR_TREE_NODES_SINOPTICOS_CENTRAL_NUCLEAR', 'SELECTOR_TREE_NODES_SINOPTICOS_CENTRAL_NUCLEAR', 1, NULL, 'modules/synopticModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL);
+
+UPDATE ui.modules SET management_areas='["ManagementArea:1"]' WHERE id=1020;
+UPDATE ui.modules SET management_areas='["ManagementArea:1"]' WHERE id=1027;
+UPDATE ui.modules SET management_areas='["ManagementArea:1"]' WHERE id=1028;
+UPDATE ui.modules SET management_areas='["ManagementArea:1"]' WHERE id=1030;

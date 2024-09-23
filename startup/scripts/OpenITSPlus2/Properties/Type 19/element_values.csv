@@ -1,0 +1,10 @@
+item;alias;description;sessionuid;road;stretchs;pk;sentido;on_change_measure;param2_entrance_tunnel_distance
+1;TUN-CO-1CA;TUN-CO-1CA;TUN-CO-1CA;Carretera Tunel;Carretera;172+100;CA;SendValuesToVentilation.groovy;0
+2;TUN-CO-2CA;TUN-CO-2CA;TUN-CO-2CA;Carretera Tunel;Carretera;172+100;CA;SendValuesToVentilation.groovy;0
+3;TUN-CO-3CA;TUN-CO-3CA;TUN-CO-3CA;Carretera Tunel;Carretera;172+100;CA;SendValuesToVentilation.groovy;0
+4;TUN-CO-4CA;TUN-CO-4CA;TUN-CO-4CA;Carretera Tunel;Carretera;172+100;CA;SendValuesToVentilation.groovy;0
+5;TUN-CO-5CA;TUN-CO-5CA;TUN-CO-5CA;Carretera Tunel;Carretera;172+100;CA;SendValuesToVentilation.groovy;0
+6;TUN-CO-1MA;TUN-CO-1MA;TUN-CO-1MA;Carretera Tunel;Carretera;173+900;MA;SendValuesToVentilation.groovy;0
+7;TUN-CO-2MA;TUN-CO-2MA;TUN-CO-2MA;Carretera Tunel;Carretera;173+900;MA;SendValuesToVentilation.groovy;0
+8;TUN-CO-3MA;TUN-CO-3MA;TUN-CO-3MA;Carretera Tunel;Carretera;173+900;MA;SendValuesToVentilation.groovy;0
+9;TUN-CO-4MA;TUN-CO-4MA;TUN-CO-4MA;Carretera Tunel;Carretera;173+900;MA;SendValuesToVentilation.groovy;0

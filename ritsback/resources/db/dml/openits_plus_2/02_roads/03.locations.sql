@@ -572,4 +572,8 @@ INSERT INTO conf.locations (location_id, location_type_id, alias, description, l
 (0010093, 1, 'pk 173+900', 'pk 173+900', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (0010096, 1, 'pk 172+100', 'pk 172+100', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (0020096, 1, 'pk 172+100', 'pk 172+100', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(0030096, 1, 'pk 172+100', 'pk 172+100', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(0030096, 1, 'pk 172+100', 'pk 172+100', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(1000, 2, 'TUNEL', 'Tunel', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1001, 2, 'TSN', 'Boca sentido Norte', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1002, 2, 'TSS', 'Boca sentido Sur', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
