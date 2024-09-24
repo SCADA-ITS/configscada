@@ -1,0 +1,10 @@
+device_name;source_name;host;measure_port(i);alarm_port(i);url_publisher;offset_opac_concentration(i);offset_alarm_sensor(i);offset_alarm_fa(i)
+TUN-OPC-1CA;OPAC;192.168.88.74;502;503;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/;3630;3639;3648
+TUN-OPC-2CA;OPAC;192.168.88.74;502;503;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/;3631;3640;3649
+TUN-OPC-3CA;OPAC;192.168.88.74;502;503;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/;3632;3641;3650
+TUN-OPC-4CA;OPAC;192.168.88.74;502;503;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/;3633;3642;3651
+TUN-OPC-5CA;OPAC;192.168.88.74;502;503;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/;3634;3643;3652
+TUN-OPC-1MA;OPAC;192.168.88.74;502;503;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/;3635;3644;3653
+TUN-OPC-2MA;OPAC;192.168.88.74;502;503;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/;3636;3645;3654
+TUN-OPC-3MA;OPAC;192.168.88.74;502;503;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/;3637;3646;3655
+TUN-OPC-4MA;OPAC;192.168.88.74;502;503;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/;3638;3647;3656
