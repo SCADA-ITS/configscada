@@ -7,3 +7,13 @@ TUN-ETD-1MA;ETDS;TUN-SEC-1-DET-1MA-IN;1;http:\/\/192.168.88.30:3000\/api\/v2\/ge
 TUN-ETD-1MA;ETDS;TUN-SEC-1-DET-2MA-IN;2;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/
 TUN-ETD-1MA;ETDS;TUN-SEC-2-DET-3CA-OUT;3;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/
 TUN-ETD-1MA;ETDS;TUN-SEC-2-DET-4CA-OUT;4;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/
+MAP-ETD-1;ETDS;MAP-SEC-1-DET-1;1;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/
+MAP-ETD-1;ETDS;MAP-SEC-1-DET-2;2;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/
+MAP-ETD-2;ETDS;MAP-SEC-2-DET-1;1;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/
+MAP-ETD-2;ETDS;MAP-SEC-2-DET-2;2;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/
+MAP-ETD-3;ETDS;MAP-SEC-3-DET-1;1;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/
+MAP-ETD-3;ETDS;MAP-SEC-3-DET-2;2;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/
+MAP-ETD-4;ETDS;MAP-SEC-4-DET-1;1;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/
+MAP-ETD-4;ETDS;MAP-SEC-4-DET-2;2;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/
+MAP-ETD-5;ETDS;MAP-SEC-5-DET-1;1;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/
+MAP-ETD-5;ETDS;MAP-SEC-5-DET-2;2;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/
