@@ -8,7 +8,7 @@ INSERT INTO ui.graphic_icons
 (020002, 'CAM_FIX', 'CAM_FIX', false, false, 'component/graphicIcon/graphicIconDefault.js', 50, 50, 'img/graphic_icon/02_camera.svg', 'null',true),
 (030002, 'CAM_FIX', 'CAM_FIX', false, false, 'component/graphicIcon/graphicIconDefault.js', 37.5, 37.5, 'img/graphic_icon/02_camera.svg', 'null',true),
 (000003, 'Detector', 'Detector', false, false, 'component/graphicIcon/graphicIconDefault.js', 50, 50, 'img/graphic_icon/03_detector.svg', 'null',true),
-(000004, 'Seccion', 'Seccion', false, false, 'component/graphicIcon/graphicIconDefault.js', 100, 100, 'img/graphic_icon/04_section.svg', 'null',true),
+(000004, 'Seccion', 'Seccion', false, true, 'component/graphicIcon/graphicIconCustom.js', 100, 100, 'img/graphic_icon/04_section.svg', 'component/graphicIcon/custom/section.js',true),
 (000005, 'PA_system', 'PA_system', false, false, 'component/graphicIcon/graphicIconDefault.js', 50, 50, 'img/graphic_icon/05_pa_system.svg', 'null',true),
 (000008, 'BAR', 'BAR', false, false, 'component/graphicIcon/graphicIconDefault.js', 50, 50, 'img/graphic_icon/08_barrier.svg', 'null',true),
 (000009, 'VNT', 'VNT', false, false, 'component/graphicIcon/graphicIconDefault.js', 50, 50, 'img/graphic_icon/09_jetfan.svg', 'null',true),

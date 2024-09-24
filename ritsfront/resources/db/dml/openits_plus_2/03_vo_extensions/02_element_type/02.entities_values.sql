@@ -13,6 +13,8 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 
 ('ElementType:4', 1, '4'),
 ('ElementType:4', 2, 'graphic_icon/04_section.svg'),
+('ElementType:4', 3, '10'),
+('ElementType:4', 4, '10'),
 ('ElementType:4', 14, 'grid/element_type_04.png'),
 
 ('ElementType:5', 1, '5'),
