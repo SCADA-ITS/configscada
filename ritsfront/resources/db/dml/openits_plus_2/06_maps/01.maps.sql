@@ -3,11 +3,13 @@ INSERT INTO ui.maps (id, name, description, "label", icon, longitude, latitude, 
 
 INSERT INTO ui.map_layers (id, base_layer, map_id, "name", description, "label", icon, visible) VALUES 
 (9700002, NULL, 1, 'Layer Camaras', 'Layer Camaras', 'LBL_ELEMENT_TYPE_CAMERA', NULL, true),
-(9800071, NULL, 1, 'Layer Paneles', 'Layer Paneles', 'LBL_ELEMENT_TYPE_PANEL', NULL, true);
+(9800071, NULL, 1, 'Layer Paneles', 'Layer Paneles', 'LBL_ELEMENT_TYPE_PANEL', NULL, true),
+(9900004, NULL, 1, 'Layer Secciones', 'Layer Secciones', 'LBL_ELEMENT_TYPE_PANEL', NULL, true);
 
 INSERT INTO ui.graphic_icons (id, "name", description, alarms, measures, js_draw_file, width, height, svg_pattern_var, svg_file, js_custom_type_render) VALUES
 (040002, 'CAM_FIX', 'CAM_FIX', false, true, 'component/graphicIcon/graphicIconDefault.js', 30, 30,null,  'img/graphic_icon/02_camera.svg',true),
 (050002, 'CAM_FIX', 'CAM_FIX', false, true, 'component/graphicIcon/graphicIconDefault.js', 50, 50,null,  'img/graphic_icon/02_camera.svg',true),
+(010004, 'Seccion', 'Seccion', false, true, 'component/graphicIcon/graphicIconCustom.js', 100, 100, null, 'img/graphic_icon/04_section.svg', 'component/graphicIcon/custom/section.js'),
 (100071, 'PMV', 'PMV', false, true, 'component/graphicIcon/graphicIconCustom.js', 240, 120, null, 'img/graphic_icon/71_vms_dgt_gr_txt.svg', 'component/graphicIcon/custom/vms.js');
 
 INSERT INTO ui.map_layer_elements (id, layer_id, element_id, graphic_icon_id, "label", longitude, latitude, horizontal_flip, rotate, tooltip, z_index_front, show_text, text_color,selectable) VALUES 
@@ -33,7 +35,14 @@ INSERT INTO ui.map_layer_elements (id, layer_id, element_id, graphic_icon_id, "l
 (19, 9800071, 'Element:71:11', 100071, 'MAP-DGT-9', -4.740575, 36.50481388888889, false, null, true, 1, true, '#000000',true),
 (20, 9800071, 'Element:71:12', 100071, 'MAP-DGT-10', -4.709702777777778, 36.50683333333333, false, null, true, 1, true, '#000000',true),
 (21, 9800071, 'Element:71:13', 100071, 'MAP-DGT-11', -4.757883333333333, 36.50729444444445, false, null, true, 1, true, '#000000',true),
-(22, 9800071, 'Element:71:14', 100071, 'MAP-DGT-12', -4.779144444444444, 36.512477777777775, false, null, true, 1, true, '#000000',true);
+(22, 9800071, 'Element:71:14', 100071, 'MAP-DGT-12', -4.779144444444444, 36.512477777777775, false, null, true, 1, true, '#000000',true),
+
+(23, 9900004, 'Element:4:5', 010004, 'MAP-ETD-1-SEC-1', -4.709702777777778, 36.50683333333333, false, null, true, 1, true, '#000000',true),
+(24, 9900004, 'Element:4:6', 010004, 'MAP-ETD-2-SEC-1', -4.740575, 36.50481388888889, false, null, true, 1, true, '#000000',true),
+(25, 9900004, 'Element:4:7', 010004, 'MAP-ETD-3-SEC-1', -4.924852777777778, 36.513172222222224, false, null, true, 1, true, '#000000',true),
+(26, 9900004, 'Element:4:8', 010004, 'MAP-ETD-4-SEC-1', -4.950216666666667, 36.52636944444444, false, null, true, 1, true, '#000000',true),
+(27, 9900004, 'Element:4:9', 010004, 'MAP-ETD-5-SEC-1', -5.048258333333333, 36.48600833333334, false, null, true, 1, true, '#000000',true);
+
 
 
 
@@ -63,6 +72,11 @@ INSERT INTO ui.map_layer_element_zooms (map_layer_element_id, zoom_lower, zoom_u
 (21, 10, 13, 100071,  -4.757883333333333, 36.50729444444445, false, null, true, false, '#00000'),
 (22, 10, 13, 100071,  -4.779144444444444, 36.512477777777775, false, null, true, false, '#00000'),
 
+(23, 10, 13, 010004,  -4.609702777777778, 36.40683333333333, false, null, true, false, '#00000'),
+(24, 10, 13, 010004,  -4.740575, 36.40683333333333, false, null, true, false, '#00000'),
+(25, 10, 13, 010004,  -4.824852777777778, 36.40683333333333, false, null, true, false, '#00000'),
+(26, 10, 13, 010004,  -4.950216666666667, 36.40683333333333, false, null, true, false, '#00000'),
+(27, 10, 13, 010004,  -5.048258333333333, 36.40683333333333,  false, null, true, false, '#00000'),
 
 (1, 13.5, 16, 050002,  -4.9816611111111115, 36.52065555555555,  false, null, true, false, '#00000'),
 (2, 13.5, 16, 050002,  -4.940216666666667, 36.52036944444444,  false, null, true, false, '#00000'),
@@ -86,7 +100,14 @@ INSERT INTO ui.map_layer_element_zooms (map_layer_element_id, zoom_lower, zoom_u
 (19, 13.5, 16, 100071,  -4.740575, 36.50281388888889,  false, null, true, false, '#00000'),
 (20, 13.5, 16, 100071,  -4.709702777777778, 36.50483333333333, false, null, true, false, '#00000'),
 (21, 13.5, 16, 100071,  -4.757883333333333, 36.50529444444445,  false, null, true, false, '#00000'),
-(22, 13.5, 16, 100071,  -4.779144444444444, 36.510477777777775, false, null, true, false, '#00000');
+(22, 13.5, 16, 100071,  -4.779144444444444, 36.510477777777775, false, null, true, false, '#00000'),
+
+(23, 13.5, 16, 010004,  -4.609702777777778, 36.40683333333333, false, null, true, false, '#00000'),
+(24, 13.5, 16, 010004,  -4.740575, 36.40683333333333, false, null, true, false, '#00000'),
+(25, 13.5, 16, 010004,  -4.824852777777778, 36.40683333333333, false, null, true, false, '#00000'),
+(26, 13.5, 16, 010004,  -4.950216666666667, 36.40683333333333, false, null, true, false, '#00000'),
+(27, 13.5, 16, 010004,  -5.048258333333333, 36.40683333333333,  false, null, true, false, '#00000');
+
 
 
 INSERT INTO ui.map_commands
