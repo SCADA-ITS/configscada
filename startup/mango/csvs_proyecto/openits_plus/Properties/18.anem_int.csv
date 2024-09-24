@@ -1,0 +1,7 @@
+device_name;source_name;host;measure_port(i);alarm_port(i);url_publisher;offset_wind_speed(i);offset_traffic_direction(i);offset_alarm_sensor(i);offset_alarm_fa(i)
+TUN-ANI-1CA;ANEM_INT;192.168.88.74;502;503;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/;3418;3419;1992;1993
+TUN-ANI-2CA;ANEM_INT;192.168.88.74;502;503;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/;3420;3421;1994;1995
+TUN-ANI-3CA;ANEM_INT;192.168.88.74;502;503;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/;3422;3423;1996;1997
+TUN-ANI-1MA;ANEM_INT;192.168.88.74;502;503;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/;3424;3425;1998;1999
+TUN-ANI-2MA;ANEM_INT;192.168.88.74;502;503;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/;3426;3427;2000;2001
+TUN-ANI-3MA;ANEM_INT;192.168.88.74;502;503;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/;3428;3429;2002;2003
