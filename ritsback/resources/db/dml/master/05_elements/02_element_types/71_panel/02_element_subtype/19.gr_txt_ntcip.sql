@@ -16,7 +16,8 @@ INSERT INTO master.element_subtype_active_params
 (19, 71, 2, 4, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (19, 71, 2, 5, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (19, 71, 2, 6, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(19, 71, 2, 7, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(19, 71, 2, 7, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(19, 71, 2, 10, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 -- 
 -- Table: master.element_subtype_active_commands
@@ -25,4 +26,6 @@ INSERT INTO master.element_subtype_active_commands (element_subtype_id, command_
 (19, 2, 71, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (19, 3, 71, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (19, 5, 71, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(19, 7, 71, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(19, 7, 71, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(19, 8, 71, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(19, 9, 71, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
