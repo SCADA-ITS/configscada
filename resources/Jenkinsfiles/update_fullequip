@@ -4,11 +4,30 @@ pipeline {
     agent any
     
     environment {
+        // SSH VARIABLES
         SSH_HOST = '192.168.88.70'
         SSH_SERVICE = 'app'
+        SSH_USER = 'revenga'
+        PROJECT = 'fullequip'
+
+        // BBDD VARIABLES
+        PROFILE_BBDD = 'maqueta_fullequip'
+        HOST_BBDD = '192.168.88.71'
+        PORT_BBDD = '5430'
+
+        // JENKINS VARIABLES
         PASSWORD_CREDENTIALS_ID = 'ssh_fullequip'  // Reemplaza con el ID de tus credenciales
-        PASSWORD_CREDENTIALS_ID_BBDD = 'fullequip_bbdd'
-        PASSWORD_CREDENTIALS_ID_BBDD_UTF8 = 'fullequip_bbdd_utf8'
+
+        // GIT VARIABLES
+        GIT_IP = '192.168.88.194'
+
+        // RESOURCES
+        BACK_RESOURCES = 'app/backrits/resources'
+        FRONT_RESOURCES = 'ritsfront/openits/src/main/resources/'
+
+        BACK_BBDD_FOLDER = 'rits/ritsback/resources/db'
+        BACK_BBDD_DDLRT_FOLDER = 'rits/ritsback/resources/db/ddlrt'
+        FRONT_BBDD_FOLDER = 'rits/ritsfront/resources/db'
     }
 
     stages {
@@ -29,7 +48,7 @@ pipeline {
                     for (repo in repos) {
                         dir(repo) {
                             git(
-                                url: "ssh://git@192.168.88.194:3004/~/${repo}.git",
+                                url: "ssh://git@${GIT_IP}:3004/~/${repo}.git",
                                 branch: 'master',
                                 changelog: true,
                                 poll: true
@@ -68,6 +87,62 @@ pipeline {
                 }
             }
         }
+
+        stage('Resources back'){
+            when {
+                expression { return env.CHANGES_FOUND == 'true' }
+            }
+            steps {
+                script {
+                    sh "echo Modificando recursos de back"
+                    if (!fileExists(BACK_RESOURCES)) {
+                        sh 'echo El directorio no existe. Creándolo...'
+                        sh "mkdir -p ${BACK_RESOURCES}"
+                        sh 'echo Directorio creado exitosamente.'
+                    } else {
+                        sh 'echo El directorio ya existe.'
+                    }
+        
+                    sh """
+                        echo Eliminando binarios antiguos...
+                        rm -Rf app/backrits/*.jar
+                        
+                        echo Eliminando ficheros de logs...
+                        rm -Rf app/backrits/logs/*
+                        
+                        echo Copiando binarios nuevos...
+                    """
+
+                    def ejecutables= ["data-loader", "equipment-manager", "ep-pub-stomp", "historical-manager", "io-controller",
+					"plan-manager", "service-graphql", "incident-manager", "traffic-manager", "virtual-equipment-manager",
+					"io-external-manager", "server-launcher"]
+
+                    ejecutables.each { ejecutable ->
+                        sh "cp ritsback/${ejecutable}/target/${ejecutable}.jar app/backrits/${ejecutable}.jar"
+                    }
+
+                    sh """
+                        echo Eliminando ficheros de recursos antiguos...
+                        rm -Rf app/backrits/resources/*
+
+                        echo Modificando recursos...
+                        sed -i 's|\\(<p:path>/home/\\).*|\\1${SSH_USER}/app/backrits/</p:path>|' rits/resources/project/${PROJECT}/adapters/server-launcher/server_launcher_adapter_v1.xml
+                        sed -i 's|\\(<p:broker>ws://\\).*|\\1${SSH_USER}:61614</p:broker>|' rits/resources/project/${PROJECT}/adapters/pub-stomp/pub_stomp_adapter_v1.xml
+                        sed -i 's|\\(jdbc.url=jdbc:postgresql://\\).*|\\1${HOST_BBDD}:${PORT_BBDD}/rits|' rits/resources/project/${PROJECT}/jdbc.properties
+                        sed -i 's|\\(redis.host=\\).*|\\1${SSH_HOST}|' rits/resources/project/${PROJECT}/redis.properties
+                    
+                        echo Copiando ficheros de recursos nuevos
+                        cp -R rits/resources/master/* app/backrits/resources
+                        cp -R rits/resources/project/${PROJECT}/* app/backrits/resources
+                        cp rits/resources/project/${PROJECT}/start.sh app/backrits/start.sh
+                    """
+                    
+                    dir('app') {
+                        sh 'tar zcvf backrits.tar.gz backrits'
+                    }
+                }
+            }
+        }
         
         stage('Deploy back') {
             when {
@@ -75,82 +150,23 @@ pipeline {
             }
             steps {
                 script {
-					sh 'echo Desplegando back'
-			
-                    def directorio = 'app/backrits/resources'
-        
-                    if (!fileExists(directorio)) {
-                        sh 'echo El directorio no existe. Creándolo...'
-                        sh "mkdir -p ${directorio}"
-                        sh 'echo Directorio creado exitosamente.'
-                    } else {
-                        sh 'echo El directorio ya existe.'
-                    }
-        
-                    sh 'echo Eliminando binarios antiguos...'
-                    sh 'rm -Rf app/backrits/*.jar'
-                    
-                    sh 'echo Eliminando ficheros de logs...'
-                    sh 'rm -Rf app/backrits/logs/*'
-                    
-                    sh 'echo Copiando binarios nuevos...'
-                    sh 'cp ritsback/data-loader/target/data-loader.jar app/backrits/data-loader.jar'
-                    sh 'cp ritsback/equipment-manager/target/equipment-manager.jar app/backrits/equipment-manager.jar'
-                    sh 'cp ritsback/ep-pub-stomp/target/ep-pub-stomp.jar app/backrits/ep-pub-stomp.jar'
-                    sh 'cp ritsback/historical-manager/target/historical-manager.jar app/backrits/historical-manager.jar'
-                    sh 'cp ritsback/io-controller/target/io-controller.jar app/backrits/io-controller.jar'
-                    sh 'cp ritsback/plan-manager/target/plan-manager.jar app/backrits/plan-manager.jar'
-                    sh 'cp ritsback/service-graphql/target/service-graphql.jar app/backrits/service-graphql.jar'
-                    sh 'cp ritsback/incident-manager/target/incident-manager.jar app/backrits/incident-manager.jar'
-                    sh 'cp ritsback/traffic-manager/target/traffic-manager.jar app/backrits/traffic-manager.jar'
-                    sh 'cp ritsback/virtual-equipment-manager/target/virtual-equipment-manager.jar app/backrits/virtual-equipment-manager.jar'
-                    sh 'cp ritsback/io-external-manager/target/io-external-manager.jar app/backrits/io-external-manager.jar'
-                    sh 'cp ritsback/server-launcher/target/server-launcher.jar app/backrits/server-launcher.jar'
-                    
-                    sh 'echo Eliminando ficheros de recursos antiguos...'
-                    sh 'rm -Rf app/backrits/resources/*'
-                    
-                    sh 'echo Copiando ficheros de recursos nuevos'
-                    sh 'cp -R rits/resources/master/* app/backrits/resources'
-                    sh 'cp -R rits/resources/project/fullequip/* app/backrits/resources'
-                    sh 'cp rits/resources/project/fullequip/start.sh app/backrits/start.sh'
-                    
-                    dir('app') {
-                        sh 'tar zcvf backrits.tar.gz backrits'
-                    }
+                    sh """
+                        echo Actualizando back remotamente...
+
+                        scp app/backrits.tar.gz ${SSH_USER}@${SSH_HOST}:/home/${SSH_USER}/app/
+                        ssh ${SSH_USER}@${SSH_HOST} 'cd /home/${SSH_USER}/app && rm -rf backrits && tar zxvf backrits.tar.gz && sleep 15 && exit'
+                    """
                 }
+
                 script {
-                    sh 'echo Actualizando back remotamente...'
+                    sh "echo Ejecutando scripts de back"
                     
-                    def user = 'revenga'
-                    def host = '192.168.88.70'
+                    dir(BACK_BBDD_DDLRT_FOLDER){
+                        sh "./ddl_param_jenkins.sh ${HOST_BBDD} ${PORT_BBDD}"
+                    }
 
-                    sh "scp app/backrits.tar.gz $user@$host:/home/$user/app/"
-                    sh "ssh $user@$host 'cd /home/$user/app && rm -rf backrits && tar zxvf backrits.tar.gz && sleep 15 && exit'"
-                }
-
-                withCredentials([string(credentialsId: PASSWORD_CREDENTIALS_ID_BBDD_UTF8, variable: 'BBDD_PASSWORD_UTF8')]) {
-                    script {
-                        sh 'echo Ejecutando scripts de back...'
-
-                        def rutaDdlRt = 'rits/ritsback/resources/db/ddlrt'
-                        dir("${rutaDdlRt}"){
-                            sh '''
-                                sed -i 's/rits:rits/rits:'''+ "$BBDD_PASSWORD_UTF8" +'''/' ddl_param_jenkins.sh
-                            '''
-                            
-                            sh "./ddl_param_jenkins.sh 192.168.88.71 5430"
-                        }
-
-                        def rutaBase = 'rits/ritsback/resources/db'                        
-                        dir("${rutaBase}") {
-                            sh '''
-                                sed -i 's/rits:rits/rits:'''+ "$BBDD_PASSWORD_UTF8" +'''/' ddl/ddl_param_jenkins.sh
-                                sed -i 's/rits:rits/rits:'''+ "$BBDD_PASSWORD_UTF8" +'''/' dml/master/dml_param_jenkins.sh
-                                sed -i 's/rits:rits/rits:'''+ "$BBDD_PASSWORD_UTF8" +'''/' dml/maqueta_fullequip/dml_param_jenkins.sh
-                            '''
-                            sh "./make_param_jenkins.sh maqueta_fullequip 192.168.88.71 5430"
-                        }
+                    dir(BACK_BBDD_FOLDER){
+                        sh "./make_param_jenkins.sh ${PROFILE_BBDD} ${HOST_BBDD} ${PORT_BBDD}"
                     }
                 }
             }
@@ -161,23 +177,20 @@ pipeline {
                 expression { return env.CHANGES_FOUND == 'true' }
             }
             steps {
-                withCredentials([usernamePassword(credentialsId: PASSWORD_CREDENTIALS_ID_BBDD, usernameVariable: 'BBDD_USER', passwordVariable: 'BBDD_PASSWORD')]) {
-                    script {
-                        sh 'echo Copiando recursos de front'
+                script {
+                    sh "echo Modificando recursos de front"
+
+                    dir(FRONT_RESOURCES) {
+                        sh """
+                            rm -rf project
+                            cp ${WORKSPACE}/rits/ritsfront/openits/*.properties ./
+                            cp -r ${WORKSPACE}/rits/ritsfront/openits/static ./
+                            cp -r ${WORKSPACE}/rits/ritsfront/openits/project ./
                         
-                        dir('ritsfront/openits/src/main/resources/') {
-                            sh 'rm -rf project'
-                            sh "cp ${WORKSPACE}/rits/ritsfront/openits/*.properties ./"
-                            sh "cp -r ${WORKSPACE}/rits/ritsfront/openits/static ./"
-                            sh "cp -r ${WORKSPACE}/rits/ritsfront/openits/project ./"
-                            
-                            sh '''
-                                sed -i 's/\\(spring.profiles.active=\\).*/\\1fullequip/' application.properties
-                                sed -i 's|\\(spring.datasource.url=jdbc:postgresql://\\).*|\\1192.168.88.71:5430/rits|' application.properties
-                                sed -i 's|\\(spring.datasource.password=\\).*|\\1'''+ "$BBDD_PASSWORD" +'''|' application.properties
-                                sed -i 's|\\(ws://\\).*\\(:61614\\)|\\1192.168.88.70\\2|' project/fullequip/data/config.js
-                            '''
-                        }
+                            sed -i 's/\\(spring.profiles.active=\\).*/\\1${PROJECT}/' application.properties
+                            sed -i 's|\\(spring.datasource.url=jdbc:postgresql://\\).*|\\1${HOST_BBDD}:${PORT_BBDD}/rits|' application.properties
+                            sed -i 's|\\(ws://\\).*\\(:61614\\)|\\1${SSH_HOST}\\2|' project/${PROJECT}/data/config.js
+                        """
                     }
                 }
             }
@@ -205,30 +218,16 @@ pipeline {
             }
             steps {
                 script {
-					sh 'echo Desplegando front'
-                    
-                    def user = 'revenga'
-                    def host = '192.168.88.70'
-    
-                    sh "scp ritsfront/openits/target/openits.jar $user@$host:/home/$user/app"
-                    sh "ssh $user@$host \"cd /home/$user/app/frontrits && rm -rf openits.jar && mv /home/$user/app/openits.jar ./ && sed -i 's|\\(active=\\).*\\( -jar\\)|\\1fullequip\\2|' ~/app/start.sh\""
-                }
-                
-                withCredentials([string(credentialsId: PASSWORD_CREDENTIALS_ID_BBDD_UTF8, variable: 'BBDD_PASSWORD_UTF8')]) {
-                    script {
-                        def rutaBase = 'rits/ritsfront/resources/db'
+					sh """
+                        echo Desplegando front
+                        scp ritsfront/openits/target/openits.jar ${SSH_USER}@${SSH_HOST}:/home/${SSH_USER}/app
+                        ssh ${SSH_USER}@${SSH_HOST} \"cd /home/${SSH_USER}/app/frontrits && rm -rf openits.jar && mv /home/${SSH_USER}/app/openits.jar ./ && sed -i 's|\\(active=\\).*\\( -jar\\)|\\1${PROJECT}\\2|' ~/app/start.sh\"
 
-                        sh 'echo Ejecutando scripts de front...'
-                        
-                        dir("${rutaBase}") {
-                            sh '''
-                                sed -i 's/rits:rits/rits:'''+ "$BBDD_PASSWORD_UTF8" +'''/' ddl/ddl_param_jenkins.sh
-                                sed -i 's/rits:rits/rits:'''+ "$BBDD_PASSWORD_UTF8" +'''/' dml/master/dml_param_jenkins.sh
-                                sed -i 's/rits:rits/rits:'''+ "$BBDD_PASSWORD_UTF8" +'''/' dml/maqueta_fullequip/dml_param_jenkins.sh
-                                sed -i 's/rits:rits/rits:'''+ "$BBDD_PASSWORD_UTF8" +'''/' make_param_jenkins.sh
-                            '''
-                            sh "./make_param_jenkins.sh maqueta_fullequip 192.168.88.71 5430 192.168.88.70"
-                        }
+                        echo Ejecutando scripts de front...
+                    """
+                    
+                    dir(FRONT_BBDD_FOLDER) {
+                        sh "./make_param_jenkins.sh ${PROFILE_BBDD} ${HOST_BBDD} ${PORT_BBDD} ${SSH_HOST}"
                     }
                 }
             }
@@ -242,7 +241,7 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: PASSWORD_CREDENTIALS_ID, usernameVariable: 'SSH_USER', passwordVariable: 'SSH_PASSWORD')]) {
                     script {
 						sh 'echo Relanzando aplicación remotamente tras ser actualizada'
-                        sh 'sshpass -p "$SSH_PASSWORD" ssh -t -t -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST' + " 'echo \\$SSH_PASSWORD | sudo -S service $SSH_SERVICE restart'"
+                        sh 'sshpass -p "${SSH_PASSWORD}" ssh -t -t -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST' + " 'echo \\${SSH_PASSWORD} | sudo -S service ${SSH_SERVICE} restart'"
 
                     }
                 }

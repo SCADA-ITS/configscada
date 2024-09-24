@@ -83,6 +83,60 @@
 			"simplifyType": "NONE"
 		},
     {
+      "xid":"DP_{device_name}_travel_time_enabled",
+      "name":"travel_time_enabled",
+      "enabled":true,
+      "loggingType":"ON_CHANGE",
+      "intervalLoggingPeriodType":"MINUTES",
+      "intervalLoggingType":"INSTANT",
+      "purgeType":"YEARS",
+      "pointLocator":{
+        "dataType":"BINARY",
+        "changeType":{
+          "type":"NO_CHANGE",
+          "startValue":"false"
+        },
+        "settable":true
+      },
+      "eventDetectors":[
+      ],
+      "plotType":"STEP",
+      "rollup":"NONE",
+      "unit":"",
+      "simplifyType":"NONE",
+      "chartColour":"",
+      "chartRenderer":{
+        "type":"TABLE",
+        "limit":10
+      },
+      "dataSourceXid":"DS_PANELS",
+      "defaultCacheSize":1,
+      "deviceName":"{device_name}",
+      "discardExtremeValues":false,
+      "discardHighLimit":1.7976931348623157E308,
+      "discardLowLimit":-1.7976931348623157E308,
+      "intervalLoggingPeriod":15,
+      "intervalLoggingSampleWindowSize":0,
+      "overrideIntervalLoggingSamples":false,
+      "preventSetExtremeValues":false,
+      "purgeOverride":false,
+      "purgePeriod":1,
+      "readPermission":"",
+      "setExtremeHighLimit":1.7976931348623157E308,
+      "setExtremeLowLimit":-1.7976931348623157E308,
+      "setPermission":"",
+      "tags":{
+      },
+      "textRenderer":{
+        "type":"BINARY",
+        "oneColour":"#00ff00",
+        "oneLabel":"one",
+        "zeroColour":"#0000ff",
+        "zeroLabel":"zero"
+      },
+      "tolerance":0.0
+    },
+    {
       "xid": "DP_{device_name}_status",
       "name": "status",
       "purgePeriod": 1,
@@ -153,6 +207,11 @@
 				{
 					"dataPointId": "DP_{device_name}_message_multistring",
 					"parameterName": "content",
+					"includeTimestamp": false
+				},
+        {
+					"dataPointId": "DP_{device_name}_travel_time_enabled",
+					"parameterName": "travel_time_enabled",
 					"includeTimestamp": false
 				},
         {
