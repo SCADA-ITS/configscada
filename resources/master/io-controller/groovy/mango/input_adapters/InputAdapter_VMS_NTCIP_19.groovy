@@ -166,8 +166,7 @@ class InputAdapter_VMS {
 		if(num_zones && num_zones != null){
 			for(int n_zone = 1; n_zone <= num_zones; n_zone++){
 				ElementValue alternance_element = EntitiesManager.getInstance().getElementValue(element, PARAM_MEASURE_DATAJSON, PARAM_TYPE_MEASURE);
-				
-				if (alternance_element.getValue() != "[]" && alternance_element.getValue() != ""){
+				if (alternance_element.getValue() != "[]" && alternance_element.getValue() != "" && alternance_element.getValue() != null){
 					
 					def jsonObject = new JsonSlurper().parseText(alternance_element.getValue());
 					Long alternance_json = jsonObject[n_zone - 1].alternance_ms
