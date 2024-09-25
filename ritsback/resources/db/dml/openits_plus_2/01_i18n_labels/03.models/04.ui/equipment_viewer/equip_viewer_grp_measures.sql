@@ -11,6 +11,7 @@
 INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) VALUES
     
     --es_ES
+	 ('es_ES', 1, 'LBL_GRP_MEASURES', 'Medidas', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	 ('es_ES', 1, 'LBL_ELEMENT_GENERAL', 'General', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	 ('es_ES', 1, 'LBL_ELEMENT_SPEED_CLASSIFICATION', 'Clasificación velocidad', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	 ('es_ES', 1, 'LBL_ELEMENT_LONG_CLASSIFICATION', 'Clasificación longitud', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -21,6 +22,7 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 	 ('es_ES', 1, 'LBL_ELEMENT_ENERGIAS', 'Energías', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
     --en_GB
+	 ('en_GB', 1, 'LBL_GRP_MEASURES', 'Measures', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	 ('en_GB', 1, 'LBL_ELEMENT_GENERAL', 'General', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 	 ('en_GB', 1, 'LBL_ELEMENT_SPEED_CLASSIFICATION', 'Speed classification', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
  	 ('en_GB', 1, 'LBL_ELEMENT_LONG_CLASSIFICATION', 'Longitude classification', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -41,6 +43,7 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 -- 	 ('en_GB', 1, 'LBL_ELEMENT_ENERGIAS', 'Energys', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	 
     --es_CL
+	 ('es_CL', 1, 'LBL_GRP_MEASURES', 'Medidas', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	 ('es_CL', 1, 'LBL_ELEMENT_GENERAL', 'General', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
  	 ('es_CL', 1, 'LBL_ELEMENT_SPEED_CLASSIFICATION', 'Clasificación velocidad', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	 ('es_CL', 1, 'LBL_ELEMENT_LONG_CLASSIFICATION', 'Clasificación longitud', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
