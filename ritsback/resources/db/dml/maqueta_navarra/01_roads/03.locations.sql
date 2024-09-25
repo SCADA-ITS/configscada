@@ -1,4 +1,5 @@
 INSERT INTO conf.locations (location_id, location_type_id, alias, description, lane, enabled, visible, created_at, updated_at) VALUES
+(0010001, 1, ' pk 3+333', ' pk 3+333', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (0010002, 1, ' pk 2+295', ' pk 2+295', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (0020002, 1, ' pk 2+520', ' pk 2+520', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (0030002, 1, ' pk 2+595', ' pk 2+595', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -48,6 +49,7 @@ INSERT INTO conf.locations (location_id, location_type_id, alias, description, l
 (0030051, 1, ' pk 41+789', ' pk 41+789', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (0040051, 1, ' pk 50+500', ' pk 50+500', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (0050051, 1, ' pk 60+230', ' pk 60+230', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(0010064, 1, ' pk 5+400', ' pk 5+400', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (0010071, 1, ' pk 91+358', ' pk 91+358', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (0020071, 1, ' pk 127+670', ' pk 127+670', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (0030071, 1, ' pk 32+560', ' pk 32+560', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),

@@ -1,4 +1,8 @@
 INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
+('ElementType:1', 1, '1'),
+('ElementType:1', 2, '01_weather_station.svg'),
+('ElementType:1', 14, 'grid/element_type_01.png'),
+
 ('ElementType:2', 1, '2'),
 ('ElementType:2', 2, '02_camera_sanctioning2.svg'),
 ('ElementType:2', 14, 'grid/02_camera_sanctioning2.png'),
@@ -14,6 +18,10 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 ('ElementType:51', 1, '51'),
 ('ElementType:51', 2, 'element_type_51.svg'),
 ('ElementType:51', 14, 'grid/element_type_51.png'),
+
+('ElementType:64', 1, '64'),
+('ElementType:64', 2, '04_air_quality.svg'),
+('ElementType:64', 14, 'grid/element_type_64.png'),
 
 ('ElementType:71', 1, '71'),
 ('ElementType:71', 2, 'graphic_icon/71_vms_dgt_gr_txt.svg'),

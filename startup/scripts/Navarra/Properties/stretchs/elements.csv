@@ -7,3 +7,4 @@ item;stretch_type;alias;description;pk_ini;pk_end;lanes;road
 6;Element;N-121A D;N-121A D;25+900;25+900;2;N-121A
 7;Element;A-1 C;A-1 C;401+560;401+560;2;A-1
 8;Element;A-1 D;A-1 D;0;0;2;A-1
+9;Element;PA-30 D;PA-30 D;0;0;2;PA-30

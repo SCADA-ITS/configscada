@@ -2,14 +2,18 @@ INSERT INTO ui.maps (id, name, description, "label", icon, longitude, latitude, 
 (2, 'Navarra', 'Navarra', 'LBL_MAP', NULL, -1.65, 42.816667, 9, 16, 9, 0, 39.8, -2.5, 45.8, 'http://192.168.88.130:8100/geoserver/wms', null, true);
 
 INSERT INTO ui.map_layers (id, base_layer, map_id, "name", description, "label", icon, visible) VALUES 
+(1001, NULL, 2, 'EM', 'EM', 'LBL_ELEMENT_TYPE_EM', NULL, true),
 (1002, NULL, 2, 'RADAR', 'RADAR', 'LBL_ELEMENT_TYPE_CAMERA', NULL, true),
 (1004, NULL, 2, 'SECC', 'SECC', 'LBL_ELEMENT_TYPE_SECTION', NULL, true),
+(1064, NULL, 2, 'AIR_QUALITY', 'AIR_QUALITY', 'LBL_ELEMENT_TYPE_AIR_QUALITY', NULL, true),
 (1071, NULL, 2, 'PMV', 'PMV', 'LBL_ELEMENT_TYPE_PANEL', NULL, true);
 
 INSERT INTO ui.map_incidents(id, incident_graphic_icon_id, incident_report_module_action_id, incident_wizard_module_action_id) VALUES
 (2, 1000, 100401, 101301);
 
 INSERT INTO ui.map_layer_elements (id, layer_id, element_id, graphic_icon_id, "label", longitude, latitude, horizontal_flip, rotate, tooltip, show_text, text_color, selectable) VALUES 
+(1001, 1001,'Element:1:1', 1,'EM-1', -1.6237985410729772, 42.850053746963255, false, null, true, false, null, true ),
+
 (1006, 1002,'Element:2:6', 2,'RM-RAD-001', -1.9017311745236636, 43.01375916591506, false, null, true, false, null, true ),
 (1007, 1002,'Element:2:7', 2,'RM-RAD-002', -1.7942441187488551, 42.08257298179288, false, null, true, false, null, true ),
 (1008, 1002,'Element:2:8', 2,'RM-RAD-003', -1.6194401610273894, 43.061277271785855, false, null, true, false, null, true ),
@@ -22,6 +26,8 @@ INSERT INTO ui.map_layer_elements (id, layer_id, element_id, graphic_icon_id, "l
 (1016, 1004,'Element:4:5', 4,'ETD3-SEC1', -1.5948137745177775, 43.12624220385988, false, null, true, false, null, true ),
 (1018, 1004,'Element:4:7', 4,'ETD4-SEC1', -1.6675353610219448, 43.16574064391471, false, null, true, false, null, true ),
 (1020, 1004,'Element:4:9', 4,'ETD5-SEC1', -1.6762278186881505, 43.25350104774429, false, null, true, false, null, true ),
+
+(1064, 1064,'Element:64:1', 64,'AQ-1', -1.6109050029815875, 42.808191649771146, false, null, true, false, null, true ),
 
 (1071, 1071,'Element:71:1', 71,'RM-PMV-001', -1.7029627033453338, 43.276149012514715, false, null, true, false, null, true ),
 (1072, 1071,'Element:71:2', 71,'RM-PMV-002', -1.6141449610235126, 43.1356503997735, false, null, true, false, null, true ),

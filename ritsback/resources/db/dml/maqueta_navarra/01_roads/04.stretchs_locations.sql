@@ -1,4 +1,5 @@
 INSERT INTO conf.stretch_locations (stretch_id, location_id, position, enabled, visible, created_at, updated_at) VALUES
+(5, 0010001, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 0010002, 2, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 0020002, 2, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (5, 0030002, 2, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -46,6 +47,7 @@ INSERT INTO conf.stretch_locations (stretch_id, location_id, position, enabled, 
 (5, 0030051, 2, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (5, 0040051, 2, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (5, 0050051, 2, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(9, 0010064, 2, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 0010071, 2, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 0020071, 2, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (5, 0030071, 2, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

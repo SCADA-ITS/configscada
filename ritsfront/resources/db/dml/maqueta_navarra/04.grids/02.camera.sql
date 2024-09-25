@@ -7,7 +7,8 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (020002, 2, 1, 2, true, false, false, true, 'LBL_NAME', 'LBL_NAME', 'alias', false, false, null, false, false, 150, NULL, true, true, NULL, NULL, NULL, NULL),
 --(020003, 2, 1, 3, true, false, false, false, 'LBL_LOCATION', 'LBL_LOCATION', 'locationAlias', false, false, null, false, false, 250, NULL, true, true, NULL, NULL, NULL, NULL),
 (020004, 2, 1, 4, true, true, false, false, NULL, NULL, 'state', false, false, null, false, false, 35, NULL, true, true, NULL, NULL, NULL, NULL),
-(020005, 2, 1, 5, true, true, false, true, 'LBL_STATE_LABEL', 'LBL_STATE_LABEL', 'stateLabel', false, false, null, true, false, 250, NULL, true, true, NULL, NULL, NULL, NULL);
+(020005, 2, 1, 5, true, true, false, true, 'LBL_STATE_LABEL', 'LBL_STATE_LABEL', 'stateLabel', false, false, null, true, false, 250, NULL, true, true, NULL, NULL, NULL, NULL),
+(020006, 2, 3, 6, true, false, false, false, 'LBL_ELEMENT_TYPE_PARAM_SPEED', 'LBL_ELEMENT_TYPE_PARAM_SPEED', 'ElementTypeParam:2:2:8', false, false, 'left', false, false, 200, NULL, true, true, NULL, NULL, NULL, NULL);
 
 INSERT INTO ui.grid_option_values(grid_id, grid_option_id, value) VALUES
 (2, 1, 'true'),

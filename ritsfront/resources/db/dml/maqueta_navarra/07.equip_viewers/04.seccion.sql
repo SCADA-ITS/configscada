@@ -1,7 +1,6 @@
 INSERT INTO ui.equip_viewers (id, name, description, "label", icon, show_info_tab, show_childs, show_actions, initial_tab, measure_width, measure_max_rows, measure_only, graphic_icon_id, info_tab_mode, no_show_properties) VALUES
 ('ElementType:4', 'Section', 'Section', 'LBL_ELEMENT_TYPE_SECTION', NULL, true, true, false, null, 225, 3, null, 401, null, true);
 
-
 INSERT INTO ui.equip_viewer_grp_measures (id, equip_viewer_id, name, description, "label", icon, "position", visible) VALUES
 (0401, 'ElementType:4', 'General', 'General', 'LBL_ELEMENT_GENERAL', NULL, 1, true),
 (0402, 'ElementType:4', 'Clasificación velocidad', 'Clasificación velocidad', 'LBL_ELEMENT_SPEED_CLASSIFICATION', NULL, 2, true),

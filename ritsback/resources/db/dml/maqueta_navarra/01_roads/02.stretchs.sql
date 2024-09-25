@@ -7,6 +7,7 @@ INSERT INTO conf.stretchs (stretch_id, stretch_type_id, alias, description, pk_i
 (6, 1, 'N-121A D', 'N-121A D', 0, 0, 0, 3, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (7, 1, 'A-1 C', 'A-1 C', 0, 0, 0, 4, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (8, 1, 'A-1 D', 'A-1 D', 0, 0, 0, 4, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(9, 1, 'PA-30 D', 'PA-30 D', 0, 0, 0, 5, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 (1000, 2, 'N-121A-C', 'N-121A-C', 0, 0, 0, 3, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
