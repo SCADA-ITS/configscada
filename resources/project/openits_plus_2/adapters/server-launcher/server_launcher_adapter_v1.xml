@@ -111,5 +111,17 @@
 				
 			</p:parameters>
 		</p:proc>
+		<p:proc id="10" enabled="true">
+			<p:name>VIRTUAL-EQUIPMENT-MANAGER</p:name>
+			<p:path>/home/admin/app/backrits/</p:path>
+			<p:executable>virtual-equipment-manager.jar</p:executable>
+			<p:xml_adapter>virtual_equipment_manager_adapter_v1.xml</p:xml_adapter>
+			<p:restart_on_fail>true</p:restart_on_fail>
+			<p:dependencies>3</p:dependencies>
+			<p:time_out>300000</p:time_out>
+			<p:parameters>
+				<p:param>-Dfile.encoding=UTF-8</p:param>
+			</p:parameters>
+		</p:proc>
 	</p:processes>
 </p:server_launcher_adapter_v1>
