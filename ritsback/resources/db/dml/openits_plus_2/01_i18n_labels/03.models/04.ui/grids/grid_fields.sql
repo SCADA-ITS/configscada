@@ -157,6 +157,10 @@ INSERT INTO master.i18n_labels (locale_code, module_id, "label", "translation", 
 --Opacímetro
 ('es_ES',1,'LBL_OPAC_CONCENTRATION','Concentración Opac ',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 
+--PMV
+('es_ES',1,'LBL_PANEL_TEMPERATURE','Temperatura',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+('es_ES',1,'LBL_PANEL_TRAVEL_TIME','Tiempos de recorrido',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+
 --Presurización
 ('es_ES',1,'LBL_REMOTE_CONTROL','Control remoto',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 ('es_ES',1,'LBL_PRESS_FAN_1','Ventilador 1 activado',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
@@ -336,6 +340,10 @@ INSERT INTO master.i18n_labels (locale_code, module_id, "label", "translation", 
 --Opacímetro
 ('en_GB',1,'LBL_OPAC_CONCENTRATION','Opac Concentration',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 
+--PMV
+('en_GB',1,'LBL_PANEL_TEMPERATURE','Temperature',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+('en_GB',1,'LBL_PANEL_TRAVEL_TIME','Travel times',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+
 --Presurización
 ('en_GB',1,'LBL_REMOTE_CONTROL','Remote control',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 ('en_GB',1,'LBL_PRESS_FAN_1','Fan 1 enable',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
@@ -514,6 +522,10 @@ INSERT INTO master.i18n_labels (locale_code, module_id, "label", "translation", 
 
 --Opacímetro
 ('es_CL',1,'LBL_OPAC_CONCENTRATION','Concentración Opac ',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+
+--PMV
+('es_CL',1,'LBL_PANEL_TEMPERATURE','Temperatura',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+('es_CL',1,'LBL_PANEL_TRAVEL_TIME','Tiempos de recorrido',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 
 --Presurización
 ('es_CL',1,'LBL_REMOTE_CONTROL','Control remoto',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),

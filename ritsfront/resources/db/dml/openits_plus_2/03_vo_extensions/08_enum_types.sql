@@ -50,5 +50,7 @@ INSERT INTO ui.vo_enum_type_values(id, vo_enum_type_id, "key", value, "translate
 
 
 INSERT INTO ui.vo_entity_enum_types(vo_entity_id, enum_type_id) VALUES
+('ElementTypeParam:71:2:10', 12),
+
 ('ElementTypeParam:84:2:1', 5);
 
