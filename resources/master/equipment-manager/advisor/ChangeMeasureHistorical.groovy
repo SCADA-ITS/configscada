@@ -13,11 +13,11 @@ import com.revenga.rits.back.data.core.model.ElementValue;
  * ChangeMeasureSample.groovy: Groovy for change measures of equipment
  *
  */
-class ChangeMeasureCamera {
+class ChangeMeasureHistorical {
 	
 	org.apache.logging.log4j.Logger log;
 	
-	ChangeMeasureCamera(org.apache.logging.log4j.Logger log) {
+	ChangeMeasureHistorical(org.apache.logging.log4j.Logger log) {
 
 		this.log = log;
 	}
