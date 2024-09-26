@@ -35,3 +35,5 @@ UPDATE ui.modules SET management_areas='["ManagementArea:1"]' WHERE id=1020;
 UPDATE ui.modules SET management_areas='["ManagementArea:1"]' WHERE id=1027;
 UPDATE ui.modules SET management_areas='["ManagementArea:1"]' WHERE id=1028;
 UPDATE ui.modules SET management_areas='["ManagementArea:1"]' WHERE id=1030;
+UPDATE ui.modules SET management_areas='["ManagementArea:2"]' WHERE id=1041;
+UPDATE ui.modules SET management_areas='["ManagementArea:1"]' WHERE id=1051;
