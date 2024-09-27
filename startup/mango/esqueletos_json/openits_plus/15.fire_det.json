@@ -37,7 +37,7 @@
       "purgePeriod": 1
     },
     {
-      "xid": "DS_ALARMS",
+      "xid": "DS_ALARMS_TUNEL",
       "name": "ALARMS",
       "enabled": true,
       "type": "MODBUS_IP",
@@ -295,7 +295,7 @@
         "type": "TABLE",
         "limit": 10
       },
-      "dataSourceXid": "DS_ALARMS",
+      "dataSourceXid": "DS_ALARMS_TUNEL",
       "defaultCacheSize": 1,
       "deviceName": "{device_name}",
       "discardExtremeValues": false,
@@ -353,7 +353,7 @@
         "type": "TABLE",
         "limit": 10
       },
-      "dataSourceXid": "DS_ALARMS",
+      "dataSourceXid": "DS_ALARMS_TUNEL",
       "defaultCacheSize": 1,
       "deviceName": "{device_name}",
       "discardExtremeValues": false,
