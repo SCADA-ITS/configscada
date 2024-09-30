@@ -7,6 +7,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import com.revenga.rits.back.equipment.manager.helper.GroovyHelper;
 import com.revenga.rits.back.data.core.model.Element;
 import com.revenga.rits.back.data.core.model.ElementValue;
+import com.revenga.rits.back.equipment.manager.service.EntitiesManager;
 
 /**
  *
@@ -23,22 +24,28 @@ class ChangeMeasureHistorical {
 	}
 	
 	boolean process(Element element, List<Pair<ElementValue, ElementValue>> elementValues) {
-
-		List<ElementValue> listElementsValues;
 		try {
 
-			listElementsValues = new ArrayList();
+			List<ElementValue> values = new ArrayList();
+			values = EntitiesManager.instance.getElementValues(element.getElementTypeId(), element.id)
+			ElementValue elementValue = new ElementValue();
 
 			if (!CollectionUtils.isEmpty(elementValues)) {
 				
 				for (Pair<ElementValue, ElementValue> pair : elementValues) {
 
 					ElementValue newElementValue = pair.getRight();
+
+					elementValue.setElementTypeId(newElementValue.getElementTypeId());
+					elementValue.setElementTypeParamId(newElementValue.getElementTypeParamId());
+					elementValue.setParamTypeId(newElementValue.getParamTypeId());
+					elementValue.setElementId(newElementValue.getId());
+					elementValue.setValue(newElementValue.getValue());
 					
-					listElementsValues.add(pair.getRight());
+					values.add(elementValue);
 				}
 				
-				element.setElementValues(listElementsValues);
+				element.setElementValues(values);
 				
 				GroovyHelper.sendElementToHistoriclManager(element);
 
