@@ -6,7 +6,9 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (630002, 63, 1, 2, true, false, false, true, 'LBL_NAME', 'LBL_NAME', 'alias', false, false, null, false, false, 150, NULL, true, true, NULL, NULL, true, NULL),
 (630003, 63, 1, 3, true, false, false, false, 'LBL_LOCATION', 'LBL_LOCATION', 'locationAlias', false, false, null, false, false, 250, NULL, true, true, NULL, NULL, NULL, NULL),
 (630004, 63, 1, 4, true, true, false, false, NULL, NULL, 'state', false, false, null, false, false, 35, NULL, true, true, NULL, NULL, NULL, NULL),
-(630005, 63, 1, 5, true, true, false, true, 'LBL_STATE_LABEL', 'LBL_STATE_LABEL', 'stateLabel', false, false, null, true, false, 250, NULL, true, true, NULL, NULL, NULL, NULL);
+(630005, 63, 1, 5, true, true, false, true, 'LBL_STATE_LABEL', 'LBL_STATE_LABEL', 'stateLabel', false, false, null, true, false, 250, NULL, true, true, NULL, NULL, NULL, NULL),
+(630006, 63, 1, 6, true, false, false, false, 'LBL_ELEMENT_TYPE_PARAM_PRESSURE', 'LBL_ELEMENT_TYPE_PARAM_PRESSURE', 'ElementTypeParam:63:2:1', false, false, 'left', false, false, 240, NULL, true, true, NULL, NULL, NULL, NULL),
+(630007, 63, 1, 7, true, false, false, false, 'LBL_ELEMENT_TYPE_PARAM_TEMPERATURE', 'LBL_ELEMENT_TYPE_PARAM_TEMPERATURE', 'ElementTypeParam:63:2:2', false, false, 'left', false, false, 240, NULL, true, true, NULL, NULL, NULL, NULL);
 
 INSERT INTO ui.grid_option_values(grid_id, grid_option_id, value) VALUES
 (63, 1, 'true'), 

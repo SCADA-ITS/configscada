@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
-   width="55mm"
-   height="70.123215mm"
-   viewBox="0 0 55 70.123215"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="53.715954mm"
+   height="72.548637mm"
+   viewBox="0 0 53.715954 72.548638"
    version="1.1"
    id="svg2"
-   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
-   sodipodi:docname="86_pump_1_meassures.svg"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:dc="http://purl.org/dc/elements/1.1/">
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"
+   sodipodi:docname="86_pump_1_meassures.svg">
+  <metadata
+     id="metadata31" />
   <defs
      id="defs1087" />
   <sodipodi:namedview
@@ -24,23 +26,24 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.8544886"
-     inkscape:cx="-16.985815"
-     inkscape:cy="104.88067"
+     inkscape:cx="-21.838905"
+     inkscape:cy="169.58854"
      inkscape:document-units="mm"
      inkscape:current-layer="main"
      inkscape:document-rotation="0"
      showgrid="false"
-     inkscape:window-width="1920"
-     inkscape:window-height="1017"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
+     inkscape:window-width="1600"
+     inkscape:window-height="837"
+     inkscape:window-x="1917"
+     inkscape:window-y="178"
      inkscape:window-maximized="1"
      inkscape:pagecheckerboard="0"
      inkscape:snap-global="true"
      showguides="true"
      inkscape:guide-bbox="true" />
   <g
-     id="main">
+     id="main"
+     transform="translate(-1.2840468)">
     <linearGradient
        id="linearGradient839"
        inkscape:swatch="solid">
@@ -82,21 +85,23 @@
       </rdf:RDF>
     </metadata>
     <rect
-       style="fill:#ffcc00;fill-opacity:1;stroke:none;stroke-width:1.5712;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#ffcc00;fill-opacity:1;stroke:none;stroke-width:1.57938;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="state"
-       width="55"
-       height="70.123215"
-       x="0"
+       width="53.715954"
+       height="72.548637"
+       x="1.2840468"
        y="4.4408921e-16"
-       ry="6.3748379" />
+       ry="6.3748379"
+       rx="6.3748379" />
     <rect
-       style="fill:#ffffff;fill-opacity:1;stroke-width:0.165968;stroke-linecap:square;stroke-linejoin:round"
+       style="fill:#ffffff;fill-opacity:1;stroke-width:0.179924;stroke-linecap:square;stroke-linejoin:round"
        id="rectValue-0"
        width="45.682816"
-       height="10.583333"
+       height="12.438067"
        x="4.4923792"
-       y="54.202499"
-       ry="3.5277777" />
+       y="55.260834"
+       ry="3.5277777"
+       rx="3.5277777" />
     <rect
        style="fill:#cccccc;stroke:none;stroke-width:1.265;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect1658"
@@ -104,7 +109,8 @@
        height="45"
        x="5"
        y="5"
-       ry="5" />
+       ry="5"
+       rx="5" />
     <g
        id="g41"
        transform="matrix(0.90892695,0,0,0.9389126,1.088917,0.87628407)">
@@ -115,7 +121,8 @@
          height="7.6706667"
          x="33.895161"
          y="13.842541"
-         ry="1.9824238" />
+         ry="1.9824238"
+         rx="1.9824238" />
       <rect
          style="fill:#54cccc;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
          id="rect2331-3"
@@ -123,7 +130,8 @@
          height="6.9585123"
          x="10.331474"
          y="36.223438"
-         ry="1.7983731" />
+         ry="1.7983731"
+         rx="1.7983731" />
       <path
          inkscape:connector-curvature="0"
          d="M 47.534665,12.738849 H 29.122078 c -0.01003,0 -0.02067,0 -0.03006,0 -0.01489,0 -0.03381,0 -0.04885,0 -8.763864,0 -15.897247,7.1704 -15.897247,15.984747 0,2.078673 0.407701,4.147336 1.187968,6.061119 l -3.693313,-0.03965 c -0.228651,-0.01 -0.442459,0.07932 -0.601593,0.244946 -0.1596979,0.15486 -0.2485657,0.369778 -0.2485657,0.594517 v 8.264701 c 0,0.469684 0.3727547,0.849472 0.8351277,0.849472 h 18.412569 c 0.01004,0 0.02067,0 0.03006,0 0.01492,0 0.03006,0 0.05072,0 8.763882,0 15.897265,-7.175405 15.897265,-15.979761 0,-2.078654 -0.4077,-4.152342 -1.183083,-6.066105 l 3.688354,0.03965 c 0.223765,0.015 0.442458,-0.09065 0.601593,-0.244757 0.154059,-0.154861 0.248562,-0.369778 0.248562,-0.599615 v -8.259697 c 0.0048,-0.469684 -0.372751,-0.849473 -0.835124,-0.849473 z M 43.2596,28.723596 c 0,7.869957 -6.362866,14.270846 -14.187235,14.290828 -7.819371,-0.0302 -14.16734,-6.435866 -14.16734,-14.290828 0,-7.869958 6.362887,-14.270848 14.187237,-14.290828 7.819371,0.02455 14.167338,6.42087 14.167338,14.290828 z M 11.470066,43.009438 v -6.575789 l 3.763056,0.0491 c 1.555837,2.798213 3.927073,5.081736 6.790369,6.525818 z m 35.229473,-22.010892 -3.768016,-0.03965 c -1.56091,-2.803216 -3.932071,-5.086741 -6.790388,-6.530823 h 10.558404 z"
@@ -190,13 +198,13 @@
     </g>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:14px;line-height:1.25;font-family:Verdana;-inkscape-font-specification:Arial;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.865806"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.46667px;line-height:1.25;font-family:Verdana;-inkscape-font-specification:Arial;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.865806"
        x="27.250324"
-       y="66.23053"
-       id="textValue-1"><tspan
+       y="64.643028"
+       id="measure1"><tspan
          sodipodi:role="line"
          id="tspan318-4"
          x="27.250324"
-         y="66.23053">-</tspan></text>
+         y="64.643028">70 m/s</tspan></text>
   </g>
 </svg>

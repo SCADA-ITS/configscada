@@ -14,7 +14,8 @@ INSERT INTO ui.synoptic_layers
 (70100022, 701, 'SYNOPTIC_LAYERS_GENERADORES', 'LBL_SYNOPTIC_LAYERS_GENERADORES', true),
 (70106300, 701, 'SYNOPTIC_LAYERS_GENERADORES_VAPOR', 'LBL_SYNOPTIC_LAYERS_GENERADORES_VAPOR', true),
 (70107500, 701, 'SYNOPTIC_LAYERS_GENERADORES_ELECTRICO', 'LBL_SYNOPTIC_LAYERS_GENERADORES_ELECTRICO', true),
-(70106200, 701, 'SYNOPTIC_LAYERS_REACTOR', 'LBL_SYNOPTIC_LAYERS_REACTOR', true);
+(70106200, 701, 'SYNOPTIC_LAYERS_REACTOR', 'LBL_SYNOPTIC_LAYERS_REACTOR', true),
+(70110000, 701, 'SYNOPTIC_LAYERS_BOTONERA', 'LBL_SYNOPTIC_LAYERS_BOTONERA', true);
 
 INSERT INTO ui.synoptic_layer_relationships 
 (synoptic_id, parent_layer_id, child_layer_id) VALUES 
@@ -30,11 +31,12 @@ INSERT INTO ui.synoptic_commands
 INSERT INTO ui.synoptic_layer_elements 
 (layer_id, element_id, graphic_icon_id, label, x, y,  horizontal_flip, rotate, tooltip, show_text, text_color, selectable) VALUES 
 (70108600, 'Element:86:7', 020086, 'PN-BB-VAP', 966, 266, false, NULL, true, false, NULL, true),
-(70108600, 'Element:86:6', 030086, 'PN-BB-REF', 343, 628, false, NULL, true, false, NULL, true),
-(70108600, 'Element:86:5', 010086, 'PN-BB-RET', 937, 606, false, NULL, true, false, NULL, true),
-(70108600, 'Element:86:3', 010086, 'PN-BB-MAR', 1733, 754, false, NULL, true, false, NULL, true),
+(70108600, 'Element:86:6', 020086, 'PN-BB-REF', 333, 628, false, NULL, true, false, NULL, true),
+(70108600, 'Element:86:5', 030086, 'PN-BB-RET', 937, 606, false, NULL, true, false, NULL, true),
+(70108600, 'Element:86:3', 000086, 'PN-BB-MAR', 1733, 754, false, NULL, true, false, NULL, true),
 (70108600, 'Element:86:4', 010086, 'PN-BB-CON', 1356, 749, false, NULL, true, false, NULL, true),
 (70106300, 'Element:63:1', 000063, 'PN-GENERADOR', 524, 314, false, NULL, true, false, NULL, true),
 (70107500, 'Element:75:2', 000075, 'PN-GRUPO_ELECTROGENO', 1140, 266, false, NULL, true, false, NULL, true),
-(70106200, 'Element:62:1', 000062, 'PN-REACTOR', 27, 394, false, NULL, true, false, NULL, true);
+(70106200, 'Element:62:1', 000062, 'PN-REACTOR', 27, 394, false, NULL, true, false, NULL, true),
+(70110000, 'Element:100:1', 000100, 'PN-BOTONERA', 60, 60, false, NULL, true, false, NULL, true);
 

@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="55mm"
    height="70.123215mm"
    viewBox="0 0 55 70.123215"
    version="1.1"
    id="svg2"
-   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"
    sodipodi:docname="86_pump_2_meassures.svg"
    inkscape:export-filename="C:\Users\jmatesanz\Desktop\SINOPTICOS\Sin Elementos\86_pump.png"
    inkscape:export-xdpi="23.09091"
-   inkscape:export-ydpi="23.09091"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:dc="http://purl.org/dc/elements/1.1/">
+   inkscape:export-ydpi="23.09091">
   <defs
      id="defs1087">
     <linearGradient
@@ -63,10 +63,10 @@
      inkscape:current-layer="main"
      inkscape:document-rotation="0"
      showgrid="false"
-     inkscape:window-width="1920"
-     inkscape:window-height="1017"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
+     inkscape:window-width="1600"
+     inkscape:window-height="837"
+     inkscape:window-x="1917"
+     inkscape:window-y="178"
      inkscape:window-maximized="1"
      inkscape:pagecheckerboard="0"
      inkscape:snap-global="true"
@@ -77,7 +77,7 @@
        orientation="0,-1"
        id="guide1194" />
     <sodipodi:guide
-       position="27.775712,54.902241"
+       position="-50.933854,77.684825"
        orientation="1,0"
        id="guide1196" />
   </sodipodi:namedview>
@@ -105,21 +105,23 @@
        y="4.4408921e-16"
        ry="6.3748379" />
     <rect
-       style="fill:#ffffff;fill-opacity:1;stroke-width:0.118487;stroke-linecap:square;stroke-linejoin:round"
+       style="fill:#ffffff;fill-opacity:1;stroke-width:0.123756;stroke-linecap:square;stroke-linejoin:round"
        id="rectValue-0"
-       width="23.283333"
+       width="25.4"
        height="10.583333"
-       x="4.4923792"
+       x="3.4340458"
        y="54.202499"
-       ry="3.5277777" />
+       ry="3.5277777"
+       rx="3.5277777" />
     <rect
-       style="fill:#ffffff;fill-opacity:1;stroke-width:0.118487;stroke-linecap:square;stroke-linejoin:round"
+       style="fill:#ffffff;fill-opacity:1;stroke-width:0.115913;stroke-linecap:square;stroke-linejoin:round"
        id="rectValue-0-9"
-       width="23.283333"
+       width="22.283001"
        height="10.583333"
-       x="27.775711"
+       x="29.89238"
        y="54.202499"
-       ry="3.5277777" />
+       ry="3.5277777"
+       rx="3.5277777" />
     <rect
        style="fill:#cccccc;stroke:none;stroke-width:1.265;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect1658"
@@ -213,23 +215,27 @@
     </g>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:14px;line-height:1.25;font-family:Verdana;-inkscape-font-specification:Arial;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.865806"
-       x="16.12192"
-       y="65.945183"
-       id="textValue-1"><tspan
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.55154px;line-height:1.25;font-family:Verdana;-inkscape-font-specification:Arial;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.825755"
+       x="16.455446"
+       y="58.581017"
+       id="measure1"
+       transform="scale(0.95373944,1.0485044)"><tspan
          sodipodi:role="line"
          id="tspan318-4"
-         x="16.12192"
-         y="65.945183">-</tspan></text>
+         x="16.455446"
+         y="58.581017"
+         style="stroke-width:0.825755">150 bar</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:14px;line-height:1.25;font-family:Verdana;-inkscape-font-specification:Arial;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.865806"
-       x="39.377434"
-       y="65.945183"
-       id="textValue-1-8"><tspan
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.40929px;line-height:1.25;font-family:Verdana;-inkscape-font-specification:Arial;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.804595"
+       x="44.363232"
+       y="56.984837"
+       id="measure2"
+       transform="scale(0.92930049,1.0760782)"><tspan
          sodipodi:role="line"
          id="tspan318-4-0"
-         x="39.377434"
-         y="65.945183">-</tspan></text>
+         x="44.363232"
+         y="56.984837"
+         style="stroke-width:0.804595">390 ºC</tspan></text>
   </g>
 </svg>

@@ -9,12 +9,12 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="55mm"
-   height="64.563683mm"
-   viewBox="0 0 55 64.563683"
+   height="56.229309mm"
+   viewBox="0 0 55 56.229309"
    version="1.1"
    id="svg2"
    inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"
-   sodipodi:docname="63_generator.svg">
+   sodipodi:docname="63_generator_ev.svg">
   <metadata
      id="metadata15">
     <rdf:RDF>
@@ -23,6 +23,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -53,47 +54,12 @@
     <rect
        id="state"
        width="55"
-       height="64.563683"
+       height="56.229309"
        x="0"
        y="0"
-       style="fill:#ffcc00;fill-opacity:1;stroke:none;stroke-width:1.50763;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       ry="5.8694258" />
-    <rect
-       style="fill:#ffffff;fill-opacity:1;stroke-width:0.118486;stroke-linecap:square;stroke-linejoin:round"
-       id="rectValue"
-       width="23.283333"
-       height="10.583333"
-       x="3.09231"
-       y="51.693764"
-       ry="3.5277777" />
-    <rect
-       style="fill:#ffffff;fill-opacity:1;stroke-width:0.118487;stroke-linecap:square;stroke-linejoin:round"
-       id="rectValue-0"
-       width="23.283333"
-       height="10.583333"
-       x="28.443956"
-       y="51.693802"
-       ry="3.5277777" />
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.29166667px;line-height:1.25;font-family:Verdana;-inkscape-font-specification:Arial;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.865806;"
-       x="39.872524"
-       y="59.122578"
-       id="temperature"><tspan
-         sodipodi:role="line"
-         id="tspan318"
-         x="39.872524"
-         y="59.122578">390 ºC</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.29166667px;line-height:1.25;font-family:Verdana;-inkscape-font-specification:Arial;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.865806;"
-       x="14.304305"
-       y="58.593418"
-       id="pressure"><tspan
-         sodipodi:role="line"
-         id="tspan318-4"
-         x="14.304305"
-         y="58.593418">150 bar</tspan></text>
+       style="fill:#ffcc00;fill-opacity:1;stroke:none;stroke-width:1.40696;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       ry="5.8694258"
+       rx="5.8694258" />
     <rect
        style="fill:#cccccc;stroke:none;stroke-width:1.265;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect1658"
@@ -101,7 +67,8 @@
        height="45"
        x="5"
        y="5"
-       ry="5" />
+       ry="5"
+       rx="5" />
     <image
        width="39.211605"
        height="39.211605"

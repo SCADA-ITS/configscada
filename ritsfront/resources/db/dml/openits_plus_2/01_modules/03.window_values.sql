@@ -149,5 +149,11 @@ INSERT INTO ui.window_values (module_id, window_param_id, value) VALUES
 (700, 10, 'img/module/default.png'),
 (700, 11, '#464646'),
 (700, 12, 'LBL_MENU_ITEM_SYNOPTIC'),
-(700, 14, 'true');
+(700, 14, 'true'),
+
+(701, 8, 'true'),
+(701, 10, 'img/module/default.png'),
+(701, 11, '#464646'),
+(701, 12, 'LBL_SELECTOR_TREE_NODES_SINOPTICOS_CENTRAL_NUCLEAR'),
+(701, 14, 'true');
 
