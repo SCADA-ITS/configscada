@@ -4,7 +4,7 @@ INSERT INTO ui.maps (id, name, description, "label", icon, longitude, latitude, 
 INSERT INTO ui.map_layers (id, base_layer, map_id, "name", description, "label", icon, visible) VALUES 
 (9700002, NULL, 1, 'Layer Camaras', 'Layer Camaras', 'LBL_ELEMENT_TYPE_CAMERA', NULL, true),
 (9800071, NULL, 1, 'Layer Paneles', 'Layer Paneles', 'LBL_ELEMENT_TYPE_PANEL', NULL, true),
-(9900004, NULL, 1, 'Layer Secciones', 'Layer Secciones', 'LBL_ELEMENT_TYPE_PANEL', NULL, true);
+(9900004, NULL, 1, 'Layer Secciones', 'Layer Secciones', 'LBL_ELEMENT_TYPE_SECTION', NULL, true);
 
 INSERT INTO ui.graphic_icons (id, "name", description, alarms, measures, js_draw_file, width, height, svg_pattern_var, svg_file, js_custom_type_render) VALUES
 (040002, 'CAM_FIX', 'CAM_FIX', false, true, 'component/graphicIcon/graphicIconDefault.js', 30, 30,null,  'img/graphic_icon/02_camera.svg',true),
