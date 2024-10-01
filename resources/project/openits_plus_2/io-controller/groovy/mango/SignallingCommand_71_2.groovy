@@ -38,8 +38,13 @@ class SignallingCommand_71_2 {
 		Element element = EntitiesManager.getInstance().getElement(signallingCommand.elementTypeId, signallingCommand.elementId);
 
 		try {
-			def pmv = shell.parse(new File(ResourcesUtil.getPath("io-controller/groovy/mango/pmv_subtypes/ntcip/grtxt.groovy")));
-			pmv.grtxt(signallingCommand, dataSourceXid, driver, element);	
+			if (element.elementSubtypeId == 19){
+				def pmv = shell.parse(new File(ResourcesUtil.getPath("io-controller/groovy/mango/pmv_subtypes/ntcip/grtxt.groovy")));
+				pmv.grtxt(signallingCommand, dataSourceXid, driver, element);	
+			}else if(element.elementSubtypeId == 16){
+				def pmv = shell.parse(new File(ResourcesUtil.getPath("io-controller/groovy/mango/pmv_subtypes/ntcip/txt.groovy")));
+				pmv.txt(signallingCommand, dataSourceXid, driver, element, log);	
+			}
 		}catch (NumberFormatException | JsonProcessingException e) {
 			log.error(e.getMessage());
 			log.debug(ExceptionUtils.getStackTrace(e));

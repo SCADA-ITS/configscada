@@ -40,7 +40,7 @@ class SignallingCommand_71_3 {
 			XidPointValueTimeModel xidPointValueTimeModel;		
 			Element element = EntitiesManager.getInstance().getElement(signallingCommand.elementTypeId, signallingCommand.elementId);
 			
-			if (element.elementSubtypeId == 19){
+			if (element.elementSubtypeId == 19 || element.elementSubtypeId == 16){
 				xidPointValueTimeModel = signallingCommandUtils.getXidPointValueTimeModel(signallingCommand, dataSourceXid + "_" + MESSAGE_MULTISTRING, MULTI);
 				xidPointValueTimeModels.add(xidPointValueTimeModel);
 			}

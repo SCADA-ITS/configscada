@@ -78,7 +78,7 @@ INSERT INTO ui.graphic_icons
 (180071, 'PMV', 'PMV', false, false, 'component/graphicIcon/graphicIconDefault.js', 300, 100, 'img/graphic_icon/71_vms_dgt_gr_txt.svg', 'null',true),
 (110071, 'CLV', 'CLV', false, false, 'component/graphicIcon/graphicIconDefault.js', 60, 60, 'img/graphic_icon/71_vms_clv_af.svg', 'null',true),
 (120071, 'AF', 'AF', false, false, 'component/graphicIcon/graphicIconDefault.js', 60, 60, 'img/graphic_icon/71_vms_clv_af.svg', 'null',true),
-(160071, 'PMVI', 'PMVI', false, false, 'component/graphicIcon/graphicIconDefault.js', 330, 70, 'img/graphic_icon/71_vms_dgt_txt_1line.svg', 'null',true),
+(160071, 'PMVI', 'PMVI', false, true, 'component/graphicIcon/graphicIconCustom.js', 330, 70, 'img/graphic_icon/71_vms_dgt_txt_1line.svg', 'component/graphicIcon/custom/vms.js',true),
 (000074, 'ERU', 'ERU', false, false, 'component/graphicIcon/graphicIconDefault.js', 50, 50, 'img/graphic_icon/74_eru.svg', 'null',true),
 (000075, 'GE', 'GE', false, true, 'component/graphicIcon/graphicIconCustom.js', 150, 130, 'img/graphic_icon/75_ge_2_meassures.svg', 'component/graphicIcon/custom/ge.js',false),
 (010075, 'GE', 'GE', false, false, 'component/graphicIcon/graphicIconDefault.js', 100, 100, 'img/graphic_icon/75_ge.svg', 'null',true),
