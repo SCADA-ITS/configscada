@@ -15,9 +15,16 @@
   <p:fields>
     <p:field>
       <p:source>content</p:source>
-	  <p:use_adapter>true</p:use_adapter>
+	    <p:use_adapter>true</p:use_adapter>
     </p:field>
-  <p:field>
+    <p:field>
+      <p:source>temperature</p:source>
+      <p:input>
+        <p:element_type_param_id>2</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:input>
+    </p:field>
+    <p:field>
       <p:source>travel_time_enabled</p:source>
       <p:input>
         <p:element_type_param_id>10</p:element_type_param_id>
@@ -26,4 +33,3 @@
     </p:field>
   </p:fields>
 </p:json_generic_mango_v1>
-
