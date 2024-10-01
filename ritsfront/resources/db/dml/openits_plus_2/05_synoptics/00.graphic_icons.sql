@@ -75,7 +75,7 @@ INSERT INTO ui.graphic_icons
 (010065, 'SAI', 'SAI', false, false, 'component/graphicIcon/graphicIconDefault.js', 35, 35, 'img/graphic_icon/65_sai.svg', 'null',true),
 (000066, 'VANE', 'VANE', false, false, 'component/graphicIcon/graphicIconDefault.js', 50, 65, 'img/graphic_icon/66_vane.svg', 'null',true),
 (000070, 'CVM', 'CVM', false, false, 'component/graphicIcon/graphicIconDefault.js', 35, 35, 'img/graphic_icon/70_analizador_red.svg', 'null',true),
-(180071, 'PMV', 'PMV', false, false, 'component/graphicIcon/graphicIconDefault.js', 300, 100, 'img/graphic_icon/71_vms_dgt.svg', 'null',true),
+(180071, 'PMV', 'PMV', false, false, 'component/graphicIcon/graphicIconDefault.js', 300, 100, 'img/graphic_icon/71_vms_dgt_gr_txt.svg', 'null',true),
 (110071, 'CLV', 'CLV', false, false, 'component/graphicIcon/graphicIconDefault.js', 60, 60, 'img/graphic_icon/71_vms_clv_af.svg', 'null',true),
 (120071, 'AF', 'AF', false, false, 'component/graphicIcon/graphicIconDefault.js', 60, 60, 'img/graphic_icon/71_vms_clv_af.svg', 'null',true),
 (160071, 'PMVI', 'PMVI', false, false, 'component/graphicIcon/graphicIconDefault.js', 330, 70, 'img/graphic_icon/71_vms_dgt_txt_1line.svg', 'null',true),

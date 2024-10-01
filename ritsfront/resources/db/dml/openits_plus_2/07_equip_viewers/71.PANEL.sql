@@ -1,8 +1,8 @@
 INSERT INTO ui.equip_viewers (id, name, description, "label", icon, show_info_tab, show_childs, show_actions, initial_tab, measure_width, measure_max_rows, measure_only, graphic_icon_id, info_tab_mode, no_show_properties,show_historical_chart) VALUES
-('ElementSubtype:11:71','VMS_CLV','VMS_CLV','LBL_ELEMENT_SUBTYPE_PANEL_VMS_CLV', NULL, true, false, true, null, 300, 1, null, 100071, 1, false, true),
-('ElementSubtype:12:71','VMS_AF','VMS_AF','LBL_ELEMENT_SUBTYPE_PANEL_VMS_AF', NULL, true, false, true, null, 300, 1, null, 100071, 1, false, true),
-('ElementSubtype:16:71','VMS_TXT_1LINE','VMS_TXT_1LINE','LBL_ELEMENT_SUBTYPE_PANEL_VMS_TXT_1LINE', NULL, true, false, true, null, 300, 1, null, 100071, 1, false, true),
-('ElementSubtype:18:71','VMS_GR_TXT_DGT','VMS_GR_TXT_DGT','LBL_ELEMENT_SUBTYPE_PANEL_VMS_GR_TXT_DGT', NULL, true, false, true, null, 300, 1, null, 100071, 1, false, true),
+('ElementSubtype:11:71','VMS_CLV','VMS_CLV','LBL_ELEMENT_SUBTYPE_PANEL_VMS_CLV', NULL, true, false, true, null, 300, 1, null, 110071, 1, false, true),
+('ElementSubtype:12:71','VMS_AF','VMS_AF','LBL_ELEMENT_SUBTYPE_PANEL_VMS_AF', NULL, true, false, true, null, 300, 1, null, 120071, 1, false, true),
+('ElementSubtype:16:71','VMS_TXT_1LINE','VMS_TXT_1LINE','LBL_ELEMENT_SUBTYPE_PANEL_VMS_TXT_1LINE', NULL, true, false, true, null, 300, 1, null, 160071, 1, false, true),
+('ElementSubtype:18:71','VMS_GR_TXT_DGT','VMS_GR_TXT_DGT','LBL_ELEMENT_SUBTYPE_PANEL_VMS_GR_TXT_DGT', NULL, true, false, true, null, 300, 1, null, 180071, 1, false, true),
 ('ElementSubtype:19:71', 'PANEL', 'PANEL', 'LBL_ELEMENT_TYPE_PANEL', NULL, true, false, true, null, 300, 1, null, 100071, 1, false, true);
 
 INSERT INTO ui.equip_viewer_tabs (equip_viewer_id, module_action_id, alias, description, "label", icon, "position", visible) VALUES
@@ -19,7 +19,6 @@ INSERT INTO ui.equip_viewer_grp_measures(id, equip_viewer_id, name, description,
 (12007101, 'ElementSubtype:12:71', 'Measures', 'Measures', 'LBL_GRP_MEASURES', null, 1, True),
 (16007101, 'ElementSubtype:16:71', 'Measures', 'Measures', 'LBL_GRP_MEASURES', null, 1, True),
 (18007101, 'ElementSubtype:18:71', 'Measures', 'Measures', 'LBL_GRP_MEASURES', null, 1, True),
-
 (00007101, 'ElementSubtype:19:71', 'Measures', 'Measures', 'LBL_GRP_MEASURES', null, 1, True);
 
 INSERT INTO ui.equip_viewer_measures (equip_viewer_grp_measure_id, vo_entities_id, position, visible) VALUES

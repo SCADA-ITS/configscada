@@ -1,6 +1,6 @@
 INSERT INTO conf.elements (element_type_id, element_subtype_id, element_id, location_id, keep_values_on_disconnected, inherit_state_id, alias, description, on_change_alarm, on_change_state, on_change_measure, on_schedule, enabled, visible, alert, alarm_count, created_at, updated_at) VALUES
-(71, 18, 1, 0010071, NULL, NULL, 'TUN-PMV-4CA', 'TUN-PMV-4CA', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(71, 18, 2, 0020071, NULL, NULL, 'TUN-PMV-3MA', 'TUN-PMV-3MA', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 19, 1, 0010071, NULL, NULL, 'TUN-PMV-4CA', 'TUN-PMV-4CA', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 19, 2, 0020071, NULL, NULL, 'TUN-PMV-3MA', 'TUN-PMV-3MA', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (71, 19, 3, 0030071, NULL, NULL, 'MAP-NTCIP-1', 'MAP-NTCIP-1', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (71, 19, 4, 0040071, NULL, NULL, 'MAP-NTCIP-2', 'MAP-NTCIP-2', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (71, 19, 5, 0050071, NULL, NULL, 'MAP-NTCIP-3', 'MAP-NTCIP-3', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
