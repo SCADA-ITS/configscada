@@ -5,7 +5,7 @@
 	xmlns:p="json_generic_mango_v1" 
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-istance" 
 	xsi:schemaLocation="json_generic_mango_v1 ../../../adapter-lib/src/main/resources/schemas/mango/json_generic_mango_v1.xsd "
-	element_type_id="71" array_element_id="1,2,3,4,7,8,9">
+	element_type_id="71" array_element_id="3,4,5,6,7,8,9,10,11,12,13,14">
   <p:groovy_adapter file="InputAdapter_VMS_NTCIP.groovy"></p:groovy_adapter>
   <p:session_uid element_type_param_id="1003" param_type_id="1"></p:session_uid>
   <p:state field="status">
