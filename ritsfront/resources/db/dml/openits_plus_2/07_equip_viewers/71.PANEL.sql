@@ -64,10 +64,6 @@ INSERT INTO ui.equip_viewer_measures (equip_viewer_grp_measure_id, vo_entities_i
 (12007101, 'ElementTypeParam:71:2:1', 1, True),
 (12007101, 'ElementTypeParam:71:2:3', 3, True),
 (12007101, 'ElementTypeParam:71:2:4', 4, True),
---VMS_TXT_1LINE
-(16007101, 'ElementTypeParam:71:2:3', 3, True),
-(16007101, 'ElementTypeParam:71:2:5', 5, True),
-(16007101, 'ElementTypeParam:71:2:6', 6, True),
 --PMV
 (19007101, 'ElementTypeParam:71:2:2', 1, True),
 --PMV TRAVEL_TIME
