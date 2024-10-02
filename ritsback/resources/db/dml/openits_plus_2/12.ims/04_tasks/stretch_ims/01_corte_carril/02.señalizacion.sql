@@ -1,21 +1,6 @@
 INSERT INTO conf.ims_incident_type_task_values
 (task_type_id, task_type_param_id, incident_type_task_id, value, enabled, visible, created_at, updated_at)
 VALUES
---iluminacion 
-(3, 1, 020101, '0', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(3, 2, 020101, '8', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-
-(3, 1, 030101, '0', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(3, 2, 030101, '9', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
---ventilacion carril izquierdo
-(5, 1, 040101, '2', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
---ventilacion carril derecho
-(5, 1, 100101, '2', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-
-(5, 1, 020201, '0', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(5, 2, 020201, '1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-
-(3, 1, 030201, '1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 --señalizacion carril derecho
 (1, 1, 050101, '[
     {
@@ -23,7 +8,7 @@ VALUES
         "alias": "PANEL NR n",
         "from": 1,
         "to": 1,
-        "elementSubtypeId": "ElementSubtype:18:71",
+        "elementSubtypeId": "ElementSubtype:19:71",
 		"command": {
 					"commandElementTypeId": "CommandElementType:2:71",
 					"commandElementValues": [{
