@@ -13,6 +13,8 @@ INSERT INTO ui.modules(id, module_type_id, "name", description, default_view_typ
 (1902, 9, 'Products backoffice', 'Products backoffice', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 (1903, 9, 'Order 1', 'Order 1', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 (1904, 9, 'Categories', 'Categories', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+--(1905, 9, 'Infractions', 'Infractions', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+--(1906, 9, 'External entities', 'External entities', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 
 -- GIP
 (1920, 9, 'Locations', 'Locations', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
@@ -29,6 +31,7 @@ INSERT INTO ui.modules(id, module_type_id, "name", description, default_view_typ
 INSERT INTO ui.modules(id, module_type_id, "name", description, default_view_type_id, default_system_permission_id, js_file, js_method_draw, js_method_callbacks, data_query, wss_topic, enabled, visible, autoload, management_areas) VALUES
 (2001, 1, 'Test module 1', 'Test module 1', 1, null, 'modules/test1Module.js', 'getView', 'loadData', NULL, NULL, true, true, NULL, '["ManagementArea:1"]'),
 (2002, 3, 'TestMap', 'TestMap', 1, null, 'modules/testMap.js', 'getView', 'loadData', NULL, NULL, true, true, true, '["ManagementArea:1"]');
+--(2003, 1, 'InfractionEditor', 'InfractionEditor', 1, null, 'modules/infractionEditorModule.js', 'getView', 'loadData', NULL, NULL, true, true, false, null);
 
 INSERT INTO ui.module_values(module_id, module_param_id, value) VALUES
 (402, 5, 'http://192.168.88.200:3030/d/qQFlxpaZz/detectors?orgId=1&refresh=5s'),
@@ -55,6 +58,13 @@ INSERT INTO ui.module_values(module_id, module_param_id, value) VALUES
 (1904, 13, '1'),
 (1904, 14, 'vw_subcategories'),
 
+/*
+(1905, 13, '1'),
+(1905, 14, 'infractions'),
+
+(1906, 13, '1'),
+(1906, 14, 'ext_entities'),
+*/
 (1920, 13, '2'),
 (1920, 14, 'locations'),
 
@@ -135,7 +145,23 @@ INSERT INTO ui.window_values(module_id, window_param_id, value) VALUES
 (1903, 11, '#464646'),
 (1903, 12, 'LBL_ORDER'),
 (1903, 14, 'true'),
+/*
+(1905, 4, '825'),
+(1905, 5, '1400'),
+(1905, 8, 'true'),
+(1905, 10, 'img/module/default.png'),
+(1905, 11, '#464646'),
+(1905, 12, 'LBL_INFRACTIONS'),
+(1905, 14, 'true'),
 
+(1906, 4, '825'),
+(1906, 5, '1400'),
+(1906, 8, 'true'),
+(1906, 10, 'img/module/default.png'),
+(1906, 11, '#464646'),
+(1906, 12, 'LBL_EXT_ENTITIES'),
+(1906, 14, 'true'),
+*/
 (1920, 4, '825'),
 (1920, 5, '1400'),
 (1920, 8, 'true'),
@@ -191,3 +217,14 @@ INSERT INTO ui.window_values(module_id, window_param_id, value) VALUES
 (1926, 11, '#464646'),
 (1926, 12, 'LBL_PARTICIPANTS'),
 (1926, 14, 'true');
+
+/*
+(2003, 4, '825'),
+(2003, 5, '1600'),
+(2003, 8, 'true'),
+(2003, 10, 'img/module/default.png'),
+(2003, 11, '#464646'),
+(2003, 12, 'LBL_INFRACTION_EDITOR'),
+(2003, 13, 'true'),
+(2003, 14, 'true');
+*/

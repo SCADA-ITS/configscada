@@ -382,21 +382,6 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 ('ElementType:96', 14, 'grid/element_type_96.png'),
 ('ElementType:96', 23, '103002'),
 
-('Location:1', 5, '40.50192872888957'),
-('Location:1', 6, '-3.5075150487690823'),
-('Location:2', 5, '40.50601573088965'),
-('Location:2', 6, '-3.5115705015736878'),
-('Location:3', 5, '40.49601573088965'),
-('Location:3', 6, '-3.5015705015736878'),
-('Location:21', 5, '36.521518061220334'),
-('Location:21', 6, '-4.9401730516827245'),
-('Location:1000', 5, '36.52624097604617'),
-('Location:1000', 6, '-4.96216249371295'),
-('Location:1002', 5, '36.52592892903678'),
-('Location:1002', 6, '-4.959665253057603'),
-('Location:1001', 5, '36.51545828668759'),
-('Location:1001', 6, '-4.985312411379245'),
-
 ('AlarmLevel:1', 8, 'false'),
 ('AlarmLevel:1', 9, null),
 ('AlarmLevel:2', 8, 'false'),
@@ -539,11 +524,6 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 ('ImsIncidentTypeTask:704', 55, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet iaculis neque, eu mattis ipsum. Phasellus erat purus, imperdiet sed ultrices eget, porttitor quis nisi. Interdum et malesuada fames ac ante ipsum primis in faucibus. Proin ac erat at erat sollicitudin molestie vel quis augue. Mauris condimentum est non augue laoreet, ut vulputate lorem imperdiet. Vestibulum maximus justo metus, non efficitur eros consectetur id. Proin hendrerit odio diam, vehicula hendrerit ex scelerisque sit amet. Ut tristique ligula ac felis efficitur, nec faucibus quam pretium. Duis quam ex, rhoncus at dignissim sit amet, porttitor et dui. Phasellus scelerisque egestas posuere.Suspendisse sed massa auctor, maximus quam sit amet, ornare diam. Curabitur rhoncus ipsum et orci fringilla, ac vestibulum ipsum hendrerit. Donec egestas dapibus felis eget pulvinar. Nunc quis facilisis tellus, at scelerisque velit. Suspendisse accumsan nunc eget libero luctus, ut porta tortor aliquam. Curabitur posuere pellentesque augue vel vestibulum. Mauris risus leo, efficitur at viverra sit amet, vehicula non orci. Nam cursus purus sit amet rutrum aliquam. Cras dictum erat libero, at aliquam neque porttitor ut. Etiam porta justo velit. Maecenas nec fringilla turpis, et lobortis turpis. Fusce massa orci, dictum id arcu ac, commodo convallis elit. Suspendisse nec mi vel nisi pharetra sollicitudin sit amet a ipsum. Integer ultrices nulla sed pellentesque pretium. Maecenas interdum mollis mattis. Duis tortor ligula, volutpat ut justo eu, imperdiet auctor urna.Vestibulum pellentesque non sem eu placerat. Ut ut ex odio. Integer ultrices et elit at commodo. Cras efficitur est nec ipsum gravida euismod. Nam commodo, velit vel pulvinar molestie, augue nisl interdum elit, lacinia consectetur ligula orci sit amet lorem. Fusce viverra molestie nibh vitae eleifend. Donec tempor scelerisque massa. Donec dictum rutrum erat.Nullam sed justo egestas, ullamcorper sapien sit amet, tempor elit. Donec nisl lorem, tempor eu nisi vitae, feugiat luctus metus. Aenean vel accumsan sapien. Curabitur id urna posuere, molestie ipsum tempor, molestie arcu. Fusce nec convallis turpis, vel scelerisque justo. Fusce nec aliquet tellus, quis sodales ex. Morbi ante ex, ornare quis augue a, blandit pulvinar odio. Sed a justo ante. Pellentesque aliquam laoreet neque. Mauris consectetur sem quis augue tristique consequat. Etiam nec condimentum tellus, sit amet malesuada turpis. Duis aliquet lorem tincidunt, varius neque vitae, hendrerit eros. Sed ex arcu, imperdiet at massa eget, accumsan facilisis nulla. Ut dapibus ultrices finibus. Curabitur vitae tristique dolor, id commodo quam. Cras a dictum nulla, vel viverra enim.Nullam pretium sodales velit, id tempor urna mollis placerat. Pellentesque arcu sapien, iaculis in varius in, consequat nec turpis. Vestibulum finibus dignissim tortor et luctus. Ut tempus, libero vel faucibus sollicitudin, ante leo malesuada nulla, at bibendum dolor massa et erat. Praesent id eros vestibulum, bibendum risus nec, iaculis ex. Fusce aliquet, mauris in cursus bibendum, turpis magna consequat erat, a venenatis metus nisi non sapien. Mauris tristique consectetur mattis. Vivamus lacus sapien, iaculis at leo a, mollis facilisis nunc. Vivamus sit amet nisi id enim congue lacinia. Etiam egestas, arcu sed congue porttitor, velit leo tincidunt sapien, nec aliquet nunc nisi vitae sem. Proin pharetra lacus in interdum eleifend. Proin sit amet rhoncus tortor. Aenean ultrices dui vel rhoncus cursus. Vestibulum sollicitudin elit id rhoncus maximus. Aenean vel dolor urna.'),
 ('PlanOrderType:10', 58, 'SystemPermission:21'),
 ('ElementTypeParam:8:2:1', 62, 'true');
-
-
-INSERT INTO ui.vo_entity_hierarchies(parent_id, child_id, "position") VALUES
-('Location:4', 'Location:2', 1),
-('Location:4', 'Location:3', 2);
 
 
 INSERT INTO ui.vo_enum_types(id, alias, description, enabled, visible) VALUES

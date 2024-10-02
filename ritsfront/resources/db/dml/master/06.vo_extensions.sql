@@ -26,9 +26,6 @@ INSERT INTO ui.vo_entity_fields (id, vo_entity_type_id, field, description, labe
 (2, 'ElementTypeUI', 'default_svg', 'default_svg', 'LBL_ENTITIE_FIELDS_DEFAULT_SVG_ALIAS', 'LBL_ENTITIE_FIELDS_DEFAULT_SVG_DESCRIPTION', true, true),
 (3, 'ElementTypeUI', 'scale_x', 'scale_x', 'LBL_ENTITIE_FIELDS_SCALE_X_ALIAS', 'LBL_ENTITIE_FIELDS_SCALE_X_DESCRIPTION', true, true),
 (4, 'ElementTypeUI', 'scale_y', 'scale_y', 'LBL_ENTITIE_FIELDS_SCALE_Y_ALIAS', 'LBL_ENTITIE_FIELDS_SCALE_Y_DESCRIPTION', true, true),
-(5, 'LocationUI', 'lat', 'lattitude_x', 'LBL_ENTITIE_FIELDS_LATTITUDE_ALIAS', 'LBL_ENTITIE_FIELDS_LATTITUDE_DESCRIPTION', true, true),
-(6, 'LocationUI', 'lon', 'longitude', 'LBL_ENTITIE_FIELDS_LONGITUDE_ALIAS', 'LBL_ENTITIE_FIELDS_LONGITUDE_DESCRIPTION', true, true),
-(7, 'LocationUI', 'coordinates', 'array of coordinates (field calculated TODO)', 'LBL_ENTITIE_FIELDS_COORDINATES_ARRAY_ALIAS', 'LBL_ENTITIE_FIELDS_COORDINATES_ARRAY_DESCRIPTION', true, true),
 (8, 'AlarmLevelUI', 'notification', 'show notification', 'LBL_ENTITIE_FIELDS_NOTIFICATION_ALIAS', 'LBL_ENTITIE_FIELDS_NOTIFICATION_DESCRIPTION', true, true),
 (9, 'AlarmLevelUI', 'sound', 'sound to play', 'LBL_ENTITIE_FIELDS_PLAY_SOUND_ALIAS', 'LBL_ENTITIE_FIELDS_PLAY_SOUND_DESCRIPTION', true, true),
 (10, 'ImsIncidentLevelUI', 'color', 'color of incident level', 'LBL_ENTITIE_FIELDS_COLOR_INCIDENT_LEVEL', 'LBL_ENTITIE_FIELDS_COLOR_INCIDENT_LEVEL_DESCRIPTION', true, true),
@@ -82,8 +79,7 @@ INSERT INTO ui.vo_entity_fields (id, vo_entity_type_id, field, description, labe
 (59, 'ElementTypeUI', 'alarmBackOffice', 'backoffice used in alarms', 'LBL_ENTITIE_FIELDS_ALARMS_BACK_OFFICE', 'LBL_ENTITIE_FIELDS_ALARMS_BACKOFFICE_DESCRIPTION', true, true),
 (60, 'ElementTypeUI', 'elementBackOffice', 'backoffice used in elements', 'LBL_ENTITIE_FIELDS_ELEMENT_BACK_OFFICE', 'LBL_ENTITIE_FIELDS_ELEMENT_BACK_OFFICE_DESCRIPTION', true, true),
 (61, 'ImsIncidentTypeUI', 'backOffice', 'backoffice used in incidents', 'LBL_ENTITIE_FIELDS_INCIDENTS_BACK_OFFICE', 'LBL_ENTITIE_FIELDS_INCIDENTS_BACK_OFFICE_DESCRIPTION', true, true),
-(62, 'ElementTypeParamUI', 'noShowMeasureInChart', 'no show measure in chart', 'LBL_NO_SHOW_MEASURE_IN_CHART', 'LBL_NO_SHOW_MEASURE_IN_CHART_DESCRIPTION', true, true),
-(63, 'LocationUI', 'options', 'location options', 'LBL_ENTITIE_FIELDS_LOCATION_OPTIONS', 'LBL_ENTITIE_FIELDS_LOCATION_OPTIONS_DESCRIPTION', true, true);
+(62, 'ElementTypeParamUI', 'noShowMeasureInChart', 'no show measure in chart', 'LBL_NO_SHOW_MEASURE_IN_CHART', 'LBL_NO_SHOW_MEASURE_IN_CHART_DESCRIPTION', true, true);
 
 
 INSERT INTO ui.vo_entities(id, vo_entity_type_id, enabled, visible) VALUES

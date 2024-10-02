@@ -67,7 +67,8 @@
 		label varchar NOT NULL,
 		icon varchar NULL,
 		visible boolean NOT NULL,
-		active boolean NULL
+		active boolean NULL,
+		tags varchar NULL
 	);
 	
 	CREATE INDEX idx_map_layers_map ON ui.map_layers USING btree (map_id);

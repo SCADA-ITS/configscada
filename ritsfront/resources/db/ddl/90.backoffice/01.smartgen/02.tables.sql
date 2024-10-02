@@ -85,5 +85,34 @@ BEGIN
 		alter table smartgen.order_details add constraint fk_order_details_order_id foreign key (order_id) references smartgen.orders(order_id)  ON DELETE CASCADE;
 		
 		alter table smartgen.order_details add constraint fk_order_details_product_id foreign key (product_id) references smartgen.products(product_id)  ON DELETE CASCADE;
+/*		
+		create table smartgen.infractions (
+			infraction_id bigserial not null,
+			fecha timestamptz not null,
+			tipo varchar(100) null,
+			estado varchar(100) not null,
+			matricula varchar(100) null,
+			operador varchar(100) not null,
+			radar varchar(100) not null,
+			carretera varchar(100) not null,
+			pk varchar(20) not null,
+			sentido varchar(10) not null,
+			carril int default 0,
+			limite bigint null,
+			velocidad_vehiculo bigint null,
+			expediente varchar(100) null,
+			constraint pk_infractions primary key (infraction_id)
+		) tablespace tbl_smartgen;
+		
+		create table smartgen.ext_entities (
+			ext_entities_id bigserial not null,
+			tipo_entidad varchar(100) null,
+			tipo_info varchar(100) null,
+			descripcion varchar(100) not null,
+			localizacion varchar(200) null,
+			constraint pk_ext_entities primary key (ext_entities_id)
+		) tablespace tbl_smartgen;
+*/
+		
   END IF;
 END $$;

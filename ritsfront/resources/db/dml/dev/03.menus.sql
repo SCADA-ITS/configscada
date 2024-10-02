@@ -41,6 +41,7 @@ INSERT INTO ui.menu_items(menu_group_id, "position", module_id, "label", icon, "
 (4, 2, 1018, 'LBL_TREE_SELECT_MODULE', 'img/menu/default.png', 'Tree select module', 'Tree select module', true, true),
 (4, 3, 2002, 'LBL_TEST_MAP', 'img/menu/default.png', 'Test map', 'Test map', true, true),
 (4, 4, 1045, 'LBL_HISTORICAL_CHARTS', 'img/menu/chart-menu.png', 'Historical charts', 'Historical Charts', true, true),
+--(4, 4, 2003, 'LBL_INFRACTIONS_EDITOR', 'img/menu/default.png', 'Infraction editor', 'Infraction editor', true, true),
 
 -- BACKOFFICE
 
@@ -50,6 +51,9 @@ INSERT INTO ui.menu_items(menu_group_id, "position", module_id, "label", icon, "
 (5, 4, null, '', null, '', null, true, true),
 (5, 5, 1903, 'LBL_ORDERS_1', 'img/menu/default.png', 'Order 1', 'Order 1', true, true),
 (5, 6, 1904, 'LBL_SUBCATEGORIES', 'img/menu/default.png', 'Subcategories', 'Subcategories', true, true),
+--(5, 7, null, '', null, '', null, true, true),
+--(5, 8, 1905, 'LBL_INFRACTIONS', 'img/menu/default.png', 'Infractions', 'Infractions', true, true),
+--(5, 9, 1906, 'LBL_EXT_ENTITIES', 'img/menu/default.png', 'External entities', 'External entities', true, true),
 
 -- GIP
 (6, 1, 1921, 'LBL_INCIDENTS', 'img/menu/default.png', 'Incident', 'Incident', true, true),

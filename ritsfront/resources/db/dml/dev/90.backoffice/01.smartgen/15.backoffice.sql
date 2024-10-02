@@ -191,6 +191,51 @@ BEGIN
 	('es_ES', 'LBL_IMAGE_GROUP_PRODUCTS_1_DESC', 'Descripción del grupo imágenes 1', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	('es_ES', 'LBL_ATTACHMENT_GROUP_PRODUCTS_1', 'Grupo de adjuntos 1', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	('es_ES', 'LBL_ATTACHMENT_GROUP_PRODUCTS_1_DESC', 'Descripción del grupos de adjuntos', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+/*	
+	INSERT INTO smartgen.infractions(infraction_id, fecha, tipo, estado, matricula, operador, radar, carretera, pk, sentido, carril, limite, velocidad_vehiculo, expediente) VALUES
+	(nextval('smartgen.infractions_infraction_id_seq'::regclass), CURRENT_TIMESTAMP, 'Radar fijo', 'RECIBIDAS', '0000-BCD', 'operator 1', 'RAD-01', 'AP-7', '130.300', 'C', '0', 120, 130, 'EXP-0001'),
+	(nextval('smartgen.infractions_infraction_id_seq'::regclass), CURRENT_TIMESTAMP, 'Radar fijo', 'RECIBIDAS', '0001-BCD', 'operator 1', 'RAD-01', 'AP-7', '130.300', 'C', '0', 120, 135, 'EXP-0002'),
+	(nextval('smartgen.infractions_infraction_id_seq'::regclass), CURRENT_TIMESTAMP, 'Radar fijo', 'RECIBIDAS', '0002-BCD', 'operator 1', 'RAD-01', 'AP-7', '130.300', 'C', '0', 120, 137, 'EXP-0002'),
+	(nextval('smartgen.infractions_infraction_id_seq'::regclass), CURRENT_TIMESTAMP, 'Radar fijo', 'RECIBIDAS', '0003-BCD', 'operator 1', 'RAD-01', 'AP-7', '130.300', 'C', '0', 120, 138, 'EXP-0002'),
+	(nextval('smartgen.infractions_infraction_id_seq'::regclass), CURRENT_TIMESTAMP, 'Radar fijo', 'RECIBIDAS', '0004-BCD', 'operator 1', 'RAD-01', 'AP-7', '130.300', 'C', '0', 120, 139, 'EXP-0002'),
+	(nextval('smartgen.infractions_infraction_id_seq'::regclass), CURRENT_TIMESTAMP, 'Radar fijo', 'RECIBIDAS', '0005-BCD', 'operator 1', 'RAD-01', 'AP-7', '130.300', 'C', '0', 120, 129, 'EXP-0002'),
+	(nextval('smartgen.infractions_infraction_id_seq'::regclass), CURRENT_TIMESTAMP, 'Radar fijo', 'RECIBIDAS', '0006-BCD', 'operator 1', 'RAD-01', 'AP-7', '130.300', 'C', '0', 120, 130, 'EXP-0002'),
+	(nextval('smartgen.infractions_infraction_id_seq'::regclass), CURRENT_TIMESTAMP, 'Radar fijo', 'RECIBIDAS', '0007-BCD', 'operator 1', 'RAD-01', 'AP-7', '130.300', 'C', '0', 120, 134, 'EXP-0002'),
+	(nextval('smartgen.infractions_infraction_id_seq'::regclass), CURRENT_TIMESTAMP, 'Radar fijo', 'RECIBIDAS', '0008-BCD', 'operator 1', 'RAD-01', 'AP-7', '130.300', 'C', '0', 120, 135, 'EXP-0002');
+*/
+/*	
+	-- Insertar tipos de entidades de Waze
+	INSERT INTO smartgen.ext_entities (tipo_entidad, tipo_info, descripcion, localizacion) 
+	VALUES 
+	('Waze', 'Incidente', 'Accidente de tráfico', 'Carretera A1, Km 15'),
+	('Waze', 'Incidente', 'Obras en la vía', 'Carretera B2, Km 30'),
+	('Waze', 'Incidente', 'Vehículo detenido', 'Autopista C3, Km 45'),
+	('Waze', 'Clima', 'Lluvia intensa', 'Carretera D4, Km 60');
+	
+	-- Insertar tipos de entidades de Google
+	INSERT INTO smartgen.ext_entities (tipo_entidad, tipo_info, descripcion, localizacion) 
+	VALUES 
+	('Google', 'Incidente', 'Tráfico lento', 'Ciudad Z, Avenida Central'),
+	('Google', 'Incidente', 'Carretera cerrada por evento', 'Ciudad X, Calle Mayor'),
+	('Google', 'Clima', 'Niebla densa', 'Ciudad Y, Puente Norte'),
+	('Google', 'Incidente', 'Desvío por obras', 'Autopista M5, Km 22');
+	
+	-- Insertar tipos de entidades de TomTom
+	INSERT INTO smartgen.ext_entities (tipo_entidad, tipo_info, descripcion, localizacion) 
+	VALUES 
+	('TomTom', 'Incidente', 'Manifestación en la vía', 'Ciudad A, Plaza Principal'),
+	('TomTom', 'Clima', 'Tormenta eléctrica', 'Región B, Carretera L7'),
+	('TomTom', 'Incidente', 'Carretera con hielo', 'Autopista N6, Km 32'),
+	('TomTom', 'Incidente', 'Obras de mantenimiento', 'Ruta Nacional O1, Km 18');
+	
+	-- Insertar tipos de entidades de DGT
+	INSERT INTO smartgen.ext_entities (tipo_entidad, tipo_info, descripcion, localizacion) 
+	VALUES 
+	('DGT', 'Incidente', 'Camión averiado', 'Ruta Nacional N1, Km 10'),
+	('DGT', 'Incidente', 'Derrumbe', 'Carretera de montaña, Km 12'),
+	('DGT', 'Clima', 'Nieve intensa', 'Autopista P2, Km 25'),
+	('DGT', 'Incidente', 'Colisión múltiple', 'Autopista Q3, Km 40');
+*/
 
   END IF;
 END $$;
