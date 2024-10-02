@@ -1,5 +1,5 @@
 device_name;source_name;host;measure_port(i);alarm_port(i);url_publisher;offset_alarm_zone(i);offset_fiber_fault(i);offset_avg_temperature(i);offset_max_temperature(i);offset_min_temperature(i)
-TUN-ZI-1CA;FIRE_DET;192.168.88.74;502;503;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/;1672;1674;2938;2939;2940
+TUN-ZI-1CA;FIRE_DET;192.168.88.74;502;503;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/;1672;1673;2938;2939;2940
 TUN-ZI-2CA;FIRE_DET;192.168.88.74;502;503;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/;1674;1675;2941;2942;2943
 TUN-ZI-3CA;FIRE_DET;192.168.88.74;502;503;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/;1676;1677;2944;2945;2946
 TUN-ZI-4CA;FIRE_DET;192.168.88.74;502;503;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/;1678;1679;2947;2948;2949

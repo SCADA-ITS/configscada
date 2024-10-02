@@ -1,0 +1,2 @@
+device_name;source_name;ip;measure_port(i);url_publisher;offset_Surface_Temperature(i);offset_Relative_Humidity(i);offset_Air_Pressure(i);offset_Gust_Wind_Direction(i);offset_Gust_Wind_Speed(i);offset_Precipitation_Intensity(i);offset_Precipitation_Quantity(i);offset_Precipitation_Type(i)
+TUN-MET-1MA;METEOS;192.168.88.74;502;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/;1;2;3;4;5;6;7;8
