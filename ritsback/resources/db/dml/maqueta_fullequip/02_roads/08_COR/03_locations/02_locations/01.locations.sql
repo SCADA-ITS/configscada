@@ -11,7 +11,7 @@ INSERT INTO conf.locations (location_id, location_type_id, alias, description, e
 
 INSERT INTO conf.locations
 (location_id, location_type_id, alias, description, lat, lon, coordinates, auto_route, enabled, visible, created_at, updated_at) VALUES 
-(1053, 2, 'COR-TUNEL', 'Tunel de Corominas', 36.430761, -5.198508, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(1054, 2, 'COR-TSM', 'Boca sentido Málaga del tunel de Corominas', 36.427925, -5.202522, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(1055, 2, 'COR-TSC', 'Boca sentido Cádiz del tunel de Corominas', 36.432503true, -5.193611, null, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(1053, 2, 'COR-TUNEL', 'Tunel de Corominas', 36.430761, -5.198508, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1054, 2, 'COR-TSM', 'Boca sentido Málaga del tunel de Corominas', 36.427925, -5.202522, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1055, 2, 'COR-TSC', 'Boca sentido Cádiz del tunel de Corominas', 36.432503, -5.193611, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 

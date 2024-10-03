@@ -11,7 +11,7 @@ INSERT INTO conf.locations (location_id, location_type_id, alias, description, e
 
 INSERT INTO conf.locations
 (location_id, location_type_id, alias, description, lat, lon, coordinates, auto_route, enabled, visible, created_at, updated_at) VALUES 
-(1042, 2, 'CAS-TUNEL', 'Tunel de Casares', 36.402638, -5.237180, null,true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(1043, 2, 'CAS-TSM', 'Boca sentido Málaga del tunel de Casares', 36.401422, -5.242236, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(1044, 2, 'CAS-TSC', 'Boca sentido Cádiz del tunel de Casares', 36.405532, -5.231565, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1042, 2, 'CAS-TUNEL', 'Tunel de Casares', 36.402638, -5.237180, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1043, 2, 'CAS-TSM', 'Boca sentido Málaga del tunel de Casares', 36.401422, -5.242236, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1044, 2, 'CAS-TSC', 'Boca sentido Cádiz del tunel de Casares', 36.405532, -5.231565, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 

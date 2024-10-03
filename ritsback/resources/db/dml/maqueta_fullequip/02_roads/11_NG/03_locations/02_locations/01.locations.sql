@@ -11,6 +11,6 @@ INSERT INTO conf.locations (location_id, location_type_id, alias, description, e
 
 INSERT INTO conf.locations
 (location_id, location_type_id, alias, description, lat, lon, coordinates, auto_route, enabled, visible, created_at, updated_at) VALUES 
-(1078, 2, 'NG-TUNEL', 'Tunel de Nagüeles', 36.515138, -4.938727, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(1079, 2, 'NG-TSM', 'Boca sentido Málaga del tunel de Nagüeles', 36.514267, -4.941269, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(1080, 2, 'NG-TSC', 'Boca sentido Cádiz del tunel de Nagüeles', 36.515019, -4.934214, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(1078, 2, 'NG-TUNEL', 'Tunel de Nagüeles', 36.515138, -4.938727, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1079, 2, 'NG-TSM', 'Boca sentido Málaga del tunel de Nagüeles', 36.514267, -4.941269, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1080, 2, 'NG-TSC', 'Boca sentido Cádiz del tunel de Nagüeles', 36.515019, -4.934214, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

@@ -11,6 +11,6 @@ INSERT INTO conf.locations (location_id, location_type_id, alias, description, e
 
 INSERT INTO conf.locations
 (location_id, location_type_id, alias, description, lat, lon, coordinates, auto_route, enabled, visible, created_at, updated_at) VALUES 
-(1031, 2, 'CH-TUNEL', 'Tunel de Calahoda', 36.506069, -4.727638, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(1032, 2, 'CH-TSM', 'Boca sentido Málaga del tunel de Calahoda', 36.504869, -4.730647, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(1033, 2, 'CH-TSC', 'Boca sentido Cádiz del tunel de Calahoda', 36.50685, -4.724717, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(1031, 2, 'CH-TUNEL', 'Tunel de Calahoda', 36.506069, -4.727638, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1032, 2, 'CH-TSM', 'Boca sentido Málaga del tunel de Calahoda', 36.504869, -4.730647, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1033, 2, 'CH-TSC', 'Boca sentido Cádiz del tunel de Calahoda', 36.50685, -4.724717, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

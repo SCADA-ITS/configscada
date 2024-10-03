@@ -11,7 +11,6 @@ INSERT INTO conf.locations (location_id, location_type_id, alias, description, e
 
 INSERT INTO conf.locations
 (location_id, location_type_id, alias, description, lat, lon, coordinates, auto_route, enabled, visible, created_at, updated_at) VALUES 
-
-(1064, 2, 'STMII-TUNEL', 'Tunel de Santa María II', 36.424833, -5.209619, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(1065, 2, 'STMII-TSM', 'Boca sentido Málaga del tunel de Santa María II', 36.423914, -5.212756, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(1066, 2, 'STMII-TSC', 'Boca sentido Cádiz del tunel de Santa María II', 36.425899, -5.207031, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(1064, 2, 'STMII-TUNEL', 'Tunel de Santa María II', 36.424833, -5.209619, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1065, 2, 'STMII-TSM', 'Boca sentido Málaga del tunel de Santa María II', 36.423914, -5.212756, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1066, 2, 'STMII-TSC', 'Boca sentido Cádiz del tunel de Santa María II', 36.425899, -5.207031, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

@@ -55,8 +55,8 @@ INSERT INTO conf.locations (location_id, location_type_id, alias, description, l
 (0030071, 1, ' pk 32+560', ' pk 32+560', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO conf.locations (location_id, location_type_id, alias, description, lat, lon, coordinates, auto_route, enabled, visible, created_at, updated_at) VALUES 
-(1000, 2, 'Bidasoa', 'Bidasoa', 43.21814818138043, -1.6727682174916507, NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(1001, 2, 'Belate', 'Belate', 43.09075530538004, -1.6022931668741753, NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(1002, 2, 'Endériz', 'Endériz', 42.90494248035897, -1.6124262461911052, NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(1000, 2, 'Bidasoa', 'Bidasoa', 43.21814818138043, -1.6727682174916507, null, NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1001, 2, 'Belate', 'Belate', 43.09075530538004, -1.6022931668741753, null, NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1002, 2, 'Endériz', 'Endériz', 42.90494248035897, -1.6124262461911052, null, NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 
