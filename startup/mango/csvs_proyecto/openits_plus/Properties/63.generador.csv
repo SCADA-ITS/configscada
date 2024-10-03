@@ -1,2 +1,2 @@
 device_name;source_name;host;port(i);url_publisher;offset_pressure(i);offset_temperature(i)
-PN-GENERADOR;CENTRAL_NUCLEAR;192.168.88.74;502;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/;5003;5004
+PN-GENERADOR;CENTRAL_NUCLEAR;192.168.88.74;504;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/;5003;5004

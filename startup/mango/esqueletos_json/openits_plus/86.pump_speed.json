@@ -87,7 +87,7 @@
          "intervalLoggingSampleWindowSize":0,
          "tolerance":0,
          "purgeType":"YEARS",
-         "plotType":"SPLINE",
+         "plotType":"STEP",
          "intervalLoggingPeriod":1,
          "discardExtremeValues":false,
          "tags":{
