@@ -1,14 +1,13 @@
 INSERT INTO ui.maps (id, name, description, "label", icon, longitude, latitude, zoom, zoom_max, zoom_min, limit_init_lon, limit_init_lat, limit_end_lon, limit_end_lat, custom_provider_url, default_zoom_search, dark_mode, custom_provider) VALUES
-(1, 'ausol', 'autopista del sol', 'LBL_MAP', NULL, -4.968995252952193, 36.513236353017206, 15, 18, 12, -5.496230111341672, 36.69560304914391, -4.286333943790312, 36.302938945943, null, 6, true, null); 
+--(1, 'ausol', 'autopista del sol', 'LBL_MAP', NULL, -4.968995252952193, 36.513236353017206, 15, 18, 12, -5.496230111341672, 36.69560304914391, -4.286333943790312, 36.302938945943, null, 6, true, null); 
 -- Geoserver config
-/*
+-- OSRM router => "router": {"enabled": true, "type": "OSRM", "url": "http://192.168.243.30:5000/route"
 (1, 'ausol', 'autopista del sol', 'LBL_MAP', NULL, -4.968995252952193, 36.513236353017206, 15, 18, 12, -5.496230111341672, 36.69560304914391, -4.286333943790312, 36.302938945943, null, 6, true, 
 	'{ 
-		"map": {"enabled": true, "type": "WMS", "serverType": "geoserver", "url": "http://192.168.243.30:8080/geoserver/wms", "name": "osm"},
-		"mapOld": {"enabled": true, "type": "WMS", "serverType": "geoserver", "url": "http://192.168.243.30:8080/geoserver/wms", "mainLayer": { "name": "osm", "alias": "LBL_MAIN_LAYER", "description": "LBL_MAIN_LAYER_DESCRIPTION"}, "layers": [{"name": "osm:red_viaria_pk_malaga", "alias": "LBL_PKS_LAYER", "description": "LBL_PKS_LAYER_DESCRIPTION"}, {"name": "osm:red_viaria_tramo_malaga", "alias": "LBL_STRETCHS_LAYER", "description": "LBL_STRETCHS_LAYER_DESCRIPTION"}]}, 
-		"router": {"enabled": true, "type": "OSRM", "url": "http://192.168.243.30:5000/route/v1/driving/${ini};${end}?overview=full&geometries=geojson"}
+		"map": {"enabled": true, "type": "WMS", "serverType": "geoserver", "url": "http://192.168.88.165:8700/geoserver/wms", "name": "osm"},
+		"router": {"enabled": true, "type": "OpenRouteServive", "url": "http://192.168.88.165:8701/ors"}
 	}');
-*/
+
 
 
 INSERT INTO ui.map_incidents(id, incident_graphic_icon_id, incident_report_module_action_id, incident_wizard_module_action_id) VALUES
@@ -28,9 +27,9 @@ INSERT INTO ui.map_layers (id, base_layer, map_id, "name", description, "label",
 (12, null, 1, 'Traffic Section Cádiz', 'Traffic Section Cádiz', 'LBL_TRAFFIC_SECTION', NULL, true, '["Tunnel Cádiz"]'),
 (13, null, 1, 'Cabinets Cádiz', 'Cabinets Cádiz', 'LBL_CABINETS', NULL, true, '["Tunnel Cádiz"]'),
 (14, null, 1, 'Semáforos', 'Semáforos', 'LBL_TRAFFIC_LIGHTS', NULL, true, '["Tunnel Cádiz"]'),
-(15, null, 1, 'Paneles', 'Paneles', 'LBL_PANEL', NULL, true, '["Tunnel Cádiz"]');
---(16, '{"enabled": true, "type": "WMS", "serverType": "geoserver", "url": "http://192.168.243.30:8080/geoserver/wms", "name": "osm:red_viaria_pk_malaga"}', 1, 'pks malaga', 'pks malaga', 'LBL_PKS_LAYER', NULL, true, null),
---(17, '{"enabled": true, "type": "WMS", "serverType": "geoserver", "url": "http://192.168.243.30:8080/geoserver/wms", "name": "osm:red_viaria_tramo_malaga"}', 1, 'stretchs malaga ', 'stretchs malaga', 'LBL_STRETCHS_LAYER', NULL, true, null);
+(15, null, 1, 'Paneles', 'Paneles', 'LBL_PANEL', NULL, true, '["Tunnel Cádiz"]'),
+(16, '{"enabled": true, "type": "WMS", "serverType": "geoserver", "url": "http://192.168.88.165:8700/geoserver/wms", "name": "osm:red_viaria_pk_malaga"}', 1, 'pks malaga', 'pks malaga', 'LBL_PKS_LAYER', NULL, true, null),
+(17, '{"enabled": true, "type": "WMS", "serverType": "geoserver", "url": "http://192.168.88.165:8700/geoserver/wms", "name": "osm:red_viaria_tramo_malaga"}', 1, 'stretchs malaga ', 'stretchs malaga', 'LBL_STRETCHS_LAYER', NULL, true, null);
 
 
 INSERT INTO ui.map_layer_relationships (id, map_id, parent_layer_id, child_layer_id) VALUES 
