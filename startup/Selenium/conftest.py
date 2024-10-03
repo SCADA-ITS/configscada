@@ -33,6 +33,19 @@ def state(request):
 
 @pytest.fixture(scope="function") 
 def firefox_browser(request, ip, user, password):  
+    if not ip or not user or not password:
+        print('''
+            El siguiente script debe contener los siguientes parámetros: 
+                --ip=IP
+                --user=Usuario
+                --password=Contraseña
+                --state=(Opcional) Estado de comunicación de los equipos a buscar
+                
+                Ejemplo:
+                pytest tests/test_02_estado_equipos.py --ip=192.168.88.201 --user=admin --password=Revenga.19 --state="Desconocido, No comunica" -s
+              ''')
+        exit()
+
     driver = webdriver.Firefox()    
     driver.implicitly_wait(0.5)  
     driver.get(f"http://{ip}:8090/openits/login.html")

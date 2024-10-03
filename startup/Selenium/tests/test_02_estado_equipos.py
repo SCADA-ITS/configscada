@@ -6,6 +6,19 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 def test_pruebaequipos(firefox_browser, state):
+    if(state is None):
+        print('''
+            El siguiente script debe contener los siguientes parámetros: 
+                --ip=IP 
+                --user=Usuario 
+                --password=Contraseña 
+                --state=Estado de comunicación de los equipos a buscar 
+                
+                Ejemplo:
+                pytest tests/test_02_estado_equipos.py --ip=192.168.88.201 --user=admin --password=Revenga.19 --state="Desconocido, No comunica" -s
+              ''')
+        exit()
+    
     estados_a_buscar = [s.strip() for s in state.split(',')]
     print(f"Estados: {estados_a_buscar}")
 

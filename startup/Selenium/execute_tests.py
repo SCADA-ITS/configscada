@@ -3,6 +3,20 @@ import pytest
 import sys
 from pathlib import Path
 
+if len(sys.argv) < 5:
+    print('''
+        El siguiente script debe contener los siguientes parámetros: \n
+            arg1 = IP 
+            arg2 = Usuario 
+            arg3 = Contraseña 
+            arg4 = Estado de comunicación de los equipos a buscar
+          
+            Ejemplo:
+            python3 execute_tests.py 192.168.88.51 admin Revenga.19 No comunica
+          ''')
+    
+    exit()
+
 def main():
     # Ruta del archivo de informe JSON
     report_file = Path("report.json")
