@@ -1,8 +1,5 @@
 -- location type incidentReport
 INSERT INTO conf.locations (location_id, location_type_id, alias, description, enabled, visible, created_at, updated_at) VALUES
-(1053, 2, 'COR-TUNEL', 'Tunel de Corominas', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(1054, 2, 'COR-TSM', 'Boca sentido Málaga del tunel de Corominas', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(1055, 2, 'COR-TSC', 'Boca sentido Cádiz del tunel de Corominas', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (1056, 2, 'COR-TSM+205', 'Sector TSM+249 del tubo sentido Málaga en el tunel de Corominas', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (1057, 2, 'COR-TSM+410', 'Sector TSM+410 del tubo sentido Málaga en el tunel de Corominas', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (1058, 2, 'COR-TSM+673', 'Sector TSM+673 del tubo sentido Málaga en el tunel de Corominas', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -11,3 +8,10 @@ INSERT INTO conf.locations (location_id, location_type_id, alias, description, e
 (1061, 2, 'COR-TSC+527', 'Sector TSC+527 del tubo sentido Cádiz en el tunel de Corominas', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (1062, 2, 'COR-TSC+732', 'Sector TSC+732 del tubo sentido Cádiz en el tunel de Corominas', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (1063, 2, 'COR-TSC+937', 'Sector TSC+937 del tubo sentido Cádiz en el tunel de Corominas', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+INSERT INTO conf.locations
+(location_id, location_type_id, alias, description, lat, lon, coordinates, auto_route, enabled, visible, created_at, updated_at) VALUES 
+(1053, 2, 'COR-TUNEL', 'Tunel de Corominas', 36.430761, -5.198508, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1054, 2, 'COR-TSM', 'Boca sentido Málaga del tunel de Corominas', 36.427925, -5.202522, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1055, 2, 'COR-TSC', 'Boca sentido Cádiz del tunel de Corominas', 36.432503true, -5.193611, null, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
