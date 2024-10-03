@@ -33,7 +33,7 @@ INSERT INTO ui.synoptic_layer_elements
 (70108600, 'Element:86:7', 020086, 'PN-BB-VAP', 966, 266, false, NULL, true, false, NULL, true),
 (70108600, 'Element:86:6', 020086, 'PN-BB-REF', 333, 628, false, NULL, true, false, NULL, true),
 (70108600, 'Element:86:5', 030086, 'PN-BB-RET', 937, 606, false, NULL, true, false, NULL, true),
-(70108600, 'Element:86:3', 000086, 'PN-BB-MAR', 1733, 754, false, NULL, true, false, NULL, true),
+(70108600, 'Element:86:3', 040086, 'PN-BB-MAR', 1733, 754, false, NULL, true, false, NULL, true),
 (70108600, 'Element:86:4', 010086, 'PN-BB-CON', 1356, 749, false, NULL, true, false, NULL, true),
 (70106300, 'Element:63:1', 000063, 'PN-GENERADOR', 524, 314, false, NULL, true, false, NULL, true),
 (70107500, 'Element:75:2', 000075, 'PN-GRUPO_ELECTROGENO', 1140, 266, false, NULL, true, false, NULL, true),

@@ -572,7 +572,6 @@ def createElement(element_name):
     if TARGET_FILE:
         outputFileName= TARGET_FILE + ".json" 
     destination = os.path.join(DIRECTORY_NAME, "csvs_proyecto/" + PROJECT_NAME + "/Config/"+ outputFileName)
-    print("Creando fichero: " + outputFileName)
     
     if not os.path.exists(os.path.dirname(destination)):
         try:
@@ -592,6 +591,7 @@ if SOURCE_FILE:
 else:
     listElementsCSV = os.listdir(os.path.join(DIRECTORY_NAME, "csvs_proyecto/" + PROJECT_NAME + "/Properties/")) 
     for element in listElementsCSV:
+        print("Creando información de elemento: " + element[:-4])
         createElement(element[:-4])
     
     listMangoConfig = os.listdir(os.path.join(DIRECTORY_NAME, "csvs_proyecto/" + PROJECT_NAME + "/Config/"))

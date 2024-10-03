@@ -54,7 +54,7 @@ INSERT INTO master.io_controller_module_type_element_types
 --
 INSERT INTO conf.alarm_configs
 (alarm_config_id, alarm_type_id, alarm_level_id, element_type_id, element_id, element_type_state_id, mine, treatment, alias, description, label_alias, label_description, enabled, visible, created_at, updated_at) VALUES
-(010063, 2, 3, 63, NULL, NULL, true, true, 'ALARM SIRENA NO CONNECTION', 'ALARM SIRENA NO CONNECTION', 'LBL_ALARM_CONFIGS_ALARM_SIRENA_NO_CONNECTION', 'LBL_ALARM_CONFIGS_ALARM_SIRENA_NO_CONNECTION_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(010063, 2, 3, 63, NULL, NULL, true, true, 'ALARM GENERADOR NO CONNECTION', 'ALARM GENERADOR NO CONNECTION', 'LBL_ALARM_CONFIGS_ALARM_GENERADOR_NO_CONNECTION', 'LBL_ALARM_CONFIGS_ALARM_GENERADOR_NO_CONNECTION_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 -- 
 -- Table: conf.element_state_alarms

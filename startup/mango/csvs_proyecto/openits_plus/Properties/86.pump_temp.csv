@@ -1,0 +1,2 @@
+device_name;source_name;host;port(i);url_publisher;offset_pump_on(i);offset_temperature(i)
+PN-BB-RET;CENTRAL_NUCLEAR;192.168.88.74;502;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/;5007;5008

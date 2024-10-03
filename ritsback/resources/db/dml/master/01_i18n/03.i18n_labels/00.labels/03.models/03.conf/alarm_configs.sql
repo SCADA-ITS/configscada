@@ -322,6 +322,12 @@ INSERT INTO master.i18n_labels (locale_code, module_id, "label", "translation", 
 ('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_FIRE_DET_CT_NO_CONNECTION', 'Central incendio cuarto técnico no comunica', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_FIRE_DET_CT_FIRE', 'FUEGO', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
+--ElementType:62 = Reactor
+('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_REACTOR_NO_CONNECTION', 'Reactor no comunica', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+--ElementType:63 = Generador
+('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_GENERADOR_NO_CONNECTION', 'Generador no comunica', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
 --ElementType:65 = SAI
 ('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_SAI_NO_CONNECTION', 'SAI no comunica', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_SAI_ALARM_AWAITING_POWER', 'SAI con fallo a la espera de energía', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -780,6 +786,12 @@ INSERT INTO master.i18n_labels (locale_code, module_id, "label", "translation", 
 ('en_GB', 1, 'LBL_ALARM_CONFIGS_ALARM_FIRE_DET_CT_NO_CONNECTION', 'Technical room fire system without communication', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_ALARM_CONFIGS_ALARM_FIRE_DET_CT_FIRE', 'FIRE', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
+--ElementType:62 = Reactor
+('en_GB', 1, 'LBL_ALARM_CONFIGS_ALARM_REACTOR_NO_CONNECTION', 'Reactor without communication', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+--ElementType:63 = Generador
+('en_GB', 1, 'LBL_ALARM_CONFIGS_ALARM_GENERADOR_NO_CONNECTION', 'Generator without communication', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
 --ElementType:65 = SAI
 ('en_GB', 1, 'LBL_ALARM_CONFIGS_ALARM_SAI_NO_CONNECTION', 'SAI without communication', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_ALARM_CONFIGS_ALARM_SAI_ALARM_AWAITING_POWER', 'UPS with fault waiting for power', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -1229,7 +1241,7 @@ INSERT INTO master.i18n_labels (locale_code, module_id, "label", "translation", 
 ('es_CL', 1, 'LBL_ALARM_CONFIGS_ALARM_SMOKE_DETECTOR_SMOKE_ALARM', 'Detector de humo alarma FUEGO cuarto técnico', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_ALARM_CONFIGS_ALARM_SMOKE_DETECTOR_FAIL', 'Detector de humo fallo funcionamiento', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
---ElementType:59 = Sirena
+--ElementType:60 = Sirena
 ('es_CL', 1, 'LBL_ALARM_CONFIGS_ALARM_SIRENA_FAIL', 'Sirena de incendio fallo funcionamiento', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_ALARM_CONFIGS_ALARM_SIRENA_ACTIVATED', 'Sirena de incendio alarma FUEGO en cuarto técnico', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_ALARM_CONFIGS_ALARM_SIRENA_NO_CONNECTION', 'Sirena de incendio no comunica', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -1237,6 +1249,12 @@ INSERT INTO master.i18n_labels (locale_code, module_id, "label", "translation", 
 --ElementType:61 = Central puntual de incendios
 ('es_CL', 1, 'LBL_ALARM_CONFIGS_ALARM_FIRE_DET_CT_NO_CONNECTION', 'Central incendio cuarto técnico no comunica', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_ALARM_CONFIGS_ALARM_FIRE_DET_CT_FIRE', 'FUEGO', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+--ElementType:62 = Reactor
+('es_CL', 1, 'LBL_ALARM_CONFIGS_ALARM_REACTOR_NO_CONNECTION', 'Reactor no comunica', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+--ElementType:63 = Generador
+('es_CL', 1, 'LBL_ALARM_CONFIGS_ALARM_GENERADOR_NO_CONNECTION', 'Generador no comunica', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --ElementType:65 = SAI
 ('es_CL', 1, 'LBL_ALARM_CONFIGS_ALARM_SAI_NO_CONNECTION', 'SAI no comunica', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),

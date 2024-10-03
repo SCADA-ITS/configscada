@@ -364,6 +364,10 @@ INSERT INTO master.i18n_labels (locale_code, module_id, "label", "translation", 
 	--ElementType:98
     ('es_ES',1,'LBL_ELEMENT_TYPE_PROCESS_INFO', 'Información de procesos', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
     ('es_ES',1,'LBL_ELEMENT_TYPE_PROCESS_INFO_DESC', 'Información de procesos', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    
+	--ElementType:100
+    ('es_ES',1,'LBL_ELEMENT_TYPE_BOTONERA', 'Botonera', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    ('es_ES',1,'LBL_ELEMENT_TYPE_BOTONERA_DESC', 'Botonera', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 	--ElementType:1000
 	('es_ES',1,'LBL_ELEMENT_TYPE_CC','Centro de control',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
@@ -740,6 +744,10 @@ INSERT INTO master.i18n_labels (locale_code, module_id, "label", "translation", 
     ('en_GB',1,'LBL_ELEMENT_TYPE_PROCESS_INFO', 'Process info', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
     ('en_GB',1,'LBL_ELEMENT_TYPE_PROCESS_INFO_DESC', 'Process info', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
+	--ElementType:100
+    ('en_GB',1,'LBL_ELEMENT_TYPE_BOTONERA', 'Button panel', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    ('en_GB',1,'LBL_ELEMENT_TYPE_BOTONERA_DESC', 'Button panel', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    
 	--ElementType:1000
  	('en_GB',1,'LBL_ELEMENT_TYPE_CC', 'Control center', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
  	('en_GB',1,'LBL_ELEMENT_TYPE_CC_DESC', 'Control center', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -993,6 +1001,10 @@ INSERT INTO master.i18n_labels (locale_code, module_id, "label", "translation", 
 	--ElementType:97
     ('sk_SK',1,'LBL_ELEMENT_TYPE_RTMS', 'RTMS', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
     ('sk_SK',1,'LBL_ELEMENT_TYPE_RTMS_DESC', 'RTMS', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+	--ElementType:100
+    ('sk_SK',1,'LBL_ELEMENT_TYPE_BOTONERA', 'Tlačidlový panel', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    ('sk_SK',1,'LBL_ELEMENT_TYPE_BOTONERA_DESC', 'Tlačidlový panel', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 	--ElementType:1000
 	('sk_SK',1,'LBL_ELEMENT_TYPE_CC','CC',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
@@ -1365,6 +1377,10 @@ INSERT INTO master.i18n_labels (locale_code, module_id, "label", "translation", 
     ('es_CL',1,'LBL_ELEMENT_TYPE_PROCESS_INFO', 'Información de procesos', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
     ('es_CL',1,'LBL_ELEMENT_TYPE_PROCESS_INFO_DESC', 'Información de procesos', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
+	--ElementType:100
+    ('es_CL',1,'LBL_ELEMENT_TYPE_BOTONERA', 'Botonera', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    ('es_CL',1,'LBL_ELEMENT_TYPE_BOTONERA_DESC', 'Botonera', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    
 	--ElementType:1000
 	('es_CL',1,'LBL_ELEMENT_TYPE_CC','Centro de control',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 	('es_CL',1,'LBL_ELEMENT_TYPE_CC_DESC','Centro de control',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),

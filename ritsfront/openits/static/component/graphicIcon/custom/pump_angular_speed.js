@@ -1,7 +1,20 @@
 import GraphicIconCustomType from "../graphicIconCustomType.js";
 import GraphicIcon from "../graphicIcon.js";
 
+const PARAM_COMMAND_VALUE_ID = "ElementTypeParam:86:2:1";
 const PARAM_ANG_SPEED = "ElementTypeParam:86:2:4";
+
+const G_ID_ARROW_UP = "arrowUp";
+const G_ID_ARROW_DOWN = "arrowDown";
+const G_ID_FAN = "fan";
+const G_ID_ANIMATION = "animation";
+
+const SPEED_FAN = 1.3; // From 1 to 10. Lower value is more slow
+const MAX_TIME_ROTATE = 10;
+const FAN_START_POSITION = "0 29.3 28.5";
+const FAN_END_POSITION = "360 29.3 28.5";
+
+const CMD_PUMP_ON = "true";
 
 const G_ID_ANG_SPEED = "measure1";
 
@@ -15,6 +28,14 @@ export default class Section extends GraphicIconCustomType {
 
 		this.gState = this.g.select("#" + GraphicIcon.G_ID_STATE);
 		this.ang_speed = this.g.select("#" + G_ID_ANG_SPEED);
+		
+		this.paramCommandValueId = PARAM_COMMAND_VALUE_ID;
+		
+		this.gArrowUp = this.g.select("#" + G_ID_ARROW_UP);
+        this.gArrowDown = this.g.select("#" + G_ID_ARROW_DOWN);
+
+        this.gFan = this.g.select("#" + G_ID_FAN)
+        this.gAnimation = this.g.select("#" + G_ID_ANIMATION);
      
 
 	}
@@ -36,7 +57,25 @@ export default class Section extends GraphicIconCustomType {
 					
 				this.ang_speed.attr( { text: ang_speedVal} );
 
-
+			}
+			
+			let cmdGroupValue = this.getValue(PARAM_COMMAND_VALUE_ID);
+			let timeFanRotate = MAX_TIME_ROTATE + 1 - SPEED_FAN + "s";
+	
+	        if (cmdGroupValue && treatmentValue) {
+	
+				
+				if(cmdGroupValue == CMD_PUMP_ON){
+					this.gArrowUp.attr({ "fill-opacity": 1 });
+	                this.gArrowDown.attr({ "fill-opacity": 1 });
+	                this.gAnimation.attr({ dur: timeFanRotate, from: FAN_START_POSITION, to: FAN_END_POSITION });
+	
+				}else {
+					this.gArrowUp.attr({ "fill-opacity": 0 });
+	                this.gArrowDown.attr({ "fill-opacity": 0 });
+	                this.gAnimation.attr({ dur: timeFanRotate, from: FAN_START_POSITION, to: FAN_START_POSITION });
+	
+				}
 			}
 		}
 		

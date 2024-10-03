@@ -2,11 +2,11 @@ INSERT INTO ui.grids(id, adapter_id, "label", enabled, visible) VALUES
 (62, 2, 'LBL_REACTOR', true, true);
 
 INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", required, parameterized, extended, filtered, "label", label_tooltip, source_field, is_pk, is_epoch_milli, align, needs_translation, grouping_summary, width_px, grid_field_group_operation_id, enabled, visible, adjust, header_vertical, fixed_column, replacement_function) VALUES
-(620001, 62, 1, 1, true, false, false, false, 'LBL_ID', 'LBL_ID', 'id', true, false, null, false, false, 500, NULL, true, false, NULL, NULL, NULL, NULL),
-(620002, 62, 1, 2, true, false, false, true, 'LBL_NAME', 'LBL_NAME', 'alias', false, false, null, false, false, 150, NULL, true, true, NULL, NULL, true, NULL),
-(620003, 62, 1, 3, true, false, false, false, 'LBL_LOCATION', 'LBL_LOCATION', 'locationAlias', false, false, null, false, false, 250, NULL, true, true, NULL, NULL, NULL, NULL),
+(620001, 62, 1, 1, true, false, false, false, 'LBL_GRID_FIELD_ID', 'LBL_GRID_FIELD_ID', 'id', true, false, null, false, false, 500, NULL, true, false, NULL, NULL, NULL, NULL),
+(620002, 62, 1, 2, true, false, false, true, 'LBL_GRID_FIELD_NAME', 'LBL_GRID_FIELD_NAME', 'alias', false, false, null, false, false, 150, NULL, true, true, NULL, NULL, true, NULL),
+(620003, 62, 1, 3, true, false, false, false, 'LBL_GRID_FIELD_DESCRIPTION', 'LBL_GRID_FIELD_DESCRIPTION', 'description', false, false, null, false, false, 200, NULL, true, true, NULL, NULL, NULL, NULL),
 (620004, 62, 1, 4, true, true, false, false, NULL, NULL, 'state', false, false, null, false, false, 35, NULL, true, true, NULL, NULL, NULL, NULL),
-(620005, 62, 1, 5, true, true, false, true, 'LBL_STATE_LABEL', 'LBL_STATE_LABEL', 'stateLabel', false, false, null, true, false, 250, NULL, true, true, NULL, NULL, NULL, NULL),
+(620005, 62, 1, 5, true, true, false, true, 'LBL_GRID_FIELD_STATE_LABEL', 'LBL_GRID_FIELD_STATE_LABEL', 'stateLabel', false, false, null, true, false, 250, NULL, true, true, NULL, NULL, NULL, NULL),
 (620006, 62, 1, 6, true, false, false, false, 'LBL_ELEMENT_TYPE_PARAM_PRESSURE', 'LBL_ELEMENT_TYPE_PARAM_PRESSURE', 'ElementTypeParam:62:2:1', false, false, 'left', false, false, 240, NULL, true, true, NULL, NULL, NULL, NULL),
 (620007, 62, 1, 7, true, false, false, false, 'LBL_ELEMENT_TYPE_PARAM_TEMPERATURE', 'LBL_ELEMENT_TYPE_PARAM_TEMPERATURE', 'ElementTypeParam:62:2:2', false, false, 'left', false, false, 240, NULL, true, true, NULL, NULL, NULL, NULL),
 (620008, 62, 1, 8, true, false, false, false, 'LBL_ELEMENT_TYPE_PARAM_FLOW_RATE', 'LBL_ELEMENT_TYPE_PARAM_FLOW_RATE', 'ElementTypeParam:62:2:3', false, false, 'left', false, false, 240, NULL, true, true, NULL, NULL, NULL, NULL);
