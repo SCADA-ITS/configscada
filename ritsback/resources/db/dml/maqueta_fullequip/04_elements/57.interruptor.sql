@@ -115,7 +115,7 @@ INSERT INTO conf.elements (element_type_id, element_subtype_id, element_id, loca
 (57, NULL, 124, 1240057, NULL, NULL, 'MM-INT-CGBT-CSA-RED', 'I.Autom.IV, In=160 A, Ireg=149 A', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, NULL, 125, 1250057, NULL, NULL, 'MM-MAG-SERV-AUX-GE', 'I.MAG.IV, 25 A', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, NULL, 126, 1260057, NULL, NULL, 'MM-CONT-COM-RED', 'I.Autom.IV, In=160 A, Ireg=149 A', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(57, NULL, 127, 1270057, NULL, NULL, 'MM-INT-CGBT-COMM-GRUPO', 'I.Autom.IV, In=160 A, Ireg=149 A', NULL, 'ChangeMeasureHistorical.groovy', NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(57, NULL, 127, 1270057, NULL, NULL, 'MM-INT-CGBT-COMM-GRUPO', 'I.Autom.IV, In=160 A, Ireg=149 A', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, NULL, 128, 1280057, NULL, NULL, 'MM-INT-CGBT-SAI', 'I.Autom.IV, In=160 A, Ireg=149 A', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, NULL, 129, 1290057, NULL, NULL, 'MM-INT-CGBT-CSV1', 'I.Autom.IV, In=160 A, Ireg=149 A', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, NULL, 130, 1300057, NULL, NULL, 'MM-INT-CGBT-CSV2', 'I.Autom.IV, In=160 A, Ireg=149 A', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
