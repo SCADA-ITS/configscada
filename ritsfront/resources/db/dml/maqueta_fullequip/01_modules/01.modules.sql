@@ -147,6 +147,8 @@ INSERT INTO ui.modules(id, module_type_id, "name", description, default_view_typ
 -- Maps
 (970, 3, 'Map', 'Map', 1, null, 'modules/mapModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 (971, 3, 'Map', 'Map', 1, null, 'modules/mapModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(972, 3, 'Map', 'Map', 1, null, 'modules/mapModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(973, 3, 'Map', 'Map', 1, null, 'modules/mapModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 
 (1920, 8, 'Selector Tree Module', 'Selector Tree Module', 1, null, 'modules/selectorModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 (6000, 9, 'NOGALES GIP - actions', 'Nogales GIP - actions', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
@@ -212,3 +214,5 @@ UPDATE ui.modules SET management_areas='["ManagementArea:1"]' WHERE id=1018;
 UPDATE ui.modules SET management_areas='["ManagementArea:2"]' WHERE id=2018;
 UPDATE ui.modules SET management_areas='["ManagementArea:1"]' WHERE id=970;
 UPDATE ui.modules SET management_areas='["ManagementArea:2"]' WHERE id=971;
+UPDATE ui.modules SET management_areas='["ManagementArea:1"]' WHERE id=972;
+UPDATE ui.modules SET management_areas='["ManagementArea:2"]' WHERE id=973;

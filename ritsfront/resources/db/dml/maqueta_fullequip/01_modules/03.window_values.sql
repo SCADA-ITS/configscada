@@ -1241,6 +1241,10 @@ INSERT INTO ui.window_values(module_id, window_param_id, value) VALUES
 
 (971, 12, 'LBL_MENU_ITEM_MAP'),
 
+(972, 12, 'LBL_MENU_ITEM_MAP_GEOSERVER'),
+
+(973, 12, 'LBL_MENU_ITEM_MAP_GEOSERVER'),
+
 (1920, 8, 'true'),
 (1920, 10, 'img/module/default.png'),
 (1920, 11, '#464646'),

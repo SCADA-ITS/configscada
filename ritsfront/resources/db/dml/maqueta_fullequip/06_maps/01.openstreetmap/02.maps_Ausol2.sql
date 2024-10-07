@@ -1,22 +1,25 @@
 INSERT INTO ui.maps (id, name, description, "label", icon, longitude, latitude, zoom, zoom_max, zoom_min, limit_init_lon, limit_init_lat, limit_end_lon, limit_end_lat, custom_provider_url, default_zoom_search, dark_mode) VALUES 
 (2, 'mapa', 'mapa', 'LBL_MENU_ITEM_MAP', NULL, -4.956077777777778, 36.46929444444445, 11, 16, 10, -6.962095, 34.525937, -2.962095, 38.525937, null, null, true);
 
+INSERT INTO ui.map_incidents(id, incident_graphic_icon_id, incident_report_module_action_id, incident_wizard_module_action_id) VALUES
+(2, 1000, 100401, 101301);
+
 INSERT INTO ui.map_layers (id, base_layer, map_id, "name", description, "label", icon, visible) VALUES 
-(3, NULL, 2, 'Layer Paneles', 'Layer Paneles', 'LBL_ELEMENT_TYPE_PANEL', NULL, true);
+(2, NULL, 2, 'Layer Paneles', 'Layer Paneles', 'LBL_ELEMENT_TYPE_PANEL', NULL, true);
 
 INSERT INTO ui.map_layer_elements (id, layer_id, element_id, graphic_icon_id, "label", longitude, latitude, horizontal_flip, rotate, tooltip, z_index_front, show_text, text_color,selectable) VALUES 
-(13, 3, 'Element:71:86', 22171, 'GDR-PMV-9MA', -5.289669444444445, 36.295138888888886, false, null, true, 1, true, '#000000',true),
-(14, 3, 'Element:71:87', 22171, 'GDR-PMV-10MA', -5.282908333333333, 36.29730833333333, false, null, true, 1, true, '#000000',true),
-(15, 3, 'Element:71:88', 22171, 'MNV-PMV-11MA', -5.268169444444444, 36.371386111111114, false, null, true, 1, true, '#000000',true),
-(16, 3, 'Element:71:89', 22171, 'MNV-PMV-13CA', -5.262094444444444, 36.383825, false, null, true, 1, true, '#000000',true),
-(27, 3, 'Element:71:11', 22171, 'CAS-PMV-15CA', -5.225447222222222, 36.40949166666667, false, null, true, 1, true, '#000000',true),
-(28, 3, 'Element:71:14', 22171, 'CAS-PMV-14MA', -5.2487055555555555, 36.399594444444446, false, null, true, 1, true, '#000000',true),
-(29, 3, 'Element:71:39', 22171, 'COR-PMV-17CA', -5.187919444444445, 36.43279444444444, false, null, true, 1, true, '#000000',true),
-(30, 3, 'Element:71:81', 22171, 'EST-PMV-19CA', -5.160819444444445, 36.433425, false, null, true, 1, true, '#000000',true),
-(31, 3, 'Element:71:84', 22171, 'EST-PMV-22MA', -5.156405555555556, 36.434263888888886, false, null, true, 1, true, '#000000',true),
-(32, 3, 'Element:71:90', 19371, 'EST-PMV-18CA', -5.173377777777778, 36.43239444444444, false, null, true, 1, true, '#000000',true),
-(33, 3, 'Element:71:85', 22171, 'EST-PMV-26MA', -5.1849, 36.43289166666666, false, null, true, 1, true, '#000000',true),
-(34, 3, 'Element:71:80', 22171, 'STM2-PMV-16MA', -5.218311111111111, 36.42060277777777, false, null, true, 1, true, '#000000',true);
+(13, 2, 'Element:71:86', 22171, 'GDR-PMV-9MA', -5.289669444444445, 36.295138888888886, false, null, true, 1, true, '#000000',true),
+(14, 2, 'Element:71:87', 22171, 'GDR-PMV-10MA', -5.282908333333333, 36.29730833333333, false, null, true, 1, true, '#000000',true),
+(15, 2, 'Element:71:88', 22171, 'MNV-PMV-11MA', -5.268169444444444, 36.371386111111114, false, null, true, 1, true, '#000000',true),
+(16, 2, 'Element:71:89', 22171, 'MNV-PMV-13CA', -5.262094444444444, 36.383825, false, null, true, 1, true, '#000000',true),
+(27, 2, 'Element:71:11', 22171, 'CAS-PMV-15CA', -5.225447222222222, 36.40949166666667, false, null, true, 1, true, '#000000',true),
+(28, 2, 'Element:71:14', 22171, 'CAS-PMV-14MA', -5.2487055555555555, 36.399594444444446, false, null, true, 1, true, '#000000',true),
+(29, 2, 'Element:71:39', 22171, 'COR-PMV-17CA', -5.187919444444445, 36.43279444444444, false, null, true, 1, true, '#000000',true),
+(30, 2, 'Element:71:81', 22171, 'EST-PMV-19CA', -5.160819444444445, 36.433425, false, null, true, 1, true, '#000000',true),
+(31, 2, 'Element:71:84', 22171, 'EST-PMV-22MA', -5.156405555555556, 36.434263888888886, false, null, true, 1, true, '#000000',true),
+(32, 2, 'Element:71:90', 19371, 'EST-PMV-18CA', -5.173377777777778, 36.43239444444444, false, null, true, 1, true, '#000000',true),
+(33, 2, 'Element:71:85', 22171, 'EST-PMV-26MA', -5.1849, 36.43289166666666, false, null, true, 1, true, '#000000',true),
+(34, 2, 'Element:71:80', 22171, 'STM2-PMV-16MA', -5.218311111111111, 36.42060277777777, false, null, true, 1, true, '#000000',true);
 
 INSERT INTO ui.map_layer_element_zooms (map_layer_element_id, zoom_lower, zoom_upper, graphic_icon_id, longitude, latitude, horizontal_flip, rotate, tooltip, show_text, text_color) VALUES
 (13,  10, 13, 22171,  -5.289669444444445, 36.295138888888886,  false, null, true, false, '#00000'),

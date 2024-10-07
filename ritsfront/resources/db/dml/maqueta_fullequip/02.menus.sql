@@ -12,7 +12,9 @@ INSERT INTO ui.menu_items(id, menu_group_id, "position", module_id, "label", ico
 (100, 1, 1, 1018, 'LBL_MENU_ITEM_SYNOPTIC', 'img/menu/synoptic-menu.png', 'Menu item Synoptic Tunnel', 'Menu item Synoptic Tunnel', true, true),
 (102, 1, 1, 2018, 'LBL_MENU_ITEM_SYNOPTIC', 'img/menu/synoptic-menu.png', 'Menu item Synoptic Tunnel', 'Menu item Synoptic Tunnel', true, true),
 (101, 1, 2, 970, 'LBL_MENU_ITEM_MAP', 'img/menu/map-menu.png', 'Menu item Map', 'Menu item Map', true, true),
-(103, 1, 3, 971, 'LBL_MENU_ITEM_MAP', 'img/menu/map-menu.png', 'Menu item Map', 'Menu item Map', true, true),
+(103, 1, 2, 971, 'LBL_MENU_ITEM_MAP', 'img/menu/map-menu.png', 'Menu item Map', 'Menu item Map', true, true),
+(104, 1, 3, 972, 'LBL_MENU_ITEM_MAP_GEOSERVER', 'img/menu/map-menu.png', 'Menu item Map', 'Menu item Map', true, true),
+(105, 1, 3, 973, 'LBL_MENU_ITEM_MAP_GEOSERVER', 'img/menu/map-menu.png', 'Menu item Map', 'Menu item Map', true, true),
 
 --EQUIPMENT
 (200, 2, 2, 500, 'LBL_MENU_ITEM_EQUIPMENTS', 'img/menu/equipment-menu.png', 'Menu item Equipments', 'Menu item Equipments', true, true),

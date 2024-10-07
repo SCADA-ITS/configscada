@@ -1,36 +1,25 @@
 INSERT INTO ui.maps (id, name, description, "label", icon, longitude, latitude, zoom, zoom_max, zoom_min, limit_init_lon, limit_init_lat, limit_end_lon, limit_end_lat, custom_provider_url, default_zoom_search, dark_mode) VALUES 
 (1, 'mapa', 'mapa', 'LBL_MENU_ITEM_MAP', NULL, -4.956077777777778, 36.46929444444445, 11, 16, 10, -6.962095, 34.525937, -2.962095, 38.525937, null, null, true);
 
-INSERT INTO ui.graphic_icons (id, "name", description, alarms, measures, js_draw_file, width, height, svg_pattern_var, svg_file, js_custom_type_render, keep_aspect_ratio) VALUES
-(1000, 'INCIDENT_REPORT', 'INCIDENT_REPORT', false, true, 'component/graphicIcon/graphicIconCustom.js', 70, 120, null, 'img/graphic_icon/incident_report.svg', 'component/graphicIcon/custom/incidentReport.js', null);
-
 INSERT INTO ui.map_incidents(id, incident_graphic_icon_id, incident_report_module_action_id, incident_wizard_module_action_id) VALUES
 (1, 1000, 100401, 101301);
 
 INSERT INTO ui.map_layers (id, base_layer, map_id, "name", description, "label", icon, visible) VALUES 
-(2, NULL, 1, 'Layer Paneles', 'Layer Paneles', 'LBL_ELEMENT_TYPE_PANEL', NULL, true);
- 
-
-INSERT INTO ui.graphic_icons (id, "name", description, alarms, measures, js_draw_file, width, height, svg_pattern_var, svg_file, js_custom_type_render) VALUES
-(19371, 'PANEL GR_TXT', 'PANEL GR_TXT', false, true, 'component/graphicIcon/graphicIconCustom.js', 120, 40, null, 'img/graphic_icon/71_vms_dgt_gr_txt.svg', 'component/graphicIcon/custom/vms.js'),
-(19471, 'PANEL GR_TXT', 'PANEL GR_TXT', false, true, 'component/graphicIcon/graphicIconCustom.js', 200, 80, null, 'img/graphic_icon/71_vms_dgt_gr_txt.svg', 'component/graphicIcon/custom/vms.js'),
-(22171, 'PMV', 'PMV', false, true, 'component/graphicIcon/graphicIconCustom.js', 120, 40, null, 'img/graphic_icon/71_vms_dgt.svg', 'component/graphicIcon/custom/vms.js'),
-(22271, 'PMV', 'PMV', false, true, 'component/graphicIcon/graphicIconCustom.js', 240, 120, null, 'img/graphic_icon/71_vms_dgt.svg', 'component/graphicIcon/custom/vms.js'),
-(0701, 'TUNEL', 'TUNEL', false, false, 'component/graphicIcon/graphicIconDefault.js', 35, 35, null, 'img/graphic_icon/07_zone.svg', null);
+(1, NULL, 1, 'Layer Paneles', 'Layer Paneles', 'LBL_ELEMENT_TYPE_PANEL', NULL, true);
 
 INSERT INTO ui.map_layer_elements (id, layer_id, element_id, graphic_icon_id, "label", longitude, latitude, horizontal_flip, rotate, tooltip, z_index_front, show_text, text_color,selectable) VALUES 
-(11, 2, 'Element:71:1', 19371, 'RV-PMV-5MA', -4.9716611111111115, 36.52565555555555, false, null, true, 1, true, '#000000',true),
-(12, 2, 'Element:71:2', 19371, 'RV-PMV-6CA', -4.950216666666667, 36.52636944444444, false, null, true, 1, true, '#000000',true),
-(17, 2, 'Element:71:8', 19371, 'LQ-PMV-3MA', -5.005908333333333, 36.499425, false, null, true, 1, true, '#000000',true),
-(18, 2, 'Element:71:7', 19371, 'LQ-PMV-4CA', -4.9856, 36.51530555555556, false, null, true, 1, true, '#000000',true),
-(19, 2, 'Element:71:3', 19371, 'MM-PMV-1MA', -5.073833333333333, 36.48594166666667, false, null, true, 1, true, '#000000',true),
-(20, 2, 'Element:71:4', 19371, 'MM-PMV-2CA', -5.048258333333333, 36.48600833333334, false, null, true, 1, true, '#000000',true),
-(21, 2, 'Element:71:82', 22171, 'NG-PMV-21CA', -4.924852777777778, 36.513172222222224, false, null, true, 1, true, '#000000',true),
-(22, 2, 'Element:71:83', 22171, 'NG-PMV-25MA', -4.94933611111111, 36.49565555555556, false, null, true, 1, true, '#000000',true),
-(23, 2, 'Element:71:9', 19371, 'CH-PMV-7MA', -4.740575, 36.50481388888889, false, null, true, 1, true, '#000000',true),
-(24, 2, 'Element:71:10', 22171, 'CH-PMV-8CA', -4.709702777777778, 36.50683333333333, false, null, true, 1, true, '#000000',true),
-(25, 2, 'Element:71:5', 22171, 'STMI-PMV-24CA', -4.757883333333333, 36.50729444444445, false, null, true, 1, true, '#000000',true),
-(26, 2, 'Element:71:6', 22171, 'STMI-PMV-23MA', -4.779144444444444, 36.512477777777775, false, null, true, 1, true, '#000000',true);
+(11, 1, 'Element:71:1', 19371, 'RV-PMV-5MA', -4.9716611111111115, 36.52565555555555, false, null, true, 1, true, '#000000',true),
+(12, 1, 'Element:71:2', 19371, 'RV-PMV-6CA', -4.950216666666667, 36.52636944444444, false, null, true, 1, true, '#000000',true),
+(17, 1, 'Element:71:8', 19371, 'LQ-PMV-3MA', -5.005908333333333, 36.499425, false, null, true, 1, true, '#000000',true),
+(18, 1, 'Element:71:7', 19371, 'LQ-PMV-4CA', -4.9856, 36.51530555555556, false, null, true, 1, true, '#000000',true),
+(19, 1, 'Element:71:3', 19371, 'MM-PMV-1MA', -5.073833333333333, 36.48594166666667, false, null, true, 1, true, '#000000',true),
+(20, 1, 'Element:71:4', 19371, 'MM-PMV-2CA', -5.048258333333333, 36.48600833333334, false, null, true, 1, true, '#000000',true),
+(21, 1, 'Element:71:82', 22171, 'NG-PMV-21CA', -4.924852777777778, 36.513172222222224, false, null, true, 1, true, '#000000',true),
+(22, 1, 'Element:71:83', 22171, 'NG-PMV-25MA', -4.94933611111111, 36.49565555555556, false, null, true, 1, true, '#000000',true),
+(23, 1, 'Element:71:9', 19371, 'CH-PMV-7MA', -4.740575, 36.50481388888889, false, null, true, 1, true, '#000000',true),
+(24, 1, 'Element:71:10', 22171, 'CH-PMV-8CA', -4.709702777777778, 36.50683333333333, false, null, true, 1, true, '#000000',true),
+(25, 1, 'Element:71:5', 22171, 'STMI-PMV-24CA', -4.757883333333333, 36.50729444444445, false, null, true, 1, true, '#000000',true),
+(26, 1, 'Element:71:6', 22171, 'STMI-PMV-23MA', -4.779144444444444, 36.512477777777775, false, null, true, 1, true, '#000000',true);
 
 INSERT INTO ui.map_layer_element_zooms (map_layer_element_id, zoom_lower, zoom_upper, graphic_icon_id, longitude, latitude, horizontal_flip, rotate, tooltip, show_text, text_color) VALUES
 (11,  10, 13, 19371,  -4.9716611111111115, 36.52565555555555,  false, null, true, false, '#00000'),

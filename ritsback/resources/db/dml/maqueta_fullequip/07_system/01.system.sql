@@ -4,8 +4,6 @@ DELETE FROM conf.system_param_values;
 -- Table: conf.system_param_values
 --
 
-UPDATE master.system_permissions SET enabled = false WHERE system_permission_id IN (20);
-
 INSERT INTO conf.system_param_values
 (system_param_id, value, enabled, visible, created_at, updated_at) VALUES
 -- Timeout (min) para que expire la sesión de usuario
