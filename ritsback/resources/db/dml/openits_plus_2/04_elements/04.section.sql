@@ -94,7 +94,7 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 (4, 81, 1, 5, NULL, '[2]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 82, 1, 5, NULL, '[3]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 83, 1, 5, NULL, '[4]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(4, 10, 1, 5, NULL, '118.300', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(4, 10, 1, 5, NULL, '118', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 
 (4, 1, 1, 6, NULL, 'true', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -113,7 +113,7 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 (4, 81, 1, 6, NULL, '[2]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 82, 1, 6, NULL, '[3]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 83, 1, 6, NULL, '[4]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(4, 10, 1, 6, NULL, '118.700', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(4, 10, 1, 6, NULL, '130', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (4, 1, 1, 7, NULL, 'true', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 2, 1, 7, NULL, 'false', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -131,7 +131,7 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 (4, 81, 1, 7, NULL, '[2]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 82, 1, 7, NULL, '[3]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 83, 1, 7, NULL, '[4]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(4, 10, 1, 7, NULL, '119.200', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(4, 10, 1, 7, NULL, '152', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (4, 1, 1, 8, NULL, 'true', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 2, 1, 8, NULL, 'false', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -149,7 +149,7 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 (4, 81, 1, 8, NULL, '[2]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 82, 1, 8, NULL, '[3]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 83, 1, 8, NULL, '[4]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(4, 10, 1, 8, NULL, '120.600', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(4, 10, 1, 8, NULL, '162', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (4, 1, 1, 9, NULL, 'true', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 2, 1, 9, NULL, 'false', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -160,7 +160,7 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 (4, 7, 1, 9, NULL, '[16, 28, 35]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 8, 1, 9, NULL, 'http://192.168.88.200:3030/d/TYXiORfMk/imd-veh-h?orgId=1&refresh=30s&fullscreen&panelId=2&from=now-1h&to=now', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 9, 1, 9, NULL, 'http://192.168.88.200:3030/d/FfFhOgfGk/velocidad-media-km-h?orgId=1&refresh=30s&from=now-1h&to=now&fullscreen&panelId=2', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(4, 10, 1, 9, NULL, '121.400', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(4, 10, 1, 9, NULL, '170', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 60, 1, 9, NULL, '[1]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 61, 1, 9, NULL, '[2]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 62, 1, 9, NULL, '[3]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
