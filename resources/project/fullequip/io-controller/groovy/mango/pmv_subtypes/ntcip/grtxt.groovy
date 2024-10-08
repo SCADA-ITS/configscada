@@ -27,95 +27,102 @@ def void grtxt(SignallingCommand signallingCommand, String dataSourceXid, MangoD
 	List<XidPointValueTimeModel> xidPointValueTimeModels = new ArrayList<>();
 	XidPointValueTimeModel xidPointValueTimeModel;
 	
-	ObjectMapper mapper = new ObjectMapper();
-	Object object = mapper.readValue(signallingCommand.signallingParams.get(0).getValue(), Zone[].class);	
-
 	GroovyShell shell = new GroovyShell();
 	def signallingCommandUtils = shell.parse(new File(ResourcesUtil.getPath("io-controller/groovy/mango/SignallingCommandUtils.groovy")));
 	def pmv = shell.parse(new File(ResourcesUtil.getPath("io-controller/groovy/mango/pmv_subtypes/utils/utilsPMV.groovy")))
-	//Recorro cada zona del panel
-	for (int i = 0; i < object.size(); i++){
-		if(object[i].getGraphics()){
-			for(int k = 0; k < object[i].getGraphics().size(); k++){	
-				if(object[i].getFlashing_on_ms()){
-					flash = object[i].getFlashing_on_ms()*0.01;
-					multi_main_graphic+= "[flt" + flash + "o" + flash + "]";
-				}
-				multi_main_graphic += "[g" + pmv.getGraphic(element, object[i].getZone()-1, object[i].getGraphics()[k].getValue()) + ",1,1]";	
-				if(object[i].getGraphics()[k].getAlternance()) {
-					multi_alternate_graphic += "[g" + pmv.getGraphic(element, object[i].getZone()-1, object[i].getGraphics()[k].getAlternance()) + ",1,1]";
-					if(object[i].getAlternance_ms()){
-						defaultPagehOnTime = object[i].getAlternance_ms()*0.01;
-						
-						xidPointValueTimeModel = signallingCommandUtils.getXidPointValueTimeModel(signallingCommand, dataSourceXid + "_" + DEFAULT_PAGEH_ON_TIME, defaultPagehOnTime);
-				
-						xidPointValueTimeModels.clear();		
-						xidPointValueTimeModels.add(xidPointValueTimeModel);
-						message = mapper.writeValueAsString(xidPointValueTimeModels);
-						if (driver != null) {
-							driver.send(message);
+	
+	if(signallingCommand.signallingParams != null && signallingCommand.signallingParams.get(0) && signallingCommand.signallingParams.get(0).getValue()){
+	
+		ObjectMapper mapper = new ObjectMapper();
+		Object object = mapper.readValue(signallingCommand.signallingParams.get(0).getValue(), Zone[].class);	
+	
+	
+		//Recorro cada zona del panel
+		for (int i = 0; i < object.size(); i++){
+			if(object[i].getGraphics()){
+				for(int k = 0; k < object[i].getGraphics().size(); k++){	
+					if(object[i].getFlashing_on_ms()){
+						flash = object[i].getFlashing_on_ms()*0.01;
+						multi_main_graphic+= "[flt" + flash + "o" + flash + "]";
+					}
+					multi_main_graphic += "[g" + pmv.getGraphic(element, object[i].getZone()-1, object[i].getGraphics()[k].getValue()) + ",1,1]";	
+					if(object[i].getGraphics()[k].getAlternance()) {
+						multi_alternate_graphic += "[g" + pmv.getGraphic(element, object[i].getZone()-1, object[i].getGraphics()[k].getAlternance()) + ",1,1]";
+						if(object[i].getAlternance_ms()){
+							defaultPagehOnTime = object[i].getAlternance_ms()*0.01;
+							
+							xidPointValueTimeModel = signallingCommandUtils.getXidPointValueTimeModel(signallingCommand, dataSourceXid + "_" + DEFAULT_PAGEH_ON_TIME, defaultPagehOnTime);
+					
+							xidPointValueTimeModels.clear();		
+							xidPointValueTimeModels.add(xidPointValueTimeModel);
+							message = mapper.writeValueAsString(xidPointValueTimeModels);
+							if (driver != null) {
+								driver.send(message);
+							}
 						}
 					}
 				}
 			}
-		}
-			
-		if(object[i].getTexts()){
-			for(int j = 0; j < object[i].getTexts().size(); j++){
-				if(object[i].getAlign()){
-					if(object[i].getFlashing_on_ms()&&j==0){
-						flash = object[i].getFlashing_on_ms()*0.01;
-						multi_main_text+= "[flt" + flash + "o" + flash + "]";
-					}
-					if(object[i].getAlign() == "center"){
-						multi_main_text+=TEXT_ALIGN_LEFT
-						text_space = (16 - object[i].getTexts()[j].getValue().size()) / 2;
-						for(int s = 0; s < text_space; s++) multi_main_text += ' ';
-					}else if(object[i].getAlign() == "right"){
-						multi_main_text+=TEXT_ALIGN_RIGHT
-					}else if(object[i].getAlign() == "left"){
-						multi_main_text+=TEXT_ALIGN_LEFT
-					}
-				}else{
-					multi_main_text+=TEXT_ALIGN_LEFT
-				}
-				multi_main_text += object[i].getTexts()[j].getValue().toUpperCase();
-				if(object[i].getTexts()[j].getValue() != null && j < object[i].getTexts().size() - 1) multi_main_text += NEW_LINE; 
-
-				if (defaultPagehOnTime != 0 && object[i].getTexts()[j].getAlternance() == ''){
-					multi_alternate_text+=TEXT_ALIGN_LEFT + NEW_LINE
-				}
-
-				if(object[i].getTexts()[j].getAlternance()) {
+				
+			if(object[i].getTexts()){
+				for(int j = 0; j < object[i].getTexts().size(); j++){
 					if(object[i].getAlign()){
+						if(object[i].getFlashing_on_ms()&&j==0){
+							flash = object[i].getFlashing_on_ms()*0.01;
+							multi_main_text+= "[flt" + flash + "o" + flash + "]";
+						}
 						if(object[i].getAlign() == "center"){
-							multi_alternate_text+=TEXT_ALIGN_LEFT
-							text_space = (16 - object[i].getTexts()[j].getAlternance().size()) / 2;
-							for(int n = 0; n < text_space; n++) multi_alternate_text += ' ';
+							multi_main_text+=TEXT_ALIGN_LEFT
+							text_space = (16 - object[i].getTexts()[j].getValue().size()) / 2;
+							for(int s = 0; s < text_space; s++) multi_main_text += ' ';
 						}else if(object[i].getAlign() == "right"){
-							multi_alternate_text+=TEXT_ALIGN_RIGHT
+							multi_main_text+=TEXT_ALIGN_RIGHT
 						}else if(object[i].getAlign() == "left"){
-							multi_alternate_text+=TEXT_ALIGN_LEFT
+							multi_main_text+=TEXT_ALIGN_LEFT
 						}
 					}else{
-						multi_alternate_text+=TEXT_ALIGN_LEFT
+						multi_main_text+=TEXT_ALIGN_LEFT
 					}
-					multi_alternate_text += object[i].getTexts()[j].getAlternance().toUpperCase();
-					if(object[i].getTexts()[j].getAlternance() != null && j < object[i].getTexts().size() - 1) multi_alternate_text += NEW_LINE; 
+					multi_main_text += object[i].getTexts()[j].getValue().toUpperCase();
+					if(object[i].getTexts()[j].getValue() != null && j < object[i].getTexts().size() - 1) multi_main_text += NEW_LINE; 
+	
+					if (defaultPagehOnTime != 0 && object[i].getTexts()[j].getAlternance() == ''){
+						multi_alternate_text+=TEXT_ALIGN_LEFT + NEW_LINE
+					}
+	
+					if(object[i].getTexts()[j].getAlternance()) {
+						if(object[i].getAlign()){
+							if(object[i].getAlign() == "center"){
+								multi_alternate_text+=TEXT_ALIGN_LEFT
+								text_space = (16 - object[i].getTexts()[j].getAlternance().size()) / 2;
+								for(int n = 0; n < text_space; n++) multi_alternate_text += ' ';
+							}else if(object[i].getAlign() == "right"){
+								multi_alternate_text+=TEXT_ALIGN_RIGHT
+							}else if(object[i].getAlign() == "left"){
+								multi_alternate_text+=TEXT_ALIGN_LEFT
+							}
+						}else{
+							multi_alternate_text+=TEXT_ALIGN_LEFT
+						}
+						multi_alternate_text += object[i].getTexts()[j].getAlternance().toUpperCase();
+						if(object[i].getTexts()[j].getAlternance() != null && j < object[i].getTexts().size() - 1) multi_alternate_text += NEW_LINE; 
+					}
+	
 				}
-
 			}
 		}
-	}
-	
-	if(multi_alternate_text.equals("[tr70,1,0,0]") && multi_alternate_graphic.equals("")){
-		multi = multi_main_graphic + multi_main_text;
-	}else if(multi_alternate_graphic && multi_alternate_text.equals("[tr70,1,0,0]")){
-		multi = multi_main_graphic + NEW_PAGE + multi_alternate_graphic;
-	}else if(multi_alternate_text && multi_alternate_graphic.equals("")){
-		multi = multi_main_text + NEW_PAGE + multi_alternate_text;		
-	}else{	
-		multi = multi_main_graphic + multi_main_text + NEW_PAGE + multi_alternate_graphic + multi_alternate_text;
+		
+		if(multi_alternate_text.equals("[tr70,1,0,0]") && multi_alternate_graphic.equals("")){
+			multi = multi_main_graphic + multi_main_text;
+		}else if(multi_alternate_graphic && multi_alternate_text.equals("[tr70,1,0,0]")){
+			multi = multi_main_graphic + NEW_PAGE + multi_alternate_graphic;
+		}else if(multi_alternate_text && multi_alternate_graphic.equals("")){
+			multi = multi_main_text + NEW_PAGE + multi_alternate_text;		
+		}else{	
+			multi = multi_main_graphic + multi_main_text + NEW_PAGE + multi_alternate_graphic + multi_alternate_text;
+		}
+	} else {
+		multi = "";
 	}
 	
 	pmv.activarVMSNTCIP(multi, dataSourceXid, signallingCommand, driver, false, false, 255);

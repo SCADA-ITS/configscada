@@ -169,8 +169,6 @@ class InputAdapter_VMS {
 			for(int n_zone = 1; n_zone <= num_zones; n_zone++){
 				ElementValue alternance_element = EntitiesManager.getInstance().getElementValue(element, PARAM_MEASURE_DATAJSON, PARAM_TYPE_MEASURE);
 				
-				log.debug("Jony alternance_element: " + alternance_element);
-				log.debug("Jony alternance_elementvalue: " + alternance_element.getValue());
 				if (alternance_element.getValue() && alternance_element.getValue() != "[]" && alternance_element.getValue() != ""){
 					
 					def jsonObject = new JsonSlurper().parseText(alternance_element.getValue());
@@ -222,7 +220,7 @@ class InputAdapter_VMS {
 		try {
 			ObjectMapper Obj = new ObjectMapper();
 			String json = Obj.writeValueAsString(zones);
-			log.debug("Jony resultado final: " + json);
+
 			return json;
 		}catch(Exception e) {
 			log.debug(e.getMessage());

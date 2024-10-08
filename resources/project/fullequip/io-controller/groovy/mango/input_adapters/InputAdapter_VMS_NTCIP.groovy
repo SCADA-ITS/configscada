@@ -206,7 +206,6 @@ class InputAdapter_VMS {
 
 				if(zone_type && zone_type != null){
 					if(zone_type.equals(GRAPHIC) && !graphics.isEmpty()){
-
 						zone.fillGraphic(graphics, element, n_zone, messages.size());	
 					}else if(zone_type.equals(TEXT)){
 						num_lineas = Integer.parseInt(p.getProperty("vms.subtype_" + String.valueOf(element.getElementSubtypeId()) + ".zone_" + String.valueOf(n_zone) + "." + TEXT + ".num_lines"));
@@ -379,11 +378,21 @@ class InputAdapter_VMS {
 			
 			Integer values = 0;
 			Integer alternances = 0;
-
-			values = obtenerGraphic(element,Integer.parseInt(message.get((int)(numZone/3))),numZone);
+			
+			if (message.size() <= (int)(numZone/3)){
+			
+				values = obtenerGraphic(element,0,numZone);
 		
-			if (alternance > 1) {
-				alternances = obtenerGraphic(element,Integer.parseInt(message.get((int)(numZone/3+1))),numZone);
+				if (alternance > 1) {
+					alternances = obtenerGraphic(element,0,numZone);
+				}
+			}else{
+			
+				values = obtenerGraphic(element,Integer.parseInt(message.get((int)(numZone/3))),numZone);
+			
+				if (alternance > 1) {
+					alternances = obtenerGraphic(element,Integer.parseInt(message.get((int)(numZone/3+1))),numZone);
+				}
 			}
 			
 			Graphic graphic = new Graphic(1, values, alternances);
