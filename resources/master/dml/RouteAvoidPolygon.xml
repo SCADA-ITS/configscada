@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="RouteAvoidPolygon">
+	<SELECT>SELECT route_avoid_polygon_id as "id",
+				   alias as "alias",
+				   description as "description",
+				   lat as "lat",
+				   lon as "lon",
+				   polygon as "polygon",
+				   incident_report_id as "incidentReportId",
+				   enabled as "enabled",
+				   visible as "visible"
+			  FROM rt.route_avoid_polygons
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>INSERT INTO rt.route_avoid_polygons
+						(route_avoid_polygon_id,
+						 alias,
+						 description,
+						 lat,
+						 lon,
+						 polygon,
+						 enabled,
+						 visible,
+						 created_at,
+						 updated_at)
+					VALUES
+						(:id=getNextValFromSec{'rt.last_route_avoid_polygon_id'},
+					 	:alias,
+					 	:description,
+					 	:lat,
+					 	:lon,
+					 	:polygon,
+					 	:enabled,
+					 	:visible,
+					 	CURRENT_TIMESTAMP,
+					 	CURRENT_TIMESTAMP)
+	</INSERT>
+	<UPDATE>UPDATE rt.route_avoid_polygons
+			   SET alias = :alias, 
+			       description = :description, 
+			       lat = :lat,
+				   lon = :lon,
+				   polygon = :polygon,
+			       updated_at = CURRENT_TIMESTAMP
+			 WHERE route_avoid_polygon_id = :id
+	</UPDATE>
+	<DELETE>DELETE FROM rt.route_avoid_polygon_id
+			 WHERE route_avoid_polygon_id = :id
+	</DELETE>
+</DML>

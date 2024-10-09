@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="Route">
+	<SELECT>SELECT route_id as "id",
+				   alias as "alias",
+				   description as "description",
+				   coordinates as "coordinates",
+				   auto_route as "autoRoute",
+				   enabled as "enabled",
+				   visible as "visible"
+			  FROM conf.routes
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>INSERT INTO conf.routes
+						(route_id,
+						 alias,
+						 description,
+						 coordinates,
+						 auto_route,
+						 enabled,
+						 visible,
+						 created_at,
+						 updated_at)
+					VALUES
+						(:id=getNextId{'conf.routes'$'route_id'},
+					 	:alias,
+					 	:description,
+					 	:coordinates,
+					 	:autoRoute,
+					 	:enabled,
+					 	:visible,
+					 	CURRENT_TIMESTAMP,
+					 	CURRENT_TIMESTAMP)
+	</INSERT>
+	<UPDATE>UPDATE conf.routes
+			   SET alias = :alias, 
+			       description = :description, 
+				   coordinates = :coordinates,
+				   auto_route = :autoRoute,
+			       updated_at = CURRENT_TIMESTAMP
+			 WHERE route_id = :id
+	</UPDATE>
+	<DELETE>DELETE FROM conf.routes
+			 WHERE route_id = :id
+	</DELETE>
+</DML>
