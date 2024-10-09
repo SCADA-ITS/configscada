@@ -24,11 +24,11 @@ element_types_ambientales = [
     FOTOCEL
 ]
 
-def get_value(firefox_browser):
+def get_value(driver):
 
     values = []
 
-    datatable = firefox_browser.find_element(By.XPATH, '//div[contains(@id, "datatable")]')
+    datatable = driver.find_element(By.XPATH, '//div[contains(@id, "datatable")]')
     values_datatable = datatable.find_elements(By.XPATH, './div[2]/div[2]/div/div[4]/div/div/span')
     values_equipment_name = datatable.find_elements(By.XPATH, './div[2]/div[1]/div/div[1]/div/span')
 
@@ -39,12 +39,14 @@ def get_value(firefox_browser):
 
 def test_cambio_valores(firefox_browser):
 
+    driver, management_area, state= firefox_browser
+
     element_types_project = []
 
-    WebDriverWait(firefox_browser, 20).until(EC.visibility_of_element_located((By.LINK_TEXT, "Equipamiento"))).click()
-    firefox_browser.find_element(By.XPATH, "//span[text()='Equipamiento']").click()
+    WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.LINK_TEXT, "Equipamiento"))).click()
+    driver.find_element(By.XPATH, "//span[text()='Equipamiento']").click()
 
-    main = WebDriverWait(firefox_browser, 20).until(EC.visibility_of_element_located((By.XPATH, '//div[contains(@view_id, "view-main-list-equipments-")]')))
+    main = WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.XPATH, '//div[contains(@view_id, "view-main-list-equipments-")]')))
     
     time.sleep(5)
 
@@ -59,16 +61,16 @@ def test_cambio_valores(firefox_browser):
     with open(f'{filename}.txt', "w") as file:
         for element_type_id in interseccion:
                 
-            WebDriverWait(firefox_browser, 20).until(EC.visibility_of_element_located((By.XPATH, f"//div[contains(@webix_l_id, 'ElementType:{element_type_id}')]"))).click()
+            WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.XPATH, f"//div[contains(@webix_l_id, 'ElementType:{element_type_id}')]"))).click()
 
             time.sleep(2)
 
-            value_a = get_value(firefox_browser)
+            value_a = get_value(driver)
 
             # Pausa para que de tiempo a cambiar el valor
             time.sleep(10)
 
-            value_b = get_value(firefox_browser)
+            value_b = get_value(driver)
 
             file.write(f'ElementTypeId:{element_type_id}\n')
             for item_a, item_b in zip(value_a, value_b):

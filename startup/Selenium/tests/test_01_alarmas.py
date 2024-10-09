@@ -28,11 +28,11 @@ def search_elements_fill_list(datatable):
     
     return alarm_data
 
-def process_alarms(firefox_browser, view_id, alarm_type, date):
+def process_alarms(driver, view_id, alarm_type, date):
     alarms_data = []
     
     # Identifico el contenedor de la tabla de alarmas (reconocidas o no reconocidas)
-    alarms_main = firefox_browser.find_element(By.XPATH, f'//*[contains(@view_id, "{view_id}")]')
+    alarms_main = driver.find_element(By.XPATH, f'//*[contains(@view_id, "{view_id}")]')
     datatable = alarms_main.find_element(By.XPATH, './div[3]')
     total_elementos = int(datatable.get_dom_attribute("aria-rowcount"))
     print(f"Existen un total de {total_elementos} {alarm_type}")
@@ -42,14 +42,14 @@ def process_alarms(firefox_browser, view_id, alarm_type, date):
     while True:
         alarms_data.extend(search_elements_fill_list(datatable))
 
-        scroll_height = firefox_browser.execute_script("return arguments[0].scrollHeight", scroll_container)
-        scroll_top = firefox_browser.execute_script("return arguments[0].scrollTop", scroll_container)
-        client_height = firefox_browser.execute_script("return arguments[0].clientHeight", scroll_container)
+        scroll_height = driver.execute_script("return arguments[0].scrollHeight", scroll_container)
+        scroll_top = driver.execute_script("return arguments[0].scrollTop", scroll_container)
+        client_height = driver.execute_script("return arguments[0].clientHeight", scroll_container)
 
         if scroll_top + client_height >= scroll_height:
             break
 
-        firefox_browser.execute_script("arguments[0].scrollTop += arguments[0].offsetHeight;", scroll_container)
+        driver.execute_script("arguments[0].scrollTop += arguments[0].offsetHeight;", scroll_container)
         time.sleep(0.5)
 
     # Eliminar duplicados
@@ -62,17 +62,20 @@ def process_alarms(firefox_browser, view_id, alarm_type, date):
     assert len(alarms_data) == total_elementos
 
 def test_alarmas(firefox_browser):
+
+    driver, management_area, state= firefox_browser
+
     now = datetime.now()
     date = now.strftime("%d-%m-%Y_%H-%M-%S")
 
     # Acceder al menú y monitor de alarmas
-    WebDriverWait(firefox_browser, 20).until(EC.visibility_of_element_located((By.LINK_TEXT, "Equipamiento"))).click()
-    firefox_browser.find_element(By.XPATH, "//span[text()='Monitor de alarmas']").click()   
+    WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.LINK_TEXT, "Equipamiento"))).click()
+    driver.find_element(By.XPATH, "//span[text()='Monitor de alarmas']").click()   
 
     # Esperar a que las tablas de alarmas sean visibles
-    WebDriverWait(firefox_browser, 20).until(EC.presence_of_element_located((By.XPATH, '//*[contains(@view_id, "viewDtNoRecognized")]')))
-    WebDriverWait(firefox_browser, 20).until(EC.presence_of_element_located((By.XPATH, '//*[contains(@view_id, "viewDtRecognized")]')))
+    WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, '//*[contains(@view_id, "viewDtNoRecognized")]')))
+    WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, '//*[contains(@view_id, "viewDtRecognized")]')))
 
     # Procesar alarmas no reconocidas y reconocidas
-    process_alarms(firefox_browser, "viewDtNoRecognized", "alarmas_no_reconocidas", date)
-    process_alarms(firefox_browser, "viewDtRecognized", "alarmas_reconocidas", date)
+    process_alarms(driver, "viewDtNoRecognized", "alarmas_no_reconocidas", date)
+    process_alarms(driver, "viewDtRecognized", "alarmas_reconocidas", date)

@@ -1,41 +1,43 @@
 import json
 import pytest
 import sys
+import configparser
+from configparser import NoOptionError
 from pathlib import Path
-
-if len(sys.argv) < 5:
-    print('''
-        El siguiente script debe contener los siguientes parámetros: \n
-            arg1 = IP 
-            arg2 = Usuario 
-            arg3 = Contraseña 
-            arg4 = Estado de comunicación de los equipos a buscar
-          
-            Ejemplo:
-            python3 execute_tests.py 192.168.88.51 admin Revenga.19 No comunica
-          ''')
-    
-    exit()
 
 def main():
     # Ruta del archivo de informe JSON
     report_file = Path("report.json")
-    ip=sys.argv[1]
-    user=sys.argv[2]
-    password=sys.argv[3]
-    state=sys.argv[4]
-    # Ejecuta pytest y genera un informe en JSON
-    result = pytest.main([
-        f"--ip={ip}",
-        f"--user={user}",
-        f"--password={password}",
-        f"--state={state}",
-        "--disable-warnings",
-        "--tb=short",
-        "--json-report",
-        "--json-report-file=" + str(report_file),
-        "tests/"
-    ])
+
+    config = configparser.RawConfigParser()
+    config.read('config.properties')
+
+    try:
+        # Acceder a los valores
+        ip = config.get('Config', 'ip')
+        user = config.get('Config', 'user')
+        password = config.get('Config', 'password')
+        state = config.get('Config', 'state')
+    except NoOptionError as e:
+        print(f'Error al leer la configuración del archivo config.properties: {e}')
+        exit()
+    
+    try:
+        # Ejecuta pytest y genera un informe en JSON
+        result = pytest.main([
+            f"--ip={ip}",
+            f"--user={user}",
+            f"--password={password}",
+            f"--state={state}",
+            "--disable-warnings",
+            "--tb=line",
+            "--json-report",
+            "--json-report-file=" + str(report_file),
+            "tests/"
+        ])
+    except UnboundLocalError as e:
+        print(f'Error al setear una variable: {e}')
+        exit()
     
     # Verifica el código de salida de pytest
     if result == pytest.ExitCode.OK:

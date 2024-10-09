@@ -5,18 +5,12 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-def test_pruebaequipos(firefox_browser, state):
+def test_pruebaequipos(firefox_browser):
+
+    driver, management_area, state= firefox_browser
+
     if(state is None):
-        print('''
-            El siguiente script debe contener los siguientes parámetros: 
-                --ip=IP 
-                --user=Usuario 
-                --password=Contraseña 
-                --state=Estado de comunicación de los equipos a buscar 
-                
-                Ejemplo:
-                pytest tests/test_02_estado_equipos.py --ip=192.168.88.201 --user=admin --password=Revenga.19 --state="Desconocido, No comunica" -s
-              ''')
+        print('ERROR: Revisar configuración del archivo config.properties. La propiedad "state" no puede estar vacía.')
         exit()
     
     estados_a_buscar = [s.strip() for s in state.split(',')]
@@ -25,10 +19,10 @@ def test_pruebaequipos(firefox_browser, state):
     # Esperar a que la página de equipos esté completamente cargada
     print("Esperando que la página de equipos esté completamente cargada...")
     try:
-        WebDriverWait(firefox_browser, 60).until(
+        WebDriverWait(driver, 60).until(
             EC.url_contains("/home.html")
         )
-        WebDriverWait(firefox_browser, 60).until(
+        WebDriverWait(driver, 60).until(
             EC.presence_of_element_located((By.CLASS_NAME, 'graphic-icon-tooltip'))
         )
         print("Página de equipos cargada.")
@@ -37,15 +31,15 @@ def test_pruebaequipos(firefox_browser, state):
 
     # Expandir el menú principal y hacer clic en el submenú "Equipamiento"
     try:
-        WebDriverWait(firefox_browser, 60).until(
+        WebDriverWait(driver, 60).until(
             EC.element_to_be_clickable((By.CSS_SELECTOR, ".webix_scroll_cont > .webix_el_label > .webix_el_box"))
         ).click()
         
-        WebDriverWait(firefox_browser, 60).until(
+        WebDriverWait(driver, 60).until(
             EC.element_to_be_clickable((By.LINK_TEXT, "Equipamiento"))
         ).click()
 
-        WebDriverWait(firefox_browser, 60).until(
+        WebDriverWait(driver, 60).until(
             EC.element_to_be_clickable((By.CSS_SELECTOR, ".webix_list_item:nth-child(1) .submenu-text"))
         ).click()
     except Exception as e:
@@ -53,7 +47,7 @@ def test_pruebaequipos(firefox_browser, state):
 
     # Contar y mostrar cuántos elementos con webix_l_id="ElementType:" están presentes
     try:
-        elements = WebDriverWait(firefox_browser, 60).until(
+        elements = WebDriverWait(driver, 60).until(
             EC.presence_of_all_elements_located((By.CSS_SELECTOR, '[webix_l_id*="ElementType:"]'))
         )
         elements_with_type = [
@@ -69,19 +63,19 @@ def test_pruebaequipos(firefox_browser, state):
         encontrado = False
         for element, element_type_number in elements_with_type:
             print(f"Haciendo clic en el elemento ElementType: {element_type_number}")
-            firefox_browser.execute_script("arguments[0].scrollIntoView(true);", element)
+            driver.execute_script("arguments[0].scrollIntoView(true);", element)
             time.sleep(0.5)  # Pequeño retraso para que se complete el desplazamiento
             element.click()
 
             # Esperar a que la clase webix_ss_body esté presente
-            WebDriverWait(firefox_browser, 60).until(
+            WebDriverWait(driver, 60).until(
                 EC.presence_of_element_located((By.CSS_SELECTOR, '[class="webix_ss_body"]'))
             )
 
             # Hacer scroll en el contenedor de la tabla
-            scroll_container = firefox_browser.find_element(By.CSS_SELECTOR, '.webix_ss_vscroll.webix_vscroll_y')
+            scroll_container = driver.find_element(By.CSS_SELECTOR, '.webix_ss_vscroll.webix_vscroll_y')
             while True:
-                cell_elements = firefox_browser.find_elements(By.CSS_SELECTOR, ".webix_cell")
+                cell_elements = driver.find_elements(By.CSS_SELECTOR, ".webix_cell")
                 
                 comunicacion_estado = {
                     cell.get_attribute("aria-rowindex"): cell.text.strip()
@@ -90,7 +84,7 @@ def test_pruebaequipos(firefox_browser, state):
 
                 nombres_columna_0 = {
                     first_cell.get_attribute("aria-rowindex"): first_cell.text.strip()
-                    for first_cell in firefox_browser.find_elements(By.CSS_SELECTOR, '[column="0"] .webix_cell')
+                    for first_cell in driver.find_elements(By.CSS_SELECTOR, '[column="0"] .webix_cell')
                 }
 
                 # Guardar los resultados en el archivo de texto
@@ -100,14 +94,14 @@ def test_pruebaequipos(firefox_browser, state):
                     encontrado = True
 
                 # Verificar si se ha alcanzado el final de la página
-                scroll_height = firefox_browser.execute_script("return arguments[0].scrollHeight", scroll_container)
-                scroll_top = firefox_browser.execute_script("return arguments[0].scrollTop", scroll_container)
-                client_height = firefox_browser.execute_script("return arguments[0].clientHeight", scroll_container)
+                scroll_height = driver.execute_script("return arguments[0].scrollHeight", scroll_container)
+                scroll_top = driver.execute_script("return arguments[0].scrollTop", scroll_container)
+                client_height = driver.execute_script("return arguments[0].clientHeight", scroll_container)
 
                 if scroll_top + client_height >= scroll_height:
                     break
 
-                firefox_browser.execute_script("arguments[0].scrollTop += arguments[0].offsetHeight;", scroll_container)
+                driver.execute_script("arguments[0].scrollTop += arguments[0].offsetHeight;", scroll_container)
                 time.sleep(0.5)
 
             time.sleep(0.5)  # Pausa entre clics
