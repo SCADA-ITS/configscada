@@ -44,6 +44,9 @@ class SignallingCommand_71_2 {
 			}else if(element.elementSubtypeId == 16){
 				def pmv = shell.parse(new File(ResourcesUtil.getPath("io-controller/groovy/mango/pmv_subtypes/ntcip/txt.groovy")));
 				pmv.txt(signallingCommand, dataSourceXid, driver, element, log);	
+			}else if(element.elementSubtypeId == 12 || element.elementSubtypeId == 11 ){
+				def pmv = shell.parse(new File(ResourcesUtil.getPath("io-controller/groovy/mango/pmv_subtypes/ntcip/gr.groovy")));
+				pmv.gr(signallingCommand, dataSourceXid, driver, element, log);	
 			}
 		}catch (NumberFormatException | JsonProcessingException e) {
 			log.error(e.getMessage());
