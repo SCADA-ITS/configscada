@@ -1,7 +1,7 @@
 INSERT INTO conf.elements (element_type_id, element_subtype_id, element_id, location_id, keep_values_on_disconnected, inherit_state_id, alias, description, on_change_alarm, on_change_state, on_change_measure, on_schedule, enabled, visible, alert, alarm_count, created_at, updated_at) VALUES
-(4, 2, 1, 0010004, NULL, NULL, 'TUN-ETD-1-SEC-1CA-IN', 'TUN-ETD-1-SEC-1CA-IN', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(4, 2, 1, 1001, NULL, NULL, 'TUN-ETD-1-SEC-1CA-IN', 'TUN-ETD-1-SEC-1CA-IN', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 2, 2, 0020004, NULL, NULL, 'TUN-ETD-1-SEC-2MA-OUT', 'TUN-ETD-1-SEC-2MA-OUT', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(4, 2, 3, 0030004, NULL, NULL, 'TUN-ETD-2-SEC-1MA-IN', 'TUN-ETD-2-SEC-1MA-IN', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(4, 2, 3, 1002, NULL, NULL, 'TUN-ETD-2-SEC-1MA-IN', 'TUN-ETD-2-SEC-1MA-IN', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 2, 4, 0040004, NULL, NULL, 'TUN-ETD-2-SEC-2CA-OUT', 'TUN-ETD-2-SEC-2CA-OUT', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 2, 5, 0050004, NULL, NULL, 'MAP-ETD-1-SEC-1', 'MAP-ETD-1-SEC-1', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 2, 6, 0060004, NULL, NULL, 'MAP-ETD-2-SEC-1', 'MAP-ETD-2-SEC-1', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 

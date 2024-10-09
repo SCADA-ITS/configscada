@@ -53,7 +53,7 @@ VALUES
         "alias": "PANEL NR n",
         "from": 1,
         "to": 2,
-        "elementSubtypeId": "ElementSubtype:18:71",
+        "elementSubtypeId": "ElementSubtype:19:71",
 		"command": {
 					"commandElementTypeId": "CommandElementType:2:71",
 					"commandElementValues": [{
@@ -79,8 +79,8 @@ VALUES
 	{
         "id": 3,
         "alias": "PANEL NR n",
-        "from": 1,
-        "to": 1,
+        "from": 2,
+        "to": 2,
         "elementSubtypeId": "ElementSubtype:12:71",
 		"command": {
 					"commandElementTypeId": "CommandElementType:2:71",

@@ -2,17 +2,17 @@ INSERT INTO conf.ims_incident_type_task_values
 (task_type_id, task_type_param_id, incident_type_task_id, value, enabled, visible, created_at, updated_at)
 VALUES
 
-(2, 1, 060201, '[
-    {
-        "id": 1,
-        "alias": "PANEL NR n",
-        "from": 1,
+(1, 1, 060201, '[
+	{
+		"id": 1,
+		"alias": "PANEL NR n",
+		"from": 1,
         "to": 1,
-        "elementSubtypeId": "ElementSubtype:19:71",
+		"elementSubtypeId": "ElementSubtype:19:71",
 		"command": {
 					"commandElementTypeId": "CommandElementType:2:71",
 					"commandElementValues": [{
-						"value": "[{\"zone\":1,\"alternance_ms\":3000,\"flashing_on_ms\":0,\"flashing_off_ms\":0,\"texts\":[],\"graphics\":[{\"id\":1,\"value\":164,\"alternance\":164}],\"align\":\"center\"},{\"zone\":2,\"alternance_ms\":3000,\"flashing_on_ms\":0,\"flashing_off_ms\":0,\"texts\":[{\"id\":1,\"value\":\"CON LLUVIA\",\"alternance\":\"\",\"color\":\"#FFFFFF\"},{\"id\":2,\"value\":\"MODERE\",\"alternance\":\"PRECAUCION\",\"color\":\"#FFFFFF\"},{\"id\":3,\"value\":\"VELOCIDAD\",\"alternance\":\"EN TUNEL\",\"color\":\"#FFFFFF\"}],\"graphics\":[],\"align\":\"center\"}]}]",
+						"value": "[{\"zone\":1,\"alternance_ms\":5000,\"graphics\":[{\"id\":1,\"value\":\"319\",\"alternance\":\"319\"}]},{\"zone\":2,\"alternance_ms\":5000,\"align\":\"center\",\"texts\":[{\"id\":1,\"value\":\"CON LLUVIA\",\"alternance\": \"MODERE\", \"color\":\"#FFFFFF\"},{\"id\":2,\"value\":\"PRECAUCION\",\"alternance\": \"VELOCIDAD\", \"color\":\"#FFFFFF\"}]}]",
 						"commandElementTypeParamId": "CommandElementTypeParam:2:71:1"
 					}]	
 		}
@@ -40,7 +40,21 @@ VALUES
 		"command": {
 					"commandElementTypeId": "CommandElementType:2:71",
 					"commandElementValues": [{
-							"value": "[{\"zone\":1,\"alternance_ms\":5000,\"graphics\":[{\"id\":1,\"value\":746}]}]",
+							"value": "[{\"zone\":1,\"alternance_ms\":5000,\"graphics\":[{\"id\":1,\"value\":745}]}]",
+						"commandElementTypeParamId": "CommandElementTypeParam:2:71:1"
+					}]	
+		}
+	},
+	{
+		"id": 4,
+		"alias": "PANEL NR n",
+		"from": 1,
+        "to": 1,
+		"elementSubtypeId": "ElementSubtype:11:71",
+		"command": {
+					"commandElementTypeId": "CommandElementType:2:71",
+					"commandElementValues": [{
+						"value": "[{\"zone\":1,\"alternance_ms\":5000,\"graphics\":[{\"id\":1,\"value\":319}]}]",
 						"commandElementTypeParamId": "CommandElementTypeParam:2:71:1"
 					}]	
 		}
