@@ -39,7 +39,7 @@ INSERT INTO ui.graphic_icons
 (010020, 'NO', 'NO', false, true, 'component/graphicIcon/graphicIconCustom.js', 40, 60, 'img/graphic_icon/20_no.svg', 'component/graphicIcon/custom/no.js',true),
 (000021, 'OPAC', 'OPAC', false, true, 'component/graphicIcon/graphicIconCustom.js', 50, 60, 'img/graphic_icon/21_opac.svg', 'component/graphicIcon/custom/op.js',true),
 (010021, 'OPAC', 'OPAC', false, true, 'component/graphicIcon/graphicIconCustom.js', 40, 60, 'img/graphic_icon/21_opac.svg', 'component/graphicIcon/custom/op.js',true),
-(000022, 'VALV', 'VALV', false, false, 'component/graphicIcon/graphicIconDefault.js', 35, 35, 'img/graphic_icon/22_valvulas.svg', 'null',true),
+(000022, 'VALV', 'VALV', false, true, 'component/graphicIcon/graphicIconCustom.js', 35, 35, 'img/graphic_icon/22_valvulas.svg', 'component/graphicIcon/custom/valve.js',true),
 (000026, 'SWITCH', 'SWITCH', false, false, 'component/graphicIcon/graphicIconDefault.js', 50, 50, 'img/graphic_icon/26_switch.svg', 'null',true),
 (000027, 'PLC', 'PLC', false, false, 'component/graphicIcon/graphicIconDefault.js', 50, 50, 'img/graphic_icon/27_plc.svg', 'null',true),
 (000028, 'NAS', 'NAS', false, false, 'component/graphicIcon/graphicIconDefault.js', 50, 50, 'img/graphic_icon/28_nas.svg', 'null',true),
