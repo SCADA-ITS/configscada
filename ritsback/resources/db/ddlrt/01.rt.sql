@@ -529,3 +529,27 @@ CREATE SCHEMA rt;
 	ALTER TABLE rt.pm_command_element_values ADD CONSTRAINT fk_pm_command_element_values_pm_command_element FOREIGN KEY (queue_id, command_element_type_id, pm_command_element_id, element_type_id, element_id) REFERENCES rt.pm_command_elements(queue_id, command_element_type_id, pm_command_element_id, element_type_id, element_id);
 
 	ALTER TABLE rt.pm_command_element_values SET TABLESPACE tbl_rt;
+	
+-- 
+-- Table: rt.route_avoid_polygons
+-- Scope: rt
+-- 
+	
+		CREATE TABLE rt.route_avoid_polygons (
+		route_avoid_polygon_id int8 NOT NULL,
+		alias varchar NOT NULL,
+		description varchar NULL,
+		lat float8 NULL,
+		lon float8 NULL,
+		polygon varchar NULL,
+		incident_report_id int8 NOT NULL,
+		enabled bool NULL,
+		visible bool NULL,
+		created_at timestamptz NOT NULL,
+		updated_at timestamptz NOT NULL,
+		CONSTRAINT pk_route_avoid_polygon  PRIMARY KEY (route_avoid_polygon_id)
+	);
+
+	ALTER TABLE rt.route_avoid_polygons ADD CONSTRAINT fk_route_avoid_polygon_incident_report FOREIGN KEY (incident_report_id) REFERENCES rt.ims_incident_reports(incident_report_id);
+	
+	ALTER TABLE rt.route_avoid_polygons SET TABLESPACE tbl_rt;

@@ -72,7 +72,7 @@ def firefox_browser(request):
 
         driver.implicitly_wait(1)
 
-        if management_area == True:
+        if management_area == 'True':
             driver.find_element(By.XPATH, '//*[contains(@view_id, "mgr-area-select")]') 
             driver.find_element(By.CSS_SELECTOR, ".webix_view.webix_control.webix_el_button.webix_secondary.form-accept-button").click()
         else:
