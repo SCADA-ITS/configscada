@@ -84,6 +84,16 @@
 			<p:enabled>true</p:enabled>
 			<p:entity>SetImsDelayedIncidentActionsCommand</p:entity>
 		</p:subscriptor>
+			<p:subscriptor>
+			<p:id>17</p:id>
+			<p:enabled>true</p:enabled>
+			<p:entity>SetAddAvoidPolygonCommand</p:entity>
+		</p:subscriptor>
+			<p:subscriptor>
+			<p:id>18</p:id>
+			<p:enabled>true</p:enabled>
+			<p:entity>SetDeleteAvoidPolygonCommand</p:entity>
+		</p:subscriptor>
 	</p:subscriptors>
 	<p:executors>
 		<p:executor>
@@ -126,6 +136,16 @@
 			<p:manager_class>com.revenga.rits.back.manager.lib.executor.ResponseCommandExecutor</p:manager_class>
 			<p:subscriptors_ref>
 				<p:subscriptor_id_ref>13</p:subscriptor_id_ref>
+			</p:subscriptors_ref>
+		</p:executor>
+			<p:executor>
+			<p:id>4</p:id>
+			<p:enabled>true</p:enabled>
+			<p:merge_wait_time>1</p:merge_wait_time>
+			<p:manager_class>com.revenga.rits.back.incident.manager.executor.AvaoidPolygonExecutor</p:manager_class>
+			<p:subscriptors_ref>
+				<p:subscriptor_id_ref>17</p:subscriptor_id_ref>
+				<p:subscriptor_id_ref>18</p:subscriptor_id_ref>			
 			</p:subscriptors_ref>
 		</p:executor>
 	</p:executors>
