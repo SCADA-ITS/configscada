@@ -27,5 +27,15 @@ INSERT INTO conf.command_element_values (command_element_type_id, element_type_i
 (2, 71, 1, 37, '[{"zone":1,"graphics":[{"id":1,"value":"315"}]}]', True, True, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (2, 71, 1, 38, '[{"zone":1,"graphics":[{"id":1,"value":"315"}]}]', True, True, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (2, 71, 1, 39, '[{"zone":1,"alternance_ms":5000,"graphics":[{"id":1,"value":"744","alternance":"315"}]},{"zone":2,"alternance_ms":5000,"align":"left","texts":[{"id":1,"value":"CARRIL","alternance":"MODERE","color":"#FFFFFF"},{"id":2,"value":"DERECHO","alternance":"LA","color":"#FFFFFF"},{"id":3,"value":"CORTADO","alternance":"VELOCIDAD","color":"#FFFFFF"}]}]', True, True, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(2, 71, 1, 40, '[{"zone":1,"alternance_ms":5000,"align":"center","texts":[{"id":1,"value":"MODERE LA","alternance":"VELOCIDAD","color":"#FFFFFF"}]}]', True, True, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(2, 71, 1, 40, '[{"zone":1,"alternance_ms":5000,"align":"center","texts":[{"id":1,"value":"MODERE LA","alternance":"VELOCIDAD","color":"#FFFFFF"}]}]', True, True, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
+(2, 71, 1, 41, '[{"zone":1,"graphics":[{"id":1,"value":"745"}]}]', True, True, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 71, 1, 42, '[{"zone":1,"graphics":[{"id":1,"value":"745"}]}]', True, True, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 71, 1, 43, '[{"zone":1,"graphics":[{"id":1,"value":"745"}]}]', True, True, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 71, 1, 44, '[{"zone":1,"graphics":[{"id":1,"value":"745"}]}]', True, True, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 71, 1, 45, '[{"zone":1,"graphics":[{"id":1,"value":"320"}]}]', True, True, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 71, 1, 46, '[{"zone":1,"graphics":[{"id":1,"value":"320"}]}]', True, True, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 71, 1, 47, '[{"zone":1,"graphics":[{"id":1,"value":"320"}]}]', True, True, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 71, 1, 48, '[{"zone":1,"graphics":[{"id":1,"value":"320"}]}]', True, True, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 71, 1, 49, '[{"zone":1,"alternance_ms":5000,"align":"center","texts":[{"id":1,"value":"CIRCULE CON","alternance":"PRECAUCION","color":"#FFFFFF"}]}]', True, True, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 71, 1, 50, '[{"zone":2,"align":"left","texts":[{"id":1,"value":"CIRCULE","color":"#FFFFFF"},{"id":2,"value":"CON","color":"#FFFFFF"},{"id":3,"value":"PRECAUCION","color":"#FFFFFF"}]},{"zone":1,"graphics":[{"id":1,"value":"819"}]}]', True, True, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
