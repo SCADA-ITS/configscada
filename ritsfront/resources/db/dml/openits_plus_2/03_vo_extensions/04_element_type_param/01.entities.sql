@@ -188,6 +188,8 @@ INSERT INTO ui.vo_entities(id, vo_entity_type_id, enabled, visible) VALUES
 ('ElementTypeParam:21:1:2', 'ElementTypeParamUI', true, true),
 ('ElementTypeParam:21:2:1', 'ElementTypeParamUI', true, true),
 
+('ElementTypeParam:22:2:1', 'ElementTypeParamUI', true, true),
+
 ('ElementTypeParam:32:2:1', 'ElementTypeParamUI', true, true),
 ('ElementTypeParam:32:2:2', 'ElementTypeParamUI', true, true),
 ('ElementTypeParam:32:2:3', 'ElementTypeParamUI', true, true),
