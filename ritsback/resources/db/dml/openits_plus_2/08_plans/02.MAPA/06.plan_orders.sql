@@ -1,5 +1,4 @@
 INSERT INTO conf.plan_orders (plan_id, plan_order_id, plan_order_type_id, plan_order_order, next_plan_order_id, next_plan_id, alias, description, enabled, visible, created_at, updated_at) VALUES
-(0200, 020001, 10, 1, NULL, NULL, 'AUTOMATISM', 'AUTOMATISM', True, True, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (0201, 020101, 1, 1, NULL, NULL, 'SIGNALLING - MAP-NTCIP-1', 'SIGNALLING - MAP-NTCIP-1', True, True, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (0201, 020102, 1, 2, NULL, NULL, 'SIGNALLING - MAP-NTCIP-10', 'SIGNALLING - MAP-NTCIP-10', True, True, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (0201, 020103, 1, 3, NULL, NULL, 'SIGNALLING - MAP-NTCIP-11', 'SIGNALLING - MAP-NTCIP-11', True, True, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),

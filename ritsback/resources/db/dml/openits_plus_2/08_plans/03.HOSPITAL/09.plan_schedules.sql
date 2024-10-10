@@ -1,2 +1,0 @@
-INSERT INTO conf.plan_schedules (plan_schedule_id, plan_id, cron_expression, alias, description, enabled, visible, created_at, updated_at) VALUES
-(3, 03, '0 0 7 ? * * *', 'Alarmas', 'Envio diario de alarmas', True, True, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
