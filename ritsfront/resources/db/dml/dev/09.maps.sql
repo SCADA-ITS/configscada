@@ -6,7 +6,7 @@ INSERT INTO ui.maps (id, name, description, "label", icon, longitude, latitude, 
 	'{ 
 		"map": {"enabled": true, "type": "WMS", "serverType": "geoserver", "url": "http://192.168.88.165:8700/geoserver/wms", "name": "osm"},
 		"router": {"enabled": true, "type": "OpenRouteService", "url": "http://192.168.88.165:8701/ors"},
-        "smartRoadInfo": {"url": "http://192.168.88.165:8702/api"}
+        "smartRoadInfo": {"enabled": true, "url": "http://192.168.88.165:8702/api"}
 	}');
 
 
