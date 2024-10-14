@@ -1,0 +1,6 @@
+item;stretch_type;alias;description;pk_ini;pk_end;lanes;road
+1;Element;UF 1;Buga – Palmira y Yumbo – Yotoco;0;250+000;2;UF 1
+2;Element;UF 2;Santander de Quilichao – Palmira;0;250+000;2;UF 2
+3;Element;UF 3;Avenida Bicentenario;0;250+000;2;UF 3
+4;Element;UF 4;Jamundi – Villa Rica;0;250+000;2;UF 4
+5;Element;UF 5;Yumbo – Cali;0;250+000;2;UF 5
