@@ -534,9 +534,10 @@ CREATE SCHEMA rt;
 -- Table: rt.route_avoid_polygons
 -- Scope: rt
 -- 
-	
+		CREATE SEQUENCE rt.last_route_avoid_polygon_id START 1;
+		
 		CREATE TABLE rt.route_avoid_polygons (
-		route_avoid_polygon_id int8 NOT NULL,
+		route_avoid_polygon_id int8 default nextval('rt.last_route_avoid_polygon_id'),
 		alias varchar NOT NULL,
 		description varchar NULL,
 		lat float8 NULL,

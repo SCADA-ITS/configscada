@@ -27,4 +27,5 @@ INSERT INTO conf.system_param_values
 }'
 , true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (15, '5', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(16, '3', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(16, '3', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(18, 'http://localhost:8083/ors/', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

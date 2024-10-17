@@ -20,6 +20,7 @@
 						 lat,
 						 lon,
 						 polygon,
+						 incident_report_id,
 						 enabled,
 						 visible,
 						 created_at,
@@ -31,6 +32,7 @@
 					 	:lat,
 					 	:lon,
 					 	:polygon,
+					 	:incidentReportId,
 					 	:enabled,
 					 	:visible,
 					 	CURRENT_TIMESTAMP,
@@ -45,7 +47,7 @@
 			       updated_at = CURRENT_TIMESTAMP
 			 WHERE route_avoid_polygon_id = :id
 	</UPDATE>
-	<DELETE>DELETE FROM rt.route_avoid_polygon_id
+	<DELETE>DELETE FROM rt.route_avoid_polygons
 			 WHERE route_avoid_polygon_id = :id
 	</DELETE>
 </DML>
