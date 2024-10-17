@@ -1,0 +1,5 @@
+device_name;source_name;host;measure_port(i);alarm_port(i);url_publisher;offset_temperature(i);offset_alarm_air_conditioner(i);offset_alarm_door_open(i)
+TUN-CGBT-1;CT;192.168.88.74;502;503;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/;3925;2505;2506
+TUN-CITS-1;CT;192.168.88.74;502;503;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/;3926;2507;2508
+TUN-PCI-1;CT;192.168.88.74;502;503;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/;3927;2509;2510
+TUN-CBT;CT;192.168.88.74;502;503;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/;3928;2511;2512
