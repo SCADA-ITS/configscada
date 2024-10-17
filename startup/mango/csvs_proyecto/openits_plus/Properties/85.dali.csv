@@ -1,0 +1,17 @@
+device_name;source_name;ip;port(i);url_publisher
+TUN-DALI-DER-1SS;DALI;192.168.88.74;503;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/
+TUN-DALI-IZQ-1SS;DALI;192.168.88.74;503;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/
+TUN-DALI-DER-2SS;DALI;192.168.88.74;503;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/
+TUN-DALI-IZQ-2SS;DALI;192.168.88.74;503;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/
+TUN-DALI-DER-3SS;DALI;192.168.88.74;503;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/
+TUN-DALI-IZQ-3SS;DALI;192.168.88.74;503;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/
+TUN-DALI-DER-4SS;DALI;192.168.88.74;503;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/
+TUN-DALI-IZQ-4SS;DALI;192.168.88.74;503;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/
+TUN-DALI-DER-1SN;DALI;192.168.88.74;503;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/
+TUN-DALI-IZQ-1SN;DALI;192.168.88.74;503;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/
+TUN-DALI-DER-2SN;DALI;192.168.88.74;503;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/
+TUN-DALI-IZQ-2SN;DALI;192.168.88.74;503;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/
+TUN-DALI-DER-3SN;DALI;192.168.88.74;503;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/
+TUN-DALI-IZQ-3SN;DALI;192.168.88.74;503;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/
+TUN-DALI-DER-4SN;DALI;192.168.88.74;503;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/
+TUN-DALI-IZQ-4SN;DALI;192.168.88.74;503;http:\/\/192.168.88.70:3000\/api\/v2\/generic\/

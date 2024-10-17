@@ -8,7 +8,7 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (220003, 22, 1, 3, true, false, false, false, 'LBL_GRID_FIELD_DESCRIPTION', 'LBL_GRID_FIELD_DESCRIPTION', 'description', false, false, NULL, false, false, 150, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
 (220004, 22, 1, 4, true, true, false, false, NULL, NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
 (220005, 22, 1, 5, true, true, false, true, 'LBL_GRID_FIELD_STATE_LABEL', 'LBL_GRID_FIELD_STATE_LABEL', 'stateLabel', false, false, NULL, true, false, 150, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
-(220006, 22, 2, 6, true, false, false, false, 'LBL_STATE', 'LBL_STATE', 'ElementTypeParam:22:2:1', false, false, 'left', true, false, 200, NULL, true, true, NULL, NULL, NULL, NULL, NULL);
+(220006, 22, 1, 6, true, false, false, false, 'LBL_STATE', 'LBL_STATE', 'ElementTypeParam:22:2:1', false, false, 'left', true, false, 200, NULL, true, true, NULL, NULL, NULL, NULL, NULL);
 
 INSERT INTO ui.grid_option_values(grid_id, grid_option_id, value) VALUES
 (22, 1, 'true'),
@@ -39,4 +39,6 @@ INSERT INTO ui.grid_field_icons(grid_field_id, icon, value, show_value, badge_co
 (220004, './img/state/stateAlarm.png', 'ElementTypeState:22:3', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_ALARMS'),
 (220004, './img/state/stateMaintenance.png', 'ElementTypeState:22:4', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_MAINTENANCE');
 
-
+INSERT INTO ui.grid_field_replacements(grid_field_id, "label", value, enabled) VALUES
+(220006, 'LBL_GRID_FR_CERRADA', '0', true),
+(220006, 'LBL_GRID_FR_ABIERTA', '1', true);

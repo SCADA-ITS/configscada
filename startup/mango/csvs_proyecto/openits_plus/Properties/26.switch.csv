@@ -1,0 +1,14 @@
+device_name;url_publisher
+TUN-SWS-1CA;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/
+TUN-SWS-2CA;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/
+TUN-SWS-3CA;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/
+TUN-SWS-4CA;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/
+TUN-SWS-5CA;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/
+TUN-SWS-1MA;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/
+TUN-SWS-2MA;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/
+TUN-SWS-3MA;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/
+TUN-SWS-4MA;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/
+TUN-SWG-CA;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/
+TUN-SWE-CA;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/
+TUN-SWL;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/
+TUN-SWE-MA;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/

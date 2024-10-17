@@ -37,15 +37,16 @@ def state(request):
 def firefox_browser(request):  
 
     config = configparser.RawConfigParser()
-    config.read('config.properties')
+    config.read('config.properties', encoding='utf-8')
 
     try:
         # Acceder a los valores
         ip = config.get('Config', 'ip')
         user = config.get('Config', 'user')
         password = config.get('Config', 'password')
-        state = config.get('Config', 'state')
-        management_area = config.get('Config', 'management_area')
+        management_area = config.get('Management Areas', 'management_area')
+        management_area_name = config.get('Management Areas', 'management_area_name')
+        state = config.get('Equipment state', 'state')
     except NoOptionError as e:
         pytest.fail(f'Error al leer la configuración del archivo config.properties: {e}')
         
@@ -73,8 +74,14 @@ def firefox_browser(request):
         driver.implicitly_wait(1)
 
         if management_area == 'True':
-            driver.find_element(By.XPATH, '//*[contains(@view_id, "mgr-area-select")]') 
-            driver.find_element(By.CSS_SELECTOR, ".webix_view.webix_control.webix_el_button.webix_secondary.form-accept-button").click()
+            driver.find_element(By.XPATH, '//*[contains(@view_id, "mgr-area-select")]').click()
+            areas_de_gestion = driver.find_elements(By.XPATH, '//*[contains(@class, "form-area-combo-list")]/div/div/div/div/div')
+            
+            for area in areas_de_gestion:
+                if area.text == management_area_name:
+                    area.click()
+            
+            driver.find_element(By.XPATH, '//*[contains(@class, "form-accept-button")]').click()
         else:
             pass
 

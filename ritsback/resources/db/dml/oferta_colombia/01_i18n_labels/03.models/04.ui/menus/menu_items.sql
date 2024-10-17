@@ -1,0 +1,32 @@
+-- 
+-- Type:   model
+-- Entity: ui.menu_items
+-- File:   menu_items.sql
+-- Langs:  es_ES, en_GB, sk_SK, es_CL
+--
+
+-- 
+-- Table: master.i18n_labels
+--
+
+INSERT INTO master.i18n_labels (locale_code, module_id, "label", "translation", created_at, updated_at) VALUES
+--es_ES--
+('es_ES', 1, 'LBL_MENU_ITEM_BACKOFFICE_INCIDENT', 'Backoffice - Incidencias', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_MENU_ITEM_BACKOFFICE_ALARM', 'Backoffice - Alarmas', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_MENU_ITEM_BACKOFFICE_ELEMENT', 'Backoffice - Elementos', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	 
+--en_GB
+('en_GB', 1, 'LBL_MENU_ITEM_BACKOFFICE_INCIDENT', 'Backoffice - Incidents', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_MENU_ITEM_BACKOFFICE_ALARM', 'Backoffice - Alarms', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_MENU_ITEM_BACKOFFICE_ELEMENT', 'Backoffice - Elements', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	 
+--sk_SK
+('sk_SK', 1, 'LBL_MENU_ITEM_BACKOFFICE_INCIDENT', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_MENU_ITEM_BACKOFFICE_ALARM', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_MENU_ITEM_BACKOFFICE_ELEMENT', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	 
+--es_CL
+('es_CL', 1, 'LBL_MENU_ITEM_BACKOFFICE_INCIDENT', 'Backoffice - Incidencias', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_MENU_ITEM_BACKOFFICE_ALARM', 'Backoffice - Alarmas', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_MENU_ITEM_BACKOFFICE_ELEMENT', 'Backoffice - Elementos', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
