@@ -1,4 +1,6 @@
 INSERT INTO ui.module_values(module_id, module_param_id, value) VALUES
+(403, 5, 'http://192.168.88.130/jasperserver/flow.html?_flowId=searchFlow&userLocale=es_ES&folderUri=/Informes'),
+
 (970, 6, '1'),
 
 (6000, 13, '3'), (6000, 14, 'actions'),

@@ -1,0 +1,32 @@
+-- 
+-- Table: conf.ims_incident_type_stretchs
+--
+INSERT INTO conf.ims_incident_type_stretchs (incident_type_id, stretch_id, default_location_id, operational_plan_url, valid_for_min, alias, description, multi_instance, cctv_scenario_id, spath_id, enabled, visible, created_at, updated_at) VALUES
+(0104, 1000, 1000, null, null, null, null, false, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(0104, 1001, 1000, null, null, null, null, false, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(0104, 1002, 1000, null, null, null, null, false, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(0104, 1003, 1000, null, null, null, null, false, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(0104, 1004, 1000, null, null, null, null, false, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(0104, 1005, 1000, null, null, null, null, false, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(0104, 1006, 1000, null, null, null, null, false, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(0104, 1007, 1000, null, null, null, null, false, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(0104, 1008, 1000, null, null, null, null, false, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(0104, 1009, 1000, null, null, null, null, false, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(0104, 1010, 1000, null, null, null, null, false, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(0104, 1011, 1000, null, null, null, null, false, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(0104, 1012, 1000, null, null, null, null, false, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(0104, 1013, 1000, null, null, null, null, false, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(0104, 1014, 1000, null, null, null, null, false, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(0104, 1015, 1000, null, null, null, null, false, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(0104, 1016, 1000, null, null, null, null, false, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(0104, 1017, 1000, null, null, null, null, false, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(0104, 1018, 1000, null, null, null, null, false, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(0104, 1019, 1000, null, null, null, null, false, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(0104, 1020, 1000, null, null, null, null, false, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(0104, 1021, 1000, null, null, null, null, false, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(0104, 1022, 1000, null, null, null, null, false, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(0104, 1023, 1000, null, null, null, null, false, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(0104, 1024, 1000, null, null, null, null, false, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(0104, 1025, 1000, null, null, null, null, false, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(0104, 1026, 1000, null, null, null, null, false, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(0104, 1027, 1000, null, null, null, null, false, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

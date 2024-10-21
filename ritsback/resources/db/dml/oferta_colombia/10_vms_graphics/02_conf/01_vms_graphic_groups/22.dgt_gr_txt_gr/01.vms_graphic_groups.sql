@@ -31,7 +31,7 @@ INSERT INTO conf.vms_graphic_groups_elements (graphic_group_id, element_type_id,
 (22, 71, 43, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO conf.vms_graphic_graphic_group_values (graphic_type_id, graphic_id, graphic_group_id, value, enabled, visible, created_at, updated_at) VALUES
-(1, 4,   22, '128' ,true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 1,   22, '128' ,true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (1, 5,   22, '129' ,true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (1, 22,  22, '130' ,true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (1, 23,  22, '131' ,true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),

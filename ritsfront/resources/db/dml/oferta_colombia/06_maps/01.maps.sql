@@ -1,0 +1,218 @@
+INSERT INTO ui.maps (id, name, description, "label", icon, latitude, longitude, zoom, zoom_max, zoom_min, limit_init_lat, limit_init_lon, limit_end_lat, limit_end_lon, custom_provider_url, default_zoom_search, dark_mode) VALUES 
+(1, 'mapa', 'mapa', 'LBL_MENU_ITEM_MAP', NULL, 3.7249, -76.3675, 11, 16, 5, 3.2249, -76.8675, 4.2249, -75.8675, null, null, true);
+
+INSERT INTO ui.map_layers (id, base_layer, map_id, "name", description, "label", icon, visible) VALUES 
+(1, NULL, 1, 'Layer meteos', 'Layer meteos', 'LBL_ELEMENT_TYPE_WEATHER_STATION', NULL, true),
+(2, NULL, 1, 'Layer camaras', 'Layer camaras', 'LBL_ELEMENT_TYPE_CAMERA', NULL, true),
+(11, NULL, 1, 'Layer SOS', 'Layer SOS', 'LBL_ELEMENT_TYPE_SOS', NULL, true),
+(17, NULL, 1, 'Layer gálibos', 'Layer gálibos', 'LBL_ELEMENT_TYPE_GALIBO', NULL, true),
+(71, NULL, 1, 'Layer paneles', 'Layer paneles', 'LBL_ELEMENT_TYPE_PANEL', NULL, true);
+
+INSERT INTO ui.map_incidents(id, incident_graphic_icon_id, incident_report_module_action_id, incident_wizard_module_action_id) VALUES
+(1, 1000, 100401, 101301);
+
+INSERT INTO ui.map_layer_elements (id, layer_id, element_id, graphic_icon_id, "label", latitude, longitude, horizontal_flip, rotate, tooltip, z_index_front, show_text, text_color,selectable) VALUES 
+(1, 1, 'Element:1:1', 00010001, 'Est,Meteo 1', 3.7598, -76.41162222, false, null, true, 1, false, '#000000', true),
+(2, 1, 'Element:1:2', 00010001, 'Est,Meteo 2', 3.712827778, -76.31914722, false, null, true, 1, false, '#000000', true),
+(3, 1, 'Element:1:3', 00010001, 'Est,Meteo 3', 3.627814509, -76.45754618, false, null, true, 1, false, '#000000', true),
+(4, 1, 'Element:1:4', 00010001, 'Est,Meteo 4', 3.557513889, -76.46271111, false, null, true, 1, false, '#000000', true),
+(5, 1, 'Element:1:5', 00010001, 'Est,Meteo 7', 3.644072222, -76.38128056, false, null, true, 1, false, '#000000', true),
+(6, 2, 'Element:2:1', 00010002, 'PTZ PAN 1', 3.760936272, -76.41136392, false, null, true, 1, false, '#000000', true),
+(7, 2, 'Element:2:2', 00010002, 'PTZ PAN 2', 3.757802774, -76.41087296, false, null, true, 1, false, '#000000', true),
+(8, 2, 'Element:2:3', 00010002, 'PTZ PAN 3', 3.62854041, -76.45830655, false, null, true, 1, false, '#000000', true),
+(9, 2, 'Element:2:4', 00010002, 'PTZ PAN 4', 3.626783776, -76.45735716, false, null, true, 1, false, '#000000', true),
+(10, 2, 'Element:2:5', 00010002, 'PTZ PAN 5', 3.557109137, -76.46379318, false, null, true, 1, false, '#000000', true),
+(11, 2, 'Element:2:6', 00010002, 'PTZ PAN 8', 3.713743679, -76.31934478, false, null, true, 1, false, '#000000', true),
+(12, 2, 'Element:2:7', 00010002, 'PTZ PAN 9', 3.712336787, -76.31901503, false, null, true, 1, false, '#000000', true),
+(13, 2, 'Element:2:8', 00010002, 'PTZ PAN 10', 3.644888506, -76.38046838, false, null, true, 1, false, '#000000', true),
+(14, 2, 'Element:2:9', 00010002, 'AS PTZ 1', 3.755677206, -76.41043823, false, null, true, 1, false, '#000000', true),
+(15, 2, 'Element:2:10', 00010002, 'AS PTZ 2', 3.725006087, -76.32094384, false, null, true, 1, false, '#000000', true),
+(16, 2, 'Element:2:11', 00010002, 'AS PTZ 3', 3.531462023, -76.39039545, false, null, true, 1, false, '#000000', true),
+(17, 2, 'Element:2:12', 00010002, 'PTZ 01', 3.868936111, -76.37739722, false, null, true, 1, false, '#000000', true),
+(18, 2, 'Element:2:13', 00010002, 'PTZ 02', 3.849463889, -76.37934722, false, null, true, 1, false, '#000000', true),
+(19, 2, 'Element:2:14', 00010002, 'PTZ 03', 3.789802778, -76.39396111, false, null, true, 1, false, '#000000', true),
+(20, 2, 'Element:2:15', 00010002, 'PTZ 04', 3.631165825, -76.46820519, false, null, true, 1, false, '#000000', true),
+(21, 2, 'Element:2:16', 00010002, 'PTZ 05', 3.601119444, -76.4832, false, null, true, 1, false, '#000000', true),
+(22, 2, 'Element:2:17', 00010002, 'PTZ 07', 3.5582109, -76.43782212, false, null, true, 1, false, '#000000', true),
+(23, 2, 'Element:2:18', 00010002, 'PTZ 08', 3.614136259, -76.39968034, false, null, true, 1, false, '#000000', true),
+(24, 2, 'Element:2:19', 00010002, 'PTZ 09', 3.559844444, -76.29078889, false, null, true, 1, false, '#000000', true),
+(25, 2, 'Element:2:20', 00010002, 'PTZ 11', 3.893242665, -76.31172685, false, null, true, 1, false, '#000000', true),
+(26, 2, 'Element:2:21', 00010002, 'PTZ 12', 3.746042223, -76.32472057, false, null, true, 1, false, '#000000', true),
+(27, 2, 'Element:2:22', 00010002, 'PTZ 13', 3.762788889, -76.32646667, false, null, true, 1, false, '#000000', true),
+(28, 2, 'Element:2:23', 00010002, 'PTZ 15', 3.694058333, -76.31472222, false, null, true, 1, false, '#000000', true),
+(29, 2, 'Element:2:24', 00010002, 'PTZ 16', 3.685641667, -76.30530556, false, null, true, 1, false, '#000000', true),
+(30, 2, 'Element:2:25', 00010002, 'PTZ 17', 3.681375311, -76.30359656, false, null, true, 1, false, '#000000', true),
+(31, 2, 'Element:2:26', 00010002, 'PTZ 19', 3.613752778, -76.27339444, false, null, true, 1, false, '#000000', true),
+(32, 2, 'Element:2:27', 00010002, 'PTZ 22', 3.892048556, -76.36995275, false, null, true, 1, false, '#000000', true),
+(33, 2, 'Element:2:28', 00010002, 'PTZ 23', 3.75217257, -76.40997835, false, null, true, 1, false, '#000000', true),
+(34, 2, 'Element:2:29', 00010002, 'PTZ 24', 3.63655, -76.38600278, false, null, true, 1, false, '#000000', true),
+(35, 2, 'Element:2:30', 00010002, 'PTZ 25', 3.860699463, -76.2962597, false, null, true, 1, false, '#000000', true),
+(36, 2, 'Element:2:31', 00010002, 'PTZ 26', 3.700638517, -76.3184618, false, null, true, 1, false, '#000000', true),
+(37, 2, 'Element:2:32', 00010002, 'PTZ 27', 3.674357103, -76.33533648, false, null, true, 1, false, '#000000', true),
+(38, 2, 'Element:2:33', 00010002, 'PTZ 30', 3.619013889, -76.43289722, false, null, true, 1, false, '#000000', true),
+(39, 2, 'Element:2:34', 00010002, 'PTZ 31', 3.547891667, -76.41711944, false, null, true, 1, false, '#000000', true),
+(40, 2, 'Element:2:35', 00010002, 'PTZ 32', 3.534197222, -76.39013056, false, null, true, 1, false, '#000000', true),
+(41, 11, 'Element:11:1', 00010011, 'SOS 40', 3.575826667, -76.2863275, false, null, true, 1, false, '#000000', true),
+(42, 11, 'Element:11:2', 00010011, 'SOS 41', 3.607308611, -76.27078444, false, null, true, 1, false, '#000000', true),
+(43, 11, 'Element:11:3', 00010011, 'SOS 42', 3.62186862, -76.28205174, false, null, true, 1, false, '#000000', true),
+(44, 11, 'Element:11:4', 00010011, 'SOS 43', 3.644397222, -76.29577667, false, null, true, 1, false, '#000000', true),
+(45, 11, 'Element:11:5', 00010011, 'SOS 44', 3.670036778, -76.29363799, false, null, true, 1, false, '#000000', true),
+(46, 11, 'Element:11:6', 00010011, 'SOS 45', 3.689637884, -76.31168625, false, null, true, 1, false, '#000000', true),
+(47, 11, 'Element:11:7', 00010011, 'SOS 46', 3.740450278, -76.32396694, false, null, true, 1, false, '#000000', true),
+(48, 11, 'Element:11:8', 00010011, 'SOS 47', 3.766870833, -76.32720361, false, null, true, 1, false, '#000000', true),
+(49, 11, 'Element:11:9', 00010011, 'SOS 48', 3.790031389, -76.31599722, false, null, true, 1, false, '#000000', true),
+(50, 11, 'Element:11:10', 00010011, 'SOS 49', 3.810550205, -76.30860964, false, null, true, 1, false, '#000000', true),
+(51, 11, 'Element:11:11', 00010011, 'SOS 50', 3.840654167, -76.29960611, false, null, true, 1, false, '#000000', true),
+(52, 11, 'Element:11:12', 00010011, 'SOS 51', 3.864893611, -76.30145944, false, null, true, 1, false, '#000000', true),
+(53, 11, 'Element:11:13', 00010011, 'SOS 52', 3.885761554, -76.31246605, false, null, true, 1, false, '#000000', true),
+(54, 11, 'Element:11:14', 00010011, 'SOS 57', 3.59521295, -76.48325226, false, null, true, 1, false, '#000000', true),
+(55, 11, 'Element:11:15', 00010011, 'SOS 58', 3.622569731, -76.47681845, false, null, true, 1, false, '#000000', true),
+(56, 11, 'Element:11:16', 00010011, 'SOS 59', 3.644520239, -76.46391892, false, null, true, 1, false, '#000000', true),
+(57, 11, 'Element:11:17', 00010011, 'SOS 60', 3.667070581, -76.4517103, false, null, true, 1, false, '#000000', true),
+(58, 11, 'Element:11:18', 00010011, 'SOS 61', 3.686797531, -76.43696317, false, null, true, 1, false, '#000000', true),
+(59, 11, 'Element:11:19', 00010011, 'SOS 62', 3.713892139, -76.42635894, false, null, true, 1, false, '#000000', true),
+(60, 11, 'Element:11:20', 00010011, 'SOS 63', 3.73008665, -76.40951665, false, null, true, 1, false, '#000000', true),
+(61, 11, 'Element:11:21', 00010011, 'SOS 64', 3.77826335, -76.40733935, false, null, true, 1, false, '#000000', true),
+(62, 11, 'Element:11:22', 00010011, 'SOS 65', 3.796759639, -76.3910396, false, null, true, 1, false, '#000000', true),
+(63, 11, 'Element:11:23', 00010011, 'SOS 66', 3.818725831, -76.39234284, false, null, true, 1, false, '#000000', true),
+(64, 11, 'Element:11:24', 00010011, 'SOS 67', 3.839442061, -76.38254688, false, null, true, 1, false, '#000000', true),
+(65, 11, 'Element:11:25', 00010011, 'SOS 68', 3.871930556, -76.37716667, false, null, true, 1, false, '#000000', true),
+(66, 11, 'Element:11:26', 00010011, 'SOS 69', 3.887073463, -76.37245517, false, null, true, 1, false, '#000000', true),
+(67, 11, 'Element:11:27', 00010011, 'SOS 70', 3.552773478, -76.47872264, false, null, true, 1, false, '#000000', true),
+(68, 11, 'Element:11:28', 00010011, 'SOS 71', 3.560242023, -76.45324735, false, null, true, 1, false, '#000000', true),
+(69, 11, 'Element:11:29', 00010011, 'SOS 72', 3.557654338, -76.42509041, false, null, true, 1, false, '#000000', true),
+(70, 11, 'Element:11:30', 00010011, 'SOS 73', 3.538074961, -76.40803454, false, null, true, 1, false, '#000000', true),
+(71, 11, 'Element:11:31', 00010011, 'SOS 74', 3.51725885, -76.39348866, false, null, true, 1, false, '#000000', true),
+(72, 11, 'Element:11:32', 00010011, 'SOS 75', 3.629811489, -76.46981939, false, null, true, 1, false, '#000000', true),
+(73, 11, 'Element:11:33', 00010011, 'SOS 76', 3.621063711, -76.44722002, false, null, true, 1, false, '#000000', true),
+(74, 11, 'Element:11:34', 00010011, 'SOS 77', 3.607352778, -76.43139444, false, null, true, 1, false, '#000000', true),
+(75, 11, 'Element:11:35', 00010011, 'SOS 78', 3.583061481, -76.4298035, false, null, true, 1, false, '#000000', true),
+(76, 11, 'Element:11:36', 00010011, 'SOS 79', 3.563005269, -76.43718236, false, null, true, 1, false, '#000000', true),
+(77, 11, 'Element:11:37', 00010011, 'SOS 80', 3.619205119, -76.43155192, false, null, true, 1, false, '#000000', true),
+(78, 11, 'Element:11:38', 00010011, 'SOS 81', 3.628196781, -76.42517989, false, null, true, 1, false, '#000000', true),
+(79, 11, 'Element:11:39', 00010011, 'SOS 82', 3.638369297, -76.40135846, false, null, true, 1, false, '#000000', true),
+(80, 11, 'Element:11:40', 00010011, 'SOS 83', 3.507231503, -76.43299069, false, null, true, 1, false, '#000000', true),
+(81, 11, 'Element:11:41', 00010011, 'SOS 84', 3.532905081, -76.42554, false, null, true, 1, false, '#000000', true),
+(82, 11, 'Element:11:42', 00010011, 'SOS 85', 3.557678622, -76.41380874, false, null, true, 1, false, '#000000', true),
+(83, 11, 'Element:11:43', 00010011, 'SOS 86', 3.583186581, -76.40503215, false, null, true, 1, false, '#000000', true),
+(84, 11, 'Element:11:44', 00010011, 'SOS 87', 3.6128325, -76.39986711, false, null, true, 1, false, '#000000', true),
+(85, 11, 'Element:11:45', 00010011, 'SOS 88', 3.631118229, -76.3897292, false, null, true, 1, false, '#000000', true),
+(86, 11, 'Element:11:46', 00010011, 'SOS 89', 3.650549469, -76.37636238, false, null, true, 1, false, '#000000', true),
+(87, 11, 'Element:11:47', 00010011, 'SOS 90', 3.670460919, -76.36027629, false, null, true, 1, false, '#000000', true),
+(88, 11, 'Element:11:48', 00010011, 'SOS 91', 3.674431919, -76.3358307, false, null, true, 1, false, '#000000', true),
+(89, 11, 'Element:11:49', 00010011, 'SOS 92', 3.695921081, -76.32420315, false, null, true, 1, false, '#000000', true),
+(90, 17, 'Element:17:1', 00010017, 'GÁLIBOS 19', 3.536662043, -76.32012479, false, null, true, 1, false, '#000000', true),
+(91, 17, 'Element:17:2', 00010017, 'GÁLIBOS 20', 3.601633078, -76.2701393, false, null, true, 1, false, '#000000', true),
+(92, 17, 'Element:17:3', 00010017, 'GÁLIBOS 21', 3.616576809, -76.27652793, false, null, true, 1, false, '#000000', true),
+(93, 17, 'Element:17:4', 00010017, 'GÁLIBOS 22', 3.636252732, -76.29233305, false, null, true, 1, false, '#000000', true),
+(94, 17, 'Element:17:5', 00010017, 'GÁLIBOS 23', 3.688167063, -76.30825682, false, null, true, 1, false, '#000000', true),
+(95, 17, 'Element:17:6', 00010017, 'GÁLIBOS 24', 3.729911111, -76.32277778, false, null, true, 1, false, '#000000', true),
+(96, 17, 'Element:17:7', 00010017, 'GÁLIBOS 25', 3.754221905, -76.32526977, false, null, true, 1, false, '#000000', true),
+(97, 17, 'Element:17:8', 00010017, 'GÁLIBOS 26', 3.771325, -76.32685556, false, null, true, 1, false, '#000000', true),
+(98, 17, 'Element:17:9', 00010017, 'GÁLIBOS 27', 3.859613889, -76.29697778, false, null, true, 1, false, '#000000', true),
+(99, 17, 'Element:17:10', 00010017, 'GÁLIBOS 28', 3.89215, -76.311725, false, null, true, 1, false, '#000000', true),
+(100, 17, 'Element:17:11', 00010017, 'GÁLIBOS 29', 3.892997222, -76.31285833, false, null, true, 1, false, '#000000', true),
+(101, 17, 'Element:17:12', 00010017, 'GÁLIBOS 30', 3.894008333, -76.31027778, false, null, true, 1, false, '#000000', true),
+(102, 17, 'Element:17:13', 00010017, 'GÁLIBOS 31', 3.68722506, -76.32805265, false, null, true, 1, false, '#000000', true),
+(103, 17, 'Element:17:14', 00010017, 'GÁLIBOS 32', 3.650402778, -76.37715833, false, null, true, 1, false, '#000000', true),
+(104, 17, 'Element:17:15', 00010017, 'GÁLIBOS 33', 3.516625, -76.43086667, false, null, true, 1, false, '#000000', true),
+(105, 17, 'Element:17:16', 00010017, 'GÁLIBOS 38', 3.560419444, -76.454275, false, null, true, 1, false, '#000000', true),
+(106, 17, 'Element:17:17', 00010017, 'GÁLIBOS 39', 3.545580556, -76.48940833, false, null, true, 1, false, '#000000', true),
+(107, 17, 'Element:17:18', 00010017, 'GÁLIBOS 40', 3.534694444, -76.39028611, false, null, true, 1, false, '#000000', true),
+(108, 17, 'Element:17:19', 00010017, 'GÁLIBOS 45', 3.626083333, -76.47396667, false, null, true, 1, false, '#000000', true),
+(109, 17, 'Element:17:20', 00010017, 'GÁLIBOS 46', 3.655958333, -76.45685556, false, null, true, 1, false, '#000000', true),
+(110, 17, 'Element:17:21', 00010017, 'GÁLIBOS 47', 3.850661111, -76.38003611, false, null, true, 1, false, '#000000', true),
+(111, 17, 'Element:17:22', 00010017, 'GÁLIBOS 48', 3.869575, -76.37821111, false, null, true, 1, false, '#000000', true),
+(112, 17, 'Element:17:23', 00010017, 'GÁLIBOS 49', 3.533711111, -76.39011944, false, null, true, 1, false, '#000000', true),
+(113, 17, 'Element:17:24', 00010017, 'GÁLIBOS 50', 3.893422222, -76.31096667, false, null, true, 1, false, '#000000', true),
+(114, 71, 'Element:71:1', 11010071, 'SCV 06', 3.856680556, -76.29726389, false, null, true, 1, false, '#000000', true),
+(115, 71, 'Element:71:2', 11010071, 'SCV 08', 3.622486111, -76.28288056, false, null, true, 1, false, '#000000', true),
+(116, 71, 'Element:71:3', 11010071, 'SCV 11', 3.557702778, -76.46289722, false, null, true, 1, false, '#000000', true),
+(117, 71, 'Element:71:4', 11010071, 'SCV 12', 3.637638889, -76.46634444, false, null, true, 1, false, '#000000', true),
+(118, 71, 'Element:71:5', 11010071, 'SCV 13', 3.643844693, -76.38095642, false, null, true, 1, false, '#000000', true),
+(119, 71, 'Element:71:6', 11010071, 'SCV 14', 3.892047227, -76.36995523, false, null, true, 1, false, '#000000', true),
+(120, 71, 'Element:71:7', 11010071, 'SCV 15', 3.558494444, -76.41366667, false, null, true, 1, false, '#000000', true),
+(121, 71, 'Element:71:8', 11010071, 'SCV 16', 3.622655974, -76.39345097, false, null, true, 1, false, '#000000', true),
+(122, 71, 'Element:71:9', 11010071, 'SCV 17', 3.768461111, -76.32715833, false, null, true, 1, false, '#000000', true),
+(123, 71, 'Element:71:10', 11010071, 'SCV 18', 3.789811605, -76.39399229, false, null, true, 1, false, '#000000', true),
+(124, 71, 'Element:71:11', 11010071, 'SCV 23', 3.688294444, -76.30953056, false, null, true, 1, false, '#000000', true),
+(125, 71, 'Element:71:12', 11010071, 'SCV 24', 3.692888889, -76.31390278, false, null, true, 1, false, '#000000', true),
+(126, 71, 'Element:71:13', 11010071, 'SCV 25', 3.766416667, -76.32691111, false, null, true, 1, false, '#000000', true),
+(127, 71, 'Element:71:14', 11010071, 'SCV 28', 3.891427778, -76.31170278, false, null, true, 1, false, '#000000', true),
+(128, 71, 'Element:71:15', 11010071, 'SCV 29', 3.596737702, -76.40084759, false, null, true, 1, false, '#000000', true),
+(129, 71, 'Element:71:16', 11010071, 'SCV 30', 3.615852778, -76.39964444, false, null, true, 1, false, '#000000', true),
+(130, 71, 'Element:71:17', 11010071, 'SCV 31', 3.618025, -76.41978333, false, null, true, 1, false, '#000000', true),
+(131, 71, 'Element:71:18', 22010071, 'PMV 01', 3.762144444, -76.41155, false, null, true, 1, false, '#000000', true),
+(132, 71, 'Element:71:19', 22010071, 'PMV 02', 3.757674341, -76.41088237, false, null, true, 1, false, '#000000', true),
+(133, 71, 'Element:71:20', 22010071, 'PMV 03', 3.715142245, -76.3195568, false, null, true, 1, false, '#000000', true),
+(134, 71, 'Element:71:21', 22010071, 'PMV 04', 3.710977507, -76.31896551, false, null, true, 1, false, '#000000', true),
+(135, 71, 'Element:71:22', 22010071, 'PMV 05', 3.629463689, -76.46032337, false, null, true, 1, false, '#000000', true),
+(136, 71, 'Element:71:23', 22010071, 'PMV 06', 3.621616899, -76.45363417, false, null, true, 1, false, '#000000', true),
+(137, 71, 'Element:71:24', 22010071, 'PMV 07', 3.556667476, -76.46488855, false, null, true, 1, false, '#000000', true),
+(138, 71, 'Element:71:25', 22010071, 'PMV 10', 3.647871699, -76.37859378, false, null, true, 1, false, '#000000', true),
+(139, 71, 'Element:71:26', 22010071, 'PMV 13', 3.892030754, -76.36995368, false, null, true, 1, false, '#000000', true),
+(140, 71, 'Element:71:27', 22010071, 'PMV 14', 3.891380148, -76.31188876, false, null, true, 1, false, '#000000', true),
+(141, 71, 'Element:71:28', 22010071, 'PMV 15', 3.891366655, -76.31170116, false, null, true, 1, false, '#000000', true),
+(142, 71, 'Element:71:29', 22010071, 'PMV 22', 3.559827547, -76.29078186, false, null, true, 1, false, '#000000', true),
+(143, 71, 'Element:71:30', 22010071, 'PMV 23', 3.612169444, -76.39982778, false, null, true, 1, false, '#000000', true),
+(144, 71, 'Element:71:31', 22010071, 'PMV 24', 3.641230556, -76.29503056, false, null, true, 1, false, '#000000', true),
+(145, 71, 'Element:71:32', 22010071, 'PMV 25', 3.531436972, -76.39040345, false, null, true, 1, false, '#000000', true),
+(146, 71, 'Element:71:33', 22010071, 'PMV 27', 3.819438889, -76.30645278, false, null, true, 1, false, '#000000', true),
+(147, 71, 'Element:71:34', 22010071, 'PMV 28', 3.674349925, -76.33537672, false, null, true, 1, false, '#000000', true),
+(148, 71, 'Element:71:35', 22010071, 'PMV 29', 3.511997222, -76.43189444, false, null, true, 1, false, '#000000', true),
+(149, 71, 'Element:71:36', 22010071, 'PMV 30', 3.601107246, -76.48319879, false, null, true, 1, false, '#000000', true),
+(150, 71, 'Element:71:37', 22010071, 'PMV 36', 3.681335982, -76.30355891, false, null, true, 1, false, '#000000', true),
+(151, 71, 'Element:71:38', 22010071, 'PMV 37', 3.535240864, -76.39563144, false, null, true, 1, false, '#000000', true),
+(152, 71, 'Element:71:39', 22010071, 'PMV 39', 3.535292813, -76.39562245, false, null, true, 1, false, '#000000', true),
+(153, 71, 'Element:71:40', 22010071, 'PMV 40', 3.637609217, -76.46624682, false, null, true, 1, false, '#000000', true),
+(154, 71, 'Element:71:41', 22010071, 'PMV 41', 3.789819444, -76.39397222, false, null, true, 1, false, '#000000', true),
+(155, 71, 'Element:71:42', 22010071, 'PMV 42', 3.766387904, -76.32689703, false, null, true, 1, false, '#000000', true),
+(156, 71, 'Element:71:43', 22010071, 'PMV 45', 3.53142431, -76.39032976, false, null, true, 1, false, '#000000', true);
+
+INSERT INTO ui.map_layer_element_zooms (map_layer_element_id, zoom_lower, zoom_upper, graphic_icon_id, latitude, longitude, horizontal_flip, rotate, tooltip, show_text, text_color) VALUES
+(1,  10, 16, 00010001,  3.759800000, -75.91162222,  false, null, true, false, '#00000'), --Est,Meteo 1
+(2,  10, 16, 00010001,  3.712827778, -75.91914722,  false, null, true, false, '#00000'), --Est,Meteo 2
+(3,  10, 16, 00010001,  3.627814509, -75.95754618,  false, null, true, false, '#00000'), --Est,Meteo 3
+(4,  10, 16, 00010001,  3.557513889, -75.96271111,  false, null, true, false, '#00000'), --Est,Meteo 4
+(5,  10, 16, 00010001,  3.644072222, -75.98128056,  false, null, true, false, '#00000'), --Est,Meteo 7
+
+(131,  10, 16, 22010071,  3.762144444, -76.61155,     false, null, true, false, '#00000'), --PMV 01
+(132,  10, 16, 22010071,  3.757674341, -76.51088237,  false, null, true, false, '#00000'), --PMV 02
+(133,  10, 16, 22010071,  3.715142245, -76.2195568,   false, null, true, false, '#00000'), --PMV 03
+(134,  10, 16, 22010071,  3.710977507, -76.11896551,  false, null, true, false, '#00000'), --PMV 04
+(135,  10, 16, 22010071,  3.629463689, -76.06032337,  false, null, true, false, '#00000'), --PMV 05
+(136,  10, 16, 22010071,  3.621616899, -76.15363417,  false, null, true, false, '#00000'), --PMV 06
+(137,  10, 16, 22010071,  3.556667476, -76.66488855,  false, null, true, false, '#00000'), --PMV 07
+(138,  10, 16, 22010071,  3.647871699, -76.57859378,  false, null, true, false, '#00000'), --PMV 10
+(139,  10, 16, 22010071,  3.892030754, -76.46995368,  false, null, true, false, '#00000'), --PMV 13
+(140,  10, 16, 22010071,  3.891380148, -76.21188876,  false, null, true, false, '#00000'), --PMV 14
+(141,  10, 16, 22010071,  3.891366655, -76.11170116,  false, null, true, false, '#00000'), --PMV 15
+(142,  10, 16, 22010071,  3.559827547, -76.59078186,  false, null, true, false, '#00000'), --PMV 22
+(143,  10, 16, 22010071,  3.612169444, -76.59982778,  false, null, true, false, '#00000'), --PMV 23
+(144,  10, 16, 22010071,  3.641230556, -76.69503056,  false, null, true, false, '#00000'), --PMV 24
+(145,  10, 16, 22010071,  3.531436972, -76.59040345,  false, null, true, false, '#00000'), --PMV 25
+(146,  10, 16, 22010071,  3.819438889, -76.20645278,  false, null, true, false, '#00000'), --PMV 27
+(147,  10, 16, 22010071,  3.674349925, -76.13537672,  false, null, true, false, '#00000'), --PMV 28
+(148,  10, 16, 22010071,  3.511997222, -76.23189444,  false, null, true, false, '#00000'), --PMV 29
+(149,  10, 16, 22010071,  3.601107246, -76.68319879,  false, null, true, false, '#00000'), --PMV 30
+(150,  10, 16, 22010071,  3.681335982, -76.20355891,  false, null, true, false, '#00000'), --PMV 36
+(151,  10, 16, 22010071,  3.535240864, -76.19563144,  false, null, true, false, '#00000'), --PMV 37
+(152,  10, 16, 22010071,  3.535292813, -76.39562245,  false, null, true, false, '#00000'), --PMV 39
+(153,  10, 16, 22010071,  3.637609217, -76.16624682,  false, null, true, false, '#00000'), --PMV 40
+(154,  10, 16, 22010071,  3.789819444, -76.49397222,  false, null, true, false, '#00000'), --PMV 41
+(155,  10, 16, 22010071,  3.766387904, -76.22689703,  false, null, true, false, '#00000'), --PMV 42
+(156,  10, 16, 22010071,  3.53142431, -76.69032976,   false, null, true, false, '#00000'); --PMV 45
+
+INSERT INTO ui.map_commands
+(id, map_id, "position", "label", icon, "default", module_action_id, args, view_type_id, multiselect, show_text, item_required, context) VALUES
+(1, 1, 1, 'LBL_CMD_ALARMS', 'mdi mdi-pencil', false, 100501, NULL, 2, true, NULL, false, true),
+(2, 1, 2, 'LBL_CMD_ELEMENT', 'mdi mdi-pencil', true, 101401, NULL, 2, false, NULL, true, true),
+(3, 1, 3, 'LBL_CMD_EQUIPMENT', 'mdi mdi-pencil', false, 101701, NULL, 2, true, NULL, false, true),
+(7, 1, 4, 'LBL_CMD_MAINTENANCE', 'mdi mdi-wrench', false, 104601, NULL, 2, true, NULL, false, true);
+
+INSERT INTO ui.map_zones (id, map_id, name, description, label, icon, latitude, longitude, zoom) VALUES
+(1,	1, 'Yumbo', 'Yumbo', 'Yumbo', NULL,	3.7598, -76.41162222,	15),
+(2,	1, 'Jamundi', 'Jamundi', 'Jamundi', NULL,	3.712827778, -76.31914722,	15),
+(3, 1, 'Cali', 'Cali', 'Cali', NULL,	3.627814509, -76.45754618,	15);
+
+

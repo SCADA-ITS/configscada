@@ -34,7 +34,7 @@ INSERT INTO conf.role_permissions
 (1, 19, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (1, 20, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (1, 21, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(1, 22, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--(1, 22, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (1, 23, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (1, 24, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (1, 25, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -52,12 +52,8 @@ INSERT INTO conf.role_permissions
 --
 INSERT INTO conf.users
 (user_id, role_id, name_, password_, password_expired_at, session_expire_time_s, locked_until, preset, allow_multiple_sessions, full_name, email, locale_code,  enabled, visible, created_at, updated_at) VALUES
-(1, 1, 'admin', 'iMTEltghfjLEY2kKHT5yyA==', NULL, NULL, NULL, true, true, 'System admin', 'admin@revenga.com', 'es_ES', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(2, 2, 'oper1', 'MR6Du+y0wfkaYpReBdYHkw==', NULL, NULL, NULL, true, true, 'System oper 1', 'oper1@revenga.com', 'es_ES', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(3, 2, 'oper2', 'lXY0flCaWPvRt/1/YPm28g==', NULL, NULL, NULL, true, true, 'System oper 2', 'oper2@revenga.com', 'es_ES', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(4, 2, 'operator1', 'sbguNdcxcFNF6H3/HirwZg==', NULL, NULL, NULL, true, true, 'System oper 1', 'operator1@revenga.com', 'en_GB', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(5, 2, 'operator2', 'OHCKOd/SDYs3/MbopWtagw==', NULL, NULL, NULL, true, true, 'System oper 2', 'operator2@revenga.com', 'en_GB', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(6, 2, 'operario', 'oyBofWN3Jlqb69OSGX8arQ==', NULL, NULL, NULL, true, true, 'Admin operator', 'admin_operator@revenga.com', 'en_GB', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(1, 1, 'admin', 'PTp8841/XyOkxeVUCyNf+w==', NULL, NULL, NULL, true, true, 'System admin', 'admin@revenga.com', 'es_ES', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(6, 2, 'operador', 'PTp8841/XyOkxeVUCyNf+w==', NULL, NULL, NULL, true, true, 'Operator', 'operator@revenga.com', 'en_GB', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 
 

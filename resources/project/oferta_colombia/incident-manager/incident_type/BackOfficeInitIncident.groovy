@@ -6,6 +6,7 @@ import com.revenga.rits.back.data.core.model.ImsIncidentType;
 import com.revenga.rits.back.data.core.model.Location;
 import com.revenga.rits.back.data.core.model.Stretch;
 import com.revenga.rits.back.data.core.model.User;
+import com.revenga.rits.back.data.core.model.Element;
 import com.revenga.rits.back.incident.manager.service.EntitiesManager;
 import com.revenga.rits.back.incident.manager.service.IncidentEntitiesManager;
 
@@ -18,15 +19,20 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.util.List;
 
 class BackOfficeInitIncident {
 
 	org.apache.logging.log4j.Logger log
-	private static final String CONNECTION_URL = "jdbc:postgresql://192.168.88.71:5430/rits";
+	private static final String CONNECTION_URL = "jdbc:postgresql://192.168.88.38:5430/rits";
 	private static final String DB_USER = "rits";
 	private static final String DB_PASSWORD = "rits";
-	private static final String DB_SCHEMA = "nogales_gip";
+	private static final String DB_SCHEMA = "incidents_gip";
+	private static final String DB_SCHEMA_CONF = "conf";
+	private static final String ELEMENT_TYPE_SOS = "11";
+	private static final String ELEMENT_ID_CAUSE_POSTE_SOS = "1";
 
 	 BackOfficeInitIncident(org.apache.logging.log4j.Logger log) {
         this.log = log;
@@ -34,6 +40,7 @@ class BackOfficeInitIncident {
 
 	 boolean process(ImsIncidentReport incidentReport) {
         Connection connection = null;
+        
         try {
             connection = DriverManager.getConnection(CONNECTION_URL, DB_USER, DB_PASSWORD);
 
@@ -62,16 +69,44 @@ class BackOfficeInitIncident {
 
         return false;
     }
+    
+    String obtainAliasElement(Long elementId){
+    	Connection connection = DriverManager.getConnection(CONNECTION_URL, DB_USER, DB_PASSWORD);
+    
+    	PreparedStatement preparedStatement = connection.prepareStatement("SELECT alias from " + DB_SCHEMA_CONF + ".elements where element_type_id = " + ELEMENT_TYPE_SOS + " and element_id = " + String.valueOf(elementId));
+		ResultSet rset = preparedStatement.executeQuery();
+		String alias = "";
+		
+		while (rset.next()) {
+			
+			alias = rset.getString("alias");
+			
+			break;
+		}
+		
+		preparedStatement = connection.prepareStatement("SELECT * from " + DB_SCHEMA + ".elements where alias = '" + alias + "'");
+		rset = preparedStatement.executeQuery();
+		
+		while (rset.next()) {
+			
+			alias = rset.getString("id");
+			
+			break;
+		}
+		
+		return alias;
+    }
 
     String createInsertStatement(ImsIncidentReport incidentReport) {
 		
         String incidentReportId = null;
         String detectionType = null;
+        String detectionOrigin = null;
         String incidentType = null;
         String incidentSubType = null;
         String level = null;
-        String location = null;
         String userName = null;
+        String alias = null;
 
         if (incidentReport != null) {
             if (incidentReport.getId() != null) {
@@ -81,15 +116,19 @@ class BackOfficeInitIncident {
             List<ImsIncidentReportAlarm> incidentAlarms = IncidentEntitiesManager.getInstance()
                     .getIncidentAlarmsByIncidentReport(incidentReport.getId());
 
+
             if (!incidentAlarms.isEmpty()) {
                 detectionType = "LBL_AUTO";
+                detectionOrigin = ELEMENT_ID_CAUSE_POSTE_SOS;
+                alias = obtainAliasElement(incidentAlarms.get(0).getElementId());
             } else {
                 detectionType = "LBL_MANUAL";
+                	
             }
 
             if (incidentReport.getIncidentTypeId() != null) {
                 ImsIncidentType imsIncidentType = IncidentEntitiesManager.getInstance().getIncidentType(incidentReport.getIncidentTypeId());
-
+				
                 if (imsIncidentType != null) {
                     incidentSubType = imsIncidentType.getAlias();
 
@@ -109,16 +148,6 @@ class BackOfficeInitIncident {
                 }
             }
 
-            if (incidentReport.getAffectionStretchId() != null && incidentReport.getLocationId() != null) {
-                Stretch stretch = IncidentEntitiesManager.getInstance().getStretch(incidentReport.getAffectionStretchId());
-
-                Location indicentLocation = IncidentEntitiesManager.getInstance().getLocation(incidentReport.getLocationId());
-
-                if (stretch != null && indicentLocation != null) {
-                    location = stretch.getAlias() + " - " + indicentLocation.getAlias();
-                }
-            }
-
             if (incidentReport.getCurrentUserId() != null) {
                 User user = EntitiesManager.getInstance().getUser(incidentReport.getCurrentUserId());
 
@@ -134,10 +163,10 @@ class BackOfficeInitIncident {
             new ColumnValuePair("incident_type", incidentType),
             new ColumnValuePair("incident_sub_type", incidentSubType),
             new ColumnValuePair("level", level),
-            new ColumnValuePair("location", location),
-            new ColumnValuePair("user_n", userName)
+            new ColumnValuePair("user_n", userName),
+            new ColumnValuePair("element_id", alias),
+            new ColumnValuePair("source_id", detectionOrigin)
         );
-
         StringBuilder columns = new StringBuilder();
         StringBuilder values = new StringBuilder();
 
@@ -147,7 +176,6 @@ class BackOfficeInitIncident {
                 values.append("'").append(pair.value).append("', ");
             }
         }
-
         columns.delete(columns.length() - 2, columns.length()); // Remove the trailing comma and space
         values.delete(values.length() - 2, values.length()); // Remove the trailing comma and space
 

@@ -33,10 +33,7 @@ INSERT INTO ui.equip_viewer_measures (equip_viewer_grp_measure_id, vo_entities_i
 (0101, 'ElementTypeParam:1:2:15', 1, true),
 (0101, 'ElementTypeParam:1:2:16', 1, true),
 (0101, 'ElementTypeParam:1:2:19', 1, true),
-(0101, 'ElementTypeParam:1:2:23', 1, true),
-
-(7102, 'ElementTypeParam:71:2:10', 1, true),
-(7106, 'ElementTypeParam:71:2:10', 1, true);
+(0101, 'ElementTypeParam:1:2:23', 1, true);
 
 
 INSERT INTO ui.equip_viewer_configs (id, equip_viewer_id, vo_entities_id, "position", visible) VALUES
