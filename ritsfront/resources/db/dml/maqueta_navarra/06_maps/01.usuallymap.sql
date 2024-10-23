@@ -1,5 +1,6 @@
 INSERT INTO ui.maps (id, name, description, "label", icon, longitude, latitude, zoom, zoom_max, zoom_min, limit_init_lon, limit_init_lat, limit_end_lon, limit_end_lat, custom_provider_url, default_zoom_search, dark_mode) VALUES 
-(1, 'MAP', 'Map', 'LBL_MENU_ITEM_MAP', NULL, -1.65, 42.816667, 9, 16, 9, 0, 39.8, -2.5, 45.8, null, null, true);
+(1, 'MAP', 'Map', 'LBL_MENU_ITEM_MAP', NULL, -1.65, 42.816667, 9, 16, 9, 0, 39.8, -2.5, 45.8, null, null, true),
+(1000, 'MAPA PARA COMPONENTE MAPEDITOR', 'MAPA PARA COMPONENTE MAPEDITOR', 'LBL_MENU_ITEM_MAP', NULL, -1.65, 42.816667, 9, 16, 9, 0, 39.8, -2.5, 45.8, null, null, true);
 
 INSERT INTO ui.graphic_icons (id, "name", description, alarms, measures, js_draw_file, width, height, svg_pattern_var, svg_file, js_custom_type_render, keep_aspect_ratio) VALUES
 (1000, 'INCIDENT_REPORT', 'INCIDENT_REPORT', false, true, 'component/graphicIcon/graphicIconCustom.js', 70, 120, null, 'img/graphic_icon/incident_report.svg', 'component/graphicIcon/custom/incidentReport.js', null);

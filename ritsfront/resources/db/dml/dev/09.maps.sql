@@ -7,6 +7,12 @@ INSERT INTO ui.maps (id, name, description, "label", icon, longitude, latitude, 
 		"map": {"enabled": true, "type": "WMS", "serverType": "geoserver", "url": "http://192.168.88.165:8700/geoserver/wms", "name": "osm"},
 		"router": {"enabled": true, "type": "OpenRouteService", "url": "http://192.168.88.165:8701/ors"},
         "smartRoadInfo": {"enabled": true, "url": "http://192.168.88.165:8702/api"}
+	}'),
+	(1000, 'MAPA PARA COMPONENTE MAPEDITOR', 'MAPA PARA COMPONENTE MAPEDITOR', 'LBL_MAP', NULL, -4.968995252952193, 36.513236353017206, 15, 18, 12, -5.496230111341672, 36.69560304914391, -4.286333943790312, 36.302938945943, null, 6, true, 
+	'{ 
+		"map": {"enabled": true, "type": "WMS", "serverType": "geoserver", "url": "http://192.168.88.165:8700/geoserver/wms", "name": "osm"},
+		"router": {"enabled": true, "type": "OpenRouteService", "url": "http://192.168.88.165:8701/ors"},
+        "smartRoadInfo": {"enabled": true, "url": "http://192.168.88.165:8702/api"}
 	}');
 
 

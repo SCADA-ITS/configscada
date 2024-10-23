@@ -8,25 +8,16 @@
 	"restEndpoints": {
 		"locations": "locations",
 		"location": "locations/${id}",
-		"stretchs" : "locations/stretchs"
+		"stretchs" : "locations/stretchs",
+		"map": "maps/${id}",
+		"roads": "geo/roads",
+		"pks": "geo/roads/${id}",
+		"locationTypes": "locations/locationTypes"
 	},
 	"actionEndpoints": {
 		"add": "locations/createLocation",
 		"edit": "locations/updateLocation",
 		"delete": "locations/deleteLocation/${id}"
-	},
-	"defaultMap": {
-		"center": {
-			"lon": -1.65,
-			"lat": 42.816667
-		},
-		"limits": {
-			"startLAT": 44.41,
-			"startLON": -4.92,
-			"endLAT": 40.73,
-			"endLON": 1.58
-		},
-		"zoom": 4
 	},
 	"steps": {
 		"newLocation": [
@@ -46,7 +37,7 @@
 				"labelAlias": "LBL_CONFIG_LOCATION",
 				"stepLabel": "LBL_LOCATION_WIZARD_NEW_HEADER_STEP_2",
 				"active": false,
-				"drawFunction": "drawStepConfigNewLocation",
+				"drawFunction": "drawStepNewLocationForm",
 				"saveFunction": "createLocation"
 			}
 		],
@@ -68,7 +59,7 @@
 				"stepLabel": "LBL_LOCATION_WIZARD_EDIT_HEADER_STEP_2",
 				"stepLabelDescription": null,
 				"active": false,
-				"drawFunction": "drawStepEditSelectLocation"
+				"drawFunction": "drawStepSelectLocation"
 			},
 			{
 				"position": 3,
@@ -78,9 +69,9 @@
 				"stepLabel": "LBL_LOCATION_WIZARD_EDIT_HEADER_STEP_3",
 				"stepLabelDescription": null,
 				"active": false,
-				"drawFunction": "drawStepConfigEditLocation",
+				"drawFunction": "drawStepEditLocationForm",
 				"saveFunction": "editLocation"
-			}
+			}			
 		],
 		"selectLocation": [
 			{
@@ -120,7 +111,7 @@
 				"labelAlias": "LBL_SELECT_LOCATION",
 				"stepLabel": "LBL_LOCATION_WIZARD_DELETE_HEADER_STEP_2",
 				"active": false,
-				"drawFunction": "drawStepEditSelectLocation"
+				"drawFunction": "drawStepSelectLocation"
 			},
 			{
 				"position": 3,
@@ -130,7 +121,7 @@
 				"stepLabel": "LBL_LOCATION_WIZARD_DELETE_HEADER_STEP_3",
 				"stepLabelDescription": null,
 				"active": false,
-				"drawFunction": "drawStepConfigEditLocation",
+				"drawFunction": "drawStepEditLocationForm",
 				"saveFunction": "deleteLocation"
 			}
 		]
