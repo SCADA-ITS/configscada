@@ -1,0 +1,566 @@
+{
+ "dataPoints": [
+  {
+   "purgePeriod": 1,
+   "setExtremeLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "intervalLoggingType": "AVERAGE",
+   "dataSourceXid": "DS_status_virtual",
+   "discardHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "deviceName": "RADF-127+670D",
+   "enabled": true,
+   "rollup": "NONE",
+   "purgeOverride": false,
+   "chartRenderer": {
+    "numberOfPeriods": 1,
+    "type": "IMAGE",
+    "timePeriodType": "DAYS"
+   },
+   "xid": "DP_RADF-127+670D_status",
+   "eventDetectors": [],
+   "textRenderer": {
+    "useUnitAsSuffix": false,
+    "format": "0.00",
+    "type": "ANALOG",
+    "suffix": ""
+   },
+   "loggingType": "NONE",
+   "overrideIntervalLoggingSamples": false,
+   "defaultCacheSize": 1,
+   "readPermission": "",
+   "setPermission": "",
+   "intervalLoggingPeriodType": "MINUTES",
+   "intervalLoggingSampleWindowSize": 0,
+   "tolerance": 0,
+   "purgeType": "YEARS",
+   "plotType": "SPLINE",
+   "intervalLoggingPeriod": 1,
+   "discardExtremeValues": false,
+   "tags": {},
+   "unit": "",
+   "pointLocator": {
+    "settable": true,
+    "dataType": "NUMERIC",
+    "changeType": {
+     "startValue": "1",
+     "type": "NO_CHANGE"
+    }
+   },
+   "discardLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "setExtremeHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "name": "status",
+   "chartColour": "",
+   "preventSetExtremeValues": false,
+   "simplifyType": "NONE"
+  },
+  {
+   "purgePeriod": 1,
+   "setExtremeLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "intervalLoggingType": "AVERAGE",
+   "dataSourceXid": "DS_status_virtual",
+   "discardHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "deviceName": "RADF-91+358D",
+   "enabled": true,
+   "rollup": "NONE",
+   "purgeOverride": false,
+   "chartRenderer": {
+    "numberOfPeriods": 1,
+    "type": "IMAGE",
+    "timePeriodType": "DAYS"
+   },
+   "xid": "DP_RADF-91+358D_status",
+   "eventDetectors": [],
+   "textRenderer": {
+    "useUnitAsSuffix": false,
+    "format": "0.00",
+    "type": "ANALOG",
+    "suffix": ""
+   },
+   "loggingType": "NONE",
+   "overrideIntervalLoggingSamples": false,
+   "defaultCacheSize": 1,
+   "readPermission": "",
+   "setPermission": "",
+   "intervalLoggingPeriodType": "MINUTES",
+   "intervalLoggingSampleWindowSize": 0,
+   "tolerance": 0,
+   "purgeType": "YEARS",
+   "plotType": "SPLINE",
+   "intervalLoggingPeriod": 1,
+   "discardExtremeValues": false,
+   "tags": {},
+   "unit": "",
+   "pointLocator": {
+    "settable": true,
+    "dataType": "NUMERIC",
+    "changeType": {
+     "startValue": "1",
+     "type": "NO_CHANGE"
+    }
+   },
+   "discardLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "setExtremeHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "name": "status",
+   "chartColour": "",
+   "preventSetExtremeValues": false,
+   "simplifyType": "NONE"
+  },
+  {
+   "purgePeriod": 1,
+   "setExtremeLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "intervalLoggingType": "AVERAGE",
+   "dataSourceXid": "DS_status_virtual",
+   "discardHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "deviceName": "RADF-32+560C",
+   "enabled": true,
+   "rollup": "NONE",
+   "purgeOverride": false,
+   "chartRenderer": {
+    "numberOfPeriods": 1,
+    "type": "IMAGE",
+    "timePeriodType": "DAYS"
+   },
+   "xid": "DP_RADF-32+560C_status",
+   "eventDetectors": [],
+   "textRenderer": {
+    "useUnitAsSuffix": false,
+    "format": "0.00",
+    "type": "ANALOG",
+    "suffix": ""
+   },
+   "loggingType": "NONE",
+   "overrideIntervalLoggingSamples": false,
+   "defaultCacheSize": 1,
+   "readPermission": "",
+   "setPermission": "",
+   "intervalLoggingPeriodType": "MINUTES",
+   "intervalLoggingSampleWindowSize": 0,
+   "tolerance": 0,
+   "purgeType": "YEARS",
+   "plotType": "SPLINE",
+   "intervalLoggingPeriod": 1,
+   "discardExtremeValues": false,
+   "tags": {},
+   "unit": "",
+   "pointLocator": {
+    "settable": true,
+    "dataType": "NUMERIC",
+    "changeType": {
+     "startValue": "1",
+     "type": "NO_CHANGE"
+    }
+   },
+   "discardLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "setExtremeHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "name": "status",
+   "chartColour": "",
+   "preventSetExtremeValues": false,
+   "simplifyType": "NONE"
+  },
+  {
+   "purgePeriod": 1,
+   "setExtremeLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "intervalLoggingType": "AVERAGE",
+   "dataSourceXid": "DS_status_virtual",
+   "discardHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "deviceName": "RADF-401+561C",
+   "enabled": true,
+   "rollup": "NONE",
+   "purgeOverride": false,
+   "chartRenderer": {
+    "numberOfPeriods": 1,
+    "type": "IMAGE",
+    "timePeriodType": "DAYS"
+   },
+   "xid": "DP_RADF-401+561C_status",
+   "eventDetectors": [],
+   "textRenderer": {
+    "useUnitAsSuffix": false,
+    "format": "0.00",
+    "type": "ANALOG",
+    "suffix": ""
+   },
+   "loggingType": "NONE",
+   "overrideIntervalLoggingSamples": false,
+   "defaultCacheSize": 1,
+   "readPermission": "",
+   "setPermission": "",
+   "intervalLoggingPeriodType": "MINUTES",
+   "intervalLoggingSampleWindowSize": 0,
+   "tolerance": 0,
+   "purgeType": "YEARS",
+   "plotType": "SPLINE",
+   "intervalLoggingPeriod": 1,
+   "discardExtremeValues": false,
+   "tags": {},
+   "unit": "",
+   "pointLocator": {
+    "settable": true,
+    "dataType": "NUMERIC",
+    "changeType": {
+     "startValue": "1",
+     "type": "NO_CHANGE"
+    }
+   },
+   "discardLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "setExtremeHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "name": "status",
+   "chartColour": "",
+   "preventSetExtremeValues": false,
+   "simplifyType": "NONE"
+  },
+  {
+   "purgePeriod": 1,
+   "setExtremeLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "intervalLoggingType": "AVERAGE",
+   "dataSourceXid": "DS_status_virtual",
+   "discardHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "deviceName": "RADF-25+900D",
+   "enabled": true,
+   "rollup": "NONE",
+   "purgeOverride": false,
+   "chartRenderer": {
+    "numberOfPeriods": 1,
+    "type": "IMAGE",
+    "timePeriodType": "DAYS"
+   },
+   "xid": "DP_RADF-25+900D_status",
+   "eventDetectors": [],
+   "textRenderer": {
+    "useUnitAsSuffix": false,
+    "format": "0.00",
+    "type": "ANALOG",
+    "suffix": ""
+   },
+   "loggingType": "NONE",
+   "overrideIntervalLoggingSamples": false,
+   "defaultCacheSize": 1,
+   "readPermission": "",
+   "setPermission": "",
+   "intervalLoggingPeriodType": "MINUTES",
+   "intervalLoggingSampleWindowSize": 0,
+   "tolerance": 0,
+   "purgeType": "YEARS",
+   "plotType": "SPLINE",
+   "intervalLoggingPeriod": 1,
+   "discardExtremeValues": false,
+   "tags": {},
+   "unit": "",
+   "pointLocator": {
+    "settable": true,
+    "dataType": "NUMERIC",
+    "changeType": {
+     "startValue": "1",
+     "type": "NO_CHANGE"
+    }
+   },
+   "discardLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "setExtremeHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "name": "status",
+   "chartColour": "",
+   "preventSetExtremeValues": false,
+   "simplifyType": "NONE"
+  },
+  {
+   "purgePeriod": 1,
+   "setExtremeLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "intervalLoggingType": "AVERAGE",
+   "dataSourceXid": "DS_status_virtual",
+   "discardHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "deviceName": "RADF-60+230C",
+   "enabled": true,
+   "rollup": "NONE",
+   "purgeOverride": false,
+   "chartRenderer": {
+    "numberOfPeriods": 1,
+    "type": "IMAGE",
+    "timePeriodType": "DAYS"
+   },
+   "xid": "DP_RADF-60+230C_status",
+   "eventDetectors": [],
+   "textRenderer": {
+    "useUnitAsSuffix": false,
+    "format": "0.00",
+    "type": "ANALOG",
+    "suffix": ""
+   },
+   "loggingType": "NONE",
+   "overrideIntervalLoggingSamples": false,
+   "defaultCacheSize": 1,
+   "readPermission": "",
+   "setPermission": "",
+   "intervalLoggingPeriodType": "MINUTES",
+   "intervalLoggingSampleWindowSize": 0,
+   "tolerance": 0,
+   "purgeType": "YEARS",
+   "plotType": "SPLINE",
+   "intervalLoggingPeriod": 1,
+   "discardExtremeValues": false,
+   "tags": {},
+   "unit": "",
+   "pointLocator": {
+    "settable": true,
+    "dataType": "NUMERIC",
+    "changeType": {
+     "startValue": "1",
+     "type": "NO_CHANGE"
+    }
+   },
+   "discardLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "setExtremeHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "name": "status",
+   "chartColour": "",
+   "preventSetExtremeValues": false,
+   "simplifyType": "NONE"
+  }
+ ],
+ "publishers": [
+  {
+   "publishAttributeChanges": true,
+   "cacheWarningSize": 100,
+   "dateFormat": "DATE_FORMAT_UTC",
+   "useJSON": true,
+   "snapshotSendPeriods": 5,
+   "raiseResultWarning": true,
+   "staticParameters": [],
+   "sendSnapshot": false,
+   "type": "HTTP_SENDER",
+   "usePost": true,
+   "enabled": true,
+   "url": "http://192.168.88.163:3000/api/v2/generic/",
+   "points": [
+    {
+     "dataPointId": "DP_RADF-127+670D_status",
+     "parameterName": "status",
+     "includeTimestamp": false
+    }
+   ],
+   "xid": "PUB_RADF-127+670D",
+   "publishType": "CHANGES_ONLY",
+   "alarmLevels": {
+    "POINT_DISABLED_EVENT": "DO_NOT_LOG",
+    "RESULT_WARNINGS_EVENT": "DO_NOT_LOG",
+    "SEND_EXCEPTION_EVENT": "DO_NOT_LOG",
+    "QUEUE_SIZE_WARNING_EVENT": "DO_NOT_LOG"
+   },
+   "staticHeaders": [
+    {
+     "value": "RADF-127+670D",
+     "key": "session-uid"
+    }
+   ],
+   "name": "RADF-127+670D",
+   "snapshotSendPeriodType": "MINUTES",
+   "cacheDiscardSize": 1000
+  },
+  {
+   "publishAttributeChanges": true,
+   "cacheWarningSize": 100,
+   "dateFormat": "DATE_FORMAT_UTC",
+   "useJSON": true,
+   "snapshotSendPeriods": 5,
+   "raiseResultWarning": true,
+   "staticParameters": [],
+   "sendSnapshot": false,
+   "type": "HTTP_SENDER",
+   "usePost": true,
+   "enabled": true,
+   "url": "http://192.168.88.163:3000/api/v2/generic/",
+   "points": [
+    {
+     "dataPointId": "DP_RADF-91+358D_status",
+     "parameterName": "status",
+     "includeTimestamp": false
+    }
+   ],
+   "xid": "PUB_RADF-91+358D",
+   "publishType": "CHANGES_ONLY",
+   "alarmLevels": {
+    "POINT_DISABLED_EVENT": "DO_NOT_LOG",
+    "RESULT_WARNINGS_EVENT": "DO_NOT_LOG",
+    "SEND_EXCEPTION_EVENT": "DO_NOT_LOG",
+    "QUEUE_SIZE_WARNING_EVENT": "DO_NOT_LOG"
+   },
+   "staticHeaders": [
+    {
+     "value": "RADF-91+358D",
+     "key": "session-uid"
+    }
+   ],
+   "name": "RADF-91+358D",
+   "snapshotSendPeriodType": "MINUTES",
+   "cacheDiscardSize": 1000
+  },
+  {
+   "publishAttributeChanges": true,
+   "cacheWarningSize": 100,
+   "dateFormat": "DATE_FORMAT_UTC",
+   "useJSON": true,
+   "snapshotSendPeriods": 5,
+   "raiseResultWarning": true,
+   "staticParameters": [],
+   "sendSnapshot": false,
+   "type": "HTTP_SENDER",
+   "usePost": true,
+   "enabled": true,
+   "url": "http://192.168.88.163:3000/api/v2/generic/",
+   "points": [
+    {
+     "dataPointId": "DP_RADF-32+560C_status",
+     "parameterName": "status",
+     "includeTimestamp": false
+    }
+   ],
+   "xid": "PUB_RADF-32+560C",
+   "publishType": "CHANGES_ONLY",
+   "alarmLevels": {
+    "POINT_DISABLED_EVENT": "DO_NOT_LOG",
+    "RESULT_WARNINGS_EVENT": "DO_NOT_LOG",
+    "SEND_EXCEPTION_EVENT": "DO_NOT_LOG",
+    "QUEUE_SIZE_WARNING_EVENT": "DO_NOT_LOG"
+   },
+   "staticHeaders": [
+    {
+     "value": "RADF-32+560C",
+     "key": "session-uid"
+    }
+   ],
+   "name": "RADF-32+560C",
+   "snapshotSendPeriodType": "MINUTES",
+   "cacheDiscardSize": 1000
+  },
+  {
+   "publishAttributeChanges": true,
+   "cacheWarningSize": 100,
+   "dateFormat": "DATE_FORMAT_UTC",
+   "useJSON": true,
+   "snapshotSendPeriods": 5,
+   "raiseResultWarning": true,
+   "staticParameters": [],
+   "sendSnapshot": false,
+   "type": "HTTP_SENDER",
+   "usePost": true,
+   "enabled": true,
+   "url": "http://192.168.88.163:3000/api/v2/generic/",
+   "points": [
+    {
+     "dataPointId": "DP_RADF-401+561C_status",
+     "parameterName": "status",
+     "includeTimestamp": false
+    }
+   ],
+   "xid": "PUB_RADF-401+561C",
+   "publishType": "CHANGES_ONLY",
+   "alarmLevels": {
+    "POINT_DISABLED_EVENT": "DO_NOT_LOG",
+    "RESULT_WARNINGS_EVENT": "DO_NOT_LOG",
+    "SEND_EXCEPTION_EVENT": "DO_NOT_LOG",
+    "QUEUE_SIZE_WARNING_EVENT": "DO_NOT_LOG"
+   },
+   "staticHeaders": [
+    {
+     "value": "RADF-401+561C",
+     "key": "session-uid"
+    }
+   ],
+   "name": "RADF-401+561C",
+   "snapshotSendPeriodType": "MINUTES",
+   "cacheDiscardSize": 1000
+  },
+  {
+   "publishAttributeChanges": true,
+   "cacheWarningSize": 100,
+   "dateFormat": "DATE_FORMAT_UTC",
+   "useJSON": true,
+   "snapshotSendPeriods": 5,
+   "raiseResultWarning": true,
+   "staticParameters": [],
+   "sendSnapshot": false,
+   "type": "HTTP_SENDER",
+   "usePost": true,
+   "enabled": true,
+   "url": "http://192.168.88.163:3000/api/v2/generic/",
+   "points": [
+    {
+     "dataPointId": "DP_RADF-25+900D_status",
+     "parameterName": "status",
+     "includeTimestamp": false
+    }
+   ],
+   "xid": "PUB_RADF-25+900D",
+   "publishType": "CHANGES_ONLY",
+   "alarmLevels": {
+    "POINT_DISABLED_EVENT": "DO_NOT_LOG",
+    "RESULT_WARNINGS_EVENT": "DO_NOT_LOG",
+    "SEND_EXCEPTION_EVENT": "DO_NOT_LOG",
+    "QUEUE_SIZE_WARNING_EVENT": "DO_NOT_LOG"
+   },
+   "staticHeaders": [
+    {
+     "value": "RADF-25+900D",
+     "key": "session-uid"
+    }
+   ],
+   "name": "RADF-25+900D",
+   "snapshotSendPeriodType": "MINUTES",
+   "cacheDiscardSize": 1000
+  },
+  {
+   "publishAttributeChanges": true,
+   "cacheWarningSize": 100,
+   "dateFormat": "DATE_FORMAT_UTC",
+   "useJSON": true,
+   "snapshotSendPeriods": 5,
+   "raiseResultWarning": true,
+   "staticParameters": [],
+   "sendSnapshot": false,
+   "type": "HTTP_SENDER",
+   "usePost": true,
+   "enabled": true,
+   "url": "http://192.168.88.163:3000/api/v2/generic/",
+   "points": [
+    {
+     "dataPointId": "DP_RADF-60+230C_status",
+     "parameterName": "status",
+     "includeTimestamp": false
+    }
+   ],
+   "xid": "PUB_RADF-60+230C",
+   "publishType": "CHANGES_ONLY",
+   "alarmLevels": {
+    "POINT_DISABLED_EVENT": "DO_NOT_LOG",
+    "RESULT_WARNINGS_EVENT": "DO_NOT_LOG",
+    "SEND_EXCEPTION_EVENT": "DO_NOT_LOG",
+    "QUEUE_SIZE_WARNING_EVENT": "DO_NOT_LOG"
+   },
+   "staticHeaders": [
+    {
+     "value": "RADF-60+230C",
+     "key": "session-uid"
+    }
+   ],
+   "name": "RADF-60+230C",
+   "snapshotSendPeriodType": "MINUTES",
+   "cacheDiscardSize": 1000
+  }
+ ],
+ "dataSources": [
+  {
+   "updatePeriodType": "SECONDS",
+   "purgePeriod": 1,
+   "updatePeriods": 10,
+   "polling": true,
+   "type": "VIRTUAL",
+   "enabled": true,
+   "purgeOverride": false,
+   "useCron": false,
+   "xid": "DS_status_virtual",
+   "alarmLevels": {
+    "POLL_ABORTED": "INFORMATION"
+   },
+   "name": "status",
+   "quantize": false,
+   "editPermission": "superadmin",
+   "purgeType": "YEARS"
+  }
+ ]
+}

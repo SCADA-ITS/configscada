@@ -1,12 +1,20 @@
-item;element_subtype;alias;description;sessionuid;road;stretchs;pk;on_change_alarm;param1_brand;param2_model;param3_stream_mjpeg;param6_preset;param7_features;param9_onvif_hostname;param10_onvif_username;param11_onvif_password;param12_onvif_ptz_params;sentido;data_proxy
-1;3;ANPR-001;ANPR-001;ANPR-001;A-15;A-15 D;2+295;null;Bosch;NDP-7512-Z30;;;PTZ;;;;;;
-2;3;ANPR-002;ANPR-002;ANPR-002;N-113;N-113 D;2+520;null;Bosch;NDP-7512-Z30;;;PTZ;;;;;;
-3;3;ANPR-003;ANPR-003;ANPR-003;N-121A;N-121A C;2+595;null;Bosch;NDP-7512-Z30;;;PTZ;;;;;;
-4;3;ANPR-004;ANPR-004;ANPR-004;A-1;A-1 C;62+400;null;Bosch;NDP-7512-Z30;;;PTZ;;;;;;
-5;3;ANPR-005;ANPR-005;ANPR-005;N-121A;N-121A C;62+395;null;Bosch;NDP-7512-Z30;;;PTZ;;;;;;
-6;4;RAD-001;RAD-001;RAD-001;A-15;A-15 D;127+670;null;Bosch;NDP-7512-Z30;;;PTZ;;;;;;
-7;4;RAD-002;RAD-002;RAD-002;N-113;N-113 D;91+358;null;Bosch;NDP-7512-Z30;;;PTZ;;;;;;
-8;4;RAD-003;RAD-003;RAD-003;N-121A;N-121A C;32+560;null;Bosch;NDP-7512-Z30;;;PTZ;;;;;;
-9;4;RAD-004;RAD-004;RAD-004;A-1;A-1 C;401+560;null;Bosch;NDP-7512-Z30;;;PTZ;;;;;;
-10;4;RAD-005;RAD-005;RAD-005;N-121A;N-121A D;25+900;null;Bosch;NDP-7512-Z30;;;PTZ;;;;;;
-11;4;RAD-006;RAD-006;RAD-006;N-121A;N-121A C;60+230;null;Bosch;NDP-7512-Z30;;;PTZ;;;;;;
+item;alias;description;sessionuid;road;stretchs;pk;param1_brand;param2_model;param3_stream_mjpeg;param6_preset;param7_features;param9_onvif_hostname;param10_onvif_username;param11_onvif_password;param12_onvif_ptz_params;sentido;data_proxy
+1;Alsasua;Alsasua;Alsasua;A-1 / A-10;A-1 / A-10;397,38 / 29,72;-;-;http://administracionelectronica.navarra.es/AccesoFicheros/DownloadFile.aspx?CodigoCompleto=camarascarreteras@@@ALSASUA_A_1_398_440.JPG;;;;;;;;
+2;Etxegarate;Etxegarate;Etxegarate;A-1 / NA-1001;A-1 / NA-1001;404,90 / 0,14;-;-;http://administracionelectronica.navarra.es/AccesoFicheros/DownloadFile.aspx?CodigoCompleto=camarascarreteras@@@ETXEGARATE_A_1_404_902.JPG;;;;;;;;
+3;Arbizu;Arbizu;Arbizu;A-10;A-10;18,43;-;-;http://administracionelectronica.navarra.es/AccesoFicheros/DownloadFile.aspx?CodigoCompleto=camarascarreteras@@@ARBIZU_A_10 18_430.JPG;;;;;;;;
+4;Zizur Mayor;Zizur Mayor;Zizur Mayor;A-12 / A-15;A-12 / A-15;4,40 / 87,91;-;-;http://administracionelectronica.navarra.es/AccesoFicheros/DownloadFile.aspx?CodigoCompleto=camarascarreteras@@@CIZUR_A_12_4_400.JPG;;;;;;;;
+5;Irurtzun;Irurtzun;Irurtzun;A-15 / A-10;A-15 / A-10;0,61 / 112,82;-;-;http://administracionelectronica.navarra.es/AccesoFicheros/DownloadFile.aspx?CodigoCompleto=camarascarreteras@@@IRURTZUN_A15_PK113.JPG;;;;;;;;
+6;Leitza;Leitza;Leitza;A-15;A-15;139,6;-;-;http://administracionelectronica.navarra.es/AccesoFicheros/DownloadFile.aspx?CodigoCompleto=camarascarreteras@@@LEITZA_A_15_139_600.JPG;;;;;;;;
+7;Pagozelai;Pagozelai;Pagozelai;A-15;A-15;134,5;-;-;http://administracionelectronica.navarra.es/AccesoFicheros/DownloadFile.aspx?CodigoCompleto=camarascarreteras@@@PAGOZELAI_A_15_134_450.JPG;;;;;;;;
+8;Lekunberri;Lekunberri;Lekunberri;A-15;A-15;127,54;-;-;http://administracionelectronica.navarra.es/AccesoFicheros/DownloadFile.aspx?CodigoCompleto=camarascarreteras@@@LEKUNBERRI_A_15_127_540.JPG;;;;;;;;
+9;Areta;Areta;Areta;PA-30 / NA-2300;PA-30 / NA-2300;5,74 / 0,00;-;-;http://administracionelectronica.navarra.es/AccesoFicheros/DownloadFile.aspx?CodigoCompleto=camarascarreteras@@@ARETA_PA_30_5_700.JPG;;;;;;;;
+10;Berriozar;Berriozar;Berriozar;PA-30 / N-240-A;PA-30 / N-240-A;18,24 /3,69;-;-;http://administracionelectronica.navarra.es/AccesoFicheros/DownloadFile.aspx?CodigoCompleto=camarascarreteras@@@DOMO_BERRIOZAR_PA_30_PK_18_200.JPG;;;;;;;;
+11;Talluntxe;Talluntxe;Talluntxe;PA-30 / A-15;PA-30 / A-15;0,29 / 83,19;-;-;http://administracionelectronica.navarra.es/AccesoFicheros/DownloadFile.aspx?CodigoCompleto=camarascarreteras@@@DOMO_TALLUNTXE_PA_30_PK_0_200.JPG;;;;;;;;
+12;Cordovilla;Cordovilla;Cordovilla;PA-32 / PA-31;PA-32 / PA-31;0,42 / 1,42;-;-;http://administracionelectronica.navarra.es/AccesoFicheros/DownloadFile.aspx?CodigoCompleto=camarascarreteras@@@CORDOVILLA_PA_32_0_400.JPG;;;;;;;;
+13;Belagua;Belagua;Belagua;NA-137;NA-137;54,75;-;-;http://administracionelectronica.navarra.es/AccesoFicheros/DownloadFile.aspx?CodigoCompleto=camarascarreteras@@@BELAGUA_EL_FERIAL_PK_55.JPG;;;;;;;;
+14;Tudela;Tudela;Tudela;A-68 / N-121-C;A-68 / N-121-C;95,69 / 2,06;-;-;http://administracionelectronica.navarra.es/AccesoFicheros/DownloadFile.aspx?CodigoCompleto=camarascarreteras@@@DOMO_TUDELA_A_68_PK_95_500.JPG;;;;;;;;
+15;Arre;Arre;Arre;N-121-A / NA-4251;N-121-A / NA-4251;5,63 / 0,05;-;-;http://administracionelectronica.navarra.es/AccesoFicheros/DownloadFile.aspx?CodigoCompleto=camarascarreteras@@@EXT_FRA_ARRE_N_121_A_PK_5_600.JPG;;;;;;;;
+16;Ezcaba;Ezcaba;Ezcaba;PA-35 / PA-30;PA-35 / PA-30;0,03 / 13,84;-;-;http://administracionelectronica.navarra.es/AccesoFicheros/DownloadFile.aspx?CodigoCompleto=camarascarreteras@@@EXT_PNA_COTUP_PA_35_PK_0_00.JPG;;;;;;;;
+17;Tunel_de_Belate;Túnel de Belate;Tunel_de_Belate;N-121-A;N-121-A;31,11;-;-;http://administracionelectronica.navarra.es/AccesoFicheros/DownloadFile.aspx?CodigoCompleto=camarascarreteras@@@BELATE_NORTE_N_121_A_PK_31_110.JPG;;;;;;;;
+18;Tunel_de_Yesa;Túnel de Yesa;Tunel_de_Yesa;A-21;A-21;48,58;-;-;http://administracionelectronica.navarra.es/AccesoFicheros/DownloadFile.aspx?CodigoCompleto=camarascarreteras@@@YESA_PAMPLONA_A_21_PK_48_580.JPG;;;;;;;;
+19;Tunel_del_Perdon;Túnel del Perdón;Tunel_del_Perdon;A-12;A-12;13,44;-;-;http://administracionelectronica.navarra.es/AccesoFicheros/DownloadFile.aspx?CodigoCompleto=camarascarreteras@@@PERDON_ESTELLA_A_12_PK_13_150.JPG;;;;;;;;

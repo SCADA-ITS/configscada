@@ -1,0 +1,1904 @@
+{
+ "dataPoints": [
+  {
+   "purgePeriod": 1,
+   "setExtremeLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "intervalLoggingType": "AVERAGE",
+   "dataSourceXid": "DS_status",
+   "discardHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "deviceName": "Alsasua",
+   "enabled": true,
+   "rollup": "NONE",
+   "purgeOverride": false,
+   "chartRenderer": {
+    "numberOfPeriods": 1,
+    "type": "IMAGE",
+    "timePeriodType": "DAYS"
+   },
+   "xid": "DP_Alsasua_status",
+   "eventDetectors": [],
+   "textRenderer": {
+    "useUnitAsSuffix": false,
+    "format": "0.00",
+    "type": "ANALOG",
+    "suffix": ""
+   },
+   "loggingType": "NONE",
+   "overrideIntervalLoggingSamples": false,
+   "defaultCacheSize": 1,
+   "readPermission": "",
+   "setPermission": "",
+   "intervalLoggingPeriodType": "MINUTES",
+   "intervalLoggingSampleWindowSize": 0,
+   "tolerance": 0,
+   "purgeType": "YEARS",
+   "plotType": "SPLINE",
+   "intervalLoggingPeriod": 1,
+   "discardExtremeValues": false,
+   "tags": {},
+   "unit": "",
+   "pointLocator": {
+    "contextUpdateEvent": "CONTEXT_UPDATE",
+    "variableName": "my",
+    "executionDelaySeconds": 0,
+    "dataType": "NUMERIC",
+    "scriptPermissions": [
+     "superadmin"
+    ],
+    "updateCronPattern": "5 0/1 * * * ?",
+    "script": "\nvar headers = {};\nvar url = 'http://administracionelectronica.navarra.es/AccesoFicheros/DownloadFile.aspx?CodigoCompleto=camarascarreteras@@@ALSASUA_A_1_398_440.JPG';\nvar result;\nvar parameters = {};\nHttpBuilder.get(url, headers, parameters).resp(function(statusCode, headers, content) { \n  // handle the response, maybe return \"Success!\" or whatever\n  result = statusCode;\n }).err(function(statusCode, headers, content) {\n // handle error responses\n   result = statusCode;\n}).execute();\n\nif(result != -1){\n    return(1.0);\n}else{\n    return(0.0);\n}",
+    "logCount": 5,
+    "settable": false,
+    "logLevel": "INFO",
+    "updateEvent": "CRON",
+    "context": [],
+    "logSize": 1
+   },
+   "discardLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "setExtremeHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "name": "status",
+   "chartColour": "",
+   "preventSetExtremeValues": false,
+   "simplifyType": "NONE"
+  },
+  {
+   "purgePeriod": 1,
+   "setExtremeLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "intervalLoggingType": "AVERAGE",
+   "dataSourceXid": "DS_status",
+   "discardHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "deviceName": "Etxegarate",
+   "enabled": true,
+   "rollup": "NONE",
+   "purgeOverride": false,
+   "chartRenderer": {
+    "numberOfPeriods": 1,
+    "type": "IMAGE",
+    "timePeriodType": "DAYS"
+   },
+   "xid": "DP_Etxegarate_status",
+   "eventDetectors": [],
+   "textRenderer": {
+    "useUnitAsSuffix": false,
+    "format": "0.00",
+    "type": "ANALOG",
+    "suffix": ""
+   },
+   "loggingType": "NONE",
+   "overrideIntervalLoggingSamples": false,
+   "defaultCacheSize": 1,
+   "readPermission": "",
+   "setPermission": "",
+   "intervalLoggingPeriodType": "MINUTES",
+   "intervalLoggingSampleWindowSize": 0,
+   "tolerance": 0,
+   "purgeType": "YEARS",
+   "plotType": "SPLINE",
+   "intervalLoggingPeriod": 1,
+   "discardExtremeValues": false,
+   "tags": {},
+   "unit": "",
+   "pointLocator": {
+    "contextUpdateEvent": "CONTEXT_UPDATE",
+    "variableName": "my",
+    "executionDelaySeconds": 0,
+    "dataType": "NUMERIC",
+    "scriptPermissions": [
+     "superadmin"
+    ],
+    "updateCronPattern": "5 0/1 * * * ?",
+    "script": "\nvar headers = {};\nvar url = 'http://administracionelectronica.navarra.es/AccesoFicheros/DownloadFile.aspx?CodigoCompleto=camarascarreteras@@@ETXEGARATE_A_1_404_902.JPG';\nvar result;\nvar parameters = {};\nHttpBuilder.get(url, headers, parameters).resp(function(statusCode, headers, content) { \n  // handle the response, maybe return \"Success!\" or whatever\n  result = statusCode;\n }).err(function(statusCode, headers, content) {\n // handle error responses\n   result = statusCode;\n}).execute();\n\nif(result != -1){\n    return(1.0);\n}else{\n    return(0.0);\n}",
+    "logCount": 5,
+    "settable": false,
+    "logLevel": "INFO",
+    "updateEvent": "CRON",
+    "context": [],
+    "logSize": 1
+   },
+   "discardLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "setExtremeHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "name": "status",
+   "chartColour": "",
+   "preventSetExtremeValues": false,
+   "simplifyType": "NONE"
+  },
+  {
+   "purgePeriod": 1,
+   "setExtremeLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "intervalLoggingType": "AVERAGE",
+   "dataSourceXid": "DS_status",
+   "discardHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "deviceName": "Arbizu",
+   "enabled": true,
+   "rollup": "NONE",
+   "purgeOverride": false,
+   "chartRenderer": {
+    "numberOfPeriods": 1,
+    "type": "IMAGE",
+    "timePeriodType": "DAYS"
+   },
+   "xid": "DP_Arbizu_status",
+   "eventDetectors": [],
+   "textRenderer": {
+    "useUnitAsSuffix": false,
+    "format": "0.00",
+    "type": "ANALOG",
+    "suffix": ""
+   },
+   "loggingType": "NONE",
+   "overrideIntervalLoggingSamples": false,
+   "defaultCacheSize": 1,
+   "readPermission": "",
+   "setPermission": "",
+   "intervalLoggingPeriodType": "MINUTES",
+   "intervalLoggingSampleWindowSize": 0,
+   "tolerance": 0,
+   "purgeType": "YEARS",
+   "plotType": "SPLINE",
+   "intervalLoggingPeriod": 1,
+   "discardExtremeValues": false,
+   "tags": {},
+   "unit": "",
+   "pointLocator": {
+    "contextUpdateEvent": "CONTEXT_UPDATE",
+    "variableName": "my",
+    "executionDelaySeconds": 0,
+    "dataType": "NUMERIC",
+    "scriptPermissions": [
+     "superadmin"
+    ],
+    "updateCronPattern": "5 0/1 * * * ?",
+    "script": "\nvar headers = {};\nvar url = 'http://administracionelectronica.navarra.es/AccesoFicheros/DownloadFile.aspx?CodigoCompleto=camarascarreteras@@@ARBIZU_A_10 18_430.JPG';\nvar result;\nvar parameters = {};\nHttpBuilder.get(url, headers, parameters).resp(function(statusCode, headers, content) { \n  // handle the response, maybe return \"Success!\" or whatever\n  result = statusCode;\n }).err(function(statusCode, headers, content) {\n // handle error responses\n   result = statusCode;\n}).execute();\n\nif(result != -1){\n    return(1.0);\n}else{\n    return(0.0);\n}",
+    "logCount": 5,
+    "settable": false,
+    "logLevel": "INFO",
+    "updateEvent": "CRON",
+    "context": [],
+    "logSize": 1
+   },
+   "discardLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "setExtremeHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "name": "status",
+   "chartColour": "",
+   "preventSetExtremeValues": false,
+   "simplifyType": "NONE"
+  },
+  {
+   "purgePeriod": 1,
+   "setExtremeLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "intervalLoggingType": "AVERAGE",
+   "dataSourceXid": "DS_status",
+   "discardHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "deviceName": "Zizur Mayor",
+   "enabled": true,
+   "rollup": "NONE",
+   "purgeOverride": false,
+   "chartRenderer": {
+    "numberOfPeriods": 1,
+    "type": "IMAGE",
+    "timePeriodType": "DAYS"
+   },
+   "xid": "DP_Zizur Mayor_status",
+   "eventDetectors": [],
+   "textRenderer": {
+    "useUnitAsSuffix": false,
+    "format": "0.00",
+    "type": "ANALOG",
+    "suffix": ""
+   },
+   "loggingType": "NONE",
+   "overrideIntervalLoggingSamples": false,
+   "defaultCacheSize": 1,
+   "readPermission": "",
+   "setPermission": "",
+   "intervalLoggingPeriodType": "MINUTES",
+   "intervalLoggingSampleWindowSize": 0,
+   "tolerance": 0,
+   "purgeType": "YEARS",
+   "plotType": "SPLINE",
+   "intervalLoggingPeriod": 1,
+   "discardExtremeValues": false,
+   "tags": {},
+   "unit": "",
+   "pointLocator": {
+    "contextUpdateEvent": "CONTEXT_UPDATE",
+    "variableName": "my",
+    "executionDelaySeconds": 0,
+    "dataType": "NUMERIC",
+    "scriptPermissions": [
+     "superadmin"
+    ],
+    "updateCronPattern": "5 0/1 * * * ?",
+    "script": "\nvar headers = {};\nvar url = 'http://administracionelectronica.navarra.es/AccesoFicheros/DownloadFile.aspx?CodigoCompleto=camarascarreteras@@@CIZUR_A_12_4_400.JPG';\nvar result;\nvar parameters = {};\nHttpBuilder.get(url, headers, parameters).resp(function(statusCode, headers, content) { \n  // handle the response, maybe return \"Success!\" or whatever\n  result = statusCode;\n }).err(function(statusCode, headers, content) {\n // handle error responses\n   result = statusCode;\n}).execute();\n\nif(result != -1){\n    return(1.0);\n}else{\n    return(0.0);\n}",
+    "logCount": 5,
+    "settable": false,
+    "logLevel": "INFO",
+    "updateEvent": "CRON",
+    "context": [],
+    "logSize": 1
+   },
+   "discardLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "setExtremeHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "name": "status",
+   "chartColour": "",
+   "preventSetExtremeValues": false,
+   "simplifyType": "NONE"
+  },
+  {
+   "purgePeriod": 1,
+   "setExtremeLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "intervalLoggingType": "AVERAGE",
+   "dataSourceXid": "DS_status",
+   "discardHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "deviceName": "Irurtzun",
+   "enabled": true,
+   "rollup": "NONE",
+   "purgeOverride": false,
+   "chartRenderer": {
+    "numberOfPeriods": 1,
+    "type": "IMAGE",
+    "timePeriodType": "DAYS"
+   },
+   "xid": "DP_Irurtzun_status",
+   "eventDetectors": [],
+   "textRenderer": {
+    "useUnitAsSuffix": false,
+    "format": "0.00",
+    "type": "ANALOG",
+    "suffix": ""
+   },
+   "loggingType": "NONE",
+   "overrideIntervalLoggingSamples": false,
+   "defaultCacheSize": 1,
+   "readPermission": "",
+   "setPermission": "",
+   "intervalLoggingPeriodType": "MINUTES",
+   "intervalLoggingSampleWindowSize": 0,
+   "tolerance": 0,
+   "purgeType": "YEARS",
+   "plotType": "SPLINE",
+   "intervalLoggingPeriod": 1,
+   "discardExtremeValues": false,
+   "tags": {},
+   "unit": "",
+   "pointLocator": {
+    "contextUpdateEvent": "CONTEXT_UPDATE",
+    "variableName": "my",
+    "executionDelaySeconds": 0,
+    "dataType": "NUMERIC",
+    "scriptPermissions": [
+     "superadmin"
+    ],
+    "updateCronPattern": "5 0/1 * * * ?",
+    "script": "\nvar headers = {};\nvar url = 'http://administracionelectronica.navarra.es/AccesoFicheros/DownloadFile.aspx?CodigoCompleto=camarascarreteras@@@IRURTZUN_A15_PK113.JPG';\nvar result;\nvar parameters = {};\nHttpBuilder.get(url, headers, parameters).resp(function(statusCode, headers, content) { \n  // handle the response, maybe return \"Success!\" or whatever\n  result = statusCode;\n }).err(function(statusCode, headers, content) {\n // handle error responses\n   result = statusCode;\n}).execute();\n\nif(result != -1){\n    return(1.0);\n}else{\n    return(0.0);\n}",
+    "logCount": 5,
+    "settable": false,
+    "logLevel": "INFO",
+    "updateEvent": "CRON",
+    "context": [],
+    "logSize": 1
+   },
+   "discardLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "setExtremeHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "name": "status",
+   "chartColour": "",
+   "preventSetExtremeValues": false,
+   "simplifyType": "NONE"
+  },
+  {
+   "purgePeriod": 1,
+   "setExtremeLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "intervalLoggingType": "AVERAGE",
+   "dataSourceXid": "DS_status",
+   "discardHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "deviceName": "Leitza",
+   "enabled": true,
+   "rollup": "NONE",
+   "purgeOverride": false,
+   "chartRenderer": {
+    "numberOfPeriods": 1,
+    "type": "IMAGE",
+    "timePeriodType": "DAYS"
+   },
+   "xid": "DP_Leitza_status",
+   "eventDetectors": [],
+   "textRenderer": {
+    "useUnitAsSuffix": false,
+    "format": "0.00",
+    "type": "ANALOG",
+    "suffix": ""
+   },
+   "loggingType": "NONE",
+   "overrideIntervalLoggingSamples": false,
+   "defaultCacheSize": 1,
+   "readPermission": "",
+   "setPermission": "",
+   "intervalLoggingPeriodType": "MINUTES",
+   "intervalLoggingSampleWindowSize": 0,
+   "tolerance": 0,
+   "purgeType": "YEARS",
+   "plotType": "SPLINE",
+   "intervalLoggingPeriod": 1,
+   "discardExtremeValues": false,
+   "tags": {},
+   "unit": "",
+   "pointLocator": {
+    "contextUpdateEvent": "CONTEXT_UPDATE",
+    "variableName": "my",
+    "executionDelaySeconds": 0,
+    "dataType": "NUMERIC",
+    "scriptPermissions": [
+     "superadmin"
+    ],
+    "updateCronPattern": "5 0/1 * * * ?",
+    "script": "\nvar headers = {};\nvar url = 'http://administracionelectronica.navarra.es/AccesoFicheros/DownloadFile.aspx?CodigoCompleto=camarascarreteras@@@LEITZA_A_15_139_600.JPG';\nvar result;\nvar parameters = {};\nHttpBuilder.get(url, headers, parameters).resp(function(statusCode, headers, content) { \n  // handle the response, maybe return \"Success!\" or whatever\n  result = statusCode;\n }).err(function(statusCode, headers, content) {\n // handle error responses\n   result = statusCode;\n}).execute();\n\nif(result != -1){\n    return(1.0);\n}else{\n    return(0.0);\n}",
+    "logCount": 5,
+    "settable": false,
+    "logLevel": "INFO",
+    "updateEvent": "CRON",
+    "context": [],
+    "logSize": 1
+   },
+   "discardLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "setExtremeHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "name": "status",
+   "chartColour": "",
+   "preventSetExtremeValues": false,
+   "simplifyType": "NONE"
+  },
+  {
+   "purgePeriod": 1,
+   "setExtremeLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "intervalLoggingType": "AVERAGE",
+   "dataSourceXid": "DS_status",
+   "discardHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "deviceName": "Pagozelai",
+   "enabled": true,
+   "rollup": "NONE",
+   "purgeOverride": false,
+   "chartRenderer": {
+    "numberOfPeriods": 1,
+    "type": "IMAGE",
+    "timePeriodType": "DAYS"
+   },
+   "xid": "DP_Pagozelai_status",
+   "eventDetectors": [],
+   "textRenderer": {
+    "useUnitAsSuffix": false,
+    "format": "0.00",
+    "type": "ANALOG",
+    "suffix": ""
+   },
+   "loggingType": "NONE",
+   "overrideIntervalLoggingSamples": false,
+   "defaultCacheSize": 1,
+   "readPermission": "",
+   "setPermission": "",
+   "intervalLoggingPeriodType": "MINUTES",
+   "intervalLoggingSampleWindowSize": 0,
+   "tolerance": 0,
+   "purgeType": "YEARS",
+   "plotType": "SPLINE",
+   "intervalLoggingPeriod": 1,
+   "discardExtremeValues": false,
+   "tags": {},
+   "unit": "",
+   "pointLocator": {
+    "contextUpdateEvent": "CONTEXT_UPDATE",
+    "variableName": "my",
+    "executionDelaySeconds": 0,
+    "dataType": "NUMERIC",
+    "scriptPermissions": [
+     "superadmin"
+    ],
+    "updateCronPattern": "5 0/1 * * * ?",
+    "script": "\nvar headers = {};\nvar url = 'http://administracionelectronica.navarra.es/AccesoFicheros/DownloadFile.aspx?CodigoCompleto=camarascarreteras@@@PAGOZELAI_A_15_134_450.JPG';\nvar result;\nvar parameters = {};\nHttpBuilder.get(url, headers, parameters).resp(function(statusCode, headers, content) { \n  // handle the response, maybe return \"Success!\" or whatever\n  result = statusCode;\n }).err(function(statusCode, headers, content) {\n // handle error responses\n   result = statusCode;\n}).execute();\n\nif(result != -1){\n    return(1.0);\n}else{\n    return(0.0);\n}",
+    "logCount": 5,
+    "settable": false,
+    "logLevel": "INFO",
+    "updateEvent": "CRON",
+    "context": [],
+    "logSize": 1
+   },
+   "discardLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "setExtremeHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "name": "status",
+   "chartColour": "",
+   "preventSetExtremeValues": false,
+   "simplifyType": "NONE"
+  },
+  {
+   "purgePeriod": 1,
+   "setExtremeLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "intervalLoggingType": "AVERAGE",
+   "dataSourceXid": "DS_status",
+   "discardHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "deviceName": "Lekunberri",
+   "enabled": true,
+   "rollup": "NONE",
+   "purgeOverride": false,
+   "chartRenderer": {
+    "numberOfPeriods": 1,
+    "type": "IMAGE",
+    "timePeriodType": "DAYS"
+   },
+   "xid": "DP_Lekunberri_status",
+   "eventDetectors": [],
+   "textRenderer": {
+    "useUnitAsSuffix": false,
+    "format": "0.00",
+    "type": "ANALOG",
+    "suffix": ""
+   },
+   "loggingType": "NONE",
+   "overrideIntervalLoggingSamples": false,
+   "defaultCacheSize": 1,
+   "readPermission": "",
+   "setPermission": "",
+   "intervalLoggingPeriodType": "MINUTES",
+   "intervalLoggingSampleWindowSize": 0,
+   "tolerance": 0,
+   "purgeType": "YEARS",
+   "plotType": "SPLINE",
+   "intervalLoggingPeriod": 1,
+   "discardExtremeValues": false,
+   "tags": {},
+   "unit": "",
+   "pointLocator": {
+    "contextUpdateEvent": "CONTEXT_UPDATE",
+    "variableName": "my",
+    "executionDelaySeconds": 0,
+    "dataType": "NUMERIC",
+    "scriptPermissions": [
+     "superadmin"
+    ],
+    "updateCronPattern": "5 0/1 * * * ?",
+    "script": "\nvar headers = {};\nvar url = 'http://administracionelectronica.navarra.es/AccesoFicheros/DownloadFile.aspx?CodigoCompleto=camarascarreteras@@@LEKUNBERRI_A_15_127_540.JPG';\nvar result;\nvar parameters = {};\nHttpBuilder.get(url, headers, parameters).resp(function(statusCode, headers, content) { \n  // handle the response, maybe return \"Success!\" or whatever\n  result = statusCode;\n }).err(function(statusCode, headers, content) {\n // handle error responses\n   result = statusCode;\n}).execute();\n\nif(result != -1){\n    return(1.0);\n}else{\n    return(0.0);\n}",
+    "logCount": 5,
+    "settable": false,
+    "logLevel": "INFO",
+    "updateEvent": "CRON",
+    "context": [],
+    "logSize": 1
+   },
+   "discardLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "setExtremeHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "name": "status",
+   "chartColour": "",
+   "preventSetExtremeValues": false,
+   "simplifyType": "NONE"
+  },
+  {
+   "purgePeriod": 1,
+   "setExtremeLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "intervalLoggingType": "AVERAGE",
+   "dataSourceXid": "DS_status",
+   "discardHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "deviceName": "Areta",
+   "enabled": true,
+   "rollup": "NONE",
+   "purgeOverride": false,
+   "chartRenderer": {
+    "numberOfPeriods": 1,
+    "type": "IMAGE",
+    "timePeriodType": "DAYS"
+   },
+   "xid": "DP_Areta_status",
+   "eventDetectors": [],
+   "textRenderer": {
+    "useUnitAsSuffix": false,
+    "format": "0.00",
+    "type": "ANALOG",
+    "suffix": ""
+   },
+   "loggingType": "NONE",
+   "overrideIntervalLoggingSamples": false,
+   "defaultCacheSize": 1,
+   "readPermission": "",
+   "setPermission": "",
+   "intervalLoggingPeriodType": "MINUTES",
+   "intervalLoggingSampleWindowSize": 0,
+   "tolerance": 0,
+   "purgeType": "YEARS",
+   "plotType": "SPLINE",
+   "intervalLoggingPeriod": 1,
+   "discardExtremeValues": false,
+   "tags": {},
+   "unit": "",
+   "pointLocator": {
+    "contextUpdateEvent": "CONTEXT_UPDATE",
+    "variableName": "my",
+    "executionDelaySeconds": 0,
+    "dataType": "NUMERIC",
+    "scriptPermissions": [
+     "superadmin"
+    ],
+    "updateCronPattern": "5 0/1 * * * ?",
+    "script": "\nvar headers = {};\nvar url = 'http://administracionelectronica.navarra.es/AccesoFicheros/DownloadFile.aspx?CodigoCompleto=camarascarreteras@@@ARETA_PA_30_5_700.JPG';\nvar result;\nvar parameters = {};\nHttpBuilder.get(url, headers, parameters).resp(function(statusCode, headers, content) { \n  // handle the response, maybe return \"Success!\" or whatever\n  result = statusCode;\n }).err(function(statusCode, headers, content) {\n // handle error responses\n   result = statusCode;\n}).execute();\n\nif(result != -1){\n    return(1.0);\n}else{\n    return(0.0);\n}",
+    "logCount": 5,
+    "settable": false,
+    "logLevel": "INFO",
+    "updateEvent": "CRON",
+    "context": [],
+    "logSize": 1
+   },
+   "discardLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "setExtremeHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "name": "status",
+   "chartColour": "",
+   "preventSetExtremeValues": false,
+   "simplifyType": "NONE"
+  },
+  {
+   "purgePeriod": 1,
+   "setExtremeLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "intervalLoggingType": "AVERAGE",
+   "dataSourceXid": "DS_status",
+   "discardHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "deviceName": "Berriozar",
+   "enabled": true,
+   "rollup": "NONE",
+   "purgeOverride": false,
+   "chartRenderer": {
+    "numberOfPeriods": 1,
+    "type": "IMAGE",
+    "timePeriodType": "DAYS"
+   },
+   "xid": "DP_Berriozar_status",
+   "eventDetectors": [],
+   "textRenderer": {
+    "useUnitAsSuffix": false,
+    "format": "0.00",
+    "type": "ANALOG",
+    "suffix": ""
+   },
+   "loggingType": "NONE",
+   "overrideIntervalLoggingSamples": false,
+   "defaultCacheSize": 1,
+   "readPermission": "",
+   "setPermission": "",
+   "intervalLoggingPeriodType": "MINUTES",
+   "intervalLoggingSampleWindowSize": 0,
+   "tolerance": 0,
+   "purgeType": "YEARS",
+   "plotType": "SPLINE",
+   "intervalLoggingPeriod": 1,
+   "discardExtremeValues": false,
+   "tags": {},
+   "unit": "",
+   "pointLocator": {
+    "contextUpdateEvent": "CONTEXT_UPDATE",
+    "variableName": "my",
+    "executionDelaySeconds": 0,
+    "dataType": "NUMERIC",
+    "scriptPermissions": [
+     "superadmin"
+    ],
+    "updateCronPattern": "5 0/1 * * * ?",
+    "script": "\nvar headers = {};\nvar url = 'http://administracionelectronica.navarra.es/AccesoFicheros/DownloadFile.aspx?CodigoCompleto=camarascarreteras@@@DOMO_BERRIOZAR_PA_30_PK_18_200.JPG';\nvar result;\nvar parameters = {};\nHttpBuilder.get(url, headers, parameters).resp(function(statusCode, headers, content) { \n  // handle the response, maybe return \"Success!\" or whatever\n  result = statusCode;\n }).err(function(statusCode, headers, content) {\n // handle error responses\n   result = statusCode;\n}).execute();\n\nif(result != -1){\n    return(1.0);\n}else{\n    return(0.0);\n}",
+    "logCount": 5,
+    "settable": false,
+    "logLevel": "INFO",
+    "updateEvent": "CRON",
+    "context": [],
+    "logSize": 1
+   },
+   "discardLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "setExtremeHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "name": "status",
+   "chartColour": "",
+   "preventSetExtremeValues": false,
+   "simplifyType": "NONE"
+  },
+  {
+   "purgePeriod": 1,
+   "setExtremeLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "intervalLoggingType": "AVERAGE",
+   "dataSourceXid": "DS_status",
+   "discardHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "deviceName": "Talluntxe",
+   "enabled": true,
+   "rollup": "NONE",
+   "purgeOverride": false,
+   "chartRenderer": {
+    "numberOfPeriods": 1,
+    "type": "IMAGE",
+    "timePeriodType": "DAYS"
+   },
+   "xid": "DP_Talluntxe_status",
+   "eventDetectors": [],
+   "textRenderer": {
+    "useUnitAsSuffix": false,
+    "format": "0.00",
+    "type": "ANALOG",
+    "suffix": ""
+   },
+   "loggingType": "NONE",
+   "overrideIntervalLoggingSamples": false,
+   "defaultCacheSize": 1,
+   "readPermission": "",
+   "setPermission": "",
+   "intervalLoggingPeriodType": "MINUTES",
+   "intervalLoggingSampleWindowSize": 0,
+   "tolerance": 0,
+   "purgeType": "YEARS",
+   "plotType": "SPLINE",
+   "intervalLoggingPeriod": 1,
+   "discardExtremeValues": false,
+   "tags": {},
+   "unit": "",
+   "pointLocator": {
+    "contextUpdateEvent": "CONTEXT_UPDATE",
+    "variableName": "my",
+    "executionDelaySeconds": 0,
+    "dataType": "NUMERIC",
+    "scriptPermissions": [
+     "superadmin"
+    ],
+    "updateCronPattern": "5 0/1 * * * ?",
+    "script": "\nvar headers = {};\nvar url = 'http://administracionelectronica.navarra.es/AccesoFicheros/DownloadFile.aspx?CodigoCompleto=camarascarreteras@@@DOMO_TALLUNTXE_PA_30_PK_0_200.JPG';\nvar result;\nvar parameters = {};\nHttpBuilder.get(url, headers, parameters).resp(function(statusCode, headers, content) { \n  // handle the response, maybe return \"Success!\" or whatever\n  result = statusCode;\n }).err(function(statusCode, headers, content) {\n // handle error responses\n   result = statusCode;\n}).execute();\n\nif(result != -1){\n    return(1.0);\n}else{\n    return(0.0);\n}",
+    "logCount": 5,
+    "settable": false,
+    "logLevel": "INFO",
+    "updateEvent": "CRON",
+    "context": [],
+    "logSize": 1
+   },
+   "discardLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "setExtremeHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "name": "status",
+   "chartColour": "",
+   "preventSetExtremeValues": false,
+   "simplifyType": "NONE"
+  },
+  {
+   "purgePeriod": 1,
+   "setExtremeLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "intervalLoggingType": "AVERAGE",
+   "dataSourceXid": "DS_status",
+   "discardHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "deviceName": "Cordovilla",
+   "enabled": true,
+   "rollup": "NONE",
+   "purgeOverride": false,
+   "chartRenderer": {
+    "numberOfPeriods": 1,
+    "type": "IMAGE",
+    "timePeriodType": "DAYS"
+   },
+   "xid": "DP_Cordovilla_status",
+   "eventDetectors": [],
+   "textRenderer": {
+    "useUnitAsSuffix": false,
+    "format": "0.00",
+    "type": "ANALOG",
+    "suffix": ""
+   },
+   "loggingType": "NONE",
+   "overrideIntervalLoggingSamples": false,
+   "defaultCacheSize": 1,
+   "readPermission": "",
+   "setPermission": "",
+   "intervalLoggingPeriodType": "MINUTES",
+   "intervalLoggingSampleWindowSize": 0,
+   "tolerance": 0,
+   "purgeType": "YEARS",
+   "plotType": "SPLINE",
+   "intervalLoggingPeriod": 1,
+   "discardExtremeValues": false,
+   "tags": {},
+   "unit": "",
+   "pointLocator": {
+    "contextUpdateEvent": "CONTEXT_UPDATE",
+    "variableName": "my",
+    "executionDelaySeconds": 0,
+    "dataType": "NUMERIC",
+    "scriptPermissions": [
+     "superadmin"
+    ],
+    "updateCronPattern": "5 0/1 * * * ?",
+    "script": "\nvar headers = {};\nvar url = 'http://administracionelectronica.navarra.es/AccesoFicheros/DownloadFile.aspx?CodigoCompleto=camarascarreteras@@@CORDOVILLA_PA_32_0_400.JPG';\nvar result;\nvar parameters = {};\nHttpBuilder.get(url, headers, parameters).resp(function(statusCode, headers, content) { \n  // handle the response, maybe return \"Success!\" or whatever\n  result = statusCode;\n }).err(function(statusCode, headers, content) {\n // handle error responses\n   result = statusCode;\n}).execute();\n\nif(result != -1){\n    return(1.0);\n}else{\n    return(0.0);\n}",
+    "logCount": 5,
+    "settable": false,
+    "logLevel": "INFO",
+    "updateEvent": "CRON",
+    "context": [],
+    "logSize": 1
+   },
+   "discardLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "setExtremeHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "name": "status",
+   "chartColour": "",
+   "preventSetExtremeValues": false,
+   "simplifyType": "NONE"
+  },
+  {
+   "purgePeriod": 1,
+   "setExtremeLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "intervalLoggingType": "AVERAGE",
+   "dataSourceXid": "DS_status",
+   "discardHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "deviceName": "Belagua",
+   "enabled": true,
+   "rollup": "NONE",
+   "purgeOverride": false,
+   "chartRenderer": {
+    "numberOfPeriods": 1,
+    "type": "IMAGE",
+    "timePeriodType": "DAYS"
+   },
+   "xid": "DP_Belagua_status",
+   "eventDetectors": [],
+   "textRenderer": {
+    "useUnitAsSuffix": false,
+    "format": "0.00",
+    "type": "ANALOG",
+    "suffix": ""
+   },
+   "loggingType": "NONE",
+   "overrideIntervalLoggingSamples": false,
+   "defaultCacheSize": 1,
+   "readPermission": "",
+   "setPermission": "",
+   "intervalLoggingPeriodType": "MINUTES",
+   "intervalLoggingSampleWindowSize": 0,
+   "tolerance": 0,
+   "purgeType": "YEARS",
+   "plotType": "SPLINE",
+   "intervalLoggingPeriod": 1,
+   "discardExtremeValues": false,
+   "tags": {},
+   "unit": "",
+   "pointLocator": {
+    "contextUpdateEvent": "CONTEXT_UPDATE",
+    "variableName": "my",
+    "executionDelaySeconds": 0,
+    "dataType": "NUMERIC",
+    "scriptPermissions": [
+     "superadmin"
+    ],
+    "updateCronPattern": "5 0/1 * * * ?",
+    "script": "\nvar headers = {};\nvar url = 'http://administracionelectronica.navarra.es/AccesoFicheros/DownloadFile.aspx?CodigoCompleto=camarascarreteras@@@BELAGUA_EL_FERIAL_PK_55.JPG';\nvar result;\nvar parameters = {};\nHttpBuilder.get(url, headers, parameters).resp(function(statusCode, headers, content) { \n  // handle the response, maybe return \"Success!\" or whatever\n  result = statusCode;\n }).err(function(statusCode, headers, content) {\n // handle error responses\n   result = statusCode;\n}).execute();\n\nif(result != -1){\n    return(1.0);\n}else{\n    return(0.0);\n}",
+    "logCount": 5,
+    "settable": false,
+    "logLevel": "INFO",
+    "updateEvent": "CRON",
+    "context": [],
+    "logSize": 1
+   },
+   "discardLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "setExtremeHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "name": "status",
+   "chartColour": "",
+   "preventSetExtremeValues": false,
+   "simplifyType": "NONE"
+  },
+  {
+   "purgePeriod": 1,
+   "setExtremeLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "intervalLoggingType": "AVERAGE",
+   "dataSourceXid": "DS_status",
+   "discardHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "deviceName": "Tudela",
+   "enabled": true,
+   "rollup": "NONE",
+   "purgeOverride": false,
+   "chartRenderer": {
+    "numberOfPeriods": 1,
+    "type": "IMAGE",
+    "timePeriodType": "DAYS"
+   },
+   "xid": "DP_Tudela_status",
+   "eventDetectors": [],
+   "textRenderer": {
+    "useUnitAsSuffix": false,
+    "format": "0.00",
+    "type": "ANALOG",
+    "suffix": ""
+   },
+   "loggingType": "NONE",
+   "overrideIntervalLoggingSamples": false,
+   "defaultCacheSize": 1,
+   "readPermission": "",
+   "setPermission": "",
+   "intervalLoggingPeriodType": "MINUTES",
+   "intervalLoggingSampleWindowSize": 0,
+   "tolerance": 0,
+   "purgeType": "YEARS",
+   "plotType": "SPLINE",
+   "intervalLoggingPeriod": 1,
+   "discardExtremeValues": false,
+   "tags": {},
+   "unit": "",
+   "pointLocator": {
+    "contextUpdateEvent": "CONTEXT_UPDATE",
+    "variableName": "my",
+    "executionDelaySeconds": 0,
+    "dataType": "NUMERIC",
+    "scriptPermissions": [
+     "superadmin"
+    ],
+    "updateCronPattern": "5 0/1 * * * ?",
+    "script": "\nvar headers = {};\nvar url = 'http://administracionelectronica.navarra.es/AccesoFicheros/DownloadFile.aspx?CodigoCompleto=camarascarreteras@@@DOMO_TUDELA_A_68_PK_95_500.JPG';\nvar result;\nvar parameters = {};\nHttpBuilder.get(url, headers, parameters).resp(function(statusCode, headers, content) { \n  // handle the response, maybe return \"Success!\" or whatever\n  result = statusCode;\n }).err(function(statusCode, headers, content) {\n // handle error responses\n   result = statusCode;\n}).execute();\n\nif(result != -1){\n    return(1.0);\n}else{\n    return(0.0);\n}",
+    "logCount": 5,
+    "settable": false,
+    "logLevel": "INFO",
+    "updateEvent": "CRON",
+    "context": [],
+    "logSize": 1
+   },
+   "discardLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "setExtremeHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "name": "status",
+   "chartColour": "",
+   "preventSetExtremeValues": false,
+   "simplifyType": "NONE"
+  },
+  {
+   "purgePeriod": 1,
+   "setExtremeLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "intervalLoggingType": "AVERAGE",
+   "dataSourceXid": "DS_status",
+   "discardHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "deviceName": "Arre",
+   "enabled": true,
+   "rollup": "NONE",
+   "purgeOverride": false,
+   "chartRenderer": {
+    "numberOfPeriods": 1,
+    "type": "IMAGE",
+    "timePeriodType": "DAYS"
+   },
+   "xid": "DP_Arre_status",
+   "eventDetectors": [],
+   "textRenderer": {
+    "useUnitAsSuffix": false,
+    "format": "0.00",
+    "type": "ANALOG",
+    "suffix": ""
+   },
+   "loggingType": "NONE",
+   "overrideIntervalLoggingSamples": false,
+   "defaultCacheSize": 1,
+   "readPermission": "",
+   "setPermission": "",
+   "intervalLoggingPeriodType": "MINUTES",
+   "intervalLoggingSampleWindowSize": 0,
+   "tolerance": 0,
+   "purgeType": "YEARS",
+   "plotType": "SPLINE",
+   "intervalLoggingPeriod": 1,
+   "discardExtremeValues": false,
+   "tags": {},
+   "unit": "",
+   "pointLocator": {
+    "contextUpdateEvent": "CONTEXT_UPDATE",
+    "variableName": "my",
+    "executionDelaySeconds": 0,
+    "dataType": "NUMERIC",
+    "scriptPermissions": [
+     "superadmin"
+    ],
+    "updateCronPattern": "5 0/1 * * * ?",
+    "script": "\nvar headers = {};\nvar url = 'http://administracionelectronica.navarra.es/AccesoFicheros/DownloadFile.aspx?CodigoCompleto=camarascarreteras@@@EXT_FRA_ARRE_N_121_A_PK_5_600.JPG';\nvar result;\nvar parameters = {};\nHttpBuilder.get(url, headers, parameters).resp(function(statusCode, headers, content) { \n  // handle the response, maybe return \"Success!\" or whatever\n  result = statusCode;\n }).err(function(statusCode, headers, content) {\n // handle error responses\n   result = statusCode;\n}).execute();\n\nif(result != -1){\n    return(1.0);\n}else{\n    return(0.0);\n}",
+    "logCount": 5,
+    "settable": false,
+    "logLevel": "INFO",
+    "updateEvent": "CRON",
+    "context": [],
+    "logSize": 1
+   },
+   "discardLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "setExtremeHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "name": "status",
+   "chartColour": "",
+   "preventSetExtremeValues": false,
+   "simplifyType": "NONE"
+  },
+  {
+   "purgePeriod": 1,
+   "setExtremeLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "intervalLoggingType": "AVERAGE",
+   "dataSourceXid": "DS_status",
+   "discardHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "deviceName": "Ezcaba",
+   "enabled": true,
+   "rollup": "NONE",
+   "purgeOverride": false,
+   "chartRenderer": {
+    "numberOfPeriods": 1,
+    "type": "IMAGE",
+    "timePeriodType": "DAYS"
+   },
+   "xid": "DP_Ezcaba_status",
+   "eventDetectors": [],
+   "textRenderer": {
+    "useUnitAsSuffix": false,
+    "format": "0.00",
+    "type": "ANALOG",
+    "suffix": ""
+   },
+   "loggingType": "NONE",
+   "overrideIntervalLoggingSamples": false,
+   "defaultCacheSize": 1,
+   "readPermission": "",
+   "setPermission": "",
+   "intervalLoggingPeriodType": "MINUTES",
+   "intervalLoggingSampleWindowSize": 0,
+   "tolerance": 0,
+   "purgeType": "YEARS",
+   "plotType": "SPLINE",
+   "intervalLoggingPeriod": 1,
+   "discardExtremeValues": false,
+   "tags": {},
+   "unit": "",
+   "pointLocator": {
+    "contextUpdateEvent": "CONTEXT_UPDATE",
+    "variableName": "my",
+    "executionDelaySeconds": 0,
+    "dataType": "NUMERIC",
+    "scriptPermissions": [
+     "superadmin"
+    ],
+    "updateCronPattern": "5 0/1 * * * ?",
+    "script": "\nvar headers = {};\nvar url = 'http://administracionelectronica.navarra.es/AccesoFicheros/DownloadFile.aspx?CodigoCompleto=camarascarreteras@@@EXT_PNA_COTUP_PA_35_PK_0_00.JPG';\nvar result;\nvar parameters = {};\nHttpBuilder.get(url, headers, parameters).resp(function(statusCode, headers, content) { \n  // handle the response, maybe return \"Success!\" or whatever\n  result = statusCode;\n }).err(function(statusCode, headers, content) {\n // handle error responses\n   result = statusCode;\n}).execute();\n\nif(result != -1){\n    return(1.0);\n}else{\n    return(0.0);\n}",
+    "logCount": 5,
+    "settable": false,
+    "logLevel": "INFO",
+    "updateEvent": "CRON",
+    "context": [],
+    "logSize": 1
+   },
+   "discardLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "setExtremeHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "name": "status",
+   "chartColour": "",
+   "preventSetExtremeValues": false,
+   "simplifyType": "NONE"
+  },
+  {
+   "purgePeriod": 1,
+   "setExtremeLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "intervalLoggingType": "AVERAGE",
+   "dataSourceXid": "DS_status",
+   "discardHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "deviceName": "Tunel_de_Belate",
+   "enabled": true,
+   "rollup": "NONE",
+   "purgeOverride": false,
+   "chartRenderer": {
+    "numberOfPeriods": 1,
+    "type": "IMAGE",
+    "timePeriodType": "DAYS"
+   },
+   "xid": "DP_Tunel_de_Belate_status",
+   "eventDetectors": [],
+   "textRenderer": {
+    "useUnitAsSuffix": false,
+    "format": "0.00",
+    "type": "ANALOG",
+    "suffix": ""
+   },
+   "loggingType": "NONE",
+   "overrideIntervalLoggingSamples": false,
+   "defaultCacheSize": 1,
+   "readPermission": "",
+   "setPermission": "",
+   "intervalLoggingPeriodType": "MINUTES",
+   "intervalLoggingSampleWindowSize": 0,
+   "tolerance": 0,
+   "purgeType": "YEARS",
+   "plotType": "SPLINE",
+   "intervalLoggingPeriod": 1,
+   "discardExtremeValues": false,
+   "tags": {},
+   "unit": "",
+   "pointLocator": {
+    "contextUpdateEvent": "CONTEXT_UPDATE",
+    "variableName": "my",
+    "executionDelaySeconds": 0,
+    "dataType": "NUMERIC",
+    "scriptPermissions": [
+     "superadmin"
+    ],
+    "updateCronPattern": "5 0/1 * * * ?",
+    "script": "\nvar headers = {};\nvar url = 'http://administracionelectronica.navarra.es/AccesoFicheros/DownloadFile.aspx?CodigoCompleto=camarascarreteras@@@BELATE_NORTE_N_121_A_PK_31_110.JPG';\nvar result;\nvar parameters = {};\nHttpBuilder.get(url, headers, parameters).resp(function(statusCode, headers, content) { \n  // handle the response, maybe return \"Success!\" or whatever\n  result = statusCode;\n }).err(function(statusCode, headers, content) {\n // handle error responses\n   result = statusCode;\n}).execute();\n\nif(result != -1){\n    return(1.0);\n}else{\n    return(0.0);\n}",
+    "logCount": 5,
+    "settable": false,
+    "logLevel": "INFO",
+    "updateEvent": "CRON",
+    "context": [],
+    "logSize": 1
+   },
+   "discardLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "setExtremeHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "name": "status",
+   "chartColour": "",
+   "preventSetExtremeValues": false,
+   "simplifyType": "NONE"
+  },
+  {
+   "purgePeriod": 1,
+   "setExtremeLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "intervalLoggingType": "AVERAGE",
+   "dataSourceXid": "DS_status",
+   "discardHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "deviceName": "Tunel_de_Yesa",
+   "enabled": true,
+   "rollup": "NONE",
+   "purgeOverride": false,
+   "chartRenderer": {
+    "numberOfPeriods": 1,
+    "type": "IMAGE",
+    "timePeriodType": "DAYS"
+   },
+   "xid": "DP_Tunel_de_Yesa_status",
+   "eventDetectors": [],
+   "textRenderer": {
+    "useUnitAsSuffix": false,
+    "format": "0.00",
+    "type": "ANALOG",
+    "suffix": ""
+   },
+   "loggingType": "NONE",
+   "overrideIntervalLoggingSamples": false,
+   "defaultCacheSize": 1,
+   "readPermission": "",
+   "setPermission": "",
+   "intervalLoggingPeriodType": "MINUTES",
+   "intervalLoggingSampleWindowSize": 0,
+   "tolerance": 0,
+   "purgeType": "YEARS",
+   "plotType": "SPLINE",
+   "intervalLoggingPeriod": 1,
+   "discardExtremeValues": false,
+   "tags": {},
+   "unit": "",
+   "pointLocator": {
+    "contextUpdateEvent": "CONTEXT_UPDATE",
+    "variableName": "my",
+    "executionDelaySeconds": 0,
+    "dataType": "NUMERIC",
+    "scriptPermissions": [
+     "superadmin"
+    ],
+    "updateCronPattern": "5 0/1 * * * ?",
+    "script": "\nvar headers = {};\nvar url = 'http://administracionelectronica.navarra.es/AccesoFicheros/DownloadFile.aspx?CodigoCompleto=camarascarreteras@@@YESA_PAMPLONA_A_21_PK_48_580.JPG';\nvar result;\nvar parameters = {};\nHttpBuilder.get(url, headers, parameters).resp(function(statusCode, headers, content) { \n  // handle the response, maybe return \"Success!\" or whatever\n  result = statusCode;\n }).err(function(statusCode, headers, content) {\n // handle error responses\n   result = statusCode;\n}).execute();\n\nif(result != -1){\n    return(1.0);\n}else{\n    return(0.0);\n}",
+    "logCount": 5,
+    "settable": false,
+    "logLevel": "INFO",
+    "updateEvent": "CRON",
+    "context": [],
+    "logSize": 1
+   },
+   "discardLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "setExtremeHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "name": "status",
+   "chartColour": "",
+   "preventSetExtremeValues": false,
+   "simplifyType": "NONE"
+  },
+  {
+   "purgePeriod": 1,
+   "setExtremeLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "intervalLoggingType": "AVERAGE",
+   "dataSourceXid": "DS_status",
+   "discardHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "deviceName": "Tunel_del_Perdon",
+   "enabled": true,
+   "rollup": "NONE",
+   "purgeOverride": false,
+   "chartRenderer": {
+    "numberOfPeriods": 1,
+    "type": "IMAGE",
+    "timePeriodType": "DAYS"
+   },
+   "xid": "DP_Tunel_del_Perdon_status",
+   "eventDetectors": [],
+   "textRenderer": {
+    "useUnitAsSuffix": false,
+    "format": "0.00",
+    "type": "ANALOG",
+    "suffix": ""
+   },
+   "loggingType": "NONE",
+   "overrideIntervalLoggingSamples": false,
+   "defaultCacheSize": 1,
+   "readPermission": "",
+   "setPermission": "",
+   "intervalLoggingPeriodType": "MINUTES",
+   "intervalLoggingSampleWindowSize": 0,
+   "tolerance": 0,
+   "purgeType": "YEARS",
+   "plotType": "SPLINE",
+   "intervalLoggingPeriod": 1,
+   "discardExtremeValues": false,
+   "tags": {},
+   "unit": "",
+   "pointLocator": {
+    "contextUpdateEvent": "CONTEXT_UPDATE",
+    "variableName": "my",
+    "executionDelaySeconds": 0,
+    "dataType": "NUMERIC",
+    "scriptPermissions": [
+     "superadmin"
+    ],
+    "updateCronPattern": "5 0/1 * * * ?",
+    "script": "\nvar headers = {};\nvar url = 'http://administracionelectronica.navarra.es/AccesoFicheros/DownloadFile.aspx?CodigoCompleto=camarascarreteras@@@PERDON_ESTELLA_A_12_PK_13_150.JPG';\nvar result;\nvar parameters = {};\nHttpBuilder.get(url, headers, parameters).resp(function(statusCode, headers, content) { \n  // handle the response, maybe return \"Success!\" or whatever\n  result = statusCode;\n }).err(function(statusCode, headers, content) {\n // handle error responses\n   result = statusCode;\n}).execute();\n\nif(result != -1){\n    return(1.0);\n}else{\n    return(0.0);\n}",
+    "logCount": 5,
+    "settable": false,
+    "logLevel": "INFO",
+    "updateEvent": "CRON",
+    "context": [],
+    "logSize": 1
+   },
+   "discardLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "setExtremeHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+   "name": "status",
+   "chartColour": "",
+   "preventSetExtremeValues": false,
+   "simplifyType": "NONE"
+  }
+ ],
+ "publishers": [
+  {
+   "publishAttributeChanges": true,
+   "cacheWarningSize": 100,
+   "dateFormat": "DATE_FORMAT_UTC",
+   "useJSON": true,
+   "snapshotSendPeriods": 5,
+   "raiseResultWarning": true,
+   "staticParameters": [],
+   "sendSnapshot": false,
+   "type": "HTTP_SENDER",
+   "usePost": true,
+   "enabled": true,
+   "url": "http://192.168.88.163:3000/api/v2/generic/",
+   "points": [
+    {
+     "dataPointId": "DP_Alsasua_status",
+     "parameterName": "status",
+     "includeTimestamp": false
+    }
+   ],
+   "xid": "PUB_Alsasua",
+   "publishType": "CHANGES_ONLY",
+   "alarmLevels": {
+    "POINT_DISABLED_EVENT": "DO_NOT_LOG",
+    "RESULT_WARNINGS_EVENT": "DO_NOT_LOG",
+    "SEND_EXCEPTION_EVENT": "DO_NOT_LOG",
+    "QUEUE_SIZE_WARNING_EVENT": "DO_NOT_LOG"
+   },
+   "staticHeaders": [
+    {
+     "value": "Alsasua",
+     "key": "session-uid"
+    }
+   ],
+   "name": "Alsasua",
+   "snapshotSendPeriodType": "MINUTES",
+   "cacheDiscardSize": 1000
+  },
+  {
+   "publishAttributeChanges": true,
+   "cacheWarningSize": 100,
+   "dateFormat": "DATE_FORMAT_UTC",
+   "useJSON": true,
+   "snapshotSendPeriods": 5,
+   "raiseResultWarning": true,
+   "staticParameters": [],
+   "sendSnapshot": false,
+   "type": "HTTP_SENDER",
+   "usePost": true,
+   "enabled": true,
+   "url": "http://192.168.88.163:3000/api/v2/generic/",
+   "points": [
+    {
+     "dataPointId": "DP_Etxegarate_status",
+     "parameterName": "status",
+     "includeTimestamp": false
+    }
+   ],
+   "xid": "PUB_Etxegarate",
+   "publishType": "CHANGES_ONLY",
+   "alarmLevels": {
+    "POINT_DISABLED_EVENT": "DO_NOT_LOG",
+    "RESULT_WARNINGS_EVENT": "DO_NOT_LOG",
+    "SEND_EXCEPTION_EVENT": "DO_NOT_LOG",
+    "QUEUE_SIZE_WARNING_EVENT": "DO_NOT_LOG"
+   },
+   "staticHeaders": [
+    {
+     "value": "Etxegarate",
+     "key": "session-uid"
+    }
+   ],
+   "name": "Etxegarate",
+   "snapshotSendPeriodType": "MINUTES",
+   "cacheDiscardSize": 1000
+  },
+  {
+   "publishAttributeChanges": true,
+   "cacheWarningSize": 100,
+   "dateFormat": "DATE_FORMAT_UTC",
+   "useJSON": true,
+   "snapshotSendPeriods": 5,
+   "raiseResultWarning": true,
+   "staticParameters": [],
+   "sendSnapshot": false,
+   "type": "HTTP_SENDER",
+   "usePost": true,
+   "enabled": true,
+   "url": "http://192.168.88.163:3000/api/v2/generic/",
+   "points": [
+    {
+     "dataPointId": "DP_Arbizu_status",
+     "parameterName": "status",
+     "includeTimestamp": false
+    }
+   ],
+   "xid": "PUB_Arbizu",
+   "publishType": "CHANGES_ONLY",
+   "alarmLevels": {
+    "POINT_DISABLED_EVENT": "DO_NOT_LOG",
+    "RESULT_WARNINGS_EVENT": "DO_NOT_LOG",
+    "SEND_EXCEPTION_EVENT": "DO_NOT_LOG",
+    "QUEUE_SIZE_WARNING_EVENT": "DO_NOT_LOG"
+   },
+   "staticHeaders": [
+    {
+     "value": "Arbizu",
+     "key": "session-uid"
+    }
+   ],
+   "name": "Arbizu",
+   "snapshotSendPeriodType": "MINUTES",
+   "cacheDiscardSize": 1000
+  },
+  {
+   "publishAttributeChanges": true,
+   "cacheWarningSize": 100,
+   "dateFormat": "DATE_FORMAT_UTC",
+   "useJSON": true,
+   "snapshotSendPeriods": 5,
+   "raiseResultWarning": true,
+   "staticParameters": [],
+   "sendSnapshot": false,
+   "type": "HTTP_SENDER",
+   "usePost": true,
+   "enabled": true,
+   "url": "http://192.168.88.163:3000/api/v2/generic/",
+   "points": [
+    {
+     "dataPointId": "DP_Zizur Mayor_status",
+     "parameterName": "status",
+     "includeTimestamp": false
+    }
+   ],
+   "xid": "PUB_Zizur Mayor",
+   "publishType": "CHANGES_ONLY",
+   "alarmLevels": {
+    "POINT_DISABLED_EVENT": "DO_NOT_LOG",
+    "RESULT_WARNINGS_EVENT": "DO_NOT_LOG",
+    "SEND_EXCEPTION_EVENT": "DO_NOT_LOG",
+    "QUEUE_SIZE_WARNING_EVENT": "DO_NOT_LOG"
+   },
+   "staticHeaders": [
+    {
+     "value": "Zizur Mayor",
+     "key": "session-uid"
+    }
+   ],
+   "name": "Zizur Mayor",
+   "snapshotSendPeriodType": "MINUTES",
+   "cacheDiscardSize": 1000
+  },
+  {
+   "publishAttributeChanges": true,
+   "cacheWarningSize": 100,
+   "dateFormat": "DATE_FORMAT_UTC",
+   "useJSON": true,
+   "snapshotSendPeriods": 5,
+   "raiseResultWarning": true,
+   "staticParameters": [],
+   "sendSnapshot": false,
+   "type": "HTTP_SENDER",
+   "usePost": true,
+   "enabled": true,
+   "url": "http://192.168.88.163:3000/api/v2/generic/",
+   "points": [
+    {
+     "dataPointId": "DP_Irurtzun_status",
+     "parameterName": "status",
+     "includeTimestamp": false
+    }
+   ],
+   "xid": "PUB_Irurtzun",
+   "publishType": "CHANGES_ONLY",
+   "alarmLevels": {
+    "POINT_DISABLED_EVENT": "DO_NOT_LOG",
+    "RESULT_WARNINGS_EVENT": "DO_NOT_LOG",
+    "SEND_EXCEPTION_EVENT": "DO_NOT_LOG",
+    "QUEUE_SIZE_WARNING_EVENT": "DO_NOT_LOG"
+   },
+   "staticHeaders": [
+    {
+     "value": "Irurtzun",
+     "key": "session-uid"
+    }
+   ],
+   "name": "Irurtzun",
+   "snapshotSendPeriodType": "MINUTES",
+   "cacheDiscardSize": 1000
+  },
+  {
+   "publishAttributeChanges": true,
+   "cacheWarningSize": 100,
+   "dateFormat": "DATE_FORMAT_UTC",
+   "useJSON": true,
+   "snapshotSendPeriods": 5,
+   "raiseResultWarning": true,
+   "staticParameters": [],
+   "sendSnapshot": false,
+   "type": "HTTP_SENDER",
+   "usePost": true,
+   "enabled": true,
+   "url": "http://192.168.88.163:3000/api/v2/generic/",
+   "points": [
+    {
+     "dataPointId": "DP_Leitza_status",
+     "parameterName": "status",
+     "includeTimestamp": false
+    }
+   ],
+   "xid": "PUB_Leitza",
+   "publishType": "CHANGES_ONLY",
+   "alarmLevels": {
+    "POINT_DISABLED_EVENT": "DO_NOT_LOG",
+    "RESULT_WARNINGS_EVENT": "DO_NOT_LOG",
+    "SEND_EXCEPTION_EVENT": "DO_NOT_LOG",
+    "QUEUE_SIZE_WARNING_EVENT": "DO_NOT_LOG"
+   },
+   "staticHeaders": [
+    {
+     "value": "Leitza",
+     "key": "session-uid"
+    }
+   ],
+   "name": "Leitza",
+   "snapshotSendPeriodType": "MINUTES",
+   "cacheDiscardSize": 1000
+  },
+  {
+   "publishAttributeChanges": true,
+   "cacheWarningSize": 100,
+   "dateFormat": "DATE_FORMAT_UTC",
+   "useJSON": true,
+   "snapshotSendPeriods": 5,
+   "raiseResultWarning": true,
+   "staticParameters": [],
+   "sendSnapshot": false,
+   "type": "HTTP_SENDER",
+   "usePost": true,
+   "enabled": true,
+   "url": "http://192.168.88.163:3000/api/v2/generic/",
+   "points": [
+    {
+     "dataPointId": "DP_Pagozelai_status",
+     "parameterName": "status",
+     "includeTimestamp": false
+    }
+   ],
+   "xid": "PUB_Pagozelai",
+   "publishType": "CHANGES_ONLY",
+   "alarmLevels": {
+    "POINT_DISABLED_EVENT": "DO_NOT_LOG",
+    "RESULT_WARNINGS_EVENT": "DO_NOT_LOG",
+    "SEND_EXCEPTION_EVENT": "DO_NOT_LOG",
+    "QUEUE_SIZE_WARNING_EVENT": "DO_NOT_LOG"
+   },
+   "staticHeaders": [
+    {
+     "value": "Pagozelai",
+     "key": "session-uid"
+    }
+   ],
+   "name": "Pagozelai",
+   "snapshotSendPeriodType": "MINUTES",
+   "cacheDiscardSize": 1000
+  },
+  {
+   "publishAttributeChanges": true,
+   "cacheWarningSize": 100,
+   "dateFormat": "DATE_FORMAT_UTC",
+   "useJSON": true,
+   "snapshotSendPeriods": 5,
+   "raiseResultWarning": true,
+   "staticParameters": [],
+   "sendSnapshot": false,
+   "type": "HTTP_SENDER",
+   "usePost": true,
+   "enabled": true,
+   "url": "http://192.168.88.163:3000/api/v2/generic/",
+   "points": [
+    {
+     "dataPointId": "DP_Lekunberri_status",
+     "parameterName": "status",
+     "includeTimestamp": false
+    }
+   ],
+   "xid": "PUB_Lekunberri",
+   "publishType": "CHANGES_ONLY",
+   "alarmLevels": {
+    "POINT_DISABLED_EVENT": "DO_NOT_LOG",
+    "RESULT_WARNINGS_EVENT": "DO_NOT_LOG",
+    "SEND_EXCEPTION_EVENT": "DO_NOT_LOG",
+    "QUEUE_SIZE_WARNING_EVENT": "DO_NOT_LOG"
+   },
+   "staticHeaders": [
+    {
+     "value": "Lekunberri",
+     "key": "session-uid"
+    }
+   ],
+   "name": "Lekunberri",
+   "snapshotSendPeriodType": "MINUTES",
+   "cacheDiscardSize": 1000
+  },
+  {
+   "publishAttributeChanges": true,
+   "cacheWarningSize": 100,
+   "dateFormat": "DATE_FORMAT_UTC",
+   "useJSON": true,
+   "snapshotSendPeriods": 5,
+   "raiseResultWarning": true,
+   "staticParameters": [],
+   "sendSnapshot": false,
+   "type": "HTTP_SENDER",
+   "usePost": true,
+   "enabled": true,
+   "url": "http://192.168.88.163:3000/api/v2/generic/",
+   "points": [
+    {
+     "dataPointId": "DP_Areta_status",
+     "parameterName": "status",
+     "includeTimestamp": false
+    }
+   ],
+   "xid": "PUB_Areta",
+   "publishType": "CHANGES_ONLY",
+   "alarmLevels": {
+    "POINT_DISABLED_EVENT": "DO_NOT_LOG",
+    "RESULT_WARNINGS_EVENT": "DO_NOT_LOG",
+    "SEND_EXCEPTION_EVENT": "DO_NOT_LOG",
+    "QUEUE_SIZE_WARNING_EVENT": "DO_NOT_LOG"
+   },
+   "staticHeaders": [
+    {
+     "value": "Areta",
+     "key": "session-uid"
+    }
+   ],
+   "name": "Areta",
+   "snapshotSendPeriodType": "MINUTES",
+   "cacheDiscardSize": 1000
+  },
+  {
+   "publishAttributeChanges": true,
+   "cacheWarningSize": 100,
+   "dateFormat": "DATE_FORMAT_UTC",
+   "useJSON": true,
+   "snapshotSendPeriods": 5,
+   "raiseResultWarning": true,
+   "staticParameters": [],
+   "sendSnapshot": false,
+   "type": "HTTP_SENDER",
+   "usePost": true,
+   "enabled": true,
+   "url": "http://192.168.88.163:3000/api/v2/generic/",
+   "points": [
+    {
+     "dataPointId": "DP_Berriozar_status",
+     "parameterName": "status",
+     "includeTimestamp": false
+    }
+   ],
+   "xid": "PUB_Berriozar",
+   "publishType": "CHANGES_ONLY",
+   "alarmLevels": {
+    "POINT_DISABLED_EVENT": "DO_NOT_LOG",
+    "RESULT_WARNINGS_EVENT": "DO_NOT_LOG",
+    "SEND_EXCEPTION_EVENT": "DO_NOT_LOG",
+    "QUEUE_SIZE_WARNING_EVENT": "DO_NOT_LOG"
+   },
+   "staticHeaders": [
+    {
+     "value": "Berriozar",
+     "key": "session-uid"
+    }
+   ],
+   "name": "Berriozar",
+   "snapshotSendPeriodType": "MINUTES",
+   "cacheDiscardSize": 1000
+  },
+  {
+   "publishAttributeChanges": true,
+   "cacheWarningSize": 100,
+   "dateFormat": "DATE_FORMAT_UTC",
+   "useJSON": true,
+   "snapshotSendPeriods": 5,
+   "raiseResultWarning": true,
+   "staticParameters": [],
+   "sendSnapshot": false,
+   "type": "HTTP_SENDER",
+   "usePost": true,
+   "enabled": true,
+   "url": "http://192.168.88.163:3000/api/v2/generic/",
+   "points": [
+    {
+     "dataPointId": "DP_Talluntxe_status",
+     "parameterName": "status",
+     "includeTimestamp": false
+    }
+   ],
+   "xid": "PUB_Talluntxe",
+   "publishType": "CHANGES_ONLY",
+   "alarmLevels": {
+    "POINT_DISABLED_EVENT": "DO_NOT_LOG",
+    "RESULT_WARNINGS_EVENT": "DO_NOT_LOG",
+    "SEND_EXCEPTION_EVENT": "DO_NOT_LOG",
+    "QUEUE_SIZE_WARNING_EVENT": "DO_NOT_LOG"
+   },
+   "staticHeaders": [
+    {
+     "value": "Talluntxe",
+     "key": "session-uid"
+    }
+   ],
+   "name": "Talluntxe",
+   "snapshotSendPeriodType": "MINUTES",
+   "cacheDiscardSize": 1000
+  },
+  {
+   "publishAttributeChanges": true,
+   "cacheWarningSize": 100,
+   "dateFormat": "DATE_FORMAT_UTC",
+   "useJSON": true,
+   "snapshotSendPeriods": 5,
+   "raiseResultWarning": true,
+   "staticParameters": [],
+   "sendSnapshot": false,
+   "type": "HTTP_SENDER",
+   "usePost": true,
+   "enabled": true,
+   "url": "http://192.168.88.163:3000/api/v2/generic/",
+   "points": [
+    {
+     "dataPointId": "DP_Cordovilla_status",
+     "parameterName": "status",
+     "includeTimestamp": false
+    }
+   ],
+   "xid": "PUB_Cordovilla",
+   "publishType": "CHANGES_ONLY",
+   "alarmLevels": {
+    "POINT_DISABLED_EVENT": "DO_NOT_LOG",
+    "RESULT_WARNINGS_EVENT": "DO_NOT_LOG",
+    "SEND_EXCEPTION_EVENT": "DO_NOT_LOG",
+    "QUEUE_SIZE_WARNING_EVENT": "DO_NOT_LOG"
+   },
+   "staticHeaders": [
+    {
+     "value": "Cordovilla",
+     "key": "session-uid"
+    }
+   ],
+   "name": "Cordovilla",
+   "snapshotSendPeriodType": "MINUTES",
+   "cacheDiscardSize": 1000
+  },
+  {
+   "publishAttributeChanges": true,
+   "cacheWarningSize": 100,
+   "dateFormat": "DATE_FORMAT_UTC",
+   "useJSON": true,
+   "snapshotSendPeriods": 5,
+   "raiseResultWarning": true,
+   "staticParameters": [],
+   "sendSnapshot": false,
+   "type": "HTTP_SENDER",
+   "usePost": true,
+   "enabled": true,
+   "url": "http://192.168.88.163:3000/api/v2/generic/",
+   "points": [
+    {
+     "dataPointId": "DP_Belagua_status",
+     "parameterName": "status",
+     "includeTimestamp": false
+    }
+   ],
+   "xid": "PUB_Belagua",
+   "publishType": "CHANGES_ONLY",
+   "alarmLevels": {
+    "POINT_DISABLED_EVENT": "DO_NOT_LOG",
+    "RESULT_WARNINGS_EVENT": "DO_NOT_LOG",
+    "SEND_EXCEPTION_EVENT": "DO_NOT_LOG",
+    "QUEUE_SIZE_WARNING_EVENT": "DO_NOT_LOG"
+   },
+   "staticHeaders": [
+    {
+     "value": "Belagua",
+     "key": "session-uid"
+    }
+   ],
+   "name": "Belagua",
+   "snapshotSendPeriodType": "MINUTES",
+   "cacheDiscardSize": 1000
+  },
+  {
+   "publishAttributeChanges": true,
+   "cacheWarningSize": 100,
+   "dateFormat": "DATE_FORMAT_UTC",
+   "useJSON": true,
+   "snapshotSendPeriods": 5,
+   "raiseResultWarning": true,
+   "staticParameters": [],
+   "sendSnapshot": false,
+   "type": "HTTP_SENDER",
+   "usePost": true,
+   "enabled": true,
+   "url": "http://192.168.88.163:3000/api/v2/generic/",
+   "points": [
+    {
+     "dataPointId": "DP_Tudela_status",
+     "parameterName": "status",
+     "includeTimestamp": false
+    }
+   ],
+   "xid": "PUB_Tudela",
+   "publishType": "CHANGES_ONLY",
+   "alarmLevels": {
+    "POINT_DISABLED_EVENT": "DO_NOT_LOG",
+    "RESULT_WARNINGS_EVENT": "DO_NOT_LOG",
+    "SEND_EXCEPTION_EVENT": "DO_NOT_LOG",
+    "QUEUE_SIZE_WARNING_EVENT": "DO_NOT_LOG"
+   },
+   "staticHeaders": [
+    {
+     "value": "Tudela",
+     "key": "session-uid"
+    }
+   ],
+   "name": "Tudela",
+   "snapshotSendPeriodType": "MINUTES",
+   "cacheDiscardSize": 1000
+  },
+  {
+   "publishAttributeChanges": true,
+   "cacheWarningSize": 100,
+   "dateFormat": "DATE_FORMAT_UTC",
+   "useJSON": true,
+   "snapshotSendPeriods": 5,
+   "raiseResultWarning": true,
+   "staticParameters": [],
+   "sendSnapshot": false,
+   "type": "HTTP_SENDER",
+   "usePost": true,
+   "enabled": true,
+   "url": "http://192.168.88.163:3000/api/v2/generic/",
+   "points": [
+    {
+     "dataPointId": "DP_Arre_status",
+     "parameterName": "status",
+     "includeTimestamp": false
+    }
+   ],
+   "xid": "PUB_Arre",
+   "publishType": "CHANGES_ONLY",
+   "alarmLevels": {
+    "POINT_DISABLED_EVENT": "DO_NOT_LOG",
+    "RESULT_WARNINGS_EVENT": "DO_NOT_LOG",
+    "SEND_EXCEPTION_EVENT": "DO_NOT_LOG",
+    "QUEUE_SIZE_WARNING_EVENT": "DO_NOT_LOG"
+   },
+   "staticHeaders": [
+    {
+     "value": "Arre",
+     "key": "session-uid"
+    }
+   ],
+   "name": "Arre",
+   "snapshotSendPeriodType": "MINUTES",
+   "cacheDiscardSize": 1000
+  },
+  {
+   "publishAttributeChanges": true,
+   "cacheWarningSize": 100,
+   "dateFormat": "DATE_FORMAT_UTC",
+   "useJSON": true,
+   "snapshotSendPeriods": 5,
+   "raiseResultWarning": true,
+   "staticParameters": [],
+   "sendSnapshot": false,
+   "type": "HTTP_SENDER",
+   "usePost": true,
+   "enabled": true,
+   "url": "http://192.168.88.163:3000/api/v2/generic/",
+   "points": [
+    {
+     "dataPointId": "DP_Ezcaba_status",
+     "parameterName": "status",
+     "includeTimestamp": false
+    }
+   ],
+   "xid": "PUB_Ezcaba",
+   "publishType": "CHANGES_ONLY",
+   "alarmLevels": {
+    "POINT_DISABLED_EVENT": "DO_NOT_LOG",
+    "RESULT_WARNINGS_EVENT": "DO_NOT_LOG",
+    "SEND_EXCEPTION_EVENT": "DO_NOT_LOG",
+    "QUEUE_SIZE_WARNING_EVENT": "DO_NOT_LOG"
+   },
+   "staticHeaders": [
+    {
+     "value": "Ezcaba",
+     "key": "session-uid"
+    }
+   ],
+   "name": "Ezcaba",
+   "snapshotSendPeriodType": "MINUTES",
+   "cacheDiscardSize": 1000
+  },
+  {
+   "publishAttributeChanges": true,
+   "cacheWarningSize": 100,
+   "dateFormat": "DATE_FORMAT_UTC",
+   "useJSON": true,
+   "snapshotSendPeriods": 5,
+   "raiseResultWarning": true,
+   "staticParameters": [],
+   "sendSnapshot": false,
+   "type": "HTTP_SENDER",
+   "usePost": true,
+   "enabled": true,
+   "url": "http://192.168.88.163:3000/api/v2/generic/",
+   "points": [
+    {
+     "dataPointId": "DP_Tunel_de_Belate_status",
+     "parameterName": "status",
+     "includeTimestamp": false
+    }
+   ],
+   "xid": "PUB_Tunel_de_Belate",
+   "publishType": "CHANGES_ONLY",
+   "alarmLevels": {
+    "POINT_DISABLED_EVENT": "DO_NOT_LOG",
+    "RESULT_WARNINGS_EVENT": "DO_NOT_LOG",
+    "SEND_EXCEPTION_EVENT": "DO_NOT_LOG",
+    "QUEUE_SIZE_WARNING_EVENT": "DO_NOT_LOG"
+   },
+   "staticHeaders": [
+    {
+     "value": "Tunel_de_Belate",
+     "key": "session-uid"
+    }
+   ],
+   "name": "Tunel_de_Belate",
+   "snapshotSendPeriodType": "MINUTES",
+   "cacheDiscardSize": 1000
+  },
+  {
+   "publishAttributeChanges": true,
+   "cacheWarningSize": 100,
+   "dateFormat": "DATE_FORMAT_UTC",
+   "useJSON": true,
+   "snapshotSendPeriods": 5,
+   "raiseResultWarning": true,
+   "staticParameters": [],
+   "sendSnapshot": false,
+   "type": "HTTP_SENDER",
+   "usePost": true,
+   "enabled": true,
+   "url": "http://192.168.88.163:3000/api/v2/generic/",
+   "points": [
+    {
+     "dataPointId": "DP_Tunel_de_Yesa_status",
+     "parameterName": "status",
+     "includeTimestamp": false
+    }
+   ],
+   "xid": "PUB_Tunel_de_Yesa",
+   "publishType": "CHANGES_ONLY",
+   "alarmLevels": {
+    "POINT_DISABLED_EVENT": "DO_NOT_LOG",
+    "RESULT_WARNINGS_EVENT": "DO_NOT_LOG",
+    "SEND_EXCEPTION_EVENT": "DO_NOT_LOG",
+    "QUEUE_SIZE_WARNING_EVENT": "DO_NOT_LOG"
+   },
+   "staticHeaders": [
+    {
+     "value": "Tunel_de_Yesa",
+     "key": "session-uid"
+    }
+   ],
+   "name": "Tunel_de_Yesa",
+   "snapshotSendPeriodType": "MINUTES",
+   "cacheDiscardSize": 1000
+  },
+  {
+   "publishAttributeChanges": true,
+   "cacheWarningSize": 100,
+   "dateFormat": "DATE_FORMAT_UTC",
+   "useJSON": true,
+   "snapshotSendPeriods": 5,
+   "raiseResultWarning": true,
+   "staticParameters": [],
+   "sendSnapshot": false,
+   "type": "HTTP_SENDER",
+   "usePost": true,
+   "enabled": true,
+   "url": "http://192.168.88.163:3000/api/v2/generic/",
+   "points": [
+    {
+     "dataPointId": "DP_Tunel_del_Perdon_status",
+     "parameterName": "status",
+     "includeTimestamp": false
+    }
+   ],
+   "xid": "PUB_Tunel_del_Perdon",
+   "publishType": "CHANGES_ONLY",
+   "alarmLevels": {
+    "POINT_DISABLED_EVENT": "DO_NOT_LOG",
+    "RESULT_WARNINGS_EVENT": "DO_NOT_LOG",
+    "SEND_EXCEPTION_EVENT": "DO_NOT_LOG",
+    "QUEUE_SIZE_WARNING_EVENT": "DO_NOT_LOG"
+   },
+   "staticHeaders": [
+    {
+     "value": "Tunel_del_Perdon",
+     "key": "session-uid"
+    }
+   ],
+   "name": "Tunel_del_Perdon",
+   "snapshotSendPeriodType": "MINUTES",
+   "cacheDiscardSize": 1000
+  }
+ ],
+ "dataSources": [
+  {
+   "xid": "DS_status",
+   "purgePeriod": 1,
+   "alarmLevels": {
+    "SCRIPT_ERROR": "DO_NOT_LOG",
+    "CONTEXT_POINT_DISABLED": "DO_NOT_LOG",
+    "RESULT_TYPE_ERROR": "DO_NOT_LOG"
+   },
+   "name": "status",
+   "type": "META",
+   "editPermission": "",
+   "enabled": true,
+   "purgeType": "YEARS",
+   "purgeOverride": false
+  }
+ ]
+}

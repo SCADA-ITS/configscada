@@ -1,7 +1,10 @@
-INSERT INTO conf.cctv_scenario_nodes (node_id, alias, description, scenario_id, enabled, visible) VALUES
-(1, 'CARRETERAS', 'CARRETERAS', NULL, true, true),
-	(2, 'CAMARA', 'CAMARA', 1, true, true);
 
+-- 
+-- Table: config.cctv_scenario_nodes
+--
+INSERT INTO conf.cctv_scenario_nodes (node_id, alias, description, scenario_id, enabled, visible) VALUES
+(1, 'CAMERAS', 'CAMERAS', NULL, true, true),
+	(2, 'MOSAICO', 'MOSAICO', 1, true, true);
 
 -- 
 -- Table: config.cctv_scenario_node_hierarchies

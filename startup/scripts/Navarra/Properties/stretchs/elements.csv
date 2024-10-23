@@ -1,10 +1,23 @@
 item;stretch_type;alias;description;pk_ini;pk_end;lanes;road
-1;Element;N-113 C;N-113 C;78+700;78+700;2;N-113
-2;Element;N-113 D;N-113 D;91+358;91+358;2;N-113
-3;Element;A-15 C;A-15 C;0;0;2;A-15
-4;Element;A-15 D;A-15 D;127+670;127+670;2;A-15
-5;Element;N-121A C;N-121A C;32+560;60+230;2;N-121A
-6;Element;N-121A D;N-121A D;25+900;25+900;2;N-121A
-7;Element;A-1 C;A-1 C;401+560;401+560;2;A-1
-8;Element;A-1 D;A-1 D;0;0;2;A-1
-9;Element;PA-30 D;PA-30 D;0;0;2;PA-30
+1;Element;A-1 / A-10;A-1 / A-10;-;-;-;A-1 / A-10
+2;Element;A-1 / NA-1001;A-1 / NA-1001;-;-;-;A-1 / NA-1001
+3;Element;A-10;A-10;-;-;-;A-10
+4;Element;A-12 / A-15;A-12 / A-15;-;-;-;A-12 / A-15
+5;Element;A-15 / A-10;A-15 / A-10;-;-;-;A-15 / A-10
+6;Element;A-15;A-15;-;-;-;A-15
+7;Element;PA-30 / NA-2300;PA-30 / NA-2300;-;-;-;PA-30 / NA-2300
+8;Element;PA-30 / N-240-A;PA-30 / N-240-A;-;-;-;PA-30 / N-240-A
+9;Element;PA-30 / A-15;PA-30 / A-15;-;-;-;PA-30 / A-15
+10;Element;PA-32 / PA-31;PA-32 / PA-31;-;-;-;PA-32 / PA-31
+11;Element;NA-137;NA-137;-;-;-;NA-137
+12;Element;A-68 / N-121-C;A-68 / N-121-C;-;-;-;A-68 / N-121-C
+13;Element;N-121-A / NA-4251;N-121-A / NA-4251;-;-;-;N-121-A / NA-4251
+14;Element;PA-35 / PA-30;PA-35 / PA-30;-;-;-;PA-35 / PA-30
+15;Element;N-121-A;N-121-A;-;-;-;N-121-A
+16;Element;A-21;A-21;-;-;-;A-21
+17;Element;A-12;A-12;-;-;-;A-12
+18;Element;A-15 Decr;A-15 Decr;-;-;-;A-15
+19;Element;N-113 Decr;N-113 Decr;-;-;-;N-113
+20;Element;N-121-A Cre;N-121-A Cre;-;-;-;N-121-A
+21;Element;A-1 Cre;A-1 Cre;-;-;-;A-1
+22;Element;N-121-A Decr;N-121-A Decr;-;-;-;N-121-A
