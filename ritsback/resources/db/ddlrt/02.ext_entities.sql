@@ -10,6 +10,9 @@
 		ext_entity_id int8 default nextval('rt.last_ext_entities_id'),
 		ext_entity_type_id int8 NOT NULL,
 		ext_entity_subtype_id int8  NULL,
+		uid varchar(100) NOT NULL,
+		alias varchar NULL,
+		description varchar NULL,
 		coordinates varchar NULL,
 		auto_route boolean NULL,
 		enabled bool NULL,
@@ -18,7 +21,8 @@
 		generated_at timestamptz NOT NULL,
 		created_at timestamptz NOT NULL,
 		updated_at timestamptz NOT NULL,
-		CONSTRAINT pk_ext_entities PRIMARY KEY (ext_entity_type_id, ext_entity_id)
+		CONSTRAINT pk_ext_entities PRIMARY KEY (ext_entity_id),
+		CONSTRAINT unique_uid_per_type UNIQUE (ext_entity_type_id, uid) 
 	);
 	
 	CREATE INDEX idx_ext_entities_ext_entity_types ON rt.ext_entities USING btree (ext_entity_type_id);
@@ -43,13 +47,13 @@
 		visible bool NULL,
 		created_at timestamptz NOT NULL,
 		updated_at timestamptz NOT NULL,
-		CONSTRAINT pk_ext_entity_values PRIMARY KEY (ext_entity_type_id, ext_entity_id, ext_entity_type_param_id)
+		CONSTRAINT pk_ext_entity_values PRIMARY KEY (ext_entity_id, ext_entity_type_param_id)
 	);
 
-	CREATE INDEX idx_ext_entity_values_ext_entity ON rt.ext_entity_values USING btree (ext_entity_type_id, ext_entity_id);
+	CREATE INDEX idx_ext_entity_values_ext_entity ON rt.ext_entity_values USING btree (ext_entity_id);
 
 	ALTER TABLE rt.ext_entity_values ADD CONSTRAINT fk_ext_entity_values_ext_entity_type_params FOREIGN KEY (ext_entity_type_id, ext_entity_type_param_id) REFERENCES static.ext_entity_type_params(ext_entity_type_id, ext_entity_type_param_id);
-	ALTER TABLE rt.ext_entity_values ADD CONSTRAINT fk_ext_entity_values_ext_entity FOREIGN KEY (ext_entity_type_id, ext_entity_id) REFERENCES rt.ext_entities(ext_entity_type_id, ext_entity_id);
+	ALTER TABLE rt.ext_entity_values ADD CONSTRAINT fk_ext_entity_values_ext_entity FOREIGN KEY (ext_entity_id) REFERENCES rt.ext_entities(ext_entity_id);
 
 	ALTER TABLE rt.ext_entity_values SET TABLESPACE tbl_rt;
 
