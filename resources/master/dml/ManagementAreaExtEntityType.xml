@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="ManagementAreaExtEntityType">
+	<SELECT>SELECT management_area_id as "id", 
+				   ext_entity_type_id as "extEntityTypeId",
+				   enabled as "enabled", 
+				   visible as "visible" 
+			  FROM static.management_area_ext_entity_types
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>
+	</INSERT>
+	<UPDATE>
+	</UPDATE>
+	<DELETE>
+	</DELETE>
+</DML>

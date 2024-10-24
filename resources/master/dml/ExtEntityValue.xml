@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="ExtEntityValue">
+	<SELECT>SELECT ext_entity_type_id as "extEntityTypeId",
+				   ext_entity_id as "extEntityTypeParamId",
+				   ext_entity_type_param_id as "extEntityId",
+				   value as "value",
+				   enabled as "enabled", 
+				   visible as "visible",
+				   created_at as "createdAt",
+				   updated_at as "updatedAt"
+			  FROM rt.ext_entity_values
+			  WHERE enabled = true or enabled is null
+
+	</SELECT>
+	<INSERT>INSERT INTO rt.ext_entity_values
+						(ext_entity_type_id,
+						 ext_entity_type_param_id,
+						 ext_entity_id,
+						 value,
+						 enabled,
+						 visible,
+						 created_at,
+						 updated_at)
+					VALUES
+						(:extEntityTypeId,
+					 	:extEntityTypeParamId,
+					 	:extEntityId,
+					 	:value,
+					 	:enabled,
+					 	:visible,
+					 	CURRENT_TIMESTAMP,
+					 	CURRENT_TIMESTAMP)
+	</INSERT>
+	<UPDATE> UPDATE rt.ext_entity_values
+				SET value = :value,
+				 	enabled = :enabled,
+				 	visible = :visible,
+				 	updated_at = CURRENT_TIMESTAMP
+				WHERE ext_entity_type_id = :extEntityTypeId 
+					AND ext_entity_type_param_id = :extEntityTypeParamId 
+					AND ext_entity_id = :extEntityId
+	</UPDATE>
+	<DELETE>DELETE FROM rt.ext_entity_values
+				WHERE ext_entity_type_id = :extEntityTypeId 
+					AND ext_entity_type_param_id = :extEntityTypeParamId 
+					AND ext_entity_id = :extEntityId
+	</DELETE>
+</DML>

@@ -62,6 +62,7 @@
 		label_description varchar NULL,
 	    data_type_id int8 NOT NULL,
 		unit_id int8 NULL,
+	    enabled bool NULL,
 		visible bool NULL,
 		editable bool NULL DEFAULT false,
 		created_at timestamptz NOT NULL,

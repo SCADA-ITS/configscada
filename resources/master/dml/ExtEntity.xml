@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="ExtEntity">
+	<SELECT>SELECT ext_entity_type_id as "extEntityTypeId", 
+				   ext_entity_subtype_id as "extEntitySubtypeId", 
+				   ext_entity_id as "id",
+				   alias as "alias", 
+				   description as "description",
+				   uid as "uid",
+				   coordinates as "coordinates",
+				   auto_route as "autoRoute",
+				   last_update as "lastUpdate",
+				   generated_at as "generatedAt",
+				   enabled as "enabled", 
+				   visible as "visible" 
+			  FROM rt.ext_entities
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>INSERT INTO rt.ext_entities
+	                (ext_entity_type_id,
+	                 ext_entity_subtype_id,
+	                 ext_entity_id,
+	                 alias,
+	                 description,
+	                 uid,
+	                 coordinates,
+	                 auto_route,
+	                 last_update,
+	                 generated_at,
+	                 enabled,
+	                 visible,
+	                 created_at,
+	                 updated_at)
+					VALUES 
+					(:extEntityTypeId,
+					 :extEntitySubtypeId,			 
+					 :id=getNextValFromSec{'rt.last_ext_entities_id'},
+					 :alias,
+					 :description, 
+					 :uid,
+					 :coordinates, 
+					 :autoRoute, 
+					 :lastUspdate,
+					 :generatedAt,	 	  		 
+					 :enabled, 
+					 :visible, 
+					 CURRENT_TIMESTAMP, 
+					 CURRENT_TIMESTAMP)
+	</INSERT>
+	<UPDATE>UPDATE rt.ext_entities
+			   SET alias = :alias, 
+			       description = :description,
+			       coordinates = :coordinates,
+			       auto_route = :autoRoute,
+			       last_update = lastUpdate,
+			       updated_at = CURRENT_TIMESTAMP
+			 WHERE ext_entity_type_id = :extEntityTypeId
+			   AND ext_entity_id = :id
+	</UPDATE>
+	<DELETE>DELETE FROM rt.ext_entities
+			 WHERE ext_entity_type_id = :extEntityTypeId
+			   AND ext_entity_id = :id
+	</DELETE>
+</DML>

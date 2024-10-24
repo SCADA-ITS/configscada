@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="ExtEntityTypeParam">
+	<SELECT>SELECT ext_entity_type_param_id as "id", 
+				   ext_entity_type_id as "extEntityTypeId",
+				   unit_id as "unitId",
+				   data_type_id as "dataTypeId",
+				   alias as "alias", 
+				   description as "description", 
+				   label_alias as "labelAlias", 
+				   label_description as "labelDescription",
+				   default_value as "defaultValue",
+				   enabled as "enabled", 
+				   visible as "visible"
+			  FROM static.ext_entity_type_params
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>
+	</INSERT>
+	<UPDATE>
+	</UPDATE>
+	<DELETE>
+	</DELETE>
+</DML>

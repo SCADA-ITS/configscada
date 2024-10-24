@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="ExtEntityType">
+	<SELECT>SELECT ext_entity_type_id as "id",
+				   alias as "alias", 
+				   description as "description", 
+				   label_alias as "labelAlias", 
+				   label_description as "labelDescription",
+				   persist as "persist",
+				   on_process as "onProcess",
+				   on_change as "onChange",
+				   cron_expression as "cronExpression",
+				   config_params as "configParams",
+				   enabled as "enabled", 
+				   visible as "visible"
+			  FROM static.ext_entity_types
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>
+	</INSERT>
+	<UPDATE>
+	</UPDATE>
+	<DELETE>
+	</DELETE>
+</DML>
