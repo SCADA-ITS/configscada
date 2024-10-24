@@ -21,22 +21,22 @@ INSERT INTO ui.map_incidents(id, incident_graphic_icon_id, incident_report_modul
 (1, 1000, 100401, 101301);
 
 
-INSERT INTO ui.map_layers (id, base_layer, map_id, "name", description, "label", icon, visible, tags) VALUES 
-(3, null, 1, 'Tunnel Málaga', 'Tunel Málaga', 'LBL_TUNNEL_Málaga', NULL, true, null),
-(4, null, 1, 'Tunnel Cádiz', 'Tunel Cádiz', 'LBL_TUNNEL_Cádiz', NULL, true, null),
-(5, null, 1, 'Cameras Málaga', 'Cameras Málaga', 'LBL_CAMERAS', NULL, true, '["Tunnel Málaga"]'),
-(6, null, 1, 'Fans Málaga', 'Fans Málaga', 'LBL_FANS', NULL, true, '["Tunnel Málaga"]'),
+INSERT INTO ui.map_layers (id, base_layer, map_id, "name", description, "label", icon, visible) VALUES 
+(3, null, 1, 'Tunnel Málaga', 'Tunel Málaga', 'LBL_TUNNEL_Málaga', NULL, true),
+(4, null, 1, 'Tunnel Cádiz', 'Tunel Cádiz', 'LBL_TUNNEL_Cádiz', NULL, true),
+(5, null, 1, 'Cameras Málaga', 'Cameras Málaga', 'LBL_CAMERAS', NULL, true),
+(6, null, 1, 'Fans Málaga', 'Fans Málaga', 'LBL_FANS', NULL, true),
 --(7, null, 1, 'VMS Málaga', 'VMS Málaga', 'LBL_VMS', NULL, true, null),
-(8, null, 1, 'Traffic Section Málaga', 'Traffic Section Málaga', 'LBL_TRAFFIC_SECTION', NULL, true, '["Tunnel Málaga"]'),
-(9, null, 1, 'Cameras Cádiz', 'Cameras Cádiz', 'LBL_CAMERAS', NULL, true, '["Tunnel Cádiz"]'),
-(10, null, 1, 'Fans Cádiz', 'Fans Cádiz', 'LBL_FANS', NULL, true, '["Tunnel Cádiz"]'),
-(11, null, 1, 'VMS Cádiz', 'VMS Cádiz', 'LBL_VMS', NULL, true, '["Tunnel Cádiz"]'),
-(12, null, 1, 'Traffic Section Cádiz', 'Traffic Section Cádiz', 'LBL_TRAFFIC_SECTION', NULL, true, '["Tunnel Cádiz"]'),
-(13, null, 1, 'Cabinets Cádiz', 'Cabinets Cádiz', 'LBL_CABINETS', NULL, true, '["Tunnel Cádiz"]'),
-(14, null, 1, 'Semáforos', 'Semáforos', 'LBL_TRAFFIC_LIGHTS', NULL, true, '["Tunnel Cádiz"]'),
-(15, null, 1, 'Paneles', 'Paneles', 'LBL_PANEL', NULL, true, '["Tunnel Cádiz"]'),
-(16, '{"enabled": true, "type": "WMS", "serverType": "geoserver", "url": "http://192.168.88.165:8700/geoserver/wms", "name": "osm:red_viaria_pk_malaga"}', 1, 'pks malaga', 'pks malaga', 'LBL_PKS_LAYER', NULL, true, null),
-(17, '{"enabled": true, "type": "WMS", "serverType": "geoserver", "url": "http://192.168.88.165:8700/geoserver/wms", "name": "osm:red_viaria_tramo_malaga"}', 1, 'stretchs malaga ', 'stretchs malaga', 'LBL_STRETCHS_LAYER', NULL, true, null);
+(8, null, 1, 'Traffic Section Málaga', 'Traffic Section Málaga', 'LBL_TRAFFIC_SECTION', NULL, true),
+(9, null, 1, 'Cameras Cádiz', 'Cameras Cádiz', 'LBL_CAMERAS', NULL, true),
+(10, null, 1, 'Fans Cádiz', 'Fans Cádiz', 'LBL_FANS', NULL, true),
+(11, null, 1, 'VMS Cádiz', 'VMS Cádiz', 'LBL_VMS', NULL, true),
+(12, null, 1, 'Traffic Section Cádiz', 'Traffic Section Cádiz', 'LBL_TRAFFIC_SECTION', NULL, true),
+(13, null, 1, 'Cabinets Cádiz', 'Cabinets Cádiz', 'LBL_CABINETS', NULL, true),
+(14, null, 1, 'Semáforos', 'Semáforos', 'LBL_TRAFFIC_LIGHTS', NULL, true),
+(15, null, 1, 'Paneles', 'Paneles', 'LBL_PANEL', NULL, true),
+(16, '{"enabled": true, "type": "WMS", "serverType": "geoserver", "url": "http://192.168.88.165:8700/geoserver/wms", "name": "osm:red_viaria_pk_malaga"}', 1, 'pks malaga', 'pks malaga', 'LBL_PKS_LAYER', NULL, true),
+(17, '{"enabled": true, "type": "WMS", "serverType": "geoserver", "url": "http://192.168.88.165:8700/geoserver/wms", "name": "osm:red_viaria_tramo_malaga"}', 1, 'stretchs malaga ', 'stretchs malaga', 'LBL_STRETCHS_LAYER', NULL, true);
 
 
 INSERT INTO ui.map_layer_relationships (id, map_id, parent_layer_id, child_layer_id) VALUES 
