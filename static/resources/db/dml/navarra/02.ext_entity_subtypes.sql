@@ -1,0 +1,5 @@
+INSERT INTO static.ext_entity_subtypes(ext_entity_type_id, ext_entity_subtype_id, alias, description, label_alias, label_description, enabled, visible, created_at, updated_at) VALUES
+(1, 1, 'Obras', 'Incidencias producidas por obras en la carreta', 'LBL_EXT_ENTITY_SUBTYPE_WORKS', 'LBL_EXT_ENTITY_SUBTYPE_WORKS_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 2, 'Meteorológicas', 'Incidencias relacionadas con las inclemencias del tiempo', 'LBL_EXT_ENTITY_SUBTYPE_WEATHER', 'LBL_EXT_ENTITY_SUBTYPE_WEATHER_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 3, 'Red viaria', 'Incidencias en la red viaria', 'LBL_EXT_ENTITY_SUBTYPE_ROAD_INCIDENTS', 'LBL_EXT_ENTITY_SUBTYPE_ROAD_INCIDENTS_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 4, 'Eventos deportivos', 'Eventos deportivos que afectan a las carreteras', 'LBL_EXT_ENTITY_SUBTYPE_SPORT_EVENT', 'LBL_EXT_ENTITY_SUBTYPE_SPORT_EVENT_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
