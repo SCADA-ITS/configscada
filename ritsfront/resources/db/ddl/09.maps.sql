@@ -54,6 +54,27 @@
 	ALTER TABLE ui.map_incidents SET TABLESPACE tbl_ui;
 	
 -- 
+-- Table: ui.map_ext_entities
+-- Description: Definition of map ext entities
+-- Scope: ui
+--
+	CREATE TABLE ui.map_ext_entities (
+		id int NOT NULL,	
+		ext_entity_graphic_icon_id int NOT NULL,
+		ext_entity_module_action_id int NULL,
+		ext_entity_types varchar NULL, -- Format JSON: [{id: ExtEntityType:1, visible: true}, ...]
+		CONSTRAINT pk_map_ext_entities PRIMARY KEY (id)
+	);
+	
+	CREATE INDEX idx_map_ext_entities_graphic_icon ON ui.map_ext_entities USING btree (ext_entity_graphic_icon_id);
+	CREATE INDEX idx_map_ext_entities_ext_entity_module_action_id ON ui.map_ext_entities USING btree (ext_entity_module_action_id);
+	
+	ALTER TABLE ui.map_ext_entities ADD CONSTRAINT fk_map_ext_entities_graphic_icon FOREIGN KEY (ext_entity_graphic_icon_id) REFERENCES ui.graphic_icons(id);
+	ALTER TABLE ui.map_ext_entities ADD CONSTRAINT fk_map_ext_entities_ext_entity_module_action_id FOREIGN KEY (ext_entity_module_action_id) REFERENCES ui.module_actions(id);
+	
+	ALTER TABLE ui.map_ext_entities SET TABLESPACE tbl_ui;
+	
+-- 
 -- Table: ui.map_layers
 -- Description: Definition map layers
 -- Scope: ui

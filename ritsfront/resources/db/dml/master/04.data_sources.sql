@@ -257,9 +257,17 @@ INSERT INTO ui.data_sources(id, data_source_type_id, "name", description, entity
 (249, 1, 'getImsDelayedIncidentReports', 'getImsDelayedIncidentReports', 'ImsDelayedIncidentReportVO', 'id', true, true),
 (250, 1, 'getImsDelayedIncidentReport', 'getImsDelayedIncidentReports', 'ImsDelayedIncidentReportVO', 'id', true, true),
 (251, 3, 'sendImsDelayedIncidentActions', 'sendImsDelayedIncidentActions', 'ImsDelayedIncidentActionVO', 'id', true, true),
-(252, 1, 'getLocationTypes', 'getLocationTypes', 'LocationTypeVO', 'id', true, true);
-
-
+(252, 1, 'getLocationTypes', 'getLocationTypes', 'LocationTypeVO', 'id', true, true),
+(253, 1, 'getExtEntities', 'getExtEntities', 'ExtEntityVO', 'id', true, true),
+(254, 1, 'getExtEntitiesByType', 'getExtEntitiesByType', 'ExtEntityVO', 'id', true, true),
+(255, 1, 'getExtEntity', 'getExtEntity', 'ExtEntityVO', 'id', true, true),
+(256, 1, 'getExtEntityTypes', 'getExtEntityTypes', 'ExtEntityTypeVO', 'id', true, true),
+(257, 1, 'getExtEntityType', 'getExtEntityType', 'ExtEntityTypeVO', 'id', true, true),
+(258, 1, 'getRoutes', 'getRoutes', 'RouteVO', 'id', true, true),
+(259, 1, 'getRoute', 'getRoute', 'RouteVO', 'id', true, true),
+(260, 3, 'createRoute', 'createRoute', 'RouteVO', 'id', true, true),
+(261, 3, 'updateRoute', 'updateRoute', 'RouteVO', 'id', true, true),
+(262, 3, 'deleteRoute', 'deleteRoute', 'RouteVO', 'id', true, true);
 
 INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) VALUES
 (1, 1, 'http://192.168.88.163:8082/graphql'),
@@ -1519,4 +1527,57 @@ INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) V
 (252, 1, 'http://192.168.88.163:8082/graphql'),
 (252, 2, 'getLocationTypes'),
 (252, 3, ''),
-(252, 4, NULL);
+(252, 4, NULL),
+
+(253, 1, 'http://192.168.88.163:8082/graphql'),
+(253, 2, 'getExtEntities'),
+(253, 3, ''),
+(253, 4, NULL),
+
+(254, 1, 'http://192.168.88.163:8082/graphql'),
+(254, 2, 'getExtEntitiesByType'),
+(254, 3, 'extEntityTypeId'),
+(254, 4, NULL),
+
+(255, 1, 'http://192.168.88.163:8082/graphql'),
+(255, 2, 'getExtEntity'),
+(255, 3, 'extEntityId'),
+(255, 4, NULL),
+
+(256, 1, 'http://192.168.88.163:8082/graphql'),
+(256, 2, 'getExtEntityTypes'),
+(256, 3, ''),
+(256, 4, NULL),
+
+(257, 1, 'http://192.168.88.163:8082/graphql'),
+(257, 2, 'getExtEntityType'),
+(257, 3, 'extEntityTypeId'),
+(257, 4, NULL),
+
+(258, 1, 'http://192.168.88.163:8082/graphql'),
+(258, 2, 'getRoutes'),
+(258, 3, ''),
+(258, 4, NULL),
+
+(259, 1, 'http://192.168.88.163:8082/graphql'),
+(259, 2, 'getRoute'),
+(259, 3, 'routeId'),
+(259, 4, NULL),
+
+(260, 8, 'http://192.168.88.163:8082/graphql'),
+(260, 9, 'createRoute'),
+(260, 10, 'route'),
+(260, 11, 'RouteVO!'),
+(260, 12, NULL),
+
+(261, 8, 'http://192.168.88.163:8082/graphql'),
+(261, 9, 'updateRoute'),
+(261, 10, 'route'),
+(261, 11, 'RouteVO!'),
+(261, 12, NULL),
+
+(262, 8, 'http://192.168.88.163:8082/graphql'),
+(262, 9, 'deleteRoute'),
+(262, 10, 'routeId'),
+(262, 11, 'String!'),
+(262, 12, NULL);
