@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE RelativeLayout>
 <DML enabled="true" model="ManagementAreaExtEntityType">
-	<SELECT>SELECT management_area_id as "id", 
+	<SELECT>SELECT management_area_id as "managementAreaId", 
 				   ext_entity_type_id as "extEntityTypeId",
 				   enabled as "enabled", 
 				   visible as "visible" 

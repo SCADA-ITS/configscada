@@ -2,8 +2,8 @@
 <!DOCTYPE RelativeLayout>
 <DML enabled="true" model="ExtEntityValue">
 	<SELECT>SELECT ext_entity_type_id as "extEntityTypeId",
-				   ext_entity_id as "extEntityTypeParamId",
-				   ext_entity_type_param_id as "extEntityId",
+				   ext_entity_type_param_id as "extEntityTypeParamId",
+				   ext_entity_id as "extEntityId",
 				   value as "value",
 				   enabled as "enabled", 
 				   visible as "visible",
