@@ -1,0 +1,2 @@
+INSERT INTO static.ext_entity_type_params (ext_entity_type_id, ext_entity_type_param_id, default_value, alias, description, label_alias, label_description, data_type_id, unit_id, visible, editable, created_at, updated_at) VALUES
+(1, 1, null, 'Categoría', 'Categoría', 'LBL_EXT_ENTITY_TYPE_PARAM_CATEGORY', 'LBL_EXT_ENTITY_TYPE_PARAM_CATEGORY_DESC', 1, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
