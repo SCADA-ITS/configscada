@@ -12,6 +12,13 @@ if [ $? -ne 0 ]; then
 fi
 
 cd ..
+cd ddlrt
+/bin/bash ./ddl_param_jenkins.sh $psqlHost $psqlPort
+if [ $? -ne 0 ]; then
+    exit 1  # Sale del script con un código de salida diferente de 0
+fi
+
+cd ..
 cd dml/master
 /bin/bash ./dml_param_jenkins.sh $psqlHost $psqlPort
 if [ $? -ne 0 ]; then
