@@ -1,7 +1,7 @@
-INSERT INTO ui.equip_viewers (id, name, description, "label", icon, show_info_tab, show_childs, show_actions, initial_tab, measure_width, measure_max_rows, measure_only, graphic_icon_id, info_tab_mode, no_show_properties) VALUES
-('Element:87:1','TUN-DEP-DIESEL-PCI','TUN-DEP-DIESEL-PCI','LBL_ELEMENT_TYPE_TANK',null,True,False,True,null,225.0,3,null,010087,2,null),
-('Element:87:2','TUN-DALJ-1','TUN-DALJ-1','LBL_ELEMENT_TYPE_TANK',null,True,False,True,null,225.0,3,null,010087,2,null),
-('Element:87:3','TUN-DEP-TOX-MA','TUN-DEP-TOX-MA','LBL_ELEMENT_TYPE_TANK',null,True,False,True,null,225.0,3,null,050087,2,null);
+INSERT INTO ui.equip_viewers (id, name, description, "label", icon, show_info_tab, show_childs, show_actions, initial_tab, measure_width, measure_max_rows, measure_only, graphic_icon_id, info_tab_mode, no_show_properties,show_historical_chart) VALUES
+('Element:87:1','TUN-DEP-DIESEL-PCI','TUN-DEP-DIESEL-PCI','LBL_ELEMENT_TYPE_TANK',null,True,False,True,null,225.0,3,null,010087,2,null,true),
+('Element:87:2','TUN-DALJ-1','TUN-DALJ-1','LBL_ELEMENT_TYPE_TANK',null,True,False,True,null,225.0,3,null,010087,2,null,true),
+('Element:87:3','TUN-DEP-TOX-MA','TUN-DEP-TOX-MA','LBL_ELEMENT_TYPE_TANK',null,True,False,True,null,225.0,3,null,050087,2,null,true);
 
 
 INSERT INTO ui.equip_viewer_tabs (equip_viewer_id, module_action_id, alias, description, "label", icon, "position", visible) VALUES

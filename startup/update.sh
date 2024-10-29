@@ -321,6 +321,12 @@ cp ~/repositorio/ritsback/server-launcher/target/server-launcher.jar ~/app/backr
 echo -e "\n\nDeleting old resource files..."
 sudo rm -Rf ~/app/backrits/resources/*
 
+echo -e "\n\nChanging back parameters..."
+sed -i "s|\(<p:broker>ws://\).*|\1$REMOTE_HOST:61614</p:broker>|" ~/repositorio/rits/resources/project/$PROJECT/adapters/pub-stomp/pub_stomp_adapter_v1.xml
+sed -i "s|\(<p:path>/home/\).*|\1$USER/app/backrits/</p:path>|" ~/repositorio/rits/resources/project/$PROJECT/adapters/server-launcher/server_launcher_adapter_v1.xml
+sed -i "s|\(jdbc.url=jdbc:postgresql://\).*|\1$REMOTE_BBDD:5430/rits|" ~/repositorio/rits/resources/project/$PROJECT/jdbc.properties
+sed -i "s|\(redis.host=\).*|\1$REMOTE_HOST|" ~/repositorio/rits/resources/project/$PROJECT/redis.properties
+
 echo -e "\n\nCopying new resources..."
 cp -R ~/repositorio/rits/resources/master/* ~/app/backrits/resources
 cp -R ~/repositorio/rits/resources/project/$PROJECT/* ~/app/backrits/resources
