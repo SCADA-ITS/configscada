@@ -29,14 +29,8 @@ INSERT INTO ui.equip_viewer_grp_measures(id, equip_viewer_id, name, description,
 
 INSERT INTO ui.equip_viewer_measures (equip_viewer_grp_measure_id, vo_entities_id, position, visible) VALUES
 (008608,'ElementTypeParam:86:2:1', 1, True),
-(008608,'ElementTypeParam:86:2:2', 2, True),
-(008608,'ElementTypeParam:86:2:3', 3, True),
-(008608,'ElementTypeParam:86:2:4', 4, True),
 
 (008607,'ElementTypeParam:86:2:1', 1, True),
-(008607,'ElementTypeParam:86:2:2', 2, True),
-(008607,'ElementTypeParam:86:2:3', 3, True),
-(008607,'ElementTypeParam:86:2:4', 4, True),
 
 (008602,'ElementTypeParam:86:2:4', 1, True),
 

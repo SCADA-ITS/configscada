@@ -1,5 +1,5 @@
 INSERT INTO ui.equip_viewers (id, name, description, "label", icon, show_info_tab, show_childs, show_actions, initial_tab, measure_width, measure_max_rows, measure_only, graphic_icon_id, info_tab_mode, no_show_properties) VALUES
-('Element:87:1','TUN-DEP-DIESEL-PCI','TUN-DEP-DIESEL-PCI','LBL_ELEMENT_TYPE_TANK',null,True,False,True,null,225.0,3,null,030087,2,null),
+('Element:87:1','TUN-DEP-DIESEL-PCI','TUN-DEP-DIESEL-PCI','LBL_ELEMENT_TYPE_TANK',null,True,False,True,null,225.0,3,null,010087,2,null),
 ('Element:87:2','TUN-DALJ-1','TUN-DALJ-1','LBL_ELEMENT_TYPE_TANK',null,True,False,True,null,225.0,3,null,010087,2,null),
 ('Element:87:3','TUN-DEP-TOX-MA','TUN-DEP-TOX-MA','LBL_ELEMENT_TYPE_TANK',null,True,False,True,null,225.0,3,null,050087,2,null);
 
@@ -19,17 +19,11 @@ INSERT INTO ui.equip_viewer_grp_measures(id, equip_viewer_id, name, description,
 
 INSERT INTO ui.equip_viewer_measures (equip_viewer_grp_measure_id, vo_entities_id, position, visible) VALUES
 --TANK
-(00008701,'ElementTypeParam:87:2:2', 1, True),
-(00008701,'ElementTypeParam:87:2:2', 2, True),
-(00008701,'ElementTypeParam:87:2:3', 3, True),
+(00008701,'ElementTypeParam:87:2:1', 1, True),
 
-(00008702,'ElementTypeParam:87:2:2', 1, True),
-(00008702,'ElementTypeParam:87:2:2', 2, True),
-(00008702,'ElementTypeParam:87:2:3', 3, True),
+(00008702,'ElementTypeParam:87:2:1', 1, True),
 
-(00008703,'ElementTypeParam:87:2:2', 1, True),
-(00008703,'ElementTypeParam:87:2:2', 2, True),
-(00008703,'ElementTypeParam:87:2:3', 3, True);
+(00008703,'ElementTypeParam:87:2:3', 1, True);
 
 INSERT INTO ui.equip_viewer_configs (id, equip_viewer_id, vo_entities_id, "position", visible) VALUES
 (008701,'Element:87:1','ElementTypeParam:87:1:1', 1, false),
