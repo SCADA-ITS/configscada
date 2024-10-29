@@ -123,6 +123,8 @@ INSERT INTO ui.modules(id, module_type_id, "name", description, default_view_typ
 (1051, 1, 'Incident reports', 'Incident report', 1, 'SystemPermission:12', 'modules/incidentMonitorModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 (1052, 1, 'Delayed incident report', 'Delayed incident report', 1, null, 'modules/delayedIncidentModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 
+(1053, 1, 'Routes editor module', 'Routes editor module', 2, null, 'modules/route/routeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+
 (2000, 1, 'Map launcher Module', 'Map launcher Module', 1, null, 'modules/mapLauncherModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL);
 
 
@@ -236,7 +238,10 @@ INSERT INTO ui.module_actions(id, module_id, name, description, system_permissio
 (105201, 1052, 'edit', 'edit delayed report', null, null),
 (105202, 1052, 'enable', 'enable delayed report', null, null),
 (105203, 1052, 'disable', 'disable delayed report', null, null),
-(105204, 1052, 'delete', 'delete delayed report', null, null);
+(105204, 1052, 'delete', 'delete delayed report', null, null),
+(105301, 1053, 'add', 'add new route', null, null),
+(105302, 1053, 'edit', 'edit route', null, null),
+(105303, 1053, 'delete', 'delete route', null, null);
 
 
 
