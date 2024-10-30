@@ -31,7 +31,7 @@ INSERT INTO ui.map_ext_entities (id, default_graphic_icon_id, default_module_act
 (2, 1001, NULL);
 
 INSERT INTO ui.map_ext_entity_types (id, ext_entity_type_id, map_ext_entity_id, graphic_icon_id, module_action_id, visible) VALUES
-(2, 'ExtEntityType:1', 2, 1001, NULL, true);
+(2, 'ExtEntityType:1000', 2, 1001, NULL, true);
 
 INSERT INTO ui.map_layers (id, base_layer, map_id, "name", description, "label", icon, visible) VALUES 
 (3, null, 1, 'Tunnel Málaga', 'Tunel Málaga', 'LBL_TUNNEL_Málaga', NULL, true),

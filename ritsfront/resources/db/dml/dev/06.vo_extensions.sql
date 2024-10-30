@@ -196,7 +196,7 @@ INSERT INTO ui.vo_entities(id, vo_entity_type_id, enabled, visible) VALUES
 ('LogSubtype:33', 'LogTypeUI', true, true),
 ('User:1', 'UserUI', true, true),
 
-('ExtEntityType:1', 'ExtEntityTypeUI', true, true);
+('ExtEntityType:1000', 'ExtEntityTypeUI', true, true);
 
 
 INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
@@ -527,9 +527,9 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 ('PlanOrderType:10', 58, 'SystemPermission:21'),
 ('ElementTypeParam:8:2:1', 62, 'true'),
 
-('ExtEntityType:1', 63, 'waze.png'),
-('ExtEntityType:1', 64, '["ExtEntityTypeParam:1:1","ExtEntityTypeParam:1:2"]'),
-('ExtEntityType:1', 65, '#6eabd9');
+('ExtEntityType:1000', 63, 'waze.png'),
+('ExtEntityType:1000', 64, '["ExtEntityTypeParam:1000:1","ExtEntityTypeParam:1000:2"]'),
+('ExtEntityType:1000', 65, '#6eabd9');
 
 
 INSERT INTO ui.vo_enum_types(id, alias, description, enabled, visible) VALUES
