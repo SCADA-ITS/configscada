@@ -1,2 +1,2 @@
-item;element_subtype;alias;description;sessionuid;road;stretchs;pk;sentido
-1;;PN-REACTOR;PN-REACTOR;PN-REACTOR;Planta Nuclear;Central;;
+item;alias;description;sessionuid;road;stretchs;pk;sentido;on_change_measure
+1;PN-REACTOR;PN-REACTOR;PN-REACTOR;Planta Nuclear;Central;;;ChangeMeasureHistorical.groovy

@@ -1,8 +1,8 @@
-item;alias;description;sessionuid;road;stretchs;pk;sentido
-1;HOSP-ELEV-NO;HOSP-ELEV-NO;HOSP-ELEV-NO;Nicklaus Childrens Hospital;Hosp P1;;
-2;HOSP-ELEV-CO;HOSP-ELEV-CO;HOSP-ELEV-CO;Nicklaus Childrens Hospital;Hosp P1;;
-3;HOSP-ELEV-SO;HOSP-ELEV-SO;HOSP-ELEV-SO;Nicklaus Childrens Hospital;Hosp P1;;
-4;HOSP-ELEV-NC;HOSP-ELEV-NC;HOSP-ELEV-NC;Nicklaus Childrens Hospital;Hosp P1;;
-5;HOSP-ELEV-SC;HOSP-ELEV-SC;HOSP-ELEV-SC;Nicklaus Childrens Hospital;Hosp P1;;
-6;HOSP-ELEV-NE;HOSP-ELEV-NE;HOSP-ELEV-NE;Nicklaus Childrens Hospital;Hosp P1;;
-7;HOSP-ELEV-CE;HOSP-ELEV-CE;HOSP-ELEV-CE;Nicklaus Childrens Hospital;Hosp P1;;
+item;alias;description;sessionuid;road;stretchs;pk;sentido;on_change_measure
+1;HOSP-ELEV-NO;HOSP-ELEV-NO;HOSP-ELEV-NO;Nicklaus Childrens Hospital;Hosp P1;;;ChangeMeasureHistorical.groovy
+2;HOSP-ELEV-CO;HOSP-ELEV-CO;HOSP-ELEV-CO;Nicklaus Childrens Hospital;Hosp P1;;;ChangeMeasureHistorical.groovy
+3;HOSP-ELEV-SO;HOSP-ELEV-SO;HOSP-ELEV-SO;Nicklaus Childrens Hospital;Hosp P1;;;ChangeMeasureHistorical.groovy
+4;HOSP-ELEV-NC;HOSP-ELEV-NC;HOSP-ELEV-NC;Nicklaus Childrens Hospital;Hosp P1;;;ChangeMeasureHistorical.groovy
+5;HOSP-ELEV-SC;HOSP-ELEV-SC;HOSP-ELEV-SC;Nicklaus Childrens Hospital;Hosp P1;;;ChangeMeasureHistorical.groovy
+6;HOSP-ELEV-NE;HOSP-ELEV-NE;HOSP-ELEV-NE;Nicklaus Childrens Hospital;Hosp P1;;;ChangeMeasureHistorical.groovy
+7;HOSP-ELEV-CE;HOSP-ELEV-CE;HOSP-ELEV-CE;Nicklaus Childrens Hospital;Hosp P1;;;ChangeMeasureHistorical.groovy

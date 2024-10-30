@@ -1,11 +1,11 @@
-INSERT INTO ui.equip_viewers (id, name, description, "label", icon, show_info_tab, show_childs, show_actions, initial_tab, measure_width, measure_max_rows, measure_only, graphic_icon_id, info_tab_mode, no_show_properties) VALUES
-('Element:86:1','TUN-BEL-1','TUN-BEL-1','LBL_ELEMENT_TYPE_PUMP',null,True,False,false,null,225.0,3,null,000086,2,null),
-('Element:86:2','TUN-BDI-1','TUN-BDI-1','LBL_ELEMENT_TYPE_PUMP',null,True,False,false,null,225.0,3,null,000086,2,null),
-('Element:86:3','PN-BB-MAR','PN-BB-MAR','LBL_ELEMENT_TYPE_PUMP',null,True,False,false,null,225.0,3,null,000086,2,null),
-('Element:86:4','PN-BB-CON','PN-BB-CON','LBL_ELEMENT_TYPE_PUMP',null,True,False,false,null,225.0,3,null,000086,2,null),
-('Element:86:5','PN-BB-RET','PN-BB-RET','LBL_ELEMENT_TYPE_PUMP',null,True,False,false,null,225.0,3,null,000086,2,null),
-('Element:86:6','PN-BB-REF','PN-BB-REF','LBL_ELEMENT_TYPE_PUMP',null,True,False,false,null,225.0,3,null,000086,2,null),
-('Element:86:7','PN-BB-VAP','PN-BB-VAP','LBL_ELEMENT_TYPE_PUMP',null,True,False,false,null,225.0,3,null,000086,2,null);
+INSERT INTO ui.equip_viewers (id, name, description, "label", icon, show_info_tab, show_childs, show_actions, initial_tab, measure_width, measure_max_rows, measure_only, graphic_icon_id, info_tab_mode, no_show_properties, show_historical_chart) VALUES
+('Element:86:1','TUN-BEL-1','TUN-BEL-1','LBL_ELEMENT_TYPE_PUMP',null,True,False,false,null,225.0,3,null,000086,2,null,true),
+('Element:86:2','TUN-BDI-1','TUN-BDI-1','LBL_ELEMENT_TYPE_PUMP',null,True,False,false,null,225.0,3,null,000086,2,null,true),
+('Element:86:3','PN-BB-MAR','PN-BB-MAR','LBL_ELEMENT_TYPE_PUMP',null,True,False,false,null,225.0,3,null,000086,2,null,true),
+('Element:86:4','PN-BB-CON','PN-BB-CON','LBL_ELEMENT_TYPE_PUMP',null,True,False,false,null,225.0,3,null,000086,2,null,true),
+('Element:86:5','PN-BB-RET','PN-BB-RET','LBL_ELEMENT_TYPE_PUMP',null,True,False,false,null,225.0,3,null,000086,2,null,true),
+('Element:86:6','PN-BB-REF','PN-BB-REF','LBL_ELEMENT_TYPE_PUMP',null,True,False,false,null,225.0,3,null,000086,2,null,true),
+('Element:86:7','PN-BB-VAP','PN-BB-VAP','LBL_ELEMENT_TYPE_PUMP',null,True,False,false,null,225.0,3,null,000086,2,null,true);
 
 INSERT INTO ui.equip_viewer_tabs (equip_viewer_id, module_action_id, alias, description, "label", icon, "position", visible) VALUES
 ('Element:86:1',100501,'Alarms module' ,'Alarms module', 'LBL_ALARMS', null,  1, True ),
@@ -40,5 +40,8 @@ INSERT INTO ui.equip_viewer_measures (equip_viewer_grp_measure_id, vo_entities_i
 (008604,'ElementTypeParam:86:2:3', 1, True),
 
 (008605,'ElementTypeParam:86:2:2', 1, True),
-(008605,'ElementTypeParam:86:2:3', 1, True);
+(008605,'ElementTypeParam:86:2:3', 1, True),
+
+(008606,'ElementTypeParam:86:2:2', 1, True),
+(008606,'ElementTypeParam:86:2:3', 1, True);
 
