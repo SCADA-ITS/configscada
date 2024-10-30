@@ -60,19 +60,42 @@
 --
 	CREATE TABLE ui.map_ext_entities (
 		id int NOT NULL,	
-		ext_entity_graphic_icon_id int NOT NULL,
-		ext_entity_module_action_id int NULL,
-		ext_entity_types varchar NULL, -- Format JSON: [{id: ExtEntityType:1, visible: true}, ...]
+		default_graphic_icon_id int NOT NULL,
+		default_module_action_id int NULL,
 		CONSTRAINT pk_map_ext_entities PRIMARY KEY (id)
 	);
 	
-	CREATE INDEX idx_map_ext_entities_graphic_icon ON ui.map_ext_entities USING btree (ext_entity_graphic_icon_id);
-	CREATE INDEX idx_map_ext_entities_ext_entity_module_action_id ON ui.map_ext_entities USING btree (ext_entity_module_action_id);
+	CREATE INDEX idx_map_ext_entities_default_graphic_icon_id ON ui.map_ext_entities USING btree (default_graphic_icon_id);
+	CREATE INDEX idx_map_ext_entities_default_module_action_id ON ui.map_ext_entities USING btree (default_module_action_id);
 	
-	ALTER TABLE ui.map_ext_entities ADD CONSTRAINT fk_map_ext_entities_graphic_icon FOREIGN KEY (ext_entity_graphic_icon_id) REFERENCES ui.graphic_icons(id);
-	ALTER TABLE ui.map_ext_entities ADD CONSTRAINT fk_map_ext_entities_ext_entity_module_action_id FOREIGN KEY (ext_entity_module_action_id) REFERENCES ui.module_actions(id);
+	ALTER TABLE ui.map_ext_entities ADD CONSTRAINT fk_map_ext_entities_default_graphic_icon_id FOREIGN KEY (default_graphic_icon_id) REFERENCES ui.graphic_icons(id);
+	ALTER TABLE ui.map_ext_entities ADD CONSTRAINT fk_map_ext_entities_default_module_action_id FOREIGN KEY (default_module_action_id) REFERENCES ui.module_actions(id);
 	
 	ALTER TABLE ui.map_ext_entities SET TABLESPACE tbl_ui;
+	
+-- 
+-- Table: ui.map_ext_entity_types
+-- Description: Definition of map ext entity types
+-- Scope: ui
+--
+	CREATE TABLE ui.map_ext_entity_types (
+		id serial primary key,
+		ext_entity_type_id varchar not null,
+		map_ext_entity_id int not null,
+		graphic_icon_id int NULL,
+		module_action_id int NULL,
+		visible boolean NOT NULL
+	);
+	
+	CREATE INDEX idx_map_ext_entity_types_map_ext_entity_id ON ui.map_ext_entity_types USING btree (map_ext_entity_id);
+	CREATE INDEX idx_map_ext_entity_types_graphic_icon_id ON ui.map_ext_entity_types USING btree (graphic_icon_id);
+	CREATE INDEX idx_map_ext_entity_types_module_action_id ON ui.map_ext_entity_types USING btree (module_action_id);
+	
+	ALTER TABLE ui.map_ext_entity_types ADD CONSTRAINT fk_map_ext_entity_types_map_ext_entity_id FOREIGN KEY (map_ext_entity_id) REFERENCES ui.map_ext_entities(id);
+	ALTER TABLE ui.map_ext_entity_types ADD CONSTRAINT fk_map_ext_entity_types_graphic_icon_id FOREIGN KEY (graphic_icon_id) REFERENCES ui.graphic_icons(id);
+	ALTER TABLE ui.map_ext_entity_types ADD CONSTRAINT fk_map_ext_entity_types_module_action_id FOREIGN KEY (module_action_id) REFERENCES ui.module_actions(id);
+	
+	ALTER TABLE ui.map_ext_entity_types SET TABLESPACE tbl_ui;
 	
 -- 
 -- Table: ui.map_layers

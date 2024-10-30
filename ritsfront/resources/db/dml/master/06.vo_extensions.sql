@@ -16,7 +16,8 @@ INSERT INTO ui.vo_entity_types(id, alias, description, enabled, visible) values
 ('ImsIncidentTypeTaskUI', 'ImsIncidentTypeTaskUI', 'ImsIncidentTypeTaskUI', true, true),
 ('ImsTaskTypeUI', 'ImsTaskTypeUI', 'ImsTaskTypeUI', true, true),
 ('PmQueuePriorityUI', 'PmQueuePriorityUI', 'PmQueuePriorityUI', true, true),
-('UserUI', 'UserUI', 'UserUI', true, true);
+('UserUI', 'UserUI', 'UserUI', true, true),
+('ExtEntityTypeUI', 'ExtEntityTypeUI', 'ExtEntityTypeUI', true, true);
 
 
 
@@ -79,7 +80,10 @@ INSERT INTO ui.vo_entity_fields (id, vo_entity_type_id, field, description, labe
 (59, 'ElementTypeUI', 'alarmBackOffice', 'backoffice used in alarms', 'LBL_ENTITIE_FIELDS_ALARMS_BACK_OFFICE', 'LBL_ENTITIE_FIELDS_ALARMS_BACKOFFICE_DESCRIPTION', true, true),
 (60, 'ElementTypeUI', 'elementBackOffice', 'backoffice used in elements', 'LBL_ENTITIE_FIELDS_ELEMENT_BACK_OFFICE', 'LBL_ENTITIE_FIELDS_ELEMENT_BACK_OFFICE_DESCRIPTION', true, true),
 (61, 'ImsIncidentTypeUI', 'backOffice', 'backoffice used in incidents', 'LBL_ENTITIE_FIELDS_INCIDENTS_BACK_OFFICE', 'LBL_ENTITIE_FIELDS_INCIDENTS_BACK_OFFICE_DESCRIPTION', true, true),
-(62, 'ElementTypeParamUI', 'noShowMeasureInChart', 'no show measure in chart', 'LBL_NO_SHOW_MEASURE_IN_CHART', 'LBL_NO_SHOW_MEASURE_IN_CHART_DESCRIPTION', true, true);
+(62, 'ElementTypeParamUI', 'noShowMeasureInChart', 'no show measure in chart', 'LBL_NO_SHOW_MEASURE_IN_CHART', 'LBL_NO_SHOW_MEASURE_IN_CHART_DESCRIPTION', true, true),
+(63, 'ExtEntityTypeUI', 'icon', 'icon for ext entity type', 'LBL_ENTITIE_FIELDS_ICON_INCIDENT_TYPE', 'LBL_ENTITIE_FIELDS_ICON_INCIDENT_TYPE_DESCRIPTION', true, true),
+(64, 'ExtEntityTypeUI', 'tooltipVisibleParams', 'tooltip visible params', 'LBL_ENTITIE_FIELDS_ICON_INCIDENT_TYPE', 'LBL_ENTITIE_FIELDS_ICON_INCIDENT_TYPE_DESCRIPTION', true, true),
+(65, 'ExtEntityTypeUI', 'color', 'color', 'LBL_ENTITIE_FIELDS_ICON_INCIDENT_TYPE', 'LBL_ENTITIE_FIELDS_ICON_INCIDENT_TYPE_DESCRIPTION', true, true);
 
 
 INSERT INTO ui.vo_entities(id, vo_entity_type_id, enabled, visible) VALUES

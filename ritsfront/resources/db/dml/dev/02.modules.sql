@@ -6,6 +6,7 @@ INSERT INTO ui.modules(id, module_type_id, "name", description, default_view_typ
 
 -- Maps
 (970, 3, 'Map Test', 'Map Test', 1, null, 'modules/mapModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(971, 3, 'Mapa Navarra', 'Mapa Navarra', 1, null, 'modules/mapModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 
 -- BackOffice custom type modules
 (1900, 9, 'Orders backoffice', 'Orders backoffice', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
@@ -30,7 +31,7 @@ INSERT INTO ui.modules(id, module_type_id, "name", description, default_view_typ
 
 INSERT INTO ui.modules(id, module_type_id, "name", description, default_view_type_id, default_system_permission_id, js_file, js_method_draw, js_method_callbacks, data_query, wss_topic, enabled, visible, autoload, management_areas) VALUES
 (2001, 1, 'Test module 1', 'Test module 1', 1, null, 'modules/test1Module.js', 'getView', 'loadData', NULL, NULL, true, true, NULL, '["ManagementArea:1"]'),
-(2002, 3, 'TestMap', 'TestMap', 1, null, 'modules/testMap.js', 'getView', 'loadData', NULL, NULL, true, true, true, '["ManagementArea:1"]');
+(2002, 3, 'TestMap', 'TestMap', 1, null, 'modules/testMap.js', 'getView', 'loadData', NULL, NULL, true, true, false, '["ManagementArea:1"]');
 --(2003, 1, 'InfractionEditor', 'InfractionEditor', 1, null, 'modules/infractionEditorModule.js', 'getView', 'loadData', NULL, NULL, true, true, false, null);
 
 INSERT INTO ui.module_values(module_id, module_param_id, value) VALUES
@@ -38,6 +39,7 @@ INSERT INTO ui.module_values(module_id, module_param_id, value) VALUES
 (402, 12, 'true'),
 (920, 4, '1'),
 (970, 6, '1'),
+(971, 6, '2'),
 (1040, 8, '{"treeCustom": [1,4,5]}'),
 
 (1900, 13, '1'),
@@ -115,6 +117,15 @@ INSERT INTO ui.window_values(module_id, window_param_id, value) VALUES
 (970, 12, 'LBL_MAP_TEST'),
 (970, 14, 'true'),
 (970, 17, 'true'),
+
+(971, 4, '825'),
+(971, 5, '1600'),
+(971, 8, 'true'),
+(971, 10, 'img/module/map-color.png'),
+(971, 11, '#464646'),
+(971, 12, 'Mapa Navarra'),
+(971, 14, 'true'),
+(971, 17, 'true'),
 
 (1900, 4, '825'),
 (1900, 5, '1400'),

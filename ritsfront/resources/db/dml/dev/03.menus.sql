@@ -10,6 +10,7 @@ INSERT INTO ui.menu_items(menu_group_id, "position", module_id, "label", icon, "
 -- MAPS & SYNOPTICS
 (1, 1, 920, 'LBL_MENU_ITEM_SYNOPTIC', 'img/menu/synoptic-menu.png', 'Menu item Synoptic Test', 'Menu item Synoptic Test', true, true),
 (1, 2, 970, 'LBL_MENU_ITEM_MAP', 'img/menu/map-menu.png', 'Menu item Mapa Test', 'Menu item Mapa Test', true, true),
+(1, 3, 971, 'Mapa Navarra', 'img/menu/map-menu.png', 'Menu item Mapa Navarra', 'Menu item Mapa Navarra', true, true),
 
 -- MODULES
 (2, 1, 500, 'LBL_MENU_ITEM_EQUIPMENTS', 'img/menu/equipment-menu.png', 'Menu item Equipments', 'Menu item Equipments', true, true),
