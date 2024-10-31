@@ -1,5 +1,5 @@
 INSERT INTO ui.equip_viewers (id, name, description, "label", icon, show_info_tab, show_childs, show_actions, initial_tab, measure_width, measure_max_rows, measure_only, graphic_icon_id, info_tab_mode, no_show_properties) VALUES
-('ElementType:8','Barrier AUS','Barrier AUS','LBL_ELEMENT_SUBTYPE_BARRIER_AUS',null,True,False,True,null,225.0,3,null,8,2,null);
+('ElementType:8','Barrier AUS','Barrier AUS','LBL_ELEMENT_SUBTYPE_BARRIER_AUS',null,True,False,True,null,225.0,3,null,8,2,true);
 
 INSERT INTO ui.equip_viewer_tabs (equip_viewer_id, module_action_id, alias, description, "label", icon, "position", visible) VALUES
 ('ElementType:8',100501,'Alarms module' ,'Alarms module', 'LBL_ALARMS', null, 1, True);
@@ -12,7 +12,3 @@ INSERT INTO ui.equip_viewer_grp_measures(id, equip_viewer_id, name, description,
 INSERT INTO ui.equip_viewer_measures (equip_viewer_grp_measure_id, vo_entities_id, position, visible) VALUES
 --Barrier AUS
 (02000801,'ElementTypeParam:8:2:1', 1, True);
-
-INSERT INTO ui.equip_viewer_configs (id, equip_viewer_id, vo_entities_id, "position", visible) VALUES
-(080201,'ElementType:8','ElementTypeParam:8:1:1', 1, True),
-(080202,'ElementType:8','ElementTypeParam:8:1:2', 2, True);
