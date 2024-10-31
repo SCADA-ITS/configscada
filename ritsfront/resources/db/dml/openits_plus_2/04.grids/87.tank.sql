@@ -9,7 +9,8 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (870004, 87, 1, 4, true, true, false, false, NULL, NULL, 'state', false, false, null, false, false, 35, NULL, true, true, NULL, NULL, NULL, NULL,NULL),
 (870005, 87, 1, 5, true, true, false, true, 'LBL_GRID_FIELD_STATE_LABEL', 'LBL_GRID_FIELD_STATE_LABEL', 'stateLabel', false, false, null, true, false, 150, NULL, true, true, NULL, NULL, NULL, NULL,NULL),
 (870006, 87, 2, 6, true, false, false, false, 'LBL_TANK_CAPACITY_WATER', 'LBL_TANK_CAPACITY_WATER', 'ElementTypeParam:87:2:1', false, false, 'left', false, false, 240, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
-(870007, 87, 2, 7, true, false, false, false, 'LBL_TANK_CAPACITY_DIESEL', 'LBL_TANK_CAPACITY_DIESEL', 'ElementTypeParam:87:2:2', false, false, 'left', false, false, 240, NULL, true, true, NULL, NULL, NULL, NULL, NULL);
+(870007, 87, 2, 7, true, false, false, false, 'LBL_TANK_CAPACITY_DIESEL', 'LBL_TANK_CAPACITY_DIESEL', 'ElementTypeParam:87:2:2', false, false, 'left', false, false, 240, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(870008, 87, 2, 8, true, false, false, false, 'LBL_TANK_CAPACITY_TOXIC', 'LBL_TANK_CAPACITY_TOXIC', 'ElementTypeParam:87:2:3', false, false, 'left', false, false, 240, NULL, true, true, NULL, NULL, NULL, NULL, NULL);
 
 INSERT INTO ui.grid_option_values(grid_id, grid_option_id, value) VALUES
 (87, 1, 'true'),

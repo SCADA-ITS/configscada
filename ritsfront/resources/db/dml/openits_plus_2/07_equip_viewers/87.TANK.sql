@@ -19,7 +19,7 @@ INSERT INTO ui.equip_viewer_grp_measures(id, equip_viewer_id, name, description,
 
 INSERT INTO ui.equip_viewer_measures (equip_viewer_grp_measure_id, vo_entities_id, position, visible) VALUES
 --TANK
-(00008701,'ElementTypeParam:87:2:1', 1, True),
+(00008701,'ElementTypeParam:87:2:2', 1, True),
 
 (00008702,'ElementTypeParam:87:2:1', 1, True),
 

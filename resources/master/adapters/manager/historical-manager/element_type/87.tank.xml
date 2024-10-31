@@ -9,9 +9,21 @@
 	<p:field_element_id>f_element_id</p:field_element_id>
 	<p:field_timestamp>timestamp_at</p:field_timestamp>
 	<p:fields>
-		<p:field name="tank_capacity">
+		<p:field name="tank_capacity_water">
 			<p:element_type_param>
 				<p:element_type_param_id>1</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+		<p:field name="tank_capacity_diesel">
+			<p:element_type_param>
+				<p:element_type_param_id>2</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+		<p:field name="toxic_capacity">
+			<p:element_type_param>
+				<p:element_type_param_id>3</p:element_type_param_id>
 				<p:param_type_id>2</p:param_type_id>
 			</p:element_type_param>
 		</p:field>

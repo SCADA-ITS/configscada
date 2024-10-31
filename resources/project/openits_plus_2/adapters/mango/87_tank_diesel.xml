@@ -3,7 +3,7 @@
 	xmlns:p="json_generic_mango_v1"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="json_generic_mango_v1 ../../../adapter-lib/src/main/resources/schemas/mango/json_generic_mango_v1.xsd "
-	element_type_id="87">
+	element_type_id="87" array_element_id="1">
 	<p:session_uid element_type_param_id="1003"
 		param_type_id="1"></p:session_uid>
 	<p:state field="status">
@@ -14,7 +14,7 @@
 		<p:field>
 			<p:source>tank_capacity</p:source>
 			<p:input>
-				<p:element_type_param_id>1</p:element_type_param_id>
+				<p:element_type_param_id>2</p:element_type_param_id>
 				<p:param_type_id>2</p:param_type_id>
 			</p:input>
 		</p:field>

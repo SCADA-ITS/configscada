@@ -77,6 +77,7 @@ INSERT INTO master.i18n_labels (locale_code, module_id, "label", "translation", 
 --Depósito
 ('es_ES',1,'LBL_TANK_CAPACITY_WATER','Capacidad agua',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 ('es_ES',1,'LBL_TANK_CAPACITY_DIESEL','Capacidad diesel',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+('es_ES',1,'LBL_TANK_CAPACITY_TOXIC','Capacidad tóxicos',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 
 --Detector/Sección
 ('es_ES',1,'LBL_DATE','Fecha',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
@@ -260,6 +261,7 @@ INSERT INTO master.i18n_labels (locale_code, module_id, "label", "translation", 
 --Depósito
 ('en_GB',1,'LBL_TANK_CAPACITY_WATER','Water capacity',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 ('en_GB',1,'LBL_TANK_CAPACITY_DIESEL','Diesel capacity',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+('en_GB',1,'LBL_TANK_CAPACITY_TOXIC','Toxic capacity',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 
 --Detector/Sección
 ('en_GB',1,'LBL_DATE','Date',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
@@ -443,6 +445,7 @@ INSERT INTO master.i18n_labels (locale_code, module_id, "label", "translation", 
 --Depósito
 ('es_CL',1,'LBL_TANK_CAPACITY_WATER','Capacidad agua',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 ('es_CL',1,'LBL_TANK_CAPACITY_DIESEL','Capacidad diesel',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+('es_CL',1,'LBL_TANK_CAPACITY_TOXIC','Capacidad tóxicos',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 
 --Detector/Sección
 ('es_CL',1,'LBL_DATE','Fecha',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
