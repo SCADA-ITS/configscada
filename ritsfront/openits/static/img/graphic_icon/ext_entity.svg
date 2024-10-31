@@ -42,8 +42,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="2.7826282"
-     inkscape:cx="61.273008"
-     inkscape:cy="114.63982"
+     inkscape:cx="61.093322"
+     inkscape:cy="63.608929"
      inkscape:document-units="mm"
      inkscape:current-layer="main"
      inkscape:document-rotation="0"
@@ -55,7 +55,29 @@
      inkscape:window-maximized="1"
      inkscape:showpageshadow="2"
      inkscape:pagecheckerboard="0"
-     inkscape:deskcolor="#d1d1d1" />
+     inkscape:deskcolor="#d1d1d1"
+     showguides="true">
+    <sodipodi:guide
+       position="-30.551025,51.992255"
+       orientation="0,-1"
+       id="guide1"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="-28.430108,3.0841531"
+       orientation="0,-1"
+       id="guide2"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="3.0669746,40.760266"
+       orientation="1,0"
+       id="guide3"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="51.915849,64.508399"
+       orientation="1,0"
+       id="guide4"
+       inkscape:locked="false" />
+  </sodipodi:namedview>
   <metadata
      id="metadata1090">
     <rdf:RDF>
@@ -72,6 +94,14 @@
      inkscape:label="Capa 1"
      inkscape:groupmode="layer"
      id="main">
+    <rect
+       style="fill:none;fill-opacity:1;stroke:none;stroke-width:1.09139;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="state"
+       width="48.610386"
+       height="48.721615"
+       x="3.1844466"
+       y="2.9333704"
+       ry="3.4801152" />
     <image
        xlink:href="../../../project/ausol/img/pictograms/80.bmp"
        style="display:inline"

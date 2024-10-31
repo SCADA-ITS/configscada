@@ -14,6 +14,7 @@ export default class ExtEntity {
 		this.events = events;
 
 		this.gType = this.g.select("#" + GraphicIconExtEntity.G_ID_TYPE);
+		this.gStatus = this.g.select("#" + GraphicIconExtEntity.G_ID_STATUS);
 	}
 	
 	render(extEntity) {
@@ -22,8 +23,12 @@ export default class ExtEntity {
 
 		// Update type
 		if (this.gType) {
+			
+			if (this.extEntity.extEntitySubtype && this.extEntity.extEntitySubtype.icon) {
 				
-			if (this.extEntity.extEntityType.icon) {
+				this.gType.attr( { "xlink:href": PICTOGRAM_TYPE_PATH + "/" + this.extEntity.extEntitySubtype.icon });
+			}
+			else if (this.extEntity.extEntityType.icon) {
 					
 				this.gType.attr( { "xlink:href": PICTOGRAM_TYPE_PATH + "/" + this.extEntity.extEntityType.icon });
 			}
@@ -31,6 +36,11 @@ export default class ExtEntity {
 				
 				this.gType.attr( { "xlink:href": PICTOGRAM_UNKNOWN_TYPE });
 			}
+		}
+		
+		// TODO Update status if aplicable
+		if (this.gStatus) {
+			
 		}
 	}
 }

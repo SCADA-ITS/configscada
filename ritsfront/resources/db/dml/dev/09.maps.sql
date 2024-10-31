@@ -8,7 +8,7 @@ INSERT INTO ui.maps (id, name, description, "label", icon, longitude, latitude, 
 		"router": {"enabled": true, "type": "OpenRouteService", "url": "http://192.168.88.165:8701/ors"},
         "smartRoadInfo": {"enabled": true, "url": "http://192.168.88.165:8702/api"}
 	}'),
-	(2, 'navarra', 'navarra', 'Mapa de Navarra', NULL, -1.6630986, 42.801216, 6, 18, 4, -4.5701704, 44.38234, 1.5830269, 40.593372, null, 6, true, 
+	(2, 'navarra', 'navarra', 'Mapa de Navarra', NULL, -1.7355106, 42.8651, 14, 18, 4, -4.5701704, 44.38234, 1.5830269, 40.593372, null, 6, true, 
 	'{ 
 		"map": {"enabled": true, "type": "WMS", "serverType": "geoserver", "url": "http://192.168.88.165:8700/geoserver/wms", "name": "osm"},
 		"router": {"enabled": true, "type": "OpenRouteService", "url": "http://192.168.88.165:8701/ors"},
@@ -27,11 +27,16 @@ INSERT INTO ui.map_incidents(id, incident_graphic_icon_id, incident_report_modul
 (1, 1000, 100401, 101301),
 (2, 1000, 100401, 101301);
 
-INSERT INTO ui.map_ext_entities (id, default_graphic_icon_id, default_module_action_id) VALUES
-(2, 1001, NULL);
-
-INSERT INTO ui.map_ext_entity_types (id, ext_entity_type_id, map_ext_entity_id, graphic_icon_id, module_action_id, visible) VALUES
-(2, 'ExtEntityType:1000', 2, 1001, NULL, true);
+INSERT INTO ui.map_ext_entities (id, default_graphic_icon_id, default_module_action_id, ext_entity_types_config) VALUES
+(2, 1001, NULL, 
+	'[
+		{
+			"extEntityTypeId": "ExtEntityType:1000",
+			"visible": true,
+			"enabled": true,
+			"animate": true
+		}
+	]');
 
 INSERT INTO ui.map_layers (id, base_layer, map_id, "name", description, "label", icon, visible) VALUES 
 (3, null, 1, 'Tunnel Málaga', 'Tunel Málaga', 'LBL_TUNNEL_Málaga', NULL, true),
