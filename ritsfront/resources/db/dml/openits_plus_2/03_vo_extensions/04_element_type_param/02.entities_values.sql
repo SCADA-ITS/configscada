@@ -1,4 +1,6 @@
 INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
+('ElementTypeParam:15:2:4', 62, 'true'),
+
 ('ElementTypeParam:3:2:3', 62, 'true'),
 ('ElementTypeParam:3:2:5', 62, 'true'),
 ('ElementTypeParam:3:2:10', 62, 'true'),

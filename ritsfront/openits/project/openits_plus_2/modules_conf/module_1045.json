@@ -1,5 +1,5 @@
 {
-	"defaultInitRangeInHours": 6,
+	"defaultInitRangeInHours": 2,
 	"defaultInitPeriodInMinutes": 1,
 	"defaultRealTimePeriodInSeconds": 5,
 	"paramTypeMeasure": "ParamType:2",

@@ -1,5 +1,5 @@
-INSERT INTO ui.equip_viewers (id, name, description, "label", icon, show_info_tab, show_childs, show_actions, initial_tab, measure_width, measure_max_rows, measure_only, graphic_icon_id, info_tab_mode, no_show_properties) VALUES
-('ElementType:70','Network analyzer','Network analyzer','LBL_ELEMENT_SUBTYPE_NETWORK_ANALYZER',null,True,False,False,null,225.0,3,null,70,2,null);
+INSERT INTO ui.equip_viewers (id, name, description, "label", icon, show_info_tab, show_childs, show_actions, initial_tab, measure_width, measure_max_rows, measure_only, graphic_icon_id, info_tab_mode, no_show_properties, show_historical_chart) VALUES
+('ElementType:70','Network analyzer','Network analyzer','LBL_ELEMENT_SUBTYPE_NETWORK_ANALYZER',null,True,False,False,null,225.0,3,null,70,2,true, true);
 
 INSERT INTO ui.equip_viewer_tabs (equip_viewer_id, module_action_id, alias, description, "label", icon, "position", visible) VALUES
 ('ElementType:70',100501,'Alarms module' ,'Alarms module', 'LBL_ALARMS', null, 1, True);
@@ -49,16 +49,12 @@ INSERT INTO ui.equip_viewer_measures (equip_viewer_grp_measure_id, vo_entities_i
 (01007001,'ElementTypeParam:70:2:36', 36, True),
 (01007001,'ElementTypeParam:70:2:37', 37, True),
 (01007001,'ElementTypeParam:70:2:38', 38, True),
-(01007001,'ElementTypeParam:70:2:38', 39, True),
+(01007001,'ElementTypeParam:70:2:39', 39, True),
 (01007001,'ElementTypeParam:70:2:40', 40, True),
-(01007001,'ElementTypeParam:70:2:40', 41, True),
+(01007001,'ElementTypeParam:70:2:41', 41, True),
 (01007001,'ElementTypeParam:70:2:42', 42, True),
 (01007001,'ElementTypeParam:70:2:43', 43, True),
 (01007001,'ElementTypeParam:70:2:44', 44, True),
 (01007001,'ElementTypeParam:70:2:45', 45, True),
 (01007001,'ElementTypeParam:70:2:46', 46, True),
 (01007001,'ElementTypeParam:70:2:47', 47, True);
-
-INSERT INTO ui.equip_viewer_configs (id, equip_viewer_id, vo_entities_id, "position", visible) VALUES
-(700101,'ElementType:70','ElementTypeParam:70:1:1', 1, True),
-(700102,'ElementType:70','ElementTypeParam:70:1:2', 2, True);
