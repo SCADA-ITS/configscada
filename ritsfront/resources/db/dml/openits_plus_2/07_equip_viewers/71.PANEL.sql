@@ -97,12 +97,15 @@ INSERT INTO ui.equip_viewer_configs (id, equip_viewer_id, vo_entities_id, "posit
 (711101, 'ElementSubtype:11:71', 'ElementTypeParam:71:1:1', 1, True),
 (711102, 'ElementSubtype:11:71', 'ElementTypeParam:71:1:2', 2, True),
 (711103, 'ElementSubtype:11:71', 'ElementTypeParam:71:1:9', 9, True),
+
 (711201, 'ElementSubtype:12:71', 'ElementTypeParam:71:1:1', 1, True),
 (711202, 'ElementSubtype:12:71', 'ElementTypeParam:71:1:2', 2, True),
 (711203, 'ElementSubtype:12:71', 'ElementTypeParam:71:1:9', 9, True),
+
 (711601, 'ElementSubtype:16:71', 'ElementTypeParam:71:1:1', 1, True),
 (711602, 'ElementSubtype:16:71', 'ElementTypeParam:71:1:2', 2, True),
 (711603, 'ElementSubtype:16:71', 'ElementTypeParam:71:1:9', 9, True),
+
 (711901, 'ElementSubtype:19:71', 'ElementTypeParam:71:1:1', 1, true),
 (711902, 'ElementSubtype:19:71', 'ElementTypeParam:71:1:2', 2, true),
 

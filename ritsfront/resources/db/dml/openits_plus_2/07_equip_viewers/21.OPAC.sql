@@ -12,7 +12,3 @@ INSERT INTO ui.equip_viewer_grp_measures(id, equip_viewer_id, name, description,
 INSERT INTO ui.equip_viewer_measures (equip_viewer_grp_measure_id, vo_entities_id, position, visible) VALUES
 --OPAC
 (00002101,'ElementTypeParam:21:2:1', 1, True);
-
-INSERT INTO ui.equip_viewer_configs (id, equip_viewer_id, vo_entities_id, "position", visible) VALUES
-(002101,'ElementType:21','ElementTypeParam:21:1:1', 1, True),
-(002102,'ElementType:21','ElementTypeParam:21:1:2', 2, True);

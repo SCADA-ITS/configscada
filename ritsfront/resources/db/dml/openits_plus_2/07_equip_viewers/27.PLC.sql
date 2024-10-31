@@ -13,7 +13,3 @@ INSERT INTO ui.equip_viewer_grp_measures(id, equip_viewer_id, name, description,
 --PLC
 --(00002701,'ElementTypeParam:27:2:1', 1, True),
 --(00002701,'ElementTypeParam:27:2:2', 2, True);
-
-INSERT INTO ui.equip_viewer_configs (id, equip_viewer_id, vo_entities_id, "position", visible) VALUES
-(002701,'ElementType:27','ElementTypeParam:27:1:1', 1, True),
-(002702,'ElementType:27','ElementTypeParam:27:1:2', 2, True);

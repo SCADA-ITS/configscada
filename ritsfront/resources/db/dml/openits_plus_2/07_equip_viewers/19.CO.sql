@@ -12,7 +12,3 @@ INSERT INTO ui.equip_viewer_grp_measures(id, equip_viewer_id, name, description,
 INSERT INTO ui.equip_viewer_measures (equip_viewer_grp_measure_id, vo_entities_id, position, visible) VALUES
 --CO
 (00001901,'ElementTypeParam:19:2:1', 1, True);
-
-INSERT INTO ui.equip_viewer_configs (id, equip_viewer_id, vo_entities_id, "position", visible) VALUES
-(001901,'ElementType:19','ElementTypeParam:19:1:1', 1, True),
-(001902,'ElementType:19','ElementTypeParam:19:1:2', 2, True);

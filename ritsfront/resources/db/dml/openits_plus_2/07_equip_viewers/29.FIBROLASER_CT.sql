@@ -8,7 +8,3 @@ INSERT INTO ui.equip_viewer_tabs (equip_viewer_id, module_action_id, alias, desc
 --if it is going to be put by element use this format for the id: ELEMENT + Subtype(2d) + Type(4d) + contador
 INSERT INTO ui.equip_viewer_grp_measures(id, equip_viewer_id, name, description, "label", icon, position, visible) VALUES
 (2002901, 'ElementType:29', 'Measures', 'Measures', 'LBL_GRP_MEASURES', null, 1, True);
-
-INSERT INTO ui.equip_viewer_configs (id, equip_viewer_id, vo_entities_id, "position", visible) VALUES
-(290201,'ElementType:29','ElementTypeParam:29:1:1', 1, True),
-(290202,'ElementType:29','ElementTypeParam:29:1:2', 2, True);
