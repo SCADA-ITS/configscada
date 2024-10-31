@@ -10,6 +10,10 @@
 --
 INSERT INTO master.i18n_labels (locale_code, module_id, "label", "translation", created_at, updated_at) VALUES
 --es_ES
+--Si/No
+('es_ES', 1, 'LBL_GRID_FR_SI', 'Sí', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_GRID_FR_NO', 'No', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
 --Ventilacion
 ('es_ES', 1, 'LBL_GRID_FR_FAN_STATE_STOP', 'Parado', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_GRID_FR_FAN_STATE_START', 'Sentido directo', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -83,6 +87,10 @@ INSERT INTO master.i18n_labels (locale_code, module_id, "label", "translation", 
 ('es_ES', 1, 'LBL_GRID_FR_PER30_REF10', 'Permanente 30%; Refuerzo 10%', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --en_GB
+--Si/No
+('en_GB', 1, 'LBL_GRID_FR_SI', 'Yes', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_GRID_FR_NO', 'No', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
 --Ventilacion
 ('en_GB', 1, 'LBL_GRID_FR_FAN_STATE_STOP', 'Parado', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_GRID_FR_FAN_STATE_START', 'Sentido directo', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -156,6 +164,10 @@ INSERT INTO master.i18n_labels (locale_code, module_id, "label", "translation", 
 ('en_GB', 1, 'LBL_GRID_FR_PER30_REF10', 'Permanente 30%; Refuerzo 10%', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --es_CL
+--Si/No
+('es_CL', 1, 'LBL_GRID_FR_SI', 'Sí', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_GRID_FR_NO', 'No', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
 --Ventilacion
 ('es_CL', 1, 'LBL_GRID_FR_FAN_STATE_STOP', 'Parado', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_GRID_FR_FAN_STATE_START', 'Sentido directo', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),

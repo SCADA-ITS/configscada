@@ -39,3 +39,7 @@ INSERT INTO ui.grid_field_icons(grid_field_id, icon, value, show_value, badge_co
 (080004, './img/state/stateAlarm.png', 'ElementTypeState:8:3', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_ALARMS'),
 (080004, './img/state/stateMaintenance.png', 'ElementTypeState:8:4', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_MAINTENANCE');
 
+INSERT INTO ui.grid_field_replacements(grid_field_id, "label", value, enabled) VALUES
+--Barrera
+(080006, 'LBL_GRID_FR_SUBIDA', '1', true),
+(080006, 'LBL_GRID_FR_BAJADA', '2', true);

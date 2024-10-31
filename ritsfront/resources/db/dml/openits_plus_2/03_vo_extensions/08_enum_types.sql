@@ -9,7 +9,9 @@ INSERT INTO ui.vo_enum_types(id, alias, description, enabled, visible) VALUES
 (9, 'FailYesNo', 'FailYesNo', true, true),
 (10, 'CerradoAbierto', 'CerradoAbierto', true, true),
 (11, 'PrecipitationTypes', 'PrecipitationTypes', true, true),
-(12, 'ENABLED', 'ENABLED', true, true);
+(12, 'ENABLED', 'ENABLED', true, true),
+(13, 'Si/No', 'Si/No', true, true),
+(14, 'Subida/Bajada', 'Subida/Bajada', true, true);
 
 
 INSERT INTO ui.vo_enum_type_values(id, vo_enum_type_id, "key", value, "translate", image) VALUES
@@ -45,14 +47,25 @@ INSERT INTO ui.vo_enum_type_values(id, vo_enum_type_id, "key", value, "translate
 (23, 11, '70', 'LBL_SOLID_PRECIPITATION', TRUE, null),
 
 (24, 12, 'true', 'LBL_ETV_ENABLE_TRAVEL_TIME', TRUE, null),
-(25, 12, 'false', 'LBL_ETV_DISABLE_TRAVEL_TIME', TRUE, null);
+(25, 12, 'false', 'LBL_ETV_DISABLE_TRAVEL_TIME', TRUE, null),
 
+(26, 13, 'true', 'LBL_ETV_SI', TRUE, null),
+(27, 13, 'false', 'LBL_ETV_NO', TRUE, null),
+
+(28, 14, '1', 'LBL_ETV_SUBIDA', TRUE, null),
+(29, 14, '2', 'LBL_ETV_BAJADA', TRUE, null);
 
 
 INSERT INTO ui.vo_entity_enum_types(vo_entity_id, enum_type_id) VALUES
+('ElementTypeParam:8:2:1', 14),
+
 ('ElementTypeParam:22:2:1', 10),
 
 ('ElementTypeParam:71:2:10', 12),
 
-('ElementTypeParam:84:2:1', 5);
+('ElementTypeParam:74:2:1', 13),
+
+('ElementTypeParam:84:2:1', 5),
+
+('ElementTypeParam:86:2:1', 13);
 

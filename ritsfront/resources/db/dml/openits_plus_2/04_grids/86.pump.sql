@@ -8,9 +8,10 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (860003, 86, 1, 3, true, false, false, false, 'LBL_GRID_FIELD_DESCRIPTION', 'LBL_GRID_FIELD_DESCRIPTION', 'description', false, false, null, false, false, 200, NULL, true, true, NULL, NULL, NULL, NULL,NULL),
 (860004, 86, 1, 4, true, true, false, false, NULL, NULL, 'state', false, false, null, false, false, 35, NULL, true, true, NULL, NULL, NULL, NULL,NULL),
 (860005, 86, 1, 5, true, true, false, true, 'LBL_GRID_FIELD_STATE_LABEL', 'LBL_GRID_FIELD_STATE_LABEL', 'stateLabel', false, false, null, true, false, 150, NULL, true, true, NULL, NULL, NULL, NULL,NULL),
-(860006, 86, 1, 6, true, false, false, false, 'LBL_ELEMENT_TYPE_PARAM_PRESSURE', 'LBL_ELEMENT_TYPE_PARAM_PRESSURE', 'ElementTypeParam:86:2:2', false, false, 'left', false, false, 240, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
-(860007, 86, 1, 7, true, false, false, false, 'LBL_ELEMENT_TYPE_PARAM_TEMPERATURE', 'LBL_ELEMENT_TYPE_PARAM_TEMPERATURE', 'ElementTypeParam:86:2:3', false, false, 'left', false, false, 240, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
-(860008, 86, 1, 8, true, false, false, false, 'LBL_ELEMENT_TYPE_PARAM_ANGULAR_SPEED', 'LBL_ELEMENT_TYPE_PARAM_ANGULAR_SPEED', 'ElementTypeParam:86:2:4', false, false, 'left', false, false, 240, NULL, true, true, NULL, NULL, NULL, NULL, NULL);
+(860006, 86, 1, 6, true, false, false, false, 'LBL_ELEMENT_TYPE_PARAM_PUMP_ON', 'LBL_ELEMENT_TYPE_PARAM_PUMP_ON', 'ElementTypeParam:86:2:1', false, false, 'left', true, false, 240, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(860007, 86, 1, 7, true, false, false, false, 'LBL_ELEMENT_TYPE_PARAM_PRESSURE', 'LBL_ELEMENT_TYPE_PARAM_PRESSURE', 'ElementTypeParam:86:2:2', false, false, 'left', false, false, 240, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(860008, 86, 1, 8, true, false, false, false, 'LBL_ELEMENT_TYPE_PARAM_TEMPERATURE', 'LBL_ELEMENT_TYPE_PARAM_TEMPERATURE', 'ElementTypeParam:86:2:3', false, false, 'left', false, false, 240, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(860009, 86, 1, 9, true, false, false, false, 'LBL_ELEMENT_TYPE_PARAM_ANGULAR_SPEED', 'LBL_ELEMENT_TYPE_PARAM_ANGULAR_SPEED', 'ElementTypeParam:86:2:4', false, false, 'left', false, false, 240, NULL, true, true, NULL, NULL, NULL, NULL, NULL);
 
 INSERT INTO ui.grid_option_values(grid_id, grid_option_id, value) VALUES
 (86, 1, 'true'),
@@ -42,3 +43,7 @@ INSERT INTO ui.grid_field_icons(grid_field_id, icon, value, show_value, badge_co
 (860004, './img/state/stateAlarm.png', 'ElementTypeState:86:3', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_ALARMS'),
 (860004, './img/state/stateMaintenance.png', 'ElementTypeState:86:4', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_MAINTENANCE');
 
+INSERT INTO ui.grid_field_replacements(grid_field_id, "label", value, enabled) VALUES
+--Bomba
+(860006, 'LBL_GRID_FR_NO', '0', true),
+(860006, 'LBL_GRID_FR_SI', '1', true);

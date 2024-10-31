@@ -10,12 +10,20 @@
 
 INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) VALUES
 --es_ES
+--Si/No
+('es_ES', 1, 'LBL_ETV_SI', 'Sí', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_ETV_NO', 'No', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
 --Presurización
 ('es_ES', 1, 'LBL_ETV_LOCAL', 'Modo local', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_ETV_REMOTO', 'Modo remoto', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 ('es_ES', 1, 'LBL_ETV_PARADO', 'Ventilador parado', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_ETV_ARRANCADO', 'Ventilador arrancado', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+--Barrera
+('es_ES', 1, 'LBL_ETV_SUBIDA', 'Subida', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_ETV_BAJADA', 'Bajada', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --Bomba
 ('es_ES', 1, 'LBL_ETV_PARADA', 'Bomba parada', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -50,6 +58,11 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_ES', 1, 'LBL_ETV_DISABLE_TRAVEL_TIME', 'Desactivado', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --en_GB
+--Si/No
+('en_GB', 1, 'LBL_ETV_SI', 'Yes', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_ETV_NO', 'No', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+
 --Presurización
 ('en_GB', 1, 'LBL_ETV_LOCAL', 'Local mode', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_ETV_REMOTO', 'Remote mode', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -90,6 +103,10 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('en_GB', 1, 'LBL_ETV_DISABLE_TRAVEL_TIME', 'Disable', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --es_CL
+--Si/No
+('es_CL', 1, 'LBL_ETV_SI', 'Sí', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_ETV_NO', 'No', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
 --Presurización
 ('es_CL', 1, 'LBL_ETV_LOCAL', 'Modo local', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_ETV_REMOTO', 'Modo remoto', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
