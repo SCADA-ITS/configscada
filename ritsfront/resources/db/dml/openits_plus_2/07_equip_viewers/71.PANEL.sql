@@ -57,13 +57,13 @@ INSERT INTO ui.equip_viewer_grp_measures(id, equip_viewer_id, name, description,
 
 INSERT INTO ui.equip_viewer_measures (equip_viewer_grp_measure_id, vo_entities_id, position, visible) VALUES
 --VMS_CLV
-(11007101, 'ElementTypeParam:71:2:1', 1, True),
-(11007101, 'ElementTypeParam:71:2:3', 3, True),
-(11007101, 'ElementTypeParam:71:2:4', 4, True),
+--(11007101, 'ElementTypeParam:71:2:1', 1, True),
+(11007101, 'ElementTypeParam:71:2:2', 3, True),
+--(11007101, 'ElementTypeParam:71:2:4', 4, True),
 --VMS_AF
-(12007101, 'ElementTypeParam:71:2:1', 1, True),
-(12007101, 'ElementTypeParam:71:2:3', 3, True),
-(12007101, 'ElementTypeParam:71:2:4', 4, True),
+--(12007101, 'ElementTypeParam:71:2:1', 1, True),
+(12007101, 'ElementTypeParam:71:2:2', 3, True),
+--(12007101, 'ElementTypeParam:71:2:4', 4, True),
 --PMV
 (19007101, 'ElementTypeParam:71:2:2', 1, True),
 --PMV TRAVEL_TIME
