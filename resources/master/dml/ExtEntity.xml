@@ -40,7 +40,7 @@
 					 :uid,
 					 :coordinates, 
 					 :autoRoute, 
-					 :lastUspdate,
+					 :lastUpdate,
 					 :generatedAt,	 	  		 
 					 :enabled, 
 					 :visible, 
@@ -52,7 +52,7 @@
 			       description = :description,
 			       coordinates = :coordinates,
 			       auto_route = :autoRoute,
-			       last_update = lastUpdate,
+			       last_update = :lastUpdate,
 			       updated_at = CURRENT_TIMESTAMP
 			 WHERE ext_entity_type_id = :extEntityTypeId
 			   AND ext_entity_id = :id

@@ -4,34 +4,42 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="manager_adapter_v1 ../../../adapter-lib/src/main/resources/schemas/manager/manager_adapter_v1.xsd ">
 	<p:subscriptors>
-		<p:subscriptor>
-			<p:id>1</p:id>
-			<p:enabled>true</p:enabled>
-			<p:entity>SetAlarmsPublishCommand</p:entity>
-		</p:subscriptor>
 	</p:subscriptors>
 	<p:executors>
 		<p:executor>
 			<p:id>1</p:id>
 			<p:enabled>true</p:enabled>
-			<p:threads>4</p:threads>
+			<p:threads>1</p:threads>
 			<p:merge_wait_time>1</p:merge_wait_time>
-			<p:manager_class>com.revenga.rits.back.io.external.manager.tcman.TCMANExecutor</p:manager_class>
+			<p:manager_class>com.revenga.rits.back.io.external.manager.c4entities.C4ExtEntitiesExcutor</p:manager_class>
 			<p:subscriptors_ref>
-				<p:subscriptor_id_ref>1</p:subscriptor_id_ref>
 			</p:subscriptors_ref>
 			<p:executor_params>
-				<p:executor_param_value>element_types=1,2,3,8,9</p:executor_param_value>
-				<p:executor_param_value>alarm_types=1,2,3,4</p:executor_param_value>
-				<p:executor_param_value>alarm_levels=1,2,3,4,5,6</p:executor_param_value>
-				<p:executor_param_value>date_format=yyyy-MM-dd'T'HH:mm:ss.SSS'Z'</p:executor_param_value>
-				<p:executor_param_value>url=http://10.133.50.32/GIMWebApi/api/REVENGA/Aviso/</p:executor_param_value>
-				<p:executor_param_value>KEY=BCA0FCE2-55E1-426D-8B00-D33C5AC97AB6</p:executor_param_value>
-				<p:executor_param_value>client_alias=OpenITS</p:executor_param_value>
-				<p:executor_param_value>source_alias=S1TS-SEV-IC-001</p:executor_param_value>
-				<p:executor_param_value>user_name=Operario1</p:executor_param_value>
-				<p:executor_param_value>GIM_id=0</p:executor_param_value>
-				<p:executor_param_value>GIM_number=0</p:executor_param_value>
+				<p:executor_param_value>ext_entity_type=1</p:executor_param_value>
+	  		</p:executor_params>
+		</p:executor>
+		<p:executor>
+			<p:id>1</p:id>
+			<p:enabled>false</p:enabled>
+			<p:threads>1</p:threads>
+			<p:merge_wait_time>1</p:merge_wait_time>
+			<p:manager_class>com.revenga.rits.back.io.external.manager.c4entities.C4ExtEntitiesExcutor</p:manager_class>
+			<p:subscriptors_ref>
+			</p:subscriptors_ref>
+			<p:executor_params>
+				<p:executor_param_value>ext_entity_type=2</p:executor_param_value>
+	  		</p:executor_params>
+		</p:executor>
+		<p:executor>
+			<p:id>1</p:id>
+			<p:enabled>false</p:enabled>
+			<p:threads>1</p:threads>
+			<p:merge_wait_time>1</p:merge_wait_time>
+			<p:manager_class>com.revenga.rits.back.io.external.manager.c4entities.C4ExtEntitiesExcutor</p:manager_class>
+			<p:subscriptors_ref>
+			</p:subscriptors_ref>
+			<p:executor_params>
+				<p:executor_param_value>ext_entity_type=3</p:executor_param_value>
 	  		</p:executor_params>
 		</p:executor>
 	</p:executors>
