@@ -28,15 +28,15 @@ INSERT INTO ui.grid_option_values(grid_id, grid_option_id, value) VALUES
 (30, 26, 'true');
 
 INSERT INTO ui.grid_commands(grid_id, "position", "label", icon, "default", module_action_id, args, view_type_id, multiselect, show_text, item_required) VALUES
-(27, 1, 'LBL_CMD_VIEW', 'mdi mdi-eye', true, 101401, NULL, NULL, false, false, false),
-(27, 2, 'LBL_CMD_SHOW_IN_MAP', 'mdi mdi-map-search', false, 200004, null, null, false, false, true),
-(27, 3, 'LBL_CMD_SHOW_ALARMS', 'mdi mdi-bell', false, 100501, null, 2, true, true, true);
+(30, 1, 'LBL_CMD_VIEW', 'mdi mdi-eye', true, 101401, NULL, NULL, false, false, false),
+(30, 2, 'LBL_CMD_SHOW_IN_MAP', 'mdi mdi-map-search', false, 200004, null, null, false, false, true),
+(30, 3, 'LBL_CMD_SHOW_ALARMS', 'mdi mdi-bell', false, 100501, null, 2, true, true, true);
 
 INSERT INTO ui.grid_field_icons(grid_field_id, icon, value, show_value, badge_color, avatar, enabled, label_value) VALUES
-(270004, './img/state/stateUnknown.png', 'ElementTypeState:27:0', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_UNKNOWN'),
-(270004, './img/state/stateUp.png', 'ElementTypeState:27:1', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_UP'),
-(270004, './img/state/stateDown.png', 'ElementTypeState:27:2', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_DOWN'),
-(270004, './img/state/stateAlarm.png', 'ElementTypeState:27:3', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_ALARMS'),
-(270004, './img/state/stateMaintenance.png', 'ElementTypeState:27:4', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_MAINTENANCE');
+(300004, './img/state/stateUnknown.png', 'ElementTypeState:30:0', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_UNKNOWN'),
+(300004, './img/state/stateUp.png', 'ElementTypeState:30:1', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_UP'),
+(300004, './img/state/stateDown.png', 'ElementTypeState:30:2', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_DOWN'),
+(300004, './img/state/stateAlarm.png', 'ElementTypeState:30:3', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_ALARMS'),
+(300004, './img/state/stateMaintenance.png', 'ElementTypeState:30:4', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_MAINTENANCE');
 
 

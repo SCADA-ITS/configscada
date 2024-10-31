@@ -78,7 +78,7 @@ INSERT INTO ui.grid_commands(grid_id, "position", "label", icon, "default", modu
 (70, 2, 'LBL_CMD_SHOW_ALARMS', 'mdi mdi-bell', false, 100501, null, 2, true, true, true),
 (70, 3, 'LBL_CMD_SHOW_IN_MAP', 'mdi mdi-map-search', false, 200004, null, null, false, false, true);
 
-INSERT INTO ui.grid_field_icons(grid_field_id, icon, value, show_value, badge_color, avatar, enabled, label_value) VALUES(600004, './img/state/stateUnknown.png', 'ElementTypeState:60:0', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_UNKNOWN'),
+INSERT INTO ui.grid_field_icons(grid_field_id, icon, value, show_value, badge_color, avatar, enabled, label_value) VALUES
 (700004, './img/state/stateUnknown.png', 'ElementTypeState:70:0', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_UNKNOWN'),
 (700004, './img/state/stateUp.png', 'ElementTypeState:70:1', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_UP'),
 (700004, './img/state/stateDown.png', 'ElementTypeState:70:2', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_DOWN'),
