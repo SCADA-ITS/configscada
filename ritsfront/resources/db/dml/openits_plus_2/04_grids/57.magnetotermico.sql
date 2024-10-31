@@ -39,3 +39,7 @@ INSERT INTO ui.grid_field_icons(grid_field_id, icon, value, show_value, badge_co
 (570004, './img/state/stateAlarm.png', 'ElementTypeState:57:3', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_ALARMS'),
 (570004, './img/state/stateMaintenance.png', 'ElementTypeState:57:4', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_MAINTENANCE');
 
+INSERT INTO ui.grid_field_replacements(grid_field_id, "label", value, enabled) VALUES
+--ERU
+(570006, 'LBL_GRID_FR_CERRADO', '0', true),
+(570006, 'LBL_GRID_FR_ABIERTO', '1', true);

@@ -30,8 +30,8 @@ INSERT INTO ui.vo_enum_type_values(id, vo_enum_type_id, "key", value, "translate
 (11, 6, 'true', 'LBL_ETV_WITH_CONTROL', TRUE, null),
 (12, 6, 'false', 'LBL_ETV_WITHOUT_CONTROL', TRUE, null),
 
-(13, 7, 'true', 'LBL_ETV_SUBIDO', TRUE, null),
-(14, 7, 'false', 'LBL_ETV_BAJADO', TRUE, null),
+(13, 7, 'false', 'LBL_ETV_CERRADO', TRUE, null),
+(14, 7, 'true', 'LBL_ETV_ABIERTO', TRUE, null),
 
 (15, 8, 'false', 'LBL_ETV_WITHOUT_DERIVATION', TRUE, null),
 (16, 8, 'true', 'LBL_ETV_WITH_DERIVATION', TRUE, null),
@@ -60,6 +60,8 @@ INSERT INTO ui.vo_entity_enum_types(vo_entity_id, enum_type_id) VALUES
 ('ElementTypeParam:8:2:1', 14),
 
 ('ElementTypeParam:22:2:1', 10),
+
+('ElementTypeParam:57:2:1', 7),
 
 ('ElementTypeParam:71:2:10', 12),
 

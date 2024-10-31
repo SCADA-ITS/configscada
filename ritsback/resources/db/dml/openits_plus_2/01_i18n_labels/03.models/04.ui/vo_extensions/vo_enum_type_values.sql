@@ -37,6 +37,10 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_ES', 1, 'LBL_ETV_WITH_CONTROL', 'Con control de periféricos', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_ETV_WITHOUT_CONTROL', 'Sin control de periféricos', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
+--Interruptor
+('es_ES', 1, 'LBL_ETV_CERRADO', 'Cerrado', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_ETV_ABIERTO', 'Abierto', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
 --SAI
 ('es_ES', 1, 'LBL_ETV_WITHOUT_DERIVATION', 'Sin derivación', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_ETV_WITH_DERIVATION', 'Con derivación', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -82,6 +86,10 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('en_GB', 1, 'LBL_ETV_WITH_CONTROL', 'With peripheral control', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_ETV_WITHOUT_CONTROL', 'Without peripheral control', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
+--Interruptor
+('en_GB', 1, 'LBL_ETV_CERRADO', 'Closed', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_ETV_ABIERTO', 'Opened', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
 --SAI
 ('en_GB', 1, 'LBL_ETV_WITHOUT_DERIVATION', 'Without derivation', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_ETV_WITH_DERIVATION', 'With derivation', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -125,6 +133,10 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 --ERU
 ('es_CL', 1, 'LBL_ETV_WITH_CONTROL', 'Con control de periféricos', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_ETV_WITHOUT_CONTROL', 'Sin control de periféricos', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+--Interruptor
+('es_CL', 1, 'LBL_ETV_CERRADO', 'Cerrado', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_ETV_ABIERTO', 'Abierto', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --SAI
 ('es_CL', 1, 'LBL_ETV_WITHOUT_DERIVATION', 'Sin derivación', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),

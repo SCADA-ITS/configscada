@@ -44,5 +44,5 @@ INSERT INTO ui.grid_field_icons(grid_field_id, icon, value, show_value, badge_co
 
 INSERT INTO ui.grid_field_replacements(grid_field_id, "label", value, enabled) VALUES
 --Circuito de iluminación
-(840006,'LBL_GRID_FR_CERRADO', '1', true),
-(840006,'LBL_GRID_FR_ABIERTO', '0', true);
+(840006,'LBL_GRID_FR_ENCENDIDO', '1', true),
+(840006,'LBL_GRID_FR_APAGADO', '0', true);
