@@ -20,7 +20,7 @@
 		</p:executor>
 		<p:executor>
 			<p:id>1</p:id>
-			<p:enabled>false</p:enabled>
+			<p:enabled>true</p:enabled>
 			<p:threads>1</p:threads>
 			<p:merge_wait_time>1</p:merge_wait_time>
 			<p:manager_class>com.revenga.rits.back.io.external.manager.c4entities.C4ExtEntitiesExcutor</p:manager_class>
@@ -32,7 +32,7 @@
 		</p:executor>
 		<p:executor>
 			<p:id>1</p:id>
-			<p:enabled>false</p:enabled>
+			<p:enabled>true</p:enabled>
 			<p:threads>1</p:threads>
 			<p:merge_wait_time>1</p:merge_wait_time>
 			<p:manager_class>com.revenga.rits.back.io.external.manager.c4entities.C4ExtEntitiesExcutor</p:manager_class>
