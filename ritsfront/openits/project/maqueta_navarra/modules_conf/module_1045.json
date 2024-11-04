@@ -1,0 +1,17 @@
+{
+	"defaultInitRangeInHours": 6,
+	"defaultInitPeriodInMinutes": 1,
+	"defaultRealTimePeriodInSeconds": 5,
+	"paramTypeMeasure": "ParamType:2",
+	"moduleAction": {
+		"alarms": 104501,
+		"states": 104502,
+		"elementValues": 104503,
+		"equipmentViewer": 104504
+	},
+	"restEndpoints":{
+		"elementValues": "elements/history/measures",
+		"states": "elements/history/states",
+		"alarms": "alarms/history"
+	}
+}

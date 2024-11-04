@@ -4,12 +4,11 @@ const appConfig = {
 	restUrl: './api/v1/',
 	stompUrl: function() {
 		
-		const wsUrl = 'ws://192.168.88.130:61614';
+		const wsUrl = 'ws://10.253.5.83:61614';
 		const wssUrl = 'wss://openits.server/ws';
 	
 		return document.location.protocol === "https:" ? wssUrl : wsUrl;	
-	}() ,
-	osrm: 'http://192.168.88.130:5000/route/v1/driving/${ini};${end}?overview=full&geometries=geojson'
+	}() 
 }
 
 const APP_TITLE = "OpenITS - NAVARRA";

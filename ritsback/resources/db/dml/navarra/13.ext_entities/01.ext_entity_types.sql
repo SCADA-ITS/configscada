@@ -1,0 +1,4 @@
+INSERT INTO static.ext_entity_types(ext_entity_type_id, alias, description, label_alias, label_description, cron_expression, config_params, enabled, visible, created_at, updated_at) VALUES
+(1, 'C4 - Obras', 'Incidencias generadas en sistema C4 dentro de la categoría obras', 'LBL_EXT_ENTITY_TYPE_C4_WORKS', 'LBL_EXT_ENTITY_TYPE_C4_WORKS:DESC', null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 'C4 - Meteorológicas', 'Incidencias generadas en sistema C4 dentro de la categoría meteorológicas ', 'LBL_EXT_ENTITY_TYPE_C4_WEATHER', 'LBL_EXT_ENTITY_TYPE_C4_WEATHER_DESC', null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(3, 'C4 - Red viaria', 'Incidencias generadas en sistema C4 dentro de la categoría red viaría', 'LBL_EXT_ENTITY_TYPE_C4_ROAD', 'LBL_EXT_ENTITY_TYPE_C4_ROAD_DESC', null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
