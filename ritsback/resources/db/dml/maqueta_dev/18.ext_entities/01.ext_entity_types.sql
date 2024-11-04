@@ -53,7 +53,7 @@ INSERT INTO static.ext_entity_types(ext_entity_type_id, alias, description, labe
 	} 
 }',
 true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(2, 'C4 - Meteorológicas', 'Incidencias generadas en sistema C4 - Meteorológicas', 'LBL_EXT_ENTITY_TYPE_C4_WEATHER', 'LBL_EXT_ENTITY_TYPE_C4_WEATHER_DESC', false, '20 0/1 * * * ? *', 
+(2, 'C4 - Meteorológicas', 'Incidencias generadas en sistema C4 - Meteorológicas', 'LBL_EXT_ENTITY_TYPE_C4_WEATHER', 'LBL_EXT_ENTITY_TYPE_C4_WEATHER_DESC', true, '20 0/1 * * * ? *', 
 '{
 	"jdbc": {
 		"url": "jdbc:sqlserver://;serverName=192.168.88.159;databaseName=IncCarreteras",
@@ -73,8 +73,7 @@ true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 							],
 	"extEntityFieldsMapping": [ {"srcField": "id_incidencia", "dstField": "uid"},
 								{"srcField": "tipo", "dstField": "alias"},
-								{"srcField": "titulo", "dstField": "description"},    
-								{"srcField": "id_tipo", "dstField": "extEntitySubtypeId"}  
+								{"srcField": "titulo", "dstField": "description"}
 							],
 	"extEntitySubtypes": {
 		"field": "id_tipo",
@@ -99,7 +98,7 @@ true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 }
 ',
 true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(3, 'C4 - Red viaria', 'Incidencias generadas en sistema C4 - Red viaria', 'LBL_EXT_ENTITY_TYPE_C4_ROAD', 'LBL_EXT_ENTITY_TYPE_C4_ROAD_DESC', false, '40 0/1 * * * ? *', 
+(3, 'C4 - Red viaria', 'Incidencias generadas en sistema C4 - Red viaria', 'LBL_EXT_ENTITY_TYPE_C4_ROAD', 'LBL_EXT_ENTITY_TYPE_C4_ROAD_DESC', true, '40 0/1 * * * ? *', 
 '{
 	"jdbc": {
 		"url": "jdbc:sqlserver://;serverName=192.168.88.159;databaseName=IncCarreteras",
@@ -119,8 +118,7 @@ true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 							],
 	"extEntityFieldsMapping": [ {"srcField": "id_incidencia", "dstField": "uid"},
 								{"srcField": "tipo", "dstField": "alias"},
-								{"srcField": "titulo", "dstField": "description"},    
-								{"srcField": "id_tipo", "dstField": "extEntitySubtypeId"}  
+								{"srcField": "titulo", "dstField": "description"}
 							],
 	"extEntitySubtypes": {
 		"field": "id_tipo",
