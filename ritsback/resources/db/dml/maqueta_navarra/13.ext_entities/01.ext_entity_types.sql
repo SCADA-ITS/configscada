@@ -1,5 +1,5 @@
 INSERT INTO static.ext_entity_types(ext_entity_type_id, alias, description, label_alias, label_description, archive_historical, cron_expression, config_params, enabled, visible, created_at, updated_at) VALUES
-(1, 'C4 - Obras', 'Incidencias generadas en sistema C4 - Obras', 'LBL_EXT_ENTITY_TYPE_C4_OBRAS', 'LBL_EXT_ENTITY_TYPE_C4_OBRAS_DESC', true, '0 0/1 * * * ? *', 
+(1, 'C4 - Obras', 'Incidencias generadas en sistema C4 - Obras', 'LBL_EXT_ENTITY_TYPE_C4_WORKS', 'LBL_EXT_ENTITY_TYPE_C4_WORKS_DESC', true, '0 0/1 * * * ? *', 
 '{
 	"jdbc": {
 		"url": "jdbc:sqlserver://;serverName=192.168.88.159;databaseName=IncCarreteras",
