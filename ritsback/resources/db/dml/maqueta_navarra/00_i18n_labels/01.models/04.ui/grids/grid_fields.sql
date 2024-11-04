@@ -1,0 +1,39 @@
+-- 
+-- Type:   model
+-- Entity: ui.grid_fields
+-- File:   grid_fields.sql
+-- Langs:  es_ES, en_GB, sk_SK, es_CL
+--
+
+-- 
+-- Table: master.i18n_labels
+--
+INSERT INTO master.i18n_labels (locale_code, module_id, "label", "translation", created_at, updated_at) VALUES
+('es_ES', 1, 'LBL_TRAMO_AFECTADO', 'Tramo afectado', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+--Detector/Sección
+('es_ES',1,'LBL_DATE','Fecha',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+('es_ES',1,'LBL_PERIOD','Periodo (min)',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+('es_ES',1,'LBL_N_VEHICLES','Número de vehículos',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+('es_ES',1,'LBL_SPEED','Velocidad',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+('es_ES',1,'LBL_LENGTH','Longitud (dm)',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+('es_ES',1,'LBL_GAP','Distancia (dm)',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+('es_ES',1,'LBL_OCCUPANCY','Ocupación ',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+('es_ES',1,'LBL_VEH_LENGTH_1','Long. veh. 1 (dm)',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+('es_ES',1,'LBL_VEH_LENGTH_2','Long. veh. 2 (dm)',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+('es_ES',1,'LBL_VEH_LENGTH_3','Long. Veh. 3 (dm)',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+('es_ES',1,'LBL_VEH_SPEED_1','Vel. veh. 1',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+('es_ES',1,'LBL_VEH_SPEED_2','Vel. veh. 2',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+('es_ES',1,'LBL_VEH_SPEED_3','Vel. veh. 3',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+('es_ES',1,'LBL_VEH_SPEED_4','Vel. Veh. 4',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
+
+
+
+
+
+
+
+
+
+
+

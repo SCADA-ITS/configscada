@@ -1,5 +1,5 @@
 INSERT INTO ui.maps (id, name, description, "label", icon, longitude, latitude, zoom, zoom_max, zoom_min, limit_init_lon, limit_init_lat, limit_end_lon, limit_end_lat, custom_provider_url, default_zoom_search, dark_mode, custom_provider) VALUES 
-(1, 'MAP', 'Map', 'LBL_MENU_ITEM_MAP', NULL, -1.65, 42.7, 9, 14, 9, 0, 39.8, -2.5, 45.8, null, 9, true,
+(1, 'MAP', 'Map', 'LBL_MENU_ITEM_MAP', NULL, -1.65, 42.7, 9, 14, 9, -2.5, 39.8, 0, 45.8, null, 9, true,
 	'{ 
 		"map": {"enabled": false, "type": "WMS", "serverType": "geoserver", "url": "http://192.168.88.161:8700/geoserver/wms", "name": "osm"},
 		"router": {"enabled": true, "type": "OpenRouteService", "url": "http://192.168.88.161:8701/ors"},
@@ -13,7 +13,14 @@ INSERT INTO ui.maps (id, name, description, "label", icon, longitude, latitude, 
 	}');
 
 INSERT INTO ui.graphic_icons (id, "name", description, alarms, measures, js_draw_file, width, height, svg_pattern_var, svg_file, js_custom_type_render, keep_aspect_ratio) VALUES
-(1000, 'INCIDENT_REPORT', 'INCIDENT_REPORT', false, true, 'component/graphicIcon/graphicIconCustom.js', 70, 120, null, 'img/graphic_icon/incident_report.svg', 'component/graphicIcon/custom/incidentReport.js', null);
+(1000, 'INCIDENT_REPORT', 'INCIDENT_REPORT', false, true, 'component/graphicIcon/graphicIconCustom.js', 70, 120, null, 'img/graphic_icon/incident_report.svg', 'component/graphicIcon/custom/incidentReport.js', null),
+(1001, 'EXT_ENTITY', 'EXT_ENTITY', false, true, 'component/graphicIcon/graphicIconCustom.js', 70, 120, null, 'img/graphic_icon/ext_entity.svg', 'component/graphicIcon/custom/ext_entity.js', null),
+(010001, 'EXT_ENTITY_WORKS_YELLOW', 'EXT_ENTITY_WORKS_YELLOW', false, true, 'component/graphicIcon/graphicIconCustom.js', 70, 120, null, 'img/graphic_icon/ext_entity.svg', 'component/graphicIcon/custom/ext_entity.js', null),
+(020001, 'EXT_ENTITY_WORKS_RED', 'EXT_ENTITY_WORKS_RED', false, true, 'component/graphicIcon/graphicIconCustom.js', 70, 120, null, 'img/graphic_icon/ext_entity.svg', 'component/graphicIcon/custom/ext_entity.js', null),
+(010002, 'EXT_ENTITY_WEATHER_YELLOW', 'EXT_ENTITY_WORKS_YELLOW', false, true, 'component/graphicIcon/graphicIconCustom.js', 70, 120, null, 'img/graphic_icon/ext_entity.svg', 'component/graphicIcon/custom/ext_entity.js', null),
+(020002, 'EXT_ENTITY_WEATHER_RED', 'EXT_ENTITY_WEATHER_RED', false, true, 'component/graphicIcon/graphicIconCustom.js', 70, 120, null, 'img/graphic_icon/ext_entity.svg', 'component/graphicIcon/custom/ext_entity.js', null),
+(010003, 'EXT_ENTITY_ROAD_YELLOW', 'EXT_ENTITY_WORKS_YELLOW', false, true, 'component/graphicIcon/graphicIconCustom.js', 70, 120, null, 'img/graphic_icon/ext_entity.svg', 'component/graphicIcon/custom/ext_entity.js', null),
+(020003, 'EXT_ENTITY_ROAD_RED', 'EXT_ENTITY_ROAD_RED', false, true, 'component/graphicIcon/graphicIconCustom.js', 70, 120, null, 'img/graphic_icon/ext_entity.svg', 'component/graphicIcon/custom/ext_entity.js', null);
 
 INSERT INTO ui.map_layers (id, base_layer, map_id, "name", description, "label", icon, visible) VALUES 
 (2, NULL, 1, 'CAMERA', 'CAMERA', 'LBL_ELEMENT_TYPE_CAMERA', NULL, true), 
@@ -59,4 +66,46 @@ INSERT INTO ui.map_commands
 (0, 1, 0, 'LBL_CMD_ALARMS', 'mdi mdi-pencil', false, 100501, NULL, 2, true, NULL, true, true),
 (1, 1, 1, 'LBL_CMD_ELEMENT', 'mdi mdi-pencil', true, 101401, NULL, 2, false, NULL, false, true),
 (2, 1, 2, 'LBL_CMD_EQUIPMENT', 'mdi mdi-pencil', false, 101701, NULL, 2, true, NULL, true, true);
+
+INSERT INTO ui.map_ext_entities (id, default_graphic_icon_id, default_module_action_id, ext_entity_types_config) VALUES
+(2, 1001, NULL, 
+	'[
+		{ 
+			"extEntityTypeId": "ExtEntityType:1000",
+			"visible": true,
+			"enabled": true,
+			"animate": true
+		}
+	]
+'),
+(3, 010001, NULL, 
+	'[
+		{ 
+			"extEntityTypeId": "ExtEntityType:1",
+			"visible": true,
+			"enabled": true,
+			"animate": true
+		}
+	]
+'),
+(4, 010002, NULL, 
+	'[
+		{ 
+			"extEntityTypeId": "ExtEntityType:2",
+			"visible": true,
+			"enabled": true,
+			"animate": true
+		}
+	]
+'),
+(5, 010003, NULL, 
+	'[
+		{ 
+			"extEntityTypeId": "ExtEntityType:3",
+			"visible": true,
+			"enabled": true,
+			"animate": true
+		}
+	]
+');
 

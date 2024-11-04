@@ -26,6 +26,9 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_ES', 1, 'LBL_MAP_EDITOR_ADD_PK_TO_LINSTRING', '¿Desea añadir el Pk a la línea actual?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_MAP_EDITOR_ADD_POINTS', 'Añadir marcadores', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_MAP_EDITOR_LINESTRING_AS_POLYGON', 'Mismo punto inicial y final, se procede a borrar la línea', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_MAP_EDITOR_INCREASING_DIRECTION', '(Creciente)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_MAP_EDITOR_DECREASING_DIRECTION', '(Decreciente)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_MAP_EDITOR_BOTH_WAYS', '(Ambos sentidos)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --en_GB
 ('en_GB', 1, 'LBL_MAP_EDITOR_PREVIEW_ROUTE', 'Preview', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -43,6 +46,9 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('en_GB', 1, 'LBL_MAP_EDITOR_ADD_PK_TO_LINSTRING', 'Do you want to add the Pk to the current linestring?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_MAP_EDITOR_ADD_POINTS', 'Add marks', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_MAP_EDITOR_LINESTRING_AS_POLYGON', 'Same start and end point, proceed to erase the linestring', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_MAP_EDITOR_INCREASING_DIRECTION', '(Increasing)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_MAP_EDITOR_DECREASING_DIRECTION', '(Decreasing)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_MAP_EDITOR_BOTH_WAYS', '(Both ways)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --es_CL
 ('es_CL', 1, 'LBL_MAP_EDITOR_PREVIEW_ROUTE', 'Previsualizar', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -59,7 +65,10 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_CL', 1, 'LBL_MAP_EDITOR_SELECT', 'Seleccionar', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_MAP_EDITOR_ADD_POINTS', 'Añadir marcadores', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_MAP_EDITOR_ADD_PK_TO_LINSTRING', '¿Desea añadir el Pk a la línea actual?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('es_CL', 1, 'LBL_MAP_EDITOR_LINESTRING_AS_POLYGON', 'Mismo punto inicial y final, se procede a borrar la línea', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+('es_CL', 1, 'LBL_MAP_EDITOR_LINESTRING_AS_POLYGON', 'Mismo punto inicial y final, se procede a borrar la línea', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_MAP_EDITOR_INCREASING_DIRECTION', '(Creciente)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_MAP_EDITOR_DECREASING_DIRECTION', '(Decreciente)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_MAP_EDITOR_BOTH_WAYS', '(Ambos sentidos)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 
 
