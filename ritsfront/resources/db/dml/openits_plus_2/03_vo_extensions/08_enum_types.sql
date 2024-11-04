@@ -63,6 +63,9 @@ INSERT INTO ui.vo_entity_enum_types(vo_entity_id, enum_type_id) VALUES
 
 ('ElementTypeParam:57:2:1', 7),
 
+('ElementTypeParam:65:2:1', 13),
+('ElementTypeParam:65:2:2', 13),
+
 ('ElementTypeParam:71:2:10', 12),
 
 ('ElementTypeParam:74:2:1', 13),

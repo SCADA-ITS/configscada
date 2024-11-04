@@ -18,7 +18,9 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (750013, 75, 2, 13, true, false, false, false, 'LBL_GRP_TENSION_SALIDA_GEN', 'LBL_GRP_TENSION_SALIDA_GEN', 'ElementTypeParam:75:2:8', false, false, 'left', false, false, 150, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
 (750014, 75, 1, 14, true, false, false, false, 'LBL_GRP_MODO_OPERACION_OFF', 'LBL_GRP_MODO_OPERACION_OFF', 'ElementTypeParam:75:2:9', false, false, 'left', false, false, 200, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
 (750015, 75, 1, 15, true, false, false, false, 'LBL_GRP_MODO_OPERACION_MAN', 'LBL_GRP_MODO_OPERACION_MAN', 'ElementTypeParam:75:2:10', false, false, 'left', false, false, 200, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
-(750016, 75, 1, 16, true, false, false, false, 'LBL_GRP_MODO_OPERACION_AUT', 'LBL_GRP_MODO_OPERACION_AUT', 'ElementTypeParam:75:2:11', false, false, 'left', false, false, 200, NULL, true, true, NULL, NULL, NULL, NULL, NULL);
+(750016, 75, 1, 16, true, false, false, false, 'LBL_GRP_MODO_OPERACION_AUT', 'LBL_GRP_MODO_OPERACION_AUT', 'ElementTypeParam:75:2:11', false, false, 'left', false, false, 200, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(750017, 75, 2, 17, true, false, false, false, 'LBL_GRP_TEMP_REFRIGERANTE', 'LBL_GRP_TEMP_REFRIGERANTE', 'ElementTypeParam:75:2:19', false, false, 'left', false, false, 200, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(750018, 75, 2, 18, true, false, false, false, 'LBL_GRP_TEMP_ACEITE', 'LBL_GRP_TEMP_ACEITE', 'ElementTypeParam:75:2:22', false, false, 'left', false, false, 200, NULL, true, true, NULL, NULL, NULL, NULL, NULL);
 
 INSERT INTO ui.grid_option_values(grid_id, grid_option_id, value) VALUES
 (75, 1, 'true'),
