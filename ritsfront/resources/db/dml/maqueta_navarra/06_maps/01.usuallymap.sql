@@ -1,5 +1,6 @@
 INSERT INTO ui.maps (id, name, description, "label", icon, longitude, latitude, zoom, zoom_max, zoom_min, limit_init_lon, limit_init_lat, limit_end_lon, limit_end_lat, custom_provider_url, default_zoom_search, dark_mode, custom_provider) VALUES 
-(1, 'MAP', 'Map', 'LBL_MENU_ITEM_MAP', NULL, -1.65, 42.7, 9, 14, 9, -2.5, 39.8, 0, 45.8, null, 9, true,
+--(1, 'MAP', 'Map', 'LBL_MENU_ITEM_MAP', NULL, -1.65, 42.7, 9, 14, 9, -2.5, 39.8, 0, 45.8, null, 9, true,
+(1, 'MAP', 'Map', 'LBL_MENU_ITEM_MAP', NULL, -1.65, 42.7, 0, 14, 0, -2.5, 39.8, 0, 45.8, null, 0, true,
 	'{ 
 		"map": {"enabled": false, "type": "WMS", "serverType": "geoserver", "url": "http://192.168.88.161:8700/geoserver/wms", "name": "osm"},
 		"router": {"enabled": true, "type": "OpenRouteService", "url": "http://192.168.88.161:8701/ors"},
@@ -68,17 +69,7 @@ INSERT INTO ui.map_commands
 (2, 1, 2, 'LBL_CMD_EQUIPMENT', 'mdi mdi-pencil', false, 101701, NULL, 2, true, NULL, true, true);
 
 INSERT INTO ui.map_ext_entities (id, default_graphic_icon_id, default_module_action_id, ext_entity_types_config) VALUES
-(2, 1001, NULL, 
-	'[
-		{ 
-			"extEntityTypeId": "ExtEntityType:1000",
-			"visible": true,
-			"enabled": true,
-			"animate": true
-		}
-	]
-'),
-(3, 010001, NULL, 
+(1, 010001, NULL, 
 	'[
 		{ 
 			"extEntityTypeId": "ExtEntityType:1",
@@ -88,7 +79,7 @@ INSERT INTO ui.map_ext_entities (id, default_graphic_icon_id, default_module_act
 		}
 	]
 '),
-(4, 010002, NULL, 
+(2, 010002, NULL, 
 	'[
 		{ 
 			"extEntityTypeId": "ExtEntityType:2",
@@ -98,7 +89,7 @@ INSERT INTO ui.map_ext_entities (id, default_graphic_icon_id, default_module_act
 		}
 	]
 '),
-(5, 010003, NULL, 
+(3, 010003, NULL, 
 	'[
 		{ 
 			"extEntityTypeId": "ExtEntityType:3",

@@ -7,6 +7,14 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 ('ElementType:99', 2, '02_camera_sanctioning2.svg'),
 ('ElementType:99', 14, 'grid/element_type_99.png'),
 
-('ExtEntityType:1000', 63, 'waze.png'),
-('ExtEntityType:1000', 64, '["ExtEntityTypeParam:1000:1","ExtEntityTypeParam:1000:2"]'),
-('ExtEntityType:1000', 65, '#6eabd9');
+('ExtEntityType:1', 63, 'obras_amarillo.png'),
+--('ExtEntityType:1000', 64, '["ExtEntityTypeParam:1000:1","ExtEntityTypeParam:1000:2"]'),
+('ExtEntityType:1', 65, '#6eabd9'),
+
+('ExtEntityType:2', 63, 'obras_rojo.png'),
+--('ExtEntityType:1000', 64, '["ExtEntityTypeParam:1000:1","ExtEntityTypeParam:1000:2"]'),
+('ExtEntityType:2', 65, '#6eabd9'),
+
+('ExtEntityType:3', 63, 'red_viaria.png'),
+--('ExtEntityType:1000', 64, '["ExtEntityTypeParam:1000:1","ExtEntityTypeParam:1000:2"]'),
+('ExtEntityType:3', 65, '#6eabd9');
