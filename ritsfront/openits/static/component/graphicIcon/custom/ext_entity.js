@@ -1,7 +1,7 @@
 import GraphicIconExtEntity from "../graphicIconExtEntity.js";
 
-const PICTOGRAM_TYPE_PATH = "img/ext_entity";
-const PICTOGRAM_UNKNOWN_TYPE = "img/ext_entity/undefined.png";
+const PICTOGRAM_TYPE_PATH = "img/ext_entity_type";
+const PICTOGRAM_UNKNOWN_TYPE = "img/ext_entity_type/undefined.png";
 
 
 export default class ExtEntity {

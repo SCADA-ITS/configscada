@@ -28,10 +28,29 @@ INSERT INTO ui.map_incidents(id, incident_graphic_icon_id, incident_report_modul
 (2, 1000, 100401, 101301);
 
 INSERT INTO ui.map_ext_entities (id, default_graphic_icon_id, default_module_action_id, ext_entity_types_config) VALUES
-(2, 1001, NULL, 
+--
+-- ext_entity_types_config format:
+--
+-- [
+--		{
+--			"extEntityTypeId": Identificador del tipo de entidad externa
+--			"graphicIconId": (Opcional) Identificador de graphicIcon para renderizar para ese tipo en concreto
+--			"moduleActionId": (Opcional) Identificador de module action a ejecutar para ese tipo en concreto
+--			"visible": Visible al arranque
+--			"enabled": Habilitado
+--			"animate": Animación (deprecated)
+--		},...
+-- ]
+(2, 1001, NULL,
 	'[
 		{
 			"extEntityTypeId": "ExtEntityType:1000",
+			"visible": true,
+			"enabled": true,
+			"animate": true
+		},
+		{
+			"extEntityTypeId": "ExtEntityType:1",
 			"visible": true,
 			"enabled": true,
 			"animate": true

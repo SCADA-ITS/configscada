@@ -17,7 +17,8 @@ INSERT INTO ui.vo_entity_types(id, alias, description, enabled, visible) values
 ('ImsTaskTypeUI', 'ImsTaskTypeUI', 'ImsTaskTypeUI', true, true),
 ('PmQueuePriorityUI', 'PmQueuePriorityUI', 'PmQueuePriorityUI', true, true),
 ('UserUI', 'UserUI', 'UserUI', true, true),
-('ExtEntityTypeUI', 'ExtEntityTypeUI', 'ExtEntityTypeUI', true, true);
+('ExtEntityTypeUI', 'ExtEntityTypeUI', 'ExtEntityTypeUI', true, true),
+('ExtEntitySubtypeUI', 'ExtEntitySubtypeUI', 'ExtEntitySubtypeUI', true, true);
 
 
 
@@ -83,7 +84,8 @@ INSERT INTO ui.vo_entity_fields (id, vo_entity_type_id, field, description, labe
 (62, 'ElementTypeParamUI', 'noShowMeasureInChart', 'no show measure in chart', 'LBL_NO_SHOW_MEASURE_IN_CHART', 'LBL_NO_SHOW_MEASURE_IN_CHART_DESCRIPTION', true, true),
 (63, 'ExtEntityTypeUI', 'icon', 'icon for ext entity type', 'LBL_ENTITIE_FIELDS_ICON_INCIDENT_TYPE', 'LBL_ENTITIE_FIELDS_ICON_INCIDENT_TYPE_DESCRIPTION', true, true),
 (64, 'ExtEntityTypeUI', 'tooltipVisibleParams', 'tooltip visible params', 'LBL_ENTITIE_FIELDS_ICON_INCIDENT_TYPE', 'LBL_ENTITIE_FIELDS_ICON_INCIDENT_TYPE_DESCRIPTION', true, true),
-(65, 'ExtEntityTypeUI', 'color', 'color', 'LBL_ENTITIE_FIELDS_ICON_INCIDENT_TYPE', 'LBL_ENTITIE_FIELDS_ICON_INCIDENT_TYPE_DESCRIPTION', true, true);
+(65, 'ExtEntityTypeUI', 'color', 'color', 'LBL_ENTITIE_FIELDS_ICON_INCIDENT_TYPE', 'LBL_ENTITIE_FIELDS_ICON_INCIDENT_TYPE_DESCRIPTION', true, true),
+(66, 'ExtEntitySubtypeUI', 'icon', 'icon for ext entity type', 'LBL_ENTITIE_FIELDS_ICON_INCIDENT_TYPE', 'LBL_ENTITIE_FIELDS_ICON_INCIDENT_TYPE_DESCRIPTION', true, true);
 
 
 INSERT INTO ui.vo_entities(id, vo_entity_type_id, enabled, visible) VALUES
