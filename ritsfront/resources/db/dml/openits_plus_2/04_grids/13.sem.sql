@@ -4,10 +4,11 @@ INSERT INTO ui.grids(id, adapter_id, "label", enabled, visible) VALUES
 INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", required, parameterized, extended, filtered, "label", label_tooltip, source_field, is_pk, is_epoch_milli, align, needs_translation, grouping_summary, width_px, grid_field_group_operation_id, enabled, visible, adjust, header_vertical, fixed_column, replacement_function, precision_filter) VALUES
 --el id lo definimos como: <tipo><numero de fila 4 numeros>
 (130001, 13, 1, 1, true, false, false, false, 'LBL_GRID_FIELD_ID', 'LBL_GRID_FIELD_ID', 'id', true, false, null, false, false, 500, NULL, true, false, NULL, NULL, NULL, NULL, NULL),
-(130002, 13, 1, 2, true, false, false, true, 'LBL_GRID_FIELD_NAME', 'LBL_GRID_FIELD_NAME', 'alias', false, false, NULL, false, false, 150, NULL, true, true, NULL, NULL, true, NULL, NULL),
-(130003, 13, 1, 3, true, false, false, false, 'LBL_GRID_FIELD_DESCRIPTION', 'LBL_GRID_FIELD_DESCRIPTION', 'description', false, false, NULL, false, false, 150, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(130002, 13, 1, 2, true, false, false, true, 'LBL_GRID_FIELD_NAME', 'LBL_GRID_FIELD_NAME', 'alias', false, false, NULL, false, false, 175, NULL, true, true, NULL, NULL, true, NULL, NULL),
+(130003, 13, 1, 3, true, false, false, false, 'LBL_GRID_FIELD_DESCRIPTION', 'LBL_GRID_FIELD_DESCRIPTION', 'description', false, false, NULL, false, false, 175, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
 (130004, 13, 1, 4, true, true, false, false, NULL, NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
-(130005, 13, 1, 5, true, true, false, true, 'LBL_GRID_FIELD_STATE_LABEL', 'LBL_GRID_FIELD_STATE_LABEL', 'stateLabel', false, false, NULL, true, false, 150, NULL, true, true, NULL, NULL, NULL, NULL, NULL);
+(130005, 13, 1, 5, true, true, false, true, 'LBL_GRID_FIELD_STATE_LABEL', 'LBL_GRID_FIELD_STATE_LABEL', 'stateLabel', false, false, NULL, true, false, 150, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(130006, 13, 1, 6, true, false, false, false, 'LBL_LIGHT_STATE', 'LBL_LIGHT_STATE', 'ElementTypeParam:13:2:1', false, false, 'left', true, false, 200, NULL, true, true, NULL, NULL, NULL, NULL, NULL);
 
 INSERT INTO ui.grid_option_values(grid_id, grid_option_id, value) VALUES
 (13, 1, 'true'),
@@ -38,4 +39,11 @@ INSERT INTO ui.grid_field_icons(grid_field_id, icon, value, show_value, badge_co
 (130004, './img/state/stateAlarm.png', 'ElementTypeState:13:3', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_ALARMS'),
 (130004, './img/state/stateMaintenance.png', 'ElementTypeState:13:4', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_MAINTENANCE');
 
+INSERT INTO ui.grid_field_replacements(grid_field_id, "label", value, enabled) VALUES
+--SEM RAV
+(130006, 'LBL_GRID_FR_FLASHING_YELLOW', '0', true),
+(130006, 'LBL_GRID_FR_RED', '1', true),
+(130006, 'LBL_GRID_FR_YELLOW', '2', true),
+(130006, 'LBL_GRID_FR_GREEN', '4', true),
+(130006, 'LBL_GRID_FR_OFF', '7', true);
 

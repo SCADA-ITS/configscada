@@ -11,7 +11,10 @@ INSERT INTO ui.vo_enum_types(id, alias, description, enabled, visible) VALUES
 (11, 'PrecipitationTypes', 'PrecipitationTypes', true, true),
 (12, 'ENABLED', 'ENABLED', true, true),
 (13, 'Si/No', 'Si/No', true, true),
-(14, 'Subida/Bajada', 'Subida/Bajada', true, true);
+(14, 'Subida/Bajada', 'Subida/Bajada', true, true),
+(15, 'SemaforosRAV', 'SemaforosRAV', true, true),
+(16, 'Encendido/Apagado', 'Encendido/Apagado', true, true),
+(17, 'Apagado/Encendido', 'Apagado/Encendido', true, true);
 
 
 INSERT INTO ui.vo_enum_type_values(id, vo_enum_type_id, "key", value, "translate", image) VALUES
@@ -53,13 +56,25 @@ INSERT INTO ui.vo_enum_type_values(id, vo_enum_type_id, "key", value, "translate
 (27, 13, 'false', 'LBL_ETV_NO', TRUE, null),
 
 (28, 14, '1', 'LBL_ETV_SUBIDA', TRUE, null),
-(29, 14, '2', 'LBL_ETV_BAJADA', TRUE, null);
+(29, 14, '2', 'LBL_ETV_BAJADA', TRUE, null),
 
+(30, 15, '0', 'LBL_ETV_FLASHING_YELLOW', TRUE, null),
+(31, 15, '1', 'LBL_ETV_RED', TRUE, null),
+(32, 15, '2', 'LBL_ETV_YELLOW', TRUE, null),
+(33, 15, '4', 'LBL_ETV_GREEN', TRUE, null),
+(34, 15, '7', 'LBL_ETV_OFF', TRUE, null),
+
+(35, 16, '0', 'LBL_ETV_APAGADO', TRUE, null),
+(36, 16, '1', 'LBL_ETV_ENCENDIDO', TRUE, null);
 
 INSERT INTO ui.vo_entity_enum_types(vo_entity_id, enum_type_id) VALUES
 ('ElementTypeParam:8:2:1', 14),
 
+('ElementTypeParam:13:2:1', 15),
+
 ('ElementTypeParam:22:2:1', 10),
+
+('ElementTypeParam:53:2:1', 16),
 
 ('ElementTypeParam:57:2:1', 7),
 

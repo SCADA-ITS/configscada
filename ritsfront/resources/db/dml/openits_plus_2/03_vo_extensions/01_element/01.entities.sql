@@ -20,6 +20,11 @@ INSERT INTO ui.vo_entities(id, vo_entity_type_id, enabled, visible) VALUES
 ('Element:4:19', 'ElementUI', true, true),
 ('Element:4:20', 'ElementUI', true, true),
 
+('Element:53:1', 'ElementUI', true, true),
+('Element:53:2', 'ElementUI', true, true),
+('Element:53:3', 'ElementUI', true, true),
+('Element:53:4', 'ElementUI', true, true),
+
 ('Element:71:3', 'ElementUI', true, true),
 ('Element:71:4', 'ElementUI', true, true),
 ('Element:71:5', 'ElementUI', true, true),
