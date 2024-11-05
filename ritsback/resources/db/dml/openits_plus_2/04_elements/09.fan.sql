@@ -27,36 +27,52 @@ INSERT INTO conf.elements (element_type_id, element_subtype_id, element_id, loca
 (9, 1, 26, 0260009, NULL, NULL, 'TUN-VENT-VF10-MA', 'TUN-VENT-VF10-MA', 'SendAlarmsToVentilation.groovy', 'SendFanStateToVentilation.groovy', 'SendValuesToVentilation.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_type_id, element_id, element_value_state_id, value, enabled, visible, created_at, updated_at) VALUES
+(9, 6, 1, 1, NULL, 'true', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (9, 1003, 1, 1, NULL, 'TUN-VENT-VF1-CA', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
+(9, 6, 1, 2, NULL, 'true', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (9, 1003, 1, 2, NULL, 'TUN-VENT-VF2-CA', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
+(9, 6, 1, 3, NULL, 'true', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (9, 1003, 1, 3, NULL, 'TUN-VENT-VF3-CA', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
+(9, 6, 1, 4, NULL, 'true', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (9, 1003, 1, 4, NULL, 'TUN-VENT-VF4-CA', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
+(9, 6, 1, 5, NULL, 'true', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (9, 1003, 1, 5, NULL, 'TUN-VENT-VF5-CA', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
+(9, 6, 1, 6, NULL, 'true', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (9, 1003, 1, 6, NULL, 'TUN-VENT-VF6-CA', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
+(9, 6, 1, 7, NULL, 'true', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (9, 1003, 1, 7, NULL, 'TUN-VENT-VF7-CA', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
+(9, 6, 1, 8, NULL, 'true', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (9, 1003, 1, 8, NULL, 'TUN-VENT-VF8-CA', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
+(9, 6, 1, 9, NULL, 'true', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (9, 1003, 1, 9, NULL, 'TUN-VENT-VF9-CA', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
+(9, 6, 1, 10, NULL, 'true', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (9, 1003, 1, 10, NULL, 'TUN-VENT-VF10-CA', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
+(9, 6, 1, 11, NULL, 'true', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (9, 1003, 1, 11, NULL, 'TUN-VENT-VF11-CA', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
+(9, 6, 1, 12, NULL, 'true', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (9, 1003, 1, 12, NULL, 'TUN-VENT-VF12-CA', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
+(9, 6, 1, 13, NULL, 'true', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (9, 1003, 1, 13, NULL, 'TUN-VENT-VF13-CA', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
+(9, 6, 1, 14, NULL, 'true', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (9, 1003, 1, 14, NULL, 'TUN-VENT-VF14-CA', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
+(9, 6, 1, 15, NULL, 'true', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (9, 1003, 1, 15, NULL, 'TUN-VENT-VF15-CA', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
+(9, 6, 1, 16, NULL, 'true', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (9, 1003, 1, 16, NULL, 'TUN-VENT-VF16-CA', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (9, 1003, 1, 17, NULL, 'TUN-VENT-VF1-MA', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 

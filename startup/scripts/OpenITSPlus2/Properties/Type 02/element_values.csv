@@ -1,6 +1,6 @@
 item;element_subtype;alias;description;sessionuid;road;stretchs;pk;sentido;on_change_measure;param1_brand;param2_model;param3_stream_mjpeg;param7_PTZ;param9_hostname;param10_user;param11_password;param12_PTZ
-1;1;TUN-TVD-1CA;TUN-TVD-1CA;TUN-TVD-1CA;Carretera Tunel;Tunel Norte;172+623;CA;;HIKVISION;DS-2CD2665FWD-IZS;http://109.206.96.58:8080/cam_1.cgi;;;;;
-2;1;TUN-TVD-1MA;TUN-TVD-1MA;TUN-TVD-1MA;Carretera Tunel;Tunel Sur;173+535;MA;;HIKVISION;DS-2CD2665FWD-IZS;http://109.206.96.58:8080/cam_1.cgi;;;;;
+1;1;TUN-TVD-1CA;TUN-TVD-1CA;TUN-TVD-1CA;Carretera Tunel;Tunel Norte;172+623;CA;;HIKVISION;DS-2CD2665FWD-IZS;http://109.206.96.58:8080/cam_1.cgi;PTZ;;;;
+2;1;TUN-TVD-1MA;TUN-TVD-1MA;TUN-TVD-1MA;Carretera Tunel;Tunel Sur;173+535;MA;;HIKVISION;DS-2CD2665FWD-IZS;http://109.206.96.58:8080/cam_1.cgi;PTZ;;;;
 3;2;TUN-TV-1CA;TUN-TV-1CA;TUN-TV-1CA;Carretera Tunel;Tunel Norte;173+492;CA;;HIKVISION;DS-2CD2665FWD-IZS;http://109.206.96.58:8080/cam_1.cgi;;;;;
 4;2;TUN-TV-2CA;TUN-TV-2CA;TUN-TV-2CA;Carretera Tunel;Tunel Norte;173+417;CA;;HIKVISION;DS-2CD2665FWD-IZS;http://109.206.96.58:8080/cam_1.cgi;;;;;
 5;2;TUN-TV-3CA;TUN-TV-3CA;TUN-TV-3CA;Carretera Tunel;Tunel Norte;173+340;CA;;HIKVISION;DS-2CD2665FWD-IZS;http://109.206.96.58:8080/cam_1.cgi;;;;;
