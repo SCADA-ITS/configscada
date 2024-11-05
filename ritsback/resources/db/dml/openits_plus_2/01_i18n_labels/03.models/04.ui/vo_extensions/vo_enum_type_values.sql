@@ -72,6 +72,10 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_ES', 1, 'LBL_ETV_ENABLE_TRAVEL_TIME', 'Activado', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_ETV_DISABLE_TRAVEL_TIME', 'Desactivado', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
+--Ventilador
+('es_ES', 1, 'LBL_ETV_DIRECTA', 'Directa', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_ETV_INVERSA', 'Inversa', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
 --en_GB
 --Si/No
 ('en_GB', 1, 'LBL_ETV_SI', 'Yes', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -132,6 +136,10 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('en_GB', 1, 'LBL_ETV_ENABLE_TRAVEL_TIME', 'Enable', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_ETV_DISABLE_TRAVEL_TIME', 'Disable', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
+--Ventilador
+('en_GB', 1, 'LBL_ETV_DIRECTA', 'Direct', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_ETV_INVERSA', 'Reverse', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
 --es_CL
 --Si/No
 ('es_CL', 1, 'LBL_ETV_SI', 'Sí', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -189,5 +197,8 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 
 --Tiempos de recorrido
 ('es_CL', 1, 'LBL_ETV_ENABLE_TRAVEL_TIME', 'Activado', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('es_CL', 1, 'LBL_ETV_DISABLE_TRAVEL_TIME', 'Desactivado', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+('es_CL', 1, 'LBL_ETV_DISABLE_TRAVEL_TIME', 'Desactivado', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
+--Ventilador
+('es_CL', 1, 'LBL_ETV_DIRECTA', 'Directa', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_ETV_INVERSA', 'Inversa', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

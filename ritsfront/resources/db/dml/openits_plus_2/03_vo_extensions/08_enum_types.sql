@@ -14,7 +14,7 @@ INSERT INTO ui.vo_enum_types(id, alias, description, enabled, visible) VALUES
 (14, 'Subida/Bajada', 'Subida/Bajada', true, true),
 (15, 'SemaforosRAV', 'SemaforosRAV', true, true),
 (16, 'Encendido/Apagado', 'Encendido/Apagado', true, true),
-(17, 'Apagado/Encendido', 'Apagado/Encendido', true, true);
+(17, 'Ventiladores', 'Parado/Directa/Inversa', true, true);
 
 
 INSERT INTO ui.vo_enum_type_values(id, vo_enum_type_id, "key", value, "translate", image) VALUES
@@ -65,14 +65,24 @@ INSERT INTO ui.vo_enum_type_values(id, vo_enum_type_id, "key", value, "translate
 (34, 15, '7', 'LBL_ETV_OFF', TRUE, null),
 
 (35, 16, '0', 'LBL_ETV_APAGADO', TRUE, null),
-(36, 16, '1', 'LBL_ETV_ENCENDIDO', TRUE, null);
+(36, 16, '1', 'LBL_ETV_ENCENDIDO', TRUE, null),
+
+(37, 17, '0', 'LBL_ETV_PARADO', TRUE, null),
+(38, 17, '1', 'LBL_ETV_DIRECTA', TRUE, null),
+(39, 17, '2', 'LBL_ETV_INVERSA', TRUE, null);
 
 INSERT INTO ui.vo_entity_enum_types(vo_entity_id, enum_type_id) VALUES
 ('ElementTypeParam:8:2:1', 14),
 
+('ElementTypeParam:9:2:1', 17),
+
 ('ElementTypeParam:13:2:1', 15),
 
 ('ElementTypeParam:22:2:1', 10),
+
+('ElementTypeParam:32:2:1', 13),
+('ElementTypeParam:32:2:2', 13),
+('ElementTypeParam:32:2:3', 13),
 
 ('ElementTypeParam:53:2:1', 16),
 
@@ -84,6 +94,10 @@ INSERT INTO ui.vo_entity_enum_types(vo_entity_id, enum_type_id) VALUES
 ('ElementTypeParam:71:2:10', 12),
 
 ('ElementTypeParam:74:2:1', 13),
+
+('ElementTypeParam:75:2:9', 13),
+('ElementTypeParam:75:2:10', 13),
+('ElementTypeParam:75:2:11', 13),
 
 ('ElementTypeParam:84:2:1', 5),
 

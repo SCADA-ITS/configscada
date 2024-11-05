@@ -97,6 +97,11 @@ INSERT INTO master.i18n_labels (locale_code, module_id, "label", "translation", 
 ('es_ES', 1, 'LBL_GRID_FR_PER30_REF20', 'Permanente 30%; Refuerzo 20%', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_GRID_FR_PER30_REF10', 'Permanente 30%; Refuerzo 10%', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
+--Ventilador
+('es_ES', 1, 'LBL_GRID_FR_DIRECTA', 'Directa', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_GRID_FR_INVERSA', 'Inversa', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+
 --en_GB
 --Si/No
 ('en_GB', 1, 'LBL_GRID_FR_SI', 'Yes', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -185,6 +190,10 @@ INSERT INTO master.i18n_labels (locale_code, module_id, "label", "translation", 
 ('en_GB', 1, 'LBL_GRID_FR_PER30_REF20', 'Permanente 30%; Refuerzo 20%', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_GRID_FR_PER30_REF10', 'Permanente 30%; Refuerzo 10%', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
+--Ventilador
+('en_GB', 1, 'LBL_GRID_FR_DIRECTA', 'Direct', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_GRID_FR_INVERSA', 'Reverse', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
 --es_CL
 --Si/No
 ('es_CL', 1, 'LBL_GRID_FR_SI', 'Sí', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -271,4 +280,8 @@ INSERT INTO master.i18n_labels (locale_code, module_id, "label", "translation", 
 ('es_CL', 1, 'LBL_GRID_FR_PER30_REF40', 'Permanente 30%; Refuerzo 40%', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_GRID_FR_PER30_REF30', 'Permanente 30%; Refuerzo 30%', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_GRID_FR_PER30_REF20', 'Permanente 30%; Refuerzo 20%', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('es_CL', 1, 'LBL_GRID_FR_PER30_REF10', 'Permanente 30%; Refuerzo 10%', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+('es_CL', 1, 'LBL_GRID_FR_PER30_REF10', 'Permanente 30%; Refuerzo 10%', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+--Ventilador
+('es_CL', 1, 'LBL_GRID_FR_DIRECTA', 'Directa', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_GRID_FR_INVERSA', 'Inversa', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

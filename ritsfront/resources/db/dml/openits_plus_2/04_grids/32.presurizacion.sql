@@ -8,11 +8,9 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (320003, 32, 1, 3, true, false, false, false, 'LBL_GRID_FIELD_DESCRIPTION', 'LBL_GRID_FIELD_DESCRIPTION', 'description', false, false, NULL, false, false, 200, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
 (320004, 32, 1, 4, true, true, false, false, NULL, NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
 (320005, 32, 1, 5, true, true, false, true, 'LBL_GRID_FIELD_STATE_LABEL', 'LBL_GRID_FIELD_STATE_LABEL', 'stateLabel', false, false, NULL, true, false, 150, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
-(320006, 32, 2, 6, true, false, false, false, 'LBL_REMOTE_CONTROL', 'LBL_REMOTE_CONTROL', 'ElementTypeParam:32:2:1', false, false, 'left', true, false, 200, NULL, true, true, NULL, NULL, NULL, NULL, 0),
-(320007, 32, 2, 7, true, false, false, false, 'LBL_PRESS_FAN_1', 'LBL_PRESS_FAN_1', 'ElementTypeParam:32:2:2', false, false, 'left', true, false, 200, NULL, true, true, NULL, NULL, NULL, NULL, 0),
-(320008, 32, 2, 8, true, false, false, false, 'LBL_PRESS_FAN_2', 'LBL_PRESS_FAN_2', 'ElementTypeParam:32:2:3', false, false, 'left', true, false, 200, NULL, true, true, NULL, NULL, NULL, NULL, 0),
-(320009, 32, 1, 9, false, false, true, false, 'LBL_GRID_FIELD_BRAND', 'LBL_GRID_FIELD_BRAND', 'ElementTypeParam:32:1:1', false, false, 'left', false, false, 100, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
-(320010, 32, 1, 10, false, false, true, false, 'LBL_GRID_FIELD_MODEL', 'LBL_GRID_FIELD_MODEL', 'ElementTypeParam:32:1:2', false, false, 'left', false, false, 240, NULL, true, true, NULL, NULL, NULL, NULL, NULL);
+(320006, 32, 1, 6, true, false, false, false, 'LBL_REMOTE_CONTROL', 'LBL_REMOTE_CONTROL', 'ElementTypeParam:32:2:1', false, false, 'left', true, false, 200, NULL, true, true, NULL, NULL, NULL, NULL, 0),
+(320007, 32, 1, 7, true, false, false, false, 'LBL_PRESS_FAN_1', 'LBL_PRESS_FAN_1', 'ElementTypeParam:32:2:2', false, false, 'left', true, false, 200, NULL, true, true, NULL, NULL, NULL, NULL, 0),
+(320008, 32, 1, 8, true, false, false, false, 'LBL_PRESS_FAN_2', 'LBL_PRESS_FAN_2', 'ElementTypeParam:32:2:3', false, false, 'left', true, false, 200, NULL, true, true, NULL, NULL, NULL, NULL, 0);
 
 INSERT INTO ui.grid_option_values(grid_id, grid_option_id, value) VALUES
 (32, 1, 'true'),
@@ -44,4 +42,13 @@ INSERT INTO ui.grid_field_icons(grid_field_id, icon, value, show_value, badge_co
 (320004, './img/state/stateAlarm.png', 'ElementTypeState:32:3', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_ALARMS'),
 (320004, './img/state/stateMaintenance.png', 'ElementTypeState:32:4', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_MAINTENANCE');
 
+INSERT INTO ui.grid_field_replacements(grid_field_id, "label", value, enabled) VALUES
+--Presurizacion
+(320006, 'LBL_GRID_FR_NO', '0', true),
+(320006, 'LBL_GRID_FR_SI', '1', true),
 
+(320007, 'LBL_GRID_FR_NO', '0', true),
+(320007, 'LBL_GRID_FR_SI', '1', true),
+
+(320008, 'LBL_GRID_FR_NO', '0', true),
+(320008, 'LBL_GRID_FR_SI', '1', true);

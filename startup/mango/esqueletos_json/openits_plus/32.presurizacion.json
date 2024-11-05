@@ -11,17 +11,17 @@
 			"rollup": "NONE",
 			"purgeOverride": false,
 			"chartRenderer": {
-				"numberOfPeriods": 1,
-				"type": "IMAGE",
-				"timePeriodType": "DAYS"
+				"type": "TABLE",
+				"limit": 10
 			},
 			"xid": "DP_{device_name}_remote_control",
 			"eventDetectors": [],
 			"textRenderer": {
-				"useUnitAsSuffix": false,
-				"format": "0.00",
-				"type": "ANALOG",
-				"suffix": ""
+				"type": "BINARY",
+				"oneColour": "#00ff00",
+				"oneLabel": "one",
+				"zeroColour": "#0000ff",
+				"zeroLabel": "zero"
 			},
 			"loggingType": "NONE",
 			"overrideIntervalLoggingSamples": false,
@@ -32,7 +32,7 @@
 			"intervalLoggingSampleWindowSize": 0,
 			"tolerance": 0,
 			"purgeType": "YEARS",
-			"plotType": "SPLINE",
+			"plotType": "STEP",
 			"intervalLoggingPeriod": 1,
 			"discardExtremeValues": false,
 			"tags": {},
@@ -47,7 +47,7 @@
 				"multistateNumeric": false,
 				"registerCount": 0,
 				"range": "HOLDING_REGISTER",
-				"modbusDataType": "TWO_BYTE_INT_UNSIGNED",
+				"modbusDataType": "BINARY",
 				"bit": 0,
 				"additive": 0
 			},
@@ -69,17 +69,17 @@
 			"rollup": "NONE",
 			"purgeOverride": false,
 			"chartRenderer": {
-				"numberOfPeriods": 1,
-				"type": "IMAGE",
-				"timePeriodType": "DAYS"
+				"type": "TABLE",
+				"limit": 10
 			},
 			"xid": "DP_{device_name}_pres_fan_1",
 			"eventDetectors": [],
 			"textRenderer": {
-				"useUnitAsSuffix": false,
-				"format": "0.00",
-				"type": "ANALOG",
-				"suffix": ""
+				"type": "BINARY",
+				"oneColour": "#00ff00",
+				"oneLabel": "one",
+				"zeroColour": "#0000ff",
+				"zeroLabel": "zero"
 			},
 			"loggingType": "NONE",
 			"overrideIntervalLoggingSamples": false,
@@ -90,7 +90,7 @@
 			"intervalLoggingSampleWindowSize": 0,
 			"tolerance": 0,
 			"purgeType": "YEARS",
-			"plotType": "SPLINE",
+			"plotType": "STEP",
 			"intervalLoggingPeriod": 1,
 			"discardExtremeValues": false,
 			"tags": {},
@@ -127,17 +127,17 @@
 			"rollup": "NONE",
 			"purgeOverride": false,
 			"chartRenderer": {
-				"numberOfPeriods": 1,
-				"type": "IMAGE",
-				"timePeriodType": "DAYS"
+				"type": "TABLE",
+				"limit": 10
 			},
 			"xid": "DP_{device_name}_pres_fan_2",
 			"eventDetectors": [],
 			"textRenderer": {
-				"useUnitAsSuffix": false,
-				"format": "0.00",
-				"type": "ANALOG",
-				"suffix": ""
+				"type": "BINARY",
+				"oneColour": "#00ff00",
+				"oneLabel": "one",
+				"zeroColour": "#0000ff",
+				"zeroLabel": "zero"
 			},
 			"loggingType": "NONE",
 			"overrideIntervalLoggingSamples": false,
@@ -148,7 +148,7 @@
 			"intervalLoggingSampleWindowSize": 0,
 			"tolerance": 0,
 			"purgeType": "YEARS",
-			"plotType": "SPLINE",
+			"plotType": "STEP",
 			"intervalLoggingPeriod": 1,
 			"discardExtremeValues": false,
 			"tags": {},

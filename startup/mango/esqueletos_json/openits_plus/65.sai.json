@@ -99,7 +99,7 @@
 			"purgeType": "YEARS",
 			"pointLocator": {
 				"range": "HOLDING_REGISTER",
-				"modbusDataType": "TWO_BYTE_INT_UNSIGNED",
+				"modbusDataType": "BINARY",
 				"writeType": "SETTABLE",
 				"additive": 0.0,
 				"bit": 0,
@@ -112,15 +112,14 @@
 				"slaveMonitor": false
 			},
 			"eventDetectors": [],
-			"plotType": "SPLINE",
+			"plotType": "STEP",
 			"rollup": "NONE",
 			"unit": "",
 			"simplifyType": "NONE",
 			"chartColour": "",
 			"chartRenderer": {
-				"type": "IMAGE",
-				"timePeriodType": "DAYS",
-				"numberOfPeriods": 1
+				"type": "TABLE",
+				"limit": 10
 			},
 			"dataSourceXid": "DS_{source_name}",
 			"defaultCacheSize": 1,
@@ -140,10 +139,11 @@
 			"setPermission": "",
 			"tags": {},
 			"textRenderer": {
-				"type": "ANALOG",
-				"useUnitAsSuffix": false,
-				"suffix": "",
-				"format": "0.00"
+				"type": "BINARY",
+				"oneColour": "#00ff00",
+				"oneLabel": "one",
+				"zeroColour": "#0000ff",
+				"zeroLabel": "zero"
 			},
 			"tolerance": 0.0
 		},
@@ -157,7 +157,7 @@
 			"purgeType": "YEARS",
 			"pointLocator": {
 				"range": "HOLDING_REGISTER",
-				"modbusDataType": "TWO_BYTE_INT_UNSIGNED",
+				"modbusDataType": "BINARY",
 				"writeType": "SETTABLE",
 				"additive": 0.0,
 				"bit": 0,
@@ -170,15 +170,14 @@
 				"slaveMonitor": false
 			},
 			"eventDetectors": [],
-			"plotType": "SPLINE",
+			"plotType": "STEP",
 			"rollup": "NONE",
 			"unit": "",
 			"simplifyType": "NONE",
 			"chartColour": "",
 			"chartRenderer": {
-				"type": "IMAGE",
-				"timePeriodType": "DAYS",
-				"numberOfPeriods": 1
+				"type": "TABLE",
+				"limit": 10
 			},
 			"dataSourceXid": "DS_{source_name}",
 			"defaultCacheSize": 1,
@@ -198,10 +197,11 @@
 			"setPermission": "",
 			"tags": {},
 			"textRenderer": {
-				"type": "ANALOG",
-				"useUnitAsSuffix": false,
-				"suffix": "",
-				"format": "0.00"
+				"type": "BINARY",
+				"oneColour": "#00ff00",
+				"oneLabel": "one",
+				"zeroColour": "#0000ff",
+				"zeroLabel": "zero"
 			},
 			"tolerance": 0.0
 		},
