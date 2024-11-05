@@ -6,7 +6,6 @@ INSERT INTO ui.graphic_icons (id, "name", description, alarms, measures, js_draw
 -- Entidades externas
 INSERT INTO ui.graphic_icons (id, "name", description, alarms, measures, js_draw_file, width, height, svg_pattern_var, svg_file, js_custom_type_render, keep_aspect_ratio) VALUES
 (1000, 'INCIDENT_REPORT', 'INCIDENT_REPORT', false, true, 'component/graphicIcon/graphicIconCustom.js', 70, 120, null, 'img/graphic_icon/incident_report.svg', 'component/graphicIcon/custom/incidentReport.js', null),
-(1001, 'EXT_ENTITY', 'EXT_ENTITY', false, true, 'component/graphicIcon/graphicIconCustom.js', 70, 120, null, 'img/graphic_icon/ext_entity.svg', 'component/graphicIcon/custom/ext_entity.js', null),
-(010001, 'EXT_ENTITY_WORKS_YELLOW', 'EXT_ENTITY_WORKS_YELLOW', false, true, 'component/graphicIcon/graphicIconCustom.js', 70, 120, null, 'img/graphic_icon/ext_entity.svg', 'component/graphicIcon/custom/ext_entity.js', null),
-(010002, 'EXT_ENTITY_WEATHER_YELLOW', 'EXT_ENTITY_WORKS_YELLOW', false, true, 'component/graphicIcon/graphicIconCustom.js', 70, 120, null, 'img/graphic_icon/ext_entity.svg', 'component/graphicIcon/custom/ext_entity.js', null),
-(010003, 'EXT_ENTITY_ROAD_YELLOW', 'EXT_ENTITY_WORKS_YELLOW', false, true, 'component/graphicIcon/graphicIconCustom.js', 70, 120, null, 'img/graphic_icon/ext_entity.svg', 'component/graphicIcon/custom/ext_entity.js', null);
+(010001, 'EXT_ENTITY_WORKS', 'EXT_ENTITY_WORKS', false, true, 'component/graphicIcon/graphicIconCustom.js', 40, 40, null, 'img/graphic_icon/ext_entity.svg', 'component/graphicIcon/custom/ext_entity.js', null),
+(010002, 'EXT_ENTITY_WEATHER', 'EXT_ENTITY_WEATHER', false, true, 'component/graphicIcon/graphicIconCustom.js', 40, 40, null, 'img/graphic_icon/ext_entity.svg', 'component/graphicIcon/custom/ext_entity.js', null),
+(010003, 'EXT_ENTITY_ROAD', 'EXT_ENTITY_ROAD', false, true, 'component/graphicIcon/graphicIconCustom.js', 40, 40, null, 'img/graphic_icon/ext_entity.svg', 'component/graphicIcon/custom/ext_entity.js', null);

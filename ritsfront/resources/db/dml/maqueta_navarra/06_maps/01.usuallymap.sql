@@ -64,28 +64,20 @@ INSERT INTO ui.map_ext_entities (id, default_graphic_icon_id, default_module_act
 			"extEntityTypeId": "ExtEntityType:1",
 			"visible": true,
 			"enabled": true,
-			"animate": true
-		}
-	]
-'),
-(2, 010002, NULL, 
-	'[
+			"animate": false
+		},
 		{ 
 			"extEntityTypeId": "ExtEntityType:2",
 			"visible": true,
 			"enabled": true,
-			"animate": true
-		}
-	]
-'),
-(3, 010003, NULL, 
-	'[
+			"animate": false
+		},
 		{ 
 			"extEntityTypeId": "ExtEntityType:3",
 			"visible": true,
 			"enabled": true,
-			"animate": true
+			"animate": false
 		}
-	]
-');
+	]'
+);
 
