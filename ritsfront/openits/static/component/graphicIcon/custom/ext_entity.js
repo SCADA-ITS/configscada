@@ -30,9 +30,11 @@ export default class ExtEntity {
 			}
 			else if (this.extEntity.extEntityType.icon) {
 				
-				const colorActual = this.extEntity.extEntityValues.find(extEntity => extEntity.id === "ExtEntityValue:1:8")?.value;
+				const iconData = JSON.parse(this.extEntity.extEntityType.icon);
+				
+				const colorActual = this.extEntity.extEntityValues.find(object => object.extEntityTypeParam.id === "ExtEntityTypeParam:1:8").value;
 
-				const icono = this.extEntity.extEntityType.icon.find(icono => icono.color === colorActual);
+				const icono = iconData.iconos.find(icono => icono.color === colorActual);
 				
 				const iconoValor = icono ? icono.valor : PICTOGRAM_UNKNOWN_TYPE;
 				
