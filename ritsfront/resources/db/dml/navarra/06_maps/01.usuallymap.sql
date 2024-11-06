@@ -12,16 +12,6 @@ INSERT INTO ui.maps (id, name, description, "label", icon, longitude, latitude, 
         "smartRoadInfo": {"enabled": true, "url": "http://192.168.88.161:8702/api"}
 	}');
 
-INSERT INTO ui.graphic_icons (id, "name", description, alarms, measures, js_draw_file, width, height, svg_pattern_var, svg_file, js_custom_type_render, keep_aspect_ratio) VALUES
-(1000, 'INCIDENT_REPORT', 'INCIDENT_REPORT', false, true, 'component/graphicIcon/graphicIconCustom.js', 70, 120, null, 'img/graphic_icon/incident_report.svg', 'component/graphicIcon/custom/incidentReport.js', null),
-(1001, 'EXT_ENTITY', 'EXT_ENTITY', false, true, 'component/graphicIcon/graphicIconCustom.js', 70, 120, null, 'img/graphic_icon/ext_entity.svg', 'component/graphicIcon/custom/ext_entity.js', null),
-(010001, 'EXT_ENTITY_WORKS_YELLOW', 'EXT_ENTITY_WORKS_YELLOW', false, true, 'component/graphicIcon/graphicIconCustom.js', 70, 120, null, 'img/graphic_icon/ext_entity.svg', 'component/graphicIcon/custom/ext_entity.js', null),
-(020001, 'EXT_ENTITY_WORKS_RED', 'EXT_ENTITY_WORKS_RED', false, true, 'component/graphicIcon/graphicIconCustom.js', 70, 120, null, 'img/graphic_icon/ext_entity.svg', 'component/graphicIcon/custom/ext_entity.js', null),
-(010002, 'EXT_ENTITY_WEATHER_YELLOW', 'EXT_ENTITY_WORKS_YELLOW', false, true, 'component/graphicIcon/graphicIconCustom.js', 70, 120, null, 'img/graphic_icon/ext_entity.svg', 'component/graphicIcon/custom/ext_entity.js', null),
-(020002, 'EXT_ENTITY_WEATHER_RED', 'EXT_ENTITY_WEATHER_RED', false, true, 'component/graphicIcon/graphicIconCustom.js', 70, 120, null, 'img/graphic_icon/ext_entity.svg', 'component/graphicIcon/custom/ext_entity.js', null),
-(010003, 'EXT_ENTITY_ROAD_YELLOW', 'EXT_ENTITY_WORKS_YELLOW', false, true, 'component/graphicIcon/graphicIconCustom.js', 70, 120, null, 'img/graphic_icon/ext_entity.svg', 'component/graphicIcon/custom/ext_entity.js', null),
-(020003, 'EXT_ENTITY_ROAD_RED', 'EXT_ENTITY_ROAD_RED', false, true, 'component/graphicIcon/graphicIconCustom.js', 70, 120, null, 'img/graphic_icon/ext_entity.svg', 'component/graphicIcon/custom/ext_entity.js', null);
-
 INSERT INTO ui.map_layers (id, base_layer, map_id, "name", description, "label", icon, visible) VALUES 
 (2, NULL, 1, 'CAMERA', 'CAMERA', 'LBL_ELEMENT_TYPE_CAMERA', NULL, true), 
 (99, NULL, 1, 'RADAR', 'RADAR', 'LBL_ELEMENT_TYPE_TRAFFIC_RADAR', NULL, true);
@@ -68,44 +58,26 @@ INSERT INTO ui.map_commands
 (2, 1, 2, 'LBL_CMD_EQUIPMENT', 'mdi mdi-pencil', false, 101701, NULL, 2, true, NULL, true, true);
 
 INSERT INTO ui.map_ext_entities (id, default_graphic_icon_id, default_module_action_id, ext_entity_types_config) VALUES
-(2, 1001, NULL, 
-	'[
-		{ 
-			"extEntityTypeId": "ExtEntityType:1000",
-			"visible": true,
-			"enabled": true,
-			"animate": true
-		}
-	]
-'),
-(3, 010001, NULL, 
+(1, 010001, NULL, 
 	'[
 		{ 
 			"extEntityTypeId": "ExtEntityType:1",
 			"visible": true,
 			"enabled": true,
-			"animate": true
-		}
-	]
-'),
-(4, 010002, NULL, 
-	'[
+			"animate": false
+		},
 		{ 
 			"extEntityTypeId": "ExtEntityType:2",
 			"visible": true,
 			"enabled": true,
-			"animate": true
-		}
-	]
-'),
-(5, 010003, NULL, 
-	'[
+			"animate": false
+		},
 		{ 
 			"extEntityTypeId": "ExtEntityType:3",
 			"visible": true,
 			"enabled": true,
-			"animate": true
+			"animate": false
 		}
-	]
-');
+	]'
+);
 

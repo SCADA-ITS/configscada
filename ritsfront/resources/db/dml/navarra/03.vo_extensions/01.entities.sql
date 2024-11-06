@@ -4,7 +4,5 @@ INSERT INTO ui.vo_entities(id, vo_entity_type_id, enabled, visible) VALUES
 
 ('ExtEntityType:1', 'ExtEntityTypeUI', true, true),
 ('ExtEntityType:2', 'ExtEntityTypeUI', true, true),
-('ExtEntityType:3', 'ExtEntityTypeUI', true, true),
-
-('ExtEntityType:1000', 'ExtEntityTypeUI', true, true);
+('ExtEntityType:3', 'ExtEntityTypeUI', true, true);
 
