@@ -85,7 +85,10 @@ INSERT INTO ui.graphic_icons (id, "name", description, alarms, measures, js_draw
 (36, 'ZONE', 'ZONE', false, false, 'component/graphicIcon/graphicIconDefault.js', 80, 80, null, 'img/graphic_icon/07_zone.svg', null, null),
 
 (1000, 'INCIDENT_REPORT', 'INCIDENT_REPORT', false, true, 'component/graphicIcon/graphicIconCustom.js', 70, 120, null, 'img/graphic_icon/incident_report.svg', 'component/graphicIcon/custom/incidentReport.js', null),
-(1001, 'EXT_ENTITY', 'EXT_ENTITY', false, true, 'component/graphicIcon/graphicIconCustom.js', 70, 120, null, 'img/graphic_icon/ext_entity.svg', 'component/graphicIcon/custom/ext_entity.js', null);
+(1001, 'EXT_ENTITY', 'EXT_ENTITY', false, true, 'component/graphicIcon/graphicIconCustom.js', 70, 120, null, 'img/graphic_icon/ext_entity.svg', 'component/graphicIcon/custom/ext_entity.js', null),
+(010001, 'EXT_ENTITY_WORKS', 'EXT_ENTITY_WORKS', false, true, 'component/graphicIcon/graphicIconCustom.js', 40, 40, null, 'img/graphic_icon/ext_entity.svg', 'component/graphicIcon/custom/ext_entity.js', null),
+(010002, 'EXT_ENTITY_WEATHER', 'EXT_ENTITY_WEATHER', false, true, 'component/graphicIcon/graphicIconCustom.js', 40, 40, null, 'img/graphic_icon/ext_entity.svg', 'component/graphicIcon/custom/ext_entity.js', null),
+(010003, 'EXT_ENTITY_ROAD', 'EXT_ENTITY_ROAD', false, true, 'component/graphicIcon/graphicIconCustom.js', 40, 40, null, 'img/graphic_icon/ext_entity.svg', 'component/graphicIcon/custom/ext_entity.js', null);
 
 
 INSERT INTO ui.synoptic_layer_elements (id, layer_id, element_id, graphic_icon_id, "label", x, y,  horizontal_flip, rotate, tooltip, show_text, text_color, text_size, text_pos, selectable) VALUES

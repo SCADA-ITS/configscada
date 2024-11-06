@@ -199,7 +199,8 @@ INSERT INTO ui.vo_entities(id, vo_entity_type_id, enabled, visible) VALUES
 ('ExtEntityType:1000', 'ExtEntityTypeUI', true, true),
 -- Navarra
 ('ExtEntityType:1', 'ExtEntityTypeUI', true, true),
-('ExtEntitySubtype:1001', 'ExtEntitySubtypeUI', true, true);
+('ExtEntityType:2', 'ExtEntityTypeUI', true, true),
+('ExtEntityType:3', 'ExtEntityTypeUI', true, true);
 
 
 INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
@@ -534,10 +535,17 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 ('ExtEntityType:1000', 64, '["ExtEntityTypeParam:1000:1","ExtEntityTypeParam:1000:2"]'),
 ('ExtEntityType:1000', 65, '#6eabd9'),
 -- Navarra
-('ExtEntityType:1', 63, 'c4_obras.png'),
-('ExtEntityType:1', 64, '["ExtEntityTypeParam:1:1","ExtEntityTypeParam:1:2","ExtEntityTypeParam:1:3","ExtEntityTypeParam:1:4","ExtEntityTypeParam:1:5","ExtEntityTypeParam:1:6","ExtEntityTypeParam:1:7","ExtEntityTypeParam:1:8","ExtEntityTypeParam:1:9"]'),
-('ExtEntityType:1', 65, '#00abd9'),
-('ExtEntitySubtype:1001', 66, 'c4_obras_baches.png');
+('ExtEntityType:1', 63, 'obras_amarillo.png'),
+('ExtEntityType:1', 64, '["ExtEntityTypeParam:1:2","ExtEntityTypeParam:1:3","ExtEntityTypeParam:1:4","ExtEntityTypeParam:1:6","ExtEntityTypeParam:1:7"]'),
+('ExtEntityType:1', 65, '#6eabd9'),
+
+('ExtEntityType:2', 63, 'obras_amarillo.png'),
+('ExtEntityType:2', 64, '["ExtEntityTypeParam:2:2","ExtEntityTypeParam:2:3","ExtEntityTypeParam:2:4","ExtEntityTypeParam:2:6","ExtEntityTypeParam:2:7"]'),
+('ExtEntityType:2', 65, '#6eabd9'),
+
+('ExtEntityType:3', 63, 'obras_amarillo.png'),
+('ExtEntityType:3', 64, '["ExtEntityTypeParam:3:2","ExtEntityTypeParam:3:3","ExtEntityTypeParam:3:4","ExtEntityTypeParam:3:6","ExtEntityTypeParam:3:7"]'),
+('ExtEntityType:3', 65, '#6eabd9');
 
 
 INSERT INTO ui.vo_enum_types(id, alias, description, enabled, visible) VALUES
