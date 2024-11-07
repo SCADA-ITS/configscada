@@ -28,10 +28,10 @@ export default class ExtEntity {
 				
 				this.gType.attr( { "xlink:href": PICTOGRAM_TYPE_PATH + "/" + this.extEntity.extEntitySubtype.icon });
 			}
-			else if (this.extEntity.extEntityType.icon) {
+			else if (this.extEntity.extEntityType.icon_data) {
 				
 				const iconData = JSON.parse(this.extEntity.extEntityType.icon_data);
-				
+								
 				const dynamicId = `ExtEntityTypeParam:${this.extEntity.extEntityType.id.split(":")[1]}:8`;
 				
 				const colorActual = this.extEntity.extEntityValues.find(object => object.extEntityTypeParam.id === dynamicId)?.value;
@@ -41,6 +41,10 @@ export default class ExtEntity {
 				const iconoValor = icono ? icono.valor : PICTOGRAM_UNKNOWN_TYPE;
 				
 				this.gType.attr({ "xlink:href": `${PICTOGRAM_TYPE_PATH}/${iconoValor}` });
+			}
+			else if (this.extEntity.extEntityType.icon) {
+				
+				this.gType.attr( { "xlink:href": PICTOGRAM_TYPE_PATH + "/" + this.extEntity.extEntityType.icon });
 			}
 			else {
 				
