@@ -14,13 +14,11 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (010009, 1, 3, 9, true, false, false, false, 'LBL_PRECIPITATION_INTENSITY', 'LBL_PRECIPITATION_INTENSITY', 'ElementTypeParam:1:2:11', false, false, 'left', false, false, 250, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
 (010010, 1, 3, 10, true, false, false, false, 'LBL_GUST_WIND_SPEED', 'LBL_GUST_WIND_SPEED', 'ElementTypeParam:1:2:15', false, false, 'left', false, false, 250, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
 (010011, 1, 2, 11, true, false, false, false, 'LBL_GUST_WIND_DIRECTION', 'LBL_GUST_WIND_DIRECTION', 'ElementTypeParam:1:2:16', false, false, 'left', false, false, 250, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
-(010012, 1, 2, 12, true, false, false, false, 'LBL_PRECIPITATION_TYPE', 'LBL_PRECIPITATION_TYPE', 'ElementTypeParam:1:2:19', false, false, 'center', true, false, 250, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(010012, 1, 1, 12, true, false, false, false, 'LBL_PRECIPITATION_TYPE', 'LBL_PRECIPITATION_TYPE', 'ElementTypeParam:1:2:19', false, false, 'left', true, false, 250, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
 (010013, 1, 3, 13, true, false, false, false, 'LBL_PRECIPITATION_QUANTITY', 'LBL_PRECIPITATION_QUANTITY', 'ElementTypeParam:1:2:23', false, false, 'left', false, false, 250, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
 (010014, 1, 1, 14, false, false, true, false, 'LBL_GRID_FIELD_BRAND', 'LBL_GRID_FIELD_BRAND', 'ElementTypeParam:1:1:1', false, false, 'left', false, false, 160, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
-(010015, 1, 1, 15, false, false, true, false, 'LBL_GRID_FIELD_MODEL', 'LBL_GRID_FIELD_MODEL', 'ElementTypeParam:1:1:2', false, false, 'left', false, false, 160, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
-(010016, 1, 1, 16, false, false, true, false, 'LBL_GRID_FIELD_ROAD', 'LBL_GRID_FIELD_ROAD', 'ElementTypeParam:1:1:3', false, false, 'left', false, false, 180, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
-(010017, 1, 1, 17, false, false, true, false, 'LBL_GRID_FIELD_SECTION', 'LBL_GRID_FIELD_SECTION', 'ElementTypeParam:1:1:4', false, false, 'left', false, false, 60, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
-(010018, 1, 1, 18, false, false, true, false, 'LBL_PK', 'LBL_PK', 'ElementTypeParam:1:1:5', false, false, 'left', false, false, 60, NULL, true, true, NULL, NULL, NULL, NULL, NULL);
+(010015, 1, 1, 15, false, false, true, false, 'LBL_GRID_FIELD_MODEL', 'LBL_GRID_FIELD_MODEL', 'ElementTypeParam:1:1:2', false, false, 'left', false, false, 160, NULL, true, true, NULL, NULL, NULL, NULL, NULL);
+
 
 INSERT INTO ui.grid_option_values(grid_id, grid_option_id, value) VALUES
 (1, 1, 'true'),
@@ -52,3 +50,8 @@ INSERT INTO ui.grid_field_icons(grid_field_id, icon, value, show_value, badge_co
 (010004, './img/state/stateAlarm.png', 'ElementTypeState:1:3', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_ALARMS'),
 (010004, './img/state/stateMaintenance.png', 'ElementTypeState:1:4', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_MAINTENANCE');
 
+INSERT INTO ui.grid_field_replacements(grid_field_id, "label", value, enabled) VALUES
+--WS
+(010012, 'LBL_GRID_FR_WITHOUT_PRECIPITATION', '0', true),
+(010012, 'LBL_GRID_FR_LIQUID_PRECIPITATION', '60', true),
+(010012, 'LBL_GRID_FR_SOLID_PRECIPITATION', '70', true);

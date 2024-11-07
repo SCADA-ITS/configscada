@@ -14,7 +14,8 @@ INSERT INTO ui.vo_enum_types(id, alias, description, enabled, visible) VALUES
 (14, 'Subida/Bajada', 'Subida/Bajada', true, true),
 (15, 'SemaforosRAV', 'SemaforosRAV', true, true),
 (16, 'Encendido/Apagado', 'Encendido/Apagado', true, true),
-(17, 'Ventiladores', 'Parado/Directa/Inversa', true, true);
+(17, 'Ventiladores', 'Parado/Directa/Inversa', true, true),
+(18, 'TipoPrecipitacionMeteo', 'TipoPrecipitacionMeteo', true, true);
 
 
 INSERT INTO ui.vo_enum_type_values(id, vo_enum_type_id, "key", value, "translate", image) VALUES
@@ -69,9 +70,15 @@ INSERT INTO ui.vo_enum_type_values(id, vo_enum_type_id, "key", value, "translate
 
 (37, 17, '0', 'LBL_ETV_PARADO', TRUE, null),
 (38, 17, '1', 'LBL_ETV_DIRECTA', TRUE, null),
-(39, 17, '2', 'LBL_ETV_INVERSA', TRUE, null);
+(39, 17, '2', 'LBL_ETV_INVERSA', TRUE, null),
+
+(40, 18, '0', 'LBL_ETV_WITHOUT_PRECIPITATION', TRUE, null),
+(41, 18, '60', 'LBL_ETV_LIQUID_PRECIPITATION', TRUE, null),
+(42, 18, '70', 'LBL_ETV_SOLID_PRECIPITATION', TRUE, null);
 
 INSERT INTO ui.vo_entity_enum_types(vo_entity_id, enum_type_id) VALUES
+('ElementTypeParam:1:2:19', 18),
+
 ('ElementTypeParam:8:2:1', 14),
 
 ('ElementTypeParam:9:2:1', 17),

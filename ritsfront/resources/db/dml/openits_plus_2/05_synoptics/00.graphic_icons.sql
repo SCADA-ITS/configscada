@@ -31,6 +31,7 @@ INSERT INTO ui.graphic_icons
 (070015, 'FIRE', 'FIRE', false, false, 'component/graphicIcon/graphicIconDefault.js', 150, 19, 'img/graphic_icon/15_fire.svg', 'null',false),
 (080015, 'FIRE', 'FIRE', false, false, 'component/graphicIcon/graphicIconDefault.js', 170, 19, 'img/graphic_icon/15_fire.svg', 'null',false),
 (090015, 'FIRE', 'FIRE', false, false, 'component/graphicIcon/graphicIconDefault.js', 50, 50, 'img/graphic_icon/15_flame.svg', 'null',true),
+(100015, 'FIRE', 'FIRE', false, false, 'component/graphicIcon/graphicIconDefault.js', 120, 25, 'img/graphic_icon/15_fire.svg', 'null',true),
 (000016, 'PA_ZONE', 'PA_ZONE', false, false, 'component/graphicIcon/graphicIconDefault.js', 120, 55, 'img/graphic_icon/16_pa_zone_width.svg', 'null',true),
 (000018, 'ANEM', 'ANEM', false, true, 'component/graphicIcon/graphicIconCustom.js', 50, 50, 'img/graphic_icon/18_anemometro.svg', 'component/graphicIcon/custom/inAnemometer.js',true),
 (010018, 'ANEMFLIP', 'ANEMFLIP', false, true, 'component/graphicIcon/graphicIconCustom.js', 50, 50, 'img/graphic_icon/18_anemometro.svg', 'component/graphicIcon/custom/inAnemometer.js',true),

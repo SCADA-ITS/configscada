@@ -100,6 +100,8 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 ('ElementTypeParam:9:2:14', 62, 'true'),
 ('ElementTypeParam:9:2:15', 62, 'true'),
 
+('ElementTypeParam:70:2:31', 62, 'true'),
+
 ('ElementTypeParam:71:2:1', 62, 'true'),
 ('ElementTypeParam:71:2:3', 62, 'true'),
 ('ElementTypeParam:71:2:4', 62, 'true'),
