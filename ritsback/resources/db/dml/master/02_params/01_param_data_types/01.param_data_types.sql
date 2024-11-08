@@ -21,7 +21,9 @@ INSERT INTO master.data_types(data_type_id, alias, description, label_alias, lab
 (2, 'ALPHANUMERIC', 'Alphanumeric type of value', 'LBL_DATA_TYPE_ALPHANUMERIC', null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (3, 'DECIMAL', 'Decimal type of value', 'LBL_DATA_TYPE_DECIMAL', null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (4, 'TIMESTAMP', 'UTC Time in ms', 'LBL_DATA_TYPE_TIMESTAMP', null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(5, 'BOOLEAN', 'Boolean data type', 'LBL_DATA_TYPE_BOOLEAN', null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(5, 'BOOLEAN', 'Boolean data type', 'LBL_DATA_TYPE_BOOLEAN', null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(6, 'ARRAY_BYTES', 'Array of bytes', 'LBL_DATA_TYPE_ARRAY_BYTES', null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
 
 -- 
 -- Table: master.element_value_states

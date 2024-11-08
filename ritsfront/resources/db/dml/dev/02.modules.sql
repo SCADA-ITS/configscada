@@ -24,7 +24,9 @@ INSERT INTO ui.modules(id, module_type_id, "name", description, default_view_typ
 (1923, 9, 'Agents', 'Agents', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 (1924, 9, 'Vehicles', 'Vehicles', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 (1925, 9, 'Lanes', 'Lanes', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
-(1926, 9, 'Participants', 'Participants', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL);
+(1926, 9, 'Participants', 'Participants', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(1927, 9, 'c4_ext_entities_with_values', 'c4_ext_entities_with_values', 1, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL);
+
 
 --(2001, 1, 'Test module 1', 'Test module 1', 1, null, 'modules/test1Module.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 --(2002, 3, 'TestMap', 'TestMap', 1, null, 'modules/testMap.js', 'getView', 'loadData', NULL, NULL, true, true, NULL);
@@ -90,7 +92,10 @@ INSERT INTO ui.module_values(module_id, module_param_id, value) VALUES
 
 (1050, 8, '{"mapId": 1000}'),
 
-(1053, 8, '{"mapId": 1000}');
+(1053, 8, '{"mapId": 1000}'),
+
+(1927, 13, '3'),
+(1927, 14, 'c4_ext_entities_with_values');
 
 
 INSERT INTO ui.window_values(module_id, window_param_id, value) VALUES
@@ -229,7 +234,16 @@ INSERT INTO ui.window_values(module_id, window_param_id, value) VALUES
 (1926, 10, 'img/module/default.png'),
 (1926, 11, '#464646'),
 (1926, 12, 'LBL_PARTICIPANTS'),
-(1926, 14, 'true');
+(1926, 14, 'true'),
+
+
+(1927, 4, '825'),
+(1927, 5, '1400'),
+(1927, 8, 'true'),
+(1927, 10, 'img/module/default.png'),
+(1927, 11, '#464646'),
+(1927, 12, 'LBL_C4'),
+(1927, 14, 'true');
 
 /*
 (2003, 4, '825'),
