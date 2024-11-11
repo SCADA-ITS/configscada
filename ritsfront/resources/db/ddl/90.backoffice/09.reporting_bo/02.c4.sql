@@ -43,6 +43,7 @@ BEGIN
                 ext_entity_type_param_id IN (2, 6, 7, 8, 9, 10, 11)
             ORDER BY 
                 ext_entity_id, 
+                created_at desc,
                 ext_entity_type_param_id$$
         ) AS pv (
             ext_entity_id int8,
