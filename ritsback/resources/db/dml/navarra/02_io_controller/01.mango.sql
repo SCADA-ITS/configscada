@@ -25,7 +25,7 @@ INSERT INTO conf.io_controller_module_values
 (1, 1, 13, 'http://10.253.5.82:8080/rest/v3', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (1, 1, 14, 'http://10.253.5.82:8080/rest/v3/login', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (1, 1, 15, 'admin', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(1, 1, 16, 'navarra3', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 1, 16, 'NAV_5313', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (1, 1, 17, '/point-values/single-array/latest/{xids}?fields=VALUE&limit=1&useCache=CACHE_ONLY', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (1, 1, 18, 'GET', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (1, 1, 19, '/point-values/{xid}?unitConversion=false', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),

@@ -86,7 +86,8 @@ INSERT INTO ui.vo_entity_fields (id, vo_entity_type_id, field, description, labe
 (64, 'ExtEntityTypeUI', 'tooltipVisibleParams', 'tooltip visible params', 'LBL_ENTITIE_FIELDS_ICON_INCIDENT_TYPE', 'LBL_ENTITIE_FIELDS_ICON_INCIDENT_TYPE_DESCRIPTION', true, true),
 (65, 'ExtEntityTypeUI', 'color', 'color', 'LBL_ENTITIE_FIELDS_ICON_INCIDENT_TYPE', 'LBL_ENTITIE_FIELDS_ICON_INCIDENT_TYPE_DESCRIPTION', true, true),
 (66, 'ExtEntitySubtypeUI', 'icon', 'icon for ext entity type', 'LBL_ENTITIE_FIELDS_ICON_INCIDENT_TYPE', 'LBL_ENTITIE_FIELDS_ICON_INCIDENT_TYPE_DESCRIPTION', true, true),
-(67, 'ExtEntityTypeUI', 'icon_data', 'json data for icon for ext entity type', 'LBL_ENTITIE_FIELDS_ICON_INCIDENT_TYPE', 'LBL_ENTITIE_FIELDS_ICON_INCIDENT_TYPE_DESCRIPTION', true, true);
+(67, 'ExtEntityTypeUI', 'icon_data', 'json data for icon for ext entity type', 'LBL_ENTITIE_FIELDS_ICON_INCIDENT_TYPE', 'LBL_ENTITIE_FIELDS_ICON_INCIDENT_TYPE_DESCRIPTION', true, true),
+(68, 'ElementTypeUI', 'map_icon', 'icon map for element type', 'LBL_ENTITIE_FIELDS_ICON_ELEMENT_TYPE', 'LBL_ENTITIE_FIELDS_ICON_ELEMENT_TYPE_DESCRIPTION', true, true);
 
 
 INSERT INTO ui.vo_entities(id, vo_entity_type_id, enabled, visible) VALUES

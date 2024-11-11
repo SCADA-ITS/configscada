@@ -1,3 +1,5 @@
+UPDATE master.command_element_types SET enabled = false WHERE element_type_id = 2 and command_element_type_id = 1;
+
 INSERT INTO conf.elements (element_type_id, element_subtype_id, element_id, location_id, keep_values_on_disconnected, inherit_state_id, alias, description, on_change_alarm, on_change_state, on_change_measure, on_schedule, enabled, visible, alert, alarm_count, created_at, updated_at) VALUES
 (2, NULL, 1, 0010002, NULL, NULL, 'Alsasua', 'Alsasua', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, NULL, 2, 0020002, NULL, NULL, 'Etxegarate', 'Etxegarate', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -23,96 +25,121 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 (2, 1, 1, 1, NULL, 'Hikvision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 2, 1, 1, NULL, 'DS-2DF8242IX-AELW_SNAP', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 3, 1, 1, NULL, 'http://administracionelectronica.navarra.es/AccesoFicheros/DownloadFile.aspx?CodigoCompleto=camarascarreteras@@@ALSASUA_A_1_398_440.JPG', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 7, 1, 1, NULL, 'PTZ', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 1003, 1, 1, NULL, 'Alsasua', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (2, 1, 1, 2, NULL, 'Hikvision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 2, 1, 2, NULL, 'DS-2DF8242IX-AELW_SNAP', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 3, 1, 2, NULL, 'http://administracionelectronica.navarra.es/AccesoFicheros/DownloadFile.aspx?CodigoCompleto=camarascarreteras@@@ETXEGARATE_A_1_404_902.JPG', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 7, 1, 2, NULL, 'PTZ', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 1003, 1, 2, NULL, 'Etxegarate', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (2, 1, 1, 3, NULL, 'Hikvision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 2, 1, 3, NULL, 'DS-2DF8242IX-AELW_SNAP', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 3, 1, 3, NULL, 'http://administracionelectronica.navarra.es/AccesoFicheros/DownloadFile.aspx?CodigoCompleto=camarascarreteras@@@ARBIZU_A_10 18_430.JPG', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 7, 1, 3, NULL, 'PTZ', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 1003, 1, 3, NULL, 'Arbizu', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (2, 1, 1, 4, NULL, 'Hikvision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 2, 1, 4, NULL, 'DS-2DF8242IX-AELW_SNAP', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 3, 1, 4, NULL, 'http://administracionelectronica.navarra.es/AccesoFicheros/DownloadFile.aspx?CodigoCompleto=camarascarreteras@@@CIZUR_A_12_4_400.JPG', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 7, 1, 4, NULL, 'PTZ', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 1003, 1, 4, NULL, 'Zizur Mayor', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (2, 1, 1, 5, NULL, 'Hikvision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 2, 1, 5, NULL, 'DS-2DF8242IX-AELW_SNAP', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 3, 1, 5, NULL, 'http://administracionelectronica.navarra.es/AccesoFicheros/DownloadFile.aspx?CodigoCompleto=camarascarreteras@@@IRURTZUN_A15_PK113.JPG', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 7, 1, 5, NULL, 'PTZ', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 1003, 1, 5, NULL, 'Irurtzun', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (2, 1, 1, 6, NULL, 'Hikvision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 2, 1, 6, NULL, 'DS-2DF8242IX-AELW_SNAP', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 3, 1, 6, NULL, 'http://administracionelectronica.navarra.es/AccesoFicheros/DownloadFile.aspx?CodigoCompleto=camarascarreteras@@@LEITZA_A_15_139_600.JPG', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 7, 1, 6, NULL, 'PTZ', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 1003, 1, 6, NULL, 'Leitza', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (2, 1, 1, 7, NULL, 'Hikvision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 2, 1, 7, NULL, 'DS-2DF8242IX-AELW_SNAP', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 3, 1, 7, NULL, 'http://administracionelectronica.navarra.es/AccesoFicheros/DownloadFile.aspx?CodigoCompleto=camarascarreteras@@@PAGOZELAI_A_15_134_450.JPG', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 7, 1, 7, NULL, 'PTZ', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 1003, 1, 7, NULL, 'Pagozelai', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (2, 1, 1, 8, NULL, 'Hikvision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 2, 1, 8, NULL, 'DS-2DF8242IX-AELW_SNAP', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 3, 1, 8, NULL, 'http://administracionelectronica.navarra.es/AccesoFicheros/DownloadFile.aspx?CodigoCompleto=camarascarreteras@@@LEKUNBERRI_A_15_127_540.JPG', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 7, 1, 8, NULL, 'PTZ', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 1003, 1, 8, NULL, 'Lekunberri', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (2, 1, 1, 9, NULL, 'Hikvision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 2, 1, 9, NULL, 'DS-2DF8242IX-AELW_SNAP', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 3, 1, 9, NULL, 'http://administracionelectronica.navarra.es/AccesoFicheros/DownloadFile.aspx?CodigoCompleto=camarascarreteras@@@ARETA_PA_30_5_700.JPG', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 7, 1, 9, NULL, 'PTZ', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 1003, 1, 9, NULL, 'Areta', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (2, 1, 1, 10, NULL, 'Hikvision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 2, 1, 10, NULL, 'DS-2DF8242IX-AELW_SNAP', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(2, 3, 1, 10, NULL, 'http://administracionelectronica.navarra.es/AccesoFicheros/DownloadFile.aspx?CodigoCompleto=camarascarreteras@@@DOMO_BERRIOZAR_PA_30_PK_18_200.JPG', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+--(2, 3, 1, 10, NULL, 'http://administracionelectronica.navarra.es/AccesoFicheros/DownloadFile.aspx?CodigoCompleto=camarascarreteras@@@DOMO_BERRIOZAR_PA_30_PK_18_200.JPG', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 3, 1, 10, NULL, 'http://10.253.5.83:8080/Berriozar', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 7, 1, 10, NULL, 'PTZ', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 9, 1, 10, NULL, '192.168.56.15', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 10, 1, 10, NULL, 'traficonavarra%40navarra.es', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 11, 1, 10, NULL, 'Trafico_011', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 12, 1, 10, NULL, '[{"id":1,"label":"LBL_X0","authType":"base64","commands":[{"name":"up","value":"1"},{"name":"down","value":"1"},{"name":"left","value":"1"},{"name":"right","value":"1"},{"name":"tele","value":"1"},{"name":"wide","value":"1"}]},{"id":2,"label":"LBL_X1","authType":"base64","commands":[{"name":"up","value":"2"},{"name":"down","value":"2"},{"name":"left","value":"2"},{"name":"right","value":"2"},{"name":"tele","value":"2"},{"name":"wide","value":"2"}]}]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 1003, 1, 10, NULL, 'Berriozar', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (2, 1, 1, 11, NULL, 'Hikvision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 2, 1, 11, NULL, 'DS-2DF8242IX-AELW_SNAP', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 3, 1, 11, NULL, 'http://administracionelectronica.navarra.es/AccesoFicheros/DownloadFile.aspx?CodigoCompleto=camarascarreteras@@@DOMO_TALLUNTXE_PA_30_PK_0_200.JPG', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 7, 1, 11, NULL, 'PTZ', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 1003, 1, 11, NULL, 'Talluntxe', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (2, 1, 1, 12, NULL, 'Hikvision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 2, 1, 12, NULL, 'DS-2DF8242IX-AELW_SNAP', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 3, 1, 12, NULL, 'http://administracionelectronica.navarra.es/AccesoFicheros/DownloadFile.aspx?CodigoCompleto=camarascarreteras@@@CORDOVILLA_PA_32_0_400.JPG', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 7, 1, 12, NULL, 'PTZ', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 1003, 1, 12, NULL, 'Cordovilla', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (2, 1, 1, 13, NULL, 'Hikvision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 2, 1, 13, NULL, 'DS-2DF8242IX-AELW_SNAP', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 3, 1, 13, NULL, 'http://administracionelectronica.navarra.es/AccesoFicheros/DownloadFile.aspx?CodigoCompleto=camarascarreteras@@@BELAGUA_EL_FERIAL_PK_55.JPG', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 7, 1, 13, NULL, 'PTZ', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 1003, 1, 13, NULL, 'Belagua', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (2, 1, 1, 14, NULL, 'Hikvision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 2, 1, 14, NULL, 'DS-2DF8242IX-AELW_SNAP', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 3, 1, 14, NULL, 'http://administracionelectronica.navarra.es/AccesoFicheros/DownloadFile.aspx?CodigoCompleto=camarascarreteras@@@DOMO_TUDELA_A_68_PK_95_500.JPG', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 7, 1, 14, NULL, 'PTZ', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 1003, 1, 14, NULL, 'Tudela', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (2, 1, 1, 15, NULL, 'Hikvision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 2, 1, 15, NULL, 'DS-2DF8242IX-AELW_SNAP', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 3, 1, 15, NULL, 'http://administracionelectronica.navarra.es/AccesoFicheros/DownloadFile.aspx?CodigoCompleto=camarascarreteras@@@EXT_FRA_ARRE_N_121_A_PK_5_600.JPG', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 7, 1, 15, NULL, 'PTZ', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 1003, 1, 15, NULL, 'Arre', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (2, 1, 1, 16, NULL, 'Hikvision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 2, 1, 16, NULL, 'DS-2DF8242IX-AELW_SNAP', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(2, 3, 1, 16, NULL, 'http://administracionelectronica.navarra.es/AccesoFicheros/DownloadFile.aspx?CodigoCompleto=camarascarreteras@@@EXT_PNA_COTUP_PA_35_PK_0_00.JPG', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(2, 1003, 1, 16, NULL, 'Ezcaba', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+--(2, 3, 1, 16, NULL, 'http://administracionelectronica.navarra.es/AccesoFicheros/DownloadFile.aspx?CodigoCompleto=camarascarreteras@@@EXT_PNA_COTUP_PA_35_PK_0_00.JPG', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 3, 1, 16, NULL, 'http://traficonavarra%40navarra.es:Trafico_011@10.191.22.92/ISAPI/Streaming/channels/1/picture', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 7, 1, 16, NULL, 'PTZ', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 1003, 1, 16, NULL, 'Ezkaba', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (2, 1, 1, 17, NULL, 'Hikvision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 2, 1, 17, NULL, 'DS-2DF8242IX-AELW_SNAP', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 3, 1, 17, NULL, 'http://administracionelectronica.navarra.es/AccesoFicheros/DownloadFile.aspx?CodigoCompleto=camarascarreteras@@@BELATE_NORTE_N_121_A_PK_31_110.JPG', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 7, 1, 17, NULL, 'PTZ', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 1003, 1, 17, NULL, 'Tunel_de_Belate', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (2, 1, 1, 18, NULL, 'Hikvision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 2, 1, 18, NULL, 'DS-2DF8242IX-AELW_SNAP', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 3, 1, 18, NULL, 'http://administracionelectronica.navarra.es/AccesoFicheros/DownloadFile.aspx?CodigoCompleto=camarascarreteras@@@YESA_PAMPLONA_A_21_PK_48_580.JPG', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 7, 1, 18, NULL, 'PTZ', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 1003, 1, 18, NULL, 'Tunel_de_Yesa', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (2, 1, 1, 19, NULL, 'Hikvision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 2, 1, 19, NULL, 'DS-2DF8242IX-AELW_SNAP', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 3, 1, 19, NULL, 'http://administracionelectronica.navarra.es/AccesoFicheros/DownloadFile.aspx?CodigoCompleto=camarascarreteras@@@PERDON_ESTELLA_A_12_PK_13_150.JPG', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 7, 1, 19, NULL, 'PTZ', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 1003, 1, 19, NULL, 'Tunel_del_Perdon', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO conf.element_io_controller_modules (element_type_id, element_id, module_type_id, module_id, enabled, visible, created_at, updated_at) VALUES

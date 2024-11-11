@@ -1,0 +1,114 @@
+{
+	"moduleAction": {
+	    "singleCam": 102001,
+	    "scenario": 102002,
+	    "equipmentViewer": 101401
+	},
+	"commands": {
+		"lock": {
+			"commandElementTypeId": "CommandElementType:1:2",
+			"elementId": null
+		},
+		"preset": {
+			"commandElementTypeId": "CommandElementType:2:2",
+			"elementId": null,
+			"commandElementValues": [
+				{
+					"commandElementTypeParamId": "CommandElementTypeParam:2:2:1",
+					"value": null
+				}
+			]
+		},
+		"ptz": {
+			"commandElementTypeId": "CommandElementType:3:2",
+			"elementId": null,
+			"commandElementValues": [
+				{
+					"commandElementTypeParamId": "CommandElementTypeParam:3:2:1",
+					"value": null
+				}
+			]
+		}
+	},
+	"ptzValue": {
+		"stop": "0",
+		"up": "1",
+		"down": "2",
+		"left": "3",
+		"right": "4",
+		"zoomIn": "5",
+		"zoomOut": "6"
+	},
+	"restEndpoints": {
+		"element": "elements/${id}",
+		"cctvScenario": "cctv_scenarios/${id}",
+		"cctvScenarios": "cctv_scenarios",
+		"cctvHierarchies": "cctv_scenarios/hierarchies",
+		"command": "elements/send_command_element",
+		"cctvScenarioNodes": "cctv_scenarios/nodes",
+		"cctvCreateNode": "cctv_scenarios/node",
+		"cctvDeleteNode": "cctv_scenarios/node/${id}",
+		"cctvCreateScenario": "cctv_scenarios/createScenario",
+		"cctvUpdateScenario": "cctv_scenarios/updateScenario",
+		"cctvDeleteScenario": "cctv_scenarios/deleteScenario/${id}"
+	},
+	"multi": {
+		"fit": false
+	},
+	"single": {
+		"fit": false
+	},
+	"requiredPermissions": {
+		"commandEquipment": "SystemPermission:6",
+		"edit": "SystemPermission:26"
+	},
+	"camConf": {
+		"brand": "ElementTypeParam:2:1:1",
+		"model": "ElementTypeParam:2:1:2",
+		"presetConfigJson": "ElementTypeParam:2:1:6",
+		"featuresPTZ": "ElementTypeParam:2:1:7",
+		"stream_mjpeg": {
+			"url": "ElementTypeParam:2:1:3"
+		},
+		"url_snapshot": "ElementTypeParam:2:1:16",
+		"devices": [
+			{
+				"brand": "Bosch",
+				"model": "Starlight-7000",
+				"decoder": "mjpeg"
+			},
+			{
+				"brand": "Hikvision",
+				"model": "DS-2CD3047G2-LS",
+				"decoder": "mjpeg"
+			},
+			{
+				"brand": "Bosch",
+				"model": "Starlight-7000_SNAP",
+				"decoder": "snap"
+			},
+			{
+				"brand": "Hikvision",
+				"model": "DS-2CD3047G2-LS_SNAP",
+				"decoder": "snap"
+			}
+		],
+		"decoders": {
+			
+			"mjpeg": {
+				"timeCheckStreamMs": 600000,
+				"timeoutConnectStreamMs": 6000,
+				"url": "ElementTypeParam:2:1:3"
+			},
+			"snap": {
+				"timeoutConnectMs": 10000,
+				"defaultFps": 10,
+				"snapshot": true,
+				"fps": "ElementTypeParam:2:1:13", 
+				"url": "ElementTypeParam:2:1:3",
+				"rnd": "ElementTypeParam:2:1:16"
+			}
+		},
+		"other": {}
+	}
+}
