@@ -6,7 +6,7 @@ INSERT INTO static.ext_entity_types(ext_entity_type_id, alias, description, labe
 		"username": "SA",
 		"password": "Navarra0"
 	},
-	"selectQuery": "SELECT fecha_actualizacion, nombre_carretera, pk, hm, tipo, afeccion, fecha, titulo, id_incidencia, fecha_modificacion, id_carretera, utm_x, utm_y, id_tipo, id_afeccion, color FROM IncCarreteras.dbo.BaseIVR where id_categoria  = 1;",
+	"selectQuery": "SELECT categoria, fecha_actualizacion, nombre_carretera, pk, hm, tipo, afeccion, fecha, titulo, id_incidencia, fecha_modificacion, id_carretera, utm_x, utm_y, id_tipo, id_afeccion, color FROM IncCarreteras.dbo.BaseIVR where id_categoria  = 1;",
 	"extEntityParamsMapping": [ {"field": "id_carretera", "extEntityTypeParamId": "ExtEntityTypeParam:1:1"},
 								{"field": "nombre_carretera", "extEntityTypeParamId": "ExtEntityTypeParam:1:2"},
 								{"field": "pk", "extEntityTypeParamId": "ExtEntityTypeParam:1:3"},
@@ -15,7 +15,8 @@ INSERT INTO static.ext_entity_types(ext_entity_type_id, alias, description, labe
 								{"field": "afeccion", "extEntityTypeParamId": "ExtEntityTypeParam:1:6"},
 								{"field": "fecha_actualizacion", "extEntityTypeParamId": "ExtEntityTypeParam:1:7"},
 								{"field": "color", "extEntityTypeParamId": "ExtEntityTypeParam:1:8"},
-								{"field": "fecha", "extEntityTypeParamId": "ExtEntityTypeParam:1:9"}
+								{"field": "fecha", "extEntityTypeParamId": "ExtEntityTypeParam:1:9"},
+								{"field": "categoria", "extEntityTypeParamId": "ExtEntityTypeParam:1:11"}
 							],
 	"extEntityFieldsMapping": [ {"srcField": "id_incidencia", "dstField": "uid"},
 								{"srcField": "tipo", "dstField": "alias"},
@@ -60,7 +61,7 @@ true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 		"username": "SA",
 		"password": "Navarra0"
 	},
-	"selectQuery": "SELECT fecha_actualizacion, nombre_carretera, pk, hm, tipo, afeccion, fecha, titulo, id_incidencia, fecha_modificacion, id_carretera, utm_x, utm_y, id_tipo, id_afeccion, color FROM IncCarreteras.dbo.BaseIVR where id_categoria  = 2;",
+	"selectQuery": "SELECT categoria, fecha_actualizacion, nombre_carretera, pk, hm, tipo, afeccion, fecha, titulo, id_incidencia, fecha_modificacion, id_carretera, utm_x, utm_y, id_tipo, id_afeccion, color FROM IncCarreteras.dbo.BaseIVR where id_categoria  = 2;",
 	"extEntityParamsMapping": [ {"field": "id_carretera", "extEntityTypeParamId": "ExtEntityTypeParam:2:1"},
 								{"field": "nombre_carretera", "extEntityTypeParamId": "ExtEntityTypeParam:2:2"},
 								{"field": "pk", "extEntityTypeParamId": "ExtEntityTypeParam:2:3"},
@@ -69,7 +70,8 @@ true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 								{"field": "afeccion", "extEntityTypeParamId": "ExtEntityTypeParam:2:6"},
 								{"field": "fecha_actualizacion", "extEntityTypeParamId": "ExtEntityTypeParam:2:7"},
 								{"field": "color", "extEntityTypeParamId": "ExtEntityTypeParam:2:8"},
-								{"field": "fecha", "extEntityTypeParamId": "ExtEntityTypeParam:2:9"}
+								{"field": "fecha", "extEntityTypeParamId": "ExtEntityTypeParam:2:9"},
+								{"field": "categoria", "extEntityTypeParamId": "ExtEntityTypeParam:2:11"}
 							],
 	"extEntityFieldsMapping": [ {"srcField": "id_incidencia", "dstField": "uid"},
 								{"srcField": "tipo", "dstField": "alias"},
@@ -105,7 +107,7 @@ true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 		"username": "SA",
 		"password": "Navarra0"
 	},
-	"selectQuery": "SELECT fecha_actualizacion, nombre_carretera, pk, hm, tipo, afeccion, fecha, titulo, id_incidencia, fecha_modificacion, id_carretera, utm_x, utm_y, id_tipo, id_afeccion, color FROM IncCarreteras.dbo.BaseIVR where id_categoria  = 3;",
+	"selectQuery": "SELECT categoria, fecha_actualizacion, nombre_carretera, pk, hm, tipo, afeccion, fecha, titulo, id_incidencia, fecha_modificacion, id_carretera, utm_x, utm_y, id_tipo, id_afeccion, color FROM IncCarreteras.dbo.BaseIVR where id_categoria  = 3;",
 	"extEntityParamsMapping": [ {"field": "id_carretera", "extEntityTypeParamId": "ExtEntityTypeParam:3:1"},
 								{"field": "nombre_carretera", "extEntityTypeParamId": "ExtEntityTypeParam:3:2"},
 								{"field": "pk", "extEntityTypeParamId": "ExtEntityTypeParam:3:3"},
@@ -114,7 +116,8 @@ true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 								{"field": "afeccion", "extEntityTypeParamId": "ExtEntityTypeParam:3:6"},
 								{"field": "fecha_actualizacion", "extEntityTypeParamId": "ExtEntityTypeParam:3:7"},
 								{"field": "color", "extEntityTypeParamId": "ExtEntityTypeParam:3:8"},
-								{"field": "fecha", "extEntityTypeParamId": "ExtEntityTypeParam:3:9"}
+								{"field": "fecha", "extEntityTypeParamId": "ExtEntityTypeParam:3:9"},
+								{"field": "categoria", "extEntityTypeParamId": "ExtEntityTypeParam:3:11"}
 							],
 	"extEntityFieldsMapping": [ {"srcField": "id_incidencia", "dstField": "uid"},
 								{"srcField": "tipo", "dstField": "alias"},

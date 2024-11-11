@@ -32,6 +32,21 @@ INSERT INTO reporting_bo.sg_metadata_tables (id, name, label, label_singular, la
 			-- sql_view 
 			'SELECT id, categoria, tipo, titulo, affecion, carretera, localizacion, fecha, fecha_actualizacion, estado, created_at 
 				FROM reporting_bo.c4_ext_entities_with_values'
+			, NULL, null),
+		(2, 'c4_works_ext_entities_with_values', 'c4_works_ext_entities_with_values', 'LBL_EXT_ENTIES_C4', 'LBL_EXT_ENTIES_C4_DESCRIPTION', NULL, false, false, 
+			-- sql_view 
+			'SELECT id, categoria, tipo, titulo, affecion, carretera, localizacion, fecha, fecha_actualizacion, estado, created_at 
+				FROM reporting_bo.c4_ext_entities_with_values where categoria = ''Obras'''
+			, NULL, null),
+		(3, 'c4_weather_ext_entities_with_values', 'c4_weather_ext_entities_with_values', 'LBL_EXT_ENTIES_C4', 'LBL_EXT_ENTIES_C4_DESCRIPTION', NULL, false, false, 
+			-- sql_view 
+			'SELECT id, categoria, tipo, titulo, affecion, carretera, localizacion, fecha, fecha_actualizacion, estado, created_at 
+				FROM reporting_bo.c4_ext_entities_with_values where categoria = ''Meteorológicas'''
+			, NULL, null),
+		(4, 'c4_road_ext_entities_with_values', 'c4_road_ext_entities_with_values', 'LBL_EXT_ENTIES_C4', 'LBL_EXT_ENTIES_C4_DESCRIPTION', NULL, false, false, 
+			-- sql_view 
+			'SELECT id, categoria, tipo, titulo, affecion, carretera, localizacion, fecha, fecha_actualizacion, estado, created_at 
+				FROM reporting_bo.c4_ext_entities_with_values where categoria = ''Red Viaria'''
 			, NULL, null);
 			
   END IF;

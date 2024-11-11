@@ -4,7 +4,8 @@
 
 INSERT INTO conf.roles
 (role_id, alias, description, preset, enabled, visible, created_at, updated_at) VALUES
-(1, 'Administrador', 'Administrador del sistema', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(1, 'Administrador', 'Administrador del sistema', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 'Visualizador', 'Visualizador del sistema', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 -- 
 -- Table: conf.role_permissions
@@ -37,14 +38,20 @@ INSERT INTO conf.role_permissions
 (1, 23, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (1, 24, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (1, 25, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(1, 26, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(1, 26, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+--Visualizador
+(2, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 -- 
 -- Table: conf.users
 --
 INSERT INTO conf.users
 (user_id, role_id, name_, password_, password_expired_at, session_expire_time_s, locked_until, preset, allow_multiple_sessions, full_name, email, locale_code,  enabled, visible, created_at, updated_at) VALUES
-(1, 1, 'admin', 'PTp8841/XyOkxeVUCyNf+w==', NULL, NULL, NULL, true, true, 'System admin', 'admin@revenga.com', 'es_ES', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-
+(1, 1, 'admin', 'iMTEltghfjLEY2kKHT5yyA==', NULL, NULL, NULL, true, true, 'System admin', 'admin@revenga.com', 'es_ES', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 2, 'traficonavarra', 'iMTEltghfjLEY2kKHT5yyA==', NULL, NULL, NULL, true, true, 'System admin', 'admin@revenga.com', 'es_ES', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(3, 2, 'molabar', 'iMTEltghfjLEY2kKHT5yyA==', NULL, NULL, NULL, true, true, 'System admin', 'admin@revenga.com', 'es_ES', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(4, 2, 'jjboulandier', 'iMTEltghfjLEY2kKHT5yyA==', NULL, NULL, NULL, true, true, 'System admin', 'admin@revenga.com', 'es_ES', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(5, 2, 'alegea', 'iMTEltghfjLEY2kKHT5yyA==', NULL, NULL, NULL, true, true, 'System admin', 'admin@revenga.com', 'es_ES', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 
