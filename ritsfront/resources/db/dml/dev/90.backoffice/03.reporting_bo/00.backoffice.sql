@@ -14,9 +14,10 @@ BEGIN
     	"tableHeight": 700,
     	"tableWidth": 900,
     	"showIdForm": true,
-    	"showIdTable": false,
+    	"showIdTable": true,
     	"showIdSearch": false,
-    	"gridFilters": true
+    	"gridFilters": true,
+		"editable": false
 	}',
 	-- default_metadata_column
 	'{
