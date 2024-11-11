@@ -87,8 +87,9 @@ INSERT INTO ui.map_layers (id, base_layer, map_id, "name", description, "label",
 (14, null, 1, 'Semáforos', 'Semáforos', 'LBL_TRAFFIC_LIGHTS', NULL, true),
 (15, null, 1, 'Paneles', 'Paneles', 'LBL_PANEL', NULL, true),
 (16, '{"enabled": true, "type": "WMS", "serverType": "geoserver", "url": "http://192.168.88.165:8700/geoserver/wms", "name": "osm:red_viaria_pk_malaga"}', 1, 'pks malaga', 'pks malaga', 'LBL_PKS_LAYER', NULL, true),
-(17, '{"enabled": true, "type": "WMS", "serverType": "geoserver", "url": "http://192.168.88.165:8700/geoserver/wms", "name": "osm:red_viaria_tramo_malaga"}', 1, 'stretchs malaga ', 'stretchs malaga', 'LBL_STRETCHS_LAYER', NULL, true);
-
+(17, '{"enabled": true, "type": "WMS", "serverType": "geoserver", "url": "http://192.168.88.165:8700/geoserver/wms", "name": "osm:red_viaria_tramo_malaga"}', 1, 'stretchs malaga ', 'stretchs malaga', 'LBL_STRETCHS_LAYER', NULL, true),
+(18, '{"enabled": true, "type": "FILE", "fileType": "ShapeFile", "fileName": "PK.zip", "name": "PK", "attributes": true}', 2, 'PK', 'PK', 'PK', NULL, true),
+(19, '{"enabled": true, "type": "FILE", "fileType": "KML", "fileName": "btt larraga track.kml", "name": "btt larraga track", "attributes": true}', 2, 'btt larraga track', 'btt larraga track', 'btt larraga track', NULL, true);
 
 INSERT INTO ui.map_layer_relationships (id, map_id, parent_layer_id, child_layer_id) VALUES 
 (3, 1, 3, 5),
