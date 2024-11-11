@@ -134,7 +134,9 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 	 ('es_ES',1,'LBL_FILE_NAME','Nombre de fichero','2024-10-24 16:53:46.61361+02','2024-10-24 16:53:46.61361+02'),
 	 ('es_ES',1,'LBL_SHOW_ATTRIBUTES','Mostrar propiedades','2024-10-24 16:53:46.61361+02','2024-10-24 16:53:46.61361+02'),
 	 ('es_ES',1,'LBL_ATTRIBUTES','Propiedades','2024-10-24 16:53:46.61361+02','2024-10-24 16:53:46.61361+02'),
-	 ('es_ES',1,'LBL_LAYER_FILE_MANAGER','Gestor de ficheros de capas','2024-10-24 16:53:46.61361+02','2024-10-24 16:53:46.61361+02');
+	 ('es_ES',1,'LBL_LAYER_FILE_MANAGER','Gestor de ficheros de capas','2024-10-24 16:53:46.61361+02','2024-10-24 16:53:46.61361+02'),
+	 ('es_ES',1,'LBL_LAYER_FILE_MANAGER_DESC','Cargue o descargue ficheros con información geográfica. Pulse Aceptar para seleccionar la capa.','2024-10-24 16:53:46.61361+02','2024-10-24 16:53:46.61361+02');
+	 
 	 
 INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) values
 --en_GB
@@ -262,7 +264,8 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 	 ('en_GB',1,'LBL_FILE_NAME','File name','2024-10-24 16:53:46.61361+02','2024-10-24 16:53:46.61361+02'),
 	 ('en_GB',1,'LBL_SHOW_ATTRIBUTES','Show attributes','2024-10-24 16:53:46.61361+02','2024-10-24 16:53:46.61361+02'),
 	 ('en_GB',1,'LBL_ATTRIBUTES','Attributes','2024-10-24 16:53:46.61361+02','2024-10-24 16:53:46.61361+02'),
-	 ('en_GB',1,'LBL_LAYER_FILE_MANAGER','Layers file manager','2024-10-24 16:53:46.61361+02','2024-10-24 16:53:46.61361+02');
+	 ('en_GB',1,'LBL_LAYER_FILE_MANAGER','Layers file manager','2024-10-24 16:53:46.61361+02','2024-10-24 16:53:46.61361+02'),
+	 ('en_GB',1,'LBL_LAYER_FILE_MANAGER_DESC','Load and upload layer files. Press Accept to select layer.','2024-10-24 16:53:46.61361+02','2024-10-24 16:53:46.61361+02');
 	 
 INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) values
 --es_CL
@@ -390,4 +393,5 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 	 ('es_CL',1,'LBL_FILE_NAME','Nombre de fichero','2024-10-24 16:53:46.61361+02','2024-10-24 16:53:46.61361+02'),
 	 ('es_CL',1,'LBL_SHOW_ATTRIBUTES','Mostrar propiedades','2024-10-24 16:53:46.61361+02','2024-10-24 16:53:46.61361+02'),
 	 ('es_CL',1,'LBL_ATTRIBUTES','Propiedades','2024-10-24 16:53:46.61361+02','2024-10-24 16:53:46.61361+02'),
-	 ('es_CL',1,'LBL_LAYER_FILE_MANAGER','Gestor de ficheros de capas','2024-10-24 16:53:46.61361+02','2024-10-24 16:53:46.61361+02');
+	 ('es_CL',1,'LBL_LAYER_FILE_MANAGER','Gestor de ficheros de capas','2024-10-24 16:53:46.61361+02','2024-10-24 16:53:46.61361+02'),
+	 ('es_CL',1,'LBL_LAYER_FILE_MANAGER_DESC','Cargue o descargue ficheros con información geográfica. Pulse Aceptar para seleccionar la capa.','2024-10-24 16:53:46.61361+02','2024-10-24 16:53:46.61361+02');
