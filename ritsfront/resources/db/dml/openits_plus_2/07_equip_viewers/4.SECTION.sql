@@ -20,7 +20,7 @@ INSERT INTO ui.equip_viewer_measures (equip_viewer_grp_measure_id, vo_entities_i
 (02000401,'ElementTypeParam:4:2:7', 7, True),
 (02000401,'ElementTypeParam:4:2:8', 8, True),
 (02000401,'ElementTypeParam:4:2:9', 9, True),
-(02000401,'ElementTypeParam:4:2:11', 11, True),
+(02000401,'ElementTypeParam:4:2:10', 11, True),
 (02000401,'ElementTypeParam:4:2:12', 12, True),
 (02000401,'ElementTypeParam:4:2:13', 13, True),
 (02000401,'ElementTypeParam:4:2:18', 18, True),
