@@ -14,18 +14,17 @@ BEGIN
         pv.param_11 AS categoria,
         e.alias AS tipo,
         e.description AS titulo,
-        pv.param_6 AS affecion,
+        pv.param_6 AS afeccion,
         pv.param_2 AS carretera,
         pv.param_10 AS localizacion,
-        pv.param_9 AS fecha,
-        pv.param_7 AS fecha_actualizacion,
+    	(TO_TIMESTAMP(pv.param_9, ''YYYY-MM-DD HH24:MI:SS.MS'') AT TIME ZONE ''Europe/Madrid'')::timestamptz AS fecha,
+    	(TO_TIMESTAMP(pv.param_7, ''YYYY-MM-DD HH24:MI:SS.MS'') AT TIME ZONE ''Europe/Madrid'')::timestamptz AS fecha_actualizacion,
         CASE 
             WHEN e.status = ''CREATED'' THEN ''CREADO''
             WHEN e.status = ''DELETED'' THEN ''ELIMINADO''
             WHEN e.status = ''UPDATED'' THEN ''ACTUALIZADO''
             ELSE e.status::varchar
-        END AS estado,
-        e.created_at
+        END AS estado
     FROM 
         (SELECT DISTINCT ON (ext_entity_id) *
          FROM hist.ext_entities

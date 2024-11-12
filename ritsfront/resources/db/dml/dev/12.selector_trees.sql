@@ -23,3 +23,21 @@ INSERT INTO ui.selector_tree_hierarchies(selector_tree_id,  node_parent_id, node
 (1, 4, 7, true, true),
 (1, 4, 8, true, true),
 (1, 4, 9, true, true);
+
+
+
+INSERT INTO ui.selector_trees(id, "label", default_module_id, enabled, visible) VALUES
+(2, 'LBL_SELECTOR_TREE_INCIDENTS_C4', 1927, true, true);
+
+INSERT INTO ui.selector_tree_nodes(id, selector_tree_id, "label", image, module_id, position, enabled, visible) VALUES
+(21, 2, 'LBL_SELECTOR_TREE_INCIDENTS_C4', null, null, null, true, true),
+(22, 2, 'LBL_EXT_ENTITY_TYPE_C4', null, 1927, 1, true, true),
+(23, 2, 'LBL_EXT_ENTITY_TYPE_C4_WORKS', null, 6000, 2, true, true),
+(24, 2, 'LBL_EXT_ENTITY_TYPE_C4_WEATHER', null, 6001, 3, true, true),
+(25, 2, 'LBL_EXT_ENTITY_TYPE_C4_ROAD', null, 6002, 4, true, true);
+
+INSERT INTO ui.selector_tree_hierarchies(selector_tree_id,  node_parent_id, node_child_id, enabled, visible) VALUES
+(2, 21, 22, true, true),
+(2, 21, 23, true, true),
+(2, 21, 24, true, true),
+(2, 21, 25, true, true);
