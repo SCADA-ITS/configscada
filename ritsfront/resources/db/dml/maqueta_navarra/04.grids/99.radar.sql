@@ -20,7 +20,7 @@ INSERT INTO ui.grid_option_values(grid_id, grid_option_id, value) VALUES
 (99, 13, 'true'),
 (99, 14, 'false'),
 (99, 15, 'false'),
-(99, 16, 'img/grid/element_type_02.png'),
+(99, 16, 'img/grid/element_type_99.png'),
 (99, 17, 'true');
 
 INSERT INTO ui.grid_commands(grid_id, "position", "label", icon, "default", module_action_id, args, view_type_id, multiselect, show_text, item_required) VALUES

@@ -49,9 +49,9 @@ INSERT INTO conf.role_permissions
 INSERT INTO conf.users
 (user_id, role_id, name_, password_, password_expired_at, session_expire_time_s, locked_until, preset, allow_multiple_sessions, full_name, email, locale_code,  enabled, visible, created_at, updated_at) VALUES
 (1, 1, 'admin', 'iMTEltghfjLEY2kKHT5yyA==', NULL, NULL, NULL, true, true, 'System admin', 'admin@revenga.com', 'es_ES', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(2, 2, 'traficonavarra', 'iMTEltghfjLEY2kKHT5yyA==', NULL, NULL, NULL, true, true, 'System admin', 'admin@revenga.com', 'es_ES', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(3, 2, 'molabar', 'iMTEltghfjLEY2kKHT5yyA==', NULL, NULL, NULL, true, true, 'System admin', 'admin@revenga.com', 'es_ES', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(4, 2, 'jjboulandier', 'iMTEltghfjLEY2kKHT5yyA==', NULL, NULL, NULL, true, true, 'System admin', 'admin@revenga.com', 'es_ES', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(5, 2, 'alegea', 'iMTEltghfjLEY2kKHT5yyA==', NULL, NULL, NULL, true, true, 'System admin', 'admin@revenga.com', 'es_ES', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(2, 2, 'traficonavarra', 'g71Fo4TZU0Htr2bphklKtg==', NULL, NULL, NULL, true, true, 'System admin', 'admin@revenga.com', 'es_ES', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(3, 2, 'molabar', 'UwoC4qpPOv8qNn/SNjrt6Q==', NULL, NULL, NULL, true, true, 'System admin', 'admin@revenga.com', 'es_ES', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(4, 2, 'jjboulandier', '+BtScbG7HCk2OH7pLQZXBw==', NULL, NULL, NULL, true, true, 'System admin', 'admin@revenga.com', 'es_ES', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(5, 2, 'alegea', '5YC8xEpktJHuKq0QO6XHPA==', NULL, NULL, NULL, true, true, 'System admin', 'admin@revenga.com', 'es_ES', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 

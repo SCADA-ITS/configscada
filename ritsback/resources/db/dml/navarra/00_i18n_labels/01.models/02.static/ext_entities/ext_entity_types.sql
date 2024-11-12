@@ -10,6 +10,7 @@
 --
 INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) VALUES
 --es_ES
+('es_ES', 1, 'LBL_EXT_ENTITY_C4', 'Incidencia C4', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_EXT_ENTITY_TYPE_C4_ROAD', 'Red viaría', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_EXT_ENTITY_TYPE_C4_ROAD_DESC', 'Red viaría', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_EXT_ENTITY_TYPE_C4_WEATHER', 'Meteorológicas', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),

@@ -8,6 +8,7 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 ('ElementType:99', 2, '02_camera_sanctioning2.svg'),
 ('ElementType:99', 14, 'grid/element_type_99.png'),
 
+('ExtEntityType:1', 14, 'ext_entity_type/obras_blanco.png'),
 ('ExtEntityType:1', 63, 'obras_blanco.png'),
 ('ExtEntityType:1', 64, '["ExtEntityTypeParam:1:2","ExtEntityTypeParam:1:6","ExtEntityTypeParam:1:7","ExtEntityTypeParam:1:10"]'),
 ('ExtEntityType:1', 65, '#6eabd9'),
@@ -33,7 +34,7 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 
 ('ExtEntityType:2', 63, 'meteo_blanco.png'),
 ('ExtEntityType:2', 64, '["ExtEntityTypeParam:2:2","ExtEntityTypeParam:2:6","ExtEntityTypeParam:2:7","ExtEntityTypeParam:2:10"]'),
-('ExtEntityType:2', 65, '#f7ed93'),
+('ExtEntityType:2', 65, '#7f8c8d'),
 ('ExtEntityType:2', 67, '
 {
   "iconos": [

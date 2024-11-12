@@ -1,5 +1,5 @@
 INSERT INTO ui.selector_trees(id, "label", default_module_id, enabled, visible) VALUES
-(1, 'LBL_SELECTOR_TREE_INCIDENTS_C4', 1950, true, true);
+(1, 'LBL_SELECTOR_TREE_INCIDENTS_C4', 6000, true, true);
 
 INSERT INTO ui.selector_tree_nodes(id, selector_tree_id, "label", image, module_id, enabled, visible) VALUES
 (1, 1, 'LBL_SELECTOR_TREE_INCIDENTS_C4', null, 1950, true, true),

@@ -1,15 +1,15 @@
 INSERT INTO ui.maps (id, name, description, "label", icon, longitude, latitude, zoom, zoom_max, zoom_min, limit_init_lon, limit_init_lat, limit_end_lon, limit_end_lat, custom_provider_url, default_zoom_search, dark_mode, custom_provider) VALUES 
 (1, 'MAP', 'Map', 'LBL_MENU_ITEM_MAP', NULL, -1.65, 42.7, 9, 14, 9, -2.5, 39.8, 0, 45.8, null, 9, true,
 	'{ 
-		"map": {"enabled": false, "type": "WMS", "serverType": "geoserver", "url": "http://192.168.88.161:8700/geoserver/wms", "name": "osm"},
-		"router": {"enabled": true, "type": "OpenRouteService", "url": "http://192.168.88.161:8701/ors"},
-        "smartRoadInfo": {"enabled": true, "url": "http://192.168.88.161:8702/api"}
+		"map": {"enabled": false, "type": "WMS", "serverType": "geoserver", "url": "http://10.253.5.81:8700/geoserver/wms", "name": "osm"},
+		"router": {"enabled": true, "type": "OpenRouteService", "url": "http://10.253.5.81:8701/ors"},
+        "smartRoadInfo": {"enabled": true, "url": "http://10.253.5.81:8702/api"}
 	}'),
 (1000, 'MAPA PARA COMPONENTE MAPEDITOR', 'MAPA PARA COMPONENTE MAPEDITOR', 'LBL_MENU_ITEM_MAP', NULL, -3, 42.7, 8, 14, 8, 0, 39.8, -2.5, 45.8, null, 8, true,
 	'{ 
-		"map": {"enabled": false, "type": "WMS", "serverType": "geoserver", "url": "http://192.168.88.161:8700/geoserver/wms", "name": "osm"},
-		"router": {"enabled": true, "type": "OpenRouteService", "url": "http://192.168.88.161:8701/ors"},
-        "smartRoadInfo": {"enabled": true, "url": "http://192.168.88.161:8702/api"}
+		"map": {"enabled": false, "type": "WMS", "serverType": "geoserver", "url": "http://10.253.5.81:8700/geoserver/wms", "name": "osm"},
+		"router": {"enabled": true, "type": "OpenRouteService", "url": "http://10.253.5.81:8701/ors"},
+        "smartRoadInfo": {"enabled": true, "url": "http://10.253.5.81:8702/api"}
 	}');
 
 INSERT INTO ui.map_layers (id, base_layer, map_id, "name", description, "label", icon, visible) VALUES 
@@ -57,7 +57,7 @@ INSERT INTO ui.map_commands
 (1, 1, 1, 'LBL_CMD_ELEMENT', 'mdi mdi-pencil', true, 101401, NULL, 2, false, NULL, false, true),
 (2, 1, 2, 'LBL_CMD_EQUIPMENT', 'mdi mdi-pencil', false, 101701, NULL, 2, true, NULL, true, true);
 
-INSERT INTO ui.map_ext_entities (id, default_graphic_icon_id, default_module_action_id, ext_entity_types_config) VALUES
+/*INSERT INTO ui.map_ext_entities (id, default_graphic_icon_id, default_module_action_id, ext_entity_types_config) VALUES
 (1, 010001, NULL, 
 	'[
 		{ 
@@ -79,5 +79,5 @@ INSERT INTO ui.map_ext_entities (id, default_graphic_icon_id, default_module_act
 			"animate": false
 		}
 	]'
-);
+);*/
 
