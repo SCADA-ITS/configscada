@@ -57,7 +57,7 @@ INSERT INTO ui.map_commands
 (1, 1, 1, 'LBL_CMD_ELEMENT', 'mdi mdi-pencil', true, 101401, NULL, 2, false, NULL, false, true),
 (2, 1, 2, 'LBL_CMD_EQUIPMENT', 'mdi mdi-pencil', false, 101701, NULL, 2, true, NULL, true, true);
 
-/*INSERT INTO ui.map_ext_entities (id, default_graphic_icon_id, default_module_action_id, ext_entity_types_config) VALUES
+INSERT INTO ui.map_ext_entities (id, default_graphic_icon_id, default_module_action_id, ext_entity_types_config) VALUES
 (1, 010001, NULL, 
 	'[
 		{ 
@@ -79,5 +79,5 @@ INSERT INTO ui.map_commands
 			"animate": false
 		}
 	]'
-);*/
+);
 

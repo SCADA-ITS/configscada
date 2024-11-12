@@ -2,9 +2,9 @@ INSERT INTO static.ext_entity_types(ext_entity_type_id, alias, description, labe
 (1, 'C4 - Obras', 'Incidencias generadas en sistema C4 - Obras', 'LBL_EXT_ENTITY_TYPE_C4_WORKS', 'LBL_EXT_ENTITY_TYPE_C4_WORKS_DESC', true, '0 0/1 * * * ? *', 
 '{
 	"jdbc": {
-		"url": "jdbc:sqlserver://;serverName=192.168.88.159;databaseName=IncCarreteras",
-		"username": "SA",
-		"password": "Navarra0"
+		"url": "jdbc:sqlserver://10.238.5.44:51433;databaseName=IncCarreteras",
+		"username": "USR_SCT",
+		"password": "C+N87)@nbR"
 	},
 	"selectQuery": "SELECT categoria, fecha_actualizacion, nombre_carretera, pk, hm, tipo, afeccion, fecha, titulo, id_incidencia, fecha_modificacion, id_carretera, utm_x, utm_y, id_tipo, id_afeccion, color FROM IncCarreteras.dbo.BaseIVR where id_categoria  = 1;",
 	"extEntityParamsMapping": [ {"field": "id_carretera", "extEntityTypeParamId": "ExtEntityTypeParam:1:1"},
@@ -57,9 +57,9 @@ true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (2, 'C4 - Meteorológicas', 'Incidencias generadas en sistema C4 - Meteorológicas', 'LBL_EXT_ENTITY_TYPE_C4_WEATHER', 'LBL_EXT_ENTITY_TYPE_C4_WEATHER_DESC', true, '20 0/1 * * * ? *', 
 '{
 	"jdbc": {
-		"url": "jdbc:sqlserver://;serverName=192.168.88.159;databaseName=IncCarreteras",
-		"username": "SA",
-		"password": "Navarra0"
+		"url": "jdbc:sqlserver://10.238.5.44:51433;databaseName=IncCarreteras",
+		"username": "USR_SCT",
+		"password": "C+N87)@nbR"
 	},
 	"selectQuery": "SELECT categoria, fecha_actualizacion, nombre_carretera, pk, hm, tipo, afeccion, fecha, titulo, id_incidencia, fecha_modificacion, id_carretera, utm_x, utm_y, id_tipo, id_afeccion, color FROM IncCarreteras.dbo.BaseIVR where id_categoria  = 2;",
 	"extEntityParamsMapping": [ {"field": "id_carretera", "extEntityTypeParamId": "ExtEntityTypeParam:2:1"},
@@ -103,9 +103,9 @@ true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (3, 'C4 - Red viaria', 'Incidencias generadas en sistema C4 - Red viaria', 'LBL_EXT_ENTITY_TYPE_C4_ROAD', 'LBL_EXT_ENTITY_TYPE_C4_ROAD_DESC', true, '40 0/1 * * * ? *', 
 '{
 	"jdbc": {
-		"url": "jdbc:sqlserver://;serverName=192.168.88.159;databaseName=IncCarreteras",
-		"username": "SA",
-		"password": "Navarra0"
+		"url": "jdbc:sqlserver://10.238.5.44:51433;databaseName=IncCarreteras",
+		"username": "USR_SCT",
+		"password": "C+N87)@nbR"
 	},
 	"selectQuery": "SELECT categoria, fecha_actualizacion, nombre_carretera, pk, hm, tipo, afeccion, fecha, titulo, id_incidencia, fecha_modificacion, id_carretera, utm_x, utm_y, id_tipo, id_afeccion, color FROM IncCarreteras.dbo.BaseIVR where id_categoria  = 3;",
 	"extEntityParamsMapping": [ {"field": "id_carretera", "extEntityTypeParamId": "ExtEntityTypeParam:3:1"},

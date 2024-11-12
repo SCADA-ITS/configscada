@@ -2,6 +2,7 @@ INSERT INTO ui.modules(id, module_type_id, "name", description, default_view_typ
 (200, 3, 'MAP', 'MAP', 1,null, 'modules/mapModule.js', 'getView', 'loadData', NULL, NULL, true, true, true),
 
 (401, 5, 'ExternalMap', 'ExternalMap', 1, null, 'modules/externalApp.js', 'getView', NULL, NULL, NULL, true, true, NULL),
+(402, 5, 'ExternalMap', 'ExternalMap', 1, null, 'modules/externalApp.js', 'getView', NULL, NULL, NULL, true, true, NULL),
 
 (1950, 9, 'c4_ext_entities_with_values', 'c4_ext_entities_with_values', 1, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 
