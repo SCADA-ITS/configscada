@@ -158,8 +158,10 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_ES',1,'LBL_ENTITIE_FIELDS_ELEMENT_BACK_OFFICE_DESCRIPTION','Backoffice utilizado en equipos',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 
 ('es_ES',1,'LBL_ENTITIE_FIELDS_INCIDENTS_BACK_OFFICE','Backoffice utilizado en incidencias',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
-('es_ES',1,'LBL_ENTITIE_FIELDS_INCIDENTS_BACK_OFFICE_DESCRIPTION','Backoffice utilizado en incidencias',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
+('es_ES',1,'LBL_ENTITIE_FIELDS_INCIDENTS_BACK_OFFICE_DESCRIPTION','Backoffice utilizado en incidencias',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 
+('es_ES',1,'LBL_ENTITIE_FIELDS_NO_GRAPHICAL','Tipo de equipo no graficable',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+('es_ES',1,'LBL_ENTITIE_FIELDS_NO_GRAPHICAL_DESCRIPTION','Tipo de equipo no se muestra en el componente de lista de equipamiento',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
 
 --es_CL
 INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) VALUES
@@ -311,8 +313,10 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_CL',1,'LBL_ENTITIE_FIELDS_ELEMENT_BACK_OFFICE_DESCRIPTION','Backoffice utilizado en equipos',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 
 ('es_CL',1,'LBL_ENTITIE_FIELDS_INCIDENTS_BACK_OFFICE','Backoffice utilizado en incidencias',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
-('es_CL',1,'LBL_ENTITIE_FIELDS_INCIDENTS_BACK_OFFICE_DESCRIPTION','Backoffice utilizado en incidencias',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
+('es_CL',1,'LBL_ENTITIE_FIELDS_INCIDENTS_BACK_OFFICE_DESCRIPTION','Backoffice utilizado en incidencias',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 
+('es_CL',1,'LBL_ENTITIE_FIELDS_NO_GRAPHICAL','Tipo de equipo no graficable',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+('es_CL',1,'LBL_ENTITIE_FIELDS_NO_GRAPHICAL_DESCRIPTION','Tipo de equipo no se muestra en el componente de lista de equipamiento',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
 
 
 --en_GB
@@ -465,8 +469,10 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('en_GB',1,'LBL_ENTITIE_FIELDS_ELEMENT_BACK_OFFICE_DESCRIPTION','Element back office',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 
 ('en_GB',1,'LBL_ENTITIE_FIELDS_INCIDENTS_BACK_OFFICE','Incidents back office',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
-('en_GB',1,'LBL_ENTITIE_FIELDS_INCIDENTS_BACK_OFFICE_DESCRIPTION','Incidents back office',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
+('en_GB',1,'LBL_ENTITIE_FIELDS_INCIDENTS_BACK_OFFICE_DESCRIPTION','Incidents back office',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 
+('en_GB',1,'LBL_ENTITIE_FIELDS_NO_GRAPHICAL','Non-graphable equipment type',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+('en_GB',1,'LBL_ENTITIE_FIELDS_NO_GRAPHICAL_DESCRIPTION','Equipment type is not displayed in the equipment list component',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
 
 --sk_SK
 --INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) VALUES
@@ -615,4 +621,8 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 --('sk_SK',1,'LBL_ENTITIE_FIELDS_ELEMENT_BACK_OFFICE_DESCRIPTION','Element back office',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 --
 --('sk_SK',1,'LBL_ENTITIE_FIELDS_INCIDENTS_BACK_OFFICE','Incidents back office',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
---('sk_SK',1,'LBL_ENTITIE_FIELDS_INCIDENTS_BACK_OFFICE_DESCRIPTION','Incidents back office',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
+--('sk_SK',1,'LBL_ENTITIE_FIELDS_INCIDENTS_BACK_OFFICE_DESCRIPTION','Incidents back office',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+--
+--('sk_SK',1,'LBL_ENTITIE_FIELDS_NO_GRAPHICAL','Typ zariadenia bez možnosti grafu',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+--('sk_SK',1,'LBL_ENTITIE_FIELDS_NO_GRAPHICAL_DESCRIPTION','Typ zariadenia sa nezobrazuje v komponente zoznamu zariadení',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
+
