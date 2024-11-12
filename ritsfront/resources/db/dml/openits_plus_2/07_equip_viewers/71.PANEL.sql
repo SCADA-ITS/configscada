@@ -37,8 +37,8 @@ INSERT INTO ui.equip_viewer_tabs (equip_viewer_id, module_action_id, alias, desc
 --equip_viewer_grp_measure_id = Subtype(2d) + Type(4d) + contador
 --if it is going to be put by element use this format for the id: ELEMENT + Subtype(2d) + Type(4d) + contador
 INSERT INTO ui.equip_viewer_grp_measures(id, equip_viewer_id, name, description, "label", icon, position, visible) VALUES
-(11007101, 'ElementSubtype:11:71', 'Measures', 'Measures', 'LBL_GRP_MEASURES', null, 1, True),
-(12007101, 'ElementSubtype:12:71', 'Measures', 'Measures', 'LBL_GRP_MEASURES', null, 1, True),
+(11007101, 'ElementSubtype:11:71', 'Measures', 'Measures', 'LBL_GRP_MEASURES', null, 1, False),
+(12007101, 'ElementSubtype:12:71', 'Measures', 'Measures', 'LBL_GRP_MEASURES', null, 1, False),
 (16007101, 'ElementSubtype:16:71', 'Measures', 'Measures', 'LBL_GRP_MEASURES', null, 1, True),
 (19007101, 'ElementSubtype:19:71', 'Measures', 'Measures', 'LBL_GRP_MEASURES', null, 1, True),
 

@@ -3,7 +3,7 @@
 --
 
 INSERT INTO conf.cctv_scenarios (scenario_id, alias, description, n_rows, n_columns, enabled, visible) VALUES
-(1, 'MOSAICO RIO VERDE', 'MOSAICO RIO VERDE', 2, 5, true, true),
+(1, 'MOSAICO', 'MOSAICO', 2, 5, true, true),
 (2, 'Norte', 'Norte', 2, 3, true, true),
 (3, 'Sur', 'Sur', 2, 3, true, true);
 
