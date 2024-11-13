@@ -48,10 +48,10 @@
      inkscape:current-layer="main"
      inkscape:document-rotation="0"
      showgrid="false"
-     inkscape:window-width="1600"
-     inkscape:window-height="837"
-     inkscape:window-x="1917"
-     inkscape:window-y="178"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="1912"
+     inkscape:window-y="-8"
      inkscape:window-maximized="1"
      inkscape:showpageshadow="2"
      inkscape:pagecheckerboard="0"
@@ -105,18 +105,18 @@
     <image
        sodipodi:absref="C:\Users\jcaballero\Downloads\camera.png"
        xlink:href="camera.png"
-       style="display:inline"
-       y="7.4503493"
-       x="7.7244601"
-       id="type"
-       preserveAspectRatio="none"
+       width="40"
        height="40"
-       width="40" />
+       preserveAspectRatio="none"
+       id="type"
+       x="7.7244601"
+       y="7.4503493"
+       style="display:inline" />
     <ellipse
        style="fill:#ffffff;fill-rule:evenodd;stroke:#0000f8;stroke-width:0.195261;stroke-linecap:square;stroke-linejoin:round;paint-order:stroke fill markers"
        id="state"
-       cx="43.366501"
-       cy="10.058267"
+       cx="46.541504"
+       cy="8.470768"
        rx="4.2183552"
        ry="3.7429347" />
   </g>
