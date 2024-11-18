@@ -73,6 +73,24 @@
 	ALTER TABLE ui.map_ext_entities ADD CONSTRAINT fk_map_ext_entities_default_module_action_id FOREIGN KEY (default_module_action_id) REFERENCES ui.module_actions(id);
 	
 	ALTER TABLE ui.map_ext_entities SET TABLESPACE tbl_ui;
+
+-- 
+-- Table: ui.map_routes
+-- Description: Definition of map routes
+-- Scope: ui
+--
+	CREATE TABLE ui.map_routes (
+		id int NOT NULL,	
+		default_module_action_id int NULL,
+		routes_config varchar NULL,
+		CONSTRAINT pk_map_routes PRIMARY KEY (id)
+	);
+	
+	CREATE INDEX idx_map_routes_default_module_action_id ON ui.map_routes USING btree (default_module_action_id);
+	
+	ALTER TABLE ui.map_routes ADD CONSTRAINT fk_map_routes_default_module_action_id FOREIGN KEY (default_module_action_id) REFERENCES ui.module_actions(id);
+	
+	ALTER TABLE ui.map_routes SET TABLESPACE tbl_ui;
 	
 -- 
 -- Table: ui.map_layers

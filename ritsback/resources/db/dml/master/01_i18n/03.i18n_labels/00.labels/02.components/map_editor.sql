@@ -32,8 +32,9 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_ES', 1, 'LBL_MAP_EDITOR_BOTH_WAYS', '(Ambos sentidos)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_MAP_EDITOR_IMPORTER_FILE_NOT_SUPPORTED', 'Formato de fichero no soportado', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_MAP_EDITOR_IMPORTER_IMPORT_FILE', 'Importar fichero', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('es_ES', 1, 'LBL_MAP_EDITOR_IMPORTER_IMPORT_FILE_DESC', 'Añada una ruta importando mediante un fichero de las extensiones soportadas (kml, shp, gpx)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_MAP_EDITOR_IMPORTER_IMPORT_FILE_DESC', 'Carga geometrías a partir de ficheros soportados. Seleccione una y pulse aceptar', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_MAP_EDITOR_IMPORT_GEOMETRIES', 'Importar', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_MAP_EDITOR_EXPORT_GEOMETRIES', 'Exportar...', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --en_GB
 ('en_GB', 1, 'LBL_MAP_EDITOR_EDIT', 'Edit', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -56,8 +57,9 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('en_GB', 1, 'LBL_MAP_EDITOR_DECREASING_DIRECTION', '(Decreasing)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_MAP_EDITOR_BOTH_WAYS', '(Both ways)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_MAP_EDITOR_IMPORTER_FILE_NOT_SUPPORTED', 'Importr file not supported', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('en_GB', 1, 'LBL_MAP_EDITOR_IMPORTER_IMPORT_FILE_DESC', 'Add a path by importing from a supported file (kml, shp, gpx)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_MAP_EDITOR_IMPORTER_IMPORT_FILE_DESC', 'Add geometry from file. Select one and select Accept', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_MAP_EDITOR_IMPORT_GEOMETRIES', 'Import', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_MAP_EDITOR_EXPORT_GEOMETRIES', 'Export...', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --es_CL
 ('es_CL', 1, 'LBL_MAP_EDITOR_EDIT', 'Editar', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -80,9 +82,6 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_CL', 1, 'LBL_MAP_EDITOR_DECREASING_DIRECTION', '(Decreciente)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_MAP_EDITOR_BOTH_WAYS', '(Ambos sentidos)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_MAP_EDITOR_IMPORTER_FILE_NOT_SUPPORTED', 'Formato de fichero no soportado', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('es_CL', 1, 'LBL_MAP_EDITOR_IMPORTER_IMPORT_FILE_DESC', 'Añada una ruta importando mediante un fichero de las extensiones soportadas (kml, shp, gpx)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('es_CL', 1, 'LBL_MAP_EDITOR_IMPORT_GEOMETRIES', 'Importar', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-
-
-
-
+('es_CL', 1, 'LBL_MAP_EDITOR_IMPORTER_IMPORT_FILE_DESC', 'Carga geometrías a partir de ficheros soportados. Seleccione una y pulse aceptar', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_MAP_EDITOR_IMPORT_GEOMETRIES', 'Importar', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_MAP_EDITOR_EXPORT_GEOMETRIES', 'Exportar...', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
