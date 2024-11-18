@@ -1,3 +1,4 @@
+import sys
 import time
 import re
 import pytest
@@ -5,24 +6,27 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
+TIMEOUT: int = 60
+
 def test_pruebaequipos(firefox_browser):
 
-    driver, management_area, state= firefox_browser
+    driver = firefox_browser[0]
+    state = firefox_browser[2]
 
-    if(state is None):
-        print('ERROR: Revisar configuración del archivo config.properties. La propiedad "state" no puede estar vacía.')
-        exit()
-    
+    if state is None:
+        sys.exit('ERROR: Revisar configuración del archivo config.properties. \
+                 La propiedad "state" no puede estar vacía.')
+
     estados_a_buscar = [s.strip() for s in state.split(',')]
     print(f"Estados: {estados_a_buscar}")
 
     # Esperar a que la página de equipos esté completamente cargada
     print("Esperando que la página de equipos esté completamente cargada...")
     try:
-        WebDriverWait(driver, 60).until(
+        WebDriverWait(driver, TIMEOUT).until(
             EC.url_contains("/home.html")
         )
-        WebDriverWait(driver, 60).until(
+        WebDriverWait(driver, TIMEOUT).until(
             EC.presence_of_element_located((By.CLASS_NAME, 'graphic-icon-tooltip'))
         )
         print("Página de equipos cargada.")
@@ -31,15 +35,15 @@ def test_pruebaequipos(firefox_browser):
 
     # Expandir el menú principal y hacer clic en el submenú "Equipamiento"
     try:
-        WebDriverWait(driver, 60).until(
+        WebDriverWait(driver, TIMEOUT).until(
             EC.element_to_be_clickable((By.CSS_SELECTOR, ".webix_scroll_cont > .webix_el_label > .webix_el_box"))
         ).click()
-        
-        WebDriverWait(driver, 60).until(
+
+        WebDriverWait(driver, TIMEOUT).until(
             EC.element_to_be_clickable((By.LINK_TEXT, "Equipamiento"))
         ).click()
 
-        WebDriverWait(driver, 60).until(
+        WebDriverWait(driver, TIMEOUT).until(
             EC.element_to_be_clickable((By.CSS_SELECTOR, ".webix_list_item:nth-child(1) .submenu-text"))
         ).click()
     except Exception as e:
@@ -47,7 +51,7 @@ def test_pruebaequipos(firefox_browser):
 
     # Contar y mostrar cuántos elementos con webix_l_id="ElementType:" están presentes
     try:
-        elements = WebDriverWait(driver, 60).until(
+        elements = WebDriverWait(driver, TIMEOUT).until(
             EC.presence_of_all_elements_located((By.CSS_SELECTOR, '[webix_l_id*="ElementType:"]'))
         )
         elements_with_type = [
@@ -59,7 +63,7 @@ def test_pruebaequipos(firefox_browser):
         pytest.fail(f"No se pudieron contar los elementos con 'ElementType:': {e}")
 
     # Abrir el archivo de texto para guardar los resultados
-    with open("equipos_estado.txt", "w") as file:
+    with open("equipos_estado.txt", mode="w", encoding="utf-8") as file:
         encontrado = False
         for element, element_type_number in elements_with_type:
             print(f"Haciendo clic en el elemento ElementType: {element_type_number}")
@@ -68,7 +72,7 @@ def test_pruebaequipos(firefox_browser):
             element.click()
 
             # Esperar a que la clase webix_ss_body esté presente
-            WebDriverWait(driver, 60).until(
+            WebDriverWait(driver, TIMEOUT).until(
                 EC.presence_of_element_located((By.CSS_SELECTOR, '[class="webix_ss_body"]'))
             )
 
@@ -76,7 +80,7 @@ def test_pruebaequipos(firefox_browser):
             scroll_container = driver.find_element(By.CSS_SELECTOR, '.webix_ss_vscroll.webix_vscroll_y')
             while True:
                 cell_elements = driver.find_elements(By.CSS_SELECTOR, ".webix_cell")
-                
+
                 comunicacion_estado = {
                     cell.get_attribute("aria-rowindex"): cell.text.strip()
                     for cell in cell_elements if cell.text.strip() in estados_a_buscar

@@ -1,34 +1,15 @@
-import json
-import pytest
 import sys
-import configparser
-from configparser import NoOptionError
+import json
 from pathlib import Path
+import pytest
 
 def main():
     # Ruta del archivo de informe JSON
-    report_file = Path("report.json")
+    report_file: Path = Path("report.json")
 
-    config = configparser.RawConfigParser()
-    config.read('config.properties')
-
-    try:
-        # Acceder a los valores
-        ip = config.get('Config', 'ip')
-        user = config.get('Config', 'user')
-        password = config.get('Config', 'password')
-        state = config.get('Config', 'state')
-    except NoOptionError as e:
-        print(f'Error al leer la configuración del archivo config.properties: {e}')
-        exit()
-    
     try:
         # Ejecuta pytest y genera un informe en JSON
-        result = pytest.main([
-            f"--ip={ip}",
-            f"--user={user}",
-            f"--password={password}",
-            f"--state={state}",
+        result: int = pytest.main([
             "--disable-warnings",
             "--tb=line",
             "--json-report",
@@ -36,26 +17,25 @@ def main():
             "tests/"
         ])
     except UnboundLocalError as e:
-        print(f'Error al setear una variable: {e}')
-        exit()
-    
+        sys.exit(f'Error al setear una variable: {e}')
+
     # Verifica el código de salida de pytest
     if result == pytest.ExitCode.OK:
         print("Todas las pruebas pasaron: Éxito")
         return "Éxito", []
-    else:
-        # Analiza el informe JSON para encontrar pruebas fallidas
-        failed_tests = []
-        if report_file.exists():
-            with open(report_file, "r") as f:
-                report_data = json.load(f)
-            
-            for test in report_data.get('tests', []):
-                if test.get('outcome') == 'failed':
-                    failed_tests.append(test['nodeid'])
-        
-        print("Algunas pruebas fallaron: Fallo")
-        return "Fallo", failed_tests
+
+    # Analiza el informe JSON para encontrar pruebas fallidas
+    failed_tests: list = []
+    if report_file.exists():
+        with open(report_file, mode="r", encoding="utf-8") as f:
+            report_data = json.load(f)
+
+        for test in report_data.get('tests', []):
+            if test.get('outcome') == 'failed':
+                failed_tests.append(test['nodeid'])
+
+    print("Algunas pruebas fallaron: Fallo")
+    return "Fallo", failed_tests
 
 if __name__ == "__main__":
     estado, failed_scripts = main()

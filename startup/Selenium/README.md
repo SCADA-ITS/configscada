@@ -13,34 +13,27 @@ Necesitamos instalar los siguientes módulos con pip:
 ### Linux
 Para ejecutar todos los test disponibles necesitamos lanzar el siguiente comando:
 
-```python3 execute_tests.py <Ip> <usuario> <contraseña> <estado>```
-
-Ejemplo:
-
-```python3 execute_tests.py 192.168.88.201 admin Revenga.19 "Desconocido"```
+```python3 execute_tests.py```
 
 Para ejecutar un test en especifico necesitamos lanzar el siguiente comando:
 
-```pytest tests/test_03_jasper.py --ip=<Ip> --user=<usuario> --password=<contraseña> --state="<estado> -s```
+```pytest <Path del archivo> -s --tb=line```
 
 Ejemplo:
 
-```pytest tests/test_03_jasper.py --ip=192.168.88.201 --user=admin --password=Revenga.19 --state="Desconocido, No comunica" -s```
+```pytest tests/test_03_jasper.py -s --tb=line```
 
 ### Windows
 Para ejecutar todos los test disponibles necesitamos lanzar el siguiente comando:
 
-```python.exe execute_tests.py <Ip> <usuario> <contraseña> <estado>```
+```python.exe .\execute_tests.py```
 
-Ejemplo:
-
-```python.exe execute_tests.py 192.168.88.201 admin Revenga.19 "No comunica"```
 
 Para ejecutar un test en especifico necesitamos lanzar el siguiente comando:
 
-```pytest.exe tests/test_03_jasper.py --ip=<Ip> --user=<usuario> --password=<contraseña> --state="<estado>" -s```
+```pytest.exe <Path del archivo> -s --tb=line```
 
 Ejemplo:
 
-```pytest.exe tests/test_03_jasper.py --ip=192.168.88.201 --user=admin --password=Revenga.19 --state="Desconocido" -s```
+```pytest.exe .\tests\test_03_jasper.py -s --tb=line```
 

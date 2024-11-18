@@ -1,15 +1,28 @@
+'''
+Este test tiene como objetivo acceder a la herramienta de informes Jasperserver 
+para comprobar que la aplicación funciona correctamente.
+'''
+import pytest
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.remote.webelement import WebElement
 from selenium.common.exceptions import TimeoutException
-import pytest
+
 
 # Constante para tiempo de espera
 TIMEOUT = 20
 
 def test_jasper(firefox_browser):
+    """
+    Funcion principal, accede a la herramienta Jasperserver para comprobar 
+    si está levantada la aplicación
+    
+    Args:
+        firefox_browser (WebDriver): Driver firefox
+    """
 
-    driver, management_area, state= firefox_browser
+    driver = firefox_browser[0]
 
     try:
         # Esperar hasta que el elemento "Herramientas" esté visible y clicarlo
@@ -29,7 +42,7 @@ def test_jasper(firefox_browser):
 
     try:
         # Esperar hasta que el iframe esté presente y cargado
-        iframe = WebDriverWait(driver, TIMEOUT).until(
+        iframe: WebElement = WebDriverWait(driver, TIMEOUT).until(
             EC.presence_of_element_located((By.XPATH, '//*[contains(@src, "jasperserver")]'))
         )
     except TimeoutException:
