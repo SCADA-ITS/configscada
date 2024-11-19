@@ -75,4 +75,7 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
     }
   ]
 }
-');
+'),
+
+('CommandElementType:2:2', 38, 'INFO'),
+('CommandElementType:3:2', 38, 'INFO');

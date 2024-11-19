@@ -28,5 +28,6 @@ INSERT INTO conf.cctv_scenario_elements (scenario_id, element_type_id, element_i
 (1, 2, 16, 16, true, true),
 (1, 2, 17, 17, true, true),
 (1, 2, 18, 18, true, true),
-(1, 2, 19, 19, true, true);
+(1, 2, 19, 19, true, true),
+(1, 2, 20, 20, true, true);
 	

@@ -83,6 +83,11 @@
 				"decoder": "mjpeg"
 			},
 			{
+				"brand": "Axis",
+				"model": "P1375-E",
+				"decoder": "mjpeg"
+			},
+			{
 				"brand": "Bosch",
 				"model": "Starlight-7000_SNAP",
 				"decoder": "snap"
@@ -90,6 +95,11 @@
 			{
 				"brand": "Hikvision",
 				"model": "DS-2CD3047G2-LS_SNAP",
+				"decoder": "snap"
+			},
+			{
+				"brand": "Axis",
+				"model": "P1375-E",
 				"decoder": "snap"
 			}
 		],

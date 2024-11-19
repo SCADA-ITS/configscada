@@ -471,6 +471,9 @@ INSERT INTO master.i18n_labels (locale_code, module_id, "label", "translation", 
 ('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_PA_GROUP', 'Grupo de megafonia con fallo funcionamiento', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_PA_GROUP_NO_CONNECTION', 'Grupo de megafonía no comunica', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
+--ElementType:99 = Radar
+('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_RADAR_NO_CONNECTION', 'Radar fuera de comunicaciones', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
 --ElementType:2000 = Tubo
 ('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_FIRE_MODE', 'Modo incendio', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
@@ -935,6 +938,9 @@ INSERT INTO master.i18n_labels (locale_code, module_id, "label", "translation", 
 ('en_GB', 1, 'LBL_ALARM_CONFIGS_ALARM_PA_GROUP', 'PA group failure', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_ALARM_CONFIGS_ALARM_PA_GROUP_NO_CONNECTION', 'PA group without communication', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
+--ElementType:99 = Radar
+('en_GB', 1, 'LBL_ALARM_CONFIGS_ALARM_RADAR_NO_CONNECTION', 'Radar without communication', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
 --ElementType:2000 = Tubo
 ('en_GB', 1, 'LBL_ALARM_CONFIGS_ALARM_FIRE_MODE', 'Fire mode', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
@@ -1398,6 +1404,9 @@ INSERT INTO master.i18n_labels (locale_code, module_id, "label", "translation", 
 --ElementType:96 = Grupo de megafonia
 ('es_CL', 1, 'LBL_ALARM_CONFIGS_ALARM_PA_GROUP', 'Grupo de megafonia con fallo funcionamiento', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_ALARM_CONFIGS_ALARM_PA_GROUP_NO_CONNECTION', 'Grupo de megafonía no comunica', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+--ElementType:99 = Radar
+('es_CL', 1, 'LBL_ALARM_CONFIGS_ALARM_RADAR_NO_CONNECTION', 'Radar fuera de comunicaciones', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --ElementType:2000 = Tubo
 ('es_CL', 1, 'LBL_ALARM_CONFIGS_ALARM_FIRE_MODE', 'Modo incendio', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

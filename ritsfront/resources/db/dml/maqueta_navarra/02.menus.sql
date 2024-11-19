@@ -10,7 +10,7 @@ INSERT INTO ui.menu_groups(id, "label", icon, "name", description, enabled, visi
 
 INSERT INTO ui.menu_items(id, menu_group_id, "position", module_id, "label", icon, "name", description, enabled, visible) VALUES
 -- MAPS & SYNOPTICS
-(0101, 1, 1, 200, 'LBL_MENU_ITEM_MAP', 'img/menu/map-menu.png', 'Mapa Navarra Entidades', 'Mapa Navarra Entidades', true, true),
+(0101, 1, 1, 200, 'LBL_MENU_ITEM_MAP', 'img/menu/map-menu.png', 'Mapa Navarra', 'Mapa Navarra', true, true),
 (0102, 1, 2, 401, 'LBL_MENU_ITEM_MAP_GOOGLE_SIMPLE', 'img/menu/map-menu.png', 'Mapa Google simplificado', 'Mapa Google simplificado', true, true),
 (0103, 1, 2, 402, 'LBL_MENU_ITEM_MAP_GOOGLE_COMPLEJO', 'img/menu/map-menu.png', 'Mapa Google simplificado', 'Mapa Google simplificado', true, true),
 
@@ -21,8 +21,7 @@ INSERT INTO ui.menu_items(id, menu_group_id, "position", module_id, "label", ico
 
 -- MANAGEMENT
 (0301, 3, 1, 1051, 'LBL_MENU_ITEM_INCIDENT_REPORTS', 'img/menu/incident.png', 'Menu item incindet report', 'Menu item incident report', true, true),
-(0304, 3, 4, 1950, 'LBL_MENU_ITEM_C4', 'img/menu/backofficeincident.png', 'incidenciasc4', 'incidenciasc4', true, true),
-(0302, 3, 2, 2020, 'LBL_MENU_ITEM_C4', 'img/menu/backofficeincident.png', 'incidenciasc4', 'incidenciasc4', true, true),
+(0302, 3, 2, 2020, 'LBL_MENU_ITEM_EXTERNAL_INCIDENTS', 'img/menu/backofficeincident.png', 'incidencias externas', 'incidencias externas', true, true),
 (0303, 3, 3, 1024, 'LBL_MENU_ITEM_PLAN_MANAGER', 'img/menu/plan-menu.png', 'Menu item Plan Manager', 'Menu item Plan Manager', true, true),
 
 -- TOOLS
@@ -30,9 +29,7 @@ INSERT INTO ui.menu_items(id, menu_group_id, "position", module_id, "label", ico
 
 -- CONFIG
 (601, 4000, 2, 1050, 'LBL_MENU_ITEM_LOCATION_EDITOR', 'img/menu/locations-menu.png', 'Menu item location editor', 'Menu item location editor', true, true),
-(602, 4000, 3, 1053, 'LBL_MENU_ITEM_ROUTE_EDITOR', 'img/menu/route-menu.png', 'Menu item route editor', 'Menu item route editor', true, true),
-
-(500001, 5000, 3, 1047, 'LBL_MENU_HELP_CONTENTS', 'img/menu/help.png', 'Help contents', 'Menu item help contents', true, true);
+(602, 4000, 3, 1053, 'LBL_MENU_ITEM_ROUTE_EDITOR', 'img/menu/route-menu.png', 'Menu item route editor', 'Menu item route editor', true, true);
 
 
 

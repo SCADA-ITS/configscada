@@ -2,11 +2,12 @@ INSERT INTO ui.grids(id, adapter_id, "label", enabled, visible) VALUES
 (2, 2, 'LBL_ELEMENT_TYPE_CAMERA', true, true);
 
 INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", required, parameterized, extended, filtered, "label", label_tooltip, source_field, is_pk, is_epoch_milli, align, needs_translation, grouping_summary, width_px, grid_field_group_operation_id, enabled, visible, adjust, header_vertical, fixed_column, replacement_function) VALUES
---el id lo definimos como: <tipo><numero de fila 4 numeros>
-(020001, 2, 1, 1, true, false, false, false, 'LBL_ID', 'LBL_ID', 'id', true, false, null, false, false, 500, NULL, true, false, NULL, NULL, NULL, NULL),
+(010002, 2, 1, 1, true, false, false, false, 'LBL_ID', 'LBL_ID', 'id', true, false, null, false, false, 500, NULL, true, false, NULL, NULL, NULL, NULL),
 (020002, 2, 1, 2, true, false, false, true, 'LBL_NAME', 'LBL_NAME', 'alias', false, false, null, false, false, 150, NULL, true, true, NULL, NULL, NULL, NULL),
-(020003, 2, 1, 3, true, true, false, false, NULL, NULL, 'state', false, false, null, false, false, 35, NULL, true, true, NULL, NULL, NULL, NULL),
-(020004, 2, 1, 4, true, true, false, true, 'LBL_STATE_LABEL', 'LBL_STATE_LABEL', 'stateLabel', false, false, null, true, false, 250, NULL, true, true, NULL, NULL, NULL, NULL);
+(030002, 2, 1, 3, true, true, false, false, NULL, NULL, 'state', false, false, null, false, false, 35, NULL, true, true, NULL, NULL, NULL, NULL),
+(040002, 2, 1, 4, true, true, false, true, 'LBL_STATE_LABEL', 'LBL_STATE_LABEL', 'stateLabel', false, false, null, true, false, 250, NULL, true, true, NULL, NULL, NULL, NULL),
+(050002, 2, 1, 5, true, false, false, true, 'LBL_GRID_FIELD_BRAND', 'LBL_GRID_FIELD_BRAND', 'ElementTypeParam:2:1:1', false, false, 'left', false, false, 100, NULL, true, true, NULL, NULL, NULL, NULL),
+(060002, 2, 1, 6, true, false, false, true, 'LBL_GRID_FIELD_MODEL', 'LBL_GRID_FIELD_MODEL', 'ElementTypeParam:2:1:2', false, false, 'left', false, false, 100, NULL, true, true, NULL, NULL, NULL, NULL);
 
 INSERT INTO ui.grid_option_values(grid_id, grid_option_id, value) VALUES
 (2, 1, 'true'),
@@ -29,8 +30,8 @@ INSERT INTO ui.grid_commands(grid_id, "position", "label", icon, "default", modu
 (2, 3, 'LBL_CMD_SHOW_IN_MAP', 'mdi mdi-map-search', false, 200004, null, null, false, false, true);
 
 INSERT INTO ui.grid_field_icons(grid_field_id, icon, value, show_value, badge_color, avatar, enabled, label_value) VALUES
-(020003, './img/state/stateUnknown.png', 'ElementTypeState:2:0', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_UNKNOWN'),
-(020003, './img/state/stateUp.png', 'ElementTypeState:2:1', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_UP'),
-(020003, './img/state/stateDown.png', 'ElementTypeState:2:2', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_DOWN'),
-(020003, './img/state/stateAlarm.png', 'ElementTypeState:2:3', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_ALARMS');
+(030002, './img/state/stateUnknown.png', 'ElementTypeState:2:0', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_UNKNOWN'),
+(030002, './img/state/stateUp.png', 'ElementTypeState:2:1', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_UP'),
+(030002, './img/state/stateDown.png', 'ElementTypeState:2:2', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_DOWN'),
+(030002, './img/state/stateAlarm.png', 'ElementTypeState:2:3', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_ALARMS');
 

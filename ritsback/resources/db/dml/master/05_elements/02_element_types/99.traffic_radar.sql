@@ -39,8 +39,14 @@ INSERT INTO master.element_type_state_transitions
 INSERT INTO conf.alarm_configs
 (alarm_config_id, alarm_type_id, alarm_level_id, element_type_id, element_id, element_type_state_id, mine, treatment, alias, description, label_alias, label_description, enabled, visible, created_at, updated_at) VALUES
 --Común a todos los subtipos
-(010099, 4, 6, 99, NULL, NULL, true, true, 'ALARM CAMERA NO CONNECTION', 'ALARM CAMERA NO CONNECTION', 'LBL_ALARM_CONFIGS_ALARM_RADAR_NO_CONNECTION', 'LBL_ALARM_CONFIGS_ALARM_RADAR_NO_CONNECTION_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(010099, 4, 6, 99, NULL, NULL, true, true, 'ALARM RADAR NO CONNECTION', 'ALARM RADAR NO CONNECTION', 'LBL_ALARM_CONFIGS_ALARM_RADAR_NO_CONNECTION', 'LBL_ALARM_CONFIGS_ALARM_RADAR_NO_CONNECTION_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
+--
+-- Table: conf.element_state_alarms
+--
+INSERT INTO conf.element_state_alarms
+(element_type_id, element_type_state_id, alarm_config_id, created_at, updated_at) VALUES
+(99, 2, 010099, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 -- 
 -- Table: master.io_controller_module_type_element_types
