@@ -95,7 +95,7 @@ def test_cambio_valores(firefox_browser) -> None:
         firefox_browser (WebDriver): Driver firefox
     """
     driver: WebDriver = firefox_browser[0]
-    custom_trees: WebDriver = firefox_browser[3]
+    custom_trees: WebDriver = firefox_browser[2]
 
     element_types_project: List[int] = []
 

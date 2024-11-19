@@ -11,7 +11,7 @@ TIMEOUT: int = 60
 def test_pruebaequipos(firefox_browser):
 
     driver = firefox_browser[0]
-    state = firefox_browser[2]
+    state = firefox_browser[1]
 
     if state is None:
         sys.exit('ERROR: Revisar configuración del archivo config.properties. \
