@@ -21,8 +21,6 @@ export default class MapIcon extends GraphicIconCustomType {
 		let elementType;
 
 		this.elementInfo = elementInfo;			
-		
-		window.em.getByField(EntityType.ELEMENT_TYPE, "id", "ElementType:2").default_svg
 
 		if (this.gState) {
 			

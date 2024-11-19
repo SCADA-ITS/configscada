@@ -2,11 +2,19 @@ INSERT INTO ui.grids(id, adapter_id, "label", enabled, visible) VALUES
 (4001, 2, 'LBL_EXT_ENTITY_C4', true, true);
 
 INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", required, parameterized, extended, filtered, "label", label_tooltip, source_field, is_pk, is_epoch_milli, align, needs_translation, grouping_summary, width_px, grid_field_group_operation_id, enabled, visible, adjust, header_vertical, fixed_column, replacement_function) VALUES
-(014001, 4001, 1, 1, true, false, false, false, 'LBL_ID', 'LBL_ID', 'id', true, false, null, false, false, 500, NULL, true, false, NULL, NULL, NULL, NULL),
-(024001, 4001, 1, 2, true, false, false, true, 'LBL_NAME', 'LBL_NAME', 'categoria', false, false, null, false, false, 150, NULL, true, true, NULL, NULL, NULL, NULL);
---(034001, 2, 1, 3, true, true, false, false, 'Cosa', 'Cosa', 'c4_my_ext_entities_with_values$categoria', false, false, null, false, false, 35, NULL, true, true, NULL, NULL, NULL, NULL);
+(014001, 4001, 1, 1, true, false, false, false, 'LBL_EXT_ENTITY_C4_COLUMN_ID', 'LBL_EXT_ENTITY_C4_COLUMN_ID', 'id', true, false, null, false, false, 500, NULL, true, false, NULL, NULL, NULL, NULL),
+(024001, 4001, 1, 2, true, true, false, false, NULL, NULL, 'categoria', false, false, null, false, false, 150, NULL, true, true, NULL, NULL, NULL, NULL),
+(034001, 4001, 1, 3, true, false, false, true, 'LBL_EXT_ENTITY_C4_COLUMN_CATEGORY', 'LBL_EXT_ENTITY_C4_COLUMN_CATEGORY', 'categoria', false, false, null, false, false, 150, NULL, true, true, NULL, NULL, NULL, NULL),
+(044001, 4001, 1, 4, true, false, false, true, 'LBL_EXT_ENTITY_C4_COLUMN_TYPE', 'LBL_EXT_ENTITY_C4_COLUMN_CATEGORY', 'tipo', false, false, null, false, false, 150, NULL, true, true, NULL, NULL, NULL, NULL),
+(054001, 4001, 1, 5, true, false, false, true, 'LBL_EXT_ENTITY_C4_COLUMN_TITLE', 'LBL_EXT_ENTITY_C4_COLUMN_CATEGORY', 'titulo', false, false, null, false, false, 150, NULL, true, true, NULL, NULL, NULL, NULL),
+(064001, 4001, 1, 6, true, false, false, true, 'LBL_EXT_ENTITY_C4_COLUMN_ROAD_IMPACT', 'LBL_EXT_ENTITY_C4_COLUMN_CATEGORY', 'afeccion', false, false, null, false, false, 150, NULL, true, true, NULL, NULL, NULL, NULL),
+(074001, 4001, 1, 7, true, false, false, true, 'LBL_EXT_ENTITY_C4_COLUMN_ROAD', 'LBL_EXT_ENTITY_C4_COLUMN_CATEGORY', 'carretera', false, false, null, false, false, 150, NULL, true, true, NULL, NULL, NULL, NULL),
+(084001, 4001, 1, 8, true, false, false, true, 'LBL_EXT_ENTITY_C4_COLUMN_LOCATION', 'LBL_EXT_ENTITY_C4_COLUMN_CATEGORY', 'localizacion', false, false, null, false, false, 150, NULL, true, true, NULL, NULL, NULL, NULL),
+(094001, 4001, 1, 9, true, false, false, true, 'LBL_EXT_ENTITY_C4_COLUMN_DATE', 'LBL_EXT_ENTITY_C4_COLUMN_CATEGORY', 'fecha', false, false, null, false, false, 150, NULL, true, true, NULL, NULL, NULL, NULL),
+(104001, 4001, 1, 10, true, false, false, true, 'LBL_EXT_ENTITY_C4_UPDATE_DATE', 'LBL_EXT_ENTITY_C4_COLUMN_CATEGORY', 'fecha_actualizacion', false, false, null, false, false, 150, NULL, true, true, NULL, NULL, NULL, NULL),
+(114001, 4001, 1, 11, true, false, false, true, 'LBL_EXT_ENTITY_C4_COLUMN_STATE', 'LBL_EXT_ENTITY_C4_COLUMN_CATEGORY', 'estado', false, false, null, false, false, 150, NULL, true, true, NULL, NULL, NULL, NULL);
 
-/*INSERT INTO ui.grid_option_values(grid_id, grid_option_id, value) VALUES
+INSERT INTO ui.grid_option_values(grid_id, grid_option_id, value) VALUES
 (4001, 1, 'true'),
 (4001, 2, 'true'),
 (4001, 7, 'true'),
@@ -19,16 +27,10 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (4001, 14, 'false'),
 (4001, 15, 'false'),
 (4001, 16, 'img/grid/element_type_02.png'),
-(4001, 17, 'true');*/
+(4001, 17, 'true');
 
-/*INSERT INTO ui.grid_commands(grid_id, "position", "label", icon, "default", module_action_id, args, view_type_id, multiselect, show_text, item_required) VALUES
-(4001, 1, 'LBL_CMD_VIEW', 'mdi mdi-eye', true, 101401, null, null, false, false, true),
-(4001, 2, 'LBL_CMD_SHOW_ALARMS', 'mdi mdi-bell', false, 100501, null, 2, true, true, true),
-(4001, 3, 'LBL_CMD_SHOW_IN_MAP', 'mdi mdi-map-search', false, 200004, null, null, false, false, true);*/
-
-/*INSERT INTO ui.grid_field_icons(grid_field_id, icon, value, show_value, badge_color, avatar, enabled, label_value) VALUES
-(020003, './img/state/stateUnknown.png', 'ElementTypeState:2:0', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_UNKNOWN'),
-(020003, './img/state/stateUp.png', 'ElementTypeState:2:1', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_UP'),
-(020003, './img/state/stateDown.png', 'ElementTypeState:2:2', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_DOWN'),
-(020003, './img/state/stateAlarm.png', 'ElementTypeState:2:3', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_ALARMS');*/
+INSERT INTO ui.grid_field_icons(grid_field_id, icon, value, show_value, badge_color, avatar, enabled, label_value) VALUES
+(024001, './img/ext_entity_type/incidencia_blanco.png', 'Red Viaria', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_UNKNOWN'),
+(024001, './img/ext_entity_type/obras_blanco.png', 'Obras', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_UP'),
+(024001, './img/ext_entity_type/meteo_blanco.png', 'Meteorológicas', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_DOWN');
 

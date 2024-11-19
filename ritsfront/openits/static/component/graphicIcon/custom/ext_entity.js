@@ -24,11 +24,21 @@ export default class ExtEntity {
 		// Update type
 		if (this.gType) {
 			
-			if (this.extEntity.extEntitySubtype && this.extEntity.extEntitySubtype.icon) {
+			if (this.extEntity.extEntitySubtype && this.extEntity.extEntitySubtype.icon_data) {	
 				
-				this.gType.attr( { "xlink:href": PICTOGRAM_TYPE_PATH + "/" + this.extEntity.extEntitySubtype.icon });
+				const iconData = JSON.parse(this.extEntity.extEntitySubtype.icon_data);
+								
+				const dynamicId = `ExtEntityTypeParam:${this.extEntity.extEntityType.id.split(":")[1]}:8`;
+				
+				const colorActual = this.extEntity.extEntityValues.find(object => object.extEntityTypeParam.id === dynamicId)?.value;
+
+				const icono = iconData.iconos.find(icon => icon.color === colorActual);
+				
+				const iconoValor = icono ? icono.valor : PICTOGRAM_UNKNOWN_TYPE;
+				
+				this.gType.attr({ "xlink:href": `${PICTOGRAM_TYPE_PATH}/${iconoValor}` });
 			}
-			else if (this.extEntity.extEntityType.icon_data) {
+			else if (this.extEntity.extEntityType && this.extEntity.extEntityType.icon_data) {
 				
 				const iconData = JSON.parse(this.extEntity.extEntityType.icon_data);
 								
