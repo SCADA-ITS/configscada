@@ -3,7 +3,7 @@ INSERT INTO ui.grids(id, adapter_id, "label", enabled, visible) VALUES
 
 INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", required, parameterized, extended, filtered, "label", label_tooltip, source_field, is_pk, is_epoch_milli, align, needs_translation, grouping_summary, width_px, grid_field_group_operation_id, enabled, visible, adjust, header_vertical, fixed_column, replacement_function) VALUES
 (014001, 4001, 1, 1, true, false, false, false, 'LBL_ID', 'LBL_ID', 'id', true, false, null, false, false, 500, NULL, true, false, NULL, NULL, NULL, NULL),
-(024001, 4001, 1, 2, true, false, false, true, 'LBL_NAME', 'LBL_NAME', 'c4_my_ext_entities_with_values$categoria', false, false, null, false, false, 150, NULL, true, true, NULL, NULL, NULL, NULL);
+(024001, 4001, 1, 2, true, false, false, true, 'LBL_NAME', 'LBL_NAME', 'categoria', false, false, null, false, false, 150, NULL, true, true, NULL, NULL, NULL, NULL);
 --(034001, 2, 1, 3, true, true, false, false, 'Cosa', 'Cosa', 'c4_my_ext_entities_with_values$categoria', false, false, null, false, false, 35, NULL, true, true, NULL, NULL, NULL, NULL);
 
 /*INSERT INTO ui.grid_option_values(grid_id, grid_option_id, value) VALUES
