@@ -8,10 +8,16 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.firefox.webdriver import WebDriver
 
 
 # Constante para tiempo de espera
-TIMEOUT = 20
+TIMEOUT: int = 20
+'''
+Este ID se saca con la combinacion de ID en la tabla ui.menu_items, juntando <menu_group_id>.<id>
+En este caso menu_group_id = 4 e id = 401
+'''
+WEBIX_ID_INFORMES: str = "4.401"
 
 def test_jasper(firefox_browser):
     """
@@ -22,7 +28,7 @@ def test_jasper(firefox_browser):
         firefox_browser (WebDriver): Driver firefox
     """
 
-    driver = firefox_browser[0]
+    driver: WebDriver = firefox_browser[0]
 
     try:
         # Esperar hasta que el elemento "Herramientas" esté visible y clicarlo
@@ -35,7 +41,7 @@ def test_jasper(firefox_browser):
     try:
         # Esperar y hacer clic en el submenú
         WebDriverWait(driver, TIMEOUT).until(
-            EC.element_to_be_clickable((By.CLASS_NAME, "submenu-text"))
+            EC.element_to_be_clickable((By.XPATH, f'//*[contains(@webix_l_id, "{WEBIX_ID_INFORMES}")]'))
         ).click()
     except TimeoutException:
         pytest.fail('No se ha encontrado el submenú "Informes"')
