@@ -33,11 +33,6 @@ BEGIN
 			-- sql_view 
 			'SELECT id, categoria, tipo, titulo, afeccion, carretera, localizacion, fecha, fecha_actualizacion, estado 
 				FROM reporting_bo.c4_ext_entities_with_values'
-			, NULL, null),
-		(2, 'c4_my_ext_entities_with_values', 'c4_my_ext_entities_with_values', 'LBL_EXT_ENTITY_C4', 'LBL_EXT_ENTITY_C4_DESCRIPTION', NULL, false, false, 
-			-- sql_view 
-			'SELECT id, categoria, tipo, titulo, afeccion, carretera, localizacion, fecha, fecha_actualizacion, estado 
-				FROM reporting_bo.c4_ext_entities_with_values'
 			, 4001, null);
 			
 			

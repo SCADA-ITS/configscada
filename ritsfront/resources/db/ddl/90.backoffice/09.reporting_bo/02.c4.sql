@@ -20,9 +20,9 @@ BEGIN
     	(TO_TIMESTAMP(pv.param_9, ''YYYY-MM-DD HH24:MI:SS.MS'') AT TIME ZONE ''Europe/Madrid'')::timestamptz AS fecha,
     	(TO_TIMESTAMP(pv.param_7, ''YYYY-MM-DD HH24:MI:SS.MS'') AT TIME ZONE ''Europe/Madrid'')::timestamptz AS fecha_actualizacion,
         CASE 
-            WHEN e.status = ''CREATED'' THEN ''CREADO''
-            WHEN e.status = ''DELETED'' THEN ''ELIMINADO''
-            WHEN e.status = ''UPDATED'' THEN ''ACTUALIZADO''
+            WHEN e.status = ''CREATED'' THEN ''ACTIVA''
+            WHEN e.status = ''DELETED'' THEN ''FINALIZADA''
+            WHEN e.status = ''UPDATED'' THEN ''ACTIVA''
             ELSE e.status::varchar
         END AS estado
     FROM 
