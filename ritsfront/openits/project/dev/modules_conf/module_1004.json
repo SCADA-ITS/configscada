@@ -61,7 +61,10 @@
 	"iReportLogValuesParamIdComment": "LogTypeParam:1:2",
 	"action": {
 		"cctvScenario": 102002,
-		"loadIncidentInMap": 200003
+		"loadIncidentInMap": 200003,
+		"newAvoidPolygonFromIncidentReport": 105401,
+		"deleteAvoidPolygonFromIncidentReport": 105402,
+		"showAvoidPolygonFromIncidentReport": 105403
 	},
 	"locationTypes":["LocationType:2"],
 	"stretchTypes":["StretchType:2"],
@@ -86,5 +89,6 @@
 	    "tableName": "incidents",
 	    "filterColumnName": "incident_report_id",
 	    "filterColumnValue": null
-  	}	
+  	},
+	"avoidPolygon": true	
 }

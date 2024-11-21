@@ -99,6 +99,8 @@ INSERT INTO ui.module_values(module_id, module_param_id, value) VALUES
 
 (1053, 8, '{"mapId": 1000}'),
 
+(1054, 8, '{"mapId": 1000}'),
+
 (1927, 13, '3'),
 (1927, 14, 'c4_all_ext_entities_with_values'),
 
