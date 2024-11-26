@@ -108,5 +108,8 @@ INSERT INTO ui.graphic_icons
 (010089, 'GATE', 'GATE', false, false, 'component/graphicIcon/graphicIconDefault.js', 40, 40, 'img/graphic_icon/89_gate.svg', 'null',true),
 (000093, 'TRANSFER_GROUP', 'TRANSFER_GROUP', false, false, 'component/graphicIcon/graphicIconDefault.js', 35, 35, 'img/graphic_icon/93_transfer_group.svg', 'null',true),
 (000096, 'CALL_SYSTEM', 'CALL_SYSTEM', false, false, 'component/graphicIcon/graphicIconDefault.js', 50, 50, 'img/graphic_icon/02_camera.svg', 'null',true),
-(000100, 'BOTONERA', 'BOTONERA', true, true, 'component/graphicIcon/graphicIconCustom.js', 365, 170, 'img/graphic_icon/100_botonera.svg', 'component/graphicIcon/custom/botonera.js',true);
+(000100, 'BOTONERA', 'BOTONERA', true, true, 'component/graphicIcon/graphicIconCustom.js', 365, 170, 'img/graphic_icon/100_botonera.svg', 'component/graphicIcon/custom/botonera.js',true),
+
+(2002, 'TUBE', 'TUBE', false, true, 'component/graphicIcon/graphicIconCustom.js', 80, 36,'img/graphic_icon/2000_light_control_tube.svg', 'component/graphicIcon/custom/light_control_tube.js',null);
+
 
