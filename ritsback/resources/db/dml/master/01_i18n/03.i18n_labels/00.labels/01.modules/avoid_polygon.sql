@@ -31,6 +31,7 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_ES', 1, 'LBL_DELETE_AVOID_POLYGONS', 'Eliminación de cortes', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_AVOID_POLYGON_SAVE_DESCRIPTION', '¿Desea guardar los cambios realizados?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_AVOID_POLYGON_SAVE_DELETE_DESCRIPTION', '¿Desea eliminar el/los corte/s seleccionada/os?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_AVOID_POLYGON_SAVE_REQUIRED_CLOSE_POLYLINE', 'La geometría guardada es una polilínea, ¿desea cerrar la polilínea como polígono y guardarlo?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 -- en_GB
 ('en_GB', 1, 'LBL_AVOID_POLYGON', 'Cut', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -52,6 +53,7 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('en_GB', 1, 'LBL_DELETE_AVOID_POLYGONS', 'Deleting cuts', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_AVOID_POLYGON_SAVE_DESCRIPTION', 'Do you want to save the changes?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_AVOID_POLYGON_SAVE_DELETE_DESCRIPTION', 'Do you want to delete the cut selected?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_AVOID_POLYGON_SAVE_REQUIRED_CLOSE_POLYLINE', 'The saved geometry is a polyline, do you want to close the polyline as a polygon and save it?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 -- es_CL
 ('es_CL', 1, 'LBL_AVOID_POLYGON', 'Corte', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -72,4 +74,5 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_CL', 1, 'LBL_SHOW_AVOID_POLYGONS', 'Mostrar cortes', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_DELETE_AVOID_POLYGONS', 'Eliminación de cortes', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_AVOID_POLYGON_SAVE_DESCRIPTION', '¿Desea guardar los cambios realizados?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('es_CL', 1, 'LBL_AVOID_POLYGON_SAVE_DELETE_DESCRIPTION', '¿Desea eliminar el/los corte/s seleccionada/os?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+('es_CL', 1, 'LBL_AVOID_POLYGON_SAVE_DELETE_DESCRIPTION', '¿Desea eliminar el/los corte/s seleccionada/os?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_AVOID_POLYGON_SAVE_REQUIRED_CLOSE_POLYLINE', 'La geometría guardada es una polilínea, ¿desea cerrar la polilínea como polígono y guardarlo?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
