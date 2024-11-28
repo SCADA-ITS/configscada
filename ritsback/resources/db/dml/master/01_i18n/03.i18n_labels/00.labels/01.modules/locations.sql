@@ -50,7 +50,10 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_ES', 1, 'LBL_LOCATIONS_ADVANCED', 'Avanzado', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_LOCATIONS_FORM', 'Formulario', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_LOCATIONS_REQUIRED_PRINCIPAL_LOCATION', 'Requerido añadir localización principal', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-
+('es_ES', 1, 'LBL_LOCATIONS_VIEW_FORM_LABEL_DESCRIPTION', 'Marque en el mapa la localización principal.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_LOCATIONS_VIEW_EDITOR_LABEL_DESCRIPTION', 'Dibuje en el mapa las diferentes geometrías que componen la localización.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_LOCATIONS_ADVANCED_DESCRIPTION', 'Edición avanzada de la localización.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_LOCATIONS_FORM_DESCRIPTION', 'Datos de formulario.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 -- en_GB
 ('en_GB', 1, 'LBL_LOCATION_WIZARD_NEW_HEADER', 'Create location', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -91,7 +94,10 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('en_GB', 1, 'LBL_LOCATIONS_ADVANCED', 'Advanced', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_LOCATIONS_FORM', 'Form', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_LOCATIONS_REQUIRED_PRINCIPAL_LOCATION', 'Required add principal location', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-
+('en_GB', 1, 'LBL_LOCATIONS_VIEW_FORM_LABEL_DESCRIPTION', 'Mark the main location on the map.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_LOCATIONS_VIEW_EDITOR_LABEL_DESCRIPTION', 'Draw on the map the different geometries that make up the location.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_LOCATIONS_ADVANCED_DESCRIPTION', 'Advanced localization editing.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_LOCATIONS_FORM_DESCRIPTION', 'Form data.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 -- es_CL
 ('es_CL', 1, 'LBL_LOCATION_WIZARD_NEW_HEADER', 'Crear localización', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -131,4 +137,8 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_CL', 1, 'LBL_LOCATIONS_ADVANCED', 'Avanzado', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_LOCATIONS_FORM', 'Formulario', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_LOCATIONS_REQUIRED_PRINCIPAL_LOCATION', 'Requerido añadir localización principal', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('es_CL', 1, 'LBL_LOCATIONS_LOCATION_TYPES', 'Tipos de localización', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+('es_CL', 1, 'LBL_LOCATIONS_LOCATION_TYPES', 'Tipos de localización', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_LOCATIONS_VIEW_FORM_LABEL_DESCRIPTION', 'Marque en el mapa la localización principal.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_LOCATIONS_VIEW_EDITOR_LABEL_DESCRIPTION', 'Dibuje en el mapa las diferentes geometrías que componen la localización.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_LOCATIONS_ADVANCED_DESCRIPTION', 'Edición avanzada de la localización.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_LOCATIONS_FORM_DESCRIPTION', 'Datos de formulario.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
