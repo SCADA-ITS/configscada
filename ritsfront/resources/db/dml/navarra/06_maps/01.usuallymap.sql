@@ -1,15 +1,15 @@
 INSERT INTO ui.maps (id, name, description, "label", icon, longitude, latitude, zoom, zoom_max, zoom_min, limit_init_lon, limit_init_lat, limit_end_lon, limit_end_lat, custom_provider_url, default_zoom_search, dark_mode, custom_provider) VALUES 
 (1, 'MAP', 'Map', 'LBL_MENU_ITEM_MAP', NULL, -1.65, 42.7, 9, 14, 9, -2.5, 45.8, 0, 39.8, null, 9, true,
 	'{ 
-		"map": {"enabled": false, "type": "WMS", "serverType": "geoserver", "url": "http://10.253.5.81:8700/geoserver/wms", "name": "osm"},
-		"router": {"enabled": true, "type": "OpenRouteService", "url": "http://10.253.5.81:8701/ors"},
-        "smartRoadInfo": {"enabled": true, "url": "http://10.253.5.81:8702/api"}
+		"map": {"enabled": false, "type": "WMS", "serverType": "geoserver", "url": "https://descontroltrafico.admon-cfnavarra.esgeoserver/wms", "name": "osm"},
+		"router": {"enabled": true, "type": "OpenRouteService", "url": "https://descontroltrafico.admon-cfnavarra.es/ors"},
+        "smartRoadInfo": {"enabled": true, "url": "https://descontroltrafico.admon-cfnavarra.es/api"}
 	}'),
 (1000, 'MAPA PARA COMPONENTE MAPEDITOR', 'MAPA PARA COMPONENTE MAPEDITOR', 'LBL_MENU_ITEM_MAP', NULL, -3, 42.7, 8, 14, 8, -2.5, 45.8, 0, 39.8, null, 8, true,
 	'{ 
-		"map": {"enabled": false, "type": "WMS", "serverType": "geoserver", "url": "http://10.253.5.81:8700/geoserver/wms", "name": "osm"},
-		"router": {"enabled": true, "type": "OpenRouteService", "url": "http://10.253.5.81:8701/ors"},
-        "smartRoadInfo": {"enabled": true, "url": "http://10.253.5.81:8702/api"}
+		"map": {"enabled": false, "type": "WMS", "serverType": "geoserver", "url": "https://descontroltrafico.admon-cfnavarra.es/geoserver/wms", "name": "osm"},
+		"router": {"enabled": true, "type": "OpenRouteService", "url": "https://descontroltrafico.admon-cfnavarra.es/ors"},
+        "smartRoadInfo": {"enabled": true, "url": "https://descontroltrafico.admon-cfnavarra.es/api"}
 	}');
 
 INSERT INTO ui.map_layers (id, base_layer, map_id, "name", description, "label", icon, visible) VALUES 
@@ -18,6 +18,26 @@ INSERT INTO ui.map_layers (id, base_layer, map_id, "name", description, "label",
 
 INSERT INTO ui.map_incidents(id, incident_graphic_icon_id, incident_report_module_action_id, incident_wizard_module_action_id) VALUES
 (1, 1000, 100401, 101301);
+
+--
+-- routes_config format:
+--
+--    {
+--      "routeClosedColor": (Opcional) Color de ruta con cortes o cortada
+--      "routeOpenColor": (Opcional) Color de ruta abierta
+--      "routeClosureColor": (Opcional) Color de representación de cortes
+--      "alternativeRoutes": (Opcional) Habilita el cálculo de rutas adicionales a partir de un corte
+--    }
+--
+INSERT INTO ui.map_routes (id, default_module_action_id, routes_config) VALUES
+(1, null,
+  '{
+      "routeClosedColor": "#FF4500",
+      "routeOpenColor": "#36B5DD",
+      "avoidPolygonColor": "#8B0000",
+      "alternativeRoutes": true,
+      "alternativeRouteColor": "#46B482"
+  }');
 
 INSERT INTO ui.map_layer_elements (id, layer_id, element_id, graphic_icon_id, "label", latitude, longitude, horizontal_flip, rotate, tooltip, show_text, text_color, selectable) VALUES 
 (0010002, 2,'Element:2:1', 2,'Alsasua', 42.88534118, -2.177320663, false, null, true, false, null, true ),
