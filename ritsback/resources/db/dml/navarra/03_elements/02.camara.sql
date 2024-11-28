@@ -71,7 +71,7 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 (2, 1, 1, 10, NULL, 'Hikvision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 2, 1, 10, NULL, 'DS-2CD3047G2-LS', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 3, 1, 10, NULL, 'https://descontroltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=Berriozar', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(2, 6, 1, 10, NULL, '[{"id": 1,"alias": "Preset 1","description": "Preset 1","default": true},{"id": 2,"alias": "Preset 2","description": "Preset 2","default": false},{"id": 3,"alias": "Preset 3","description": "Preset 3","default": false},{"id": 4,"alias": "Preset 4","description": "Preset 4": false},{"id": 5,"alias": "Preset 5","description": "Preset 5","default": false},{"id": 6,"alias": "Preset 6","description": "Preset 6","default": false}]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 6, 1, 10, NULL, '[{"id": 1,"alias": "Preset 1","description": "Preset 1","default": true},{"id": 2,"alias": "Preset 2","description": "Preset 2","default": false},{"id": 3,"alias": "Preset 3","description": "Preset 3","default": false},{"id": 4,"alias": "Preset 4","description": "Preset 4","default": false},{"id": 5,"alias": "Preset 5","description": "Preset 5","default": false},{"id": 6,"alias": "Preset 6","description": "Preset 6","default": false}]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 7, 1, 10, NULL, 'PTZ', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 9, 1, 10, NULL, '10.191.10.11', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 10, 1, 10, NULL, 'traficonavarra@navarra.es', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 

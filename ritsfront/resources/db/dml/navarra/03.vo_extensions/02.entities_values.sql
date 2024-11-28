@@ -77,5 +77,42 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 }
 '),
 
+('ExtEntitySubtype:2001', 70, '
+{
+  "iconos": [
+    {
+      "color": "rojo",
+      "valor": "nieve_rojo.png"
+    },
+    {
+      "color": "verde",
+      "valor": "nieve_verde.png"
+    },
+    {
+      "color": "amarillo",
+      "valor": "nieve_amarillo.png"
+    }
+  ]
+}
+'), 
+('ExtEntitySubtype:2011', 70, '
+{
+  "iconos": [
+    {
+      "color": "rojo",
+      "valor": "nieve_rojo.png"
+    },
+    {
+      "color": "verde",
+      "valor": "nieve_verde.png"
+    },
+    {
+      "color": "amarillo",
+      "valor": "nieve_amarillo.png"
+    }
+  ]
+}
+'), 
+
 ('CommandElementType:2:2', 38, 'INFO'),
 ('CommandElementType:3:2', 38, 'INFO');

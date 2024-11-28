@@ -19,6 +19,26 @@ INSERT INTO ui.map_layers (id, base_layer, map_id, "name", description, "label",
 INSERT INTO ui.map_incidents(id, incident_graphic_icon_id, incident_report_module_action_id, incident_wizard_module_action_id) VALUES
 (1, 1000, 100401, 101301);
 
+--
+-- routes_config format:
+--
+--    {
+--      "routeClosedColor": (Opcional) Color de ruta con cortes o cortada
+--      "routeOpenColor": (Opcional) Color de ruta abierta
+--      "routeClosureColor": (Opcional) Color de representación de cortes
+--      "alternativeRoutes": (Opcional) Habilita el cálculo de rutas adicionales a partir de un corte
+--    }
+--
+INSERT INTO ui.map_routes (id, default_module_action_id, routes_config) VALUES
+(1, null,
+  '{
+      "routeClosedColor": "#FF4500",
+      "routeOpenColor": "#36B5DD",
+      "avoidPolygonColor": "#8B0000",
+      "alternativeRoutes": true,
+      "alternativeRouteColor": "#46B482"
+  }');
+
 INSERT INTO ui.map_layer_elements (id, layer_id, element_id, graphic_icon_id, "label", latitude, longitude, horizontal_flip, rotate, tooltip, show_text, text_color, selectable) VALUES 
 (0010002, 2,'Element:2:1', 2,'Alsasua', 42.88534118, -2.177320663, false, null, true, false, null, true ),
 (0020002, 2,'Element:2:2', 2,'Etxegarate', 42.92928501, -2.227834578, false, null, true, false, null, true ),
