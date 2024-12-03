@@ -125,5 +125,6 @@
 				"saveFunction": "deleteLocation"
 			}
 		]
-	}
+	},
+	"locationTypeFromIncidentWizard": "LocationType:3"
 }
