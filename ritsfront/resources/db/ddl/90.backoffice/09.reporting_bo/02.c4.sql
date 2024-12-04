@@ -1,7 +1,8 @@
 DO $do$
 BEGIN
   -- Verifica si el TABLESPACE existe
-  IF EXISTS (SELECT 1 FROM pg_tablespace WHERE spcname = 'tbl_reporting_bo') THEN
+  IF (EXISTS (SELECT 1 FROM pg_tablespace WHERE spcname = 'tbl_reporting_bo') AND
+  	  EXISTS (SELECT 1 FROM pg_tables WHERE schemaname = 'hist' AND tablename = 'ext_entities')) THEN
 
     -- Cargar la extensión `tablefunc` si no está ya instalada
     CREATE EXTENSION IF NOT EXISTS tablefunc;

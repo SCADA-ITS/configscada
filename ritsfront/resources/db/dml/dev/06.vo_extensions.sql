@@ -254,6 +254,7 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 ('ElementType:9', 14, 'grid/element_type_09.png'),
 ('ElementType:9', 23, '102703'),
 ('ElementType:9', 56, 'false'),
+('ElementType:9', 71, '[9,10]'),
 
 ('ElementType:11', 1, '19'),
 ('ElementType:11', 2, '11_sos.svg'),
@@ -305,6 +306,7 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 ('ElementType:34', 3, '10'),
 ('ElementType:34', 4, '10'),
 ('ElementType:34', 14, 'grid/element_type_34.png'),
+('ElementType:34', 71, '[12]'),
 
 ('ElementType:36', 23, '101901'),
 

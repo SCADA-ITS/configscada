@@ -86,8 +86,16 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 	--SystemPermission:25
 	('es_ES', 1, 'LBL_SYSTEM_PERMISSION_EDIT_EQUIPMENTS', 'Editar equipos', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	('es_ES', 1, 'LBL_SYSTEM_PERMISSION_EDIT_EQUIPMENTS_DESC', 'Permite crear, editar, clonar y eliminar equipos del sistema', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-
-
+	--SystemPermission:27
+	('es_ES', 1, 'LBL_SYSTEM_PERMISSION_EDIT_MAPS', 'Editar mapas', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_ES', 1, 'LBL_SYSTEM_PERMISSION_EDIT_MAPS_DESC', 'Permite editar mapas', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	--SystemPermission:28
+	('es_ES', 1, 'LBL_SYSTEM_PERMISSION_EDIT_SYNOPTICS', 'Editar sinópticos', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_ES', 1, 'LBL_SYSTEM_PERMISSION_EDIT_SYNOPTICS_DESC', 'Permite editar sinópticos', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	--SystemPermission:29
+	('es_ES', 1, 'LBL_SYSTEM_PERMISSION_EDIT_MAPS_ADVANCED', 'Editar mapas (avanzado)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_ES', 1, 'LBL_SYSTEM_PERMISSION_EDIT_MAPS_ADVANCED_DESC', 'Permite editar mapas (avanzado)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	
 --en_GB
 	--SystemPermission:1
 	('en_GB', 1, 'LBL_SYSTEM_PERMISSION_LOGIN', 'Login', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -164,6 +172,15 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 	--SystemPermission:25
 	('en_GB', 1, 'LBL_SYSTEM_PERMISSION_EDIT_EQUIPMENTS', 'Edit equipments', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	('en_GB', 1, 'LBL_SYSTEM_PERMISSION_EDIT_EQUIPMENTS_DESC', 'User can create, edit, clone and delete equipments', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	--SystemPermission:27
+	('en_GB', 1, 'LBL_SYSTEM_PERMISSION_EDIT_MAPS', 'Edit maps', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('en_GB', 1, 'LBL_SYSTEM_PERMISSION_EDIT_MAPS_DESC', 'Allows edit maps', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	--SystemPermission:28
+	('en_GB', 1, 'LBL_SYSTEM_PERMISSION_EDIT_SYNOPTICS', 'Edit synoptics', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('en_GB', 1, 'LBL_SYSTEM_PERMISSION_EDIT_SYNOPTICS_DESC', 'Allows edit synoptics', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	--SystemPermission:29
+	('en_GB', 1, 'LBL_SYSTEM_PERMISSION_EDIT_MAPS_ADVANCED', 'Edit maps (expert)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('en_GB', 1, 'LBL_SYSTEM_PERMISSION_EDIT_MAPS_ADVANCED_DESC', 'Allows edit maps (expert)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --sk_SK
 	--SystemPermission:1
@@ -241,6 +258,15 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 	--SystemPermission:25
 	('sk_SK', 1, 'LBL_SYSTEM_PERMISSION_EDIT_EQUIPMENTS', 'Upraviť tímy', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	('sk_SK', 1, 'LBL_SYSTEM_PERMISSION_EDIT_EQUIPMENTS_DESC', 'Umožňuje vytvárať, upravovať, klonovať a mazať počítače zo systému', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	--SystemPermission:27
+	('sk_SK', 1, 'LBL_SYSTEM_PERMISSION_EDIT_MAPS', 'Úprava máp', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('sk_SK', 1, 'LBL_SYSTEM_PERMISSION_EDIT_MAPS_DESC', 'Umožňuje upravovať mapy', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	--SystemPermission:28
+	('sk_SK', 1, 'LBL_SYSTEM_PERMISSION_EDIT_SYNOPTICS', 'Upraviť synoptiku', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('sk_SK', 1, 'LBL_SYSTEM_PERMISSION_EDIT_SYNOPTICS_DESC', 'Umožňuje upravovať synoptiku', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	--SystemPermission:29
+	('sk_SK', 1, 'LBL_SYSTEM_PERMISSION_EDIT_MAPS_ADVANCED', 'Úprava máp (expert)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('sk_SK', 1, 'LBL_SYSTEM_PERMISSION_EDIT_MAPS_ADVANCED_DESC', 'Umožňuje upravovať mapy (expert)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	
 --es_CL
 	--SystemPermission:1
@@ -317,4 +343,13 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 	('es_CL', 1, 'LBL_SYSTEM_PERMISSION_RESTART_SYSTEM_PROCESSES_DESC', 'Permite reiniciar procesos del sistema', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	--SystemPermission:25
 	('es_CL', 1, 'LBL_SYSTEM_PERMISSION_EDIT_EQUIPMENTS', 'Editar equipos', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-	('es_CL', 1, 'LBL_SYSTEM_PERMISSION_EDIT_EQUIPMENTS_DESC', 'Permite crear, editar, clonar y eliminar equipos del sistema', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+	('es_CL', 1, 'LBL_SYSTEM_PERMISSION_EDIT_EQUIPMENTS_DESC', 'Permite crear, editar, clonar y eliminar equipos del sistema', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	--SystemPermission:27
+	('es_CL', 1, 'LBL_SYSTEM_PERMISSION_EDIT_MAPS', 'Editar mapas', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_CL', 1, 'LBL_SYSTEM_PERMISSION_EDIT_MAPS_DESC', 'Permite editar mapas', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	--SystemPermission:28
+	('es_CL', 1, 'LBL_SYSTEM_PERMISSION_EDIT_SYNOPTICS', 'Editar sinópticos', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_CL', 1, 'LBL_SYSTEM_PERMISSION_EDIT_SYNOPTICS_DESC', 'Permite editar sinópticos', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	--SystemPermission:29
+	('es_CL', 1, 'LBL_SYSTEM_PERMISSION_EDIT_MAPS_ADVANCED', 'Editar mapas (avanzado)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_CL', 1, 'LBL_SYSTEM_PERMISSION_EDIT_MAPS_ADVANCED_DESC', 'Permite editar mapas (avanzado)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

@@ -7,6 +7,7 @@ INSERT INTO ui.modules(id, module_type_id, "name", description, default_view_typ
 -- Maps
 (970, 3, 'Map Test', 'Map Test', 1, null, 'modules/mapModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 (971, 3, 'Mapa Navarra', 'Mapa Navarra', 1, null, 'modules/mapModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(972, 3, 'Mapa Paracuellos', 'Mapa Paracuellos', 1, null, 'modules/mapModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 
 -- BackOffice custom type modules
 (1900, 9, 'Orders backoffice', 'Orders backoffice', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
@@ -47,6 +48,7 @@ INSERT INTO ui.module_values(module_id, module_param_id, value) VALUES
 (920, 4, '1'),
 (970, 6, '1'),
 (971, 6, '2'),
+(972, 6, '3'),
 (1040, 8, '{"treeCustom": [1,4,5]}'),
 
 (1900, 13, '1'),
@@ -144,6 +146,15 @@ INSERT INTO ui.window_values(module_id, window_param_id, value) VALUES
 (971, 12, 'Mapa Navarra'),
 (971, 14, 'true'),
 (971, 17, 'true'),
+
+(972, 4, '825'),
+(972, 5, '1600'),
+(972, 8, 'true'),
+(972, 10, 'img/module/map-color.png'),
+(972, 11, '#464646'),
+(972, 12, 'Mapa Paracuellos'),
+(972, 14, 'true'),
+(972, 17, 'true'),
 
 (1900, 4, '825'),
 (1900, 5, '1400'),

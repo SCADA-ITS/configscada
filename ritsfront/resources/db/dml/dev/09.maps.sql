@@ -14,7 +14,15 @@ INSERT INTO ui.maps (id, name, description, "label", icon, longitude, latitude, 
 		"router": {"enabled": true, "type": "OpenRouteService", "url": "http://192.168.88.165:8701/ors"},
         "smartRoadInfo": {"enabled": true, "url": "http://192.168.88.165:8702/api"}
 	}'),
-	(1000, 'MAPA PARA COMPONENTE MAPEDITOR', 'MAPA PARA COMPONENTE MAPEDITOR', 'LBL_MAP', NULL, -1.7355106, 42.8651, 14, 18, 4, -4.5701704, 44.38234, 1.5830269, 40.593372, null, 6, true, 
+-- Map 3
+	(3, 'paracuellos', 'paracuellos', 'Mapa de Paracuellos', NULL, -3.5144417, 40.503395, 14, 18, 4, -10.701286, 44.587864, 4.9189625, 34.662407, null, 6, true, 
+	'{ 
+		"map": {"enabled": true, "type": "WMS", "serverType": "geoserver", "url": "http://192.168.88.165:8700/geoserver/wms", "name": "osm"},
+		"router": {"enabled": true, "type": "OpenRouteService", "url": "http://192.168.88.165:8701/ors"},
+        "smartRoadInfo": {"enabled": true, "url": "http://192.168.88.165:8702/api"}
+	}'),
+-- For use in MapEditor
+	(1000, 'MAPA PARA COMPONENTE MAPEDITOR', 'MAPA PARA COMPONENTE MAPEDITOR', 'LBL_MAP', NULL, -1.7355106, 42.8651, 14, 18, 4, -9.827346, 44.069317, 3.4447792, 35.558895, null, 6, true, 
 	'{ 
 		"map": {"enabled": true, "type": "WMS", "serverType": "geoserver", "url": "http://192.168.88.165:8700/geoserver/wms", "name": "osm"},
 		"router": {"enabled": true, "type": "OpenRouteService", "url": "http://192.168.88.165:8701/ors"},
@@ -25,7 +33,8 @@ INSERT INTO ui.maps (id, name, description, "label", icon, longitude, latitude, 
 
 INSERT INTO ui.map_incidents(id, incident_graphic_icon_id, incident_report_module_action_id, incident_wizard_module_action_id) VALUES
 (1, 1000, 100401, 101301),
-(2, 1000, 100401, 101301);
+(2, 1000, 100401, 101301),
+(3, 1000, 100401, 101301);
 
 INSERT INTO ui.map_ext_entities (id, default_graphic_icon_id, default_module_action_id, ext_entity_types_config) VALUES
 --
@@ -109,7 +118,25 @@ INSERT INTO ui.map_layers (id, base_layer, map_id, "name", description, "label",
 (16, '{"enabled": true, "type": "WMS", "serverType": "geoserver", "url": "http://192.168.88.165:8700/geoserver/wms", "name": "osm:red_viaria_pk_malaga"}', 1, 'pks malaga', 'pks malaga', 'LBL_PKS_LAYER', NULL, true),
 (17, '{"enabled": true, "type": "WMS", "serverType": "geoserver", "url": "http://192.168.88.165:8700/geoserver/wms", "name": "osm:red_viaria_tramo_malaga"}', 1, 'stretchs malaga ', 'stretchs malaga', 'LBL_STRETCHS_LAYER', NULL, true),
 (18, '{"enabled": true, "type": "FILE", "fileType": "ShapeFile", "fileName": "PK.zip", "name": "PK", "attributes": true}', 2, 'PK', 'PK', 'PK', NULL, true),
-(19, '{"enabled": true, "type": "FILE", "fileType": "KML", "fileName": "btt larraga track.kml", "name": "btt larraga track", "attributes": true}', 2, 'btt larraga track', 'btt larraga track', 'btt larraga track', NULL, true);
+(19, '{"enabled": true, "type": "FILE", "fileType": "KML", "fileName": "btt larraga track.kml", "name": "btt larraga track", "attributes": true}', 2, 'btt larraga track', 'btt larraga track', 'btt larraga track', NULL, true),
+-- Map 3
+(20, NULL, 3, 'TUNEL M-111 Sentido Barajas', 'TUNEL M-111 Sentido Barajas', 'TUNEL M-111 Sentido Barajas', NULL, true),
+(21, '{
+	"enabled":true,
+	"type":"FILE",
+	"fileType":"GPX",
+	"fileName":"COURSE_320282150.gpx",
+	"name":"bici_1",
+	"attributes":true,
+	"attributesConfig": [
+		{
+			"name": "name",
+			"label": "LBL_NAME",
+			"default": true,
+            "func": "return mapValues.get(\"name\") + \": Esto es una prueba\";"
+		}
+	]
+}', 3, 'LBL_BICI_1', 'LBL_BICI_1', 'LBL_BICI_1', 'mdi mdi-bicycle', true);
 
 INSERT INTO ui.map_layer_relationships (id, map_id, parent_layer_id, child_layer_id) VALUES 
 (3, 1, 3, 5),
@@ -141,7 +168,11 @@ INSERT INTO ui.map_layer_elements (id, layer_id, element_id, graphic_icon_id, "l
 --(18, 15, 'Element:71:1', 15, 'LBL_VMS', -4.994050334935018, 36.506571546155456, -4.99233637774394, 36.50582616335875, false, null, true, true, '#000000', null, null, null, true); -- 2 custom zooms. From 12 to 16 and from 17 to 18 zoom levels
 (18, 15, 'Element:71:1', 15, 'LBL_VMS', -4.962065331099242, 36.522075027192656, false, null, true, true, '#000000', null, null, null, true),
 (19, 12, 'Element:53:3', 22, 'LBL_TRAFFIC_LIGHT', -4.989869129194308,36.52089726444369, false, null, true, true, '#000000', null, null, null, true),
-(20, 12, 'Element:53:4', 22, 'LBL_TRAFFIC_LIGHT', -4.953570957059859,36.533670749660274, false, null, true, true, '#000000', null, null, null, true);
+(20, 12, 'Element:53:4', 22, 'LBL_TRAFFIC_LIGHT', -4.953570957059859,36.533670749660274, false, null, true, true, '#000000', null, null, null, true),
+-- Map 3
+(21, 20, 'Element:9:1', 9, 'LBL_FAN', -3.5576081, 40.493908, false, NULL, true, true, '#000000', NULL, NULL, NULL, true),
+(22, 20, 'Element:9:3', 9, 'LBL_FAN', -3.5782444, 40.48703, false, NULL, true, true, '#000000', NULL, NULL, NULL, true),
+(23, 20, 'Element:9:4', 9, 'LBL_SCN', -3.5278144, 40.49796, false, NULL, true, true, '#000000', NULL, NULL, NULL, true);
 
 
 INSERT INTO ui.map_layer_element_zooms (map_layer_element_id, zoom_lower, zoom_upper, graphic_icon_id, longitude, latitude, horizontal_flip, rotate, tooltip, show_text, text_color, z_index_front) VALUES
