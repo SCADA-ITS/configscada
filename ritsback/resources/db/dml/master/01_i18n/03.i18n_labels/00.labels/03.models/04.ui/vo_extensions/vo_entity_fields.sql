@@ -161,7 +161,10 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_ES',1,'LBL_ENTITIE_FIELDS_INCIDENTS_BACK_OFFICE_DESCRIPTION','Backoffice utilizado en incidencias',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 
 ('es_ES',1,'LBL_ENTITIE_FIELDS_NO_GRAPHICAL','Tipo de equipo no graficable',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
-('es_ES',1,'LBL_ENTITIE_FIELDS_NO_GRAPHICAL_DESCRIPTION','Tipo de equipo no se muestra en el componente de lista de equipamiento',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
+('es_ES',1,'LBL_ENTITIE_FIELDS_NO_GRAPHICAL_DESCRIPTION','Tipo de equipo no se muestra en el componente de lista de equipamiento',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+
+('es_ES',1,'LBL_ENTITIE_FIELDS_NO_SHOW_ELEMENT_TYPE','Tipo de equipo a no mostrar',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+('es_ES',1,'LBL_ENTITIE_FIELDS_NO_SHOW_ELEMENT_TYPE_DESCRIPTION','Tipo de equipo no se muestra en el componente o módulo utilizado',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
 
 --es_CL
 INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) VALUES
@@ -316,7 +319,10 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_CL',1,'LBL_ENTITIE_FIELDS_INCIDENTS_BACK_OFFICE_DESCRIPTION','Backoffice utilizado en incidencias',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 
 ('es_CL',1,'LBL_ENTITIE_FIELDS_NO_GRAPHICAL','Tipo de equipo no graficable',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
-('es_CL',1,'LBL_ENTITIE_FIELDS_NO_GRAPHICAL_DESCRIPTION','Tipo de equipo no se muestra en el componente de lista de equipamiento',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
+('es_CL',1,'LBL_ENTITIE_FIELDS_NO_GRAPHICAL_DESCRIPTION','Tipo de equipo no se muestra en el componente de lista de equipamiento',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+
+('es_CL',1,'LBL_ENTITIE_FIELDS_NO_SHOW_ELEMENT_TYPE','Tipo de equipo a no mostrar',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+('es_CL',1,'LBL_ENTITIE_FIELDS_NO_SHOW_ELEMENT_TYPE_DESCRIPTION','Tipo de equipo no se muestra en el componente o módulo utilizado',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
 
 
 --en_GB
@@ -472,7 +478,10 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('en_GB',1,'LBL_ENTITIE_FIELDS_INCIDENTS_BACK_OFFICE_DESCRIPTION','Incidents back office',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 
 ('en_GB',1,'LBL_ENTITIE_FIELDS_NO_GRAPHICAL','Non-graphable equipment type',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
-('en_GB',1,'LBL_ENTITIE_FIELDS_NO_GRAPHICAL_DESCRIPTION','Equipment type is not displayed in the equipment list component',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
+('en_GB',1,'LBL_ENTITIE_FIELDS_NO_GRAPHICAL_DESCRIPTION','Equipment type is not displayed in the equipment list component',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+
+('en_GB',1,'LBL_ENTITIE_FIELDS_NO_SHOW_ELEMENT_TYPE','No show this element type',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+('en_GB',1,'LBL_ENTITIE_FIELDS_NO_SHOW_ELEMENT_TYPE_DESCRIPTION','This element type no show in component or module used',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
 
 --sk_SK
 --INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) VALUES
@@ -624,5 +633,8 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 --('sk_SK',1,'LBL_ENTITIE_FIELDS_INCIDENTS_BACK_OFFICE_DESCRIPTION','Incidents back office',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 --
 --('sk_SK',1,'LBL_ENTITIE_FIELDS_NO_GRAPHICAL','Typ zariadenia bez možnosti grafu',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
---('sk_SK',1,'LBL_ENTITIE_FIELDS_NO_GRAPHICAL_DESCRIPTION','Typ zariadenia sa nezobrazuje v komponente zoznamu zariadení',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
+--('sk_SK',1,'LBL_ENTITIE_FIELDS_NO_GRAPHICAL_DESCRIPTION','Typ zariadenia sa nezobrazuje v komponente zoznamu zariadení',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+--
+--('sk_SK',1,'LBL_ENTITIE_FIELDS_NO_SHOW_ELEMENT_TYPE','Typ zariadenia sa neuvádza',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+--('sk_SK',1,'LBL_ENTITIE_FIELDS_NO_SHOW_ELEMENT_TYPE_DESCRIPTION','Typ zariadenia sa nezobrazuje na použitom komponente alebo module',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
 

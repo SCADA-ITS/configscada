@@ -89,7 +89,8 @@ INSERT INTO ui.vo_entity_fields (id, vo_entity_type_id, field, description, labe
 (67, 'ExtEntityTypeUI', 'icon_data', 'json data for icon for ext entity type', 'LBL_ENTITIE_FIELDS_ICON_INCIDENT_TYPE', 'LBL_ENTITIE_FIELDS_ICON_INCIDENT_TYPE_DESCRIPTION', true, true),
 (68, 'ElementTypeUI', 'map_icon', 'icon map for element type', 'LBL_ENTITIE_FIELDS_ICON_ELEMENT_TYPE', 'LBL_ENTITIE_FIELDS_ICON_ELEMENT_TYPE_DESCRIPTION', true, true),
 (69, 'ElementTypeUI', 'noGraphical', 'no show element type in component list', 'LBL_ENTITIE_FIELDS_NO_GRAPHICAL', 'LBL_ENTITIE_FIELDS_NO_GRAPHICAL_DESCRIPTION', true, true),
-(70, 'ExtEntitySubtypeUI', 'icon_data', 'json data for icon for ext entity subtype', 'LBL_ENTITIE_FIELDS_ICON_INCIDENT_TYPE', 'LBL_ENTITIE_FIELDS_ICON_INCIDENT_TYPE_DESCRIPTION', true, true);
+(70, 'ExtEntitySubtypeUI', 'icon_data', 'json data for icon for ext entity subtype', 'LBL_ENTITIE_FIELDS_ICON_INCIDENT_TYPE', 'LBL_ENTITIE_FIELDS_ICON_INCIDENT_TYPE_DESCRIPTION', true, true),
+(71, 'ElementTypeUI', 'noShow', 'no show element type', 'LBL_ENTITIE_FIELDS_NO_SHOW_ELEMENT_TYPE', 'LBL_ENTITIE_FIELDS_NO_SHOW_ELEMENT_TYPE_DESCRIPTION', true, true);
 
 
 INSERT INTO ui.vo_entities(id, vo_entity_type_id, enabled, visible) VALUES
