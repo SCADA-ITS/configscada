@@ -3,11 +3,17 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 ('ElementType:2', 2, 'graphic_icon/02_camera.svg'),
 ('ElementType:2', 14, 'grid/element_type_02.png'),
 ('ElementType:2', 68, 'camera.png'),
+('ElementType:2', 71, '[2]'),
+
+('ElementType:98', 72, 'true'),
 
 ('ElementType:99', 1, '99'),
 ('ElementType:99', 2, '02_camera_sanctioning2.svg'),
 ('ElementType:99', 14, 'grid/element_type_99.png'),
 ('ElementType:99', 68, 'radar.png'),
+('ElementType:99', 71, '[99]'),
+
+('ElementType:1000', 72, 'true'),
 
 ('ExtEntityType:1', 63, 'obras_blanco.png'),
 ('ExtEntityType:1', 64, '["ExtEntityTypeParam:1:2","ExtEntityTypeParam:1:6","ExtEntityTypeParam:1:7","ExtEntityTypeParam:1:10"]'),

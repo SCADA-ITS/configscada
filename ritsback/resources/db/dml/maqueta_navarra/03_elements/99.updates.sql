@@ -30,6 +30,8 @@ where
 			element_type_id
 		from
 			conf.elements);	
+
+update master.element_subtypes set enabled = false where element_type_id = 2 and element_subtype_id not in (1,3);
 			
 update 
 	master.element_subtype_active_params
