@@ -79,6 +79,8 @@ INSERT INTO ui.vo_entities(id, vo_entity_type_id, enabled, visible) VALUES
 ('ElementType:84', 'ElementTypeUI', true, true),
 ('ElementType:85', 'ElementTypeUI', true, true),
 ('ElementType:96', 'ElementTypeUI', true, true),
+('ElementType:98', 'ElementTypeUI', true, true),
+('ElementType:1000', 'ElementTypeUI', true, true),
 
 ('Location:1', 'LocationUI', true, true),
 ('Location:2', 'LocationUI', true, true),
@@ -389,6 +391,9 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 ('ElementType:96', 2, 'element_type_96.svg'),
 ('ElementType:96', 14, 'grid/element_type_96.png'),
 ('ElementType:96', 23, '103002'),
+
+('ElementType:98', 72, 'true'),
+('ElementType:1000', 72, 'true'),
 
 ('AlarmLevel:1', 8, 'false'),
 ('AlarmLevel:1', 9, null),
