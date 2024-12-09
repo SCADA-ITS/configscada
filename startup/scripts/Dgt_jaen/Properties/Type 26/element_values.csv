@@ -1,0 +1,59 @@
+item;alias;description;sessionuid;road;stretchs;pk;sentido;param1_brand;param2_model
+1;SWP-1-01-DP;SWP-1-01-DP;SWP-1-01-DP;Autovía A-4;Despeñaperros;;Madrid;Equitel;N950
+2;SWP-1-02-DP;SWP-1-02-DP;SWP-1-02-DP;Autovía A-4;Despeñaperros;;Madrid;Equitel;N950
+3;SWP-1-03-DP;SWP-1-03-DP;SWP-1-03-DP;Autovía A-4;Despeñaperros;;Madrid;Equitel;N950
+4;SWP-1-04-DP;SWP-1-04-DP;SWP-1-04-DP;Autovía A-4;Despeñaperros;;Madrid;Equitel;N950
+5;SWP-1-05-DP;SWP-1-05-DP;SWP-1-05-DP;Autovía A-4;Despeñaperros;;Madrid;Equitel;N950
+6;SWP-1-06-DP;SWP-1-06-DP;SWP-1-06-DP;Autovía A-4;Despeñaperros;;Madrid;Equitel;N950
+7;SWP-1-07-DP;SWP-1-07-DP;SWP-1-07-DP;Autovía A-4;Despeñaperros;;Madrid;Equitel;N950
+8;SWP-1-08-DP;SWP-1-08-DP;SWP-1-08-DP;Autovía A-4;Despeñaperros;;Madrid;Equitel;N950
+9;SWP-1-09-DP;SWP-1-09-DP;SWP-1-09-DP;Autovía A-4;Despeñaperros;;Madrid;Equitel;N950
+10;SWP-1-10-DP;SWP-1-10-DP;SWP-1-10-DP;Autovía A-4;Despeñaperros;;Madrid;Equitel;N950
+11;SWP-1-11-DP;SWP-1-11-DP;SWP-1-11-DP;Autovía A-4;Despeñaperros;;Madrid;Equitel;N950
+12;SWP-1-12-DP;SWP-1-12-DP;SWP-1-12-DP;Autovía A-4;Despeñaperros;;Madrid;Equitel;N950
+13;SWP-1-13-DP;SWP-1-13-DP;SWP-1-13-DP;Autovía A-4;Despeñaperros;;Madrid;Equitel;N950
+14;SWP-1-14-DP;SWP-1-14-DP;SWP-1-14-DP;Autovía A-4;Despeñaperros;;Madrid;Equitel;N950
+15;SWP-1-15-DP;SWP-1-15-DP;SWP-1-15-DP;Autovía A-4;Despeñaperros;;;Cisco;SGE 2000
+16;SWP-1-16-DP;SWP-1-16-DP;SWP-1-16-DP;Autovía A-4;Despeñaperros;;;Cisco;SGE 2000
+17;SWP-1-17-DP;SWP-1-17-DP;SWP-1-17-DP;Autovía A-4;Despeñaperros;;;Cisco;SGE 2000
+18;SWP-1-18-DP;SWP-1-18-DP;SWP-1-18-DP;Autovía A-4;Despeñaperros;;;Cisco;SGE 2000
+19;SWP-2-01-DP;SWP-2-01-DP;SWP-2-01-DP;Autovía A-4;Despeñaperros;;;Cisco;SGE 2000
+20;SWP-2-02-DP;SWP-2-02-DP;SWP-2-02-DP;Autovía A-4;Despeñaperros;;Córdoba;Equitel;N950
+21;SWP-2-03-DP;SWP-2-03-DP;SWP-2-03-DP;Autovía A-4;Despeñaperros;;Córdoba;Equitel;N950
+22;SWP-2-04-DP;SWP-2-04-DP;SWP-2-04-DP;Autovía A-4;Despeñaperros;;Córdoba;Equitel;N950
+23;SWP-2-05-DP;SWP-2-05-DP;SWP-2-05-DP;Autovía A-4;Despeñaperros;;Córdoba;Equitel;N950
+24;SWP-2-06-DP;SWP-2-06-DP;SWP-2-06-DP;Autovía A-4;Despeñaperros;;Córdoba;Equitel;N950
+25;SWP-2-07-DP;SWP-2-07-DP;SWP-2-07-DP;Autovía A-4;Despeñaperros;;Córdoba;Equitel;N950
+26;SWP-2-08-DP;SWP-2-08-DP;SWP-2-08-DP;Autovía A-4;Despeñaperros;;Córdoba;Equitel;N950
+27;SWP-2-09-DP;SWP-2-09-DP;SWP-2-09-DP;Autovía A-4;Despeñaperros;;Córdoba;Equitel;N950
+28;SWP-2-10-DP;SWP-2-10-DP;SWP-2-10-DP;Autovía A-4;Despeñaperros;;Córdoba;Equitel;N950
+29;SWP-2-11-DP;SWP-2-11-DP;SWP-2-11-DP;Autovía A-4;Despeñaperros;;Córdoba;Equitel;N950
+30;SWP-2-12-DP;SWP-2-12-DP;SWP-2-12-DP;Autovía A-4;Despeñaperros;;Córdoba;Equitel;N950
+31;SWP-2-13-DP;SWP-2-13-DP;SWP-2-13-DP;Autovía A-4;Despeñaperros;;Córdoba;Equitel;N950
+32;SWP-2-14-DP;SWP-2-14-DP;SWP-2-14-DP;Autovía A-4;Despeñaperros;;Córdoba;Equitel;N950
+33;SWP-2-15-DP;SWP-2-15-DP;SWP-2-15-DP;Autovía A-4;Despeñaperros;;Córdoba;Equitel;N950
+34;SWP-2-16-DP;SWP-2-16-DP;SWP-2-16-DP;Autovía A-4;Despeñaperros;;;Cisco;SGE 2000
+35;SWP-2-17-DP;SWP-2-17-DP;SWP-2-17-DP;Autovía A-4;Despeñaperros;;;Cisco;SGE 2000
+36;SWP-2-18-DP;SWP-2-18-DP;SWP-2-18-DP;Autovía A-4;Despeñaperros;;;Cisco;SGE 2000
+37;SWP-1-01-GA1;SWP-1-01-GA1;SWP-1-01-GA1;Autovía A-4;Despeñaperros;;;Equitel;N950
+38;SWP-1-01-GA2;SWP-1-01-GA2;SWP-1-01-GA2;Autovía A-4;Despeñaperros;;;Equitel;N950
+39;SWP-1-01-GA3;SWP-1-01-GA3;SWP-1-01-GA3;Autovía A-4;Despeñaperros;;;Equitel;N950
+40;SWP-1-01-GA4;SWP-1-01-GA4;SWP-1-01-GA4;Autovía A-4;Despeñaperros;;;Equitel;N950
+41;SWP-1-01-CA;SWP-1-01-CA;SWP-1-01-CA;Autovía A-4;La Cantera;;Madrid;Equitel;N950
+42;SWP-1-02-CA;SWP-1-02-CA;SWP-1-02-CA;Autovía A-4;La Cantera;;Madrid;Equitel;N950
+43;SWP-1-03-CA;SWP-1-03-CA;SWP-1-03-CA;Autovía A-4;La Cantera;;Madrid;Equitel;N950
+44;SWP-1-04-CA;SWP-1-04-CA;SWP-1-04-CA;Autovía A-4;La Cantera;;Madrid;Equitel;N950
+45;SWP-1-05-CA;SWP-1-05-CA;SWP-1-05-CA;Autovía A-4;La Cantera;;;Cisco;SGE 2000
+46;SWP-2-01-CA;SWP-2-01-CA;SWP-2-01-CA;Autovía A-4;La Cantera;;;Cisco;SGE 2000
+47;SWP-2-02-CA;SWP-2-02-CA;SWP-2-02-CA;Autovía A-4;La Cantera;;Córdoba;Equitel;N951
+48;SWP-2-03-CA;SWP-2-03-CA;SWP-2-03-CA;Autovía A-4;La Cantera;;;Equitel;N952
+49;SWP-1-01-CZ;SWP-1-01-CZ;SWP-1-01-CZ;Autovía A-4;El Corzo;;Madrid;Equitel;N950
+50;SWP-1-02-CZ;SWP-1-02-CZ;SWP-1-02-CZ;Autovía A-4;El Corzo;;Madrid;Equitel;N950
+51;SWP-1-03-CZ;SWP-1-03-CZ;SWP-1-03-CZ;Autovía A-4;El Corzo;;Madrid;Equitel;N950
+52;SWP-1-04-CZ;SWP-1-04-CZ;SWP-1-04-CZ;Autovía A-4;El Corzo;;;Cisco;SGE 2000
+53;SWP-1-05-CZ;SWP-1-05-CZ;SWP-1-05-CZ;Autovía A-4;El Corzo;;;Cisco;SGE 2000
+54;SWP-2-01-CZ;SWP-2-01-CZ;SWP-2-01-CZ;Autovía A-4;El Corzo;;Córdoba;Equitel;N950
+55;SWP-2-02-CZ;SWP-2-02-CZ;SWP-2-02-CZ;Autovía A-4;El Corzo;;Córdoba;Equitel;N950
+56;SWP-2-03-CZ;SWP-2-03-CZ;SWP-2-03-CZ;Autovía A-4;El Corzo;;Córdoba;Equitel;N950
+57;SWP-2-04-CZ;SWP-2-04-CZ;SWP-2-04-CZ;Autovía A-4;El Corzo;;Córdoba;Equitel;N950
+58;SWP-2-05-CZ;SWP-2-05-CZ;SWP-2-05-CZ;Autovía A-4;El Corzo;;Córdoba;Equitel;N950

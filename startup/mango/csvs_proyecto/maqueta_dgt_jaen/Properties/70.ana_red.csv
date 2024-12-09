@@ -1,0 +1,6 @@
+device_name;url_publisher;host;dir_esclavo(i);port(i)
+AR-1-DP1;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;172.21.33.109;5;502
+AR-1-DP2;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;172.21.33.108;5;502
+AR-1-DP1;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;172.21.41.97;5;502
+AR-2-DP1;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;172.21.41.98;5;502
+AR-3-DP1;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;172.21.41.99;5;502

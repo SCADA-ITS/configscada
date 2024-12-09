@@ -1,0 +1,3 @@
+device_name;url_publisher;ip;port;dir_logica
+EM-1-01-CZ;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;;;20
+EM-2-01-CA;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;;;20

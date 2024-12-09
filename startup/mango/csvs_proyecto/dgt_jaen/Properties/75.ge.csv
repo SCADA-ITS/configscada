@@ -1,0 +1,5 @@
+device_name;url_publisher;source_name;host;port(i);offset_start(i);offset_failure(i);offset_fuel_level(i)
+GE2-DP;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;M-11-DP;172.21.33.90;502;46;47;49
+GE3-DP;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;M-01-DP;172.21.49.90;502;52;53;55
+GE4-CA;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;ES-05-CA;172.21.57.50;502;14;15;17
+GE1-CZ;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;ES-05-CZ;172.21.17.90;502;22;23;25

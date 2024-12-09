@@ -1,0 +1,13 @@
+device_name;url_publisher
+ILU-NOR-DP2;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/
+ILU-SUR-DP2;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/
+CGBT-DP2;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/
+ILU-NOR-DP3;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/
+ILU-SUR-DP3;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/
+CGBT-DP3;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/
+ILU-NOR-DP4;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/
+ILU-SUR-DP4;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/
+CGBT-DP4;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/
+ILU-NOR-DP1;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/
+ILU-SUR-DP1;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/
+CGBT-DP1;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/

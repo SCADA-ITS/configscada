@@ -1,0 +1,8 @@
+item;stretch_type;alias;description;pk_ini;pk_end;lanes;road
+1;Element;Despeñaperros;Despeñaperros;0.0;0.0;0;Autovía A-4
+2;Element;LT2;LT2;0.0;0.0;0;Autovía A-4
+3;Element;LT3;LT3;0.0;0.0;0;Autovía A-4
+4;Element;La Cantera;La Cantera;0.0;0.0;0;Autovía A-4
+5;Element;LT4;LT4;0.0;0.0;0;Autovía A-4
+6;Element;El Corzo;El Corzo;0.0;0.0;0;Autovía A-4
+7;Element;LT1;LT1;0.0;0.0;0;Autovía A-4

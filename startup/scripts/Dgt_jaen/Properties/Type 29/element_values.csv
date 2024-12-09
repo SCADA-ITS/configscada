@@ -1,0 +1,5 @@
+item;alias;description;sessionuid;road;stretchs;pk;sentido;param1_brand;param2_model
+1;CEN-LIST-DP1;CEN-LIST-DP1;CEN-LIST-DP1;Autovía A-4;Despeñaperros;;Madrid;LISTEC;LISTcontroller
+2;CEN-LIST-DP2;CEN-LIST-DP2;CEN-LIST-DP2;Autovía A-4;Despeñaperros;;Córdoba;LISTEC;LISTcontroller
+3;CEN-LIST-CA;CEN-LIST-CA;CEN-LIST-CA;Autovía A-4;La Cantera;;;LISTEC;LISTcontroller
+4;CEN-LIST-CZ;CEN-LIST-CZ;CEN-LIST-CZ;Autovía A-4;El Corzo;;;LISTEC;LISTcontroller

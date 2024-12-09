@@ -1,0 +1,9 @@
+item;alias;description;sessionuid;road;stretchs;pk;sentido;param1_brand;param2_model
+1;SAI-N-DP2;SAI-N-DP2;SAI-N-DP2;Autovía A-4;LT2;;Madrid;Multi Sentry;MST 50
+2;SAI-S-DP2;SAI-S-DP2;SAI-S-DP2;Autovía A-4;LT2;;Córdoba;Multi Sentry;MST 50
+3;SAI-N-DP1;SAI-N-DP1;SAI-N-DP1;Autovía A-4;LT3;;Madrid;Multi Sentry;MST 50
+4;SAI-S-DP1;SAI-S-DP1;SAI-S-DP1;Autovía A-4;LT3;;Córdoba;Multi Sentry;MST 50
+5;SAI-N-CA;SAI-N-CA;SAI-N-CA;Autovía A-4;LT4;;NA;Multi Sentry;MST 50
+6;SAI-S-CA;SAI-S-CA;SAI-S-CA;Autovía A-4;LT4;;NA;Multi Sentry;MST 50
+7;SAI-N-CZ;SAI-N-CZ;SAI-N-CZ;Autovía A-4;LT1;;NA;Multi Sentry;MST 50
+8;SAI-S-CZ;SAI-S-CZ;SAI-S-CZ;Autovía A-4;LT1;;NA;Multi Sentry;MST 50

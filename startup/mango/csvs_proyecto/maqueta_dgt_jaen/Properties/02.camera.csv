@@ -1,0 +1,13 @@
+device_name;url_publisher
+TVE-1-01-DP;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/
+TVE-2-01-DP;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/
+TVI-1-01-GA1;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/
+TVI-2-01-GA1;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/
+TVI-1-01-GA2;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/
+TVI-2-01-GA2;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/
+TVI-1-01-GA3;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/
+TVI-2-01-GA3;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/
+TVI-1-01-GA4;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/
+TVI-2-01-GA4;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/
+TVE-1-01-CA;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/
+TVE-2-01-CA;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/

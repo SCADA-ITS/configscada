@@ -1,0 +1,5 @@
+device_name;url_publisher;source_name;host;port(i);offset_luminosity_real(i)
+LUM-0-03-DP;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;M-11-DP;172.21.33.90;502;2
+LUM-0-01-CA;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;ES-03-CA;172.21.57.80;502;0
+LUM-0-02-CA;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;ES-05-CA;172.21.57.50;502;2
+LUM-0-04-CZ;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;ES-05-CZ;172.21.17.90;502;0

@@ -1,0 +1,43 @@
+item;alias;description;sessionuid;road;stretchs;pk;sentido;param1_brand;param2_model
+1;M-01-DP;M-01-DP;M-01-DP;Autovía A-4;Despeñaperros;;;WAGO;750-352
+2;M-11-DP;M-11-DP;M-11-DP;Autovía A-4;Despeñaperros;;;WAGO;750-352
+3;ES-02-DP;ES-02-DP;ES-02-DP;Autovía A-4;Despeñaperros;;Madrid;WAGO;750-352
+4;ES-03-DP;ES-03-DP;ES-03-DP;Autovía A-4;Despeñaperros;;Madrid;WAGO;750-352
+5;ES-01-GA-1;ES-01-GA-1;ES-01-GA-1;Autovía A-4;Despeñaperros;;Madrid;WAGO;750-352
+6;ES-04-DP;ES-04-DP;ES-04-DP;Autovía A-4;Despeñaperros;;Madrid;WAGO;750-352
+7;ES-05-DP;ES-05-DP;ES-05-DP;Autovía A-4;Despeñaperros;;Madrid;WAGO;750-352
+8;ES-01-GA-2;ES-01-GA-2;ES-01-GA-2;Autovía A-4;Despeñaperros;;Madrid;WAGO;750-352
+9;ES-06-DP;ES-06-DP;ES-06-DP;Autovía A-4;Despeñaperros;;Madrid;WAGO;750-352
+10;ES-07-DP;ES-07-DP;ES-07-DP;Autovía A-4;Despeñaperros;;Madrid;WAGO;750-352
+11;ES-01-GA-3;ES-01-GA-3;ES-01-GA-3;Autovía A-4;Despeñaperros;;Madrid;WAGO;750-352
+12;ES-08-DP;ES-08-DP;ES-08-DP;Autovía A-4;Despeñaperros;;Madrid;WAGO;750-352
+13;ES-09-DP;ES-09-DP;ES-09-DP;Autovía A-4;Despeñaperros;;Madrid;WAGO;750-352
+14;ES-01-GA-4;ES-01-GA-4;ES-01-GA-4;Autovía A-4;Despeñaperros;;Madrid;WAGO;750-352
+15;ES-10-DP;ES-10-DP;ES-10-DP;Autovía A-4;Despeñaperros;;Madrid;WAGO;750-352
+16;ES-10-B-DP;ES-10-B-DP;ES-10-B-DP;Autovía A-4;Despeñaperros;;Madrid;WAGO;750-352
+17;ES-12-DP;ES-12-DP;ES-12-DP;Autovía A-4;Despeñaperros;;Córdoba;WAGO;750-352
+18;ES-13-DP;ES-13-DP;ES-13-DP;Autovía A-4;Despeñaperros;;Córdoba;WAGO;750-352
+19;ES-14-DP;ES-14-DP;ES-14-DP;Autovía A-4;Despeñaperros;;Córdoba;WAGO;750-352
+20;ES-15-DP;ES-15-DP;ES-15-DP;Autovía A-4;Despeñaperros;;Córdoba;WAGO;750-352
+21;ES-16-DP;ES-16-DP;ES-16-DP;Autovía A-4;Despeñaperros;;Córdoba;WAGO;750-352
+22;ES-17-DP;ES-17-DP;ES-17-DP;Autovía A-4;Despeñaperros;;Córdoba;WAGO;750-352
+23;ES-18-DP;ES-18-DP;ES-18-DP;Autovía A-4;Despeñaperros;;Córdoba;WAGO;750-352
+24;ES-19-DP;ES-19-DP;ES-19-DP;Autovía A-4;Despeñaperros;;Córdoba;WAGO;750-352
+25;ES-20-DP;ES-20-DP;ES-20-DP;Autovía A-4;Despeñaperros;;Córdoba;WAGO;750-352
+26;ES-20-B-DP;ES-20-B-DP;ES-20-B-DP;Autovía A-4;Despeñaperros;;Córdoba;WAGO;750-352
+27;ES-21-DP;ES-21-DP;ES-21-DP;Autovía A-4;Despeñaperros;;Córdoba;WAGO;750-352
+28;ES-01-CA;ES-01-CA;ES-01-CA;Autovía A-4;La Cantera;;Madrid;WAGO;750-352
+29;ES-02-CA;ES-02-CA;ES-02-CA;Autovía A-4;La Cantera;;Madrid;WAGO;750-352
+30;ES-03-CA;ES-03-CA;ES-03-CA;Autovía A-4;La Cantera;;Madrid;WAGO;750-352
+31;ES-04-CA;ES-04-CA;ES-04-CA;Autovía A-4;La Cantera;;Córdoba;WAGO;750-352
+32;ES-05-CA;ES-05-CA;ES-05-CA;Autovía A-4;La Cantera;;Córdoba;WAGO;750-352
+33;ES-06-CA;ES-06-CA;ES-06-CA;Autovía A-4;La Cantera;;Córdoba;WAGO;750-352
+34;ES-01-CZ;ES-01-CZ;ES-01-CZ;Autovía A-4;El Corzo;;Madrid;WAGO;750-352
+35;ES-02-CZ;ES-02-CZ;ES-02-CZ;Autovía A-4;El Corzo;;Madrid;WAGO;750-352
+36;ES-03-CZ;ES-03-CZ;ES-03-CZ;Autovía A-4;El Corzo;;Córdoba;WAGO;750-352
+37;ES-04-CZ;ES-04-CZ;ES-04-CZ;Autovía A-4;El Corzo;;Córdoba;WAGO;750-352
+38;ES-05-CZ;ES-05-CZ;ES-05-CZ;Autovía A-4;El Corzo;;;WAGO;750-352
+39;ES-06-CZ;ES-06-CZ;ES-06-CZ;Autovía A-4;El Corzo;;Córdoba;WAGO;750-352
+40;ES-VEN-01-CZ;ES-VEN-01-CZ;ES-VEN-01-CZ;Autovía A-4;El Corzo;;;WAGO;750-352
+41;ES-VEN-02-CZ;ES-VEN-02-CZ;ES-VEN-02-CZ;Autovía A-4;El Corzo;;;WAGO;750-352
+42;ES-07-CZ;ES-07-CZ;ES-07-CZ;Autovía A-4;El Corzo;;;WAGO;750-352

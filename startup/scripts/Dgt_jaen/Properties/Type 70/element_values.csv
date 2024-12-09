@@ -1,0 +1,10 @@
+item;alias;description;sessionuid;road;stretchs;pk;sentido;param1_brand;param2_model
+1;AR-1-DP2;AR-1-DP2;AR-1-DP2;Autovía A-4;LT2;;NA;DIRIS;A-40
+2;AR-2-DP2;AR-2-DP2;AR-2-DP2;Autovía A-4;LT2;;NA;DIRIS;A-40
+3;AR-1-DP1;AR-1-DP1;AR-1-DP1;Autovía A-4;LT3;;NA;DIRIS;A-40
+4;AR-2-DP1;AR-2-DP1;AR-2-DP1;Autovía A-4;LT3;;NA;DIRIS;A-40
+5;AR-3-DP1;AR-3-DP1;AR-3-DP1;Autovía A-4;LT3;;NA;DIRIS;A-40
+6;AR-1-CA;AR-1-CA;AR-1-CA;Autovía A-4;LT4;;NA;DIRIS;A-40
+7;AR-2-CA;AR-2-CA;AR-2-CA;Autovía A-4;LT4;;NA;DIRIS;A-40
+8;AR-1-CZ;AR-1-CZ;AR-1-CZ;Autovía A-4;LT1;;NA;DIRIS;A-40
+9;AR-2-CZ;AR-2-CZ;AR-2-CZ;Autovía A-4;LT1;;NA;DIRIS;A-40

@@ -1,0 +1,2 @@
+circuito_virtual_izqda_1;circuito_virtual_izqda_2;circuito_virtual_dcha_1;circuito_virtual_dcha_2;interruptor_izqda_1;interruptor_izqda_2;interruptor_dcha_1;interruptor_dcha_2;interruptor_tension;circuito;url_publisher
+NUB-IZQ-1-ILU-NOR-4;NUB-IZQ-2-ILU-NOR-4;NUB-DER-1-ILU-NOR-4;NUB-DER-2-ILU-NOR-4;INT-NUB-IZQ-1-ILU-NOR-4;INT-NUB-IZQ-2-ILU-NOR-4;INT-NUB-DER-1-ILU-NOR-4;INT-NUB-DER-2-ILU-NOR-4;INT-K02-ILU-NOR-4;CONT-NUB-ILU-NOR-4;http://192.168.88.201:3000/api/v2/generic

@@ -1,0 +1,5 @@
+device_name;url_publisher;source_name;host;port(i);offset_working_state(i)
+BOMB-PRIN-1-DP2;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;M-11-DP;172.21.33.90;502;255
+BOMB-PRIN-2-DP2;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;M-11-DP;172.21.33.90;502;256
+BOMB-LLEN-1-DP2;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;M-11-DP;172.21.33.90;502;260
+BOMB-JOCK-1-DP2;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;M-11-DP;172.21.33.90;502;257

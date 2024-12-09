@@ -1,0 +1,13 @@
+item;alias;description;sessionuid;road;stretchs;pk;sentido;on_change_measure;param1_brand;param2_model
+1;OP-1-01-DP;OP-1-01-DP;OP-1-01-DP;Autovía A-4;Despeñaperros;248+200;Madrid;SendValuesToVentilation.groovy;Duran;Sondeltox
+2;OP-1-02-DP;OP-1-02-DP;OP-1-02-DP;Autovía A-4;Despeñaperros;247+700;Madrid;SendValuesToVentilation.groovy;Duran;Sondeltox
+3;OP-1-03-DP;OP-1-03-DP;OP-1-03-DP;Autovía A-4;Despeñaperros;247+300;Madrid;SendValuesToVentilation.groovy;Duran;Sondeltox
+4;OP-1-04-DP;OP-1-04-DP;OP-1-04-DP;Autovía A-4;Despeñaperros;246+600;Madrid;SendValuesToVentilation.groovy;Duran;Sondeltox
+5;OP-2-01-DP;OP-2-01-DP;OP-2-01-DP;Autovía A-4;Despeñaperros;247;Córdoba;SendValuesToVentilation.groovy;Duran;Sondeltox
+6;OP-2-02-DP;OP-2-02-DP;OP-2-02-DP;Autovía A-4;Despeñaperros;247+400;Córdoba;SendValuesToVentilation.groovy;Duran;Sondeltox
+7;OP-2-03-DP;OP-2-03-DP;OP-2-03-DP;Autovía A-4;Despeñaperros;247+800;Córdoba;SendValuesToVentilation.groovy;Duran;Sondeltox
+8;OP-2-04-DP;OP-2-04-DP;OP-2-04-DP;Autovía A-4;Despeñaperros;248+200;Córdoba;SendValuesToVentilation.groovy;Duran;Sondeltox
+9;OP-1-01-CA;OP-1-01-CA;OP-1-01-CA;Autovía A-4;La Cantera;;Madrid;SendValuesToVentilation.groovy;SICK;VISIC620-1111
+10;OP-2-01-CA;OP-2-01-CA;OP-2-01-CA;Autovía A-4;La Cantera;;Córdoba;SendValuesToVentilation.groovy;SICK;VISIC620-1111
+11;OP-1-01-CZ;OP-1-01-CZ;OP-1-01-CZ;Autovía A-4;El Corzo;;Madrid;SendValuesToVentilation.groovy;SICK;VISIC620-1111
+12;OP-2-01-CZ;OP-2-01-CZ;OP-2-01-CZ;Autovía A-4;El Corzo;;Córdoba;SendValuesToVentilation.groovy;SICK;VISIC620-1111

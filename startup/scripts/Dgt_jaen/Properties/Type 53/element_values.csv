@@ -1,0 +1,7 @@
+item;element_subtype;alias;description;sessionuid;road;stretchs;pk;sentido;on_change_measure
+1;2;SMF-1-03-CA-D;SMF-1-03-CA-D;SMF-1-03-CA-D;Autovía A-4;La Cantera;;Madrid;ChangeMeasureHistorical.groovy
+2;2;SMF-1-03-CA-I;SMF-1-03-CA-I;SMF-1-03-CA-I;Autovía A-4;La Cantera;;Madrid;ChangeMeasureHistorical.groovy
+3;2;SMF-2-01-CA-D;SMF-2-01-CA-D;SMF-2-01-CA-D;Autovía A-4;La Cantera;;Córdoba;ChangeMeasureHistorical.groovy
+4;2;SMF-2-01-CA-I;SMF-2-01-CA-I;SMF-2-01-CA-I;Autovía A-4;La Cantera;;Córdoba;ChangeMeasureHistorical.groovy
+5;2;SMF-2-03-CZ-D;SMF-2-03-CZ-D;SMF-2-03-CZ-D;Autovía A-4;El Corzo;;Córdoba;ChangeMeasureHistorical.groovy
+6;2;SMF-2-03-CZ-I;SMF-2-03-CZ-I;SMF-2-03-CZ-I;Autovía A-4;El Corzo;;Córdoba;ChangeMeasureHistorical.groovy

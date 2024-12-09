@@ -1,0 +1,5 @@
+device_name;url_publisher;source_name;host;port(i);offset_measure_status(i)
+CEN-LIST-DP1;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;CEN-LIST-DP1;172.21.33.96;502;16655
+CEN-LIST-DP2;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;CEN-LIST-DP2;172.21.49.96;502;16655
+CEN-LIST-CA;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;CEN-LIST-CA;172.21.57.56;502;16655
+CEN-LIST-CZ;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;CEN-LIST-CZ;172.21.33.106;502;16655

@@ -1,0 +1,67 @@
+--
+-- Table: conf.ims_incident_alarm_conditions
+--
+
+-- Para el id seguiremos el siguiente criterio:
+-- 1.- Id incident_type
+-- 2.- Orden (2 cifras)
+-- 3.- stretch_id (4 cifras)
+INSERT INTO conf.ims_incident_alarm_conditions (incident_alarm_condition_id, incident_type_id, stretch_id, auto, enabled, visible, created_at, updated_at)
+VALUES
+--co leve
+(301011001, 301, 1001, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(301021001, 301, 1001, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(301031001, 301, 1001, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(301041002, 301, 1002, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(301051002, 301, 1002, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(301061002, 301, 1002, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(301072001, 301, 2001, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(301082001, 301, 2001, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(301092001, 301, 2001, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(301102002, 301, 2002, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(301112002, 301, 2002, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(301122002, 301, 2002, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+
+(301133001, 301, 3001, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(301143001, 301, 3001, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(301153001, 301, 3001, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(301163002, 301, 3002, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(301173002, 301, 3002, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(301183002, 301, 3002, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+-- 
+-- Table: conf.ims_incident_alarm_condition_alarms
+--
+-- Para el id seguiremos el siguiente criterio:
+-- 1.- Id ims_incident_alarm_conditions
+-- 2.- Orden (2 cifras)
+INSERT INTO conf.ims_incident_alarm_condition_alarms (incident_alarm_condition_alarm_id, incident_alarm_condition_id, incident_alarm_condition_alarm_type_id, alarm_config_id, element_type_id, element_id, min_alarmed_elements, enabled, visible, created_at, updated_at)
+VALUES
+(30101100101, 301011001, 2, 03010021, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(30102100101, 301021001, 2, 03020021, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(30103100101, 301031001, 2, 03030021, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(30104100201, 301041002, 2, 03010021, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(30105100201, 301051002, 2, 03020021, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(30106100201, 301061002, 2, 03030021, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(30107200101, 301072001, 2, 03010021, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(30108200101, 301082001, 2, 03020021, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(30109200101, 301092001, 2, 03030021, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(30110200201, 301102002, 2, 03010021, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(30111200201, 301112002, 2, 03020021, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(30112200201, 301122002, 2, 03030021, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(30113300101, 301133001, 2, 03010021, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(30114300101, 301143001, 2, 03020021, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(30115300101, 301153001, 2, 03030021, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(30116300201, 301163002, 2, 03010021, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(30117300201, 301173002, 2, 03020021, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(30118300201, 301183002, 2, 03030021, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

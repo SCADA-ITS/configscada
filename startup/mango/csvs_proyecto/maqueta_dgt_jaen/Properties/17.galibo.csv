@@ -1,0 +1,2 @@
+device_name;url_publisher;source_name;host;port(i);offset_clearance_alarm_state(i)
+GA-1-01-CA;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;ES-01-CA;192.168.88.21;5290;0

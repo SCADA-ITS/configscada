@@ -1,0 +1,65 @@
+INSERT INTO ui.selector_trees 
+(id, default_module_id, label, enabled, visible) VALUES 
+(1, 901, 'LBL_SELECTOR_TREES_SINOPTICOS', true, true);
+
+INSERT INTO ui.selector_tree_nodes 
+(id, selector_tree_id, label, module_id, image, enabled, visible) VALUES 
+(1, 1, 'LBL_SELECTOR_TREE_NODES_SINOPTICO_DESPEÑAPERROS', NULL, NULL, true, true),
+(2, 1, 'LBL_SELECTOR_TREE_NODES_SINOPTICO_DESPEÑAPERROS_TUNNEL', 901, 'menu/synoptic-menu.png', true, true),
+(3, 1, 'LBL_SELECTOR_TREE_NODES_SINOPTICO_LOCALES_TECNICOS', 902, 'menu/synoptic-menu.png', true, true),
+(4, 1, 'LBL_SELECTOR_TREE_NODES_SINOPTICO_LA_CANTERA', NULL, NULL, true, true),
+(5, 1, 'LBL_SELECTOR_TREE_NODES_SINOPTICO_LA_CANTERA_TUNEL', 903, 'menu/synoptic-menu.png', true, true),
+(6, 1, 'LBL_SELECTOR_TREE_NODES_SINOPTICO_UNIFILARES_DESPEÑAPERROS', NULL, NULL, true, true),
+(7, 1, 'LBL_SELECTOR_TREE_NODES_SINOPTICO_LT2', NULL, NULL, true, true),
+(8, 1, 'LBL_SELECTOR_TREE_NODES_SINOPTICO_LT3', NULL, NULL, true, true),
+(9, 1, 'LBL_SELECTOR_TREE_NODES_SINOPTICO_UNIFILAR_ILUMINACION_SUR_DP2', 904, 'menu/synoptic-menu.png', true, true),
+(10, 1, 'LBL_SELECTOR_TREE_NODES_SINOPTICO_UNIFILAR_ILUMINACION_2_NORTE', 905, 'menu/synoptic-menu.png', true, true),
+(11, 1, 'LBL_SELECTOR_TREE_NODES_SINOPTICO_UNIFILAR_ILUMINACION_3_NORTE', 906, 'menu/synoptic-menu.png', true, true),
+(12, 1, 'LBL_SELECTOR_TREE_NODES_SINOPTICO_UNIFILAR_ILUMINACION_3_SUR', 907, 'menu/synoptic-menu.png', true, true),
+(13, 1, 'LBL_SELECTOR_TREE_NODES_SINOPTICO_UNIFILAR_CGBT_LT2', 908, 'menu/synoptic-menu.png', true, true),
+(14, 1, 'LBL_SELECTOR_TREE_NODES_SINOPTICO_UNIFILAR_CGBT_LT3', 909, 'menu/synoptic-menu.png', true, true),
+(15, 1, 'LBL_SELECTOR_TREE_NODES_SINOPTICO_UNIFILARES_LA_CANTERA', NULL, NULL, true, true),
+(16, 1, 'LBL_SELECTOR_TREE_NODES_SINOPTICO_LT4', NULL, NULL, true, true),
+(17, 1, 'LBL_SELECTOR_TREE_NODES_SINOPTICO_UNIFILAR_ILUMINACION_4_NORTE', 910, 'menu/synoptic-menu.png', true, true),
+(18, 1, 'LBL_SELECTOR_TREE_NODES_SINOPTICO_UNIFILAR_ILUMINACION_4_SUR', 911, 'menu/synoptic-menu.png', true, true),
+(19, 1, 'LBL_SELECTOR_TREE_NODES_SINOPTICO_UNIFILAR_CGBT_LT4', 912, 'menu/synoptic-menu.png', true, true),
+(20, 1, 'LBL_SELECTOR_TREE_NODES_SINOPTICO_EL_CORZO', NULL, NULL, true, true),
+(21, 1, 'LBL_SELECTOR_TREE_NODES_SINOPTICO_EL_CORZO_TUNEL', 913, 'menu/synoptic-menu.png', true, true),
+(22, 1, 'LBL_SELECTOR_TREE_NODES_SINOPTICO_UNIFILARES_EL_CORZO', NULL, NULL, true, true),
+(23, 1, 'LBL_SELECTOR_TREE_NODES_SINOPTICO_LT1', NULL, NULL, true, true),
+(24, 1, 'LBL_SELECTOR_TREE_NODES_SINOPTICO_UNIFILAR_CGBT_LT1', 914, 'menu/synoptic-menu.png', true, true),
+(25, 1, 'LBL_SELECTOR_TREE_NODES_SINOPTICO_UNIFILAR_ILUM_NOR_LT1', 915, 'menu/synoptic-menu.png', true, true),
+(26, 1, 'LBL_SELECTOR_TREE_NODES_SINOPTICO_UNIFILAR_ILUM_SUR_LT1', 916, 'menu/synoptic-menu.png', true, true),
+(27, 1, 'LBL_SELECTOR_TREE_NODES_SINOPTICO_DESPEÑAPERROS_TUNNEL_COMUNICACIONES', 917, 'menu/synoptic-menu.png', true, true),
+(28, 1, 'LBL_SELECTOR_TREE_NODES_SINOPTICO_CENTROS_TRANSFORMACION', 918, 'menu/synoptic-menu.png', true, true),
+(29, 1, 'LBL_SELECTOR_TREE_NODES_SINOPTICO_LA_CANTERA_TUNNEL_COMUNICACIONES', 919, 'menu/synoptic-menu.png', true, true),
+(30, 1, 'LBL_SELECTOR_TREE_NODES_SINOPTICO_EL_CORZO_TUNNEL_COMUNICACIONES', 920, 'menu/synoptic-menu.png', true, true);
+
+INSERT INTO ui.selector_tree_hierarchies 
+(selector_tree_id, node_parent_id, node_child_id, enabled, visible) VALUES 
+(1, 1, 2, true, true),
+(1, 4, 5, true, true),
+(1, 1, 6, true, true),
+(1, 6, 7, true, true),
+(1, 6, 8, true, true),
+(1, 7, 9, true, true),
+(1, 7, 10, true, true),
+(1, 8, 11, true, true),
+(1, 8, 12, true, true),
+(1, 7, 13, true, true),
+(1, 8, 14, true, true),
+(1, 4, 15, true, true),
+(1, 15, 16, true, true),
+(1, 16, 17, true, true),
+(1, 16, 18, true, true),
+(1, 16, 19, true, true),
+(1, 20, 21, true, true),
+(1, 20, 22, true, true),
+(1, 22, 23, true, true),
+(1, 23, 24, true, true),
+(1, 23, 25, true, true),
+(1, 23, 26, true, true),
+(1, 1, 27, true, true),
+(1, 4, 29, true, true),
+(1, 20, 30, true, true);
+

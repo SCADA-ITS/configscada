@@ -1,0 +1,2 @@
+UPDATE conf.alarm_configs SET alarm_level_id = 3, enabled = True, treatment = True WHERE element_type_id = 86 AND alarm_config_id = 10086; --LBL_ALARM_CONFIGS_ALARM_PUMP_DISCONNECTED
+UPDATE conf.alarm_configs SET alarm_level_id = 3, enabled = True, treatment = True WHERE element_type_id = 86 AND alarm_config_id = 40086; --LBL_ALARM_CONFIGS_ALARM_PUMP_ON

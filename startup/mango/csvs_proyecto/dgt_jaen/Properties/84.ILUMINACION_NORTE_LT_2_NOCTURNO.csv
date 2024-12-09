@@ -1,0 +1,2 @@
+circuito_virtual_izqda_1;circuito_virtual_izqda_2;interruptor_izqda_1;interruptor_izqda_2;interruptor_tension;circuito;url_publisher
+NOC-IZQ-1-ILU-NOR-2;NOC-IZQ-2-ILU-NOR-2;INT-NOC-IZQ-1-ILU-NOR-2;INT-NOC-IZQ-2-ILU-NOR-2;INT-K02-ILU-NOR-2;CONT-NOC-ILU-NOR-2;http://192.168.88.201:3000/api/v2/generic

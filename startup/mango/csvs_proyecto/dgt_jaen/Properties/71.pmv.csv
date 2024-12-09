@@ -1,0 +1,5 @@
+device_name;url_publisher;host;port(i)
+PMV-2-01-DP;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;172.21.49.71;4001
+PMV-1-01-DP;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;172.21.41.81;4001
+PMV-1-01-CA;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;172.21.57.21;4001
+PMV-2-01-CZ;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;172.21.31.100;4001

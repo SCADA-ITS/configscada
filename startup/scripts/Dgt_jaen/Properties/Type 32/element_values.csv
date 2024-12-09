@@ -1,0 +1,9 @@
+item;element_subtype;alias;description;sessionuid;road;stretchs;pk;sentido
+1;3;PRES-GA1-S;PRES-GA1-S;PRES-GA1-S;Autovía A-4;Despeñaperros;248+200;Córdoba
+2;3;PRES-GA1-N;PRES-GA1-N;PRES-GA1-N;Autovía A-4;Despeñaperros;248+200;Madrid
+3;3;PRES-GA2-S;PRES-GA2-S;PRES-GA2-S;Autovía A-4;Despeñaperros;247+700;Córdoba
+4;3;PRES-GA2-N;PRES-GA2-N;PRES-GA2-N;Autovía A-4;Despeñaperros;247+700;Madrid
+5;3;PRES-GA3-S;PRES-GA3-S;PRES-GA3-S;Autovía A-4;Despeñaperros;247+350;Córdoba
+6;3;PRES-GA3-N;PRES-GA3-N;PRES-GA3-N;Autovía A-4;Despeñaperros;247+350;Madrid
+7;3;PRES-GA4-S;PRES-GA4-S;PRES-GA4-S;Autovía A-4;Despeñaperros;246+700;Córdoba
+8;3;PRES-GA4-N;PRES-GA4-N;PRES-GA4-N;Autovía A-4;Despeñaperros;246+700;Madrid

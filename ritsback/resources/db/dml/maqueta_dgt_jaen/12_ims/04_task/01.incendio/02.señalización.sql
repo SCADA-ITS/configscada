@@ -1,0 +1,89 @@
+INSERT INTO conf.ims_incident_type_task_values
+(task_type_id, task_type_param_id, incident_type_task_id, value, enabled, visible, created_at, updated_at)
+VALUES
+--ilumninación
+(3, 1, 01030101, '0', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(3, 2, 01030101, '2', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+--ventilación
+(5, 1, 00020101, '0', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(5, 2, 00020101, '1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+--ventilación
+(5, 1, 01010101, '3', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(5, 2, 01010101, '1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+
+(1, 1, 01040101, '[
+    {
+        "id": 1,
+        "alias": "Semáforos aguas arriba",
+        "from": 1,
+        "to": 1,
+        "elementSubtypeId": "ElementSubtype:1:13",
+        "command": {
+                    "commandElementTypeId": "CommandElementType:3:13",
+                    "commandElementValues": [{"commandElementTypeParamId": "CommandElementTypeParam:2:13:1"}]
+                    }
+    },
+    {
+        "id": 2,
+        "alias": "Semáforos aguas arriba",
+        "from": 1,
+        "to": 1,
+        "elementSubtypeId": "ElementSubtype:2:13",
+        "command": {
+                    "commandElementTypeId": "CommandElementType:3:13",
+                    "commandElementValues": [{"commandElementTypeParamId": "CommandElementTypeParam:2:13:1"}]
+                    }
+    },
+    {
+        "id": 3,
+        "alias": "Semáforos aguas abajo",
+        "from": 2,
+        "to": 2,
+        "elementSubtypeId": "ElementSubtype:1:13",
+        "command": {
+                    "commandElementTypeId": "CommandElementType:5:13",
+                    "commandElementValues": [{"commandElementTypeParamId": "CommandElementTypeParam:2:13:1"}]
+                    }
+    },
+    {
+        "id": 4,
+        "alias": "Semáforos aguas abajo",
+        "from": 2,
+        "to": 2,
+        "elementSubtypeId": "ElementSubtype:2:13",
+        "command": {
+                    "commandElementTypeId": "CommandElementType:5:13",
+                    "commandElementValues": [{"commandElementTypeParamId": "CommandElementTypeParam:2:13:1"}]
+                    }
+    },
+	{
+        "id": 5,
+        "alias": "Aspa-Flecha",
+        "from": 3,
+        "to": 3,
+        "elementSubtypeId": "ElementSubtype:12:71",
+		"command": {
+					"commandElementTypeId": "CommandElementType:2:71",
+					"commandElementValues": [{
+							"value": "[{\"zone\":1,\"alternance_ms\":5000,\"graphics\":[{\"id\":1,\"value\":746}]}]",
+						"commandElementTypeParamId": "CommandElementTypeParam:2:71:1"
+					}]	
+		}
+	},
+	{
+		"id": 6,
+		"alias": "CLV",
+		"from": 4,
+        "to": 4,
+		"elementSubtypeId": "ElementSubtype:11:71",
+		"command": {
+					"commandElementTypeId": "CommandElementType:3:71",
+					"commandElementValues": [{
+						"commandElementTypeParamId": "CommandElementTypeParam:2:71:1"
+					}]
+		}
+	}
+]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

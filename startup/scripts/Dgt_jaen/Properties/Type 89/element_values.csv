@@ -1,0 +1,20 @@
+item;alias;description;sessionuid;road;stretchs;pk;sentido
+1;PUE-GA1-S;PUE-GA1-S;PUE-GA1-S;Autovía A-4;Despeñaperros;248+200;Córdoba
+2;PUE-GA1-N;PUE-GA1-N;PUE-GA1-N;Autovía A-4;Despeñaperros;248+200;Madrid
+3;PUE-GA2-S;PUE-GA2-S;PUE-GA2-S;Autovía A-4;Despeñaperros;247+700;Córdoba
+4;PUE-GA2-N;PUE-GA2-N;PUE-GA2-N;Autovía A-4;Despeñaperros;247+700;Madrid
+5;PUE-GA3-S;PUE-GA3-S;PUE-GA3-S;Autovía A-4;Despeñaperros;247+350;Córdoba
+6;PUE-GA3-N;PUE-GA3-N;PUE-GA3-N;Autovía A-4;Despeñaperros;247+350;Madrid
+7;PUE-GA4-S;PUE-GA4-S;PUE-GA4-S;Autovía A-4;Despeñaperros;246+700;Córdoba
+8;PUE-GA4-N;PUE-GA4-N;PUE-GA4-N;Autovía A-4;Despeñaperros;246+700;Madrid
+9;PUE-CGBT-CT2;PUE-CGBT-CT2;PUE-CGBT-CT2;Autovía A-4;LT2;;
+10;PUE-GE2-CT2;PUE-GE2-CT2;PUE-GE2-CT2;Autovía A-4;LT2;;
+11;PUE-MT-CT2;PUE-MT-CT2;PUE-MT-CT2;Autovía A-4;LT2;;
+12;PUE-CGBT-CT3;PUE-CGBT-CT3;PUE-CGBT-CT3;Autovía A-4;LT3;;
+13;PUE-GE3-CT3;PUE-GE3-CT3;PUE-GE3-CT3;Autovía A-4;LT3;;
+14;PUE-MT-CT3;PUE-MT-CT3;PUE-MT-CT3;Autovía A-4;LT3;;
+15;PUE-CGBT-CT4;PUE-CGBT-CT4;PUE-CGBT-CT4;Autovía A-4;LT4;;
+16;PUE-GE4-CT4;PUE-GE4-CT4;PUE-GE4-CT4;Autovía A-4;LT4;;
+17;PUE-CGBT-CT1;PUE-CGBT-CT1;PUE-CGBT-CT1;Autovía A-4;LT1;;
+18;PUE-MT-CT1;PUE-MT-CT1;PUE-MT-CT1;Autovía A-4;LT1;;
+19;PUE-GE1-CT1;PUE-GE1-CT1;PUE-GE1-CT1;Autovía A-4;LT1;;

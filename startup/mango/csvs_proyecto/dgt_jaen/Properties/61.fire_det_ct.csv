@@ -1,0 +1,5 @@
+device_name;PLC_name;PLC_ip;port(i);url_publisher;offset_fire_alarm(i);offset_fault_alarm(i)
+CEN-INC-DP2;M-11-DP;172.21.33.90;502;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;244;245
+CEN-INC-DP1;M-01-DP;172.21.49.90;502;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;273;274
+CEN-INC-CA;ES-05-CA;172.21.57.50;502;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;109;110
+CEN-INC-CZ;ES-05-CZ;172.21.17.90;502;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;127;128

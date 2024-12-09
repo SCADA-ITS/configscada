@@ -1,0 +1,765 @@
+{
+  "dataSources": [
+    {
+      "xid": "DS_ILUMINACION_SUR_LT4_ALARMAS",
+      "name": "ILUMINACION_SUR_LT4_ALARMAS",
+      "enabled": true,
+      "type": "VIRTUAL",
+      "alarmLevels": {
+        "POLL_ABORTED": "URGENT"
+      },
+      "purgeType": "YEARS",
+      "updatePeriods": 10,
+      "updatePeriodType": "SECONDS",
+      "polling": true,
+      "quantize": false,
+      "useCron": false,
+      "editPermission": "",
+      "purgeOverride": false,
+      "purgePeriod": 1
+    },
+    {
+      "xid": "DS_ILUMINACION_SUR_LT4",
+      "name": "ILUMINACION_SUR_LT4",
+      "enabled": true,
+      "type": "META",
+      "alarmLevels": {
+        "SCRIPT_ERROR": "DO_NOT_LOG",
+        "CONTEXT_POINT_DISABLED": "DO_NOT_LOG",
+        "RESULT_TYPE_ERROR": "DO_NOT_LOG"
+      },
+      "purgeType": "YEARS",
+      "editPermission": "",
+      "purgeOverride": false,
+      "purgePeriod": 1
+    },
+    {
+      "xid": "DS_status",
+      "name": "status",
+      "enabled": true,
+      "type": "VIRTUAL",
+      "alarmLevels": {
+        "POLL_ABORTED": "URGENT"
+      },
+      "purgeType": "YEARS",
+      "updatePeriods": 1,
+      "updatePeriodType": "MINUTES",
+      "polling": true,
+      "quantize": false,
+      "useCron": false,
+      "editPermission": "superadmin",
+      "purgeOverride": false,
+      "purgePeriod": 1
+    },
+    {
+      "xid": "DS_status_calcular",
+      "name": "status_calcular",
+      "enabled": true,
+      "type": "META",
+      "alarmLevels": {
+        "SCRIPT_ERROR": "URGENT",
+        "CONTEXT_POINT_DISABLED": "URGENT",
+        "RESULT_TYPE_ERROR": "URGENT"
+      },
+      "purgeType": "YEARS",
+      "editPermission": "",
+      "purgeOverride": false,
+      "purgePeriod": 1
+    }
+  ],
+  "dataPoints": [
+    {
+      "xid": "DP_{circuito_virtual_izqda_1}_alarm",
+      "name": "alarm",
+      "enabled": true,
+      "loggingType": "ON_CHANGE",
+      "intervalLoggingPeriodType": "MINUTES",
+      "intervalLoggingType": "INSTANT",
+      "purgeType": "YEARS",
+      "pointLocator": {
+        "dataType": "BINARY",
+        "changeType": {
+          "type": "NO_CHANGE",
+          "startValue": "false"
+        },
+        "settable": true
+      },
+      "eventDetectors": [],
+      "plotType": "STEP",
+      "rollup": "NONE",
+      "unit": "",
+      "simplifyType": "NONE",
+      "chartColour": "",
+      "chartRenderer": {
+        "type": "TABLE",
+        "limit": 10
+      },
+      "dataSourceXid": "DS_ILUMINACION_SUR_LT4_ALARMAS",
+      "defaultCacheSize": 1,
+      "deviceName": "{circuito_virtual_izqda_1}",
+      "discardExtremeValues": false,
+      "discardHighLimit": 1.7976931348623157E308,
+      "discardLowLimit": -1.7976931348623157E308,
+      "intervalLoggingPeriod": 15,
+      "intervalLoggingSampleWindowSize": 0,
+      "overrideIntervalLoggingSamples": false,
+      "preventSetExtremeValues": false,
+      "purgeOverride": false,
+      "purgePeriod": 1,
+      "readPermission": "",
+      "setExtremeHighLimit": 1.7976931348623157E308,
+      "setExtremeLowLimit": -1.7976931348623157E308,
+      "setPermission": "",
+      "tags": {},
+      "textRenderer": {
+        "type": "BINARY",
+        "oneColour": "#00ff00",
+        "oneLabel": "one",
+        "zeroColour": "#0000ff",
+        "zeroLabel": "zero"
+      },
+      "tolerance": 0.0
+    },
+    {
+      "xid": "DP_{circuito_virtual_izqda_1}_without_voltage",
+      "name": "without_voltage",
+      "enabled": true,
+      "loggingType": "ON_CHANGE",
+      "intervalLoggingPeriodType": "MINUTES",
+      "intervalLoggingType": "INSTANT",
+      "purgeType": "YEARS",
+      "pointLocator": {
+        "dataType": "BINARY",
+        "changeType": {
+          "type": "NO_CHANGE",
+          "startValue": "false"
+        },
+        "settable": true
+      },
+      "eventDetectors": [],
+      "plotType": "STEP",
+      "rollup": "NONE",
+      "unit": "",
+      "simplifyType": "NONE",
+      "chartColour": "",
+      "chartRenderer": {
+        "type": "TABLE",
+        "limit": 10
+      },
+      "dataSourceXid": "DS_ILUMINACION_SUR_LT4_ALARMAS",
+      "defaultCacheSize": 1,
+      "deviceName": "{circuito_virtual_izqda_1}",
+      "discardExtremeValues": false,
+      "discardHighLimit": 1.7976931348623157E308,
+      "discardLowLimit": -1.7976931348623157E308,
+      "intervalLoggingPeriod": 15,
+      "intervalLoggingSampleWindowSize": 0,
+      "overrideIntervalLoggingSamples": false,
+      "preventSetExtremeValues": false,
+      "purgeOverride": false,
+      "purgePeriod": 1,
+      "readPermission": "",
+      "setExtremeHighLimit": 1.7976931348623157E308,
+      "setExtremeLowLimit": -1.7976931348623157E308,
+      "setPermission": "",
+      "tags": {},
+      "textRenderer": {
+        "type": "BINARY",
+        "oneColour": "#00ff00",
+        "oneLabel": "one",
+        "zeroColour": "#0000ff",
+        "zeroLabel": "zero"
+      },
+      "tolerance": 0.0
+    },
+    {
+      "xid": "DP_{circuito_virtual_izqda_1}_manual",
+      "name": "manual",
+      "enabled": true,
+      "loggingType": "ON_CHANGE",
+      "intervalLoggingPeriodType": "MINUTES",
+      "intervalLoggingType": "INSTANT",
+      "purgeType": "YEARS",
+      "pointLocator": {
+        "dataType": "BINARY",
+        "changeType": {
+          "type": "NO_CHANGE",
+          "startValue": "false"
+        },
+        "settable": true
+      },
+      "eventDetectors": [],
+      "plotType": "STEP",
+      "rollup": "NONE",
+      "unit": "",
+      "simplifyType": "NONE",
+      "chartColour": "",
+      "chartRenderer": {
+        "type": "TABLE",
+        "limit": 10
+      },
+      "dataSourceXid": "DS_ILUMINACION_SUR_LT4_ALARMAS",
+      "defaultCacheSize": 1,
+      "deviceName": "{circuito_virtual_izqda_1}",
+      "discardExtremeValues": false,
+      "discardHighLimit": 1.7976931348623157E308,
+      "discardLowLimit": -1.7976931348623157E308,
+      "intervalLoggingPeriod": 15,
+      "intervalLoggingSampleWindowSize": 0,
+      "overrideIntervalLoggingSamples": false,
+      "preventSetExtremeValues": false,
+      "purgeOverride": false,
+      "purgePeriod": 1,
+      "readPermission": "",
+      "setExtremeHighLimit": 1.7976931348623157E308,
+      "setExtremeLowLimit": -1.7976931348623157E308,
+      "setPermission": "",
+      "tags": {},
+      "textRenderer": {
+        "type": "BINARY",
+        "oneColour": "#00ff00",
+        "oneLabel": "one",
+        "zeroColour": "#0000ff",
+        "zeroLabel": "zero"
+      },
+      "tolerance": 0.0
+    },
+    {
+      "xid": "DP_{circuito_virtual_izqda_1}_state",
+      "name": "state",
+      "enabled": true,
+      "loggingType": "ON_CHANGE",
+      "intervalLoggingPeriodType": "MINUTES",
+      "intervalLoggingType": "INSTANT",
+      "purgeType": "YEARS",
+      "pointLocator": {
+        "dataType": "BINARY",
+        "updateEvent": "NONE",
+        "contextUpdateEvent": "CONTEXT_CHANGE",
+        "context": [
+          {
+            "varName": "interruptor",
+            "dataPointXid": "DP_{interruptor_izqda_1}_state",
+            "updateContext": true
+          },
+          {
+            "varName": "general",
+            "dataPointXid": "DP_{interruptor_tension}_state",
+            "updateContext": true
+          },
+          {
+            "varName": "contactor",
+            "dataPointXid": "DP_{circuito}_state",
+            "updateContext": true
+          },
+          {
+            "varName": "alarma_individual",
+            "dataPointXid": "DP_{circuito_virtual_izqda_1}_alarm",
+            "updateContext": false
+          },
+          {
+            "varName": "alarma_tension",
+            "dataPointXid": "DP_{circuito_virtual_izqda_1}_without_voltage",
+            "updateContext": false
+          }
+        ],
+        "logLevel": "NONE",
+        "variableName": "my",
+        "scriptPermissions": [
+          "superadmin"
+        ],
+        "executionDelaySeconds": 0,
+        "logCount": 5,
+        "logSize": 1.0,
+        "script": "if (general.value == true && interruptor.value == true && contactor.value == true){\n    alarma_tension.set(false)\n    alarma_individual.set(false)\n    return true\n}else if(general.value == true && interruptor.value == false && contactor.value == true){\n    alarma_tension.set(false)\n    alarma_individual.set(true)\n    return false\n}else if(general.value == true && interruptor.value == false && contactor.value == false){\n    alarma_tension.set(false)\n    alarma_individual.set(false)\n    return false\n}else if(general.value == false){\n    alarma_individual.set(false)\n    alarma_tension.set(true)\n}\nelse{\n    return false\n}\n",
+        "settable": false,
+        "updateCronPattern": ""
+      },
+      "eventDetectors": [],
+      "plotType": "STEP",
+      "rollup": "NONE",
+      "unit": "",
+      "simplifyType": "NONE",
+      "chartColour": "",
+      "chartRenderer": {
+        "type": "TABLE",
+        "limit": 10
+      },
+      "dataSourceXid": "DS_ILUMINACION_SUR_LT4",
+      "defaultCacheSize": 1,
+      "deviceName": "{circuito_virtual_izqda_1}",
+      "discardExtremeValues": false,
+      "discardHighLimit": 1.7976931348623157E308,
+      "discardLowLimit": -1.7976931348623157E308,
+      "intervalLoggingPeriod": 1,
+      "intervalLoggingSampleWindowSize": 0,
+      "overrideIntervalLoggingSamples": false,
+      "preventSetExtremeValues": false,
+      "purgeOverride": false,
+      "purgePeriod": 1,
+      "readPermission": "",
+      "setExtremeHighLimit": 1.7976931348623157E308,
+      "setExtremeLowLimit": -1.7976931348623157E308,
+      "setPermission": "",
+      "tags": {},
+      "textRenderer": {
+        "type": "BINARY",
+        "oneColour": "#00ff00",
+        "oneLabel": "one",
+        "zeroColour": "#0000ff",
+        "zeroLabel": "zero"
+      },
+      "tolerance": 0.0
+    },
+    {
+      "xid": "DP_{circuito}_alarm",
+      "name": "alarm",
+      "enabled": true,
+      "loggingType": "ON_CHANGE",
+      "intervalLoggingPeriodType": "MINUTES",
+      "intervalLoggingType": "INSTANT",
+      "purgeType": "YEARS",
+      "pointLocator": {
+        "dataType": "BINARY",
+        "updateEvent": "NONE",
+        "contextUpdateEvent": "CONTEXT_CHANGE",
+        "context": [
+          {
+            "varName": "alarm1",
+            "dataPointXid": "DP_{circuito_virtual_izqda_1}_alarm",
+            "updateContext": true
+          }
+        ],
+        "logLevel": "NONE",
+        "variableName": "my",
+        "scriptPermissions": [
+          "superadmin"
+        ],
+        "executionDelaySeconds": 0,
+        "logCount": 5,
+        "logSize": 1.0,
+        "script": "if(alarm1.value == true){\n    return true\n}else{\n    return false\n}",
+        "settable": false,
+        "updateCronPattern": "5 * * * * ?"
+      },
+      "eventDetectors": [],
+      "plotType": "STEP",
+      "rollup": "NONE",
+      "unit": "",
+      "simplifyType": "NONE",
+      "chartColour": "",
+      "chartRenderer": {
+        "type": "TABLE",
+        "limit": 10
+      },
+      "dataSourceXid": "DS_ILUMINACION_SUR_LT4",
+      "defaultCacheSize": 1,
+      "deviceName": "{circuito}",
+      "discardExtremeValues": false,
+      "discardHighLimit": 1.7976931348623157E308,
+      "discardLowLimit": -1.7976931348623157E308,
+      "intervalLoggingPeriod": 1,
+      "intervalLoggingSampleWindowSize": 0,
+      "overrideIntervalLoggingSamples": false,
+      "preventSetExtremeValues": false,
+      "purgeOverride": false,
+      "purgePeriod": 1,
+      "readPermission": "",
+      "setExtremeHighLimit": 1.7976931348623157E308,
+      "setExtremeLowLimit": -1.7976931348623157E308,
+      "setPermission": "",
+      "tags": {},
+      "textRenderer": {
+        "type": "BINARY",
+        "oneColour": "#00ff00",
+        "oneLabel": "one",
+        "zeroColour": "#0000ff",
+        "zeroLabel": "zero"
+      },
+      "tolerance": 0.0
+    },
+    {
+      "xid": "DP_{circuito}_without_voltage",
+      "name": "without_voltage",
+      "enabled": true,
+      "loggingType": "ON_CHANGE",
+      "intervalLoggingPeriodType": "MINUTES",
+      "intervalLoggingType": "INSTANT",
+      "purgeType": "YEARS",
+      "pointLocator": {
+        "dataType": "BINARY",
+        "updateEvent": "NONE",
+        "contextUpdateEvent": "CONTEXT_CHANGE",
+        "context": [
+          {
+            "varName": "general",
+            "dataPointXid": "DP_{interruptor_tension}_state",
+            "updateContext": true
+          }
+        ],
+        "logLevel": "NONE",
+        "variableName": "my",
+        "scriptPermissions": [
+          "superadmin"
+        ],
+        "executionDelaySeconds": 0,
+        "logCount": 5,
+        "logSize": 1.0,
+        "script": "if(general.value == false){\n    return true\n}else{\n    return false\n}",
+        "settable": false,
+        "updateCronPattern": "5 * * * * ?"
+      },
+      "eventDetectors": [],
+      "plotType": "STEP",
+      "rollup": "NONE",
+      "unit": "",
+      "simplifyType": "NONE",
+      "chartColour": "",
+      "chartRenderer": {
+        "type": "TABLE",
+        "limit": 10
+      },
+      "dataSourceXid": "DS_ILUMINACION_SUR_LT4",
+      "defaultCacheSize": 1,
+      "deviceName": "{circuito}",
+      "discardExtremeValues": false,
+      "discardHighLimit": 1.7976931348623157E308,
+      "discardLowLimit": -1.7976931348623157E308,
+      "intervalLoggingPeriod": 15,
+      "intervalLoggingSampleWindowSize": 0,
+      "overrideIntervalLoggingSamples": false,
+      "preventSetExtremeValues": false,
+      "purgeOverride": false,
+      "purgePeriod": 1,
+      "readPermission": "",
+      "setExtremeHighLimit": 1.7976931348623157E308,
+      "setExtremeLowLimit": -1.7976931348623157E308,
+      "setPermission": "",
+      "tags": {},
+      "textRenderer": {
+        "type": "BINARY",
+        "oneColour": "#00ff00",
+        "oneLabel": "one",
+        "zeroColour": "#0000ff",
+        "zeroLabel": "zero"
+      },
+      "tolerance": 0.0
+    },
+    {
+      "xid": "DP_{circuito_virtual_izqda_1}_status",
+      "name": "status",
+      "enabled": true,
+      "loggingType": "NONE",
+      "intervalLoggingPeriodType": "MINUTES",
+      "intervalLoggingType": "AVERAGE",
+      "purgeType": "YEARS",
+      "pointLocator": {
+        "dataType": "NUMERIC",
+        "changeType": {
+          "type": "NO_CHANGE",
+          "startValue": "1"
+        },
+        "settable": true
+      },
+      "eventDetectors": [],
+      "plotType": "STEP",
+      "rollup": "NONE",
+      "unit": "",
+      "simplifyType": "NONE",
+      "chartColour": "",
+      "chartRenderer": {
+        "type": "IMAGE",
+        "timePeriodType": "DAYS",
+        "numberOfPeriods": 1
+      },
+      "dataSourceXid": "DS_status",
+      "defaultCacheSize": 1,
+      "deviceName": "{circuito_virtual_izqda_1}",
+      "discardExtremeValues": false,
+      "discardHighLimit": 1.7976931348623157E308,
+      "discardLowLimit": -1.7976931348623157E308,
+      "intervalLoggingPeriod": 1,
+      "intervalLoggingSampleWindowSize": 0,
+      "overrideIntervalLoggingSamples": false,
+      "preventSetExtremeValues": false,
+      "purgeOverride": false,
+      "purgePeriod": 1,
+      "readPermission": "",
+      "setExtremeHighLimit": 1.7976931348623157E308,
+      "setExtremeLowLimit": -1.7976931348623157E308,
+      "setPermission": "",
+      "tags": {},
+      "textRenderer": {
+        "type": "ANALOG",
+        "useUnitAsSuffix": false,
+        "suffix": "",
+        "format": "0.00"
+      },
+      "tolerance": 0.0
+    },
+    {
+      "xid": "DP_84.ILUMINACION_SUR_LT_4_NOCTURNO_status_calcular",
+      "name": "status_calcular",
+      "enabled": true,
+      "loggingType": "INTERVAL",
+      "intervalLoggingPeriodType": "MINUTES",
+      "intervalLoggingType": "AVERAGE",
+      "purgeType": "YEARS",
+      "pointLocator": {
+        "dataType": "NUMERIC",
+        "updateEvent": "NONE",
+        "contextUpdateEvent": "CONTEXT_CHANGE",
+        "context": [
+          {
+            "varName": "contactor",
+            "dataPointXid": "DP_{circuito}_status",
+            "updateContext": true
+          },
+          {
+            "varName": "contactor_virtual_1",
+            "dataPointXid": "DP_{circuito_virtual_izqda_1}_status",
+            "updateContext": false
+          }
+        ],
+        "logLevel": "NONE",
+        "variableName": "my",
+        "scriptPermissions": [
+          "superadmin"
+        ],
+        "executionDelaySeconds": 0,
+        "logCount": 5,
+        "logSize": 1.0,
+        "script": "if(contactor.value == 1.0){\n    contactor_virtual_1.set(1.0)\n}else{\n    contactor_virtual_1.set(0.0)\n}\n\nreturn 1",
+        "settable": false,
+        "updateCronPattern": ""
+      },
+      "eventDetectors": [],
+      "plotType": "SPLINE",
+      "rollup": "NONE",
+      "unit": "",
+      "simplifyType": "NONE",
+      "chartColour": "",
+      "chartRenderer": {
+        "type": "IMAGE",
+        "timePeriodType": "DAYS",
+        "numberOfPeriods": 1
+      },
+      "dataSourceXid": "DS_status_calcular",
+      "defaultCacheSize": 1,
+      "deviceName": "84.ILUMINACION_SUR_LT_4_NOCTURNO",
+      "discardExtremeValues": false,
+      "discardHighLimit": 1.7976931348623157E308,
+      "discardLowLimit": -1.7976931348623157E308,
+      "intervalLoggingPeriod": 1,
+      "intervalLoggingSampleWindowSize": 0,
+      "overrideIntervalLoggingSamples": false,
+      "preventSetExtremeValues": false,
+      "purgeOverride": false,
+      "purgePeriod": 1,
+      "readPermission": "",
+      "setExtremeHighLimit": 1.7976931348623157E308,
+      "setExtremeLowLimit": -1.7976931348623157E308,
+      "setPermission": "",
+      "tags": {},
+      "textRenderer": {
+        "type": "ANALOG",
+        "useUnitAsSuffix": false,
+        "suffix": "",
+        "format": "0.00"
+      },
+      "tolerance": 0.0
+    },
+    {
+      "xid":"DP_{circuito}_set_manual",
+      "name":"set_manual",
+      "enabled":true,
+      "loggingType":"INTERVAL",
+      "intervalLoggingPeriodType":"MINUTES",
+      "intervalLoggingType":"AVERAGE",
+      "purgeType":"YEARS",
+      "pointLocator":{
+        "dataType":"NUMERIC",
+        "updateEvent":"NONE",
+        "contextUpdateEvent":"CONTEXT_CHANGE",
+        "context":[
+          {
+            "varName":"contactor_virtual_1",
+            "dataPointXid":"DP_{circuito_virtual_izqda_1}_manual",
+            "updateContext":false
+          },
+          {
+            "varName":"alarma_contactor",
+            "dataPointXid":"DP_{circuito}_manual",
+            "updateContext":true
+          }
+        ],
+        "logLevel":"NONE",
+        "variableName":"my",
+        "scriptPermissions":[
+          "superadmin"
+        ],
+        "executionDelaySeconds":0,
+        "logCount":5,
+        "logSize":1.0,
+        "script":"if(alarma_contactor.value == true ){\n    contactor_virtual_1.set(true)\n}else{\n   contactor_virtual_1.set(false)\n}\n\nreturn 1",
+        "settable":false,
+        "updateCronPattern":"5 * * * * ?"
+      },
+      "eventDetectors":[
+      ],
+      "plotType":"SPLINE",
+      "rollup":"NONE",
+      "unit":"",
+      "simplifyType":"NONE",
+      "chartColour":"",
+      "chartRenderer":{
+        "type":"IMAGE",
+        "timePeriodType":"DAYS",
+        "numberOfPeriods":1
+      },
+      "dataSourceXid":"DS_ILUMINACION_SUR_LT4",
+      "defaultCacheSize":1,
+      "deviceName":"{circuito}",
+      "discardExtremeValues":false,
+      "discardHighLimit":1.7976931348623157E308,
+      "discardLowLimit":-1.7976931348623157E308,
+      "intervalLoggingPeriod":1,
+      "intervalLoggingSampleWindowSize":0,
+      "overrideIntervalLoggingSamples":false,
+      "preventSetExtremeValues":false,
+      "purgeOverride":false,
+      "purgePeriod":1,
+      "readPermission":"",
+      "setExtremeHighLimit":1.7976931348623157E308,
+      "setExtremeLowLimit":-1.7976931348623157E308,
+      "setPermission":"",
+      "tags":{
+      },
+      "textRenderer":{
+        "type":"ANALOG",
+        "useUnitAsSuffix":false,
+        "suffix":"",
+        "format":"0.00"
+      },
+      "tolerance":0.0
+    }
+  ],
+  "publishers": [
+    {
+      "publishAttributeChanges": true,
+      "cacheWarningSize": 100,
+      "dateFormat": "DATE_FORMAT_UTC",
+      "useJSON": true,
+      "snapshotSendPeriods": 5,
+      "raiseResultWarning": true,
+      "staticParameters": [],
+      "sendSnapshot": false,
+      "type": "HTTP_SENDER",
+      "usePost": true,
+      "enabled": true,
+      "url": "{url_publisher}",
+      "points": [
+        {
+          "dataPointId": "DP_{circuito_virtual_izqda_1}_status",
+          "parameterName": "status",
+          "includeTimestamp": false
+        },
+        {
+          "dataPointId": "DP_{circuito_virtual_izqda_1}_state",
+          "parameterName": "state",
+          "includeTimestamp": false
+        },
+        {
+          "dataPointId": "DP_{circuito_virtual_izqda_1}_alarm",
+          "parameterName": "alarm",
+          "includeTimestamp": false
+        },
+        {
+          "dataPointId": "DP_{circuito_virtual_izqda_1}_without_voltage",
+          "parameterName": "without_voltage",
+          "includeTimestamp": false
+        },
+        {
+          "dataPointId": "DP_{circuito_virtual_izqda_1}_manual",
+          "parameterName": "manual",
+          "includeTimestamp": false
+        }
+      ],
+      "xid": "PUB_{circuito_virtual_izqda_1}",
+      "publishType": "ALL",
+      "alarmLevels": {
+        "POINT_DISABLED_EVENT": "DO_NOT_LOG",
+        "RESULT_WARNINGS_EVENT": "DO_NOT_LOG",
+        "SEND_EXCEPTION_EVENT": "DO_NOT_LOG",
+        "QUEUE_SIZE_WARNING_EVENT": "DO_NOT_LOG"
+      },
+      "staticHeaders": [
+        {
+          "value": "{circuito_virtual_izqda_1}",
+          "key": "session-uid"
+        }
+      ],
+      "name": "{circuito_virtual_izqda_1}",
+      "snapshotSendPeriodType": "MINUTES",
+      "cacheDiscardSize": 1000
+    },
+    {
+      "publishAttributeChanges": true,
+      "cacheWarningSize": 100,
+      "dateFormat": "DATE_FORMAT_UTC",
+      "useJSON": true,
+      "snapshotSendPeriods": 5,
+      "raiseResultWarning": true,
+      "staticParameters": [],
+      "sendSnapshot": false,
+      "type": "HTTP_SENDER",
+      "usePost": true,
+      "enabled": true,
+      "url": "{url_publisher}",
+      "points": [
+        {
+          "dataPointId": "DP_{circuito}_status",
+          "parameterName": "status",
+          "includeTimestamp": false
+        },
+        {
+          "dataPointId": "DP_{circuito}_state",
+          "parameterName": "state",
+          "includeTimestamp": false
+        },
+        {
+          "dataPointId": "DP_{circuito}_alarm",
+          "parameterName": "alarm",
+          "includeTimestamp": false
+        },
+        {
+          "dataPointId": "DP_{circuito}_without_voltage",
+          "parameterName": "without_voltage",
+          "includeTimestamp": false
+        },
+        {
+          "dataPointId": "DP_{circuito}_manual",
+          "parameterName": "manual",
+          "includeTimestamp": false
+        }
+      ],
+      "xid": "PUB_{circuito}",
+      "publishType": "ALL",
+      "alarmLevels": {
+        "POINT_DISABLED_EVENT": "URGENT",
+        "RESULT_WARNINGS_EVENT": "INFORMATION",
+        "SEND_EXCEPTION_EVENT": "URGENT",
+        "QUEUE_SIZE_WARNING_EVENT": "URGENT"
+      },
+      "staticHeaders": [
+        {
+          "value": "{circuito}",
+          "key": "session-uid"
+        }
+      ],
+      "name": "{circuito}",
+      "snapshotSendPeriodType": "MINUTES",
+      "cacheDiscardSize": 1000
+    }
+  ]
+}
