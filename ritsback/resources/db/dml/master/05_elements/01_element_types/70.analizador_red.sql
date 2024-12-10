@@ -75,7 +75,10 @@ INSERT INTO master.element_type_params (element_type_id, param_type_id, element_
 (70,2,59,18,3, NULL, 'frecuency', 'frecuency', 'LBL_ELEMENT_TYPE_PARAM_FRECUENCY', 'LBL_ELEMENT_TYPE_PARAM_FRECUENCY_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (70,2,60,19,1, NULL, 'active_energy_delivered', 'active_energy_delivered', 'LBL_ELEMENT_TYPE_PARAM_ACTIVE_ENERGY_DELIVERED', 'LBL_ELEMENT_TYPE_PARAM_ACTIVE_ENERGY_DELIVERED_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (70,2,61,20,1, NULL, 'reactive_energy_delivered', 'reactive_energy_delivered', 'LBL_ELEMENT_TYPE_PARAM_REACTIVE_ENERGY_DELIVERED', 'LBL_ELEMENT_TYPE_PARAM_REACTIVE_ENERGY_DELIVERED_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(70,2,62,21,1, NULL, 'apparent_energy_delivered', 'apparent_energy_delivered', 'LBL_ELEMENT_TYPE_PARAM_APPARENT_ENERGY_DELIVERED', 'LBL_ELEMENT_TYPE_PARAM_APPARENT_ENERGY_DELIVERED_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(70,2,62,21,1, NULL, 'apparent_energy_delivered', 'apparent_energy_delivered', 'LBL_ELEMENT_TYPE_PARAM_APPARENT_ENERGY_DELIVERED', 'LBL_ELEMENT_TYPE_PARAM_APPARENT_ENERGY_DELIVERED_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(70,2,63,33,3,NULL, 'pulse_counters', 'pulse_counters', 'LBL_ELEMENT_TYPE_PARAM_PULSE_COUNTERS' , 'LBL_ELEMENT_TYPE_PARAM_PULSE_COUNTERS_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(70,2,64,39,3,NULL, 'pulse_meter', 'pulse_meter', 'LBL_ELEMENT_TYPE_PARAM_PULSE_METER' , 'LBL_ELEMENT_TYPE_PARAM_PULSE_METER_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 
 -- 
@@ -84,7 +87,8 @@ INSERT INTO master.element_type_params (element_type_id, param_type_id, element_
 INSERT INTO master.element_subtypes(element_subtype_id, element_type_id, alias, description,label_alias, label_description, enabled, visible, created_at, updated_at)
 VALUES
 (1, 70, 'Network analyzer', 'Network analyzer', 'LBL_ELEMENT_SUBTYPE_NETWORK_ANALYZER', 'LBL_ELEMENT_SUBTYPE_NETWORK_ANALYZER_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(2, 70, 'Network analyzer modbus', 'Network analyzer modbus', 'LBL_ELEMENT_SUBTYPE_NETWORK_ANALYZER_MODBUS', 'LBL_ELEMENT_SUBTYPE_NETWORK_ANALYZER_MODBUS_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(2, 70, 'Network analyzer modbus', 'Network analyzer modbus', 'LBL_ELEMENT_SUBTYPE_NETWORK_ANALYZER_MODBUS', 'LBL_ELEMENT_SUBTYPE_NETWORK_ANALYZER_MODBUS_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(3, 70, 'Network analyzer jaen', 'Network analyzer jaen', 'LBL_ELEMENT_SUBTYPE_NETWORK_ANALYZER', 'LBL_ELEMENT_SUBTYPE_NETWORK_ANALYZER_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 -- 
 -- Table: master.element_subtype_active_params
@@ -155,7 +159,19 @@ INSERT INTO master.element_subtype_active_params
 (2, 70, 2, 59, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (2, 70, 2, 60, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (2, 70, 2, 61, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(2, 70, 2, 62, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(2, 70, 2, 62, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+--network analyzer jaen
+(3, 70, 2, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(3, 70, 2, 2, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(3, 70, 2, 3, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(3, 70, 2, 6, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(3, 70, 2, 7, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(3, 70, 2, 8, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(3, 70, 2, 30, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(3, 70, 2, 63, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(3, 70, 2, 64, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
 
 -- 
 -- Table: master.element_type_states

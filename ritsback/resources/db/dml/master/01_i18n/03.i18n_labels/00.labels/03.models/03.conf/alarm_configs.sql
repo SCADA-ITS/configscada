@@ -302,6 +302,7 @@ INSERT INTO master.i18n_labels (locale_code, module_id, "label", "translation", 
 --ElementType:57 = Interruptor
 ('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_MAGNETOTERMICO_NO_CONNECTION', 'Interruptor no comunica', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_DIMMER_OPEN', 'Interruptor abierto', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_DIMMER_CLOSED', 'Interruptor cerrado', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --ElementType:58 = Pulsador
 ('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_PULSADOR_FAIL', 'Pulsador de incendio fallo funcionamiento', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -436,6 +437,9 @@ INSERT INTO master.i18n_labels (locale_code, module_id, "label", "translation", 
 --ElementType:84 = Contactor electrico
 ('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_CIRCUIT_DISCONNECTED', 'Contactor eléctrico no comunica', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_PROT_AUT', 'Protección de circuito eléctrico activada', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_FALLO_HASTIAL', 'Fallo hastial', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_CIRCUITO_SIN_TENSION', 'Circuito sin tensión', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_CIRCUITO_MANUAL', 'Circuito manual', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --ElementType:85 = DALI
 ('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_DALI_DISCONNECTED', 'Bus DALI no comunica', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -769,6 +773,7 @@ INSERT INTO master.i18n_labels (locale_code, module_id, "label", "translation", 
 --ElementType:57 = Interruptor
 ('en_GB', 1, 'LBL_ALARM_CONFIGS_ALARM_MAGNETOTERMICO_NO_CONNECTION', 'Switch without communication', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_ALARM_CONFIGS_ALARM_DIMMER_OPEN', 'Open switch', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_ALARM_CONFIGS_ALARM_DIMMER_CLOSED', 'Switch closed', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --ElementType:58 = Pulsador
 ('en_GB', 1, 'LBL_ALARM_CONFIGS_ALARM_PULSADOR_FAIL', 'Fire alarm switch failure', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -903,6 +908,9 @@ INSERT INTO master.i18n_labels (locale_code, module_id, "label", "translation", 
 --ElementType:84 = Contactor electrico
 ('en_GB', 1, 'LBL_ALARM_CONFIGS_ALARM_CIRCUIT_DISCONNECTED', 'Circuit without communication', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_ALARM_CONFIGS_ALARM_PROT_AUT', 'Circuit protection enable', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_ALARM_CONFIGS_ALARM_FALLO_HASTIAL', 'Gable failure', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_ALARM_CONFIGS_ALARM_CIRCUITO_SIN_TENSION', 'Circuit without voltage', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_ALARM_CONFIGS_ALARM_CIRCUITO_MANUAL', 'Manual circuit', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --ElementType:85 = DALI
 ('en_GB', 1, 'LBL_ALARM_CONFIGS_ALARM_DALI_DISCONNECTED', 'Bus DALI without communication', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -1236,6 +1244,7 @@ INSERT INTO master.i18n_labels (locale_code, module_id, "label", "translation", 
 --ElementType:57 = Interruptor
 ('es_CL', 1, 'LBL_ALARM_CONFIGS_ALARM_MAGNETOTERMICO_NO_CONNECTION', 'Interruptor no comunica', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_ALARM_CONFIGS_ALARM_DIMMER_OPEN', 'Interruptor abierto', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_ALARM_CONFIGS_ALARM_DIMMER_CLOSED', 'Interruptor cerrado', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --ElementType:58 = Pulsador
 ('es_CL', 1, 'LBL_ALARM_CONFIGS_ALARM_PULSADOR_FAIL', 'Pulsador de incendio fallo funcionamiento', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -1370,6 +1379,9 @@ INSERT INTO master.i18n_labels (locale_code, module_id, "label", "translation", 
 --ElementType:84 = Contactor electrico
 ('es_CL', 1, 'LBL_ALARM_CONFIGS_ALARM_CIRCUIT_DISCONNECTED', 'Contactor eléctrico no comunica', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_ALARM_CONFIGS_ALARM_PROT_AUT', 'Protección de circuito eléctrico activada', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_ALARM_CONFIGS_ALARM_FALLO_HASTIAL', 'Fallo hastial', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_ALARM_CONFIGS_ALARM_CIRCUITO_SIN_TENSION', 'Circuito sin tensión', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_ALARM_CONFIGS_ALARM_CIRCUITO_MANUAL', 'Circuito manual', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --ElementType:85 = DALI
 ('es_CL', 1, 'LBL_ALARM_CONFIGS_ALARM_DALI_DISCONNECTED', 'Bus DALI no comunica', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),

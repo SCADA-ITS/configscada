@@ -1,13 +1,13 @@
 INSERT INTO conf.elements (element_type_id, element_subtype_id, element_id, location_id, keep_values_on_disconnected, inherit_state_id, alias, description, on_change_alarm, on_change_state, on_change_measure, on_schedule, enabled, visible, alert, alarm_count, created_at, updated_at) VALUES
-(70, NULL, 1, 0010070, NULL, NULL, 'AR-1-DP2', 'AR-1-DP2', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(70, NULL, 2, 0020070, NULL, NULL, 'AR-2-DP2', 'AR-2-DP2', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(70, NULL, 3, 0030070, NULL, NULL, 'AR-1-DP1', 'AR-1-DP1', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(70, NULL, 4, 0040070, NULL, NULL, 'AR-2-DP1', 'AR-2-DP1', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(70, NULL, 5, 0050070, NULL, NULL, 'AR-3-DP1', 'AR-3-DP1', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(70, NULL, 6, 0060070, NULL, NULL, 'AR-1-CA', 'AR-1-CA', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(70, NULL, 7, 0070070, NULL, NULL, 'AR-2-CA', 'AR-2-CA', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(70, NULL, 8, 0080070, NULL, NULL, 'AR-1-CZ', 'AR-1-CZ', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(70, NULL, 9, 0090070, NULL, NULL, 'AR-2-CZ', 'AR-2-CZ', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(70, 3, 1, 0010070, NULL, NULL, 'AR-1-DP2', 'AR-1-DP2', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(70, 3, 2, 0020070, NULL, NULL, 'AR-2-DP2', 'AR-2-DP2', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(70, 3, 3, 0030070, NULL, NULL, 'AR-1-DP1', 'AR-1-DP1', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(70, 3, 4, 0040070, NULL, NULL, 'AR-2-DP1', 'AR-2-DP1', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(70, 3, 5, 0050070, NULL, NULL, 'AR-3-DP1', 'AR-3-DP1', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(70, 3, 6, 0060070, NULL, NULL, 'AR-1-CA', 'AR-1-CA', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(70, 3, 7, 0070070, NULL, NULL, 'AR-2-CA', 'AR-2-CA', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(70, 3, 8, 0080070, NULL, NULL, 'AR-1-CZ', 'AR-1-CZ', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(70, 3, 9, 0090070, NULL, NULL, 'AR-2-CZ', 'AR-2-CZ', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_type_id, element_id, element_value_state_id, value, enabled, visible, created_at, updated_at) VALUES
 (70, 1, 1, 1, NULL, 'DIRIS', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 

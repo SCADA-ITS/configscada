@@ -36,21 +36,21 @@
 	  <p:field>
 			<p:source>tension_fase_a</p:source>
 			<p:input>
-				<p:element_type_param_id>9</p:element_type_param_id>
+				<p:element_type_param_id>6</p:element_type_param_id>
 				<p:param_type_id>2</p:param_type_id>
 			</p:input>
 		</p:field>
 	 	<p:field>
 			<p:source>tension_fase_b</p:source>
 			<p:input>
-				<p:element_type_param_id>10</p:element_type_param_id>
+				<p:element_type_param_id>8</p:element_type_param_id>
 				<p:param_type_id>2</p:param_type_id>
 			</p:input>
 		</p:field>
 	 	<p:field>
 			<p:source>tension_fase_c</p:source>
 			<p:input>
-				<p:element_type_param_id>11</p:element_type_param_id>
+				<p:element_type_param_id>7</p:element_type_param_id>
 				<p:param_type_id>2</p:param_type_id>
 			</p:input>
 		</p:field>
@@ -58,7 +58,7 @@
 	 	<p:field>
 			<p:source>frecuencia</p:source>
 			<p:input>
-				<p:element_type_param_id>21</p:element_type_param_id>
+				<p:element_type_param_id>30</p:element_type_param_id>
 				<p:param_type_id>2</p:param_type_id>
 			</p:input>
 		</p:field>
@@ -66,14 +66,14 @@
   	<p:field>
 			<p:source>pulse_counters</p:source>
 			<p:input>
-				<p:element_type_param_id>42</p:element_type_param_id>
+				<p:element_type_param_id>63</p:element_type_param_id>
 				<p:param_type_id>2</p:param_type_id>
 			</p:input>
 		</p:field>
 	 	<p:field>
 			<p:source>pulse_meter</p:source>
 			<p:input>
-				<p:element_type_param_id>43</p:element_type_param_id>
+				<p:element_type_param_id>64</p:element_type_param_id>
 				<p:param_type_id>2</p:param_type_id>
 			</p:input>
 		</p:field>
