@@ -1,35 +1,35 @@
+----
+---- Table: master.element_type_params
+----
+--INSERT INTO master.element_type_params
+--(element_type_id, param_type_id, element_type_param_id, element_type_param_unit_id, data_type_id, default_value, alias, description, label_alias, label_description, enabled, visible, editable, created_at, updated_at) VALUES
+----UNE PARAMS 
+--(1, 1, 4001, NULL, 2, NULL, 'socket une host', 'socket une host', 'LBL_ELEMENT_TYPE_PARAM_SOCKET_UNE_HOST' , 'LBL_ELEMENT_TYPE_PARAM_SOCKET_UNE_HOST_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--(1, 1, 4002, NULL, 2, NULL, 'socket une port', 'socket une port', 'LBL_ELEMENT_TYPE_PARAM_SOCKET_UNE_PORT' , 'LBL_ELEMENT_TYPE_PARAM_SOCKET_UNE_PORT_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--(1, 1, 4003, NULL, 6, NULL, 'socket une enq frame', 'socket une enq frame', 'LBL_ELEMENT_TYPE_PARAM_SOCKET_UNE_ENQ_FRAME' , 'LBL_ELEMENT_TYPE_PARAM_SOCKET_UNE_ENQ_FRAME_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--(1, 1, 4004, NULL, 6, NULL, 'socket une ack frame', 'socket une ack frame', 'LBL_ELEMENT_TYPE_PARAM_SOCKET_UNE_ACK_FRAME' , 'LBL_ELEMENT_TYPE_PARAM_SOCKET_UNE_ACK_FRAME_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--(1, 1, 4005, NULL, 6, NULL, 'socket une ack address', 'address', 'LBL_ELEMENT_TYPE_PARAM_SOCKET_UNE_ADDRESS' , 'LBL_ELEMENT_TYPE_PARAM_SOCKET_UNE_ADDRESS_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 --
--- Table: master.element_type_params
 --
-INSERT INTO master.element_type_params
-(element_type_id, param_type_id, element_type_param_id, element_type_param_unit_id, data_type_id, default_value, alias, description, label_alias, label_description, enabled, visible, editable, created_at, updated_at) VALUES
---UNE PARAMS 
-(1, 1, 4001, NULL, 2, NULL, 'socket une host', 'socket une host', 'LBL_ELEMENT_TYPE_PARAM_SOCKET_UNE_HOST' , 'LBL_ELEMENT_TYPE_PARAM_SOCKET_UNE_HOST_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(1, 1, 4002, NULL, 2, NULL, 'socket une port', 'socket une port', 'LBL_ELEMENT_TYPE_PARAM_SOCKET_UNE_PORT' , 'LBL_ELEMENT_TYPE_PARAM_SOCKET_UNE_PORT_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(1, 1, 4003, NULL, 6, NULL, 'socket une enq frame', 'socket une enq frame', 'LBL_ELEMENT_TYPE_PARAM_SOCKET_UNE_ENQ_FRAME' , 'LBL_ELEMENT_TYPE_PARAM_SOCKET_UNE_ENQ_FRAME_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(1, 1, 4004, NULL, 6, NULL, 'socket une ack frame', 'socket une ack frame', 'LBL_ELEMENT_TYPE_PARAM_SOCKET_UNE_ACK_FRAME' , 'LBL_ELEMENT_TYPE_PARAM_SOCKET_UNE_ACK_FRAME_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(1, 1, 4005, NULL, 6, NULL, 'socket une ack address', 'address', 'LBL_ELEMENT_TYPE_PARAM_SOCKET_UNE_ADDRESS' , 'LBL_ELEMENT_TYPE_PARAM_SOCKET_UNE_ADDRESS_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-
-
--- 
--- Table: master.element_subtypes
+---- 
+---- Table: master.element_subtypes
+----
+--INSERT INTO master.element_subtypes
+--(element_subtype_id, element_type_id, alias, description,label_alias, label_description, enabled, visible, created_at, updated_at)VALUES
+--(5, 1, 'Meteo socket une', 'Meteo socket une', 'LBL_ELEMENT_SUBTYPE_METEO_SOCKET_UNE', 'LBL_ELEMENT_SUBTYPE_METEO_OCKET_UNE_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 --
-INSERT INTO master.element_subtypes
-(element_subtype_id, element_type_id, alias, description,label_alias, label_description, enabled, visible, created_at, updated_at)VALUES
-(5, 1, 'Meteo socket une', 'Meteo socket une', 'LBL_ELEMENT_SUBTYPE_METEO_SOCKET_UNE', 'LBL_ELEMENT_SUBTYPE_METEO_OCKET_UNE_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-
--- 
--- Table: master.element_subtype_active_params 
+---- 
+---- Table: master.element_subtype_active_params 
+----
 --
-
-INSERT INTO master.element_subtype_active_params
-(element_subtype_id, element_type_id, param_type_id, element_type_param_id, enabled, visible, created_at, updated_at)VALUES
-
-(5, 1, 1, 4001, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(5, 1, 1, 4002, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(5, 1, 1, 4003, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(5, 1, 1, 4004, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(5, 1, 1, 4005, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+--INSERT INTO master.element_subtype_active_params
+--(element_subtype_id, element_type_id, param_type_id, element_type_param_id, enabled, visible, created_at, updated_at)VALUES
+--
+--(5, 1, 1, 4001, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--(5, 1, 1, 4002, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--(5, 1, 1, 4003, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--(5, 1, 1, 4004, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--(5, 1, 1, 4005, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 
 -- 

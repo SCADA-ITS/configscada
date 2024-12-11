@@ -4,13 +4,19 @@
 --
 INSERT INTO master.element_subtypes
 (element_subtype_id, element_type_id, alias, description,label_alias, label_description, enabled, visible, created_at, updated_at)VALUES
-(5, 1, 'Meteo DGT', 'Meteo DGT', 'LBL_ELEMENT_SUBTYPE_METEO_DGT', 'LBL_ELEMENT_SUBTYPE_METEO_DGT_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(5, 1, 'Meteo socket une', 'Meteo socket une', 'LBL_ELEMENT_SUBTYPE_METEO_SOCKET_UNE', 'LBL_ELEMENT_SUBTYPE_METEO_OCKET_UNE_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 -- 
 -- Table: master.element_subtype_active_params 
 --
 INSERT INTO master.element_subtype_active_params
 (element_subtype_id, element_type_id, param_type_id, element_type_param_id, enabled, visible, created_at, updated_at)VALUES
+(5, 1, 1, 4001, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(5, 1, 1, 4002, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(5, 1, 1, 4003, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(5, 1, 1, 4004, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(5, 1, 1, 4005, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
 (5, 1, 2, 4, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (5, 1, 2, 10, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (5, 1, 2, 17, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
