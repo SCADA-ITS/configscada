@@ -2,8 +2,8 @@
 -- Table: master.element_types
 --
 INSERT INTO master.element_types
-(element_type_id, alias, description,label_alias, label_description, initial_element_type_state_id, connected_element_type_state_id, disconnected_element_type_state_id, enabled, visible, created_at, updated_at) VALUES
-(13, 'SEM', 'SEM', 'LBL_ELEMENT_TYPE_SEM', 'LBL_ELEMENT_TYPE_SEM_DESC', 0, 1, 2, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(element_type_id, element_group_id, alias, description,label_alias, label_description, initial_element_type_state_id, connected_element_type_state_id, disconnected_element_type_state_id, enabled, visible, created_at, updated_at) VALUES
+(13, NULL, 'SEM', 'SEM', 'LBL_ELEMENT_TYPE_SEM', 'LBL_ELEMENT_TYPE_SEM_DESC', 0, 1, 2, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 --
 -- Table: master.element_type_params

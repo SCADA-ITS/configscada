@@ -23,6 +23,8 @@ INSERT INTO master.element_type_params
 (2000, 2, 7, null , 2, 'ElementTypeState:2001:1', 'VentilationElementTypeStateId', 'current ventilation state', 'LBL_ELEMENT_TYPE_PARAM_VENTILATION_STATE', 'LBL_ELEMENT_TYPE_PARAM_VENTILATION_STATE_DESC', true, true, false, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (2000, 2, 8, null , 2, 'ElementTypeState:2002:1', 'IlluminationElementTypeStateId', 'current illumination state', 'LBL_ELEMENT_TYPE_PARAM_ILLUMINATION_STATE', 'LBL_ELEMENT_TYPE_PARAM_ILLUMINATION_STATE_DESC', true, true, false, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
+(2000, 2, 9, null , 3, NULL, 'averageWindSpeedSensors', 'Average wind speed sensors', 'LBL_ELEMENT_TYPE_PARAM_AVERAGE_WIND_SPEED_SENSORS', 'LBL_ELEMENT_TYPE_PARAM_AVERAGE_WIND_SPEED_SENSORS_DESC', true, true, false, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
 (2000, 1, 1003, NULL, 2, ' ', 'MANGO SESSION_UID', 'MANGO SESSION_UID', 'LBL_ELEMENT_TYPE_PARAM_MANGO_SESSION_UID' , 'LBL_ELEMENT_TYPE_PARAM_MANGO_SESSION_UID_DESC', true, true, false, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO master.element_type_states(element_type_id, element_type_state_id, alias, description, label_alias, label_description, enabled, visible, created_at, updated_at) VALUES

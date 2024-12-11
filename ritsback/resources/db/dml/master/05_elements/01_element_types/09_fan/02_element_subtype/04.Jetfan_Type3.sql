@@ -12,6 +12,7 @@ INSERT INTO master.element_subtype_active_params
 (element_subtype_id, element_type_id, param_type_id, element_type_param_id, enabled, visible, created_at, updated_at)VALUES
 (4, 9, 2, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (4, 9, 2, 2, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(4, 9, 2, 15, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (4, 9, 2, 28, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (4, 9, 2, 29, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 

@@ -5,7 +5,7 @@ INSERT INTO ui.equip_viewers (id, name, description, "label", icon, show_info_ta
 ('ElementType:8', 'BARRIER', 'BARRIER', 'LBL_ELEMENT_TYPE_BARRIER', NULL, true, false, true, null, true, 300, 1, null, 000008, true, false),
 ('ElementSubtype:4:9', 'JETFAN', 'JETFAN', 'LBL_ELEMENT_TYPE_JETFAN', NULL, true, false, true, null, false, null, null, null, 040009, null, false),
 ('ElementSubtype:5:9', 'JETFAN', 'JETFAN', 'LBL_ELEMENT_TYPE_JETFAN', NULL, true, false, true, null, false, null, null, null, 040009, null, false),
-('ElementType:11', 'SOS', 'SOS', 'LBL_ELEMENT_TYPE_SOS', NULL, true, false, false, null, false, 300, 1, null, 000011, false, false),
+('ElementSubtype:4:11', 'SOS', 'SOS', 'LBL_ELEMENT_TYPE_SOS', NULL, true, false, false, null, false, 300, 1, null, 000011, false, false),
 ('ElementType:13', 'SEM', 'SEM', 'LBL_ELEMENT_TYPE_TRAFFIC_LIGHT', NULL, true, false, true, null, false, 300, 1, null, 000013, true, false),
 ('ElementType:14', 'LUM', 'LUM', 'LBL_ELEMENT_TYPE_LUM', NULL, true, false, false, null, false, 300, 1, true, 000014, true, true),
 ('ElementType:15', 'FIRE_DET', 'FIRE_DET', 'LBL_ELEMENT_TYPE_FIRE_DET', NULL, true, false, false, null, false, 300, 1, true, 000015, true, true),
@@ -65,7 +65,7 @@ INSERT INTO ui.equip_viewer_tabs (equip_viewer_id, module_action_id, alias, desc
 ('ElementType:8', 100501, 'Alarms module', 'Alarms module', 'LBL_ALARMS', NULL, 1, true),
 ('ElementSubtype:4:9', 100501, 'Alarms module', 'Alarms module', 'LBL_ALARMS', NULL, 1, true),
 ('ElementSubtype:5:9', 100501, 'Alarms module', 'Alarms module', 'LBL_ALARMS', NULL, 1, true),
-('ElementType:11', 100501, 'Alarms module', 'Alarms module', 'LBL_ALARMS', NULL, 1, true),
+('ElementSubtype:4:11', 100501, 'Alarms module', 'Alarms module', 'LBL_ALARMS', NULL, 1, true),
 ('ElementType:13', 100501, 'Alarms module', 'Alarms module', 'LBL_ALARMS', NULL, 1, true),
 ('ElementType:14', 100501, 'Alarms module', 'Alarms module', 'LBL_ALARMS', NULL, 1, true),
 ('ElementType:15', 100501, 'Alarms module', 'Alarms module', 'LBL_ALARMS', NULL, 1, true),
@@ -121,7 +121,7 @@ INSERT INTO ui.equip_viewer_grp_measures (id, equip_viewer_id, name, description
 (05000101, 'ElementType:1', 'Measures', 'Measures', 'LBL_ELEMENT_MEASURES', null, 1, True),
 (040901, 'ElementSubtype:4:9', 'Medidas', 'Medidas', 'LBL_ELEMENT_MEASURES', NULL, 1, true),
 (050901, 'ElementSubtype:5:9', 'Medidas', 'Medidas', 'LBL_ELEMENT_MEASURES', NULL, 1, true),
-(1101, 'ElementType:11', 'Medidas', 'Medidas', 'LBL_ELEMENT_MEASURES', NULL, 1, true),
+(1101, 'ElementSubtype:4:11', 'Medidas', 'Medidas', 'LBL_ELEMENT_MEASURES', NULL, 1, true),
 (1301, 'ElementType:13', 'Medidas', 'Medidas', 'LBL_ELEMENT_MEASURES', NULL, 1, true),
 (1401, 'ElementType:14', 'Medidas', 'Medidas', 'LBL_ELEMENT_MEASURES', NULL, 1, true),
 (1501, 'ElementType:15', 'Medidas', 'Medidas', 'LBL_ELEMENT_MEASURES', NULL, 1, true),
@@ -161,16 +161,16 @@ INSERT INTO ui.equip_viewer_grp_measures (id, equip_viewer_id, name, description
 
 INSERT INTO ui.equip_viewer_measures (equip_viewer_grp_measure_id, vo_entities_id, "position", visible) VALUES
 --Meteo DGT
-(05000101,'ElementTypeParam:1:2:1', 5, True),
-(05000101,'ElementTypeParam:1:2:2', 4, True),
-(05000101,'ElementTypeParam:1:2:3', 7, True),
-(05000101,'ElementTypeParam:1:2:4', 8, True),
-(05000101,'ElementTypeParam:1:2:5', 3, True),
-(05000101,'ElementTypeParam:1:2:6', 10, True),
-(05000101,'ElementTypeParam:1:2:7', 6, True),
-(05000101,'ElementTypeParam:1:2:8', 9, True),
-(05000101,'ElementTypeParam:1:2:9', 1, True),
-(05000101,'ElementTypeParam:1:2:10', 2, True),
+(05000101,'ElementTypeParam:1:2:4', 5, True),
+(05000101,'ElementTypeParam:1:2:10', 4, True),
+(05000101,'ElementTypeParam:1:2:17', 3, True),
+(05000101,'ElementTypeParam:1:2:18', 10, True),
+(05000101,'ElementTypeParam:1:2:20', 6, True),
+(05000101,'ElementTypeParam:1:2:26', 7, True),
+(05000101,'ElementTypeParam:1:2:27', 8, True),
+(05000101,'ElementTypeParam:1:2:28', 9, True),
+(05000101,'ElementTypeParam:1:2:29', 1, True),
+(05000101,'ElementTypeParam:1:2:30', 2, True),
 
 (040901, 'ElementTypeParam:9:2:1', 1, true),
 (040901, 'ElementTypeParam:9:2:2', 2, true),
@@ -183,9 +183,9 @@ INSERT INTO ui.equip_viewer_measures (equip_viewer_grp_measure_id, vo_entities_i
 (050901, 'ElementTypeParam:9:2:15', 4, true),
 (050901, 'ElementTypeParam:9:2:29', 5, true),
 
-(1101, 'ElementTypeParam:11:2:1', 1, true),
-(1101, 'ElementTypeParam:11:2:2', 2, true),
-(1101, 'ElementTypeParam:11:2:3', 3, true),
+(1101, 'ElementTypeParam:11:2:4', 1, true),
+(1101, 'ElementTypeParam:11:2:15', 2, true),
+(1101, 'ElementTypeParam:11:2:16', 3, true),
 
 (1301, 'ElementTypeParam:13:2:1', 1, true),
 
@@ -271,8 +271,8 @@ INSERT INTO ui.equip_viewer_configs (id, equip_viewer_id, vo_entities_id, "posit
 (090501, 'ElementSubtype:5:9', 'ElementTypeParam:9:1:1' , 1, true),
 (090502, 'ElementSubtype:5:9', 'ElementTypeParam:9:1:2' , 2, true),
 
-(1101, 'ElementType:11', 'ElementTypeParam:11:1:1', 1, true),
-(1102, 'ElementType:11', 'ElementTypeParam:11:1:2', 2, true),
+(1101, 'ElementSubtype:4:11', 'ElementTypeParam:11:1:1', 1, true),
+(1102, 'ElementSubtype:4:11', 'ElementTypeParam:11:1:2', 2, true),
 
 (1801,'ElementType:18','ElementTypeParam:18:1:1', 1, true),
 (1802,'ElementType:18','ElementTypeParam:18:1:2', 2, true),

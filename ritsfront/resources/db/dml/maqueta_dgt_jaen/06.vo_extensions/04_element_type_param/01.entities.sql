@@ -1,16 +1,17 @@
 INSERT INTO ui.vo_entities(id, vo_entity_type_id, enabled, visible) VALUES
 ('ElementTypeParam:1:1:1', 'ElementTypeParamUI', true, true),
 ('ElementTypeParam:1:1:2', 'ElementTypeParamUI', true, true),
-('ElementTypeParam:1:2:1', 'ElementTypeParamUI', true, true),
-('ElementTypeParam:1:2:2', 'ElementTypeParamUI', true, true),
-('ElementTypeParam:1:2:3', 'ElementTypeParamUI', true, true),
 ('ElementTypeParam:1:2:4', 'ElementTypeParamUI', true, true),
-('ElementTypeParam:1:2:5', 'ElementTypeParamUI', true, true),
-('ElementTypeParam:1:2:6', 'ElementTypeParamUI', true, true),
-('ElementTypeParam:1:2:7', 'ElementTypeParamUI', true, true),
-('ElementTypeParam:1:2:8', 'ElementTypeParamUI', true, true),
-('ElementTypeParam:1:2:9', 'ElementTypeParamUI', true, true),
 ('ElementTypeParam:1:2:10', 'ElementTypeParamUI', true, true),
+('ElementTypeParam:1:2:17', 'ElementTypeParamUI', true, true),
+('ElementTypeParam:1:2:18', 'ElementTypeParamUI', true, true),
+('ElementTypeParam:1:2:20', 'ElementTypeParamUI', true, true),
+('ElementTypeParam:1:2:26', 'ElementTypeParamUI', true, true),
+('ElementTypeParam:1:2:27', 'ElementTypeParamUI', true, true),
+
+('ElementTypeParam:1:2:28', 'ElementTypeParamUI', true, true),
+('ElementTypeParam:1:2:29', 'ElementTypeParamUI', true, true),
+('ElementTypeParam:1:2:30', 'ElementTypeParamUI', true, true),
 
 ('ElementTypeParam:2:1:1', 'ElementTypeParamUI', true, true),
 ('ElementTypeParam:2:1:2', 'ElementTypeParamUI', true, true),
@@ -27,9 +28,9 @@ INSERT INTO ui.vo_entities(id, vo_entity_type_id, enabled, visible) VALUES
 
 ('ElementTypeParam:11:1:1', 'ElementTypeParamUI', true, true),
 ('ElementTypeParam:11:1:2', 'ElementTypeParamUI', true, true),
-('ElementTypeParam:11:2:1', 'ElementTypeParamUI', true, true),
-('ElementTypeParam:11:2:2', 'ElementTypeParamUI', true, true),
-('ElementTypeParam:11:2:3', 'ElementTypeParamUI', true, true),
+('ElementTypeParam:11:2:4', 'ElementTypeParamUI', true, true),
+('ElementTypeParam:11:2:15', 'ElementTypeParamUI', true, true),
+('ElementTypeParam:11:2:16', 'ElementTypeParamUI', true, true),
 
 ('ElementTypeParam:13:2:1', 'ElementTypeParamUI', true, true),
 

@@ -22,9 +22,9 @@ INSERT INTO master.element_type_params (element_type_id, param_type_id, element_
 (32,2,6, 31,1, NULL, 'parcial_operating_hours', 'parcial_operating_hours', 'LBL_ELEMENT_TYPE_PARAM_PRESSURIZATION_PARCIAL_OPERATING_HOURS' , 'LBL_ELEMENT_TYPE_PARAM_PRESSURIZATION_PARCIAL_OPERATING_HOURS_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (32,2,7, 31,1, NULL, 'total_operating_hours', 'total_operating_hours', 'LBL_ELEMENT_TYPE_PARAM_PRESSURIZATION_TOTAL_OPERATING_HOURS' , 'LBL_ELEMENT_TYPE_PARAM_PRESSURIZATION_TOTAL_OPERATING_HOURS_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 --MEASURE JAEN
-(32,2,8, NULL,5, NULL, 'fan_low_speed_state', 'fan_low_speed_state', 'LBL_ELEMENT_TYPE_PARAM_fan_low_speed_state' , 'LBL_ELEMENT_TYPE_PARAM_fan_low_speed_state_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(32,2,9, NULL,5, NULL, 'fan_high_speed_state', 'fan_high_speed_state', 'LBL_ELEMENT_TYPE_PARAM_fan_high_speed_state' , 'LBL_ELEMENT_TYPE_PARAM_fan_high_speed_state_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(32,2,10, NULL,5, NULL, 'grid_gate_clousure_state', 'grid_gate_clousure_state', 'LBL_ELEMENT_TYPE_PARAM_grid_gate_clousure_state' , 'LBL_ELEMENT_TYPE_PARAM_grid_gate_clousure_state_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(32,2,8, NULL,5, NULL, 'fan_low_speed_state', 'fan_low_speed_state', 'LBL_ELEMENT_TYPE_PARAM_FAN_LOW_SPEED_STATE' , 'LBL_ELEMENT_TYPE_PARAM_fan_low_speed_state_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(32,2,9, NULL,5, NULL, 'fan_high_speed_state', 'fan_high_speed_state', 'LBL_ELEMENT_TYPE_PARAM_FAN_HIGH_SPEED_STATE' , 'LBL_ELEMENT_TYPE_PARAM_fan_high_speed_state_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(32,2,10, NULL,5, NULL, 'grid_gate_clousure_state', 'grid_gate_clousure_state', 'LBL_ELEMENT_TYPE_PARAM_GRID_GATE_CLOUSURE_STATE' , 'LBL_ELEMENT_TYPE_PARAM_grid_gate_clousure_state_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 -- 
 -- Table: master.element_type_states.PRESURIZACION

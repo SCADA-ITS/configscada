@@ -49,13 +49,13 @@ INSERT INTO ui.vo_enum_type_values(id, vo_enum_type_id, "key", value, "translate
 
 
 INSERT INTO ui.vo_entity_enum_types(vo_entity_id, enum_type_id) VALUES
-('ElementTypeParam:1:2:8', 9),
+('ElementTypeParam:1:2:28', 9),
 
 ('ElementTypeParam:9:2:1', 8),
 ('ElementTypeParam:9:2:28', 2),
 ('ElementTypeParam:9:2:29', 2),
 
-('ElementTypeParam:11:2:2', 6),
+('ElementTypeParam:11:2:15', 6),
 ('ElementTypeParam:13:2:1', 1),
 
 ('ElementTypeParam:32:2:8', 5),

@@ -1,59 +1,59 @@
-item;alias;description;sessionuid;road;stretchs;pk;sentido;param1_brand;param2_model
-1;PSE-1-01-DP;PSE-1-01-DP - Esclavo;PSE-1-01-DP;Autovía A-4;Despeñaperros;248+600;Madrid;Equitel;E301
-2;PSI-1-01-DP;PSI-1-01-DP - Maestro;PSI-1-01-DP;Autovía A-4;Despeñaperros;248+500;Madrid;Equitel;E301
-3;PSI-1-02-DP;PSI-1-02-DP - Esclavo;PSI-1-02-DP;Autovía A-4;Despeñaperros;248+400;Madrid;Equitel;E301
-4;PSI-1-03-DP;PSI-1-03-DP - Maestro;PSI-1-03-DP;Autovía A-4;Despeñaperros;248+300;Madrid;Equitel;E301
-5;PSI-1-04-DP;PSI-1-04-DP - Maestro;PSI-1-04-DP;Autovía A-4;Despeñaperros;248+200;Madrid;Equitel;E301
-6;PSI-1-05-DP;PSI-1-05-DP - Maestro;PSI-1-05-DP;Autovía A-4;Despeñaperros;248+100;Madrid;Equitel;E301
-7;PSI-1-06-DP;PSI-1-06-DP - Maestro;PSI-1-06-DP;Autovía A-4;Despeñaperros;247+900;Madrid;Equitel;E301
-8;PSI-1-07-DP;PSI-1-07-DP - Maestro;PSI-1-07-DP;Autovía A-4;Despeñaperros;247+800;Madrid;Equitel;E301
-9;PSI-1-08-DP;PSI-1-08-DP - Maestro;PSI-1-08-DP;Autovía A-4;Despeñaperros;247+700;Madrid;Equitel;E301
-10;PSI-1-09-DP;PSI-1-09-DP - Esclavo;PSI-1-09-DP;Autovía A-4;Despeñaperros;247+600;Madrid;Equitel;E301
-11;PSI-1-10-DP;PSI-1-10-DP - Maestro;PSI-1-10-DP;Autovía A-4;Despeñaperros;247+500;Madrid;Equitel;E301
-12;PSI-1-11-DP;PSI-1-11-DP - Esclavo;PSI-1-11-DP;Autovía A-4;Despeñaperros;247+400;Madrid;Equitel;E301
-13;PSI-1-12-DP;PSI-1-12-DP - Maestro;PSI-1-12-DP;Autovía A-4;Despeñaperros;247+300;Madrid;Equitel;E301
-14;PSI-1-13-DP;PSI-1-13-DP - Maestro;PSI-1-13-DP;Autovía A-4;Despeñaperros;247+200;Madrid;Equitel;E301
-15;PSI-1-14-DP;PSI-1-14-DP - Maestro;PSI-1-14-DP;Autovía A-4;Despeñaperros;247+100;Madrid;Equitel;E301
-16;PSI-1-15-DP;PSI-1-15-DP - Maestro;PSI-1-15-DP;Autovía A-4;Despeñaperros;246+750;Madrid;Equitel;E301
-17;PSI-1-16-DP;PSI-1-16-DP - Maestro;PSI-1-16-DP;Autovía A-4;Despeñaperros;246+600;Madrid;Equitel;E301
-18;PSI-1-17-DP;PSI-1-17-DP - Esclavo;PSI-1-17-DP;Autovía A-4;Despeñaperros;246+500;Madrid;Equitel;E301
-19;PSI-1-18-DP;PSI-1-18-DP - Maestro;PSI-1-18-DP;Autovía A-4;Despeñaperros;246+400;Madrid;Equitel;E301
-20;PSE-1-02-DP;PSE-1-02-DP - Esclavo;PSE-1-02-DP;Autovía A-4;Despeñaperros;246+300;Madrid;Equitel;E301
-21;PSE-2-01-DP;PSE-2-01-DP - Esclavo;PSE-2-01-DP;Autovía A-4;Despeñaperros;246+300;Córdoba;Equitel;E301
-22;PSI-2-01-DP;PSI-2-01-DP - Maestro;PSI-2-01-DP;Autovía A-4;Despeñaperros;246+400;Córdoba;Equitel;E301
-23;PSI-2-02-DP;PSI-2-02-DP - Esclavo;PSI-2-02-DP;Autovía A-4;Despeñaperros;246+500;Córdoba;Equitel;E301
-24;PSI-2-03-DP;PSI-2-03-DP - Maestro;PSI-2-03-DP;Autovía A-4;Despeñaperros;246+600;Córdoba;Equitel;E301
-25;PSI-2-04-DP;PSI-2-04-DP - Maestro;PSI-2-04-DP;Autovía A-4;Despeñaperros;247+000;Córdoba;Equitel;E301
-26;PSI-2-05-DP;PSI-2-05-DP - Maestro;PSI-2-05-DP;Autovía A-4;Despeñaperros;247+100;Córdoba;Equitel;E301
-27;PSI-2-06-DP;PSI-2-06-DP - Esclavo;PSI-2-06-DP;Autovía A-4;Despeñaperros;247+200;Córdoba;Equitel;E301
-28;PSI-2-07-DP;PSI-2-07-DP - Maestro;PSI-2-07-DP;Autovía A-4;Despeñaperros;247+300;Córdoba;Equitel;E301
-29;PSI-2-08-DP;PSI-2-08-DP - Maestro;PSI-2-08-DP;Autovía A-4;Despeñaperros;247+400;Córdoba;Equitel;E301
-30;PSI-2-09-DP;PSI-2-09-DP - Maestro;PSI-2-09-DP;Autovía A-4;Despeñaperros;247+500;Córdoba;Equitel;E301
-31;PSI-2-10-DP;PSI-2-10-DP - Maestro;PSI-2-10-DP;Autovía A-4;Despeñaperros;247+600;Córdoba;Equitel;E301
-32;PSI-2-11-DP;PSI-2-11-DP - Esclavo;PSI-2-11-DP;Autovía A-4;Despeñaperros;247+700;Córdoba;Equitel;E301
-33;PSI-2-12-DP;PSI-2-12-DP - Maestro;PSI-2-12-DP;Autovía A-4;Despeñaperros;247+800;Córdoba;Equitel;E301
-34;PSI-2-13-DP;PSI-2-13-DP - Maestro;PSI-2-13-DP;Autovía A-4;Despeñaperros;247+900;Córdoba;Equitel;E301
-35;PSI-2-14-DP;PSI-2-14-DP - Maestro;PSI-2-14-DP;Autovía A-4;Despeñaperros;248+100;Córdoba;Equitel;E301
-36;PSI-2-15-DP;PSI-2-15-DP - Maestro;PSI-2-15-DP;Autovía A-4;Despeñaperros;248+200;Córdoba;Equitel;E301
-37;PSI-2-16-DP;PSI-2-16-DP - Maestro;PSI-2-16-DP;Autovía A-4;Despeñaperros;248+300;Córdoba;Equitel;E301
-38;PSI-2-17-DP;PSI-2-17-DP - Esclavo;PSI-2-17-DP;Autovía A-4;Despeñaperros;248+400;Córdoba;Equitel;E301
-39;PSI-2-18-DP;PSI-2-18-DP - Maestro;PSI-2-18-DP;Autovía A-4;Despeñaperros;248+500;Córdoba;Equitel;E301
-40;PSE-2-02-DP;PSE-2-02-DP - Esclavo;PSE-2-02-DP;Autovía A-4;Despeñaperros;248+600;Córdoba;Equitel;E301
-41;PSI-GAL-1;PSI-GAL-1 - Esclavo;PSI-GAL-1;Autovía A-4;Despeñaperros;248+200;NA;Equitel;E301
-42;PSI-GAL-2;PSI-GAL-2 - Esclavo;PSI-GAL-2;Autovía A-4;Despeñaperros;247+700;NA;Equitel;E301
-43;PSI-GAL-3;PSI-GAL-3 - Esclavo;PSI-GAL-3;Autovía A-4;Despeñaperros;247+350;NA;Equitel;E301
-44;PSI-GAL-4;PSI-GAL-4 - Esclavo;PSI-GAL-4;Autovía A-4;Despeñaperros;246+700;NA;Equitel;E301
-45;PSI-1-01-CA;PSI-1-01-CA - Maestro;PSI-1-01-CA;Autovía A-4;La Cantera;249+250;Madrid;Equitel;E301
-46;PSI-2-01-CA;PSI-2-01-CA - Maestro;PSI-2-01-CA;Autovía A-4;La Cantera;249+250;Córdoba;Equitel;E301
-47;PSE-1-01-CA;PSE-1-01-CA - Maestro;PSE-1-01-CA;Autovía A-4;La Cantera;249+350;N/A;Equitel;E301
-48;PSE-1-02-CA;PSE-1-02-CA - Esclavo;PSE-1-02-CA;Autovía A-4;La Cantera;249+150;N/A;Equitel;E301
-49;PSE-2-01-CA;PSE-2-01-CA - Maestro;PSE-2-01-CA;Autovía A-4;La Cantera;249+150;N/A;Equitel;E301
-50;PSE-2-02-CA;PSE-2-02-CA - Esclavo;PSE-2-02-CA;Autovía A-4;La Cantera;249+350;N/A;Equitel;E301
-51;PSI-1-01-CZ;PSI-1-01-CZ - Maestro;PSI-1-01-CZ;Autovía A-4;El Corzo;;Madrid;Equitel;E301
-52;PSI-1-02-CZ;PSI-1-02-CZ - Maestro;PSI-1-02-CZ;Autovía A-4;El Corzo;;Madrid;Equitel;E301
-53;PSI-1-03-CZ;PSI-1-03-CZ - Maestro;PSI-1-03-CZ;Autovía A-4;El Corzo;;Madrid;Equitel;E301
-54;PSI-2-01-CZ;PSI-2-01-CZ - Maestro;PSI-2-01-CZ;Autovía A-4;El Corzo;;Córdoba;Equitel;E301
-55;PSE-1-01-CZ;PSE-1-01-CZ - Esclavo;PSE-1-01-CZ;Autovía A-4;El Corzo;;N/A;Equitel;E301
-56;PSE-1-02-CZ;PSE-1-02-CZ - Esclavo;PSE-1-02-CZ;Autovía A-4;El Corzo;;N/A;Equitel;E301
-57;PSE-2-01-CZ;PSE-2-01-CZ - Maestro;PSE-2-01-CZ;Autovía A-4;El Corzo;;N/A;Equitel;E301
-58;PSE-2-02-CZ;PSE-2-02-CZ - Esclavo;PSE-2-02-CZ;Autovía A-4;El Corzo;;N/A;Equitel;E301
+item;element_subtype;alias;description;sessionuid;road;stretchs;pk;sentido;param1_brand;param2_model
+1;4;PSE-1-01-DP;PSE-1-01-DP - Esclavo;PSE-1-01-DP;Autovía A-4;Despeñaperros;248+600;Madrid;Equitel;E301
+2;4;PSI-1-01-DP;PSI-1-01-DP - Maestro;PSI-1-01-DP;Autovía A-4;Despeñaperros;248+500;Madrid;Equitel;E301
+3;4;PSI-1-02-DP;PSI-1-02-DP - Esclavo;PSI-1-02-DP;Autovía A-4;Despeñaperros;248+400;Madrid;Equitel;E301
+4;4;PSI-1-03-DP;PSI-1-03-DP - Maestro;PSI-1-03-DP;Autovía A-4;Despeñaperros;248+300;Madrid;Equitel;E301
+5;4;PSI-1-04-DP;PSI-1-04-DP - Maestro;PSI-1-04-DP;Autovía A-4;Despeñaperros;248+200;Madrid;Equitel;E301
+6;4;PSI-1-05-DP;PSI-1-05-DP - Maestro;PSI-1-05-DP;Autovía A-4;Despeñaperros;248+100;Madrid;Equitel;E301
+7;4;PSI-1-06-DP;PSI-1-06-DP - Maestro;PSI-1-06-DP;Autovía A-4;Despeñaperros;247+900;Madrid;Equitel;E301
+8;4;PSI-1-07-DP;PSI-1-07-DP - Maestro;PSI-1-07-DP;Autovía A-4;Despeñaperros;247+800;Madrid;Equitel;E301
+9;4;PSI-1-08-DP;PSI-1-08-DP - Maestro;PSI-1-08-DP;Autovía A-4;Despeñaperros;247+700;Madrid;Equitel;E301
+10;4;PSI-1-09-DP;PSI-1-09-DP - Esclavo;PSI-1-09-DP;Autovía A-4;Despeñaperros;247+600;Madrid;Equitel;E301
+11;4;PSI-1-10-DP;PSI-1-10-DP - Maestro;PSI-1-10-DP;Autovía A-4;Despeñaperros;247+500;Madrid;Equitel;E301
+12;4;PSI-1-11-DP;PSI-1-11-DP - Esclavo;PSI-1-11-DP;Autovía A-4;Despeñaperros;247+400;Madrid;Equitel;E301
+13;4;PSI-1-12-DP;PSI-1-12-DP - Maestro;PSI-1-12-DP;Autovía A-4;Despeñaperros;247+300;Madrid;Equitel;E301
+14;4;PSI-1-13-DP;PSI-1-13-DP - Maestro;PSI-1-13-DP;Autovía A-4;Despeñaperros;247+200;Madrid;Equitel;E301
+15;4;PSI-1-14-DP;PSI-1-14-DP - Maestro;PSI-1-14-DP;Autovía A-4;Despeñaperros;247+100;Madrid;Equitel;E301
+16;4;PSI-1-15-DP;PSI-1-15-DP - Maestro;PSI-1-15-DP;Autovía A-4;Despeñaperros;246+750;Madrid;Equitel;E301
+17;4;PSI-1-16-DP;PSI-1-16-DP - Maestro;PSI-1-16-DP;Autovía A-4;Despeñaperros;246+600;Madrid;Equitel;E301
+18;4;PSI-1-17-DP;PSI-1-17-DP - Esclavo;PSI-1-17-DP;Autovía A-4;Despeñaperros;246+500;Madrid;Equitel;E301
+19;4;PSI-1-18-DP;PSI-1-18-DP - Maestro;PSI-1-18-DP;Autovía A-4;Despeñaperros;246+400;Madrid;Equitel;E301
+20;4;PSE-1-02-DP;PSE-1-02-DP - Esclavo;PSE-1-02-DP;Autovía A-4;Despeñaperros;246+300;Madrid;Equitel;E301
+21;4;PSE-2-01-DP;PSE-2-01-DP - Esclavo;PSE-2-01-DP;Autovía A-4;Despeñaperros;246+300;Córdoba;Equitel;E301
+22;4;PSI-2-01-DP;PSI-2-01-DP - Maestro;PSI-2-01-DP;Autovía A-4;Despeñaperros;246+400;Córdoba;Equitel;E301
+23;4;PSI-2-02-DP;PSI-2-02-DP - Esclavo;PSI-2-02-DP;Autovía A-4;Despeñaperros;246+500;Córdoba;Equitel;E301
+24;4;PSI-2-03-DP;PSI-2-03-DP - Maestro;PSI-2-03-DP;Autovía A-4;Despeñaperros;246+600;Córdoba;Equitel;E301
+25;4;PSI-2-04-DP;PSI-2-04-DP - Maestro;PSI-2-04-DP;Autovía A-4;Despeñaperros;247+000;Córdoba;Equitel;E301
+26;4;PSI-2-05-DP;PSI-2-05-DP - Maestro;PSI-2-05-DP;Autovía A-4;Despeñaperros;247+100;Córdoba;Equitel;E301
+27;4;PSI-2-06-DP;PSI-2-06-DP - Esclavo;PSI-2-06-DP;Autovía A-4;Despeñaperros;247+200;Córdoba;Equitel;E301
+28;4;PSI-2-07-DP;PSI-2-07-DP - Maestro;PSI-2-07-DP;Autovía A-4;Despeñaperros;247+300;Córdoba;Equitel;E301
+29;4;PSI-2-08-DP;PSI-2-08-DP - Maestro;PSI-2-08-DP;Autovía A-4;Despeñaperros;247+400;Córdoba;Equitel;E301
+30;4;PSI-2-09-DP;PSI-2-09-DP - Maestro;PSI-2-09-DP;Autovía A-4;Despeñaperros;247+500;Córdoba;Equitel;E301
+31;4;PSI-2-10-DP;PSI-2-10-DP - Maestro;PSI-2-10-DP;Autovía A-4;Despeñaperros;247+600;Córdoba;Equitel;E301
+32;4;PSI-2-11-DP;PSI-2-11-DP - Esclavo;PSI-2-11-DP;Autovía A-4;Despeñaperros;247+700;Córdoba;Equitel;E301
+33;4;PSI-2-12-DP;PSI-2-12-DP - Maestro;PSI-2-12-DP;Autovía A-4;Despeñaperros;247+800;Córdoba;Equitel;E301
+34;4;PSI-2-13-DP;PSI-2-13-DP - Maestro;PSI-2-13-DP;Autovía A-4;Despeñaperros;247+900;Córdoba;Equitel;E301
+35;4;PSI-2-14-DP;PSI-2-14-DP - Maestro;PSI-2-14-DP;Autovía A-4;Despeñaperros;248+100;Córdoba;Equitel;E301
+36;4;PSI-2-15-DP;PSI-2-15-DP - Maestro;PSI-2-15-DP;Autovía A-4;Despeñaperros;248+200;Córdoba;Equitel;E301
+37;4;PSI-2-16-DP;PSI-2-16-DP - Maestro;PSI-2-16-DP;Autovía A-4;Despeñaperros;248+300;Córdoba;Equitel;E301
+38;4;PSI-2-17-DP;PSI-2-17-DP - Esclavo;PSI-2-17-DP;Autovía A-4;Despeñaperros;248+400;Córdoba;Equitel;E301
+39;4;PSI-2-18-DP;PSI-2-18-DP - Maestro;PSI-2-18-DP;Autovía A-4;Despeñaperros;248+500;Córdoba;Equitel;E301
+40;4;PSE-2-02-DP;PSE-2-02-DP - Esclavo;PSE-2-02-DP;Autovía A-4;Despeñaperros;248+600;Córdoba;Equitel;E301
+41;4;PSI-GAL-1;PSI-GAL-1 - Esclavo;PSI-GAL-1;Autovía A-4;Despeñaperros;248+200;NA;Equitel;E301
+42;4;PSI-GAL-2;PSI-GAL-2 - Esclavo;PSI-GAL-2;Autovía A-4;Despeñaperros;247+700;NA;Equitel;E301
+43;4;PSI-GAL-3;PSI-GAL-3 - Esclavo;PSI-GAL-3;Autovía A-4;Despeñaperros;247+350;NA;Equitel;E301
+44;4;PSI-GAL-4;PSI-GAL-4 - Esclavo;PSI-GAL-4;Autovía A-4;Despeñaperros;246+700;NA;Equitel;E301
+45;4;PSI-1-01-CA;PSI-1-01-CA - Maestro;PSI-1-01-CA;Autovía A-4;La Cantera;249+250;Madrid;Equitel;E301
+46;4;PSI-2-01-CA;PSI-2-01-CA - Maestro;PSI-2-01-CA;Autovía A-4;La Cantera;249+250;Córdoba;Equitel;E301
+47;4;PSE-1-01-CA;PSE-1-01-CA - Maestro;PSE-1-01-CA;Autovía A-4;La Cantera;249+350;N/A;Equitel;E301
+48;4;PSE-1-02-CA;PSE-1-02-CA - Esclavo;PSE-1-02-CA;Autovía A-4;La Cantera;249+150;N/A;Equitel;E301
+49;4;PSE-2-01-CA;PSE-2-01-CA - Maestro;PSE-2-01-CA;Autovía A-4;La Cantera;249+150;N/A;Equitel;E301
+50;4;PSE-2-02-CA;PSE-2-02-CA - Esclavo;PSE-2-02-CA;Autovía A-4;La Cantera;249+350;N/A;Equitel;E301
+51;4;PSI-1-01-CZ;PSI-1-01-CZ - Maestro;PSI-1-01-CZ;Autovía A-4;El Corzo;;Madrid;Equitel;E301
+52;4;PSI-1-02-CZ;PSI-1-02-CZ - Maestro;PSI-1-02-CZ;Autovía A-4;El Corzo;;Madrid;Equitel;E301
+53;4;PSI-1-03-CZ;PSI-1-03-CZ - Maestro;PSI-1-03-CZ;Autovía A-4;El Corzo;;Madrid;Equitel;E301
+54;4;PSI-2-01-CZ;PSI-2-01-CZ - Maestro;PSI-2-01-CZ;Autovía A-4;El Corzo;;Córdoba;Equitel;E301
+55;4;PSE-1-01-CZ;PSE-1-01-CZ - Esclavo;PSE-1-01-CZ;Autovía A-4;El Corzo;;N/A;Equitel;E301
+56;4;PSE-1-02-CZ;PSE-1-02-CZ - Esclavo;PSE-1-02-CZ;Autovía A-4;El Corzo;;N/A;Equitel;E301
+57;4;PSE-2-01-CZ;PSE-2-01-CZ - Maestro;PSE-2-01-CZ;Autovía A-4;El Corzo;;N/A;Equitel;E301
+58;4;PSE-2-02-CZ;PSE-2-02-CZ - Esclavo;PSE-2-02-CZ;Autovía A-4;El Corzo;;N/A;Equitel;E301

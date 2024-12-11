@@ -10,6 +10,10 @@
 --
 INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) VALUES
 --es_ES
+--Element:9 -> jetfan
+('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_JETFAN_STARTER_SHOT', 'Alarma de arranque de ventilador', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+--es_ES
 --ElementType:19 -> CO
 ('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_CO_CONCENTRATION', 'Detector CO  alta concentración (30 ppm< CO <60 ppm)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_CO_HIGH_CONCENTRATION', 'Detector CO  alta concentración (60 ppm< CO <200 ppm)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -24,6 +28,9 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_EXCESS_CLEARANCE', 'Exceso de Gálibo', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --en_GB
+--Element:9 -> jetfan
+('en_GB', 1, 'LBL_ALARM_CONFIGS_ALARM_JETFAN_STARTER_SHOT', 'Alarm Jetfan starter shot', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
 --ElementType:19 -> CO
 ('en_GB', 1, 'LBL_ALARM_CONFIGS_ALARM_CO_CONCENTRATION', 'High concentration (30 ppm< CO <60 ppm)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_ALARM_CONFIGS_ALARM_CO_HIGH_CONCENTRATION', 'High concentration (60 ppm< CO <200 ppm)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -38,6 +45,9 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('en_GB', 1, 'LBL_ALARM_CONFIGS_ALARM_EXCESS_CLEARANCE', 'Clearance excess', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 -- es_CL
+--Element:9 -> jetfan
+('es_CL', 1, 'LBL_ALARM_CONFIGS_ALARM_JETFAN_STARTER_SHOT', 'Alarma de arranque de ventilador', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
 --ElementType:19 -> CO
 ('es_CL', 1, 'LBL_ALARM_CONFIGS_ALARM_CO_CONCENTRATION', 'Detector CO  alta concentración (30 ppm< CO <60 ppm)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_ALARM_CONFIGS_ALARM_CO_HIGH_CONCENTRATION', 'Detector CO  alta concentración (60 ppm< CO <200 ppm)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
