@@ -3,7 +3,8 @@
 		"new": 105001,
 		"edit": 105002,
 		"delete": 105003,
-		"select": 105004
+		"select": 105004,
+		"deleteFromIncidentWizard": 105005
 	},
 	"restEndpoints": {
 		"locations": "locations",

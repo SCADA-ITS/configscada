@@ -236,6 +236,7 @@ INSERT INTO ui.module_actions(id, module_id, name, description, system_permissio
 (105002, 1050, 'edit', 'edit location', null, null),
 (105003, 1050, 'delete', 'delete location', null, null),
 (105004, 1050, 'select', 'select location', null, null),
+(105005, 1050, 'delete from Incident Wizard', 'delete from Incident Wizard', null, null),
 (105201, 1052, 'edit', 'edit delayed report', null, null),
 (105202, 1052, 'enable', 'enable delayed report', null, null),
 (105203, 1052, 'disable', 'disable delayed report', null, null),
