@@ -4,7 +4,7 @@ BEGIN
   IF EXISTS (SELECT 1 FROM pg_tablespace WHERE spcname = 'tbl_reporting_bo') THEN
 	
   	INSERT INTO ui.backoffices (id, "name", description, "label", jdbc, "user", "password", "schema", default_metadata_backoffice, default_metadata_table, default_metadata_column, enabled) 
-	VALUES(1, 'reporting_bo', NULL, NULL, 'jdbc:postgresql://192.168.88.160:5430/rits', 'rits', 'uMuD7Uy0gpCRL4Jo1w6SOQ==', 'reporting_bo',
+	VALUES(1, 'reporting_bo', NULL, NULL, 'jdbc:postgresql://10.253.5.80:5430/rits', 'rits', 'uMuD7Uy0gpCRL4Jo1w6SOQ==', 'reporting_bo',
 	-- default_metadata_backoffice
 	'{}',
 	-- default_metadata_table

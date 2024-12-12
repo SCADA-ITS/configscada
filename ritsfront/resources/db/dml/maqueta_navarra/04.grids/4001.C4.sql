@@ -5,14 +5,14 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (014001, 4001, 1, 1, true, false, false, false, 'LBL_EXT_ENTITY_C4_COLUMN_ID', 'LBL_EXT_ENTITY_C4_COLUMN_ID', 'id', true, false, null, false, false, 500, NULL, true, false, NULL, NULL, NULL, NULL),
 (024001, 4001, 1, 2, true, true, false, false, NULL, NULL, 'categoria', false, false, null, false, false, 50, NULL, true, true, NULL, NULL, NULL, NULL),
 (034001, 4001, 1, 3, true, true, false, true, 'LBL_EXT_ENTITY_C4_COLUMN_CATEGORY', 'LBL_EXT_ENTITY_C4_COLUMN_CATEGORY', 'categoria', false, false, null, false, false, 150, NULL, true, true, NULL, NULL, NULL, NULL),
-(044001, 4001, 1, 4, true, true, false, true, 'LBL_EXT_ENTITY_C4_COLUMN_TYPE', 'LBL_EXT_ENTITY_C4_COLUMN_CATEGORY', 'tipo', false, false, null, false, false, 150, NULL, true, true, NULL, NULL, NULL, NULL),
-(054001, 4001, 1, 5, true, false, false, true, 'LBL_EXT_ENTITY_C4_COLUMN_TITLE', 'LBL_EXT_ENTITY_C4_COLUMN_CATEGORY', 'titulo', false, false, null, false, false, 150, NULL, true, true, NULL, NULL, NULL, NULL),
-(064001, 4001, 1, 6, true, false, false, true, 'LBL_EXT_ENTITY_C4_COLUMN_ROAD_IMPACT', 'LBL_EXT_ENTITY_C4_COLUMN_CATEGORY', 'afeccion', false, false, null, false, false, 150, NULL, true, true, NULL, NULL, NULL, NULL),
-(074001, 4001, 1, 7, true, false, false, true, 'LBL_EXT_ENTITY_C4_COLUMN_ROAD', 'LBL_EXT_ENTITY_C4_COLUMN_CATEGORY', 'carretera', false, false, null, false, false, 150, NULL, true, true, NULL, NULL, NULL, NULL),
-(084001, 4001, 1, 8, true, false, false, true, 'LBL_EXT_ENTITY_C4_COLUMN_LOCATION', 'LBL_EXT_ENTITY_C4_COLUMN_CATEGORY', 'localizacion', false, false, null, false, false, 150, NULL, true, true, NULL, NULL, NULL, NULL),
-(094001, 4001, 4, 9, true, false, false, true, 'LBL_EXT_ENTITY_C4_COLUMN_DATE', 'LBL_EXT_ENTITY_C4_COLUMN_CATEGORY', 'fecha', false, true, null, false, false, 150, NULL, true, true, NULL, NULL, NULL, NULL),
-(104001, 4001, 4, 10, true, false, false, true, 'LBL_EXT_ENTITY_C4_UPDATE_DATE', 'LBL_EXT_ENTITY_C4_COLUMN_CATEGORY', 'fecha_actualizacion', false, true, null, false, false, 150, NULL, true, true, NULL, NULL, NULL, NULL),
-(114001, 4001, 1, 11, true, true, false, true, 'LBL_EXT_ENTITY_C4_COLUMN_STATE', 'LBL_EXT_ENTITY_C4_COLUMN_CATEGORY', 'estado', false, false, null, false, false, 150, NULL, true, true, NULL, NULL, NULL, NULL);
+(044001, 4001, 1, 4, true, true, false, true, 'LBL_EXT_ENTITY_C4_COLUMN_TYPE', 'LBL_EXT_ENTITY_C4_COLUMN_CATEGORY', 'tipo', false, false, null, false, false, 200, NULL, true, true, NULL, NULL, NULL, NULL),
+(054001, 4001, 1, 5, true, false, false, true, 'LBL_EXT_ENTITY_C4_COLUMN_TITLE', 'LBL_EXT_ENTITY_C4_COLUMN_CATEGORY', 'titulo', false, false, null, false, false, 200, NULL, true, true, NULL, NULL, NULL, NULL),
+(064001, 4001, 1, 6, true, false, false, true, 'LBL_EXT_ENTITY_C4_COLUMN_ROAD_IMPACT', 'LBL_EXT_ENTITY_C4_COLUMN_CATEGORY', 'afeccion', false, false, null, false, false, 180, NULL, true, true, NULL, NULL, NULL, NULL),
+(074001, 4001, 1, 7, true, false, false, true, 'LBL_EXT_ENTITY_C4_COLUMN_ROAD', 'LBL_EXT_ENTITY_C4_COLUMN_CATEGORY', 'carretera', false, false, null, false, false, 250, NULL, true, true, NULL, NULL, NULL, NULL),
+(084001, 4001, 1, 8, true, false, false, true, 'LBL_EXT_ENTITY_C4_COLUMN_LOCATION', 'LBL_EXT_ENTITY_C4_COLUMN_CATEGORY', 'localizacion', false, false, null, false, false, 120, NULL, true, true, NULL, NULL, NULL, NULL),
+(094001, 4001, 4, 9, true, false, false, true, 'LBL_EXT_ENTITY_C4_COLUMN_DATE', 'LBL_EXT_ENTITY_C4_COLUMN_CATEGORY', 'fecha', false, true, null, false, false, 170, NULL, true, true, NULL, NULL, NULL, NULL),
+(104001, 4001, 4, 10, true, false, false, true, 'LBL_EXT_ENTITY_C4_UPDATE_DATE', 'LBL_EXT_ENTITY_C4_COLUMN_CATEGORY', 'fecha_actualizacion', false, true, null, false, false, 170, NULL, true, true, NULL, NULL, NULL, NULL),
+(114001, 4001, 1, 11, true, true, false, true, 'LBL_EXT_ENTITY_C4_COLUMN_STATE', 'LBL_EXT_ENTITY_C4_COLUMN_CATEGORY', 'estado', false, false, null, false, false, 100, NULL, true, true, NULL, NULL, NULL, NULL);
 
 INSERT INTO ui.grid_option_values(grid_id, grid_option_id, value) VALUES
 (4001, 1, 'true'),
@@ -26,8 +26,9 @@ INSERT INTO ui.grid_option_values(grid_id, grid_option_id, value) VALUES
 (4001, 13, 'true'),
 (4001, 14, 'false'),
 (4001, 15, 'false'),
-(4001, 16, 'img/grid/element_type_02.png'),
-(4001, 17, 'true');
+(4001, 16, 'img/ext_entity_type/ext_entity_C4.png'),
+(4001, 17, 'true'),
+(4001, 21, 'custom');
 
 INSERT INTO ui.grid_field_icons(grid_field_id, icon, value, show_value, badge_color, avatar, enabled, label_value) VALUES
 (024001, './img/ext_entity_type/incidencia_blanco.png', 'Red Viaria', false, false, false, true, 'LBL_EXT_ENTITY_TYPE_C4_ROAD'),

@@ -13,12 +13,12 @@ INSERT INTO master.ims_incident_groups (incident_group_id,alias,description,labe
 -- Table: conf.ims_incident_types
 --
 INSERT INTO conf.ims_incident_types (incident_type_id, ini_incident_state_id, incident_group_id, alias, description, incident_level_id, default_user_id, auto_confirm_incident, cancel_incident, valid_for_min, on_create_execute, enabled, visible, created_at, updated_at) VALUES
-(101, 1, 1, 'MET-001', 'Nieve en calzada',  1, 1, null, false, 2880, 'BackOfficeInitIncident.groovy', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(101, 1, 1, 'MET-001', 'Nieve en calzada',  1, 1, null, false, 2880, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
-(201, 1, 2, 'OBR-001', 'Afecciones por obras',  1, 1, null, false, 2880, 'BackOfficeInitIncident.groovy', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(202, 1, 2, 'OBR-002', 'Trabajos de asfaltado',  1, 1, null, false, 2880, 'BackOfficeInitIncident.groovy', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(203, 1, 2, 'OBR-003', 'Trabajos de mantenimiento',  1, 1, null, false, 2880, 'BackOfficeInitIncident.groovy', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(201, 1, 2, 'OBR-001', 'Afecciones por obras',  1, 1, null, false, 2880, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(202, 1, 2, 'OBR-002', 'Trabajos de asfaltado',  1, 1, null, false, 2880, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(203, 1, 2, 'OBR-003', 'Trabajos de mantenimiento',  1, 1, null, false, 2880, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
-(301, 1, 3, 'RED-001', 'Accidente en carretera',  1, 1, null, false, 2880, 'BackOfficeInitIncident.groovy', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(302, 1, 3, 'RED-002', 'Túnel cerrado',  1, 1, null, false, 2880, 'BackOfficeInitIncident.groovy', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(301, 1, 3, 'RED-001', 'Accidente en carretera',  1, 1, null, false, 2880, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(302, 1, 3, 'RED-002', 'Túnel cerrado',  1, 1, null, false, 2880, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 

@@ -1,7 +1,8 @@
 INSERT INTO ui.module_values(module_id, module_param_id, value) VALUES
 (200, 6, '1'),
 
-(403, 5, 'https://descontroltrafico.admon-cfnavarra.es/jasperserver/flow.html?_flowId=searchFlow&j_username=user&j_password=traficonavarra&userLocale=es_ES&folderUri=/Informes'),
+(402, 5, 'http://10.253.5.83:8080/google_complejo.html'),
+(403, 5, 'https://controltrafico.admon-cfnavarra.es/jasperserver/flow.html?_flowId=searchFlow&j_username=user&j_password=traficonavarra&userLocale=es_ES&folderUri=/Informes'),
 
 (1050, 8, '{"mapId": 1000}'),
 (1053, 8, '{"mapId": 1000}'),

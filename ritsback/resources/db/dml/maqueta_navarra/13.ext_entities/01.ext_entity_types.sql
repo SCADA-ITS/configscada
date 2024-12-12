@@ -163,4 +163,67 @@ true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	}  
 }
 ',
+true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(4, '112 Emergencias', 'Incidencias generadas en sistema 112 Emergencias', 'LBL_EXT_ENTITY_TYPE_112', 'LBL_EXT_ENTITY_TYPE_112_DESC', true, '5 0/1 * * * ? *', 
+'{
+	//"jdbc": {
+	//	"url": "jdbc:sqlserver://;serverName=192.168.88.159;databaseName=IncCarreteras",
+	//	"username": "SA",
+	//	"password": "Navarra0"
+	//},
+	//"selectQuery": "SELECT categoria, fecha_actualizacion, nombre_carretera, pk, hm, tipo, afeccion, fecha, titulo, id_incidencia, fecha_modificacion, id_carretera, utm_x, utm_y, id_tipo, id_afeccion, color FROM IncCarreteras.dbo.BaseIVR where id_categoria  = 3;",
+	"extEntityParamsMapping": [ {"field": "location", "extEntityTypeParamId": "ExtEntityTypeParam:4:1"},
+								{"field": "status", "extEntityTypeParamId": "ExtEntityTypeParam:4:2"},
+								//{"field": "type", "extEntityTypeParamId": "ExtEntityTypeParam:4:3"},
+								{"field": "resources", "extEntityTypeParamId": "ExtEntityTypeParam:4:4"},
+								{"field": "vehicles", "extEntityTypeParamId": "ExtEntityTypeParam:4:5"},
+								{"field": "date", "extEntityTypeParamId": "ExtEntityTypeParam:4:6"}
+							],
+	"extEntityFieldsMapping": [ {"srcField": "id_incidencia", "dstField": "id"},
+								{"srcField": "tipo", "dstField": "typeName"},
+								{"srcField": "titulo", "dstField": "typeName"}
+							],
+	"extEntitySubtypes": {
+		"field": "id_tipo",
+		"mapping": [ {"extEntitySubtypeId": "ExtEntitySubtype:3001", "value": "11020"},
+					 {"extEntitySubtypeId": "ExtEntitySubtype:3002", "value": "11021"},
+					 {"extEntitySubtypeId": "ExtEntitySubtype:3003", "value": "11022"},					
+					 {"extEntitySubtypeId": "ExtEntitySubtype:3004", "value": "11080"},
+					 {"extEntitySubtypeId": "ExtEntitySubtype:3005", "value": "11081"},
+					 {"extEntitySubtypeId": "ExtEntitySubtype:3006", "value": "11082"},
+					 {"extEntitySubtypeId": "ExtEntitySubtype:3007", "value": "11150"},
+					 {"extEntitySubtypeId": "ExtEntitySubtype:3008", "value": "11160"},
+					 {"extEntitySubtypeId": "ExtEntitySubtype:3009", "value": "11360"},
+					 {"extEntitySubtypeId": "ExtEntitySubtype:3010", "value": "11510"},
+					 {"extEntitySubtypeId": "ExtEntitySubtype:3011", "value": "11570"},
+					 {"extEntitySubtypeId": "ExtEntitySubtype:3012", "value": "11640"},
+					 {"extEntitySubtypeId": "ExtEntitySubtype:3013", "value": "12000"},
+					 {"extEntitySubtypeId": "ExtEntitySubtype:3014", "value": "12001"},
+					 {"extEntitySubtypeId": "ExtEntitySubtype:3015", "value": "12010"},
+					 {"extEntitySubtypeId": "ExtEntitySubtype:3016", "value": "12020"},
+					 {"extEntitySubtypeId": "ExtEntitySubtype:3017", "value": "12030"},
+					 {"extEntitySubtypeId": "ExtEntitySubtype:3018", "value": "12040"},					
+					 {"extEntitySubtypeId": "ExtEntitySubtype:3019", "value": "12050"},
+					 {"extEntitySubtypeId": "ExtEntitySubtype:3020", "value": "12060"},
+					 {"extEntitySubtypeId": "ExtEntitySubtype:3021", "value": "12070"},
+					 {"extEntitySubtypeId": "ExtEntitySubtype:3022", "value": "12080"},
+					 {"extEntitySubtypeId": "ExtEntitySubtype:3023", "value": "12090"},
+					 {"extEntitySubtypeId": "ExtEntitySubtype:3024", "value": "12100"},
+					 {"extEntitySubtypeId": "ExtEntitySubtype:3025", "value": "12110"},
+					 {"extEntitySubtypeId": "ExtEntitySubtype:3026", "value": "12120"},
+					 {"extEntitySubtypeId": "ExtEntitySubtype:3027", "value": "12130"},
+					 {"extEntitySubtypeId": "ExtEntitySubtype:3028", "value": "12350"},
+					 {"extEntitySubtypeId": "ExtEntitySubtype:3029", "value": "12360"},
+					 {"extEntitySubtypeId": "ExtEntitySubtype:3030", "value": "12370"},
+					 {"extEntitySubtypeId": "ExtEntitySubtype:3031", "value": "12410"},
+					 {"extEntitySubtypeId": "ExtEntitySubtype:3032", "value": "12420"},
+					 {"extEntitySubtypeId": "ExtEntitySubtype:3033", "value": "12430"},
+					 {"extEntitySubtypeId": "ExtEntitySubtype:3034", "value": "12440"},
+					 {"extEntitySubtypeId": "ExtEntitySubtype:3035", "value": "12510"},
+					 {"extEntitySubtypeId": "ExtEntitySubtype:3036", "value": "12520"},
+					 {"extEntitySubtypeId": "ExtEntitySubtype:3037", "value": "18010"}
+		]
+	}  
+}
+',
 true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

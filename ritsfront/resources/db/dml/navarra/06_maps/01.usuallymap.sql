@@ -1,15 +1,15 @@
 INSERT INTO ui.maps (id, name, description, "label", icon, longitude, latitude, zoom, zoom_max, zoom_min, limit_init_lon, limit_init_lat, limit_end_lon, limit_end_lat, custom_provider_url, default_zoom_search, dark_mode, custom_provider) VALUES 
 (1, 'MAP', 'Map', 'LBL_MENU_ITEM_MAP', NULL, -1.65, 42.7, 9, 14, 9, -2.5, 45.8, 0, 39.8, null, 9, true,
 	'{ 
-		"map": {"enabled": false, "type": "WMS", "serverType": "geoserver", "url": "https://descontroltrafico.admon-cfnavarra.esgeoserver/wms", "name": "osm"},
-		"router": {"enabled": true, "type": "OpenRouteService", "url": "https://descontroltrafico.admon-cfnavarra.es/ors"},
-        "smartRoadInfo": {"enabled": true, "url": "https://descontroltrafico.admon-cfnavarra.es/api"}
+		"map": {"enabled": false, "type": "WMS", "serverType": "geoserver", "url": "https://controltrafico.admon-cfnavarra.esgeoserver/wms", "name": "osm"},
+		"router": {"enabled": true, "type": "OpenRouteService", "url": "https://controltrafico.admon-cfnavarra.es/ors"},
+        "smartRoadInfo": {"enabled": true, "url": "https://controltrafico.admon-cfnavarra.es/api"}
 	}'),
 (1000, 'MAPA PARA COMPONENTE MAPEDITOR', 'MAPA PARA COMPONENTE MAPEDITOR', 'LBL_MENU_ITEM_MAP', NULL, -3, 42.7, 8, 14, 8, -2.5, 45.8, 0, 39.8, null, 8, true,
 	'{ 
-		"map": {"enabled": false, "type": "WMS", "serverType": "geoserver", "url": "https://descontroltrafico.admon-cfnavarra.es/geoserver/wms", "name": "osm"},
-		"router": {"enabled": true, "type": "OpenRouteService", "url": "https://descontroltrafico.admon-cfnavarra.es/ors"},
-        "smartRoadInfo": {"enabled": true, "url": "https://descontroltrafico.admon-cfnavarra.es/api"}
+		"map": {"enabled": false, "type": "WMS", "serverType": "geoserver", "url": "https://controltrafico.admon-cfnavarra.es/geoserver/wms", "name": "osm"},
+		"router": {"enabled": true, "type": "OpenRouteService", "url": "https://controltrafico.admon-cfnavarra.es/ors"},
+        "smartRoadInfo": {"enabled": true, "url": "https://controltrafico.admon-cfnavarra.es/api"}
 	}');
 
 INSERT INTO ui.map_layers (id, base_layer, map_id, "name", description, "label", icon, visible) VALUES 

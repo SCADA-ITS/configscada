@@ -5,7 +5,7 @@ const appConfig = {
 	stompUrl: function() {
 		
 		const wsUrl = 'ws://10.253.5.83:61614';
-		const wssUrl = 'wss://descontroltrafico.admon-cfnavarra.es:61614';
+		const wssUrl = 'wss://controltrafico.admon-cfnavarra.es:61614';
 	
 		return document.location.protocol === "https:" ? wssUrl : wsUrl;	
 	}() 
