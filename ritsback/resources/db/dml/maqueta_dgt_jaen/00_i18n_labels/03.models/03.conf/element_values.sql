@@ -19,6 +19,7 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_ES', 1, 'LBL_CREPUSCULAR', 'Crepuscular', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_NUBLADO', 'Nublado', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_NOCTURNO', 'Nocturno', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_EXTERIOR_NOCTURNO', 'Exterior/Nocturno', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 -- en_GB
 ('en_GB', 1, 'LBL_REGIME_0', 'Normal', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -30,6 +31,7 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('en_GB', 1, 'LBL_CREPUSCULAR', 'Twilight', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_NUBLADO', 'Cloudy', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_NOCTURNO', 'Nightly', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_EXTERIOR_NOCTURNO', 'Exterior/Nightly', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 
 -- es_CL
@@ -41,5 +43,5 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_CL', 1, 'LBL_SOLEADO', 'Soleado', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_CREPUSCULAR', 'Crepuscular', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_NUBLADO', 'Nublado', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('es_CL', 1, 'LBL_NOCTURNO', 'Nocturno', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-
+('es_CL', 1, 'LBL_NOCTURNO', 'Nocturno', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_EXTERIOR_NOCTURNO', 'Exterior/Nocturno', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

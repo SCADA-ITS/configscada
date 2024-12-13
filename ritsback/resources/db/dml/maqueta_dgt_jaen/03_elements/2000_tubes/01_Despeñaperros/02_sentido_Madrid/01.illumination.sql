@@ -6,7 +6,7 @@ INSERT INTO conf.element_values
 	"regimes": [{
 			"id": 1,
 			"alias": "EMERGENCIA",
-			"description": "Regimen de emergencia para el tubo de Sentido Madrid",
+			"description": "Régimen de emergencia para el tubo de Sentido Madrid",
 			"labelAlias": "LBL_EMERGENCIA",
 			"documentUrl": "",
 			"configs": [{
@@ -54,7 +54,7 @@ INSERT INTO conf.element_values
 		{
 			"id": 2,
 			"alias": "SOLEADO",
-			"description": "Regimen soleado para el tubo de Sentido Madrid",
+			"description": "Régimen soleado para el tubo de Sentido Madrid",
 			"labelAlias": "LBL_SOLEADO",
 			"documentUrl": "",
 			"configs": [{
@@ -101,24 +101,24 @@ INSERT INTO conf.element_values
 		},
 		{
 			"id": 3,
-			"alias": "CREPUSCULAR",
-			"description": "Regimen crepuscular para el tubo de Sentido Madrid",
-			"labelAlias": "LBL_CREPUSCULAR",
+			"alias": "NUBLADO",
+			"description": "Régimen nublado para el tubo de Sentido Madrid",
+			"labelAlias": "LBL_NUBLADO",
 			"documentUrl": "",
 			"configs": [{
 				"id": 3,
 				"commands": [
                     {
                         "commandElementTypeId": "CommandElementType:2:84",
-                        "elementId": "Element:84:7"
-                    },
-                    {
-                        "commandElementTypeId": "CommandElementType:2:84",
-                        "elementId": "Element:84:13"
+                        "elementId": "Element:84:11"
                     },
 					{
-                        "commandElementTypeId": "CommandElementType:1:84",
+                        "commandElementTypeId": "CommandElementType:2:84",
                         "elementId": "Element:84:6"
+                    },
+					{
+                        "commandElementTypeId": "CommandElementType:2:84",
+                        "elementId": "Element:84:7"
                     },
 					{
                         "commandElementTypeId": "CommandElementType:1:84",
@@ -133,12 +133,12 @@ INSERT INTO conf.element_values
                         "elementId": "Element:84:10"
                     },
 					{
-                        "commandElementTypeId": "CommandElementType:1:84",
-                        "elementId": "Element:84:11"
+                        "commandElementTypeId": "CommandElementType:2:84",
+                        "elementId": "Element:84:12"
                     },
 					{
-                        "commandElementTypeId": "CommandElementType:1:84",
-                        "elementId": "Element:84:12"
+                        "commandElementTypeId": "CommandElementType:2:84",
+                        "elementId": "Element:84:13"
                     },
 					{
                         "commandElementTypeId": "CommandElementType:1:84",
@@ -149,24 +149,24 @@ INSERT INTO conf.element_values
 		},
 		{
 			"id": 4,
-			"alias": "NUBLADO",
-			"description": "Regimen nublado para el tubo de Sentido Madrid",
-			"labelAlias": "LBL_NUBLADO",
+			"alias": "CREPUSCULAR",
+			"description": "Régimen crepuscular para el tubo de Sentido Madrid",
+			"labelAlias": "LBL_CREPUSCULAR",
 			"documentUrl": "",
 			"configs": [{
 				"id": 4,
 				"commands": [
                     {
                         "commandElementTypeId": "CommandElementType:2:84",
-                        "elementId": "Element:84:11"
-                    },
-					{
-                        "commandElementTypeId": "CommandElementType:1:84",
-                        "elementId": "Element:84:6"
-                    },
-					{
-                        "commandElementTypeId": "CommandElementType:1:84",
                         "elementId": "Element:84:7"
+                    },
+                    {
+                        "commandElementTypeId": "CommandElementType:2:84",
+                        "elementId": "Element:84:13"
+                    },
+					{
+                        "commandElementTypeId": "CommandElementType:2:84",
+                        "elementId": "Element:84:6"
                     },
 					{
                         "commandElementTypeId": "CommandElementType:1:84",
@@ -182,11 +182,11 @@ INSERT INTO conf.element_values
                     },
 					{
                         "commandElementTypeId": "CommandElementType:1:84",
-                        "elementId": "Element:84:12"
+                        "elementId": "Element:84:11"
                     },
 					{
-                        "commandElementTypeId": "CommandElementType:1:84",
-                        "elementId": "Element:84:13"
+                        "commandElementTypeId": "CommandElementType:2:84",
+                        "elementId": "Element:84:12"
                     },
 					{
                         "commandElementTypeId": "CommandElementType:1:84",
@@ -198,11 +198,59 @@ INSERT INTO conf.element_values
 		{
 			"id": 5,
 			"alias": "NOCTURNO",
-			"description": "Regimen nocturno para el tubo de Sentido Madrid",
+			"description": "Régimen nocturno para el tubo de Sentido Madrid",
 			"labelAlias": "LBL_NOCTURNO",
 			"documentUrl": "",
 			"configs": [{
 				"id": 5,
+				"commands": [
+                    {
+                        "commandElementTypeId": "CommandElementType:2:84",
+                        "elementId": "Element:84:6"
+                    },
+                    {
+                        "commandElementTypeId": "CommandElementType:2:84",
+                        "elementId": "Element:84:12"
+                    },
+					{
+                        "commandElementTypeId": "CommandElementType:1:84",
+                        "elementId": "Element:84:7"
+                    },
+					{
+                        "commandElementTypeId": "CommandElementType:1:84",
+                        "elementId": "Element:84:8"
+                    },
+					{
+                        "commandElementTypeId": "CommandElementType:1:84",
+                        "elementId": "Element:84:9"
+                    },
+					{
+                        "commandElementTypeId": "CommandElementType:1:84",
+                        "elementId": "Element:84:10"
+                    },
+					{
+                        "commandElementTypeId": "CommandElementType:1:84",
+                        "elementId": "Element:84:11"
+                    },
+					{
+                        "commandElementTypeId": "CommandElementType:1:84",
+                        "elementId": "Element:84:13"
+                    },
+					{
+                        "commandElementTypeId": "CommandElementType:1:84",
+                        "elementId": "Element:84:14"
+                    }
+				]	
+			}]
+		},
+		{
+			"id": 6,
+			"alias": "EXTERIOR/NOCTURNO",
+			"description": "Régimen exterior/nocturno para el tubo de Sentido Madrid",
+			"labelAlias": "LBL_EXTERIOR_NOCTURNO",
+			"documentUrl": "",
+			"configs": [{
+				"id": 6,
 				"commands": [
                     {
                         "commandElementTypeId": "CommandElementType:2:84",
@@ -255,7 +303,7 @@ INSERT INTO conf.element_values
 			"smConfigsRegimes": [
 				{
 					"regimeId": 1,
-					"stateIds": [2,3,4,5]	
+					"stateIds": [2,3,4,6]	
 				},
 				{
 					"regimeId": 2,
@@ -272,6 +320,10 @@ INSERT INTO conf.element_values
 				{
 					"regimeId": 5,
 					"stateIds": [5]	
+				},
+				{
+					"regimeId": 6,
+					"stateIds": [6]	
 				}
 			]
 		},
@@ -298,6 +350,10 @@ INSERT INTO conf.element_values
 				{
 					"regimeId": 5,
 					"stateIds": [5]	
+				},
+				{
+					"regimeId": 6,
+					"stateIds": [6]	
 				}
 			]
 		}
