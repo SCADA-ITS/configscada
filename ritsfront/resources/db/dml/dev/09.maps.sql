@@ -11,7 +11,7 @@ INSERT INTO ui.maps (id, name, description, "label", icon, longitude, latitude, 
 	(2, 'navarra', 'navarra', 'Mapa de Navarra', NULL, -1.7355106, 42.8651, 14, 18, 4, -4.5701704, 44.38234, 1.5830269, 40.593372, null, 6, true, 
 	'{ 
 		"map": {"enabled": true, "type": "WMS", "serverType": "geoserver", "url": "http://192.168.88.165:8700/geoserver/wms", "name": "osm"},
-		"router": {"enabled": true, "type": "OpenRouteService", "url": "http://192.168.88.165:8701/ors"},
+		"router": {"enabled": true, "type": "SmartRoadInfo", "url": "http://192.168.243.30:8702/api"},
         "smartRoadInfo": {"enabled": true, "url": "http://192.168.88.165:8702/api"}
 	}'),
 -- Map 3
