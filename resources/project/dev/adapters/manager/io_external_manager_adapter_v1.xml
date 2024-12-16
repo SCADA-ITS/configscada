@@ -19,7 +19,7 @@
 	  		</p:executor_params>
 		</p:executor>
 		<p:executor>
-			<p:id>1</p:id>
+			<p:id>2</p:id>
 			<p:enabled>true</p:enabled>
 			<p:threads>1</p:threads>
 			<p:merge_wait_time>1</p:merge_wait_time>
@@ -31,7 +31,7 @@
 	  		</p:executor_params>
 		</p:executor>
 		<p:executor>
-			<p:id>1</p:id>
+			<p:id>3</p:id>
 			<p:enabled>true</p:enabled>
 			<p:threads>1</p:threads>
 			<p:merge_wait_time>1</p:merge_wait_time>
@@ -40,6 +40,42 @@
 			</p:subscriptors_ref>
 			<p:executor_params>
 				<p:executor_param_value>ext_entity_type=3</p:executor_param_value>
+	  		</p:executor_params>
+		</p:executor>
+		<p:executor>
+			<p:id>4</p:id>
+			<p:enabled>true</p:enabled>
+			<p:threads>1</p:threads>
+			<p:merge_wait_time>1</p:merge_wait_time>
+			<p:manager_class>com.revenga.rits.back.io.external.manager.c112entities.C112ExtEntitiesExcutor</p:manager_class>
+			<p:subscriptors_ref>
+			</p:subscriptors_ref>
+			<p:executor_params>
+				<p:executor_param_value>ext_entity_type=4</p:executor_param_value>
+	  		</p:executor_params>
+		</p:executor>
+		<p:executor>
+			<p:id>5</p:id>
+			<p:enabled>true</p:enabled>
+			<p:threads>1</p:threads>
+			<p:merge_wait_time>1</p:merge_wait_time>
+			<p:manager_class>com.revenga.rits.back.io.external.manager.c112entities.C112ResourcesExtEntitiesExcutor</p:manager_class>
+			<p:subscriptors_ref>
+			</p:subscriptors_ref>
+			<p:executor_params>
+				<p:executor_param_value>ext_entity_type=5</p:executor_param_value>
+	  		</p:executor_params>
+		</p:executor>
+		<p:executor>
+			<p:id>6</p:id>
+			<p:enabled>true</p:enabled>
+			<p:threads>1</p:threads>
+			<p:merge_wait_time>1</p:merge_wait_time>
+			<p:manager_class>com.revenga.rits.back.io.external.manager.c112entities.C112VehiclesExtEntitiesExcutor</p:manager_class>
+			<p:subscriptors_ref>
+			</p:subscriptors_ref>
+			<p:executor_params>
+				<p:executor_param_value>ext_entity_type=6</p:executor_param_value>
 	  		</p:executor_params>
 		</p:executor>
 	</p:executors>

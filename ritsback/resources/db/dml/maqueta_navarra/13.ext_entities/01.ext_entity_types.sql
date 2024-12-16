@@ -54,6 +54,7 @@ INSERT INTO static.ext_entity_types(ext_entity_type_id, alias, description, labe
 	} 
 }',
 true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
 (2, 'C4 - Meteorológicas', 'Incidencias generadas en sistema C4 - Meteorológicas', 'LBL_EXT_ENTITY_TYPE_C4_WEATHER', 'LBL_EXT_ENTITY_TYPE_C4_WEATHER_DESC', true, '20 0/1 * * * ? *', 
 '{
 	"jdbc": {
@@ -97,9 +98,9 @@ true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 					 {"extEntitySubtypeId": "ExtEntitySubtype:2016", "value": "58"}
 		]
 	}  
-}
-',
+}',
 true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
 (3, 'C4 - Red viaria', 'Incidencias generadas en sistema C4 - Red viaria', 'LBL_EXT_ENTITY_TYPE_C4_ROAD', 'LBL_EXT_ENTITY_TYPE_C4_ROAD_DESC', true, '40 0/1 * * * ? *', 
 '{
 	"jdbc": {
@@ -161,30 +162,23 @@ true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 					 {"extEntitySubtypeId": "ExtEntitySubtype:3034", "value": "58"}
 		]
 	}  
-}
-',
+}',
 true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(4, '112 Emergencias', 'Incidencias generadas en sistema 112 Emergencias', 'LBL_EXT_ENTITY_TYPE_112', 'LBL_EXT_ENTITY_TYPE_112_DESC', true, '5 0/1 * * * ? *', 
+
+(4, '112 Emergencias', 'Incidencias generadas en sistema 112 Emergencias', 'LBL_EXT_ENTITY_TYPE_112', 'LBL_EXT_ENTITY_TYPE_112_DESC', true, '0 0 * * * ? *', 
 '{
-	//"jdbc": {
-	//	"url": "jdbc:sqlserver://;serverName=192.168.88.159;databaseName=IncCarreteras",
-	//	"username": "SA",
-	//	"password": "Navarra0"
-	//},
-	//"selectQuery": "SELECT categoria, fecha_actualizacion, nombre_carretera, pk, hm, tipo, afeccion, fecha, titulo, id_incidencia, fecha_modificacion, id_carretera, utm_x, utm_y, id_tipo, id_afeccion, color FROM IncCarreteras.dbo.BaseIVR where id_categoria  = 3;",
-	"extEntityParamsMapping": [ {"field": "location", "extEntityTypeParamId": "ExtEntityTypeParam:4:1"},
-								{"field": "status", "extEntityTypeParamId": "ExtEntityTypeParam:4:2"},
-								//{"field": "type", "extEntityTypeParamId": "ExtEntityTypeParam:4:3"},
-								{"field": "resources", "extEntityTypeParamId": "ExtEntityTypeParam:4:4"},
-								{"field": "vehicles", "extEntityTypeParamId": "ExtEntityTypeParam:4:5"},
-								{"field": "date", "extEntityTypeParamId": "ExtEntityTypeParam:4:6"}
+
+	"host": "http://192.168.88.163:8100/TrafficIncidents",
+	"extEntityParamsMapping": [ {"field": "location.text", "extEntityTypeParamId": "ExtEntityTypeParam:4:1"},
+								{"field": "statusName", "extEntityTypeParamId": "ExtEntityTypeParam:4:2"},
+								{"field": "creationTime", "extEntityTypeParamId": "ExtEntityTypeParam:4:5"}
 							],
-	"extEntityFieldsMapping": [ {"srcField": "id_incidencia", "dstField": "id"},
-								{"srcField": "tipo", "dstField": "typeName"},
-								{"srcField": "titulo", "dstField": "typeName"}
+	"extEntityFieldsMapping": [ {"srcField": "id", "dstField": "uid"},
+								{"srcField": "typeName", "dstField": "alias"},
+								{"srcField": "typeName", "dstField": "description"}
 							],
 	"extEntitySubtypes": {
-		"field": "id_tipo",
+		"field": "typeOid",
 		"mapping": [ {"extEntitySubtypeId": "ExtEntitySubtype:3001", "value": "11020"},
 					 {"extEntitySubtypeId": "ExtEntitySubtype:3002", "value": "11021"},
 					 {"extEntitySubtypeId": "ExtEntitySubtype:3003", "value": "11022"},					
@@ -224,6 +218,32 @@ true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 					 {"extEntitySubtypeId": "ExtEntitySubtype:3037", "value": "18010"}
 		]
 	}  
-}
-',
+}',
+true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(5, '112 - Resources', 'Recursos asiganados a una incidencia del 112', 'LBL_EXT_ENTITY_TYPE_112_RESOURCES', 'LBL_EXT_ENTITY_TYPE_112_RESOURCES_DESC', true, '20 0 * * * ? *', 
+'{
+	"host": "http://192.168.88.163:8100/TrafficIncidents",
+	"extEntityParamsMapping": [ {"field": "avlTime", "extEntityTypeParamId": "ExtEntityTypeParam:5:1"},
+								{"field": "statusName", "extEntityTypeParamId": "ExtEntityTypeParam:5:2"},
+								{"field": "statusTime", "extEntityTypeParamId": "ExtEntityTypeParam:5:3"}
+							],
+	"extEntityFieldsMapping": [ {"srcField": "name", "dstField": "uid"},
+								{"srcField": "agencyName", "dstField": "alias"},
+								{"srcField": "stationName", "dstField": "description"}
+							]
+	}  
+}',
+
+true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(6, '112 - Vehicles', 'Vehículos asiganados a una incidencia del 112', 'LBL_EXT_ENTITY_TYPE_112_VEHICLES', 'LBL_EXT_ENTITY_TYPE_112_VEHICLES_DESC', true, '40 0 * * * ? *', 
+'{
+	"host": "http://192.168.88.163:8100/TrafficIncidents",
+	"extEntityParamsMapping": [ {"field": "color", "extEntityTypeParamId": "ExtEntityTypeParam:6:1"}
+							],
+	"extEntityFieldsMapping": [ {"srcField": "plateNumber", "dstField": "uid"},
+								{"srcField": "brand", "dstField": "alias"},
+								{"srcField": "model", "dstField": "description"}
+							],
+}',
 true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
