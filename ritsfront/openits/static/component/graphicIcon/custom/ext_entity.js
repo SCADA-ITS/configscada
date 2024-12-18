@@ -1,7 +1,7 @@
 import GraphicIconExtEntity from "../graphicIconExtEntity.js";
 
 const PICTOGRAM_TYPE_PATH = "img/ext_entity_type";
-const PICTOGRAM_UNKNOWN_TYPE = "img/ext_entity_type/undefined.png";
+const PICTOGRAM_UNKNOWN_TYPE = "undefined.png";
 
 
 export default class ExtEntity {
@@ -25,30 +25,48 @@ export default class ExtEntity {
 		if (this.gType) {
 			
 			if (this.extEntity.extEntitySubtype && this.extEntity.extEntitySubtype.icon_data) {	
-				
-				const iconData = JSON.parse(this.extEntity.extEntitySubtype.icon_data);
 								
 				const dynamicId = `ExtEntityTypeParam:${this.extEntity.extEntityType.id.split(":")[1]}:8`;
 				
-				const colorActual = this.extEntity.extEntityValues.find(object => object.extEntityTypeParam.id === dynamicId)?.value;
-
-				const icono = iconData.iconos.find(icon => icon.color === colorActual);
+				const colorActual = this.extEntity.extEntityValues.find(object => object.extEntityTypeParam?.id === dynamicId)?.value;
 				
-				const iconoValor = icono ? icono.valor : PICTOGRAM_UNKNOWN_TYPE;
+				let iconoValor = "";
+					
+				if (colorActual === undefined) {
+									
+					iconoValor = this.extEntity.extEntitySubtype.icon_data;
+				
+				} else {
+					
+					const iconData = JSON.parse(this.extEntity.extEntitySubtype.icon_data);
+					
+					const icono = iconData.iconos.find(icon => icon.color === colorActual);
+									
+					iconoValor = icono ? icono.valor : PICTOGRAM_UNKNOWN_TYPE;
+				}
 				
 				this.gType.attr({ "xlink:href": `${PICTOGRAM_TYPE_PATH}/${iconoValor}` });
 			}
 			else if (this.extEntity.extEntityType && this.extEntity.extEntityType.icon_data) {
-				
-				const iconData = JSON.parse(this.extEntity.extEntityType.icon_data);
 								
 				const dynamicId = `ExtEntityTypeParam:${this.extEntity.extEntityType.id.split(":")[1]}:8`;
 				
-				const colorActual = this.extEntity.extEntityValues.find(object => object.extEntityTypeParam.id === dynamicId)?.value;
+				const colorActual = this.extEntity.extEntityValues.find(object => object.extEntityTypeParam?.id === dynamicId)?.value;
 
-				const icono = iconData.iconos.find(icon => icon.color === colorActual);
+				let iconoValor = "";
 				
-				const iconoValor = icono ? icono.valor : PICTOGRAM_UNKNOWN_TYPE;
+				if (colorActual === undefined) {
+					
+					iconoValor = this.extEntity.extEntitySubtype.icon_data;
+				
+				} else {
+					
+					const iconData = JSON.parse(this.extEntity.extEntityType.icon_data);
+					
+					const icono = iconData.iconos.find(icon => icon.color === colorActual);
+									
+					iconoValor = icono ? icono.valor : PICTOGRAM_UNKNOWN_TYPE;
+				}
 				
 				this.gType.attr({ "xlink:href": `${PICTOGRAM_TYPE_PATH}/${iconoValor}` });
 			}

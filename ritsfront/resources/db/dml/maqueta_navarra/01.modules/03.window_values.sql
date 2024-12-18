@@ -28,6 +28,14 @@ INSERT INTO ui.window_values(module_id, window_param_id, value) VALUES
 (1950, 12, 'LBL_MENU_ITEM_EXTERNAL_INCIDENTS'),
 (1950, 14, 'true'),
 
+(1951, 4, '825'),
+(1951, 5, '1400'),
+(1951, 8, 'true'),
+(1951, 10, 'img/module/default.png'),
+(1951, 11, '#464646'),
+(1951, 12, 'LBL_MENU_ITEM_EXTERNAL_INCIDENTS'),
+(1951, 14, 'true'),
+
 (2020, 8, 'true'),
 (2020, 10, 'img/module/default.png'),
 (2020, 11, '#464646'),

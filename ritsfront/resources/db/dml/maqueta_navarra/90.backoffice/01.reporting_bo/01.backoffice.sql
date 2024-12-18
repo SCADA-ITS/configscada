@@ -33,7 +33,13 @@ BEGIN
 			-- sql_view 
 			'SELECT id, categoria, tipo, titulo, afeccion, carretera, localizacion, fecha, fecha_actualizacion, estado 
 				FROM reporting_bo.c4_ext_entities_with_values'
-			, 4001, null);
+			, 4001, null),
+		
+		(2, 'e112_all_ext_entities_with_values', 'Incidencias 112', 'LBL_EXT_ENTITY_112', 'LBL_EXT_ENTITY_112_DESCRIPTION', NULL, false, false, 
+			-- sql_view 
+			'SELECT id, tipo, localizacion, fecha, estado 
+				FROM reporting_bo.e112_ext_entities_with_values'
+			, null, null);
 			
 			
 	INSERT INTO reporting_bo.sg_metadata_columns (id, sg_metadata_table_id, column_name, "label", label_description, needs_translation, metadata) VALUES
@@ -46,7 +52,13 @@ BEGIN
 		(0107, 1, 'localizacion', 'LBL_EXT_ENTITY_C4_COLUMN_LOCATION', NULL, true, '{"position": 7, "editable": false, "refName": true}'),
 		(0108, 1, 'fecha', 'LBL_EXT_ENTITY_C4_COLUMN_DATE', NULL, true, '{"position": 8, "editable": false, "refName": true}'),
 		(0109, 1, 'fecha_actualizacion', 'LBL_EXT_ENTITY_C4_UPDATE_DATE', NULL, true, '{"position": 9, "editable": false, "refName": true}'),
-		(0110, 1, 'estado', 'LBL_EXT_ENTITY_C4_COLUMN_STATE', NULL, true, '{"position": 10, "editable": false, "refName": true}');
+		(0110, 1, 'estado', 'LBL_EXT_ENTITY_C4_COLUMN_STATE', NULL, true, '{"position": 10, "editable": false, "refName": true}'),
+		
+		(0201, 2, 'id', 'LBL_EXT_ENTITY_112_COLUMN_ID', NULL, true, '{"position": 1, "editable": false, "refName": true}'),
+		(0202, 2, 'tipo', 'LBL_EXT_ENTITY_112_COLUMN_TYPE', NULL, true, '{"position": 2, "editable": false, "refName": true}'),
+		(0203, 2, 'localizacion', 'LBL_EXT_ENTITY_112_COLUMN_LOCATION', NULL, true, '{"position": 3, "editable": false, "refName": true}'),
+		(0204, 2, 'fecha', 'LBL_EXT_ENTITY_112_COLUMN_DATE', NULL, true, '{"position": 4, "editable": false, "refName": true}'),
+		(0205, 2, 'estado', 'LBL_EXT_ENTITY_112_COLUMN_STATE', NULL, true, '{"position": 5, "editable": false, "refName": true}');
 		
 		
   END IF;

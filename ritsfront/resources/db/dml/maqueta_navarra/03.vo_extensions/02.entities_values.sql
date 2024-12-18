@@ -83,6 +83,29 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 }
 '),
 
+
+('ExtEntityType:4', 63,  'incidencia_blanco.png'),
+('ExtEntityType:4', 64, '["ExtEntityTypeParam:4:1","ExtEntityTypeParam:4:2","ExtEntityTypeParam:4:5"]'),
+('ExtEntityType:4', 65, '#8c7461'),
+('ExtEntityType:4', 67,  '
+{
+  "iconos": [
+    {
+      "color": "rojo",
+      "valor": "incidencia_rojo.png"
+    },
+    {
+      "color": "verde",
+      "valor": "incidencia_verde.png"
+    },
+    {
+      "color": "amarillo",
+      "valor": "incidencia_amarillo.png"
+    }
+  ]
+}
+'),
+
 ('ExtEntitySubtype:2001', 70, '
 {
   "iconos": [
@@ -119,6 +142,11 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
   ]
 }
 '), 
+
+('ExtEntitySubtype:4001', 70, 'incidencia_112.png'),
+('ExtEntitySubtype:4002', 70, 'meteo_112.png'),
+('ExtEntitySubtype:4003', 70, 'trafico_112.png'),
+('ExtEntitySubtype:4004', 70, 'varios_112.png'),
 
 ('CommandElementType:2:2', 38, 'INFO'),
 ('CommandElementType:3:2', 38, 'INFO');
