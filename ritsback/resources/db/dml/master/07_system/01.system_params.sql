@@ -29,7 +29,7 @@ INSERT INTO master.system_params
 (15, 'travel_time_period_time_minutes', 'travel_time_period_time_minutes', 'LBL_SYSTEM_PARAM_TRAVEL_TIME_PERIOD_TIME_MINUTES', null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (16, 'max_sessions', 'max_sessions', 'LBL_SYSTEM_PARAM_MAX_SESSIONS', null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (17, 'max_unrecognized_audit_logs', 'maximum number of audit logs', 'LBL_SYSTEM_PARAM_AUDIT_LOGS', null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(18, 'ors_host', 'open router host', 'LBL_SYSTEM_PARAM_ORS_HOST', null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(18, 'smart_road_info_url', 'smart road info url', 'LBL_SYSTEM_PARAM_SMART_ROAD_INFO_URL', null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 
 
