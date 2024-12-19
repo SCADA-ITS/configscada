@@ -131,12 +131,15 @@ BEGIN
 		label_description varchar NULL,
 		needs_translation bool NOT NULL,
 		metadata varchar null,
+		ref_view_column_id int NULL,
 		CONSTRAINT pk_sg_metadata_columns PRIMARY KEY (id)
 	);
 
 	CREATE INDEX idx_sg_metadata_columns_sg_metadata_table_id ON gip.sg_metadata_columns USING btree (sg_metadata_table_id);
 
 	ALTER TABLE gip.sg_metadata_columns ADD CONSTRAINT fk_sg_metadata_columns_sg_metadata_table_id FOREIGN KEY (sg_metadata_table_id) references gip.sg_metadata_tables(id);
+	
+	ALTER TABLE gip.sg_metadata_columns ADD CONSTRAINT fk_sg_metadata_columns_sg_metadata_column_id FOREIGN KEY (ref_view_column_id) references gip.sg_metadata_columns(id);
 	
 	ALTER TABLE gip.sg_metadata_columns ADD CONSTRAINT unique_sg_metadata_columns UNIQUE (sg_metadata_table_id, column_name);
 	

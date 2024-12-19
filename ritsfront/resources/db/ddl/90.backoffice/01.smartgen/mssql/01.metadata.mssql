@@ -163,6 +163,7 @@ CREATE TABLE dbo.sg_metadata_columns (
 	mdi_icon varchar(100) NULL,
 	needs_translation bit NOT NULL,
 	metadata varchar(2000) NULL,
+	ref_view_column_id int NULL,
 	CONSTRAINT pk_sg_metadata_columns PRIMARY KEY (id)
 );
 GO
@@ -177,6 +178,10 @@ GO
 
 ALTER TABLE dbo.sg_metadata_columns ADD CONSTRAINT fk_sg_metadata_columns_sg_metadata_table_id FOREIGN KEY (sg_metadata_table_id) REFERENCES dbo.sg_metadata_tables(id);
 GO
+
+ALTER TABLE dbo.sg_metadata_columns ADD CONSTRAINT fk_sg_metadata_columns_sg_metadata_column_id FOREIGN KEY (ref_view_column_id) REFERENCES dbo.sg_metadata_columns(id);
+GO
+
 -- Table: dbo.sg_metadata_column_fillers
 -- Descripción: 
 -- Scope: 

@@ -125,23 +125,88 @@ BEGIN
                 WHERE c.category_id = sc.category_id 
             ) as A
     ' 
-    ,  51, '{"gridId": 51}');
+    ,  51, '{"gridId": 51}'),
+    -- vw_drivers
+    (8, 'vw_drivers', 'LBL_DRIVERS', 'LBL_DRIVER', 'LBL_DRIVER_DESCRIPTION', NULL, true, true,
+		'
+		 SELECT *
+	       FROM (VALUES
+	           (1, ''Juan'', ''Pérez''),
+	           (2, ''María'', ''López''),
+	           (3, ''Carlos'', ''García''),
+	           (4, ''Ana'', ''Martínez''),
+	           (5, ''Luis'', ''Hernández'')
+	       ) AS drivers(id, name, surname)
+	    ', null, null),
+	-- vw_addresses
+    (9, 'vw_addreses', 'LBL_ADDRESSES', 'LBL_ADDRESS', 'LBL_ADDRESS_DESCRIPTION', NULL, true, true,
+		'
+		 SELECT *
+	       FROM (VALUES
+    	       (1, ''Calle Falsa 123'', 1),
+    	       (2, ''Avenida Siempreviva 742'', 1),
+    	       (3, ''Calle Luna 45'', 2),
+    	       (4, ''Boulevard del Sol 678'', 3),
+	           (5, ''Calle Estrella 9'', 3),
+    	       (6, ''Avenida Central 456'', 4)
+	       ) AS addresses(id, address, driver_id)
+	    ', null, null),
+	-- vw_brands
+	(10, 'vw_brands', 'LBL_BRANDS', 'LBL_BRAND', 'LBL_BRAND_DESCRIPTION', NULL, true, true,
+		'
+		 SELECT *
+	       FROM (VALUES
+    	       (1, ''Toyota''),
+    	       (2, ''Seat''),
+    	       (3, ''Porsche''),
+    	       (4, ''Citroën'')
+	       ) AS brands(id, name)
+	    ', null, null),
+	-- vw_cars
+    (11, 'vw_cars', 'LBL_CARS', 'LBL_CAR', 'LBL_CAR_DESCRIPTION', NULL, true, true,
+		'
+		 SELECT *
+	       FROM (VALUES
+    	       (1, ''Avensis'', 1, 1),
+    	       (2, ''Altea'', 1, 2),
+    	       (3, ''Leon'', 2, 2),
+    	       (4, ''Taycan'', 3, 3),
+	           (5, ''C5'', 3, 4),
+    	       (6, ''Berlingo'', 3, 4)
+	       ) AS cars(id, model, driver_id, brand_id)
+	    ', null, null);
 	
 	-- 
   	-- smartgen.sg_metadata_columns
   	--
-	INSERT INTO smartgen.sg_metadata_columns (id, sg_metadata_table_id, column_name, "label", label_description, needs_translation, metadata) VALUES
-	(1, 2, 'product_name', 'LBL_PRODUCT', NULL, true, '{ "badgeInHeader": "mdi mdi-account" }'),
-	(2, 1, 'fullname', 'LBL_FULLNAME', NULL, false, '{ "multiline": 4 }'),
-	(3, 1, 'name', 'LBL_NAME', NULL, false, '{ "refName": true }'),
+	INSERT INTO smartgen.sg_metadata_columns (id, sg_metadata_table_id, column_name, "label", label_description, needs_translation, metadata, ref_view_column_id) VALUES
+	(1, 2, 'product_name', 'LBL_PRODUCT', NULL, true, '{ "badgeInHeader": "mdi mdi-account" }', null),
+	(2, 1, 'fullname', 'LBL_FULLNAME', NULL, false, '{ "multiline": 4 }', null),
+	(3, 1, 'name', 'LBL_NAME', NULL, false, '{ "refName": true }', null),
 	(4, 2, 'subcategory_id', NULL, NULL, false, 
 	-- metadata
 	'{ 
 		"associatedFieldName": "category_id",
 		"badgeInHeader": "mdi mdi-cog"
-	}'),
-	(5, 4, 'product_id', NULL, NULL, false, '{ "refGroupFieldName": "category_id" }'),
-	(6, 2, 'category_id', NULL, NULL, false, '{ "badgeInHeader": "mdi mdi-cog" }');
+	}', null),
+	(5, 4, 'product_id', NULL, NULL, false, '{ "refGroupFieldName": "category_id" }', null),
+	(6, 2, 'category_id', NULL, NULL, false, '{ "badgeInHeader": "mdi mdi-cog" }', null),
+	-- drivers
+	(7, 8, 'id', NULL, NULL, false, null, null),
+	(8, 8, 'name', NULL, NULL, false, null, null),
+	(9, 8, 'surname', NULL, NULL, false, null, null),
+	-- addresses
+	(10, 9, 'id', NULL, NULL, false, null, null),
+	(11, 9, 'address', NULL, NULL, false, null, null),
+	(12, 9, 'driver_id', NULL, NULL, false, null, 7),
+	-- brands
+	(13, 10, 'id', NULL, NULL, false, null, null),
+	(14, 10, 'name', NULL, NULL, false, null, null),
+	-- cars
+	(15, 11, 'id', NULL, NULL, false, null, null),
+	(16, 11, 'model', NULL, NULL, false, null, null),
+	(17, 11, 'driver_id', NULL, NULL, false, null, 7),
+	(18, 11, 'brand_id', NULL, NULL, false, null, 13);
 	
 	-- 
   	-- smartgen.sg_metadata_table_triggers
