@@ -171,7 +171,8 @@ true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	"host": "http://192.168.88.163:8100/TrafficIncidents",
 	"extEntityParamsMapping": [ {"field": "location.text", "extEntityTypeParamId": "ExtEntityTypeParam:4:1"},
 								{"field": "statusName", "extEntityTypeParamId": "ExtEntityTypeParam:4:2"},
-								{"field": "creationTime", "extEntityTypeParamId": "ExtEntityTypeParam:4:3"}
+								{"field": "creationTime", "extEntityTypeParamId": "ExtEntityTypeParam:4:5"},
+								{"field": "typeOid", "extEntityTypeParamId": "ExtEntityTypeParam:4:6"}
 							],
 	"extEntityFieldsMapping": [ {"srcField": "id", "dstField": "uid"},
 								{"srcField": "typeName", "dstField": "alias"},

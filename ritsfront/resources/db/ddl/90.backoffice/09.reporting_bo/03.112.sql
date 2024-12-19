@@ -12,8 +12,17 @@ BEGIN
     CREATE OR REPLACE VIEW reporting_bo.e112_ext_entities_with_values AS
     SELECT 
         e.uid as id,
+		CASE 
+            WHEN pv.param_6 in (''11020'', ''11021'', ''11022'', ''11080'', ''11081'', ''11082'', ''11150'', ''11160'', ''11360'') THEN ''Accidentes''
+            WHEN pv.param_6 in (''11510'', ''11570'', ''11640'') THEN ''Meteorológicas''
+            WHEN pv.param_6 in (''12000'', ''12001'', ''12010'', ''12020'', ''12030'', ''12040'', ''12050'', ''12060'', ''12070'', 
+                                ''12080'', ''12090'', ''12100'', ''12110'', ''12120'', ''12130'', ''12350'', ''12360'', ''12370'',
+                                ''12410'', ''12420'', ''12430'', ''12440'', ''12510'', ''12520'') THEN ''Tráfico''
+            WHEN pv.param_6 in (''18010'') THEN ''Varios''
+            ELSE pv.param_6::varchar
+        END AS categoria,
         e.alias AS tipo,
-        pv.param_3 as fecha,
+		pv.param_5::timestamptz AT TIME ZONE ''Europe/Madrid'' AS fecha,
         pv.param_1 as localizacion,
         pv.param_2 as estado
     FROM 
@@ -30,7 +39,7 @@ BEGIN
             FROM 
                 hist.ext_entity_values
             WHERE 
-                ext_entity_type_param_id IN (1, 2, 3)
+                ext_entity_type_param_id IN (1, 2, 5, 6)
             ORDER BY 
                 ext_entity_id, 
                 created_at desc,
@@ -39,7 +48,8 @@ BEGIN
             ext_entity_id int8,
             param_1 varchar,
             param_2 varchar,
-            param_3 varchar
+            param_5 varchar,
+            param_6 varchar
         )
     ON 
         e.ext_entity_id = pv.ext_entity_id
