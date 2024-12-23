@@ -246,4 +246,51 @@ true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 								{"srcField": "model", "dstField": "description"}
 							]
 }',
+true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(7, 'Waze traffic alerts', 'Alertas de trafico de waze', 'LBL_EXT_ENTITY_TYPE_WAZE_TRAFFIC_ALERTS', 'LBL_EXT_ENTITY_TYPE_WAZE_TRAFFIC_ALERTS_DESC', true, '0 0/2 * * * ? *', 
+'{
+	"url": "https://www.waze.com/row-partnerhub-api/partners/16934850034/waze-feeds/c46bd65e-1743-4e61-88da-311bab40b8ae?format=1&types=alerts",
+	"reliability": 10,
+	"confidence": 0,
+	"extEntityParamsMapping": [ {"field": "pubMillis", "extEntityTypeParamId": "ExtEntityTypeParam:7:1"},
+								{"field": "magvar", "extEntityTypeParamId": "ExtEntityTypeParam:7:2"},
+								{"field": "street", "extEntityTypeParamId": "ExtEntityTypeParam:7:3"},
+								{"field": "city", "extEntityTypeParamId": "ExtEntityTypeParam:7:4"},
+								{"field": "country", "extEntityTypeParamId": "ExtEntityTypeParam:7:5"},
+								{"field": "reportRating", "extEntityTypeParamId": "ExtEntityTypeParam:7:6"},
+								{"field": "reliability", "extEntityTypeParamId": "ExtEntityTypeParam:7:7"},
+								{"field": "confidence", "extEntityTypeParamId": "ExtEntityTypeParam:7:8"},
+								{"field": "reportByMunicipalityUser", "extEntityTypeParamId": "ExtEntityTypeParam:7:9"}
+							],
+	"extEntityFieldsMapping": [ {"srcField": "uuid", "dstField": "uid"},
+								{"srcField": "subtype", "dstField": "alias"},
+								{"srcField": "reportDescription", "dstField": "description"}
+							],
+	"extEntitySubtypes": {
+			"field": "type",
+			"mapping": [{"extEntitySubtypeId": "ExtEntitySubtype:7001", "value": "ACCIDENT"},
+						{"extEntitySubtypeId": "ExtEntitySubtype:7002", "value": "JAM"},
+						{"extEntitySubtypeId": "ExtEntitySubtype:7003", "value": "HAZARD"},
+						{"extEntitySubtypeId": "ExtEntitySubtype:7004", "value": "WEATHERHAZARD"},	
+						{"extEntitySubtypeId": "ExtEntitySubtype:7003", "value": "WEATHERHAZARD / HAZARD",	
+							"field": "subtype",
+							"mapping": [{"extEntitySubtypeId": "ExtEntitySubtype:7004", "value": "HAZARD_WEATHER"},
+										{"extEntitySubtypeId": "ExtEntitySubtype:7004", "value": "HAZARD_WEATHER_FOG"},
+										{"extEntitySubtypeId": "ExtEntitySubtype:7004", "value": "HAZARD_WEATHER_HAIL"},
+										{"extEntitySubtypeId": "ExtEntitySubtype:7004", "value": "HAZARD_WEATHER_HEAVY_RAIN"},
+										{"extEntitySubtypeId": "ExtEntitySubtype:7004", "value": "HAZARD_WEATHER_HEAVY_SNOW"},
+										{"extEntitySubtypeId": "ExtEntitySubtype:7004", "value": "HAZARD_WEATHER_FLOOD"},
+										{"extEntitySubtypeId": "ExtEntitySubtype:7004", "value": "HAZARD_WEATHER_MONSOON"},
+										{"extEntitySubtypeId": "ExtEntitySubtype:7004", "value": "HAZARD_WEATHER_TORNADO"},
+										{"extEntitySubtypeId": "ExtEntitySubtype:7004", "value": "HAZARD_WEATHER_HEAT_WAVE"},
+										{"extEntitySubtypeId": "ExtEntitySubtype:7004", "value": "HAZARD_WEATHER_HURRICANE"},
+										{"extEntitySubtypeId": "ExtEntitySubtype:7004", "value": "HAZARD_WEATHER_FREEZING_RAIN"}]
+						},					
+						{"extEntitySubtypeId": "ExtEntitySubtype:7005", "value": "MISC"},
+						{"extEntitySubtypeId": "ExtEntitySubtype:7006", "value": "CONSTRUCTION"},
+						{"extEntitySubtypeId": "ExtEntitySubtype:7007", "value": "ROAD_CLOSED"}
+		]
+	}  
+}',
 true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

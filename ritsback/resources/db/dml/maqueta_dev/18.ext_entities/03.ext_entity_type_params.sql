@@ -45,7 +45,18 @@ INSERT INTO static.ext_entity_type_params (ext_entity_type_id, ext_entity_type_p
 (5, 2, null, 'status', 'status', 'LBL_EXT_ENTITY_PARAM_ID_STATUS', 'LBL_EXT_ENTITY_PARAM_ID_STATUS_DESC', 2, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (5, 3, null, 'status_time', 'status_time', 'LBL_EXT_ENTITY_PARAM_ID_STATUS_TIME', 'LBL_EXT_ENTITY_PARAM_ID_STATUS_TIME_DESC', 2, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
-(6, 1, null, 'color', 'color', 'LBL_EXT_ENTITY_PARAM_ID_COLOR', 'LBL_EXT_ENTITY_PARAM_ID_COLOR_DESC', 2, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(6, 1, null, 'color', 'color', 'LBL_EXT_ENTITY_PARAM_ID_COLOR', 'LBL_EXT_ENTITY_PARAM_ID_COLOR_DESC', 2, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(7, 1, null, 'publication_date', 'Publication date', 'LBL_EXT_ENTITY_PARAM_PUBLICATION_DATE', 'LBL_EXT_ENTITY_PARAM_ID_PUBLICATION_DATE_DESC', 4, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(7, 2, null, 'event_direction', 'Event direction (Driver heading at report time. 0 degrees at North, according to the driver’s device)', 'LBL_EXT_ENTITY_PARAM_ID_EVENT_DIRECTION', 'LBL_EXT_ENTITY_PARAM_ID_EVENT_DIRECTION_DESC', 1, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(7, 3, null, 'street', 'Street name (as is written in database, no canonical form, may be null)', 'LBL_EXT_ENTITY_PARAM_ID_STREET', 'LBL_EXT_ENTITY_PARAM_ID_STREET_DESC', 2, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(7, 4, null, 'city', 'City', 'LBL_EXT_ENTITY_PARAM_ID_CITY', 'LBL_EXT_ENTITY_PARAM_ID_CITY_DESC', 2, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(7, 5, null, 'country', '(see two letters codes in  http://en.wikipedia.org/wiki/ISO_3166-1) ', 'LBL_EXT_ENTITY_PARAM_ID_COUNTRY', 'LBL_EXT_ENTITY_PARAM_ID_COUNTRY_DESC', 2, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(7, 6, null, 'report_rating', 'User rank between 1-6 ( 6 = high ranked user)', 'LBL_EXT_ENTITY_PARAM_ID_REPORT_RATING', 'LBL_EXT_ENTITY_PARAM_ID_REPORT_RATING_DESC', 1, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(7, 7, null, 'reliability', 'Reliability score based on user reactions and reporter level', 'LBL_EXT_ENTITY_PARAM_ID_RELEABILITY', 'LBL_EXT_ENTITY_PARAM_ID_RELEABILITY_DESC', 1, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(7, 8, null, 'confidence', 'Confidence score based on user reactions', 'LBL_EXT_ENTITY_PARAM_ID_CONFIDENCE', 'LBL_EXT_ENTITY_PARAM_ID_CONFIDENCE_DESC', 1, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(7, 9, null, 'report_by_municipality_user', 'Alert reported by municipality user (partner) Optional.', 'LBL_EXT_ENTITY_PARAM_ID_REPORT_BY_MUNICIPALITY_USER', 'LBL_EXT_ENTITY_PARAM_ID_REPORT_BY_MUNICIPALITY_USER_DESC', 5, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+--(7, 10, null, 'n_thumbs_up', 'Number of thumbs up by users', 'LBL_EXT_ENTITY_PARAM_ID_N_THUMBS_UP', 'LBL_EXT_ENTITY_PARAM_ID_REPORT_ID_N_THUMBS_UP_DESC', 1, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 
 
