@@ -251,7 +251,7 @@ true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (7, 'Waze traffic alerts', 'Alertas de trafico de waze', 'LBL_EXT_ENTITY_TYPE_WAZE_TRAFFIC_ALERTS', 'LBL_EXT_ENTITY_TYPE_WAZE_TRAFFIC_ALERTS_DESC', true, '0 0/2 * * * ? *', 
 '{
 	"url": "https://www.waze.com/row-partnerhub-api/partners/16934850034/waze-feeds/c46bd65e-1743-4e61-88da-311bab40b8ae?format=1&types=alerts",
-	"reliability": 10,
+	"reliability": 0,
 	"confidence": 0,
 	"extEntityParamsMapping": [ {"field": "pubMillis", "extEntityTypeParamId": "ExtEntityTypeParam:7:1"},
 								{"field": "magvar", "extEntityTypeParamId": "ExtEntityTypeParam:7:2"},
@@ -292,5 +292,34 @@ true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 						{"extEntitySubtypeId": "ExtEntitySubtype:7007", "value": "ROAD_CLOSED"}
 		]
 	}  
+}',
+true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(8, 'Waze traffic jams', 'Atascos de trafico waze', 'LBL_EXT_ENTITY_TYPE_WAZE_TRAFFIC_JAMS', 'LBL_EXT_ENTITY_TYPE_WAZE_TRAFFIC_JAMS_DESC', true, '50 0/2 * * * ? *', 
+'{
+	"url": "https://www.waze.com/row-partnerhub-api/partners/16934850034/waze-feeds/c46bd65e-1743-4e61-88da-311bab40b8ae?format=1&types=traffic",
+	"level": 1,
+	"extEntityParamsMapping": [ {"field": "pubMillis", "extEntityTypeParamId": "ExtEntityTypeParam:8:1"},
+								{"field": "speedKMH", "extEntityTypeParamId": "ExtEntityTypeParam:8:2"},
+								{"field": "length", "extEntityTypeParamId": "ExtEntityTypeParam:8:3"},
+								{"field": "delay", "extEntityTypeParamId": "ExtEntityTypeParam:8:4"},
+								{"field": "city", "extEntityTypeParamId": "ExtEntityTypeParam:8:5"},
+								{"field": "country", "extEntityTypeParamId": "ExtEntityTypeParam:8:6"},
+								{"field": "startNode", "extEntityTypeParamId": "ExtEntityTypeParam:8:7"},
+								{"field": "endNode", "extEntityTypeParamId": "ExtEntityTypeParam:8:8"}
+							],
+	"extEntityFieldsMapping": [ {"srcField": "uuid", "dstField": "uid"},
+								{"srcField": "street", "dstField": "alias"}
+							] ,
+	"extEntitySubtypes": {
+		"field": "level",
+		"mapping": [ {"extEntitySubtypeId": "ExtEntitySubtype:8001", "value": "0"},
+					 {"extEntitySubtypeId": "ExtEntitySubtype:8002", "value": "1"},
+					 {"extEntitySubtypeId": "ExtEntitySubtype:8003", "value": "2"},					
+					 {"extEntitySubtypeId": "ExtEntitySubtype:8004", "value": "3"},
+					 {"extEntitySubtypeId": "ExtEntitySubtype:8005", "value": "4"},
+					 {"extEntitySubtypeId": "ExtEntitySubtype:8006", "value": "5"}
+		]
+	} 
 }',
 true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
