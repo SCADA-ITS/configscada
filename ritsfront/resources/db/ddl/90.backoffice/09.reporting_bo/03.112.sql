@@ -11,7 +11,8 @@ BEGIN
     EXECUTE '
     CREATE OR REPLACE VIEW reporting_bo.e112_ext_entities_with_values AS
     SELECT 
-        e.uid as id,
+   		abs(hashtext(e.uid)::int8) AS id,
+        e.uid,
 		CASE 
             WHEN pv.param_6 in (''11020'', ''11021'', ''11022'', ''11080'', ''11081'', ''11082'', ''11150'', ''11160'', ''11360'') THEN ''Accidentes''
             WHEN pv.param_6 in (''11510'', ''11570'', ''11640'') THEN ''Meteorológicas''
@@ -22,9 +23,15 @@ BEGIN
             ELSE pv.param_6::varchar
         END AS categoria,
         e.alias AS tipo,
-		pv.param_5::timestamptz AT TIME ZONE ''Europe/Madrid'' AS fecha,
+		pv.param_5::timestamptz AS fecha,
         pv.param_1 as localizacion,
-        pv.param_2 as estado
+        pv.param_2 as estado,
+        CASE 
+            WHEN e.status = ''CREATED'' THEN ''ACTIVA''
+            WHEN e.status = ''DELETED'' THEN ''FINALIZADA''
+            WHEN e.status = ''UPDATED'' THEN ''ACTIVA''
+            ELSE e.status::varchar
+        END AS estado_incidente
     FROM 
         (SELECT DISTINCT ON (ext_entity_id) *
          FROM hist.ext_entities

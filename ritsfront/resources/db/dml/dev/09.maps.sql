@@ -4,29 +4,25 @@ INSERT INTO ui.maps (id, name, description, "label", icon, longitude, latitude, 
 -- OSRM router => "router": {"enabled": true, "type": "OSRM", "url": "http://192.168.243.30:5000/route"
 (1, 'ausol', 'autopista del sol', 'LBL_MAP', NULL, -4.968995252952193, 36.513236353017206, 15, 18, 12, -5.496230111341672, 36.69560304914391, -4.286333943790312, 36.302938945943, null, 6, true, 
 	'{ 
-		"map": {"enabled": true, "type": "WMS", "serverType": "geoserver", "url": "http://192.168.88.165:8700/geoserver/wms", "name": "osm"},
-		"router": {"enabled": true, "type": "OpenRouteService", "url": "http://192.168.88.165:8701/ors"},
-        "smartRoadInfo": {"enabled": true, "url": "http://192.168.88.165:8702/api"}
+		"router": {"enabled": true, "type": "OpenRouteService", "url": "http://192.168.88.161:8701/ors"},
+        "smartRoadInfo": {"enabled": true, "url": "http://192.168.88.161:8702/api"}
 	}'),
 	(2, 'navarra', 'navarra', 'Mapa de Navarra', NULL, -1.7355106, 42.8651, 14, 18, 4, -4.5701704, 44.38234, 1.5830269, 40.593372, null, 6, true, 
 	'{ 
-		"map": {"enabled": true, "type": "WMS", "serverType": "geoserver", "url": "http://192.168.88.165:8700/geoserver/wms", "name": "osm"},
-		"router": {"enabled": true, "type": "SmartRoadInfo", "url": "http://192.168.243.30:8702/api"},
-        "smartRoadInfo": {"enabled": true, "url": "http://192.168.88.165:8702/api"}
+		"router": {"enabled": true, "type": "SmartRoadInfo", "url": "http://192.168.88.161:8702/api"},
+        "smartRoadInfo": {"enabled": true, "url": "http://192.168.88.161:8702/api"}
 	}'),
 -- Map 3
 	(3, 'paracuellos', 'paracuellos', 'Mapa de Paracuellos', NULL, -3.5144417, 40.503395, 14, 18, 4, -10.701286, 44.587864, 4.9189625, 34.662407, null, 6, true, 
 	'{ 
-		"map": {"enabled": true, "type": "WMS", "serverType": "geoserver", "url": "http://192.168.88.165:8700/geoserver/wms", "name": "osm"},
-		"router": {"enabled": true, "type": "OpenRouteService", "url": "http://192.168.88.165:8701/ors"},
-        "smartRoadInfo": {"enabled": true, "url": "http://192.168.88.165:8702/api"}
+		"router": {"enabled": true, "type": "OpenRouteService", "url": "http://192.168.88.161:8701/ors"},
+        "smartRoadInfo": {"enabled": true, "url": "http://192.168.88.161:8702/api"}
 	}'),
 -- For use in MapEditor
 	(1000, 'MAPA PARA COMPONENTE MAPEDITOR', 'MAPA PARA COMPONENTE MAPEDITOR', 'LBL_MAP', NULL, -1.7355106, 42.8651, 14, 18, 4, -9.827346, 44.069317, 3.4447792, 35.558895, null, 6, true, 
 	'{ 
-		"map": {"enabled": true, "type": "WMS", "serverType": "geoserver", "url": "http://192.168.88.165:8700/geoserver/wms", "name": "osm"},
-		"router": {"enabled": true, "type": "OpenRouteService", "url": "http://192.168.88.165:8701/ors"},
-        "smartRoadInfo": {"enabled": true, "url": "http://192.168.88.165:8702/api"}
+		"router": {"enabled": true, "type": "OpenRouteService", "url": "http://192.168.88.161:8701/ors"},
+        "smartRoadInfo": {"enabled": true, "url": "http://192.168.88.161:8702/api"}
 	}');
 
 
@@ -75,6 +71,24 @@ INSERT INTO ui.map_ext_entities (id, default_graphic_icon_id, default_module_act
 		{ 
 			"extEntityTypeId": "ExtEntityType:3",
 			"graphicIconId": 10003,
+			"visible": true,
+			"enabled": true,
+			"animate": false
+		},
+		{ 
+			"extEntityTypeId": "ExtEntityType:7",
+			"visible": true,
+			"enabled": true,
+			"animate": false
+		},
+		{ 
+			"extEntityTypeId": "ExtEntityType:8",
+			"visible": true,
+			"enabled": true,
+			"animate": false
+		},
+		{ 
+			"extEntityTypeId": "ExtEntityType:9",
 			"visible": true,
 			"enabled": true,
 			"animate": false

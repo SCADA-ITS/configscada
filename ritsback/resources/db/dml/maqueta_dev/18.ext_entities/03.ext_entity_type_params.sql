@@ -40,6 +40,7 @@ INSERT INTO static.ext_entity_type_params (ext_entity_type_id, ext_entity_type_p
 (4, 3, null, 'resources', 'Resources', 'LBL_EXT_ENTITY_PARAM_ID_RESOURCES', 'LBL_EXT_ENTITY_TYPE_PARAM_RESOURCES_DESC', 2, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (4, 4, null, 'vehicles', 'Vehicles', 'LBL_EXT_ENTITY_PARAM_ID_VEHICLES', 'LBL_EXT_ENTITY_TYPE_PARAM_VEHICLES_DESC', 2, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (4, 5, null, 'date', 'Date', 'LBL_EXT_ENTITY_PARAM_ID_DATE', 'LBL_EXT_ENTITY_TYPE_PARAM_DATE_DESC', 2, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(4, 6, null, 'type_oid', 'TypeOID', 'LBL_EXT_ENTITY_TYPE_PARAM_ID_TYPE', 'LBL_EXT_ENTITY_TYPE_PARAM_ID_TYPE_DESC', 2, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 (5, 1, null, 'activation_time', 'activation_time', 'LBL_EXT_ENTITY_PARAM_ID_ACTIVATION_TIME', 'LBL_EXT_ENTITY_PARAM_ID_ACTIVATION_TIME_DESC', 2, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (5, 2, null, 'status', 'status', 'LBL_EXT_ENTITY_PARAM_ID_STATUS', 'LBL_EXT_ENTITY_PARAM_ID_STATUS_DESC', 2, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -65,5 +66,7 @@ INSERT INTO static.ext_entity_type_params (ext_entity_type_id, ext_entity_type_p
 (8, 5, null, 'city', 'City', 'LBL_EXT_ENTITY_PARAM_ID_CITY', 'LBL_EXT_ENTITY_PARAM_ID_CITY_DESC', 2, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (8, 6, null, 'country', '(see two letters codes in  http://en.wikipedia.org/wiki/ISO_3166-1) ', 'LBL_EXT_ENTITY_PARAM_COUNTRY', 'LBL_EXT_ENTITY_PARAM_COUNTRY_DESC', 2, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (8, 7, null, 'startNode', 'Nearest Junction/steet/city to jam start (supplied when available)', 'LBL_EXT_ENTITY_PARAM_START_NODE', 'LBL_EXT_ENTITY_PARAM_START_NODE_DESC', 2, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(8, 8, null, 'endNode', 'Nearest Junction/steet/city to jam end (supplied when available)', 'LBL_EXT_ENTITY_PARAM_END_NODE', 'LBL_EXT_ENTITY_PARAM_END_NODE_DESC', 2, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(8, 8, null, 'endNode', 'Nearest Junction/steet/city to jam end (supplied when available)', 'LBL_EXT_ENTITY_PARAM_END_NODE', 'LBL_EXT_ENTITY_PARAM_END_NODE_DESC', 2, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
+(9, 1, null, 'length', 'Length of route in meters', 'LBL_EXT_ENTITY_PARAM_LENGTH_M', 'LBL_EXT_ENTITY_PARAM_LENGTH_M_DESC', 1, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(9, 2, null, 'time', 'Time in seconds it takes to cross the route right now', 'LBL_EXT_ENTITY_PARAM_DELAY_S', 'LBL_EXT_ENTITY_PARAM_DELAY_S_DESC', 1, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

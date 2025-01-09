@@ -11,11 +11,19 @@ BEGIN
     EXECUTE '
     CREATE OR REPLACE VIEW reporting_bo.e112_vehicles_ext_entities AS
     SELECT 
-        e.uid as id,
+        abs(hashtext(e.uid)::int8) AS id,
+        e.uid,
+   		abs(hashtext(split_part(e.uid, ''##'', 1))::int8) AS id_incidente,
+    	split_part(e.uid, ''##'', 2)::varchar(20)  AS matricula,
         e.alias AS marca,
         e.description AS modelo,
         pv.param_1 as color,
-        pv.param_2 as matricula
+        CASE 
+            WHEN e.status = ''CREATED'' THEN ''ACTIVA''
+            WHEN e.status = ''DELETED'' THEN ''FINALIZADA''
+            WHEN e.status = ''UPDATED'' THEN ''ACTIVA''
+            ELSE e.status::varchar
+        END AS estado
     FROM 
         (SELECT DISTINCT ON (ext_entity_id) *
          FROM hist.ext_entities
@@ -30,15 +38,14 @@ BEGIN
             FROM 
                 hist.ext_entity_values
             WHERE 
-                ext_entity_type_param_id IN (1, 2)
+                ext_entity_type_param_id IN (1)
             ORDER BY 
                 ext_entity_id, 
                 created_at desc,
                 ext_entity_type_param_id$$
         ) AS pv (
             ext_entity_id int8,
-            param_1 varchar,
-            param_2 varchar
+            param_1 varchar
         )
     ON 
         e.ext_entity_id = pv.ext_entity_id

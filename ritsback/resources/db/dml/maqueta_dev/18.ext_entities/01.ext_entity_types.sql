@@ -165,13 +165,14 @@ true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 }',
 true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
-(4, '112 Emergencias', 'Incidencias generadas en sistema 112 Emergencias', 'LBL_EXT_ENTITY_TYPE_112', 'LBL_EXT_ENTITY_TYPE_112_DESC', true, '0 * * * * ? *', 
+(4, '112 Emergencias', 'Incidencias generadas en sistemas 112 Emergencias', 'LBL_EXT_ENTITY_TYPE_112', 'LBL_EXT_ENTITY_TYPE_112_DESC', true, '0 * * * * ? *', 
 '{
 
-	"host": "http://192.168.88.163:8100/TrafficIncidents",
+	"host": "http://localhost:8088/response_1733922050534.json",
 	"extEntityParamsMapping": [ {"field": "location.text", "extEntityTypeParamId": "ExtEntityTypeParam:4:1"},
 								{"field": "statusName", "extEntityTypeParamId": "ExtEntityTypeParam:4:2"},
-								{"field": "creationTime", "extEntityTypeParamId": "ExtEntityTypeParam:4:5"}
+								{"field": "creationTime", "extEntityTypeParamId": "ExtEntityTypeParam:4:5"},
+								{"field": "typeOid", "extEntityTypeParamId": "ExtEntityTypeParam:4:6"}
 							],
 	"extEntityFieldsMapping": [ {"srcField": "id", "dstField": "uid"},
 								{"srcField": "typeName", "dstField": "alias"},
@@ -223,7 +224,7 @@ true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 (5, '112 - Resources', 'Recursos asiganados a una incidencia del 112', 'LBL_EXT_ENTITY_TYPE_112_RESOURCES', 'LBL_EXT_ENTITY_TYPE_112_RESOURCES_DESC', true, '20 * * * * ? *', 
 '{
-	"host": "http://192.168.88.163:8100/TrafficIncidents",
+	"host": "http://localhost:8088/response_1733922050534.json",
 	"extEntityParamsMapping": [ {"field": "avlTime", "extEntityTypeParamId": "ExtEntityTypeParam:5:1"},
 								{"field": "statusName", "extEntityTypeParamId": "ExtEntityTypeParam:5:2"},
 								{"field": "statusTime", "extEntityTypeParamId": "ExtEntityTypeParam:5:3"}
@@ -238,7 +239,7 @@ true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (6, '112 - Vehicles', 'Vehículos asiganados a una incidencia del 112', 'LBL_EXT_ENTITY_TYPE_112_VEHICLES', 'LBL_EXT_ENTITY_TYPE_112_VEHICLES_DESC', true, '40 * * * * ? *', 
 '{
-	"host": "http://192.168.88.163:8100/TrafficIncidents",
+	"host": "http://localhost:8088/response_1733922050534.json",
 	"extEntityParamsMapping": [ {"field": "color", "extEntityTypeParamId": "ExtEntityTypeParam:6:1"}
 							],
 	"extEntityFieldsMapping": [ {"srcField": "plateNumber", "dstField": "uid"},
@@ -319,6 +320,30 @@ true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 					 {"extEntitySubtypeId": "ExtEntitySubtype:8004", "value": "3"},
 					 {"extEntitySubtypeId": "ExtEntitySubtype:8005", "value": "4"},
 					 {"extEntitySubtypeId": "ExtEntitySubtype:8006", "value": "5"}
+		]
+	} 
+}',
+true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(9, 'Waze routes', 'Rutas creadas en waze', 'LBL_EXT_ENTITY_TYPE_WAZE_ROUTES', 'LBL_EXT_ENTITY_TYPE_WAZE_ROUTES_DESC', false, '0 0/2 * * * ? *', 
+'{
+	"url": "https://www.waze.com/row-partnerhub-api/feeds-tvt/?id=11010904334",
+	"level": 0,
+	"extEntityParamsMapping": [ {"field": "length", "extEntityTypeParamId": "ExtEntityTypeParam:9:1"},
+								{"field": "time", "extEntityTypeParamId": "ExtEntityTypeParam:9:2"}
+							],
+	"extEntityFieldsMapping": [ {"srcField": "id", "dstField": "uid"},
+								{"srcField": "name", "dstField": "alias"},
+								{"srcField": "fromName", "dstField": "description"}
+							] ,
+	"extEntitySubtypes": {
+		"field": "jamLevel",
+		"mapping": [ {"extEntitySubtypeId": "ExtEntitySubtype:9001", "value": "0"},
+					 {"extEntitySubtypeId": "ExtEntitySubtype:9002", "value": "1"},
+					 {"extEntitySubtypeId": "ExtEntitySubtype:9003", "value": "2"},					
+					 {"extEntitySubtypeId": "ExtEntitySubtype:9004", "value": "3"},
+					 {"extEntitySubtypeId": "ExtEntitySubtype:9005", "value": "4"},
+					 {"extEntitySubtypeId": "ExtEntitySubtype:9006", "value": "5"}
 		]
 	} 
 }',

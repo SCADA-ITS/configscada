@@ -34,10 +34,21 @@ INSERT INTO ui.selector_tree_nodes(id, selector_tree_id, "label", image, module_
 (22, 2, 'LBL_EXT_ENTITY_TYPE_C4', null, 1927, 1, true, true),
 (23, 2, 'LBL_EXT_ENTITY_TYPE_C4_WORKS', null, 6000, 2, true, true),
 (24, 2, 'LBL_EXT_ENTITY_TYPE_C4_WEATHER', null, 6001, 3, true, true),
-(25, 2, 'LBL_EXT_ENTITY_TYPE_C4_ROAD', null, 6002, 4, true, true);
+(25, 2, 'LBL_EXT_ENTITY_TYPE_C4_ROAD', null, 6002, 4, true, true),
+(26, 2, 'LBL_EXT_ENTITY_TYPE_112', null, 7000, 5, true, true),
+(27, 2, 'LBL_EXT_ENTITY_TYPE_112_RESOURCES', null, 7001, 6, true, true),
+(28, 2, 'LBL_EXT_ENTITY_TYPE_112_VEHICLES', null, 7002, 7, true, true),
+(29, 2, 'LBL_EXT_ENTITY_WAZE_TRAFFIC_ALERT', null, 8000, 8, true, true),
+(30, 2, 'LBL_EXT_ENTITY_WAZE_TRAFFIC_JAM', null, 8001, 9, true, true);
 
 INSERT INTO ui.selector_tree_hierarchies(selector_tree_id,  node_parent_id, node_child_id, enabled, visible) VALUES
 (2, 21, 22, true, true),
 (2, 21, 23, true, true),
 (2, 21, 24, true, true),
-(2, 21, 25, true, true);
+(2, 21, 25, true, true),
+(2, 21, 26, true, true),
+(2, 21, 27, true, true),
+(2, 21, 28, true, true),
+(2, 21, 29, true, true),
+(2, 21, 30, true, true);
+

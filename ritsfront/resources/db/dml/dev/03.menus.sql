@@ -37,6 +37,8 @@ INSERT INTO ui.menu_items(menu_group_id, "position", module_id, "label", icon, "
 -- OTHERS
 --(3, 1, 402, 'LBL_CONTROL_PANEL', 'img/menu/control-panel-menu.png', 'Menu item Control Panel', 'Menu item  CCTV', true, true),
 --(3, 2, 403, 'LBL_MENU_ITEM_REPORTS', 'img/menu/default.png', 'Menu item Reports', 'Menu item Reports', true, true),
+(3, 1, 600, 'WAZE', 'img/menu/default.png', 'WAZE', 'WAZE', true, true),
+
 
 -- TEST
 (4, 1, 2001, 'LBL_TEST_1', 'img/menu/default.png', 'Menu item test 1', 'Menu item test 1', true, true),

@@ -205,13 +205,21 @@ INSERT INTO ui.vo_entities(id, vo_entity_type_id, enabled, visible) VALUES
 ('ExtEntityType:3', 'ExtEntityTypeUI', true, true),
 ('ExtEntityType:7', 'ExtEntityTypeUI', true, true),
 ('ExtEntityType:8', 'ExtEntityTypeUI', true, true),
+('ExtEntityType:9', 'ExtEntityTypeUI', true, true),
 
 ('ExtEntitySubtype:8001', 'ExtEntitySubtypeUI', true, true),
 ('ExtEntitySubtype:8002', 'ExtEntitySubtypeUI', true, true),
 ('ExtEntitySubtype:8003', 'ExtEntitySubtypeUI', true, true),
 ('ExtEntitySubtype:8004', 'ExtEntitySubtypeUI', true, true),
 ('ExtEntitySubtype:8005', 'ExtEntitySubtypeUI', true, true),
-('ExtEntitySubtype:8006', 'ExtEntitySubtypeUI', true, true);
+('ExtEntitySubtype:8006', 'ExtEntitySubtypeUI', true, true),
+
+('ExtEntitySubtype:9001', 'ExtEntitySubtypeUI', true, true),
+('ExtEntitySubtype:9002', 'ExtEntitySubtypeUI', true, true),
+('ExtEntitySubtype:9003', 'ExtEntitySubtypeUI', true, true),
+('ExtEntitySubtype:9004', 'ExtEntitySubtypeUI', true, true),
+('ExtEntitySubtype:9005', 'ExtEntitySubtypeUI', true, true),
+('ExtEntitySubtype:9006', 'ExtEntitySubtypeUI', true, true);
 
 
 INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
@@ -577,7 +585,18 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 ('ExtEntitySubtype:8003', 73, '#FFBC00'),
 ('ExtEntitySubtype:8004', 73, '#FF8000'),
 ('ExtEntitySubtype:8005', 73, '#FF0000'),
-('ExtEntitySubtype:8006', 73, '#4E0E00');
+('ExtEntitySubtype:8006', 73, '#4E0E00'),
+
+('ExtEntityType:9', 63, 'waze.png'),
+('ExtEntityType:9', 64, '["ExtEntityTypeParam:9:1","ExtEntityTypeParam:9:2"]'),
+('ExtEntityType:9', 65, '#d96e6e'),
+
+('ExtEntitySubtype:9001', 73, '#6FFF00'),
+('ExtEntitySubtype:9002', 73, '#E5FB6B'),
+('ExtEntitySubtype:9003', 73, '#FFBC00'),
+('ExtEntitySubtype:9004', 73, '#FF8000'),
+('ExtEntitySubtype:9005', 73, '#FF0000'),
+('ExtEntitySubtype:9006', 73, '#4E0E00');
 
 
 INSERT INTO ui.vo_enum_types(id, alias, description, enabled, visible) VALUES
