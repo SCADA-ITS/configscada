@@ -23,15 +23,9 @@ BEGIN
             ELSE pv.param_6::varchar
         END AS categoria,
         e.alias AS tipo,
-		pv.param_5::timestamptz AS fecha,
+		pv.param_5::timestamptz AT TIME ZONE ''Europe/Madrid'' AS fecha,
         pv.param_1 as localizacion,
-        pv.param_2 as estado,
-        CASE 
-            WHEN e.status = ''CREATED'' THEN ''ACTIVA''
-            WHEN e.status = ''DELETED'' THEN ''FINALIZADA''
-            WHEN e.status = ''UPDATED'' THEN ''ACTIVA''
-            ELSE e.status::varchar
-        END AS estado_incidente
+        pv.param_2 as estado
     FROM 
         (SELECT DISTINCT ON (ext_entity_id) *
          FROM hist.ext_entities

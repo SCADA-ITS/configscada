@@ -19,13 +19,7 @@ BEGIN
         e.alias AS agencia,
         e.description AS estacion,
         pv.param_2 as estado,
-        pv.param_3 as fecha_ultimo_estado,
-        CASE 
-            WHEN e.status = ''CREATED'' THEN ''ACTIVA''
-            WHEN e.status = ''DELETED'' THEN ''FINALIZADA''
-            WHEN e.status = ''UPDATED'' THEN ''ACTIVA''
-            ELSE e.status::varchar
-        END AS estado_recurso
+        pv.param_3 as fecha_ultimo_estado
     FROM 
         (SELECT DISTINCT ON (ext_entity_id) *
          FROM hist.ext_entities

@@ -12,7 +12,19 @@ INSERT INTO ui.module_values(module_id, module_param_id, value) VALUES
 (1950, 14, 'c4_all_ext_entities_with_values'),
 
 (1951, 13, '1'),
-(1951, 14, 'e112_all_ext_entities_with_values'),
+(1951, 14, 'Incidencias'),
+
+(7001, 13, '1'), 
+(7001, 14, 'Recursos'),
+
+(7002, 13, '1'), 
+(7002, 14, 'Vehículos'),
+
+(8000, 13, '1'), 
+(8000, 14, 'all_waze_traffic_alert_ext_entities_with_values'),
+
+(8001, 13, '1'), 
+(8001, 14, 'all_waze_traffic_jam_ext_entities_with_values'),
 
 (2020, 9, '1');
 

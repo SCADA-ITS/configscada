@@ -106,6 +106,18 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 }
 '),
 
+('ExtEntityType:7', 63, 'waze.png'),
+('ExtEntityType:7', 64, '["ExtEntityTypeParam:7:7","ExtEntityTypeParam:7:8"]'),
+('ExtEntityType:7', 65, '#6eabd9'),
+
+('ExtEntityType:8', 63, 'waze.png'),
+('ExtEntityType:8', 64, '["ExtEntityTypeParam:8:2","ExtEntityTypeParam:8:3"]'),
+('ExtEntityType:8', 65, '#d96e6e'),
+
+('ExtEntityType:9', 63, 'waze.png'),
+('ExtEntityType:9', 64, '["ExtEntityTypeParam:9:1","ExtEntityTypeParam:9:2"]'),
+('ExtEntityType:9', 65, '#d96e6e'),
+
 ('ExtEntitySubtype:2001', 70, '
 {
   "iconos": [
@@ -147,6 +159,20 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 ('ExtEntitySubtype:4002', 70, 'meteo_112.png'),
 ('ExtEntitySubtype:4003', 70, 'trafico_112.png'),
 ('ExtEntitySubtype:4004', 70, 'varios_112.png'),
+
+('ExtEntitySubtype:8001', 73, '#6FFF00'),
+('ExtEntitySubtype:8002', 73, '#E5FB6B'),
+('ExtEntitySubtype:8003', 73, '#FFBC00'),
+('ExtEntitySubtype:8004', 73, '#FF8000'),
+('ExtEntitySubtype:8005', 73, '#FF0000'),
+('ExtEntitySubtype:8006', 73, '#4E0E00'),
+
+('ExtEntitySubtype:9001', 73, '#6FFF00'),
+('ExtEntitySubtype:9002', 73, '#E5FB6B'),
+('ExtEntitySubtype:9003', 73, '#FFBC00'),
+('ExtEntitySubtype:9004', 73, '#FF8000'),
+('ExtEntitySubtype:9005', 73, '#FF0000'),
+('ExtEntitySubtype:9006', 73, '#4E0E00'),
 
 ('CommandElementType:2:2', 38, 'INFO'),
 ('CommandElementType:3:2', 38, 'INFO');
