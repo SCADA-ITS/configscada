@@ -10,57 +10,9 @@
 	<p:field_timestamp>timestamp_at</p:field_timestamp>
 	<p:cron_expression>0 */10 * ? * *</p:cron_expression>
 	<p:fields>
-		<p:field name="Surface_Temperature">
-			<p:element_type_param>
-				<p:element_type_param_id>1</p:element_type_param_id>
-				<p:param_type_id>2</p:param_type_id>
-			</p:element_type_param>
-		</p:field>
-		<p:field name="Sub_Surface_Temperature">
-			<p:element_type_param>
-				<p:element_type_param_id>2</p:element_type_param_id>
-				<p:param_type_id>2</p:param_type_id>
-			</p:element_type_param>
-		</p:field>
-		<p:field name="Freeze_Point">
-			<p:element_type_param>
-				<p:element_type_param_id>3</p:element_type_param_id>
-				<p:param_type_id>2</p:param_type_id>
-			</p:element_type_param>
-		</p:field>
 		<p:field name="Air_Pressure">
 			<p:element_type_param>
 				<p:element_type_param_id>4</p:element_type_param_id>
-				<p:param_type_id>2</p:param_type_id>
-			</p:element_type_param>
-		</p:field>
-		<p:field name="Water_Depth">
-			<p:element_type_param>
-				<p:element_type_param_id>5</p:element_type_param_id>
-				<p:param_type_id>2</p:param_type_id>
-			</p:element_type_param>
-		</p:field>
-		<p:field name="Concentration_NaCl">
-			<p:element_type_param>
-				<p:element_type_param_id>6</p:element_type_param_id>
-				<p:param_type_id>2</p:param_type_id>
-			</p:element_type_param>
-		</p:field>
-		<p:field name="Concentration_MgCl2">
-			<p:element_type_param>
-				<p:element_type_param_id>7</p:element_type_param_id>
-				<p:param_type_id>2</p:param_type_id>
-			</p:element_type_param>
-		</p:field>
-		<p:field name="Concentration_CaCl">
-			<p:element_type_param>
-				<p:element_type_param_id>8</p:element_type_param_id>
-				<p:param_type_id>2</p:param_type_id>
-			</p:element_type_param>
-		</p:field>
-		<p:field name="Road_Condition">
-			<p:element_type_param>
-				<p:element_type_param_id>9</p:element_type_param_id>
 				<p:param_type_id>2</p:param_type_id>
 			</p:element_type_param>
 		</p:field>
@@ -70,39 +22,15 @@
 				<p:param_type_id>2</p:param_type_id>
 			</p:element_type_param>
 		</p:field>
-		<p:field name="Precipitation_Intensity">
+		<p:field name="Wind_Speed">
 			<p:element_type_param>
-				<p:element_type_param_id>11</p:element_type_param_id>
+				<p:element_type_param_id>26</p:element_type_param_id>
 				<p:param_type_id>2</p:param_type_id>
 			</p:element_type_param>
 		</p:field>
-		<p:field name="Snow_Fall_Intensity">
+		<p:field name="Wind_Direction">
 			<p:element_type_param>
-				<p:element_type_param_id>12</p:element_type_param_id>
-				<p:param_type_id>2</p:param_type_id>
-			</p:element_type_param>
-		</p:field>
-		<p:field name="Average_Wind_Speed">
-			<p:element_type_param>
-				<p:element_type_param_id>13</p:element_type_param_id>
-				<p:param_type_id>2</p:param_type_id>
-			</p:element_type_param>
-		</p:field>
-		<p:field name="Average_Wind_Direction">
-			<p:element_type_param>
-				<p:element_type_param_id>14</p:element_type_param_id>
-				<p:param_type_id>2</p:param_type_id>
-			</p:element_type_param>
-		</p:field>
-		<p:field name="Gust_Wind_Speed">
-			<p:element_type_param>
-				<p:element_type_param_id>15</p:element_type_param_id>
-				<p:param_type_id>2</p:param_type_id>
-			</p:element_type_param>
-		</p:field>
-		<p:field name="Gust_Wind_Direction">
-			<p:element_type_param>
-				<p:element_type_param_id>16</p:element_type_param_id>
+				<p:element_type_param_id>27</p:element_type_param_id>
 				<p:param_type_id>2</p:param_type_id>
 			</p:element_type_param>
 		</p:field>
@@ -118,47 +46,23 @@
 				<p:param_type_id>2</p:param_type_id>
 			</p:element_type_param>
 		</p:field>
-		<p:field name="Precipitation_Type">
-			<p:element_type_param>
-				<p:element_type_param_id>19</p:element_type_param_id>
-				<p:param_type_id>2</p:param_type_id>
-			</p:element_type_param>
-		</p:field>
 		<p:field name="Visibility">
 			<p:element_type_param>
 				<p:element_type_param_id>20</p:element_type_param_id>
 				<p:param_type_id>2</p:param_type_id>
 			</p:element_type_param>
 		</p:field>
-		<p:field name="Black_Ice_Signal">
+		<p:field name="Wind_Type">
 			<p:element_type_param>
-				<p:element_type_param_id>21</p:element_type_param_id>
+				<p:element_type_param_id>28</p:element_type_param_id>
 				<p:param_type_id>2</p:param_type_id>
 			</p:element_type_param>
 		</p:field>
-		<p:field name="Prediction_Alarm_Code">
+		<p:field name="period">
 			<p:element_type_param>
-				<p:element_type_param_id>22</p:element_type_param_id>
+				<p:element_type_param_id>30</p:element_type_param_id>
 				<p:param_type_id>2</p:param_type_id>
 			</p:element_type_param>
-		</p:field>
-		<p:field name="Precipitation_Quantity">
-			<p:element_type_param>
-				<p:element_type_param_id>23</p:element_type_param_id>
-				<p:param_type_id>2</p:param_type_id>
-			</p:element_type_param>
-		</p:field>
-		<p:field name="Ice_Percent">
-			<p:element_type_param>
-				<p:element_type_param_id>24</p:element_type_param_id>
-				<p:param_type_id>2</p:param_type_id>
-			</p:element_type_param>
-		</p:field>
-		<p:field name="Friction">
-			<p:element_type_param>
-				<p:element_type_param_id>25</p:element_type_param_id>
-				<p:param_type_id>2</p:param_type_id>
-			</p:element_type_param>
-		</p:field>
+		</p:field>   
 	</p:fields>
 </p:historical_element_parser_v1>
