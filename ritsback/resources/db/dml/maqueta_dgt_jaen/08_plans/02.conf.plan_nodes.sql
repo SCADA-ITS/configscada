@@ -54,5 +54,6 @@ INSERT INTO conf.plan_nodes (node_id, alias, description, plan_id, management_ar
 (58, 'PRECAUCIÓN TÚNELES SENTIDO -> NORTE', 'PRECAUCIÓN TÚNELES SENTIDO -> NORTE', 40, NULL, True, True),
 (59, 'PRECAUCIÓN TÚNELES SENTIDO -> SUR', 'PRECAUCIÓN TÚNELES SENTIDO -> SUR', 41, NULL, True, True),
 (60, 'CORTE CARRIL DERECHO', 'CORTE CARRIL DERECHO', 42, NULL, True, True),
-(61, 'CORTE CARRIL SENTIDO -> SUR', 'CORTE CARRIL SENTIDO -> SUR', 43, NULL, True, True);
+(61, 'CORTE CARRIL SENTIDO -> SUR', 'CORTE CARRIL SENTIDO -> SUR', 43, NULL, True, True),
+(62, 'Corte carril', 'Corte carril', NULL, NULL, True, True);
 

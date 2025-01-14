@@ -40,5 +40,13 @@ INSERT INTO conf.plan_node_hierarchies (node_parent_id, node_child_id, enabled, 
 (49, 50, True, True),
 (49, 51, True, True),
 (49, 52, True, True),
-(49, 53, True, True);
+(49, 53, True, True),
+(1, 54, True, True),
+(1, 55, True, True),
+(2, 56, True, True),
+(2, 57, True, True),
+(3, 58, True, True),
+(3, 59, True, True),
+(62, 60, True, True),
+(62, 61, True, True);
 
