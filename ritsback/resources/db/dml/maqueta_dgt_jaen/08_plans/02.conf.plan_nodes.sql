@@ -2,8 +2,6 @@ INSERT INTO conf.plan_nodes (node_id, alias, description, plan_id, management_ar
 (1, 'Apertura', 'Apertura', NULL, NULL, True, True),
 (2, 'Cierre', 'Cierre', NULL, NULL, True, True),
 (3, 'Precaución', 'Precaución', NULL, NULL, True, True),
-(4, 'ABRIR TÚNELES SENTIDO -> NORTE', 'ABRIR TÚNELES SENTIDO -> NORTE', 1, NULL, True, True),
-(5, 'ABRIR TÚNELES SENTIDO -> SUR', 'ABRIR TÚNELES SENTIDO -> SUR', 2, NULL, True, True),
 (8, 'Despeñaperros', 'Despeñaperros', NULL, NULL, True, True),
 (9, 'PRECAUCIÓN 60KM/H -> SENTIDO NORTE', 'PRECAUCIÓN 60KM/H -> SENTIDO NORTE', 5, NULL, True, True),
 (10, 'PRECAUCIÓN 40KM/H -> SENTIDO NORTE', 'PRECAUCIÓN 40KM/H -> SENTIDO NORTE', 6, NULL, True, True),

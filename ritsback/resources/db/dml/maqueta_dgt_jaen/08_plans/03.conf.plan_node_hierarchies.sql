@@ -1,6 +1,4 @@
 INSERT INTO conf.plan_node_hierarchies (node_parent_id, node_child_id, enabled, visible) VALUES
-(1, 4, True, True),
-(1, 5, True, True),
 (3, 8, True, True),
 (8, 9, True, True),
 (8, 10, True, True),
