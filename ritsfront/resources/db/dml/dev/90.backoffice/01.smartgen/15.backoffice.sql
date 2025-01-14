@@ -255,7 +255,16 @@ BEGIN
 	('es_ES', 'LBL_IMAGE_GROUP_PRODUCTS_1', 'Grupo imágenes 1', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	('es_ES', 'LBL_IMAGE_GROUP_PRODUCTS_1_DESC', 'Descripción del grupo imágenes 1', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	('es_ES', 'LBL_ATTACHMENT_GROUP_PRODUCTS_1', 'Grupo de adjuntos 1', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-	('es_ES', 'LBL_ATTACHMENT_GROUP_PRODUCTS_1_DESC', 'Descripción del grupos de adjuntos', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+	('es_ES', 'LBL_ATTACHMENT_GROUP_PRODUCTS_1_DESC', 'Descripción del grupos de adjuntos', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_ES', 'LBL_DRIVERS', 'conductores', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_ES', 'LBL_DRIVER', 'conductor', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_ES', 'LBL_ADDRESSES', 'direcciones', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_ES', 'LBL_ADDRESS', 'dirección', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_ES', 'LBL_BRANDS', 'marcas', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_ES', 'LBL_BRAND', 'marca', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_ES', 'LBL_CARS', 'coches', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_ES', 'LBL_CAR', 'coche', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
 /*	
 	INSERT INTO smartgen.infractions(infraction_id, fecha, tipo, estado, matricula, operador, radar, carretera, pk, sentido, carril, limite, velocidad_vehiculo, expediente) VALUES
 	(nextval('smartgen.infractions_infraction_id_seq'::regclass), CURRENT_TIMESTAMP, 'Radar fijo', 'RECIBIDAS', '0000-BCD', 'operator 1', 'RAD-01', 'AP-7', '130.300', 'C', '0', 120, 130, 'EXP-0001'),
