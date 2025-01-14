@@ -556,7 +556,7 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 ('ElementTypeParam:8:2:1', 62, 'true'),
 
 ('ExtEntityType:1000', 63, 'waze.png'),
-('ExtEntityType:1000', 64, '["ExtEntityTypeParam:1000:1","ExtEntityTypeParam:1000:2"]'),
+('ExtEntityType:1000', 64, '["ExtEntityTypeParam:1000:1","ExtEntityTypeParam:1000:2","ExtEntityTypeParam:1000:3"]'),
 ('ExtEntityType:1000', 65, '#6eabd9'),
 -- Navarra
 ('ExtEntityType:1', 63, 'obras_amarillo.png'),
