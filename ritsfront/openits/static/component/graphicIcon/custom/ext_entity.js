@@ -41,8 +41,21 @@ export default class ExtEntity {
 					const iconData = JSON.parse(this.extEntity.extEntitySubtype.icon_data);
 					
 					const icono = iconData.iconos.find(icon => icon.color === colorActual);
-									
-					iconoValor = icono ? icono.valor : PICTOGRAM_UNKNOWN_TYPE;
+					
+					const specialIconId = `ExtEntityTypeParam:${this.extEntity.extEntityType.id.split(":")[1]}:12`;
+					const specialIcon = this.extEntity.extEntityValues.find(object => object.extEntityTypeParam?.id === specialIconId)?.value;
+					
+					if (specialIcon){
+						
+						let changeIcon = iconData.especiales?.find(special => special.id === specialIcon);
+						if (icono && changeIcon)
+							iconoValor = changeIcon ? changeIcon.icono + "_" + colorActual + ".png" : PICTOGRAM_UNKNOWN_TYPE;
+						else
+							iconoValor = icono ? icono.valor : PICTOGRAM_UNKNOWN_TYPE;
+					}else{
+		
+						iconoValor = PICTOGRAM_UNKNOWN_TYPE;
+					}
 				}
 				
 				this.gType.attr({ "xlink:href": `${PICTOGRAM_TYPE_PATH}/${iconoValor}` });

@@ -36,7 +36,7 @@ BEGIN
 			, 4001, null),
 		(2, 'Incidencias', 'LBL_EXT_ENTITY_112', 'LBL_EXT_ENTITY_112', 'LBL_EXT_ENTITY_112_DESCRIPTION', NULL, false, false, 
 			-- sql_view 
-			'SELECT id, categoria, tipo, localizacion, fecha, estado 
+			'SELECT id, categoria, tipo, localizacion, fecha, estado, num_recursos, num_vehiculos 
 				FROM reporting_bo.e112_ext_entities_with_values'
 			, 4002, null),
 		(3, 'Recursos', 'LBL_EXT_ENTITY_TYPE_112_RESOURCES', 'LBL_EXT_ENTITY_TYPE_112_RESOURCES', 'LBL_EXT_ENTITY_TYPE_112_RESOURCES_DESCRIPTION', NULL, false, false, 
@@ -74,6 +74,8 @@ BEGIN
 		(0204, 2, 'localizacion', 'LBL_EXT_ENTITY_112_COLUMN_LOCATION', NULL, true, '{"position": 4, "editable": false}', NULL),
 		(0205, 2, 'fecha', 'LBL_EXT_ENTITY_112_COLUMN_DATE', NULL, true, '{"position": 5, "editable": false}', NULL),
 		(0206, 2, 'estado', 'LBL_EXT_ENTITY_112_COLUMN_STATE', NULL, true, '{"position": 6, "editable": false}', NULL),
+		(0207, 2, 'num_recursos', 'LBL_EXT_ENTITY_112_COLUMN_NRECURSES', NULL, true, '{"position": 7, "editable": false}', NULL),
+		(0208, 2, 'num_vehiculos', 'LBL_EXT_ENTITY_112_COLUMN_NVEHICLES', NULL, true, '{"position": 8, "editable": false}', NULL),
 		
 		(0501, 3, 'id_incidente', 'id_incidente', NULL, true, '{"position": 1, "editable": false, "refName": true}', 201),
 		(0502, 3, 'nombre', 'nombre', NULL, true, '{"position": 2, "editable": false, "refName": true}', NULL),

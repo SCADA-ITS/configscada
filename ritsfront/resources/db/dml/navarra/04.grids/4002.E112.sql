@@ -7,9 +7,7 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (034002, 4002, 4, 3, true, false, false, true, 'fecha', 'fecha', 'fecha', false, true, null, false, false, 175, NULL, true, true, NULL, NULL, NULL, NULL),
 (044002, 4002, 1, 4, true, true, false, true, 'tipo', 'tipo', 'tipo', false, false, null, false, false, 400, NULL, true, true, NULL, NULL, NULL, NULL),
 (054002, 4002, 1, 5, true, false, false, true, 'localizacion', 'localizacion', 'localizacion', false, false, null, false, false, 450, NULL, true, true, NULL, NULL, NULL, NULL),
-(064002, 4002, 1, 6, true, true, false, true, 'estado', 'estado', 'estado', false, false, null, false, false, 150, NULL, true, true, NULL, NULL, NULL, NULL),
-(074002, 4002, 1, 7, true, true, false, true, 'recursos', 'recursos', 'num_recursos', false, false, null, false, false, 100, NULL, true, true, NULL, NULL, NULL, NULL),
-(084002, 4002, 1, 8, true, true, false, true, 'vehiculos', 'vehiculos', 'num_vehiculos', false, false, null, false, false, 100, NULL, true, true, NULL, NULL, NULL, NULL);
+(064002, 4002, 1, 6, true, true, false, true, 'estado', 'estado', 'estado', false, false, null, false, false, 150, NULL, true, true, NULL, NULL, NULL, NULL);
 
 INSERT INTO ui.grid_option_values(grid_id, grid_option_id, value) VALUES
 (4002, 1, 'true'),
@@ -27,8 +25,8 @@ INSERT INTO ui.grid_option_values(grid_id, grid_option_id, value) VALUES
 (4002, 21, 'custom');
 
 INSERT INTO ui.grid_field_icons(grid_field_id, icon, value, show_value, badge_color, avatar, enabled, label_value) VALUES
-(024002, './img/ext_entity_type/incidencia_112.png', 'ACCIDENTES', false, false, false, true, 'LBL_EXT_ENTITY_TYPE_112_ACCIDENT'),
-(024002, './img/ext_entity_type/meteo_112.png', 'METEOROLÓGICAS', false, false, false, true, 'LBL_EXT_ENTITY_TYPE_112_WEATHER'),
-(024002, './img/ext_entity_type/trafico_112.png', 'TRÁFICO', false, false, false, true, 'LBL_EXT_ENTITY_TYPE_112_TRAFFIC'),
-(024002, './img/ext_entity_type/varios_112.png', 'VARIOS', false, false, false, true, 'LBL_EXT_ENTITY_TYPE_112_OTHERS');
+(024002, './img/ext_entity_type/incidencia_112.png', '4001', false, false, false, true, 'LBL_EXT_ENTITY_TYPE_112_ACCIDENT'),
+(024002, './img/ext_entity_type/meteo_112.png', '4002', false, false, false, true, 'LBL_EXT_ENTITY_TYPE_112_WEATHER'),
+(024002, './img/ext_entity_type/trafico_112.png', '4003', false, false, false, true, 'LBL_EXT_ENTITY_TYPE_112_TRAFFIC'),
+(024002, './img/ext_entity_type/varios_112.png', '4004', false, false, false, true, 'LBL_EXT_ENTITY_TYPE_112_OTHERS');
 

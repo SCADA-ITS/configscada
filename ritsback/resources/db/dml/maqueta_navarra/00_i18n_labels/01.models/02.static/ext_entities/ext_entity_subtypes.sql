@@ -10,6 +10,9 @@
 --
 INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) VALUES
 --es_ES
+('es_ES', 1, 'LBL_EXT_ENTITY_C4_SUBTYPE_1', 'Obras', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_EXT_ENTITY_C4_SUBTYPE_2', 'Meteorológicas', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_EXT_ENTITY_C4_SUBTYPE_3', 'Red viaría', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_EXT_ENTITY_SUBTYPE_1', 'Hielo en la calzada', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_EXT_ENTITY_SUBTYPE_2', 'Árboles, ramas, setos en la calzada', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_EXT_ENTITY_SUBTYPE_3', 'Animales muertos en la calzada', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -85,6 +88,9 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_ES', 1, 'LBL_EXT_ENTITY_SUBTYPE_TRAFFIC_ROUTE_4', 'Ruta congestionada nivel 4', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_EXT_ENTITY_SUBTYPE_TRAFFIC_ROUTE_5', 'Ruta congestionada nivel 5', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
+('es_ES', 1, 'LBL_EXT_ENTITY_C4_SUBTYPE_1_DESC', 'Obras', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_EXT_ENTITY_C4_SUBTYPE_2_DESC', 'Meteorológicas', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_EXT_ENTITY_C4_SUBTYPE_3_DESC', 'Red viaría', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_EXT_ENTITY_SUBTYPE_1_DESC', 'Hielo en la calzada', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_EXT_ENTITY_SUBTYPE_2_DESC', 'Árboles, ramas, setos en la calzada', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_EXT_ENTITY_SUBTYPE_3_DESC', 'Animales muertos en la calzada', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),

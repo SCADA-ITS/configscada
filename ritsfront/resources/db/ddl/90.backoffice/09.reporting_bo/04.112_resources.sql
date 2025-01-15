@@ -15,11 +15,11 @@ BEGIN
         e.uid,
    		abs(hashtext(split_part(e.uid, ''##'', 1))::int8) AS id_incidente,
     	split_part(e.uid, ''##'', 2)::varchar(50)  AS nombre,
-        pv.param_1 as fecha_salida,
+		(TO_TIMESTAMP(pv.param_1, ''YYYY-MM-DD"T"HH24:MI:SS'') AT TIME ZONE ''Europe/Madrid'')::timestamptz AS fecha_salida,
         e.alias AS agencia,
         e.description AS estacion,
         pv.param_2 as estado,
-        pv.param_3 as fecha_ultimo_estado
+		(TO_TIMESTAMP(pv.param_3, ''YYYY-MM-DD"T"HH24:MI:SS'') AT TIME ZONE ''Europe/Madrid'')::timestamptz AS fecha_ultimo_estado
     FROM 
         (SELECT DISTINCT ON (ext_entity_id) *
          FROM hist.ext_entities

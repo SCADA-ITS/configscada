@@ -23,7 +23,6 @@ INSERT INTO static.ext_entity_type_params (ext_entity_type_id, ext_entity_type_p
 (2, 10, null, 'location', 'Location', 'LBL_EXT_ENTITY_TYPE_PARAM_LOCATION', 'LBL_EXT_ENTITY_TYPE_PARAM_LOCATION_DESC', 2, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (2, 11, null, 'categoria', 'Categoria', 'LBL_EXT_ENTITY_TYPE_PARAM_CATEGORY', 'LBL_EXT_ENTITY_TYPE_PARAM_CATEGORY_DESC', 2, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
-
 (3, 1, null, 'id_road', 'Id road', 'LBL_EXT_ENTITY_TYPE_PARAM_ID_ROAD', 'LBL_EXT_ENTITY_TYPE_PARAM_ID_CATEGORY_DESC', 1, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (3, 2, null, 'road', 'Road', 'LBL_EXT_ENTITY_TYPE_PARAM_ROAD', 'LBL_EXT_ENTITY_TYPE_PARAM_ID_ROAD_DESC', 2, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (3, 3, null, 'pk', 'PK', 'LBL_EXT_ENTITY_TYPE_PARAM_ID_PK', 'LBL_EXT_ENTITY_TYPE_PARAM_ID_PK_DESC', 1, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -34,4 +33,40 @@ INSERT INTO static.ext_entity_type_params (ext_entity_type_id, ext_entity_type_p
 (3, 8, null, 'color', 'Color', 'LBL_EXT_ENTITY_TYPE_PARAM_COLOR', 'LBL_EXT_ENTITY_TYPE_PARAM_COLOR_DESC', 2, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (3, 9, null, 'date', 'Date', 'LBL_EXT_ENTITY_TYPE_PARAM_DATE', 'LBL_EXT_ENTITY_TYPE_PARAM_DATE_DESC', 2, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (3, 10, null, 'location', 'Location', 'LBL_EXT_ENTITY_TYPE_PARAM_LOCATION', 'LBL_EXT_ENTITY_TYPE_PARAM_LOCATION_DESC', 2, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(3, 11, null, 'categoria', 'Categoria', 'LBL_EXT_ENTITY_TYPE_PARAM_CATEGORY', 'LBL_EXT_ENTITY_TYPE_PARAM_CATEGORY_DESC', 2, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(3, 11, null, 'categoria', 'Categoria', 'LBL_EXT_ENTITY_TYPE_PARAM_CATEGORY', 'LBL_EXT_ENTITY_TYPE_PARAM_CATEGORY_DESC', 2, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(4, 1, null, 'location', 'Location', 'LBL_EXT_ENTITY_TYPE_PARAM_LOCATION', 'LBL_EXT_ENTITY_TYPE_PARAM_LOCATION_DESC', 2, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(4, 2, null, 'status', 'Status', 'LBL_EXT_ENTITY_TYPE_PARAM_STATUS', 'LBL_EXT_ENTITY_TYPE_PARAM_STATUS_DESC', 2, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(4, 3, null, 'resources', 'Resources', 'LBL_EXT_ENTITY_TYPE_PARAM_RESOURCES', 'LBL_EXT_ENTITY_TYPE_PARAM_RESOURCES_DESC', 2, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(4, 4, null, 'vehicles', 'Vehicles', 'LBL_EXT_ENTITY_TYPE_PARAM_VEHICLES', 'LBL_EXT_ENTITY_TYPE_PARAM_VEHICLES_DESC', 2, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(4, 5, null, 'date', 'Date', 'LBL_EXT_ENTITY_TYPE_PARAM_DATE', 'LBL_EXT_ENTITY_TYPE_PARAM_DATE_DESC', 2, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(4, 6, null, 'type_oid', 'TypeOID', 'LBL_EXT_ENTITY_TYPE_PARAM_ID_TYPE', 'LBL_EXT_ENTITY_TYPE_PARAM_ID_TYPE_DESC', 2, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(5, 1, null, 'activation_time', 'activation_time', 'LBL_EXT_ENTITY_TYPE_PARAM_ACTIVATION_TIME', 'LBL_EXT_ENTITY_TYPE_PARAM_ACTIVATION_TIME_DESC', 2, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(5, 2, null, 'status', 'status', 'LBL_EXT_ENTITY_TYPE_PARAM_STATUS', 'LBL_EXT_ENTITY_TYPE_PARAM_STATUS_DESC', 2, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(5, 3, null, 'status_time', 'status_time', 'LBL_EXT_ENTITY_TYPE_PARAM_STATUS_TIME', 'LBL_EXT_ENTITY_TYPE_PARAM_STATUS_TIME_DESC', 2, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(6, 1, null, 'color', 'color', 'LBL_EXT_ENTITY_TYPE_PARAM_COLOR', 'LBL_EXT_ENTITY_TYPE_PARAM_COLOR_DESC', 2, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(7, 1, null, 'publication_date', 'Publication date', 'LBL_EXT_ENTITY_PARAM_PUBLICATION_DATE', 'LBL_EXT_ENTITY_PARAM_ID_PUBLICATION_DATE_DESC', 4, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(7, 2, null, 'event_direction', 'Event direction (Driver heading at report time. 0 degrees at North, according to the driver’s device)', 'LBL_EXT_ENTITY_PARAM_EVENT_DIRECTION', 'LBL_EXT_ENTITY_PARAM_EVENT_DIRECTION_DESC', 1, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(7, 3, null, 'street', 'Street name (as is written in database, no canonical form, may be null)', 'LBL_EXT_ENTITY_PARAM_STREET', 'LBL_EXT_ENTITY_PARAM_STREET_DESC', 2, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(7, 4, null, 'city', 'City', 'LBL_EXT_ENTITY_PARAM_ID_CITY', 'LBL_EXT_ENTITY_PARAM_ID_CITY_DESC', 2, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(7, 5, null, 'country', '(see two letters codes in  http://en.wikipedia.org/wiki/ISO_3166-1) ', 'LBL_EXT_ENTITY_PARAM_COUNTRY', 'LBL_EXT_ENTITY_PARAM_COUNTRY_DESC', 2, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(7, 6, null, 'report_rating', 'User rank between 1-6 ( 6 = high ranked user)', 'LBL_EXT_ENTITY_PARAM_REPORT_RATING', 'LBL_EXT_ENTITY_PARAM_REPORT_RATING_DESC', 1, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(7, 7, null, 'reliability', 'Reliability score based on user reactions and reporter level', 'LBL_EXT_ENTITY_PARAM_RELEABILITY', 'LBL_EXT_ENTITY_PARAM_RELEABILITY_DESC', 1, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(7, 8, null, 'confidence', 'Confidence score based on user reactions', 'LBL_EXT_ENTITY_PARAM_CONFIDENCE', 'LBL_EXT_ENTITY_PARAM_CONFIDENCE_DESC', 1, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(7, 9, null, 'report_by_municipality_user', 'Alert reported by municipality user (partner) Optional.', 'LBL_EXT_ENTITY_PARAM_REPORT_BY_MUNICIPALITY_USER', 'LBL_EXT_ENTITY_PARAM_REPORT_BY_MUNICIPALITY_USER_DESC', 5, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--(7, 10, null, 'n_thumbs_up', 'Number of thumbs up by users', 'LBL_EXT_ENTITY_PARAM_ID_N_THUMBS_UP', 'LBL_EXT_ENTITY_PARAM_ID_REPORT_ID_N_THUMBS_UP_DESC', 1, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+(8, 1, null, 'publication_date', 'Publication date', 'LBL_EXT_ENTITY_PARAM_PUBLICATION_DATE', 'LBL_EXT_ENTITY_PARAM_PUBLICATION_DATE_DESC', 4, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(8, 2, null, 'speed', 'Current average speed on jammed segments in Km/h', 'LBL_EXT_ENTITY_PARAM_SPEED_KM_H', 'LBL_EXT_ENTITY_PARAM_SPEED_KM_H_DESC', 3, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(8, 3, null, 'length', 'Jam length in meters', 'LBL_EXT_ENTITY_PARAM_LENGTH_M', 'LBL_EXT_ENTITY_PARAM_LENGTH_M_DESC', 1, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(8, 4, null, 'delay', 'Delay of jam compared to free flow speed, in seconds (in case of block, -1)', 'LBL_EXT_ENTITY_PARAM_DELAY_S', 'LBL_EXT_ENTITY_PARAM_DELAY_S_DESC', 1, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(8, 5, null, 'city', 'City', 'LBL_EXT_ENTITY_PARAM_ID_CITY', 'LBL_EXT_ENTITY_PARAM_ID_CITY_DESC', 2, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(8, 6, null, 'country', '(see two letters codes in  http://en.wikipedia.org/wiki/ISO_3166-1) ', 'LBL_EXT_ENTITY_PARAM_COUNTRY', 'LBL_EXT_ENTITY_PARAM_COUNTRY_DESC', 2, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(8, 7, null, 'startNode', 'Nearest Junction/steet/city to jam start (supplied when available)', 'LBL_EXT_ENTITY_PARAM_START_NODE', 'LBL_EXT_ENTITY_PARAM_START_NODE_DESC', 2, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(8, 8, null, 'endNode', 'Nearest Junction/steet/city to jam end (supplied when available)', 'LBL_EXT_ENTITY_PARAM_END_NODE', 'LBL_EXT_ENTITY_PARAM_END_NODE_DESC', 2, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(9, 1, null, 'length', 'Length of route in meters', 'LBL_EXT_ENTITY_PARAM_LENGTH_M', 'LBL_EXT_ENTITY_PARAM_LENGTH_M_DESC', 1, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(9, 2, null, 'time', 'Time in seconds it takes to cross the route right now', 'LBL_EXT_ENTITY_PARAM_DELAY_S', 'LBL_EXT_ENTITY_PARAM_DELAY_S_DESC', 1, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

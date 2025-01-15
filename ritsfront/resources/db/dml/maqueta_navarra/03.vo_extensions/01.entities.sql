@@ -17,8 +17,9 @@ INSERT INTO ui.vo_entities(id, vo_entity_type_id, enabled, visible) VALUES
 ('ExtEntityType:8', 'ExtEntityTypeUI', true, true),
 ('ExtEntityType:9', 'ExtEntityTypeUI', true, true),
 
-('ExtEntitySubtype:2001', 'ExtEntityTypeUI', true, true),
-('ExtEntitySubtype:2011', 'ExtEntityTypeUI', true, true),
+('ExtEntitySubtype:1001', 'ExtEntityTypeUI', true, true),
+('ExtEntitySubtype:1002', 'ExtEntityTypeUI', true, true),
+('ExtEntitySubtype:1003', 'ExtEntityTypeUI', true, true),
 ('ExtEntitySubtype:4001', 'ExtEntityTypeUI', true, true),
 ('ExtEntitySubtype:4002', 'ExtEntityTypeUI', true, true),
 ('ExtEntitySubtype:4003', 'ExtEntityTypeUI', true, true),

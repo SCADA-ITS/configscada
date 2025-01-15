@@ -14,18 +14,17 @@ BEGIN
    		abs(hashtext(e.uid)::int8) AS id,
         e.uid,
 		CASE 
-            WHEN pv.param_6 in (''11020'', ''11021'', ''11022'', ''11080'', ''11081'', ''11082'', ''11150'', ''11160'', ''11360'') THEN ''Accidentes''
-            WHEN pv.param_6 in (''11510'', ''11570'', ''11640'') THEN ''Meteorológicas''
-            WHEN pv.param_6 in (''12000'', ''12001'', ''12010'', ''12020'', ''12030'', ''12040'', ''12050'', ''12060'', ''12070'', 
-                                ''12080'', ''12090'', ''12100'', ''12110'', ''12120'', ''12130'', ''12350'', ''12360'', ''12370'',
-                                ''12410'', ''12420'', ''12430'', ''12440'', ''12510'', ''12520'') THEN ''Tráfico''
-            WHEN pv.param_6 in (''18010'') THEN ''Varios''
-            ELSE pv.param_6::varchar
+            WHEN e.ext_entity_subtype_id = ''4001'' THEN ''ACCIDENTES''
+            WHEN e.ext_entity_subtype_id = ''4002'' THEN ''METEOROLÓGICAS''
+            WHEN e.ext_entity_subtype_id = ''4003'' THEN ''TRÁFICO''
+            ELSE ''VARIOS''
         END AS categoria,
         e.alias AS tipo,
 		pv.param_5::timestamptz AT TIME ZONE ''Europe/Madrid'' AS fecha,
         pv.param_1 as localizacion,
-        pv.param_2 as estado
+        pv.param_2 as estado,
+		split_part(pv.param_3, ''-'', 1)::int8 AS num_recursos,
+		split_part(pv.param_4, ''-'', 1)::int8 AS num_vehiculos
     FROM 
         (SELECT DISTINCT ON (ext_entity_id) *
          FROM hist.ext_entities
@@ -40,7 +39,7 @@ BEGIN
             FROM 
                 hist.ext_entity_values
             WHERE 
-                ext_entity_type_param_id IN (1, 2, 5, 6)
+                ext_entity_type_param_id IN (1, 2, 3, 4, 5)
             ORDER BY 
                 ext_entity_id, 
                 created_at desc,
@@ -49,8 +48,9 @@ BEGIN
             ext_entity_id int8,
             param_1 varchar,
             param_2 varchar,
-            param_5 varchar,
-            param_6 varchar
+            param_3 varchar,
+            param_4 varchar,
+            param_5 varchar
         )
     ON 
         e.ext_entity_id = pv.ext_entity_id

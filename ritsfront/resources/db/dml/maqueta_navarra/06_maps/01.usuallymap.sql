@@ -84,43 +84,16 @@ INSERT INTO ui.map_ext_entities (id, default_graphic_icon_id, default_module_act
 			"animate": false
 		},
 		{ 
-			"extEntityTypeId": "ExtEntityType:2",
-			"visible": true,
-			"enabled": true,
-			"animate": false
-		},
-		{ 
-			"extEntityTypeId": "ExtEntityType:3",
-			"visible": true,
-			"enabled": true,
-			"animate": false
-		},
-		{ 
 			"extEntityTypeId": "ExtEntityType:4",
-			"visible": true,
-			"enabled": true,
-			"animate": false
-		},
-		{ 
-			"extEntityTypeId": "ExtEntityType:7",
-			"visible": true,
-			"enabled": true,
-			"animate": false
-		},
-		{ 
-			"extEntityTypeId": "ExtEntityType:8",
-			"visible": true,
-			"enabled": true,
-			"animate": false
-		},
-		{ 
-			"extEntityTypeId": "ExtEntityType:9",
 			"visible": true,
 			"enabled": true,
 			"animate": false
 		}
 	]'
 );
+
+
+
 
 INSERT INTO ui.map_routes (id, default_module_action_id, routes_config) VALUES
 --
