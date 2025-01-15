@@ -153,14 +153,28 @@
 			<p:id>4</p:id>
 			<p:enabled>true</p:enabled>
 			<p:merge_wait_time>1</p:merge_wait_time>
-			<p:manager_class>com.revenga.rits.back.virtual.equipment.manager.une.weatherstation.WeatherStationExecutor</p:manager_class>
+			<p:manager_class>com.revenga.rits.back.virtual.equipment.manager.une.uneExecutor</p:manager_class>
 			<p:subscriptors_ref>
 				<p:subscriptor_id_ref>20</p:subscriptor_id_ref>
 			</p:subscriptors_ref>
 			<p:executor_params>
 				<p:executor_param_value>cron_job=last_period_data_task_job;com.revenga.rits.back.virtual.equipment.manager.une.sheduler.RequestFrameJob;0 * * * * ?;0x07</p:executor_param_value>
-        <p:executor_param_value>elementType=1</p:executor_param_value>
-        <p:executor_param_value>elementSubtype=5</p:executor_param_value>         
+        		<p:executor_param_value>elementType=1</p:executor_param_value>
+        		<p:executor_param_value>elementSubtype=5</p:executor_param_value>         
+			</p:executor_params>
+		</p:executor>
+		<p:executor>
+			<p:id>5</p:id>
+			<p:enabled>true</p:enabled>
+			<p:merge_wait_time>1</p:merge_wait_time>
+			<p:manager_class>com.revenga.rits.back.virtual.equipment.manager.une.uneExecutor</p:manager_class>
+			<p:subscriptors_ref>
+				<p:subscriptor_id_ref>20</p:subscriptor_id_ref>
+			</p:subscriptors_ref>
+			<p:executor_params>
+				<p:executor_param_value>cron_job=last_period_data_task_job;com.revenga.rits.back.virtual.equipment.manager.une.sheduler.RequestFrameJob;0 * * * * ?;0x17</p:executor_param_value>
+        		<p:executor_param_value>elementType=71</p:executor_param_value>
+        		<p:executor_param_value>elementSubtype=18</p:executor_param_value>         
 			</p:executor_params>
 		</p:executor>
 	</p:executors>
