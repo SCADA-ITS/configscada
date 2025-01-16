@@ -113,7 +113,7 @@ BEGIN
 		(0808, 6, 'distancia_m', 'distancia_m', NULL, true, '{"position": 8, "editable": false}', NULL),
 		(0809, 6, 'retraso_s', 'retraso_s', NULL, true, '{"position": 9, "editable": false}', NULL),
 		(0810, 6, 'comienzo', 'comienzo', NULL, true, '{"position": 10, "editable": false}', NULL),
-		(0810, 6, 'fin', 'fin', NULL, true, '{"position": 11, "editable": false}', NULL),
-		(0811, 6, 'estado', 'estado', NULL, true, '{"position": 12, "editable": false}', NULL);
+		(0811, 6, 'fin', 'fin', NULL, true, '{"position": 11, "editable": false}', NULL),
+		(0812, 6, 'estado', 'estado', NULL, true, '{"position": 12, "editable": false}', NULL);
   END IF;
 END $$;
