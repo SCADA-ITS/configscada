@@ -20,6 +20,16 @@ INSERT INTO ui.synoptic_commands
 
 INSERT INTO ui.synoptic_layer_elements 
 (layer_id, element_id, graphic_icon_id, label, x, y,  horizontal_flip, rotate, tooltip, show_text, text_color, selectable) VALUES 
-(92305700, 'Element:57:314', 00005700, 'INT-K01-ILU-SUR-1', 437, 144, false, NULL, true, false, NULL, true),
-(92305700, 'Element:57:313', 00005701, 'INT-Q1-ILU-SUR-1', 1533, -813, false, NULL, true, false, NULL, true);
+(92305700, 'Element:57:332', 00005702, 'INT-ST-VENT-4-DP1', 1415, 666, false, NULL, true, false, NULL, true),
+(92305700, 'Element:57:326', 00005702, 'INT-ST-VENT-2-DP1', 1413, 145, false, NULL, true, false, NULL, true),
+(92305700, 'Element:57:329', 00005702, 'INT-ST-VENT-3-DP1', 438, 666, false, NULL, true, false, NULL, true),
+(92305700, 'Element:57:323', 00005702, 'INT-ST-VENT-1-DP1', 437, 144, false, NULL, true, false, NULL, true),
+(92305700, 'Element:57:331', 000057, 'INT-VENT-1-06-DP1', 556, 768, false, NULL, true, false, NULL, true),
+(92305700, 'Element:57:330', 000057, 'INT-VENT-1-05-DP1', 341, 768, false, NULL, true, false, NULL, true),
+(92305700, 'Element:57:324', 000057, 'INT-VENT-1-01-DP1', 342, 247, false, NULL, true, false, NULL, true),
+(92305700, 'Element:57:325', 000057, 'INT-VENT-1-02-DP1', 556, 247, false, NULL, true, false, NULL, true),
+(92305700, 'Element:57:328', 000057, 'INT-VENT-1-04-DP1', 1533, 247, false, NULL, true, false, NULL, true),
+(92305700, 'Element:57:327', 000057, 'INT-VENT-1-03-DP1', 1318, 247, false, NULL, true, false, NULL, true),
+(92305700, 'Element:57:333', 000057, 'INT-VENT-1-07-DP1', 1318, 768, false, NULL, true, false, NULL, true),
+(92305700, 'Element:57:334', 000057, 'INT-VENT-1-08-DP1', 1533, 768, false, NULL, true, false, NULL, true);
 
