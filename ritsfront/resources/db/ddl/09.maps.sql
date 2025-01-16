@@ -41,7 +41,7 @@
 		id int NOT NULL,	
 		incident_graphic_icon_id int NOT NULL,
 		incident_report_module_action_id int NOT NULL,
-		incident_wizard_module_action_id int NOT NULL,
+		incident_wizard_module_action_id int NULL,
 		CONSTRAINT pk_map_incidents PRIMARY KEY (id)
 	);
 	
