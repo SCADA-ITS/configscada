@@ -113,11 +113,43 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 ('ExtEntitySubtype:4004', 66, 'varios_112.png'),
 ('ExtEntitySubtype:4004', 70, 'varios_112.png'),
 
+('ExtEntitySubtype:7001', 66, 'waze_accident.png'),
+('ExtEntitySubtype:7001', 70, 'waze_accident.png'),
+
+('ExtEntitySubtype:7003', 66, 'waze_traffic_hazard.png'),
+('ExtEntitySubtype:7003', 70, 'waze_traffic_hazard.png'),
+
+('ExtEntitySubtype:7004', 66, 'waze_weather_hazard.png'),
+('ExtEntitySubtype:7004', 70, 'waze_weather_hazard.png'),
+
+('ExtEntitySubtype:7006', 66, 'waze_construction.png'),
+('ExtEntitySubtype:7006', 70, 'waze_construction.png'),
+
+('ExtEntitySubtype:7007', 66, 'waze_closed_road.png'),
+('ExtEntitySubtype:7007', 70, 'waze_closed_road.png'),
+
+('ExtEntitySubtype:8001', 66, 'waze_trafficjam_0.png'),
+('ExtEntitySubtype:8001', 70, 'waze_trafficjam_0.png'),
 ('ExtEntitySubtype:8001', 73, '#6FFF00'),
+
+('ExtEntitySubtype:8002', 66, 'waze_trafficjam_1.png'),
+('ExtEntitySubtype:8002', 70, 'waze_trafficjam_1.png'),
 ('ExtEntitySubtype:8002', 73, '#E5FB6B'),
+
+('ExtEntitySubtype:8003', 66, 'waze_trafficjam_2.png'),
+('ExtEntitySubtype:8003', 70, 'waze_trafficjam_2.png'),
 ('ExtEntitySubtype:8003', 73, '#FFBC00'),
+
+('ExtEntitySubtype:8004', 66, 'waze_trafficjam_3.png'),
+('ExtEntitySubtype:8004', 70, 'waze_trafficjam_3.png'),
 ('ExtEntitySubtype:8004', 73, '#FF8000'),
+
+('ExtEntitySubtype:8005', 66, 'waze_trafficjam_4.png'),
+('ExtEntitySubtype:8005', 70, 'waze_trafficjam_4.png'),
 ('ExtEntitySubtype:8005', 73, '#FF0000'),
+
+('ExtEntitySubtype:8006', 66, 'waze_trafficjam_5.png'),
+('ExtEntitySubtype:8006', 70, 'waze_trafficjam_5.png'),
 ('ExtEntitySubtype:8006', 73, '#4E0E00'),
 
 ('ExtEntitySubtype:9001', 73, '#6FFF00'),

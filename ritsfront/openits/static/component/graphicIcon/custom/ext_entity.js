@@ -23,12 +23,14 @@ export default class ExtEntity {
 
 		// Update type
 		if (this.gType) {
+			let colorActual;
 			
 			if (this.extEntity.extEntitySubtype && this.extEntity.extEntitySubtype.icon_data) {	
 								
-				const dynamicId = `ExtEntityTypeParam:${this.extEntity.extEntityType.id.split(":")[1]}:8`;
+				let dynamicId = `ExtEntityTypeParam:${this.extEntity.extEntityType.id.split(":")[1]}:8`;
 				
-				const colorActual = this.extEntity.extEntityValues.find(object => object.extEntityTypeParam?.id === dynamicId)?.value;
+				if (this.extEntity.extEntityValues.find(object => object.extEntityTypeParam?.id === dynamicId)?.extEntityTypeParam.alias === "color")
+					colorActual = this.extEntity.extEntityValues.find(object => object.extEntityTypeParam?.id === dynamicId)?.value;
 				
 				let iconoValor = "";
 					
@@ -38,12 +40,12 @@ export default class ExtEntity {
 				
 				} else {
 					
-					const iconData = JSON.parse(this.extEntity.extEntitySubtype.icon_data);
+					let iconData = JSON.parse(this.extEntity.extEntitySubtype.icon_data);
 					
-					const icono = iconData.iconos.find(icon => icon.color === colorActual);
+					let icono = iconData.iconos.find(icon => icon.color === colorActual);
 					
-					const specialIconId = `ExtEntityTypeParam:${this.extEntity.extEntityType.id.split(":")[1]}:12`;
-					const specialIcon = this.extEntity.extEntityValues.find(object => object.extEntityTypeParam?.id === specialIconId)?.value;
+					let specialIconId = `ExtEntityTypeParam:${this.extEntity.extEntityType.id.split(":")[1]}:12`;
+					let specialIcon = this.extEntity.extEntityValues.find(object => object.extEntityTypeParam?.id === specialIconId)?.value;
 					
 					if (specialIcon){
 						
@@ -62,9 +64,9 @@ export default class ExtEntity {
 			}
 			else if (this.extEntity.extEntityType && this.extEntity.extEntityType.icon_data) {
 								
-				const dynamicId = `ExtEntityTypeParam:${this.extEntity.extEntityType.id.split(":")[1]}:8`;
+				let dynamicId = `ExtEntityTypeParam:${this.extEntity.extEntityType.id.split(":")[1]}:8`;
 				
-				const colorActual = this.extEntity.extEntityValues.find(object => object.extEntityTypeParam?.id === dynamicId)?.value;
+				let colorActual = this.extEntity.extEntityValues.find(object => object.extEntityTypeParam?.id === dynamicId)?.value;
 
 				let iconoValor = "";
 				
@@ -74,9 +76,9 @@ export default class ExtEntity {
 				
 				} else {
 					
-					const iconData = JSON.parse(this.extEntity.extEntityType.icon_data);
+					let iconData = JSON.parse(this.extEntity.extEntityType.icon_data);
 					
-					const icono = iconData.iconos.find(icon => icon.color === colorActual);
+					let icono = iconData.iconos.find(icon => icon.color === colorActual);
 									
 					iconoValor = icono ? icono.valor : PICTOGRAM_UNKNOWN_TYPE;
 				}
