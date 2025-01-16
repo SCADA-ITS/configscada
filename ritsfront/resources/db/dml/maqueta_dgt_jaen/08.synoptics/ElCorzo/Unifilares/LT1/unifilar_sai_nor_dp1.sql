@@ -20,15 +20,15 @@ INSERT INTO ui.synoptic_commands
 
 INSERT INTO ui.synoptic_layer_elements 
 (layer_id, element_id, graphic_icon_id, label, x, y,  horizontal_flip, rotate, tooltip, show_text, text_color, selectable) VALUES 
-(92105700, 'Element:57:312', 00005701, 'INT-EMER-PERM-DER-SAI-NOR-1', 1817, 765, false, NULL, true, false, NULL, true),
-(92105700, 'Element:57:311', 00005701, 'INT-RED-FLUJO-SAI-NOR-1', 1816, 418, false, NULL, true, false, NULL, true),
-(92105700, 'Element:57:310', 00005701, 'INT-PMV-GA-SAI-NOR-1', 1569, 418, false, NULL, true, false, NULL, true),
-(92105700, 'Element:57:309', 00005701, 'INT-BAL-SAI-NOR-1', 1322, 418, false, NULL, true, false, NULL, true),
-(92105700, 'Element:57:308', 00005701, 'INT-VOD-METEO-SAI-NOR-1', 1074, 418, false, NULL, true, false, NULL, true),
-(92105700, 'Element:57:307', 00005701, 'INT-SOS-SAI-NOR-1', 826, 418, false, NULL, true, false, NULL, true),
-(92105700, 'Element:57:306', 00005701, 'INT-CIRC-1B-SAI-NOR-1', 571, 418, false, NULL, true, false, NULL, true),
-(92105700, 'Element:57:305', 00005701, 'INT-CIRC-1A-ERU-SAI-NOR-1', 327, 418, false, NULL, true, false, NULL, true),
-(92105700, 'Element:57:304', 00005701, 'INT-MANI-SAI-NOR-1', 84, 418, false, NULL, true, false, NULL, true),
-(92105700, 'Element:57:302', 00005701, 'INT-Q1-SAI-NOR-1', 951, 254, false, NULL, true, false, NULL, true),
-(92105700, 'Element:57:303', 00005703, 'INT-K01-SAI-NOR-1', 943, 317, false, NULL, true, false, NULL, true);
+(92105700, 'Element:57:312', 000057, 'INT-EMER-PERM-DER-SAI-NOR-1', 1817, 765, false, NULL, true, false, NULL, true),
+(92105700, 'Element:57:311', 000057, 'INT-RED-FLUJO-SAI-NOR-1', 1816, 418, false, NULL, true, false, NULL, true),
+(92105700, 'Element:57:310', 000057, 'INT-PMV-GA-SAI-NOR-1', 1569, 418, false, NULL, true, false, NULL, true),
+(92105700, 'Element:57:309', 000057, 'INT-BAL-SAI-NOR-1', 1322, 418, false, NULL, true, false, NULL, true),
+(92105700, 'Element:57:308', 000057, 'INT-VOD-METEO-SAI-NOR-1', 1074, 418, false, NULL, true, false, NULL, true),
+(92105700, 'Element:57:307', 000057, 'INT-SOS-SAI-NOR-1', 826, 418, false, NULL, true, false, NULL, true),
+(92105700, 'Element:57:306', 000057, 'INT-CIRC-1B-SAI-NOR-1', 571, 418, false, NULL, true, false, NULL, true),
+(92105700, 'Element:57:305', 000057, 'INT-CIRC-1A-ERU-SAI-NOR-1', 327, 418, false, NULL, true, false, NULL, true),
+(92105700, 'Element:57:304', 000057, 'INT-MANI-SAI-NOR-1', 84, 418, false, NULL, true, false, NULL, true),
+(92105700, 'Element:57:302', 000057, 'INT-Q1-SAI-NOR-1', 951, 254, false, NULL, true, false, NULL, true),
+(92105700, 'Element:57:303', 00005702, 'INT-K01-SAI-NOR-1', 943, 317, false, NULL, true, false, NULL, true);
 

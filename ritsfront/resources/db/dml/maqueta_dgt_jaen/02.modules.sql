@@ -19,7 +19,10 @@ INSERT INTO ui.modules
 (917, 4, 'SELECTOR_TREE_NODES_SINOPTICO_DESPEÑAPERROS_TUNNEL_COMUNICACIONES', 'SELECTOR_TREE_NODES_SINOPTICO_DESPEÑAPERROS_TUNNEL_COMUNICACIONES', 1, NULL, 'modules/synopticModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 (918, 4, 'SELECTOR_TREE_NODES_SINOPTICO_CENTROS_TRANSFORMACION', 'SELECTOR_TREE_NODES_SINOPTICO_CENTROS_TRANSFORMACION', 1, NULL, 'modules/synopticModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 (919, 4, 'SELECTOR_TREE_NODES_SINOPTICO_LA_CANTERA_TUNNEL_COMUNICACIONES', 'SELECTOR_TREE_NODES_SINOPTICO_LA_CANTERA_TUNNEL_COMUNICACIONES', 1, NULL, 'modules/synopticModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
-(920, 4, 'SELECTOR_TREE_NODES_SINOPTICO_EL_CORZO_TUNNEL_COMUNICACIONES', 'SELECTOR_TREE_NODES_SINOPTICO_EL_CORZO_TUNNEL_COMUNICACIONES', 1, NULL, 'modules/synopticModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL);
+(920, 4, 'SELECTOR_TREE_NODES_SINOPTICO_EL_CORZO_TUNNEL_COMUNICACIONES', 'SELECTOR_TREE_NODES_SINOPTICO_EL_CORZO_TUNNEL_COMUNICACIONES', 1, NULL, 'modules/synopticModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(921, 4, 'SELECTOR_TREE_NODES_SINOPTICO_UNIFILAR_SAI_NOR_DP1', 'SELECTOR_TREE_NODES_SINOPTICO_UNIFILAR_SAI_NOR_DP1', 1, NULL, 'modules/synopticModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(922, 4, 'SELECTOR_TREE_NODES_SINOPTICO_UNIFILAR_SAI_SUR_DP1', 'SELECTOR_TREE_NODES_SINOPTICO_UNIFILAR_SAI_SUR_DP1', 1, NULL, 'modules/synopticModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(923, 4, 'SELECTOR_TREE_NODES_SINOPTICO_UNIFILAR_VENT_DP1', 'SELECTOR_TREE_NODES_SINOPTICO_UNIFILAR_VENT_DP1', 1, NULL, 'modules/synopticModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL);
 
 
 
@@ -51,8 +54,10 @@ INSERT INTO ui.module_values
 (917, 4, '917'),
 (918, 4, '918'),
 (919, 4, '919'),
-(920, 4, '920');
-
+(920, 4, '920'),
+(921, 4, '921'),
+(922, 4, '922'),
+(923, 4, '923');
 
 INSERT INTO ui.window_values 
 (module_id, window_param_id, value) VALUES 
@@ -214,6 +219,29 @@ INSERT INTO ui.window_values
 (920, 10, 'img/module/default.png'),
 (920, 11, '#464646'),
 (920, 12, 'LBL_SELECTOR_TREE_NODES_SINOPTICO_EL_CORZO_TUNNEL_COMUNICACIONES'),
-(920, 14, 'true');
+(920, 14, 'true'),
 
+(921, 4, '825'),
+(921, 8, 'true'),
+(921, 9, 'img/module/default.png'),
+(921, 10, 'img/module/default.png'),
+(921, 11, '#464646'),
+(921, 12, 'LBL_SELECTOR_TREE_NODES_SINOPTICO_UNIFILAR_SAI_NOR_DP1'),
+(921, 14, 'true'),
+
+(922, 4, '825'),
+(922, 8, 'true'),
+(922, 9, 'img/module/default.png'),
+(922, 10, 'img/module/default.png'),
+(922, 11, '#464646'),
+(922, 12, 'LBL_SELECTOR_TREE_NODES_SINOPTICO_UNIFILAR_SAI_SUR_DP1'),
+(922, 14, 'true'),
+
+(923, 4, '825'),
+(923, 8, 'true'),
+(923, 9, 'img/module/default.png'),
+(923, 10, 'img/module/default.png'),
+(923, 11, '#464646'),
+(923, 12, 'LBL_SELECTOR_TREE_NODES_SINOPTICO_UNIFILAR_VENT_DP1'),
+(923, 14, 'true');
 
