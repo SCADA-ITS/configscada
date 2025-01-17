@@ -22,7 +22,10 @@ INSERT INTO ui.modules
 (920, 4, 'SELECTOR_TREE_NODES_SINOPTICO_EL_CORZO_TUNNEL_COMUNICACIONES', 'SELECTOR_TREE_NODES_SINOPTICO_EL_CORZO_TUNNEL_COMUNICACIONES', 1, NULL, 'modules/synopticModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 (921, 4, 'SELECTOR_TREE_NODES_SINOPTICO_UNIFILAR_SAI_NOR_DP1', 'SELECTOR_TREE_NODES_SINOPTICO_UNIFILAR_SAI_NOR_DP1', 1, NULL, 'modules/synopticModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 (922, 4, 'SELECTOR_TREE_NODES_SINOPTICO_UNIFILAR_SAI_SUR_DP1', 'SELECTOR_TREE_NODES_SINOPTICO_UNIFILAR_SAI_SUR_DP1', 1, NULL, 'modules/synopticModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
-(923, 4, 'SELECTOR_TREE_NODES_SINOPTICO_UNIFILAR_VENT_DP1', 'SELECTOR_TREE_NODES_SINOPTICO_UNIFILAR_VENT_DP1', 1, NULL, 'modules/synopticModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL);
+(923, 4, 'SELECTOR_TREE_NODES_SINOPTICO_UNIFILAR_VENT_DP1', 'SELECTOR_TREE_NODES_SINOPTICO_UNIFILAR_VENT_DP1', 1, NULL, 'modules/synopticModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(924, 4, 'SELECTOR_TREE_NODES_SINOPTICO_UNIFILAR_SAI_NOR_DP2', 'SELECTOR_TREE_NODES_SINOPTICO_UNIFILAR_SAI_NOR_DP2', 1, NULL, 'modules/synopticModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(925, 4, 'SELECTOR_TREE_NODES_SINOPTICO_UNIFILAR_SAI_NOR_DP3', 'SELECTOR_TREE_NODES_SINOPTICO_UNIFILAR_SAI_NOR_DP3', 1, NULL, 'modules/synopticModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(926, 4, 'SELECTOR_TREE_NODES_SINOPTICO_UNIFILAR_SAI_SUR_DP2', 'SELECTOR_TREE_NODES_SINOPTICO_UNIFILAR_SAI_SUR_DP2', 1, NULL, 'modules/synopticModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL);
 
 
 
@@ -57,7 +60,10 @@ INSERT INTO ui.module_values
 (920, 4, '920'),
 (921, 4, '921'),
 (922, 4, '922'),
-(923, 4, '923');
+(923, 4, '923'),
+(924, 4, '924'),
+(925, 4, '925'),
+(926, 4, '926');
 
 INSERT INTO ui.window_values 
 (module_id, window_param_id, value) VALUES 
@@ -243,5 +249,29 @@ INSERT INTO ui.window_values
 (923, 10, 'img/module/default.png'),
 (923, 11, '#464646'),
 (923, 12, 'LBL_SELECTOR_TREE_NODES_SINOPTICO_UNIFILAR_VENT_DP1'),
-(923, 14, 'true');
+(923, 14, 'true'),
+
+(924, 4, '825'),
+(924, 8, 'true'),
+(924, 9, 'img/module/default.png'),
+(924, 10, 'img/module/default.png'),
+(924, 11, '#464646'),
+(924, 12, 'LBL_SELECTOR_TREE_NODES_SINOPTICO_UNIFILAR_SAI_NOR_DP2'),
+(924, 14, 'true'),
+
+(925, 4, '825'),
+(925, 8, 'true'),
+(925, 9, 'img/module/default.png'),
+(925, 10, 'img/module/default.png'),
+(925, 11, '#464646'),
+(925, 12, 'LBL_SELECTOR_TREE_NODES_SINOPTICO_UNIFILAR_SAI_NOR_DP3'),
+(925, 14, 'true'),
+
+(926, 4, '825'),
+(926, 8, 'true'),
+(926, 9, 'img/module/default.png'),
+(926, 10, 'img/module/default.png'),
+(926, 11, '#464646'),
+(926, 12, 'LBL_SELECTOR_TREE_NODES_SINOPTICO_UNIFILAR_SAI_SUR_DP2'),
+(926, 14, 'true');
 

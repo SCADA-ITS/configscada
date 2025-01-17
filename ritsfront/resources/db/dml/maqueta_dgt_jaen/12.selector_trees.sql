@@ -36,7 +36,10 @@ INSERT INTO ui.selector_tree_nodes
 (30, 1, 'LBL_SELECTOR_TREE_NODES_SINOPTICO_EL_CORZO_TUNNEL_COMUNICACIONES', 920, 'menu/synoptic-menu.png', true, true),
 (31, 1, 'LBL_SELECTOR_TREE_NODES_SINOPTICO_UNIFILAR_SAI_NOR_DP1', 921, 'menu/synoptic-menu.png', true, true),
 (32, 1, 'LBL_SELECTOR_TREE_NODES_SINOPTICO_UNIFILAR_SAI_SUR_DP1', 922, 'menu/synoptic-menu.png', true, true),
-(33, 1, 'LBL_SELECTOR_TREE_NODES_SINOPTICO_UNIFILAR_VENT_DP1', 923, 'menu/synoptic-menu.png', true, true);
+(33, 1, 'LBL_SELECTOR_TREE_NODES_SINOPTICO_UNIFILAR_VENT_DP1', 923, 'menu/synoptic-menu.png', true, true),
+(34, 1, 'LBL_SELECTOR_TREE_NODES_SINOPTICO_UNIFILAR_SAI_NOR_DP2', 924, 'menu/synoptic-menu.png', true, true),
+(35, 1, 'LBL_SELECTOR_TREE_NODES_SINOPTICO_UNIFILAR_SAI_NOR_DP3', 925, 'menu/synoptic-menu.png', true, true),
+(36, 1, 'LBL_SELECTOR_TREE_NODES_SINOPTICO_UNIFILAR_SAI_SUR_DP2', 926, 'menu/synoptic-menu.png', true, true);
 
 INSERT INTO ui.selector_tree_hierarchies 
 (selector_tree_id, node_parent_id, node_child_id, enabled, visible) VALUES 
@@ -67,5 +70,8 @@ INSERT INTO ui.selector_tree_hierarchies
 (1, 20, 30, true, true),
 (1, 23, 31, true, true),
 (1, 23, 32, true, true),
-(1, 23, 33, true, true);
+(1, 23, 33, true, true),
+(1, 7, 34, true, true),
+(1, 8, 35, true, true),
+(1, 7, 36, true, true);
 
