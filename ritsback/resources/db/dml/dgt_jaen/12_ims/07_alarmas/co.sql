@@ -1,0 +1,67 @@
+----
+---- Table: conf.ims_incident_alarm_conditions
+----
+--
+---- Para el id seguiremos el siguiente criterio:
+---- 1.- Id incident_type
+---- 2.- Orden (2 cifras)
+---- 3.- stretch_id (4 cifras)
+--INSERT INTO conf.ims_incident_alarm_conditions (incident_alarm_condition_id, incident_type_id, stretch_id, auto, enabled, visible, created_at, updated_at)
+--VALUES
+----co
+--(201011001, 201, 1001, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--(201021001, 201, 1001, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--(201031001, 201, 1001, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--
+--(201041002, 201, 1002, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--(201051002, 201, 1002, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--(201061002, 201, 1002, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--
+--(201072001, 201, 2001, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--(201082001, 201, 2001, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--(201092001, 201, 2001, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--
+--(201102002, 201, 2002, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--(201112002, 201, 2002, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--(201122002, 201, 2002, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--
+--(201133001, 201, 3001, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--(201143001, 201, 3001, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--(201153001, 201, 3001, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--
+--(201163002, 201, 3002, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--(201173002, 201, 3002, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--(201183002, 201, 3002, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+--
+--
+---- 
+---- Table: conf.ims_incident_alarm_condition_alarms
+----
+---- Para el id seguiremos el siguiente criterio:
+---- 1.- Id ims_incident_alarm_conditions
+---- 2.- Orden (2 cifras)
+--INSERT INTO conf.ims_incident_alarm_condition_alarms (incident_alarm_condition_alarm_id, incident_alarm_condition_id, incident_alarm_condition_alarm_type_id, alarm_config_id, element_type_id, element_id, min_alarmed_elements, enabled, visible, created_at, updated_at)
+--VALUES
+--(20101100101, 201011001, 2, 03010019, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--(20102100101, 201021001, 2, 03020019, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--(20103100101, 201031001, 2, 03030019, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--
+--(20104100201, 201041002, 2, 03010019, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--(20105100201, 201051002, 2, 03020019, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--(20106100201, 201061002, 2, 03030019, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--
+--(20107200101, 201072001, 2, 03010019, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--(20108200101, 201082001, 2, 03020019, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--(20109200101, 201092001, 2, 03030019, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--
+--(20110200201, 201102002, 2, 03010019, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--(20111200201, 201112002, 2, 03020019, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--(20112200201, 201122002, 2, 03030019, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--
+--(20113300101, 201133001, 2, 03010019, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--(20114300101, 201143001, 2, 03020019, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--(20115300101, 201153001, 2, 03030019, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--
+--(20116300101, 201163002, 2, 03010019, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--(20117300101, 201173002, 2, 03020019, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--(20118300201, 201183002, 2, 03030019, null, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

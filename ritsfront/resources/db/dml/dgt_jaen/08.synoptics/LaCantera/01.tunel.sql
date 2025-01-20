@@ -1,0 +1,122 @@
+-- Para los identificadores de los sinopticos seguiremos los siguientes criterios
+-- Id iterado --> 3 cifras
+INSERT INTO ui.synoptics 
+(id, name, description, label, icon, base_layer, exclusive_layers) VALUES 
+(903, 'SELECTOR_TREE_NODES_SINOPTICO_LA_CANTERA_TUNEL', 'SELECTOR_TREE_NODES_SINOPTICO_LA_CANTERA_TUNEL', 'LBL_SELECTOR_TREE_NODES_SINOPTICO_LA_CANTERA_TUNEL', NULL, 'img/synoptics/tunel_la_cantera.svg', false);
+
+-- Para los identificadores de synoptic_layers seguiremos los siguientes criterios
+-- Id Synoptico                                   --> 3 cifras
+-- Id tipo (000 si no hay tipo asociado)          --> 3 cifras
+-- Id subTipo (00 si tiene tipo, iterador si no)  --> 2 cifras
+INSERT INTO ui.synoptic_layers 
+(id, synoptic_id, name, label, visible) VALUES 
+(90300004, 903, 'SYNOPTIC_LAYERS_CONTROL_DE_ACCESSOS', 'LBL_SYNOPTIC_LAYERS_CONTROL_DE_ACCESSOS', true),
+(90300201, 903, 'SYNOPTIC_LAYERS_DOMO_CAMERAS', 'LBL_SYNOPTIC_LAYERS_DOMO_CAMERAS', true),
+(90300202, 903, 'SYNOPTIC_LAYERS_DAI_CAMERAS', 'LBL_SYNOPTIC_LAYERS_DAI_CAMERAS', true),
+(90300800, 903, 'SYNOPTIC_LAYERS_BARRIER', 'LBL_SYNOPTIC_LAYERS_BARRIER', true),
+(90301300, 903, 'SYNOPTIC_LAYERS_SEMAFOROS', 'LBL_SYNOPTIC_LAYERS_SEMAFOROS', true),
+(90301400, 903, 'SYNOPTIC_LAYERS_LUMINANCIMETER', 'LBL_SYNOPTIC_LAYERS_LUMINANCIMETER', true),
+(90301700, 903, 'SYNOPTIC_LAYERS_GALIBO', 'LBL_SYNOPTIC_LAYERS_GALIBO', true),
+(90305302, 903, 'SYNOPTIC_LAYERS_SEM_2_GRUPOS', 'LBL_SYNOPTIC_LAYERS_SEM_2_GRUPOS', true),
+(90307112, 903, 'SYNOPTIC_LAYERS_PANELES_AF', 'LBL_SYNOPTIC_LAYERS_PANELES_AF', true),
+(90307111, 903, 'SYNOPTIC_LAYERS_PANELES_CLV', 'LBL_SYNOPTIC_LAYERS_PANELES_CLV', true),
+(90307122, 903, 'SYNOPTIC_LAYERS_PANELES_GR_TXT_GR', 'LBL_SYNOPTIC_LAYERS_PANELES_GR_TXT_GR', true),
+(90307126, 903, 'SYNOPTIC_LAYERS_PANELES_STOP', 'LBL_SYNOPTIC_LAYERS_PANELES_STOP', true),
+(90307127, 903, 'SYNOPTIC_LAYERS_PANELES_GALIBO', 'LBL_SYNOPTIC_LAYERS_PANELES_GALIBO', true),
+(90300005, 903, 'SYNOPTIC_LAYERS_AMBIENTALES', 'LBL_SYNOPTIC_LAYERS_AMBIENTALES', true),
+(90300105, 903, 'SYNOPTIC_LAYERS_METEO', 'LBL_SYNOPTIC_LAYERS_METEO', true),
+(90301900, 903, 'SYNOPTIC_LAYERS_CO', 'LBL_SYNOPTIC_LAYERS_CO', true),
+(90302100, 903, 'SYNOPTIC_LAYERS_OPAC', 'LBL_SYNOPTIC_LAYERS_OPAC', true),
+(90306600, 903, 'SYNOPTIC_LAYERS_VANE', 'LBL_SYNOPTIC_LAYERS_VANE', true),
+(90301100, 903, 'SYNOPTIC_LAYERS_SOS', 'LBL_SYNOPTIC_LAYERS_SOS', true),
+(90301500, 903, 'SYNOPTIC_LAYERS_FIRE_DET', 'LBL_SYNOPTIC_LAYERS_FIRE_DET', true);
+
+INSERT INTO ui.synoptic_layer_relationships 
+(synoptic_id, parent_layer_id, child_layer_id) VALUES 
+(903, 90300004, 90300201),
+(903, 90300004, 90300202),
+(903, 90300004, 90300800),
+(903, 90300004, 90301300),
+(903, 90300005, 90301400),
+(903, 90300004, 90301700),
+(903, 90300004, 90305302),
+(903, 90300004, 90307112),
+(903, 90300004, 90307111),
+(903, 90300004, 90307122),
+(903, 90300004, 90307126),
+(903, 90300004, 90307127),
+(903, 90300005, 90300105),
+(903, 90300005, 90301900),
+(903, 90300005, 90302100),
+(903, 90300005, 90306600);
+
+INSERT INTO ui.synoptic_commands 
+(id, synoptic_id, position, label, icon, "default", module_action_id, args, view_type_id, multiselect, show_text, item_required, context) VALUES 
+(6, 903, 0, 'LBL_CMD_ALARMS', 'mdi mdi-pencil', false, 100501, NULL, 2, true, NULL, false, true),
+(7, 903, 1, 'LBL_ELEMENT', 'mdi mdi-pencil', true, 101401, NULL, 2, false, NULL, true, true),
+(8, 903, 2, 'LBL_CMD_EQUIPMENT', 'mdi mdi-pencil', false, 101701, NULL, 2, true, NULL, false, true);
+
+INSERT INTO ui.synoptic_layer_elements 
+(layer_id, element_id, graphic_icon_id, label, x, y,  horizontal_flip, rotate, tooltip, show_text, text_color, selectable) VALUES 
+(90300201, 'Element:2:50', 01000200, 'TVE-2-01-CA', 1438, 544, false, NULL, true, false, NULL, true),
+(90300201, 'Element:2:49', 01000200, 'TVE-1-01-CA', 624, 980, false, NULL, true, false, NULL, true),
+(90300202, 'Element:2:53', 02000201, 'TVI-2-01-CA', 1215, 172, true, NULL, true, false, NULL, true),
+(90300202, 'Element:2:54', 02000201, 'TVI-2-02-CA', 1093, 172, true, NULL, true, false, NULL, true),
+(90300202, 'Element:2:52', 02000201, 'TVI-1-02-CA', 1047, 913, false, NULL, true, false, NULL, true),
+(90300202, 'Element:2:51', 02000201, 'TVI-1-01-CA', 898, 913, false, NULL, true, false, NULL, true),
+(90300800, 'Element:8:1', 000008, 'BA-1-01-CA-D', 695, 852, false, NULL, true, false, NULL, true),
+(90300800, 'Element:8:2', 000008, 'BA-1-01-CA-I', 695, 753, false, NULL, true, false, NULL, true),
+(90301300, 'Element:13:12', 00001302, 'SMF-2-02-CA', 1269, 135, false, NULL, true, false, NULL, true),
+(90301300, 'Element:13:12', 00001302, 'SMF-2-02-CA', 1269, 478, false, NULL, true, false, NULL, true),
+(90301300, 'Element:13:11', 00001302, 'SMF-1-04-CA', 834, 951, false, NULL, true, false, NULL, true),
+(90301300, 'Element:13:11', 00001302, 'SMF-1-04-CA', 834, 609, false, NULL, true, false, NULL, true),
+(90301300, 'Element:13:18', 00001302, 'SMF-1-02-CA-I', 572, 678, false, NULL, true, false, NULL, true),
+(90301300, 'Element:13:17', 00001302, 'SMF-1-02-CA-C', 572, 779, false, NULL, true, false, NULL, true),
+(90301300, 'Element:13:16', 00001302, 'SMF-1-02-CA-D', 572, 882, false, NULL, true, false, NULL, true),
+(90301300, 'Element:13:13', 00001302, 'SMF-1-01-CA-D', 447, 882, false, NULL, true, false, NULL, true),
+(90301300, 'Element:13:14', 00001302, 'SMF-1-01-CA-C', 447, 779, false, NULL, true, false, NULL, true),
+(90301300, 'Element:13:15', 00001302, 'SMF-1-01-CA-I', 447, 678, false, NULL, true, false, NULL, true),
+(90301400, 'Element:14:2', 00001403, 'LUM-0-01-CA', 672, 967, false, NULL, true, false, NULL, true),
+(90301400, 'Element:14:3', 00001403, 'LUM-0-02-CA', 1494, 529, false, NULL, true, false, NULL, true),
+(90301700, 'Element:17:1', 000017, 'GA-1-01-CA', 23, 961, false, NULL, true, false, NULL, true),
+--(90305302, 'Element:53:3', 020053, 'SMF-2-01-CA-D', 1459, 282, false, NULL, true, false, NULL, true),
+--(90305302, 'Element:53:4', 020053, 'SMF-2-01-CA-I', 1459, 382, false, NULL, true, false, NULL, true),
+(90305302, 'Element:53:2', 020053, 'SMF-1-03-CA-I', 695, 705, false, NULL, true, false, NULL, true),
+(90305302, 'Element:53:1', 020053, 'SMF-1-03-CA-D', 695, 804, false, NULL, true, false, NULL, true),
+(90307112, 'Element:71:66', 12007100, 'AF-2-01-CA-D', 1269, 183, false, NULL, true, false, NULL, true),
+(90307112, 'Element:71:67', 12007100, 'AF-2-01-CA-C', 1269, 282, false, NULL, true, false, NULL, true),
+(90307112, 'Element:71:68', 12007100, 'AF-2-01-CA-I', 1269, 382, false, NULL, true, false, NULL, true),
+(90307112, 'Element:71:65', 12007101, 'AF-1-01-CA-I', 834, 705, false, NULL, true, false, NULL, true),
+(90307112, 'Element:71:64', 12007100, 'AF-1-01-CA-C', 834, 803, false, NULL, true, false, NULL, true),
+(90307112, 'Element:71:63', 12007100, 'AF-1-01-CA-D', 834, 903, false, NULL, true, false, NULL, true),
+(90307111, 'Element:71:74', 11007102, 'SV-2-01-CA-I', 1269, 430, false, NULL, true, false, NULL, true),
+(90307111, 'Element:71:73', 11007102, 'SV-2-01-CA-C', 1269, 330, false, NULL, true, false, NULL, true),
+(90307111, 'Element:71:72', 11007102, 'SV-2-01-CA-D', 1269, 231, false, NULL, true, false, NULL, true),
+(90307111, 'Element:71:71', 11007103, 'SV-1-01-CA-I', 834, 657, false, NULL, true, false, NULL, true),
+(90307111, 'Element:71:70', 11007102, 'SV-1-01-CA-C', 834, 756, false, NULL, true, false, NULL, true),
+(90307111, 'Element:71:69', 11007102, 'SV-1-01-CA-D', 834, 855, false, NULL, true, false, NULL, true),
+(90307122, 'Element:71:79', 220071, 'PMV-1-01-CA', 5, 768, false, NULL, true, false, NULL, true),
+(90307126, 'Element:71:75', 260071, 'STP-1-01-CA-D', 311, 865, false, NULL, true, false, NULL, true),
+(90307126, 'Element:71:76', 260071, 'STP-1-01-CA-C', 311, 763, false, NULL, true, false, NULL, true),
+(90307126, 'Element:71:77', 260071, 'STP-1-01-CA-I', 311, 664, false, NULL, true, false, NULL, true),
+(90307127, 'Element:71:78', 270071, 'PG-1-01-CA', 71, 929, false, NULL, true, false, NULL, true),
+(90300105, 'Element:1:2', 050001, 'EM-2-01-CA', 720, 544, false, NULL, true, false, NULL, true),
+(90301900, 'Element:19:9', 00001906, 'SCO-1-01-CA', 1095, 961, false, NULL, true, false, NULL, true),
+(90301900, 'Element:19:10', 00001906, 'SCO-2-01-CA', 997, 111, false, NULL, true, false, NULL, true),
+(90302100, 'Element:21:9', 00002107, 'OP-1-01-CA', 1140, 961, false, NULL, true, false, NULL, true),
+(90302100, 'Element:21:10', 00002107, 'OP-2-01-CA', 1045, 111, false, NULL, true, false, NULL, true),
+(90306600, 'Element:66:2', 00006608, 'ANX-VEL-1-01-DP', 1542, 529, false, NULL, true, false, NULL, true),
+(90301100, 'Element:11:48', 00001109, 'PSE-1-02-CA', 1354, 959, false, NULL, true, false, NULL, true),
+(90301100, 'Element:11:47', 00001109, 'PSE-1-01-CA', 751, 959, false, NULL, true, false, NULL, true),
+(90301100, 'Element:11:46', 00001109, 'PSI-2-01-CA', 1093, 124, false, NULL, true, false, NULL, true),
+(90301100, 'Element:11:49', 00001109, 'PSE-2-01-CA', 1363, 124, false, NULL, true, false, NULL, true),
+(90301100, 'Element:11:50', 00001109, 'PSE-2-02-CA', 736, 124, false, NULL, true, false, NULL, true),
+(90301100, 'Element:11:45', 00001109, 'PSI-1-01-CA', 1047, 961, false, NULL, true, false, NULL, true),
+(90301500, 'Element:15:43', 00001512, 'ZI-2-01-CA', 1205, 402, false, NULL, true, false, NULL, true),
+(90301500, 'Element:15:44', 00001512, 'ZI-2-02-CA', 1060, 402, false, NULL, true, false, NULL, true),
+(90301500, 'Element:15:45', 00001512, 'ZI-2-03-CA', 913, 402, false, NULL, true, false, NULL, true),
+(90301500, 'Element:15:41', 00001512, 'ZI-1-03-CA', 1205, 679, false, NULL, true, false, NULL, true),
+(90301500, 'Element:15:40', 00001512, 'ZI-1-02-CA', 1060, 679, false, NULL, true, false, NULL, true),
+(90301500, 'Element:15:39', 00001512, 'ZI-1-01-CA', 913, 679, false, NULL, true, false, NULL, true);
+
+

@@ -1,0 +1,36 @@
+--INSERT INTO conf.element_values
+--(element_type_id, element_type_param_id, param_type_id, element_id, value, enabled, visible, created_at, updated_at) VALUES
+--(2000, 1, 1, 5,
+--'{	
+--	"ventilationRegimes": [
+--        {
+--            "id": 1,
+--            "alias": "REGIMEN_PARADO",
+--            "description": "Régimen 0 túnel Despeñaperros para el sentido Córdoba",
+--            "labelAlias": "LBL_REGIME_0",
+--            "fans": 0
+--        },
+--        {
+--            "id": 2,
+--            "alias": "REGIMEN_BAJO",
+--            "description": "Régimen bajo túnel Despeñaperros para el sentido Córdoba",
+--            "labelAlias": "LBL_REGIME_1",
+--            "fans": 2
+--        },
+--        {
+--            "id": 3,
+--            "alias": "REGIMEN_MEDIO",
+--            "description": "Régimen medio túnel Despeñaperros para el sentido Córdoba",
+--            "labelAlias": "LBL_REGIME_2",
+--            "fans": 3
+--        },
+--        {
+--            "id": 4,
+--            "alias": "REGIMEN_ALTO",
+--            "description": "Régimen alto túnel Despeñaperros para el sentido Córdoba",
+--            "labelAlias": "LBL_REGIME_3",
+--            "fans": 4
+--        }
+--    ]
+--}'
+--, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
