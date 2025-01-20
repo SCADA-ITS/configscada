@@ -20,6 +20,8 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_ES', 1, 'LBL_OF_THE_MONTH', 'del mes', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_CRONUI_NEW_EXPRESSION_DIFERENT_CURRENT', 'La nueva expresión cron es distinta a la actual: ', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_CRONUI_SAVE_DESCRIPTION', '¿Desea guardar los cambios realizados?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_CRONUI_CURRENT', 'Expresión actual: ', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_CRONUI_NEW', 'Expresión nueva: ', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	
 --en_GB
 ('en_GB', 1, 'LBL_MINUTE(S)_STARTING_AT_MINUTE', 'minute(s) starting at minute', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -32,7 +34,8 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('en_GB', 1, 'LBL_OF_THE_MONTH', 'of the month', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 ('en_GB', 1, 'LBL_CRONUI_NEW_EXPRESSION_DIFERENT_CURRENT', 'The new cron expression is different from the current one: ', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_CRONUI_SAVE_DESCRIPTION', 'Do you want to save the changes?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-
+('en_GB', 1, 'LBL_CRONUI_CURRENT', 'Current expression: ', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_CRONUI_NEW', 'New expression: ', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
  	
  --sk_SK
 ('sk_SK', 1, 'LBL_MINUTE(S)_STARTING_AT_MINUTE', 'minúta(y) od minúty',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
@@ -45,7 +48,8 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('sk_SK', 1, 'LBL_OF_THE_MONTH', 'mesiaca', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('sk_SK', 1, 'LBL_CRONUI_NEW_EXPRESSION_DIFERENT_CURRENT', 'Nový výraz cron je odlišný od súčasného: ', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('sk_SK', 1, 'LBL_CRONUI_SAVE_DESCRIPTION', '¿Desea guardar los cambios realizados?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-
+('sk_SK', 1, 'LBL_CRONUI_CURRENT', 'Aktuálny výraz: ', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_CRONUI_NEW', 'Nový výraz:', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	
 --es_CL
 ('es_CL', 1, 'LBL_MINUTE(S)_STARTING_AT_MINUTE', 'minuto(s) a partir del minuto', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -57,4 +61,6 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_CL', 1, 'LBL_DAY(S)_STARTING_ON_THE', 'día(s) a partir del', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_OF_THE_MONTH', 'del mes', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_CRONUI_NEW_EXPRESSION_DIFERENT_CURRENT', 'La nueva expresión cron es distinta a la actual: ', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('es_CL', 1, 'LBL_CRONUI_SAVE_DESCRIPTION', '¿Desea guardar los cambios realizados?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+('es_CL', 1, 'LBL_CRONUI_SAVE_DESCRIPTION', '¿Desea guardar los cambios realizados?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_CRONUI_CURRENT', 'Expresión actual: ', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_CRONUI_NEW', 'Expresión nueva: ', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
