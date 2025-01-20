@@ -310,7 +310,6 @@ item;alias;description;sessionuid;road;stretchs;pk;sentido;on_change_measure
 310;INT-PMV-GA-SAI-NOR-1;INT-PMV-GA-SAI-NOR-1;INT-PMV-GA-SAI-NOR-1;Autovía A-4;LT1;;;ChangeMeasureHistorical.groovy
 311;INT-RED-FLUJO-SAI-NOR-1;INT-RED-FLUJO-SAI-NOR-1;INT-RED-FLUJO-SAI-NOR-1;Autovía A-4;LT1;;;ChangeMeasureHistorical.groovy
 312;INT-EMER-PERM-DER-SAI-NOR-1;INT-EMER-PERM-DER-SAI-NOR-1;INT-EMER-PERM-DER-SAI-NOR-1;Autovía A-4;LT1;;;ChangeMeasureHistorical.groovy
-313;INT-Q1-ILU-SUR-1;INT-Q1-ILU-SUR-1;INT-Q1-ILU-SUR-1;Autovía A-4;LT1;;;ChangeMeasureHistorical.groovy
 314;INT-K01-ILU-SUR-1;INT-K01-ILU-SUR-1;INT-K01-ILU-SUR-1;Autovía A-4;LT1;;;ChangeMeasureHistorical.groovy
 315;INT-DET-FASE-SAI-SUR-1;INT-DET-FASE-SAI-SUR-1;INT-DET-FASE-SAI-SUR-1;Autovía A-4;LT1;;;ChangeMeasureHistorical.groovy
 316;INT-SOS-SAI-SUR-1;INT-SOS-SAI-SUR-1;INT-SOS-SAI-SUR-1;Autovía A-4;LT1;;;ChangeMeasureHistorical.groovy
@@ -354,13 +353,11 @@ item;alias;description;sessionuid;road;stretchs;pk;sentido;on_change_measure
 354;INT-RED-FLUJO-SAI-NOR-3;INT-RED-FLUJO-SAI-NOR-3;INT-RED-FLUJO-SAI-NOR-3;Autovía A-4;LT3;;Madrid;ChangeMeasureHistorical.groovy
 355;INT-EMER-PERM-DER-SAI-NOR-3;INT-EMER-PERM-DER-SAI-NOR-3;INT-EMER-PERM-DER-SAI-NOR-3;Autovía A-4;LT3;;Madrid;ChangeMeasureHistorical.groovy
 356;INT-Q1-SAI-SUR-2;INT-Q1-SAI-SUR-2;INT-Q1-SAI-SUR-2;Autovía A-4;LT2;;Córdoba;ChangeMeasureHistorical.groovy
-357;INT-K01-SAI-NOR-SUR-2;INT-K01-SAI-NOR-SUR-2;INT-K01-SAI-NOR-SUR-2;Autovía A-4;LT2;;Córdoba;ChangeMeasureHistorical.groovy
 358;INT-CIRC-1D-SAI-SUR-2;INT-CIRC-1D-SAI-SUR-2;INT-CIRC-1D-SAI-SUR-2;Autovía A-4;LT2;;Córdoba;ChangeMeasureHistorical.groovy
 359;INT-SOS-1-SAI-SUR-2;INT-SOS-1-SAI-SUR-2;INT-SOS-1-SAI-SUR-2;Autovía A-4;LT2;;Córdoba;ChangeMeasureHistorical.groovy
 360;INT-SOS-2-SAI-SUR-2;INT-SOS-2-SAI-SUR-2;INT-SOS-2-SAI-SUR-2;Autovía A-4;LT2;;Córdoba;ChangeMeasureHistorical.groovy
 361;INT-DOMO-SAI-SUR-2;INT-DOMO-SAI-SUR-2;INT-DOMO-SAI-SUR-2;Autovía A-4;LT2;;Córdoba;ChangeMeasureHistorical.groovy
 362;INT-GA4-SAI-SUR-2;INT-GA4-SAI-SUR-2;INT-GA4-SAI-SUR-2;Autovía A-4;LT2;;Córdoba;ChangeMeasureHistorical.groovy
-363;INT-RED-FLUJO-SAI-NOR-SUR-2;INT-RED-FLUJO-SAI-NOR-SUR-2;INT-RED-FLUJO-SAI-NOR-SUR-2;Autovía A-4;LT2;;Córdoba;ChangeMeasureHistorical.groovy
 364;INT-EMER-PERM-DER-SAI-SUR-2;INT-EMER-PERM-DER-SAI-SUR-2;INT-EMER-PERM-DER-SAI-SUR-2;Autovía A-4;LT2;;Córdoba;ChangeMeasureHistorical.groovy
 365;INT-Q1-SAI-SUR-3;INT-Q1-SAI-SUR-3;INT-Q1-SAI-SUR-3;Autovía A-4;LT3;;Córdoba;ChangeMeasureHistorical.groovy
 366;INT-K01-SAI-SUR-3;INT-K01-SAI-SUR-3;INT-K01-SAI-SUR-3;Autovía A-4;LT3;;Córdoba;ChangeMeasureHistorical.groovy

@@ -20,7 +20,7 @@ INSERT INTO ui.synoptic_commands
 
 INSERT INTO ui.synoptic_layer_elements 
 (layer_id, element_id, graphic_icon_id, label, x, y,  horizontal_flip, rotate, tooltip, show_text, text_color, selectable) VALUES 
-(92205700, 'Element:57:314', 00005702, 'INT-K01-ILU-SUR-1', 927, 317, false, NULL, true, false, NULL, true),
+(92205700, 'Element:57:270', 00005702, 'INT-K01-ILU-SUR-1', 927, 317, false, NULL, true, false, NULL, true),
 (92205700, 'Element:57:322', 000057, 'INT-EMER-PERM-DER-SAI-SUR-1', 1669, 766, false, NULL, true, false, NULL, true),
 (92205700, 'Element:57:321', 000057, 'INT-RED-FLUJO-SAI-SUR-1', 1669, 418, false, NULL, true, false, NULL, true),
 (92205700, 'Element:57:320', 000057, 'INT-AF-SV-SAI-SUR-1', 1424, 418, false, NULL, true, false, NULL, true),
@@ -29,5 +29,5 @@ INSERT INTO ui.synoptic_layer_elements
 (92205700, 'Element:57:317', 000057, 'INT-SMF-STOP-SAI-SUR-1', 692, 418, false, NULL, true, false, NULL, true),
 (92205700, 'Element:57:316', 000057, 'INT-SOS-SAI-SUR-1', 450, 418, false, NULL, true, false, NULL, true),
 (92205700, 'Element:57:315', 000057, 'INT-DET-FASE-SAI-SUR-1', 205, 418, false, NULL, true, false, NULL, true),
-(92205700, 'Element:57:313', 000057, 'INT-Q1-ILU-SUR-1', 937, 253, false, NULL, true, false, NULL, true);
+(92205700, 'Element:57:269', 000057, 'INT-Q1-ILU-SUR-1', 937, 253, false, NULL, true, false, NULL, true);
 
