@@ -84,18 +84,6 @@ INSERT INTO ui.map_ext_entities (id, default_graphic_icon_id, default_module_act
 			"animate": false
 		},
 		{ 
-			"extEntityTypeId": "ExtEntityType:2",
-			"visible": true,
-			"enabled": true,
-			"animate": false
-		},
-		{ 
-			"extEntityTypeId": "ExtEntityType:3",
-			"visible": true,
-			"enabled": true,
-			"animate": false
-		},
-		{ 
 			"extEntityTypeId": "ExtEntityType:4",
 			"visible": true,
 			"enabled": true,
@@ -104,3 +92,25 @@ INSERT INTO ui.map_ext_entities (id, default_graphic_icon_id, default_module_act
 	]'
 );
 
+
+
+
+INSERT INTO ui.map_routes (id, default_module_action_id, routes_config) VALUES
+--
+-- routes_config format:
+--
+--		{
+--			"routeClosedColor": (Opcional) Color de ruta con cortes o cortada
+--			"routeOpenColor": (Opcional) Color de ruta abierta
+--			"routeClosureColor": (Opcional) Color de representación de cortes
+--			"alternativeRoutes": (Opcional) Habilita el cálculo de rutas adicionales a partir de un corte
+--		}
+--
+(2, null,
+	'{
+			"routeClosedColor": "#FF4500",
+			"routeOpenColor": "#36B5DD",
+			"avoidPolygonColor": "#8B0000",
+			"alternativeRoutes": true,
+			"alternativeRouteColor": "#46B482"
+	}');

@@ -34,27 +34,27 @@ BEGIN
 			'SELECT id, categoria, tipo, titulo, afeccion, carretera, localizacion, fecha, fecha_actualizacion, estado 
 				FROM reporting_bo.c4_ext_entities_with_values'
 			, 4001, null),
-		(2, 'Incidencias', 'LBL_EXT_ENTITY_112', 'LBL_EXT_ENTITY_112', 'LBL_EXT_ENTITY_112_DESCRIPTION', NULL, false, false, 
+		(2, 'c4_all_ext_entities_with_values', 'LBL_EXT_ENTITY_112', 'LBL_EXT_ENTITY_112', 'LBL_EXT_ENTITY_112_DESCRIPTION', NULL, false, false, 
 			-- sql_view 
 			'SELECT id, categoria, tipo, localizacion, fecha, estado, num_recursos, num_vehiculos 
 				FROM reporting_bo.e112_ext_entities_with_values'
 			, 4002, null),
-		(3, 'Recursos', 'LBL_EXT_ENTITY_TYPE_112_RESOURCES', 'LBL_EXT_ENTITY_TYPE_112_RESOURCES', 'LBL_EXT_ENTITY_TYPE_112_RESOURCES_DESCRIPTION', NULL, false, false, 
+		(3, 'c4_resources_ext_entities_with_values', 'LBL_EXT_ENTITY_TYPE_112_RESOURCES', 'LBL_EXT_ENTITY_TYPE_112_RESOURCES', 'LBL_EXT_ENTITY_TYPE_112_RESOURCES_DESCRIPTION', NULL, false, false, 
 			-- sql_view 
 			'SELECT id_incidente,nombre,fecha_salida,agencia,estacion,estado,fecha_ultimo_estado FROM reporting_bo.e112_resources_ext_entities'
 			, 4003, null),
-		(4, 'Vehículos', 'LBL_EXT_ENTITY_TYPE_112_VEHICLES', 'LBL_EXT_ENTITY_TYPE_112_VEHICLES', 'LBL_EXT_ENTITY_TYPE_112_VEHICLES_DESCRIPTION', NULL, false, false, 
+		(4, 'c4_vehicles_ext_entities_with_values', 'LBL_EXT_ENTITY_TYPE_112_VEHICLES', 'LBL_EXT_ENTITY_TYPE_112_VEHICLES', 'LBL_EXT_ENTITY_TYPE_112_VEHICLES_DESCRIPTION', NULL, false, false, 
 			-- sql_view 
 			'SELECT id_incidente,matricula,marca,modelo,color FROM reporting_bo.e112_vehicles_ext_entities'
 			, 4004, null),	
 		(5, 'all_waze_traffic_alert_ext_entities_with_values', 'LBL_EXT_ENTITY_WAZE_TRAFFIC_ALERT', 'LBL_EXT_ENTITY_WAZE_TRAFFIC_ALERT', 'LBL_EXT_ENTITY_WAZE_TRAFFIC_ALERT_DESCRIPTION', NULL, false, false, 
 			-- sql_view 
 			'SELECT * FROM reporting_bo.waze_traffic_alert_ext_entities_with_values'
-			, NULL, null),
+			, 4005, null),
 		(6, 'all_waze_traffic_jam_ext_entities_with_values', 'LBL_EXT_ENTITY_WAZE_TRAFFIC_JAM', 'LBL_EXT_ENTITY_WAZE_TRAFFIC_JAM', 'LBL_EXT_ENTITY_WAZE_TRAFFIC_JAM_DESCRIPTION', NULL, false, false, 
 			-- sql_view 
 			'SELECT * FROM reporting_bo.waze_traffic_jam_ext_entities_with_values'
-			, NULL, null);			
+			, 4006, null);			
 			
 	INSERT INTO reporting_bo.sg_metadata_columns (id, sg_metadata_table_id, column_name, "label", label_description, needs_translation, metadata, ref_view_column_id) VALUES
 		(0101, 1, 'id', 'LBL_EXT_ENTITY_C4_COLUMN_ID', NULL, true, '{"position": 1, "editable": false, "refName": true}', NULL),
@@ -89,6 +89,31 @@ BEGIN
 		(0602, 4, 'matricula', 'matricula', NULL, true, '{"position": 2, "editable": false}', NULL),
 		(0603, 4, 'marca', 'marca', NULL, true, '{"position": 3, "editable": false}', NULL),
 		(0604, 4, 'modelo', 'modelo', NULL, true, '{"position": 4, "editable": false}', NULL),
-		(0605, 4, 'color', 'color', NULL, true, '{"position": 5, "editable": false}', NULL);
+		(0605, 4, 'color', 'color', NULL, true, '{"position": 5, "editable": false}', NULL),
+		
+		(0701, 5, 'id', 'id', NULL, true, '{"position": 1, "editable": false, "refName": true}', NULL),
+		(0702, 5, 'subtipo', 'subtipo', NULL, true, '{"position": 2, "editable": false}', NULL),
+		(0703, 5, 'description', 'description', NULL, true, '{"position": 3, "editable": false}', NULL),
+		(0704, 5, 'fecha_publicacion', 'fecha_publicacion', NULL, true, '{"position": 4, "editable": false}', NULL),
+		(0705, 5, 'direccion', 'direccion', NULL, true, '{"position": 5, "editable": false}', NULL),
+		(0706, 5, 'calle', 'calle', NULL, true, '{"position": 6, "editable": false}', NULL),
+		(0707, 5, 'pais', 'pais', NULL, true, '{"position": 7, "editable": false}', NULL),
+		(0708, 5, 'localidad', 'localidad', NULL, true, '{"position": 8, "editable": false}', NULL),
+		(0709, 5, 'confianza', 'confianza', NULL, true, '{"position": 9, "editable": false}', NULL),
+		(0710, 5, 'usuario_municipio', 'usuario_municipio', NULL, true, '{"position": 10, "editable": false}', NULL),
+		(0711, 5, 'estado', 'estado', NULL, true, '{"position": 11, "editable": false}', NULL),
+		
+		(0801, 6, 'id', 'id', NULL, true, '{"position": 1, "editable": false, "refName": true}', NULL),
+		(0802, 6, 'circulacion', 'circulacion', NULL, true, '{"position": 2, "editable": false}', NULL),
+		(0803, 6, 'calle', 'calle', NULL, true, '{"position": 3, "editable": false}', NULL),
+		(0804, 6, 'ciudad', 'ciudad', NULL, true, '{"position": 4, "editable": false}', NULL),
+		(0805, 6, 'pais', 'pais', NULL, true, '{"position": 5, "editable": false}', NULL),
+		(0806, 6, 'fecha_publicacion', 'fecha_publicacion', NULL, true, '{"position": 6, "editable": false}', NULL),
+		(0807, 6, 'velocidad_km_h', 'velocidad_km_h', NULL, true, '{"position": 7, "editable": false}', NULL),
+		(0808, 6, 'distancia_m', 'distancia_m', NULL, true, '{"position": 8, "editable": false}', NULL),
+		(0809, 6, 'retraso_s', 'retraso_s', NULL, true, '{"position": 9, "editable": false}', NULL),
+		(0810, 6, 'comienzo', 'comienzo', NULL, true, '{"position": 10, "editable": false}', NULL),
+		(0811, 6, 'fin', 'fin', NULL, true, '{"position": 11, "editable": false}', NULL),
+		(0812, 6, 'estado', 'estado', NULL, true, '{"position": 12, "editable": false}', NULL);
   END IF;
 END $$;
