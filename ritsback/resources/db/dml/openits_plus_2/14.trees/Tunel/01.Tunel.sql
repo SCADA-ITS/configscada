@@ -567,12 +567,12 @@ INSERT INTO conf.element_tree_nodes(element_tree_node_id, element_tree_id, "labe
         (040189002, 04, '', 89, 2, 2, 1, true, true),
 
     (040193, 04, 'Grupo de trasiego', NULL, NULL, 49, 1, true, true),
-        (040193001, 04, '', 93, 1, 1, 1, true, true),
+        (040193001, 04, '', 93, 1, 1, 1, true, true);
 
-    (040196, 04, 'Grupo de megafonía', NULL, NULL, 50, 1, true, true),
-        (040196001, 04, '', 96, 1, 1, 1, true, true),
-        (040196002, 04, '', 96, 2, 2, 1, true, true),
-        (040196003, 04, '', 96, 3, 3, 1, true, true);
+    -- (040196, 04, 'Grupo de megafonía', NULL, NULL, 50, 1, true, true),
+    --     (040196001, 04, '', 96, 1, 1, 1, true, true),
+    --     (040196002, 04, '', 96, 2, 2, 1, true, true),
+    --     (040196003, 04, '', 96, 3, 3, 1, true, true);
 
 INSERT INTO conf.element_tree_node_hierarchies (element_tree_node_hierarchy_id, element_tree_id, node_parent_id, node_child_id, enabled, visible) VALUES  
 --Meteos
@@ -1109,10 +1109,10 @@ INSERT INTO conf.element_tree_node_hierarchies (element_tree_node_hierarchy_id, 
     (040193001, 04, 040193, 040193001, true, true),
 
 --PA_group
-(040196, 04, 0401, 040196, true, true),
-    (040196001, 04, 040196, 040196001, true, true),
-    (040196002, 04, 040196, 040196002, true, true),
-    (040196003, 04, 040196, 040196003, true, true),
+-- (040196, 04, 0401, 040196, true, true),
+--     (040196001, 04, 040196, 040196001, true, true),
+--     (040196002, 04, 040196, 040196002, true, true),
+--     (040196003, 04, 040196, 040196003, true, true),
 
 --bombas
 (040286, 04, 0402, 040286, true, true),

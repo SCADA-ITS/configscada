@@ -9,7 +9,7 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (160004, 16, 1, 4, true, true, false, false, NULL, NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
 (160005, 16, 1, 5, true, true, false, true, 'LBL_GRID_FIELD_STATE_LABEL', 'LBL_GRID_FIELD_STATE_LABEL', 'stateLabel', false, false, NULL, true, false, 150, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
 (160010, 16, 1, 10, true, false, false, false, 'LBL_MESSAGE_ID', 'LBL_MESSAGE_ID', 'ElementTypeParam:16:2:1001', false, false, 'left', false, false, 200, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
-(160011, 16, 1, 11, true, false, false, false, 'LBL_MESSAGE_TEXT', 'LBL_MESSAGE_TEXT', 'ElementTypeParam:16:2:1002', false, false, 'left', false, false, 200, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(160011, 16, 1, 11, true, false, false, false, 'LBL_MESSAGE_TEXT', 'LBL_MESSAGE_TEXT', 'ElementTypeParam:16:2:1003', false, false, 'left', false, false, 200, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
 (160012, 16, 1, 12, true, false, false, false, 'LBL_MESSAGE_TAG', 'LBL_MESSAGE_TAG', 'ElementTypeParam:16:2:1004', false, false, 'left', false, false, 200, NULL, true, true, NULL, NULL, NULL, NULL, NULL);
 
 INSERT INTO ui.grid_option_values(grid_id, grid_option_id, value) VALUES
