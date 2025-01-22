@@ -28,6 +28,8 @@ INSERT INTO ui.synoptic_element_type_commands
 
 INSERT INTO ui.synoptic_layer_elements 
 (layer_id, element_id, graphic_icon_id, label, x, y,  horizontal_flip, rotate, tooltip, show_text, text_color, selectable) VALUES 
+(91405600, 'Element:56:14', 00005602, 'SAI-SUR-DP1', 1244, 908, false, NULL, true, false, NULL, true),
+(91405600, 'Element:56:13', 00005602, 'SAI-NOR-DP1', 1082, 908, false, NULL, true, false, NULL, true),
 (91405600, 'Element:56:11', 00005602, 'ILU-NOR-DP1', 884, 842, false, NULL, true, false, NULL, true),
 (91405600, 'Element:56:10', 00005602, 'ILU-SUR-DP1', 752, 842, false, NULL, true, false, NULL, true),
 (91405700, 'Element:57:240', 000057, 'INT-Q9-CGBT-DP1', 1252, 729, false, NULL, true, false, NULL, true),
