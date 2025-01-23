@@ -172,7 +172,7 @@
 				<p:subscriptor_id_ref>20</p:subscriptor_id_ref>
 			</p:subscriptors_ref>
 			<p:executor_params>
-				<p:executor_param_value>cron_job=last_period_data_task_job;com.revenga.rits.back.virtual.equipment.manager.une.sheduler.RequestFrameJob;0 * * * * ?;0x17</p:executor_param_value>
+				<p:executor_param_value>cron_job=general_pmv_state_task_job;com.revenga.rits.back.virtual.equipment.manager.une.sheduler.RequestFrameJob;0 * * * * ?;0x17</p:executor_param_value>
         		<p:executor_param_value>elementType=71</p:executor_param_value>
         		<p:executor_param_value>elementSubtype=18</p:executor_param_value>         
 			</p:executor_params>
