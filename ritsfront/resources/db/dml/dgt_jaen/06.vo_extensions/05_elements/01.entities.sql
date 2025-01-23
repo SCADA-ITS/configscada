@@ -11,6 +11,14 @@ INSERT INTO ui.vo_entities(id, vo_entity_type_id, enabled, visible) VALUES
 ('Element:56:10', 'ElementUI', true, true),
 ('Element:56:11', 'ElementUI', true, true),
 ('Element:56:12', 'ElementUI', true, true),
+('Element:56:13', 'ElementUI', true, true),
+('Element:56:14', 'ElementUI', true, true),
+('Element:56:15', 'ElementUI', true, true),
+('Element:56:16', 'ElementUI', true, true),
+('Element:56:17', 'ElementUI', true, true),
+('Element:56:18', 'ElementUI', true, true),
+('Element:56:19', 'ElementUI', true, true),
+('Element:56:20', 'ElementUI', true, true),
 
 ('Element:57:2', 'ElementUI', true, true),
 ('Element:57:29', 'ElementUI', true, true),
@@ -46,4 +54,12 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 ('Element:56:9', 25, '912'),
 ('Element:56:10', 25, '916'),
 ('Element:56:11', 25, '915'),
-('Element:56:12', 25, '914');
+('Element:56:12', 25, '914'),
+('Element:56:13', 25, '921'),
+('Element:56:14', 25, '922'),
+('Element:56:15', 25, '924'),
+('Element:56:16', 25, '926'),
+('Element:56:17', 25, '925'),
+('Element:56:18', 25, '927'),
+('Element:56:19', 25, '928'),
+('Element:56:20', 25, '929');
