@@ -1,10 +1,10 @@
 import java.util.List;
 
 import com.revenga.rits.back.data.core.model.Element;
+import com.revenga.rits.back.data.core.model.AlarmConfig;
 import com.revenga.rits.back.data.core.model.command.SetActivationAlarmsCommand;
 import com.revenga.rits.back.data.core.model.command.SetDeactivationAlarmsCommand;
 import com.revenga.rits.back.virtual.equipment.manager.une.thread.ThreadSendManager;
-import com.revenga.rits.back.virtual.equipment.manager.service.EntityManager;
 
 
 class ProcessorUneResponse_ElementSubtype_18_71 {
@@ -34,46 +34,48 @@ class ProcessorUneResponse_ElementSubtype_18_71 {
 	}
 
 	void processResponse_0x97(String serviceId, Long elementId, Long elementTypeId, List<Byte> data) {
-		Element element = null;
-		SetActivationAlarmsCommand setActivationAlarmsCommandList = new SetActivationAlarmsCommand();
-    	SetDeactivationAlarmsCommand setDeactivationAlarmsCommandList = new SetDeactivationAlarmsCommand();
-		
-		if (data != null && data.size() > 0) {
-			element = new Element(elementTypeId, elementId);
-		
+		if (data && !data.isEmpty()) {
+			Element element = new Element(elementTypeId, elementId);
+
+			AlarmConfig doorOpen = createAlarm(ALARM_CONFIG_PUERTA_ABIERTA);
+			AlarmConfig ventilationOn = createAlarm(ALARM_CONFIG_VENTILACION_ACTIVADA);
+			AlarmConfig ventilationError = createAlarm(ALARM_CONFIG_FALLO_VENTILACION);
+			AlarmConfig internalHardwareError = createAlarm(ALARM_CONFIG_ERROR_INTERNO_HARDWARE);
+			AlarmConfig temperatureExcess = createAlarm(ALARM_CONFIG_EXCESO_TEMPERATURA);
+			AlarmConfig photocellAlarm = createAlarm(ALARM_CONFIG_FOTOCELULA);
+
 			Byte alarmsByte3 = data[ALARMAS_BYTE_3];
 			Byte alarmsByte6 = data[ALARMAS_BYTE_6];
 
-			int[] arrayByte3Binary = conversionIntToArrayIntBinary(alarmsByte3)
-			int[] arrayByte6Binary = conversionIntToArrayIntBinary(alarmsByte6)
+			int[] arrayByte3Binary = conversionIntToArrayIntBinary(alarmsByte3);
+			int[] arrayByte6Binary = conversionIntToArrayIntBinary(alarmsByte6);
 
-			generateAlarm(serviceId, element, arrayByte3Binary, BIT_ALARMA_PUERTA_ABIERTA, ALARM_CONFIG_PUERTA_ABIERTA, setActivationAlarmsCommandList, setDeactivationAlarmsCommandList)
-			generateAlarm(serviceId, element, arrayByte3Binary, BIT_ALARMA_VENTILACION_ACTIVADA, ALARM_CONFIG_VENTILACION_ACTIVADA, setActivationAlarmsCommandList, setDeactivationAlarmsCommandList)
-			generateAlarm(serviceId, element, arrayByte3Binary, BIT_ALARMA_FALLO_VENTILACION, ALARM_CONFIG_FALLO_VENTILACION, setActivationAlarmsCommandList, setDeactivationAlarmsCommandList)
-			generateAlarm(serviceId, element, arrayByte3Binary, BIT_ALARMA_ERROR_INTERNO_HARDWARE, ALARM_CONFIG_ERROR_INTERNO_HARDWARE, setActivationAlarmsCommandList, setDeactivationAlarmsCommandList)
-			generateAlarm(serviceId, element, arrayByte3Binary, BIT_ALARMA_EXCESO_TEMPERATURA, ALARM_CONFIG_EXCESO_TEMPERATURA, setActivationAlarmsCommandList, setDeactivationAlarmsCommandList)
-			generateAlarm(serviceId, element, arrayByte6Binary, BIT_ALARMA_FOTOCELULA, ALARM_CONFIG_FOTOCELULA, setActivationAlarmsCommandList, setDeactivationAlarmsCommandList)
+			generateAlarm(serviceId, element, arrayByte3Binary, BIT_ALARMA_PUERTA_ABIERTA, doorOpen);
+			generateAlarm(serviceId, element, arrayByte3Binary, BIT_ALARMA_VENTILACION_ACTIVADA, ventilationOn);
+			generateAlarm(serviceId, element, arrayByte3Binary, BIT_ALARMA_FALLO_VENTILACION, ventilationError);
+			generateAlarm(serviceId, element, arrayByte3Binary, BIT_ALARMA_ERROR_INTERNO_HARDWARE, internalHardwareError);
+			generateAlarm(serviceId, element, arrayByte3Binary, BIT_ALARMA_EXCESO_TEMPERATURA, temperatureExcess);
 
-			EntityManager.getInstance().sendCommand(setActivationAlarmsCommandList);
-			EntityManager.getInstance().sendCommand(setDeactivationAlarmsCommandList);
-		}
-	}
+			generateAlarm(serviceId, element, arrayByte6Binary, BIT_ALARMA_FOTOCELULA, photocellAlarm);
+        }
+    }
 
-	public int[] conversionIntToArrayIntBinary (Byte alarms){
-		String byteBinario = String.format("%${BYTE_SIZE}s", Integer.toBinaryString(alarms & 0xFF)).replace(' ', '0')
-		int[] arrayByteBinario = byteBinario.collect { it as Integer }
+    AlarmConfig createAlarm(Long alarmId) {
+        AlarmConfig alarmConfig = new AlarmConfig()
+        alarmConfig.setId(alarmId);
+        return alarmConfig;
+    }
 
-		return arrayByteBinario
-	}
+    int[] conversionIntToArrayIntBinary(Byte alarms) {
+        String binaryString = String.format("%${BYTE_SIZE}s", Integer.toBinaryString(alarms & 0xFF)).replace(' ', '0');
+        return binaryString.collect { it as Integer };
+    }
 
-	public void generateAlarm (String serviceId, Element element, int[] binaryArray, int bitPosition, Long alarm, SetActivationAlarmsCommand setActivationAlarmsCommandList, 
-								SetDeactivationAlarmsCommand setDeactivationAlarmsCommandList){
-		if(binaryArray[bitPosition] == 1){
-
-			setActivationAlarmsCommandList.add(element, ThreadSendManager.getInstance().addActivateAlarm(serviceId, element, EntityManager.getInstance().getAlarmConfig(alarm)));
-		}else{
-
-			setDeactivationAlarmsCommandList.add(element, ThreadSendManager.getInstance().addDeactivateAlarm(serviceId, element, EntityManager.getInstance().getAlarmConfig(alarm)));
+	void generateAlarm(String serviceId, Element element, int[] binaryArray, int bitPosition, AlarmConfig alarm) {
+		if (binaryArray[bitPosition] == 1) {
+			ThreadSendManager.getInstance().addActivateAlarm(serviceId, element, alarm);
+        } else {
+			ThreadSendManager.getInstance().addDeactivateAlarm(serviceId, element, alarm);
 		}
 	}
 }
