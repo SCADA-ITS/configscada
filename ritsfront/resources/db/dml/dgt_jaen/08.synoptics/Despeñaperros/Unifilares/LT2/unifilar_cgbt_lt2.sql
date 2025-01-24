@@ -31,6 +31,8 @@ INSERT INTO ui.synoptic_layer_elements
 (layer_id, element_id, graphic_icon_id, label, x, y,  horizontal_flip, rotate, tooltip, show_text, text_color, selectable) VALUES 
 (90805600, 'Element:56:2', 000056, 'ILU-SUR-DP2', 333, 598, false, NULL, true, false, NULL, true),
 (90805600, 'Element:56:1', 000056, 'ILU-NOR-DP2', 467, 598, false, NULL, true, false, NULL, true),
+(90805600, 'Element:56:15', 000056, 'SAI-NOR-DP2', 668, 668, false, NULL, true, false, NULL, true),
+(90805600, 'Element:56:16', 000056, 'SAI-SUR-DP2', 831, 668, false, NULL, true, false, NULL, true),
 (90805700, 'Element:57:103', 000057, 'INT-VENT-3-15-CGBT-DP2', 54, 804, false, NULL, true, false, NULL, true),
 (90805700, 'Element:57:104', 000057, 'INT-VENT-3-16-CGBT-DP2', 214, 804, false, NULL, true, false, NULL, true),
 (90805700, 'Element:57:105', 000057, 'INT-VENT-3-17-CGBT-DP2', 364, 804, false, NULL, true, false, NULL, true),
