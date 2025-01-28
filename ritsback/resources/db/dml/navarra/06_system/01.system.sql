@@ -14,5 +14,5 @@ INSERT INTO conf.system_param_values
 (6, '40', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (8, '0 * * ? * * *', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (15, '5', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(18, 'http://10.253.5.81:8701/ors/', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(18, 'http://10.253.5.81:8702/api', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 

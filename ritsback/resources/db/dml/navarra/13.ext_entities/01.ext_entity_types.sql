@@ -166,7 +166,7 @@ true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (8, 'Waze traffic jams', 'Atascos de trafico waze', 'LBL_EXT_ENTITY_TYPE_WAZE_TRAFFIC_JAMS', 'LBL_EXT_ENTITY_TYPE_WAZE_TRAFFIC_JAMS_DESC', true, '50 0/2 * * * ? *', 
 '{
 	"url": "https://www.waze.com/row-partnerhub-api/partners/16934850034/waze-feeds/c46bd65e-1743-4e61-88da-311bab40b8ae?format=1&types=traffic",
-	"level": 1,
+	"level": 0,
 	"extEntityParamsMapping": [ {"field": "pubMillis", "extEntityTypeParamId": "ExtEntityTypeParam:8:1"},
 								{"field": "speedKMH", "extEntityTypeParamId": "ExtEntityTypeParam:8:2"},
 								{"field": "length", "extEntityTypeParamId": "ExtEntityTypeParam:8:3"},

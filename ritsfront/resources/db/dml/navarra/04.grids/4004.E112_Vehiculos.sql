@@ -21,5 +21,7 @@ INSERT INTO ui.grid_option_values(grid_id, grid_option_id, value) VALUES
 (4004, 14, 'false'),
 (4004, 15, 'false'),
 (4004, 17, 'false'),
-(4004, 21, 'custom');
+(4004, 21, 'custom'),
+(4004, 25, 'true'),
+(4004, 26, 'true');
 
