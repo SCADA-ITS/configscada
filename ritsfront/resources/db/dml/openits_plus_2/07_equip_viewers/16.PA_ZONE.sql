@@ -13,8 +13,7 @@ INSERT INTO ui.equip_viewer_measures (equip_viewer_grp_measure_id, vo_entities_i
 --PA_ZONE
 (00001601,'ElementTypeParam:16:2:1001', 1, True),
 (00001601,'ElementTypeParam:16:2:1002', 1, True),
-(00001601,'ElementTypeParam:16:2:1003', 1, True),
-(00001601,'ElementTypeParam:16:2:1004', 1, True);
+(00001601,'ElementTypeParam:16:2:1003', 1, True);
 
 INSERT INTO ui.equip_viewer_configs (id, equip_viewer_id, vo_entities_id, "position", visible) VALUES
 (001601,'ElementType:16','ElementTypeParam:16:1:5', 5, True),
