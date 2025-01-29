@@ -50,4 +50,14 @@ INSERT INTO conf.plan_nodes (node_id,alias,description,plan_id,management_area_i
 	 (79,'Corte Carril Derecho Sentido Sur','Corte Carril Derecho Sentido Sur',56,NULL,true,true),
 	 (80,'Corte Carriles Derecho + Central Sentido Sur','Corte Carriles Derecho + Central Sentido Sur',57,NULL,true,true),
 	 (81,'Corte Carril Izquierdo Sentido Sur','Corte Carril Izquierdo Sentido Sur',58,NULL,true,true),
-	 (82,'Corte Carriles Izquierdo + Central Sentido Sur','Corte Carriles Izquierdo + Central Sentido Sur',59,NULL,true,true);
+	 (82,'Corte Carriles Izquierdo + Central Sentido Sur','Corte Carriles Izquierdo + Central Sentido Sur',59,NULL,true,true),
+	 (83,'Restitución ','Restitución ',NULL,NULL,true,true),
+	 (84,'Despeñaperros','Despeñaperros',NULL,NULL,true,true),
+	 (85,'DP -> Túnel con normalidad sentido norte','DP -> Túnel con normalidad sentido norte',60,NULL,true,true),
+	 (86,'DP -> Túnel con normalidad sentido sur','DP -> Túnel con normalidad sentido sur',61,NULL,true,true),
+	 (87,'El Corzo','El Corzo',NULL,NULL,true,true),
+	 (88,'','',62,NULL,true,true),
+	 (89,'CZ -> Túnel con normalidad sentido sur','CZ -> Túnel con normalidad sentido sur',63,NULL,true,true),
+	 (90,'La Cantera','La Cantera',NULL,NULL,true,true),
+	 (91,'CA -> Túnel con normalidad sentido norte','CA -> Túnel con normalidad sentido norte',64,NULL,true,true),
+	 (92,'CA -> Túnel con normalidad sentido sur','CA -> Túnel con normalidad sentido sur',65,NULL,true,true);

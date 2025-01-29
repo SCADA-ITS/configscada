@@ -45,4 +45,13 @@ INSERT INTO conf.plan_node_hierarchies (node_parent_id,node_child_id,enabled,vis
 	 (70,79,true,true),
 	 (70,80,true,true),
 	 (70,81,true,true),
-	 (70,82,true,true);
+	 (70,82,true,true),
+	 (83,84,true,true),
+	 (84,85,true,true),
+	 (84,86,true,true),
+	 (83,87,true,true),
+	 (87,88,true,true),
+	 (87,89,true,true),
+	 (83,90,true,true),
+	 (90,91,true,true),
+	 (90,92,true,true);
