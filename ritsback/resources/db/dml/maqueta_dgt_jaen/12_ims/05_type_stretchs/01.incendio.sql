@@ -39,4 +39,17 @@ INSERT INTO conf.ims_incident_type_stretchs (incident_type_id, stretch_id, defau
 (101, 15161002, 0350015, './resources/ims/operational_plans/incendio.png', null, null, null, false, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (101, 15171002, 0360015, './resources/ims/operational_plans/incendio.png', null, null, null, false, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (101, 15181002, 0370015, './resources/ims/operational_plans/incendio.png', null, null, null, false, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(101, 15191002, 0380015, './resources/ims/operational_plans/incendio.png', null, null, null, false, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(101, 15191002, 0380015, './resources/ims/operational_plans/incendio.png', null, null, null, false, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(101, 15012001, 0390015, './resources/ims/operational_plans/incendio.png', null, null, null, false, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(101, 15022001, 0400015, './resources/ims/operational_plans/incendio.png', null, null, null, false, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(101, 15032001, 0410015, './resources/ims/operational_plans/incendio.png', null, null, null, false, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(101, 15012002, 0430015, './resources/ims/operational_plans/incendio.png', null, null, null, false, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(101, 15022002, 0440015, './resources/ims/operational_plans/incendio.png', null, null, null, false, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(101, 15032002, 0450015, './resources/ims/operational_plans/incendio.png', null, null, null, false, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(101, 15013001, 0470015, './resources/ims/operational_plans/incendio.png', null, null, null, false, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(101, 15023001, 0480015, './resources/ims/operational_plans/incendio.png', null, null, null, false, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(101, 15033001, 0490015, './resources/ims/operational_plans/incendio.png', null, null, null, false, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(101, 15043001, 0500015, './resources/ims/operational_plans/incendio.png', null, null, null, false, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(101, 15013002, 0510015, './resources/ims/operational_plans/incendio.png', null, null, null, false, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(101, 15023002, 0520015, './resources/ims/operational_plans/incendio.png', null, null, null, false, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+

@@ -17,7 +17,7 @@ VALUES
 (1, 1, 01040101, '[
     {
         "id": 1,
-        "alias": "Semáforos aguas arriba",
+        "alias": "Semáforos",
         "from": 1,
         "to": 1,
         "elementSubtypeId": "ElementSubtype:1:13",
@@ -28,7 +28,7 @@ VALUES
     },
     {
         "id": 2,
-        "alias": "Semáforos aguas arriba",
+        "alias": "Semáforos",
         "from": 1,
         "to": 1,
         "elementSubtypeId": "ElementSubtype:2:13",
@@ -37,33 +37,11 @@ VALUES
                     "commandElementValues": [{"commandElementTypeParamId": "CommandElementTypeParam:2:13:1"}]
                     }
     },
-    {
-        "id": 3,
-        "alias": "Semáforos aguas abajo",
-        "from": 2,
-        "to": 2,
-        "elementSubtypeId": "ElementSubtype:1:13",
-        "command": {
-                    "commandElementTypeId": "CommandElementType:5:13",
-                    "commandElementValues": [{"commandElementTypeParamId": "CommandElementTypeParam:2:13:1"}]
-                    }
-    },
-    {
-        "id": 4,
-        "alias": "Semáforos aguas abajo",
-        "from": 2,
-        "to": 2,
-        "elementSubtypeId": "ElementSubtype:2:13",
-        "command": {
-                    "commandElementTypeId": "CommandElementType:5:13",
-                    "commandElementValues": [{"commandElementTypeParamId": "CommandElementTypeParam:2:13:1"}]
-                    }
-    },
 	{
         "id": 5,
         "alias": "Aspa-Flecha",
-        "from": 3,
-        "to": 3,
+        "from": 1,
+        "to": 1,
         "elementSubtypeId": "ElementSubtype:12:71",
 		"command": {
 					"commandElementTypeId": "CommandElementType:2:71",
@@ -76,14 +54,55 @@ VALUES
 	{
 		"id": 6,
 		"alias": "CLV",
-		"from": 4,
-        "to": 4,
+		"from": 1,
+        "to": 1,
 		"elementSubtypeId": "ElementSubtype:11:71",
 		"command": {
 					"commandElementTypeId": "CommandElementType:3:71",
 					"commandElementValues": [{
 						"commandElementTypeParamId": "CommandElementTypeParam:2:71:1"
 					}]
+		}
+	},
+    {
+        "id": 7,
+        "alias": "PMV",
+        "from": 1,
+        "to": 1,
+        "elementSubtypeId": "ElementSubtype:18:71",
+		"command": {
+					"commandElementTypeId": "CommandElementType:2:71",
+					"commandElementValues": [{
+						"value": "[{\"zone\":1,\"alternance_ms\":3000,\"flashing_on_ms\":0,\"flashing_off_ms\":0,\"texts\":[],\"graphics\":[],\"align\":\"center\"},{\"zone\":2,\"alternance_ms\":3000,\"flashing_on_ms\":0,\"flashing_off_ms\":0,\"texts\":[{\"id\":1,\"value\":\"TUNEL\",\"alternance\":\"\",\"color\":\"#FFFFFF\"},{\"id\":2,\"value\":\"CERRADO\",\"alternance\":\"\",\"color\":\"#FFFFFF\"},{\"id\":3,\"value\":\"\",\"alternance\":\"\",\"color\":\"#FFFFFF\"}],\"graphics\":[],\"align\":\"center\"}]",
+						"commandElementTypeParamId": "CommandElementTypeParam:2:71:1"
+					}]	
+		}
+	},
+    {
+        "id": 8,
+        "alias": "PMV",
+        "from": 1,
+        "to": 1,
+        "elementSubtypeId": "ElementSubtype:22:71",
+		"command": {
+					"commandElementTypeId": "CommandElementType:2:71",
+					"commandElementValues": [{
+						"value": "[{\"zone\":1,\"alternance_ms\":3000,\"flashing_on_ms\":0,\"flashing_off_ms\":0,\"texts\":[],\"graphics\":[],\"align\":\"center\"},{\"zone\":2,\"alternance_ms\":3000,\"flashing_on_ms\":0,\"flashing_off_ms\":0,\"texts\":[{\"id\":1,\"value\":\"TUNEL\",\"alternance\":\"\",\"color\":\"#FFFFFF\"},{\"id\":2,\"value\":\"CERRADO\",\"alternance\":\"\",\"color\":\"#FFFFFF\"},{\"id\":3,\"value\":\"\",\"alternance\":\"\",\"color\":\"#FFFFFF\"}],\"graphics\":[],\"align\":\"center\"},{\"zone\":3,\"alternance_ms\":3000,\"flashing_on_ms\":0,\"flashing_off_ms\":0,\"texts\":[],\"graphics\":[],\"align\":\"center\"}]",
+						"commandElementTypeParamId": "CommandElementTypeParam:2:71:1"
+					}]	
+		}
+	},
+    {
+        "id": 9,
+        "alias": "STOP",
+        "from": 1,
+        "to": 1,
+        "elementSubtypeId": "ElementSubtype:26:71",
+		"command": {
+					"commandElementTypeId": "CommandElementType:4:71",
+					"commandElementValues": [{
+                        "commandElementTypeParamId": "CommandElementTypeParam:2:71:1"
+					}]	
 		}
 	}
 ]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
