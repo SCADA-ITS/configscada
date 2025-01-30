@@ -10,14 +10,15 @@ DROP TABLE IF EXISTS conf.element_transit_types;
 DROP TABLE IF EXISTS conf.infraction_params;
 DROP TABLE IF EXISTS conf.infraction_param_groups;
 DROP TABLE IF EXISTS conf.infraction_manager_types;
+DROP TABLE IF EXISTS conf.infraction_type_threshold_values;
 DROP TABLE IF EXISTS conf.infraction_types;
 DROP TABLE IF EXISTS conf.infraction_managers;
-DROP TABLE IF EXISTS conf.transit_params;
-DROP TABLE IF EXISTS conf.transit_param_groups;
-DROP TABLE IF EXISTS conf.transit_type_states;
+DROP TABLE IF EXISTS conf.transit_type_params;
+DROP TABLE IF EXISTS conf.transit_type_param_groups;
+DROP TABLE IF EXISTS conf.transit_type_state_transitions;
 DROP TABLE IF EXISTS conf.transit_types;
-DROP TABLE IF EXISTS conf.transit_state_options;
-DROP TABLE IF EXISTS conf.transit_states;
+DROP TABLE IF EXISTS conf.transit_type_state_options;
+DROP TABLE IF EXISTS conf.transit_type_states;
 
 DROP TABLE IF EXISTS conf.driver_values;
 DROP TABLE IF EXISTS conf.drivers;
@@ -493,13 +494,13 @@ DROP TABLE IF EXISTS master.countries;
 	ALTER TABLE conf.driver_values SET TABLESPACE tbl_conf;
 
 -- 
--- Table: conf.transit_states
+-- Table: conf.transit_type_states
 -- Descripción: Estados de transitos
 -- Scope: conf
 --
-	CREATE TABLE conf.transit_states (
-		transit_state_id int8 NOT NULL,
-		transit_state_code varchar(2) UNIQUE NOT NULL,
+	CREATE TABLE conf.transit_type_states (
+		transit_type_state_id int8 NOT NULL,
+		transit_type_state_code varchar(2) UNIQUE NOT NULL,
 		alias varchar(100) NOT NULL,
 		description varchar(200) NULL,
 		label_alias varchar(50) NOT NULL,
@@ -509,20 +510,20 @@ DROP TABLE IF EXISTS master.countries;
 		visible bool NULL,
 		created_at timestamptz NOT NULL,
 		updated_at timestamptz NOT NULL,
-		CONSTRAINT pk_transit_states PRIMARY KEY (transit_state_id)
+		CONSTRAINT pk_transit_type_states PRIMARY KEY (transit_type_state_id)
 	);
 	
-	ALTER TABLE conf.transit_states SET TABLESPACE tbl_conf;
+	ALTER TABLE conf.transit_type_states SET TABLESPACE tbl_conf;
 	
 -- 
--- Table: conf.transit_state_options
--- Descripción: Opciones en estados de transitos
+-- Table: conf.transit_type_state_options
+-- Descripción: Opciones en estados de tipos de transitos
 -- Scope: conf
 --
-	CREATE TABLE conf.transit_state_options (
-		transit_state_id int8 NOT NULL,
-		transit_state_option_id int8 NOT NULL,
-		transit_state_option_code varchar(2) UNIQUE NOT NULL,
+	CREATE TABLE conf.transit_type_state_options (
+		transit_type_state_id int8 NOT NULL,
+		transit_type_state_option_id int8 NOT NULL,
+		transit_type_state_option_code varchar(2) UNIQUE NOT NULL,
 		alias varchar(100) NOT NULL,
 		description varchar(200) NULL,
 		label_alias varchar(50) NOT NULL,
@@ -532,14 +533,14 @@ DROP TABLE IF EXISTS master.countries;
 		visible bool NULL,
 		created_at timestamptz NOT NULL,
 		updated_at timestamptz NOT NULL,
-		CONSTRAINT pk_transit_state_options PRIMARY KEY (transit_state_id, transit_state_option_id)
+		CONSTRAINT pk_transit_type_state_options PRIMARY KEY (transit_type_state_id, transit_type_state_option_id)
 	);
 	
-	CREATE INDEX idx_transit_state_options_transit_states ON conf.transit_state_options USING btree (transit_state_id);
+	CREATE INDEX idx_transit_type_state_options_transit_type_states ON conf.transit_type_state_options USING btree (transit_type_state_id);
 		
-	ALTER TABLE conf.transit_state_options ADD CONSTRAINT fk_transit_state_options_transit_states FOREIGN KEY (transit_state_id) REFERENCES conf.transit_states (transit_state_id);
+	ALTER TABLE conf.transit_type_state_options ADD CONSTRAINT fk_transit_type_state_options_transit_type_states FOREIGN KEY (transit_type_state_id) REFERENCES conf.transit_type_states (transit_type_state_id);
 	
-	ALTER TABLE conf.transit_state_options SET TABLESPACE tbl_conf;
+	ALTER TABLE conf.transit_type_state_options SET TABLESPACE tbl_conf;
 
 -- 
 -- Table: conf.transit_types
@@ -548,9 +549,9 @@ DROP TABLE IF EXISTS master.countries;
 --
 	CREATE TABLE conf.transit_types (
 		transit_type_id int8 NOT NULL,
-		init_transit_state_id int8 NOT NULL,
-		end_transit_state_id int8 NOT NULL,
-		discard_transit_state_id int8 NOT NULL,
+		init_transit_type_state_id int8 NOT NULL,
+		end_transit_type_state_id int8 NOT NULL,
+		discard_transit_type_state_id int8 NOT NULL,
 		alias varchar(100) NOT NULL,
 		description varchar(200) NULL,
 		label_alias varchar(50) NOT NULL,
@@ -562,49 +563,49 @@ DROP TABLE IF EXISTS master.countries;
 		CONSTRAINT pk_transit_types PRIMARY KEY (transit_type_id)
 	);
 	
-	CREATE INDEX idx_transit_types_transit_states_1 ON conf.transit_types USING btree (init_transit_state_id);
-	CREATE INDEX idx_transit_types_transit_states_2 ON conf.transit_types USING btree (end_transit_state_id);
-	CREATE INDEX idx_transit_types_transit_states_3 ON conf.transit_types USING btree (discard_transit_state_id);
+	CREATE INDEX idx_transit_types_transit_type_states_1 ON conf.transit_types USING btree (init_transit_type_state_id);
+	CREATE INDEX idx_transit_types_transit_type_states_2 ON conf.transit_types USING btree (end_transit_type_state_id);
+	CREATE INDEX idx_transit_types_transit_type_states_3 ON conf.transit_types USING btree (discard_transit_type_state_id);
 	
-	ALTER TABLE conf.transit_types ADD CONSTRAINT fk_transit_types_transit_states_1 FOREIGN KEY (init_transit_state_id) REFERENCES conf.transit_states(transit_state_id);
-	ALTER TABLE conf.transit_types ADD CONSTRAINT fk_transit_types_transit_states_2 FOREIGN KEY (end_transit_state_id) REFERENCES conf.transit_states(transit_state_id);
-	ALTER TABLE conf.transit_types ADD CONSTRAINT fk_transit_types_transit_states_3 FOREIGN KEY (discard_transit_state_id) REFERENCES conf.transit_states(transit_state_id);
+	ALTER TABLE conf.transit_types ADD CONSTRAINT fk_transit_types_transit_type_states_1 FOREIGN KEY (init_transit_type_state_id) REFERENCES conf.transit_type_states(transit_type_state_id);
+	ALTER TABLE conf.transit_types ADD CONSTRAINT fk_transit_types_transit_type_states_2 FOREIGN KEY (end_transit_type_state_id) REFERENCES conf.transit_type_states(transit_type_state_id);
+	ALTER TABLE conf.transit_types ADD CONSTRAINT fk_transit_types_transit_type_states_3 FOREIGN KEY (discard_transit_type_state_id) REFERENCES conf.transit_type_states(transit_type_state_id);
 	
 	ALTER TABLE conf.transit_types SET TABLESPACE tbl_conf;
 
 -- 
--- Table: conf.transit_type_states
+-- Table: conf.transit_type_state_transitions
 -- Descripción: Compatibilidad de transiciones de estados de tipos de transitos
 -- Scope: conf
 --
-	CREATE TABLE conf.transit_type_states (
+	CREATE TABLE conf.transit_type_state_transitions (
 		transit_type_id int8 NOT NULL,
-		parent_transit_state_id int8 NOT NULL,
-		child_transit_state_id int8 NOT NULL,
+		parent_transit_type_state_id int8 NOT NULL,
+		child_transit_type_state_id int8 NOT NULL,
 		enabled bool NULL,
 		visible bool NULL,
 		created_at timestamptz NOT NULL,
 		updated_at timestamptz NOT NULL,
-		CONSTRAINT pk_transit_type_states PRIMARY KEY (transit_type_id, parent_transit_state_id, child_transit_state_id)
+		CONSTRAINT pk_transit_type_state_transitions PRIMARY KEY (transit_type_id, parent_transit_type_state_id, child_transit_type_state_id)
 	);
 	
-	CREATE INDEX idx_transit_type_states_transit_types ON conf.transit_type_states USING btree (transit_type_id);
-	CREATE INDEX idx_transit_type_states_transit_states_1 ON conf.transit_type_states USING btree (parent_transit_state_id);
-	CREATE INDEX idx_transit_type_states_transit_states_2 ON conf.transit_type_states USING btree (child_transit_state_id);
+	CREATE INDEX idx_transit_type_state_transitions_transit_types ON conf.transit_type_state_transitions USING btree (transit_type_id);
+	CREATE INDEX idx_transit_type_state_transitions_transit_type_states_1 ON conf.transit_type_state_transitions USING btree (parent_transit_type_state_id);
+	CREATE INDEX idx_transit_type_state_transitions_transit_type_states_2 ON conf.transit_type_state_transitions USING btree (child_transit_type_state_id);
 	
-	ALTER TABLE conf.transit_type_states ADD CONSTRAINT fk_transit_type_states_transit_types FOREIGN KEY (transit_type_id) REFERENCES conf.transit_types(transit_type_id);
-	ALTER TABLE conf.transit_type_states ADD CONSTRAINT fk_transit_type_states_transit_states_1 FOREIGN KEY (parent_transit_state_id) REFERENCES conf.transit_states(transit_state_id);
-	ALTER TABLE conf.transit_type_states ADD CONSTRAINT fk_transit_type_states_transit_states_2 FOREIGN KEY (child_transit_state_id) REFERENCES conf.transit_states(transit_state_id);
+	ALTER TABLE conf.transit_type_state_transitions ADD CONSTRAINT fk_transit_type_state_transitions_transit_types FOREIGN KEY (transit_type_id) REFERENCES conf.transit_types(transit_type_id);
+	ALTER TABLE conf.transit_type_state_transitions ADD CONSTRAINT fk_transit_type_state_transitions_transit_type_states_1 FOREIGN KEY (parent_transit_type_state_id) REFERENCES conf.transit_type_states(transit_type_state_id);
+	ALTER TABLE conf.transit_type_state_transitions ADD CONSTRAINT fk_transit_type_state_transitions_transit_type_states_2 FOREIGN KEY (child_transit_type_state_id) REFERENCES conf.transit_type_states(transit_type_state_id);
 	
-	ALTER TABLE conf.transit_type_states SET TABLESPACE tbl_conf;
+	ALTER TABLE conf.transit_type_state_transitions SET TABLESPACE tbl_conf;
 
 -- 
 -- Table: conf.transit_param_groups
 -- Descripción: Grupos de parámetros de transitos
 -- Scope: conf
 --
-	CREATE TABLE conf.transit_param_groups (
-		transit_param_group_id int8 NOT NULL,
+	CREATE TABLE conf.transit_type_param_groups (
+		transit_type_param_group_id int8 NOT NULL,
 		position int4 NOT NULL,
 		icon varchar(50) NULL,
 		alias varchar(100) NOT NULL,
@@ -615,21 +616,21 @@ DROP TABLE IF EXISTS master.countries;
 		visible bool NULL,
 		created_at timestamptz NOT NULL,
 		updated_at timestamptz NOT NULL,
-		CONSTRAINT pk_transit_param_groups PRIMARY KEY (transit_param_group_id)
+		CONSTRAINT pk_transit_type_param_groups PRIMARY KEY (transit_type_param_group_id)
 	);
 	
-	ALTER TABLE conf.transit_param_groups SET TABLESPACE tbl_conf;
+	ALTER TABLE conf.transit_type_param_groups SET TABLESPACE tbl_conf;
 
 -- 
 -- Table: conf.transit_params
 -- Descripción: Parámetros de tránsitos
 -- Scope: conf
 --
-	CREATE TABLE conf.transit_params (
+	CREATE TABLE conf.transit_type_params (
 		transit_type_id int8 NOT NULL,	
-		transit_param_id int8 NOT NULL,
+		transit_type_param_id int8 NOT NULL,
 		data_type_id int8 NOT NULL,
-		transit_param_group_id int8 NULL,
+		transit_type_param_group_id int8 NULL,
 		icon varchar(50) NULL,
 		alias varchar(100) NOT NULL,
 		description varchar(200) NULL,
@@ -639,18 +640,18 @@ DROP TABLE IF EXISTS master.countries;
 		visible bool NULL,
 		created_at timestamptz NOT NULL,
 		updated_at timestamptz NOT NULL,
-		CONSTRAINT pk_transit_params PRIMARY KEY (transit_type_id, transit_param_id)
+		CONSTRAINT pk_transit_type_params PRIMARY KEY (transit_type_id, transit_type_param_id)
 	);
 	
-	CREATE INDEX idx_transit_params_transit_types ON conf.transit_params USING btree (transit_type_id);
-	CREATE INDEX idx_transit_params_data_types ON conf.transit_params USING btree (data_type_id);
-	CREATE INDEX idx_transit_params_transit_param_groups ON conf.transit_params USING btree (transit_param_group_id);
+	CREATE INDEX idx_transit_type_params_transit_types ON conf.transit_type_params USING btree (transit_type_id);
+	CREATE INDEX idx_transit_type_params_data_types ON conf.transit_type_params USING btree (data_type_id);
+	CREATE INDEX idx_transit_type_params_transit_param_groups ON conf.transit_type_params USING btree (transit_type_param_group_id);
 		
-	ALTER TABLE conf.transit_params ADD CONSTRAINT fk_transit_params_transit_types FOREIGN KEY (transit_type_id) REFERENCES conf.transit_types(transit_type_id);
-	ALTER TABLE conf.transit_params ADD CONSTRAINT fk_transit_params_data_types FOREIGN KEY (data_type_id) REFERENCES master.data_types(data_type_id);
-	ALTER TABLE conf.transit_params ADD CONSTRAINT fk_transit_params_transit_param_groups FOREIGN KEY (transit_param_group_id) REFERENCES conf.transit_param_groups(transit_param_group_id);
+	ALTER TABLE conf.transit_type_params ADD CONSTRAINT fk_transit_type_params_transit_types FOREIGN KEY (transit_type_id) REFERENCES conf.transit_types(transit_type_id);
+	ALTER TABLE conf.transit_type_params ADD CONSTRAINT fk_transit_type_params_data_types FOREIGN KEY (data_type_id) REFERENCES master.data_types(data_type_id);
+	ALTER TABLE conf.transit_type_params ADD CONSTRAINT fk_transit_type_params_transit_type_param_groups FOREIGN KEY (transit_type_param_group_id) REFERENCES conf.transit_type_param_groups(transit_type_param_group_id);
 	
-	ALTER TABLE conf.transit_params SET TABLESPACE tbl_conf;
+	ALTER TABLE conf.transit_type_params SET TABLESPACE tbl_conf;
 	
 -- 
 -- Table: conf.infraction_managers
@@ -695,6 +696,45 @@ DROP TABLE IF EXISTS master.countries;
 	
 
 	ALTER TABLE conf.infraction_types SET TABLESPACE tbl_conf;
+	
+	
+-- 
+-- Table: conf.infraction_type_threshold_values
+-- Descripción: Configuración de umbrales de velocidad o distancia de tipos de infracción
+-- Scope: conf
+--
+	CREATE TABLE conf.infraction_type_threshold_values (
+		infraction_type_id int8 NOT NULL,
+		infraction_type_threshold_value_id int8 NOT NULL,
+		vehicle_class_id int8 NULL,
+		speed_threshold_operation_id int8 NULL,
+		speed_val1 float8 NULL,
+		speed_val2 float8 NULL,
+		distance_threshold_operation_id int8 NULL,
+		distance_val1 float8 NULL,
+		distance_val2 float8 NULL,
+		alias varchar(100) NOT NULL,
+		description varchar(200) NULL,
+		label_alias varchar(50) NOT NULL,
+		label_description varchar(50) NULL,
+		enabled bool NULL,
+		visible bool NULL,
+		created_at timestamptz NOT NULL,
+		updated_at timestamptz NOT NULL,
+		CONSTRAINT pk_infraction_type_threshold_values PRIMARY KEY (infraction_type_id, infraction_type_threshold_value_id)
+	);
+	
+	CREATE INDEX idx_infraction_type_threshold_values_infraction_types ON conf.infraction_type_threshold_values USING btree (infraction_type_id);
+	CREATE INDEX idx_infraction_type_threshold_values_vehicle_classes ON conf.infraction_type_threshold_values USING btree (vehicle_class_id);
+	CREATE INDEX idx_infraction_type_threshold_values_threshold_operations_1 ON conf.infraction_type_threshold_values USING btree (speed_threshold_operation_id);
+	CREATE INDEX idx_infraction_type_threshold_values_threshold_operations_2 ON conf.infraction_type_threshold_values USING btree (distance_threshold_operation_id);
+	
+	ALTER TABLE conf.infraction_type_threshold_values ADD CONSTRAINT fk_infraction_type_threshold_values_infraction_types FOREIGN KEY (infraction_type_id) REFERENCES conf.infraction_types(infraction_type_id);
+	ALTER TABLE conf.infraction_type_threshold_values ADD CONSTRAINT fk_infraction_type_threshold_values_vehicle_classes FOREIGN KEY (vehicle_class_id) REFERENCES master.vehicle_classes(vehicle_class_id);
+	ALTER TABLE conf.infraction_type_threshold_values ADD CONSTRAINT fk_infraction_type_threshold_values_threshold_operations_1 FOREIGN KEY (speed_threshold_operation_id) REFERENCES master.threshold_operations(threshold_operation_id);
+	ALTER TABLE conf.infraction_type_threshold_values ADD CONSTRAINT fk_infraction_type_threshold_values_threshold_operations_2 FOREIGN KEY (distance_threshold_operation_id) REFERENCES master.threshold_operations(threshold_operation_id);
+
+	ALTER TABLE conf.infraction_type_threshold_values SET TABLESPACE tbl_conf;
 	
 -- 
 -- Table: conf.infraction_manager_types
