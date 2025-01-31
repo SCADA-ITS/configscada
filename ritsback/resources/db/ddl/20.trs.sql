@@ -19,25 +19,28 @@ DROP TABLE IF EXISTS conf.transit_type_state_transitions;
 DROP TABLE IF EXISTS conf.transit_types;
 DROP TABLE IF EXISTS conf.transit_type_state_options;
 DROP TABLE IF EXISTS conf.transit_type_states;
-
 DROP TABLE IF EXISTS conf.driver_values;
 DROP TABLE IF EXISTS conf.drivers;
 DROP TABLE IF EXISTS conf.vehicle_values;
 DROP TABLE IF EXISTS conf.vehicles;
-DROP TABLE IF EXISTS master.driver_params;
-DROP TABLE IF EXISTS master.driver_param_groups;
-DROP TABLE IF EXISTS master.driver_types;
-DROP TABLE IF EXISTS master.license_types;
-DROP TABLE IF EXISTS master.vehicle_params;
-DROP TABLE IF EXISTS master.vehicle_param_groups;
+
+DROP TABLE IF EXISTS static.vehicle_classes;
+DROP TABLE IF EXISTS static.driver_params;
+DROP TABLE IF EXISTS static.driver_param_groups;
+DROP TABLE IF EXISTS static.driver_types;
+DROP TABLE IF EXISTS static.license_types;
+DROP TABLE IF EXISTS static.vehicle_params;
+DROP TABLE IF EXISTS static.vehicle_param_groups;
+DROP TABLE IF EXISTS static.vehicle_classes;
+
 DROP TABLE IF EXISTS master.vehicle_models;
-DROP TABLE IF EXISTS master.vehicle_brands;
-DROP TABLE IF EXISTS master.vehicle_classes;
 DROP TABLE IF EXISTS master.vehicle_types;
+DROP TABLE IF EXISTS master.vehicle_brands;
 DROP TABLE IF EXISTS master.localities;
 DROP TABLE IF EXISTS master.regions;
 DROP TABLE IF EXISTS master.states;
 DROP TABLE IF EXISTS master.countries;
+
 
 ---------------------------------------------------------
 --
@@ -138,7 +141,24 @@ DROP TABLE IF EXISTS master.countries;
 	ALTER TABLE master.localities ADD CONSTRAINT fk_localities_regions FOREIGN KEY (country_id, state_id, region_id) REFERENCES master.regions(country_id, state_id, region_id);
 	
 	ALTER TABLE master.localities SET TABLESPACE tbl_master;
-
+	
+-- 
+-- Table: master.vehicle_brands
+-- Descripción: Marcas de vehículos
+-- Scope: master
+--
+	CREATE TABLE master.vehicle_brands (
+		vehicle_brand_id int8 NOT NULL,
+		alias varchar(100) NOT NULL,
+		enabled bool NULL,
+		visible bool NULL,
+		created_at timestamptz NOT NULL,
+		updated_at timestamptz NOT NULL,
+		CONSTRAINT pk_vehicle_brands PRIMARY KEY (vehicle_brand_id)
+	);
+	
+	ALTER TABLE master.vehicle_brands SET TABLESPACE tbl_master;
+	
 -- 
 -- Table: master.vehicle_types
 -- Descripción: Tipos de vehículos
@@ -157,40 +177,6 @@ DROP TABLE IF EXISTS master.countries;
 	ALTER TABLE master.vehicle_types SET TABLESPACE tbl_master;
 
 -- 
--- Table: master.vehicle_classes
--- Descripción: Clases de vehículos
--- Scope: master
---
-	CREATE TABLE master.vehicle_classes (
-		vehicle_class_id int8 NOT NULL,
-		alias varchar(100) NOT NULL,
-		enabled bool NULL,
-		visible bool NULL,
-		created_at timestamptz NOT NULL,
-		updated_at timestamptz NOT NULL,
-		CONSTRAINT pk_vehicle_classes PRIMARY KEY (vehicle_class_id)
-	);
-	
-	ALTER TABLE master.vehicle_classes SET TABLESPACE tbl_master;
-	
--- 
--- Table: master.vehicle_brands
--- Descripción: Marcas de vehículos
--- Scope: master
---
-	CREATE TABLE master.vehicle_brands (
-		vehicle_brand_id int8 NOT NULL,
-		alias varchar(100) NOT NULL,
-		enabled bool NULL,
-		visible bool NULL,
-		created_at timestamptz NOT NULL,
-		updated_at timestamptz NOT NULL,
-		CONSTRAINT pk_vehicle_brands PRIMARY KEY (vehicle_brand_id)
-	);
-	
-	ALTER TABLE master.vehicle_brands SET TABLESPACE tbl_master;
-
--- 
 -- Table: master.vehicle_models
 -- Descripción: Modelos de vehículos
 -- Scope: master
@@ -199,7 +185,6 @@ DROP TABLE IF EXISTS master.countries;
 		vehicle_brand_id int8 NOT NULL,
 		vehicle_model_id int8 NOT NULL,
 		vehicle_type_id int8 NULL,
-		vehicle_class_id int8 NULL,
 		alias varchar(100) NOT NULL,
 		year_production int4 null,
 		enabled bool NULL,
@@ -211,20 +196,24 @@ DROP TABLE IF EXISTS master.countries;
 	
 	CREATE INDEX idx_vehicle_models_vehicle_brands ON master.vehicle_models USING btree (vehicle_brand_id);
 	CREATE INDEX idx_vehicle_models_vehicle_types ON master.vehicle_models USING btree (vehicle_type_id);
-	CREATE INDEX idx_vehicle_models_vehicle_classes ON master.vehicle_models USING btree (vehicle_class_id);
 		
 	ALTER TABLE master.vehicle_models ADD CONSTRAINT fk_vehicle_models_vehicle_brands FOREIGN KEY (vehicle_brand_id) REFERENCES master.vehicle_brands(vehicle_brand_id);
 	ALTER TABLE master.vehicle_models ADD CONSTRAINT fk_vehicle_models_vehicle_types FOREIGN KEY (vehicle_type_id) REFERENCES master.vehicle_types(vehicle_type_id);
-	ALTER TABLE master.vehicle_models ADD CONSTRAINT fk_vehicle_models_vehicle_classes FOREIGN KEY (vehicle_class_id) REFERENCES master.vehicle_classes(vehicle_class_id);
 	
 	ALTER TABLE master.vehicle_models SET TABLESPACE tbl_master;
 
--- 
--- Table: master.vehicle_param_groups
--- Descripción: Grupos de parámetros de vehículos
--- Scope: master
+---------------------------------------------------------
 --
-	CREATE TABLE master.vehicle_param_groups (
+-- TABLES FOR STATIC SCHEMA
+--
+---------------------------------------------------------
+
+-- 
+-- Table: static.vehicle_param_groups
+-- Descripción: Grupos de parámetros de vehículos
+-- Scope: static
+--
+	CREATE TABLE static.vehicle_param_groups (
 		vehicle_param_group_id int8 NOT NULL,
 		position int4 NOT NULL,
 		icon varchar(50) NULL,
@@ -239,14 +228,14 @@ DROP TABLE IF EXISTS master.countries;
 		CONSTRAINT pk_vehicle_param_groups PRIMARY KEY (vehicle_param_group_id)
 	);
 	
-	ALTER TABLE master.vehicle_param_groups SET TABLESPACE tbl_master;
+	ALTER TABLE static.vehicle_param_groups SET TABLESPACE tbl_static;
 
 -- 
--- Table: master.vehicle_params
+-- Table: static.vehicle_params
 -- Descripción: Parámetros de vehículos
--- Scope: master
+-- Scope: static
 --
-	CREATE TABLE master.vehicle_params (
+	CREATE TABLE static.vehicle_params (
 		vehicle_type_id int8 NOT NULL,	
 		vehicle_param_id int8 NOT NULL,
 		data_type_id int8 NOT NULL,
@@ -263,22 +252,22 @@ DROP TABLE IF EXISTS master.countries;
 		CONSTRAINT pk_vehicle_params PRIMARY KEY (vehicle_type_id, vehicle_param_id)
 	);
 	
-	CREATE INDEX idx_vehicle_params_vehicle_types ON master.vehicle_params USING btree (vehicle_type_id);
-	CREATE INDEX idx_vehicle_params_data_types ON master.vehicle_params USING btree (data_type_id);
-	CREATE INDEX idx_vehicle_params_vehicle_param_groups ON master.vehicle_params USING btree (vehicle_param_group_id);
+	CREATE INDEX idx_vehicle_params_vehicle_types ON static.vehicle_params USING btree (vehicle_type_id);
+	CREATE INDEX idx_vehicle_params_data_types ON static.vehicle_params USING btree (data_type_id);
+	CREATE INDEX idx_vehicle_params_vehicle_param_groups ON static.vehicle_params USING btree (vehicle_param_group_id);
 		
-	ALTER TABLE master.vehicle_params ADD CONSTRAINT fk_vehicle_params_vehicle_types FOREIGN KEY (vehicle_type_id) REFERENCES master.vehicle_types(vehicle_type_id);
-	ALTER TABLE master.vehicle_params ADD CONSTRAINT fk_vehicle_params_data_types FOREIGN KEY (data_type_id) REFERENCES master.data_types(data_type_id);
-	ALTER TABLE master.vehicle_params ADD CONSTRAINT fk_vehicle_params_vehicle_param_groups FOREIGN KEY (vehicle_param_group_id) REFERENCES master.vehicle_param_groups(vehicle_param_group_id);
+	ALTER TABLE static.vehicle_params ADD CONSTRAINT fk_vehicle_params_vehicle_types FOREIGN KEY (vehicle_type_id) REFERENCES master.vehicle_types(vehicle_type_id);
+	ALTER TABLE static.vehicle_params ADD CONSTRAINT fk_vehicle_params_data_types FOREIGN KEY (data_type_id) REFERENCES master.data_types(data_type_id);
+	ALTER TABLE static.vehicle_params ADD CONSTRAINT fk_vehicle_params_vehicle_param_groups FOREIGN KEY (vehicle_param_group_id) REFERENCES static.vehicle_param_groups(vehicle_param_group_id);
 	
-	ALTER TABLE master.vehicle_params SET TABLESPACE tbl_master;
+	ALTER TABLE static.vehicle_params SET TABLESPACE tbl_static;
 
 -- 
--- Table: master.license_types
+-- Table: static.license_types
 -- Descripción: Tipos de permisos de circulación
--- Scope: master
+-- Scope: static
 --
-	CREATE TABLE master.license_types (
+	CREATE TABLE static.license_types (
 		license_type_id int8 NOT NULL,
 		alias varchar(100) NOT NULL,
 		description varchar(200) NULL,
@@ -291,14 +280,14 @@ DROP TABLE IF EXISTS master.countries;
 		CONSTRAINT pk_license_types PRIMARY KEY (license_type_id)
 	);
 	
-	ALTER TABLE master.license_types SET TABLESPACE tbl_master;
+	ALTER TABLE static.license_types SET TABLESPACE tbl_static;
 
 -- 
--- Table: master.driver_types
+-- Table: static.driver_types
 -- Descripción: Tipos de conductores
--- Scope: master
+-- Scope: static
 --
-	CREATE TABLE master.driver_types (
+	CREATE TABLE static.driver_types (
 		driver_type_id int8 NOT NULL,
 		alias varchar(100) NOT NULL,
 		description varchar(200) NULL,
@@ -311,14 +300,14 @@ DROP TABLE IF EXISTS master.countries;
 		CONSTRAINT pk_driver_types PRIMARY KEY (driver_type_id)
 	);
 	
-	ALTER TABLE master.driver_types SET TABLESPACE tbl_master;
+	ALTER TABLE static.driver_types SET TABLESPACE tbl_static;
 
 -- 
--- Table: master.driver_param_groups
+-- Table: static.driver_param_groups
 -- Descripción: Grupos de parámetros de conductores
--- Scope: master
+-- Scope: static
 --
-	CREATE TABLE master.driver_param_groups (
+	CREATE TABLE static.driver_param_groups (
 		driver_param_group_id int8 NOT NULL,
 		position int4 NOT NULL,
 		icon varchar(50) NULL,
@@ -333,14 +322,14 @@ DROP TABLE IF EXISTS master.countries;
 		CONSTRAINT pk_driver_param_groups PRIMARY KEY (driver_param_group_id)
 	);
 	
-	ALTER TABLE master.driver_param_groups SET TABLESPACE tbl_master;
+	ALTER TABLE static.driver_param_groups SET TABLESPACE tbl_static;
 
 -- 
--- Table: master.vehicle_params
+-- Table: static.vehicle_params
 -- Descripción: Parámetros de vehículos
--- Scope: master
+-- Scope: static
 --
-	CREATE TABLE master.driver_params (
+	CREATE TABLE static.driver_params (
 		driver_type_id int8 NOT NULL,	
 		driver_param_id int8 NOT NULL,
 		data_type_id int8 NOT NULL,
@@ -357,15 +346,32 @@ DROP TABLE IF EXISTS master.countries;
 		CONSTRAINT pk_driver_params PRIMARY KEY (driver_type_id, driver_param_id)
 	);
 	
-	CREATE INDEX idx_driver_params_driver_types ON master.driver_params USING btree (driver_type_id);
-	CREATE INDEX idx_driver_params_data_types ON master.driver_params USING btree (data_type_id);
-	CREATE INDEX idx_driver_params_driver_param_groups ON master.driver_params USING btree (driver_param_group_id);
+	CREATE INDEX idx_driver_params_driver_types ON static.driver_params USING btree (driver_type_id);
+	CREATE INDEX idx_driver_params_data_types ON static.driver_params USING btree (data_type_id);
+	CREATE INDEX idx_driver_params_driver_param_groups ON static.driver_params USING btree (driver_param_group_id);
 		
-	ALTER TABLE master.driver_params ADD CONSTRAINT fk_driver_params_driver_types FOREIGN KEY (driver_type_id) REFERENCES master.driver_types(driver_type_id);
-	ALTER TABLE master.driver_params ADD CONSTRAINT fk_driver_params_data_types FOREIGN KEY (data_type_id) REFERENCES master.data_types(data_type_id);
-	ALTER TABLE master.driver_params ADD CONSTRAINT fk_driver_params_driver_param_groups FOREIGN KEY (driver_param_group_id) REFERENCES master.driver_param_groups(driver_param_group_id);
+	ALTER TABLE static.driver_params ADD CONSTRAINT fk_driver_params_driver_types FOREIGN KEY (driver_type_id) REFERENCES static.driver_types(driver_type_id);
+	ALTER TABLE static.driver_params ADD CONSTRAINT fk_driver_params_data_types FOREIGN KEY (data_type_id) REFERENCES master.data_types(data_type_id);
+	ALTER TABLE static.driver_params ADD CONSTRAINT fk_driver_params_driver_param_groups FOREIGN KEY (driver_param_group_id) REFERENCES static.driver_param_groups(driver_param_group_id);
 	
-	ALTER TABLE master.driver_params SET TABLESPACE tbl_master;
+	ALTER TABLE static.driver_params SET TABLESPACE tbl_static;
+	
+-- 
+-- Table: static.vehicle_classes
+-- Descripción: Clases de vehículos
+-- Scope: static
+--
+	CREATE TABLE static.vehicle_classes (
+		vehicle_class_id int8 NOT NULL,
+		alias varchar(100) NOT NULL,
+		enabled bool NULL,
+		visible bool NULL,
+		created_at timestamptz NOT NULL,
+		updated_at timestamptz NOT NULL,
+		CONSTRAINT pk_vehicle_classes PRIMARY KEY (vehicle_class_id)
+	);
+	
+	ALTER TABLE static.vehicle_classes SET TABLESPACE tbl_static;
 
 ---------------------------------------------------------
 --
@@ -382,6 +388,7 @@ DROP TABLE IF EXISTS master.countries;
 		vehicle_type_id int8 NOT NULL,
 		vehicle_id int8 NOT NULL,
 		vehicle_model_id int8 NOT NULL,
+		vehicle_class_id int8 NULL,
 		country_id int8 NULL,
 		plate_number varchar(20) NULL,
 		date_registration timestamptz NULL,
@@ -394,8 +401,10 @@ DROP TABLE IF EXISTS master.countries;
 	);
 	
 	CREATE INDEX idx_vehicles_vehicle_types ON conf.vehicles USING btree (vehicle_type_id);
-		
+	CREATE INDEX idx_vehicles_vehicle_classes ON conf.vehicles USING btree (vehicle_class_id);
+	
 	ALTER TABLE conf.vehicles ADD CONSTRAINT fk_vehicles_vehicle_types FOREIGN KEY (vehicle_type_id) REFERENCES master.vehicle_types(vehicle_type_id);
+	ALTER TABLE conf.vehicles ADD CONSTRAINT fk_vehicles_vehicle_classes FOREIGN KEY (vehicle_class_id) REFERENCES static.vehicle_classes(vehicle_class_id);
 	
 	ALTER TABLE conf.vehicles SET TABLESPACE tbl_conf;
 
@@ -419,7 +428,7 @@ DROP TABLE IF EXISTS master.countries;
 	CREATE INDEX idx_vehicle_values_vehicle_params ON conf.vehicle_values USING btree (vehicle_type_id, vehicle_param_id);
 	CREATE INDEX idx_vehicle_values_vehicles ON conf.vehicle_values USING btree (vehicle_type_id, vehicle_id);
 		
-	ALTER TABLE conf.vehicle_values ADD CONSTRAINT fk_vehicle_values_vehicle_params FOREIGN KEY (vehicle_type_id, vehicle_param_id) REFERENCES master.vehicle_params(vehicle_type_id, vehicle_param_id);
+	ALTER TABLE conf.vehicle_values ADD CONSTRAINT fk_vehicle_values_vehicle_params FOREIGN KEY (vehicle_type_id, vehicle_param_id) REFERENCES static.vehicle_params(vehicle_type_id, vehicle_param_id);
 	ALTER TABLE conf.vehicle_values ADD CONSTRAINT fk_vehicle_values_vehicles FOREIGN KEY (vehicle_type_id, vehicle_id) REFERENCES conf.vehicles(vehicle_type_id, vehicle_id);
 	
 	ALTER TABLE conf.vehicle_values SET TABLESPACE tbl_conf;
@@ -459,8 +468,8 @@ DROP TABLE IF EXISTS master.countries;
 	CREATE INDEX idx_drivers_regions ON conf.drivers USING btree (region_id);
 	CREATE INDEX idx_drivers_localities ON conf.drivers USING btree (locality_id);
 		
-	ALTER TABLE conf.drivers ADD CONSTRAINT fk_drivers_driver_types FOREIGN KEY (driver_type_id) REFERENCES master.driver_types(driver_type_id);
-	ALTER TABLE conf.drivers ADD CONSTRAINT fk_drivers_license_types FOREIGN KEY (license_type_id) REFERENCES master.license_types(license_type_id);
+	ALTER TABLE conf.drivers ADD CONSTRAINT fk_drivers_driver_types FOREIGN KEY (driver_type_id) REFERENCES static.driver_types(driver_type_id);
+	ALTER TABLE conf.drivers ADD CONSTRAINT fk_drivers_license_types FOREIGN KEY (license_type_id) REFERENCES static.license_types(license_type_id);
 	ALTER TABLE conf.drivers ADD CONSTRAINT fk_drivers_countries FOREIGN KEY (country_id) REFERENCES master.countries(country_id);
 	ALTER TABLE conf.drivers ADD CONSTRAINT fk_drivers_states FOREIGN KEY (country_id, state_id) REFERENCES master.states(country_id, state_id);
 	ALTER TABLE conf.drivers ADD CONSTRAINT fk_drivers_regions FOREIGN KEY (country_id, state_id, region_id) REFERENCES master.regions(country_id, state_id, region_id);
@@ -488,7 +497,7 @@ DROP TABLE IF EXISTS master.countries;
 	CREATE INDEX idx_driver_values_driver_params ON conf.driver_values USING btree (driver_type_id, driver_param_id);
 	CREATE INDEX idx_driver_values_drivers ON conf.driver_values USING btree (driver_type_id, driver_id);
 		
-	ALTER TABLE conf.driver_values ADD CONSTRAINT fk_driver_values_driver_params FOREIGN KEY (driver_type_id, driver_param_id) REFERENCES master.driver_params(driver_type_id, driver_param_id);
+	ALTER TABLE conf.driver_values ADD CONSTRAINT fk_driver_values_driver_params FOREIGN KEY (driver_type_id, driver_param_id) REFERENCES static.driver_params(driver_type_id, driver_param_id);
 	ALTER TABLE conf.driver_values ADD CONSTRAINT fk_driver_values_drivers FOREIGN KEY (driver_type_id, driver_id) REFERENCES conf.drivers(driver_type_id, driver_id);
 	
 	ALTER TABLE conf.driver_values SET TABLESPACE tbl_conf;
@@ -730,7 +739,7 @@ DROP TABLE IF EXISTS master.countries;
 	CREATE INDEX idx_infraction_type_threshold_values_threshold_operations_2 ON conf.infraction_type_threshold_values USING btree (distance_threshold_operation_id);
 	
 	ALTER TABLE conf.infraction_type_threshold_values ADD CONSTRAINT fk_infraction_type_threshold_values_infraction_types FOREIGN KEY (infraction_type_id) REFERENCES conf.infraction_types(infraction_type_id);
-	ALTER TABLE conf.infraction_type_threshold_values ADD CONSTRAINT fk_infraction_type_threshold_values_vehicle_classes FOREIGN KEY (vehicle_class_id) REFERENCES master.vehicle_classes(vehicle_class_id);
+	ALTER TABLE conf.infraction_type_threshold_values ADD CONSTRAINT fk_infraction_type_threshold_values_vehicle_classes FOREIGN KEY (vehicle_class_id) REFERENCES static.vehicle_classes(vehicle_class_id);
 	ALTER TABLE conf.infraction_type_threshold_values ADD CONSTRAINT fk_infraction_type_threshold_values_threshold_operations_1 FOREIGN KEY (speed_threshold_operation_id) REFERENCES master.threshold_operations(threshold_operation_id);
 	ALTER TABLE conf.infraction_type_threshold_values ADD CONSTRAINT fk_infraction_type_threshold_values_threshold_operations_2 FOREIGN KEY (distance_threshold_operation_id) REFERENCES master.threshold_operations(threshold_operation_id);
 

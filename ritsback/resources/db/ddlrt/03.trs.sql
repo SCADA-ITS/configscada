@@ -26,8 +26,8 @@ DROP TABLE IF EXISTS rt.transits;
 		transit_type_id int8 NOT NULL,
 		date_transit timestamptz NOT NULL,
 		plate_number varchar(20) NULL,
-		transit_state_id int8 NOT NULL,
-		transit_state_option_id int8 NULL,
+		transit_type_state_id int8 NOT NULL,
+		transit_type_state_option_id int8 NULL,
 		location_id int8 NOT NULL,
 		direction varchar(10) NULL,
 		lane_number int4 NULL,
@@ -52,8 +52,8 @@ DROP TABLE IF EXISTS rt.transits;
 	);
 	
 	CREATE INDEX idx_transits_transit_types ON rt.transits USING btree (transit_type_id);
-	CREATE INDEX idx_transits_transit_states ON rt.transits USING btree (transit_state_id);
-	CREATE INDEX idx_transits_transit_state_options ON rt.transits USING btree (transit_state_id, transit_state_option_id);
+	CREATE INDEX idx_transits_transit_type_states ON rt.transits USING btree (transit_type_state_id);
+	CREATE INDEX idx_transits_transit_type_state_options ON rt.transits USING btree (transit_type_state_id, transit_type_state_option_id);
 	CREATE INDEX idx_transits_transit_locations ON rt.transits USING btree (location_id);
 	CREATE INDEX idx_transits_transit_elements ON rt.transits USING btree (element_type_id, element_id);
 	CREATE INDEX idx_transits_transit_drivers ON rt.transits USING btree (driver_type_id, driver_id);
@@ -62,8 +62,8 @@ DROP TABLE IF EXISTS rt.transits;
 	CREATE INDEX idx_transits_transit_users ON rt.transits USING btree (assigned_user_id);
 
 	ALTER TABLE rt.transits ADD CONSTRAINT fk_transits_transit_types FOREIGN KEY (transit_type_id) REFERENCES conf.transit_types(transit_type_id);
-	ALTER TABLE rt.transits ADD CONSTRAINT fk_transits_transit_states FOREIGN KEY (transit_state_id) REFERENCES conf.transit_states(transit_state_id);
-	ALTER TABLE rt.transits ADD CONSTRAINT fk_transits_transit_state_options FOREIGN KEY (transit_state_id, transit_state_option_id) REFERENCES conf.transit_state_options(transit_state_id, transit_state_option_id);
+	ALTER TABLE rt.transits ADD CONSTRAINT fk_transits_transit_type_states FOREIGN KEY (transit_type_state_id) REFERENCES conf.transit_type_states(transit_type_state_id);
+	ALTER TABLE rt.transits ADD CONSTRAINT fk_transits_transit_type_state_options FOREIGN KEY (transit_type_state_id, transit_type_state_option_id) REFERENCES conf.transit_type_state_options(transit_type_state_id, transit_type_state_option_id);
 	ALTER TABLE rt.transits ADD CONSTRAINT fk_transits_transit_locations FOREIGN KEY (location_id) REFERENCES conf.locations(location_id);
 	ALTER TABLE rt.transits ADD CONSTRAINT fk_transits_transit_elements FOREIGN KEY (element_type_id, element_id) REFERENCES conf.elements(element_type_id, element_id);
 	ALTER TABLE rt.transits ADD CONSTRAINT fk_transits_transit_drivers FOREIGN KEY (driver_type_id, driver_id) REFERENCES conf.drivers(driver_type_id, driver_id);
@@ -110,8 +110,8 @@ DROP TABLE IF EXISTS rt.transits;
 	-- One to one relationship
 	ALTER TABLE rt.transit_drivers ADD CONSTRAINT fk_transit_drivers_transits FOREIGN KEY (transit_id) REFERENCES rt.transits(transit_id);
 	
-	ALTER TABLE rt.transit_drivers ADD CONSTRAINT fk_transit_drivers_driver_types FOREIGN KEY (driver_type_id) REFERENCES master.driver_types(driver_type_id);
-	ALTER TABLE rt.transit_drivers ADD CONSTRAINT fk_transit_drivers_license_types FOREIGN KEY (license_type_id) REFERENCES master.license_types(license_type_id);
+	ALTER TABLE rt.transit_drivers ADD CONSTRAINT fk_transit_drivers_driver_types FOREIGN KEY (driver_type_id) REFERENCES static.driver_types(driver_type_id);
+	ALTER TABLE rt.transit_drivers ADD CONSTRAINT fk_transit_drivers_license_types FOREIGN KEY (license_type_id) REFERENCES static.license_types(license_type_id);
 	ALTER TABLE rt.transit_drivers ADD CONSTRAINT fk_transit_drivers_countries FOREIGN KEY (country_id) REFERENCES master.countries(country_id);
 	ALTER TABLE rt.transit_drivers ADD CONSTRAINT fk_transit_drivers_states FOREIGN KEY (country_id, state_id) REFERENCES master.states(country_id, state_id);
 	ALTER TABLE rt.transit_drivers ADD CONSTRAINT fk_transit_drivers_regions FOREIGN KEY (country_id, state_id, region_id) REFERENCES master.regions(country_id, state_id, region_id);
@@ -139,7 +139,7 @@ DROP TABLE IF EXISTS rt.transits;
 	CREATE INDEX idx_transit_driver_values_driver_params ON rt.transit_driver_values USING btree (driver_type_id, driver_param_id);
 	
 	ALTER TABLE rt.transit_driver_values ADD CONSTRAINT fk_transit_driver_values_transit_drivers FOREIGN KEY (transit_id) REFERENCES rt.transit_drivers(transit_id);
-	ALTER TABLE rt.transit_driver_values ADD CONSTRAINT fk_transit_driver_values_driver_params FOREIGN KEY (driver_type_id, driver_param_id) REFERENCES master.driver_params(driver_type_id, driver_param_id);
+	ALTER TABLE rt.transit_driver_values ADD CONSTRAINT fk_transit_driver_values_driver_params FOREIGN KEY (driver_type_id, driver_param_id) REFERENCES static.driver_params(driver_type_id, driver_param_id);
 	
 	ALTER TABLE rt.transit_driver_values SET TABLESPACE tbl_rt;
 
@@ -193,7 +193,7 @@ DROP TABLE IF EXISTS rt.transits;
 	CREATE INDEX idx_transit_driver_values_vehicle_params ON rt.transit_vehicle_values USING btree (vehicle_type_id, vehicle_param_id);
 	
 	ALTER TABLE rt.transit_vehicle_values ADD CONSTRAINT fk_transit_vehicle_values_transit_vehicles FOREIGN KEY (transit_id) REFERENCES rt.transit_vehicles(transit_id);
-	ALTER TABLE rt.transit_vehicle_values ADD CONSTRAINT fk_transit_driver_values_vehicle_params FOREIGN KEY (vehicle_type_id, vehicle_param_id) REFERENCES master.vehicle_params(vehicle_type_id, vehicle_param_id);
+	ALTER TABLE rt.transit_vehicle_values ADD CONSTRAINT fk_transit_driver_values_vehicle_params FOREIGN KEY (vehicle_type_id, vehicle_param_id) REFERENCES static.vehicle_params(vehicle_type_id, vehicle_param_id);
 	
 	ALTER TABLE rt.transit_vehicle_values SET TABLESPACE tbl_rt;
 	
@@ -249,8 +249,8 @@ DROP TABLE IF EXISTS rt.transits;
 		transit_log_id bigserial NOT NULL,
 		transit_id int8 NOT NULL,
 		assigned_user_id int8 NOT NULL,
-		transit_state_id int8 NOT NULL,
-		transit_state_option_id int8 NULL,
+		transit_type_state_id int8 NOT NULL,
+		transit_type_state_option_id int8 NULL,
 		timestamp_log timestamptz NOT NULL,
 		log_type varchar(100) NOT NULL,
 		message varchar(1000) NULL,
@@ -262,12 +262,12 @@ DROP TABLE IF EXISTS rt.transits;
 	
 	CREATE INDEX idx_transit_logs_timestamp_log ON rt.transit_logs USING btree (timestamp_log);
 	CREATE INDEX idx_transit_logs_users ON rt.transit_logs USING btree (assigned_user_id);
-	CREATE INDEX idx_transit_logs_transit_states ON rt.transit_logs USING btree (transit_state_id);
-	CREATE INDEX idx_transit_logs_transit_state_options ON rt.transit_logs USING btree (transit_state_id, transit_state_option_id);
+	CREATE INDEX idx_transit_logs_transit_type_states ON rt.transit_logs USING btree (transit_type_state_id);
+	CREATE INDEX idx_transit_logs_transit_type_state_options ON rt.transit_logs USING btree (transit_type_state_id, transit_type_state_option_id);
 	
 	ALTER TABLE rt.transit_logs ADD CONSTRAINT fk_transit_logs_users FOREIGN KEY (assigned_user_id) REFERENCES conf.users(user_id);
-	ALTER TABLE rt.transit_logs ADD CONSTRAINT fk_transit_logs_transit_states FOREIGN KEY (transit_state_id) REFERENCES conf.transit_states(transit_state_id);
-	ALTER TABLE rt.transit_logs ADD CONSTRAINT fk_transit_logs_transit_state_options FOREIGN KEY (transit_state_id, transit_state_option_id) REFERENCES conf.transit_state_options(transit_state_id, transit_state_option_id);
+	ALTER TABLE rt.transit_logs ADD CONSTRAINT fk_transit_logs_transit_type_states FOREIGN KEY (transit_type_state_id) REFERENCES conf.transit_type_states(transit_type_state_id);
+	ALTER TABLE rt.transit_logs ADD CONSTRAINT fk_transit_logs_transit_type_state_options FOREIGN KEY (transit_type_state_id, transit_type_state_option_id) REFERENCES conf.transit_type_state_options(transit_type_state_id, transit_type_state_option_id);
 	
 	ALTER TABLE rt.transit_logs SET TABLESPACE tbl_rt;
 	
