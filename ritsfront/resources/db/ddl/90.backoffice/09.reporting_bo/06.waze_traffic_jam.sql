@@ -13,12 +13,12 @@ BEGIN
     SELECT 
         e.uid as id,
         case
-        	when e.ext_entity_subtype_id = 8001 then ''Libre''
-        	when e.ext_entity_subtype_id = 8002 then ''Velocidad moderada''
-        	when e.ext_entity_subtype_id = 8003 then ''Muy lenta''
-        	when e.ext_entity_subtype_id = 8004 then ''Paradas intermitentes''
-        	when e.ext_entity_subtype_id = 8005 then ''Paradas prolongadas''
-        	when e.ext_entity_subtype_id = 8006 then ''Detenida''
+        	when e.ext_entity_subtype_id = 8001 then ''(0) Libre''
+        	when e.ext_entity_subtype_id = 8002 then ''(1) Velocidad moderada''
+        	when e.ext_entity_subtype_id = 8003 then ''(2) Muy lenta''
+        	when e.ext_entity_subtype_id = 8004 then ''(3) Paradas intermitentes''
+        	when e.ext_entity_subtype_id = 8005 then ''(4) Paradas prolongadas''
+        	when e.ext_entity_subtype_id = 8006 then ''(5) Detenida''
         	ELSE e.status::varchar
         end as circulacion,
         e.alias AS calle,
