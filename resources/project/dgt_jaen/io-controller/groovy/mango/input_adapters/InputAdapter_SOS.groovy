@@ -29,8 +29,8 @@ class InputAdapter_SOS {
     static final Long PARAM_TYPE_MEASURE = 2L
 
     static final Long ELEMENT_TYPE_PARAM_VOL_AUDIO = 1L
-    static final Long ELEMENT_TYPE_PARAM_MEG_STATE = 2L
-    static final Long ELEMENT_TYPE_PARAM_VOL_MEG = 3L
+    static final Long ELEMENT_TYPE_PARAM_MEG_STATE = 15L
+    static final Long ELEMENT_TYPE_PARAM_VOL_MEG = 16L
     
     static final Integer POS_ORD = 1; //Posición del byte que indica la orden
     //Trama de megafonía 0x56
@@ -50,127 +50,77 @@ class InputAdapter_SOS {
 
     boolean res_meg_qry(Element element, String value, List<ElementValue> elementValues) {
 
-		List<Integer> contentByte = new ArrayList<Integer>();
-		String aux = "";
-		
-		for(int i = 0; i<value.length(); i+=2){
-			aux = value.substring(i,i+2);
-			contentByte.add(Integer.parseInt(aux, 16));
-		}
-		
-		
-		if(!(contentByte.get(POS_ORD) & 0xFF).equals(0x56)){
-			log.debug("Trama recibida no es de estado de la megafonía");
-		}
-		
-		//Para el poste principal
-        elementValues.add(elementSetValue(ELEMENT_TYPE_PARAM_MEG_STATE, PARAM_TYPE_MEASURE, element.getId(),String.valueOf(contentByte.get(POS_MEG_STATE))));
-        elementValues.add(elementSetValue(ELEMENT_TYPE_PARAM_VOL_MEG, PARAM_TYPE_MEASURE, element.getId(),String.valueOf(contentByte.get(POS_VOL_MEG))));
-        
-        //Para el poste secundario en caso de existir
-		List<ElementHierarchy> elementHierarchies = EntitiesManager.getInstance().getsByParent(
-							element.getElementTypeId(), element.getId());
-        
-        if (!CollectionUtils.isEmpty(elementHierarchies)) {
+		List<Integer> contentByte = checkFrame(value, 0x56, "megafonía")
 
-			for (ElementHierarchy elementHierarchie : elementHierarchies) {
-				
-				Element elementChild = EntitiesManager.getInstance().getElement(elementHierarchie.getChildElementTypeId(),  elementHierarchie.getChildElementId());
-				
-				if(elementChild != null) {
-					List<ElementValue> listElements = new ArrayList();
+		if (!CollectionUtils.isEmpty(contentByte)){
+
+			//Para el poste principal
+			elementValues.add(elementSetValue(ELEMENT_TYPE_PARAM_MEG_STATE, PARAM_TYPE_MEASURE, element.getId(),String.valueOf(contentByte.get(POS_MEG_STATE))));
+			elementValues.add(elementSetValue(ELEMENT_TYPE_PARAM_VOL_MEG, PARAM_TYPE_MEASURE, element.getId(),String.valueOf(contentByte.get(POS_VOL_MEG))));
+			
+			publishElementValues(elementValues)
+			
+			//Para el poste secundario en caso de existir
+			List<ElementHierarchy> elementHierarchies = EntitiesManager.getInstance().getsByParent(
+								element.getElementTypeId(), element.getId());
+			
+			if (!CollectionUtils.isEmpty(elementHierarchies)) {
+
+				for (ElementHierarchy elementHierarchie : elementHierarchies) {
 					
-					listElements.add(elementSetValue(ELEMENT_TYPE_PARAM_VOL_MEG, PARAM_TYPE_MEASURE, elementChild.getId(),String.valueOf(contentByte.get(POS_VOL_MEG))));
-					listElements.add(elementSetValue(ELEMENT_TYPE_PARAM_MEG_STATE, PARAM_TYPE_MEASURE, elementChild.getId(),String.valueOf(contentByte.get(POS_MEG_STATE))));
+					Element elementChild = EntitiesManager.getInstance().getElement(elementHierarchie.getChildElementTypeId(),  elementHierarchie.getChildElementId());
 					
-					EntitiesManager.getInstance().putElementValues(listElements);
-					
-					SetElementValuesPublishCommand setElementValuesPublishCommand = new SetElementValuesPublishCommand();
-					setElementValuesPublishCommand.setElementValues(new HashSet<>(listElements));
-					
-					EntitiesManager.getInstance().sendCommand(setElementValuesPublishCommand);
+					if(elementChild != null) {
+						List<ElementValue> listElements = new ArrayList();
+						
+						listElements.add(elementSetValue(ELEMENT_TYPE_PARAM_VOL_MEG, PARAM_TYPE_MEASURE, elementChild.getId(),String.valueOf(contentByte.get(POS_VOL_MEG))));
+						listElements.add(elementSetValue(ELEMENT_TYPE_PARAM_MEG_STATE, PARAM_TYPE_MEASURE, elementChild.getId(),String.valueOf(contentByte.get(POS_MEG_STATE))));
+						
+						publishElementValues(listElements)
+					}
 				}
 			}
-		}
+
+		}		
         
         return true;
     }
 
     boolean res_tst_man(Element element, String value, List<ElementValue> elementValues) {
-    	SetActivationAlarmsCommand setActivationAlarmsCommandList = new SetActivationAlarmsCommand();
-    	SetDeactivationAlarmsCommand setDeactivationAlarmsCommandList = new SetDeactivationAlarmsCommand();
     
-		List<Integer> contentByte = new ArrayList<Integer>();
-		String aux = "";
-		
-		for(int i = 0; i<value.length(); i+=2){
-			aux = value.substring(i,i+2);
-			contentByte.add(Integer.parseInt(aux, 16));
-		}
-		
-		if(!(contentByte.get(POS_ORD) & 0xFF).equals(0x89)){
-			log.debug("Trama recibida no es de estado de los SOS");
-		}
-		
-		for (int i = 0; i < 8; i++) {
-            boolean isBitSet = (contentByte.get(POS_STATE_MASTER) & (1 << i)) != 0;
-            
-            if (isBitSet){
-            
-            	setActivationAlarmsCommandList.add(element, EntitiesManager.getInstance().getAlarmConfig(alarm[i]));	
-            } else {
-            
-            	setDeactivationAlarmsCommandList.add(element, EntitiesManager.getInstance().getAlarmConfig(alarm[i]));
-            }
-        }
+		List<Integer> contentByte = checkFrame(value, 0x89, "SOS")
 
-		EntitiesManager.getInstance().sendCommand(setActivationAlarmsCommandList);
-		EntitiesManager.getInstance().sendCommand(setDeactivationAlarmsCommandList);
-		
-        elementValues.add(elementSetValue(ELEMENT_TYPE_PARAM_VOL_AUDIO, PARAM_TYPE_MEASURE, element.getId(),String.valueOf(contentByte.get(POS_VOL_SOS_MASTER))));
-        
-        //Para el poste secundario en caso de existir
-		List<ElementHierarchy> elementHierarchies = EntitiesManager.getInstance().getsByParent(
-							element.getElementTypeId(), element.getId());
-        
-        if (!CollectionUtils.isEmpty(elementHierarchies)) {
+		if (!CollectionUtils.isEmpty(contentByte)){
 
-			for (ElementHierarchy elementHierarchie : elementHierarchies) {
-				
-				Element elementChild = EntitiesManager.getInstance().getElement(elementHierarchie.getChildElementTypeId(),  elementHierarchie.getChildElementId());
-				
-				if(elementChild != null) {
-					List<ElementValue> listElements = new ArrayList();
+			publishAlarms(element, contentByte, POS_STATE_MASTER)
+
+			elementValues.add(elementSetValue(ELEMENT_TYPE_PARAM_VOL_AUDIO, PARAM_TYPE_MEASURE, element.getId(),String.valueOf(contentByte.get(POS_VOL_SOS_MASTER))));
+			
+			publishElementValues(elementValues)
+
+			//Para el poste secundario en caso de existir
+			List<ElementHierarchy> elementHierarchies = EntitiesManager.getInstance().getsByParent(
+								element.getElementTypeId(), element.getId());
+			
+			if (!CollectionUtils.isEmpty(elementHierarchies)) {
+
+				for (ElementHierarchy elementHierarchie : elementHierarchies) {
 					
-					listElements.add(elementSetValue(ELEMENT_TYPE_PARAM_VOL_AUDIO, PARAM_TYPE_MEASURE, elementChild.getId(),String.valueOf(contentByte.get(POS_VOL_SOS_SLAVE))));
+					Element elementChild = EntitiesManager.getInstance().getElement(elementHierarchie.getChildElementTypeId(),  elementHierarchie.getChildElementId());
 					
-					EntitiesManager.getInstance().putElementValues(listElements);
-					
-					SetElementValuesPublishCommand setElementValuesPublishCommand = new SetElementValuesPublishCommand();
-					setElementValuesPublishCommand.setElementValues(new HashSet<>(listElements));
-					
-					EntitiesManager.getInstance().sendCommand(setElementValuesPublishCommand);
-								
-			    	SetActivationAlarmsCommand setActivationAlarmsSlaveCommandList = new SetActivationAlarmsCommand();
-			    	SetDeactivationAlarmsCommand setDeactivationAlarmsSlaveCommandList = new SetDeactivationAlarmsCommand();
-					
-					for (int i = 0; i < 8; i++) {
-			            boolean isBitSet = (contentByte.get(POS_STATE_SLAVE) & (1 << i)) != 0;
-			            
-			            if (isBitSet){
-			            
-			            	setActivationAlarmsSlaveCommandList.add(elementChild, EntitiesManager.getInstance().getAlarmConfig(alarm[i]));	
-			            } else {
-			            
-			            	setDeactivationAlarmsSlaveCommandList.add(elementChild, EntitiesManager.getInstance().getAlarmConfig(alarm[i]));
-			            }
-			        }
-			        		    
-					EntitiesManager.getInstance().sendCommand(setActivationAlarmsSlaveCommandList);
-					EntitiesManager.getInstance().sendCommand(setDeactivationAlarmsSlaveCommandList);
+					if(elementChild != null) {
+						List<ElementValue> listElements = new ArrayList();
+						
+						listElements.add(elementSetValue(ELEMENT_TYPE_PARAM_VOL_AUDIO, PARAM_TYPE_MEASURE, elementChild.getId(),String.valueOf(contentByte.get(POS_VOL_SOS_SLAVE))));
+						
+						publishElementValues(listElements)
+
+						publishAlarms(elementChild, contentByte, POS_STATE_SLAVE)
+					}
 				}
 			}
 		}
+		
         
         return true;
     }
@@ -184,5 +134,54 @@ class InputAdapter_SOS {
 	    element.setValue(value);
 	    
 	    return element;
+	}
+	
+	void publishElementValues(List<ElementValue> elementValues){
+		EntitiesManager.getInstance().putElementValues(elementValues);
+		
+		SetElementValuesPublishCommand setElementValuesPublishCommand = new SetElementValuesPublishCommand();
+		setElementValuesPublishCommand.setElementValues(new HashSet<>(elementValues));
+		
+		EntitiesManager.getInstance().sendCommand(setElementValuesPublishCommand);
+
+	}
+
+	void publishAlarms(Element element, List<Integer> contentByte, Integer position){
+		SetActivationAlarmsCommand setActivationAlarmsCommandList = new SetActivationAlarmsCommand();
+		SetDeactivationAlarmsCommand setDeactivationAlarmsCommandList = new SetDeactivationAlarmsCommand();
+		
+		for (int i = 0; i < 8; i++) {
+			boolean isBitSet = (contentByte.get(position) & (1 << i)) != 0;
+			
+			if (isBitSet){
+			
+				setActivationAlarmsCommandList.add(element, EntitiesManager.getInstance().getAlarmConfig(alarm[i]));	
+			} else {
+			
+				setDeactivationAlarmsCommandList.add(element, EntitiesManager.getInstance().getAlarmConfig(alarm[i]));
+			}
+		}
+					
+		EntitiesManager.getInstance().sendCommand(setActivationAlarmsCommandList);
+		EntitiesManager.getInstance().sendCommand(setDeactivationAlarmsCommandList);
+
+	}
+
+	List<Integer> checkFrame(String value, int state, String equipment){
+		List<Integer> contentByte = new ArrayList<Integer>();
+		String aux = "";
+		
+		for(int i = 0; i<value.length(); i+=2){
+			aux = value.substring(i,i+2);
+			contentByte.add(Integer.parseInt(aux, 16));
+		}
+		
+		if(!(contentByte.get(POS_ORD) & 0xFF).equals(state)){
+			log.debug("Trama recibida no es de estado de " + equipment);
+			contentByte = []
+		}
+
+		return contentByte
+
 	}
 }
