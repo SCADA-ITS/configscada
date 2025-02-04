@@ -11,6 +11,7 @@ INSERT INTO ui.equip_viewer_grp_measures(id, equip_viewer_id, name, description,
 
 INSERT INTO ui.equip_viewer_measures (equip_viewer_grp_measure_id, vo_entities_id, position, visible) VALUES
 --PA_ZONE
+(00001601,'ElementTypeParam:16:2:1', 1, True),
 (00001601,'ElementTypeParam:16:2:1001', 1, True),
 (00001601,'ElementTypeParam:16:2:1002', 1, True),
 (00001601,'ElementTypeParam:16:2:1003', 1, True);
