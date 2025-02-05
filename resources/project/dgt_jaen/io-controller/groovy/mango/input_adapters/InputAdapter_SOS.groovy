@@ -120,20 +120,18 @@ class InputAdapter_SOS {
 				}
 			}
 		}
-		
-        
         return true;
     }
 
     ElementValue elementSetValue(Long elementTypeParamId, Long paramTypeId, Long elementId, String value){
-		ElementValue element = new ElementValue();
-	    element.setElementTypeId(ELEMENT_TYPE_SOS);
-	    element.setElementTypeParamId(elementTypeParamId);
-	    element.setParamTypeId(paramTypeId);
-	    element.setElementId(elementId);
-	    element.setValue(value);
+		ElementValue elementValue = new ElementValue();
+	    elementValue.setElementTypeId(ELEMENT_TYPE_SOS);
+	    elementValue.setElementTypeParamId(elementTypeParamId);
+	    elementValue.setParamTypeId(paramTypeId);
+	    elementValue.setElementId(elementId);
+	    elementValue.setValue(value);
 	    
-	    return element;
+	    return elementValue;
 	}
 	
 	void publishElementValues(List<ElementValue> elementValues){

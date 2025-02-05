@@ -11,7 +11,7 @@
 	<p:fields>
 		<p:field name="vol_audio">
 			<p:element_type_param>
-				<p:element_type_param_id>1</p:element_type_param_id>
+				<p:element_type_param_id>4</p:element_type_param_id>
 				<p:param_type_id>2</p:param_type_id>
 			</p:element_type_param>
 		</p:field>
