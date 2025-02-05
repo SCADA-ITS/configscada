@@ -167,9 +167,9 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (320003, 32, 1, 3, true, false, false, false, 'LBL_GRID_FIELD_DESCRIPTION', 'LBL_GRID_FIELD_DESCRIPTION', 'description', false, false, NULL, false, false, 170, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
 (320004, 32, 1, 4, true, true, false, false, NULL, NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
 (320005, 32, 1, 5, true, true, false, true, 'LBL_GRID_FIELD_STATE_LABEL', 'LBL_GRID_FIELD_STATE_LABEL', 'stateLabel', false, false, NULL, true, false, 150, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
-(320006, 32, 2, 6, true, false, false, false, 'LBL_ELEMENT_TYPE_PARAM_FAN_LOW_SPEED_STATE', 'LBL_ELEMENT_TYPE_PARAM_fan_low_speed_state_DESC', 'ElementTypeParam:32:2:8', false, false, 'left', false, false, 150, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
-(320007, 32, 2, 7, true, false, false, false, 'LBL_ELEMENT_TYPE_PARAM_FAN_HIGH_SPEED_STATE', 'LBL_ELEMENT_TYPE_PARAM_fan_high_speed_state_DESC', 'ElementTypeParam:32:2:9', false, false, 'left', false, false, 150, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
-(320008, 32, 2, 8, true, false, false, false, 'LBL_ELEMENT_TYPE_PARAM_GRID_GATE_CLOUSURE_STATE', 'LBL_ELEMENT_TYPE_PARAM_grid_gate_clousure_state_DESC', 'ElementTypeParam:32:2:10', false, false, 'left', false, false, 150, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(320006, 32, 2, 6, true, false, false, false, 'LBL_ELEMENT_TYPE_PARAM_FAN_LOW_SPEED_STATE', 'LBL_ELEMENT_TYPE_PARAM_fan_low_speed_state_DESC', 'ElementTypeParam:32:2:8', false, false, 'left', true, false, 150, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(320007, 32, 2, 7, true, false, false, false, 'LBL_ELEMENT_TYPE_PARAM_FAN_HIGH_SPEED_STATE', 'LBL_ELEMENT_TYPE_PARAM_fan_high_speed_state_DESC', 'ElementTypeParam:32:2:9', false, false, 'left', true, false, 150, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(320008, 32, 2, 8, true, false, false, false, 'LBL_ELEMENT_TYPE_PARAM_GRID_GATE_CLOUSURE_STATE', 'LBL_ELEMENT_TYPE_PARAM_grid_gate_clousure_state_DESC', 'ElementTypeParam:32:2:10', false, false, 'left', true, false, 150, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
 
 (530001, 53, 1, 1, true, false, false, false, 'LBL_GRID_FIELD_ID', 'LBL_GRID_FIELD_ID', 'id', true, false, null, false, false, 500, NULL, true, false, NULL, NULL, NULL, NULL, NULL),
 (530002, 53, 1, 2, true, false, false, true, 'LBL_GRID_FIELD_NAME', 'LBL_GRID_FIELD_NAME', 'alias', false, false, NULL, false, false, 150, NULL, true, true, NULL, NULL, true, NULL, NULL),
@@ -1086,6 +1086,16 @@ INSERT INTO ui.grid_field_replacements(grid_field_id, "label", value, enabled) V
 (130006, 'LBL_GRID_FIELD_REPLACEMENTS_ROJO', '1', true),
 (130006, 'LBL_GRID_FIELD_REPLACEMENTS_AMBAR', '0', true),
 (130006, 'LBL_GRID_FIELD_REPLACEMENTS_VERDE', '4', true),
+
+
+(320006, 'LBL_GRID_FIELD_REPLACEMENTS_YES_PRESURIZATION', '1', true),
+(320006, 'LBL_GRID_FIELD_REPLACEMENTS_NO_PRESURIZATION', '0', true),
+
+(320007, 'LBL_GRID_FIELD_REPLACEMENTS_YES_PRESURIZATION', '1', true),
+(320007, 'LBL_GRID_FIELD_REPLACEMENTS_NO_PRESURIZATION', '0', true),
+
+(320008, 'LBL_GRID_FIELD_REPLACEMENTS_OPEN_PRESURIZATION', '1', true),
+(320008, 'LBL_GRID_FIELD_REPLACEMENTS_CLOSED_PRESURIZATION', '0', true),
 
 (530006, 'LBL_GRID_FIELD_REPLACEMENTS_APAGADO', '0', true),
 (530006, 'LBL_GRID_FIELD_REPLACEMENTS_ROJO', '1', true),

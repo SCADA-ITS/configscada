@@ -56,12 +56,6 @@ class SendValuesToVentilation {
 
 				if(element.elementTypeId == FAN){
 					values = EntitiesManager.instance.getElementValues(FAN, element.id)
-				}else if(element.elementTypeId == CO){
-					values = EntitiesManager.instance.getElementValues(CO, element.id)
-				}else if(element.elementTypeId == OPAC){
-					values = EntitiesManager.instance.getElementValues(OPAC, element.id)
-				}else{
-					log.debug("El tipo de equipo no esta contemplado")
 				}
 
 				element.setElementValues(values);

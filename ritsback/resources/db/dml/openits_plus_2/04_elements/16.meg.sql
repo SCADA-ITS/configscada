@@ -31,10 +31,10 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 (16, 5, 1, 7, NULL, '7', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (16, 1003, 1, 7, NULL, 'TUN-MEG-3CA', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
-(16, 5, 1, 8, NULL, '10', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(16, 5, 1, 8, NULL, '8', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (16, 1003, 1, 8, NULL, 'TUN-MEG-4CA', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
-(16, 5, 1, 9, NULL, '8', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(16, 5, 1, 9, NULL, '9', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (16, 1003, 1, 9, NULL, 'TUN-RADIO', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO conf.element_io_controller_modules (element_type_id, element_id, module_type_id, module_id, enabled, visible, created_at, updated_at) VALUES
