@@ -4,7 +4,7 @@
 INSERT INTO conf.ims_incident_type_tasks (incident_type_task_id, incident_type_id, incident_state_id, task_type_id, alias, description, operation_description, mandatory, position, auto, on_change, road_impact_id, enabled, visible, created_at, updated_at) VALUES
 -- Para el incident_type_task_id sigo la siguiente convencion: <orden de la tarea dentro del estado><estado en el que está englobada la tarea><tipo de incidente>
 --ETAPA = AL SALTAR LA INCIDENCIA - ANTES DE CONFIRMAR - TAREAS GENERALES
-(00020101, 101, null, 4, 'VENTILACIÓN', 'Régimen normal', 'Poner la ventilación en régimen normal para parar ventiladores', true, 2, true, 'TaskTypeVentilation/SetVentilationTubeTask', null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(00020101, 101, null, 5, 'VENTILACIÓN', 'Régimen normal', 'Poner la ventilación en régimen normal para parar ventiladores', true, 2, true, 'TaskTypeVentilation/SetVentilationTubeTask', null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (00040101, 101, null, 1, 'ENVIAR LIGERO', 'Indicar vehículo ligero',null, false, 3, false, 'SendLigero', null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (00050101, 101, null, 1, 'ENVIAR CAMIÓN', 'Indicar vehículo camión',null, false, 4, false, 'SendCamión', null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (00060101, 101, null, 1, 'ENVIAR MERCANCIAS PELIGROSAS', 'Indicar vehículo mercancias peligrosas',null, false, 5, false, 'SendMPeligrosas', null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -18,7 +18,7 @@ INSERT INTO conf.ims_incident_type_tasks (incident_type_task_id, incident_type_i
 (01100101, 101, 1, 6, 'AVISO', 'Aviso a vigilantes y equipo de retén', 'Aviso a vigilantes y equipo de retén para poner en marcha el protocolo de cierre de túnel, desviar tráfico y colaborar con cuerpos de emergencia', true, 8, false, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (01110101, 101, 1, 6, 'AVISO', 'Aviso a jefe de emergencias vialidad', 'Aviso al jefe de emergencias vialidad para mantener comunicaciones', false, 9, false, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
-(03010101, 101, 3, 5, 'VENTILACIÓN', 'Ventilación modo Confort', 'Ventilación modo Confort', true, 1, false, 'TaskTypeVentilation/SetVentilationTubeTask', null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(03010101, 101, 3, 5, 'VENTILACIÓN', 'Ventilación modo Confort', 'Ventilación modo Confort', true, 1, true, 'TaskTypeVentilation/SetVentilationTubeTask', null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (03020101, 101, 3, 1, 'PRESURIZACIÓN', 'Presurización', 'Apagado de presurización', true, 2, true, 'SendSignallingToStretch', null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (03030101, 101, 3, 3, 'ILUMINACIÓN', 'Iluminación modo automático', 'Iluminación modo automático', true, 3, true, 'TaskTypeTubeLighting/SetIlluminationTask', null ,true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
