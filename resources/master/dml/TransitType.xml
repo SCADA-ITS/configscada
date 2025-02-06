@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="TransitType">
+	<SELECT>SELECT transit_type_id as "id",
+				   init_transit_type_state_id as "initTransitTypeStateId",
+				   end_transit_type_state_id as "endTransitTypeStateId",
+				   discard_transit_type_state_id as "discardTransitTypeStateId",
+				   alias as "alias",
+				   description as "description",
+				   label_alias as "labelAlias",
+				   label_description as "labelDescription",
+				   enabled as "enabled",
+				   visible as "visible",
+				   created_at as "createdAt",
+				   updated_at as "updatedAt"
+			  FROM conf.transit_types	  
+			 WHERE enabled = true OR enabled is null
+	</SELECT>
+	<INSERT>
+	</INSERT>
+	<UPDATE>
+	</UPDATE>
+	<DELETE>
+	</DELETE>
+</DML>

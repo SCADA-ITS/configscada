@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="TransitTypeStateTransition">
+	<SELECT>SELECT transit_type_id as "transitTypeId",
+    			   parent_transit_type_state_id as "parentTransitTypeStateId",
+    			   child_transit_type_state_id as "childTransitTypeStateId",
+    			   enabled as "enabled",
+				   visible as "visible",
+				   created_at as "createdAt",
+			   	   updated_at as "updatedAt"
+			  FROM conf.transit_type_state_transitions
+			 WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>
+	</INSERT>
+	<UPDATE>
+	</UPDATE>
+	<DELETE>
+	</DELETE>
+</DML>

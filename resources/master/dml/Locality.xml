@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="Locality">
+	<SELECT>SELECT country_id as "countryId",
+				   state_id as "stateId",
+				   region_id as "regionId",
+				   locality_id as "id",
+				   locality_code as "localityCode", 
+				   alias as "alias", 
+				   enabled as "enabled", 
+				   visible as "visible"
+			  FROM master.localities
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>
+	</INSERT>
+	<UPDATE>
+	</UPDATE>
+	<DELETE>
+	</DELETE>
+</DML>

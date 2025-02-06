@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="TransitDriverValue" autoLoad="false">
+	<SELECT>SELECT transit_id as "id",
+				   driver_type_id as "driverTypeId",
+				   driver_param_id as "driverParamId",
+				   value as "value",
+				   visible as "visible",
+				   created_at as "createdAt",
+				   updated_at as "updatedAt"
+			  FROM rt.transit_driver_values
+	</SELECT>
+	<INSERT>
+	</INSERT>
+	<UPDATE>
+	</UPDATE>
+	<DELETE>
+	</DELETE>
+</DML>
