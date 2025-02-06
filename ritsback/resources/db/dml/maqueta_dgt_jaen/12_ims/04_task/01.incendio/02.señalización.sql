@@ -104,5 +104,36 @@ VALUES
                         "commandElementTypeParamId": "CommandElementTypeParam:2:71:1"
 					}]	
 		}
-	}
-]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+	},
+    {
+        "id": 10,
+        "alias": "PRESURIZACION",
+        "from": 1,
+        "to": 1,
+        "elementSubtypeId": "ElementSubtype:3:32",
+        "command": {
+                    "commandElementTypeId": "CommandElementType:1:32",
+                    "commandElementValues": [{"commandElementTypeParamId": "CommandElementTypeParam:2:32:1"}]
+                    }
+    }
+]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+
+
+--RESTITUCION
+--ventilación
+(5, 1, 03010101, '1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(3, 1, 03030101, '1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(1, 1, 03020101, '[
+    {
+        "id": 1,
+        "alias": "PRESURIZACION",
+        "from": 1,
+        "to": 1,
+        "elementSubtypeId": "ElementSubtype:3:32",
+        "command": {
+                    "commandElementTypeId": "CommandElementType:2:32",
+                    "commandElementValues": [{"commandElementTypeParamId": "CommandElementTypeParam:2:32:1"}]
+                    }
+    }]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

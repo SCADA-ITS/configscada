@@ -1,0 +1,38 @@
+<generic_une_v1 name="" version=""
+    xmlns="generic_une_v1"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="generic_une_v1 ../../../adapter-lib/src/main/resources/schemas/une/generic_une_v1.xsd"
+    element_type_id="1">
+	<groovy_adapter file="Ejemplo.groovy"></groovy_adapter>
+
+    <!-- Responses -->
+    <response_list>
+        <response>
+            <code>0x87</code>
+            <values>
+                <value element_type_param_id="1" param_type_id="2" offset="0" length="4" number_of_decimals="3" is_ascii="true"/>
+                <value element_type_param_id="2" param_type_id="2" offset="4" length="4" number_of_decimals="2" has_sign="true" is_ascii="true"/>
+                <value element_type_param_id="3" param_type_id="2" />
+                
+            </values>
+            <alarms>
+                <alarm byte="0" mask="0x01" active_value="0x01" alarm_config_id="21"/>
+                <alarm byte="0" mask="0x02" active_value="0x00" alarm_config_id="22"/>
+                <alarm byte="1" mask="0x01" alarm_config_id="23"/>   
+            </alarms>
+
+        </response>
+    </response_list>
+
+    <!-- Requests -->
+    <request_list>
+        <request>
+            <request_frame>0x07</request_frame>
+            <cron_expression>0 * * * * ?</cron_expression>
+            <signalling_command_id>23</signalling_command_id>
+            <use_adapter>true</use_adapter>
+        </request>
+    </request_list>
+
+</generic_une_v1>
+
