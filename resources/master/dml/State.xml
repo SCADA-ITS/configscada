@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="State">
+	<SELECT>SELECT country_id as "countryId",
+				   state_id as "id",
+				   state_code as "stateCode", 
+				   alias as "alias", 
+				   enabled as "enabled", 
+				   visible as "visible"
+			  FROM master.states
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>
+	</INSERT>
+	<UPDATE>
+	</UPDATE>
+	<DELETE>
+	</DELETE>
+</DML>

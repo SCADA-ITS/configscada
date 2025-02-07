@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="TransitDriver" autoLoad="false">
+	<SELECT>SELECT transit_id as "id",
+				   driver_type_id as "driverTypeId",
+				   license_type_id as "licenseTypeId",
+				   license_value as "licenseValue",
+				   license_issue_data as "licenseIssueDate",
+				   license_expire_date as "licenseExpireDate",
+				   name as "name",
+				   surname as "surname",
+				   gender as "gender",
+				   date_of_birth as "dateOfBirth",
+				   country_id as "countryId",
+				   state_id as "stateId",
+				   region_id as "regionId",
+				   locality_id as "localityId",
+				   address as "address",
+				   visible as "visible",
+				   created_at as "createdAt",
+				   updated_at as "updatedAt"
+			  FROM rt.transit_drivers
+	</SELECT>
+	<INSERT>
+	</INSERT>
+	<UPDATE>
+	</UPDATE>
+	<DELETE>
+	</DELETE>
+</DML>

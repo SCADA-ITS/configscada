@@ -215,8 +215,6 @@ DROP TABLE IF EXISTS master.countries;
 --
 	CREATE TABLE static.vehicle_param_groups (
 		vehicle_param_group_id int8 NOT NULL,
-		position int4 NOT NULL,
-		icon varchar(50) NULL,
 		alias varchar(100) NOT NULL,
 		description varchar(200) NOT NULL,
 		label_alias varchar(50) NOT NULL,
@@ -240,7 +238,6 @@ DROP TABLE IF EXISTS master.countries;
 		vehicle_param_id int8 NOT NULL,
 		data_type_id int8 NOT NULL,
 		vehicle_param_group_id int8 NULL,
-		icon varchar(50) NULL,
 		alias varchar(100) NOT NULL,
 		description varchar(200) NOT NULL,
 		label_alias varchar(50) NOT NULL,
@@ -309,8 +306,6 @@ DROP TABLE IF EXISTS master.countries;
 --
 	CREATE TABLE static.driver_param_groups (
 		driver_param_group_id int8 NOT NULL,
-		position int4 NOT NULL,
-		icon varchar(50) NULL,
 		alias varchar(100) NOT NULL,
 		description varchar(200) NULL,
 		label_alias varchar(50) NOT NULL,
@@ -334,7 +329,6 @@ DROP TABLE IF EXISTS master.countries;
 		driver_param_id int8 NOT NULL,
 		data_type_id int8 NOT NULL,
 		driver_param_group_id int8 NULL,
-		icon varchar(50) NULL,
 		alias varchar(100) NOT NULL,
 		description varchar(200) NULL,
 		label_alias varchar(50) NOT NULL,
@@ -615,8 +609,6 @@ DROP TABLE IF EXISTS master.countries;
 --
 	CREATE TABLE conf.transit_type_param_groups (
 		transit_type_param_group_id int8 NOT NULL,
-		position int4 NOT NULL,
-		icon varchar(50) NULL,
 		alias varchar(100) NOT NULL,
 		description varchar(200) NULL,
 		label_alias varchar(50) NOT NULL,
@@ -640,7 +632,6 @@ DROP TABLE IF EXISTS master.countries;
 		transit_type_param_id int8 NOT NULL,
 		data_type_id int8 NOT NULL,
 		transit_type_param_group_id int8 NULL,
-		icon varchar(50) NULL,
 		alias varchar(100) NOT NULL,
 		description varchar(200) NULL,
 		label_alias varchar(50) NOT NULL,
@@ -775,8 +766,6 @@ DROP TABLE IF EXISTS master.countries;
 --
 	CREATE TABLE conf.infraction_param_groups (
 		infraction_param_group_id int8 NOT NULL,
-		position int4 NOT NULL,
-		icon varchar(50) NULL,
 		alias varchar(100) NOT NULL,
 		description varchar(200) NULL,
 		label_alias varchar(50) NOT NULL,
@@ -800,7 +789,6 @@ DROP TABLE IF EXISTS master.countries;
 		infraction_param_id int8 NOT NULL,
 		data_type_id int8 NOT NULL,
 		infraction_param_group_id int8 NULL,
-		icon varchar(50) NULL,
 		alias varchar(100) NOT NULL,
 		description varchar(200) NULL,
 		label_alias varchar(50) NOT NULL,

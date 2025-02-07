@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="Country">
+	<SELECT>SELECT country_id as "id",
+				   alpha_2_code as "alpha2Code",
+				   alpha_3_code as "alpha3Code", 
+				   numeric_code as "numericCode", 
+				   alias as "alias", 
+				   label_alias as "labelAlias",
+				   enabled as "enabled", 
+				   visible as "visible"
+			  FROM master.countries
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>
+	</INSERT>
+	<UPDATE>
+	</UPDATE>
+	<DELETE>
+	</DELETE>
+</DML>
