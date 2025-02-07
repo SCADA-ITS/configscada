@@ -1,5 +1,6 @@
 INSERT INTO ui.module_values (module_id, module_param_id, value) VALUES 
-(500, 8, '{"treeCustom": [4]}'),
+(500, 8, '{"treeCustom": [1]}'),
+(1040, 8, '{"treeCustom": [2]}'),
 
 --Management Area 1
 (900, 9, '1'),

@@ -1,0 +1,48 @@
+INSERT INTO conf.element_trees(element_tree_id, user_id, role_id, "label", enabled, visible) VALUES
+(02, NULL, NULL, 'PMVs', true, true);
+
+INSERT INTO conf.element_tree_nodes(element_tree_node_id, element_tree_id, "label", element_type_id, element_id, "position", management_area_id, enabled, visible) VALUES
+(0201, 02, 'NORTE', NULL, NULL, 1, 1, true, true),
+ 	(020101, 02, '', 71, 1, 2, 1, true, true),
+ 	(020102, 02, '', 71, 31, 3, 1, true, true),
+ 	(020103, 02, '', 71, 15, 4, 1, true, true),
+ 	(020104, 02, '', 71, 16, 5, 1, true, true),
+ 	(020105, 02, '', 71, 17, 6, 1, true, true),
+ 	(020106, 02, '', 71, 18, 7, 1, true, true),
+ 	(020107, 02, '', 71, 23, 8, 1, true, true),
+ 	(020108, 02, '', 71, 24, 9, 1, true, true),
+ 	(020109, 02, '', 71, 25, 10, 1, true, true),
+ 	(020110, 02, '', 71, 26, 11, 1, true, true),
+(0202, 02, 'NORTE', NULL, NULL, 12, 1, true, true),
+ 	(020201, 02, '', 71, 2, 13, 1, true, true),
+ 	(020202, 02, '', 71, 32, 14, 1, true, true),
+ 	(020203, 02, '', 71, 19, 15, 1, true, true),
+ 	(020204, 02, '', 71, 20, 16, 1, true, true),
+ 	(020205, 02, '', 71, 21, 17, 1, true, true),
+ 	(020206, 02, '', 71, 22, 18, 1, true, true),
+ 	(020207, 02, '', 71, 27, 19, 1, true, true),
+ 	(020208, 02, '', 71, 28, 20, 1, true, true),
+ 	(020209, 02, '', 71, 29, 21, 1, true, true),
+ 	(020210, 02, '', 71, 30, 22, 1, true, true);
+ 	
+INSERT INTO conf.element_tree_node_hierarchies (element_tree_node_hierarchy_id, element_tree_id, node_parent_id, node_child_id, enabled, visible) VALUES  
+(020101, 02, 0201, 020101, true, true), 
+(020102, 02, 0201, 020102, true, true), 
+(020103, 02, 0201, 020103, true, true), 
+(020104, 02, 0201, 020104, true, true), 
+(020105, 02, 0201, 020105, true, true), 
+(020106, 02, 0201, 020106, true, true), 
+(020107, 02, 0201, 020107, true, true), 
+(020108, 02, 0201, 020108, true, true), 
+(020109, 02, 0201, 020109, true, true), 
+(020110, 02, 0201, 020110, true, true), 
+(020201, 02, 0202, 020201, true, true), 
+(020202, 02, 0202, 020202, true, true), 
+(020203, 02, 0202, 020203, true, true), 
+(020204, 02, 0202, 020204, true, true), 
+(020205, 02, 0202, 020205, true, true), 
+(020206, 02, 0202, 020206, true, true), 
+(020207, 02, 0202, 020207, true, true), 
+(020208, 02, 0202, 020208, true, true), 
+(020209, 02, 0202, 020209, true, true), 
+(020210, 02, 0202, 020210, true, true);

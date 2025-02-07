@@ -26,10 +26,17 @@ INSERT INTO ui.menu_items(id, menu_group_id, "position", module_id, "label", ico
 
 --MANAGER
 (400, 4, 1, 1051, 'LBL_MENU_ITEM_INCIDENT_REPORTS', 'img/menu/incident-menu.png', 'Menu item incindet report', 'Menu item incident report', true, true),
-(401, 4, 2, 1041, 'LBL_MENU_ITEM_TRAVEL_TIMES', 'img/menu/travel_times.png', 'Menu item travel times', 'Menu item travel times', true, true),
-(402, 4, 3, 1024, 'LBL_MENU_ITEM_PLAN_MANAGER', 'img/menu/plan-menu.png', 'Menu item Plan Manager', 'Menu item Plan Manager', true, true),
+(401, 4, 2, 1024, 'LBL_MENU_ITEM_PLAN_MANAGER', 'img/menu/plan-menu.png', 'Menu item Plan Manager', 'Menu item Plan Manager', true, true),
+(402, 4, 3, null, '', null, '', null, true, true),
+(403, 4, 4, 1040, 'LBL_MENU_ITEM_VMS_SIGNALING', 'img/menu/signaling-menu.png', 'Menu item VMS Signaling', 'Menu item VMS Signaling', true, true),
+(404, 4, 5, 1039, 'LBL_SIGNALING_QUEUES', 'img/menu/queue-menu.png', 'Menu item queue signaling', 'Menu item queue signaling', true, true),
+(405, 4, 6, 1041, 'LBL_MENU_ITEM_TRAVEL_TIMES', 'img/menu/travel_times.png', 'Menu item travel times', 'Menu item travel times', true, true),
 
-(501, 5, 1, 1045, 'LBL_HISTORICAL_CHARTS', 'img/menu/chart-menu.png', 'Historical charts', 'Historical Charts', true, true),
+--TOOLS
+(500, 5, 1, 403, 'LBL_MENU_ITEM_REPORTS', 'img/menu/report.png', 'Menu item Reports', 'Menu item Reports', true, true),
+(501, 5, 2, 1045, 'LBL_HISTORICAL_CHARTS', 'img/menu/chart-menu.png', 'Historical charts', 'Historical Charts', true, true),
+(502, 5, 3, 1006, 'LBL_MENU_ITEM_AUDITS', 'img/menu/logs-menu.png', 'Auditorias', 'Auditorias', true, true),
+--(503, 5, 4, 6011, 'LBL_MENU_ITEM_BACKOFFICE_INCIDENT', 'img/menu/incident.png', 'NOGALES_GIP_INCIDENT', 'Nogales GIP', true, true),
 
 (500001, 5000, 3, 1047, 'LBL_MENU_HELP_CONTENTS', 'img/menu/help.png', 'Help contents', 'Menu item help contents', true, true);
 
