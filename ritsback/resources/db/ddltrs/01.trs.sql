@@ -13,6 +13,7 @@ DROP TABLE IF EXISTS rt.transit_vehicle_values;
 DROP TABLE IF EXISTS rt.transit_vehicles;
 DROP TABLE IF EXISTS rt.transit_driver_values;
 DROP TABLE IF EXISTS rt.transit_drivers;
+DROP TABLE IF EXISTS rt.transit_values;
 DROP TABLE IF EXISTS rt.transits;
 
 -- 
@@ -72,6 +73,30 @@ DROP TABLE IF EXISTS rt.transits;
 	ALTER TABLE rt.transits ADD CONSTRAINT fk_transits_transit_users FOREIGN KEY (assigned_user_id) REFERENCES conf.users(user_id);
 	
 	ALTER TABLE rt.transits SET TABLESPACE tbl_rt;
+	
+-- 
+-- Table: rt.transit_values
+-- Descripción: Parámetros asociados al tránsito
+-- Scope: rt
+--
+	CREATE TABLE rt.transit_values (
+		transit_id int8 NOT NULL,
+		transit_type_id int8 NOT NULL,
+		transit_type_param_id int8 NOT NULL,
+		value varchar NULL,
+		visible bool NULL,
+		created_at timestamptz NOT NULL,
+		updated_at timestamptz NOT NULL,
+		CONSTRAINT pk_transit_values PRIMARY KEY (transit_id, transit_type_id, transit_type_param_id)
+	);
+	
+	CREATE INDEX idx_transit_values_transit_types ON rt.transit_values USING btree (transit_id);
+	CREATE INDEX idx_transit_values_transit_type_params ON rt.transit_values USING btree (transit_type_id, transit_type_param_id);
+	
+	ALTER TABLE rt.transit_values ADD CONSTRAINT fk_transit_values_transit_types FOREIGN KEY (transit_id) REFERENCES rt.transits(transit_id);
+	ALTER TABLE rt.transit_values ADD CONSTRAINT fk_transit_values_transit_type_params FOREIGN KEY (transit_type_id, transit_type_param_id) REFERENCES conf.transit_type_params(transit_type_id, transit_type_param_id);
+	
+	ALTER TABLE rt.transit_values SET TABLESPACE tbl_rt;
 
 -- 
 -- Table: rt.transit_drivers

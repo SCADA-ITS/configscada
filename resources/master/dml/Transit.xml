@@ -31,7 +31,62 @@
 			  FROM rt.transits	  
 			 WHERE enabled = true OR enabled is null 
 	</SELECT>
-	<INSERT>
+	<INSERT>INSERT INTO	rt.transits (
+						transit_id,
+						transit_code,
+						transit_type_id,
+						date_transit,
+						plate_number,
+						transit_type_state_id,
+						transit_type_state_option_id,
+						location_id,
+						direction,
+						lane_number,
+						element_type_id,
+						element_id,
+						certificate_valid_date,
+						certificate_path,
+						driver_type_id,
+						driver_id,
+						vehicle_type_id,
+						vehicle_id,
+						infraction_type_id,
+						infraction_code,
+						speed,
+						distance,
+						assigned_user_id,
+						enabled,
+						visible,
+						created_at,
+						updated_at)
+				 VALUES (
+				 		nextval('rt.transits_transit_id_seq'::regclass),
+						:transit_code,
+						:transit_type_id,
+						:date_transit,
+						:plate_number,
+						:transit_type_state_id,
+						:transit_type_state_option_id,
+						:location_id,
+						:direction,
+						:lane_number,
+						:element_type_id,
+						:element_id,
+						:certificate_valid_date,
+						:certificate_path,
+						:driver_type_id,
+						:driver_id,
+						:vehicle_type_id,
+						:vehicle_id,
+						:infraction_type_id,
+						:infraction_code,
+						:speed,
+						:distance,
+						:assigned_user_id,
+						:enabled,
+						:visible,
+						CURRENT_TIMESTAMP,
+						CURRENT_TIMESTAMP)
 	</INSERT>
 	<UPDATE>
 	</UPDATE>

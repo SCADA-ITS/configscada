@@ -12,7 +12,7 @@
 				   visible as "visible",
 				   created_at as "createdAt",
 				   updated_at as "updatedAt"
-			  FROM conf.transit_type_states
+			  FROM static.transit_type_states
 			 WHERE enabled = true OR enabled is null
 	</SELECT>
 	<INSERT>

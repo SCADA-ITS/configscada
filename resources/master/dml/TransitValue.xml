@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="TransitValue" autoLoad="false">
+	<SELECT>SELECT transit_id as "id",
+				   transit_type_id as "transitTypeId",
+				   transit_type_param_id as "transitTypeParamId",
+				   value as "value",
+				   visible as "visible",
+				   created_at as "createdAt",
+				   updated_at as "updatedAt"
+			  FROM rt.transit_values
+	</SELECT>
+	<INSERT>
+	</INSERT>
+	<UPDATE>
+	</UPDATE>
+	<DELETE>
+	</DELETE>
+</DML>
