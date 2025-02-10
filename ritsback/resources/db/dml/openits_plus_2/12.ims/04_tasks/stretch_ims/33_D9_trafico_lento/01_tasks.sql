@@ -4,7 +4,7 @@
 INSERT INTO conf.ims_incident_type_tasks (incident_type_task_id, incident_type_id, incident_state_id, task_type_id, alias, description, mandatory, position, auto, on_change, rerun, enabled, visible, created_at, updated_at) VALUES
 -- Para el incident_type_task_id sigo la siguiente convencion: <orden de la tarea dentro del estado><estado en el que está englobada la tarea><tipo de incidente>
 --ETAPA = AL SALTAR LA INCIDENCIA - ANTES DE CONFIRMAR - TAREAS GENERALES
-(00010339, 101, null, 7, 'CCTV', 'Enclavamiento CCTV Zona afectada', true, 1, true, null, false, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(00010339, 101, null, 7, 'CCTV', 'Enclavamiento CCTV Zona afectada', true, 1, true, 'LockCamera', false, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (01040339, 101, null, 6, 'RELLENAR BITACORA DEL INCIDENTE', 'Rellenar bitacora del incidente con toda la información disponible', true, 4, false, null, false, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --ETAPA = INICIAL
