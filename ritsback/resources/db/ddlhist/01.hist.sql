@@ -26,7 +26,7 @@ CREATE SCHEMA hist;
 		incident_type_id int8 NOT NULL,
 		incident_type_cause_id int8 NULL,
 		affection_stretch_id int8 NOT NULL,
-		location_id int8 NULL,
+		location varchar NULL,
 		incident_state_id int8 NOT NULL,
 		incident_level_id int8 NOT NULL,
 		current_user_id int8 NULL,
@@ -40,7 +40,6 @@ CREATE SCHEMA hist;
 	);
 	
 	CREATE INDEX idx_ims_incident_reports_ims_incidents ON hist.ims_incident_reports USING btree (incident_type_id, affection_stretch_id);
-	CREATE INDEX idx_ims_incident_reports_locations ON hist.ims_incident_reports USING btree (location_id);
 	CREATE INDEX idx_ims_incident_reports_ims_incident_states ON hist.ims_incident_reports USING btree (incident_state_id);
 	CREATE INDEX idx_ims_incident_reports_ims_incident_levels ON hist.ims_incident_reports USING btree (incident_level_id);
 	CREATE INDEX idx_ims_incident_reports_users ON hist.ims_incident_reports USING btree (current_user_id);
