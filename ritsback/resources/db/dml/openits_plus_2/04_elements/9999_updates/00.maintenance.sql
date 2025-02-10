@@ -1,0 +1,2 @@
+UPDATE master.element_types
+SET maintenance_element_type_state_id=4;

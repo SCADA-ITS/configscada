@@ -1,0 +1,21 @@
+
+INSERT INTO ui.vms_library_nodes (id, vms_library_id, name, description, label, signaling, enabled, visible) VALUES
+
+(1, 1, 'Libreria', NULL, 'Libreria', NULL, True, True),
+(101, 1, 'Campaña DGT', NULL, 'Campaña DGT OPE', NULL, True, True),
+(10101, 1, 'NO TE DISTRAIGAS', NULL, 'NO TE DISTRAIGAS', '[{"zone":1,"graphics":[{"id":1,"value":"8000"}]},{"zone":2,"align":"center","texts":[{"id":1,"value":"NO  USES  EL","color":"#FFFFFF"},{"id":2,"value":" MOVIL  AL","color":"#FFFFFF"},{"id":3,"value":"   VOLANTE","color":"#FFFFFF"}]}]', True, True),
+(10102, 1, 'UN SEGUNDO CAMBIA LA VIDA', NULL, 'UN SEGUNDO CAMBIA LA VIDA', '[{"zone":1,"graphics":[]},{"zone":2,"align":"center","texts":[{"id":1,"value":"UN  SEGUNDO","color":"#FFFFFF"},{"id":2,"value":"   CAMBIA","color":"#FFFFFF"},{"id":3,"value":"  LA  VIDA","color":"#FFFFFF"}]}]', True, True),
+(10103, 1, 'NO USES EL MOVIL', NULL, 'NO USES EL MOVIL', '[{"zone":1,"graphics":[{"id":1,"value":"8000"}]},{"zone":2,"align":"center","texts":[{"id":1,"value":"NO  USES  EL","color":"#FFFFFF"},{"id":2,"value":" MOVIL  AL  ","color":"#FFFFFF"},{"id":3,"value":"   VOLANTE","color":"#FFFFFF"}]}]', True, True),
+(10104, 1, 'USAR EL MOVIL SUPONE', NULL, 'USAR EL MOVIL SUPONE', '[{"zone":1,"graphics":[{"id":1,"value":"8000"}]},{"zone":2,"align":"center","texts":[{"id":1,"value":"  USAR EL","color":"#FFFFFF"},{"id":2,"value":"MOVIL SUPONE","color":"#FFFFFF"},{"id":3,"value":"  4 PUNTOS","color":"#FFFFFF"}]}]', True, True),
+(10105, 1, 'NEUMÁTICOS PERFECTOS', NULL, 'NEUMÁTICOS PERFECTOS', '[{"zone":1,"graphics":[{"id":1,"value":"8000"}]},{"zone":2,"align":"center","texts":[{"id":1,"value":" NEUMATICOS","color":"#FFFFFF"},{"id":2,"value":"PERFECTOS TU","color":"#FFFFFF"},{"id":3,"value":"MEJOR SEGURO","color":"#FFFFFF"}]}]', True, True),
+(10106, 1, 'REVISA TUS NEUMÁTICOS', NULL, 'REVISA TUS NEUMÁTICOS', '[{"zone":1,"graphics":[{"id":1,"value":"8000"}]},{"zone":2,"align":"center","texts":[{"id":1,"value":"REVISA TUS","color":"#FFFFFF"},{"id":2,"value":"NEUMATICOS","color":"#FFFFFF"},{"id":3,"value":"CADA 15 DIAS","color":"#FFFFFF"}]}]', True, True),
+(10107, 1, 'MANTEN LA DISTANCIA', NULL, 'MANTEN LA DISTANCIA', '[{"zone":1,"graphics":[{"id":1,"value":"8000"}]},{"zone":2,"align":"center","texts":[{"id":1,"value":" MANTEN LA","color":"#FFFFFF"},{"id":2,"value":" DISTANCIA","color":"#FFFFFF"},{"id":3,"value":"DE SEGURIDAD","color":"#FFFFFF"}]}]', True, True),
+(10108, 1, 'SEGURIDAD', NULL, 'SEGURIDAD', '[{"zone":1,"graphics":[{"id":1,"value":"8000"}]},{"zone":2,"align":"center","texts":[{"id":1,"value":" SEGURIDAD","color":"#FFFFFF"},{"id":2,"value":" ES MANTENER","color":"#FFFFFF"},{"id":3,"value":"LA DISTANCIA","color":"#FFFFFF"}]}]', True, True),
+(10109, 1, 'ANTES DEL VIAJE', NULL, 'ANTES DEL VIAJE', '[{"zone":1,"graphics":[{"id":1,"value":"8000"}]},{"zone":2,"align":"center","texts":[{"id":1,"value":" ANTES DEL","color":"#FFFFFF"},{"id":2,"value":"VIAJE REVISA","color":"#FFFFFF"},{"id":3,"value":"TU VEHICULO","color":"#FFFFFF"}]}]', True, True),
+(10110, 1, 'EVITA RIESGOS', NULL, 'EVITA RIESGOS', '[{"zone":1,"graphics":[{"id":1,"value":"8000"}]},{"zone":2,"align":"center","texts":[{"id":1,"value":"  EVITA","color":"#FFFFFF"},{"id":2,"value":"RIESGOS HAZ","color":"#FFFFFF"},{"id":3,"value":"LA REVISION","color":"#FFFFFF"}]}]', True, True),
+(10111, 1, 'CERO ALCOHOL', NULL, 'CERO ALCOHOL', '[{"zone":1,"graphics":[{"id":1,"value":"8000"}]},{"zone":2,"align":"center","texts":[{"id":1,"value":"CERO ALCOHOL","color":"#FFFFFF"},{"id":2,"value":" AL VOLANTE","color":"#FFFFFF"},{"id":3,"value":"","color":"#FFFFFF"}]}]', True, True),
+(10112, 1, 'SI BEBES', NULL, 'SI BEBES', '[{"zone":1,"graphics":[{"id":1,"value":"8000"}]},{"zone":2,"align":"center","texts":[{"id":1,"value":"  SI  BEBES","color":"#FFFFFF"},{"id":2,"value":"    NO","color":"#FFFFFF"},{"id":3,"value":" CONDUZCAS","color":"#FFFFFF"}]}]', True, True),
+
+(2, 2, 'Libreria', NULL, 'Libreria', NULL, True, True),
+(201, 2, 'Alternantes', NULL, 'Alternantes', NULL, True, True),
+(202, 2, 'Fijos', NULL, 'Fijos', NULL, True, True);

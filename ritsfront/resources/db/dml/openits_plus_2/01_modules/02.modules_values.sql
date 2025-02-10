@@ -2,6 +2,8 @@ INSERT INTO ui.module_values (module_id, module_param_id, value) VALUES
 (500, 8, '{"treeCustom": [1]}'),
 (1040, 8, '{"treeCustom": [2]}'),
 
+(403, 5, 'http://192.168.88.32:8081/jasperserver?j_username=jasperadmin&j_password=jasperadmin&userLocale=es_ES'),
+
 --Management Area 1
 (900, 9, '1'),
 (901, 4, '901'),
