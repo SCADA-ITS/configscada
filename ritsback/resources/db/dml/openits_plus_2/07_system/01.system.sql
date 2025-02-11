@@ -34,7 +34,7 @@ INSERT INTO conf.system_param_values
 	"mail.smtp.ssl.trust": "*",
 	"mail.smtp.ssl.protocols": "TLSv1.2",
 	"mail.smtp.user": "dev.openits@gmail.com",
-	"mail.smtp.password": ""
+	"mail.smtp.password": "dcacvqowflgrebbu"
 }'
 , true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 -- Número máximo de alarmas permitidas sin reconocer
