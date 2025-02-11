@@ -9,6 +9,7 @@
                    i.delayed_incident_state_type_id as "delayedIncidentStateTypeId",
                    i.affection_stretch_id as "affectionStretchId",
                    i.cron_expression as "cronExpression",
+                   i.auto_close_in_min as "autoCloseInMin",
                    i.enabled as "enabled", 
                    i.visible as "visible",
                    i.created_at as "createdAt",
@@ -24,6 +25,7 @@
                         road_impact_id,
                         affection_stretch_id,
                         cron_expression,
+                        auto_close_in_min,
                         enabled,
                         visible,
                         created_at,
@@ -35,6 +37,7 @@
                          :roadImpactId,
                          :affectionStretchId,
                          :cronExpression,
+                         :autoCloseInMin,
                          :enabled,
                          :visible,
                          CURRENT_TIMESTAMP,
@@ -42,6 +45,7 @@
     </INSERT>
     <UPDATE>UPDATE rt.ims_delayed_incident_reports 
 	SET cron_expression = :cronExpression,
+	auto_close_in_min = :autoCloseInMin,
 	delayed_incident_state_type_id = :delayedIncidentStateTypeId,
 	updated_at = CURRENT_TIMESTAMP
 	 WHERE id = :id
