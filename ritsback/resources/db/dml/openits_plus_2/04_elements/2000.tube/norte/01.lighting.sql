@@ -4,7 +4,7 @@
 INSERT INTO conf.element_values
 (element_type_id, element_type_param_id, param_type_id, element_id, value, enabled, visible, created_at, updated_at) VALUES
 --Iluminación 
-(2000, 2, 1, 7,
+(2000, 2, 1, 1,
 '{
 	"regimes": [{
 			"id": 1,

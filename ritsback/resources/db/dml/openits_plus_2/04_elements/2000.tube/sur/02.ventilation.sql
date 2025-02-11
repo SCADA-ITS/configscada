@@ -1,7 +1,7 @@
 
 INSERT INTO conf.element_values
 (element_type_id, element_type_param_id, param_type_id, element_id, value, enabled, visible, created_at, updated_at) VALUES
-(2000, 1, 1, 8,
+(2000, 1, 1, 2,
 '{	
 	"windDirectionId": "ElementTypeParam:18:2:1",
 	"measuresValidityPeriod_s": 60,
@@ -33,24 +33,6 @@ INSERT INTO conf.element_values
 				"description": "Regimen alto tunel para el sentido Sur",
 				"labelAlias": "LBL_REGIME_3",
 				"fans": 6
-			},
-			{
-				"id": 5,
-				"alias": "EMERGENCIA E1-AMB-01",
-				"description": "Emergencia E1-AMB-01 tunel para el sentido Sur",
-				"labelAlias": "LBL_REGIME_EMERGENCIA_E1_AMB_01",
-				"fans": 6,
-				"incidentTypeId": "ImsIncidentType:22",
-				"locationId": "Location:1001"
-			},
-			{
-				"id": 6,
-				"alias": "EMERGENCIA E1-AMB-02",
-				"description": "Emergencia E1-AMB-02 tunel para el sentido Sur",
-				"labelAlias": "LBL_REGIME_EMERGENCIA_E1_AMB_02",
-				"fans": 6,
-				"incidentTypeId": "ImsIncidentType:23",
-				"locationId": "Location:1001"
 			}],
 	"smConfigs": [
 		{
