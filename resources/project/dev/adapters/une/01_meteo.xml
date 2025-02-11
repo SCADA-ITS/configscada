@@ -7,20 +7,22 @@
 
     <!-- Responses -->
     <response_list>
-        <response>
+       <response>
             <code>0x87</code>
             <values>
                 <value element_type_param_id="1" param_type_id="2" offset="0" length="4" number_of_decimals="3" is_ascii="true"/>
                 <value element_type_param_id="2" param_type_id="2" offset="4" length="4" number_of_decimals="2" has_sign="true" is_ascii="true"/>
                 <value element_type_param_id="3" param_type_id="2" />
-                
+                <value element_type_param_id="4" param_type_id="2" offset="0" length="4" is_int_le="true"/>
+                <value element_type_param_id="5" param_type_id="2" offset="0" length="4" is_int_be="true"/>
+                <value element_type_param_id="6" param_type_id="2" offset="0" length="1" is_int_le="true"/>
+                <value element_type_param_id="7" param_type_id="2" offset="2" length="1" is_int_be="true"/>
             </values>
             <alarms>
                 <alarm byte="0" mask="0x01" active_value="0x01" alarm_config_id="21"/>
                 <alarm byte="0" mask="0x02" active_value="0x00" alarm_config_id="22"/>
                 <alarm byte="1" mask="0x01" alarm_config_id="23"/>   
             </alarms>
-
         </response>
     </response_list>
 
