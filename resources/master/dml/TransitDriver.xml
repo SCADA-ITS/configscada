@@ -5,7 +5,7 @@
 				   driver_type_id as "driverTypeId",
 				   license_type_id as "licenseTypeId",
 				   license_value as "licenseValue",
-				   license_issue_data as "licenseIssueDate",
+				   license_issue_date as "licenseIssueDate",
 				   license_expire_date as "licenseExpireDate",
 				   name as "name",
 				   surname as "surname",
@@ -21,7 +21,44 @@
 				   updated_at as "updatedAt"
 			  FROM rt.transit_drivers
 	</SELECT>
-	<INSERT>
+	<INSERT>INSERT INTO	rt.transit_drivers (
+						transit_id,
+						driver_type_id,
+						license_type_id,
+						license_value,
+						license_issue_date,
+						license_expire_date,
+						name,
+						surname,
+						gender,
+						date_of_birth,
+						country_id,
+						state_id,
+						region_id,
+						locality_id,
+						address,
+						visible,
+						created_at,
+						updated_at)
+				VALUES (
+						:id,
+						:driverTypeId,
+						:licenseTypeId,
+						:licenseValue,
+						:licenseIssueDate,
+						:licenseExpireDate,
+						:name,
+						:surname,
+						:gender,
+						:dateOfBirth,
+						:countryId,
+						:stateId,
+						:regionId,
+						:localityId,
+						:address,
+						:visible,
+						CURRENT_TIMESTAMP,
+						CURRENT_TIMESTAMP)
 	</INSERT>
 	<UPDATE>
 	</UPDATE>

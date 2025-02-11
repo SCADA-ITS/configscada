@@ -22,7 +22,7 @@ DROP TABLE IF EXISTS rt.transits;
 -- Scope: rt
 --
 	CREATE TABLE rt.transits (
-		transit_id bigserial NOT null,
+		transit_id int8 NOT null,
 		transit_code varchar(200) NULL,
 		transit_type_id int8 NOT NULL,
 		date_transit timestamptz NOT NULL,
@@ -61,16 +61,16 @@ DROP TABLE IF EXISTS rt.transits;
 	CREATE INDEX idx_transits_transit_vehicles ON rt.transits USING btree (vehicle_type_id, vehicle_id);
 	CREATE INDEX idx_transits_transit_infraction_types ON rt.transits USING btree (infraction_type_id);
 	CREATE INDEX idx_transits_transit_users ON rt.transits USING btree (assigned_user_id);
+	CREATE INDEX idx_transits_element_transit_types ON rt.transits USING btree (element_type_id, element_id, transit_type_id);
 
-	ALTER TABLE rt.transits ADD CONSTRAINT fk_transits_transit_types FOREIGN KEY (transit_type_id) REFERENCES conf.transit_types(transit_type_id);
-	ALTER TABLE rt.transits ADD CONSTRAINT fk_transits_transit_type_states FOREIGN KEY (transit_type_state_id) REFERENCES conf.transit_type_states(transit_type_state_id);
-	ALTER TABLE rt.transits ADD CONSTRAINT fk_transits_transit_type_state_options FOREIGN KEY (transit_type_state_id, transit_type_state_option_id) REFERENCES conf.transit_type_state_options(transit_type_state_id, transit_type_state_option_id);
+	ALTER TABLE rt.transits ADD CONSTRAINT fk_transits_transit_type_states FOREIGN KEY (transit_type_state_id) REFERENCES static.transit_type_states(transit_type_state_id);
+	ALTER TABLE rt.transits ADD CONSTRAINT fk_transits_transit_type_state_options FOREIGN KEY (transit_type_state_id, transit_type_state_option_id) REFERENCES static.transit_type_state_options(transit_type_state_id, transit_type_state_option_id);
 	ALTER TABLE rt.transits ADD CONSTRAINT fk_transits_transit_locations FOREIGN KEY (location_id) REFERENCES conf.locations(location_id);
-	ALTER TABLE rt.transits ADD CONSTRAINT fk_transits_transit_elements FOREIGN KEY (element_type_id, element_id) REFERENCES conf.elements(element_type_id, element_id);
 	ALTER TABLE rt.transits ADD CONSTRAINT fk_transits_transit_drivers FOREIGN KEY (driver_type_id, driver_id) REFERENCES conf.drivers(driver_type_id, driver_id);
 	ALTER TABLE rt.transits ADD CONSTRAINT fk_transits_transit_vehicles FOREIGN KEY (vehicle_type_id, vehicle_id) REFERENCES conf.vehicles(vehicle_type_id, vehicle_id);
-	ALTER TABLE rt.transits ADD CONSTRAINT fk_transits_transit_infraction_types FOREIGN KEY (infraction_type_id) REFERENCES conf.infraction_types(infraction_type_id);
+	ALTER TABLE rt.transits ADD CONSTRAINT fk_transits_transit_infraction_types FOREIGN KEY (infraction_type_id) REFERENCES static.infraction_types(infraction_type_id);
 	ALTER TABLE rt.transits ADD CONSTRAINT fk_transits_transit_users FOREIGN KEY (assigned_user_id) REFERENCES conf.users(user_id);
+	ALTER TABLE rt.transits ADD CONSTRAINT fk_transits_element_transit_types FOREIGN KEY (element_type_id, element_id, transit_type_id) REFERENCES conf.element_transit_types(element_type_id, element_id, transit_type_id);
 	
 	ALTER TABLE rt.transits SET TABLESPACE tbl_rt;
 	
@@ -94,7 +94,7 @@ DROP TABLE IF EXISTS rt.transits;
 	CREATE INDEX idx_transit_values_transit_type_params ON rt.transit_values USING btree (transit_type_id, transit_type_param_id);
 	
 	ALTER TABLE rt.transit_values ADD CONSTRAINT fk_transit_values_transit_types FOREIGN KEY (transit_id) REFERENCES rt.transits(transit_id);
-	ALTER TABLE rt.transit_values ADD CONSTRAINT fk_transit_values_transit_type_params FOREIGN KEY (transit_type_id, transit_type_param_id) REFERENCES conf.transit_type_params(transit_type_id, transit_type_param_id);
+	ALTER TABLE rt.transit_values ADD CONSTRAINT fk_transit_values_transit_type_params FOREIGN KEY (transit_type_id, transit_type_param_id) REFERENCES static.transit_type_params(transit_type_id, transit_type_param_id);
 	
 	ALTER TABLE rt.transit_values SET TABLESPACE tbl_rt;
 
@@ -108,7 +108,7 @@ DROP TABLE IF EXISTS rt.transits;
 		driver_type_id int8 NULL,
 		license_type_id int8 NULL,
 		license_value varchar(200) NULL,
-		license_issue_data timestamptz NULL,
+		license_issue_date timestamptz NULL,
 		license_expire_date timestamptz NULL,
 		name varchar(100) NOT NULL,
 		surname varchar(300) NULL,
@@ -177,6 +177,7 @@ DROP TABLE IF EXISTS rt.transits;
 		transit_id int8 NOT NULL,
 		vehicle_brand_id int8 NULL,
 		vehicle_model_id int8 NULL,
+		vehicle_class_id int8 NULL,
 		country_id int8 NULL,
 		plate_number varchar(20) NULL,
 		date_registration timestamptz NULL,
@@ -188,12 +189,14 @@ DROP TABLE IF EXISTS rt.transits;
 	);
 	
 	CREATE INDEX idx_transit_vehicles_vehicle_models ON rt.transit_vehicles USING btree (vehicle_brand_id, vehicle_model_id);
+	CREATE INDEX idx_transit_vehicles_vehicle_classes ON rt.transit_vehicles USING btree (vehicle_class_id);
 	CREATE INDEX idx_transit_vehicles_countries ON rt.transit_drivers USING btree (country_id);
 	
 	-- One to one relationship
 	ALTER TABLE rt.transit_vehicles ADD CONSTRAINT fk_transit_vehicles_transits FOREIGN KEY (transit_id) REFERENCES rt.transits(transit_id);
 	
 	ALTER TABLE rt.transit_vehicles ADD CONSTRAINT fk_transit_vehicles_vehicle_models FOREIGN KEY (vehicle_brand_id, vehicle_model_id) REFERENCES master.vehicle_models(vehicle_brand_id, vehicle_model_id);
+	ALTER TABLE rt.transit_vehicles ADD CONSTRAINT fk_transit_vehicles_vehicle_classes FOREIGN KEY (vehicle_class_id) REFERENCES static.vehicle_classes(vehicle_class_id);
 	ALTER TABLE rt.transit_vehicles ADD CONSTRAINT fk_transit_vehicles_countries FOREIGN KEY (country_id) REFERENCES master.countries(country_id);
 	
 	ALTER TABLE rt.transit_vehicles SET TABLESPACE tbl_rt;
@@ -228,7 +231,7 @@ DROP TABLE IF EXISTS rt.transits;
 -- Scope: rt
 --
 	CREATE TABLE rt.transit_images (
-		transit_image_id bigserial NOT NULL,
+		transit_image_id int8 NOT NULL,
 		transit_id int8 NOT NULL,
 		path varchar(400) NOT NULL,
 		read_only bool NULL,
@@ -250,7 +253,7 @@ DROP TABLE IF EXISTS rt.transits;
 -- Scope: rt
 --
 	CREATE TABLE rt.transit_attachments (
-		transit_attachment_id bigserial NOT NULL,
+		transit_attachment_id int8 NOT NULL,
 		transit_id int8 NOT NULL,
 		path varchar(400) NOT NULL,
 		visible bool NULL,
@@ -271,7 +274,7 @@ DROP TABLE IF EXISTS rt.transits;
 -- Scope: rt
 --
 	CREATE TABLE rt.transit_logs (
-		transit_log_id bigserial NOT NULL,
+		transit_log_id int8 NOT NULL,
 		transit_id int8 NOT NULL,
 		assigned_user_id int8 NOT NULL,
 		transit_type_state_id int8 NOT NULL,
@@ -291,8 +294,8 @@ DROP TABLE IF EXISTS rt.transits;
 	CREATE INDEX idx_transit_logs_transit_type_state_options ON rt.transit_logs USING btree (transit_type_state_id, transit_type_state_option_id);
 	
 	ALTER TABLE rt.transit_logs ADD CONSTRAINT fk_transit_logs_users FOREIGN KEY (assigned_user_id) REFERENCES conf.users(user_id);
-	ALTER TABLE rt.transit_logs ADD CONSTRAINT fk_transit_logs_transit_type_states FOREIGN KEY (transit_type_state_id) REFERENCES conf.transit_type_states(transit_type_state_id);
-	ALTER TABLE rt.transit_logs ADD CONSTRAINT fk_transit_logs_transit_type_state_options FOREIGN KEY (transit_type_state_id, transit_type_state_option_id) REFERENCES conf.transit_type_state_options(transit_type_state_id, transit_type_state_option_id);
+	ALTER TABLE rt.transit_logs ADD CONSTRAINT fk_transit_logs_transit_type_states FOREIGN KEY (transit_type_state_id) REFERENCES static.transit_type_states(transit_type_state_id);
+	ALTER TABLE rt.transit_logs ADD CONSTRAINT fk_transit_logs_transit_type_state_options FOREIGN KEY (transit_type_state_id, transit_type_state_option_id) REFERENCES static.transit_type_state_options(transit_type_state_id, transit_type_state_option_id);
 	
 	ALTER TABLE rt.transit_logs SET TABLESPACE tbl_rt;
 	

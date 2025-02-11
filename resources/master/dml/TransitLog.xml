@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="TransitLog" autoLoad="false">
+	<SELECT>SELECT transit_log_id as "id",
+				   transit_id as "transitId",
+				   assigned_user_id as "assignedUserId",
+			   	   transit_type_state_id as "transitTypeStateId",
+				   transit_type_state_option_id as "transitTypeStateOptionId",
+				   timestamp_log as "timestampLog",
+				   log_type as "logType",
+				   message as "message",
+				   visible as "visible",
+				   created_at as "createdAt",
+				   updated_at as "updatedAt"
+			  FROM rt.transit_logs
+	</SELECT>
+	<INSERT>INSERT INTO	rt.transit_logs (
+						transit_log_id,
+						transit_id,
+						assigned_user_id,
+						transit_type_state_id,
+						transit_type_state_option_id,
+						timestamp_log,
+						log_type,
+						message,
+						visible,
+						created_at,
+						updated_at)
+				VALUES(
+						:id,
+						:transitId,
+						:assignedUserId,
+						:transitTypeStateId,
+						:transitTypeStateOptionId,
+						:timestampLog,
+						:logType,
+						:message,
+						:visible,
+						CURRENT_TIMESTAMP,
+						CURRENT_TIMESTAMP)
+	</INSERT>
+	<UPDATE>
+	</UPDATE>
+	<DELETE>
+	</DELETE>
+</DML>

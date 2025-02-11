@@ -10,7 +10,22 @@
 				   updated_at as "updatedAt"
 			  FROM rt.transit_values
 	</SELECT>
-	<INSERT>
+	<INSERT>INSERT INTO	rt.transit_values (
+						transit_id,
+						transit_type_id,
+						transit_type_param_id,
+						value,
+						visible,
+						created_at,
+						updated_at)
+				VALUES (
+						:id,
+						:transitTypeId,
+						:transitTypeParamId,
+						:value,
+						:visible,
+						CURRENT_TIMESTAMP,
+						CURRENT_TIMESTAMP)
 	</INSERT>
 	<UPDATE>
 	</UPDATE>

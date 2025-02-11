@@ -2,6 +2,31 @@ SET client_min_messages TO WARNING;
 
 DO $$
 BEGIN
+	IF EXISTS (
+        SELECT table_name
+ 	        FROM information_schema.tables
+ 	        where table_schema = 'rt'
+ 	          and table_name =  'transit_logs'
+    ) THEN
+        DELETE FROM rt.transit_logs;
+    END IF;
+	IF EXISTS (
+        SELECT table_name
+ 	        FROM information_schema.tables
+ 	        where table_schema = 'rt'
+ 	          and table_name =  'transit_attachments'
+    ) THEN
+        DELETE FROM rt.transit_attachments;
+    END IF;
+	IF EXISTS (
+        SELECT table_name
+ 	        FROM information_schema.tables
+ 	        where table_schema = 'rt'
+ 	          and table_name =  'transit_images'
+    ) THEN
+        DELETE FROM rt.transit_images;
+    END IF;
+    
     IF EXISTS (
         SELECT table_name
  	        FROM information_schema.tables
@@ -57,6 +82,7 @@ BEGIN
     END IF;
 END $$;
 
+SELECT FROM conf.element_transit_types;
 DELETE FROM static.driver_params;
 DELETE FROM static.driver_types;
 DELETE FROM static.vehicle_params;
@@ -104,7 +130,9 @@ INSERT INTO static.driver_types (driver_type_id,alias,description,label_alias,la
 
 INSERT INTO static.driver_params (driver_type_id,driver_param_id,data_type_id,driver_param_group_id,alias,description,label_alias,label_description,enabled,visible,created_at,updated_at) VALUES
 	 (1,1,2,NULL,'Driver Type I Param 1','Driver Type I Param 1','LBL_DRIVER_TYPE_I_PARAM_1','LBL_DRIVER_TYPE_I_PARAM_1_DESC',true,true,'2025-02-06 09:09:38.587+01','2025-02-06 09:09:38.587+01');
-
+	 
+INSERT INTO conf.element_transit_types (element_type_id, element_id, transit_type_id, infraction_manager_id, enabled, visible, created_at, updated_at) VALUES
+	(2, 1, 1, null, true, true, '2025-02-06 09:09:38.587+01','2025-02-06 09:09:38.587+01');
 	 
 DO $$
 BEGIN
@@ -127,7 +155,7 @@ BEGIN
  	          and table_name =  'transit_drivers'
     ) THEN
 		-- rt.transit_drivers
-		INSERT INTO rt.transit_drivers (transit_id,driver_type_id,license_type_id,license_value,license_issue_data,license_expire_date,"name",surname,gender,date_of_birth,country_id,state_id,region_id,locality_id,address,visible,created_at,updated_at) VALUES
+		INSERT INTO rt.transit_drivers (transit_id,driver_type_id,license_type_id,license_value,license_issue_date,license_expire_date,"name",surname,gender,date_of_birth,country_id,state_id,region_id,locality_id,address,visible,created_at,updated_at) VALUES
 			 (3,NULL,NULL,NULL,NULL,NULL,'Pepito','Pérez','',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2025-02-06 09:11:40.337+01','2025-02-06 09:11:40.337+01');
     END IF;
 

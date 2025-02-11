@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="TransitAttachment" autoLoad="false">
+	<SELECT>SELECT transit_attachment_id as "id",
+				   transit_id as "transitId",
+				   path as "path",
+				   visible as "visible",
+				   created_at as "createdAt",
+				   updated_at as "updatedAt"
+			  FROM rt.transit_attachments
+	</SELECT>
+	<INSERT>INSERT INTO	rt.transit_attachments (
+						transit_attachment_id,
+						transit_id,
+						path,
+						visible,
+						created_at,
+						updated_at)
+				VALUES(
+						:id,
+						:transitId,
+						:path,
+						:visible,
+						CURRENT_TIMESTAMP,
+						CURRENT_TIMESTAMP)
+	</INSERT>
+	<UPDATE>
+	</UPDATE>
+	<DELETE>
+	</DELETE>
+</DML>
