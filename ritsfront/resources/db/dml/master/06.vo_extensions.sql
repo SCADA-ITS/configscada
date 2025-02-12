@@ -17,8 +17,10 @@ INSERT INTO ui.vo_entity_types(id, alias, description, enabled, visible) values
 ('ImsTaskTypeUI', 'ImsTaskTypeUI', 'ImsTaskTypeUI', true, true),
 ('PmQueuePriorityUI', 'PmQueuePriorityUI', 'PmQueuePriorityUI', true, true),
 ('UserUI', 'UserUI', 'UserUI', true, true),
+('ExtEntityUI', 'ExtEntityUI', 'ExtEntityUI', true, true),
 ('ExtEntityTypeUI', 'ExtEntityTypeUI', 'ExtEntityTypeUI', true, true),
-('ExtEntitySubtypeUI', 'ExtEntitySubtypeUI', 'ExtEntitySubtypeUI', true, true);
+('ExtEntitySubtypeUI', 'ExtEntitySubtypeUI', 'ExtEntitySubtypeUI', true, true),
+('RouteUI', 'RouteUI', 'RouteUI', true, true);
 
 
 
@@ -92,7 +94,11 @@ INSERT INTO ui.vo_entity_fields (id, vo_entity_type_id, field, description, labe
 (70, 'ExtEntitySubtypeUI', 'icon_data', 'json data for icon for ext entity subtype', 'LBL_ENTITIE_FIELDS_ICON_INCIDENT_TYPE', 'LBL_ENTITIE_FIELDS_ICON_INCIDENT_TYPE_DESCRIPTION', true, true),
 (71, 'ElementTypeUI', 'graphicIcons', 'graphic icons', 'LBL_GRAPHIC_ICONS', 'LBL_GRAPHIC_ICONS', true, true),
 (72, 'ElementTypeUI', 'noShow', 'no show element type', 'LBL_ENTITIE_FIELDS_NO_SHOW_ELEMENT_TYPE', 'LBL_ENTITIE_FIELDS_NO_SHOW_ELEMENT_TYPE_DESCRIPTION', true, true),
-(73, 'ExtEntitySubtypeUI', 'color', 'color', 'LBL_ENTITIE_FIELDS_ICON_INCIDENT_TYPE', 'LBL_ENTITIE_FIELDS_ICON_INCIDENT_TYPE_DESCRIPTION', true, true);
+(73, 'ExtEntitySubtypeUI', 'color', 'color', 'LBL_ENTITIE_FIELDS_ICON_INCIDENT_TYPE', 'LBL_ENTITIE_FIELDS_ICON_INCIDENT_TYPE_DESCRIPTION', true, true),
+(74, 'ElementUI', 'searchZoom', 'Zoom level to search item', 'LBL_SEARCH_ZOOM', 'LBL_SEARCH_ZOOM_DESCRIPTION', true, true),
+(75, 'ImsIncidentTypeUI', 'searchZoom', 'Zoom level to search item', 'LBL_SEARCH_ZOOM', 'LBL_SEARCH_ZOOM_DESCRIPTION', true, true),
+(76, 'ExtEntityUI', 'searchZoom', 'Zoom level to search item', 'LBL_SEARCH_ZOOM', 'LBL_SEARCH_ZOOM_DESCRIPTION', true, true),
+(77, 'RouteUI', 'searchZoom', 'Zoom level to search item', 'LBL_SEARCH_ZOOM', 'LBL_SEARCH_ZOOM_DESCRIPTION', true, true);
 
 
 
