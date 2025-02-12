@@ -14,8 +14,8 @@ class LockCamera {
 
     static final Long ELEMENT_TYPE_CAMERA = 2L;
     static final Long LOCK_CAMERA_COMMAND = 1L;
-    private static final String DOCKLIGHT_IP = "192.168.88.74"; // Reemplaza con la IP de Docklight
-    private static final int DOCKLIGHT_PORT = 6000; // Reemplaza con el puerto adecuado
+    private static final String DOCKLIGHT_IP = "192.168.88.74"; 
+    private static final int DOCKLIGHT_PORT = 6000; 
 
     Logger log;
 
@@ -24,11 +24,9 @@ class LockCamera {
     }
 
     void process(ImsIncidentReport incidentReport, ImsIncidentTypeTask incidentTypeTask, List<ImsIncidentTypeTaskValue> values) {
-        log.debug("incidentReport------> " + incidentReport);
 
         if (incidentReport.getAffectionStretchId() != null) {
             Long stretch = incidentReport.getAffectionStretchId();
-            log.debug("Stretch-----> " + stretch);
 
             List<String> tunTv1CAList = List.of("TUN-TV-1CA", "TUN-TV-2CA", "TUN-TV-3CA", "TUN-TV-4CA", "TUN-TV-5CA", "TUN-TV-6CA", "TUN-TV-7CA", "TUN-TV-8CA", "TUN-TV-9CA", "TUN-TV-10CA", "TUN-TV-11CA");
             List<String> tunTv1MAList = List.of("TUN-TV-1MA", "TUN-TV-2MA", "TUN-TV-3MA", "TUN-TV-4MA", "TUN-TV-5MA", "TUN-TV-6MA", "TUN-TV-7MA", "TUN-TV-8MA", "TUN-TV-9MA");
@@ -61,9 +59,8 @@ class LockCamera {
             outputStream = socket.getOutputStream();
             outputStream.write(message.getBytes(StandardCharsets.UTF_8));
             outputStream.flush();
-            log.debug("Mensaje enviado a Docklight: " + message);
         } catch (Exception e) {
-            log.error("Error al enviar mensaje a Docklight", e);
+            log.error("Error al enviar mensaje", e);
         } finally {
             try {
                 if (outputStream != null) outputStream.close();

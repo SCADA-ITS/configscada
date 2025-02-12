@@ -36,7 +36,7 @@ INSERT INTO ui.menu_items(id, menu_group_id, "position", module_id, "label", ico
 (500, 5, 1, 403, 'LBL_MENU_ITEM_REPORTS', 'img/menu/report.png', 'Menu item Reports', 'Menu item Reports', true, true),
 (501, 5, 2, 1045, 'LBL_HISTORICAL_CHARTS', 'img/menu/chart-menu.png', 'Historical charts', 'Historical Charts', true, true),
 (502, 5, 3, 1006, 'LBL_MENU_ITEM_AUDITS', 'img/menu/logs-menu.png', 'Auditorias', 'Auditorias', true, true),
---(503, 5, 4, 6011, 'LBL_MENU_ITEM_BACKOFFICE_INCIDENT', 'img/menu/incident.png', 'NOGALES_GIP_INCIDENT', 'Nogales GIP', true, true),
+(503, 5, 4, 1920, 'LBL_MENU_ITEM_BACKOFFICE_INCIDENT', 'img/menu/incident.png', 'Backoffice incidencias', 'Backoffice incidencias', true, true),
 
 (500001, 5000, 3, 1047, 'LBL_MENU_HELP_CONTENTS', 'img/menu/help.png', 'Help contents', 'Menu item help contents', true, true);
 
