@@ -3,7 +3,7 @@ BEGIN
   IF EXISTS (SELECT 1 FROM pg_namespace WHERE nspname = 'nogales_gip') THEN
 	
   	INSERT INTO ui.backoffices (id, "name", description, "label", jdbc, "user", "password", "schema", default_metadata_backoffice, default_metadata_table, default_metadata_column, enabled) 
-	VALUES(3, 'nogales_gip', NULL, NULL, 'jdbc:postgresql://192.168.88.56:5430/rits', 'rits', 'uMuD7Uy0gpCRL4Jo1w6SOQ==', 'nogales_gip',
+	VALUES(3, 'nogales_gip', NULL, NULL, 'jdbc:postgresql://192.168.88.32:5431/rits', 'rits', 'uMuD7Uy0gpCRL4Jo1w6SOQ==', 'nogales_gip',
 	-- default_metadata_backoffice
 	'{}',
 	-- default_metadata_table
