@@ -49,6 +49,7 @@
       <p:enabled>true</p:enabled>
       <p:threads>4</p:threads>
       <p:subscriptors_ref>
+        <p:subscriptor_id_ref>1</p:subscriptor_id_ref>
         <p:subscriptor_id_ref>2</p:subscriptor_id_ref>
       </p:subscriptors_ref>
     </p:mod>

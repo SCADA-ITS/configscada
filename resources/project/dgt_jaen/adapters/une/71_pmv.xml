@@ -37,8 +37,11 @@
             <use_adapter>false</use_adapter>
         </request>
         <request>
-            <request_frame>0x1A</request_frame>
             <signalling_command_id>2</signalling_command_id>
+            <use_adapter>true</use_adapter>
+        </request>
+        <request>
+            <signalling_command_id>3</signalling_command_id>
             <use_adapter>true</use_adapter>
         </request>
     </request_list>

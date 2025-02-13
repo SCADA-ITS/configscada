@@ -47,15 +47,57 @@ public class ProcessFrame_71{
 
     public List<Byte> processSignallingCommand_2(SignallingCommand signallingCommand, Element element) {
 
-		//TODO
 		List<Byte> frame = new ArrayList<>();
+		String result = "";
 
-		if (signallingCommand != null) {
-			log.debug(signallingCommand);
-            log.debug(signallingCommand.getSignallingCommandId());
-            log.debug(element);
+		def pmv;
+
+		try{
+
+			if(element.getElementSubtypeId() == GR_TXT_PMV){
+
+				pmv = shell.parse(new File(ResourcesUtil.getPath("io-controller/groovy/une/signallingCommand/SignallingCommand_71_2.groovy")));
+				result = pmv.signalling(element, signallingCommand, log);
+
+				frame = result.decodeHex()
+
+			}else{
+				log.debug("No se encuentra el subtipo del panel")
+			}
+
+		}catch(Exception e) {
+			log.debug(e.getMessage());
 		}
 		
 		return frame;
 	}
+
+	public List<Byte> processSignallingCommand_3(SignallingCommand signallingCommand, Element element) {
+
+		//TODO
+		List<Byte> frame = new ArrayList<>();
+		String result = "";
+
+		def pmv;
+
+		try{
+
+			if(element.getElementSubtypeId() == GR_TXT_PMV){
+
+				pmv = shell.parse(new File(ResourcesUtil.getPath("io-controller/groovy/une/signallingCommand/SignallingCommand_71_3.groovy")));
+				result = pmv.shutdown(element, signallingCommand, log);
+
+				frame = result.decodeHex()
+
+			}else{
+				log.debug("No se encuentra el subtipo del panel")
+			}
+
+		}catch(Exception e) {
+			log.debug(e.getMessage());
+		}
+		
+		return frame;
+	}
+
 }
