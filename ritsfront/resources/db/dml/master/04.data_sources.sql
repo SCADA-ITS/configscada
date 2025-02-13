@@ -269,7 +269,9 @@ INSERT INTO ui.data_sources(id, data_source_type_id, "name", description, entity
 (261, 3, 'updateRoute', 'updateRoute', 'RouteVO', 'id', true, true),
 (262, 3, 'deleteRoute', 'deleteRoute', 'RouteVO', 'id', true, true),
 (263, 3, 'addAvoidPolygonInIncidentReport', 'addAvoidPolygonInIncidentReport', 'RouteAvoidPolygonVO', 'id', true, true),
-(264, 3, 'deleteAvoidPolygonInIncidentReport', 'deleteAvoidPolygonInIncidentReport', 'RouteAvoidPolygonVO', 'id', true, true);
+(264, 3, 'deleteAvoidPolygonInIncidentReport', 'deleteAvoidPolygonInIncidentReport', 'RouteAvoidPolygonVO', 'id', true, true),
+(265, 1, 'getTransits', 'getTransits', 'TransitVO', 'id', true, true),
+(266, 1, 'getTransit', 'getTransit', 'TransitVO', 'id', true, true);
 
 INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) VALUES
 (1, 1, 'http://192.168.88.163:8082/graphql'),
@@ -1594,4 +1596,14 @@ INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) V
 (264, 9, 'deleteAvoidPolygonInIncidentReport'),
 (264, 10, 'avoidPolygonId'),
 (264, 11, 'String!'),
-(264, 12, NULL);
+(264, 12, NULL),
+
+(265, 1, 'http://192.168.88.163:8082/graphql'),
+(265, 2, 'getTransits'),
+(265, 3, 'initDate,finalDate,transit'),
+(265, 4, NULL),
+
+(266, 1, 'http://192.168.88.163:8082/graphql'),
+(266, 2, 'getTransit'),
+(266, 3, 'transitId'),
+(266, 4, NULL);

@@ -32,6 +32,7 @@ INSERT INTO ui.menu_items(menu_group_id, "position", module_id, "label", icon, "
 (2, 22, null, '', null, '', null, true, true),
 (2, 23, 1020, 'LBL_CCTV', 'img/menu/camera-menu.png', 'Menu item CCTV', 'Menu item CCTV', true, true),
 (2, 24, 1051, 'LBL_INCIDENT_MONITOR_MODULE', 'img/menu/incident-menu.png', 'Menu incident Monitor Module', 'Menu incident Monitor Module', true, true),
+(2, 25, 1055, 'LBL_TRANSIT_LIST_MODULE', 'img/menu/transit-menu.png', 'Transit list Module', 'Transit list Module', true, true),
 
 
 -- OTHERS
@@ -45,7 +46,7 @@ INSERT INTO ui.menu_items(menu_group_id, "position", module_id, "label", icon, "
 (4, 2, 1018, 'LBL_TREE_SELECT_MODULE', 'img/menu/default.png', 'Tree select module', 'Tree select module', true, true),
 (4, 3, 2002, 'LBL_TEST_MAP', 'img/menu/default.png', 'Test map', 'Test map', true, true),
 (4, 4, 1045, 'LBL_HISTORICAL_CHARTS', 'img/menu/chart-menu.png', 'Historical charts', 'Historical Charts', true, true),
---(4, 4, 2003, 'LBL_INFRACTIONS_EDITOR', 'img/menu/default.png', 'Infraction editor', 'Infraction editor', true, true),
+(4, 4, 2003, 'LBL_INFRACTIONS_EDITOR', 'img/menu/default.png', 'Infraction editor', 'Infraction editor', true, true),
 
 -- BACKOFFICE
 

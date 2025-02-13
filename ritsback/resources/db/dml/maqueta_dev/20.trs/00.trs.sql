@@ -134,73 +134,73 @@ INSERT INTO static.driver_params (driver_type_id,driver_param_id,data_type_id,dr
 INSERT INTO conf.element_transit_types (element_type_id, element_id, transit_type_id, infraction_manager_id, enabled, visible, created_at, updated_at) VALUES
 	(2, 1, 1, null, true, true, '2025-02-06 09:09:38.587+01','2025-02-06 09:09:38.587+01');
 	 
-DO $$
-BEGIN
-
-	IF EXISTS (
-        SELECT table_name
- 	        FROM information_schema.tables
- 	        where table_schema = 'rt'
- 	          and table_name =  'transits'
-    ) THEN
-        -- rt.transits
-		INSERT INTO rt.transits (transit_id, transit_code, transit_type_id, date_transit, plate_number, transit_type_state_id, transit_type_state_option_id, location_id, direction, lane_number, element_type_id, element_id, certificate_valid_date, certificate_path, driver_type_id, driver_id, vehicle_type_id, vehicle_id, infraction_type_id, infraction_code, speed, distance, assigned_user_id, enabled, visible, created_at, updated_at) VALUES
-		(3, 'TR0001', 1, '2025-01-31 11:09:08.849', NULL, 1, NULL, 1, NULL, NULL, 2, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, true, true, '2025-01-31 11:08:53.540', '2025-01-31 11:08:56.605');
-    END IF;
-
-	IF EXISTS (
-        SELECT table_name
- 	        FROM information_schema.tables
- 	        where table_schema = 'rt'
- 	          and table_name =  'transit_drivers'
-    ) THEN
-		-- rt.transit_drivers
-		INSERT INTO rt.transit_drivers (transit_id,driver_type_id,license_type_id,license_value,license_issue_date,license_expire_date,"name",surname,gender,date_of_birth,country_id,state_id,region_id,locality_id,address,visible,created_at,updated_at) VALUES
-			 (3,NULL,NULL,NULL,NULL,NULL,'Pepito','Pérez','',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2025-02-06 09:11:40.337+01','2025-02-06 09:11:40.337+01');
-    END IF;
-
-	IF EXISTS (
-        SELECT table_name
- 	        FROM information_schema.tables
- 	        where table_schema = 'rt'
- 	          and table_name =  'transit_driver_values'
-    ) THEN
-		-- rt.transit_driver_values
-		INSERT INTO rt.transit_driver_values (transit_id,driver_type_id,driver_param_id,value,visible,created_at,updated_at) VALUES
-			 (3,1,1,'Valor Driver 1',true,'2025-02-06 09:12:19.984+01','2025-02-06 09:12:19.984+01');
-    END IF;
-
-	IF EXISTS (
-        SELECT table_name
- 	        FROM information_schema.tables
- 	        where table_schema = 'rt'
- 	          and table_name =  'transit_vehicles'
-    ) THEN
-		-- rt.transit_vehicles
-		INSERT INTO rt.transit_vehicles (transit_id,vehicle_brand_id,vehicle_model_id,country_id,plate_number,date_registration,color,visible,created_at,updated_at) VALUES
-			 (3,NULL,NULL,NULL,'LE0000AG','2025-02-06 10:13:21.153+01','AZUL',NULL,'2025-02-06 10:13:21.153+01','2025-02-06 10:13:21.153+01');
-    END IF;
-
-	IF EXISTS (
-        SELECT table_name
- 	        FROM information_schema.tables
- 	        where table_schema = 'rt'
- 	          and table_name =  'transit_vehicle_values'
-    ) THEN
-		-- rt.transit_vehicle_values
-		INSERT INTO rt.transit_vehicle_values (transit_id,vehicle_type_id,vehicle_param_id,value,visible,created_at,updated_at) VALUES
-			 (3,1,1,'Valor Vehicle 1',true,'2025-02-06 10:20:24.583+01','2025-02-06 10:20:24.583+01');
-    END IF;
-
-	IF EXISTS (
-        SELECT table_name
- 	        FROM information_schema.tables
- 	        where table_schema = 'rt'
- 	          and table_name =  'transit_vehicle_values'
-    ) THEN
-		-- rt.transit_values	 
-		INSERT INTO rt.transit_values (transit_id, transit_type_id, transit_type_param_id, value, visible, created_at, updated_at) VALUES
-			(3, 1, 1, 'Valor transito 1', true, '2025-02-06 10:20:24.583+01','2025-02-06 10:20:24.583+01');
-    END IF;
-
-END $$;
+--DO $$
+--BEGIN
+--
+--	IF EXISTS (
+--        SELECT table_name
+-- 	        FROM information_schema.tables
+-- 	        where table_schema = 'rt'
+-- 	          and table_name =  'transits'
+--    ) THEN
+--        -- rt.transits
+--		INSERT INTO rt.transits (transit_id, transit_code, transit_type_id, date_transit, plate_number, transit_type_state_id, transit_type_state_option_id, location_id, direction, lane_number, element_type_id, element_id, certificate_valid_date, certificate_path, driver_type_id, driver_id, vehicle_type_id, vehicle_id, infraction_type_id, infraction_code, speed, distance, assigned_user_id, enabled, visible, created_at, updated_at) VALUES
+--		(3, 'TR0001', 1, '2025-01-31 11:09:08.849', NULL, 1, NULL, 1, NULL, NULL, 2, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, true, true, '2025-01-31 11:08:53.540', '2025-01-31 11:08:56.605');
+--    END IF;
+--
+--	IF EXISTS (
+--        SELECT table_name
+-- 	        FROM information_schema.tables
+-- 	        where table_schema = 'rt'
+-- 	          and table_name =  'transit_drivers'
+--    ) THEN
+--		-- rt.transit_drivers
+--		INSERT INTO rt.transit_drivers (transit_id,driver_type_id,license_type_id,license_value,license_issue_date,license_expire_date,"name",surname,gender,date_of_birth,country_id,state_id,region_id,locality_id,address,visible,created_at,updated_at) VALUES
+--			 (3,NULL,NULL,NULL,NULL,NULL,'Pepito','Pérez','',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2025-02-06 09:11:40.337+01','2025-02-06 09:11:40.337+01');
+--    END IF;
+--
+--	IF EXISTS (
+--        SELECT table_name
+-- 	        FROM information_schema.tables
+-- 	        where table_schema = 'rt'
+-- 	          and table_name =  'transit_driver_values'
+--    ) THEN
+--		-- rt.transit_driver_values
+--		INSERT INTO rt.transit_driver_values (transit_id,driver_type_id,driver_param_id,value,visible,created_at,updated_at) VALUES
+--			 (3,1,1,'Valor Driver 1',true,'2025-02-06 09:12:19.984+01','2025-02-06 09:12:19.984+01');
+--    END IF;
+--
+--	IF EXISTS (
+--        SELECT table_name
+-- 	        FROM information_schema.tables
+-- 	        where table_schema = 'rt'
+-- 	          and table_name =  'transit_vehicles'
+--    ) THEN
+--		-- rt.transit_vehicles
+--		INSERT INTO rt.transit_vehicles (transit_id,vehicle_brand_id,vehicle_model_id,country_id,plate_number,date_registration,color,visible,created_at,updated_at) VALUES
+--			 (3,NULL,NULL,NULL,'LE0000AG','2025-02-06 10:13:21.153+01','AZUL',NULL,'2025-02-06 10:13:21.153+01','2025-02-06 10:13:21.153+01');
+--    END IF;
+--
+--	IF EXISTS (
+--        SELECT table_name
+-- 	        FROM information_schema.tables
+-- 	        where table_schema = 'rt'
+-- 	          and table_name =  'transit_vehicle_values'
+--    ) THEN
+--		-- rt.transit_vehicle_values
+--		INSERT INTO rt.transit_vehicle_values (transit_id,vehicle_type_id,vehicle_param_id,value,visible,created_at,updated_at) VALUES
+--			 (3,1,1,'Valor Vehicle 1',true,'2025-02-06 10:20:24.583+01','2025-02-06 10:20:24.583+01');
+--    END IF;
+--
+--	IF EXISTS (
+--        SELECT table_name
+-- 	        FROM information_schema.tables
+-- 	        where table_schema = 'rt'
+-- 	          and table_name =  'transit_vehicle_values'
+--    ) THEN
+--		-- rt.transit_values	 
+--		INSERT INTO rt.transit_values (transit_id, transit_type_id, transit_type_param_id, value, visible, created_at, updated_at) VALUES
+--			(3, 1, 1, 'Valor transito 1', true, '2025-02-06 10:20:24.583+01','2025-02-06 10:20:24.583+01');
+--    END IF;
+--
+--END $$;

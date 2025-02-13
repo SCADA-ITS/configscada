@@ -126,6 +126,9 @@ INSERT INTO ui.modules(id, module_type_id, "name", description, default_view_typ
 (1053, 1, 'Routes editor module', 'Routes editor module', 2, null, 'modules/route/routeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 (1054, 1, 'Avoid polygons module', 'Avoid polygons module', 2, null, 'modules/avoidPolygon/avoidPolygonModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 
+(1055, 1, 'Transit list module', 'Transit list module', 2, null, 'modules/trs/transitListModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(1056, 1, 'Transit editor module', 'Transit editor module', 2, null, 'modules/trs/transitEditorModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+
 (2000, 1, 'Map launcher Module', 'Map launcher Module', 1, null, 'modules/mapLauncherModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL);
 
 

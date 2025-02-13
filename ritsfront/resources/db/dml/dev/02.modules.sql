@@ -50,8 +50,8 @@ INSERT INTO ui.modules(id, module_type_id, "name", description, default_view_typ
 
 INSERT INTO ui.modules(id, module_type_id, "name", description, default_view_type_id, default_system_permission_id, js_file, js_method_draw, js_method_callbacks, data_query, wss_topic, enabled, visible, autoload, management_areas) VALUES
 (2001, 1, 'Test module 1', 'Test module 1', 1, null, 'modules/test1Module.js', 'getView', 'loadData', NULL, NULL, true, true, NULL, '["ManagementArea:1"]'),
-(2002, 3, 'TestMap', 'TestMap', 1, null, 'modules/testMap.js', 'getView', 'loadData', NULL, NULL, true, true, false, '["ManagementArea:1"]');
---(2003, 1, 'InfractionEditor', 'InfractionEditor', 1, null, 'modules/infractionEditorModule.js', 'getView', 'loadData', NULL, NULL, true, true, false, null);
+(2002, 3, 'TestMap', 'TestMap', 1, null, 'modules/testMap.js', 'getView', 'loadData', NULL, NULL, true, true, false, '["ManagementArea:1"]'),
+(2003, 1, 'InfractionEditor', 'InfractionEditor', 1, null, 'modules/infractionEditorModule.js', 'getView', 'loadData', NULL, NULL, true, true, false, null);
 
 INSERT INTO ui.module_values(module_id, module_param_id, value) VALUES
 (402, 5, 'http://192.168.88.200:3030/d/qQFlxpaZz/detectors?orgId=1&refresh=5s'),
