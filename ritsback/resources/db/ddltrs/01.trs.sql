@@ -30,7 +30,6 @@ DROP TABLE IF EXISTS rt.transits;
 		transit_type_state_id int8 NOT NULL,
 		transit_type_state_option_id int8 NULL,
 		location_id int8 NOT NULL,
-		direction varchar(10) NULL,
 		lane_number int4 NULL,
 		element_type_id int8 NOT NULL,
 		element_id int8 NOT NULL,
@@ -41,6 +40,12 @@ DROP TABLE IF EXISTS rt.transits;
 		speed float8 NULL,
 		distance float8 NULL,
 		assigned_user_id int8 NULL,
+		towards varchar(1000) NULL,
+		address varchar(1000) NULL,
+		locality varchar(100) NULL,
+		road varchar(100) NULL,
+		pk varchar(50) NULL,
+		direction varchar(10) NULL,
 		-- Vehicle info		
 		vehicle_type_id int8 NULL,
 		vehicle_id int8 NULL,
@@ -49,6 +54,7 @@ DROP TABLE IF EXISTS rt.transits;
 		vehicle_class_id int8 NULL,
 		vehicle_country_id int8 NULL,
 		vehicle_plate_number varchar(20) NULL,
+		vehicle_direction bool NULL,
 		vehicle_date_registration timestamptz NULL,
 		vehicle_color varchar(100) NULL,
 		-- Driver info
