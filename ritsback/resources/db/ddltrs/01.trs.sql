@@ -26,6 +26,8 @@ DROP TABLE IF EXISTS rt.transits;
 		transit_type_id int8 NOT NULL,
 		dossier_code varchar(200) NULL,
 		remittance_code varchar(200) NULL,
+		installation_code varchar(200) NULL,
+		detection_point_code varchar(200) NULL,
 		date_transit timestamptz NOT NULL,
 		transit_type_state_id int8 NOT NULL,
 		transit_type_state_option_id int8 NULL,
