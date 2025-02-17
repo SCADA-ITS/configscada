@@ -1,78 +1,214 @@
 {
-    "dataSources": [
-        {
-            "updatePeriodType": "MINUTES",
-            "purgePeriod": 1,
-            "updatePeriods": 1,
-            "polling": true,
-            "type": "VIRTUAL",
-            "enabled": true,
-            "purgeOverride": false,
-            "useCron": false,
-            "xid": "DS_status",
-            "alarmLevels": {
-                "POLL_ABORTED": "URGENT"
+  "dataSources":[
+    {
+      "xid":"DS_{device_name}",
+      "name":"{device_name}",
+      "enabled":true,
+      "type":"TcpIp",
+      "alarmLevels":{
+        "POINT_WRITE_EXCEPTION":"URGENT",
+        "POLL_ABORTED":"URGENT",
+        "DATA_SOURCE_EXCEPTION":"URGENT",
+        "POINT_READ_EXCEPTION":"URGENT"
+      },
+      "purgeType":"YEARS",
+      "updatePeriods":30,
+      "updatePeriodType":"SECONDS",
+      "delimiter":"",
+      "hex":true,
+      "host":"{ip}",
+      "ioLogFileSizeMBytes":1.0,
+      "logIO":false,
+      "maxHistoricalIOLogs":1,
+      "port":3000,
+      "responseBufferSize":20000,
+      "socketRetries":0,
+      "timeout":500,
+      "quantize":false,
+      "useCron":false,
+      "editPermission":"",
+      "purgeOverride":false,
+      "purgePeriod":1
+    },
+    {
+        "updatePeriodType": "MINUTES",
+        "purgePeriod": 1,
+        "updatePeriods": 1,
+        "polling": true,
+        "type": "VIRTUAL",
+        "enabled": true,
+        "purgeOverride": false,
+        "useCron": false,
+        "xid": "DS_status",
+        "alarmLevels": {
+            "POLL_ABORTED": "URGENT"
+        },
+        "name": "status",
+        "quantize": false,
+        "editPermission": "superadmin",
+        "purgeType": "YEARS"
+    }
+  ],
+  "dataPoints":[
+  	{
+        "xid": "DP_{device_name}_status",
+        "name": "status",
+        "enabled": true,
+        "loggingType": "NONE",
+        "intervalLoggingPeriodType": "MINUTES",
+        "intervalLoggingType": "AVERAGE",
+        "purgeType": "YEARS",
+        "pointLocator": {
+            "dataType": "NUMERIC",
+            "changeType": {
+                "type": "NO_CHANGE",
+                "startValue": "1"
             },
-            "name": "status",
-            "quantize": false,
-            "editPermission": "superadmin",
-            "purgeType": "YEARS"
-        }
-    ],
-    "dataPoints": [
-        {
-            "xid": "DP_{device_name}_status",
-            "name": "status",
-            "enabled": true,
-            "loggingType": "NONE",
-            "intervalLoggingPeriodType": "MINUTES",
-            "intervalLoggingType": "AVERAGE",
-            "purgeType": "YEARS",
-            "pointLocator": {
-                "dataType": "NUMERIC",
-                "changeType": {
-                    "type": "NO_CHANGE",
-                    "startValue": "1"
-                },
-                "settable": true
-            },
-            "eventDetectors": [],
-            "plotType": "STEP",
-            "rollup": "NONE",
-            "unit": "",
-            "simplifyType": "NONE",
-            "chartColour": "",
-            "chartRenderer": {
-                "type": "IMAGE",
-                "timePeriodType": "DAYS",
-                "numberOfPeriods": 1
-            },
-            "dataSourceXid": "DS_status",
-            "defaultCacheSize": 1,
-            "deviceName": "{device_name}",
-            "discardExtremeValues": false,
-            "discardHighLimit": 1.7976931348623157E308,
-            "discardLowLimit": -1.7976931348623157E308,
-            "intervalLoggingPeriod": 1,
-            "intervalLoggingSampleWindowSize": 0,
-            "overrideIntervalLoggingSamples": false,
-            "preventSetExtremeValues": false,
-            "purgeOverride": false,
-            "purgePeriod": 1,
-            "readPermission": "",
-            "setExtremeHighLimit": 1.7976931348623157E308,
-            "setExtremeLowLimit": -1.7976931348623157E308,
-            "setPermission": "",
-            "tags": {},
-            "textRenderer": {
-                "type": "ANALOG",
-                "useUnitAsSuffix": false,
-                "suffix": "",
-                "format": "0.00"
-            },
-            "tolerance": 0.0
-        }
-    ],
+            "settable": true
+        },
+        "eventDetectors": [],
+        "plotType": "STEP",
+        "rollup": "NONE",
+        "unit": "",
+        "simplifyType": "NONE",
+        "chartColour": "",
+        "chartRenderer": {
+            "type": "IMAGE",
+            "timePeriodType": "DAYS",
+            "numberOfPeriods": 1
+        },
+        "dataSourceXid": "DS_status",
+        "defaultCacheSize": 1,
+        "deviceName": "{device_name}",
+        "discardExtremeValues": false,
+        "discardHighLimit": 1.7976931348623157E308,
+        "discardLowLimit": -1.7976931348623157E308,
+        "intervalLoggingPeriod": 1,
+        "intervalLoggingSampleWindowSize": 0,
+        "overrideIntervalLoggingSamples": false,
+        "preventSetExtremeValues": false,
+        "purgeOverride": false,
+        "purgePeriod": 1,
+        "readPermission": "",
+        "setExtremeHighLimit": 1.7976931348623157E308,
+        "setExtremeLowLimit": -1.7976931348623157E308,
+        "setPermission": "",
+        "tags": {},
+        "textRenderer": {
+            "type": "ANALOG",
+            "useUnitAsSuffix": false,
+            "suffix": "",
+            "format": "0.00"
+        },
+        "tolerance": 0.0
+    },
+    {
+      "xid":"DP_{device_name}_res_tst_man",
+      "name":"res_tst_man",
+      "enabled":true,
+      "loggingType":"ON_TS_CHANGE",
+      "intervalLoggingPeriodType":"MINUTES",
+      "intervalLoggingType":"INSTANT",
+      "purgeType":"YEARS",
+      "pointLocator":{
+        "dataType":"ALPHANUMERIC",
+        "queryable":true,
+        "readCommand":"0046ffff",
+        "settable":false,
+        "valueIndex":0,
+        "valueRegex":".*",
+        "writeCommand":""
+      },
+      "eventDetectors":[
+      ],
+      "plotType":"STEP",
+      "rollup":"NONE",
+      "unit":"",
+      "simplifyType":"NONE",
+      "chartColour":"",
+      "chartRenderer":{
+        "type":"TABLE",
+        "limit":10
+      },
+      "dataSourceXid":"DS_{device_name}",
+      "defaultCacheSize":1,
+      "deviceName":"{device_name}",
+      "discardExtremeValues":false,
+      "discardHighLimit":1.7976931348623157E308,
+      "discardLowLimit":-1.7976931348623157E308,
+      "intervalLoggingPeriod":1,
+      "intervalLoggingSampleWindowSize":0,
+      "overrideIntervalLoggingSamples":false,
+      "preventSetExtremeValues":false,
+      "purgeOverride":false,
+      "purgePeriod":1,
+      "readPermission":"",
+      "setExtremeHighLimit":1.7976931348623157E308,
+      "setExtremeLowLimit":-1.7976931348623157E308,
+      "setPermission":"",
+      "tags":{
+      },
+      "textRenderer":{
+        "type":"PLAIN",
+        "useUnitAsSuffix":false,
+        "suffix":""
+      },
+      "tolerance":0.0
+    },
+    {
+      "xid":"DP_{device_name}_res_meg_qry",
+      "name":"res_meg_qry",
+      "enabled":true,
+      "loggingType":"ON_TS_CHANGE",
+      "intervalLoggingPeriodType":"MINUTES",
+      "intervalLoggingType":"INSTANT",
+      "purgeType":"YEARS",
+      "pointLocator":{
+        "dataType":"ALPHANUMERIC",
+        "queryable":true,
+        "readCommand":"0055ffff",
+        "settable":false,
+        "valueIndex":0,
+        "valueRegex":".*",
+        "writeCommand":""
+      },
+      "eventDetectors":[
+      ],
+      "plotType":"STEP",
+      "rollup":"NONE",
+      "unit":"",
+      "simplifyType":"NONE",
+      "chartColour":"",
+      "chartRenderer":{
+        "type":"TABLE",
+        "limit":10
+      },
+      "dataSourceXid":"DS_{device_name}",
+      "defaultCacheSize":1,
+      "deviceName":"{device_name}",
+      "discardExtremeValues":false,
+      "discardHighLimit":1.7976931348623157E308,
+      "discardLowLimit":-1.7976931348623157E308,
+      "intervalLoggingPeriod":15,
+      "intervalLoggingSampleWindowSize":0,
+      "overrideIntervalLoggingSamples":false,
+      "preventSetExtremeValues":false,
+      "purgeOverride":false,
+      "purgePeriod":1,
+      "readPermission":"",
+      "setExtremeHighLimit":1.7976931348623157E308,
+      "setExtremeLowLimit":-1.7976931348623157E308,
+      "setPermission":"",
+      "tags":{
+      },
+      "textRenderer":{
+        "type":"PLAIN",
+        "useUnitAsSuffix":false,
+        "suffix":""
+      },
+      "tolerance":0.0
+    }
+  ],
     "publishers": [
         {
             "publishAttributeChanges": true,
@@ -88,6 +224,16 @@
             "enabled": true,
             "url": "{url_publisher}",
             "points": [
+                {
+                    "dataPointId": "DP_{device_name}_res_meg_qry",
+                    "parameterName": "res_meg_qry",
+                    "includeTimestamp": false
+                },
+                {
+                    "dataPointId": "DP_{device_name}_res_tst_man",
+                    "parameterName": "res_tst_man",
+                    "includeTimestamp": false
+                },
                 {
                     "dataPointId": "DP_{device_name}_status",
                     "parameterName": "status",

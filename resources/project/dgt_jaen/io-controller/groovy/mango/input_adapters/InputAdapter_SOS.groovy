@@ -42,7 +42,7 @@ class InputAdapter_SOS {
     static final Integer POS_VOL_SOS_MASTER = 6; //Posición del volumen de salida del poste principal
     static final Integer POS_VOL_SOS_SLAVE = 7; //Posición del volumen de salida del poste secundario
     
-    static final Long[] alarm = [70011L,60011L,50011L,40011L,0,20011L,30011L,0];
+    static final Long[] alarm = [130011L, 120011L, 110011L, 100011L, 0, 20011L, 90011L, 0];
 
     InputAdapter_SOS(org.apache.logging.log4j.Logger log) {
         this.log = log
