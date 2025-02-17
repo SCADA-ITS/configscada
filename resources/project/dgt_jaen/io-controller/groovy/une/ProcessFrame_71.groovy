@@ -14,6 +14,7 @@ import com.revenga.rits.back.data.core.util.ResourcesUtil;
 public class ProcessFrame_71{
 
 	static final Long GR_TXT_PMV = 18L;
+	static final Long GR_TXT_GR_PMV = 22L;
 
 	GroovyShell shell;
 
@@ -32,9 +33,13 @@ public class ProcessFrame_71{
 		try{
 
 			if(element.getElementSubtypeId() == GR_TXT_PMV){
-
 				pmv = shell.parse(new File(ResourcesUtil.getPath("io-controller/groovy/une/pmv_subtypes/dgt/ElementSubtype_18_71.groovy")));
 				pmv.content(element, data, elementValuesToSend, log);
+			
+			}else if(element.getElementSubtypeId() == GR_TXT_GR_PMV){
+				pmv = shell.parse(new File(ResourcesUtil.getPath("io-controller/groovy/une/pmv_subtypes/dgt/ElementSubtype_22_71.groovy")));
+				pmv.content(element, data, elementValuesToSend, log);
+			
 			}else{
 				log.debug("No se encuentra el subtipo del panel")
 			}
@@ -61,6 +66,13 @@ public class ProcessFrame_71{
 
 				frame = result.decodeHex()
 
+			}else if(element.getElementSubtypeId() == GR_TXT_GR_PMV){
+
+				pmv = shell.parse(new File(ResourcesUtil.getPath("io-controller/groovy/une/signallingCommand/SignallingCommand_71_2.groovy")));
+				result = pmv.signalling(element, signallingCommand, log);
+
+				frame = result.decodeHex()
+
 			}else{
 				log.debug("No se encuentra el subtipo del panel")
 			}
@@ -81,17 +93,10 @@ public class ProcessFrame_71{
 		def pmv;
 
 		try{
+			pmv = shell.parse(new File(ResourcesUtil.getPath("io-controller/groovy/une/signallingCommand/SignallingCommand_71_3.groovy")));
+			result = pmv.shutdown(element, signallingCommand, log);
 
-			if(element.getElementSubtypeId() == GR_TXT_PMV){
-
-				pmv = shell.parse(new File(ResourcesUtil.getPath("io-controller/groovy/une/signallingCommand/SignallingCommand_71_3.groovy")));
-				result = pmv.shutdown(element, signallingCommand, log);
-
-				frame = result.decodeHex()
-
-			}else{
-				log.debug("No se encuentra el subtipo del panel")
-			}
+			frame = result.decodeHex()
 
 		}catch(Exception e) {
 			log.debug(e.getMessage());

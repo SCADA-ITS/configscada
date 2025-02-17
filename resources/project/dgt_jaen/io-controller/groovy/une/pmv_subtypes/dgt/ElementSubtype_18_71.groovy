@@ -47,7 +47,7 @@ public void content(Element element, List<Byte> data, List<ElementValue> element
 		elementValuesToSend.add(elementValue);
 	}
 	
-	String result = construirVMS(newData, element, intermitence);
+	String result = construirVMS(newData, element, intermitence, log);
 	
 	if (result == null || result.equals("")){
 		
@@ -71,7 +71,7 @@ public void content(Element element, List<Byte> data, List<ElementValue> element
 
 }
 
-public String construirVMS(byte[] content, Element element, boolean intermitence) {
+public String construirVMS(byte[] content, Element element, boolean intermitence, org.apache.logging.log4j.Logger log) {
 	final String GRAPHIC = "graphic";
 	final String TEXT = "text";
 	final int EST_ALT = 0x33;

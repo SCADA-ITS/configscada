@@ -59,10 +59,17 @@ INSERT INTO static.sm_thresholds
 -- Para el id seguiremos el siguiente criterio:
 -- 1.- Túnel (2 cifras), coincidiendo con el id del fichero
 -- 2.- Orden del umbral (2 cifras)
-(0501, 'Threshold_LUM_2500', 'Threshold_LUM_2500', 'LBL_THRESHOLD_LUM_2500', 'LBL_THRESHOLD_LUM_2500', 3, '2500', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),							-- Soleado > 1000 lux
-(0502, 'Threshold_LUM_1000', 'Threshold_LUM_1000', 'LBL_THRESHOLD_LUM_1000', 'LBL_THRESHOLD_LUM_1000', 3, '1000', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),	-- Crepusuclar < 1000 lux y > 800 lux
-(0503, 'Threshold_LUM_300', 'Threshold_LUM_300', 'LBL_THRESHOLD_LUM_300', 'LBL_THRESHOLD_LUM_300', 3, '300', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),	-- Nublado < 800 lux y > 500 lux
-(0504, 'Threshold_LUM_200', 'Threshold_LUM_200', 'LBL_THRESHOLD_LUM_200', 'LBL_THRESHOLD_LUM_200', 3, '200', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);	-- Nocturno < 500 lux
+
+--Iluminación exterior: 0-200 cd/m2
+--Iluminación nocturno: 0-300 cd/m2
+--Iluminación crepuscular: 300-1000 cd/m2
+--Iluminación nublado: 1000-2500 cd/m2
+--Iluminación refuerzo: 1000-2500 cd/m2
+--Iluminación soleado: >2500 cd/m2
+(0501, 'Threshold_LUM_2500', 'Threshold_LUM_2500', 'LBL_THRESHOLD_LUM_2500', 'LBL_THRESHOLD_LUM_2500', 3, '2500', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(0502, 'Threshold_LUM_1000', 'Threshold_LUM_1000', 'LBL_THRESHOLD_LUM_1000', 'LBL_THRESHOLD_LUM_1000', 3, '1000', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(0503, 'Threshold_LUM_300', 'Threshold_LUM_300', 'LBL_THRESHOLD_LUM_300', 'LBL_THRESHOLD_LUM_300', 3, '300', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(0504, 'Threshold_LUM_200', 'Threshold_LUM_200', 'LBL_THRESHOLD_LUM_200', 'LBL_THRESHOLD_LUM_200', 3, '200', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO static.sm_conditions
 (condition_id, threshold_operation_id, threshold_val1_id, threshold_val2_id, element_type_id, element_type_param_id, param_type_id, timer_id, enabled, visible, created_at, updated_at)VALUES
