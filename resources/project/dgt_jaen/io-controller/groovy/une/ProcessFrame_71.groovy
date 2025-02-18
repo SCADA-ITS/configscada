@@ -58,24 +58,11 @@ public class ProcessFrame_71{
 		def pmv;
 
 		try{
+			pmv = shell.parse(new File(ResourcesUtil.getPath("io-controller/groovy/une/signallingCommand/SignallingCommand_71_2.groovy")));
 
-			if(element.getElementSubtypeId() == GR_TXT_PMV){
+			result = pmv.sendMessage(element, signallingCommand, log);
 
-				pmv = shell.parse(new File(ResourcesUtil.getPath("io-controller/groovy/une/signallingCommand/SignallingCommand_71_2.groovy")));
-				result = pmv.signalling(element, signallingCommand, log);
-
-				frame = result.decodeHex()
-
-			}else if(element.getElementSubtypeId() == GR_TXT_GR_PMV){
-
-				pmv = shell.parse(new File(ResourcesUtil.getPath("io-controller/groovy/une/signallingCommand/SignallingCommand_71_2.groovy")));
-				result = pmv.signalling(element, signallingCommand, log);
-
-				frame = result.decodeHex()
-
-			}else{
-				log.debug("No se encuentra el subtipo del panel")
-			}
+			frame = result.decodeHex()
 
 		}catch(Exception e) {
 			log.debug(e.getMessage());
@@ -94,7 +81,7 @@ public class ProcessFrame_71{
 
 		try{
 			pmv = shell.parse(new File(ResourcesUtil.getPath("io-controller/groovy/une/signallingCommand/SignallingCommand_71_3.groovy")));
-			result = pmv.shutdown(element, signallingCommand, log);
+			result = pmv.shutdown(element, signallingCommand);
 
 			frame = result.decodeHex()
 

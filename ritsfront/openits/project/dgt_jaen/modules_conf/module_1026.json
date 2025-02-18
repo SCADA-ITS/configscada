@@ -111,9 +111,9 @@
 			"configBlinking": false,
 			"defaultFlashingOnMs":1000,
 			"defaultFlashingOffMs":1000,
-			"textColor": true,
+			"textColor": false,
 			"defaultTextColor": "#FFBF00",
-			"textAlign": true
+			"textAlign": false
 		},
 		{
 			"id": "ElementSubtype:22:71",
@@ -130,7 +130,7 @@
 			"configBlinking": false,
 			"defaultFlashingOnMs":1000,
 			"defaultFlashingOffMs":1000,
-			"textColor": true,
+			"textColor": false,
 			"defaultTextColor": "#FFBF00",
 			"textAlign": false
 		},

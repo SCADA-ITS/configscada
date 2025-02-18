@@ -8,7 +8,7 @@ DELETE FROM conf.io_controller_modules;
 INSERT INTO conf.io_controller_modules
 (module_type_id, module_id, alias, description, enabled, visible, created_at, updated_at)VALUES
 (1, 1, 'MANGO', 'MANGO', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(4, 1, ' METEO_SOCKET_UNE', 'METEO_SOCKET_UNE', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(4, 1, 'SOCKET_UNE', 'SOCKET_UNE', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 
 -- 
