@@ -18,7 +18,7 @@
 			<p:merge_wait_time>1</p:merge_wait_time>
 			<p:manager_class>com.revenga.rits.back.transit.manager.transit.recovery.une199121.TransitRecoveryUne199121Executor</p:manager_class>
 			<p:executor_params>
-				<p:executor_param_value>cron_job=recoveryUne199121_4Transits;0 * * * * ?;60;/home/agomez/radar</p:executor_param_value>
+				<p:executor_param_value>cron_job=recoveryUne199121_4Transits;0 * * * * ?;3;secring.gpg;YtkdWrfU8VF/yiQcHNsVzw==</p:executor_param_value>
 				<p:executor_param_value>elementType=99</p:executor_param_value>
 			</p:executor_params>
 		</p:executor>

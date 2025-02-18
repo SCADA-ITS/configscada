@@ -223,6 +223,7 @@ DROP TABLE IF EXISTS master.countries;
 	CREATE TABLE static.vehicle_classes (
 		vehicle_class_id int8 NOT NULL,
 		alias varchar(100) NOT NULL,
+		label_alias varchar(100) NULL,
 		enabled bool NULL,
 		visible bool NULL,
 		created_at timestamptz NOT NULL,

@@ -22,7 +22,7 @@ DROP TABLE IF EXISTS rt.transits;
 	CREATE TABLE rt.transits (
 		-- Transit info
 		transit_id int8 NOT null,
-		transit_code varchar(200) NULL,
+		transit_code varchar(200) NOT NULL,
 		transit_type_id int8 NOT NULL,
 		dossier_code varchar(200) NULL,
 		remittance_code varchar(200) NULL,
@@ -31,7 +31,7 @@ DROP TABLE IF EXISTS rt.transits;
 		date_transit timestamptz NOT NULL,
 		transit_type_state_id int8 NOT NULL,
 		transit_type_state_option_id int8 NULL,
-		location_id int8 NOT NULL,
+		location_id int8 NULL,
 		lane_number int4 NULL,
 		element_type_id int8 NOT NULL,
 		element_id int8 NOT NULL,
@@ -66,7 +66,7 @@ DROP TABLE IF EXISTS rt.transits;
 		driver_license_value varchar(200) NULL,
 		driver_license_issue_date timestamptz NULL,
 		driver_license_expire_date timestamptz NULL,
-		driver_name varchar(100) NOT NULL,
+		driver_name varchar(100) NULL,
 		driver_surname varchar(300) NULL,
 		driver_gender varchar(1) NULL,
 		driver_date_of_birth timestamptz NULL,
