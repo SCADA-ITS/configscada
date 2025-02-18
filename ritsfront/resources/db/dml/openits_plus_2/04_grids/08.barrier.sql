@@ -7,7 +7,7 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (080002, 8, 1, 2, true, false, false, true, 'LBL_GRID_FIELD_NAME', 'LBL_GRID_FIELD_NAME', 'alias', false, false, NULL, false, false, 150, NULL, true, true, NULL, NULL, true, NULL, NULL),
 (080003, 8, 1, 3, true, false, false, false, 'LBL_GRID_FIELD_DESCRIPTION', 'LBL_GRID_FIELD_DESCRIPTION', 'description', false, false, NULL, false, false, 150, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
 (080004, 8, 1, 4, true, true, false, false, NULL, NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
-(080005, 8, 1, 5, true, true, false, true, 'LBL_GRID_FIELD_STATE_LABEL', 'LBL_GRID_FIELD_STATE_LABEL', 'stateLabel', false, false, NULL, true, false, 150, NULL, true, true, NULL, NULL, NULL, true, NULL),
+(080005, 8, 1, 5, true, true, false, true, 'LBL_GRID_FIELD_STATE_LABEL', 'LBL_GRID_FIELD_STATE_LABEL', 'stateLabel', false, false, NULL, true, false, 150, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
 (080006, 8, 1, 6, true, false, false, false, 'LBL_BAR_CMD', 'LBL_BAR_CMD', 'ElementTypeParam:8:2:1', false, false, 'left', true, false, 200, NULL, true, true, NULL, NULL, NULL, NULL, NULL);
 
 INSERT INTO ui.grid_option_values(grid_id, grid_option_id, value) VALUES
@@ -41,5 +41,7 @@ INSERT INTO ui.grid_field_icons(grid_field_id, icon, value, show_value, badge_co
 
 INSERT INTO ui.grid_field_replacements(grid_field_id, "label", value, enabled) VALUES
 --Barrera
-(080006, 'LBL_GRID_FR_SUBIDA', '1', true),
-(080006, 'LBL_GRID_FR_BAJADA', '2', true);
+(080006, 'LBL_GRID_FIELD_REPLACEMENTS_UP', '1', true),
+(080006, 'LBL_GRID_FIELD_REPLACEMENTS_0', '0', true),
+(080006, 'LBL_GRID_FIELD_REPLACEMENTS_DOWN', '2', true);
+
