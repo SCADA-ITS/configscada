@@ -42,8 +42,6 @@ INSERT INTO conf.io_controller_module_values
 (1, 1, 28, '0 0/1 * 1/1 * ? *', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (1, 1, 29, '/users/current', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (1, 1, 30, 'GET', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(1, 1, 31, '/data-points', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(1, 1, 32, 'GET', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 (4, 1, 1, 'ElementTypeParam:1:1:4001', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (4, 1, 2, 'ElementTypeParam:1:1:4002', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
