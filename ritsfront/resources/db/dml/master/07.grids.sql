@@ -31,7 +31,8 @@ INSERT INTO ui.grid_field_data_types(id, name, format, description) VALUES
 (1, 'string', NULL, 'string'),
 (2, 'int', NULL, 'int'),
 (3, 'decimal', NULL, 'decimal'),
-(4, 'date', NULL, 'date');
+(4, 'date', NULL, 'date'),
+(5, 'image', NULL, 'image');
 
 INSERT INTO ui.grids(id, adapter_id, "label", enabled, visible) VALUES
 (1000, 3, 'LBL_GRID_FIELD_USERS', true, true),
@@ -53,7 +54,8 @@ INSERT INTO ui.grids(id, adapter_id, "label", enabled, visible) VALUES
 (1022, 11, 'LBL_GRID_PLAN_MONITOR', true, true),
 (1023, 2, 'LBL_GRID_TRAVEL_TIMES', true, true),
 (1026, 12, 'LBL_GRID_EQUIPMENT_EDITOR', true, true),
-(1051, 13, 'LBL_GRID_DELAYED_INCIDENTS', true, true);
+(1051, 13, 'LBL_GRID_DELAYED_INCIDENTS', true, true),
+(1052, null, 'LBL_GRID_TRANSITS', true, true);
 
 
 INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", required, parameterized, extended, filtered, "label", label_tooltip, source_field, is_pk, is_epoch_milli, align, needs_translation, grouping_summary, width_px, grid_field_group_operation_id, enabled, visible, adjust, header_vertical, fixed_column, replacement_function, precision_filter) VALUES
@@ -235,7 +237,19 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (105107, 1051, 1, 7, true, false, true, false, 'LBL_GRID_FIELD_LOCATION', 'LBL_GRID_FIELD_LOCATION', 'locationAlias', false, false, NULL, false, false, 150, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
 (105108, 1051, 1, 8, true, false, false, false, 'LBL_GRID_FIELD_INCIDENT_STATE_LAVEL_ALIAS', 'LBL_GRID_FIELD_INCIDENT_STATE_LAVEL_ALIAS', 'delayedIncidentStateLabelAlias', false, false, NULL, true, false, 150, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
 (105109, 1051, 1, 9, true, false, false, false, 'LBL_GRID_FIELD_CRONEXPRESION', 'LBL_GRID_FIELD_CRONEXPRESION', 'cronExpression', false, false, NULL, true, false, 250, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
-(105110, 1051, 1, 10, true, false, false, false, 'LBL_GRID_FIELD_NEXT_EXEC', 'LBL_GRID_FIELD_NEXT_EXEC', 'cronExpression', false, false, NULL, false, false, 175, NULL, true, true, NULL, NULL, NULL, 'getNextExec', NULL);
+(105110, 1051, 1, 10, true, false, false, false, 'LBL_GRID_FIELD_NEXT_EXEC', 'LBL_GRID_FIELD_NEXT_EXEC', 'cronExpression', false, false, NULL, false, false, 175, NULL, true, true, NULL, NULL, NULL, 'getNextExec', NULL),
+--INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", required, parameterized, extended, filtered, "label", label_tooltip, source_field, is_pk, is_epoch_milli, align, needs_translation, grouping_summary, width_px, grid_field_group_operation_id, enabled, visible, adjust, header_vertical, fixed_column, replacement_function, precision_filter) VALUES
+(105201, 1052, 1, 1, true, false, false, false, 'LBL_GRID_FIELD_ID', 'LBL_GRID_FIELD_ID', 'id', true, false, NULL, false, false, 100, NULL, true, false, NULL, NULL, NULL, NULL, NULL),
+(105202, 1052, 2, 2, true, false, false, false, 'LBL_GRID_FIELD_TRANSIT_ID', 'LBL_GRID_FIELD_TRANSIT_ID', 'id', false, true, true, false, false, 150, NULL, true, false, NULL, NULL, NULL, 'getSimpleId', NULL),
+(105203, 1052, 1, 3, true, false, false, false, 'LBL_GRID_FIELD_TRANSIT_CODE', 'LBL_GRID_FIELD_TRANSIT_CODE', 'transitCode', false, false, true, false, false, 300, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(105204, 1052, 4, 4, true, false, false, false, 'LBL_GRID_FIELD_TRANSIT_DATE', 'LBL_GRID_FIELD_TRANSIT_DATE', 'dateTransit', false, true, true, false, false, 165, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(105205, 1052, 1, 5, true, false, false, false, NULL, NULL, 'transitTypeState.id', false, false, null, false, false, 40, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(105206, 1052, 1, 6, true, false, false, false, 'LBL_GRID_FIELD_TRANSIT_TYPE_STATE', 'LBL_GRID_FIELD_TRANSIT_TYPE_STATE', 'transitTypeState.labelAlias', false, false, true, true, false, 175, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(105207, 1052, 1, 7, true, false, false, false, 'LBL_GRID_FIELD_TRANSIT_VEHICLE_PLATE_NUMBER', 'LBL_GRID_FIELD_TRANSIT_VEHICLE_PLATE_NUMBER', 'vehiclePlateNumber', false, false, true, false, false, 120, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(105208, 1052, 5, 8, true, false, false, false, NULL, NULL, 'element.elementType.elementTypePhoto', false, false, true, false, false, 40, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(105209, 1052, 1, 9, true, false, false, false, 'LBL_GRID_FIELD_TRANSIT_ELEMENT_TYPE', 'LBL_GRID_FIELD_TRANSIT__ELEMENT_TYPE', 'element.elementType.labelAlias', false, false, true, true, false, 150, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(105210, 1052, 1, 10, true, false, false, false, 'LBL_GRID_FIELD_TRANSIT_EQUIPMENT', 'LBL_GRID_FIELD_TRANSIT_EQUIPMENT', 'element.alias', false, false, true, false, false, 150, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(105211, 1052, 3, 11, true, false, false, false, 'LBL_GRID_FIELD_TRANSIT_SPEED', 'LBL_GRID_FIELD_TRANSIT_SPEED', 'speed', false, false, true, false, false, 75, NULL, true, true, NULL, NULL, NULL, NULL, 2);
 
 
 INSERT INTO ui.grid_option_values(grid_id, grid_option_id, value) VALUES
@@ -572,7 +586,32 @@ INSERT INTO ui.grid_option_values(grid_id, grid_option_id, value) VALUES
 (1051, 21, NULL),
 (1051, 22, NULL),
 (1051, 25, 'true'),
-(1051, 26, 'true');
+(1051, 26, 'true'),
+
+(1052, 1, 'true'),
+(1052, 2, 'true'),
+(1052, 3, '105204'),
+(1052, 4, 'desc'),
+(1052, 5, NULL),
+(1052, 6, NULL),
+(1052, 7, 'false'),
+(1052, 8, 'false'),
+(1052, 9, 'false'),
+(1052, 10, 'true'),
+(1052, 11, 'true'),
+(1052, 12, 'true'),
+(1052, 13, 'true'),
+(1052, 14, 'false'),
+(1052, 15, 'false'),
+(1052, 16, 'img/grid/default.png'),
+(1052, 17, 'true'),
+(1052, 18, NULL),
+(1052, 19, NULL),
+(1052, 20, 'true'),
+(1052, 21, NULL),
+(1052, 22, NULL),
+(1052, 25, 'true'),
+(1052, 26, 'true');
 
 INSERT INTO ui.grid_commands(grid_id, "position", "label", icon, "default", module_action_id, args, view_type_id, multiselect, show_text, item_required, grouped, unselect_all_after) VALUES
 (1000, 1, 'LBL_CMD_ADD', 'mdi mdi-plus', false, 101101, null, 2, false, false, false, null, null),

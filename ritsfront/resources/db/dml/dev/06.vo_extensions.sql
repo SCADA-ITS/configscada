@@ -80,6 +80,7 @@ INSERT INTO ui.vo_entities(id, vo_entity_type_id, enabled, visible) VALUES
 ('ElementType:85', 'ElementTypeUI', true, true),
 ('ElementType:96', 'ElementTypeUI', true, true),
 ('ElementType:98', 'ElementTypeUI', true, true),
+('ElementType:99', 'ElementTypeUI', true, true),
 ('ElementType:1000', 'ElementTypeUI', true, true),
 
 ('Location:1', 'LocationUI', true, true),
@@ -225,12 +226,12 @@ INSERT INTO ui.vo_entities(id, vo_entity_type_id, enabled, visible) VALUES
 INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 ('ElementType:1', 1, '3'),
 ('ElementType:1', 2, 'element_type_1.svg'),
-('ElementType:1', 14, 'grid/element_type_1.png'),
+('ElementType:1', 14, 'grid/element_type_01.png'),
 ('ElementType:1', 23, '101901'),
 
 ('ElementType:2', 1, '4'),
 ('ElementType:2', 2, 'element_type_2.svg'),
-('ElementType:2', 14, 'grid/element_type_2.png'),
+('ElementType:2', 14, 'grid/element_type_02.png'),
 ('ElementType:2', 23, '101901'),
 ('ElementType:2', 32, 'http://192.168.88.200:3030/d/qQFlxpaZz/detectors?orgId=1&refresh=5s'),
 
@@ -410,6 +411,13 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 ('ElementType:96', 23, '103002'),
 
 ('ElementType:98', 72, 'true'),
+
+('ElementType:99', 1, '99'),
+('ElementType:99', 2, '02_camera_sanctioning2.svg'),
+('ElementType:99', 14, 'grid/element_type_99.png'),
+('ElementType:99', 68, 'radar.png'),
+('ElementType:99', 71, '[99]'),
+
 ('ElementType:1000', 72, 'true'),
 
 ('AlarmLevel:1', 8, 'false'),

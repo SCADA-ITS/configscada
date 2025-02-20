@@ -126,7 +126,7 @@ INSERT INTO ui.modules(id, module_type_id, "name", description, default_view_typ
 (1053, 1, 'Routes editor module', 'Routes editor module', 2, null, 'modules/route/routeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 (1054, 1, 'Avoid polygons module', 'Avoid polygons module', 2, null, 'modules/avoidPolygon/avoidPolygonModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 
-(1055, 1, 'Transit list module', 'Transit list module', 2, null, 'modules/trs/transitListModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(1055, 1, 'Transit list module', 'Transit list module', 1, null, 'modules/trs/transitListModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 (1056, 1, 'Transit editor module', 'Transit editor module', 2, null, 'modules/trs/transitEditorModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 
 (2000, 1, 'Map launcher Module', 'Map launcher Module', 1, null, 'modules/mapLauncherModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL);
@@ -638,5 +638,11 @@ INSERT INTO ui.window_values(module_id, window_param_id, value) VALUES
 (1052, 10, 'img/module/default.png'),
 (1052, 11, '#464646'),
 (1052, 12, 'LBL_DELAYED_INCIDENT'),
-(1052, 14, 'false');
+(1052, 14, 'false'),
+
+(1055, 8, 'true'),
+(1055, 10, 'img/module/default.png'),
+(1055, 11, '#464646'),
+(1055, 12, 'LBL_TRANSIT_LIST'),
+(1055, 14, 'true');
 
