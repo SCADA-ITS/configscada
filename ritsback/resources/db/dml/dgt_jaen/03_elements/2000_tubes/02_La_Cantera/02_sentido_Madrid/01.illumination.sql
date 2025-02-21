@@ -3,38 +3,7 @@ INSERT INTO conf.element_values
 --Iluminación La Cantera sentido Madrid
 (2000, 2, 1, 3,
 '{
-	"regimes": [{
-			"id": 1,
-			"alias": "EMERGENCIA",
-			"description": "Régimen de emergencia para el tubo de Sentido Madrid",
-			"labelAlias": "LBL_EMERGENCIA",
-			"documentUrl": "",
-			"configs": [{
-				"id": 1,
-				"commands": [
-                    {
-                        "commandElementTypeId": "CommandElementType:2:84",
-                        "elementId": "Element:84:19"
-                    },
-					{
-                        "commandElementTypeId": "CommandElementType:2:84",
-                        "elementId": "Element:84:20"
-                    },
-					{
-                        "commandElementTypeId": "CommandElementType:2:84",
-                        "elementId": "Element:84:21"
-                    },
-					{
-                        "commandElementTypeId": "CommandElementType:2:84",
-                        "elementId": "Element:84:22"
-                    },
-					{
-                        "commandElementTypeId": "CommandElementType:2:84",
-                        "elementId": "Element:84:23"
-                    }
-				]	
-			}]
-		},
+	"regimes": [
 		{
 			"id": 2,
 			"alias": "SOLEADO",
@@ -205,10 +174,6 @@ INSERT INTO conf.element_values
 			"stateMachineId": 301,
 			"changeCurrentRegime": false,
 			"smConfigsRegimes": [
-				{
-					"regimeId": 1,
-					"stateIds": [2,3,4,6]	
-				},
 				{
 					"regimeId": 2,
 					"stateIds": [2]	

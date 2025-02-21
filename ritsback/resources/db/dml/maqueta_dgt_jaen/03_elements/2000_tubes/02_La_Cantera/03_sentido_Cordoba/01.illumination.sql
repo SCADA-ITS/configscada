@@ -3,38 +3,7 @@ INSERT INTO conf.element_values
 --Iluminación La Cantera sentido Córdoba
 (2000, 2, 1, 4,
 '{
-	"regimes": [{
-			"id": 1,
-			"alias": "EMERGENCIA",
-			"description": "Régimen soleado para el tubo de Sentido Córdoba",
-			"labelAlias": "LBL_EMERGENCIA",
-			"documentUrl": "",
-			"configs": [{
-				"id": 1,
-				"commands": [
-                    {
-                        "commandElementTypeId": "CommandElementType:2:84",
-                        "elementId": "Element:84:24"
-                    },
-					{
-                        "commandElementTypeId": "CommandElementType:2:84",
-                        "elementId": "Element:84:25"
-                    },
-					{
-                        "commandElementTypeId": "CommandElementType:2:84",
-                        "elementId": "Element:84:26"
-                    },
-					{
-                        "commandElementTypeId": "CommandElementType:2:84",
-                        "elementId": "Element:84:27"
-                    },
-					{
-                        "commandElementTypeId": "CommandElementType:2:84",
-                        "elementId": "Element:84:28"
-                    }
-				]	
-			}]
-		},
+	"regimes": [
 		{
 			"id": 2,
 			"alias": "SOLEADO",
@@ -205,10 +174,6 @@ INSERT INTO conf.element_values
 			"stateMachineId": 401,
 			"changeCurrentRegime": false,
 			"smConfigsRegimes": [
-				{
-					"regimeId": 1,
-					"stateIds": [2,3,4,6]	
-				},
 				{
 					"regimeId": 2,
 					"stateIds": [2]	

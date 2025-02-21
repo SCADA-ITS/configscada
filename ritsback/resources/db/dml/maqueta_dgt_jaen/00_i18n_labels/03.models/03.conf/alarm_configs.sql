@@ -17,6 +17,7 @@ Update master.i18n_labels
 set "translation" = 'Lack of grid power'
 where "label" = 'LBL_ALARM_CONFIGS_ALARM_SAI_ALARM_COMMUNICATIONS_LOST' and locale_code = 'en_GB';
 
+
 INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) VALUES
 --es_ES
 --Element:9 -> jetfan

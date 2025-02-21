@@ -14,6 +14,7 @@ import com.revenga.rits.back.equipment.manager.service.EntitiesManager;
 class SendValuesToIllumination {
 
 	org.apache.logging.log4j.Logger log;
+	final Long ELEMENT_TYPE_CIRCUIT = 84L;
 	final long ELEMENT_TYPE_PARAM_LUMINOSITY = 2L;
 	final List<Long> elementTypeParamIdList = Collections.unmodifiableList(Arrays.asList(ELEMENT_TYPE_PARAM_LUMINOSITY));
 	
@@ -42,6 +43,14 @@ class SendValuesToIllumination {
 				}
 				
                 EntitiesManager.getInstance().sendElementValuesToIllumination(values);
+
+				if(element.elementTypeId == ELEMENT_TYPE_CIRCUIT){
+					values = EntitiesManager.instance.getElementValues(ELEMENT_TYPE_CIRCUIT, element.id)
+				}
+
+				element.setElementValues(values);
+				
+				GroovyHelper.sendElementToHistoriclManager(element);
 			}
 			
             return true;

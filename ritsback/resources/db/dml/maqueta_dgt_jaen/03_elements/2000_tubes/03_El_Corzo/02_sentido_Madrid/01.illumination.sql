@@ -3,38 +3,7 @@ INSERT INTO conf.element_values
 --Iluminación El Corzo sentido Madrid
 (2000, 2, 1, 5,
 '{
-	"regimes": [{
-			"id": 1,
-			"alias": "EMERGENCIA",
-			"description": "Régimen soleado para el tubo de Sentido Madrid",
-			"labelAlias": "LBL_EMERGENCIA",
-			"documentUrl": "",
-			"configs": [{
-				"id": 1,
-				"commands": [
-                    {
-                        "commandElementTypeId": "CommandElementType:2:84",
-                        "elementId": "Element:84:29"
-                    },
-					{
-                        "commandElementTypeId": "CommandElementType:2:84",
-                        "elementId": "Element:84:30"
-                    },
-					{
-                        "commandElementTypeId": "CommandElementType:2:84",
-                        "elementId": "Element:84:31"
-                    },
-					{
-                        "commandElementTypeId": "CommandElementType:2:84",
-                        "elementId": "Element:84:32"
-                    },
-					{
-                        "commandElementTypeId": "CommandElementType:2:84",
-                        "elementId": "Element:84:33"
-                    }
-				]	
-			}]
-		},
+	"regimes": [
 		{
 			"id": 2,
 			"alias": "SOLEADO",
@@ -205,10 +174,6 @@ INSERT INTO conf.element_values
 			"stateMachineId": 501,
 			"changeCurrentRegime": false,
 			"smConfigsRegimes": [
-				{
-					"regimeId": 1,
-					"stateIds": [2,3,4,6]	
-				},
 				{
 					"regimeId": 2,
 					"stateIds": [2]	

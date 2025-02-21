@@ -3,54 +3,7 @@ INSERT INTO conf.element_values
 --Iluminación Despeñaperros sentido Madrid
 (2000, 2, 1, 1,
 '{
-	"regimes": [{
-			"id": 1,
-			"alias": "EMERGENCIA",
-			"description": "Régimen de emergencia para el tubo de Sentido Madrid",
-			"labelAlias": "LBL_EMERGENCIA",
-			"documentUrl": "",
-			"configs": [{
-				"id": 1,
-				"commands": [
-					{
-                        "commandElementTypeId": "CommandElementType:2:84",
-                        "elementId": "Element:84:6"
-                    },
-					{
-                        "commandElementTypeId": "CommandElementType:2:84",
-                        "elementId": "Element:84:7"
-                    },
-					{
-                        "commandElementTypeId": "CommandElementType:2:84",
-                        "elementId": "Element:84:8"
-                    },
-					{
-                        "commandElementTypeId": "CommandElementType:2:84",
-                        "elementId": "Element:84:9"
-                    },
-					{
-                        "commandElementTypeId": "CommandElementType:2:84",
-                        "elementId": "Element:84:10"
-                    },
-					{
-                        "commandElementTypeId": "CommandElementType:2:84",
-                        "elementId": "Element:84:11"
-                    },
-					{
-                        "commandElementTypeId": "CommandElementType:2:84",
-                        "elementId": "Element:84:12"
-                    },
-					{
-                        "commandElementTypeId": "CommandElementType:2:84",
-                        "elementId": "Element:84:13"
-                    },
-					{
-                        "commandElementTypeId": "CommandElementType:2:84",
-                        "elementId": "Element:84:14"
-                    }
-				]	
-			}]
-		},
+	"regimes": [
 		{
 			"id": 2,
 			"alias": "SOLEADO",
@@ -125,7 +78,7 @@ INSERT INTO conf.element_values
                         "elementId": "Element:84:8"
                     },
 					{
-                        "commandElementTypeId": "CommandElementType:1:84",
+                        "commandElementTypeId": "CommandElementType:2:84",
                         "elementId": "Element:84:9"
                     },
 					{
@@ -301,10 +254,6 @@ INSERT INTO conf.element_values
 			"stateMachineId": 101,
 			"changeCurrentRegime": false,
 			"smConfigsRegimes": [
-				{
-					"regimeId": 1,
-					"stateIds": [2,3,4,6]	
-				},
 				{
 					"regimeId": 2,
 					"stateIds": [2]	
