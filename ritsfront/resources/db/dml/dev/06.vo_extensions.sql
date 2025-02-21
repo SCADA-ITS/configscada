@@ -220,8 +220,12 @@ INSERT INTO ui.vo_entities(id, vo_entity_type_id, enabled, visible) VALUES
 ('ExtEntitySubtype:9003', 'ExtEntitySubtypeUI', true, true),
 ('ExtEntitySubtype:9004', 'ExtEntitySubtypeUI', true, true),
 ('ExtEntitySubtype:9005', 'ExtEntitySubtypeUI', true, true),
-('ExtEntitySubtype:9006', 'ExtEntitySubtypeUI', true, true);
+('ExtEntitySubtype:9006', 'ExtEntitySubtypeUI', true, true),
 
+('TransitTypeState:1', 'TransitTypeStateUI', true, true),
+('TransitTypeState:2', 'TransitTypeStateUI', true, true),
+('TransitTypeState:3', 'TransitTypeStateUI', true, true),
+('TransitTypeState:4', 'TransitTypeStateUI', true, true);
 
 INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 ('ElementType:1', 1, '3'),
@@ -604,7 +608,12 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 ('ExtEntitySubtype:9003', 73, '#FFBC00'),
 ('ExtEntitySubtype:9004', 73, '#FF8000'),
 ('ExtEntitySubtype:9005', 73, '#FF0000'),
-('ExtEntitySubtype:9006', 73, '#4E0E00');
+('ExtEntitySubtype:9006', 73, '#4E0E00'),
+
+('TransitTypeState:1', 78, 'transit_type_state/IN.png'),
+('TransitTypeState:2', 78, 'transit_type_state/PT.png'),
+('TransitTypeState:3', 78, 'transit_type_state/EN.png'),
+('TransitTypeState:4', 78, 'transit_type_state/CA.png');
 
 
 INSERT INTO ui.vo_enum_types(id, alias, description, enabled, visible) VALUES

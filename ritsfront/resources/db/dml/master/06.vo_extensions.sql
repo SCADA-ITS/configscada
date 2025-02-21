@@ -20,7 +20,8 @@ INSERT INTO ui.vo_entity_types(id, alias, description, enabled, visible) values
 ('ExtEntityUI', 'ExtEntityUI', 'ExtEntityUI', true, true),
 ('ExtEntityTypeUI', 'ExtEntityTypeUI', 'ExtEntityTypeUI', true, true),
 ('ExtEntitySubtypeUI', 'ExtEntitySubtypeUI', 'ExtEntitySubtypeUI', true, true),
-('RouteUI', 'RouteUI', 'RouteUI', true, true);
+('RouteUI', 'RouteUI', 'RouteUI', true, true),
+('TransitTypeStateUI', 'TransitTypeStateUI', 'TransitTypeStateUI', true, true);
 
 
 
@@ -98,7 +99,8 @@ INSERT INTO ui.vo_entity_fields (id, vo_entity_type_id, field, description, labe
 (74, 'ElementUI', 'searchZoom', 'Zoom level to search item', 'LBL_SEARCH_ZOOM', 'LBL_SEARCH_ZOOM_DESCRIPTION', true, true),
 (75, 'ImsIncidentTypeUI', 'searchZoom', 'Zoom level to search item', 'LBL_SEARCH_ZOOM', 'LBL_SEARCH_ZOOM_DESCRIPTION', true, true),
 (76, 'ExtEntityUI', 'searchZoom', 'Zoom level to search item', 'LBL_SEARCH_ZOOM', 'LBL_SEARCH_ZOOM_DESCRIPTION', true, true),
-(77, 'RouteUI', 'searchZoom', 'Zoom level to search item', 'LBL_SEARCH_ZOOM', 'LBL_SEARCH_ZOOM_DESCRIPTION', true, true);
+(77, 'RouteUI', 'searchZoom', 'Zoom level to search item', 'LBL_SEARCH_ZOOM', 'LBL_SEARCH_ZOOM_DESCRIPTION', true, true),
+(78, 'TransitTypeStateUI', 'icon', 'Icon for Transit Type State', 'LBL_TRANSIT_TYPE_STATE_ICON', 'LBL_TRANSIT_TYPE_STATE_ICON_DESCRIPTION', true, true);
 
 
 

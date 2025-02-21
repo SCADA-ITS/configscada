@@ -243,13 +243,15 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (105202, 1052, 2, 2, true, false, false, false, 'LBL_GRID_FIELD_TRANSIT_ID', 'LBL_GRID_FIELD_TRANSIT_ID', 'id', false, true, true, false, false, 150, NULL, true, false, NULL, NULL, NULL, 'getSimpleId', NULL),
 (105203, 1052, 1, 3, true, false, false, false, 'LBL_GRID_FIELD_TRANSIT_CODE', 'LBL_GRID_FIELD_TRANSIT_CODE', 'transitCode', false, false, true, false, false, 300, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
 (105204, 1052, 4, 4, true, false, false, false, 'LBL_GRID_FIELD_TRANSIT_DATE', 'LBL_GRID_FIELD_TRANSIT_DATE', 'dateTransit', false, true, true, false, false, 165, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
-(105205, 1052, 1, 5, true, false, false, false, NULL, NULL, 'transitTypeState.id', false, false, null, false, false, 40, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
-(105206, 1052, 1, 6, true, false, false, false, 'LBL_GRID_FIELD_TRANSIT_TYPE_STATE', 'LBL_GRID_FIELD_TRANSIT_TYPE_STATE', 'transitTypeState.labelAlias', false, false, true, true, false, 175, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
-(105207, 1052, 1, 7, true, false, false, false, 'LBL_GRID_FIELD_TRANSIT_VEHICLE_PLATE_NUMBER', 'LBL_GRID_FIELD_TRANSIT_VEHICLE_PLATE_NUMBER', 'vehiclePlateNumber', false, false, true, false, false, 120, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
-(105208, 1052, 5, 8, true, false, false, false, NULL, NULL, 'element.elementType.elementTypePhoto', false, false, true, false, false, 40, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
-(105209, 1052, 1, 9, true, false, false, false, 'LBL_GRID_FIELD_TRANSIT_ELEMENT_TYPE', 'LBL_GRID_FIELD_TRANSIT__ELEMENT_TYPE', 'element.elementType.labelAlias', false, false, true, true, false, 150, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
-(105210, 1052, 1, 10, true, false, false, false, 'LBL_GRID_FIELD_TRANSIT_EQUIPMENT', 'LBL_GRID_FIELD_TRANSIT_EQUIPMENT', 'element.alias', false, false, true, false, false, 150, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
-(105211, 1052, 3, 11, true, false, false, false, 'LBL_GRID_FIELD_TRANSIT_SPEED', 'LBL_GRID_FIELD_TRANSIT_SPEED', 'speed', false, false, true, false, false, 75, NULL, true, true, NULL, NULL, NULL, NULL, 2);
+--(105205, 1052, 1, 5, true, false, false, false, NULL, NULL, 'transitTypeState.id', false, false, null, false, false, 40, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(105205, 1052, 5, 5, true, false, false, false, NULL, NULL, 'transitTypeState.icon', false, false, true, false, false, 35, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(105206, 1052, 1, 6, true, false, false, false, NULL, NULL, 'transitTypeState.transitTypeStateCode', false, false, true, true, false, 40, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(105207, 1052, 1, 7, true, true, false, true, 'LBL_GRID_FIELD_TRANSIT_TYPE_STATE', 'LBL_GRID_FIELD_TRANSIT_TYPE_STATE', 'transitTypeState.labelAlias', false, false, true, true, false, 175, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(105208, 1052, 1, 8, true, false, false, false, 'LBL_GRID_FIELD_TRANSIT_VEHICLE_PLATE_NUMBER', 'LBL_GRID_FIELD_TRANSIT_VEHICLE_PLATE_NUMBER', 'vehiclePlateNumber', false, false, true, false, false, 120, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(105209, 1052, 5, 9, true, false, false, false, NULL, NULL, 'element.elementType.elementTypePhoto', false, false, true, false, false, 40, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(105210, 1052, 1, 10, true, true, false, true, 'LBL_GRID_FIELD_TRANSIT_ELEMENT_TYPE', 'LBL_GRID_FIELD_TRANSIT_ELEMENT_TYPE', 'element.elementType.labelAlias', false, false, true, true, false, 150, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(105211, 1052, 1, 11, true, true, false, true, 'LBL_GRID_FIELD_TRANSIT_EQUIPMENT', 'LBL_GRID_FIELD_TRANSIT_EQUIPMENT', 'element.alias', false, false, true, false, false, 150, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(105212, 1052, 3, 12, true, false, false, false, 'LBL_GRID_FIELD_TRANSIT_SPEED', 'LBL_GRID_FIELD_TRANSIT_SPEED', 'speed', false, false, true, false, false, 100, NULL, true, true, NULL, NULL, NULL, NULL, 2);
 
 
 INSERT INTO ui.grid_option_values(grid_id, grid_option_id, value) VALUES
@@ -601,7 +603,7 @@ INSERT INTO ui.grid_option_values(grid_id, grid_option_id, value) VALUES
 (1052, 11, 'true'),
 (1052, 12, 'true'),
 (1052, 13, 'true'),
-(1052, 14, 'false'),
+(1052, 14, 'true'),
 (1052, 15, 'false'),
 (1052, 16, 'img/grid/default.png'),
 (1052, 17, 'true'),

@@ -134,8 +134,8 @@ INSERT INTO static.driver_params (driver_type_id,driver_param_id,data_type_id,dr
 	
 -- static.vehicle_classes 
 INSERT INTO static.vehicle_classes (vehicle_class_id,alias,label_alias,enabled,visible,created_at,updated_at) VALUES
-	 (1, 'light', 'LBL_VEHICLE_CLASSE_LIGHT', true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),	 
-	 (2, 'heavy', 'LBL_VEHICLE_CLASSE_HEAVY', true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
+	 (1, 'light', 'LBL_VEHICLE_CLASS_LIGHT', true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),	 
+	 (2, 'heavy', 'LBL_VEHICLE_CLASS_HEAVY', true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
 
 INSERT INTO conf.element_transit_types (element_type_id, element_id, transit_type_id, infraction_manager_id, enabled, visible, created_at, updated_at) VALUES
 	(2, 1, 1, null, true, true, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
