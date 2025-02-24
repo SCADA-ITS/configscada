@@ -8,6 +8,7 @@
 				   pk_ini as "pkIni",
 				   pk_end as "pkEnd",
 				   lanes as "lanes",
+				   direction as "direction",
 				   road_id as "roadId",
 				   enabled as "enabled",
 				   visible as "visible"

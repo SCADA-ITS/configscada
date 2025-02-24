@@ -504,6 +504,7 @@
 		pk_end float8 NOT NULL,
 		lanes int4 NOT NULL,
 		road_id int8 NOT NULL,
+		direction int4 NULL,
 		enabled bool NULL,
 		visible bool NULL,
 		created_at timestamptz NOT NULL,
