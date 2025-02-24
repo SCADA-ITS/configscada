@@ -10,6 +10,7 @@ from typing import Generator
 from typing import Tuple
 import pytest
 from selenium import webdriver
+from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
@@ -30,8 +31,14 @@ def open_scada(ip: str) -> WebDriver:
     Returns:
         WebDriver: Devuelve el WebDriver de Firefox
     '''
-    driver: WebDriver = webdriver.Firefox()
-    driver.maximize_window()
+    options = Options()
+    options.add_argument("--headless")  # Asegurar que Firefox corra en modo headless
+    options.add_argument("--width=1920")  # Establecer tamaño de ventana
+    options.add_argument("--height=1080")  # Evita problemas de renderizado
+
+    driver: WebDriver = webdriver.Firefox(options=options)
+
+    driver: WebDriver = webdriver.Firefox(options=options)
     driver.get(f"http://{ip}:8090/openits/login.html")
 
     WebDriverWait(driver, 10).until(
