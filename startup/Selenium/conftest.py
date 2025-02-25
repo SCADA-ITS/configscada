@@ -35,8 +35,7 @@ def open_scada(ip: str) -> WebDriver:
     options.add_argument("--headless")  # Asegurar que Firefox corra en modo headless
     options.add_argument("--width=1920")  # Establecer tamaño de ventana
     options.add_argument("--height=1080")  # Evita problemas de renderizado
-
-    driver: WebDriver = webdriver.Firefox(options=options)
+    options.binary_location = "/usr/bin/firefox"  # Asegúrate de que esta ruta sea correcta en tu entorno
 
     driver: WebDriver = webdriver.Firefox(options=options)
     driver.get(f"http://{ip}:8090/openits/login.html")
