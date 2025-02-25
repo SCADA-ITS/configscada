@@ -1029,8 +1029,8 @@ INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) V
 
 (159, 8, 'http://192.168.88.163:8082/graphql'),
 (159, 9, 'createIncidentReport'),
-(159, 10, 'incidentTypeId,locationId,alarmIds,affectionStretchIds,userId,roadImpactId, cronExpression'),
-(159, 11, 'String!,String!,[String!],[String!],String!,String,String'),
+(159, 10, 'incidentTypeId,locationId,alarmIds,affectionStretchIds,userId,roadImpactId, cronExpression, autoCloseInMin'),
+(159, 11, 'String!,String!,[String!],[String!],String!,String,String,Int'),
 (159, 12, NULL),
 
 (160, 1, 'http://192.168.88.163:8082/graphql'),
