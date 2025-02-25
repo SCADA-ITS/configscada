@@ -14,7 +14,7 @@ def main() -> None:
             "--json-report",
             "--json-report-indent=2",
             "--json-report-file=" + str(report_file),
-            "tests/"
+            str(Path(__file__).parent / "tests/")
         ])
     except UnboundLocalError as e:
         sys.exit(f'Error al setear una variable: {e}')
