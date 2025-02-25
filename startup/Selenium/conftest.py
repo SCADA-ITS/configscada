@@ -32,7 +32,7 @@ def open_scada(ip: str) -> WebDriver:
         WebDriver: Devuelve el WebDriver de Firefox
     '''
     options = Options()
-    options.add_argument("--headless")  # Asegurar que Firefox corra en modo headless
+    #options.add_argument("--headless")  # Asegurar que Firefox corra en modo headless
     options.add_argument("--width=1920")  # Establecer tamaño de ventana
     options.add_argument("--height=1080")  # Evita problemas de renderizado
     options.binary_location = "/usr/bin/firefox"  # Asegúrate de que esta ruta sea correcta en tu entorno
