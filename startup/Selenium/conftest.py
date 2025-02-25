@@ -10,6 +10,8 @@ from typing import Generator
 from typing import Tuple
 import pytest
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -32,10 +34,11 @@ def open_scada(ip: str) -> WebDriver:
         WebDriver: Devuelve el WebDriver de chrome
     '''
     options = Options()
-    options.add_argument("--headless")  # Modo headless
-    options.add_argument("--window-size=1920x1080")  # Establecer tamaño de ventana
+    options.add_argument("--headless")  # Asegurar que Chrome corra en modo headless
+    options.add_argument("--width=1920")  # Establecer tamaño de ventana
+    options.add_argument("--height=1080")  # Evitar problemas de renderizado
 
-    driver: WebDriver = webdriver.chrome(options=options)
+    driver: WebDriver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
     driver.get(f"http://{ip}:8090/openits/login.html")
 
     WebDriverWait(driver, 10).until(
