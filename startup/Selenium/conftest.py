@@ -10,12 +10,12 @@ from typing import Generator
 from typing import Tuple
 import pytest
 from selenium import webdriver
-from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
-from selenium.webdriver.firefox.webdriver import WebDriver
+from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.common.exceptions import WebDriverException
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import TimeoutException
@@ -23,21 +23,19 @@ from selenium.common.exceptions import ElementNotInteractableException
 
 def open_scada(ip: str) -> WebDriver:
     '''
-    Esta función crea una sesion en Firefox y abre la web del SCADA
+    Esta función crea una sesion en chorme y abre la web del SCADA
 
     Args:
         ip (str): IP donde se ubica el SCADA
 
     Returns:
-        WebDriver: Devuelve el WebDriver de Firefox
+        WebDriver: Devuelve el WebDriver de chrome
     '''
     options = Options()
-    #options.add_argument("--headless")  # Asegurar que Firefox corra en modo headless
-    options.add_argument("--width=1920")  # Establecer tamaño de ventana
-    options.add_argument("--height=1080")  # Evita problemas de renderizado
-    options.binary_location = "/usr/bin/firefox"  # Asegúrate de que esta ruta sea correcta en tu entorno
+    options.add_argument("--headless")  # Modo headless
+    options.add_argument("--window-size=1920x1080")  # Establecer tamaño de ventana
 
-    driver: WebDriver = webdriver.Firefox(options=options)
+    driver: WebDriver = webdriver.chrome(options=options)
     driver.get(f"http://{ip}:8090/openits/login.html")
 
     WebDriverWait(driver, 10).until(
