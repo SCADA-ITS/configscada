@@ -613,7 +613,12 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 ('TransitTypeState:1', 78, 'transit_type_state/IN.png'),
 ('TransitTypeState:2', 78, 'transit_type_state/PT.png'),
 ('TransitTypeState:3', 78, 'transit_type_state/EN.png'),
-('TransitTypeState:4', 78, 'transit_type_state/CA.png');
+('TransitTypeState:4', 78, 'transit_type_state/CA.png'),
+
+('TransitTypeState:1', 79, '#bddcf0'),
+('TransitTypeState:2', 79, '#e1d86e'),
+('TransitTypeState:3', 79, '#a6c8c5'),
+('TransitTypeState:4', 79, '#eb7474');
 
 
 INSERT INTO ui.vo_enum_types(id, alias, description, enabled, visible) VALUES

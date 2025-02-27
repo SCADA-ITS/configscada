@@ -100,10 +100,8 @@ INSERT INTO ui.vo_entity_fields (id, vo_entity_type_id, field, description, labe
 (75, 'ImsIncidentTypeUI', 'searchZoom', 'Zoom level to search item', 'LBL_SEARCH_ZOOM', 'LBL_SEARCH_ZOOM_DESCRIPTION', true, true),
 (76, 'ExtEntityUI', 'searchZoom', 'Zoom level to search item', 'LBL_SEARCH_ZOOM', 'LBL_SEARCH_ZOOM_DESCRIPTION', true, true),
 (77, 'RouteUI', 'searchZoom', 'Zoom level to search item', 'LBL_SEARCH_ZOOM', 'LBL_SEARCH_ZOOM_DESCRIPTION', true, true),
-(78, 'TransitTypeStateUI', 'icon', 'Icon for Transit Type State', 'LBL_TRANSIT_TYPE_STATE_ICON', 'LBL_TRANSIT_TYPE_STATE_ICON_DESCRIPTION', true, true);
-
-
-
+(78, 'TransitTypeStateUI', 'icon', 'Icon for Transit Type State', 'LBL_TRANSIT_TYPE_STATE_ICON', 'LBL_TRANSIT_TYPE_STATE_ICON_DESCRIPTION', true, true),
+(79, 'TransitTypeStateUI', 'color', 'Color for Transit Type State', 'LBL_TRANSIT_TYPE_STATE_COLOR', 'LBL_TRANSIT_TYPE_STATE_COLOR_DESCRIPTION', true, true);
 
 INSERT INTO ui.vo_entities(id, vo_entity_type_id, enabled, visible) VALUES
 ('AlarmLevel:1', 'AlarmLevelUI', true, true),

@@ -249,7 +249,9 @@ INSERT INTO ui.module_actions(id, module_id, name, description, system_permissio
 (105303, 1053, 'delete', 'delete route', null, null),
 (105401, 1054, 'newFromIncidentReport', 'new avoid polygon from incidentReport', null, null),
 (105402, 1054, 'deleteFromIncidentReport', 'delete avoid polygon from incidentReport', null, null),
-(105403, 1054, 'showFromIncidentReport', 'show avoid polygon from incidentReport', null, null);
+(105403, 1054, 'showFromIncidentReport', 'show avoid polygon from incidentReport', null, null),
+(105601, 1056, 'edit', 'edit transit', null, null),
+(105602, 1056, 'changeState', 'change state to transit', null, null);
 
 
 INSERT INTO ui.module_values(module_id, module_param_id, value) VALUES
@@ -640,9 +642,19 @@ INSERT INTO ui.window_values(module_id, window_param_id, value) VALUES
 (1052, 12, 'LBL_DELAYED_INCIDENT'),
 (1052, 14, 'false'),
 
+(1055, 4, '825'),
+(1055, 5, '1400'),
 (1055, 8, 'true'),
-(1055, 10, 'img/module/default.png'),
+(1055, 10, 'img/module/transit.png'),
 (1055, 11, '#464646'),
 (1055, 12, 'LBL_TRANSIT_LIST'),
-(1055, 14, 'true');
+(1055, 14, 'true'),
+(1055, 17, 'true'),
 
+(1056, 4, '825'),
+(1056, 5, '1700'),
+(1056, 8, 'true'),
+(1056, 10, 'img/module/transit.png'),
+(1056, 11, '#464646'),
+(1056, 12, 'LBL_TRANSIT'),
+(1056, 14, 'true');

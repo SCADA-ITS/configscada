@@ -603,7 +603,7 @@ INSERT INTO ui.grid_option_values(grid_id, grid_option_id, value) VALUES
 (1052, 11, 'true'),
 (1052, 12, 'true'),
 (1052, 13, 'true'),
-(1052, 14, 'true'),
+(1052, 14, 'false'),
 (1052, 15, 'false'),
 (1052, 16, 'img/grid/default.png'),
 (1052, 17, 'true'),
@@ -689,7 +689,10 @@ INSERT INTO ui.grid_commands(grid_id, "position", "label", icon, "default", modu
 (1051, 2, 'LBL_CMD_EDIT', 'mdi mdi-pencil', true, 105201, NULL, 2, false, false, true, null, null),
 (1051, 4, 'LBL_CMD_ENABLE', 'mdi mdi-radiobox-marked', false, 105202, NULL, 2, true, true, true, null, null),
 (1051, 5, 'LBL_CMD_DISABLE', 'mdi mdi-radiobox-blank', false, 105203, NULL, 2, true, true, true, null, null),
-(1051, 3, 'LBL_CMD_DELETE', 'mdi mdi-delete', false, 105204, NULL, 2, true, false, true, null, null);
+(1051, 3, 'LBL_CMD_DELETE', 'mdi mdi-delete', false, 105204, NULL, 2, true, false, true, null, null),
+
+(1052, 1, 'LBL_CMD_EDIT', 'mdi mdi-pencil', true, 105601, null, 2, false, false, true, null, null),
+(1052, 2, 'LBL_CMD_CHANGE_STATE', 'mdi mdi-rotate-right', false, 105602, null, 2, true, false, true, null, null);
 
 INSERT INTO ui.grid_field_icons(grid_field_id, icon, value, show_value, badge_color, avatar, enabled, label_value) VALUES
 (100002, NULL, NULL, true, false, true, true, NULL),
