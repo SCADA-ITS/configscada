@@ -17,7 +17,7 @@ INSERT INTO ui.map_layers (id, base_layer, map_id, "name", description, "label",
 (99, NULL, 1, 'RADAR', 'RADAR', 'LBL_ELEMENT_TYPE_TRAFFIC_RADAR', NULL, true);
 
 INSERT INTO ui.map_incidents(id, incident_graphic_icon_id, incident_report_module_action_id, incident_wizard_module_action_id) VALUES
-(1, 1000, 100401, 101301);
+(1, 1000, 100401, 101304);
 
 --
 -- routes_config format:
