@@ -33,7 +33,7 @@
      showgrid="false"
      inkscape:window-width="1920"
      inkscape:window-height="1017"
-     inkscape:window-x="1912"
+     inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
      showguides="false"
@@ -84,7 +84,7 @@
          width="34.395832"
          height="34.395832"
          preserveAspectRatio="none"
-         id="graphic1"
+         id="graphic1-1"
          x="2.6458333"
          y="2.6458333" />
     </g>
@@ -96,13 +96,13 @@
       <path
          style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke-width:0.500632"
          d="m 1.984375,39.191459 h 35.71875 V 74.91021 H 1.984375 Z"
-         id="path191-1" />
+         id="path191-2" />
       <image
          xlink:href="../project/ausol/img/pictograms/80.bmp"
          width="34.395832"
          height="34.395832"
          preserveAspectRatio="none"
-         id="graphic1-1"
+         id="graphic2-1"
          x="2.6458333"
          y="40.140125" />
     </g>
