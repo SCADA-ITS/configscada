@@ -51,7 +51,8 @@
 		{ "position": 10, "icon": "ico webix_icon mdi mdi-clock-time-three-outline", "label": "LBL_INCIDENT_CREATED", "objField": "fieldGenerateAt" },
 		{ "position": 11, "icon": "ico webix_icon mdi mdi-refresh", "label": "LBL_INCIDENT_LAST_UPDATED", "objField": "fieldLastUpdated" },
 		{ "position": 12, "icon": "ico webix_icon mdi mdi-calendar", "label": "LBL_INCIDENT_VALID_UNTIL", "objField": "fieldValidUntil" },
-		{ "position": 13, "icon": "ico webix_icon mdi mdi-exclamation-thick", "label": "LBL_INCIDENT_CAUSE", "objField": "fieldCause" }
+		{ "position": 13, "icon": "ico webix_icon mdi mdi-exclamation-thick", "label": "LBL_INCIDENT_CAUSE", "objField": "fieldCause" },
+		{ "position": 14, "icon": "ico webix_icon mdi mdi-calendar-check", "label": "LBL_INCIDENT_REPORT_FINISH_DATE_WITH_PENDING_TASK", "objField": "fieldAutoCloseInMin" }
 	],
 	"logIncidentType": "LogType:1",
 	"logIncidentSubTypes":["LogSubtype:17"],
@@ -84,11 +85,11 @@
 	"showOperationalPlan": true,
 	"showDocuments": true,
 	"showAttachments": true,
-	"avoidPolygon": true,	
 	"backOffice": {
 	    "id": 2,
 	    "tableName": "incidents",
 	    "filterColumnName": "incident_report_id",
 	    "filterColumnValue": null
-  	}	
+  	},
+	"avoidPolygon": true	
 }
