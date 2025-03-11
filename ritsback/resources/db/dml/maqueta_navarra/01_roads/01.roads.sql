@@ -35,9 +35,9 @@ INSERT INTO conf.roads (road_id, road_type_id, alias, description) VALUES
 (34,1,'NA-1300','NA-1300'),
 (35,1,'NA-1310','NA-1310'),
 (36,1,'NA-132','NA-132'),
-(37,1,'NA-132-A','NA-132-A'),
-(38,1,'NA-132-B','NA-132-B'),
-(39,1,'NA-1320','NA-1320'),
+(37,1,'NA-1320','NA-1320'),
+(38,1,'NA-132-A','NA-132-A'),
+(39,1,'NA-132-B','NA-132-B'),
 (40,1,'NA-134','NA-134'),
 (41,1,'NA-137','NA-137'),
 (42,1,'NA-138','NA-138'),
@@ -584,7 +584,5 @@ INSERT INTO conf.roads (road_id, road_type_id, alias, description) VALUES
 (583,1,'PA-34','PA-34'),
 (584,1,'PA-35','PA-35'),
 (585,1,'PA-36','PA-36');
-
-
 
 

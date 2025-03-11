@@ -19,10 +19,17 @@ INSERT INTO ui.window_values(module_id, window_param_id, value) VALUES
 (402, 10, 'img/module/default.png'),
 (402, 11, '#464646'),
 (402, 12, 'LBL_MENU_ITEM_MAP_GOOGLE_COMPLEJO'),
-(402, 14, 'true'),
 
-(2020, 8, 'true'),
-(2020, 10, 'img/module/default.png'),
-(2020, 11, '#464646'),
-(2020, 12, 'LBL_MENU_ITEM_C4_INCIDENTS'),
-(2020, 14, 'true');
+(1920, 8, 'true'),
+(1920, 10, 'img/module/default.png'),
+(1920, 11, '#464646'),
+(1920, 12, 'LBL_MENU_ITEM_GIP'),
+(1920, 14, 'true'),
+
+(6011, 4, '825'),
+(6011, 5, '1600'),
+(6011, 8, 'true'),
+(6011, 10, 'img/module/default.png'),
+(6011, 11, '#464646'),
+(6011, 12, 'LBL_INCIDENTS'),
+(6011, 14, 'true');

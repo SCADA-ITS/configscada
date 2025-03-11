@@ -84,5 +84,11 @@
 	"showOperationalPlan": true,
 	"showDocuments": true,
 	"showAttachments": true,
-	"avoidPolygon": true	
+	"avoidPolygon": true,	
+	"backOffice": {
+	    "id": 2,
+	    "tableName": "incidents",
+	    "filterColumnName": "incident_report_id",
+	    "filterColumnValue": null
+  	}	
 }

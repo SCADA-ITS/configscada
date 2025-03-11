@@ -1,8 +1,8 @@
 DO $$ 
 BEGIN
-  IF EXISTS (SELECT 1 FROM pg_namespace WHERE nspname = 'nogales_gip') THEN
+  IF EXISTS (SELECT 1 FROM pg_namespace WHERE nspname = 'incidents') THEN
   
-INSERT INTO nogales_gip.sg_i18n_labels (locale_code, "label", "translation", created_at, updated_at) VALUES
+INSERT INTO incidents.sg_i18n_labels (locale_code, "label", "translation", created_at, updated_at) VALUES
 
 --es_ES
 	('es_ES','LBL_PATENT', 'patente', CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),

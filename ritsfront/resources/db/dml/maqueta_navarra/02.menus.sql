@@ -18,12 +18,13 @@ INSERT INTO ui.menu_items(id, menu_group_id, "position", module_id, "label", ico
 (0201, 2, 1, 500, 'LBL_MENU_ITEM_EQUIPMENTS', 'img/menu/equipment-menu.png', 'Menu item Equipments', 'Menu item Equipments', true, true),
 (0202, 2, 2, 1020, 'LBL_MENU_ITEM_CCTV', 'img/menu/camera-menu.png', 'Menu item CCTV', 'Menu item CCTV', true, true),
 (0203, 2, 3, 1005, 'LBL_MENU_ITEM_ALARM_MONITOR', 'img/menu/alarm_monitor.png', 'Menu item alarm monitor', 'Menu item alarm monitor', true, true),
-(0204, 2, 4, 1055, 'LBL_TRANSIT_LIST_MODULE', 'img/menu/transit-menu.png', 'Transit list Module', 'Transit list Module', true, true),
 
 -- MANAGEMENT
 (0301, 3, 1, 1051, 'LBL_MENU_ITEM_INCIDENT_REPORTS', 'img/menu/incident.png', 'Menu item incindet report', 'Menu item incident report', true, true),
-(0302, 3, 2, 2020, 'LBL_MENU_ITEM_EXTERNAL_INCIDENTS', 'img/menu/backofficeincident.png', 'incidencias externas', 'incidencias externas', true, true),
-(0303, 3, 3, 1024, 'LBL_MENU_ITEM_PLAN_MANAGER', 'img/menu/plan-menu.png', 'Menu item Plan Manager', 'Menu item Plan Manager', true, true),
+(0302, 3, 2, 1920, 'LBL_MENU_ITEM_INCIDENT_REPORTS_BACKOFFICE', 'img/menu/incident.png', 'Menu item incindet report', 'Menu item incident report', true, true),
+(0303, 3, 3, 2020, 'LBL_MENU_ITEM_EXTERNAL_INCIDENTS', 'img/menu/backofficeincident.png', 'incidencias externas', 'incidencias externas', true, true),
+(0304, 3, 4, 1024, 'LBL_MENU_ITEM_PLAN_MANAGER', 'img/menu/plan-menu.png', 'Menu item Plan Manager', 'Menu item Plan Manager', true, true),
+(0305, 3, 5, 1055, 'LBL_TRANSIT_LIST_MODULE', 'img/menu/transit-menu.png', 'Transit list Module', 'Transit list Module', true, true),
 
 -- TOOLS
 (0401, 4, 1, 403, 'LBL_MENU_ITEM_REPORTS', 'img/menu/report.png', 'Menu item Reports', 'Menu item Reports', true, true),
