@@ -37,7 +37,6 @@ CREATE SCHEMA rt;
 	CREATE INDEX idx_audit_logs_log_level_id ON rt.audit_logs USING btree (log_level_id);
 	CREATE INDEX idx_audit_logs_user_id ON rt.audit_logs USING btree (user_id);
 
-
 	ALTER TABLE rt.audit_logs ADD CONSTRAINT fk_audit_logs_log_type FOREIGN KEY (log_type_id) REFERENCES master.log_types(log_type_id);
 	ALTER TABLE rt.audit_logs ADD CONSTRAINT fk_audit_logs_log_subtype FOREIGN KEY (log_subtype_id) REFERENCES master.log_subtypes(log_subtype_id);
 	ALTER TABLE rt.audit_logs ADD CONSTRAINT fk_audit_logs_levels FOREIGN KEY (log_level_id) REFERENCES master.log_levels(log_level_id);
@@ -63,13 +62,16 @@ CREATE SCHEMA rt;
 	);
 
 	CREATE INDEX idx_audit_log_values_audit_log_id ON rt.audit_log_values USING btree (audit_log_id);
+	
+	CREATE INDEX idx_audit_log_values_log_type_params ON rt.audit_log_values USING btree (log_type_id, log_type_param_id);
+	CREATE INDEX idx_audit_log_values_audit_logs ON rt.audit_log_values USING btree (audit_log_id, log_type_id);
 
 	ALTER TABLE rt.audit_log_values ADD CONSTRAINT fk_audit_log_values_log_type_params FOREIGN KEY (log_type_id, log_type_param_id) REFERENCES master.log_type_params(log_type_id, log_type_param_id);
 	ALTER TABLE rt.audit_log_values ADD CONSTRAINT fk_audit_log_values_audit_logs FOREIGN KEY (audit_log_id, log_type_id) REFERENCES rt.audit_logs(audit_log_id, log_type_id);
 	
 	ALTER TABLE rt.audit_log_values SET TABLESPACE tbl_rt;
 	
-	-- 
+-- 
 -- Table: rt.element_states
 -- Descripción: Tabla de estados de equipos
 -- Scope: rt
@@ -84,6 +86,9 @@ CREATE SCHEMA rt;
 		updated_at timestamptz NOT NULL,
 		CONSTRAINT pk_element_states PRIMARY KEY (element_type_id, element_id)
 	);
+	
+	CREATE INDEX idx_element_states_elements_element_type_states_previous ON rt.element_states USING btree (element_type_id, previous_state_id);
+	CREATE INDEX idx_element_states_elements_element_type_states_current ON rt.element_states USING btree (element_type_id, current_state_id);
 	
 	ALTER TABLE rt.element_states ADD CONSTRAINT fk_element_states_elements FOREIGN KEY (element_type_id, element_id) REFERENCES conf.elements(element_type_id, element_id);
 	ALTER TABLE rt.element_states ADD CONSTRAINT fk_element_states_elements_element_type_states_previous FOREIGN KEY (element_type_id, previous_state_id) REFERENCES master.element_type_states(element_type_id, element_type_state_id);
@@ -122,20 +127,18 @@ CREATE SCHEMA rt;
 	CREATE INDEX idx_alarm_alarm_configs ON rt.alarms USING btree (alarm_config_id);
 	CREATE INDEX idx_alarm_source_elements ON rt.alarms USING btree (source_element_type_id, source_element_id);
 	CREATE INDEX idx_alarm_target_elements ON rt.alarms USING btree (target_element_type_id, target_element_id);
+	CREATE INDEX idx_ims_alarm_users_creation ON rt.alarms USING btree (creation_user_id);
+	CREATE INDEX idx_ims_alarm_users_recognition ON rt.alarms USING btree (recognized_user_id);
+	CREATE INDEX idx_ims_alarm_users_deactivation ON rt.alarms USING btree (deactivation_user_id);
 	
 	ALTER TABLE rt.alarms ADD CONSTRAINT fk_alarm_alarm_configs FOREIGN KEY (alarm_config_id) REFERENCES conf.alarm_configs(alarm_config_id);
 	ALTER TABLE rt.alarms ADD CONSTRAINT fk_alarm_source_elements FOREIGN KEY (source_element_type_id, source_element_id) REFERENCES conf.elements(element_type_id, element_id);
 	ALTER TABLE rt.alarms ADD CONSTRAINT fk_alarm_target_elements FOREIGN KEY (target_element_type_id, target_element_id) REFERENCES conf.elements(element_type_id, element_id);
-	
 	ALTER TABLE rt.alarms ADD CONSTRAINT fk_ims_alarm_users_creation FOREIGN KEY (creation_user_id) REFERENCES conf.users(user_id);
 	ALTER TABLE rt.alarms ADD CONSTRAINT fk_ims_alarm_users_recognition FOREIGN KEY (recognized_user_id) REFERENCES conf.users(user_id);
 	ALTER TABLE rt.alarms ADD CONSTRAINT fk_ims_alarm_users_deactivation FOREIGN KEY (deactivation_user_id) REFERENCES conf.users(user_id);
 	
 	ALTER TABLE rt.alarms SET TABLESPACE tbl_rt;
-
--- 
--- Scope: rt
---
 
 -- 
 -- Table: rt.ims_incident_reports
@@ -167,11 +170,13 @@ CREATE SCHEMA rt;
 		CONSTRAINT pk_ims_incident_reports PRIMARY KEY (incident_report_id)
 	);
 	
-	CREATE INDEX idx_ims_incident_reports_ims_incidents ON rt.ims_incident_reports USING btree (incident_type_id, affection_stretch_id);
-	CREATE INDEX idx_ims_incident_reports_locations ON rt.ims_incident_reports USING btree (location_id);
-	CREATE INDEX idx_ims_incident_reports_ims_incident_states ON rt.ims_incident_reports USING btree (incident_state_id);
 	CREATE INDEX idx_ims_incident_reports_ims_incident_levels ON rt.ims_incident_reports USING btree (incident_level_id);
+	CREATE INDEX idx_ims_incident_reports_ims_incident_states ON rt.ims_incident_reports USING btree (incident_state_id);
+	CREATE INDEX idx_ims_incident_reports_ims_incidents ON rt.ims_incident_reports USING btree (incident_type_id, affection_stretch_id);
+	CREATE INDEX idx_ims_incident_reports_ims_incident_types_causes ON rt.ims_incident_reports USING btree (incident_type_id, incident_type_cause_id);
+	CREATE INDEX idx_ims_incident_reports_locations ON rt.ims_incident_reports USING btree (location_id);
 	CREATE INDEX idx_ims_incident_reports_users ON rt.ims_incident_reports USING btree (current_user_id);
+	CREATE INDEX idx_ims_incident_reports_impacts ON rt.ims_incident_reports USING btree (road_impact_id);
 
 	ALTER TABLE rt.ims_incident_reports ADD CONSTRAINT fk_ims_incident_reports_ims_incident_levels FOREIGN KEY (incident_level_id) REFERENCES static.ims_incident_levels(incident_level_id);
 	ALTER TABLE rt.ims_incident_reports ADD CONSTRAINT fk_ims_incident_reports_ims_incident_states FOREIGN KEY (incident_state_id) REFERENCES static.ims_incident_states(incident_state_id);
@@ -180,10 +185,8 @@ CREATE SCHEMA rt;
 	ALTER TABLE rt.ims_incident_reports ADD CONSTRAINT fk_ims_incident_reports_locations FOREIGN KEY (location_id) REFERENCES conf.locations(location_id);
 	ALTER TABLE rt.ims_incident_reports ADD CONSTRAINT fk_ims_incident_reports_users FOREIGN KEY (current_user_id) REFERENCES conf.users(user_id);
 	ALTER TABLE rt.ims_incident_reports ADD CONSTRAINT fk_ims_incident_reports_impacts FOREIGN KEY (road_impact_id) REFERENCES master.road_impacts(road_impact_id);
-
 		
 	ALTER TABLE rt.ims_incident_reports SET TABLESPACE tbl_rt;
-
 
 -- 
 -- Table: rt.ims_incident_report_task_states
@@ -209,7 +212,6 @@ CREATE SCHEMA rt;
 	ALTER TABLE rt.ims_incident_report_task_states ADD CONSTRAINT fk_ims_incident_report_task_states_ims_incident_type_tasks FOREIGN KEY (incident_type_task_id) REFERENCES conf.ims_incident_type_tasks(incident_type_task_id);
 	
 	ALTER TABLE rt.ims_incident_report_task_states SET TABLESPACE tbl_rt;
-
 	
 -- 
 -- Table: rt.ims_incident_report_task_values
@@ -229,14 +231,17 @@ CREATE SCHEMA rt;
 		CONSTRAINT pk_ims_incident_report_task_values PRIMARY KEY (incident_report_id, task_type_id, task_type_param_id, incident_type_task_id)
 	);
 	
+	CREATE INDEX idx_ims_incident_report_task_values_ims_incident_reports ON rt.ims_incident_report_task_values USING btree (incident_report_id);
+	CREATE INDEX idx_ims_incident_report_task_values_type_params ON rt.ims_incident_report_task_values USING btree (task_type_id, task_type_param_id);
+	CREATE INDEX idx_ims_incident_report_task_values_incident_type_tasks ON rt.ims_incident_report_task_values USING btree (incident_type_task_id);
+	
 	ALTER TABLE rt.ims_incident_report_task_values ADD CONSTRAINT fk_ims_incident_report_task_values_ims_incident_reports FOREIGN KEY (incident_report_id) REFERENCES rt.ims_incident_reports(incident_report_id);
 	ALTER TABLE rt.ims_incident_report_task_values ADD CONSTRAINT fk_ims_incident_report_task_values_type_params FOREIGN KEY (task_type_id, task_type_param_id) REFERENCES master.ims_task_type_params(task_type_id, task_type_param_id);
 	ALTER TABLE rt.ims_incident_report_task_values ADD CONSTRAINT fk_ims_incident_report_task_values_incident_type_tasks FOREIGN KEY (incident_type_task_id) REFERENCES conf.ims_incident_type_tasks(incident_type_task_id);
 		
 	ALTER TABLE rt.ims_incident_report_task_values SET TABLESPACE tbl_rt;
 	
-	
-	-- 
+-- 
 -- Table: rt.ims_incident_report_task_elements
 -- Descripción:
 -- Scope: rt
@@ -253,10 +258,14 @@ CREATE SCHEMA rt;
 		CONSTRAINT pk_ims_incident_report_task_elements PRIMARY KEY (incident_report_id, incident_type_task_id, element_type_id, element_id)
 	);
 	
+	CREATE INDEX idx_ims_incident_report_task_element_task_states ON rt.ims_incident_report_task_elements USING btree (incident_report_id, incident_type_task_id);
+	CREATE INDEX idx_ims_incident_report_task_element_element ON rt.ims_incident_report_task_elements USING btree (element_type_id, element_id);
+	
 	ALTER TABLE rt.ims_incident_report_task_elements ADD CONSTRAINT fk_ims_incident_report_task_element_task_states FOREIGN KEY (incident_report_id, incident_type_task_id) REFERENCES rt.ims_incident_report_task_states(incident_report_id, incident_type_task_id);
 	ALTER TABLE rt.ims_incident_report_task_elements ADD CONSTRAINT fk_ims_incident_report_task_element_element FOREIGN KEY (element_type_id, element_id) REFERENCES conf.elements(element_type_id, element_id);
 		
 	ALTER TABLE rt.ims_incident_report_task_elements SET TABLESPACE tbl_rt;
+	
 -- 
 -- Table: rt.ims_incident_report_task_plan_states
 -- Descripción: Estado de un plan en un parte de incidencia
@@ -281,7 +290,6 @@ CREATE SCHEMA rt;
 	
 	ALTER TABLE rt.ims_incident_report_task_plan_states SET TABLESPACE tbl_rt;
 
-
 -- 
 -- Table: rt.ims_incident_report_logs
 -- Descripción: Traza de un parte de incidencia
@@ -304,9 +312,11 @@ CREATE SCHEMA rt;
 		CONSTRAINT pk_ims_incident_report_logs PRIMARY KEY (incident_report_log_id)
 	);
 	
+	CREATE INDEX idx_ims_incident_report_logs_ims_incident_log_levels ON rt.ims_incident_report_logs USING btree (level);
+	
 	CREATE INDEX idx_ims_incident_report_logs_ims_incident_reports ON rt.ims_incident_report_logs USING btree (incident_report_id);
 	CREATE INDEX idx_ims_incident_report_logs_users ON rt.ims_incident_report_logs USING btree (user_id);
-	CREATE INDEX idx_ims_incident_report_logs_ims_incident_log_levels ON rt.ims_incident_report_logs USING btree (level);
+	CREATE INDEX idx_ims_incident_report_logs_log_subtype ON rt.ims_incident_report_logs USING btree (log_subtype_id);
 	
 	ALTER TABLE rt.ims_incident_report_logs ADD CONSTRAINT fk_ims_incident_report_logs_ims_incident_reports FOREIGN KEY (incident_report_id) REFERENCES rt.ims_incident_reports(incident_report_id);
 	ALTER TABLE rt.ims_incident_report_logs ADD CONSTRAINT fk_ims_incident_report_logs_users FOREIGN KEY (user_id) REFERENCES conf.users(user_id);
@@ -358,6 +368,8 @@ CREATE SCHEMA rt;
 	);
 	
 	CREATE INDEX idx_ims_incident_report_alarms_incident_reports ON rt.ims_incident_report_alarms USING btree (incident_report_id);
+	CREATE INDEX idx_ims_incident_report_alarms_alarm_configs ON rt.ims_incident_report_alarms USING btree (alarm_config_id);
+	CREATE INDEX idx_ims_incident_report_alarms_elements ON rt.ims_incident_report_alarms USING btree (element_type_id, element_id);
 
 	ALTER TABLE rt.ims_incident_report_alarms ADD CONSTRAINT fk_ims_incident_report_alarms_incident_reports FOREIGN KEY (incident_report_id) REFERENCES rt.ims_incident_reports(incident_report_id);
 	ALTER TABLE rt.ims_incident_report_alarms ADD CONSTRAINT fk_ims_incident_report_alarms_alarm_configs FOREIGN KEY (alarm_config_id) REFERENCES conf.alarm_configs(alarm_config_id);
@@ -382,12 +394,15 @@ CREATE SCHEMA rt;
 		CONSTRAINT pk_ims_incident_param_values PRIMARY KEY (incident_report_id, incident_param_id)
 	);
 	
+	CREATE INDEX idx_ims_incident_reports ON rt.ims_incident_param_values USING btree (incident_report_id);
+	CREATE INDEX idx_ims_incident_params ON rt.ims_incident_param_values USING btree (incident_param_id);
+	
 	ALTER TABLE rt.ims_incident_param_values ADD CONSTRAINT fk_ims_incident_reports FOREIGN KEY (incident_report_id) REFERENCES rt.ims_incident_reports(incident_report_id);
 	ALTER TABLE rt.ims_incident_param_values ADD CONSTRAINT fk_ims_incident_params FOREIGN KEY (incident_param_id) REFERENCES static.ims_incident_params(incident_param_id);
 	
 	ALTER TABLE rt.ims_incident_param_values SET TABLESPACE tbl_rt;
 	
-		-- 
+-- 
 -- Table: rt.ims_delayed_incident_reports
 -- Descripción: Delayed Incident Reports
 -- Scope: rt
@@ -412,6 +427,13 @@ CREATE SCHEMA rt;
 	    updated_at timestamptz NOT NULL DEFAULT now(),
 	    PRIMARY KEY (id)
 	);
+	
+	CREATE INDEX idx_ims_delayed_incident_reports_incident_type ON rt.ims_delayed_incident_reports USING btree (incident_type_id);
+	CREATE INDEX idx_ims_delayed_incident_reports_location ON rt.ims_delayed_incident_reports USING btree (location_id);
+	CREATE INDEX idx_ims_delayed_incident_reports_user ON rt.ims_delayed_incident_reports USING btree (user_id);
+	CREATE INDEX idx_ims_delayed_incident_reports_road_impact ON rt.ims_delayed_incident_reports USING btree (road_impact_id);
+	CREATE INDEX idx_ims_delayed_incident_state_type ON rt.ims_delayed_incident_reports USING btree (delayed_incident_state_type_id);
+	CREATE INDEX idx_ims_delayed_incident_affection_stretch ON rt.ims_delayed_incident_reports USING btree (affection_stretch_id);
 
 	ALTER TABLE rt.ims_delayed_incident_reports ADD CONSTRAINT fk_ims_delayed_incident_reports_incident_type FOREIGN KEY (incident_type_id) REFERENCES conf.ims_incident_types(incident_type_id);
 	ALTER TABLE rt.ims_delayed_incident_reports ADD CONSTRAINT fk_ims_delayed_incident_reports_location FOREIGN KEY (location_id) REFERENCES conf.locations(location_id);
@@ -419,7 +441,9 @@ CREATE SCHEMA rt;
 	ALTER TABLE rt.ims_delayed_incident_reports ADD CONSTRAINT fk_ims_delayed_incident_reports_road_impact FOREIGN KEY (road_impact_id) REFERENCES master.road_impacts(road_impact_id);
 	ALTER TABLE rt.ims_delayed_incident_reports ADD CONSTRAINT fk_ims_delayed_incident_state_type FOREIGN KEY (delayed_incident_state_type_id) REFERENCES master.ims_delayed_incident_state_types(delayed_incident_state_type_id);
 	ALTER TABLE rt.ims_delayed_incident_reports ADD CONSTRAINT fk_ims_delayed_incident_affection_stretch FOREIGN KEY (affection_stretch_id) REFERENCES conf.stretchs(stretch_id);
-		-- 
+	
+	ALTER TABLE rt.ims_delayed_incident_reports SET TABLESPACE tbl_rt;
+-- 
 -- Table: rt.ims_delayed_incident_report_alarms
 -- Descripción: Alarmas que han producido reportes
 -- Scope: rt
@@ -439,6 +463,8 @@ CREATE SCHEMA rt;
 	);
 	
 	CREATE INDEX idx_ims_delayed_incident_report_alarms_delayed_incident_reports ON rt.ims_delayed_incident_report_alarms USING btree (delayed_incident_report_id);
+	CREATE INDEX idx_ims_delayed_incident_report_alarms_alarm_configs ON rt.ims_delayed_incident_report_alarms USING btree (alarm_config_id);
+	CREATE INDEX idx_ims_delayed_incident_report_alarms_elements ON rt.ims_delayed_incident_report_alarms USING btree (element_type_id, element_id);
 
 	ALTER TABLE rt.ims_delayed_incident_report_alarms ADD CONSTRAINT fk_ims_delayed_incident_report_alarms_ims_delayed_incident_reports FOREIGN KEY (delayed_incident_report_id) REFERENCES rt.ims_delayed_incident_reports(id);
 	ALTER TABLE rt.ims_delayed_incident_report_alarms ADD CONSTRAINT fk_ims_delayed_incident_report_alarms_alarm_configs FOREIGN KEY (alarm_config_id) REFERENCES conf.alarm_configs(alarm_config_id);
@@ -446,7 +472,7 @@ CREATE SCHEMA rt;
 	
 	ALTER TABLE rt.ims_delayed_incident_report_alarms SET TABLESPACE tbl_rt;
 	
-	-- 
+-- 
 -- Table: rt.element_values
 -- Descripción: Parámetros de los equipos
 -- Scope: rt
@@ -466,6 +492,9 @@ CREATE SCHEMA rt;
 	);
 
 	CREATE INDEX idx_element_values_element_id_rt ON rt.element_values USING btree (element_id);
+	
+	CREATE INDEX idx_element_values_element_type_params_rt ON rt.element_values USING btree (element_type_id, element_type_param_id, param_type_id);
+	CREATE INDEX idx_element_values_elements_rt ON rt.element_values USING btree (element_type_id, element_id);
 	CREATE INDEX idx_element_values_element_value_states_rt ON rt.element_values USING btree (element_value_state_id);
 
 	ALTER TABLE rt.element_values ADD CONSTRAINT fk_element_values_element_type_params_rt FOREIGN KEY (element_type_id, element_type_param_id, param_type_id) REFERENCES master.element_type_params(element_type_id, element_type_param_id, param_type_id);
@@ -474,9 +503,7 @@ CREATE SCHEMA rt;
 	
 	ALTER TABLE rt.element_values SET TABLESPACE tbl_rt;
 	
-	
-	
-	-- 
+-- 
 -- Table: rt.pm_command_elements 
 -- Descripción: Comandos almacenados en cada cola 
 -- Scope: conf
@@ -498,15 +525,19 @@ CREATE SCHEMA rt;
        CONSTRAINT pk_pm_command_elements PRIMARY KEY (queue_id, command_element_type_id, pm_command_element_id, element_type_id, element_id)
     );
     
+    CREATE INDEX idx_pm_command_elements_command_element_types ON rt.pm_command_elements USING btree (command_element_type_id, element_type_id);
+    CREATE INDEX idx_pm_command_elements_elements ON rt.pm_command_elements USING btree (element_type_id, element_id);
+    CREATE INDEX idx_pm_command_elements_pm_element_type_queues ON rt.pm_command_elements USING btree (element_type_id, queue_id);
+    CREATE INDEX idx_pm_command_elements_pm_queue_priorities ON rt.pm_command_elements USING btree (queue_id, priority_id);
+    
     ALTER TABLE rt.pm_command_elements ADD CONSTRAINT fk_pm_command_elements_command_element_types FOREIGN KEY (command_element_type_id, element_type_id) REFERENCES master.command_element_types(command_element_type_id, element_type_id);
     ALTER TABLE rt.pm_command_elements ADD CONSTRAINT fk_pm_command_elements_elements FOREIGN KEY (element_type_id, element_id) REFERENCES conf.elements(element_type_id, element_id);
     ALTER TABLE rt.pm_command_elements ADD CONSTRAINT fk_pm_command_elements_pm_element_type_queues FOREIGN KEY (element_type_id, queue_id) REFERENCES master.pm_element_type_queues(element_type_id, queue_id);
     ALTER TABLE rt.pm_command_elements ADD CONSTRAINT fk_pm_command_elements_pm_queue_priorities FOREIGN KEY (queue_id, priority_id) REFERENCES master.pm_queue_priorities(queue_id, priority_id);
 
     ALTER TABLE rt.pm_command_elements SET TABLESPACE tbl_rt;
-    
-    
-    -- 
+
+-- 
 -- Table: rt.command_element_values
 
 -- Scope: rt
@@ -526,7 +557,9 @@ CREATE SCHEMA rt;
        CONSTRAINT pk_command_element_values PRIMARY KEY (queue_id, command_element_type_id, pm_command_element_id, element_type_id, element_id, command_element_type_param_id)
 	);
 	
-
+	CREATE INDEX idx_pm_command_element_values_command_element_type_param ON rt.pm_command_element_values USING btree (command_element_type_id, element_type_id, command_element_type_param_id);
+	CREATE INDEX idx_pm_command_element_values_pm_command_element ON rt.pm_command_element_values USING btree (queue_id, command_element_type_id, pm_command_element_id, element_type_id, element_id);
+	
 	ALTER TABLE rt.pm_command_element_values ADD CONSTRAINT fk_pm_command_element_values_command_element_type_param FOREIGN KEY (command_element_type_id, element_type_id, command_element_type_param_id) REFERENCES master.command_element_type_params(command_element_type_id, element_type_id, command_element_type_param_id);
 	ALTER TABLE rt.pm_command_element_values ADD CONSTRAINT fk_pm_command_element_values_pm_command_element FOREIGN KEY (queue_id, command_element_type_id, pm_command_element_id, element_type_id, element_id) REFERENCES rt.pm_command_elements(queue_id, command_element_type_id, pm_command_element_id, element_type_id, element_id);
 
@@ -552,6 +585,8 @@ CREATE SCHEMA rt;
 		updated_at timestamptz NOT NULL,
 		CONSTRAINT pk_route_avoid_polygon  PRIMARY KEY (route_avoid_polygon_id)
 	);
+	
+	CREATE INDEX fk_route_avoid_polygon_incident_report ON rt.route_avoid_polygons USING btree (incident_report_id);
 
 	ALTER TABLE rt.route_avoid_polygons ADD CONSTRAINT fk_route_avoid_polygon_incident_report FOREIGN KEY (incident_report_id) REFERENCES rt.ims_incident_reports(incident_report_id);
 	
