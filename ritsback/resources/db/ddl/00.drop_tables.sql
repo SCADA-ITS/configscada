@@ -3,8 +3,7 @@ SET client_min_messages TO WARNING;
 CREATE TABLE rt.temp_fk_constraints_rt AS
 SELECT conrelid::regclass AS tabla,
        conname AS constraint_name,
-       pg_get_constraintdef(oid) AS definition,
-       pg_constraint.*
+       pg_get_constraintdef(oid) AS definition
 FROM pg_constraint
 WHERE confrelid IS NOT null
 AND contype = 'f'

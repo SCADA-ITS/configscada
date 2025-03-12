@@ -83,6 +83,8 @@ BEGIN
 END $$;
 
 SELECT FROM conf.element_transit_types;
+DELETE FROM static.infraction_types;
+DELETE FROM static.vehicle_classes;
 DELETE FROM static.driver_params;
 DELETE FROM static.driver_types;
 DELETE FROM static.vehicle_params;
@@ -131,11 +133,12 @@ INSERT INTO static.driver_types (driver_type_id,alias,description,label_alias,la
 INSERT INTO static.driver_params (driver_type_id,driver_param_id,data_type_id,driver_param_group_id,alias,description,label_alias,label_description,enabled,visible,created_at,updated_at) VALUES
 	 (1,1,2,NULL,'Driver Type I Param 1','Driver Type I Param 1','LBL_DRIVER_TYPE_I_PARAM_1','LBL_DRIVER_TYPE_I_PARAM_1_DESC',true,true,'2025-02-06 09:09:38.587+01','2025-02-06 09:09:38.587+01');
 	
-	
--- static.vehicle_classes 
 INSERT INTO static.vehicle_classes (vehicle_class_id,alias,label_alias,enabled,visible,created_at,updated_at) VALUES
 	 (1, 'light', 'LBL_VEHICLE_CLASS_LIGHT', true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),	 
 	 (2, 'heavy', 'LBL_VEHICLE_CLASS_HEAVY', true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
+	 
+INSERT INTO static.infraction_types (infraction_type_id,infraction_code,infraction_original_code,alias,description,label_alias,label_description,enabled,visible,created_at,updated_at) VALUES
+	 (1,'0001','0001','Infraction type I','Infraction type I','LBL_INFRACTION_TYPE_1','LBL_INFRACTION_TYPE_1_DESC',true,true,'2025-03-12 10:37:18.887+01','2025-03-12 10:37:18.887+01');
 
 INSERT INTO conf.element_transit_types (element_type_id, element_id, transit_type_id, infraction_manager_id, enabled, visible, created_at, updated_at) VALUES
 	(2, 1, 1, null, true, true, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
