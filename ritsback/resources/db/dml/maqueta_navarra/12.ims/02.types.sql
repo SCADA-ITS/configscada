@@ -13,19 +13,19 @@ INSERT INTO master.ims_incident_groups (incident_group_id,alias,description,labe
 -- Table: conf.ims_incident_types
 --
 INSERT INTO conf.ims_incident_types (incident_type_id, ini_incident_state_id, incident_group_id, alias, description, incident_level_id, default_user_id, auto_confirm_incident, cancel_incident, valid_for_min, on_create_execute, enabled, visible, created_at, updated_at) VALUES
-(101, 1, 1, 'ATL-001', 'Atletismo - Triatlón y similares',  1, 1, null, false, 2880, 'BackOfficeInitIncident.groovy', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(102, 1, 1, 'ATL-002', 'Atletismo - Carrera por montaña o campo a través',  1, 1, null, false, 2880, 'BackOfficeInitIncident.groovy', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(103, 1, 1, 'ATL-003', 'Atletismo - Carrera a pie o por asfalto',  1, 1, null, false, 2880, 'BackOfficeInitIncident.groovy', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(104, 1, 1, 'CIC-001', 'Ciclismo - Ciclodeportivo',  1, 1, null, false, 2880, 'BackOfficeInitIncident.groovy', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(105, 1, 1, 'CIC-002', 'Ciclismo - Carrera ciclista',  1, 1, null, false, 2880, 'BackOfficeInitIncident.groovy', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(106, 1, 1, 'CIC-003', 'Ciclismo - Cicloturista',  1, 1, null, false, 2880, 'BackOfficeInitIncident.groovy', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(107, 1, 1, 'AUT-001', 'Automovilismo - Carrera con vehículos a motor',  1, 1, null, false, 2880, 'BackOfficeInitIncident.groovy', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(108, 1, 1, 'VAR-001', 'Triatlon',  1, 1, null, false, 2880, 'BackOfficeInitIncident.groovy', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(109, 1, 1, 'VAR-002', 'Marcha ciclista',  1, 1, null, false, 2880, 'BackOfficeInitIncident.groovy', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(110, 1, 1, 'VAR-003', 'Vehículos históricos',  1, 1, null, false, 2880, 'BackOfficeInitIncident.groovy', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(101, 1, 1, 'ATL-001', 'Atletismo - Triatlón y similares',  1, 1, null, false, null, 'BackOfficeInitIncident.groovy', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(102, 1, 1, 'ATL-002', 'Atletismo - Carrera por montaña o campo a través',  1, 1, null, false, null, 'BackOfficeInitIncident.groovy', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(103, 1, 1, 'ATL-003', 'Atletismo - Carrera a pie o por asfalto',  1, 1, null, false, null, 'BackOfficeInitIncident.groovy', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(104, 1, 1, 'CIC-001', 'Ciclismo - Ciclodeportivo',  1, 1, null, false, null, 'BackOfficeInitIncident.groovy', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(105, 1, 1, 'CIC-002', 'Ciclismo - Carrera ciclista',  1, 1, null, false, null, 'BackOfficeInitIncident.groovy', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(106, 1, 1, 'CIC-003', 'Ciclismo - Cicloturista',  1, 1, null, false, null, 'BackOfficeInitIncident.groovy', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(107, 1, 1, 'AUT-001', 'Automovilismo - Carrera con vehículos a motor',  1, 1, null, false, null, 'BackOfficeInitIncident.groovy', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(108, 1, 1, 'VAR-001', 'Triatlon',  1, 1, null, false, null, 'BackOfficeInitIncident.groovy', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(109, 1, 1, 'VAR-002', 'Marcha ciclista',  1, 1, null, false, null, 'BackOfficeInitIncident.groovy', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(110, 1, 1, 'VAR-003', 'Vehículos históricos',  1, 1, null, false, null, 'BackOfficeInitIncident.groovy', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
-(201, 1, 2, 'ACT-001', 'Festejo popular',  1, 1, null, false, 2880, 'BackOfficeInitIncident.groovy', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(202, 1, 2, 'ACT-002', 'Tranumancia - Otros con animales',  1, 1, null, false, 2880, 'BackOfficeInitIncident.groovy', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(201, 1, 2, 'ACT-001', 'Festejo popular',  1, 1, null, false, null, 'BackOfficeInitIncident.groovy', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(202, 1, 2, 'ACT-002', 'Tranumancia - Otros con animales',  1, 1, null, false, null, 'BackOfficeInitIncident.groovy', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
-(301, 1, 3, 'ROD-001', 'Rodaje',  1, 1, null, false, 2880, 'BackOfficeInitIncident.groovy', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(301, 1, 3, 'ROD-001', 'Rodaje',  1, 1, null, false, null, 'BackOfficeInitIncident.groovy', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
