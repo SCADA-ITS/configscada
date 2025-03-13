@@ -24,6 +24,8 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_ES', 1, 'LBL_IMAGE_EDITOR_NEW_IMAGE_NAME', 'Nuevo nombre', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_IMAGE_EDITOR_DELETE', 'Eliminar', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_IMAGE_EDITOR_DELETE_IMAGE_CONFIRM', '¿Desea eliminar la imagen seleccionada?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_IMAGE_EDITOR_DELETE_SUCCESSFULLY', 'Imagen eliminada correctamente', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_IMAGE_EDITOR_DELETE_ERROR', 'Error al eliminar la imagen', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --en_GB
 ('en_GB', 1, 'LBL_IMAGE_EDITOR_SAVED_ERROR', 'Error to save the image', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -40,6 +42,8 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('en_GB', 1, 'LBL_IMAGE_EDITOR_NEW_IMAGE_NAME', 'New name', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_IMAGE_EDITOR_DELETE', 'Delete', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_IMAGE_EDITOR_DELETE_IMAGE_CONFIRM', 'Do you want to delete the selected image?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_IMAGE_EDITOR_DELETE_SUCCESSFULLY', 'Image deleted successfully', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_IMAGE_EDITOR_DELETE_ERROR', 'Error to delete the image', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --sk_SK
 
@@ -57,4 +61,6 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_CL', 1, 'LBL_IMAGE_EDITOR_ACTUAL_IMAGE_NAME', 'Nombre actual', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_IMAGE_EDITOR_NEW_IMAGE_NAME', 'Nuevo nombre', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_IMAGE_EDITOR_DELETE', 'Eliminar', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('es_CL', 1, 'LBL_IMAGE_EDITOR_DELETE_IMAGE_CONFIRM', '¿Desea eliminar la imagen seleccionada?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+('es_CL', 1, 'LBL_IMAGE_EDITOR_DELETE_IMAGE_CONFIRM', '¿Desea eliminar la imagen seleccionada?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_IMAGE_EDITOR_DELETE_SUCCESSFULLY', 'Imagen eliminada correctamente', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_IMAGE_EDITOR_DELETE_ERROR', 'Error al eliminar la imagen', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
