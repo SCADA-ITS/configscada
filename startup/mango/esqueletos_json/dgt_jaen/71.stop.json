@@ -65,7 +65,7 @@
             "intervalLoggingType": "INSTANT",
             "purgeType": "YEARS",
             "pointLocator": {
-                "range": "HOLDING_REGISTER",
+                "range": "COIL_STATUS",
                 "modbusDataType": "BINARY",
                 "writeType": "SETTABLE",
                 "additive": 0.0,
@@ -123,7 +123,7 @@
             "intervalLoggingType": "INSTANT",
             "purgeType": "YEARS",
             "pointLocator": {
-                "range": "HOLDING_REGISTER",
+                "range": "INPUT_STATUS",
                 "modbusDataType": "BINARY",
                 "writeType": "SETTABLE",
                 "additive": 0.0,
