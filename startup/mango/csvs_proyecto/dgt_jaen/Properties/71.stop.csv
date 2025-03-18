@@ -2,5 +2,5 @@ device_name;url_publisher;source_name;host;port(i);offset_stop_order(i);offset_s
 STP-1-01-CA-D;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;ES-02-CA;172.21.57.30;502;530;0
 STP-1-01-CA-C;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;ES-02-CA;172.21.57.30;502;531;1
 STP-1-01-CA-I;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;ES-02-CA;172.21.57.30;502;532;2
-STP-2-01-CZ-D;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;ES-04-CZ;172.21.17.60;502;524;0
-STP-2-01-CZ-I;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;ES-04-CZ;172.21.17.60;502;525;1
+STP-2-01-CZ-D;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;ES-04-CZ;172.21.17.60;502;525;0
+STP-2-01-CZ-I;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;ES-04-CZ;172.21.17.60;502;524;1
