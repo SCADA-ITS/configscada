@@ -1,9 +1,9 @@
 DO $$ 
 BEGIN
-  IF EXISTS (SELECT 1 FROM pg_namespace WHERE nspname = 'nogales_gip') THEN
+  IF EXISTS (SELECT 1 FROM pg_namespace WHERE nspname = 'incidents_gip') THEN
 
-		INSERT INTO nogales_gip.pdas (alias) VALUES('Patrullero');
-		INSERT INTO nogales_gip.pdas (alias) VALUES('Antonio');
+		INSERT INTO incidents_gip.pdas (alias) VALUES('Patrullero');
+		INSERT INTO incidents_gip.pdas (alias) VALUES('Antonio');
 		
 
   END IF;

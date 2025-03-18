@@ -1,9 +1,9 @@
 DO $$ 
 BEGIN
-  IF EXISTS (SELECT 1 FROM pg_namespace WHERE nspname = 'nogales_gip') THEN
+  IF EXISTS (SELECT 1 FROM pg_namespace WHERE nspname = 'incidents_gip') THEN
 	
   	INSERT INTO ui.backoffices (id, "name", description, "label", jdbc, "user", "password", "schema", default_metadata_backoffice, default_metadata_table, default_metadata_column, enabled) 
-	VALUES(3, 'nogales_gip', NULL, NULL, 'jdbc:postgresql://192.168.88.191:5430/rits', 'rits', 'uMuD7Uy0gpCRL4Jo1w6SOQ==', 'nogales_gip',
+	VALUES(3, 'incidents_gip', NULL, NULL, 'jdbc:postgresql://192.168.88.38:5430/rits', 'rits', 'uMuD7Uy0gpCRL4Jo1w6SOQ==', 'incidents_gip',
 	-- default_metadata_backoffice
 	'{}',
 	-- default_metadata_table
@@ -29,7 +29,7 @@ BEGIN
 	-- 
   	-- smartgen.sg_metadata_tables
   	--
-	INSERT INTO nogales_gip.sg_metadata_tables (id, name, label, label_singular, label_description, mdi_icon, support_images, support_attachments, metadata) VALUES
+	INSERT INTO incidents_gip.sg_metadata_tables (id, name, label, label_singular, label_description, mdi_icon, support_images, support_attachments, metadata) VALUES
 	(1, 'actions', 'LBL_ACTIONS', 'LBL_ACTION', 'LBL_ACTIONS_DESCRIPTION', NULL, false, false,  NULL),
 	(2, 'agents', 'LBL_AGENTS', 'LBL_AGENT', 'LBL_AGENTS_DESCRIPTION', NULL, false, false,  NULL),
 	(3, 'assigned_pdas', 'LBL_ASSIGNED_PDAS', 'LBL_ASSIGNED_PDA', 'LBL_ASSIGNED_PDAS_DESCRIPTION', NULL, false, false,  NULL),
@@ -99,12 +99,12 @@ BEGIN
 	(38, 'vehicle_types', 'LBL_VEHICLE_TYPES', 'LBL_VEHICLE_TYPE', 'LBL_VEHICLE_TYPES_DESCRIPTION', NULL, false, false,  NULL),
 	(39, 'vehicles', 'LBL_VEHICLES', 'LBL_VEHICLE', 'LBL_VEHICLES_DESCRIPTION', NULL, false, false,  NULL);
 
-	INSERT INTO nogales_gip.sg_metadata_tables (id, name, label, label_singular, label_description, mdi_icon, support_images, support_attachments, grid_id,metadata) VALUES
+	INSERT INTO incidents_gip.sg_metadata_tables (id, name, label, label_singular, label_description, mdi_icon, support_images, support_attachments, grid_id,metadata) VALUES
 	(25, 'participants', 'LBL_PARTICIPANTS', 'LBL_PARTICIPANT', 'LBL_PARTICIPANTS_DESCRIPTION', NULL, false, false, 9006, NULL);
 
-	--update nogales_gip.sg_metadata_tables set grid_id = 9005 where id = 4;
+	--update incidents_gip.sg_metadata_tables set grid_id = 9005 where id = 4;
 	
-	INSERT INTO nogales_gip.sg_metadata_columns (id, sg_metadata_table_id, column_name, "label", label_description, needs_translation, metadata) VALUES
+	INSERT INTO incidents_gip.sg_metadata_columns (id, sg_metadata_table_id, column_name, "label", label_description, needs_translation, metadata) VALUES
 	(0401, 4, 'incident_report_id', NULL, NULL, false, '{"position": 1 }'),
 	(0402, 4, 'action_id', NULL, NULL, false, '{"position": 2 }'),
 	(0403, 4, 'typology_id', NULL, NULL, false, '{"position": 3 }'),
