@@ -76,7 +76,7 @@ INSERT INTO conf.elements (element_type_id, element_subtype_id, element_id, loca
 (71, 26, 75, 0750071, NULL, NULL, 'STP-1-01-CA-D', 'STP-1-01-CA-D', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (71, 26, 76, 0760071, NULL, NULL, 'STP-1-01-CA-C', 'STP-1-01-CA-C', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (71, 26, 77, 0770071, NULL, NULL, 'STP-1-01-CA-I', 'STP-1-01-CA-I', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(71, 27, 78, 0780071, NULL, NULL, 'PG-1-01-CA', 'PG-1-01-CA', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+--(71, 27, 78, 0780071, NULL, NULL, 'PG-1-01-CA', 'PG-1-01-CA', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (71, 22, 79, 0790071, NULL, NULL, 'PMV-1-01-CA', 'PMV-1-01-CA', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (71, 12, 80, 0800071, NULL, NULL, 'AF-1-01-CZ-D', 'AF-1-01-CZ-D', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (71, 12, 81, 0810071, NULL, NULL, 'AF-1-01-CZ-C', 'AF-1-01-CZ-C', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -90,8 +90,8 @@ INSERT INTO conf.elements (element_type_id, element_subtype_id, element_id, loca
 (71, 11, 89, 0890071, NULL, NULL, 'SV-2-01-CZ-I', 'SV-2-01-CZ-I', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (71, 22, 90, 0900071, NULL, NULL, 'PMV-2-01-CZ', 'PMV-2-01-CZ', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (71, 26, 91, 0910071, NULL, NULL, 'STP-2-01-CZ-D', 'STP-2-01-CZ-D', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(71, 26, 92, 0920071, NULL, NULL, 'STP-2-01-CZ-I', 'STP-2-01-CZ-I', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(71, 27, 93, 0930071, NULL, NULL, 'PG-2-01-CZ', 'PG-2-01-CZ', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(71, 26, 92, 0920071, NULL, NULL, 'STP-2-01-CZ-I', 'STP-2-01-CZ-I', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+--(71, 27, 93, 0930071, NULL, NULL, 'PG-2-01-CZ', 'PG-2-01-CZ', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_type_id, element_id, element_value_state_id, value, enabled, visible, created_at, updated_at) VALUES
 (71, 1, 1, 1, NULL, 'Alba Electrónica', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -489,10 +489,10 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 (71, 4, 1, 77, NULL, '[{"zone":1,"type":"graphic","vms_group_id":26}]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (71, 1003, 1, 77, NULL, 'STP-1-01-CA-I', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
-(71, 1, 1, 78, NULL, 'Alba Electrónica', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(71, 3, 1, 78, NULL, 'Modbus', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(71, 4, 1, 78, NULL, '[{"zone":1,"type":"graphic","vms_group_id":27}]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(71, 1003, 1, 78, NULL, 'PG-1-01-CA', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+--(71, 1, 1, 78, NULL, 'Alba Electrónica', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+--(71, 3, 1, 78, NULL, 'Modbus', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+--(71, 4, 1, 78, NULL, '[{"zone":1,"type":"graphic","vms_group_id":27}]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+--(71, 1003, 1, 78, NULL, 'PG-1-01-CA', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (71, 1, 1, 79, NULL, 'Alba Electrónica', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (71, 3, 1, 79, NULL, 'DGT', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -562,12 +562,12 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 (71, 1, 1, 92, NULL, 'Alba Electrónica', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (71, 3, 1, 92, NULL, 'Modbus', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (71, 4, 1, 92, NULL, '[{"zone":1,"type":"graphic","vms_group_id":26}]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(71, 1003, 1, 92, NULL, 'STP-2-01-CZ-I', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 1003, 1, 92, NULL, 'STP-2-01-CZ-I', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
-(71, 1, 1, 93, NULL, 'Alba Electrónica', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(71, 3, 1, 93, NULL, 'Modbus', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(71, 4, 1, 93, NULL, '[{"zone":1,"type":"graphic","vms_group_id":27}]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(71, 1003, 1, 93, NULL, 'PG-2-01-CZ', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+--(71, 1, 1, 93, NULL, 'Alba Electrónica', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+--(71, 3, 1, 93, NULL, 'Modbus', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+--(71, 4, 1, 93, NULL, '[{"zone":1,"type":"graphic","vms_group_id":27}]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+--(71, 1003, 1, 93, NULL, 'PG-2-01-CZ', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO conf.element_io_controller_modules (element_type_id, element_id, module_type_id, module_id, enabled, visible, created_at, updated_at) VALUES
 (71, 1, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -647,7 +647,7 @@ INSERT INTO conf.element_io_controller_modules (element_type_id, element_id, mod
 (71, 75, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (71, 76, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (71, 77, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(71, 78, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+--(71, 78, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (71, 79, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (71, 80, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (71, 81, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -661,5 +661,5 @@ INSERT INTO conf.element_io_controller_modules (element_type_id, element_id, mod
 (71, 89, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (71, 90, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (71, 91, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(71, 92, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(71, 93, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(71, 92, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+--(71, 93, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
