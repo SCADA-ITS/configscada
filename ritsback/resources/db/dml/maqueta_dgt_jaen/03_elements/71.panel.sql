@@ -572,12 +572,12 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 (71, 1, 1, 92, NULL, 'Alba Electrónica', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (71, 3, 1, 92, NULL, 'Modbus', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (71, 4, 1, 92, NULL, '[{"zone":1,"type":"graphic","vms_group_id":26}]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(71, 1003, 1, 92, NULL, 'STP-2-01-CZ-I', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(71, 1003, 1, 92, NULL, 'STP-2-01-CZ-I', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
-(71, 1, 1, 93, NULL, 'Alba Electrónica', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(71, 3, 1, 93, NULL, 'Modbus', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(71, 4, 1, 93, NULL, '[{"zone":1,"type":"graphic","vms_group_id":27}]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(71, 1003, 1, 93, NULL, 'PG-2-01-CZ', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+-- (71, 1, 1, 93, NULL, 'Alba Electrónica', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+-- (71, 3, 1, 93, NULL, 'Modbus', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+-- (71, 4, 1, 93, NULL, '[{"zone":1,"type":"graphic","vms_group_id":27}]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+-- (71, 1003, 1, 93, NULL, 'PG-2-01-CZ', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO conf.element_io_controller_modules (element_type_id, element_id, module_type_id, module_id, enabled, visible, created_at, updated_at) VALUES
 (71, 1, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 

@@ -38,7 +38,7 @@ WHERE id=1018;
 
 INSERT INTO ui.module_values 
 (module_id, module_param_id, value) VALUES 
-(403, 5, 'http://172.21.3.203:8081/jasperserver?j_username=user&j_password=bitnami&userLocale=es_ES&reportUnit=/Reports'),
+(403, 5, 'http://172.21.3.202/jasperserver'),
 (1040, 8, '{"treeCustom": [1]}'),
 (1005, 8, '{"treeCustom": [4]}'),
 (901, 4, '901'),
