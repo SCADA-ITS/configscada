@@ -1,6 +1,8 @@
 INSERT INTO ui.maps (id, name, description, "label", icon, longitude, latitude, zoom, zoom_max, zoom_min, limit_init_lon, limit_init_lat, limit_end_lon, limit_end_lat, custom_provider_url, default_zoom_search, dark_mode) VALUES 
 (1, 'MAP', 'Map', 'LBL_MENU_ITEM_MAP', NULL, -58, -34.54, 8, 16, 8, -59.14, -34.04, -58, -35.04, null, null, false);
 
+INSERT INTO ui.map_incidents(id, incident_graphic_icon_id, incident_report_module_action_id, incident_wizard_module_action_id) VALUES
+(1, 1000, 100401, 101301);
 
 INSERT INTO ui.map_layers (id, base_layer, map_id, "name", description, "label", icon, visible) VALUES 
 (2, NULL, 1, 'CCTV', 'CCTV', 'LBL_LAYER_CCTV', NULL, true),
@@ -89,8 +91,8 @@ INSERT INTO ui.map_layer_element_zooms (map_layer_element_id, zoom_lower, zoom_u
 (66, 8, 16, 4, -58.29105044171893, -34.54553311460827, false, null, true, false, '#000000', null),
 (67, 8, 16, 4, -58.36707757214754, -34.67099803386465, false, null, true, false, '#000000', null),
 (68, 8, 16, 4, -58.41317940499244, -34.48565690503931, false, null, true, false, '#000000', null),
-(69, 8, 16, 4, -58.90433433004708, -34.34196301925897, false, null, true, false, '#000000', null),
-(70, 8, 16, 4, -59.0650461219165, -34.34173435817256, false, null, true, false, '#000000', null),
+(69, 8, 16, 4, -58.90433433004708, -34.40196301925897, false, null, true, false, '#000000', null),
+(70, 8, 16, 4, -59.0650461219165, -34.40173435817256, false, null, true, false, '#000000', null),
 (71, 8, 16, 71, -58.7009270698308, -34.55162891514033,  false, null, true, false, '#000000', null),
 (72, 8, 16, 71, -58.69822881064771, -34.67713081866339, false, null, true, false, '#000000', null),
 (73, 8, 16, 71, -58.75408226875065, -34.49634697265635, false, null, true, false, '#000000', null),
