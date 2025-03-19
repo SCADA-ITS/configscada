@@ -98,7 +98,7 @@
 				<p:param>-Dfile.encoding=UTF-8</p:param>
 			</p:parameters>
 		</p:proc>
-		<p:proc id="9" enabled="false">
+		<p:proc id="9" enabled="true">
 			<p:name>VIRTUAL-EQUIPMENT-MANAGER</p:name>
 			<p:path>/home/admin/app/backrits/</p:path>
 			<p:executable>virtual-equipment-manager.jar</p:executable>
