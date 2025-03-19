@@ -21,7 +21,7 @@ INSERT INTO ui.grid_option_values(grid_id, grid_option_id, value) VALUES
 (2, 13, 'true'),
 (2, 14, 'false'),
 (2, 15, 'false'),
-(2, 16, 'img/grid/camera.png'),
+(2, 16, 'img/grid/element_type_02.png'),
 (2, 17, 'true');
 
 INSERT INTO ui.grid_commands(grid_id, "position", "label", icon, "default", module_action_id, args, view_type_id, multiselect, show_text, item_required) VALUES

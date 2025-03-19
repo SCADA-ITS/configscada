@@ -18,5 +18,12 @@
 	  <p:use_adapter>true</p:use_adapter>
     </p:field>
   </p:fields>
+  <p:alarms>
+    <p:alarm source="door_open" active_value="true" alarm_config_id="20071"></p:alarm>
+    <p:alarm source="pixel_error" active_value="true" alarm_config_id="40071"></p:alarm>
+    <p:alarm source="photocell_error" active_value="true" alarm_config_id="50071"></p:alarm>
+    <p:alarm source="warning_temperature" active_value="true" alarm_config_id="60071"></p:alarm>
+    <p:alarm source="critical_temperature" active_value="true" alarm_config_id="70071"></p:alarm>
+  </p:alarms>
 </p:json_generic_mango_v1>
 

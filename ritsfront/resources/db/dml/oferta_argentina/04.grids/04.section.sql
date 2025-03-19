@@ -15,7 +15,9 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (040010, 4, 1, 10, true, false, false, false, 'LBL_OCCUPANCY', 'LBL_OCCUPANCY', 'ElementTypeParam:4:2:6', false, false, 'left', false, false, 100, NULL, true, true, NULL, NULL, NULL, NULL),
 (040011, 4, 1, 11, true, false, false, false, 'LBL_VEH_SPEED_1', 'LBL_VEH_SPEED_1', 'ElementTypeParam:4:2:80', false, false, 'left', false, false, 100, NULL, true, true, NULL, NULL, NULL, NULL),
 (040012, 4, 1, 12, true, false, false, false, 'LBL_VEH_SPEED_2', 'LBL_VEH_SPEED_2', 'ElementTypeParam:4:2:81', false, false, 'left', false, false, 100, NULL, true, true, NULL, NULL, NULL, NULL),
-(040013, 4, 1, 13, true, false, false, false, 'LBL_VEH_SPEED_3', 'LBL_VEH_SPEED_3', 'ElementTypeParam:4:2:82', false, false, 'left', false, false, 100, NULL, true, true, NULL, NULL, NULL, NULL);
+(040013, 4, 1, 13, true, false, false, false, 'LBL_VEH_SPEED_3', 'LBL_VEH_SPEED_3', 'ElementTypeParam:4:2:82', false, false, 'left', false, false, 100, NULL, true, true, NULL, NULL, NULL, NULL),
+(040014, 4, 1, 13, true, false, false, false, 'LBL_VEH_LENGTH_1', 'LBL_VEH_LENGTH_1', 'ElementTypeParam:4:2:60', false, false, 'left', false, false, 100, NULL, true, true, NULL, NULL, NULL, NULL),
+(040015, 4, 1, 13, true, false, false, false, 'LBL_VEH_LENGTH_2', 'LBL_VEH_LENGTH_2', 'ElementTypeParam:4:2:61', false, false, 'left', false, false, 100, NULL, true, true, NULL, NULL, NULL, NULL);
 
 
 INSERT INTO ui.grid_option_values(grid_id, grid_option_id, value) VALUES
@@ -28,7 +30,7 @@ INSERT INTO ui.grid_option_values(grid_id, grid_option_id, value) VALUES
 (4, 11, 'true'),
 (4, 12, 'true'),
 (4, 13, 'true'),
-(4, 14, 'true'),
+(4, 14, 'false'),
 (4, 15, 'false'),
 (4, 16, 'img/grid/element_type_04.png'),
 (4, 17, 'true');

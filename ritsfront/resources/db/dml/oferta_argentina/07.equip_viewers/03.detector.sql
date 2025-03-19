@@ -1,5 +1,5 @@
-INSERT INTO ui.equip_viewers (id, name, description, "label", icon, show_info_tab, show_childs, show_actions, initial_tab, measure_width, measure_max_rows, measure_only, graphic_icon_id, no_show_properties, show_historical_chart) VALUES
-('ElementType:3', 'Detector', 'Detector', 'LBL_ELEMENT_TYPE_DETECTOR', NULL, true, false, false, null, 450, 3, null, 3, true, true);
+INSERT INTO ui.equip_viewers (id, name, description, "label", icon, show_info_tab, show_childs, show_actions, initial_tab, measure_width, measure_max_rows, measure_only, graphic_icon_id, no_show_properties) VALUES
+('ElementType:3', 'Detector', 'Detector', 'LBL_ELEMENT_TYPE_DETECTOR', NULL, true, false, false, null, 450, 3, null, 3, true);
 
 INSERT INTO ui.equip_viewer_tabs (equip_viewer_id, module_action_id, alias, description, "label", icon, "position", visible) VALUES
 ('ElementType:3', 100501, 'Alarms module', 'Alarms module', 'LBL_ALARMS', NULL, 1, true);
@@ -19,9 +19,6 @@ INSERT INTO ui.equip_viewer_measures (equip_viewer_grp_measure_id, vo_entities_i
 (0301, 'ElementTypeParam:3:2:9', 2, true),
 (0302, 'ElementTypeParam:3:2:40', 1, true),
 (0302, 'ElementTypeParam:3:2:41', 2, true),
-(0302, 'ElementTypeParam:3:2:42', 3, true),
-(0302, 'ElementTypeParam:3:2:43', 4, true),
 (0303, 'ElementTypeParam:3:2:20', 1, true),
-(0303, 'ElementTypeParam:3:2:21', 2, true),
-(0303, 'ElementTypeParam:3:2:22', 3, true);
+(0303, 'ElementTypeParam:3:2:21', 2, true);
 

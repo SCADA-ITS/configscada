@@ -21,9 +21,8 @@ INSERT INTO ui.grid_option_values(grid_id, grid_option_id, value) VALUES
 (71, 13, 'true'),
 (71, 14, 'false'),
 (71, 15, 'false'),
-(71, 16, 'img/grid/panel.png'),
-(71, 17, 'true'),
-(71, 22, NULL);
+(71, 16, 'img/grid/element_type_71.png'),
+(71, 17, 'true');
 
 INSERT INTO ui.grid_commands(grid_id, "position", "label", icon, "default", module_action_id, args, view_type_id, multiselect, show_text, item_required) VALUES
 (71, 1, 'LBL_CMD_VIEW_EQUIPMENT', 'mdi mdi-eye', true, 101401, NULL, 1, false, false, false),

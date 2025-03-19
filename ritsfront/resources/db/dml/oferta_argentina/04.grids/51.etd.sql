@@ -12,10 +12,6 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 INSERT INTO ui.grid_option_values(grid_id, grid_option_id, value) VALUES
 (51, 1, 'true'),
 (51, 2, 'true'),
-(51, 3, NULL),
-(51, 4, NULL),
-(51, 5, NULL),
-(51, 6, NULL),
 (51, 7, 'true'),
 (51, 8, 'true'),
 (51, 9, 'false'),
@@ -26,12 +22,7 @@ INSERT INTO ui.grid_option_values(grid_id, grid_option_id, value) VALUES
 (51, 14, 'false'),
 (51, 15, 'false'),
 (51, 16, 'img/grid/element_type_51.png'),
-(51, 17, 'true'),
-(51, 18, NULL),
-(51, 19, NULL),
-(51, 20, 'true'),
-(51, 21, NULL),
-(51, 22, NULL);
+(51, 17, 'true');
 
 INSERT INTO ui.grid_commands(grid_id, "position", "label", icon, "default", module_action_id, args, view_type_id, multiselect, show_text, item_required) VALUES
 (51, 1, 'LBL_CMD_VIEW', 'mdi mdi-eye', true, 101401, null, null, false, false, true),
