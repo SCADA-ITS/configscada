@@ -28,7 +28,15 @@ INSERT INTO ui.modules
 (926, 4, 'SELECTOR_TREE_NODES_SINOPTICO_UNIFILAR_SAI_SUR_DP2', 'SELECTOR_TREE_NODES_SINOPTICO_UNIFILAR_SAI_SUR_DP2', 1, NULL, 'modules/synopticModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 (927, 4, 'SELECTOR_TREE_NODES_SINOPTICO_UNIFILAR_SAI_SUR_DP3', 'SELECTOR_TREE_NODES_SINOPTICO_UNIFILAR_SAI_SUR_DP3', 1, NULL, 'modules/synopticModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 (928, 4, 'SELECTOR_TREE_NODES_SINOPTICO_UNIFILAR_SAI_NOR_DP4', 'SELECTOR_TREE_NODES_SINOPTICO_UNIFILAR_SAI_NOR_DP4', 1, NULL, 'modules/synopticModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
-(929, 4, 'SELECTOR_TREE_NODES_SINOPTICO_UNIFILAR_SAI_SUR_DP4', 'SELECTOR_TREE_NODES_SINOPTICO_UNIFILAR_SAI_SUR_DP4', 1, NULL, 'modules/synopticModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL);
+(929, 4, 'SELECTOR_TREE_NODES_SINOPTICO_UNIFILAR_SAI_SUR_DP4', 'SELECTOR_TREE_NODES_SINOPTICO_UNIFILAR_SAI_SUR_DP4', 1, NULL, 'modules/synopticModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+
+(11000, 8, 'Selector Tree Module', 'Selector Tree Module', 1, null, 'modules/selectorModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(11001, 9, 'HISTORICAL DATA PMV', 'HISTORICAL DATA', 1, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(11002, 9, 'HISTORICAL DATA SEM', 'HISTORICAL DATA', 1, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(11003, 9, 'HISTORICAL DATA PRES', 'HISTORICAL DATA', 1, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(11004, 9, 'HISTORICAL DATA LIGHTNING CIRCUIT', 'HISTORICAL DATA', 1, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(11005, 9, 'HISTORICAL DATA BARRIER', 'HISTORICAL DATA', 1, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(11006, 9, 'HISTORICAL DATA CAM', 'HISTORICAL DATA', 1, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL);
 
 
 
@@ -69,7 +77,15 @@ INSERT INTO ui.module_values
 (926, 4, '926'),
 (927, 4, '927'),
 (928, 4, '928'),
-(929, 4, '929');
+(929, 4, '929'),
+
+(11000, 9, '11'),
+(11001, 13, '11'), (11001, 14, 'pmv'),
+(11002, 13, '11'), (11002, 14, 'sem'),
+(11003, 13, '11'), (11003, 14, 'pressurization'),
+(11004, 13, '11'), (11004, 14, 'lightning_circuit'),
+(11005, 13, '11'), (11005, 14, 'barrier'),
+(11006, 13, '11'), (11006, 14, 'cam');
 
 INSERT INTO ui.window_values 
 (module_id, window_param_id, value) VALUES 
@@ -303,5 +319,58 @@ INSERT INTO ui.window_values
 (929, 10, 'img/module/default.png'),
 (929, 11, '#464646'),
 (929, 12, 'LBL_SELECTOR_TREE_NODES_SINOPTICO_UNIFILAR_SAI_SUR_DP4'),
-(929, 14, 'true');
+(929, 14, 'true'),
 
+(11000, 8, 'true'),
+(11000, 10, 'img/module/default.png'),
+(11000, 11, '#464646'),
+(11000, 12, 'LBL_MENU_ITEM_BACKOFFICE_HISTORICAL_DATA'),
+(11000, 14, 'true'),
+
+(11001, 4, '825'),
+(11001, 5, '1600'),
+(11001, 8, 'true'),
+(11001, 10, 'img/module/default.png'),
+(11001, 11, '#464646'),
+(11001, 12, 'LBL_HISTORICAL_DATA_PMV'),
+(11001, 14, 'true'),
+
+(11002, 4, '825'),
+(11002, 5, '1600'),
+(11002, 8, 'true'),
+(11002, 10, 'img/module/default.png'),
+(11002, 11, '#464646'),
+(11002, 12, 'LBL_HISTORICAL_DATA_SEM'),
+(11002, 14, 'true'),
+
+(11003, 4, '825'),
+(11003, 5, '1600'),
+(11003, 8, 'true'),
+(11003, 10, 'img/module/default.png'),
+(11003, 11, '#464646'),
+(11003, 12, 'LBL_HISTORICAL_DATA_PRES'),
+(11003, 14, 'true'),
+
+(11004, 4, '825'),
+(11004, 5, '1600'),
+(11004, 8, 'true'),
+(11004, 10, 'img/module/default.png'),
+(11004, 11, '#464646'),
+(11004, 12, 'LBL_HISTORICAL_DATA_PRES'),
+(11004, 14, 'true'),
+
+(11005, 4, '825'),
+(11005, 5, '1600'),
+(11005, 8, 'true'),
+(11005, 10, 'img/module/default.png'),
+(11005, 11, '#464646'),
+(11005, 12, 'LBL_HISTORICAL_DATA_PRES'),
+(11005, 14, 'true'),
+
+(11006, 4, '825'),
+(11006, 5, '1600'),
+(11006, 8, 'true'),
+(11006, 10, 'img/module/default.png'),
+(11006, 11, '#464646'),
+(11006, 12, 'LBL_HISTORICAL_DATA_CAM'),
+(11006, 14, 'true');

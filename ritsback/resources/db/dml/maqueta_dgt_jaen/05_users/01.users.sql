@@ -81,6 +81,7 @@ INSERT INTO conf.users
 (user_id, role_id, name_, password_, password_expired_at, session_expire_time_s, locked_until, preset, allow_multiple_sessions, full_name, email, locale_code,  enabled, visible, created_at, updated_at) VALUES
 (1, 1, 'administrador', 'g6dmWgvubUf+S4s1hlEOpw==', NULL, NULL, NULL, true, true, 'Internal admin', 'administrador@rits.com', 'es_ES', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (2, 2, 'operador', '+h6zFJYmXAgFDSBlq6LFSw==', NULL, NULL, NULL, true, true, 'Internal operator', 'operador@rits.com', 'es_ES', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(3, 4, 'visualizador', 'uKtqDqv/9iQdwi9kc+eKPg==', NULL, NULL, NULL, true, true, 'Internal visualizator', 'visualizator@rits.com', 'es_ES', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (1001, 1, 'admin', 'Ren+avYOP7drGR8ltBGb4A==', NULL, NULL, NULL, true, true, 'System admin', 'admin@rits.com', 'es_ES', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 -- 

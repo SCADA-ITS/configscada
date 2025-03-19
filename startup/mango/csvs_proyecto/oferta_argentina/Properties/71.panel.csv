@@ -1,0 +1,5 @@
+device_name;source_name;url_publisher
+PMV-1;PANELES;http:\/\/192.168.88.38:3000\/api\/v2\/generic\/
+PMV-2;PANELES;http:\/\/192.168.88.38:3000\/api\/v2\/generic\/
+PMV-3;PANELES;http:\/\/192.168.88.38:3000\/api\/v2\/generic\/
+PMV-4;PANELES;http:\/\/192.168.88.38:3000\/api\/v2\/generic\/
