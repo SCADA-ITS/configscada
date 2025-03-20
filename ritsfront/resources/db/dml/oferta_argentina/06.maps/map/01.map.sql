@@ -6,7 +6,7 @@ INSERT INTO ui.map_incidents(id, incident_graphic_icon_id, incident_report_modul
 
 INSERT INTO ui.map_layers (id, base_layer, map_id, "name", description, "label", icon, visible) VALUES 
 (2, NULL, 1, 'CCTV', 'CCTV', 'LBL_LAYER_CCTV', NULL, true),
-(4, NULL, 1, 'ETD', 'ETD', 'LBL_LAYER_ETD', NULL, true),
+(4, NULL, 1, 'ETD', 'ETD', 'LBL_ELEMENT_TYPE_ETD', NULL, true),
 (71, NULL, 1, 'PMV', 'PMV', 'LBL_LAYER_PMV', NULL, true);
 
 

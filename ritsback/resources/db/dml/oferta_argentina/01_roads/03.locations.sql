@@ -1,4 +1,4 @@
-INSERT INTO conf.locations (location_id, location_type_id, alias, description, lat, lon, lane, enabled, visible, created_at, updated_at) VALUES
+INSERT INTO conf.locations (location_id, location_type_id, alias, description, lon, lat, lane, enabled, visible, created_at, updated_at) VALUES
 (0010002, 1, ' pk 0+100', ' pk 0+100', NULL, NULL, NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (0020002, 1, ' pk 0+100', ' pk 0+100', NULL, NULL, NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (0030002, 1, ' pk 0+100', ' pk 0+100', NULL, NULL, NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
