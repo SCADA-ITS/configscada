@@ -50,6 +50,31 @@ public class ProcessFrame_71{
 
 	}
 
+    public void processResponse_0x9A(Element element, List<Byte> data, List<ElementValue> elementValuesToSend,
+			List<AlarmConfig> activateAlarmsToSend, List<AlarmConfig> deactivateAlarmsToSend) {
+		
+		def pmv;
+
+		try{
+
+			if(element.getElementSubtypeId() == GR_TXT_PMV){
+				pmv = shell.parse(new File(ResourcesUtil.getPath("io-controller/groovy/une/pmv_subtypes/dgt/ElementSubtype_18_71.groovy")));
+				pmv.content(element, data, elementValuesToSend, log);
+			
+			}else if(element.getElementSubtypeId() == GR_TXT_GR_PMV){
+				pmv = shell.parse(new File(ResourcesUtil.getPath("io-controller/groovy/une/pmv_subtypes/dgt/ElementSubtype_22_71.groovy")));
+				pmv.content(element, data, elementValuesToSend, log);
+			
+			}else{
+				log.debug("No se encuentra el subtipo del panel")
+			}
+
+		}catch(Exception e) {
+			log.debug(e.getMessage());
+		}
+
+	}
+
     public List<Byte> processSignallingCommand_2(SignallingCommand signallingCommand, Element element) {
 
 		List<Byte> frame = new ArrayList<>();

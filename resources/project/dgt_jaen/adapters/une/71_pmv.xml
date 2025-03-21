@@ -22,6 +22,10 @@
             <code>0x9B</code>
             <use_adapter>true</use_adapter>
         </response>
+        <response>
+            <code>0x9A</code>
+            <use_adapter>true</use_adapter>
+        </response>
     </response_list>
 
     <!-- Requests -->
