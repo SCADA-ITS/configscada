@@ -3,7 +3,7 @@ INSERT INTO conf.elements (element_type_id, element_subtype_id, element_id, loca
 (1, 5, 2, 0020001, NULL, NULL, 'EM-2-01-CA', 'EM-2-01-CA', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_type_id, element_id, element_value_state_id, value, enabled, visible, created_at, updated_at) VALUES
-(1, 4001, 1, 1, NULL, '192.168.88.196', true, true, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), 
+(1, 4001, 1, 1, NULL, '192.168.88.201', true, true, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), 
 (1, 4002, 1, 1, NULL, '5000', true, true, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), 
 (1, 4003, 1, 1, NULL, '0x05 0x20', true, true, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), 
 (1, 4004, 1, 1, NULL, '0x06', true, true, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), 

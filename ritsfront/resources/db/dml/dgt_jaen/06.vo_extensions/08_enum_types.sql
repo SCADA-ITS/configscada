@@ -7,7 +7,9 @@ INSERT INTO ui.vo_enum_types(id, alias, description, enabled, visible) VALUES
 (6, 'PASystemState', 'PASystemState', true, true),
 (7, 'OpenClose_presurization', 'OpenClose_presurization', true, true),
 (8, 'FanDirection', 'FanDirection', true, true),
-(9, 'Normal', 'Racheado', true, true);
+(9, 'Normal', 'Racheado', true, true),
+(10, 'tipo precipitacion', 'tipo precipitacion', true, true);
+
 
 
 
@@ -42,7 +44,14 @@ INSERT INTO ui.vo_enum_type_values(id, vo_enum_type_id, "key", value, "translate
 (19, 8, '2', 'LBL_VO_ENUM_TYPE_VALUES_INVERSA', TRUE, null),
 
 (20, 9, '1', 'LBL_VO_ENUM_TYPE_VALUES_NORMAL', TRUE, null),
-(21, 9, '2', 'LBL_VO_ENUM_TYPE_VALUES_RACHEADO', TRUE, null);
+(21, 9, '2', 'LBL_VO_ENUM_TYPE_VALUES_RACHEADO', TRUE, null),
+
+(22, 10, '0', 'LBL_VO_ENUM_TYPE_VALUES_NINGUNA', TRUE, null),
+(23, 10, '1', 'LBL_VO_ENUM_TYPE_VALUES_LLUVIA', TRUE, null),
+(24, 10, '2', 'LBL_VO_ENUM_TYPE_VALUES_LLUVIA_NIEVE', TRUE, null),
+(25, 10, '3', 'LBL_VO_ENUM_TYPE_VALUES_NIEVE', TRUE, null),
+(26, 10, '4', 'LBL_VO_ENUM_TYPE_VALUES_GRANIZO', TRUE, null);
+
 
 
 
@@ -50,6 +59,7 @@ INSERT INTO ui.vo_enum_type_values(id, vo_enum_type_id, "key", value, "translate
 
 INSERT INTO ui.vo_entity_enum_types(vo_entity_id, enum_type_id) VALUES
 ('ElementTypeParam:1:2:28', 9),
+('ElementTypeParam:1:2:19', 10),
 
 ('ElementTypeParam:9:2:1', 8),
 ('ElementTypeParam:9:2:28', 2),
@@ -70,4 +80,6 @@ INSERT INTO ui.vo_entity_enum_types(vo_entity_id, enum_type_id) VALUES
 ('ElementTypeParam:84:2:1', 4),
 
 ('ElementTypeParam:87:2:4', 3);
+
+
 

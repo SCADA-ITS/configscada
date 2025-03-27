@@ -23,6 +23,9 @@ public class ProcessFrame_1 {
     def windDirValue;
     def windTypeValue;
     def dewPointTempValue;
+    def intPrecipitation;
+    def precipitationValue;
+    def typePrecipitation;
 
     // Variables para almacenar la fecha y la hora
     def diaValue;
@@ -39,6 +42,9 @@ public class ProcessFrame_1 {
     static final Long TYPE_PARAM_MEASURE = 2L;
     static final long PARAM_MEASURE_AIR_RPESSURE = 4L;
     static final long PARAM_MEASURE_RELATIVE_HUMIDITY = 10L;
+    static final long PARAM_MEASURE_INTENSITY_PRECIPITATION = 11L;
+    static final long PARAM_MEASURE_PRECIPITATION_TYPE = 19L;
+    static final long PARAM_MEASURE_PRECIPITATION_QUANTITY = 23L;
     static final long PARAM_MEASURE_WIND_SPEED = 26L;
     static final long PARAM_MEASURE_WIND_DIRECTION = 27L;
     static final long PARAM_MEASURE_AIR_TEMPERATURE = 17L;
@@ -55,7 +61,7 @@ public class ProcessFrame_1 {
     public void processResponse_0x87(Element element, List<Byte> data, List<ElementValue> elementValuesToSend,
                                      List<AlarmConfig> activateAlarmsToSend, List<AlarmConfig> deactivateAlarmsToSend) {
         StringBuilder dataHex = new StringBuilder();
-
+        log.debug("ENTRA")
         for (Byte b : data) {
             dataHex.append(String.format("%02X", b & 0xFF)); // Se eliminan los espacios
         }
@@ -77,6 +83,9 @@ public class ProcessFrame_1 {
             "02": "Humedad relativa",
             "03": "Presión atmosférica",
             "04": "Visibilidad",
+            "05": "Intensidad de precipitacion",
+            "06": "Cantidad de precipitacion",
+            "07": "tipo de precipitacion",
             "0A": "Velocidad del viento",
             "0B": "Dirección del viento",
             "0C": "Tipo de viento",
@@ -84,7 +93,7 @@ public class ProcessFrame_1 {
         ]
 		int startIndex = 11 // El primer byte de las medidas, se empieza en 11 por que despues de quitar los bytes especiales la primera medida comienza en esa posicion.
         encontrarMedidas(dataString, medidas, startIndex)
-
+        log.debug("TEMPERATURA----------> " + airTempValue)
         List<ElementValue> listElements = new ArrayList();
         listElements.add(elementSetValue(PARAM_MEASURE_AIR_RPESSURE, TYPE_PARAM_MEASURE,element.getId(), airPressureValue.toString()))
         listElements.add(elementSetValue(PARAM_MEASURE_RELATIVE_HUMIDITY, TYPE_PARAM_MEASURE,element.getId(), relHumValue.toString()))
@@ -96,6 +105,10 @@ public class ProcessFrame_1 {
         listElements.add(elementSetValue(PARAM_MEASURE_WIND_TYPE, TYPE_PARAM_MEASURE,element.getId(), windTypeValue.toString()))
         listElements.add(elementSetValue(PARAM_MEASURE_DATE, TYPE_PARAM_MEASURE,element.getId(), timestampValue.toString()))
         listElements.add(elementSetValue(PARAM_MEASURE_PERIOD, TYPE_PARAM_MEASURE,element.getId(), periodoIntegracionValue.toString()))
+        listElements.add(elementSetValue(PARAM_MEASURE_INTENSITY_PRECIPITATION, TYPE_PARAM_MEASURE,element.getId(), intPrecipitation.toString()))
+        listElements.add(elementSetValue(PARAM_MEASURE_PRECIPITATION_TYPE, TYPE_PARAM_MEASURE,element.getId(), typePrecipitation.toString()))
+        listElements.add(elementSetValue(PARAM_MEASURE_PRECIPITATION_QUANTITY, TYPE_PARAM_MEASURE,element.getId(), precipitationValue.toString()))
+
         EntitiesManager.getInstance().putElementValues(listElements);
 		return;
     }
@@ -158,6 +171,8 @@ public class ProcessFrame_1 {
 
             // Capturar el valor en bytes
             valor = bytes[i..(i + numBytes - 1)]
+            log.debug("VALOR-------> " + valor)
+            log.debug("CODIGO-------> " + codigo)
             i += numBytes
 
             if (valor.size() == numBytes) {
@@ -185,6 +200,9 @@ public class ProcessFrame_1 {
             case "02": return 3 // Humedad relativa
             case "03": return 4 // Presión atmosférica
             case "04": return 4 // Visibilidad
+            case "05": return 3 // Intensidad de precipitaciones
+            case "06": return 4 // Cantidad de precipitacion
+            case "07": return 1 // Naturaleza de las precipitaciones
             case "0A": return 3 // Velocidad del viento
             case "0B": return 3 // Dirección del viento
             case "0C": return 1 // Tipo de viento
@@ -198,6 +216,7 @@ public class ProcessFrame_1 {
         switch (codigo) {
             case "01":
                 airTempValue = (bytesToASCII(valor) as Double) / 100 
+                log.debug("TEMPREATURA AIRE-----> " + airTempValue)
                 break
             case "02":
                 relHumValue = bytesToASCII(valor) 
@@ -208,6 +227,15 @@ public class ProcessFrame_1 {
             case "04":
                 visibilityValue = bytesToASCII(valor)
                 break
+            case "05":
+                intPrecipitation = (bytesToASCII(valor) as Double) /10
+                break
+            case "06":
+                precipitationValue = (bytesToASCII(valor) as Double) /10
+                break
+            case "07":
+                typePrecipitation = bytesToASCII(valor)
+                break                
             case "0A":
                 windVelValue = bytesToASCII(valor)
                 break

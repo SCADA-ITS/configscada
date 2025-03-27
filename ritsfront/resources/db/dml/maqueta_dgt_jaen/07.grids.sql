@@ -46,6 +46,9 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (0100011, 1, 3, 11, true, false, false, false, 'LBL_ELEMENT_TYPE_PARAM_DEW_POINT_TEMPERATURE', 'LBL_ELEMENT_TYPE_PARAM_DEW_POINT_TEMPERATURE_DESC', 'ElementTypeParam:1:2:18', false, false, 'left', false, false, 250, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
 (0100012, 1, 1, 12, true, false, false, false, 'LBL_ELEMENT_TYPE_PARAM_VISIBILITY', 'LBL_ELEMENT_TYPE_PARAM_VISIBILITY_DESC', 'ElementTypeParam:1:2:20', false, false, 'left', false, false, 250, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
 (0100013, 1, 1, 13, true, false, false, false, 'LBL_ELEMENT_TYPE_PARAM_WIND_TYPE', 'LBL_ELEMENT_TYPE_PARAM_WIND_TYPE_DESC', 'ElementTypeParam:1:2:28', false, false, 'left', true, false, 250, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(0100014, 1, 3, 14, true, false, false, false, 'LBL_ELEMENT_TYPE_PARAM_PRECIPITATION_INTENSITY', 'LBL_ELEMENT_TYPE_PARAM_PRECIPITATION_INTENSITY_DESC', 'ElementTypeParam:1:2:11', false, false, 'left', false, false, 250, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(0100015, 1, 1, 15, true, false, false, false, 'LBL_ELEMENT_TYPE_PARAM_PRECIPITATION_TYPE', 'LBL_ELEMENT_TYPE_PARAM_PRECIPITATION_TYPE_DESC', 'ElementTypeParam:1:2:19', false, false, 'left', true, false, 250, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(0100016, 1, 3, 16, true, false, false, false, 'LBL_ELEMENT_TYPE_PARAM_PRECIPITATION_QUANTITY', 'LBL_ELEMENT_TYPE_PARAM_PRECIPITATION_QUANTITY_DESC', 'ElementTypeParam:1:2:23', false, false, 'left', false, false, 250, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
 
 
 (020001, 2, 1, 1, true, false, false, false, 'LBL_GRID_FIELD_ID', 'LBL_GRID_FIELD_ID', 'id', true, false, null, false, false, 500, NULL, true, false, NULL, NULL, NULL, NULL, NULL),
@@ -1065,6 +1068,11 @@ INSERT INTO ui.grid_field_icons(grid_field_id, icon, value, show_value, badge_co
 INSERT INTO ui.grid_field_replacements(grid_field_id, "label", value, enabled) VALUES
 (0100013, 'LBL_GRID_FIELD_REPLACEMENTS_NORMAL', '1', true),
 (0100013, 'LBL_GRID_FIELD_REPLACEMENTS_RACHEADO', '2', true),
+(0100015, 'LBL_GRID_FIELD_REPLACEMENTS_NINGUNA', '0', true),
+(0100015, 'LBL_GRID_FIELD_REPLACEMENTS_LLUVIA', '1', true),
+(0100015, 'LBL_GRID_FIELD_REPLACEMENTS_LLUVIA_NIEVE', '2', true),
+(0100015, 'LBL_GRID_FIELD_REPLACEMENTS_NIEVE', '3', true),
+(0100015, 'LBL_GRID_FIELD_REPLACEMENTS_GRANIZO', '4', true),
 
 (080006, 'LBL_GRID_FIELD_REPLACEMENTS_UP', '1', true),
 (080006, 'LBL_GRID_FIELD_REPLACEMENTS_DOWN', '2', true),

@@ -163,9 +163,12 @@ INSERT INTO ui.equip_viewer_measures (equip_viewer_grp_measure_id, vo_entities_i
 --Meteo DGT
 (05000101,'ElementTypeParam:1:2:4', 5, True),
 (05000101,'ElementTypeParam:1:2:10', 4, True),
+(05000101,'ElementTypeParam:1:2:11', 11, True),
 (05000101,'ElementTypeParam:1:2:17', 3, True),
 (05000101,'ElementTypeParam:1:2:18', 10, True),
+(05000101,'ElementTypeParam:1:2:19', 12, True),
 (05000101,'ElementTypeParam:1:2:20', 6, True),
+(05000101,'ElementTypeParam:1:2:23', 13, True),
 (05000101,'ElementTypeParam:1:2:26', 7, True),
 (05000101,'ElementTypeParam:1:2:27', 8, True),
 (05000101,'ElementTypeParam:1:2:28', 9, True),

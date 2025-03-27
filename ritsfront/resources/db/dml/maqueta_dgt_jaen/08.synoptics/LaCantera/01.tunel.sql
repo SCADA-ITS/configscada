@@ -99,7 +99,7 @@ INSERT INTO ui.synoptic_layer_elements
 (90307126, 'Element:71:75', 260071, 'STP-1-01-CA-D', 311, 865, false, NULL, true, false, NULL, true),
 (90307126, 'Element:71:76', 260071, 'STP-1-01-CA-C', 311, 763, false, NULL, true, false, NULL, true),
 (90307126, 'Element:71:77', 260071, 'STP-1-01-CA-I', 311, 664, false, NULL, true, false, NULL, true),
-(90307127, 'Element:71:78', 270071, 'PG-1-01-CA', 71, 929, false, NULL, true, false, NULL, true),
+--(90307127, 'Element:71:78', 270071, 'PG-1-01-CA', 71, 929, false, NULL, true, false, NULL, true),
 (90300105, 'Element:1:2', 050001, 'EM-2-01-CA', 720, 544, false, NULL, true, false, NULL, true),
 (90301900, 'Element:19:9', 00001906, 'SCO-1-01-CA', 1095, 961, false, NULL, true, false, NULL, true),
 (90301900, 'Element:19:10', 00001906, 'SCO-2-01-CA', 997, 111, false, NULL, true, false, NULL, true),
