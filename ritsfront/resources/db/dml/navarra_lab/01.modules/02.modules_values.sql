@@ -1,0 +1,71 @@
+INSERT INTO ui.module_values(module_id, module_param_id, value) VALUES
+(200, 6, '1'),
+
+(402, 5, 'https://descontroltrafico.admon-cfnavarra.es/google/google_complejo.html'),
+(403, 5, 'https://descontroltrafico.admon-cfnavarra.es/jasperserver/flow.html?_flowId=searchFlow&j_username=user&j_password=traficonavarra&userLocale=es_ES&folderUri=/Informes'),
+
+(1050, 8, '{"mapId": 1000}'),
+(1053, 8, '{"mapId": 1000}'),
+(1054, 8, '{"mapId": 1000}'),
+
+(1920, 9, '2'),
+(6000, 13, '2'), (6000, 14, 'actions'),
+(6001, 13, '2'), (6001, 14, 'agents'),
+(6002, 13, '2'), (6002, 14, 'assigned_pdas'),
+(6003, 13, '2'), (6003, 14, 'assigned_resources'),
+(6004, 13, '2'), (6004, 14, 'assistance_types'),
+(6005, 13, '2'), (6005, 14, 'atmospheric_states'),
+(6006, 13, '2'), (6006, 14, 'attendeds'),
+(6007, 13, '2'), (6007, 14, 'causes'),
+(6008, 13, '2'), (6008, 14, 'conditions'),
+(6009, 13, '2'), (6009, 14, 'elements'),
+(6010, 13, '2'), (6010, 14, 'genders'),
+(6011, 13, '2'), (6011, 14, 'incidents'),
+(6012, 13, '2'), (6012, 14, 'infrastructure_damages'),
+(6013, 13, '2'), (6013, 14, 'injury_levels'),
+(6014, 13, '2'), (6014, 14, 'injury_types'),
+(6015, 13, '2'), (6015, 14, 'interrupt_agents'),
+(6016, 13, '2'), (6016, 14, 'lanes'),
+(6017, 13, '2'), (6017, 14, 'lanes_actions'),
+(6018, 13, '2'), (6018, 14, 'lanes_states'),
+(6019, 13, '2'), (6019, 14, 'luminosities'),
+(6020, 13, '2'), (6020, 14, 'maneuvers'),
+(6021, 13, '2'), (6021, 14, 'participant_assistance_types'),
+(6022, 13, '2'), (6022, 14, 'participant_transfer_places'),
+(6023, 13, '2'), (6023, 14, 'participant_types'),
+(6024, 13, '2'), (6024, 14, 'participants'),
+(6025, 13, '2'), (6025, 14, 'pdas'),
+(6026, 13, '2'), (6026, 14, 'resources'),
+(6027, 13, '2'), (6027, 14, 'road_impacts'),
+(6028, 13, '2'), (6028, 14, 'sources'),
+(6029, 13, '2'), (6029, 14, 'stages'),
+(6030, 13, '2'), (6030, 14, 'transfer_places'),
+(6031, 13, '2'), (6031, 14, 'typologies'),
+(6032, 13, '2'), (6032, 14, 'unavailable_lanes'),
+(6033, 13, '2'), (6033, 14, 'user_types'),
+(6034, 13, '2'), (6034, 14, 'vehicle_brands'),
+(6035, 13, '2'), (6035, 14, 'vehicle_damages'),
+(6036, 13, '2'), (6036, 14, 'vehicle_models'),
+(6037, 13, '2'), (6037, 14, 'vehicle_types'),
+(6038, 13, '2'), (6038, 14, 'vehicles'),
+
+(1950, 13, '1'),
+(1950, 14, 'c4_all_ext_entities_with_values'),
+
+(1951, 13, '1'),
+(1951, 14, 'e112_all_ext_entities_with_values'),
+
+(7001, 13, '1'), 
+(7001, 14, 'e112_resources_ext_entities_with_values'),
+
+(7002, 13, '1'), 
+(7002, 14, 'e112_vehicles_ext_entities_with_values'),
+
+(8000, 13, '1'), 
+(8000, 14, 'all_waze_traffic_alert_ext_entities_with_values'),
+
+(8001, 13, '1'), 
+(8001, 14, 'all_waze_traffic_jam_ext_entities_with_values'),
+
+(2020, 9, '1');
+

@@ -1,0 +1,131 @@
+{
+	"moduleAction": {
+		"new": 105001,
+		"edit": 105002,
+		"delete": 105003,
+		"select": 105004,
+		"newFromIncidentWizard": 105005
+	},
+	"restEndpoints": {
+		"locations": "locations",
+		"location": "locations/${id}",
+		"stretchs" : "locations/stretchs",
+		"map": "maps/${id}",
+		"roads": "geo/roads",
+		"pks": "geo/roads/${id}",
+		"locationTypes": "locations/locationTypes"
+	},
+	"actionEndpoints": {
+		"add": "locations/createLocation",
+		"edit": "locations/updateLocation",
+		"delete": "locations/deleteLocation/${id}"
+	},
+	"steps": {
+		"newLocation": [
+			{
+				"position": 1,
+				"headerLabel": "LBL_LOCATION_WIZARD_NEW_HEADER",
+				"headerLabelDescription": "LBL_LOCATION_WIZARD_HEADER_STEP_SELECT_AREA",
+				"labelAlias": "LBL_SELECT_AREA",
+				"stepLabel": "LBL_LOCATION_WIZARD_HEADER_STEP_1",
+				"active": true,
+				"drawFunction": "drawStepSelectArea"
+			},
+			{
+				"position": 2,
+				"headerLabel": "LBL_LOCATION_WIZARD_NEW_HEADER",
+				"headerLabelDescription": "LBL_LOCATION_WIZARD_NEW_HEADER_STEP_CONFIG_LOCATION",
+				"labelAlias": "LBL_CONFIG_LOCATION",
+				"stepLabel": "LBL_LOCATION_WIZARD_NEW_HEADER_STEP_2",
+				"active": false,
+				"drawFunction": "drawStepNewLocationForm",
+				"saveFunction": "createLocation"
+			}
+		],
+		"editLocation": [
+			{
+				"position": 1,
+				"headerLabel": "LBL_LOCATION_WIZARD_EDIT_HEADER",
+				"headerLabelDescription": "LBL_LOCATION_WIZARD_HEADER_STEP_SELECT_AREA",
+				"labelAlias": "LBL_SELECT_AREA",
+				"stepLabel": "LBL_LOCATION_WIZARD_HEADER_STEP_1",
+				"active": true,
+				"drawFunction": "drawStepSelectArea"
+			},
+			{
+				"position": 2,
+				"headerLabel": "LBL_LOCATION_WIZARD_EDIT_HEADER",
+				"headerLabelDescription": "LBL_LOCATION_WIZARD_EDIT_HEADER_STEP_CONFIG_LOCATION",
+				"labelAlias": "LBL_SELECT_LOCATION",
+				"stepLabel": "LBL_LOCATION_WIZARD_EDIT_HEADER_STEP_2",
+				"stepLabelDescription": null,
+				"active": false,
+				"drawFunction": "drawStepSelectLocation"
+			},
+			{
+				"position": 3,
+				"headerLabel": "LBL_LOCATION_WIZARD_EDIT_HEADER",
+				"headerLabelDescription": "LBL_LOCATION_WIZARD_EDIT_HEADER_STEP_CHANGE_CONFIG_LOCATION",
+				"labelAlias": "LBL_EDIT_LOCATION",
+				"stepLabel": "LBL_LOCATION_WIZARD_EDIT_HEADER_STEP_3",
+				"stepLabelDescription": null,
+				"active": false,
+				"drawFunction": "drawStepEditLocationForm",
+				"saveFunction": "editLocation"
+			}			
+		],
+		"selectLocation": [
+			{
+				"position": 1,
+				"headerLabel": "LBL_LOCATION_WIZARD_SELECT_HEADER",
+				"headerLabelDescription": "LBL_LOCATION_WIZARD_HEADER_STEP_SELECT_AREA",
+				"labelAlias": "LBL_SELECT_AREA",
+				"stepLabel": "LBL_LOCATION_WIZARD_HEADER_STEP_1",
+				"active": true,
+				"drawFunction": "drawStepSelectArea"
+			},
+			{
+				"position": 2,
+				"headerLabel": "LBL_LOCATION_WIZARD_SELECT_HEADER",
+				"headerLabelDescription": "LBL_LOCATION_WIZARD_SELECT_HEADER_STEP_SELECT_LOCATION",
+				"labelAlias": "LBL_SELECT_LOCATION",
+				"stepLabel": "LBL_LOCATION_WIZARD_SELECT_HEADER_STEP_2",
+				"active": false,
+				"drawFunction": "drawStepSelectLocation",
+				"saveFunction": "selectLocation"
+			}
+		],
+		"deleteLocation": [
+			{
+				"position": 1,
+				"headerLabel": "LBL_LOCATION_WIZARD_DELETE_HEADER",
+				"headerLabelDescription": "LBL_LOCATION_WIZARD_HEADER_STEP_SELECT_AREA",
+				"labelAlias": "LBL_SELECT_AREA",
+				"stepLabel": "LBL_LOCATION_WIZARD_HEADER_STEP_1",
+				"active": true,
+				"drawFunction": "drawStepSelectArea"
+			},
+			{
+				"position": 2,
+				"headerLabel": "LBL_LOCATION_WIZARD_DELETE_HEADER",
+				"headerLabelDescription": "LBL_LOCATION_WIZARD_SELECT_HEADER_STEP_SELECT_LOCATION",
+				"labelAlias": "LBL_SELECT_LOCATION",
+				"stepLabel": "LBL_LOCATION_WIZARD_DELETE_HEADER_STEP_2",
+				"active": false,
+				"drawFunction": "drawStepSelectLocation"
+			},
+			{
+				"position": 3,
+				"headerLabel": "LBL_LOCATION_WIZARD_DELETE_HEADER",
+				"headerLabelDescription": "LBL_LOCATION_WIZARD_DELETE_HEADER_STEP_CONFIG_LOCATION",
+				"labelAlias": "LBL_DELETE_LOCATION",
+				"stepLabel": "LBL_LOCATION_WIZARD_DELETE_HEADER_STEP_3",
+				"stepLabelDescription": null,
+				"active": false,
+				"drawFunction": "drawStepEditLocationForm",
+				"saveFunction": "deleteLocation"
+			}
+		]
+	},
+	"locationTypeFromIncidentWizard": "LocationType:3"
+}
