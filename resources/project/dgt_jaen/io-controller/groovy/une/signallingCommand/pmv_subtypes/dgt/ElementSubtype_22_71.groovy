@@ -49,7 +49,7 @@ String signalling(Element element, SignallingCommand signallingCommand) {
 
     data = setGraphicsFrame(element, object, data, alternance, TERCERA_ZONA, TERCER_SUBPANEL);
         
-    data = controlCharacters(data);	//Transformo los caracteres especiales del protocolo 
+    //data = controlCharacters(data);	//Transformo los caracteres especiales del protocolo 
     
     for(byte aux : data){
         resultado += String.format("%02X", aux);

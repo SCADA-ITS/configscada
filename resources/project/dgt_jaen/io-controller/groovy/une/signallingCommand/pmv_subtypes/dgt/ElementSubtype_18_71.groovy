@@ -47,7 +47,7 @@ String signalling(Element element, SignallingCommand signallingCommand, org.apac
 
         data = setTextsFrame(object, data, alternance)
 
-        data = controlCharacters(data);	//Transformo los caracteres especiales del protocolo 
+        //data = controlCharacters(data);	//Transformo los caracteres especiales del protocolo 
 
         for(byte aux : data){
             resultado += String.format("%02X", aux);
