@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="VehicleModel">
+	<SELECT>SELECT vehicle_brand_id as "vehicleBrandId",
+				   vehicle_model_id as "id",
+				   vehicle_type_id as "vehicleTypeId",
+			       alias as "alias",
+			       year_production as "yearProduction",		    
+				   enabled as "enabled", 
+				   visible as "visible"
+			  FROM master.vehicle_models
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>
+	</INSERT>
+	<UPDATE>
+	</UPDATE>
+	<DELETE>
+	</DELETE>
+</DML>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="InfractionType">
+	<SELECT>SELECT infraction_type_id as "id",
+				   infraction_code as "infractionCode",
+				   infraction_original_code as "infractionOriginalCode",
+				   alias as "alias",
+				   description as "description",
+				   label_alias as "labelAlias",
+				   label_description as "labelDescription",
+				   enabled as "enabled",
+				   visible as "visible",
+				   created_at as "createdAt",
+				   updated_at as "updatedAt"
+			  FROM static.infraction_types
+			 WHERE enabled = true OR enabled is null
+	</SELECT>
+	<INSERT>
+	</INSERT>
+	<UPDATE>
+	</UPDATE>
+	<DELETE>
+	</DELETE>
+</DML>

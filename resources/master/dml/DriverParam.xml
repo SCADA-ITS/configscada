@@ -1,19 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE RelativeLayout>
-<DML enabled="true" model="DriverParam">
+<DML enabled="true" model="Driver">
 	<SELECT>SELECT driver_type_id as "driverTypeId",
-				   driver_param_id as "id",
-				   data_type_id as "dataTypeId",
-				   driver_param_group_id as "driverParamGroupId",
-				   alias as "alias",
-				   description as "description",
-				   label_alias as "labelAlias",
-				   label_description as "labelDescription",
+				   driver_id as "id",
+				   license_type_id as "licenseTypeId",
+				   license_value as "licenseValue",
+				   license_issue_date as "licenseIssueDate",
+				   license_expire_date as "licenseExpireDate",
+				   name as "name",
+				   surname as "surname",
+				   gender as "gender",
+				   date_of_birth as "dateOfBirth",
+				   country_id as "countryId",
+				   state_id as "stateId",
+				   region_id as "regionId",
+				   locality_id as "localityId",
+				   address as "address",
 				   enabled as "enabled",
 				   visible as "visible",
 				   created_at as "createdAt",
 			   	   updated_at as "updatedAt"
-			  FROM static.driver_params
+			  FROM conf.drivers
 			 WHERE enabled = true or enabled is null
 	</SELECT>
 	<INSERT>

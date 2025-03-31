@@ -772,7 +772,7 @@ DROP TABLE IF EXISTS master.countries;
 		driver_id int8 NOT NULL,
 		license_type_id int8 NOT NULL,
 		license_value varchar(200) NULL,
-		license_issue_data timestamptz NULL,
+		license_issue_date timestamptz NULL,
 		license_expire_date timestamptz NULL,
 		name varchar(100) NOT NULL,
 		surname varchar(300) NULL,

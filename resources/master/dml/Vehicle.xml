@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="Vehicle">
+	<SELECT>SELECT vehicle_type_id as "vehicleTypeId",
+				   vehicle_id as "id",
+				   vehicle_model_id as "vehicleModelId",
+			       vehicle_class_id as "vehicleClassId",
+			       country_id as "countryId",
+			       plate_number as "plateNumber",
+			       date_registration as "dateRegistration",
+			       color as "color",		    
+				   enabled as "enabled", 
+				   visible as "visible"
+			  FROM conf.vehicles
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>
+	</INSERT>
+	<UPDATE>
+	</UPDATE>
+	<DELETE>
+	</DELETE>
+</DML>
