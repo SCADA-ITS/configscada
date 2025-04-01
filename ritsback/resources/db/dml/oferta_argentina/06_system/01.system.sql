@@ -13,7 +13,7 @@ INSERT INTO conf.system_param_values
 (5, '1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (6, '40', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (7, '600', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(8, '0 0 * ? * * *', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(8, '0 * * ? * * *', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 -- Número máximo de alarmas permitidas sin reconocer
 (14, '50', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 -- Período de cálculo para los tiempos de recorrido

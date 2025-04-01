@@ -4,9 +4,9 @@ BEGIN
   
 INSERT INTO incidents_gip.sg_i18n_labels (locale_code, "label", "translation", created_at, updated_at) VALUES
 
---es_ES
-	('es_ES','LBL_PATENT', 'patente', CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
-	('es_ES','LBL_COLOR', 'color', CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+--es_AR
+	('es_AR','LBL_PATENT', 'patente', CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+	('es_AR','LBL_COLOR', 'color', CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 
 --en_GB
 	('en_GB','LBL_PATENT', 'paten', CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
