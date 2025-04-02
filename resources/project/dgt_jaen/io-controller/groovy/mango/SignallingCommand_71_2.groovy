@@ -29,10 +29,8 @@ class SignallingCommand_71_2 {
 	static final String SIGNALLING = "signalling";
 	static final String CROSS_ORDER = "cross_order";
 	static final String ARROW_ORDER = "arrow_order";
-	static final String BIT_A = "bit_A_order";
-	static final String BIT_B = "bit_B_order";
-	static final String BIT_C = "bit_C_order";
-	static final String BIT_D = "bit_D_order";
+	static final String SIGNAL = "signal";
+
 
 	static final boolean ACTIVATION_ON = true;
 	static final boolean ACTIVATION_OFF = false;
@@ -107,50 +105,22 @@ class SignallingCommand_71_2 {
 			Element element = EntitiesManager.getInstance().getElement(signallingCommand.elementTypeId, signallingCommand.elementId);
 			
 			if (element.elementSubtypeId == CLV){
-				List bitValue = [];
-				def signalling = [
-					10: [0,0,0,1],
-					20: [1,0,0,1],
-					30: [1,0,0,0],
-					40: [0,1,0,0],
-					50: [1,1,0,0],
-					60: [0,0,1,0],
-					70: [1,0,1,0],
-					80: [0,1,1,0],
-					90: [1,1,1,0],
-					100: [0,1,0,1],
-					110: [1,1,0,1],
-					120: [0,0,1,1]
-				]
 				
-				// Iterar sobre las entradas del diccionario y cambiar 0 y 1 por true y false
-				signalling.each { clave, valores ->
-					signalling[clave] = valores.collect { it == 1 ? true : false }
-				}
-
 				Object object = mapper.readValue(signallingCommand.signallingParams.get(0).getValue(), Zone[].class);		
 				//Recorro cada zona del panel
 				for (int i = 0; i < object.size(); i++){
 					if(object[i].getGraphics()){
 						Long pictoValue = getGraphic(element, i+1, object[i].getGraphics()[0].getValue())
-						def position = signalling.find { clave, valor -> pictoValue == clave }?.key
 
-						if (position != null) {
-							// Acceder al valor asociado usando el nombre del diccionario
-							bitValue = signalling[position]
-						}
-
-						xidPointValueTimeModel = signallingCommandUtils.getXidPointValueTimeModel(signallingCommand, dataSourceXid + "_" +  BIT_A, bitValue[0]);
+						xidPointValueTimeModel = signallingCommandUtils.getXidPointValueTimeModel(signallingCommand, dataSourceXid + "_" +  SIGNAL, pictoValue);
 						xidPointValueTimeModels.add(xidPointValueTimeModel);
-						xidPointValueTimeModel = signallingCommandUtils.getXidPointValueTimeModel(signallingCommand, dataSourceXid + "_" +  BIT_B, bitValue[1]);
-						xidPointValueTimeModels.add(xidPointValueTimeModel);
-						xidPointValueTimeModel = signallingCommandUtils.getXidPointValueTimeModel(signallingCommand, dataSourceXid + "_" +  BIT_C, bitValue[2]);
-						xidPointValueTimeModels.add(xidPointValueTimeModel);
-						xidPointValueTimeModel = signallingCommandUtils.getXidPointValueTimeModel(signallingCommand, dataSourceXid + "_" +  BIT_D, bitValue[3]);
-						xidPointValueTimeModels.add(xidPointValueTimeModel);
-
+						log.debug(xidPointValueTimeModels)
 					}else{
 						log.error("No hay gráfico en el objeto")
+						Long pictoValue = ZERO
+						xidPointValueTimeModel = signallingCommandUtils.getXidPointValueTimeModel(signallingCommand, dataSourceXid + "_" +  SIGNAL, pictoValue);
+						xidPointValueTimeModels.add(xidPointValueTimeModel);
+						log.debug(xidPointValueTimeModels)
 					}
 				}
 				

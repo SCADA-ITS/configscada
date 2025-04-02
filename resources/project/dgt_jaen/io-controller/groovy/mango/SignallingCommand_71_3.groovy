@@ -35,7 +35,7 @@ class SignallingCommand_71_3 {
 	static final boolean SWICHT_OFF = false;
 	static final Long SHUTDOWN = 0L;
 	static final Long PARAM_CONFIG_PROTOCOLO = 3L;
-
+	static final String SIGNAL = "signal";
 	//Element Types ID
 	static final Long CLV = 11L;
 	static final Long AF = 12L;
@@ -72,6 +72,9 @@ class SignallingCommand_71_3 {
 					xidPointValueTimeModels.add(xidPointValueTimeModel);
 					xidPointValueTimeModel = signallingCommandUtils.getXidPointValueTimeModel(signallingCommand, dataSourceXid + "_" + BIT_D, SWICHT_OFF);
 					xidPointValueTimeModels.add(xidPointValueTimeModel);
+					xidPointValueTimeModel = signallingCommandUtils.getXidPointValueTimeModel(signallingCommand, dataSourceXid + "_" + SIGNAL, SHUTDOWN);
+					xidPointValueTimeModels.add(xidPointValueTimeModel);
+					log.debug("ENTRA")
 				}else{
 					log.error("No se encuentra protocolo");	
 					return true;			
@@ -118,6 +121,7 @@ class SignallingCommand_71_3 {
 			ObjectMapper objectMapper = new ObjectMapper();
 			objectMapper.setSerializationInclusion(Include.NON_NULL);
 			String message = objectMapper.writeValueAsString(xidPointValueTimeModels);
+			log.debug("MENSAJE------> " + message)
 			if (driver != null) {
 				driver.send(message);
 			}

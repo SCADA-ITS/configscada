@@ -52,6 +52,24 @@
             "purgePeriod": 1
         },
         {
+            "xid":"DS_Virtual_CLV",
+            "name":"Virtual_CLV",
+            "enabled":true,
+            "type":"VIRTUAL",
+            "alarmLevels":{
+              "POLL_ABORTED":"DO_NOT_LOG"
+            },
+            "purgeType":"YEARS",
+            "updatePeriods":10,
+            "updatePeriodType":"SECONDS",
+            "polling":true,
+            "quantize":false,
+            "useCron":false,
+            "editPermission":"",
+            "purgeOverride":false,
+            "purgePeriod":1
+        },
+        {
             "updatePeriodType": "MINUTES",
             "purgePeriod": 1,
             "updatePeriods": 1,
@@ -79,20 +97,20 @@
             "intervalLoggingPeriodType": "MINUTES",
             "intervalLoggingType": "INSTANT",
             "purgeType": "YEARS",
-            "pointLocator": {
-                "range": "HOLDING_REGISTER",
-                "modbusDataType": "BINARY",
-                "writeType": "SETTABLE",
-                "additive": 0.0,
-                "bit": 0,
-                "charset": "ASCII",
-                "multiplier": 1.0,
-                "multistateNumeric": false,
-                "offset": "{offset_bit_A_state}",
-                "registerCount": 0,
-                "slaveId": 1,
-                "slaveMonitor": false
-            },
+	        "pointLocator": {
+	           "range": "INPUT_STATUS",
+	           "modbusDataType": "BINARY",
+	           "writeType": "SETTABLE",
+	           "additive": 0.0,
+	           "bit": 0,
+	           "charset": "ASCII",
+	           "multiplier": 1.0,
+	           "multistateNumeric": false,
+	           "offset": "{offset_bit_A_state}",
+	           "registerCount": 0,
+	           "slaveId": 1,
+	           "slaveMonitor": false
+	        },
             "eventDetectors": [],
             "plotType": "STEP",
             "rollup": "NONE",
@@ -137,20 +155,20 @@
             "intervalLoggingPeriodType": "MINUTES",
             "intervalLoggingType": "INSTANT",
             "purgeType": "YEARS",
-            "pointLocator": {
-                "range": "HOLDING_REGISTER",
-                "modbusDataType": "BINARY",
-                "writeType": "SETTABLE",
-                "additive": 0.0,
-                "bit": 0,
-                "charset": "ASCII",
-                "multiplier": 1.0,
-                "multistateNumeric": false,
-                "offset": "{offset_bit_B_state}",
-                "registerCount": 0,
-                "slaveId": 1,
-                "slaveMonitor": false
-            },
+	        "pointLocator": {
+	           "range": "INPUT_STATUS",
+	           "modbusDataType": "BINARY",
+	           "writeType": "SETTABLE",
+	           "additive": 0.0,
+	           "bit": 0,
+	           "charset": "ASCII",
+	           "multiplier": 1.0,
+	           "multistateNumeric": false,
+	           "offset": "{offset_bit_B_state}",
+	           "registerCount": 0,
+	           "slaveId": 1,
+	           "slaveMonitor": false
+	        },
             "eventDetectors": [],
             "plotType": "STEP",
             "rollup": "NONE",
@@ -195,20 +213,20 @@
             "intervalLoggingPeriodType": "MINUTES",
             "intervalLoggingType": "INSTANT",
             "purgeType": "YEARS",
-            "pointLocator": {
-                "range": "HOLDING_REGISTER",
-                "modbusDataType": "BINARY",
-                "writeType": "SETTABLE",
-                "additive": 0.0,
-                "bit": 0,
-                "charset": "ASCII",
-                "multiplier": 1.0,
-                "multistateNumeric": false,
-                "offset": "{offset_bit_C_state}",
-                "registerCount": 0,
-                "slaveId": 1,
-                "slaveMonitor": false
-            },
+	        "pointLocator": {
+	           "range": "INPUT_STATUS",
+	           "modbusDataType": "BINARY",
+	           "writeType": "SETTABLE",
+	           "additive": 0.0,
+	           "bit": 0,
+	           "charset": "ASCII",
+	           "multiplier": 1.0,
+	           "multistateNumeric": false,
+	           "offset": "{offset_bit_C_state}",
+	           "registerCount": 0,
+	           "slaveId": 1,
+	           "slaveMonitor": false
+	        },
             "eventDetectors": [],
             "plotType": "STEP",
             "rollup": "NONE",
@@ -253,20 +271,20 @@
             "intervalLoggingPeriodType": "MINUTES",
             "intervalLoggingType": "INSTANT",
             "purgeType": "YEARS",
-            "pointLocator": {
-                "range": "HOLDING_REGISTER",
-                "modbusDataType": "BINARY",
-                "writeType": "SETTABLE",
-                "additive": 0.0,
-                "bit": 0,
-                "charset": "ASCII",
-                "multiplier": 1.0,
-                "multistateNumeric": false,
-                "offset": "{offset_bit_D_state}",
-                "registerCount": 0,
-                "slaveId": 1,
-                "slaveMonitor": false
-            },
+	        "pointLocator": {
+	           "range": "INPUT_STATUS",
+	           "modbusDataType": "BINARY",
+	           "writeType": "SETTABLE",
+	           "additive": 0.0,
+	           "bit": 0,
+	           "charset": "ASCII",
+	           "multiplier": 1.0,
+	           "multistateNumeric": false,
+	           "offset": "{offset_bit_D_state}",
+	           "registerCount": 0,
+	           "slaveId": 1,
+	           "slaveMonitor": false
+	        },
             "eventDetectors": [],
             "plotType": "STEP",
             "rollup": "NONE",
@@ -312,7 +330,7 @@
             "intervalLoggingType": "INSTANT",
             "purgeType": "YEARS",
             "pointLocator": {
-                "range": "HOLDING_REGISTER",
+                "range": "COIL_STATUS",
                 "modbusDataType": "BINARY",
                 "writeType": "SETTABLE",
                 "additive": 0.0,
@@ -370,7 +388,7 @@
             "intervalLoggingType": "INSTANT",
             "purgeType": "YEARS",
             "pointLocator": {
-                "range": "HOLDING_REGISTER",
+                "range": "COIL_STATUS",
                 "modbusDataType": "BINARY",
                 "writeType": "SETTABLE",
                 "additive": 0.0,
@@ -428,7 +446,7 @@
             "intervalLoggingType": "INSTANT",
             "purgeType": "YEARS",
             "pointLocator": {
-                "range": "HOLDING_REGISTER",
+                "range": "COIL_STATUS",
                 "modbusDataType": "BINARY",
                 "writeType": "SETTABLE",
                 "additive": 0.0,
@@ -486,7 +504,7 @@
             "intervalLoggingType": "INSTANT",
             "purgeType": "YEARS",
             "pointLocator": {
-                "range": "HOLDING_REGISTER",
+                "range": "COIL_STATUS",
                 "modbusDataType": "BINARY",
                 "writeType": "SETTABLE",
                 "additive": 0.0,
@@ -615,6 +633,149 @@
             },
             "tolerance": 0.0
         },
+        {
+            "xid":"DP_{device_name}_order",
+            "name":"order",
+            "enabled":true,
+            "loggingType":"INTERVAL",
+            "intervalLoggingPeriodType":"MINUTES",
+            "intervalLoggingType":"AVERAGE",
+            "purgeType":"YEARS",
+            "pointLocator":{
+              "dataType":"NUMERIC",
+              "updateEvent":"NONE",
+              "contextUpdateEvent":"CONTEXT_CHANGE",
+              "context":[
+                {
+                  "varName":"bit_A_order",
+                  "dataPointXid":"DP_{device_name}_bit_A_order",
+                  "updateContext":false
+                },
+                {
+                  "varName":"bit_B_order",
+                  "dataPointXid":"DP_{device_name}_bit_B_order",
+                  "updateContext":false
+                },
+                {
+                  "varName":"bit_C_order",
+                  "dataPointXid":"DP_{device_name}_bit_C_order",
+                  "updateContext":false
+                },
+                {
+                  "varName":"bit_D_order",
+                  "dataPointXid":"DP_{device_name}_bit_D_order",
+                  "updateContext":false
+                },
+                {
+                  "varName":"signal",
+                  "dataPointXid":"DP_{device_name}_signal",
+                  "updateContext":true
+                }
+              ],
+              "logLevel":"NONE",
+              "variableName":"my",
+              "scriptPermissions":[
+                "superadmin"
+              ],
+              "executionDelaySeconds":0,
+              "logCount":5,
+              "logSize":1.0,
+              "script":"if (signal.value == 0){\n    bit_A_order.set(false);\n    bit_B_order.set(false);\n    bit_C_order.set(false);\n    bit_D_order.set(false);\n}\nelse if (signal.value == 10){\n    bit_A_order.set(false);\n    bit_B_order.set(false);\n    bit_C_order.set(false);\n    bit_D_order.set(true);\n} else if (signal.value == 20){\n    bit_A_order.set(true);\n    bit_B_order.set(false);\n    bit_C_order.set(false);\n    bit_D_order.set(true);\n} else if (signal.value == 30){\n    bit_A_order.set(true);\n    bit_B_order.set(false);\n    bit_C_order.set(false);\n    bit_D_order.set(false);\n} else if (signal.value == 40){\n    bit_A_order.set(false);\n    bit_B_order.set(true);\n    bit_C_order.set(false);\n    bit_D_order.set(false);\n} else if (signal.value == 50){\n    bit_A_order.set(true);\n    bit_B_order.set(true);\n    bit_C_order.set(false);\n    bit_D_order.set(false);\n} else if (signal.value == 60){\n    bit_A_order.set(false);\n    bit_B_order.set(false);\n    bit_C_order.set(true);\n    bit_D_order.set(false);\n} else if (signal.value == 70){\n    bit_A_order.set(true);\n    bit_B_order.set(false);\n    bit_C_order.set(true);\n    bit_D_order.set(false);\n} else if (signal.value == 80){\n    bit_A_order.set(false);\n    bit_B_order.set(true);\n    bit_C_order.set(true);\n    bit_D_order.set(false);\n} else if (signal.value == 90){\n    bit_A_order.set(true);\n    bit_B_order.set(true);\n    bit_C_order.set(true);\n    bit_D_order.set(false);\n} else if (signal.value == 100){\n    bit_A_order.set(false);\n    bit_B_order.set(true);\n    bit_C_order.set(false);\n    bit_D_order.set(true);\n} else if (signal.value == 110){\n    bit_A_order.set(true);\n    bit_B_order.set(true);\n    bit_C_order.set(false);\n    bit_D_order.set(true);\n} else if (signal.value == 120){\n    bit_A_order.set(false);\n    bit_B_order.set(false);\n    bit_C_order.set(true);\n    bit_D_order.set(true);\n} return 1;",
+              "settable":false,
+              "updateCronPattern":""
+            },
+            "eventDetectors":[
+            ],
+            "plotType":"SPLINE",
+            "rollup":"NONE",
+            "unit":"",
+            "simplifyType":"NONE",
+            "chartColour":"",
+            "chartRenderer":{
+              "type":"IMAGE",
+              "timePeriodType":"DAYS",
+              "numberOfPeriods":1
+            },
+            "dataSourceXid":"DS_Meta_CLV",
+            "defaultCacheSize":1,
+            "deviceName":"{device_name}",
+            "discardExtremeValues":false,
+            "discardHighLimit":1.7976931348623157E308,
+            "discardLowLimit":-1.7976931348623157E308,
+            "intervalLoggingPeriod":1,
+            "intervalLoggingSampleWindowSize":0,
+            "overrideIntervalLoggingSamples":false,
+            "preventSetExtremeValues":false,
+            "purgeOverride":false,
+            "purgePeriod":1,
+            "readPermission":"",
+            "setExtremeHighLimit":1.7976931348623157E308,
+            "setExtremeLowLimit":-1.7976931348623157E308,
+            "setPermission":"",
+            "tags":{
+            },
+            "textRenderer":{
+              "type":"ANALOG",
+              "useUnitAsSuffix":false,
+              "suffix":"",
+              "format":"0.00"
+            },
+            "tolerance":0.0
+        },   
+        {
+            "xid":"DP_{device_name}_signal",
+            "name":"signal",
+            "enabled":true,
+            "loggingType":"INTERVAL",
+            "intervalLoggingPeriodType":"MINUTES",
+            "intervalLoggingType":"AVERAGE",
+            "purgeType":"YEARS",
+            "pointLocator":{
+              "dataType":"NUMERIC",
+              "changeType":{
+                "type":"NO_CHANGE",
+                "startValue":"0"
+              },
+              "settable":true
+            },
+            "eventDetectors":[
+            ],
+            "plotType":"SPLINE",
+            "rollup":"NONE",
+            "unit":"",
+            "simplifyType":"NONE",
+            "chartColour":"",
+            "chartRenderer":{
+              "type":"IMAGE",
+              "timePeriodType":"DAYS",
+              "numberOfPeriods":1
+            },
+            "dataSourceXid":"DS_Virtual_CLV",
+            "defaultCacheSize":1,
+            "deviceName":"{device_name}",
+            "discardExtremeValues":false,
+            "discardHighLimit":1.7976931348623157E308,
+            "discardLowLimit":-1.7976931348623157E308,
+            "intervalLoggingPeriod":1,
+            "intervalLoggingSampleWindowSize":0,
+            "overrideIntervalLoggingSamples":false,
+            "preventSetExtremeValues":false,
+            "purgeOverride":false,
+            "purgePeriod":1,
+            "readPermission":"",
+            "setExtremeHighLimit":1.7976931348623157E308,
+            "setExtremeLowLimit":-1.7976931348623157E308,
+            "setPermission":"",
+            "tags":{
+            },
+            "textRenderer":{
+              "type":"ANALOG",
+              "useUnitAsSuffix":false,
+              "suffix":"",
+              "format":"0.00"
+            },
+            "tolerance":0.0
+        },   
         {
             "xid": "DP_{device_name}_status",
             "name": "status",
