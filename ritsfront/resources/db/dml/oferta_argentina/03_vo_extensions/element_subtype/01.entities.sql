@@ -1,3 +1,0 @@
-INSERT INTO ui.vo_entities(id, vo_entity_type_id, enabled, visible) VALUES
-('ElementSubtype:22:71', 'ElementSubtypeUI', true, true);
-

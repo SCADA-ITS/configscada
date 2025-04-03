@@ -611,4 +611,6 @@ INSERT INTO conf.stretchs (stretch_id, stretch_type_id, alias, description, pk_i
 (610,2,'PA-34','Decreciente',0,2,0,583,2,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 (611,2,'PA-35','Creciente',0,0,0,584,1,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 (612,2,'PA-35','Decreciente',0,0,0,584,2,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
-(613,2,'PA-36','Ambos sentidos',0,0,0,585,3,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
+(613,2,'PA-36','Ambos sentidos',0,0,0,585,3,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+(614,2,'PA-36','Ambos sentidos',0,0,0,585,3,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+(615,2,'PA-36','Ambos sentidos',0,0,0,585,3,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
