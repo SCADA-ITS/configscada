@@ -10,7 +10,8 @@ INSERT INTO master.ims_task_types (task_type_id, alias, description, label_alias
 (6, 'PERSONAL ALERT', 'Personal Alert', 'LBL_IMS_TASK_TYPE_PERSONAL_ALERT', null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (7, 'CCTV', 'CCTV', 'LBL_IMS_TASK_TYPE_CCTV', null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (8, 'SEND MAIL', 'Send mail', 'LBL_IMS_TASK_TYPE_SEND_MAIL', null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(9, 'PAS', 'PAS', 'LBL_IMS_TASK_TYPE_PAS', null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(9, 'PAS', 'PAS', 'LBL_IMS_TASK_TYPE_PAS', null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(10, 'SEND TELEGRAM', 'Send telegram notification', 'LBL_IMS_TASK_TYPE_SEND_TELEGRAM', null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO master.ims_task_type_params
 (task_type_id, task_type_param_id, param_type_id, data_type_id, threshold_1, threshold_2, task_type_param_unit_id, alias, description, label_alias, label_description, enabled, visible, created_at, updated_at)
@@ -37,8 +38,11 @@ VALUES
 (8, 4, 1, 2, null, null, null, 'subject', 'subject', 'LBL_IMS_TASK_TYPE_PARAM_IMS_SEND_MAIL_SUBJECT', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (8, 5, 1, 2, null, null, null, 'body', 'body', 'LBL_IMS_TASK_TYPE_PARAM_IMS_SEND_MAIL_BODY', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
-(9, 1, 2, 2, null, null, null, 'messageIds', 'messageIds', 'LBL_IMS_TASK_TYPE_PARAM_IMS_PAS_MESSAGE_IDS', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(9, 1, 2, 2, null, null, null, 'messageIds', 'messageIds', 'LBL_IMS_TASK_TYPE_PARAM_IMS_PAS_MESSAGE_IDS', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
+(10, 1, 1, 2, null, null, null, 'tokenBot', 'tokenBot', 'LBL_IMS_TASK_TYPE_PARAM_IMS_SEND_TELEGRAM_TOKEN_BOT', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(10, 2, 1, 2, null, null, null, 'chatID', 'chatID', 'LBL_IMS_TASK_TYPE_PARAM_IMS_SEND_TELEGRAM_CHAT_ID', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(10, 3, 1, 2, null, null, null, 'messageText', 'messageText', 'LBL_IMS_TASK_TYPE_PARAM_IMS_SEND_TELEGRAM_MESSAGE', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 -- 
 -- Table: master.ims_incident_alarm_condition_alarm_types

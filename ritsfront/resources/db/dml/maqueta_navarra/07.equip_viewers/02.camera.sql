@@ -2,8 +2,8 @@ INSERT INTO ui.equip_viewers (id, name, description, "label", icon, show_info_ta
 ('ElementType:2', 'CAMERA', 'CAMERA', 'LBL_ELEMENT_TYPE_CAMERA', NULL, false, false, false, 2, 300, 3, null, 2, 1, null, false, null, null);
 
 INSERT INTO ui.equip_viewer_tabs (id, equip_viewer_id, module_action_id, alias, description, "label", icon, "position", visible) VALUES
-(1, 'ElementType:2', 100501, 'Alarms module', 'Alarms module', 'LBL_ALARMS', NULL, 1, true),
-(2, 'ElementType:2', 102001, 'SingleCam', 'CCTV Module - Action SingleCam', 'LBL_ELEMENT_TYPE_PARAM_VIDEO', NULL, 2, true);
+(010002, 'ElementType:2', 100501, 'Alarms module', 'Alarms module', 'LBL_ALARMS', NULL, 1, true),
+(020002, 'ElementType:2', 102001, 'SingleCam', 'CCTV Module - Action SingleCam', 'LBL_ELEMENT_TYPE_PARAM_VIDEO', NULL, 2, true);
 
 INSERT INTO ui.equip_viewer_configs (id, equip_viewer_id, vo_entities_id, "position", visible) VALUES
 (01010002, 'ElementType:2', 'ElementTypeParam:2:1:1' , 1, true),

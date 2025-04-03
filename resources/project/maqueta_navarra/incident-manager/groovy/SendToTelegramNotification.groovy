@@ -11,99 +11,81 @@ import com.revenga.rits.back.data.core.model.ImsIncidentReport;
 import com.revenga.rits.back.data.core.model.ImsIncidentTypeTask;
 import com.revenga.rits.back.data.core.model.ImsIncidentTypeTaskValue;
 import com.revenga.rits.back.data.core.model.command.Command;
+import com.revenga.rits.back.incident.manager.service.IncidentEntitiesManager;
 
 class SendToTelegramNotification {
 
-    // Configuración del bot
-    private final String API_TOKEN = System.getenv("API_TOKEN") ?: "7673259805:AAEqCaKMZ-SvxE8wpUriuGLegpNxLlOLgRM"
-    private final String CHAT_FILE = "/home/admin/subscribers.json"
-    private final String CHANNEL_ID = "@TraficoNavarra" // 🔹 Si es público, usa @username. Si es privado, usa el chat_id (-100xxxxxxxxxx).
-    private final String TELEGRAM_API_URL = "https://api.telegram.org/bot${API_TOKEN}/sendMessage"
+    static final Long TASK_TYPE_PARAM_API_TOKEN = 1L;
+    static final Long TASK_TYPE_PARAM_CHAT_ID = 2L;
+    static final Long TASK_TYPE_PARAM_MESSAGE = 3L;
 
     Logger log;
 
     // Constructor
     SendToTelegramNotification(Logger log) {
         this.log = log;
-        log.info("🔔 Inicializando el bot de Telegram...");
     }
 
-    // Cargar suscriptores desde JSON
-    private Map loadSubscribers() {
-        def file = new File(CHAT_FILE)
-        if (!file.exists()) {
-            log.error("❌ Archivo de suscriptores no encontrado.");
-            return [:]
-        }
+    // Notificar al canal
+    boolean notifyUsers(String api_token, String chat_id, String message) {
+	
+	String api_url = "https://api.telegram.org/bot${api_token}/sendMessage"
+
+        // 🔹 **Enviar también al canal**
+        log.info("📢 Enviando notificación al canal ${chat_id}...");
 
         try {
-            return new JsonSlurper().parse(file)
-        } catch (Exception e) {
-            log.error("❌ Error al leer el archivo JSON: ${e.message}");
-            return [:]
-        }
-    }
-
-    // Enviar mensaje por Telegram
-    private boolean sendMessage(String chatId, String message) {
-        try {
-            def url = new URL(TELEGRAM_API_URL)
+            def url = new URL(api_url)
             def connection = url.openConnection()
             connection.setRequestMethod("POST")
             connection.setDoOutput(true)
             connection.setRequestProperty("Content-Type", "application/json")
 
-            def payload = JsonOutput.toJson([chat_id: chatId, text: message])
+            def payload = JsonOutput.toJson([chat_id: chat_id, text: message])
             connection.outputStream.withWriter("UTF-8") { it.write(payload) }
 
             def responseCode = connection.responseCode
             if (responseCode == 200) {
-                log.info("✅ Mensaje enviado a ${chatId}")
+                log.info("✅ Mensaje enviado a ${chat_id}")
                 return true
             } else {
-                log.warn("⚠️ No se pudo enviar el mensaje a ${chatId}. Código: ${responseCode}")
+                log.warn("⚠️ No se pudo enviar el mensaje a ${chat_id}. Código: ${responseCode}")
                 return false
             }
         } catch (Exception e) {
-            log.error("⚠️ Error enviando mensaje a ${chatId}: ${e.message}")
+            log.error("⚠️ Error enviando mensaje a ${chat_id}: ${e.message}")
             return false
         }
-    }
 
-    // Notificar a todos los suscriptores **y al canal**
-    void notifyUsers() {
-        def subscribers = loadSubscribers()
-        def message = "🚨 ¡INICIO DE EVENTO DE TRIATLÓN! 🚨"
-
-        if (subscribers.isEmpty()) {
-            log.warn("⚠️ No hay suscriptores registrados.");
-        } else {
-            log.info("📢 Enviando notificaciones a ${subscribers.size()} usuarios...");
-            subscribers.each { userId, _ -> 
-                sendMessage(userId, message) 
-            }
-        }
-
-        // 🔹 **Enviar también al canal**
-        log.info("📢 Enviando notificación al canal ${CHANNEL_ID}...");
-        sendMessage(CHANNEL_ID, message);
     }
 
     List<Command> process(ImsIncidentReport incidentReport, ImsIncidentTypeTask incidentTypeTask, List<ImsIncidentTypeTaskValue> values) {
-
+		
         List<Command> commands = null;
+        String api_token = null;
+        String chat_id = null;
+        String message = null;
+	boolean respuesta = false;
+        
+        if (incidentReport.getAffectionStretchId() != null) {
 
-        try {
-            notifyUsers();            
-
-            if (commands == null) {
-                commands = new ArrayList<>();
-            }
-
-            // commands.add(new SignallingCommand());
-
-        } catch (Exception e) {
-            log.error("⚠️ Error en process(): ${e.message}")
+		api_token = IncidentEntitiesManager.getInstance().getIncidentTypeTaskValue(values, TASK_TYPE_PARAM_API_TOKEN);
+		chat_id = IncidentEntitiesManager.getInstance().getIncidentTypeTaskValue(values, TASK_TYPE_PARAM_CHAT_ID);
+		message = IncidentEntitiesManager.getInstance().getIncidentTypeTaskValue(values, TASK_TYPE_PARAM_MESSAGE);
+			
+		if (api_token != null && chat_id != null && message != null) {
+        
+        		try {
+		            respuesta = notifyUsers(api_token, chat_id, message);            
+		
+		            if (commands == null && respuesta) {
+		                commands = new ArrayList<>();
+		            }
+		
+		        } catch (Exception e) {
+		            log.error("⚠️ Error en process(): ${e.message}")
+		        }
+        	}
         }
 
         return commands;

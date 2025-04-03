@@ -69,7 +69,7 @@ INSERT INTO ui.map_layer_elements (id, layer_id, element_id, graphic_icon_id, "l
 (0260002, 2,'Element:2:26', 2,'Bera Tunel Norte 2', 43.2757475, -1.6956659,  false, null, true, false, null, true ),
 (0270002, 2,'Element:2:27', 2,'Endarlatza 2', 43.2792225, -1.711128641,  false, null, true, false, null, true ),
 (0280002, 2,'Element:2:28', 2,'Talluntxe LPR ', 42.7755542, -1.6315534,  false, null, true, false, null, true ),
-(0010071, 71,'Element:71:1', 71,'PMV-VIRTUAL', 42.7755542, -1.6315534,  false, null, true, false, null, true ),
+
 (0010099, 99,'Element:99:1', 99,'RADF-127+670D',43.01762766,-1.90737257, false, null, true, false, null, true ),
 (0020099, 99,'Element:99:2', 99,'RADF-91+358D', 42.07934146,-1.79528762, false, null, true, false, null, true ),
 (0030099, 99,'Element:99:3', 99,'RADF-32+560C', 43.0658902, -1.6177618, false, null, true, false, null, true ),

@@ -21,6 +21,7 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
     ('es_ES', 1, 'LBL_IMS_TASK_TYPE_CCTV', 'CCTV', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
     ('es_ES', 1, 'LBL_IMS_TASK_TYPE_SEND_MAIL', 'Enviar correo', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
     ('es_ES', 1, 'LBL_IMS_TASK_TYPE_PAS', 'Megafonía', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    ('es_ES', 1, 'LBL_IMS_TASK_TYPE_SEND_TELEGRAM', 'Enviar notificación por Telegram', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --en_GB
     ('en_GB', 1, 'LBL_IMS_TASK_TYPE_SIGNALING', 'Signaling', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -32,6 +33,7 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
     ('en_GB', 1, 'LBL_IMS_TASK_TYPE_CCTV', 'CCTV', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
     ('en_GB', 1, 'LBL_IMS_TASK_TYPE_SEND_MAIL', 'Send email', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
     ('en_GB', 1, 'LBL_IMS_TASK_TYPE_PAS', 'PAS', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    ('en_GB', 1, 'LBL_IMS_TASK_TYPE_SEND_TELEGRAM', 'Send Telegram notification', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --sk_SK
     ('sk_SK', 1, 'LBL_IMS_TASK_TYPE_SIGNALING', 'sihnalizovať', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -53,6 +55,7 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
     ('es_CL', 1, 'LBL_IMS_TASK_TYPE_PERSONAL_ALERT', 'Aviso a Personal', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
     ('es_CL', 1, 'LBL_IMS_TASK_TYPE_CCTV', 'CCTV', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
     ('es_CL', 1, 'LBL_IMS_TASK_TYPE_SEND_MAIL', 'Enviar correo', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-    ('es_CL', 1, 'LBL_IMS_TASK_TYPE_PAS', 'Megafonía', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+    ('es_CL', 1, 'LBL_IMS_TASK_TYPE_PAS', 'Megafonía', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    ('es_CL', 1, 'LBL_IMS_TASK_TYPE_SEND_TELEGRAM', 'Enviar notificación por Telegram', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 

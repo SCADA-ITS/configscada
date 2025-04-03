@@ -137,22 +137,39 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 (2, 3, 1, 20, NULL, '', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 1003, 1, 20, NULL, 'Endarlatza 1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
+(2, 1, 1, 21, NULL, 'Axis', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 2, 1, 21, NULL, 'P1375-E', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 3, 1, 21, NULL, 'https://descontroltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=AlmandozNorte', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 1003, 1, 21, NULL, 'Almandoz Norte', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
+(2, 1, 1, 22, NULL, 'Axis', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 2, 1, 22, NULL, 'P1375-E', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 3, 1, 22, NULL, 'https://descontroltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=N121pk26', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 1003, 1, 22, NULL, 'N-121-A PK26', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (2, 1, 1, 23, NULL, 'Axis', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 2, 1, 23, NULL, 'P1375-E', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 3, 1, 23, NULL, 'https://descontroltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=BeraTunelSur1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 1003, 1, 23, NULL, 'Bera Tunel Sur 1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (2, 1, 1, 24, NULL, 'Axis', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 2, 1, 24, NULL, 'P1375-E', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 3, 1, 24, NULL, 'https://descontroltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=BeraTunelSur2', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 1003, 1, 24, NULL, 'Bera Tunel Sur 2', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (2, 1, 1, 25, NULL, 'Axis', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 2, 1, 25, NULL, 'P1375-E', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 3, 1, 25, NULL, 'https://descontroltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=BeraTunelNorte1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 1003, 1, 25, NULL, 'Bera Tunel Norte 1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (2, 1, 1, 26, NULL, 'Axis', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 2, 1, 26, NULL, 'P1375-E', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 3, 1, 26, NULL, 'https://descontroltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=BeraTunelNorte2', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 1003, 1, 26, NULL, 'Bera Tunel Norte 2', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
+(2, 1, 1, 27, NULL, 'Axis', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 2, 1, 27, NULL, 'P1375-E', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 3, 1, 27, NULL, 'https://descontroltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=Endarlatza2', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 1003, 1, 27, NULL, 'Endarlatza 2', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (2, 1, 1, 28, NULL, 'LectorVision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 

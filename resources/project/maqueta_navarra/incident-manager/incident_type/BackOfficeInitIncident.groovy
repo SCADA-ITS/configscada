@@ -130,12 +130,10 @@ class BackOfficeInitIncident {
 
         List<ColumnValuePair> columnValuePairs = List.of(
             new ColumnValuePair("incident_report_id", incidentReportId),
-            new ColumnValuePair("type_detection", detectionType),
             new ColumnValuePair("incident_type", incidentType),
             new ColumnValuePair("incident_sub_type", incidentSubType),
             new ColumnValuePair("level", level),
             new ColumnValuePair("km_start", location),
-            new ColumnValuePair("user_n", userName)
         );
 
         StringBuilder columns = new StringBuilder();

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<p:manager_adapter_v1 name="" version=""
+	xmlns:p="manager_adapter_v1"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="manager_adapter_v1 ../../../adapter-lib/src/main/resources/schemas/manager/manager_adapter_v1.xsd ">
+	<p:subscriptors>
+	</p:subscriptors>
+	<p:executors>
+		<p:executor>
+			<p:id>1</p:id>
+			<p:enabled>true</p:enabled>
+			<p:threads>1</p:threads>
+			<p:merge_wait_time>1</p:merge_wait_time>
+			<p:manager_class>com.revenga.rits.back.io.external.manager.c4entities.C4ExtEntitiesExcutor</p:manager_class>
+			<p:subscriptors_ref>
+			</p:subscriptors_ref>
+			<p:executor_params>
+				<p:executor_param_value>ext_entity_type=1</p:executor_param_value>
+	  		</p:executor_params>
+		</p:executor>
+		<p:executor>
+			<p:id>1</p:id>
+			<p:enabled>false</p:enabled>
+			<p:threads>1</p:threads>
+			<p:merge_wait_time>1</p:merge_wait_time>
+			<p:manager_class>com.revenga.rits.back.io.external.manager.c4entities.C4ExtEntitiesExcutor</p:manager_class>
+			<p:subscriptors_ref>
+			</p:subscriptors_ref>
+			<p:executor_params>
+				<p:executor_param_value>ext_entity_type=2</p:executor_param_value>
+	  		</p:executor_params>
+		</p:executor>
+		<p:executor>
+			<p:id>1</p:id>
+			<p:enabled>false</p:enabled>
+			<p:threads>1</p:threads>
+			<p:merge_wait_time>1</p:merge_wait_time>
+			<p:manager_class>com.revenga.rits.back.io.external.manager.c4entities.C4ExtEntitiesExcutor</p:manager_class>
+			<p:subscriptors_ref>
+			</p:subscriptors_ref>
+			<p:executor_params>
+				<p:executor_param_value>ext_entity_type=3</p:executor_param_value>
+	  		</p:executor_params>
+		</p:executor>
+	</p:executors>
+</p:manager_adapter_v1>
