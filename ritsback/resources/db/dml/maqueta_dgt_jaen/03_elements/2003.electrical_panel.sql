@@ -3,9 +3,9 @@
 --
 INSERT INTO conf.elements
 (element_type_id,  element_subtype_id,  element_id,  location_id,  keep_values_on_disconnected,  inherit_state_id,  alias,  description,  on_change_alarm,  on_change_state,  on_change_measure,  on_schedule,  enabled,  visible,  alert,  alarm_count,  created_at,  updated_at) VALUES 
-(2003, NULL, 1, 1001, NULL,  NULL, 'Cuadro eléctrico Sentido Norte', 'Cuadro eléctrico para el tubo Sentido Norte', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(2003, NULL, 2, 1002, NULL,  NULL, 'Cuadro eléctrico Sentido SUR', 'Cuadro eléctrico para el tubo Sentido SUR', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-
+(2003, NULL, 1, 1001, NULL,  NULL, 'Despeñaperros Cuadro eléctrico Sentido Norte', 'Despeñaperros Cuadro eléctrico para el tubo Sentido Norte', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2003, NULL, 2, 1002, NULL,  NULL, 'Despeñaperros Cuadro eléctrico Sentido SUR', 'Despeñaperros Cuadro eléctrico para el tubo Sentido SUR', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2003, NULL, 3, 3001, NULL,  NULL, 'El Corzo Cuadro eléctrico Sentido Norte', 'El Corzo Cuadro eléctrico para el tubo Sentido Norte', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 INSERT INTO conf.element_values
 (element_type_id, element_type_param_id, param_type_id, element_id, value, enabled, visible, created_at, updated_at) VALUES
 (2003, 2, 1, 1, '1',true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -200,5 +200,51 @@ INSERT INTO conf.element_values
 	}
 ]'
 , true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(2003, 4, 1, 2, '26', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(2003, 4, 1, 2, '26', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2003, 2, 1, 3, '1',true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2003, 3, 1, 3, '[
+	{
+					"id": 1,
+					"startRampSeconds": 120, 
+					"startRampNFans": [0]
+	},
+	{
+					"id": 2,
+					"startRampSeconds": 120, 
+					"startRampNFans": [1]
+	},
+	{
+					"id": 3,
+					"startRampSeconds": 120, 
+					"startRampNFans": [2]
+	},
+	{
+					"id": 4,
+					"startRampSeconds": 120, 
+					"startRampNFans": [3]
+	},
+	{
+					"id": 5,
+					"startRampSeconds": 120, 
+					"startRampNFans": [4]
+	},
+	{
+					"id": 6,
+					"startRampSeconds": 120, 
+					"startRampNFans": [5]
+	},
+	{
+					"id": 7,
+					"startRampSeconds": 120, 
+					"startRampNFans": [6]
+	},
+	{
+					"id": 8,
+					"startRampSeconds": 120, 
+					"startRampNFans": [7]
+	}
+]'
+, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2003, 4, 1, 3, '8', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
 

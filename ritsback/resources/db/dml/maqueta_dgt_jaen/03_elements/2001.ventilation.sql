@@ -3,7 +3,8 @@
 --
 INSERT INTO conf.elements
 (element_type_id,  element_subtype_id,  element_id,  location_id,  keep_values_on_disconnected,  inherit_state_id,  alias,  description,  on_change_alarm,  on_change_state,  on_change_measure,  on_schedule,  enabled,  visible,  alert,  alarm_count,  created_at,  updated_at) VALUES 
-(2001, NULL, 1, 1000, NULL,  NULL, 'Despeñaperros', 'Ventilación tunel Despeñaperros', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(2001, NULL, 1, 1000, NULL,  NULL, 'Despeñaperros', 'Ventilación tunel Despeñaperros', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2001, NULL, 2, 3000, NULL,  NULL, 'El Corzo', 'Ventilación tunel El Corzo', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 -- 
 -- Table: conf.element_values
@@ -93,4 +94,48 @@ INSERT INTO conf.element_values
 		}
 	]
 }'
+, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2001, 1, 1, 2, 
+'{
+	"configs": [
+		{
+			"alias": "El Corzo Sentido Madrid",
+			"windSpeedSensorsId" :["ElementValue:2000:1:2:9"],
+			"windDirectionSensorsId": ["ElementValue:18:9:1:2"],
+			"windSpeedRanges":[
+				{
+						"id": 1,
+						"alias": "Ligero Vc1",
+						"max": 1.7		
+				},
+				{
+						"id": 2,
+						"alias": "Camión Vc2",
+						"min": 1.7,
+						"max": 2.5		
+				},
+				{
+						"id": 3,
+						"alias": "Mercancía peligrosa Vc3",
+						"min": 2.5,
+						"max": 3.17	
+				}
+			],
+			"defaultRangeId": 1,
+			"stretchs": [{
+				"stretchId": "Stretch:3001",
+				"alias": "El Corzo Sentido Madrid",	
+				"order": 1,
+				"fansOrderId": [ "Element:9:37", "Element:9:38", "Element:9:39", "Element:9:40", "Element:9:41", 
+								 "Element:9:42", "Element:9:43", "Element:9:44" ],
+				"fansToStartByRange": [ 
+                    {"rangeId": 3, "fans": 8},
+                    {"rangeId": 2, "fans": 8},
+                    {"rangeId": 1, "fans": 8}
+                ]
+			}]
+		}
+	]
+}'
 , true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
