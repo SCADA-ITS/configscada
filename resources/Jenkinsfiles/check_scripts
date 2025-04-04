@@ -84,7 +84,7 @@ pipeline {
 					directorios.each { directorio ->
                         proyectos.add(directorio.name)
                     }
-                    proyectos.removeAll([".gitignore", "bus_demo", "master"])
+                    proyectos.removeAll([".gitignore", "bus_demo", "master", "navarra_lab", "navarra_pro"])
                     
                     dir("${rutaBase}") {
 						for (proyecto in proyectos) {
@@ -115,7 +115,7 @@ pipeline {
 					directorios.each { directorio ->
                         proyectos.add(directorio.name)
                     }
-                    proyectos.removeAll([".gitignore", "bus_demo", "master"])
+                    proyectos.removeAll([".gitignore", "bus_demo", "master", "navarra_lab", "navarra_pro"])
                     
                     dir("${rutaBase}") {
 						for (proyecto in proyectos) {
