@@ -91,7 +91,7 @@ DELETE FROM static.vehicle_params;
 DELETE FROM static.transit_type_state_transitions;
 DELETE FROM static.transit_type_params;
 DELETE FROM static.transit_types;
-DELETE FROM static.transit_type_states;
+DELETE FROM static.transit_states;
 DELETE FROM master.vehicle_types;
 
 
@@ -99,23 +99,23 @@ DELETE FROM master.vehicle_types;
 INSERT INTO master.vehicle_types (vehicle_type_id,alias,enabled,visible,created_at,updated_at) VALUES
 	 (1,'Vehicle Type I',true,true,'2025-02-06 10:15:42.887+01','2025-02-06 10:15:42.887+01');
 	 
--- static.transit_type_states
-INSERT INTO static.transit_type_states (transit_type_state_id,transit_type_state_code,alias,description,label_alias,label_description,user_transit_enable,enabled,visible,created_at,updated_at) VALUES
-	 (1,'IN','Initial','Initial','LBL_TRANSIT_TYPE_STATE_INITIAL','LBL_TRANSIT_TYPE_STATE_INITIAL_DESC',false,true,true,'2025-01-31 11:20:35.936+01','2025-01-31 11:20:38.612+01'),
-	 (2,'PT','Pending','Pending','LBL_TRANSIT_TYPE_STATE_PENDING','LBL_TRANSIT_TYPE_STATE_PENDING_DESC',true,true,true,'2025-01-31 11:20:35.936+01','2025-01-31 11:20:38.612+01'),
-	 (3,'EN','End','End','LBL_TRANSIT_TYPE_STATE_END','LBL_TRANSIT_TYPE_STATE_END_DESC',true,true,true,'2025-01-31 11:20:35.936+01','2025-01-31 11:20:38.612+01'),
-	 (4,'CA','Cancel','Cancel','LBL_TRANSIT_TYPE_STATE_CANCEL','LBL_TRANSIT_TYPE_STATE_CANCEL_DESC',true,true,true,'2025-01-31 11:20:35.936+01','2025-01-31 11:20:38.612+01');
+-- static.transit_states
+INSERT INTO static.transit_states (transit_state_id,transit_state_code,alias,description,label_alias,label_description,user_transit_enable,enabled,visible,created_at,updated_at) VALUES
+	 (1,'IN','Initial','Initial','LBL_TRANSIT_STATE_INITIAL','LBL_TRANSIT_STATE_INITIAL_DESC',false,true,true,'2025-01-31 11:20:35.936+01','2025-01-31 11:20:38.612+01'),
+	 (2,'PT','Pending','Pending','LBL_TRANSIT_STATE_PENDING','LBL_TRANSIT_STATE_PENDING_DESC',true,true,true,'2025-01-31 11:20:35.936+01','2025-01-31 11:20:38.612+01'),
+	 (3,'EN','End','End','LBL_TRANSIT_STATE_END','LBL_TRANSIT_STATE_END_DESC',true,true,true,'2025-01-31 11:20:35.936+01','2025-01-31 11:20:38.612+01'),
+	 (4,'CA','Cancel','Cancel','LBL_TRANSIT_STATE_CANCEL','LBL_TRANSIT_STATE_CANCEL_DESC',true,true,true,'2025-01-31 11:20:35.936+01','2025-01-31 11:20:38.612+01');
 
 -- static.transit_types
-INSERT INTO static.transit_types (transit_type_id,init_transit_type_state_id,end_transit_type_state_id,discard_transit_type_state_id,alias,description,label_alias,label_description,enabled,visible,created_at,updated_at) VALUES
-	 (1,1,3,4,'Generic Transit','Generic Transit','LBL_TRANSIT_GENERIC','LBL_TRANSIT_GENERIC_DESC',true,true,'2025-01-31 11:24:43.315+01','2025-01-31 11:24:49.967+01');
+INSERT INTO static.transit_types (transit_type_id,alias,description,label_alias,label_description,enabled,visible,created_at,updated_at) VALUES
+	 (1,'Generic Transit','Generic Transit','LBL_TRANSIT_GENERIC','LBL_TRANSIT_GENERIC_DESC',true,true,'2025-01-31 11:24:43.315+01','2025-01-31 11:24:49.967+01');
 
 -- static.transit_type_params
 INSERT INTO static.transit_type_params (transit_type_id, transit_type_param_id, data_type_id, transit_type_param_group_id, alias, description, label_alias, label_description, enabled, visible, created_at, updated_at) VALUES
 	(1, 1, 2, null, 'Transit type Param 1', 'Transit type Param 1', 'LBL_TRANSIT_PARAM_1', 'LBL_TRANSIT_PARAM_DESC', true, true, '2025-01-31 11:24:43.315+01', '2025-01-31 11:24:43.315+01');
 	
 -- static.transit_type_state_transitions
-INSERT INTO static.transit_type_state_transitions (transit_type_id,parent_transit_type_state_id,child_transit_type_state_id,enabled,visible,created_at,updated_at) VALUES
+INSERT INTO static.transit_type_state_transitions (transit_type_id,parent_transit_state_id,child_transit_state_id,enabled,visible,created_at,updated_at) VALUES
 	 (1,1,2,true,true,'2025-01-31 11:30:29.574+01','2025-01-31 10:30:29.574+01'),
 	 (1,1,4,true,true,'2025-01-31 11:30:29.574+01','2025-01-31 10:30:29.574+01'),
 	 (1,2,3,true,true,'2025-01-31 11:30:29.574+01','2025-01-31 10:30:29.574+01'),
@@ -155,7 +155,7 @@ BEGIN
     ) THEN
     
     	INSERT INTO rt.transits
-			(transit_id, transit_code, transit_type_id, dossier_code, remittance_code, installation_code, detection_point_code, date_transit, transit_type_state_id, transit_type_state_option_id, location_id, lane_number, element_type_id, element_id, certificate_valid_date, certificate_path, infraction_type_id, infraction_code, speed, distance, assigned_user_id, towards, address, locality, road, pk, direction, vehicle_type_id, vehicle_id, vehicle_brand_id, vehicle_model_id, vehicle_class_id, vehicle_country_id, vehicle_plate_number, vehicle_direction, vehicle_date_registration, vehicle_color, driver_type_id, driver_id, driver_license_type_id, driver_license_value, driver_license_issue_date, driver_license_expire_date, driver_name, driver_surname, driver_gender, driver_date_of_birth, driver_country_id, driver_state_id, driver_region_id, driver_locality_id, driver_address, enabled, visible, created_at, updated_at)
+			(transit_id, transit_code, transit_type_id, dossier_code, remittance_code, installation_code, detection_point_code, date_transit, transit_state_id, transit_state_option_id, location_id, lane_number, element_type_id, element_id, certificate_valid_date, certificate_path, infraction_type_id, infraction_code, speed, distance, assigned_user_id, towards, address, locality, road, pk, direction, vehicle_type_id, vehicle_id, vehicle_brand_id, vehicle_model_id, vehicle_class_id, vehicle_country_id, vehicle_plate_number, vehicle_direction, vehicle_date_registration, vehicle_color, driver_type_id, driver_id, driver_license_type_id, driver_license_value, driver_license_issue_date, driver_license_expire_date, driver_name, driver_surname, driver_gender, driver_date_of_birth, driver_country_id, driver_state_id, driver_region_id, driver_locality_id, driver_address, enabled, visible, created_at, updated_at)
 			VALUES
 				(1739893658872, 'CR. TEST, 8 C-20250215_121402_01852', 1, NULL, NULL, 'CR. TEST, 8 C', 'CR. TEST, 8 C', '2025-02-15 11:14:02.000', 1, NULL, NULL, NULL, 99, 1, NULL, NULL, NULL, NULL, 60.0, NULL, NULL, 'C', 'CR. TEST, 8', 'SANT BOI', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, '1234AAA', true, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, true, true, '2025-02-18 16:48:01.793', '2025-02-18 16:48:01.793'),
 				(1739893658868, 'CR. TEST, 8 C-20250216_121409_01853', 1, NULL, NULL, 'CR. TEST, 8 C', 'CR. TEST, 8 C', '2025-02-16 11:14:09.000', 1, NULL, NULL, NULL, 99, 1, NULL, NULL, NULL, NULL, 90.0, NULL, NULL, 'C', 'CR. TEST, 8', 'SANT BOI', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, 'B1111BB', true, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, true, true, '2025-02-18 16:48:01.793', '2025-02-18 16:48:01.793'),
@@ -211,7 +211,7 @@ END $$;
 -- 	          and table_name =  'transits'
 --    ) THEN
 --        -- rt.transits
---		INSERT INTO rt.transits (transit_id, transit_code, transit_type_id, date_transit, plate_number, transit_type_state_id, transit_type_state_option_id, location_id, direction, lane_number, element_type_id, element_id, certificate_valid_date, certificate_path, driver_type_id, driver_id, vehicle_type_id, vehicle_id, infraction_type_id, infraction_code, speed, distance, assigned_user_id, enabled, visible, created_at, updated_at) VALUES
+--		INSERT INTO rt.transits (transit_id, transit_code, transit_type_id, date_transit, plate_number, transit_state_id, transit_state_option_id, location_id, direction, lane_number, element_type_id, element_id, certificate_valid_date, certificate_path, driver_type_id, driver_id, vehicle_type_id, vehicle_id, infraction_type_id, infraction_code, speed, distance, assigned_user_id, enabled, visible, created_at, updated_at) VALUES
 --		(3, 'TR0001', 1, '2025-01-31 11:09:08.849', NULL, 1, NULL, 1, NULL, NULL, 2, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, true, true, '2025-01-31 11:08:53.540', '2025-01-31 11:08:56.605');
 --    END IF;
 --

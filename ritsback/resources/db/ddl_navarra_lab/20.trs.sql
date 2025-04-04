@@ -24,8 +24,8 @@ DROP TABLE IF EXISTS static.transit_type_state_transitions;
 DROP TABLE IF EXISTS static.transit_type_params;
 DROP TABLE IF EXISTS static.transit_type_param_groups;
 DROP TABLE IF EXISTS static.transit_types;
-DROP TABLE IF EXISTS static.transit_type_state_options;
-DROP TABLE IF EXISTS static.transit_type_states;
+DROP TABLE IF EXISTS static.transit_state_options;
+DROP TABLE IF EXISTS static.transit_states;
 -- SECTION 2 --
 DROP TABLE IF EXISTS static.driver_params;
 DROP TABLE IF EXISTS static.driver_param_groups;
@@ -380,13 +380,13 @@ DROP TABLE IF EXISTS master.countries;
 -- BEGIN SECTION 3
 	
 -- 
--- Table: static.transit_type_states
+-- Table: static.transit_states
 -- Descripción: Estados de transitos
 -- Scope: static
 --
-	CREATE TABLE static.transit_type_states (
-		transit_type_state_id int8 NOT NULL,
-		transit_type_state_code varchar(2) UNIQUE NOT NULL,
+	CREATE TABLE static.transit_states (
+		transit_state_id int8 NOT NULL,
+		transit_state_code varchar(2) UNIQUE NOT NULL,
 		alias varchar(100) NOT NULL,
 		description varchar(200) NULL,
 		label_alias varchar(50) NOT NULL,
@@ -396,20 +396,20 @@ DROP TABLE IF EXISTS master.countries;
 		visible bool NULL,
 		created_at timestamptz NOT NULL,
 		updated_at timestamptz NOT NULL,
-		CONSTRAINT pk_transit_type_states PRIMARY KEY (transit_type_state_id)
+		CONSTRAINT pk_transit_states PRIMARY KEY (transit_state_id)
 	);
 	
-	ALTER TABLE static.transit_type_states SET TABLESPACE tbs_controltrafico_static;
+	ALTER TABLE static.transit_states SET TABLESPACE tbs_controltrafico_static;
 	
 -- 
--- Table: static.transit_type_state_options
+-- Table: static.transit_state_options
 -- Descripción: Opciones en estados de tipos de transitos
 -- Scope: static
 --
-	CREATE TABLE static.transit_type_state_options (
-		transit_type_state_id int8 NOT NULL,
-		transit_type_state_option_id int8 NOT NULL,
-		transit_type_state_option_code varchar(2) UNIQUE NOT NULL,
+	CREATE TABLE static.transit_state_options (
+		transit_state_id int8 NOT NULL,
+		transit_state_option_id int8 NOT NULL,
+		transit_state_option_code varchar(2) UNIQUE NOT NULL,
 		alias varchar(100) NOT NULL,
 		description varchar(200) NULL,
 		label_alias varchar(50) NOT NULL,
@@ -419,14 +419,14 @@ DROP TABLE IF EXISTS master.countries;
 		visible bool NULL,
 		created_at timestamptz NOT NULL,
 		updated_at timestamptz NOT NULL,
-		CONSTRAINT pk_transit_type_state_options PRIMARY KEY (transit_type_state_id, transit_type_state_option_id)
+		CONSTRAINT pk_transit_state_options PRIMARY KEY (transit_state_id, transit_state_option_id)
 	);
 	
-	CREATE INDEX idx_transit_type_state_options_transit_type_states ON static.transit_type_state_options USING btree (transit_type_state_id);
+	CREATE INDEX idx_transit_state_options_transit_states ON static.transit_state_options USING btree (transit_state_id);
 		
-	ALTER TABLE static.transit_type_state_options ADD CONSTRAINT fk_transit_type_state_options_transit_type_states FOREIGN KEY (transit_type_state_id) REFERENCES static.transit_type_states (transit_type_state_id);
+	ALTER TABLE static.transit_state_options ADD CONSTRAINT fk_transit_state_options_transit_states FOREIGN KEY (transit_state_id) REFERENCES static.transit_states (transit_state_id);
 	
-	ALTER TABLE static.transit_type_state_options SET TABLESPACE tbs_controltrafico_static;
+	ALTER TABLE static.transit_state_options SET TABLESPACE tbs_controltrafico_static;
 
 -- 
 -- Table: static.transit_types
@@ -435,9 +435,6 @@ DROP TABLE IF EXISTS master.countries;
 --
 	CREATE TABLE static.transit_types (
 		transit_type_id int8 NOT NULL,
-		init_transit_type_state_id int8 NOT NULL,
-		end_transit_type_state_id int8 NOT NULL,
-		discard_transit_type_state_id int8 NOT NULL,
 		alias varchar(100) NOT NULL,
 		description varchar(200) NULL,
 		label_alias varchar(50) NOT NULL,
@@ -448,14 +445,6 @@ DROP TABLE IF EXISTS master.countries;
 		updated_at timestamptz NOT NULL,
 		CONSTRAINT pk_transit_types PRIMARY KEY (transit_type_id)
 	);
-	
-	CREATE INDEX idx_transit_types_transit_type_states_1 ON static.transit_types USING btree (init_transit_type_state_id);
-	CREATE INDEX idx_transit_types_transit_type_states_2 ON static.transit_types USING btree (end_transit_type_state_id);
-	CREATE INDEX idx_transit_types_transit_type_states_3 ON static.transit_types USING btree (discard_transit_type_state_id);
-	
-	ALTER TABLE static.transit_types ADD CONSTRAINT fk_transit_types_transit_type_states_1 FOREIGN KEY (init_transit_type_state_id) REFERENCES static.transit_type_states(transit_type_state_id);
-	ALTER TABLE static.transit_types ADD CONSTRAINT fk_transit_types_transit_type_states_2 FOREIGN KEY (end_transit_type_state_id) REFERENCES static.transit_type_states(transit_type_state_id);
-	ALTER TABLE static.transit_types ADD CONSTRAINT fk_transit_types_transit_type_states_3 FOREIGN KEY (discard_transit_type_state_id) REFERENCES static.transit_type_states(transit_type_state_id);
 	
 	ALTER TABLE static.transit_types SET TABLESPACE tbs_controltrafico_static;
 
@@ -517,22 +506,22 @@ DROP TABLE IF EXISTS master.countries;
 --
 	CREATE TABLE static.transit_type_state_transitions (
 		transit_type_id int8 NOT NULL,
-		parent_transit_type_state_id int8 NOT NULL,
-		child_transit_type_state_id int8 NOT NULL,
+		parent_transit_state_id int8 NOT NULL,
+		child_transit_state_id int8 NOT NULL,
 		enabled bool NULL,
 		visible bool NULL,
 		created_at timestamptz NOT NULL,
 		updated_at timestamptz NOT NULL,
-		CONSTRAINT pk_transit_type_state_transitions PRIMARY KEY (transit_type_id, parent_transit_type_state_id, child_transit_type_state_id)
+		CONSTRAINT pk_transit_type_state_transitions PRIMARY KEY (transit_type_id, parent_transit_state_id, child_transit_state_id)
 	);
 	
 	CREATE INDEX idx_transit_type_state_transitions_transit_types ON static.transit_type_state_transitions USING btree (transit_type_id);
-	CREATE INDEX idx_transit_type_state_transitions_transit_type_states_1 ON static.transit_type_state_transitions USING btree (parent_transit_type_state_id);
-	CREATE INDEX idx_transit_type_state_transitions_transit_type_states_2 ON static.transit_type_state_transitions USING btree (child_transit_type_state_id);
+	CREATE INDEX idx_transit_type_state_transitions_transit_states_1 ON static.transit_state_transitions USING btree (parent_transit_state_id);
+	CREATE INDEX idx_transit_type_state_transitions_transit_states_2 ON static.transit_state_transitions USING btree (child_transit_state_id);
 	
 	ALTER TABLE static.transit_type_state_transitions ADD CONSTRAINT fk_transit_type_state_transitions_transit_types FOREIGN KEY (transit_type_id) REFERENCES static.transit_types(transit_type_id);
-	ALTER TABLE static.transit_type_state_transitions ADD CONSTRAINT fk_transit_type_state_transitions_transit_type_states_1 FOREIGN KEY (parent_transit_type_state_id) REFERENCES static.transit_type_states(transit_type_state_id);
-	ALTER TABLE static.transit_type_state_transitions ADD CONSTRAINT fk_transit_type_state_transitions_transit_type_states_2 FOREIGN KEY (child_transit_type_state_id) REFERENCES static.transit_type_states(transit_type_state_id);
+	ALTER TABLE static.transit_type_state_transitions ADD CONSTRAINT fk_transit_type_state_transitions_transit_states_1 FOREIGN KEY (parent_transit_state_id) REFERENCES static.transit_states(transit_state_id);
+	ALTER TABLE static.transit_type_state_transitions ADD CONSTRAINT fk_transit_type_state_transitions_transit_states_2 FOREIGN KEY (child_transit_state_id) REFERENCES static.transit_states(transit_state_id);
 	
 	ALTER TABLE static.transit_type_state_transitions SET TABLESPACE tbs_controltrafico_static;
 

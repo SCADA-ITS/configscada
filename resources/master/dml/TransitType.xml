@@ -2,9 +2,6 @@
 <!DOCTYPE RelativeLayout>
 <DML enabled="true" model="TransitType">
 	<SELECT>SELECT transit_type_id as "id",
-				   init_transit_type_state_id as "initTransitTypeStateId",
-				   end_transit_type_state_id as "endTransitTypeStateId",
-				   discard_transit_type_state_id as "discardTransitTypeStateId",
 				   alias as "alias",
 				   description as "description",
 				   label_alias as "labelAlias",

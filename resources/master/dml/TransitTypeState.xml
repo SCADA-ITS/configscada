@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE RelativeLayout>
-<DML enabled="true" model="TransitTypeState">
-	<SELECT>SELECT transit_type_state_id as "id",
-				   transit_type_state_code as "transitTypeStateCode",
+<DML enabled="true" model="TransitState">
+	<SELECT>SELECT transit_state_id as "id",
+				   transit_state_code as "transitStateCode",
 				   alias as "alias",
 				   description as "description",
 				   label_alias as "labelAlias",
@@ -12,7 +12,7 @@
 				   visible as "visible",
 				   created_at as "createdAt",
 				   updated_at as "updatedAt"
-			  FROM static.transit_type_states
+			  FROM static.transit_states
 			 WHERE enabled = true OR enabled is null
 	</SELECT>
 	<INSERT>

@@ -89,7 +89,7 @@ DELETE FROM static.vehicle_params;
 DELETE FROM static.transit_type_state_transitions;
 DELETE FROM static.transit_type_params;
 DELETE FROM static.transit_types;
-DELETE FROM static.transit_type_states;
+DELETE FROM static.transit_states;
 DELETE FROM master.vehicle_types;
 
 
@@ -97,23 +97,23 @@ DELETE FROM master.vehicle_types;
 INSERT INTO master.vehicle_types (vehicle_type_id,alias,enabled,visible,created_at,updated_at) VALUES
 	 (1,'Vehicle Type I',true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
 	 
--- static.transit_type_states
-INSERT INTO static.transit_type_states (transit_type_state_id,transit_type_state_code,alias,description,label_alias,label_description,user_transit_enable,enabled,visible,created_at,updated_at) VALUES
-	 (1,'IN','Initial','Initial','LBL_TRANSIT_TYPE_STATE_INITIAL','LBL_TRANSIT_TYPE_STATE_INITIAL_DESC',false,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
-	 (2,'PT','Pending','Pending','LBL_TRANSIT_TYPE_STATE_PENDING','LBL_TRANSIT_TYPE_STATE_PENDING_DESC',true,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
-	 (3,'EN','End','End','LBL_TRANSIT_TYPE_STATE_END','LBL_TRANSIT_TYPE_STATE_END_DESC',true,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
-	 (4,'CA','Cancel','Cancel','LBL_TRANSIT_TYPE_STATE_CANCEL','LBL_TRANSIT_TYPE_STATE_CANCEL_DESC',true,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
+-- static.transit_states
+INSERT INTO static.transit_states (transit_state_id,transit_state_code,alias,description,label_alias,label_description,user_transit_enable,enabled,visible,created_at,updated_at) VALUES
+	 (1,'IN','Initial','Initial','LBL_TRANSIT_STATE_INITIAL','LBL_TRANSIT_STATE_INITIAL_DESC',false,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+	 (2,'PT','Pending','Pending','LBL_TRANSIT_STATE_PENDING','LBL_TRANSIT_STATE_PENDING_DESC',true,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+	 (3,'EN','End','End','LBL_TRANSIT_STATE_END','LBL_TRANSIT_STATE_END_DESC',true,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+	 (4,'CA','Cancel','Cancel','LBL_TRANSIT_STATE_CANCEL','LBL_TRANSIT_STATE_CANCEL_DESC',true,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
 
 -- static.transit_types
-INSERT INTO static.transit_types (transit_type_id,init_transit_type_state_id,end_transit_type_state_id,discard_transit_type_state_id,alias,description,label_alias,label_description,enabled,visible,created_at,updated_at) VALUES
-	 (1,1,3,4,'Generic Transit','Generic Transit','LBL_TRANSIT_GENERIC','LBL_TRANSIT_GENERIC_DESC',true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
+INSERT INTO static.transit_types (transit_type_id,alias,description,label_alias,label_description,enabled,visible,created_at,updated_at) VALUES
+	 (1,'Generic Transit','Generic Transit','LBL_TRANSIT_GENERIC','LBL_TRANSIT_GENERIC_DESC',true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
 
 -- static.transit_type_params
 INSERT INTO static.transit_type_params (transit_type_id, transit_type_param_id, data_type_id, transit_type_param_group_id, alias, description, label_alias, label_description, enabled, visible, created_at, updated_at) VALUES
 	(1, 1, 2, null, 'Transit type Param 1', 'Transit type Param 1', 'LBL_TRANSIT_PARAM_1', 'LBL_TRANSIT_PARAM_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 	
 -- static.transit_type_state_transitions
-INSERT INTO static.transit_type_state_transitions (transit_type_id,parent_transit_type_state_id,child_transit_type_state_id,enabled,visible,created_at,updated_at) VALUES
+INSERT INTO static.transit_type_state_transitions (transit_type_id,parent_transit_state_id,child_transit_state_id,enabled,visible,created_at,updated_at) VALUES
 	 (1,1,2,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 	 (1,1,4,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 	 (1,2,3,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
