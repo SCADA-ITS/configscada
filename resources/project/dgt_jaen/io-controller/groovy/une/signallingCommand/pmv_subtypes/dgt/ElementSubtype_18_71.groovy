@@ -28,11 +28,12 @@ String signalling(Element element, SignallingCommand signallingCommand, org.apac
         List<Byte> data = new ArrayList<Byte>();
         String resultado = "";
         boolean alternance = false;
-
+        String align_AUX = "";
 
         data.add(COD_MODIFICAR_PMV);	//Codigo de protocolo para modificar señalización = 0x1A
 
         alternance = checkAlternance(object, alternance)
+        align_AUX = checkTextAlign(object, align_AUX)
 
         if (alternance){
             data.add(EST_ALT);				//Utilizaremos una señalización alternante
@@ -45,9 +46,7 @@ String signalling(Element element, SignallingCommand signallingCommand, org.apac
 
         data = setGraphicsFrame(element, object, data, alternance)
 
-        data = setTextsFrame(object, data, alternance)
-
-        //data = controlCharacters(data);	//Transformo los caracteres especiales del protocolo 
+        data = setTextsFrame(object, data, alternance, align_AUX, log)
 
         for(byte aux : data){
             resultado += String.format("%02X", aux);
@@ -192,6 +191,17 @@ public boolean checkAlternance(Object object, boolean alternance){
     return alternance
 }
 
+public String checkTextAlign(Zone[] zones, String align) {
+    for (Zone zone : zones) {   
+        if (zone.getAlign() != null) {  // Si la zona tiene alineación definida
+            align = zone.getAlign();
+            break;  // Salimos en cuanto encontramos un valor
+        }
+    }
+    return align;
+}
+
+
 public List<Byte> setGraphicsFrame(Element element, Object object, List<Byte> data, boolean alternance){
 
     final int PRIMER_SUBPANEL = 0x31;
@@ -245,7 +255,7 @@ public List<Byte> setGraphicsFrame(Element element, Object object, List<Byte> da
     return data;
 }
 
-public List<Byte> setTextsFrame(Object object, List<Byte> data, boolean alternance){
+public List<Byte> setTextsFrame(Object object, List<Byte> data, boolean alternance, String align, org.apache.logging.log4j.Logger log){
 
     final int SEGUNDO_SUBPANEL = 0x32;
     final int CONT_LIT = 0x33;
@@ -255,7 +265,7 @@ public List<Byte> setTextsFrame(Object object, List<Byte> data, boolean alternan
     final int PARAM_LINEA = 0x18;
     final int FIN_LINEA = 0x0A;
     final int FIN_TEXTO = 0x00;
-
+    final int SPACE = 0x20;
     List<Byte> aux_text = new ArrayList<Byte>();
     int tam_texto;
     int ini_texto;
@@ -274,16 +284,36 @@ public List<Byte> setTextsFrame(Object object, List<Byte> data, boolean alternan
     data.add(PARAM_LINEA);			//Ponemos por defecto que las lineas sean de color ambar = 0x18
 
     //Añado el texto a señalizar, linea a linea
-    for (int i = 0; i < object.size(); i++){
-        if(object[i].getTexts()){
-            for(int j = 0; j < object[i].getTexts().size(); j++){					
-                aux_text.addAll(object[i].getTexts()[j].getValue().getBytes("Cp437"));
-                if(j < object[i].getTexts().size()-1){
+    int panelSize = 12;  // Tamaño del panel
+
+    for (int i = 0; i < object.size(); i++) {
+        if (object[i].getTexts()) {
+            for (int j = 0; j < object[i].getTexts().size(); j++) {
+                String texto = object[i].getTexts()[j].getValue();
+                tam_texto_line = texto.length();  // Calculamos el tamaño del texto
+
+                int espacios = 0; // Espacios por defecto
+
+                if ("center".equals(align)) {
+                    espacios = (panelSize - tam_texto_line) / 2; // Para centrar
+                } else if ("right".equals(align)) {
+                    espacios = panelSize - tam_texto_line; // Para alinear a la derecha
+                } 
+
+                for (int e = 0; e < espacios; e++) {
+                    aux_text.add((byte) 0x20); // Agregamos espacios (0x20)
+                }
+
+                aux_text.addAll(texto.getBytes("Cp437"));
+
+                if (j < object[i].getTexts().size() - 1) {
                     aux_text.add(FIN_LINEA);
                 }		
             }
         }
     }
+
+
     aux_text.add(FIN_TEXTO);
 
     data.addAll(aux_text);	
@@ -305,12 +335,27 @@ public List<Byte> setTextsFrame(Object object, List<Byte> data, boolean alternan
         data.add(NUM_LINEAS_TRES);			//Panel de 3 lineas
         data.add(PARAM_LINEA);			//Ponemos por defecto que las lineas sean de color ambar = 0x18
         data.add(PARAM_LINEA);			//Ponemos por defecto que las lineas sean de color ambar = 0x18
-        data.add(PARAM_LINEA);			//Ponemos por defecto que las lineas sean de color ambar = 0x18
+        data.add(PARAM_LINEA);	        //Ponemos por defecto que las lineas sean de color ambar = 0x18
 
         //Añado el texto a señalizar, linea a linea
-        for (int i = 0; i < object.size(); i++){
-            if(object[i].getTexts()){
-                for(int j = 0; j < object[i].getTexts().size(); j++){
+        for (int i = 0; i < object.size(); i++) {
+            if (object[i].getTexts()) {
+                for (int j = 0; j < object[i].getTexts().size(); j++) {
+                    String texto = object[i].getTexts()[j].getAlternance();
+
+                    tam_texto_line = texto.length();  // Calculamos el tamaño del texto
+
+                    int espacios = 0; // Espacios por defecto
+
+                    if ("center".equals(align)) {
+                        espacios = (panelSize - tam_texto_line) / 2; 
+                    }else if ("right".equals(align)) {
+                        espacios = panelSize - tam_texto_line; 
+                    } 
+
+                    for (int e = 0; e < espacios; e++) {
+                        aux_text.add((byte) 0x20); // Agregamos espacios (0x20)
+                    }
                     aux_text.addAll(object[i].getTexts()[j].getAlternance().getBytes("Cp437"));
                     if(j < object[i].getTexts().size()-1){
                         aux_text.add(FIN_LINEA);
@@ -330,28 +375,6 @@ public List<Byte> setTextsFrame(Object object, List<Byte> data, boolean alternan
     return data;
 }
 
-public List<Byte> controlCharacters(List<Byte> data){
-
-    final int STX = 0x02;
-	final int ETX = 0x03;
-	final int ENQ = 0x05;
-	final int ACK = 0x06;
-	final int CTRL = 0x10;
-	final int SPECIAL = 0x80;
-
-    List<Byte> resultado = new ArrayList<Byte>();
-
-    for(byte aux : data){
-        if(aux == STX || aux == ETX || aux == ACK || aux == ENQ || aux == CTRL){
-            resultado.add(CTRL);
-            resultado.add(aux + SPECIAL);
-        }else{
-            resultado.add(aux);
-        }
-    }
-
-    return resultado;
-}
             
 public Long getGraphic(Element element, Long numZone, Long picto){
     final Long PARAM_CONFIG_JSONCONFIG = 4L;

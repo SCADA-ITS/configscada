@@ -37,7 +37,7 @@ public void content(Element element, List<Byte> data, List<ElementValue> element
 	}
 	
 	String result = construirVMS(newData, element, log);
-	
+
 	if (result == null || result.equals("")){
 		
 		ElementValue elementValue = new ElementValue();
@@ -273,7 +273,7 @@ class Zone{
     }
     
     public void fillText(List<String> messages, Integer numLineas) {
-        final String TEXT_COLOR = "#FFFFFF";
+        final String TEXT_COLOR = "#FFBF00";
         
         List<String> values = Arrays.asList(messages.get(0).split("\n"));
         List<String> alternances;

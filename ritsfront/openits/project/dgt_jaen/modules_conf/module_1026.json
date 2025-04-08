@@ -105,7 +105,7 @@
 				"jsCustomTypeRender": "component/graphicIcon/custom/vms.js"
 			},
 			"alternance": true,
-			"configAlternance": true,
+			"configAlternance": false,
 			"defaultAlternanceMs": 3000,
 			"blinking": false,
 			"configBlinking": false,
@@ -113,7 +113,7 @@
 			"defaultFlashingOffMs":1000,
 			"textColor": false,
 			"defaultTextColor": "#FFBF00",
-			"textAlign": false
+			"textAlign": true
 		},
 		{
 			"id": "ElementSubtype:22:71",
@@ -124,7 +124,7 @@
 				"jsCustomTypeRender": "component/graphicIcon/custom/vms.js"
 			},
 			"alternance": true,
-			"configAlternance": true,
+			"configAlternance": false,
 			"defaultAlternanceMs": 5000,
 			"blinking": false,
 			"configBlinking": false,
@@ -132,7 +132,7 @@
 			"defaultFlashingOffMs":1000,
 			"textColor": false,
 			"defaultTextColor": "#FFBF00",
-			"textAlign": false
+			"textAlign": true
 		},
 		{
 			"id": "ElementSubtype:26:71",

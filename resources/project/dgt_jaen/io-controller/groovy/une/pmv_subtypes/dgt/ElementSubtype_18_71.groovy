@@ -133,6 +133,7 @@ public String construirVMS(byte[] content, Element element, boolean intermitence
 	texts.add(resultado);
 	
 	if(hayAlternancia){
+		log.debug("ENTRA en alternancia")
 		contentByte = contentByte.subList(contador + 1, contentByte.size() );
 		contador = 0;
 		resultado = "";
@@ -155,6 +156,7 @@ public String construirVMS(byte[] content, Element element, boolean intermitence
 			contador++;
 		}
 		texts.add(resultado);
+		log.debug("TEXT_ALTERNANCIA-------> " + texts)
 	}
 			
 	if(element.getElementSubtypeId() == null || !element.getElementSubtypeId()){
@@ -189,6 +191,7 @@ public String construirVMS(byte[] content, Element element, boolean intermitence
 					num_lineas = Integer.parseInt(p.getProperty("vms.subtype_" + String.valueOf(element.getElementSubtypeId()) + ".zone_" + String.valueOf(n_zone) + "." + TEXT + ".num_lines"));
 					if(num_lineas && num_lineas != null){
 						zone.fillText(texts, num_lineas);
+						
 					}else{
 						log.debug("No se encuenta el numero de lineas de la zona de texto " + num_zone + " para el Element:" + element.getElementTypeId() + ":" + element.getId());
 						return "";
@@ -202,6 +205,7 @@ public String construirVMS(byte[] content, Element element, boolean intermitence
 				return "";
 			}
 			zones.add(zone);
+			log.debug("zone------> "+ zones)
 		}	
 	}else{
 		log.debug("No se ha encontrado el parametro num_zonas para el Element:" + element.getElementTypeId() + ":" + element.getId());
@@ -263,7 +267,7 @@ class Zone{
 	}
 	
 	public void fillText(List<String> messages, Integer numLineas) {
-		final String TEXT_COLOR = "#FFFFFF";
+		final String TEXT_COLOR = "#FFBF00";
 
 		List<String> values = Arrays.asList(messages.get(0).split("\n"));
 		List<String> alternances;

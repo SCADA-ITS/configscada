@@ -23,7 +23,7 @@ String sendMessage(Element element, SignallingCommand signallingCommand, org.apa
         }else if(element.getElementSubtypeId() == GR_TXT_GR_PMV){
 
             pmv = shell.parse(new File(ResourcesUtil.getPath("io-controller/groovy/une/signallingCommand/pmv_subtypes/dgt/ElementSubtype_22_71.groovy")));
-            frame = pmv.signalling(element, signallingCommand);
+            frame = pmv.signalling(element, signallingCommand, log);
         }else{
             log.debug("Subtipo no encontrado")
         }
