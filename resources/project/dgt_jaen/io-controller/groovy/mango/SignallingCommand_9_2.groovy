@@ -41,26 +41,60 @@ class SignallingCommand_9_2 {
 	boolean process(String dataSourceXid, SignallingCommand signallingCommand, MangoDriver driver) {
 
 		try {
+			
 			List<XidPointValueTimeModel> xidPointValueTimeModels = new ArrayList<>();
 			XidPointValueTimeModel xidPointValueTimeModel = null;
-			
-			xidPointValueTimeModel = signallingCommandUtils.getXidPointValueTimeModel(signallingCommand, 
+			if (dataSourceXid.contains("CZ")) {
+				xidPointValueTimeModel = signallingCommandUtils.getXidPointValueTimeModel(signallingCommand, 
 					dataSourceXid + "_" + FAN_DIRECT_ORDER, ON);
-						
-			xidPointValueTimeModels.add(xidPointValueTimeModel);
 
-			xidPointValueTimeModel = signallingCommandUtils.getXidPointValueTimeModel(signallingCommand, 
-					dataSourceXid + "_" + FAN_REVERSE_ORDER, OFF);
-						
-			xidPointValueTimeModels.add(xidPointValueTimeModel);
+				xidPointValueTimeModels.add(xidPointValueTimeModel);
 
-			ObjectMapper objectMapper = new ObjectMapper();
-			objectMapper.setSerializationInclusion(Include.NON_NULL);
-			String message = objectMapper.writeValueAsString(xidPointValueTimeModels);
+				ObjectMapper objectMapper = new ObjectMapper();
+				objectMapper.setSerializationInclusion(Include.NON_NULL);
+				String onMessage = objectMapper.writeValueAsString(xidPointValueTimeModels);
+				log.debug("ENVIO EL ON-----> " + onMessage)
+				if (driver != null) {
+					driver.send(onMessage);
+				}
 
-			if (driver != null) {
-			
-				driver.send(message);
+				Thread.sleep(1000);
+
+				xidPointValueTimeModels.clear(); // Borra todos los elementos previos de la lista
+
+				xidPointValueTimeModel = signallingCommandUtils.getXidPointValueTimeModel(signallingCommand, 
+					dataSourceXid + "_" + FAN_DIRECT_ORDER, OFF);
+				
+				xidPointValueTimeModels.add(xidPointValueTimeModel);
+
+				objectMapper = new ObjectMapper();
+				objectMapper.setSerializationInclusion(Include.NON_NULL);
+
+				String offMessage = objectMapper.writeValueAsString(xidPointValueTimeModels);
+				log.debug("ENVIO EL OFF-----> " + offMessage)
+				if (driver != null) {
+					driver.send(offMessage);
+				}
+			}else{
+				log.debug("ENTRA")
+				xidPointValueTimeModel = signallingCommandUtils.getXidPointValueTimeModel(signallingCommand, 
+						dataSourceXid + "_" + FAN_DIRECT_ORDER, ON);
+							
+				xidPointValueTimeModels.add(xidPointValueTimeModel);
+
+				xidPointValueTimeModel = signallingCommandUtils.getXidPointValueTimeModel(signallingCommand, 
+						dataSourceXid + "_" + FAN_REVERSE_ORDER, OFF);
+							
+				xidPointValueTimeModels.add(xidPointValueTimeModel);
+
+				ObjectMapper objectMapper = new ObjectMapper();
+				objectMapper.setSerializationInclusion(Include.NON_NULL);
+				String message = objectMapper.writeValueAsString(xidPointValueTimeModels);
+
+				if (driver != null) {
+				
+					driver.send(message);
+				}				
 			}
 
 		} catch (NumberFormatException | JsonProcessingException e) {
