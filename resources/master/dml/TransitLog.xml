@@ -32,7 +32,7 @@
 						:assignedUserId,
 						:transitStateId,
 						:transitStateOptionId,
-						:timestampLog,
+						CURRENT_TIMESTAMP,
 						:logType,
 						:message,
 						:visible,

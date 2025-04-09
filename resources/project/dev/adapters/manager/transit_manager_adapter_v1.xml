@@ -9,7 +9,11 @@
 			<p:enabled>true</p:enabled>
 			<p:entity>SendTransitsCommand</p:entity>
 		</p:subscriptor>
-
+		<p:subscriptor>
+			<p:id>2</p:id>
+			<p:enabled>true</p:enabled>
+			<p:entity>SetChangeStateTransitCommand</p:entity>
+		</p:subscriptor>
 	</p:subscriptors>
 	<p:executors>
 		<p:executor>
@@ -33,6 +37,15 @@
 			<p:executor_params>
 				<p:executor_param_value>elementType=2</p:executor_param_value>
 			</p:executor_params>
+		</p:executor>
+		<p:executor>
+			<p:id>3</p:id>
+			<p:enabled>true</p:enabled>
+			<p:merge_wait_time>1</p:merge_wait_time>
+			<p:manager_class>com.revenga.rits.back.transit.manager.transit.persistence.TransitPersistenceExecutor</p:manager_class>
+			<p:subscriptors_ref>
+				<p:subscriptor_id_ref>2</p:subscriptor_id_ref>
+			</p:subscriptors_ref>
 		</p:executor>
 	</p:executors>
 </p:manager_adapter_v1>

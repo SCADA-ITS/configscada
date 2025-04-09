@@ -175,8 +175,64 @@
 						CURRENT_TIMESTAMP,
 						CURRENT_TIMESTAMP)
 	</INSERT>
-	<UPDATE>
+	<UPDATE>UPDATE rt.transits SET
+						transit_code = :transitCode,
+						transit_type_id = :transitTypeId,
+						dossier_code = :dossierCode,
+						remittance_code = :remittanceCode,
+						installation_code = :installationCode,
+				   		detection_point_code = :detectionPointCode,
+						date_transit = :dateTransit,
+						transit_state_id = :transitStateId,
+						transit_state_option_id = :transitStateOptionId,
+						location_id = :locationId,
+						lane_number = :laneNumber,
+						element_type_id = :elementTypeId,
+						element_id = :elementId,
+						certificate_valid_date = :certificateValidDate,
+						certificate_path = :certificatePath,
+						infraction_type_id = :infractionTypeId,
+						infraction_code = :infractionCode,
+						speed = :speed,
+						distance = :distance,
+						assigned_user_id = :assignedUserId,
+						towards = :towards,
+						address = :address,
+						locality = :locality,
+						road = :road,
+						pk = :pk,
+						direction = :direction,
+						vehicle_type_id = :vehicleTypeId,
+				   		vehicle_id = :vehicleId,
+				   		vehicle_brand_id = :vehicleBrandId,
+					   	vehicle_model_id = :vehicleModelId,
+					   	vehicle_class_id = :vehicleClassId,
+					   	vehicle_country_id = :vehicleCountryId,
+					   	vehicle_plate_number = :vehiclePlateNumber,
+					   	vehicle_direction = :vehicleDirection,
+					   	vehicle_date_registration = :vehicleDateRegistration,
+					   	vehicle_color = :vehicleColor,
+					   	driver_type_id = :driverTypeId,
+					   	driver_id = :driverId,
+					   	driver_license_type_id = :driverLicenseTypeId,
+					   	driver_license_value = :driverLicenseValue,
+					   	driver_license_issue_date = :driverLicenseIssueDate,
+					   	driver_license_expire_date = :driverLicenseExpireDate,
+					   	driver_name = :driverName,
+					   	driver_surname = :driverSurname,
+					   	driver_gender = :driverGender,
+					   	driver_date_of_birth = :driverDateOfBirth,
+					   	driver_country_id = :driverCountryId,
+					   	driver_state_id = :driverStateId,
+					   	driver_region_id = :driverRegionId,
+					   	driver_locality_id = :driverLocalityId,
+					   	driver_address = :driverAddress,
+						enabled = :enabled,
+						visible = :visible,
+						updated_at = CURRENT_TIMESTAMP
+					WHERE transit_id = :id
 	</UPDATE>
-	<DELETE>
+	<DELETE>DELETE FROM rt.transits
+	         WHERE transit_id = :id
 	</DELETE>
 </DML>

@@ -100,9 +100,10 @@ INSERT INTO master.vehicle_types (vehicle_type_id,alias,enabled,visible,created_
 -- static.transit_states
 INSERT INTO static.transit_states (transit_state_id,transit_state_code,alias,description,label_alias,label_description,user_transit_enable,enabled,visible,created_at,updated_at) VALUES
 	 (1,'IN','Initial','Initial','LBL_TRANSIT_STATE_INITIAL','LBL_TRANSIT_STATE_INITIAL_DESC',false,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
-	 (2,'PT','Pending','Pending','LBL_TRANSIT_STATE_PENDING','LBL_TRANSIT_STATE_PENDING_DESC',true,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
-	 (3,'EN','End','End','LBL_TRANSIT_STATE_END','LBL_TRANSIT_STATE_END_DESC',true,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
-	 (4,'CA','Cancel','Cancel','LBL_TRANSIT_STATE_CANCEL','LBL_TRANSIT_STATE_CANCEL_DESC',true,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
+	 (2,'PE','Pending','Pending','LBL_TRANSIT_STATE_PENDING','LBL_TRANSIT_STATE_PENDING_DESC',true,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+	 (3,'VA','Validated','Validated','LBL_TRANSIT_STATE_VALIDATED','LBL_TRANSIT_STATE_VALIDATED_DESC',true,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+	 (4,'DI','Discarded','Discarded','LBL_TRANSIT_STATE_DISCARDED','LBL_TRANSIT_STATE_DISCARDED_DESC',true,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+	 (5,'AR','Archived','Archived','LBL_TRANSIT_STATE_ARCHIVED','LBL_TRANSIT_STATE_ARCHIVED_DESC',true,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
 
 -- static.transit_types
 INSERT INTO static.transit_types (transit_type_id,alias,description,label_alias,label_description,enabled,visible,created_at,updated_at) VALUES
@@ -115,9 +116,10 @@ INSERT INTO static.transit_type_params (transit_type_id, transit_type_param_id, 
 -- static.transit_type_state_transitions
 INSERT INTO static.transit_type_state_transitions (transit_type_id,parent_transit_state_id,child_transit_state_id,enabled,visible,created_at,updated_at) VALUES
 	 (1,1,2,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
-	 (1,1,4,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 	 (1,2,3,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
-	 (1,2,4,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
+	 (1,2,4,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+	 (1,3,5,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+	 (1,4,5,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
 
 
 -- "static".vehicle_params
