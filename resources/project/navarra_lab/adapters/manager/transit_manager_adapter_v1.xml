@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<p:manager_adapter_v1 name="" version=""
+	xmlns:p="manager_adapter_v1"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="manager_adapter_v1 ../../../adapter-lib/src/main/resources/schemas/manager/manager_adapter_v1.xsd ">
+	<p:subscriptors>
+		<p:subscriptor>
+			<p:id>1</p:id>
+			<p:enabled>true</p:enabled>
+			<p:entity>SendTransitsCommand</p:entity>
+		</p:subscriptor>S
+
+	</p:subscriptors>
+	<p:executors>
+		<p:executor>
+			<p:id>1</p:id>
+			<p:enabled>true</p:enabled>
+			<p:merge_wait_time>1</p:merge_wait_time>
+			<p:manager_class>com.revenga.rits.back.transit.manager.transit.recovery.une199121.TransitRecoveryUne199121Executor</p:manager_class>
+			<p:executor_params>
+				<p:executor_param_value>cron_job=recoveryUne199121_4Transits1;0 * * * * ?;5;secring_saima.gpg;YtkdWrfU8VF/yiQcHNsVzw==</p:executor_param_value>
+				<p:executor_param_value>elementType=99</p:executor_param_value>
+				<p:executor_param_value>elementSubtype=1</p:executor_param_value>
+			</p:executor_params>
+		</p:executor>
+		<p:executor>
+			<p:id>1</p:id>
+			<p:enabled>true</p:enabled>
+			<p:merge_wait_time>1</p:merge_wait_time>
+			<p:manager_class>com.revenga.rits.back.transit.manager.transit.recovery.une199121.TransitRecoveryUne199121Executor</p:manager_class>
+			<p:executor_params>
+				<p:executor_param_value>cron_job=recoveryUne199121_4Transits2;10 * * * * ?;5;secring_tradesegur1.gpg;HPEWs7yu3ByvDor2SirfT+KLe5K3bMipAfvYQoNVyYzFDpOAHhfDiVF2CJnRkVjl+ToPojMqtTBsoXuxJv1yUw==</p:executor_param_value>
+				<p:executor_param_value>elementType=99</p:executor_param_value>
+				<p:executor_param_value>elementSubtype=2</p:executor_param_value>
+			</p:executor_params>
+		</p:executor>
+		<p:executor>
+			<p:id>1</p:id>
+			<p:enabled>true</p:enabled>
+			<p:merge_wait_time>1</p:merge_wait_time>
+			<p:manager_class>com.revenga.rits.back.transit.manager.transit.recovery.une199121.TransitRecoveryUne199121Executor</p:manager_class>
+			<p:executor_params>
+				<p:executor_param_value>cron_job=recoveryUne199121_4Transits3;20 * * * * ?;5;secring_tradesegur2.gpg;BVn/ulD9gEPpB7GOw1caMg==</p:executor_param_value>
+				<p:executor_param_value>elementType=99</p:executor_param_value>
+				<p:executor_param_value>elementSubtype=3</p:executor_param_value>
+			</p:executor_params>
+		</p:executor>
+		<p:executor>
+			<p:id>1</p:id>
+			<p:enabled>true</p:enabled>
+			<p:merge_wait_time>1</p:merge_wait_time>
+			<p:manager_class>com.revenga.rits.back.transit.manager.transit.recovery.une199121.TransitRecoveryUne199121Executor</p:manager_class>
+			<p:executor_params>
+				<p:executor_param_value>cron_job=recoveryUne199121_4Transits4;30 * * * * ?;5;secring_tradesegur2.gpg;BVn/ulD9gEPpB7GOw1caMg==</p:executor_param_value>
+				<p:executor_param_value>elementType=99</p:executor_param_value>
+				<p:executor_param_value>elementSubtype=4</p:executor_param_value>
+			</p:executor_params>
+		</p:executor>
+	</p:executors>
+</p:manager_adapter_v1>

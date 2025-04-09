@@ -72,7 +72,7 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 (2, 1003, 1, 8, NULL, 'Lekunberri', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (2, 1, 1, 9, NULL, 'Hikvision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(2, 2, 1, 9, NULL, 'DS-2CD3047G2-LS_SNAP', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 2, 1, 9, NULL, 'DS-2CD3047G2-LS', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 3, 1, 9, NULL, 'https://descontroltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=Areta', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 1003, 1, 9, NULL, 'Areta', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 

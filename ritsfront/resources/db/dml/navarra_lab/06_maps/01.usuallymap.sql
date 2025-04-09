@@ -77,8 +77,8 @@ INSERT INTO ui.map_layer_elements (id, layer_id, element_id, graphic_icon_id, "l
 (0060099, 99,'Element:99:6', 99,'RADF-60+230C', 43.2475295, -1.6712459, false, null, true, false, null, true );
 
 INSERT INTO ui.map_layer_element_zooms (map_layer_element_id, zoom_lower, zoom_upper, graphic_icon_id, latitude, longitude, horizontal_flip, rotate, tooltip, show_text, text_color) VALUES
-(0240002,  8, 20, 2,  43.2292, -1.6908707,  false, null, true, false, '#00000'),
-(0260002,  8, 20, 2,  43.2342, -1.6956659,  false, null, true, false, '#00000');
+(0270002,  8, 20, 2,  43.2308, -1.6956659,  false, null, true, false, '#00000'),
+(0280002,  8, 20, 2,  43.2342, -1.6956659,  false, null, true, false, '#00000');
                                                                  
 INSERT INTO ui.map_commands
 (id, map_id, "position", "label", icon, "default", module_action_id, args, view_type_id, multiselect, show_text, item_required,  context) VALUES

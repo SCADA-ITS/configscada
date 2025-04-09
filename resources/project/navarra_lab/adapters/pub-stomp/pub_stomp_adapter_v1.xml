@@ -64,6 +64,11 @@
 			<p:enabled>true</p:enabled>
 			<p:entity>SetPmQueuePublishCommand</p:entity>
 		</p:subscriptor>
+		<p:subscriptor>
+			<p:id>14</p:id>
+			<p:enabled>true</p:enabled>
+			<p:entity>SetExtEntitiesPublishCommand</p:entity>
+		</p:subscriptor>
 	</p:subscriptors>
 	<p:publishers>
 		<p:publisher>
@@ -193,6 +198,18 @@
 					</p:subscriptors_ref>
 					<p:custom_path>false</p:custom_path>
 					<p:path>/topic/pm_queue.{id}</p:path>
+				</p:topic>
+				<p:topic>
+					<p:id>13</p:id>
+					<p:enabled>true</p:enabled>
+					<p:entity>ExtEntityVO</p:entity>
+					<p:publisher_class>ExtEntityPublisher</p:publisher_class>
+					<p:merge_wait_time>1</p:merge_wait_time>
+					<p:subscriptors_ref>
+						<p:subscriptor_id_ref>14</p:subscriptor_id_ref>
+					</p:subscriptors_ref>
+					<p:custom_path>true</p:custom_path>
+					<p:path>/topic/extEntity.{extEntityTypeId}.{id}</p:path>
 				</p:topic>
 			</p:topics>
 		</p:publisher>
