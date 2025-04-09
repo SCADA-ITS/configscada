@@ -7,10 +7,11 @@ DELETE FROM conf.io_controller_modules;
 --
 INSERT INTO conf.io_controller_modules
 (module_type_id, module_id, alias, description, enabled, visible, created_at, updated_at) VALUES
-(1, 1, 'MANGO', 'MANGO', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 1, 'MANGO', 'MANGO', false, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (2, 1, 'CITILOG', 'CITILOG', false, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (3, 1, 'RTMS', 'RTMS', false, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(4, 1, ' METEO_SOCKET_UNE', 'METEO_SOCKET_UNE', false, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(4, 1, 'METEO_SOCKET_UNE', 'METEO_SOCKET_UNE', false, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(4, 2, 'LPR_SOCKET_UNE', 'LPR_SOCKET_UNE', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 
 
@@ -83,15 +84,30 @@ INSERT INTO conf.io_controller_module_values
 (4, 1, 3, 'ElementTypeParam:1:1:4003', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (4, 1, 4, 'ElementTypeParam:1:1:4004', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (4, 1, 5, 'ElementTypeParam:1:1:4005', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(4, 1, 6, '0x10 0x20 0x30', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(4, 1, 6, '0x10 0x02 0x03 0x06 0x05', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (4, 1, 7, '0/30 * * ? * * *', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (4, 1, 8, '1048576', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), -- 1024 * 124  1 mb
-(4, 1, 9, '180000', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(4, 1, 16, '1048576', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), -- 1024 * 1024  
+(4, 1, 9, '60000', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (4, 1, 10, 'CRC_CCITT', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (4, 1, 11, '50', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (4, 1, 12, '500', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(4, 1, 16, '1048576', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
+(4, 2, 1, 'ElementTypeParam:2:1:4001', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(4, 2, 2, 'ElementTypeParam:2:1:4002', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(4, 2, 3, 'ElementTypeParam:2:1:4003', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(4, 2, 4, 'ElementTypeParam:2:1:4004', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(4, 2, 5, 'ElementTypeParam:2:1:4005', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(4, 2, 6, '0x10 0x02 0x03', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(4, 2, 14, 'ElementTypeParam:2:1:4006', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(4, 2, 15, 'ElementTypeParam:2:1:4007', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(4, 2, 7, '0 * * ? * * *', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(4, 2, 8, '1048576', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), -- 1024 * 1024  1 mb
+(4, 2, 16, '1048576', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), -- 1024 * 1024  
+(4, 2, 9, '120000', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(4, 2, 11, '50', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(4, 2, 12, '500', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(4, 2, 13, 'true', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 
 -- 
@@ -100,9 +116,11 @@ INSERT INTO conf.io_controller_module_values
 INSERT INTO conf.element_io_controller_modules
 (element_type_id, element_id, module_type_id, module_id, enabled, visible, created_at, updated_at) VALUES
 (1, 2, 4, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(1, 3, 4, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(1, 4, 4, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(1, 5, 4, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--(1, 3, 4, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--(1, 4, 4, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--(1, 5, 4, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(2, 1, 4, 2, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 (1, 1, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (2, 1, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),

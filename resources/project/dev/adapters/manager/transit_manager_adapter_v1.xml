@@ -5,11 +5,6 @@
 	xsi:schemaLocation="manager_adapter_v1 ../../../adapter-lib/src/main/resources/schemas/manager/manager_adapter_v1.xsd ">
 	<p:subscriptors>
 		<p:subscriptor>
-			<p:id>1</p:id>
-			<p:enabled>true</p:enabled>
-			<p:entity>SendTransitsCommand</p:entity>
-		</p:subscriptor>
-		<p:subscriptor>
 			<p:id>2</p:id>
 			<p:enabled>true</p:enabled>
 			<p:entity>SetChangeStateTransitCommand</p:entity>
@@ -18,7 +13,7 @@
 	<p:executors>
 		<p:executor>
 			<p:id>1</p:id>
-			<p:enabled>true</p:enabled>
+			<p:enabled>false</p:enabled>
 			<p:merge_wait_time>1</p:merge_wait_time>
 			<p:manager_class>com.revenga.rits.back.transit.manager.transit.recovery.une199121.TransitRecoveryUne199121Executor</p:manager_class>
 			<p:executor_params>
@@ -31,10 +26,8 @@
 			<p:enabled>true</p:enabled>
 			<p:merge_wait_time>1</p:merge_wait_time>
 			<p:manager_class>com.revenga.rits.back.transit.manager.transit.recovery.une199141.TransitRecoveryUne199141Executor</p:manager_class>
-			<p:subscriptors_ref>
-				<p:subscriptor_id_ref>1</p:subscriptor_id_ref>
-			</p:subscriptors_ref>
 			<p:executor_params>
+				<p:executor_param_value>cron_job=recoveryUne199141;0 * * * * ?;C1</p:executor_param_value>
 				<p:executor_param_value>elementType=2</p:executor_param_value>
 			</p:executor_params>
 		</p:executor>

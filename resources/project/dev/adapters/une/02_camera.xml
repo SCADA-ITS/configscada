@@ -4,13 +4,12 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="generic_une_v1 ../../../adapter-lib/src/main/resources/schemas/une/generic_une_v1.xsd"
     element_type_id="2">
-	<groovy_adapter file="Ejemplo.groovy"></groovy_adapter>
     <!-- Responses -->
     <response_list>
         <response>
             <code>0xC1</code>
-            <use_adapter>true</use_adapter>
+            <store_frame>true</store_frame>
+            <send_ack>true</send_ack>
         </response>
-    </response_list>
-    
+    </response_list>  
 </generic_une_v1>

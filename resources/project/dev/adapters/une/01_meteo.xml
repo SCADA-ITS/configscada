@@ -15,8 +15,6 @@
                 <value element_type_param_id="3" param_type_id="2" />
                 <value element_type_param_id="4" param_type_id="2" offset="0" length="4" is_int_le="true"/>
                 <value element_type_param_id="5" param_type_id="2" offset="0" length="4" is_int_be="true"/>
-                <value element_type_param_id="6" param_type_id="2" offset="0" length="1" is_int_le="true"/>
-                <value element_type_param_id="7" param_type_id="2" offset="2" length="1" is_int_be="true"/>
             </values>
             <alarms>
                 <alarm byte="0" mask="0x01" active_value="0x01" alarm_config_id="21"/>

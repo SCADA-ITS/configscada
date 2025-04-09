@@ -253,3 +253,18 @@ INSERT INTO conf.element_values
 
 (2,1003,1,32,'S1TS-CAM-032',true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 (2,1004,1,32,'32',true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
+
+
+-- 
+-- Table: conf.element_values.CAMARA
+--
+
+INSERT INTO conf.element_values
+(element_type_id, element_type_param_id, param_type_id, element_id, value, enabled, visible, created_at, updated_at) VALUES
+(2, 4001, 1, 1, '192.168.88.125', true, true, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), 
+(2, 4002, 1, 1, '3051', true, true, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), 
+(2, 4003, 1, 1, '0x02 0x64 0x00 0x03', true, true, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), 
+(2, 4004, 1, 1, '0x02 0x64 0xFF 0x03', true, true, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), 
+(2, 4005, 1, 1, '0x64', true, true, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), 
+(2, 4006, 1, 1, 'keystore2.jks', true, true, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), 
+(2, 4007, 1, 1, 'k/7x4pJrPbHAr7opLlK7Mg==', true, true, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);

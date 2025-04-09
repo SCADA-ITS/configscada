@@ -109,8 +109,9 @@ INSERT INTO static.transit_states (transit_state_id,transit_state_code,alias,des
 
 -- static.transit_types
 INSERT INTO static.transit_types (transit_type_id,alias,description,label_alias,label_description,enabled,visible,created_at,updated_at) VALUES
-	 (1,'Generic Transit','Generic Transit','LBL_TRANSIT_GENERIC','LBL_TRANSIT_GENERIC_DESC',true,true,'2025-01-31 11:24:43.315+01','2025-01-31 11:24:49.967+01');
-
+	 (1,'Generic Transit','Generic Transit','LBL_TRANSIT_GENERIC','LBL_TRANSIT_GENERIC_DESC',true,true,'2025-01-31 11:24:43.315+01','2025-01-31 11:24:49.967+01'),
+	 (2,'LPR','LPR','LBL_TRANSIT_LPR','LBL_TRANSIT_LPR_DESC',true,true,'2025-01-31 11:24:43.315+01','2025-01-31 11:24:49.967+01');
+	 
 -- static.transit_type_params
 INSERT INTO static.transit_type_params (transit_type_id, transit_type_param_id, data_type_id, transit_type_param_group_id, alias, description, label_alias, label_description, enabled, visible, created_at, updated_at) VALUES
 	(1, 1, 2, null, 'Transit type Param 1', 'Transit type Param 1', 'LBL_TRANSIT_PARAM_1', 'LBL_TRANSIT_PARAM_DESC', true, true, '2025-01-31 11:24:43.315+01', '2025-01-31 11:24:43.315+01');
@@ -145,7 +146,8 @@ INSERT INTO static.infraction_types (infraction_type_id,infraction_code,infracti
 
 INSERT INTO conf.element_transit_types (element_type_id, element_id, transit_type_id, infraction_manager_id, enabled, visible, created_at, updated_at) VALUES
 	(2, 1, 1, null, true, true, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
-	(99, 1, 1, null, true, true, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
+	(99, 1, 1, null, true, true, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+	(2, 1, 2, null, true, true, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
 
 DO $$
 BEGIN
