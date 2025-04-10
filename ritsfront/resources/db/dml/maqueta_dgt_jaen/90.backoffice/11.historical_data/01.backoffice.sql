@@ -42,7 +42,7 @@ BEGIN
 				INNER JOIN conf.elements on conf.elements.alias = hist.audit_commands.element
 			WHERE master.i18n_labels.locale_code = ''es_ES''
 				and conf.elements.element_type_id = 71 
-				and hist.audit_commands.log_subtype_id = 1 
+				and hist.audit_commands.log_subtype_id = 1
 				and time_stamp >= date_trunc(''month'', now()) 
 				and time_stamp < date_trunc(''month'', now()) + INTERVAL ''1 month''
 			ORDER BY time_stamp desc
@@ -107,22 +107,9 @@ BEGIN
 				and time_stamp >= date_trunc(''month'', now()) 
 				and time_stamp < date_trunc(''month'', now()) + INTERVAL ''1 month''
 			ORDER BY time_stamp desc
-	', NULL),
-
-	(6, 'cam', 'LBL_BACKOFFICE_SG_METADATA_TABLES_CAM', 'LBL_BACKOFFICE_SG_METADATA_TABLES_CAM', 'LBL_BACKOFFICE_SG_METADATA_TABLES_CAM_DESCRIPTION', NULL, true, true, 
-	--sql_view
-	'
-		SELECT audit_log_id, time_stamp, user_name, translation, element
-			FROM hist.audit_commands 
-				INNER JOIN master.i18n_labels on master.i18n_labels.label = hist.audit_commands.command_type
-				INNER JOIN conf.elements on conf.elements.alias = hist.audit_commands.element
-			WHERE master.i18n_labels.locale_code = ''es_ES''
-				and conf.elements.element_type_id = 2 
-				and hist.audit_commands.log_subtype_id = 1 
-				and time_stamp >= date_trunc(''month'', now()) 
-				and time_stamp < date_trunc(''month'', now()) + INTERVAL ''1 month''
-			ORDER BY time_stamp desc
 	', NULL);
+
+
 
 	-- 
   	-- historical_data.sg_metadata_columns
@@ -162,14 +149,8 @@ BEGIN
 	(5, 'date', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_DATE', NULL, false, '{"editable": false}'),
 	(5, 'user', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_USER', NULL, false, '{"editable": false}'),
 	(5, 'command', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_COMMAND', NULL, false, '{"editable": false}'),
-    (5, 'element', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ELEMENT', NULL, false, '{"editable": false}'),
+    (5, 'element', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ELEMENT', NULL, false, '{"editable": false}');
 
-	--cam
-	(6, 'id', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ID', NULL, false, '{"formVisible": false, "tableVisible": false}'),
-	(6, 'date', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_DATE', NULL, false, '{"editable": false}'),
-	(6, 'user', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_USER', NULL, false, '{"editable": false}'),
-	(6, 'command', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_COMMAND', NULL, false, '{"editable": false}'),
-    (6, 'element', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ELEMENT', NULL, false, '{"editable": false}');
 
   END IF;
   
