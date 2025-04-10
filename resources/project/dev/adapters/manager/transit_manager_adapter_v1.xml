@@ -5,9 +5,14 @@
 	xsi:schemaLocation="manager_adapter_v1 ../../../adapter-lib/src/main/resources/schemas/manager/manager_adapter_v1.xsd ">
 	<p:subscriptors>
 		<p:subscriptor>
-			<p:id>2</p:id>
+			<p:id>1</p:id>
 			<p:enabled>true</p:enabled>
 			<p:entity>SetChangeStateTransitCommand</p:entity>
+		</p:subscriptor>
+		<p:subscriptor>
+			<p:id>2</p:id>
+			<p:enabled>true</p:enabled>
+			<p:entity>SetChangeAssignedUserTransitCommand</p:entity>
 		</p:subscriptor>
 	</p:subscriptors>
 	<p:executors>
@@ -37,6 +42,7 @@
 			<p:merge_wait_time>1</p:merge_wait_time>
 			<p:manager_class>com.revenga.rits.back.transit.manager.transit.persistence.TransitPersistenceExecutor</p:manager_class>
 			<p:subscriptors_ref>
+				<p:subscriptor_id_ref>1</p:subscriptor_id_ref>
 				<p:subscriptor_id_ref>2</p:subscriptor_id_ref>
 			</p:subscriptors_ref>
 		</p:executor>
