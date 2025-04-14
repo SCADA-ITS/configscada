@@ -508,6 +508,8 @@ DROP TABLE IF EXISTS master.countries;
 		transit_type_id int8 NOT NULL,
 		parent_transit_state_id int8 NOT NULL,
 		child_transit_state_id int8 NOT NULL,
+		auto bool NULL,
+		groovy_file varchar(100) NULL,
 		enabled bool NULL,
 		visible bool NULL,
 		created_at timestamptz NOT NULL,

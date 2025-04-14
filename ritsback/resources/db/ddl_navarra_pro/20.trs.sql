@@ -506,8 +506,10 @@ DROP TABLE IF EXISTS master.countries;
 --
 	CREATE TABLE static.transit_type_state_transitions (
 		transit_type_id int8 NOT NULL,
-		parent_transit_state_id int8 NOT NULL,
+		parent_transit_state_id int8 NULL,
 		child_transit_state_id int8 NOT NULL,
+		auto bool NULL,
+		groovy_file varchar(100) NULL,
 		enabled bool NULL,
 		visible bool NULL,
 		created_at timestamptz NOT NULL,

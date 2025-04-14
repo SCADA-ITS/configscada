@@ -4,6 +4,8 @@
 	<SELECT>SELECT transit_type_id as "transitTypeId",
     			   parent_transit_state_id as "parentTransitStateId",
     			   child_transit_state_id as "childTransitStateId",
+    			   auto as "auto",
+    			   groovy_file as "groovyFile",
     			   enabled as "enabled",
 				   visible as "visible",
 				   created_at as "createdAt",
