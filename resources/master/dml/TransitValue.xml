@@ -29,6 +29,9 @@
 	</INSERT>
 	<UPDATE>
 	</UPDATE>
-	<DELETE>
+	<DELETE>DELETE FROM rt.transit_values
+	         WHERE transit_id = :id
+	           AND transit_type_id = :transitTypeId
+	           AND transit_type_param_id = :transitTypeParamId
 	</DELETE>
 </DML>

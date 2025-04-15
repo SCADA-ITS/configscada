@@ -27,8 +27,15 @@
 						CURRENT_TIMESTAMP,
 						CURRENT_TIMESTAMP)
 	</INSERT>
-	<UPDATE>
+	<UPDATE>UPDATE rt.transit_images SET
+					path = :path,
+					read_only = :readOnly,
+					updated_at = CURRENT_TIMESTAMP
+			 WHERE transit_image_id = :id
+			   AND transit_id = :transitId
 	</UPDATE>
-	<DELETE>
+	<DELETE>DELETE FROM rt.transit_images
+	         WHERE transit_image_id = :id
+	           AND transit_id = :transitId
 	</DELETE>
 </DML>

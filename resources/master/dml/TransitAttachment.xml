@@ -26,6 +26,8 @@
 	</INSERT>
 	<UPDATE>
 	</UPDATE>
-	<DELETE>
+	<DELETE>DELETE FROM rt.transit_attachments
+	         WHERE transit_attachment_id = :id
+	           AND transit_id = :transitId
 	</DELETE>
 </DML>

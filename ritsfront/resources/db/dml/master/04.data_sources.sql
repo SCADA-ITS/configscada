@@ -273,7 +273,12 @@ INSERT INTO ui.data_sources(id, data_source_type_id, "name", description, entity
 (265, 1, 'getTransits', 'getTransits', 'TransitVO', 'id', true, true),
 (266, 1, 'getTransit', 'getTransit', 'TransitVO', 'id', true, true),
 (267, 1, 'getTransitTypes', 'getTransitTypes', 'TransitTypeVO', 'id', true, true),
-(268, 1, 'getVehicleClasses', 'getVehicleClasses', 'VehicleClassVO', 'id', true, true);
+(268, 1, 'getVehicleClasses', 'getVehicleClasses', 'VehicleClassVO', 'id', true, true),
+(269, 3, 'changeAssignedUserTransit', 'changeAssignedUserTransit', 'TransitVO', 'id', true, true),
+(270, 3, 'changeStateTransit', 'changeStateTransit', 'TransitVO', 'id', true, true),
+(271, 3, 'addTransitImage', 'addTransitImage', 'TransitImageVO', 'id', true, true),
+(272, 3, 'updateTransitImage', 'addTransitImage', 'TransitImageVO', 'id', true, true),
+(273, 3, 'deleteTransitImage', 'addTransitImage', 'TransitImageVO', 'id', true, true);
 
 INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) VALUES
 (1, 1, 'http://192.168.88.163:8082/graphql'),
@@ -1618,4 +1623,34 @@ INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) V
 (268, 1, 'http://192.168.88.163:8082/graphql'),
 (268, 2, 'getVehicleClasses'),
 (268, 3, 'ids'),
-(268, 4, NULL);
+(268, 4, NULL),
+
+(269, 8, 'http://localhost:8082/graphql'),
+(269, 9, 'changeAssignedUserTransit'),
+(269, 10, 'transitId,assignedUserId'),
+(269, 11, 'String!,String!'),
+(269, 12, NULL),
+
+(270, 8, 'http://localhost:8082/graphql'),
+(270, 9, 'changeStateTransit'),
+(270, 10, 'transitId,transitStateId,transitStateOptionId'),
+(270, 11, 'String!,String!,String'),
+(270, 12, NULL),
+
+(271, 8, 'http://localhost:8082/graphql'),
+(271, 9, 'addTransitImage'),
+(271, 10, 'transitImage'),
+(271, 11, 'TransitImageVO!'),
+(271, 12, NULL),
+
+(272, 8, 'http://localhost:8082/graphql'),
+(272, 9, 'updateTransitImage'),
+(272, 10, 'transitImage'),
+(272, 11, 'TransitImageVO!'),
+(272, 12, NULL),
+
+(273, 8, 'http://localhost:8082/graphql'),
+(273, 9, 'deleteTransitImage'),
+(273, 10, 'transitImageId'),
+(273, 11, 'String!'),
+(273, 12, NULL);

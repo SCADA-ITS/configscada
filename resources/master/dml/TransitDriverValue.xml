@@ -29,6 +29,9 @@
 	</INSERT>
 	<UPDATE>
 	</UPDATE>
-	<DELETE>
+	<DELETE>DELETE FROM rt.transit_driver_values
+	         WHERE transit_id = :id
+	           AND driver_type_id = :driverTypeId
+	           AND driver_param_id = :driverParamId
 	</DELETE>
 </DML>

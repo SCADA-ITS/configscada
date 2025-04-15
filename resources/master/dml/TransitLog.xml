@@ -41,6 +41,8 @@
 	</INSERT>
 	<UPDATE>
 	</UPDATE>
-	<DELETE>
+	<DELETE>DELETE FROM rt.transit_logs
+	         WHERE transit_log_id = :id
+	           AND transit_id = :transitId
 	</DELETE>
 </DML>
