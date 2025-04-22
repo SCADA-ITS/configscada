@@ -34,4 +34,21 @@
 	           AND driver_type_id = :driverTypeId
 	           AND driver_param_id = :driverParamId
 	</DELETE>
+	<ARCHIVE>INSERT INTO hist.transit_driver_values (
+						transit_id,
+						driver_type_id,
+						driver_param_id,
+						value,
+						visible,
+						created_at,
+						updated_at)
+				VALUES (
+						:id,
+						:driverTypeId,
+						:driverParamId,
+						:value,
+						:visible,
+						CURRENT_TIMESTAMP,
+						CURRENT_TIMESTAMP)
+	</ARCHIVE>
 </DML>

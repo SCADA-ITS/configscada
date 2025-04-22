@@ -30,4 +30,19 @@
 	         WHERE transit_attachment_id = :id
 	           AND transit_id = :transitId
 	</DELETE>
+	<ARCHIVE>INSERT INTO hist.transit_attachments (
+						transit_attachment_id,
+						transit_id,
+						path,
+						visible,
+						created_at,
+						updated_at)
+				VALUES(
+						:id,
+						:transitId,
+						:path,
+						:visible,
+						CURRENT_TIMESTAMP,
+						CURRENT_TIMESTAMP)
+	</ARCHIVE>
 </DML>

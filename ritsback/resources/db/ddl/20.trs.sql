@@ -25,7 +25,7 @@ DROP TABLE IF EXISTS static.transit_type_params;
 DROP TABLE IF EXISTS static.transit_type_param_groups;
 DROP TABLE IF EXISTS static.transit_types;
 DROP TABLE IF EXISTS static.transit_state_options;
-DROP TABLE IF EXISTS static.transit_states;
+DROP TABLE IF EXISTS master.transit_states;
 -- SECTION 2 --
 DROP TABLE IF EXISTS static.driver_params;
 DROP TABLE IF EXISTS static.driver_param_groups;
@@ -380,11 +380,11 @@ DROP TABLE IF EXISTS master.countries;
 -- BEGIN SECTION 3
 	
 -- 
--- Table: static.transit_states
+-- Table: master.transit_states
 -- Descripción: Estados de transitos
 -- Scope: static
 --
-	CREATE TABLE static.transit_states (
+	CREATE TABLE master.transit_states (
 		transit_state_id int8 NOT NULL,
 		transit_state_code varchar(2) UNIQUE NOT NULL,
 		alias varchar(100) NOT NULL,
@@ -399,7 +399,7 @@ DROP TABLE IF EXISTS master.countries;
 		CONSTRAINT pk_transit_states PRIMARY KEY (transit_state_id)
 	);
 	
-	ALTER TABLE static.transit_states SET TABLESPACE tbl_static;
+	ALTER TABLE master.transit_states SET TABLESPACE tbl_static;
 	
 -- 
 -- Table: static.transit_state_options
@@ -424,7 +424,7 @@ DROP TABLE IF EXISTS master.countries;
 	
 	CREATE INDEX idx_transit_state_options_transit_states ON static.transit_state_options USING btree (transit_state_id);
 		
-	ALTER TABLE static.transit_state_options ADD CONSTRAINT fk_transit_state_options_transit_states FOREIGN KEY (transit_state_id) REFERENCES static.transit_states (transit_state_id);
+	ALTER TABLE static.transit_state_options ADD CONSTRAINT fk_transit_state_options_transit_states FOREIGN KEY (transit_state_id) REFERENCES master.transit_states (transit_state_id);
 	
 	ALTER TABLE static.transit_state_options SET TABLESPACE tbl_static;
 
@@ -439,6 +439,7 @@ DROP TABLE IF EXISTS master.countries;
 		description varchar(200) NULL,
 		label_alias varchar(50) NOT NULL,
 		label_description varchar(50) NULL,
+		archive_after_minutes int NULL,
 		enabled bool NULL,
 		visible bool NULL,
 		created_at timestamptz NOT NULL,
@@ -522,8 +523,8 @@ DROP TABLE IF EXISTS master.countries;
 	CREATE INDEX idx_transit_type_state_transitions_transit_states_2 ON static.transit_type_state_transitions USING btree (child_transit_state_id);
 	
 	ALTER TABLE static.transit_type_state_transitions ADD CONSTRAINT fk_transit_type_state_transitions_transit_types FOREIGN KEY (transit_type_id) REFERENCES static.transit_types(transit_type_id);
-	ALTER TABLE static.transit_type_state_transitions ADD CONSTRAINT fk_transit_type_state_transitions_transit_states_1 FOREIGN KEY (parent_transit_state_id) REFERENCES static.transit_states(transit_state_id);
-	ALTER TABLE static.transit_type_state_transitions ADD CONSTRAINT fk_transit_type_state_transitions_transit_states_2 FOREIGN KEY (child_transit_state_id) REFERENCES static.transit_states(transit_state_id);
+	ALTER TABLE static.transit_type_state_transitions ADD CONSTRAINT fk_transit_type_state_transitions_transit_states_1 FOREIGN KEY (parent_transit_state_id) REFERENCES master.transit_states(transit_state_id);
+	ALTER TABLE static.transit_type_state_transitions ADD CONSTRAINT fk_transit_type_state_transitions_transit_states_2 FOREIGN KEY (child_transit_state_id) REFERENCES master.transit_states(transit_state_id);
 	
 	ALTER TABLE static.transit_type_state_transitions SET TABLESPACE tbl_static;
 

@@ -34,4 +34,21 @@
 	           AND vehicle_type_id = :vehicleTypeId
 	           AND vehicle_param_id = :vehicleParamId
 	</DELETE>
+	<ARCHIVE>INSERT INTO hist.transit_vehicle_values (
+						transit_id,
+						vehicle_type_id,
+						vehicle_param_id,
+						value,
+						visible,
+						created_at,
+						updated_at)
+				VALUES (
+						:id,
+						:vehicleTypeId,
+						:vehicleParamId,
+						:value,
+						:visible,
+						CURRENT_TIMESTAMP,
+						CURRENT_TIMESTAMP)
+	</ARCHIVE>
 </DML>

@@ -111,7 +111,7 @@ DROP TABLE IF EXISTS rt.transits;
 	CREATE INDEX idx_transits_driver_localities ON rt.transits USING btree (driver_locality_id);
 
 	-- Transit relationships
-	ALTER TABLE rt.transits ADD CONSTRAINT fk_transits_transit_states FOREIGN KEY (transit_state_id) REFERENCES static.transit_states(transit_state_id);
+	ALTER TABLE rt.transits ADD CONSTRAINT fk_transits_transit_states FOREIGN KEY (transit_state_id) REFERENCES master.transit_states(transit_state_id);
 	ALTER TABLE rt.transits ADD CONSTRAINT fk_transits_transit_state_options FOREIGN KEY (transit_state_id, transit_state_option_id) REFERENCES static.transit_state_options(transit_state_id, transit_state_option_id);
 	ALTER TABLE rt.transits ADD CONSTRAINT fk_transits_transit_locations FOREIGN KEY (location_id) REFERENCES conf.locations(location_id);
 	ALTER TABLE rt.transits ADD CONSTRAINT fk_transits_transit_infraction_types FOREIGN KEY (infraction_type_id) REFERENCES static.infraction_types(infraction_type_id);
@@ -278,7 +278,7 @@ DROP TABLE IF EXISTS rt.transits;
 	CREATE INDEX idx_transit_logs_transit_state_options ON rt.transit_logs USING btree (transit_state_id, transit_state_option_id);
 	
 	ALTER TABLE rt.transit_logs ADD CONSTRAINT fk_transit_logs_users FOREIGN KEY (assigned_user_id) REFERENCES conf.users(user_id);
-	ALTER TABLE rt.transit_logs ADD CONSTRAINT fk_transit_logs_transit_states FOREIGN KEY (transit_state_id) REFERENCES static.transit_states(transit_state_id);
+	ALTER TABLE rt.transit_logs ADD CONSTRAINT fk_transit_logs_transit_states FOREIGN KEY (transit_state_id) REFERENCES master.transit_states(transit_state_id);
 	ALTER TABLE rt.transit_logs ADD CONSTRAINT fk_transit_logs_transit_state_options FOREIGN KEY (transit_state_id, transit_state_option_id) REFERENCES static.transit_state_options(transit_state_id, transit_state_option_id);
 	
 	ALTER TABLE rt.transit_logs SET TABLESPACE tbs_controltrafico_rt;

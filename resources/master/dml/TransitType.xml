@@ -6,6 +6,7 @@
 				   description as "description",
 				   label_alias as "labelAlias",
 				   label_description as "labelDescription",
+				   archive_after_minutes as "archiveAfterMinutes",
 				   enabled as "enabled",
 				   visible as "visible",
 				   created_at as "createdAt",

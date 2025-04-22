@@ -91,7 +91,7 @@ DELETE FROM static.vehicle_params;
 DELETE FROM static.transit_type_state_transitions;
 DELETE FROM static.transit_type_params;
 DELETE FROM static.transit_types;
-DELETE FROM static.transit_states;
+DELETE FROM master.transit_states;
 DELETE FROM master.vehicle_types;
 
 
@@ -99,8 +99,8 @@ DELETE FROM master.vehicle_types;
 INSERT INTO master.vehicle_types (vehicle_type_id,alias,enabled,visible,created_at,updated_at) VALUES
 	 (1,'Vehicle Type I',true,true,'2025-02-06 10:15:42.887+01','2025-02-06 10:15:42.887+01');
 	 
--- static.transit_states
-INSERT INTO static.transit_states (transit_state_id,transit_state_code,alias,description,label_alias,label_description,user_transit_enable,enabled,visible,created_at,updated_at) VALUES
+-- master.transit_states
+INSERT INTO master.transit_states (transit_state_id,transit_state_code,alias,description,label_alias,label_description,user_transit_enable,enabled,visible,created_at,updated_at) VALUES
 	 (1,'IN','Initial','Initial','LBL_TRANSIT_STATE_INITIAL','LBL_TRANSIT_STATE_INITIAL_DESC',false,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 	 (2,'PE','Pending','Pending','LBL_TRANSIT_STATE_PENDING','LBL_TRANSIT_STATE_PENDING_DESC',true,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 	 (3,'VA','Validated','Validated','LBL_TRANSIT_STATE_VALIDATED','LBL_TRANSIT_STATE_VALIDATED_DESC',true,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),

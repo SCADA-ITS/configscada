@@ -34,4 +34,21 @@
 	           AND transit_type_id = :transitTypeId
 	           AND transit_type_param_id = :transitTypeParamId
 	</DELETE>
+	<ARCHIVE>INSERT INTO hist.transit_values (
+						transit_id,
+						transit_type_id,
+						transit_type_param_id,
+						value,
+						visible,
+						created_at,
+						updated_at)
+				VALUES (
+						:id,
+						:transitTypeId,
+						:transitTypeParamId,
+						:value,
+						:visible,
+						CURRENT_TIMESTAMP,
+						CURRENT_TIMESTAMP)
+	</ARCHIVE>
 </DML>

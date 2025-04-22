@@ -110,5 +110,17 @@
 				<p:param>-Dfile.encoding=UTF-8</p:param>
 			</p:parameters>
 		</p:proc>
+		<p:proc id="10" enabled="true">
+			<p:name>TRANSIT-MANAGER</p:name>
+			<p:path>/app/backrits/</p:path>
+			<p:executable>transit-manager.jar</p:executable>
+			<p:xml_adapter>transit_manager_adapter_v1.xml</p:xml_adapter>
+			<p:restart_on_fail>true</p:restart_on_fail>
+			<p:dependencies>2</p:dependencies>
+			<p:time_out>300000</p:time_out>
+			<p:parameters>
+				<p:param>-Dfile.encoding=UTF-8</p:param>
+			</p:parameters>
+		</p:proc>
 	</p:processes>
 </p:server_launcher_adapter_v1>
