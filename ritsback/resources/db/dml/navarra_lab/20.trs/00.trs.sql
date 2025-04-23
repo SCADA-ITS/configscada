@@ -107,7 +107,8 @@ INSERT INTO master.transit_states (transit_state_id,transit_state_code,alias,des
 
 -- static.transit_types
 INSERT INTO static.transit_types (transit_type_id,alias,description,label_alias,label_description,enabled,visible,created_at,updated_at) VALUES
-	 (1,'Generic Transit','Generic Transit','LBL_TRANSIT_GENERIC','LBL_TRANSIT_GENERIC_DESC',true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
+	 (1,'Generic Transit','Generic Transit','LBL_TRANSIT_GENERIC','LBL_TRANSIT_GENERIC_DESC',true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+	 (2,'LPR Transit','LPR Transit','LBL_TRANSIT_LPR','LBL_TRANSIT_LPR_DESC',true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
 
 -- static.transit_type_params
 INSERT INTO static.transit_type_params (transit_type_id, transit_type_param_id, data_type_id, transit_type_param_group_id, alias, description, label_alias, label_description, enabled, visible, created_at, updated_at) VALUES
@@ -140,7 +141,7 @@ INSERT INTO static.vehicle_classes (vehicle_class_id,alias,label_alias,enabled,v
 	 (2, 'heavy', 'LBL_VEHICLE_CLASS_HEAVY', true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
 
 INSERT INTO conf.element_transit_types (element_type_id, element_id, transit_type_id, infraction_manager_id, enabled, visible, created_at, updated_at) VALUES
-	(2, 1, 1, null, true, true, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+	(2, 1, 2, null, true, true, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 	(99, 1, 1, null, true, true, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 	(99, 2, 1, null, true, true, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 	(99, 3, 1, null, true, true, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),

@@ -21,7 +21,7 @@ INSERT INTO conf.ims_incident_type_task_values (task_type_id, task_type_param_id
 --3 addressBCC = Destinatarios en copia oculta
 --4 subject = Asunto del correo electrónico
 --5 body = Cuerpo del mensaje a enviar
-(8, 3, 03010110, 'jcaballeroa@revenga.com', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(8, 1, 03010110, 'jcaballeroa@revenga.com', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (8, 4, 03010110, 'Aviso de inicio de incidencia', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),		
 (8, 5, 03010110, '🚨 ¡INICIO DE EVENTO DE COCHES HISTÓRICOS! 🚨', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 

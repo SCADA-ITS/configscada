@@ -1,4 +1,4 @@
-DO $$
+/*DO $$
 BEGIN
 
 	IF EXISTS (
@@ -52,4 +52,4 @@ BEGIN
         
     END IF;
 
-END $$;
+END $$;*/
