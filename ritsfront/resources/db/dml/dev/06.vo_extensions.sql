@@ -787,13 +787,171 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 			"id": 2,
 			"label": "LBL_TAB_TRANSIT_VEHICLE",
 			"position": 2,
-			"enabled": true
+			"enabled": true,
+			"propertyGroups": [
+				{
+					"id": 1,
+					"position": 1,
+					"label": "LBL_TRANSIT_TAB_GENERAL_SUMMARY",
+					"enabled": true
+				},
+				{
+					"id": 2,
+					"position": 2,
+					"label": "LBL_TRANSIT_VEHICLE_CLASS",
+					"enabled": true
+				}
+			],
+			"properties": [
+				{
+					"id": 101,
+					"propertyGroupId": 1,
+					"field": "transitCode",
+					"position": 1,
+					"dataType": "DataType:2",
+					"label": "LBL_TRANSIT_TAB_GENERAL_SUMMARY_STATE",
+					"enabled": true
+				},
+				{
+					"id": 102,
+					"propertyGroupId": 1,
+					"field": "vehicleModel.vehicleBrand.alias",
+					"position": 2,
+					"dataType": "DataType:2",
+					"label": "LBL_GRID_FIELD_TRANSIT_VEHICLE_BRAND",
+					"enabled": true
+				},
+				{
+					"id": 103,
+					"propertyGroupId": 1,
+					"field": "vehicleModel.alias",
+					"position": 4,
+					"dataType": "DataType:2",
+					"label": "LBL_GRID_FIELD_TRANSIT_VEHICLE_MODEL",
+					"enabled": true
+				},
+				{
+					"id": 104,
+					"propertyGroupId": 1,
+					"field": "vehiclePlateNumber",
+					"position": 5,
+					"dataType": "DataType:2",
+					"label": "LBL_TRANSIT_TAB_GENERAL_SUMMARY_PLATE_NUMBER",
+					"enabled": true
+				},
+				{
+					"id": 201,
+					"propertyGroupId": 2,
+					"field": "vehicleModel.vehicleType.alias",
+					"position": 1,
+					"dataType": "DataType:2",
+					"label": "LBL_GRID_FIELD_TRANSIT_ELEMENT_TYPE",
+					"enabled": true
+				},
+				{
+					"id": 202,
+					"propertyGroupId": 2,
+					"position": 2,
+					"field": "vehicleClass.labelAlias",
+					"dataType": "DataType:3",
+					"label": "LBL_VEHICLE_CLASS",
+					"enabled": false
+				}
+			]
 		},	
 		{
 			"id": 3,
 			"label": "LBL_TAB_TRANSIT_DRIVER",
 			"position": 3,
-			"enabled": true
+			"enabled": true,
+			"propertyGroups": [
+				{
+					"id": 1,
+					"position": 1,
+					"label": "LBL_TRANSIT_TAB_DRIVER_DATA",
+					"enabled": true
+				},
+				{
+					"id": 2,
+					"position": 2,
+					"label": "LBL_TRANSIT_TAB_GENERAL_LOCATION_ADDRESS",
+					"enabled": true
+				}
+			],
+			"properties": [
+				{
+					"id": 101,
+					"propertyGroupId": 1,
+					"field": "transitCode",
+					"position": 1,
+					"dataType": "DataType:2",
+					"label": "LBL_TRANSIT_TAB_GENERAL_SUMMARY_STATE",
+					"enabled": true
+				},
+				{
+					"id": 102,
+					"propertyGroupId": 1,
+					"field": "driverName",
+					"position": 2,
+					"dataType": "DataType:2",
+					"label": "LBL_TAB_TRANSIT_DRIVER",
+					"enabled": true
+				},
+				{
+					"id": 103,
+					"propertyGroupId": 1,
+					"field": "driverLicenseValue",
+					"position": 3,
+					"dataType": "DataType:2",
+					"label": "LBL_TRANSIT_TAB_DRIVER_IDENTITY",
+					"enabled": true
+				},
+				{
+					"id": 104,
+					"propertyGroupId": 1,
+					"field": "driverDateOfBirth",
+					"position": 4,
+					"dataType": "DataType:4",
+					"label": "LBL_TRANSIT_TAB_DRIVER_BIRTHDAY",
+					"enabled": true
+				},
+				{
+					"id": 201,
+					"propertyGroupId": 2,
+					"field": "driverAddress",
+					"position": 1,
+					"dataType": "DataType:2",
+					"label": "LBL_TRANSIT_TAB_GENERAL_LOCATION_ADDRESS",
+					"enabled": true
+				},
+				{
+					"id": 202,
+					"propertyGroupId": 2,
+					"field": "driverLocality.alias",
+					"position": 1,
+					"dataType": "DataType:2",
+					"label": "LBL_TRANSIT_TAB_GENERAL_LOCATION_LOCALITY",
+					"enabled": true
+				},
+				{
+					"id": 203,
+					"propertyGroupId": 2,
+					"position": 2,
+					"dataType": "DataType:2",
+					"field": "driverLocality.localityCode",
+					"label": "LBL_TRANSIT_TAB_GENERAL_SUMMARY_CODE",
+					"enabled": false
+				},
+				{
+					"id": 204,
+					"propertyGroupId": 2,
+					"field": "driverRegion.alias",
+					"position": 1,
+					"dataType": "DataType:2",
+					"label": "LBL_TRANSIT_TAB_DRIVER_REGION",
+					"enabled": true
+				}
+			]
 		},
 		{
 			"id": 4,
