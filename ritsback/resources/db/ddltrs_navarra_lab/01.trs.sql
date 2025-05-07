@@ -264,7 +264,7 @@ DROP TABLE IF EXISTS rt.transits;
 		transit_state_id int8 NOT NULL,
 		transit_state_option_id int8 NULL,
 		timestamp_log timestamptz NOT NULL,
-		log_type varchar(100) NOT NULL,
+		log_level varchar(100) NOT NULL,
 		message varchar(1000) NULL,
 		visible bool NULL,
 		created_at timestamptz NOT NULL,
