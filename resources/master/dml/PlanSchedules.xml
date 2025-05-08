@@ -6,6 +6,7 @@
 				   cron_expression as "cronExpression",
 				   alias as "alias", 
 				   description as "description", 
+				   current_plan_schedule_state_type_id as "currentPlanScheduleStateTypeId",
 				   enabled as "enabled", 
 				   visible as "visible"
 			  FROM conf.plan_schedules
@@ -17,6 +18,7 @@
 	                 cron_expression,
 	                 alias,
 	                 description,
+	                 current_plan_schedule_state_type_id,
 	                 enabled,
 	                 visible,
 	                 created_at,
@@ -26,7 +28,8 @@
 					 :planId,
 					 :cronExpression,
 					 :alias, 
-					 :description, 
+					 :description,
+					 :currentPlanScheduleStateTypeId,
 					 :enabled, 
 					 :visible, 
 					 CURRENT_TIMESTAMP, 
@@ -36,7 +39,8 @@
 			   SET plan_id = :planId,
 			   	   cron_expression = :cronExpression,
 			       alias = :alias, 
-				   description = :description, 
+				   description = :description,
+				   current_plan_schedule_state_type_id = :currentPlanScheduleStateTypeId, 
 				   enabled = :enabled, 
 				   visible = :visible, 
 				   updated_at = CURRENT_TIMESTAMP
