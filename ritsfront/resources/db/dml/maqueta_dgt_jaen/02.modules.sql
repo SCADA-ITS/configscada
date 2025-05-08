@@ -35,7 +35,12 @@ INSERT INTO ui.modules
 (11002, 9, 'HISTORICAL DATA SEM', 'HISTORICAL DATA', 1, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 (11003, 9, 'HISTORICAL DATA PRES', 'HISTORICAL DATA', 1, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 (11004, 9, 'HISTORICAL DATA LIGHTNING CIRCUIT', 'HISTORICAL DATA', 1, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
-(11005, 9, 'HISTORICAL DATA BARRIER', 'HISTORICAL DATA', 1, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL);
+(11005, 9, 'HISTORICAL DATA BARRIER', 'HISTORICAL DATA', 1, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(11006, 9, 'HISTORICAL DATA VENTILATION', 'HISTORICAL DATA', 1, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(12001, 9, 'HISTORICAL DATA CO', 'HISTORICAL DATA', 1, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(12002, 9, 'HISTORICAL DATA OPAC', 'HISTORICAL DATA', 1, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(12003, 9, 'HISTORICAL DATA LUM', 'HISTORICAL DATA', 1, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(12004, 9, 'HISTORICAL DATA WS', 'HISTORICAL DATA', 1, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL);
 
 
 
@@ -83,7 +88,13 @@ INSERT INTO ui.module_values
 (11002, 13, '11'), (11002, 14, 'sem'),
 (11003, 13, '11'), (11003, 14, 'pressurization'),
 (11004, 13, '11'), (11004, 14, 'lightning_circuit'),
-(11005, 13, '11'), (11005, 14, 'barrier');
+(11005, 13, '11'), (11005, 14, 'barrier'),
+(11006, 13, '11'), (11006, 14, 'ventilation'),
+(12001, 13, '11'), (12001, 14, 'co'),(12001, 18,'true'),
+(12002, 13, '11'), (12002, 14, 'opac'),(12002, 18,'true'),
+(12003, 13, '11'), (12003, 14, 'lum'),(12003, 18,'true'),
+(12004, 13, '11'), (12004, 14, 'ws'),(12004, 18,'true');
+
 
 
 INSERT INTO ui.window_values 
@@ -364,5 +375,46 @@ INSERT INTO ui.window_values
 (11005, 10, 'img/module/default.png'),
 (11005, 11, '#464646'),
 (11005, 12, 'LBL_HISTORICAL_DATA_PRES'),
-(11005, 14, 'true');
+(11005, 14, 'true'),
+
+(11006, 4, '825'),
+(11006, 5, '1600'),
+(11006, 8, 'true'),
+(11006, 10, 'img/module/default.png'),
+(11006, 11, '#464646'),
+(11006, 12, 'LBL_HISTORICAL_DATA_PRES'),
+(11006, 14, 'true'),
+
+
+(12001, 4, '825'),
+(12001, 5, '1600'),
+(12001, 8, 'true'),
+(12001, 10, 'img/module/default.png'),
+(12001, 11, '#464646'),
+(12001, 12, 'LBL_HISTORICAL_DATA_PRES'),
+(12001, 14, 'true'),
+
+(12002, 4, '825'),
+(12002, 5, '1600'),
+(12002, 8, 'true'),
+(12002, 10, 'img/module/default.png'),
+(12002, 11, '#464646'),
+(12002, 12, 'LBL_HISTORICAL_DATA_PRES'),
+(12002, 14, 'true'),
+
+(12003, 4, '825'),
+(12003, 5, '1600'),
+(12003, 8, 'true'),
+(12003, 10, 'img/module/default.png'),
+(12003, 11, '#464646'),
+(12003, 12, 'LBL_HISTORICAL_DATA_PRES'),
+(12003, 14, 'true'),
+
+(12004, 4, '825'),
+(12004, 5, '1600'),
+(12004, 8, 'true'),
+(12004, 10, 'img/module/default.png'),
+(12004, 11, '#464646'),
+(12004, 12, 'LBL_HISTORICAL_DATA_PRES'),
+(12004, 14, 'true');
 

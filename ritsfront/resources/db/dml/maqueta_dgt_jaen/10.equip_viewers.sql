@@ -1,7 +1,7 @@
 INSERT INTO ui.equip_viewers (id, name, description, "label", icon, show_info_tab, show_childs, show_actions, initial_tab, no_show_measures, measure_width, measure_max_rows, measure_only, graphic_icon_id, no_show_properties, show_historical_chart) VALUES
-('ElementType:1','Meteo DGT','Meteo DGT','LBL_ELEMENT_SUBTYPE_METEO_DGT',NULL,true,False,false,2,false,null, null, null,050001,true,false),
-('ElementSubtype:1:2', 'CAMERA DOMO', 'CAMERA DOMO', 'LBL_ELEMENT_TYPE_CAMERA', NULL, false, false, false, 1, true, null, null, null, 010002, null, false),
-('ElementSubtype:2:2', 'CAMERA DAI', 'CAMERA DAI', 'LBL_ELEMENT_TYPE_CAMERA', NULL, false, false, false, 1, false, null, null, null, 020002, null, false),
+('ElementType:1','Meteo DGT','Meteo DGT','LBL_ELEMENT_SUBTYPE_METEO_DGT',NULL,true,False,false,null,false,null, null, null,050001,true,false),
+('ElementSubtype:1:2', 'CAMERA DOMO', 'CAMERA DOMO', 'LBL_ELEMENT_TYPE_CAMERA', NULL, false, false, false, 2, true, null, null, null, 010002, null, false),
+('ElementSubtype:2:2', 'CAMERA DAI', 'CAMERA DAI', 'LBL_ELEMENT_TYPE_CAMERA', NULL, false, false, false, 4, false, null, null, null, 020002, null, false),
 ('ElementType:8', 'BARRIER', 'BARRIER', 'LBL_ELEMENT_TYPE_BARRIER', NULL, true, false, true, null, true, 300, 1, null, 000008, true, false),
 ('ElementSubtype:4:9', 'JETFAN', 'JETFAN', 'LBL_ELEMENT_TYPE_JETFAN', NULL, true, false, true, null, false, null, null, null, 040009, null, false),
 ('ElementSubtype:5:9', 'JETFAN', 'JETFAN', 'LBL_ELEMENT_TYPE_JETFAN', NULL, true, false, true, null, false, null, null, null, 040009, null, false),

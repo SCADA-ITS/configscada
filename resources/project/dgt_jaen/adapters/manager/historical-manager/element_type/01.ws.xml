@@ -22,6 +22,12 @@
 				<p:param_type_id>2</p:param_type_id>
 			</p:element_type_param>
 		</p:field>
+		<p:field name="Precipitation_Intensity">
+			<p:element_type_param>
+				<p:element_type_param_id>11</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
 		<p:field name="Wind_Speed">
 			<p:element_type_param>
 				<p:element_type_param_id>26</p:element_type_param_id>
@@ -46,15 +52,33 @@
 				<p:param_type_id>2</p:param_type_id>
 			</p:element_type_param>
 		</p:field>
+		<p:field name="Precipitation_Type">
+			<p:element_type_param>
+				<p:element_type_param_id>19</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
 		<p:field name="Visibility">
 			<p:element_type_param>
 				<p:element_type_param_id>20</p:element_type_param_id>
 				<p:param_type_id>2</p:param_type_id>
 			</p:element_type_param>
 		</p:field>
+		<p:field name="Precipitation_Quantity">
+			<p:element_type_param>
+				<p:element_type_param_id>23</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
 		<p:field name="Wind_Type">
 			<p:element_type_param>
 				<p:element_type_param_id>28</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+		<p:field name="date">
+			<p:element_type_param>
+				<p:element_type_param_id>29</p:element_type_param_id>
 				<p:param_type_id>2</p:param_type_id>
 			</p:element_type_param>
 		</p:field>

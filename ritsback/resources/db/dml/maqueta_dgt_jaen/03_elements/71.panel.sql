@@ -498,7 +498,7 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 (71, 3, 1, 79, NULL, 'DGT', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (71, 4, 1, 79, NULL, '[{"zone":1,"type":"graphic","vms_group_id":22},{"zone":2,"type":"text","maxCharsPerLine":12},{"zone":3,"type":"graphic","vms_group_id":22}]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 --(71, 1003, 1, 79, NULL, 'PMV-1-01-CA', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(71, 4001, 1, 79, NULL, '192.168.88.201', true, true, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), 
+(71, 4001, 1, 79, NULL, '192.168.88.196', true, true, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), 
 (71, 4002, 1, 79, NULL, '5000', true, true, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), 
 (71, 4003, 1, 79, NULL, '0x05 0x20', true, true, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), 
 (71, 4004, 1, 79, NULL, '0x06', true, true, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), 
