@@ -780,6 +780,16 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 					"dataType": "DataType:2",
 					"label": "LBL_TRANSIT_TAB_GENERAL_EQUIPMENT_DETECTION_POINT_CODE",
 					"enabled": true
+				},
+				{
+					"id": 405,
+					"propertyGroupId": 4,
+					"field": "transitValues",
+					"position": 5,
+					"dataType": "DataType:2",
+					"calculatedFieldExpresion": "return fieldValue.find(type => type.transitTypeParam.id === \"TransitTypeParam:1:1\")?.value;", 
+					"label": "LBL_TRANSIT_PARAM_1",
+					"enabled": true
 				}
 			]
 		},
