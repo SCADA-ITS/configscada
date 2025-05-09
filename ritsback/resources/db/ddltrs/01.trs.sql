@@ -93,6 +93,8 @@ DROP TABLE IF EXISTS rt.transits;
 	CREATE INDEX idx_transits_transit_users ON rt.transits USING btree (assigned_user_id);
 	CREATE INDEX idx_transits_element_transit_types ON rt.transits USING btree (element_type_id, element_id, transit_type_id);
 	
+	CREATE INDEX idx_transits_search_idx_1 ON rt.transits USING btree (date_transit, transit_type_id, element_type_id, element_id);
+	
 	-- Vehicle indexes
 	CREATE INDEX idx_transits_vehicle_types ON rt.transits USING btree (vehicle_type_id);
 	CREATE INDEX idx_transits_vehicles ON rt.transits USING btree (vehicle_type_id, vehicle_id);
