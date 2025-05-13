@@ -480,8 +480,7 @@ SELECT *
 FROM ventilation_data
 ORDER BY time_stamp DESC;
 
-
-
+--ANALOGICOS
 --co
 CREATE VIEW historical_data.co AS
 SELECT 
@@ -564,7 +563,199 @@ WHERE
 ORDER BY 
     c.timestamp_at DESC;
 
+--ANE
+CREATE VIEW historical_data.ane AS
+SELECT 
+    ev.value::varchar AS equipo,
+    c.timestamp_at, 
+    c.wind_speed
+FROM 
+    hist.ane c
+INNER JOIN conf.element_values ev 
+    ON ev.element_id = c.f_element_id
+WHERE 
+    ev.element_type_id = 18
+    AND ev.element_type_param_id = 1003
+    AND c.timestamp_at >= NOW() - INTERVAL '1 month'
+    AND c.timestamp_at <= NOW()
+ORDER BY 
+    c.timestamp_at DESC;
 
+--VANE
+CREATE VIEW historical_data.vane AS
+SELECT 
+    ev.value::varchar AS equipo,
+    c.timestamp_at, 
+    c.wind_speed,
+    c.wind_direction
+FROM 
+    hist.vane c
+INNER JOIN conf.element_values ev 
+    ON ev.element_id = c.f_element_id
+WHERE 
+    ev.element_type_id = 66
+    AND ev.element_type_param_id = 1003
+    AND c.timestamp_at >= NOW() - INTERVAL '1 month'
+    AND c.timestamp_at <= NOW()
+ORDER BY 
+    c.timestamp_at DESC;
+
+--HISTORICOS
+--BARRERAS
+CREATE VIEW historical_data.barreras AS
+SELECT 
+    ev.value::varchar AS equipo,
+    c.timestamp_at, 
+    CASE 
+        WHEN c.bar_state = 1 THEN 'Abierta'
+        WHEN c.bar_state = 2 THEN 'Cerrada'
+        ELSE 'Desconocido'
+    END::varchar AS estado_barrera  
+FROM 
+    hist.barrier c
+INNER JOIN conf.element_values ev 
+    ON ev.element_id = c.f_element_id
+WHERE 
+    ev.element_type_id = 8  -- 
+    AND ev.element_type_param_id = 1003
+    AND c.timestamp_at >= NOW() - INTERVAL '1 month'  -- Intervalo de 1 mes
+    AND c.timestamp_at <= NOW()
+ORDER BY 
+    c.timestamp_at DESC;
+
+--SEMÁFOROS
+CREATE VIEW historical_data.semaforos AS
+SELECT 
+    ev.value::varchar AS equipo,
+    c.timestamp_at, 
+    CASE 
+        WHEN c.light = 0 THEN 'Ámbar intermitente'
+        WHEN c.light = 1 THEN 'Rojo'
+        WHEN c.light = 2 THEN 'Ámbar fijo'
+        WHEN c.light = 4 THEN 'Verde'
+        WHEN c.light = 7 THEN 'Apagado'
+        ELSE 'Desconocido'
+    END::varchar AS estado_semaforo
+FROM 
+    hist.sem c
+INNER JOIN conf.element_values ev 
+    ON ev.element_id = c.f_element_id
+WHERE 
+    ev.element_type_id = 13
+    AND ev.element_type_param_id = 1003
+    AND c.timestamp_at >= NOW() - INTERVAL '1 month'
+    AND c.timestamp_at <= NOW()
+ORDER BY 
+    c.timestamp_at DESC;
+    
+--PRESURIZACIÓN
+CREATE VIEW historical_data.pres AS
+SELECT 
+    ev.value::varchar AS equipo,
+    c.timestamp_at, 
+    CASE 
+        WHEN c.fan_low_speed_state = true AND c.fan_high_speed_state = false THEN 'Lenta'
+        WHEN c.fan_low_speed_state = false AND c.fan_high_speed_state = true THEN 'Rápida'
+        ELSE 'Desconocido'
+    END::varchar AS fan_speed,
+    CASE 
+        WHEN c.grid_gate_clousure_state = true THEN 'Abierta'
+        WHEN c.grid_gate_clousure_state = false THEN 'Cerrada'
+        ELSE 'Desconocido'
+    END::varchar AS grid_gate_state
+FROM 
+    hist.pressurization c
+INNER JOIN conf.element_values ev 
+    ON ev.element_id = c.f_element_id
+WHERE 
+    ev.element_type_id = 32
+    AND ev.element_type_param_id = 1003
+    AND c.timestamp_at >= NOW() - INTERVAL '1 month'
+    AND c.timestamp_at <= NOW()
+ORDER BY 
+    c.timestamp_at DESC;
+
+--PANELES
+CREATE OR REPLACE VIEW historical_data.pmv AS
+WITH comando_normalizado AS (
+    SELECT
+        p.f_element_id,
+        p.timestamp_at,
+        p.data_json,
+        CASE
+            WHEN jsonb_typeof(p.data_json::jsonb) = 'string' THEN
+                (p.data_json::jsonb)::text::jsonb
+            WHEN jsonb_typeof(p.data_json::jsonb) = 'array'
+                AND jsonb_typeof((p.data_json::jsonb)->0->'value') = 'string'
+            THEN ((p.data_json::jsonb)->0->>'value')::jsonb
+            WHEN jsonb_typeof(p.data_json::jsonb) = 'array' THEN
+                (p.data_json::jsonb)
+            ELSE NULL
+        END AS comando_json
+    FROM hist.pmv p
+    WHERE p.timestamp_at >= now() - interval '1 month'
+      AND p.timestamp_at <= now()
+)
+
+SELECT
+    ev.value::varchar AS equipo,
+    cn.timestamp_at,
+
+    -- Zona gráfica 1
+    COALESCE((
+        SELECT TRIM(BOTH ' ' FROM string_agg(NULLIF(g->>'value', '0')::varchar, ' '))
+        FROM jsonb_array_elements(cn.comando_json) zone
+        CROSS JOIN LATERAL jsonb_array_elements(zone->'graphics') g
+        WHERE zone->>'zone' = '1'
+    ), ' ')::varchar AS zona_grafico_1,
+
+    -- Mensaje
+    COALESCE((
+        SELECT string_agg(t->>'value'::varchar, ' / ' ORDER BY (t->>'id')::int)
+        FROM jsonb_array_elements(cn.comando_json) zone
+        CROSS JOIN LATERAL jsonb_array_elements(zone->'texts') t
+        WHERE zone->>'zone' = '2'
+    ), ' ')::varchar AS mensaje,
+
+    -- Zona gráfica 2
+    COALESCE((
+        SELECT TRIM(BOTH ' ' FROM string_agg(NULLIF(g->>'value', '0')::varchar, ' '))
+        FROM jsonb_array_elements(cn.comando_json) zone
+        CROSS JOIN LATERAL jsonb_array_elements(zone->'graphics') g
+        WHERE zone->>'zone' = '3'
+    ), ' ')::varchar AS zona_grafico_2,
+
+    -- Alternancia zona gráfica 1
+    COALESCE((
+        SELECT TRIM(BOTH ' ' FROM string_agg(NULLIF(g->>'alternance', '0')::varchar, ' '))
+        FROM jsonb_array_elements(cn.comando_json) zone
+        CROSS JOIN LATERAL jsonb_array_elements(zone->'graphics') g
+        WHERE zone->>'zone' = '1'
+    ), ' ')::varchar AS alternancia_zona_grafico_1,
+
+    -- Alternancia del mensaje
+    COALESCE((
+        SELECT string_agg(NULLIF(t->>'alternance', '')::varchar, E' / ' ORDER BY (t->>'id')::int)
+        FROM jsonb_array_elements(cn.comando_json) zone
+        CROSS JOIN LATERAL jsonb_array_elements(zone->'texts') t
+        WHERE zone->>'zone' = '2' AND NULLIF(t->>'alternance', '') IS NOT NULL
+    ), ' ')::varchar AS mensaje_alternancia,
+
+    -- Alternancia zona gráfica 2
+    COALESCE((
+        SELECT TRIM(BOTH ' ' FROM string_agg(NULLIF(g->>'alternance', '0')::varchar, ' '))
+        FROM jsonb_array_elements(cn.comando_json) zone
+        CROSS JOIN LATERAL jsonb_array_elements(zone->'graphics') g
+        WHERE zone->>'zone' = '3'
+    ), ' ')::varchar AS alternancia_zona_grafico_2
+
+FROM comando_normalizado cn
+INNER JOIN conf.element_values ev 
+    ON ev.element_id = cn.f_element_id
+WHERE 
+    ev.element_type_id = 71  -- PMV
+    AND ev.element_type_param_id = 1003
+ORDER BY cn.timestamp_at DESC;
 
 
   	-- historical_data.sg_metadata_tables
@@ -607,9 +798,28 @@ ORDER BY
 
     (10, 'ws', 'LBL_BACKOFFICE_SG_METADATA_TABLES_WS', 'LBL_BACKOFFICE_SG_METADATA_TABLES_WS', 'LBL_BACKOFFICE_SG_METADATA_TABLES_WS_DESCRIPTION', NULL, true, true, 
 	--sql_view
-	'SELECT * FROM historical_data.ws', NULL, NULL);
+	'SELECT * FROM historical_data.ws', NULL, NULL),
+
+    (11, 'ane', 'LBL_BACKOFFICE_SG_METADATA_TABLES_WS', 'LBL_BACKOFFICE_SG_METADATA_TABLES_WS', 'LBL_BACKOFFICE_SG_METADATA_TABLES_WS_DESCRIPTION', NULL, true, true, 
+	--sql_view
+	'SELECT * FROM historical_data.ane', NULL, NULL),
+
+    (12, 'vane', 'LBL_BACKOFFICE_SG_METADATA_TABLES_WS', 'LBL_BACKOFFICE_SG_METADATA_TABLES_WS', 'LBL_BACKOFFICE_SG_METADATA_TABLES_WS_DESCRIPTION', NULL, true, true, 
+	--sql_view
+	'SELECT * FROM historical_data.vane', NULL, NULL),
+
+    (13, 'barreras', 'LBL_BACKOFFICE_SG_METADATA_TABLES_WS', 'LBL_BACKOFFICE_SG_METADATA_TABLES_WS', 'LBL_BACKOFFICE_SG_METADATA_TABLES_WS_DESCRIPTION', NULL, true, true, 
+	--sql_view
+	'SELECT * FROM historical_data.barreras', NULL, NULL),
+
+    (14, 'pres', 'LBL_BACKOFFICE_SG_METADATA_TABLES_WS', 'LBL_BACKOFFICE_SG_METADATA_TABLES_WS', 'LBL_BACKOFFICE_SG_METADATA_TABLES_WS_DESCRIPTION', NULL, true, true, 
+	--sql_view
+	'SELECT * FROM historical_data.pres', NULL, NULL),
 
 
+    (15, 'paneles', 'LBL_BACKOFFICE_SG_METADATA_TABLES_WS', 'LBL_BACKOFFICE_SG_METADATA_TABLES_WS', 'LBL_BACKOFFICE_SG_METADATA_TABLES_WS_DESCRIPTION', NULL, true, true, 
+	--sql_view
+	'SELECT * FROM historical_data.pmv', NULL, NULL);
 
 
 
@@ -686,7 +896,16 @@ ORDER BY
 	(10, 'date', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_DATE_WS', NULL, false, '{"editable": false}'),
 	(10, 'precipitation_type', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_PRECIPITATION_TYPE', NULL, false, '{"editable": false}'),
 	(10, 'precipitation_quantity', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_PRECIPITATION_QUANTITY', NULL, false, '{"editable": false}'),
-	(10, 'precipitation_intensity', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_PRECIPITATION_INTENSITY', NULL, false, '{"editable": false}');
+	(10, 'precipitation_intensity', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_PRECIPITATION_INTENSITY', NULL, false, '{"editable": false}'),
+
+    (11, 'timestamp_at', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_DATE', NULL, false, '{"editable": false}'),
+	(11, 'wind_speed', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_WIND_SPEED', NULL, false, '{"editable": false}'),
+	(11, 'equipo', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ELEMENT', NULL, false, '{"editable": false}'),
+
+    (12, 'timestamp_at', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_DATE', NULL, false, '{"editable": false}'),
+	(12, 'wind_speed', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_WIND_SPEED', NULL, false, '{"editable": false}'),
+    (12, 'wind_direction', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_WIND_SPEED', NULL, false, '{"editable": false}'),
+	(12, 'equipo', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ELEMENT', NULL, false, '{"editable": false}');
 
 
 

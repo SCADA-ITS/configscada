@@ -2,18 +2,27 @@ INSERT INTO ui.selector_trees(id, "label", default_module_id, enabled, visible) 
 (11, 'LBL_SELECTOR_TREE_HISTORICAL_DATA_BACKOFFICE', 11000, true, true);
 
 INSERT INTO ui.selector_tree_nodes(id, selector_tree_id, "label", image, module_id, enabled, visible) VALUES
-(1100000, 11, 'LBL_HISTORICAL_DATA', null, null, true, true),
+(1100000, 11, 'LBL_COMMAND_EXECUTE', null, null, true, true),
 (1100001, 11, 'LBL_PMV_COMMANDS', null, 11001, true, true),
 (1100002, 11, 'LBL_SEM_COMMANDS', null, 11002, true, true),
 (1100003, 11, 'LBL_PRES_COMMANDS', null, 11003, true, true),
 (1100004, 11, 'LBL_LIGHTNING_CIRCUIT_COMMANDS', null, 11004, true, true),
 (1100005, 11, 'LBL_BARRIER_COMMANDS', null, 11005, true, true),
 (1100006, 11, 'LBL_VENTILATION_COMMANDS', null, 11006, true, true),
+
 (1200000, 11, 'LBL_ANALOGIC_DATA', null, null, true, true),
 (1200001, 11, 'LBL_CO_DATA', null, 12001, true, true),
 (1200002, 11, 'LBL_OPAC_DATA', null, 12002, true, true),
 (1200003, 11, 'LBL_LUM_DATA', null, 12003, true, true),
-(1200004, 11, 'LBL_WS_DATA', null, 12004, true, true);
+(1200004, 11, 'LBL_WS_DATA', null, 12004, true, true),
+(1200005, 11, 'LBL_ANE_DATA', null, 12005, true, true),
+
+(1300000, 11, 'LBL_HISTORICAL_DATA', null, null, true, true),
+(1300001, 11, 'LBL_BARRERAS_DATA', null, 13001, true, true),
+(1300002, 11, 'LBL_SEMAFOROS_DATA', null, 13002, true, true),
+(1300003, 11, 'LBL_PRES_COMMANDS', null, 13003, true, true),
+(1300004, 11, 'LBL_PMV_COMMANDS', null, 13004, true, true);
+
 
 
 
@@ -30,5 +39,12 @@ INSERT INTO ui.selector_tree_hierarchies(selector_tree_id,  node_parent_id, node
 (11, 1200000, 1200001, true, true),
 (11, 1200000, 1200002, true, true),
 (11, 1200000, 1200003, true, true),
-(11, 1200000, 1200004, true, true);
+(11, 1200000, 1200004, true, true),
+(11, 1200000, 1200005, true, true),
+
+(11, 1300000, 1300001, true, true),
+(11, 1300000, 1300002, true, true),
+(11, 1300000, 1300003, true, true),
+(11, 1300000, 1300004, true, true);
+
 
