@@ -69,7 +69,7 @@
 		<p:publisher>
 			<p:id>1</p:id>
 			<p:enabled>true</p:enabled>
-			<p:broker>ws://192.1688.88.201:61614</p:broker>
+			<p:broker>ws://192.168.88.201:61614</p:broker>
 			<p:topics>
 				<p:topic>
 					<p:id>2</p:id>
