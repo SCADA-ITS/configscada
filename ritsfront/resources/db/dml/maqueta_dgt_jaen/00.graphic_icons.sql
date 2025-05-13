@@ -65,6 +65,7 @@ INSERT INTO ui.graphic_icons
 (000066, 'VANE', 'VANE', false, true, 'component/graphicIcon/graphicIconCustom.js', 40, 50.909107, 'img/graphic_icon/66_vane.svg', 'component/graphicIcon/custom/vane_integers_jaen.js',true),
 (00006606, 'VANE', 'VANE', false, true, 'component/graphicIcon/graphicIconCustom.js', 45, 57.272747, 'img/graphic_icon/66_vane.svg', 'component/graphicIcon/custom/vane_integers_jaen.js',true),
 (00006608, 'VANE', 'VANE', false, true, 'component/graphicIcon/graphicIconCustom.js', 48, 61.090931, 'img/graphic_icon/66_vane.svg', 'component/graphicIcon/custom/vane_integers_jaen.js',true),
+(000067, 'ILUM_EMER_CT', 'ILUM_EMER_CT', false, false, 'component/graphicIcon/graphicIconDefault.js', 40, 40, 'img/graphic_icon/67_Central_luz_emer.svg', 'null',true),
 (000070, 'ANALIZADOR_RED', 'ANALIZADOR_RED', false, false, 'component/graphicIcon/graphicIconDefault.js', 70, 70, 'img/graphic_icon/70_analizador_red.svg', 'null',true),
 (00007001, 'ANALIZADOR_RED', 'ANALIZADOR_RED', false, false, 'component/graphicIcon/graphicIconDefault.js', 65, 65, 'img/graphic_icon/70_analizador_red.svg', 'null',true),
 (00007002, 'ANALIZADOR_RED', 'ANALIZADOR_RED', false, false, 'component/graphicIcon/graphicIconDefault.js', 75, 75, 'img/graphic_icon/70_analizador_red.svg', 'null',true),

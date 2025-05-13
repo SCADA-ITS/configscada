@@ -25,6 +25,7 @@ element_type;element_subtype;alias;svg_file;js_custom_type_render;keepRatio
 61;;FIRE_CT;61_fire_det_ct.svg;;true
 65;;SAI;65_sai.svg;;true
 66;;VANE;66_vane.svg;vane_integers.js;true
+67;;ILUM_EMER_CT;67_Central_luz_emer.svg;;true
 70;3;ANALIZADOR_RED;70_analizador_red.svg;;true
 71;11;PMV;71_vms_clv_af.svg;vms.js;true
 71;12;PMV;71_vms_clv_af.svg;vms.js;true
