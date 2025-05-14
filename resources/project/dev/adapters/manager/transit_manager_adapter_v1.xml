@@ -18,11 +18,11 @@
 	<p:executors>
 		<p:executor>
 			<p:id>1</p:id>
-			<p:enabled>false</p:enabled>
+			<p:enabled>true</p:enabled>
 			<p:merge_wait_time>1</p:merge_wait_time>
 			<p:manager_class>com.revenga.rits.back.transit.manager.transit.recovery.une199121.TransitRecoveryUne199121Executor</p:manager_class>
 			<p:executor_params>
-				<p:executor_param_value>cron_job=recoveryUne199121_4Transits;0 * * * * ?;3;secring.gpg;YtkdWrfU8VF/yiQcHNsVzw==</p:executor_param_value>
+				<p:executor_param_value>cron_job=TransitRecoveryJob;recoveryUne199121_4Transits;0 * * * * ?;3;secring.gpg;YtkdWrfU8VF/yiQcHNsVzw==</p:executor_param_value>
 				<p:executor_param_value>elementType=99</p:executor_param_value>
 			</p:executor_params>
 		</p:executor>
@@ -30,9 +30,11 @@
 			<p:id>2</p:id>
 			<p:enabled>true</p:enabled>
 			<p:merge_wait_time>1</p:merge_wait_time>
-			<p:manager_class>com.revenga.rits.back.transit.manager.transit.recovery.une199141.TransitRecoveryUne199141Executor</p:manager_class>
+			<p:manager_class>com.revenga.rits.back.transit.manager.transit.recovery.une199142.TransitRecoveryUne199142Executor</p:manager_class>
 			<p:executor_params>
-				<p:executor_param_value>cron_job=recoveryUne199141;0 * * * * ?;C1</p:executor_param_value>
+				<p:executor_param_value>cron_job=TransitRecoveryJob;recoveryUne199142;0 * * * * ?;C1</p:executor_param_value>
+				<p:executor_param_value>cron_job=TransitRecoveryJob;historicalRecoveryUne199142;0 * * * * ?;A9;true</p:executor_param_value>
+				<p:executor_param_value>cron_job=RequestHistoricalTransitJob;reqhistorical;0 * * * * ?;09;5;0;ElementTypeParam:2:1:4005</p:executor_param_value>	
 				<p:executor_param_value>elementType=2</p:executor_param_value>
 			</p:executor_params>
 		</p:executor>
@@ -48,7 +50,7 @@
 		</p:executor>
 		<p:executor>
 			<p:id>4</p:id>
-			<p:enabled>true</p:enabled>
+			<p:enabled>false</p:enabled>
 			<p:merge_wait_time>1</p:merge_wait_time>
 			<p:manager_class>com.revenga.rits.back.transit.manager.transit.persistence.TransitArchiverExecutor</p:manager_class>
 			<p:executor_params>
