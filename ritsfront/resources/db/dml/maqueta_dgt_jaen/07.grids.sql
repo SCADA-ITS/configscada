@@ -21,6 +21,7 @@ INSERT INTO ui.grids(id, adapter_id, "label", enabled, visible) VALUES
 (61, 2, 'LBL_ELEMENT_TYPE_FIRE_DET_CT', true, true),
 (65, 2, 'LBL_ELEMENT_TYPE_SAI', true, true),
 (66, 2, 'LBL_ELEMENT_TYPE_VANE', true, true),
+(67, 2, 'LBL_ELEMENT_TYPE_ILUM_EMER_CT', true, true),
 (70, 2, 'LBL_ELEMENT_TYPE_ANALIZADOR_RED', true, true),
 (71, 2, 'LBL_ELEMENT_TYPE_PANEL', true, true),
 (75, 2, 'LBL_ELEMENT_TYPE_GE', true, true),
@@ -220,6 +221,13 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (660010, 66, 3, 10, true, false, false, false, 'LBL_ELEMENT_TYPE_PARAM_DECIMAL_WIND_SPEED', 'LBL_ELEMENT_TYPE_PARAM_DECIMAL_WIND_SPEED_DESC', 'ElementTypeParam:66:2:2', false, false, 'left', false, false, 240, NULL, true, true, NULL, NULL, NULL, NULL, 2),
 (660011, 66, 2, 11, true, false, false, false, 'LBL_ELEMENT_TYPE_PARAM_INTEGER_WIND_DIRECTION', 'LBL_ELEMENT_TYPE_PARAM_INTEGER_WIND_DIRECTION_DESC', 'ElementTypeParam:66:2:1', false, false, 'left', false, false, 240, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
 
+(670001, 67, 1, 1, true, false, false, false, 'LBL_GRID_FIELD_ID', 'LBL_GRID_FIELD_ID', 'id', true, false, null, false, false, 500, NULL, true, false, NULL, NULL, NULL, NULL, NULL),
+(670002, 67, 1, 2, true, false, false, true, 'LBL_GRID_FIELD_NAME', 'LBL_GRID_FIELD_NAME', 'alias', false, false, NULL, false, false, 170, NULL, true, true, NULL, NULL, true, NULL, NULL),
+(670003, 67, 1, 3, true, false, false, false, 'LBL_GRID_FIELD_DESCRIPTION', 'LBL_GRID_FIELD_DESCRIPTION', 'description', false, false, NULL, false, false, 170, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(670004, 67, 1, 4, true, true, false, false, NULL, NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(670005, 67, 1, 5, true, true, false, true, 'LBL_GRID_FIELD_STATE_LABEL', 'LBL_GRID_FIELD_STATE_LABEL', 'stateLabel', false, false, NULL, true, false, 150, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(670006, 67, 4, 6, true, false, false, true, 'LBL_GRID_FIELD_DATE', 'LBL_GRID_FIELD_DATE', 'ElementTypeParam:67:2:1', false, true, 'left', false, false, 180, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+
 (700001, 70, 1, 1, true, false, false, false, 'LBL_GRID_FIELD_ID', 'LBL_GRID_FIELD_ID', 'id', true, false, null, false, false, 500, NULL, true, false, NULL, NULL, NULL, NULL, NULL),
 (700002, 70, 1, 2, true, false, false, true, 'LBL_GRID_FIELD_NAME', 'LBL_GRID_FIELD_NAME', 'alias', false, false, NULL, false, false, 180, NULL, true, true, NULL, NULL, true, NULL, NULL),
 (700003, 70, 1, 3, true, false, false, false, 'LBL_GRID_FIELD_DESCRIPTION', 'LBL_GRID_FIELD_DESCRIPTION', 'description', false, false, NULL, false, false, 180, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
@@ -256,6 +264,7 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (840004, 84, 1, 4, true, true, false, false, NULL, NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
 (840005, 84, 1, 5, true, true, false, true, 'LBL_GRID_FIELD_STATE_LABEL', 'LBL_GRID_FIELD_STATE_LABEL', 'stateLabel', false, false, NULL, true, false, 150, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
 (840006, 84, 1 ,6, true, false, false, false, 'LBL_ELEMENT_TYPE_PARAM_CIRCUIT_STATE', 'LBL_ELEMENT_TYPE_PARAM_CIRCUIT_STATE_DESC', 'ElementTypeParam:84:2:1', false, false, 'left', true, false, 200, NULL, true, true, NULL, NULL, NULL, NULL, 0),
+(840007, 84, 1 ,7, true, false, false, false, 'LBL_ELEMENT_TYPE_PARAM_DIMING_LEVEL', 'LBL_ELEMENT_TYPE_PARAM_DIMING_LEVEL_DESC', 'ElementTypeParam:84:2:2', false, false, 'left', true, false, 200, NULL, true, true, NULL, NULL, NULL, NULL, 0),
 
 (860001, 86, 1, 1, true, false, false, false, 'LBL_GRID_FIELD_ID', 'LBL_GRID_FIELD_ID', 'id', true, false, null, false, false, 500, NULL, true, false, NULL, NULL, NULL, NULL, NULL),
 (860002, 86, 1, 2, true, false, false, true, 'LBL_GRID_FIELD_NAME', 'LBL_GRID_FIELD_NAME', 'alias', false, false, NULL, false, false, 170, NULL, true, true, NULL, NULL, true, NULL, NULL),
@@ -663,6 +672,23 @@ INSERT INTO ui.grid_option_values(grid_id, grid_option_id, value) VALUES
 (66, 25, 'true'),
 (66, 26, 'true'),
 
+(67, 1, 'true'),
+(67, 2, 'true'),
+(67, 7, 'true'),
+(67, 8, 'true'),
+(67, 9, 'false'),
+(67, 10, 'true'),
+(67, 11, 'true'),
+(67, 12, 'true'),
+(67, 13, 'true'),
+(67, 14, 'false'),
+(67, 15, 'false'),
+(67, 16, 'img/grid/element_type_67.png'),
+(67, 17, 'true'),
+(67, 25, 'true'),
+(67, 26, 'true'),
+
+
 (70, 1, 'true'),
 (70, 2, 'true'),
 (70, 7, 'true'),
@@ -901,6 +927,10 @@ INSERT INTO ui.grid_commands(grid_id, "position", "label", icon, "default", modu
 (66, 2, 'LBL_CMD_SHOW_IN_MAP', 'mdi mdi-map-search', false, 200004, null, null, false, false, true),
 (66, 3, 'LBL_CMD_SHOW_ALARMS', 'mdi mdi-bell', false, 100501, null, 2, true, true, true),
 
+(67, 1, 'LBL_CMD_VIEW', 'mdi mdi-eye', true, 101401, NULL, NULL, false, false, false),
+(67, 2, 'LBL_CMD_SHOW_IN_MAP', 'mdi mdi-map-search', false, 200004, null, null, false, false, true),
+(67, 3, 'LBL_CMD_SHOW_ALARMS', 'mdi mdi-bell', false, 100501, null, 2, true, true, true),
+
 (70, 1, 'LBL_CMD_VIEW', 'mdi mdi-eye', true, 101401, NULL, NULL, false, false, false),
 (70, 2, 'LBL_CMD_SHOW_IN_MAP', 'mdi mdi-map-search', false, 200004, null, null, false, false, true),
 (70, 3, 'LBL_CMD_SHOW_ALARMS', 'mdi mdi-bell', false, 100501, null, 2, true, true, true),
@@ -1078,6 +1108,12 @@ INSERT INTO ui.grid_field_icons(grid_field_id, icon, value, show_value, badge_co
 (660004, './img/state/stateDown.png', 'ElementTypeState:66:2', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_DOWN'),
 (660004, './img/state/stateAlarm.png', 'ElementTypeState:66:3', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_ALARMS'),
 (660004, './img/state/stateMaintenance.png', 'ElementTypeState:66:4', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_MAINTENANCE'),
+
+(670004, './img/state/stateUnknown.png', 'ElementTypeState:67:0', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_UNKNOWN'),
+(670004, './img/state/stateUp.png', 'ElementTypeState:67:1', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_UP'),
+(670004, './img/state/stateDown.png', 'ElementTypeState:67:2', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_DOWN'),
+(670004, './img/state/stateAlarm.png', 'ElementTypeState:67:3', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_ALARMS'),
+(670004, './img/state/stateMaintenance.png', 'ElementTypeState:67:4', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_MAINTENANCE'),
 
 (700004, './img/state/stateUnknown.png', 'ElementTypeState:70:0', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_UNKNOWN'),
 (700004, './img/state/stateUp.png', 'ElementTypeState:70:1', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_UP'),
