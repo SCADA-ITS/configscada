@@ -30,7 +30,7 @@ BEGIN
   	-- smartgen.sg_metadata_tables
   	--
 	INSERT INTO incidents.sg_metadata_tables (id, name, label, label_singular, label_description, mdi_icon, support_images, support_attachments, metadata) VALUES
-	(1, 'incidents', 'LBL_INCIDENTS', 'LBL_INCIDENT', 'LBL_INCIDENTS_DESCRIPTION', 'mdi mdi-message-alert', true, true,NULL);
+	(1, 'incidents', 'LBL_INCIDENTS', 'LBL_INCIDENTS', 'LBL_INCIDENTS_DESCRIPTION', 'mdi mdi-message-alert', true, true,NULL);
 
 	
 	INSERT INTO incidents.sg_metadata_columns (id, sg_metadata_table_id, column_name, "label", label_description, needs_translation, metadata) VALUES

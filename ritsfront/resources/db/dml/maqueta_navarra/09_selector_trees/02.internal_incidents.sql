@@ -3,7 +3,7 @@ INSERT INTO ui.selector_trees(id, "label", default_module_id, enabled, visible) 
 
 INSERT INTO ui.selector_tree_nodes(id, selector_tree_id, "label", image, module_id, enabled, visible) VALUES
 (0201, 2, 'LBL_MASTER', null, null, true, true),
-	(020101, 2, 'LBL_MUNICIPALITES', null, 6001, true, true),
+	(020101, 2, 'LBL_MUNICIPALITIES', null, 6001, true, true),
 	(020102, 2, 'LBL_REQUESTING_ENTITIES', null, 6002, true, true),
 (0202, 2, 'LBL_INCIDENTS', null, 6011, true, true);
 

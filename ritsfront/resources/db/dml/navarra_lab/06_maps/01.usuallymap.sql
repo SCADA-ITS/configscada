@@ -17,7 +17,7 @@ INSERT INTO ui.map_layers (id, base_layer, map_id, "name", description, "label",
 (99, NULL, 1, 'RADAR', 'RADAR', 'LBL_ELEMENT_TYPE_TRAFFIC_RADAR', NULL, true);
 
 INSERT INTO ui.map_incidents(id, incident_graphic_icon_id, incident_report_module_action_id, incident_wizard_module_action_id) VALUES
-(1, 1000, 100401, 101304);
+(1, 1000, 100401, 101303);
 
 --
 -- routes_config format:
@@ -77,9 +77,11 @@ INSERT INTO ui.map_layer_elements (id, layer_id, element_id, graphic_icon_id, "l
 (0060099, 99,'Element:99:6', 99,'RADF-60+230C', 43.2475295, -1.6712459, false, null, true, false, null, true );
 
 INSERT INTO ui.map_layer_element_zooms (map_layer_element_id, zoom_lower, zoom_upper, graphic_icon_id, latitude, longitude, horizontal_flip, rotate, tooltip, show_text, text_color) VALUES
-(0270002,  8, 20, 2,  43.2308, -1.6956659,  false, null, true, false, '#00000'),
-(0280002,  8, 20, 2,  43.2342, -1.6956659,  false, null, true, false, '#00000');
-                                                                 
+(0040002,  8, 20, 2,  43.3039305, -1.6908707,  false, null, true, false, '#00000'),
+(0050002,  8, 20, 2,  43.2439305, -1.6908707,  false, null, true, false, '#00000'),
+(0060002,  8, 20, 2,  43.3039305, -1.6956659,  false, null, true, false, '#00000'),
+(0070002,  8, 20, 2,  43.2439305, -1.6956659,  false, null, true, false, '#00000');
+
 INSERT INTO ui.map_commands
 (id, map_id, "position", "label", icon, "default", module_action_id, args, view_type_id, multiselect, show_text, item_required,  context) VALUES
 (0, 1, 0, 'LBL_CMD_ALARMS', 'mdi mdi-pencil', false, 100501, NULL, 2, true, NULL, true, true),

@@ -17,11 +17,18 @@ BEGIN
 			WHEN e.alias = ''HAZARD_ON_ROAD'' THEN ''Peligro en carretera''
 			WHEN e.alias = ''HAZARD_ON_ROAD_CAR_STOPPED'' THEN ''Coche detenido''
 			WHEN e.alias = ''HAZARD_ON_ROAD_CONSTRUCTION'' THEN ''Obras''
+			WHEN e.alias = ''HAZARD_ON_ROAD_ICE'' THEN ''Hielo en carretera''
 			WHEN e.alias = ''HAZARD_ON_ROAD_LANE_CLOSED'' THEN ''Carril cerrado''
 			WHEN e.alias = ''HAZARD_ON_ROAD_OBJECT'' THEN ''Objeto en carretera''
+			WHEN e.alias = ''HAZARD_ON_ROAD_POT_HOLE'' THEN ''Bache en carretera''
 			WHEN e.alias = ''HAZARD_ON_ROADTRAFFIC_LIGHT_FAULT'' THEN ''Semáforo averíado''
 			WHEN e.alias = ''HAZARD_ON_SHOULDER_CAR_STOPPED'' THEN ''Coche en el arcén''
+			WHEN e.alias = ''HAZARD_WEATHER'' THEN ''Incidencia meteorológica''
+			WHEN e.alias = ''HAZARD_WEATHER_FLOOD'' THEN ''Inundación''
+			WHEN e.alias = ''HAZARD_WEATHER_FOG'' THEN ''Niebla''
+			WHEN e.alias = ''HAZARD_WEATHER_HEAVY_SNOW'' THEN ''Nieve''
 			WHEN e.alias = ''ROAD_CLOSED_EVENT'' THEN ''Carretera cortada''
+			ELSE ''Sin clasificación''
 		END AS subtipo, 
         e.description AS descripcion,
         TO_TIMESTAMP(pv.param_1::BIGINT / 1000) AS fecha_publicacion,

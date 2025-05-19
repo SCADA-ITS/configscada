@@ -133,7 +133,7 @@ class BackOfficeInitIncident {
             new ColumnValuePair("incident_type", incidentType),
             new ColumnValuePair("incident_sub_type", incidentSubType),
             new ColumnValuePair("level", level),
-            new ColumnValuePair("km_start", location),
+            new ColumnValuePair("location", location),
         );
 
         StringBuilder columns = new StringBuilder();

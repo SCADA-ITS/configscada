@@ -23,9 +23,9 @@ import java.util.List;
 class BackOfficeInitIncident {
 
 	org.apache.logging.log4j.Logger log
-	private static final String CONNECTION_URL = "jdbc:postgresql://192.168.88.160:5430/rits";
-	private static final String DB_USER = "rits";
-	private static final String DB_PASSWORD = "rits";
+	private static final String CONNECTION_URL = "jdbc:postgresql://10.253.4.23:5432/controltrafico";
+	private static final String DB_USER = "dbo_controltrafico";
+	private static final String DB_PASSWORD = "ha9t5h57Emh4h1";
 	private static final String DB_SCHEMA = "incidents";
 
 	 BackOfficeInitIncident(org.apache.logging.log4j.Logger log) {
@@ -133,7 +133,7 @@ class BackOfficeInitIncident {
             new ColumnValuePair("incident_type", incidentType),
             new ColumnValuePair("incident_sub_type", incidentSubType),
             new ColumnValuePair("level", level),
-            new ColumnValuePair("km_start", location),
+            new ColumnValuePair("location", location),
         );
 
         StringBuilder columns = new StringBuilder();

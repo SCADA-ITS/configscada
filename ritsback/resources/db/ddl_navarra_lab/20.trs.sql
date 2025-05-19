@@ -519,8 +519,8 @@ DROP TABLE IF EXISTS master.countries;
 	);
 	
 	CREATE INDEX idx_transit_type_state_transitions_transit_types ON static.transit_type_state_transitions USING btree (transit_type_id);
-	CREATE INDEX idx_transit_type_state_transitions_transit_states_1 ON static.transit_state_transitions USING btree (parent_transit_state_id);
-	CREATE INDEX idx_transit_type_state_transitions_transit_states_2 ON static.transit_state_transitions USING btree (child_transit_state_id);
+	CREATE INDEX idx_transit_type_state_transitions_transit_states_1 ON static.transit_type_state_transitions USING btree (parent_transit_state_id);
+	CREATE INDEX idx_transit_type_state_transitions_transit_states_2 ON static.transit_type_state_transitions USING btree (child_transit_state_id);
 	
 	ALTER TABLE static.transit_type_state_transitions ADD CONSTRAINT fk_transit_type_state_transitions_transit_types FOREIGN KEY (transit_type_id) REFERENCES static.transit_types(transit_type_id);
 	ALTER TABLE static.transit_type_state_transitions ADD CONSTRAINT fk_transit_type_state_transitions_transit_states_1 FOREIGN KEY (parent_transit_state_id) REFERENCES master.transit_states(transit_state_id);
@@ -764,7 +764,7 @@ DROP TABLE IF EXISTS master.countries;
 		driver_id int8 NOT NULL,
 		license_type_id int8 NOT NULL,
 		license_value varchar(200) NULL,
-		license_issue_data timestamptz NULL,
+		license_issue_date timestamptz NULL,
 		license_expire_date timestamptz NULL,
 		name varchar(100) NOT NULL,
 		surname varchar(300) NULL,

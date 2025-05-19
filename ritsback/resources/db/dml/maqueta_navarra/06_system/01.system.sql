@@ -44,5 +44,5 @@ INSERT INTO conf.system_param_values
 -- URL de conexión al smart road info
 (18, 'http://192.168.88.161:8702/api', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 -- Path para servidor de ficheros
-(19, '/home/admin/radar', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(19, '/home/admin/frontrits/resources/trs', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 

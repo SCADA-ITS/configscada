@@ -15,6 +15,7 @@ INSERT INTO conf.io_controller_module_values
 (4, 1, 3, 'ElementTypeParam:2:1:4003', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (4, 1, 4, 'ElementTypeParam:2:1:4004', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (4, 1, 5, 'ElementTypeParam:2:1:4005', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(4, 1, 6, '0x10 0x02 0x03', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (4, 1, 7, '0 * * ? * * *', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (4, 1, 8, '1048576', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), -- 1024 * 1024  1 mb
 (4, 1, 9, '120000', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
