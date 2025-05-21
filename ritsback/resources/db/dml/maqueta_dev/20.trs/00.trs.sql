@@ -109,13 +109,47 @@ INSERT INTO master.transit_states (transit_state_id,transit_state_code,alias,des
 
 -- static.transit_types
 INSERT INTO static.transit_types (transit_type_id,alias,description,label_alias,label_description,enabled,visible,created_at,updated_at) VALUES
-	 (1,'Generic Transit','Generic Transit','LBL_TRANSIT_GENERIC','LBL_TRANSIT_GENERIC_DESC',true,true,'2025-01-31 11:24:43.315+01','2025-01-31 11:24:49.967+01'),
-	 (2,'LPR','LPR','LBL_TRANSIT_LPR','LBL_TRANSIT_LPR_DESC',true,true,'2025-01-31 11:24:43.315+01','2025-01-31 11:24:49.967+01');
+	 (1,'Generic Transit','Generic Transit','LBL_TRANSIT_GENERIC','LBL_TRANSIT_GENERIC_DESC',true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+	 (2,'LPR','LPR','LBL_TRANSIT_LPR','LBL_TRANSIT_LPR_DESC',true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+	 (3,'ZBE','ZBE','LBL_TRANSIT_ZBE','LBL_TRANSIT_LPR_DESC',true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
+
 	 
 -- static.transit_type_params
 INSERT INTO static.transit_type_params (transit_type_id, transit_type_param_id, data_type_id, transit_type_param_group_id, alias, description, label_alias, label_description, enabled, visible, created_at, updated_at) VALUES
 	(1, 1, 2, null, 'Transit type Param 1', 'Transit type Param 1', 'LBL_TRANSIT_PARAM_1', 'LBL_TRANSIT_PARAM_DESC', true, true, '2025-01-31 11:24:43.315+01', '2025-01-31 11:24:43.315+01');
-	
+
+-- LPRR transit type params
+INSERT INTO static.transit_type_params (transit_type_id, transit_type_param_id, data_type_id, transit_type_param_group_id, alias, description, label_alias, label_description, enabled, visible, created_at, updated_at) VALUES
+	(2, 1, 2, null, 'nationality', 'Nacionalidad', 'LBL_NATIONALITY', 'LBL_DESC_NATIONALITY', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	(2, 2, 2, null, 'public_service_vehicle', 'Vehículo de servicio público', 'LBL_PUBLIC_SERVICE_VEHICLE', 'LBL_DESC_PUBLIC_SERVICE_VEHICLE', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	(2, 3, 2, null, 'hazardous_goods', 'Transporte de mercancías peligrosas', 'LBL_HAZARDOUS_GOODS', 'LBL_DESC_HAZARDOUS_GOODS', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+-- ZBE transit type params
+INSERT INTO static.transit_type_params (transit_type_id, transit_type_param_id, data_type_id, transit_type_param_group_id, alias, description, label_alias, label_description, enabled, visible, created_at, updated_at) VALUES
+	(3, 1, 2, null, 'nationality', 'Nacionalidad', 'LBL_NATIONALITY', 'LBL_DESC_NATIONALITY', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	(3, 2, 2, null, 'public_service_vehicle', 'Vehículo de servicio público', 'LBL_PUBLIC_SERVICE_VEHICLE', 'LBL_DESC_PUBLIC_SERVICE_VEHICLE', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	(3, 3, 2, null, 'hazardous_goods', 'Transporte de mercancías peligrosas', 'LBL_HAZARDOUS_GOODS', 'LBL_DESC_HAZARDOUS_GOODS', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	(3, 4, 2, null, 'adr_code', 'Código ADR', 'LBL_ADR_CODE', 'LBL_DESC_ADR_CODE', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	(3, 5, 2, null, 'imo_code', 'Código IMO', 'LBL_IMO_CODE', 'LBL_DESC_IMO_CODE', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	(3, 6, 2, null, 'tag_obe', 'Identificador tag OBE', 'LBL_TAG_OBE', 'LBL_DESC_TAG_OBE', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	(3, 7, 2, null, 'trailer_plate', 'Matrícula del remolque', 'LBL_TRAILER_PLATE', 'LBL_DESC_TRAILER_PLATE', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	(3, 8, 1, null, 'speed_kmh', 'Velocidad en km/h', 'LBL_SPEED_KMH', 'LBL_DESC_SPEED_KMH', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	(3, 9, 1, null, 'front_vehicle_distance', 'Distancia vehículo delante', 'LBL_FRONT_VEHICLE_DISTANCE', 'LBL_DESC_FRONT_VEHICLE_DISTANCE', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	(3, 10, 2, null, 'vehicle_class', 'Clase del vehículo', 'LBL_VEHICLE_CLASS', 'LBL_DESC_VEHICLE_CLASS', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	(3, 11, 2, null, 'vehicle_type', 'Tipo de vehículo', 'LBL_VEHICLE_TYPE', 'LBL_DESC_VEHICLE_TYPE', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	(3, 12, 1, null, 'vehicle_weight', 'Peso del vehículo (kg)', 'LBL_VEHICLE_WEIGHT', 'LBL_DESC_VEHICLE_WEIGHT', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	(3, 13, 1, null, 'axle_weight_1', 'Peso del eje 1 (kg)', 'LBL_AXLE_WEIGHT_1', 'LBL_DESC_AXLE_WEIGHT_1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	(3, 14, 1, null, 'axle_weight_2', 'Peso del eje 2 (kg)', 'LBL_AXLE_WEIGHT_2', 'LBL_DESC_AXLE_WEIGHT_2', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	(3, 15, 1, null, 'vehicle_length', 'Longitud del vehículo (mm)', 'LBL_VEHICLE_LENGTH', 'LBL_DESC_VEHICLE_LENGTH', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	(3, 16, 1, null, 'vehicle_height', 'Altura del vehículo (mm)', 'LBL_VEHICLE_HEIGHT', 'LBL_DESC_VEHICLE_HEIGHT', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	(3, 17, 1, null, 'vehicle_width', 'Anchura del vehículo (mm)', 'LBL_VEHICLE_WIDTH', 'LBL_DESC_VEHICLE_WIDTH', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	(3, 18, 2, null, 'vehicle_brand', 'Marca del vehículo', 'LBL_VEHICLE_BRAND', 'LBL_DESC_VEHICLE_BRAND', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	(3, 19, 2, null, 'vehicle_model', 'Modelo del vehículo', 'LBL_VEHICLE_MODEL', 'LBL_DESC_VEHICLE_MODEL', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	(3, 20, 2, null, 'vehicle_color', 'Color del vehículo', 'LBL_VEHICLE_COLOR', 'LBL_DESC_VEHICLE_COLOR', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	(3, 21, 2, null, 'eco_label', 'Etiqueta medioambiental', 'LBL_ECO_LABEL', 'LBL_DESC_ECO_LABEL', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	(3, 22, 1, null, 'ocr_score', 'Porcentaje de lectura OCR (Score)', 'LBL_OCR_SCORE', 'LBL_DESC_OCR_SCORE', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	(3, 23, 2, null, 'coordinates', 'Coordenadas (ymin, ymax)', 'LBL_COORDINATES', 'LBL_DESC_COORDINATES', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
 -- static.transit_type_state_transitions
 INSERT INTO static.transit_type_state_transitions (transit_type_id,parent_transit_state_id,child_transit_state_id, auto, groovy_file, enabled,visible,created_at,updated_at) VALUES
 	 (1,1,2,false,null,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
@@ -145,9 +179,10 @@ INSERT INTO static.infraction_types (infraction_type_id,infraction_code,infracti
 	 (1,'0001','0001','Infraction type I','Infraction type I','LBL_INFRACTION_TYPE_1','LBL_INFRACTION_TYPE_1_DESC',true,true,'2025-03-12 10:37:18.887+01','2025-03-12 10:37:18.887+01');
 
 INSERT INTO conf.element_transit_types (element_type_id, element_id, transit_type_id, infraction_manager_id, enabled, visible, created_at, updated_at) VALUES
-	(2, 1, 1, null, true, true, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 	(99, 1, 1, null, true, true, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
-	(2, 1, 2, null, true, true, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
+	(2, 1, 2, null, true, true, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+	(2, 1, 3, null, true, true, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
+
 
 DO $$
 BEGIN
