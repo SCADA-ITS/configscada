@@ -161,7 +161,6 @@ item;alias;description;sessionuid;road;stretchs;pk;sentido;on_change_measure
 160;INT-Q3-CGBT-DP3;INT-Q3-CGBT-DP3;INT-Q3-CGBT-DP3;Autovía A-4;LT3;;;ChangeMeasureHistorical.groovy
 161;INT-Q6-CGBT-DP3;INT-Q6-CGBT-DP3;INT-Q6-CGBT-DP3;Autovía A-4;LT3;;;ChangeMeasureHistorical.groovy
 162;INT-K02-GRU-CGBT-DP3;INT-K02-GRU-CGBT-DP3;INT-K02-GRU-CGBT-DP3;Autovía A-4;LT3;;;ChangeMeasureHistorical.groovy
-163;INT-F1-GRU-CGBT-DP3;INT-F1-GRU-CGBT-DP3;INT-F1-GRU-CGBT-DP3;Autovía A-4;LT3;;;ChangeMeasureHistorical.groovy
 164;INT-F6-CGBT-DP3;INT-F6-CGBT-DP3;INT-F6-CGBT-DP3;Autovía A-4;LT3;;;ChangeMeasureHistorical.groovy
 165;INT-Q27-ILU-NOR-4;INT-Q27-ILU-NOR-4;INT-Q27-ILU-NOR-4;Autovía A-4;LT4;;;ChangeMeasureHistorical.groovy
 166;INT-K02-ILU-NOR-4;INT-K02-ILU-NOR-4;INT-K02-ILU-NOR-4;Autovía A-4;LT4;;;ChangeMeasureHistorical.groovy
@@ -264,7 +263,6 @@ item;alias;description;sessionuid;road;stretchs;pk;sentido;on_change_measure
 264;INT-CREP-DER-1-ILU-NOR-1;INT-CREP-DER-1-ILU-NOR-1;INT-CREP-DER-1-ILU-NOR-1;Autovía A-4;LT1;;;ChangeMeasureHistorical.groovy
 265;INT-CREP-DER-2-ILU-NOR-1;INT-CREP-DER-2-ILU-NOR-1;INT-CREP-DER-2-ILU-NOR-1;Autovía A-4;LT1;;;ChangeMeasureHistorical.groovy
 266;INT-CREP-DER-3-ILU-NOR-1;INT-CREP-DER-3-ILU-NOR-1;INT-CREP-DER-3-ILU-NOR-1;Autovía A-4;LT1;;;ChangeMeasureHistorical.groovy
-267;INT-EXT-ENT-ILU-NOR-1;INT-EXT-ENT-ILU-NOR-1;INT-EXT-ENT-ILU-NOR-1;Autovía A-4;LT1;;;ChangeMeasureHistorical.groovy
 268;INT-EXT-SAL-ILU-NOR-1;INT-EXT-SAL-ILU-NOR-1;INT-EXT-SAL-ILU-NOR-1;Autovía A-4;LT1;;;ChangeMeasureHistorical.groovy
 269;INT-Q1-ILU-SUR-1;INT-Q1-ILU-SUR-1;INT-Q1-ILU-SUR-1;Autovía A-4;LT1;;;ChangeMeasureHistorical.groovy
 270;INT-K01-ILU-SUR-1;INT-K01-ILU-SUR-1;INT-K01-ILU-SUR-1;Autovía A-4;LT1;;;ChangeMeasureHistorical.groovy
@@ -279,7 +277,6 @@ item;alias;description;sessionuid;road;stretchs;pk;sentido;on_change_measure
 279;INT-NUB-DER-1-ILU-SUR-1;INT-NUB-DER-1-ILU-SUR-1;INT-NUB-DER-1-ILU-SUR-1;Autovía A-4;LT1;;;ChangeMeasureHistorical.groovy
 280;INT-CREP-DER-1-ILU-SUR-1;INT-CREP-DER-1-ILU-SUR-1;INT-CREP-DER-1-ILU-SUR-1;Autovía A-4;LT1;;;ChangeMeasureHistorical.groovy
 281;INT-EXT-ENT-ILU-SUR-1;INT-EXT-ENT-ILU-SUR-1;INT-EXT-ENT-ILU-SUR-1;Autovía A-4;LT1;;;ChangeMeasureHistorical.groovy
-282;INT-EXT-SAL-ILU-SUR-1;INT-EXT-SAL-ILU-SUR-1;INT-EXT-SAL-ILU-SUR-1;Autovía A-4;LT1;;;ChangeMeasureHistorical.groovy
 283;INT-L2-1-CGMT;INT-L2-1-CGMT;INT-L2-1-CGMT;Autovía A-4;LT2;;;ChangeMeasureHistorical.groovy
 284;INT-L2-2-CGMT;INT-L2-2-CGMT;INT-L2-2-CGMT;Autovía A-4;LT2;;;ChangeMeasureHistorical.groovy
 285;SEC-L2-2-CGMT;SEC-L2-2-CGMT;SEC-L2-2-CGMT;Autovía A-4;LT2;;;ChangeMeasureHistorical.groovy
