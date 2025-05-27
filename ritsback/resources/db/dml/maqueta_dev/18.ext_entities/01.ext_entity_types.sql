@@ -218,7 +218,16 @@ true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 					 {"extEntitySubtypeId": "ExtEntitySubtype:3036", "value": "12520"},
 					 {"extEntitySubtypeId": "ExtEntitySubtype:3037", "value": "18010"}
 		]
-	}  
+	},
+	"incidentReportMappings": [{
+		"extEntitySubtypeId": "ExtEntitySubtype:3001",
+		"imsIncidentTypeId": "ImsIncidentType:30",
+		"confirm": true
+	}, {
+		"extEntitySubtypeId": "ExtEntitySubtype:3014",
+		"imsIncidentTypeId": "ImsIncidentType:27",
+		"confirm": false
+	}]
 }',
 true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
