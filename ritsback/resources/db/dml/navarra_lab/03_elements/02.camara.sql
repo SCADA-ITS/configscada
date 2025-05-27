@@ -177,8 +177,8 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 (2, 3, 1, 28, NULL, 'https://descontroltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=Talluntxe', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 4001, 1, 28, NULL, '10.191.80.23', true, true, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), 
 (2, 4002, 1, 28, NULL, '3051', true, true, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), 
-(2, 4003, 1, 28, NULL, '0x02 0x64 0x00 0x03', true, true, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), 
-(2, 4004, 1, 28, NULL, '0x02 0x64 0xFF 0x03', true, true, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), 
+(2, 4003, 1, 28, NULL, '0x02 0x01 0x00 0x03', true, true, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), 
+(2, 4004, 1, 28, NULL, '0x02 0x01 0xFF 0x03', true, true, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), 
 (2, 4005, 1, 28, NULL, '0x01', true, true, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), 
 (2, 4006, 1, 28, NULL, 'keystore2.jks', true, true, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), 
 (2, 4007, 1, 28, NULL, 'k/7x4pJrPbHAr7opLlK7Mg==', true, true, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);

@@ -16,11 +16,19 @@ INSERT INTO conf.elements (element_type_id, element_subtype_id, element_id, loca
 (2, NULL, 13, 0130002, NULL, NULL, 'Belagua', 'Belagua', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, NULL, 14, 0140002, NULL, NULL, 'Tudela', 'Tudela', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, NULL, 15, 0150002, NULL, NULL, 'Arre', 'Arre', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(2, NULL, 16, 0160002, NULL, NULL, 'Ezkaba', 'Ezkaba', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, NULL, 16, 0160002, NULL, NULL, 'Ezkaba túnel Francia', 'Ezkaba túnel Francia', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, NULL, 17, 0170002, NULL, NULL, 'Tunel_de_Belate', 'Túnel de Belate', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, NULL, 18, 0180002, NULL, NULL, 'Tunel_de_Yesa', 'Túnel de Yesa', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, NULL, 19, 0190002, NULL, NULL, 'Tunel_del_Perdon', 'Túnel del Perdón', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(2, NULL, 20, 0200002, NULL, NULL, 'Endarlatza', 'Endarlatza', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(2, NULL, 20, 0200002, NULL, NULL, 'Endarlatza 1', 'Endarlatza 1', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, NULL, 21, 0210002, NULL, NULL, 'Almandoz Norte', 'Almandoz Norte', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, NULL, 22, 0220002, NULL, NULL, 'N-121-A PK26', 'N-121-A PK26', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, NULL, 23, 0230002, NULL, NULL, 'Bera Tunel Sur 1', 'Bera Tunel Sur 1', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, NULL, 24, 0240002, NULL, NULL, 'Bera Tunel Sur 2', 'Bera Tunel Sur 2', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, NULL, 25, 0250002, NULL, NULL, 'Bera Tunel Norte 1', 'Bera Tunel Norte 1', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, NULL, 26, 0260002, NULL, NULL, 'Bera Tunel Norte 2', 'Bera Tunel Norte 2', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, NULL, 27, 0270002, NULL, NULL, 'Endarlatza 2', 'Endarlatza 2', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, NULL, 28, 0280002, NULL, NULL, 'Talluntxe LPR ', 'Talluntxe LPR ', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_type_id, element_id, element_value_state_id, value, enabled, visible, created_at, updated_at) VALUES
 (2, 1, 1, 1, NULL, 'Hikvision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -64,8 +72,8 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 (2, 1003, 1, 8, NULL, 'Lekunberri', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (2, 1, 1, 9, NULL, 'Hikvision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(2, 2, 1, 9, NULL, 'DS-2CD3047G2-LS_SNAP', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(2, 3, 1, 9, NULL, 'http://administracionelectronica.navarra.es/AccesoFicheros/DownloadFile.aspx?CodigoCompleto=camarascarreteras@@@ARETA_PA_30_5_700.JPG', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 2, 1, 9, NULL, 'DS-2CD3047G2-LS', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 3, 1, 9, NULL, 'https://controltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=Areta', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 1003, 1, 9, NULL, 'Areta', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (2, 1, 1, 10, NULL, 'Hikvision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -126,8 +134,54 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 
 (2, 1, 1, 20, NULL, 'Axis', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 2, 1, 20, NULL, 'P1375-E', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(2, 3, 1, 20, NULL, 'https://controltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=Endarlatza', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(2, 1003, 1, 20, NULL, 'Endarlatza', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(2, 3, 1, 20, NULL, 'https://controltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=Endarlatza1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 1003, 1, 20, NULL, 'Endarlatza', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(2, 1, 1, 21, NULL, 'Axis', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 2, 1, 21, NULL, 'P1375-E', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 3, 1, 21, NULL, 'https://controltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=AlmandozNorte', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 1003, 1, 21, NULL, 'Almandoz Norte', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+
+(2, 1, 1, 22, NULL, 'Axis', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 2, 1, 22, NULL, 'P1375-E', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 3, 1, 22, NULL, 'https://controltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=N121pk26', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 1003, 1, 22, NULL, 'N-121-A PK26', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+
+(2, 1, 1, 23, NULL, 'Axis', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 2, 1, 23, NULL, 'P1375-E', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 3, 1, 23, NULL, 'https://controltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=BeraTunelSur1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 1003, 1, 23, NULL, 'Bera Tunel Sur 1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+
+(2, 1, 1, 24, NULL, 'Axis', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 2, 1, 24, NULL, 'P1375-E', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 3, 1, 24, NULL, 'https://controltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=BeraTunelSur2', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 1003, 1, 24, NULL, 'Bera Tunel Sur 2', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+
+(2, 1, 1, 25, NULL, 'Axis', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 2, 1, 25, NULL, 'P1375-E', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 3, 1, 25, NULL, 'https://controltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=BeraTunelNorte1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 1003, 1, 25, NULL, 'Bera Tunel Norte 1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+
+(2, 1, 1, 26, NULL, 'Axis', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 2, 1, 26, NULL, 'P1375-E', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 3, 1, 26, NULL, 'https://controltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=BeraTunelNorte2', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 1003, 1, 26, NULL, 'Bera Tunel Norte 2', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+
+(2, 1, 1, 27, NULL, 'Axis', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 2, 1, 27, NULL, 'P1375-E', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 3, 1, 27, NULL, 'https://controltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=Endarlatza2', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 1003, 1, 27, NULL, 'Endarlatza 2', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+
+(2, 1, 1, 28, NULL, 'LectorVision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 2, 1, 28, NULL, 'P1375-E', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 3, 1, 28, NULL, 'https://controltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=Talluntxe', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 4001, 1, 28, NULL, '10.191.80.23', true, true, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), 
+(2, 4002, 1, 28, NULL, '3051', true, true, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), 
+(2, 4003, 1, 28, NULL, '0x02 0x01 0x00 0x03', true, true, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), 
+(2, 4004, 1, 28, NULL, '0x02 0x01 0xFF 0x03', true, true, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), 
+(2, 4005, 1, 28, NULL, '0x01', true, true, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), 
+(2, 4006, 1, 28, NULL, 'keystore2.jks', true, true, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), 
+(2, 4007, 1, 28, NULL, 'k/7x4pJrPbHAr7opLlK7Mg==', true, true, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
 
 INSERT INTO conf.element_io_controller_modules (element_type_id, element_id, module_type_id, module_id, enabled, visible, created_at, updated_at) VALUES
 (2, 1, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -149,4 +203,12 @@ INSERT INTO conf.element_io_controller_modules (element_type_id, element_id, mod
 (2, 17, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 18, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 19, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(2, 20, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(2, 20, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 21, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 22, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 23, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 24, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 25, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 26, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 27, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 28, 4, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

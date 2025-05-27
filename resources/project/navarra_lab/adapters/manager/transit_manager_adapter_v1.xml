@@ -9,18 +9,16 @@
 			<p:enabled>true</p:enabled>
 			<p:entity>SendTransitsCommand</p:entity>
 		</p:subscriptor>
-
 	</p:subscriptors>
 	<p:executors>
 		<p:executor>
 	      <p:id>1</p:id>
 	      <p:enabled>true</p:enabled>
-	      <p:merge_wait_time>1</p:merge_wait_time>
-	      <p:manager_class>com.revenga.rits.back.transit.manager.transit.recovery.une199141.TransitRecoveryUne199141Executor</p:manager_class>
-	      <p:executor_params>
-	        <p:executor_param_value>cron_job=recoveryUne199141;0 * * * * ?;C1</p:executor_param_value>
-	        <p:executor_param_value>elementType=2</p:executor_param_value>
-	      </p:executor_params>
-	    </p:executor>
+        <p:manager_class>com.revenga.rits.back.transit.manager.transit.recovery.une199142.TransitRecoveryUne199142Executor</p:manager_class>
+			  <p:executor_params>
+				  <p:executor_param_value>cron_job=TransitRecoveryJob;recoveryUne199142;0 * * * * ?;C1</p:executor_param_value>
+				  <p:executor_param_value>elementType=2</p:executor_param_value>
+			  </p:executor_params>
+    </p:executor>
 	</p:executors>
 </p:manager_adapter_v1>

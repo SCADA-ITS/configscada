@@ -1,7 +1,6 @@
 -- Elementos SCADA
 INSERT INTO ui.graphic_icons (id, "name", description, alarms, measures, js_draw_file, width, height, svg_pattern_var, svg_file, js_custom_type_render) VALUES
 (2, 'CAM', 'CAM', false, true, 'component/graphicIcon/graphicIconCustom.js', 45, 45, null, 'img/graphic_icon/map_icon.svg', 'component/graphicIcon/custom/map_icon.js'),
-(71, 'PMV', 'PMV', false, true, 'component/graphicIcon/graphicIconCustom.js', 100, 80, null, 'img/graphic_icon/71_vms_incident.svg', 'component/graphicIcon/custom/vms.js'),
 (99, 'RADAR', 'RADAR', false, true, 'component/graphicIcon/graphicIconCustom.js', 45, 45, null, 'img/graphic_icon/map_icon.svg', 'component/graphicIcon/custom/map_icon.js');
 
 -- Entidades externas

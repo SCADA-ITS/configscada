@@ -17,7 +17,7 @@ INSERT INTO ui.map_layers (id, base_layer, map_id, "name", description, "label",
 (99, NULL, 1, 'RADAR', 'RADAR', 'LBL_ELEMENT_TYPE_TRAFFIC_RADAR', NULL, true);
 
 INSERT INTO ui.map_incidents(id, incident_graphic_icon_id, incident_report_module_action_id, incident_wizard_module_action_id) VALUES
-(1, 1000, 100401, 101304);
+(1, 1000, 100401, 101303);
 
 --
 -- routes_config format:
@@ -55,11 +55,19 @@ INSERT INTO ui.map_layer_elements (id, layer_id, element_id, graphic_icon_id, "l
 (0130002, 2,'Element:2:13', 2,'Belagua', 42.95755607, -0.800989197,  false, null, true, false, null, true ),
 (0140002, 2,'Element:2:14', 2,'Tudela', 42.04560299, -1.618388954,  false, null, true, false, null, true ),
 (0150002, 2,'Element:2:15', 2,'Arre', 42.84479838, -1.623058612,  false, null, true, false, null, true ),
-(0160002, 2,'Element:2:16', 2,'Ezcaba', 42.83412497, -1.617397489,  false, null, true, false, null, true ),
+(0160002, 2,'Element:2:16', 2,'Ezkaba túnel Francia', 42.83412497, -1.617397489,  false, null, true, false, null, true ),
 (0170002, 2,'Element:2:17', 2,'Túnel de Belate', 43.05401035, -1.614583662,  false, null, true, false, null, true ),
 (0180002, 2,'Element:2:18', 2,'Túnel de Yesa', 42.62254724, -1.195976004,  false, null, true, false, null, true ),
 (0190002, 2,'Element:2:19', 2,'Túnel del Perdón', 42.7330244, -1.754499646,  false, null, true, false, null, true ),
-(0200002, 2,'Element:2:20', 2,'Endarlatza', 43.2792225, -1.711128641,  false, null, true, false, null, true ),
+(0200002, 2,'Element:2:20', 2,'Endarlatza 1', 43.2792225, -1.711128641,  false, null, true, false, null, true ),
+(0210002, 2,'Element:2:21', 2,'Almandoz Norte', 43.0800550, -1.6087037,  false, null, true, false, null, true ),
+(0220002, 2,'Element:2:22', 2,'N-121-A PK26', 43.0191539, -1.6347815,  false, null, true, false, null, true ),
+(0230002, 2,'Element:2:23', 2,'Bera Tunel Sur 1', 43.2739305, -1.6908707,  false, null, true, false, null, true ),
+(0240002, 2,'Element:2:24', 2,'Bera Tunel Sur 2', 43.2739305, -1.6908707,  false, null, true, false, null, true ),
+(0250002, 2,'Element:2:25', 2,'Bera Tunel Norte 1', 43.2757475, -1.6956659,  false, null, true, false, null, true ),
+(0260002, 2,'Element:2:26', 2,'Bera Tunel Norte 2', 43.2757475, -1.6956659,  false, null, true, false, null, true ),
+(0270002, 2,'Element:2:27', 2,'Endarlatza 2', 43.2792225, -1.711128641,  false, null, true, false, null, true ),
+(0280002, 2,'Element:2:28', 2,'Talluntxe LPR ', 42.7755542, -1.6315534,  false, null, true, false, null, true ),
 
 (0010099, 99,'Element:99:1', 99,'RADF-127+670D',43.01762766,-1.90737257, false, null, true, false, null, true ),
 (0020099, 99,'Element:99:2', 99,'RADF-91+358D', 42.07934146,-1.79528762, false, null, true, false, null, true ),
@@ -67,7 +75,13 @@ INSERT INTO ui.map_layer_elements (id, layer_id, element_id, graphic_icon_id, "l
 (0040099, 99,'Element:99:4', 99,'RADF-401+561C',42.9161053, -2.1916473, false, null, true, false, null, true ),
 (0050099, 99,'Element:99:5', 99,'RADF-25+900D', 43.0113198, -1.6367476, false, null, true, false, null, true ),
 (0060099, 99,'Element:99:6', 99,'RADF-60+230C', 43.2475295, -1.6712459, false, null, true, false, null, true );
-                                                                 
+
+INSERT INTO ui.map_layer_element_zooms (map_layer_element_id, zoom_lower, zoom_upper, graphic_icon_id, latitude, longitude, horizontal_flip, rotate, tooltip, show_text, text_color) VALUES
+(0040002,  8, 20, 2,  43.3039305, -1.6908707,  false, null, true, false, '#00000'),
+(0050002,  8, 20, 2,  43.2439305, -1.6908707,  false, null, true, false, '#00000'),
+(0060002,  8, 20, 2,  43.3039305, -1.6956659,  false, null, true, false, '#00000'),
+(0070002,  8, 20, 2,  43.2439305, -1.6956659,  false, null, true, false, '#00000');
+
 INSERT INTO ui.map_commands
 (id, map_id, "position", "label", icon, "default", module_action_id, args, view_type_id, multiselect, show_text, item_required,  context) VALUES
 (0, 1, 0, 'LBL_CMD_ALARMS', 'mdi mdi-pencil', false, 100501, NULL, 2, true, NULL, true, true),

@@ -132,7 +132,7 @@ true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 								{"field": "reportByMunicipalityUser", "extEntityTypeParamId": "ExtEntityTypeParam:7:9"}
 							],
 	"extEntityFieldsMapping": [ {"srcField": "uuid", "dstField": "uid"},
-								{"srcField": "subtype", "dstField": "alias"},
+								{"srcField": "street", "dstField": "alias"},
 								{"srcField": "reportDescription", "dstField": "description"}
 							],
 	"extEntitySubtypes": {

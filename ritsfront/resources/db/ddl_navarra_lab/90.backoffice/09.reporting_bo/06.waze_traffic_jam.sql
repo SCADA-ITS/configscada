@@ -21,15 +21,17 @@ BEGIN
         	when e.ext_entity_subtype_id = 8006 then ''(5) Detenida''
         	ELSE e.status::varchar
         end as circulacion,
-        e.alias AS calle,
+        COALESCE(e.alias, ''-'') AS calle,
+		e.coordinates::json->0->>1 AS latitud,
+        e.coordinates::json->0->>0 AS longitud,
         pv.param_5 AS ciudad,
         pv.param_6 AS pais,
         TO_TIMESTAMP(pv.param_1::BIGINT / 1000) AS fecha_publicacion,
         pv.param_2 AS velocidad_km_h,
         pv.param_3 AS distancia_m,
         pv.param_4 AS retraso_s,
-        pv.param_7 AS comienzo,
-        pv.param_8 AS fin,
+        COALESCE(pv.param_7, ''-'') AS comienzo,
+        COALESCE(pv.param_8, ''-'') AS fin,
         CASE 
             WHEN e.status = ''CREATED'' THEN ''ACTIVA''
             WHEN e.status = ''DELETED'' THEN ''FINALIZADA''

@@ -20,6 +20,8 @@ BEGIN
             ELSE ''VARIOS''
         END AS categoria,
         e.alias AS tipo,
+		e.coordinates::json->0->>1 AS latitud,
+        e.coordinates::json->0->>0 AS longitud,
 		pv.param_5::timestamptz AT TIME ZONE ''Europe/Madrid'' AS fecha,
         pv.param_1 as localizacion,
         pv.param_2 as estado,

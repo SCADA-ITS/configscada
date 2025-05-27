@@ -518,13 +518,13 @@ DROP TABLE IF EXISTS master.countries;
 		CONSTRAINT pk_transit_type_state_transitions PRIMARY KEY (transit_type_id, parent_transit_state_id, child_transit_state_id)
 	);
 	
-	CREATE INDEX idx_transit_state_transitions_transit_types ON static.transit_state_transitions USING btree (transit_type_id);
-	CREATE INDEX idx_transit_state_transitions_transit_states_1 ON static.transit_state_transitions USING btree (parent_transit_state_id);
-	CREATE INDEX idx_transit_state_transitions_transit_states_2 ON static.transit_state_transitions USING btree (child_transit_state_id);
+	CREATE INDEX idx_transit_type_state_transitions_transit_types ON static.transit_type_state_transitions USING btree (transit_type_id);
+	CREATE INDEX idx_transit_type_state_transitions_transit_states_1 ON static.transit_type_state_transitions USING btree (parent_transit_state_id);
+	CREATE INDEX idx_transit_type_state_transitions_transit_states_2 ON static.transit_type_state_transitions USING btree (child_transit_state_id);
 	
-	ALTER TABLE static.transit_state_transitions ADD CONSTRAINT fk_transit_state_transitions_transit_types FOREIGN KEY (transit_type_id) REFERENCES static.transit_types(transit_type_id);
-	ALTER TABLE static.transit_state_transitions ADD CONSTRAINT fk_transit_state_transitions_transit_states_1 FOREIGN KEY (parent_transit_state_id) REFERENCES master.transit_states(transit_state_id);
-	ALTER TABLE static.transit_state_transitions ADD CONSTRAINT fk_transit_state_transitions_transit_states_2 FOREIGN KEY (child_transit_state_id) REFERENCES master.transit_states(transit_state_id);
+	ALTER TABLE static.transit_type_state_transitions ADD CONSTRAINT fk_transit_type_state_transitions_transit_types FOREIGN KEY (transit_type_id) REFERENCES static.transit_types(transit_type_id);
+	ALTER TABLE static.transit_type_state_transitions ADD CONSTRAINT fk_transit_type_state_transitions_transit_states_1 FOREIGN KEY (parent_transit_state_id) REFERENCES master.transit_states(transit_state_id);
+	ALTER TABLE static.transit_type_state_transitions ADD CONSTRAINT fk_transit_type_state_transitions_transit_states_2 FOREIGN KEY (child_transit_state_id) REFERENCES master.transit_states(transit_state_id);
 	
 	ALTER TABLE static.transit_type_state_transitions SET TABLESPACE tbs_controltrafico_static;
 

@@ -35,6 +35,8 @@ INSERT INTO conf.system_param_values
 	"mail.smtp.password": "oaxgloogmvmahsrf"
 }'
 , true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+-- Número máximo de alarmas sin reconocer permitidas
+(14, '100', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 -- Período de cálculo para los tiempos de recorrido
 (15, '5', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 -- Número máximo de sesiones simultáneas

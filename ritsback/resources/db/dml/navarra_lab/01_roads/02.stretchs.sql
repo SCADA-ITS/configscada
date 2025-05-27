@@ -17,9 +17,9 @@ INSERT INTO conf.stretchs (stretch_id, stretch_type_id, alias, description, pk_i
 (16,2,'AP-15','Ambos sentidos',1,1,0,7,3,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 (17,2,'AP-15','Creciente',2,112,0,7,1,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 (18,2,'AP-15','Decreciente',1,112,0,7,2,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
-(19,2,'AP-15','Ambos sentidos',1,4,0,7,3,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
-(20,2,'AP-15','Creciente',5,6,0,7,1,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
-(21,2,'AP-15','Decreciente',5,6,0,7,2,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+--(19,2,'AP-15','Ambos sentidos',1,4,0,7,3,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+--(20,2,'AP-15','Creciente',5,6,0,7,1,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+--(21,2,'AP-15','Decreciente',5,6,0,7,2,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 (22,2,'AP-68','Creciente',163,237,0,8,1,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 (23,2,'AP-68','Decreciente',163,237,0,8,2,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 (24,2,'N-111','Ambos sentidos',81,84,0,9,3,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
@@ -657,4 +657,7 @@ INSERT INTO conf.stretchs (stretch_id, stretch_type_id, alias, description, pk_i
 (656,2,'PA-35','Creciente',0,0,0,626,1,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 (657,2,'PA-35','Decreciente',0,0,0,626,2,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 (658,2,'PA-36','Ambos sentidos',0,0,0,627,3,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
+
+update conf.stretchs set pk_ini = '0';
+update conf.stretchs set pk_end = '0';
 

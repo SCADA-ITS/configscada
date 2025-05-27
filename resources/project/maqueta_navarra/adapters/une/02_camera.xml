@@ -9,6 +9,7 @@
         <response>
             <code>0xC1</code>
             <store_frame>true</store_frame>
+            <send_ack>true</send_ack>
         </response>
     </response_list>
 </generic_une_v1>

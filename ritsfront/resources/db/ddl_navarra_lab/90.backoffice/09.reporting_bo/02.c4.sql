@@ -15,6 +15,8 @@ BEGIN
         pv.param_11 AS categoria,
         e.alias AS tipo,
         e.description AS titulo,
+		e.coordinates::json->0->>1 AS latitud,
+        e.coordinates::json->0->>0 AS longitud,
         pv.param_6 AS afeccion,
         pv.param_2 AS carretera,
         pv.param_10 AS localizacion,

@@ -5,10 +5,6 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 ('ElementType:2', 68, 'camera.png'),
 ('ElementType:2', 71, '[2]'),
 
-('ElementType:72', 1, '2'),
-('ElementType:72', 2, 'graphic_icon/72_lpr.svg'),
-('ElementType:72', 14, 'grid/element_type_72.png'),
-
 ('ElementType:98', 72, 'true'),
 
 ('ElementType:99', 1, '99'),

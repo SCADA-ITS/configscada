@@ -1,4 +1,4 @@
-update 
+/*update 
 	master.io_controller_module_types 
 set 
 	enabled = false 
@@ -18,4 +18,4 @@ where
 		(select distinct
 			module_type_id
 		from
-			conf.io_controller_modules);
+			conf.io_controller_modules);*/

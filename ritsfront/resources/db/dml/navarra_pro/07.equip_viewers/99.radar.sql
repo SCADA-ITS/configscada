@@ -2,7 +2,7 @@ INSERT INTO ui.equip_viewers (id, name, description, "label", icon, show_info_ta
 ('ElementType:99', 'RADAR', 'RADAR', 'LBL_ELEMENT_TYPE_RADAR', NULL, true, false, false, 99, 300, 3, null, 2, 1, null, false, null, null);
 
 INSERT INTO ui.equip_viewer_tabs (id, equip_viewer_id, module_action_id, alias, description, "label", icon, "position", visible) VALUES
-(3, 'ElementType:99', 100501, 'Alarms module', 'Alarms module', 'LBL_ALARMS', NULL, 1, true);
+(010099, 'ElementType:99', 100501, 'Alarms module', 'Alarms module', 'LBL_ALARMS', NULL, 1, true);
 
 
 

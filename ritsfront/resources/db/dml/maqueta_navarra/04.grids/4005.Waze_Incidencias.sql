@@ -10,7 +10,9 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (064005, 4005, 1, 6, true, false, false, true, 'carretera', 'carretera', 'calle', false, false, null, false, false, 200, NULL, true, true, NULL, NULL, NULL, NULL),
 (074005, 4005, 1, 7, true, true, false, true, 'pais', 'pais', 'pais', false, false, null, false, false, 70, NULL, true, true, NULL, NULL, NULL, NULL),
 (084005, 4005, 1, 8, true, false, false, true, 'localidad', 'localidad', 'localidad', false, true, null, false, false, 170, NULL, true, true, NULL, NULL, NULL, NULL),
-(094005, 4005, 1, 9, true, true, false, true, 'estado', 'estado', 'estado', false, false, null, false, false, 120, NULL, true, true, NULL, NULL, NULL, NULL);
+(094005, 4005, 1, 9, true, true, false, true, 'estado', 'estado', 'estado', false, false, null, false, false, 120, NULL, true, true, NULL, NULL, NULL, NULL),
+(104005, 4005, 4, 10, true, false, true, true, 'latitud', 'latitud', 'latitud', false, false, null, false, false, 120, NULL, true, true, NULL, NULL, NULL, NULL),
+(114005, 4005, 4, 11, true, false, true, true, 'longitud', 'longitud', 'longitud', false, false, null, false, false, 120, NULL, true, true, NULL, NULL, NULL, NULL);
 
 INSERT INTO ui.grid_option_values(grid_id, grid_option_id, value) VALUES
 (4005, 1, 'true'),
@@ -44,6 +46,7 @@ INSERT INTO ui.grid_field_icons(grid_field_id, icon, value, show_value, badge_co
 (034005, './img/ext_entity_type/waze_weather_hazard.png', 'Incidencia meteorológica', false, false, false, true, 'LBL_EXT_ENTITY_SUBTYPE_HAZARD_WEATHER'),
 (034005, './img/ext_entity_type/waze_weather_hazard.png', 'Inundación', false, false, false, true, 'LBL_EXT_ENTITY_SUBTYPE_HAZARD_WEATHER'),
 (034005, './img/ext_entity_type/waze_weather_hazard.png', 'Niebla', false, false, false, true, 'LBL_EXT_ENTITY_SUBTYPE_HAZARD_WEATHER'),
-(034005, './img/ext_entity_type/waze_weather_hazard.png', 'Nieve', false, false, false, true, 'LBL_EXT_ENTITY_SUBTYPE_HAZARD_WEATHER');
+(034005, './img/ext_entity_type/waze_weather_hazard.png', 'Nieve', false, false, false, true, 'LBL_EXT_ENTITY_SUBTYPE_HAZARD_WEATHER'),
+(034005, './img/ext_entity_type/undefined.png', 'Sin clasificación', false, false, false, true, 'LBL_EXT_ENTITY_SUBTYPE_HAZARD_WEATHER');
 
 

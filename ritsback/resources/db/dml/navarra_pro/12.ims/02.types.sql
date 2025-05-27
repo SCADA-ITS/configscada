@@ -25,7 +25,7 @@ INSERT INTO conf.ims_incident_types (incident_type_id, ini_incident_state_id, in
 (110, 1, 1, 'VAR-003', 'Vehículos históricos',  1, 1, null, false, null, 'BackOfficeInitIncident.groovy', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 (201, 1, 2, 'ACT-001', 'Festejo popular',  1, 1, null, false, null, 'BackOfficeInitIncident.groovy', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(202, 1, 2, 'ACT-002', 'Tranumancia - Otros con animales',  1, 1, null, false, null, 'BackOfficeInitIncident.groovy', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(202, 1, 2, 'ACT-002', 'Transhumancia - Otros con animales',  1, 1, null, false, null, 'BackOfficeInitIncident.groovy', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 (301, 1, 3, 'ROD-001', 'Rodaje',  1, 1, null, false, null, 'BackOfficeInitIncident.groovy', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
