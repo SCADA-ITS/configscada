@@ -32,7 +32,7 @@ INSERT INTO ui.synoptic_layer_elements
 (90505700, 'Element:57:33', 000057, 'INT-NOC-IZQ-2-ILU-NOR-2', 549, 418, false, NULL, true, false, NULL, true),
 (90505700, 'Element:57:32', 000057, 'INT-NOC-IZQ-1-ILU-NOR-2', 394, 418, false, NULL, true, false, NULL, true),
 (90505700, 'Element:57:31', 000057, 'INT-CREP-IZQ-ILU-NOR-2', 239, 418, false, NULL, true, false, NULL, true),
-(90505700, 'Element:57:28', 000057, 'INT-Q27-ILU-NOR-2', 937, 254, false, NULL, true, false, NULL, true),
+(90505700, 'Element:57:28', 00005704, 'INT-Q27-ILU-NOR-2', 937, 254, false, NULL, true, false, NULL, true),
 (90505700, 'Element:57:30', 000057, 'INT-MANI-ILU-NOR-2', 83, 418, false, NULL, true, false, NULL, true),
 (90508400, 'Element:84:73', 00008401, 'EXT-ILU-NOR-2', 1783, 544, false, NULL, true, false, NULL, true),
 (90508400, 'Element:84:72', 00008401, 'REF-DER-3-ILU-NOR-2', 1628, 544, false, NULL, true, false, NULL, true),
