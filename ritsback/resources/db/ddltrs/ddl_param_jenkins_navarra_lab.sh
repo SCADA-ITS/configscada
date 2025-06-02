@@ -1,4 +1,4 @@
-c#!/bin/bash 
+#!/bin/bash 
 
 yourfilenames=`find . -name '*.sql' -print0 | sort -z | xargs -r0`
 
