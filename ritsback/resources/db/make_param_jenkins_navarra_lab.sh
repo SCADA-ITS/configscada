@@ -13,7 +13,7 @@ fi
 
 cd ..
 cd ddlrt_navarra_lab
-/bin/bash ./ddl_param_jenkins_navarra_lab.sh $psqlHost $psqlPort
+/bin/bash ./ddl_param_jenkins.sh $psqlHost $psqlPort
 if [ $? -ne 0 ]; then
     exit 1  # Sale del script con un código de salida diferente de 0
 fi
@@ -28,7 +28,7 @@ fi
     
 cd ..
 cd $project
-/bin/bash ./dml_param_jenkins_navarra_lab.sh $psqlHost $psqlPort
+/bin/bash ./dml_param_jenkins.sh $psqlHost $psqlPort
 if [ $? -ne 0 ]; then
     echo "Error ejecutando psql para $eachfile"
     exit 1  # Sale del script con un código de salida diferente de 0
