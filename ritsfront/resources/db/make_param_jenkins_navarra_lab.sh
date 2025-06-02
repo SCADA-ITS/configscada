@@ -24,12 +24,12 @@ fi
 cd ../..
 
 if [ "$#" -gt 3 ]; then
-	psql postgresql://rits:rits@$2:$3/rits -c "UPDATE ui.data_source_values SET value='http://$4:8082/graphql' WHERE data_source_param_id = 1;"
-	psql postgresql://rits:rits@$2:$3/rits -c "UPDATE ui.data_source_values SET value='ws://$4:61614' WHERE data_source_param_id = 5;"
-	psql postgresql://rits:rits@$2:$3/rits -c "UPDATE ui.data_source_values SET value='http://$4:8082/graphql' WHERE data_source_param_id = 8;"
+	psql postgresql://dbo_controltrafico:ha9t5h57Emh4h1@$1/controltrafico -c "UPDATE ui.data_source_values SET value='http://$4:8082/graphql' WHERE data_source_param_id = 1;"
+	psql postgresql://dbo_controltrafico:ha9t5h57Emh4h1@$1/controltrafico -c "UPDATE ui.data_source_values SET value='ws://$4:61614' WHERE data_source_param_id = 5;"
+	psql postgresql://dbo_controltrafico:ha9t5h57Emh4h1@$1/controltrafico -c "UPDATE ui.data_source_values SET value='http://$4:8082/graphql' WHERE data_source_param_id = 8;"
 else
-	psql postgresql://rits:rits@$2:$3/rits -c "UPDATE ui.data_source_values SET value='http://$2:8082/graphql' WHERE data_source_param_id = 1;"
-	psql postgresql://rits:rits@$2:$3/rits -c "UPDATE ui.data_source_values SET value='ws://$2:61614' WHERE data_source_param_id = 5;"
-	psql postgresql://rits:rits@$2:$3/rits -c "UPDATE ui.data_source_values SET value='http://$2:8082/graphql' WHERE data_source_param_id = 8;"
+	psql postgresql://dbo_controltrafico:ha9t5h57Emh4h1@$1/controltrafico -c "UPDATE ui.data_source_values SET value='http://$2:8082/graphql' WHERE data_source_param_id = 1;"
+	psql postgresql://dbo_controltrafico:ha9t5h57Emh4h1@$1/controltrafico -c "UPDATE ui.data_source_values SET value='ws://$2:61614' WHERE data_source_param_id = 5;"
+	psql postgresql://dbo_controltrafico:ha9t5h57Emh4h1@$1/controltrafico -c "UPDATE ui.data_source_values SET value='http://$2:8082/graphql' WHERE data_source_param_id = 8;"
 fi
 echo Done
