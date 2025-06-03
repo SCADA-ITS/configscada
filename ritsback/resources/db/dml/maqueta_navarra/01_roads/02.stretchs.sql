@@ -658,6 +658,6 @@ INSERT INTO conf.stretchs (stretch_id, stretch_type_id, alias, description, pk_i
 (657,2,'PA-35','Decreciente',0,0,0,626,2,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 (658,2,'PA-36','Ambos sentidos',0,0,0,627,3,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
 
-update conf.stretchs set pk_ini = '0';
-update conf.stretchs set pk_end = '0';
+--update conf.stretchs set pk_ini = '0';
+--update conf.stretchs set pk_end = '0';
 

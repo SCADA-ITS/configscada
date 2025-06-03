@@ -1,0 +1,14 @@
+-- 
+-- Table: conf.ims_incident_type_tasks
+--
+INSERT INTO conf.ims_incident_type_tasks (incident_type_task_id, incident_type_id, incident_state_id, task_type_id, alias, description, operation_description, mandatory, position, auto, on_change, rerun, road_impact_id, enabled, visible, created_at, updated_at) VALUES
+-- Para el incident_type_task_id sigo la siguiente convencion: <orden de la tarea dentro del estado><estado en el que está englobada la tarea><tipo de incidente>
+--ETAPA = AL SALTAR LA INCIDENCIA - ANTES DE CONFIRMAR - TAREAS GENERALES
+(01010401, 401, 1, 6, 'INFORMAR A ENTIDAD RESPONSABLE', 'Informar a C4', 'Llamar al teléfono 1111-111-11 para informar a C4 de que existe una incidencia', false, 1, false, null, true, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(02010401, 401, 1, 6, 'RECABAR INFORMACIÓN', 'Llamar a CMC/COTA para informarse', 'Realizar una llamada telefónica a CMC/COTA para recabar la información completa de lo ocurrido en el accidente', false, 2, false, null, true, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(03010401, 401, 1, 10, 'TELEGRAM HERIDOS/FALLECIDOS', 'Envio de información interna de heridos y fallecidos', 'Enviar mediante Telegram de manera interna la información de los heridos graves y los fallecidos', false, 3, false, 'SendToTelegramNotification', true, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(04010401, 401, 1, 8, 'CORREO HERIDOS/FALLECIDOS', 'Envio de información interna de heridos y fallecidos', 'Enviar mediante correo electrónico de manera interna la información de los heridos graves y los fallecidos', false, 4, false, 'SendMailTask', true, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(05010401, 401, 1, 6, 'SELECCIONAR AFECCIÓN', 'Indicar estado de la circulación', 'Seleccionar el estado de la circulación del tráfico indicándolo a través de la afección de la incidencia', false, 5, false, null, true, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(06010401, 401, 1, 10, 'TELEGRAM ESTADO CIRCULACIÓN', 'Envio de información interna del estado de circulación', 'Enviar mediante Telegram de manera interna la información del estado de la circulación', false, 6, false, 'SendToTelegramNotification', true, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(07010401, 401, 1, 8, 'CORREO ESTADO CIRCULACIÓN', 'Envio de información interna del estado de circulación', 'Enviar mediante correo electrónico de manera interna la información del estado de la circulación', false, 7, false, 'SendMailTask', true, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(08010401, 401, 1, 10, 'INFORMACIÓN AL CIUDADANO', 'Publicar Telegram del accidente', 'Publicar en el canal público del Gobierno de Navarra la información al ciudadano del estado del accidente', false, 8, false, 'SendToTelegramNotification', true, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

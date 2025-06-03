@@ -56,7 +56,7 @@ INSERT INTO conf.stretchs (stretch_id, stretch_type_id, alias, description, pk_i
 (55,2,'NA-129','Ambos sentidos',0,34,0,32,3,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 (56,2,'NA-1300','Ambos sentidos',0,30,0,33,3,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 (57,2,'NA-1310','Ambos sentidos',0,6,0,34,3,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
-(58,2,'NA-132','Ambos sentidos',0,1,0,35,3,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+(58,2,'NA-132','Ambos sentidos',0,74,0,35,3,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 (59,2,'NA-132-A','Ambos sentidos',0,74,0,36,3,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 (60,2,'NA-132-B','Ambos sentidos',0,27,0,37,3,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 (61,2,'NA-1320','Ambos sentidos',0,3,0,38,3,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
@@ -658,6 +658,6 @@ INSERT INTO conf.stretchs (stretch_id, stretch_type_id, alias, description, pk_i
 (657,2,'PA-35','Decreciente',0,0,0,626,2,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 (658,2,'PA-36','Ambos sentidos',0,0,0,627,3,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
 
-update conf.stretchs set pk_ini = '0';
-update conf.stretchs set pk_end = '0';
+--update conf.stretchs set pk_ini = '0';
+--update conf.stretchs set pk_end = '0';
 

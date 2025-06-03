@@ -31,12 +31,12 @@ BEGIN
 	VALUES
 		(1, 'c4_all_ext_entities_with_values', 'LBL_EXT_ENTITY_C4', 'LBL_EXT_ENTITY_C4', 'LBL_EXT_ENTITY_C4_DESCRIPTION', NULL, false, false, 
 			-- sql_view 
-			'SELECT id, categoria, tipo, titulo, afeccion, carretera, localizacion, fecha, estado, latitud, longitud
+			'SELECT id, categoria, tipo, titulo, afeccion, carretera, localizacion, fecha, estado, latitud, longitud, fecha_finalizacion
 				FROM reporting_bo.c4_ext_entities_with_values'
 			, 4001, null),
 		(2, 'e112_all_ext_entities_with_values', 'LBL_EXT_ENTITY_112', 'LBL_EXT_ENTITY_112', 'LBL_EXT_ENTITY_112_DESCRIPTION', NULL, false, false, 
 			-- sql_view 
-			'SELECT id, categoria, tipo, localizacion, fecha, estado, num_recursos, num_vehiculos, latitud, longitud 
+			'SELECT id, categoria, tipo, localizacion, fecha, estado, num_recursos, num_vehiculos, latitud, longitud, ultima_actualizacion
 				FROM reporting_bo.e112_ext_entities_with_values'
 			, 4002, null),
 		(3, 'e112_resources_ext_entities_with_values', 'LBL_EXT_ENTITY_TYPE_112_RESOURCES', 'LBL_EXT_ENTITY_TYPE_112_RESOURCES', 'LBL_EXT_ENTITY_TYPE_112_RESOURCES_DESCRIPTION', NULL, false, false, 
@@ -66,8 +66,9 @@ BEGIN
 		(0107, 1, 'localizacion', 'LBL_EXT_ENTITY_C4_COLUMN_LOCATION', NULL, true, '{"position": 7, "editable": false}', NULL),
 		(0108, 1, 'fecha', 'LBL_EXT_ENTITY_C4_COLUMN_DATE', NULL, true, '{"position": 8, "editable": false}', NULL),
 		(0109, 1, 'estado', 'LBL_EXT_ENTITY_C4_COLUMN_STATE', NULL, true, '{"position": 9, "editable": false}', NULL),
-		(0110, 1, 'latitud', 'latitud', NULL, true, '{"position": 10, "editable": false}', NULL),
-		(0111, 1, 'longitud', 'longitud', NULL, true, '{"position": 11, "editable": false}', NULL),
+		(0110, 1, 'fecha_finalizacion', 'fecha_finalizacion', NULL, true, '{"position": 10, "editable": false}', NULL),
+		(0111, 1, 'latitud', 'latitud', NULL, true, '{"position": 11, "editable": false}', NULL),
+		(0112, 1, 'longitud', 'longitud', NULL, true, '{"position": 12, "editable": false}', NULL),
 		
 		(0201, 2, 'id', 'LBL_EXT_ENTITY_112_COLUMN_ID', NULL, true, '{"position": 1, "editable": false, "refName": true}', NULL),
 		(0202, 2, 'categoria', 'LBL_EXT_ENTITY_112_COLUMN_ID', NULL, true, '{"position": 2, "editable": false}', NULL),
@@ -77,8 +78,9 @@ BEGIN
 		(0206, 2, 'estado', 'LBL_EXT_ENTITY_112_COLUMN_STATE', NULL, true, '{"position": 6, "editable": false}', NULL),
 		(0207, 2, 'num_recursos', 'LBL_EXT_ENTITY_112_COLUMN_NRECURSES', NULL, true, '{"position": 7, "editable": false}', NULL),
 		(0208, 2, 'num_vehiculos', 'LBL_EXT_ENTITY_112_COLUMN_NVEHICLES', NULL, true, '{"position": 8, "editable": false}', NULL),
-		(0209, 2, 'latitud', 'latitud', NULL, true, '{"position": 9, "editable": false}', NULL),
-		(0210, 2, 'longitud', 'longitud', NULL, true, '{"position": 10, "editable": false}', NULL),
+		(0209, 2, 'ultima_actualizacion', 'ultima_actualizacion', NULL, true, '{"position": 9, "editable": false}', NULL),
+		(0210, 2, 'latitud', 'latitud', NULL, true, '{"position": 10, "editable": false}', NULL),
+		(0211, 2, 'longitud', 'longitud', NULL, true, '{"position": 11, "editable": false}', NULL),
 		
 		(0501, 3, 'id_incidente', 'LBL_EXT_ENTITY_112_COLUMN_ID_INCIDENTE', NULL, true, '{"position": 1, "editable": false, "refName": true}', 201),
 		(0502, 3, 'nombre', 'LBL_EXT_ENTITY_112_COLUMN_NAME', NULL, true, '{"position": 2, "editable": false}', NULL),
@@ -105,8 +107,9 @@ BEGIN
 		(0709, 5, 'confianza', 'LBL_EXT_ENTITY_WAZE_COLUMN_RELIABILITY', NULL, true, '{"position": 9, "editable": false}', NULL),
 		(0710, 5, 'usuario_municipio', 'LBL_EXT_ENTITY_WAZE_COLUMN_MUNICIPALITY', NULL, true, '{"position": 10, "editable": false}', NULL),
 		(0711, 5, 'estado', 'LBL_EXT_ENTITY_WAZE_COLUMN_STATE', NULL, true, '{"position": 11, "editable": false}', NULL),
-		(0712, 5, 'latitud', 'latitud', NULL, true, '{"position": 12, "editable": false}', NULL),
-		(0713, 5, 'longitud', 'longitud', NULL, true, '{"position": 13, "editable": false}', NULL),
+		(0712, 5, 'fecha_finalizacion', 'fecha_finalizacion', NULL, true, '{"position": 12, "editable": false}', NULL),
+		(0713, 5, 'latitud', 'latitud', NULL, true, '{"position": 13, "editable": false}', NULL),
+		(0714, 5, 'longitud', 'longitud', NULL, true, '{"position": 14, "editable": false}', NULL),
 		
 		(0801, 6, 'id', 'LBL_EXT_ENTITY_WAZE_COLUMN_ID', NULL, true, '{"position": 1, "editable": false, "refName": true}', NULL),
 		(0802, 6, 'circulacion', 'LBL_EXT_ENTITY_WAZE_COLUMN_CIRCULATION', NULL, true, '{"position": 2, "editable": false}', NULL),
@@ -120,7 +123,8 @@ BEGIN
 		(0810, 6, 'comienzo', 'LBL_EXT_ENTITY_WAZE_COLUMN_START', NULL, true, '{"position": 10, "editable": false}', NULL),
 		(0811, 6, 'fin', 'LBL_EXT_ENTITY_WAZE_COLUMN_END', NULL, true, '{"position": 11, "editable": false}', NULL),
 		(0812, 6, 'estado', 'LBL_EXT_ENTITY_WAZE_COLUMN_STATE', NULL, true, '{"position": 12, "editable": false}', NULL),
-		(0813, 6, 'latitud', 'latitud', NULL, true, '{"position": 13, "editable": false}', NULL),
-		(0814, 6, 'longitud', 'longitud', NULL, true, '{"position": 14, "editable": false}', NULL);
+		(0813, 6, 'fecha_finalizacion', 'fecha_finalizacion', NULL, true, '{"position": 13, "editable": false}', NULL),
+		(0814, 6, 'latitud', 'latitud', NULL, true, '{"position": 14, "editable": false}', NULL),
+		(0815, 6, 'longitud', 'longitud', NULL, true, '{"position": 15, "editable": false}', NULL);
   END IF;
 END $$;

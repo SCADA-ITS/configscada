@@ -74,12 +74,7 @@
 		"devices": [
 			{
 				"brand": "Bosch",
-				"model": "Starlight-7000",
-				"decoder": "mjpeg"
-			},
-			{
-				"brand": "Hikvision",
-				"model": "DS-2CD3047G2-LS",
+				"model": "VIP_X1_XF_IVA",
 				"decoder": "mjpeg"
 			},
 			{
@@ -88,14 +83,24 @@
 				"decoder": "mjpeg"
 			},
 			{
-				"brand": "Bosch",
-				"model": "Starlight-7000_SNAP",
-				"decoder": "snap"
+				"brand": "Hikvision",
+				"model": "Desconocido",
+				"decoder": "mjpeg"
 			},
 			{
-				"brand": "Hikvision",
-				"model": "DS-2CD3047G2-LS_SNAP",
-				"decoder": "snap"
+				"brand": "Axis",
+				"model": "Desconocido",
+				"decoder": "mjpeg"
+			},
+			{
+				"brand": "LectorVision",
+				"model": "Desconocido",
+				"decoder": "mjpeg"
+			},
+			{
+				"brand": "Desconocido",
+				"model": "Desconocido",
+				"decoder": "mjpeg"
 			}
 		],
 		"decoders": {

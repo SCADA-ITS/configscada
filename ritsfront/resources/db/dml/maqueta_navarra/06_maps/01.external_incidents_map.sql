@@ -16,8 +16,8 @@ INSERT INTO ui.map_layers (id, base_layer, map_id, "name", description, "label",
 (2, NULL, 1, 'CAMERA', 'CAMERA', 'LBL_ELEMENT_TYPE_CAMERA', NULL, true), 
 (99, NULL, 1, 'RADAR', 'RADAR', 'LBL_ELEMENT_TYPE_TRAFFIC_RADAR', NULL, true);
 
-INSERT INTO ui.map_incidents(id, incident_graphic_icon_id, incident_report_module_action_id, incident_wizard_module_action_id) VALUES
-(1, 1000, 100401, 101303);
+--INSERT INTO ui.map_incidents(id, incident_graphic_icon_id, incident_report_module_action_id, incident_wizard_module_action_id) VALUES
+--(1, 1000, 100401, 101303);
 
 --
 -- routes_config format:
@@ -76,11 +76,13 @@ INSERT INTO ui.map_layer_elements (id, layer_id, element_id, graphic_icon_id, "l
 (0050099, 99,'Element:99:5', 99,'RADF-25+900D', 43.0113198, -1.6367476, false, null, true, false, null, true ),
 (0060099, 99,'Element:99:6', 99,'RADF-60+230C', 43.2475295, -1.6712459, false, null, true, false, null, true );
 
+--PMV [02/06/2025 11:53:24,626][DEBUG][openMap.js:934] - USER CLIC (LON,LAT) => -1.8698446869403202,43.47649071772713
+
 INSERT INTO ui.map_layer_element_zooms (map_layer_element_id, zoom_lower, zoom_upper, graphic_icon_id, latitude, longitude, horizontal_flip, rotate, tooltip, show_text, text_color) VALUES
-(0040002,  8, 20, 2,  43.3039305, -1.6908707,  false, null, true, false, '#00000'),
-(0050002,  8, 20, 2,  43.2439305, -1.6908707,  false, null, true, false, '#00000'),
-(0060002,  8, 20, 2,  43.3039305, -1.6956659,  false, null, true, false, '#00000'),
-(0070002,  8, 20, 2,  43.2439305, -1.6956659,  false, null, true, false, '#00000');
+(0230002,  8, 20, 2,  43.2689305, -1.7008707,  false, null, true, false, '#00000'),
+(0240002,  8, 20, 2,  43.2789305, -1.6808707,  false, null, true, false, '#00000'),
+(0250002,  8, 20, 2,  43.2707475, -1.7056659,  false, null, true, false, '#00000'),
+(0260002,  8, 20, 2,  43.2807475, -1.6856659,  false, null, true, false, '#00000');
 
 INSERT INTO ui.map_commands
 (id, map_id, "position", "label", icon, "default", module_action_id, args, view_type_id, multiselect, show_text, item_required,  context) VALUES

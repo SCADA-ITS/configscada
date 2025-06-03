@@ -1,4 +1,6 @@
 INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
+('ImsIncidentType:401', 34, 'accident.png'),
+
 ('ElementType:2', 1, '2'),
 ('ElementType:2', 2, 'graphic_icon/02_camera.svg'),
 ('ElementType:2', 14, 'grid/element_type_02.png'),
@@ -158,6 +160,11 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 ('ExtEntitySubtype:9004', 73, '#FF8000'),
 ('ExtEntitySubtype:9005', 73, '#FF0000'),
 ('ExtEntitySubtype:9006', 73, '#4E0E00'),
+
+('RoadImpact:100', 81, '#93CA51'),
+('RoadImpact:200', 81, '#F3EC0C'),
+('RoadImpact:300', 81, '#EE2025'),
+('RoadImpact:400', 81, '#050607'),
 
 ('CommandElementType:2:2', 38, 'INFO'),
 ('CommandElementType:3:2', 38, 'INFO');

@@ -29,7 +29,12 @@ INSERT INTO static.ext_entity_types(ext_entity_type_id, alias, description, labe
 					 {"extEntitySubtypeId": "ExtEntitySubtype:1002", "value": "Meteorológicas"},
 					 {"extEntitySubtypeId": "ExtEntitySubtype:1003", "value": "Red Viaria"}
 		]
-	} 
+	},
+	"incidentReportMappings": [{
+	    "extEntitySubtypeId": "ExtEntitySubtype:1003",
+	    "imsIncidentTypeId": "ImsIncidentType:401",
+	    "confirm": true
+	  }]
 }',
 true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (4, '112 Emergencias', 'Incidencias generadas en sistema 112 Emergencias', 'LBL_EXT_ENTITY_TYPE_112', 'LBL_EXT_ENTITY_TYPE_112_DESC', true, '10 0/1 * * * ? *', 
@@ -85,7 +90,12 @@ true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 					 {"extEntitySubtypeId": "ExtEntitySubtype:4003", "value": "12520"},
 					 {"extEntitySubtypeId": "ExtEntitySubtype:4004", "value": "18010"}
 		]
-	}  
+	},
+	"incidentReportMappings": [{
+	    "extEntitySubtypeId": "ExtEntitySubtype:4001",
+	    "imsIncidentTypeId": "ImsIncidentType:401",
+	    "confirm": true
+	  }]  
 }',
 true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
@@ -132,7 +142,7 @@ true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 								{"field": "reportByMunicipalityUser", "extEntityTypeParamId": "ExtEntityTypeParam:7:9"}
 							],
 	"extEntityFieldsMapping": [ {"srcField": "uuid", "dstField": "uid"},
-								{"srcField": "subtype", "dstField": "alias"},
+								{"srcField": "street", "dstField": "alias"},
 								{"srcField": "reportDescription", "dstField": "description"}
 							],
 	"extEntitySubtypes": {
@@ -159,7 +169,12 @@ true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 						{"extEntitySubtypeId": "ExtEntitySubtype:7006", "value": "CONSTRUCTION"},
 						{"extEntitySubtypeId": "ExtEntitySubtype:7007", "value": "ROAD_CLOSED"}
 		]
-	}  
+	},
+	"incidentReportMappings": [{
+	    "extEntitySubtypeId": "ExtEntitySubtype:7001",
+	    "imsIncidentTypeId": "ImsIncidentType:401",
+	    "confirm": true
+	  }]   
 }',
 true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 

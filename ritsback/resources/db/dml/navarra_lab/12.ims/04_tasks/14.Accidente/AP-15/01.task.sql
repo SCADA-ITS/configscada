@@ -1,0 +1,39 @@
+-- 
+-- Table: conf.ims_incident_type_tasks
+--
+
+-- Tareas sobrescritas
+INSERT INTO conf.ims_incident_type_tasks (incident_type_task_id, stretch_id, incident_type_id, incident_state_id, task_type_id, alias, description, operation_description, mandatory, position, auto, on_change, rerun, road_impact_id, enabled, visible, created_at, updated_at) VALUES
+-- Para sobrescribir la tarea incluyo al inicio del id el <stetch_id>
+--ETAPA = AL SALTAR LA INCIDENCIA - ANTES DE CONFIRMAR - TAREAS GENERALES
+(001601010401, 16, 401, 1, 6, 'INFORMAR A ENTIDAD RESPONSABLE', 'Informar a Audenasa', 'Llamar al teléfono 5555-555-55 para informar de que existe una incidencia la AP-15', false, 1, false, null, true, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(001701010401, 17, 401, 1, 6, 'INFORMAR A ENTIDAD RESPONSABLE', 'Informar a Audenasa', 'Llamar al teléfono 5555-555-55 para informar de que existe una incidencia la AP-15', false, 1, false, null, true, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(001801010401, 18, 401, 1, 6, 'INFORMAR A ENTIDAD RESPONSABLE', 'Informar a Audenasa', 'Llamar al teléfono 5555-555-55 para informar de que existe una incidencia la AP-15', false, 1, false, null, true, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(001602010401, 16, 401, 1, 6, 'RECABAR INFORMACIÓN', 'Llamar a CMC/COTA para informarse', 'Realizar una llamada telefónica a CMC/COTA para recabar la información completa de lo ocurrido en el accidente', false, 2, false, null, true, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(001702010401, 17, 401, 1, 6, 'RECABAR INFORMACIÓN', 'Llamar a CMC/COTA para informarse', 'Realizar una llamada telefónica a CMC/COTA para recabar la información completa de lo ocurrido en el accidente', false, 2, false, null, true, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(001802010401, 18, 401, 1, 6, 'RECABAR INFORMACIÓN', 'Llamar a CMC/COTA para informarse', 'Realizar una llamada telefónica a CMC/COTA para recabar la información completa de lo ocurrido en el accidente', false, 2, false, null, true, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(001603010401, 16, 401, 1, 10, 'TELEGRAM HERIDOS/FALLECIDOS', 'Envio de información interna de heridos y fallecidos', 'Enviar mediante Telegram de manera interna la información de los heridos graves y los fallecidos', false, 3, false, 'SendToTelegramNotification', true, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(001703010401, 17, 401, 1, 10, 'TELEGRAM HERIDOS/FALLECIDOS', 'Envio de información interna de heridos y fallecidos', 'Enviar mediante Telegram de manera interna la información de los heridos graves y los fallecidos', false, 3, false, 'SendToTelegramNotification', true, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(001803010401, 18, 401, 1, 10, 'TELEGRAM HERIDOS/FALLECIDOS', 'Envio de información interna de heridos y fallecidos', 'Enviar mediante Telegram de manera interna la información de los heridos graves y los fallecidos', false, 3, false, 'SendToTelegramNotification', true, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(001604010401, 16, 401, 1, 8, 'CORREO HERIDOS/FALLECIDOS', 'Envio de información interna de heridos y fallecidos', 'Enviar mediante correo electrónico de manera interna la información de los heridos graves y los fallecidos', false, 4, false, 'SendMailTask', true, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(001704010401, 17, 401, 1, 8, 'CORREO HERIDOS/FALLECIDOS', 'Envio de información interna de heridos y fallecidos', 'Enviar mediante correo electrónico de manera interna la información de los heridos graves y los fallecidos', false, 4, false, 'SendMailTask', true, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(001804010401, 18, 401, 1, 8, 'CORREO HERIDOS/FALLECIDOS', 'Envio de información interna de heridos y fallecidos', 'Enviar mediante correo electrónico de manera interna la información de los heridos graves y los fallecidos', false, 4, false, 'SendMailTask', true, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(001605010401, 16, 401, 1, 6, 'SELECCIONAR AFECCIÓN', 'Indicar estado de la circulación', 'Seleccionar el estado de la circulación del tráfico indicándolo a través de la afección de la incidencia', false, 5, false, null, true, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(001705010401, 17, 401, 1, 6, 'SELECCIONAR AFECCIÓN', 'Indicar estado de la circulación', 'Seleccionar el estado de la circulación del tráfico indicándolo a través de la afección de la incidencia', false, 5, false, null, true, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(001805010401, 18, 401, 1, 6, 'SELECCIONAR AFECCIÓN', 'Indicar estado de la circulación', 'Seleccionar el estado de la circulación del tráfico indicándolo a través de la afección de la incidencia', false, 5, false, null, true, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(001606010401, 16, 401, 1, 10, 'TELEGRAM ESTADO CIRCULACIÓN', 'Envio de información interna del estado de circulación', 'Enviar mediante Telegram de manera interna la información del estado de la circulación', false, 6, false, 'SendToTelegramNotification', true, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(001706010401, 17, 401, 1, 10, 'TELEGRAM ESTADO CIRCULACIÓN', 'Envio de información interna del estado de circulación', 'Enviar mediante Telegram de manera interna la información del estado de la circulación', false, 6, false, 'SendToTelegramNotification', true, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(001806010401, 18, 401, 1, 10, 'TELEGRAM ESTADO CIRCULACIÓN', 'Envio de información interna del estado de circulación', 'Enviar mediante Telegram de manera interna la información del estado de la circulación', false, 6, false, 'SendToTelegramNotification', true, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(001607010401, 16, 401, 1, 8, 'CORREO ESTADO CIRCULACIÓN', 'Envio de información interna del estado de circulación', 'Enviar mediante correo electrónico de manera interna la información del estado de la circulación', false, 7, false, 'SendMailTask', true, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(001707010401, 17, 401, 1, 8, 'CORREO ESTADO CIRCULACIÓN', 'Envio de información interna del estado de circulación', 'Enviar mediante correo electrónico de manera interna la información del estado de la circulación', false, 7, false, 'SendMailTask', true, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(001807010401, 18, 401, 1, 8, 'CORREO ESTADO CIRCULACIÓN', 'Envio de información interna del estado de circulación', 'Enviar mediante correo electrónico de manera interna la información del estado de la circulación', false, 7, false, 'SendMailTask', true, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(001608010401, 16, 401, 1, 10, 'INFORMACIÓN AL CIUDADANO', 'Publicar Telegram del accidente', 'Publicar en el canal público del Gobierno de Navarra la información al ciudadano del estado del accidente', false, 8, false, 'SendToTelegramNotification', true, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(001708010401, 17, 401, 1, 10, 'INFORMACIÓN AL CIUDADANO', 'Publicar Telegram del accidente', 'Publicar en el canal público del Gobierno de Navarra la información al ciudadano del estado del accidente', false, 8, false, 'SendToTelegramNotification', true, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(001808010401, 18, 401, 1, 10, 'INFORMACIÓN AL CIUDADANO', 'Publicar Telegram del accidente', 'Publicar en el canal público del Gobierno de Navarra la información al ciudadano del estado del accidente', false, 8, false, 'SendToTelegramNotification', true, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

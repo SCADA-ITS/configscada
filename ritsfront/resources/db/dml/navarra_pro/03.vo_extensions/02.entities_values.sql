@@ -1,4 +1,6 @@
 INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
+('ImsIncidentType:401', 34, 'accident.png'),
+
 ('ElementType:2', 1, '2'),
 ('ElementType:2', 2, 'graphic_icon/02_camera.svg'),
 ('ElementType:2', 14, 'grid/element_type_02.png'),

@@ -37,7 +37,11 @@ BEGIN
             WHEN e.status = ''DELETED'' THEN ''FINALIZADA''
             WHEN e.status = ''UPDATED'' THEN ''ACTIVA''
             ELSE e.status::varchar
-        END AS estado
+        END AS estado,
+	    CASE 
+	        WHEN e.status = ''DELETED'' THEN e.last_update
+	        ELSE NULL
+	    END AS fecha_finalizacion
     FROM 
         (SELECT DISTINCT ON (ext_entity_id) *
          FROM hist.ext_entities

@@ -26,7 +26,8 @@ BEGIN
         pv.param_1 as localizacion,
         pv.param_2 as estado,
 		split_part(pv.param_3, ''-'', 1)::int8 AS num_recursos,
-		split_part(pv.param_4, ''-'', 1)::int8 AS num_vehiculos
+		split_part(pv.param_4, ''-'', 1)::int8 AS num_vehiculos,
+	    e.last_update AS ultima_actualizacion
     FROM 
         (SELECT DISTINCT ON (ext_entity_id) *
          FROM hist.ext_entities
