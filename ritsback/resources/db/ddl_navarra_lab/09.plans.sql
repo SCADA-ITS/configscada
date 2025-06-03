@@ -357,6 +357,7 @@
 		cron_expression varchar NULL,
 		alias varchar NULL,
 		description varchar NULL,
+		current_plan_schedule_state_type_id int8 NULL,
 		enabled bool NULL,
 		visible bool NULL,
 		created_at timestamptz NOT NULL,
