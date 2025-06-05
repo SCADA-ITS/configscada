@@ -164,7 +164,10 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_ES',1,'LBL_ENTITIE_FIELDS_NO_GRAPHICAL_DESCRIPTION','Tipo de equipo no se muestra en el componente de lista de equipamiento',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 
 ('es_ES',1,'LBL_ENTITIE_FIELDS_NO_SHOW_ELEMENT_TYPE','Tipo de equipo a no mostrar',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
-('es_ES',1,'LBL_ENTITIE_FIELDS_NO_SHOW_ELEMENT_TYPE_DESCRIPTION','Tipo de equipo no se muestra en el componente o módulo utilizado',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
+('es_ES',1,'LBL_ENTITIE_FIELDS_NO_SHOW_ELEMENT_TYPE_DESCRIPTION','Tipo de equipo no se muestra en el componente o módulo utilizado',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+
+('es_ES',1,'LBL_ENTITIE_FIELDS_INCIDENT_TYPE_MAP_ID','Id de mapa de tipo de incidencia',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+('es_ES',1,'LBL_ENTITIE_FIELDS_INCIDENT_TYPE_MAP_ID_DESCRIPTION','Id de mapa a mostrar en un tipo de incidencia concreto',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
 
 --es_CL
 INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) VALUES
@@ -322,8 +325,10 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_CL',1,'LBL_ENTITIE_FIELDS_NO_GRAPHICAL_DESCRIPTION','Tipo de equipo no se muestra en el componente de lista de equipamiento',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 
 ('es_CL',1,'LBL_ENTITIE_FIELDS_NO_SHOW_ELEMENT_TYPE','Tipo de equipo a no mostrar',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
-('es_CL',1,'LBL_ENTITIE_FIELDS_NO_SHOW_ELEMENT_TYPE_DESCRIPTION','Tipo de equipo no se muestra en el componente o módulo utilizado',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
+('es_CL',1,'LBL_ENTITIE_FIELDS_NO_SHOW_ELEMENT_TYPE_DESCRIPTION','Tipo de equipo no se muestra en el componente o módulo utilizado',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 
+('es_CL',1,'LBL_ENTITIE_FIELDS_INCIDENT_TYPE_MAP_ID','Id de mapa de tipo de incidencia',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+('es_CL',1,'LBL_ENTITIE_FIELDS_INCIDENT_TYPE_MAP_ID_DESCRIPTION','Id de mapa a mostrar en un tipo de incidencia concreto',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
 
 --en_GB
 INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) VALUES
@@ -481,7 +486,11 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('en_GB',1,'LBL_ENTITIE_FIELDS_NO_GRAPHICAL_DESCRIPTION','Equipment type is not displayed in the equipment list component',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 
 ('en_GB',1,'LBL_ENTITIE_FIELDS_NO_SHOW_ELEMENT_TYPE','No show this element type',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
-('en_GB',1,'LBL_ENTITIE_FIELDS_NO_SHOW_ELEMENT_TYPE_DESCRIPTION','This element type no show in component or module used',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
+('en_GB',1,'LBL_ENTITIE_FIELDS_NO_SHOW_ELEMENT_TYPE_DESCRIPTION','This element type no show in component or module used',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+
+('en_GB',1,'LBL_ENTITIE_FIELDS_INCIDENT_TYPE_MAP_ID','Map id of incident type',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+('en_GB',1,'LBL_ENTITIE_FIELDS_INCIDENT_TYPE_MAP_ID_DESCRIPTION','Map id of incident type',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
+
 
 --sk_SK
 --INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) VALUES
