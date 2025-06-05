@@ -26,7 +26,24 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 	 ('es_ES',1,'LBL_VENTILATION_SERVICE', 'Ventilación sanitaria',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 	 ('es_ES',1,'LBL_VENTILATION_SERVICE_DESC', 'Umbrales para la ventilación sanitaria',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 	 ('es_ES',1,'LBL_VENTILATION_CONFORT', 'Ventilación modo confort',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
-	 ('es_ES',1,'LBL_VENTILATION_CONFORT_DESC','Umbrales para la ventilación en modo confort',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
+	 ('es_ES',1,'LBL_VENTILATION_CONFORT_DESC','Umbrales para la ventilación en modo confort',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+	 ('es_ES',1,'LBL_ILUM_DESP_NORTE', 'Iluminacion Despeñaperros sentido Madrid',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+	 ('es_ES',1,'LBL_ILUM_DESP_NORTE_DESC', 'Iluminacion Despeñaperros sentido Madrid',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+	 ('es_ES',1,'LBL_ILUM_CA_NORTE', 'Iluminacion La Cantera sentido Madrid',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+	 ('es_ES',1,'LBL_ILUM_CA_NORTE_DESC', 'Iluminacion La Cantera  sentido Madrid',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+	 ('es_ES',1,'LBL_ILUM_CZ_NORTE', 'Iluminacion El Corzo sentido Madrid',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+	 ('es_ES',1,'LBL_ILUM_CZ_NORTE_DESC', 'Iluminacion El Corzo sentido Madrid',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+	 ('es_ES',1,'LBL_ILUM_DESP_SUR', 'Iluminacion Despeñaperros sentido Cordoba',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+	 ('es_ES',1,'LBL_ILUM_DESP_SUR_DESC', 'Iluminacion Despeñaperros sentido Cordoba',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+	 ('es_ES',1,'LBL_ILUM_CA_SUR', 'Iluminacion La Cantera  sentido Cordoba',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+	 ('es_ES',1,'LBL_ILUM_CA_SUR_DESC', 'Iluminacion La Cantera  sentido Cordoba',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+	 ('es_ES',1,'LBL_ILUM_CZ_SUR', 'Iluminacion El Corzo sentido Cordoba',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+	 ('es_ES',1,'LBL_ILUM_CZ_SUR_DESC', 'Iluminacion El Corzo sentido Cordoba',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+	 ('es_ES',1,'LBL_THRESHOLD_LUM_1000', 'Nivel 2 iluminación (cd/m2)',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+	 ('es_ES',1,'LBL_THRESHOLD_LUM_200', 'Nivel 0 iluminación (cd/m2)',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+	 ('es_ES',1,'LBL_THRESHOLD_LUM_2500', 'Nivel 3 iluminación (cd/m2)',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+	 ('es_ES',1,'LBL_THRESHOLD_LUM_300', 'Nivel 1 iluminación (cd/m2)',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
+
 
 -- en_GB
 INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) VALUES

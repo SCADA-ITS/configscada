@@ -27,6 +27,3 @@ INSERT INTO ui.menu_items(id, menu_group_id, "position", module_id, "label", ico
 (0502, 5, 2, 1024, 'LBL_MENU_ITEM_PLAN_MANAGER', 'img/menu/plan-menu.png', 'Menu item Plan Manager', 'Menu item Plan Manager', true, true),
 (0503, 5, 3, 1040, 'LBL_MENU_ITEM_VMS_SIGNALING', 'img/menu/signaling-menu.png', 'Menu item VMS Signaling', 'Menu item VMS Signaling', true, true);
 
-update ui.menu_items
-set enabled=false
-where menu_group_id = 4000 and module_id = 1037;

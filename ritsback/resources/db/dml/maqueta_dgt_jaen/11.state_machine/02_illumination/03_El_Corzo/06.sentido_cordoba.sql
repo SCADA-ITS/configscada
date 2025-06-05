@@ -3,7 +3,7 @@ INSERT INTO static.sm_state_machines
 -- Para el id seguiremos el siguiente criterio:
 -- 1.- Túnel (2 cifras), coincidiendo con el id del fichero
 -- 2.- Orden de la maquina de estados (2 cifras)
-(0601, 'LIGHTING_SERVICE_EL_CORZO_SENTIDO_CORDOBA_AUT', 'States machine to calulate service lighting regime in El Corzo Aut', NULL, NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(0601, 'LIGHTING_SERVICE_EL_CORZO_SENTIDO_CORDOBA_AUT', 'States machine to calulate service lighting regime in El Corzo Aut', 'LBL_ILUM_CZ_SUR', 'LBL_ILUM_CZ_SUR_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO static.sm_states
 (state_machine_id, state_id, alias, description, label_alias, label_description, init_state, t_min, enabled, visible, created_at, updated_at) VALUES

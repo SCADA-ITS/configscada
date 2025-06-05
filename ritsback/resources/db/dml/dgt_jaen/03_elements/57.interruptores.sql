@@ -161,7 +161,6 @@ INSERT INTO conf.elements (element_type_id, element_subtype_id, element_id, loca
 (57, NULL, 160, 1600057, NULL, NULL, 'INT-Q3-CGBT-DP3', 'INT-Q3-CGBT-DP3', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, NULL, 161, 1610057, NULL, NULL, 'INT-Q6-CGBT-DP3', 'INT-Q6-CGBT-DP3', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, NULL, 162, 1620057, NULL, NULL, 'INT-K02-GRU-CGBT-DP3', 'INT-K02-GRU-CGBT-DP3', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(57, NULL, 163, 1630057, NULL, NULL, 'INT-F1-GRU-CGBT-DP3', 'INT-F1-GRU-CGBT-DP3', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, NULL, 164, 1640057, NULL, NULL, 'INT-F6-CGBT-DP3', 'INT-F6-CGBT-DP3', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, NULL, 165, 1650057, NULL, NULL, 'INT-Q27-ILU-NOR-4', 'INT-Q27-ILU-NOR-4', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, NULL, 166, 1660057, NULL, NULL, 'INT-K02-ILU-NOR-4', 'INT-K02-ILU-NOR-4', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -264,7 +263,6 @@ INSERT INTO conf.elements (element_type_id, element_subtype_id, element_id, loca
 (57, NULL, 264, 2640057, NULL, NULL, 'INT-CREP-DER-1-ILU-NOR-1', 'INT-CREP-DER-1-ILU-NOR-1', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, NULL, 265, 2650057, NULL, NULL, 'INT-CREP-DER-2-ILU-NOR-1', 'INT-CREP-DER-2-ILU-NOR-1', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, NULL, 266, 2660057, NULL, NULL, 'INT-CREP-DER-3-ILU-NOR-1', 'INT-CREP-DER-3-ILU-NOR-1', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(57, NULL, 267, 2670057, NULL, NULL, 'INT-EXT-ENT-ILU-NOR-1', 'INT-EXT-ENT-ILU-NOR-1', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, NULL, 268, 2680057, NULL, NULL, 'INT-EXT-SAL-ILU-NOR-1', 'INT-EXT-SAL-ILU-NOR-1', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, NULL, 269, 2690057, NULL, NULL, 'INT-Q1-ILU-SUR-1', 'INT-Q1-ILU-SUR-1', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, NULL, 270, 2700057, NULL, NULL, 'INT-K01-ILU-SUR-1', 'INT-K01-ILU-SUR-1', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -279,7 +277,6 @@ INSERT INTO conf.elements (element_type_id, element_subtype_id, element_id, loca
 (57, NULL, 279, 2790057, NULL, NULL, 'INT-NUB-DER-1-ILU-SUR-1', 'INT-NUB-DER-1-ILU-SUR-1', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, NULL, 280, 2800057, NULL, NULL, 'INT-CREP-DER-1-ILU-SUR-1', 'INT-CREP-DER-1-ILU-SUR-1', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, NULL, 281, 2810057, NULL, NULL, 'INT-EXT-ENT-ILU-SUR-1', 'INT-EXT-ENT-ILU-SUR-1', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(57, NULL, 282, 2820057, NULL, NULL, 'INT-EXT-SAL-ILU-SUR-1', 'INT-EXT-SAL-ILU-SUR-1', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, NULL, 283, 2830057, NULL, NULL, 'INT-L2-1-CGMT', 'INT-L2-1-CGMT', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, NULL, 284, 2840057, NULL, NULL, 'INT-L2-2-CGMT', 'INT-L2-2-CGMT', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, NULL, 285, 2850057, NULL, NULL, 'SEC-L2-2-CGMT', 'SEC-L2-2-CGMT', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -707,8 +704,6 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 
 (57, 1003, 1, 162, NULL, 'INT-K02-GRU-CGBT-DP3', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
-(57, 1003, 1, 163, NULL, 'INT-F1-GRU-CGBT-DP3', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-
 (57, 1003, 1, 164, NULL, 'INT-F6-CGBT-DP3', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (57, 1003, 1, 165, NULL, 'INT-Q27-ILU-NOR-4', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -913,8 +908,6 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 
 (57, 1003, 1, 266, NULL, 'INT-CREP-DER-3-ILU-NOR-1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
-(57, 1003, 1, 267, NULL, 'INT-EXT-ENT-ILU-NOR-1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-
 (57, 1003, 1, 268, NULL, 'INT-EXT-SAL-ILU-NOR-1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (57, 1003, 1, 269, NULL, 'INT-Q1-ILU-SUR-1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -942,8 +935,6 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 (57, 1003, 1, 280, NULL, 'INT-CREP-DER-1-ILU-SUR-1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (57, 1003, 1, 281, NULL, 'INT-EXT-ENT-ILU-SUR-1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-
-(57, 1003, 1, 282, NULL, 'INT-EXT-SAL-ILU-SUR-1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (57, 1003, 1, 283, NULL, 'INT-L2-1-CGMT', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
@@ -1310,7 +1301,6 @@ INSERT INTO conf.element_io_controller_modules (element_type_id, element_id, mod
 (57, 160, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, 161, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, 162, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(57, 163, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, 164, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, 165, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, 166, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -1413,7 +1403,6 @@ INSERT INTO conf.element_io_controller_modules (element_type_id, element_id, mod
 (57, 264, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, 265, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, 266, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(57, 267, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, 268, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, 269, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, 270, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -1428,7 +1417,6 @@ INSERT INTO conf.element_io_controller_modules (element_type_id, element_id, mod
 (57, 279, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, 280, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, 281, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(57, 282, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, 283, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, 284, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, 285, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
