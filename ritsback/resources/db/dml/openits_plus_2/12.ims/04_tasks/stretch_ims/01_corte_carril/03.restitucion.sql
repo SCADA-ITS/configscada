@@ -64,4 +64,11 @@ VALUES
 					"commandElementTypeId": "CommandElementType:3:71"
 		}
 	}
-]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+--ponemos el modo mantenimiento en la ventilacion.
+(5, 1, 020131, '1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--ilumninación
+(3, 1, 030131, '1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+
