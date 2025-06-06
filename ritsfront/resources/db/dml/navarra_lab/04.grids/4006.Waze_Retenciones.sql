@@ -15,8 +15,9 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (114006, 4006, 1, 11, true, false, false, true, 'comienzo', 'comienzo', 'comienzo', false, false, null, false, false, 150, NULL, true, true, NULL, NULL, NULL, NULL),
 (124006, 4006, 1, 12, true, false, false, true, 'fin', 'fin', 'fin', false, false, null, false, false, 150, NULL, true, true, NULL, NULL, NULL, NULL),
 (134006, 4006, 1, 13, true, true, false, true, 'estado', 'estado', 'estado', false, false, null, false, false, 120, NULL, true, true, NULL, NULL, NULL, NULL),
-(144006, 4006, 4, 14, true, false, true, true, 'latitud', 'latitud', 'latitud', false, false, null, false, false, 100, NULL, true, true, NULL, NULL, NULL, NULL),
-(154006, 4006, 4, 15, true, false, true, true, 'longitud', 'longitud', 'longitud', false, false, null, false, false, 100, NULL, true, true, NULL, NULL, NULL, NULL);
+(144006, 4006, 4, 14, true, false, false, true, 'fecha finalizacion', 'fecha finalizacion', 'fecha_finalizacion', false, true, null, false, false, 175, NULL, true, true, NULL, NULL, NULL, NULL),
+(154006, 4006, 1, 15, true, false, true, true, 'latitud', 'latitud', 'latitud', false, false, null, false, false, 100, NULL, true, true, NULL, NULL, NULL, NULL),
+(164006, 4006, 1, 16, true, false, true, true, 'longitud', 'longitud', 'longitud', false, false, null, false, false, 100, NULL, true, true, NULL, NULL, NULL, NULL);
 
 INSERT INTO ui.grid_option_values(grid_id, grid_option_id, value) VALUES
 (4006, 1, 'true'),

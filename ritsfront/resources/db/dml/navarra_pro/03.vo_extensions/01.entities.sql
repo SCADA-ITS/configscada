@@ -2,9 +2,12 @@ INSERT INTO ui.vo_entities(id, vo_entity_type_id, enabled, visible) VALUES
 ('ImsIncidentType:401', 'ImsIncidentTypeUI', true, true),
 
 ('ElementType:2', 'ElementTypeUI', true, true),
+('ElementType:71', 'ElementTypeUI', true, true),
 ('ElementType:98', 'ElementTypeUI', true, true),
 ('ElementType:99', 'ElementTypeUI', true, true),
 ('ElementType:1000', 'ElementTypeUI', true, true),
+
+('ElementSubtype:22:71', 'ElementSubtypeUI', true, true),
 
 ('ElementTypeParam:2:1:1', 'ElementTypeParamUI', true, true),
 ('ElementTypeParam:2:1:2', 'ElementTypeParamUI', true, true),
@@ -43,6 +46,11 @@ INSERT INTO ui.vo_entities(id, vo_entity_type_id, enabled, visible) VALUES
 ('ExtEntitySubtype:9004', 'ExtEntitySubtypeUI', true, true),
 ('ExtEntitySubtype:9005', 'ExtEntitySubtypeUI', true, true),
 ('ExtEntitySubtype:9006', 'ExtEntitySubtypeUI', true, true),
+
+('RoadImpact:100', 'RoadImpactUI', true, true),
+('RoadImpact:200', 'RoadImpactUI', true, true),
+('RoadImpact:300', 'RoadImpactUI', true, true),
+('RoadImpact:400', 'RoadImpactUI', true, true),
 
 ('CommandElementType:2:2', 'CommandElementTypeUI', true, true),
 ('CommandElementType:3:2', 'CommandElementTypeUI', true, true);

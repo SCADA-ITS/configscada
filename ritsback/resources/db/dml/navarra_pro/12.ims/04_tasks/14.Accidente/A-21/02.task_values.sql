@@ -3,37 +3,25 @@ INSERT INTO conf.ims_incident_type_task_values (task_type_id, task_type_param_id
 --1 = TOKEN BOT que usamos para la notifiación
 --2 = CHAT_ID del canal donde vamos a mandar la incidencia
 --3 = MESSAGE_TEXT Definición del texto a enviar en la notificación
-(10, 1, 001203010401, '7673259805:AAEqCaKMZ-SvxE8wpUriuGLegpNxLlOLgRM', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(10, 2, 001203010401, '-1002691923172', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(10, 3, 001203010401, '¡ACCIDENTE CON HERIDOS GRAVES Y FALLECIDOS!', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(10, 1, 001203010401, '¡ACCIDENTE CON HERIDOS GRAVES Y FALLECIDOS!', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
-(10, 1, 001303010401, '7673259805:AAEqCaKMZ-SvxE8wpUriuGLegpNxLlOLgRM', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(10, 2, 001303010401, '-1002691923172', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(10, 3, 001303010401, '¡ACCIDENTE CON HERIDOS GRAVES Y FALLECIDOS!', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(10, 1, 001303010401, '¡ACCIDENTE CON HERIDOS GRAVES Y FALLECIDOS!', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --SendToTelegramNotification tiene tres parámetros:
 --1 = TOKEN BOT que usamos para la notifiación
 --2 = CHAT_ID del canal donde vamos a mandar la incidencia
 --3 = MESSAGE_TEXT Definición del texto a enviar en la notificación
-(10, 1, 001206010401, '7673259805:AAEqCaKMZ-SvxE8wpUriuGLegpNxLlOLgRM', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(10, 2, 001206010401, '-1002691923172', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(10, 3, 001206010401, 'El estado actual de la circulación es @afeccion', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(10, 1, 001206010401, 'El estado actual de la circulación es @afeccion', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
-(10, 1, 001306010401, '7673259805:AAEqCaKMZ-SvxE8wpUriuGLegpNxLlOLgRM', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(10, 2, 001306010401, '-1002691923172', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(10, 3, 001306010401, 'El estado actual de la circulación es @afeccion', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(10, 1, 001306010401, 'El estado actual de la circulación es @afeccion', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --SendToTelegramNotification tiene tres parámetros:
 --1 = TOKEN BOT que usamos para la notifiación
 --2 = CHAT_ID del canal donde vamos a mandar la incidencia
 --3 = MESSAGE_TEXT Definición del texto a enviar en la notificación
-(10, 1, 001208010401, '7673259805:AAEqCaKMZ-SvxE8wpUriuGLegpNxLlOLgRM', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(10, 2, 001208010401, '@TraficoNavarra', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(10, 3, 001208010401, 'Accidente en @localizacion con estado de la circulación @afeccion', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(10, 1, 001208010401, 'Accidente en @localizacion con estado de la circulación @afeccion', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
-(10, 1, 001308010401, '7673259805:AAEqCaKMZ-SvxE8wpUriuGLegpNxLlOLgRM', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(10, 2, 001308010401, '@TraficoNavarra', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(10, 3, 001308010401, 'Accidente en @localizacion con estado de la circulación @afeccion', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(10, 1, 001308010401, 'Accidente en @localizacion con estado de la circulación @afeccion', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --SendMailTask tiene tres parámetros
 --1 addressTO = Destinatarios
