@@ -7,12 +7,13 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (044002, 4002, 1, 4, true, true, false, false, null, null, 'categoria', false, false, null, false, false, 45, NULL, true, true, NULL, NULL, NULL, NULL),
 (054002, 4002, 1, 5, true, true, false, true, 'tipo', 'tipo', 'tipo', false, false, null, false, false, 300, NULL, true, true, NULL, NULL, NULL, NULL),
 (064002, 4002, 1, 6, true, false, false, true, 'localizacion', 'localizacion', 'localizacion', false, false, null, false, false, 300, NULL, true, true, NULL, NULL, NULL, NULL),
-(074002, 4002, 1, 7, true, true, false, true, 'estado', 'estado', 'estado', false, false, null, false, false, 150, NULL, true, true, NULL, NULL, NULL, NULL),
-(084002, 4002, 1, 8, true, true, false, true, 'recursos', 'recursos', 'num_recursos', false, false, null, false, false, 100, NULL, true, true, NULL, NULL, NULL, NULL),
-(094002, 4002, 1, 9, true, true, false, true, 'vehiculos', 'vehiculos', 'num_vehiculos', false, false, null, false, false, 100, NULL, true, true, NULL, NULL, NULL, NULL),
-(104002, 4002, 4, 10, true, false, false, true, 'ultima actualizacion', 'ultima actualizacion', 'ultima_actualizacion', false, true, null, false, false, 175, NULL, true, true, NULL, NULL, NULL, NULL),
-(114002, 4002, 1, 11, true, false, true, true, 'latitud', 'latitud', 'latitud', false, false, null, false, false, 120, NULL, true, true, NULL, NULL, NULL, NULL),
-(124002, 4002, 1, 12, true, false, true, true, 'longitud', 'longitud', 'longitud', false, false, null, false, false, 120, NULL, true, true, NULL, NULL, NULL, NULL);
+(074002, 4002, 1, 7, true, true, false, true, 'situación', 'situación', 'estado112', false, false, null, false, false, 150, NULL, true, true, NULL, NULL, NULL, NULL),
+(084002, 4002, 1, 8, true, false, false, true, 'recursos', 'recursos', 'num_recursos', false, false, null, false, false, 100, NULL, true, true, NULL, NULL, NULL, NULL),
+(094002, 4002, 1, 9, true, false, false, true, 'vehiculos', 'vehiculos', 'num_vehiculos', false, false, null, false, false, 100, NULL, true, true, NULL, NULL, NULL, NULL),
+(104002, 4002, 1, 10, true, true, false, true, 'estado', 'estado', 'estado', false, false, null, false, false, 150, NULL, true, true, NULL, NULL, NULL, NULL),
+(114002, 4002, 4, 11, true, false, false, true, 'fecha finalizacion', 'fecha finalizacion', 'fecha_finalizacion', false, true, null, false, false, 175, NULL, true, true, NULL, NULL, NULL, NULL),
+(124002, 4002, 1, 12, true, false, true, true, 'latitud', 'latitud', 'latitud', false, false, null, false, false, 120, NULL, true, true, NULL, NULL, NULL, NULL),
+(134002, 4002, 1, 13, true, false, true, true, 'longitud', 'longitud', 'longitud', false, false, null, false, false, 120, NULL, true, true, NULL, NULL, NULL, NULL);
 
 INSERT INTO ui.grid_option_values(grid_id, grid_option_id, value) VALUES
 (4002, 1, 'true'),

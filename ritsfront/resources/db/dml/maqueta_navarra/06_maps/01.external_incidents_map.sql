@@ -11,9 +11,13 @@ INSERT INTO ui.maps (id, name, description, "label", icon, longitude, latitude, 
 		"router": {"enabled": true, "type": "OpenRouteService", "url": "http://192.168.88.161:8701/ors"},
         "smartRoadInfo": {"enabled": true, "url": "http://192.168.88.161:8702/api"}
 	}');
+	
+INSERT INTO ui.map_incidents(id, incident_graphic_icon_id, incident_report_module_action_id, incident_wizard_module_action_id) VALUES
+(1, 1000, 100401, 101303);
 
 INSERT INTO ui.map_layers (id, base_layer, map_id, "name", description, "label", icon, visible) VALUES 
 (2, NULL, 1, 'CAMERA', 'CAMERA', 'LBL_ELEMENT_TYPE_CAMERA', NULL, true), 
+--(71, NULL, 1, 'PMV', 'PMV', 'LBL_ELEMENT_TYPE_PMV', NULL, true), 
 (99, NULL, 1, 'RADAR', 'RADAR', 'LBL_ELEMENT_TYPE_TRAFFIC_RADAR', NULL, true);
 
 --INSERT INTO ui.map_incidents(id, incident_graphic_icon_id, incident_report_module_action_id, incident_wizard_module_action_id) VALUES
@@ -37,7 +41,15 @@ INSERT INTO ui.map_routes (id, default_module_action_id, routes_config) VALUES
       "avoidPolygonColor": "#8B0000",
       "alternativeRoutes": true,
       "alternativeRouteColor": "#46B482"
-  }');
+  }'),
+(2, null,
+  '{
+		"routeClosedColor": "#FF4500",
+		"routeOpenColor": "#36B5DD",
+		"avoidPolygonColor": "#8B0000",
+		"alternativeRoutes": true,
+		"alternativeRouteColor": "#46B482"
+}');
 
 INSERT INTO ui.map_layer_elements (id, layer_id, element_id, graphic_icon_id, "label", latitude, longitude, horizontal_flip, rotate, tooltip, show_text, text_color, selectable) VALUES 
 (0010002, 2,'Element:2:1', 2,'Alsasua', 42.88534118, -2.177320663, false, null, true, false, null, true ),
@@ -69,14 +81,14 @@ INSERT INTO ui.map_layer_elements (id, layer_id, element_id, graphic_icon_id, "l
 (0270002, 2,'Element:2:27', 2,'Endarlatza 2', 43.2792225, -1.711128641,  false, null, true, false, null, true ),
 (0280002, 2,'Element:2:28', 2,'Talluntxe LPR ', 42.7755542, -1.6315534,  false, null, true, false, null, true ),
 
+--(0010071, 71, 'Element:71:1', 71, 'PMV-VIRTUAL-1', 43.39616189919906, -2.0825991357475653, false, null, true, false, null, true ),
+
 (0010099, 99,'Element:99:1', 99,'RADF-127+670D',43.01762766,-1.90737257, false, null, true, false, null, true ),
 (0020099, 99,'Element:99:2', 99,'RADF-91+358D', 42.07934146,-1.79528762, false, null, true, false, null, true ),
 (0030099, 99,'Element:99:3', 99,'RADF-32+560C', 43.0658902, -1.6177618, false, null, true, false, null, true ),
 (0040099, 99,'Element:99:4', 99,'RADF-401+561C',42.9161053, -2.1916473, false, null, true, false, null, true ),
 (0050099, 99,'Element:99:5', 99,'RADF-25+900D', 43.0113198, -1.6367476, false, null, true, false, null, true ),
 (0060099, 99,'Element:99:6', 99,'RADF-60+230C', 43.2475295, -1.6712459, false, null, true, false, null, true );
-
---PMV [02/06/2025 11:53:24,626][DEBUG][openMap.js:934] - USER CLIC (LON,LAT) => -1.8698446869403202,43.47649071772713
 
 INSERT INTO ui.map_layer_element_zooms (map_layer_element_id, zoom_lower, zoom_upper, graphic_icon_id, latitude, longitude, horizontal_flip, rotate, tooltip, show_text, text_color) VALUES
 (0230002,  8, 20, 2,  43.2689305, -1.7008707,  false, null, true, false, '#00000'),
@@ -120,25 +132,3 @@ INSERT INTO ui.map_ext_entities (id, default_graphic_icon_id, default_module_act
 	]'
 );
 
-
-
-
-INSERT INTO ui.map_routes (id, default_module_action_id, routes_config) VALUES
---
--- routes_config format:
---
---		{
---			"routeClosedColor": (Opcional) Color de ruta con cortes o cortada
---			"routeOpenColor": (Opcional) Color de ruta abierta
---			"routeClosureColor": (Opcional) Color de representación de cortes
---			"alternativeRoutes": (Opcional) Habilita el cálculo de rutas adicionales a partir de un corte
---		}
---
-(2, null,
-	'{
-			"routeClosedColor": "#FF4500",
-			"routeOpenColor": "#36B5DD",
-			"avoidPolygonColor": "#8B0000",
-			"alternativeRoutes": true,
-			"alternativeRouteColor": "#46B482"
-	}');

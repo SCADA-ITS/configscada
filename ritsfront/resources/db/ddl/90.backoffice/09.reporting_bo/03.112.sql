@@ -22,12 +22,21 @@ BEGIN
         e.alias AS tipo,
 		e.coordinates::json->0->>1 AS latitud,
         e.coordinates::json->0->>0 AS longitud,
+		CASE 
+            WHEN e.status = ''CREATED'' THEN ''ACTIVA''
+            WHEN e.status = ''DELETED'' THEN ''FINALIZADA''
+            WHEN e.status = ''UPDATED'' THEN ''ACTIVA''
+            ELSE e.status::varchar
+        END AS estado,
 		pv.param_5::timestamptz AT TIME ZONE ''Europe/Madrid'' AS fecha,
         pv.param_1 as localizacion,
-        pv.param_2 as estado,
+        pv.param_2 as estado112,
 		split_part(pv.param_3, ''-'', 1)::int8 AS num_recursos,
 		split_part(pv.param_4, ''-'', 1)::int8 AS num_vehiculos,
-	    e.last_update AS ultima_actualizacion
+	    CASE 
+	        WHEN e.status = ''DELETED'' THEN e.last_update
+	        ELSE NULL
+	    END AS fecha_finalizacion
     FROM 
         (SELECT DISTINCT ON (ext_entity_id) *
          FROM hist.ext_entities

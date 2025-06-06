@@ -11,3 +11,7 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 
 INSERT INTO conf.element_io_controller_modules (element_type_id, element_id, module_type_id, module_id, enabled, visible, created_at, updated_at) VALUES
 (71, 1, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+update master.element_subtype_active_commands
+set enabled = false
+where element_type_id = 71 and element_subtype_id = 22 and command_element_type_id in (8,9);

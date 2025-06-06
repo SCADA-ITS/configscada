@@ -62,15 +62,13 @@ class SendToTelegramNotification {
     List<Command> process(ImsIncidentReport incidentReport, ImsIncidentTypeTask incidentTypeTask, List<ImsIncidentTypeTaskValue> values) {
 		
         List<Command> commands = null;
-        String api_token = null;
-        String chat_id = null;
+        String api_token = '7673259805:AAEqCaKMZ-SvxE8wpUriuGLegpNxLlOLgRM';
+        String chat_id = '-1002691923172';
         String message = null;
-	boolean respuesta = false;
+		boolean respuesta = false;
         
         if (incidentReport.getAffectionStretchId() != null) {
 
-		api_token = IncidentEntitiesManager.getInstance().getIncidentTypeTaskValue(values, TASK_TYPE_PARAM_API_TOKEN);
-		chat_id = IncidentEntitiesManager.getInstance().getIncidentTypeTaskValue(values, TASK_TYPE_PARAM_CHAT_ID);
 		message = IncidentEntitiesManager.getInstance().getIncidentTypeTaskValue(values, TASK_TYPE_PARAM_MESSAGE);
 			
 		if (api_token != null && chat_id != null && message != null) {

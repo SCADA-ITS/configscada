@@ -40,9 +40,7 @@ VALUES
 
 (9, 1, 2, 2, null, null, null, 'messageIds', 'messageIds', 'LBL_IMS_TASK_TYPE_PARAM_IMS_PAS_MESSAGE_IDS', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
-(10, 1, 1, 2, null, null, null, 'tokenBot', 'tokenBot', 'LBL_IMS_TASK_TYPE_PARAM_IMS_SEND_TELEGRAM_TOKEN_BOT', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(10, 2, 1, 2, null, null, null, 'chatID', 'chatID', 'LBL_IMS_TASK_TYPE_PARAM_IMS_SEND_TELEGRAM_CHAT_ID', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(10, 3, 1, 2, null, null, null, 'messageText', 'messageText', 'LBL_IMS_TASK_TYPE_PARAM_IMS_SEND_TELEGRAM_MESSAGE', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(10, 1, 1, 2, null, null, null, 'messageText', 'messageText', 'LBL_IMS_TASK_TYPE_PARAM_IMS_SEND_TELEGRAM_MESSAGE', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 -- 
 -- Table: master.ims_incident_alarm_condition_alarm_types
