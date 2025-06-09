@@ -19,9 +19,9 @@ INSERT INTO conf.ims_incident_type_tasks (incident_type_task_id, incident_type_i
 (030131, 301, 3, 3, 'ILUMINACIÓN', 'Reforzar iluminación en túnel 100% soleado', 'Encendido de todos los circuitos de alumbrado del túnel con objeto de mejorar las condiciones de visibilidad por existencia de humos en caso de fuego.', true, 3, true, 'TaskTypeTubeLighting/SetIlluminationTask', null ,true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --restutucion carril derecho
-(010201, 301, 3, 1, '5 - SEÑALIZACIÓN', 'Retirar señalización de la emergencia', 'Retirar la señalización activada con el aviso de cualquier situación de emergencia.', true, 1, false, 'SendSignallingToStretch', 20, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(010201, 301, 3, 1, 'SEÑALIZACIÓN', 'Retirar señalización de la emergencia', 'Retirar la señalización activada con el aviso de cualquier situación de emergencia.', true, 1, false, 'SendSignallingToStretch', 20, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --restitucion carril izq
-(050201, 301, 3, 1, '5 - SEÑALIZACIÓN', 'Retirar señalización de la emergencia', 'Retirar la señalización activada con el aviso de cualquier situación de emergencia.', true, 1, false, 'SendSignallingToStretch', 10, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(050201, 301, 3, 1, 'SEÑALIZACIÓN', 'Retirar señalización de la emergencia', 'Retirar la señalización activada con el aviso de cualquier situación de emergencia.', true, 1, false, 'SendSignallingToStretch', 10, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 

@@ -16,10 +16,14 @@ VALUES
         "id": 2,
         "alias": "PANEL NR n",
         "from": 1,
-        "to": 1,
+        "to": 2,
         "elementSubtypeId": "ElementSubtype:12:71",
 		"command": {
-					"commandElementTypeId": "CommandElementType:3:71"
+					"commandElementTypeId": "CommandElementType:2:71",
+					"commandElementValues": [{
+							"value": "[{\"zone\":1,\"alternance_ms\":5000,\"graphics\":[{\"id\":1,\"value\":745}]}]",
+						"commandElementTypeParamId": "CommandElementTypeParam:2:71:1"
+					}]	
 		}
 	},	
 	{
@@ -30,6 +34,20 @@ VALUES
         "elementSubtypeId": "ElementSubtype:16:71",
 		"command": {
 					"commandElementTypeId": "CommandElementType:3:71"
+		}
+	},
+	{
+        "id": 4,
+        "alias": "PANEL NR n",
+        "from": 1,
+        "to": 1,
+        "elementSubtypeId": "ElementSubtype:11:71",
+		"command": {
+					"commandElementTypeId": "CommandElementType:2:71",
+					"commandElementValues": [{
+							"value": "[{\"zone\":1,\"alternance_ms\":5000,\"graphics\":[{\"id\":1,\"value\":321}]}]",
+						"commandElementTypeParamId": "CommandElementTypeParam:2:71:1"
+					}]	
 		}
 	}
 ]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -51,9 +69,13 @@ VALUES
         "to": 2,
         "elementSubtypeId": "ElementSubtype:12:71",
 		"command": {
-					"commandElementTypeId": "CommandElementType:3:71"
+					"commandElementTypeId": "CommandElementType:2:71",
+					"commandElementValues": [{
+							"value": "[{\"zone\":1,\"alternance_ms\":5000,\"graphics\":[{\"id\":1,\"value\":745}]}]",
+						"commandElementTypeParamId": "CommandElementTypeParam:2:71:1"
+					}]	
 		}
-	},	
+	},
 	{
         "id": 3,
         "alias": "PANEL NR n",
@@ -62,6 +84,20 @@ VALUES
         "elementSubtypeId": "ElementSubtype:16:71",
 		"command": {
 					"commandElementTypeId": "CommandElementType:3:71"
+		}
+	},
+	{
+        "id": 4,
+        "alias": "PANEL NR n",
+        "from": 1,
+        "to": 1,
+        "elementSubtypeId": "ElementSubtype:11:71",
+		"command": {
+					"commandElementTypeId": "CommandElementType:2:71",
+					"commandElementValues": [{
+							"value": "[{\"zone\":1,\"alternance_ms\":5000,\"graphics\":[{\"id\":1,\"value\":321}]}]",
+						"commandElementTypeParamId": "CommandElementTypeParam:2:71:1"
+					}]	
 		}
 	}
 ]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),

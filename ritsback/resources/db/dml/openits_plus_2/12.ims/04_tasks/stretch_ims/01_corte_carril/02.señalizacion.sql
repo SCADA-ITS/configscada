@@ -50,6 +50,20 @@ VALUES
 						"commandElementTypeParamId": "CommandElementTypeParam:2:71:1"
 					}]	
 		}
+	},
+	{
+        "id": 4,
+        "alias": "PANEL NR n",
+        "from": 1,
+        "to": 1,
+        "elementSubtypeId": "ElementSubtype:11:71",
+		"command": {
+					"commandElementTypeId": "CommandElementType:2:71",
+					"commandElementValues": [{
+							"value": "[{\"zone\":1,\"alternance_ms\":5000,\"graphics\":[{\"id\":1,\"value\":319}]}]",
+						"commandElementTypeParamId": "CommandElementTypeParam:2:71:1"
+					}]	
+		}
 	}
 ]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 --señalizacion carril izquierdo
@@ -92,6 +106,20 @@ VALUES
 					"commandElementTypeId": "CommandElementType:2:71",
 					"commandElementValues": [{
 							"value": "[{\"zone\":1,\"alternance_ms\":5000,\"graphics\":[{\"id\":1,\"value\":746}]}]",
+						"commandElementTypeParamId": "CommandElementTypeParam:2:71:1"
+					}]	
+		}
+	},
+	{
+        "id": 4,
+        "alias": "PANEL NR n",
+        "from": 1,
+        "to": 1,
+        "elementSubtypeId": "ElementSubtype:11:71",
+		"command": {
+					"commandElementTypeId": "CommandElementType:2:71",
+					"commandElementValues": [{
+							"value": "[{\"zone\":1,\"alternance_ms\":5000,\"graphics\":[{\"id\":1,\"value\":319}]}]",
 						"commandElementTypeParamId": "CommandElementTypeParam:2:71:1"
 					}]	
 		}
