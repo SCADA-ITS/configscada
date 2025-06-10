@@ -9,7 +9,7 @@ INSERT INTO conf.ims_incident_type_tasks (incident_type_task_id, incident_type_i
 
 --ETAPA = INICIAL
 (01010339, 101, 1, 1, 'SEÑALIZACION ALTO FLUJO VEHICULAR', 'Plan de señalización de alto flujo vehicular', true, 1, false, 'SendSignallingToStretch', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-
+(01020339, 101, 1, 10, 'NOTIFICACION TELEGRAM', 'Envio de notificacion por telegram', true, 2, false, 'SendToTelegramNotificationPublic', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (01030339, 101, 1, 6, 'COMPROBAR FALSA ALARMA', 'Verificación que no se trata de un vehículo lento o falsa alarma de DAI o ETD', false, 3, false, null, false, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --ETAPA = RESTITUCION
