@@ -53,19 +53,11 @@ INSERT INTO conf.element_values
 				},
 				{
 					"regimeId": 3,
-					"stateIds": [3, 4]	
+					"stateIds": [3]	
 				},
 				{
 					"regimeId": 4,
-					"stateIds": [5, 6]	
-				},
-				{
-					"regimeId": 5,
-					"stateIds": [7]	
-				},
-				{
-					"regimeId": 6,
-					"stateIds": [8]	
+					"stateIds": [4]	
 				}
 			]
 		},
@@ -87,19 +79,11 @@ INSERT INTO conf.element_values
 				},
 				{
 					"regimeId": 3,
-					"stateIds": [3, 4]	
+					"stateIds": [3]	
 				},
 				{
 					"regimeId": 4,
-					"stateIds": [5, 6]	
-				},
-				{
-					"regimeId": 5,
-					"stateIds": [7]	
-				},
-				{
-					"regimeId": 6,
-					"stateIds": [8]	
+					"stateIds": [4]	
 				}
 			]
 		},

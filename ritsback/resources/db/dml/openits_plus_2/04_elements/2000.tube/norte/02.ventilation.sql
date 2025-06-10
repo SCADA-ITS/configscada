@@ -18,21 +18,21 @@ INSERT INTO conf.element_values
 				"alias": "REGIMEN_BAJO",
 				"description": "Regimen bajo tunel para el sentido Norte",
 				"labelAlias": "LBL_REGIME_1",
-				"fans": 2
+				"fans": 3
 			},
 			{
 				"id": 3,
 				"alias": "REGIMEN_MEDIO",
 				"description": "Regimen medio tunel para el sentido Norte",
 				"labelAlias": "LBL_REGIME_2",
-				"fans": 3
+				"fans": 5
 			},
 			{
 				"id": 4,
 				"alias": "REGIMEN_ALTO",
 				"description": "Regimen alto tunel para el sentido Norte",
 				"labelAlias": "LBL_REGIME_3",
-				"fans": 4
+				"fans": 8
 			}],
 	"smConfigs": [
 		{
@@ -53,19 +53,11 @@ INSERT INTO conf.element_values
 				},
 				{
 					"regimeId": 3,
-					"stateIds": [3, 4]	
+					"stateIds": [3]	
 				},
 				{
 					"regimeId": 4,
-					"stateIds": [5, 6]	
-				},
-				{
-					"regimeId": 5,
-					"stateIds": [7]	
-				},
-				{
-					"regimeId": 6,
-					"stateIds": [8]	
+					"stateIds": [4]	
 				}
 			]
 		},
@@ -87,19 +79,11 @@ INSERT INTO conf.element_values
 				},
 				{
 					"regimeId": 3,
-					"stateIds": [3, 4]	
+					"stateIds": [3]	
 				},
 				{
 					"regimeId": 4,
-					"stateIds": [5, 6]	
-				},
-				{
-					"regimeId": 5,
-					"stateIds": [7]	
-				},
-				{
-					"regimeId": 6,
-					"stateIds": [8]	
+					"stateIds": [4]	
 				}
 			]
 		},

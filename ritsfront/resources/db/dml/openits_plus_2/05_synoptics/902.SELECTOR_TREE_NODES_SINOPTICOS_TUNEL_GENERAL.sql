@@ -243,5 +243,7 @@ INSERT INTO ui.synoptic_layer_elements
 (90200900, 'Element:9:7', 000009, 'TUN-VENT-VF7-CA', 970, 266, false, NULL, true, false, NULL, true),
 (90200900, 'Element:9:3', 000009, 'TUN-VENT-VF3-CA', 1190, 266, false, NULL, true, false, NULL, true),
 (90200900, 'Element:9:2', 000009, 'TUN-VENT-VF2-CA', 1300, 400, false, NULL, true, false, NULL, true),
-(90200900, 'Element:9:1', 000009, 'TUN-VENT-VF1-CA', 1300, 266, false, NULL, true, false, NULL, true);
+(90200900, 'Element:9:1', 000009, 'TUN-VENT-VF1-CA', 1300, 266, false, NULL, true, false, NULL, true),
+(90200900, 'Element:9:10', 000009, 'TUN-VENT-VF10-CA', 860, 400, false, NULL, true, false, NULL, true);
+
 
