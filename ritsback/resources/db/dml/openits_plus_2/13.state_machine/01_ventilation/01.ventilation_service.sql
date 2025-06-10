@@ -74,13 +74,6 @@ INSERT INTO static.sm_conditions
 (13, 4, 9, NULL, 20, 1, 2, NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP); --- NO2 > Threshold_NO2_4
 
 
-
-
-
-
-
-
-
 INSERT INTO static.sm_transition_conditions
 (state_machine_id, state_id, transition_id, condition_id, enabled, visible, created_at, updated_at)VALUES
 
