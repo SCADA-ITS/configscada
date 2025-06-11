@@ -177,7 +177,7 @@ INSERT INTO conf.element_values
 		{
 			"id": 3,
 			"alias": "SOLEADO",
-			"description": "Regimen soleado al 30% para el tubo de Sentido Cádiz",
+			"description": "Regimen soleado al 30% para el tubo de Sentido Norte",
 			"labelAlias": "LBL_SOLEADO_30",
 			"documentUrl": "",
 			"configs": [{
@@ -261,7 +261,7 @@ INSERT INTO conf.element_values
 		{
 			"id": 4,
 			"alias": "SOLEADO",
-			"description": "Regimen soleado al 40% para el tubo de Sentido Cádiz",
+			"description": "Regimen soleado al 40% para el tubo de Sentido Norte",
 			"labelAlias": "LBL_SOLEADO_40",
 			"documentUrl": "",
 			"configs": [{
@@ -345,7 +345,7 @@ INSERT INTO conf.element_values
 		{
 			"id": 5,
 			"alias": "SOLEADO",
-			"description": "Regimen soleado al 50% para el tubo de Sentido Cádiz",
+			"description": "Regimen soleado al 50% para el tubo de Sentido Norte",
 			"labelAlias": "LBL_SOLEADO_50",
 			"documentUrl": "",
 			"configs": [{
@@ -429,7 +429,7 @@ INSERT INTO conf.element_values
 		{
 			"id": 6,
 			"alias": "SOLEADO",
-			"description": "Regimen soleado al 65% para el tubo de Sentido Cádiz",
+			"description": "Regimen soleado al 65% para el tubo de Sentido Norte",
 			"labelAlias": "LBL_SOLEADO_65",
 			"documentUrl": "",
 			"configs": [{
@@ -513,7 +513,7 @@ INSERT INTO conf.element_values
 		{
 			"id": 7,
 			"alias": "SOLEADO",
-			"description": "Regimen soleado al 85% para el tubo de Sentido Cádiz",
+			"description": "Regimen soleado al 85% para el tubo de Sentido Norte",
 			"labelAlias": "LBL_SOLEADO_85",
 			"documentUrl": "",
 			"configs": [{
@@ -597,7 +597,7 @@ INSERT INTO conf.element_values
 		{
 			"id": 8,
 			"alias": "SOLEADO",
-			"description": "Regimen soleado al 100% para el tubo de Sentido Cádiz",
+			"description": "Regimen soleado al 100% para el tubo de Sentido Norte",
 			"labelAlias": "LBL_SOLEADO_100",
 			"documentUrl": "",
 			"configs": [{
@@ -681,7 +681,7 @@ INSERT INTO conf.element_values
 		{
 			"id": 9,
 			"alias": "NOCTURNO",
-			"description": "Regimen nocturno para el tubo de Sentido Cádiz",
+			"description": "Regimen nocturno para el tubo de Sentido Norte",
 			"labelAlias": "LBL_NOCTURNO_100",
 			"documentUrl": "",
 			"configs": [{
@@ -765,7 +765,7 @@ INSERT INTO conf.element_values
 		{
 			"id": 10,
 			"alias": "NOCTURNO",
-			"description": "Regimen nocturno para el tubo de Sentido Cádiz",
+			"description": "Regimen nocturno para el tubo de Sentido Norte",
 			"labelAlias": "LBL_NOCTURNO_60",
 			"documentUrl": "",
 			"configs": [{
@@ -849,7 +849,7 @@ INSERT INTO conf.element_values
 		{
 			"id": 11,
 			"alias": "NOCTURNO",
-			"description": "Regimen nocturno para el tubo de Sentido Cádiz",
+			"description": "Regimen nocturno para el tubo de Sentido Norte",
 			"labelAlias": "LBL_NOCTURNO_30",
 			"documentUrl": "",
 			"configs": [{

@@ -26,13 +26,13 @@ INSERT INTO static.sm_thresholds
 (10002, 'Threshold_CO_2', 'Threshold CO 2 (ppm)', 'LBL_THRESHOLD_CO_2', 'LBL_THRESHOLD_CO_2', 1, '25', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (10003, 'Threshold_CO_4', 'Threshold CO 4 (ppm)', 'LBL_THRESHOLD_CO_4', 'LBL_THRESHOLD_CO_4', 1, '40', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
-(10004, 'Threshold_K_0', 'Threshold K 0 (m-1)', 'LBL_THRESHOLD_K_0', 'LBL_THRESHOLD_K_0', 3, '0.0020', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(10005, 'Threshold_K_2', 'Threshold K 2 (m-1)', 'LBL_THRESHOLD_K_2', 'LBL_THRESHOLD_K_2', 3, '0.0040', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(10006, 'Threshold_K_4', 'Threshold K 4 (m-1)', 'LBL_THRESHOLD_K_4', 'LBL_THRESHOLD_K_4', 3, '0.0060', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(10004, 'Threshold_K_0', 'Threshold K 0 (m-1)', 'LBL_THRESHOLD_K_0', 'LBL_THRESHOLD_K_0', 1, '1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(10005, 'Threshold_K_2', 'Threshold K 2 (m-1)', 'LBL_THRESHOLD_K_2', 'LBL_THRESHOLD_K_2', 1, '3', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(10006, 'Threshold_K_4', 'Threshold K 4 (m-1)', 'LBL_THRESHOLD_K_4', 'LBL_THRESHOLD_K_4', 1, '5', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
-(10007, 'Threshold_NO2_0', 'Threshold NO2 0 (ppm)', 'LBL_THRESHOLD_NO2_0', 'LBL_THRESHOLD_NO2_0', 3, '0.05', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(10008, 'Threshold_NO2_2', 'Threshold NO2 2 (ppm)', 'LBL_THRESHOLD_NO2_2', 'LBL_THRESHOLD_NO2_2', 3, '0.25', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(10009, 'Threshold_NO2_4', 'Threshold NO2 4 (ppm)', 'LBL_THRESHOLD_NO2_4', 'LBL_THRESHOLD_NO2_4', 3, '0.40', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(10007, 'Threshold_NO2_0', 'Threshold NO2 0 (ppm)', 'LBL_THRESHOLD_NO2_0', 'LBL_THRESHOLD_NO2_0', 1, '1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(10008, 'Threshold_NO2_2', 'Threshold NO2 2 (ppm)', 'LBL_THRESHOLD_NO2_2', 'LBL_THRESHOLD_NO2_2', 1, '3', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(10009, 'Threshold_NO2_4', 'Threshold NO2 4 (ppm)', 'LBL_THRESHOLD_NO2_4', 'LBL_THRESHOLD_NO2_4', 1, '5', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO static.sm_transitions
 (state_machine_id, state_id, transition_id, nexus_and, next_state_id, enabled, visible, created_at, updated_at) VALUES
