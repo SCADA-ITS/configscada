@@ -13,6 +13,7 @@ BEGIN
     SELECT 
         abs(hashtext(e.uid)::int8) AS id,
         e.uid,
+		e.last_update as fecha_actualizacion,
    		abs(hashtext(split_part(e.uid, ''##'', 1))::int8) AS id_incidente,
     	split_part(e.uid, ''##'', 2)::varchar(20)  AS matricula,
         e.alias AS marca,

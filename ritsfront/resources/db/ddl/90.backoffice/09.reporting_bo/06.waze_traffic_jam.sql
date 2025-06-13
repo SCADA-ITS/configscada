@@ -12,6 +12,7 @@ BEGIN
     CREATE OR REPLACE VIEW reporting_bo.waze_traffic_jam_ext_entities_with_values AS
     SELECT 
         e.uid as id,
+		e.last_update as fecha_actualizacion,
         case
         	when e.ext_entity_subtype_id = 8001 then ''(0) Libre''
         	when e.ext_entity_subtype_id = 8002 then ''(1) Velocidad moderada''

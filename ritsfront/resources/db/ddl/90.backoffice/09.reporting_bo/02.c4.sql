@@ -12,6 +12,7 @@ BEGIN
     CREATE OR REPLACE VIEW reporting_bo.c4_ext_entities_with_values AS
     SELECT 
         e.uid as id,
+		e.last_update as fecha_actualizacion,
         pv.param_11 AS categoria,
         e.alias AS tipo,
         e.description AS titulo,
@@ -21,7 +22,6 @@ BEGIN
         pv.param_2 AS carretera,
         pv.param_10 AS localizacion,
     	(TO_TIMESTAMP(pv.param_9, ''YYYY-MM-DD HH24:MI:SS.MS'') AT TIME ZONE ''Europe/Madrid'')::timestamptz AS fecha,
-    	(TO_TIMESTAMP(pv.param_7, ''YYYY-MM-DD HH24:MI:SS.MS'') AT TIME ZONE ''Europe/Madrid'')::timestamptz AS fecha_actualizacion,
         CASE 
             WHEN e.status = ''CREATED'' THEN ''ACTIVA''
             WHEN e.status = ''DELETED'' THEN ''FINALIZADA''
@@ -46,7 +46,7 @@ BEGIN
             FROM 
                 hist.ext_entity_values
             WHERE 
-                ext_entity_type_param_id IN (2, 6, 7, 8, 9, 10, 11)
+                ext_entity_type_param_id IN (2, 6, 8, 9, 10, 11)
             ORDER BY 
                 ext_entity_id, 
                 created_at desc,
@@ -55,7 +55,6 @@ BEGIN
             ext_entity_id int8,
             param_2 varchar,
             param_6 varchar,
-            param_7 varchar,
             param_8 varchar,
             param_9 varchar,
             param_10 varchar,

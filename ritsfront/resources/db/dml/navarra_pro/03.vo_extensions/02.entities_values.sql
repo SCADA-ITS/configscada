@@ -124,17 +124,110 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 ('ExtEntitySubtype:7001', 66, 'waze_accident.png'),
 ('ExtEntitySubtype:7001', 70, 'waze_accident.png'),
 
-('ExtEntitySubtype:7003', 66, 'waze_traffic_hazard.png'),
-('ExtEntitySubtype:7003', 70, 'waze_traffic_hazard.png'),
+('ExtEntitySubtype:7002', 66, 'waze_accident.png'),
+('ExtEntitySubtype:7002', 70, 'waze_accident.png'),
 
-('ExtEntitySubtype:7004', 66, 'waze_weather_hazard.png'),
-('ExtEntitySubtype:7004', 70, 'waze_weather_hazard.png'),
+('ExtEntitySubtype:7003', 66, 'waze.png'),
+('ExtEntitySubtype:7003', 70, 'waze.png'),
 
-('ExtEntitySubtype:7006', 66, 'waze_construction.png'),
-('ExtEntitySubtype:7006', 70, 'waze_construction.png'),
+('ExtEntitySubtype:7004', 66, 'waze.png'),
+('ExtEntitySubtype:7004', 70, 'waze.png'),
 
-('ExtEntitySubtype:7007', 66, 'waze_closed_road.png'),
-('ExtEntitySubtype:7007', 70, 'waze_closed_road.png'),
+('ExtEntitySubtype:7005', 66, 'waze.png'),
+('ExtEntitySubtype:7005', 70, 'waze.png'),
+
+('ExtEntitySubtype:7006', 66, 'waze.png'),
+('ExtEntitySubtype:7006', 70, 'waze.png'),
+
+('ExtEntitySubtype:7007', 66, 'waze_traffic_hazard.png'),
+('ExtEntitySubtype:7007', 70, 'waze_traffic_hazard.png'),
+
+('ExtEntitySubtype:7008', 66, 'waze_traffic_hazard.png'),
+('ExtEntitySubtype:7008', 70, 'waze_traffic_hazard.png'),
+
+('ExtEntitySubtype:7009', 66, 'waze_weather_hazard.png'),
+('ExtEntitySubtype:7009', 70, 'waze_weather_hazard.png'),
+
+('ExtEntitySubtype:7010', 66, 'waze_traffic_hazard.png'),
+('ExtEntitySubtype:7010', 70, 'waze_traffic_hazard.png'),
+
+('ExtEntitySubtype:7011', 66, 'waze_traffic_hazard.png'),
+('ExtEntitySubtype:7011', 70, 'waze_traffic_hazard.png'),
+
+('ExtEntitySubtype:7012', 66, 'waze_traffic_hazard.png'),
+('ExtEntitySubtype:7012', 70, 'waze_traffic_hazard.png'),
+
+('ExtEntitySubtype:7013', 66, 'waze_traffic_hazard.png'),
+('ExtEntitySubtype:7013', 70, 'waze_traffic_hazard.png'),
+
+('ExtEntitySubtype:7014', 66, 'waze_traffic_hazard.png'),
+('ExtEntitySubtype:7014', 70, 'waze_traffic_hazard.png'),
+
+('ExtEntitySubtype:7015', 66, 'waze_traffic_hazard.png'),
+('ExtEntitySubtype:7015', 70, 'waze_traffic_hazard.png'),
+
+('ExtEntitySubtype:7016', 66, 'waze_weather_hazard.png'),
+('ExtEntitySubtype:7016', 70, 'waze_weather_hazard.png'),
+
+('ExtEntitySubtype:7017', 66, 'waze_weather_hazard.png'),
+('ExtEntitySubtype:7017', 70, 'waze_weather_hazard.png'),
+
+('ExtEntitySubtype:7018', 66, 'waze_weather_hazard.png'),
+('ExtEntitySubtype:7018', 70, 'waze_weather_hazard.png'),
+
+('ExtEntitySubtype:7019', 66, 'waze_weather_hazard.png'),
+('ExtEntitySubtype:7019', 70, 'waze_weather_hazard.png'),
+
+('ExtEntitySubtype:7020', 66, 'waze_weather_hazard.png'),
+('ExtEntitySubtype:7020', 70, 'waze_weather_hazard.png'),
+
+('ExtEntitySubtype:7021', 66, 'waze_weather_hazard.png'),
+('ExtEntitySubtype:7021', 70, 'waze_weather_hazard.png'),
+
+('ExtEntitySubtype:7022', 66, 'waze_weather_hazard.png'),
+('ExtEntitySubtype:7022', 70, 'waze_weather_hazard.png'),
+
+('ExtEntitySubtype:7023', 66, 'waze_weather_hazard.png'),
+('ExtEntitySubtype:7023', 70, 'waze_weather_hazard.png'),
+
+('ExtEntitySubtype:7024', 66, 'waze_weather_hazard.png'),
+('ExtEntitySubtype:7024', 70, 'waze_weather_hazard.png'),
+
+('ExtEntitySubtype:7025', 66, 'waze_weather_hazard.png'),
+('ExtEntitySubtype:7025', 70, 'waze_weather_hazard.png'),
+
+('ExtEntitySubtype:7026', 66, 'waze_traffic_hazard.png'),
+('ExtEntitySubtype:7026', 70, 'waze_traffic_hazard.png'),
+
+('ExtEntitySubtype:7027', 66, 'waze_traffic_hazard.png'),
+('ExtEntitySubtype:7027', 70, 'waze_traffic_hazard.png'),
+
+('ExtEntitySubtype:7028', 66, 'waze_traffic_hazard.png'),
+('ExtEntitySubtype:7028', 70, 'waze_traffic_hazard.png'),
+
+('ExtEntitySubtype:7029', 66, 'waze_traffic_hazard.png'),
+('ExtEntitySubtype:7029', 70, 'waze_traffic_hazard.png'),
+
+('ExtEntitySubtype:7030', 66, 'waze_traffic_hazard.png'),
+('ExtEntitySubtype:7030', 70, 'waze_traffic_hazard.png'),
+
+('ExtEntitySubtype:7031', 66, 'waze_traffic_hazard.png'),
+('ExtEntitySubtype:7031', 70, 'waze_traffic_hazard.png'),
+
+('ExtEntitySubtype:7032', 66, 'waze.png'),
+('ExtEntitySubtype:7032', 70, 'waze.png'),
+
+('ExtEntitySubtype:7033', 66, 'waze_construction.png'),
+('ExtEntitySubtype:7033', 70, 'waze_construction.png'),
+
+('ExtEntitySubtype:7034', 66, 'waze_closed_road.png'),
+('ExtEntitySubtype:7034', 70, 'waze_closed_road.png'),
+
+('ExtEntitySubtype:7035', 66, 'waze_closed_road.png'),
+('ExtEntitySubtype:7035', 70, 'waze_closed_road.png'),
+
+('ExtEntitySubtype:7036', 66, 'waze_closed_road.png'),
+('ExtEntitySubtype:7036', 70, 'waze_closed_road.png'),
 
 ('ExtEntitySubtype:8001', 66, 'waze_trafficjam_0.png'),
 ('ExtEntitySubtype:8001', 70, 'waze_trafficjam_0.png'),

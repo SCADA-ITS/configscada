@@ -6,7 +6,7 @@ INSERT INTO static.ext_entity_types(ext_entity_type_id, alias, description, labe
 		"username": "IncCarreterasTRAFICO",
 		"password": "Frp$JoD6M2"
 	},
-	"selectQuery": "SELECT categoria, fecha_actualizacion, nombre_carretera, pk, hm, tipo, afeccion, fecha, titulo, id_incidencia, fecha_modificacion, id_carretera, utm_x, utm_y, id_tipo, id_afeccion, color FROM IncCarreteras.dbo.BaseIVR where id_categoria  = 1;",
+	"selectQuery": "SELECT categoria, descripcion, fecha_actualizacion, nombre_carretera, pk, hm, tipo, afeccion, fecha, titulo, id_incidencia, fecha_modificacion, id_carretera, utm_x, utm_y, id_tipo, id_afeccion, color FROM IncCarreteras.dbo.BaseIVR;",
 	"extEntityParamsMapping": [ {"field": "id_carretera", "extEntityTypeParamId": "ExtEntityTypeParam:1:1"},
 								{"field": "nombre_carretera", "extEntityTypeParamId": "ExtEntityTypeParam:1:2"},
 								{"field": "pk", "extEntityTypeParamId": "ExtEntityTypeParam:1:3"},
@@ -21,7 +21,7 @@ INSERT INTO static.ext_entity_types(ext_entity_type_id, alias, description, labe
 							],
 	"extEntityFieldsMapping": [ {"srcField": "id_incidencia", "dstField": "uid"},
 								{"srcField": "tipo", "dstField": "alias"},
-								{"srcField": "titulo", "dstField": "description"}
+								{"srcField": "descripcion", "dstField": "description"}
 							],
 	"extEntitySubtypes": {
 		"field": "categoria",
@@ -129,8 +129,8 @@ true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (7, 'Waze traffic alerts', 'Alertas de trafico de waze', 'LBL_EXT_ENTITY_TYPE_WAZE_TRAFFIC_ALERTS', 'LBL_EXT_ENTITY_TYPE_WAZE_TRAFFIC_ALERTS_DESC', true, '0 0/2 * * * ? *', 
 '{
 	"url": "https://www.waze.com/row-partnerhub-api/partners/16934850034/waze-feeds/c46bd65e-1743-4e61-88da-311bab40b8ae?format=1&types=alerts",
-	"reliability": 7,
-	"confidence": 3,
+	"reliability": 0,
+	"confidence": 0,
 	"extEntityParamsMapping": [ {"field": "pubMillis", "extEntityTypeParamId": "ExtEntityTypeParam:7:1"},
 								{"field": "magvar", "extEntityTypeParamId": "ExtEntityTypeParam:7:2"},
 								{"field": "street", "extEntityTypeParamId": "ExtEntityTypeParam:7:3"},
@@ -147,31 +147,100 @@ true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 							],
 	"extEntitySubtypes": {
 			"field": "type",
-			"mapping": [{"extEntitySubtypeId": "ExtEntitySubtype:7001", "value": "ACCIDENT"},
-						{"extEntitySubtypeId": "ExtEntitySubtype:7002", "value": "JAM"},
-						{"extEntitySubtypeId": "ExtEntitySubtype:7003", "value": "HAZARD"},
-						{"extEntitySubtypeId": "ExtEntitySubtype:7004", "value": "WEATHERHAZARD"},	
-						{"extEntitySubtypeId": "ExtEntitySubtype:7003", "value": "WEATHERHAZARD / HAZARD",	
+			"mapping": [{"extEntitySubtypeId": "ExtEntitySubtype:7001", "value": "ACCIDENT",
+						 "extEntitySubtypes": {
 							"field": "subtype",
-							"mapping": [{"extEntitySubtypeId": "ExtEntitySubtype:7004", "value": "HAZARD_WEATHER"},
-										{"extEntitySubtypeId": "ExtEntitySubtype:7004", "value": "HAZARD_WEATHER_FOG"},
-										{"extEntitySubtypeId": "ExtEntitySubtype:7004", "value": "HAZARD_WEATHER_HAIL"},
-										{"extEntitySubtypeId": "ExtEntitySubtype:7004", "value": "HAZARD_WEATHER_HEAVY_RAIN"},
-										{"extEntitySubtypeId": "ExtEntitySubtype:7004", "value": "HAZARD_WEATHER_HEAVY_SNOW"},
-										{"extEntitySubtypeId": "ExtEntitySubtype:7004", "value": "HAZARD_WEATHER_FLOOD"},
-										{"extEntitySubtypeId": "ExtEntitySubtype:7004", "value": "HAZARD_WEATHER_MONSOON"},
-										{"extEntitySubtypeId": "ExtEntitySubtype:7004", "value": "HAZARD_WEATHER_TORNADO"},
-										{"extEntitySubtypeId": "ExtEntitySubtype:7004", "value": "HAZARD_WEATHER_HEAT_WAVE"},
-										{"extEntitySubtypeId": "ExtEntitySubtype:7004", "value": "HAZARD_WEATHER_HURRICANE"},
-										{"extEntitySubtypeId": "ExtEntitySubtype:7004", "value": "HAZARD_WEATHER_FREEZING_RAIN"}]
-						},					
-						{"extEntitySubtypeId": "ExtEntitySubtype:7005", "value": "MISC"},
-						{"extEntitySubtypeId": "ExtEntitySubtype:7006", "value": "CONSTRUCTION"},
-						{"extEntitySubtypeId": "ExtEntitySubtype:7007", "value": "ROAD_CLOSED"}
+							"mapping": [{"extEntitySubtypeId": "ExtEntitySubtype:7001", "value": "ACCIDENT_MINOR"},
+										{"extEntitySubtypeId": "ExtEntitySubtype:7002", "value": "ACCIDENT_MAJOR"}]
+						 }
+						},
+						{"extEntitySubtypeId": "ExtEntitySubtype:7006", "value": "JAM",
+						 "extEntitySubtypes": {
+							"field": "subtype",
+							"mapping": [{"extEntitySubtypeId": "ExtEntitySubtype:7003", "value": "JAM_MODERATE_TRAFFIC"},
+										{"extEntitySubtypeId": "ExtEntitySubtype:7004", "value": "JAM_HEAVY_TRAFFIC"},
+										{"extEntitySubtypeId": "ExtEntitySubtype:7005", "value": "JAM_STAND_STILL_TRAFFIC"},
+										{"extEntitySubtypeId": "ExtEntitySubtype:7006", "value": "JAM_LIGHT_TRAFFIC"}]
+						 }
+						},
+						{"extEntitySubtypeId": "ExtEntitySubtype:7007", "value": "HAZARD",
+						 "extEntitySubtypes": {
+							"field": "subtype",
+							"mapping": [{"extEntitySubtypeId": "ExtEntitySubtype:7007", "value": "HAZARD_ON_ROAD"},
+										{"extEntitySubtypeId": "ExtEntitySubtype:7008", "value": "HAZARD_ON_SHOULDER"},
+										{"extEntitySubtypeId": "ExtEntitySubtype:7009", "value": "HAZARD_WEATHER"},
+										{"extEntitySubtypeId": "ExtEntitySubtype:7010", "value": "HAZARD_ON_ROAD_OBJECT"},
+										{"extEntitySubtypeId": "ExtEntitySubtype:7011", "value": "HAZARD_ON_ROAD_POT_HOLE"},
+										{"extEntitySubtypeId": "ExtEntitySubtype:7012", "value": "HAZARD_ON_ROAD_ROAD_KILL"},
+										{"extEntitySubtypeId": "ExtEntitySubtype:7013", "value": "HAZARD_ON_SHOULDER_CAR_STOPPED"},
+										{"extEntitySubtypeId": "ExtEntitySubtype:7014", "value": "HAZARD_ON_SHOULDER_ANIMALS"},
+										{"extEntitySubtypeId": "ExtEntitySubtype:7015", "value": "HAZARD_ON_SHOULDER_MISSING_SIGN"},
+										{"extEntitySubtypeId": "ExtEntitySubtype:7016", "value": "HAZARD_WEATHER_FOG"},
+										{"extEntitySubtypeId": "ExtEntitySubtype:7017", "value": "HAZARD_WEATHER_HAIL"},
+										{"extEntitySubtypeId": "ExtEntitySubtype:7018", "value": "HAZARD_WEATHER_HEAVY_RAIN"},
+										{"extEntitySubtypeId": "ExtEntitySubtype:7019", "value": "HAZARD_WEATHER_HEAVY_SNOW"},
+										{"extEntitySubtypeId": "ExtEntitySubtype:7020", "value": "HAZARD_WEATHER_FLOOD"},
+										{"extEntitySubtypeId": "ExtEntitySubtype:7021", "value": "HAZARD_WEATHER_MONSOON"},
+										{"extEntitySubtypeId": "ExtEntitySubtype:7022", "value": "HAZARD_WEATHER_TORNADO"},
+										{"extEntitySubtypeId": "ExtEntitySubtype:7023", "value": "HAZARD_WEATHER_HEAT_WAVE"},
+										{"extEntitySubtypeId": "ExtEntitySubtype:7024", "value": "HAZARD_WEATHER_HURRICANE"},
+										{"extEntitySubtypeId": "ExtEntitySubtype:7025", "value": "HAZARD_WEATHER_FREEZING_RAIN"},
+										{"extEntitySubtypeId": "ExtEntitySubtype:7026", "value": "HAZARD_ON_ROAD_LANE_CLOSED"},
+										{"extEntitySubtypeId": "ExtEntitySubtype:7027", "value": "HAZARD_ON_ROAD_OIL"},
+										{"extEntitySubtypeId": "ExtEntitySubtype:7028", "value": "HAZARD_ON_ROAD_ICE"},
+										{"extEntitySubtypeId": "ExtEntitySubtype:7029", "value": "HAZARD_ON_ROAD_CONSTRUCTION"},
+										{"extEntitySubtypeId": "ExtEntitySubtype:7030", "value": "HAZARD_ON_ROAD_CAR_STOPPED"},
+										{"extEntitySubtypeId": "ExtEntitySubtype:7031", "value": "HAZARD_ON_ROAD_TRAFFIC_LIGHT_FAULT"}]
+						 }
+						},
+						{"extEntitySubtypeId": "ExtEntitySubtype:7007", "value": "WEATHERHAZARD",
+						 "extEntitySubtypes": {
+							"field": "subtype",
+							"mapping": [{"extEntitySubtypeId": "ExtEntitySubtype:7007", "value": "HAZARD_ON_ROAD"},
+										{"extEntitySubtypeId": "ExtEntitySubtype:7008", "value": "HAZARD_ON_SHOULDER"},
+										{"extEntitySubtypeId": "ExtEntitySubtype:7009", "value": "HAZARD_WEATHER"},
+										{"extEntitySubtypeId": "ExtEntitySubtype:7010", "value": "HAZARD_ON_ROAD_OBJECT"},
+										{"extEntitySubtypeId": "ExtEntitySubtype:7011", "value": "HAZARD_ON_ROAD_POT_HOLE"},
+										{"extEntitySubtypeId": "ExtEntitySubtype:7012", "value": "HAZARD_ON_ROAD_ROAD_KILL"},
+										{"extEntitySubtypeId": "ExtEntitySubtype:7013", "value": "HAZARD_ON_SHOULDER_CAR_STOPPED"},
+										{"extEntitySubtypeId": "ExtEntitySubtype:7014", "value": "HAZARD_ON_SHOULDER_ANIMALS"},
+										{"extEntitySubtypeId": "ExtEntitySubtype:7015", "value": "HAZARD_ON_SHOULDER_MISSING_SIGN"},
+										{"extEntitySubtypeId": "ExtEntitySubtype:7016", "value": "HAZARD_WEATHER_FOG"},
+										{"extEntitySubtypeId": "ExtEntitySubtype:7017", "value": "HAZARD_WEATHER_HAIL"},
+										{"extEntitySubtypeId": "ExtEntitySubtype:7018", "value": "HAZARD_WEATHER_HEAVY_RAIN"},
+										{"extEntitySubtypeId": "ExtEntitySubtype:7019", "value": "HAZARD_WEATHER_HEAVY_SNOW"},
+										{"extEntitySubtypeId": "ExtEntitySubtype:7020", "value": "HAZARD_WEATHER_FLOOD"},
+										{"extEntitySubtypeId": "ExtEntitySubtype:7021", "value": "HAZARD_WEATHER_MONSOON"},
+										{"extEntitySubtypeId": "ExtEntitySubtype:7022", "value": "HAZARD_WEATHER_TORNADO"},
+										{"extEntitySubtypeId": "ExtEntitySubtype:7023", "value": "HAZARD_WEATHER_HEAT_WAVE"},
+										{"extEntitySubtypeId": "ExtEntitySubtype:7024", "value": "HAZARD_WEATHER_HURRICANE"},
+										{"extEntitySubtypeId": "ExtEntitySubtype:7025", "value": "HAZARD_WEATHER_FREEZING_RAIN"},
+										{"extEntitySubtypeId": "ExtEntitySubtype:7026", "value": "HAZARD_ON_ROAD_LANE_CLOSED"},
+										{"extEntitySubtypeId": "ExtEntitySubtype:7027", "value": "HAZARD_ON_ROAD_OIL"},
+										{"extEntitySubtypeId": "ExtEntitySubtype:7028", "value": "HAZARD_ON_ROAD_ICE"},
+										{"extEntitySubtypeId": "ExtEntitySubtype:7029", "value": "HAZARD_ON_ROAD_CONSTRUCTION"},
+										{"extEntitySubtypeId": "ExtEntitySubtype:7030", "value": "HAZARD_ON_ROAD_CAR_STOPPED"},
+										{"extEntitySubtypeId": "ExtEntitySubtype:7031", "value": "HAZARD_ON_ROAD_TRAFFIC_LIGHT_FAULT"}]
+						 }
+						},
+						{"extEntitySubtypeId": "ExtEntitySubtype:7032", "value": "MISC"},
+						{"extEntitySubtypeId": "ExtEntitySubtype:7033", "value": "CONSTRUCTION"},
+						{"extEntitySubtypeId": "ExtEntitySubtype:7034", "value": "ROAD_CLOSED",
+						 "extEntitySubtypes": {
+							"field": "subtype",
+							"mapping": [{"extEntitySubtypeId": "ExtEntitySubtype:7034", "value": "ROAD_CLOSED_HAZARD"},
+										{"extEntitySubtypeId": "ExtEntitySubtype:7035", "value": "ROAD_CLOSED_CONSTRUCTION"},
+										{"extEntitySubtypeId": "ExtEntitySubtype:7036", "value": "ROAD_CLOSED_EVENT"}]
+						 }
+						}
 		]
 	},
 	"incidentReportMappings": [{
 	    "extEntitySubtypeId": "ExtEntitySubtype:7001",
+	    "imsIncidentTypeId": "ImsIncidentType:401",
+	    "confirm": true
+	  },{
+	    "extEntitySubtypeId": "ExtEntitySubtype:7002",
 	    "imsIncidentTypeId": "ImsIncidentType:401",
 	    "confirm": true
 	  }]   
@@ -181,7 +250,7 @@ true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (8, 'Waze traffic jams', 'Atascos de trafico waze', 'LBL_EXT_ENTITY_TYPE_WAZE_TRAFFIC_JAMS', 'LBL_EXT_ENTITY_TYPE_WAZE_TRAFFIC_JAMS_DESC', true, '50 0/2 * * * ? *', 
 '{
 	"url": "https://www.waze.com/row-partnerhub-api/partners/16934850034/waze-feeds/c46bd65e-1743-4e61-88da-311bab40b8ae?format=1&types=traffic",
-	"level": 4,
+	"level": 0,
 	"extEntityParamsMapping": [ {"field": "pubMillis", "extEntityTypeParamId": "ExtEntityTypeParam:8:1"},
 								{"field": "speedKMH", "extEntityTypeParamId": "ExtEntityTypeParam:8:2"},
 								{"field": "length", "extEntityTypeParamId": "ExtEntityTypeParam:8:3"},

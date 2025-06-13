@@ -13,6 +13,7 @@ BEGIN
     SELECT 
    		abs(hashtext(e.uid)::int8) AS id,
         e.uid,
+		e.last_update as fecha_actualizacion,
 		CASE 
             WHEN e.ext_entity_subtype_id = ''4001'' THEN ''ACCIDENTES''
             WHEN e.ext_entity_subtype_id = ''4002'' THEN ''METEOROLÓGICAS''

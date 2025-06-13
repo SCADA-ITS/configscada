@@ -49,7 +49,16 @@ BEGIN
 			, 4004, null),	
 		(5, 'all_waze_traffic_alert_ext_entities_with_values', 'LBL_EXT_ENTITY_WAZE_TRAFFIC_ALERT', 'LBL_EXT_ENTITY_WAZE_TRAFFIC_ALERT', 'LBL_EXT_ENTITY_WAZE_TRAFFIC_ALERT_DESCRIPTION', NULL, false, false, 
 			-- sql_view 
-			'SELECT * FROM reporting_bo.waze_traffic_alert_ext_entities_with_values'
+			'SELECT 
+				id, categoria, tipo, carretera, latitud, longitud, fecha_publicacion, direccion, calle, localidad, pais, valoracion, fiabilidad, confianza, usuario_municipio, estado, fecha_finalizacion
+			FROM 
+				reporting_bo.waze_traffic_alert_ext_entities_with_values t
+			WHERE
+				fecha_actualizacion = (
+					select max (fecha_actualizacion)
+					from reporting_bo.waze_traffic_alert_ext_entities_with_values
+					where id = t.id
+				)'
 			, 4005, null),
 		(6, 'all_waze_traffic_jam_ext_entities_with_values', 'LBL_EXT_ENTITY_WAZE_TRAFFIC_JAM', 'LBL_EXT_ENTITY_WAZE_TRAFFIC_JAM', 'LBL_EXT_ENTITY_WAZE_TRAFFIC_JAM_DESCRIPTION', NULL, false, false, 
 			-- sql_view 

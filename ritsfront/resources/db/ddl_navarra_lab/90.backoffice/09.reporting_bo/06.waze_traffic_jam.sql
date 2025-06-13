@@ -12,6 +12,7 @@ BEGIN
     CREATE OR REPLACE VIEW reporting_bo.waze_traffic_jam_ext_entities_with_values AS
     SELECT 
         e.uid as id,
+		e.last_update as fecha_actualizacion,
         case
         	when e.ext_entity_subtype_id = 8001 then ''(0) Libre''
         	when e.ext_entity_subtype_id = 8002 then ''(1) Velocidad moderada''
@@ -37,7 +38,11 @@ BEGIN
             WHEN e.status = ''DELETED'' THEN ''FINALIZADA''
             WHEN e.status = ''UPDATED'' THEN ''ACTIVA''
             ELSE e.status::varchar
-        END AS estado
+        END AS estado,
+	    CASE 
+	        WHEN e.status = ''DELETED'' THEN e.last_update
+	        ELSE NULL
+	    END AS fecha_finalizacion
     FROM 
         (SELECT DISTINCT ON (ext_entity_id) *
          FROM hist.ext_entities

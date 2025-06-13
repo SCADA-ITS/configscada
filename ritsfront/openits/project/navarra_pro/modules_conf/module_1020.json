@@ -78,8 +78,23 @@
 				"decoder": "mjpeg"
 			},
 			{
+				"brand": "Bosch",
+				"model": "Starlight-7000",
+				"decoder": "mjpeg"
+			},
+			{
 				"brand": "Axis",
 				"model": "P1375-E",
+				"decoder": "mjpeg"
+			},
+			{
+				"brand": "Hikvision",
+				"model": "IDS-2CD7A86G0-IZHSY",
+				"decoder": "mjpeg"
+			},
+			{
+				"brand": "Hikvision",
+				"model": "DS-2CD3047G2-LS",
 				"decoder": "mjpeg"
 			},
 			{
@@ -94,7 +109,7 @@
 			},
 			{
 				"brand": "LectorVision",
-				"model": "Desconocido",
+				"model": "Traffic-eye-smart-sensor-HR-overview",
 				"decoder": "mjpeg"
 			},
 			{

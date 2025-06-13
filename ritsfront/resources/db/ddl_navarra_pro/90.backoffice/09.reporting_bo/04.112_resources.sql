@@ -13,6 +13,7 @@ BEGIN
     SELECT 
         abs(hashtext(e.uid)::int8) AS id,
         e.uid,
+		e.last_update as fecha_actualizacion,
    		abs(hashtext(split_part(e.uid, ''##'', 1))::int8) AS id_incidente,
     	split_part(e.uid, ''##'', 2)::varchar(50)  AS nombre,
 		(TO_TIMESTAMP(pv.param_1, ''YYYY-MM-DD"T"HH24:MI:SS'') AT TIME ZONE ''Europe/Madrid'')::timestamptz AS fecha_salida,

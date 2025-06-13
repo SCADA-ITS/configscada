@@ -19,10 +19,6 @@ INSERT INTO conf.ims_incident_type_state_transitions (incident_type_id, ini_inci
 
 (108, 1, 100, false, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
-(109, 1, 100, false, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-
-(110, 1, 100, false, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-
 (201, 1, 100, false, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 (202, 1, 100, false, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
