@@ -762,174 +762,6 @@ INSERT INTO conf.element_values
 				}
 				]	
 			}]
-		},
-		{
-			"id": 10,
-			"alias": "NOCTURNO",
-			"description": "Regimen nocturno para el tubo de Sentido Sur",
-			"labelAlias": "LBL_NOCTURNO_60",
-			"documentUrl": "",
-			"configs": [{
-				"id": 10,
-				"commands": [
-				{
-					"commandElementTypeId": "CommandElementType:1:84",
-					"elementId": "Element:84:12"
-				},
-				{
-					"commandElementTypeId": "CommandElementType:1:84",
-					"elementId": "Element:84:13"
-				},	
-				{
-					"commandElementTypeId": "CommandElementType:1:84",
-					"elementId": "Element:84:14"
-				},
-				{
-					"commandElementTypeId": "CommandElementType:1:84",
-					"elementId": "Element:84:15"
-				},
-				{
-					"commandElementTypeId": "CommandElementType:2:84",
-					"elementId": "Element:84:17"
-				},
-				{
-					"commandElementTypeId": "CommandElementType:2:84",
-					"elementId": "Element:84:18"
-				},
-				{
-					"commandElementTypeId": "CommandElementType:2:84",
-					"elementId": "Element:84:19"
-				},
-				{
-					"commandElementTypeId": "CommandElementType:2:84",
-					"elementId": "Element:84:20"
-				},
-				{
-					"commandElementTypeId": "CommandElementType:1:84",
-					"elementId": "Element:84:21"
-				},
-				{
-					"commandElementTypeId": "CommandElementType:1:84",
-					"elementId": "Element:84:22"
-				},
-				{
-					"commandElementTypeId": "CommandElementType:2:85",
-					"elementId": "Element:85:1",
-					"commandElementValues": [{
-						"value": "{\"groups\":[ {\"id\": 0 , \"value\" : 60 },{\"id\": 1 , \"value\" : 100}]}",
-						"commandElementTypeParamId": "CommandElementTypeParam:1:85:1"
-					}]	
-				},
-				{
-					"commandElementTypeId": "CommandElementType:2:85",
-					"elementId": "Element:85:2",
-					"commandElementValues": [{
-						"value": "{\"groups\":[ {\"id\": 0 , \"value\" : 60 },{\"id\": 1 , \"value\" : 100}]}",
-						"commandElementTypeParamId": "CommandElementTypeParam:1:85:1"
-					}]	
-				},
-				{
-					"commandElementTypeId": "CommandElementType:2:85",
-					"elementId": "Element:85:3",
-					"commandElementValues": [{
-						"value": "{\"groups\":[ {\"id\": 0 , \"value\" : 60 },{\"id\": 1 , \"value\" : 100}]}",
-						"commandElementTypeParamId": "CommandElementTypeParam:1:85:1"
-					}]	
-				},
-				{
-					"commandElementTypeId": "CommandElementType:2:85",
-					"elementId": "Element:85:4",
-					"commandElementValues": [{
-						"value": "{\"groups\":[ {\"id\": 0 , \"value\" : 60 },{\"id\": 1 , \"value\" : 100}]}",
-						"commandElementTypeParamId": "CommandElementTypeParam:1:85:1"
-					}]	
-				}
-				]	
-			}]
-		},
-		{
-			"id": 11,
-			"alias": "NOCTURNO",
-			"description": "Regimen nocturno para el tubo de Sentido Sur",
-			"labelAlias": "LBL_NOCTURNO_30",
-			"documentUrl": "",
-			"configs": [{
-				"id": 11,
-				"commands": [
-				{
-					"commandElementTypeId": "CommandElementType:1:84",
-					"elementId": "Element:84:12"
-				},
-				{
-					"commandElementTypeId": "CommandElementType:1:84",
-					"elementId": "Element:84:13"
-				},	
-				{
-					"commandElementTypeId": "CommandElementType:1:84",
-					"elementId": "Element:84:14"
-				},
-				{
-					"commandElementTypeId": "CommandElementType:1:84",
-					"elementId": "Element:84:15"
-				},
-				{
-					"commandElementTypeId": "CommandElementType:2:84",
-					"elementId": "Element:84:17"
-				},
-				{
-					"commandElementTypeId": "CommandElementType:2:84",
-					"elementId": "Element:84:18"
-				},
-				{
-					"commandElementTypeId": "CommandElementType:2:84",
-					"elementId": "Element:84:19"
-				},
-				{
-					"commandElementTypeId": "CommandElementType:2:84",
-					"elementId": "Element:84:20"
-				},
-				{
-					"commandElementTypeId": "CommandElementType:1:84",
-					"elementId": "Element:84:21"
-				},
-				{
-					"commandElementTypeId": "CommandElementType:1:84",
-					"elementId": "Element:84:22"
-				},
-				{
-					"commandElementTypeId": "CommandElementType:2:85",
-					"elementId": "Element:85:1",
-					"commandElementValues": [{
-						"value": "{\"groups\":[ {\"id\": 0 , \"value\" : 30 },{\"id\": 1 , \"value\" : 100}]}",
-						"commandElementTypeParamId": "CommandElementTypeParam:1:85:1"
-					}]	
-				},
-				{
-					"commandElementTypeId": "CommandElementType:2:85",
-					"elementId": "Element:85:2",
-					"commandElementValues": [{
-						"value": "{\"groups\":[ {\"id\": 0 , \"value\" : 30 },{\"id\": 1 , \"value\" : 100}]}",
-						"commandElementTypeParamId": "CommandElementTypeParam:1:85:1"
-					}]	
-				},
-				{
-					"commandElementTypeId": "CommandElementType:2:85",
-					"elementId": "Element:85:3",
-					"commandElementValues": [{
-						"value": "{\"groups\":[ {\"id\": 0 , \"value\" : 30 },{\"id\": 1 , \"value\" : 100}]}",
-						"commandElementTypeParamId": "CommandElementTypeParam:1:85:1"
-					}]	
-				},
-				{
-					"commandElementTypeId": "CommandElementType:2:85",
-					"elementId": "Element:85:4",
-					"commandElementValues": [{
-						"value": "{\"groups\":[ {\"id\": 0 , \"value\" : 30 },{\"id\": 1 , \"value\" : 100}]}",
-						"commandElementTypeParamId": "CommandElementTypeParam:1:85:1"
-					}]	
-				}
-				]	
-			}]
 		}
 	],
 	"smConfigs": [
@@ -976,14 +808,6 @@ INSERT INTO conf.element_values
 				{
 					"regimeId": 9,
 					"stateIds": [99]	
-				},
-				{
-					"regimeId": 10,
-					"stateIds": [99]	
-				},
-				{
-					"regimeId": 11,
-					"stateIds": [99]	
 				}
 			]
 		},
@@ -1028,7 +852,7 @@ INSERT INTO conf.element_values
 					"stateIds": [2]	
 				},
 				{
-					"regimeId": 10,
+					"regimeId": 9,
 					"stateIds": [99]	
 				}
 			]
