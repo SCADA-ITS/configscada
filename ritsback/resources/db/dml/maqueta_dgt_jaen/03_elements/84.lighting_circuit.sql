@@ -180,7 +180,9 @@ INSERT INTO conf.elements (element_type_id, element_subtype_id, element_id, loca
 (84, 2, 179, 1790084, NULL, NULL, 'NUB-DER-1-ILU-SUR-1', 'NUB-DER-1-ILU-SUR-1', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (84, 2, 180, 1800084, NULL, NULL, 'CREP-DER-1-ILU-SUR-1', 'CREP-DER-1-ILU-SUR-1', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (84, 2, 181, 1810084, NULL, NULL, 'EXT-ENT-ILU-SUR-1', 'EXT-ENT-ILU-SUR-1', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(84, 2, 182, 1820084, NULL, NULL, 'EXT-SAL-ILU-SUR-1', 'EXT-SAL-ILU-SUR-1', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(84, 2, 182, 1820084, NULL, NULL, 'EXT-SAL-ILU-SUR-1', 'EXT-SAL-ILU-SUR-1', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(84, 3, 183, 1830084, NULL, NULL, 'LUM_EMER', 'LUM_EMER', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
 
 INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_type_id, element_id, element_value_state_id, value, enabled, visible, created_at, updated_at) VALUES
 (84, 1003, 1, 1, NULL, 'CONT-SOL-ILU-SUR-2', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -545,7 +547,10 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 
 (84, 1003, 1, 181, NULL, 'EXT-ENT-ILU-SUR-1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
-(84, 1003, 1, 182, NULL, 'EXT-SAL-ILU-SUR-1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(84, 1003, 1, 182, NULL, 'EXT-SAL-ILU-SUR-1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(84, 1003, 1, 183, NULL, 'LUM_EMER', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
 
 INSERT INTO conf.element_io_controller_modules (element_type_id, element_id, module_type_id, module_id, enabled, visible, created_at, updated_at) VALUES
 (84, 1, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -729,4 +734,6 @@ INSERT INTO conf.element_io_controller_modules (element_type_id, element_id, mod
 (84, 179, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (84, 180, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (84, 181, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(84, 182, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(84, 182, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(84, 183, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+

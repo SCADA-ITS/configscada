@@ -280,6 +280,9 @@ INSERT INTO master.i18n_labels (locale_code, module_id, "label", "translation", 
 	--ElementType:66
 	('es_ES',1,'LBL_ELEMENT_TYPE_VANE','Veleta',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 	('es_ES',1,'LBL_ELEMENT_TYPE_VANE_DESC','Veleta',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+	--ElementType:67
+	('es_ES',1,'LBL_ELEMENT_TYPE_CENT_ILUM_EMER','Central de Iluminación de Emergencia',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+	('es_ES',1,'LBL_ELEMENT_TYPE_CENT_ILUM_EMER_DESC','Central de Iluminación de Emergencia',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 
 	--ElementType:68
 	('es_ES',1,'LBL_ELEMENT_TYPE_TFA_3D','ETD pórtico',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),

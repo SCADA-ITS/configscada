@@ -21,7 +21,7 @@ INSERT INTO ui.grids(id, adapter_id, "label", enabled, visible) VALUES
 (61, 2, 'LBL_ELEMENT_TYPE_FIRE_DET_CT', true, true),
 (65, 2, 'LBL_ELEMENT_TYPE_SAI', true, true),
 (66, 2, 'LBL_ELEMENT_TYPE_VANE', true, true),
-(67, 2, 'LBL_ELEMENT_TYPE_ILUM_EMER_CT', true, true),
+(67, 2, 'LBL_ELEMENT_TYPE_CENT_ILUM_EMER', true, true),
 (70, 2, 'LBL_ELEMENT_TYPE_ANALIZADOR_RED', true, true),
 (71, 2, 'LBL_ELEMENT_TYPE_PANEL', true, true),
 (75, 2, 'LBL_ELEMENT_TYPE_GE', true, true),
