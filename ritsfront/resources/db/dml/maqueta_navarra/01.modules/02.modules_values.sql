@@ -12,7 +12,7 @@ INSERT INTO ui.module_values(module_id, module_param_id, value) VALUES
 (1920, 9, '2'),
 
 (6001, 13, '2'), (6001, 14, 'municipalities'),
-(6002, 13, '2'), (6002, 14, 'requesting_entities'),
+(6002, 13, '2'), (6002, 14, 'entities'),
 (6011, 13, '2'), (6011, 14, 'incidents'),
 
 (1950, 13, '1'),

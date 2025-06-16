@@ -39,9 +39,7 @@ BEGIN
 	(0103, 1, 'incident_sub_type', 'subtipo incidencia', NULL, true, '{"position": 3, "editable": false}'),
 	(0104, 1, 'level', 'nivel', NULL, true, '{"position": 4, "editable": false}'),
 	(0105, 1, 'location', 'localización', NULL, true, '{"position": 5, "editable": false}'),
-	(0106, 1, 'municipalities', 'municipios', NULL, true, '{"position": 6, "editable": false}'),
-	(0107, 1, 'requesting_entities', 'entidad solicitante', NULL, true, '{"position": 7, "editable": false}'),
-	(0108, 1, 'comment', 'comentarios', NULL, true, '{"position": 8, "editable": false}'),
-	(0109, 1, 'created_at', 'fecha', NULL, true, '{"position": 9, "editable": false}');
+	(0106, 1, 'comment', 'comentarios', NULL, true, '{"position": 6, "editable": true}'),
+	(0107, 1, 'created_at', 'fecha', NULL, true, '{"position": 7, "editable": false}');
   END IF;
 END $$;

@@ -6,7 +6,7 @@ INSERT INTO ui.modules(id, module_type_id, "name", description, default_view_typ
 
 (1920, 8, 'Selector Tree Module', 'Selector Tree Module', 1, null, 'modules/selectorModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 (6001, 9, 'INCIDENTS GIP - municipalities', 'Incidents GIP - municipalities', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
-(6002, 9, 'INCIDENTS GIP - requesting_entities', 'Incidents GIP - requesting_entities', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(6002, 9, 'INCIDENTS GIP - entities', 'Incidents GIP - entities', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 (6011, 9, 'INCIDENTS GIP - incidents', 'Incidents GIP - incidents', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 
 (1950, 9, 'c4_ext_entities_with_values', 'c4_ext_entities_with_values', 1, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),

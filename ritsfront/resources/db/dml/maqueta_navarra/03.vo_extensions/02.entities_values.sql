@@ -1,5 +1,20 @@
 INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
-('ImsIncidentType:401', 34, 'accident.png'),
+('ImsIncidentType:101', 34, 'deporte.png'),
+('ImsIncidentType:102', 34, 'deporte.png'),
+('ImsIncidentType:103', 34, 'deporte.png'),
+('ImsIncidentType:104', 34, 'deporte.png'),
+('ImsIncidentType:105', 34, 'deporte.png'),
+('ImsIncidentType:106', 34, 'deporte.png'),
+('ImsIncidentType:107', 34, 'deporte.png'),
+('ImsIncidentType:108', 34, 'deporte.png'),
+
+('ImsIncidentType:201', 34, 'actividades.png'),
+('ImsIncidentType:202', 34, 'actividades.png'),
+('ImsIncidentType:203', 34, 'actividades.png'),
+
+('ImsIncidentType:301', 34, 'rodaje.png'),
+
+('ImsIncidentType:401', 34, 'accidente.png'),
 
 ('ElementType:2', 1, '2'),
 ('ElementType:2', 2, 'graphic_icon/02_camera.svg'),

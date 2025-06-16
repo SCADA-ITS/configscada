@@ -67,10 +67,29 @@ class SendToTelegramNotification {
         
         if (incidentReport.getAffectionStretchId() != null) {
 
-		message = IncidentEntitiesManager.getInstance().getIncidentTypeTaskValue(values, TASK_TYPE_PARAM_MESSAGE);
+			Location imsIncidentLocation = EntitiesManager.getInstance().getLocation(incidentReport.getLocationId());
+	
+			message = IncidentEntitiesManager.getInstance().getIncidentTypeTaskValue(values, TASK_TYPE_PARAM_MESSAGE);
 			
-		if (api_token != null && chat_id != null && message != null) {
-        
+			message = message.replace("@type", "⚠️ " + IncidentEntitiesManager.getInstance().getImsIncidentType(incidentReport.getIncidentTypeId()).getDescription());
+			message = message.replace("@location", "🚩 " + EntitiesManager.getInstance().getLocation(incidentReport.getLocationId()).getAlias());
+			
+			if (IncidentEntitiesManager.getInstance().getImsRoadImpact(incidentReport.getRoadImpactId()).getDescription().contains("interrumpida")){
+				message = message.replace("@road_impact", "⚫️ " + IncidentEntitiesManager.getInstance().getImsRoadImpact(incidentReport.getRoadImpactId()).getDescription());
+			}else if (IncidentEntitiesManager.getInstance().getImsRoadImpact(incidentReport.getRoadImpactId()).getDescription().contains("difícil")){
+				message = message.replace("@road_impact", "🔴 " + IncidentEntitiesManager.getInstance().getImsRoadImpact(incidentReport.getRoadImpactId()).getDescription());
+			}else if (IncidentEntitiesManager.getInstance().getImsRoadImpact(incidentReport.getRoadImpactId()).getDescription().contains("irregular")){
+				message = message.replace("@road_impact", "🟡 " + IncidentEntitiesManager.getInstance().getImsRoadImpact(incidentReport.getRoadImpactId()).getDescription());
+			}else if (IncidentEntitiesManager.getInstance().getImsRoadImpact(incidentReport.getRoadImpactId()).getDescription().contains("condicionada")){
+				message = message.replace("@road_impact", "🟠 " + IncidentEntitiesManager.getInstance().getImsRoadImpact(incidentReport.getRoadImpactId()).getDescription());
+			}else{
+				message = message.replace("@road_impact", "Sin información de la circulación");
+			}
+					
+		    message = message.replace("@date", "📅 " + fecha(incidentReport.getGeneratedAt()));
+				
+			if (api_token != null && chat_id != null && message != null) {
+	        
         		try {
 		            respuesta = notifyUsers(api_token, chat_id, message);            
 		
@@ -81,8 +100,8 @@ class SendToTelegramNotification {
 		        } catch (Exception e) {
 		            log.error("⚠️ Error en process(): ${e.message}")
 		        }
-        	}
-        }
+	        }
+	    }
 
         return commands;
     }

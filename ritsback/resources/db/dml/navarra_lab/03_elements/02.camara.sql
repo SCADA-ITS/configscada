@@ -161,7 +161,8 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 
 (2, 1, 1, 23, NULL, 'Axis', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 2, 1, 23, NULL, 'P1375-E', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(2, 3, 1, 23, NULL, 'https://descontroltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=BeraTunelSur1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), (2, 6, 1, 21, NULL, '[{"id": 1,"alias": "Preset 1","description": "Preset 1","default": true},{"id": 2,"alias": "Preset 2","description": "Preset 2","default": false},{"id": 3,"alias": "Preset 3","description": "Preset 3","default": false},{"id": 4,"alias": "Preset 4","description": "Preset 4","default": false},{"id": 5,"alias": "Preset 5","description": "Preset 5","default": false},{"id": 6,"alias": "Preset 6","description": "Preset 6","default": false}]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 3, 1, 23, NULL, 'https://descontroltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=BeraTunelSur1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 6, 1, 23, NULL, '[{"id": 1,"alias": "Preset 1","description": "Preset 1","default": true},{"id": 2,"alias": "Preset 2","description": "Preset 2","default": false},{"id": 3,"alias": "Preset 3","description": "Preset 3","default": false},{"id": 4,"alias": "Preset 4","description": "Preset 4","default": false},{"id": 5,"alias": "Preset 5","description": "Preset 5","default": false},{"id": 6,"alias": "Preset 6","description": "Preset 6","default": false}]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 7, 1, 23, NULL, 'PTZ', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 9, 1, 23, NULL, '10.191.46.42', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 10, 1, 23, NULL, 'traficonavarra@navarra.es', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 

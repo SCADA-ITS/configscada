@@ -13,27 +13,54 @@ INSERT INTO conf.ims_incident_type_task_values (task_type_id, task_type_param_id
 --1 = TOKEN BOT que usamos para la notifiación
 --2 = CHAT_ID del canal donde vamos a mandar la incidencia
 --3 = MESSAGE_TEXT Definición del texto a enviar en la notificación
-(10, 1, 011606010401, 'El estado actual de la circulación es @afeccion', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(10, 1, 011606010401, '@type
+@location
+@road_impact
+@date', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
-(10, 1, 011706010401, 'El estado actual de la circulación es @afeccion', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(10, 1, 011706010401, '@type
+@location
+@road_impact
+@date', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
-(10, 1, 011806010401, 'El estado actual de la circulación es @afeccion', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(10, 1, 011806010401, '@type
+@location
+@road_impact
+@date', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
-(10, 1, 021606010401, 'El estado actual de la circulación es @afeccion', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(10, 1, 021606010401, '@type
+@location
+@road_impact
+@date', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
-(10, 1, 021706010401, 'El estado actual de la circulación es @afeccion', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(10, 1, 021706010401, '@type
+@location
+@road_impact
+@date', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
-(10, 1, 021806010401, 'El estado actual de la circulación es @afeccion', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(10, 1, 021806010401, '@type
+@location
+@road_impact
+@date', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --SendToTelegramNotification tiene tres parámetros:
 --1 = TOKEN BOT que usamos para la notifiación
 --2 = CHAT_ID del canal donde vamos a mandar la incidencia
 --3 = MESSAGE_TEXT Definición del texto a enviar en la notificación
-(10, 1, 001608010401, 'Accidente en @localizacion con estado de la circulación @afeccion', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(10, 1, 001608010401, '@type
+@location
+@road_impact
+@date', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
-(10, 1, 001708010401, 'Accidente en @localizacion con estado de la circulación @afeccion', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(10, 1, 001708010401, '@type
+@location
+@road_impact
+@date', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
-(10, 1, 001808010401, 'Accidente en @localizacion con estado de la circulación @afeccion', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(10, 1, 001808010401, '@type
+@location
+@road_impact
+@date', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --SendMailTask tiene tres parámetros
 --1 addressTO = Destinatarios
@@ -61,27 +88,45 @@ INSERT INTO conf.ims_incident_type_task_values (task_type_id, task_type_param_id
 --5 body = Cuerpo del mensaje a enviar
 (8, 1, 011607010401, 'monica.labat.villalba@navarra.es,alberto.egea.corella@navarra.es', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (8, 4, 011607010401, 'Estado de circulación accidente', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),		
-(8, 5, 011607010401, 'Accidente en @localizacion con estado de la circulación @afeccion', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(8, 5, 011607010401, '@type
+@location
+@road_impact
+@date', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 (8, 1, 011707010401, 'monica.labat.villalba@navarra.es,alberto.egea.corella@navarra.es', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (8, 4, 011707010401, 'Estado de circulación accidente', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),		
-(8, 5, 011707010401, 'Accidente en @localizacion con estado de la circulación @afeccion', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(8, 5, 011707010401, '@type
+@location
+@road_impact
+@date', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 (8, 1, 011807010401, 'monica.labat.villalba@navarra.es,alberto.egea.corella@navarra.es', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (8, 4, 011807010401, 'Estado de circulación accidente', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),		
-(8, 5, 011807010401, 'Accidente en @localizacion con estado de la circulación @afeccion', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(8, 5, 011807010401, '@type
+@location
+@road_impact
+@date', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 (8, 1, 021607010401, 'monica.labat.villalba@navarra.es,alberto.egea.corella@navarra.es', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (8, 4, 021607010401, 'Estado de circulación accidente', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),		
-(8, 5, 021607010401, 'Accidente en @localizacion con estado de la circulación @afeccion', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(8, 5, 021607010401, '@type
+@location
+@road_impact
+@date', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 (8, 1, 021707010401, 'monica.labat.villalba@navarra.es,alberto.egea.corella@navarra.es', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (8, 4, 021707010401, 'Estado de circulación accidente', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),		
-(8, 5, 021707010401, 'Accidente en @localizacion con estado de la circulación @afeccion', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(8, 5, 021707010401, '@type
+@location
+@road_impact
+@date', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 (8, 1, 021807010401, 'monica.labat.villalba@navarra.es,alberto.egea.corella@navarra.es', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (8, 4, 021807010401, 'Estado de circulación accidente', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),		
-(8, 5, 021807010401, 'Accidente en @localizacion con estado de la circulación @afeccion', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(8, 5, 021807010401, '@type
+@location
+@road_impact
+@date', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 
 

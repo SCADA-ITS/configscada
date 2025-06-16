@@ -91,12 +91,12 @@ class BackOfficeInitIncident {
                 ImsIncidentType imsIncidentType = IncidentEntitiesManager.getInstance().getIncidentType(incidentReport.getIncidentTypeId());
 
                 if (imsIncidentType != null) {
-                    incidentSubType = imsIncidentType.getAlias();
+                    incidentSubType = imsIncidentType.getDescription();
 
                     if (imsIncidentType.getIncidentGroupId() != null) {
                         ImsIncidentGroup imsIncidentGroup = IncidentEntitiesManager.getInstance()
                                 .getIncidentGroup(imsIncidentType.getIncidentGroupId());
-                        incidentType = imsIncidentGroup.getLabelAlias();
+                        incidentType = imsIncidentGroup.getAlias();
                     }
                 }
             }
