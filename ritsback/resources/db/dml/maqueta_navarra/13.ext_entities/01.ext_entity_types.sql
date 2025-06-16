@@ -126,7 +126,7 @@ true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 }',
 true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
-(7, 'Waze traffic alerts', 'Alertas de trafico de waze', 'LBL_EXT_ENTITY_TYPE_WAZE_TRAFFIC_ALERTS', 'LBL_EXT_ENTITY_TYPE_WAZE_TRAFFIC_ALERTS_DESC', true, '0 0/2 * * * ? *', 
+(7, 'Waze traffic alerts', 'Alertas de trafico de waze', 'LBL_EXT_ENTITY_TYPE_WAZE_TRAFFIC_ALERTS', 'LBL_EXT_ENTITY_TYPE_WAZE_TRAFFIC_ALERTS_DESC', true, '0/30 * * * * ? *', 
 '{
 	"url": "http://192.168.88.163:8101/WazeIncidents",
 	"reliability": 0,
@@ -247,7 +247,7 @@ true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 }',
 true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
-(8, 'Waze traffic jams', 'Atascos de trafico waze', 'LBL_EXT_ENTITY_TYPE_WAZE_TRAFFIC_JAMS', 'LBL_EXT_ENTITY_TYPE_WAZE_TRAFFIC_JAMS_DESC', true, '50 0/2 * * * ? *', 
+(8, 'Waze traffic jams', 'Atascos de trafico waze', 'LBL_EXT_ENTITY_TYPE_WAZE_TRAFFIC_JAMS', 'LBL_EXT_ENTITY_TYPE_WAZE_TRAFFIC_JAMS_DESC', true, '10/40 * * * * ? *', 
 '{
 	"url": "https://www.waze.com/row-partnerhub-api/partners/16934850034/waze-feeds/c46bd65e-1743-4e61-88da-311bab40b8ae?format=1&types=traffic",
 	"level": 0,
@@ -276,7 +276,7 @@ true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 }',
 true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
-(9, 'Waze routes', 'Rutas creadas en waze', 'LBL_EXT_ENTITY_TYPE_WAZE_ROUTES', 'LBL_EXT_ENTITY_TYPE_WAZE_ROUTES_DESC', false, '0 0/2 * * * ? *', 
+(9, 'Waze routes', 'Rutas creadas en waze', 'LBL_EXT_ENTITY_TYPE_WAZE_ROUTES', 'LBL_EXT_ENTITY_TYPE_WAZE_ROUTES_DESC', false, '20/50 * * * * ? *', 
 '{
 	"url": "https://www.waze.com/row-partnerhub-api/feeds-tvt/?id=11010904334",
 	"level": 0,

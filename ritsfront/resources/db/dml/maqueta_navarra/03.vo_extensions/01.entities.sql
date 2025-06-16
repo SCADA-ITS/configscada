@@ -1,4 +1,16 @@
 INSERT INTO ui.vo_entities(id, vo_entity_type_id, enabled, visible) VALUES
+('ImsIncidentType:101', 'ImsIncidentTypeUI', true, true),
+('ImsIncidentType:102', 'ImsIncidentTypeUI', true, true),
+('ImsIncidentType:103', 'ImsIncidentTypeUI', true, true),
+('ImsIncidentType:104', 'ImsIncidentTypeUI', true, true),
+('ImsIncidentType:105', 'ImsIncidentTypeUI', true, true),
+('ImsIncidentType:106', 'ImsIncidentTypeUI', true, true),
+('ImsIncidentType:107', 'ImsIncidentTypeUI', true, true),
+('ImsIncidentType:108', 'ImsIncidentTypeUI', true, true),
+('ImsIncidentType:201', 'ImsIncidentTypeUI', true, true),
+('ImsIncidentType:202', 'ImsIncidentTypeUI', true, true),
+('ImsIncidentType:203', 'ImsIncidentTypeUI', true, true),
+('ImsIncidentType:301', 'ImsIncidentTypeUI', true, true),
 ('ImsIncidentType:401', 'ImsIncidentTypeUI', true, true),
 
 ('ElementType:2', 'ElementTypeUI', true, true),
@@ -11,6 +23,9 @@ INSERT INTO ui.vo_entities(id, vo_entity_type_id, enabled, visible) VALUES
 
 ('ElementTypeParam:2:1:1', 'ElementTypeParamUI', true, true),
 ('ElementTypeParam:2:1:2', 'ElementTypeParamUI', true, true),
+
+('ElementTypeParam:99:1:1', 'ElementTypeParamUI', true, true),
+('ElementTypeParam:99:1:2', 'ElementTypeParamUI', true, true),
 
 ('ExtEntityType:1', 'ExtEntityTypeUI', true, true),
 ('ExtEntityType:2', 'ExtEntityTypeUI', true, true),
