@@ -1,0 +1,18 @@
+{
+    "moduleAction": {
+        "edit": 105201,
+        "enable": 105202,
+        "disable": 105203,
+        "delete": 105204
+    },
+	"backOffice": {
+	    "id": 2,
+	    "tableName": "incidents",
+	    "filterColumnName": "incident_report_id",
+	    "filterColumnValue": null
+  	},
+    "restEndpoints": {
+    	"delayedIncident": "incidents/delayed_reports/${id}",	
+    	"sendDelayedIncidentActions": "incidents/send_delayed_incident_actions"
+    }
+}
