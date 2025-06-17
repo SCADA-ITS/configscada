@@ -16,6 +16,7 @@ INSERT INTO ui.selector_tree_nodes(id, selector_tree_id, "label", image, module_
 (1200003, 11, 'LBL_LUM_DATA', null, 12003, true, true),
 (1200004, 11, 'LBL_WS_DATA', null, 12004, true, true),
 (1200005, 11, 'LBL_ANE_DATA', null, 12005, true, true),
+(1200006, 11, 'LBL_VANE_DATA', null, 12006, true, true),
 
 (1300000, 11, 'LBL_HISTORICAL_DATA', null, null, true, true),
 (1300001, 11, 'LBL_BARRERAS_DATA', null, 13001, true, true),
@@ -41,6 +42,7 @@ INSERT INTO ui.selector_tree_hierarchies(selector_tree_id,  node_parent_id, node
 (11, 1200000, 1200003, true, true),
 (11, 1200000, 1200004, true, true),
 (11, 1200000, 1200005, true, true),
+(11, 1200000, 1200006, true, true),
 
 (11, 1300000, 1300001, true, true),
 (11, 1300000, 1300002, true, true),

@@ -63,6 +63,8 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
     ('es_ES', 1, 'LBL_OPAC_DATA', 'Opacímetros', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
     ('es_ES', 1, 'LBL_LUM_DATA', 'Luminancímetros', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
     ('es_ES', 1, 'LBL_WS_DATA', 'Estación meteorológicas', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    ('es_ES', 1, 'LBL_ANE_DATA', 'Anemómetros', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    ('es_ES', 1, 'LBL_VANE_DATA', 'Veletas', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
     ('es_ES', 1, 'LBL_HISTORICAL_DATA', 'Datos históricos', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 

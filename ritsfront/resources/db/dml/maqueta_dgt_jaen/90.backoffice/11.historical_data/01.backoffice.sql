@@ -48,7 +48,7 @@ WITH comando_normalizado AS (
 SELECT
 	ac.audit_log_id,
 	ac.time_stamp,
-	COALESCE(
+	COALESCE(                                                                                            
 		CASE
 			WHEN ac.comment ~* '^Plan:\d+$' THEN (
 				SELECT ap.user_name
@@ -904,7 +904,7 @@ ORDER BY cn.timestamp_at DESC;
 
     (12, 'timestamp_at', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_DATE', NULL, false, '{"editable": false}'),
 	(12, 'wind_speed', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_WIND_SPEED', NULL, false, '{"editable": false}'),
-    (12, 'wind_direction', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_WIND_SPEED', NULL, false, '{"editable": false}'),
+    (12, 'wind_direction', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_WIND_DIRECTION', NULL, false, '{"editable": false}'),
 	(12, 'equipo', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ELEMENT', NULL, false, '{"editable": false}');
 
 

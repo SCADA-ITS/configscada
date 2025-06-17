@@ -31,7 +31,7 @@ INSERT INTO conf.io_controller_module_values
 (1, 1, 13, 'http://192.168.88.203:8080/rest/v1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (1, 1, 14, 'http://192.168.88.203:8080/rest/v2/login', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (1, 1, 15, 'admin', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(1, 1, 16, 'DES_4942', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 1, 16, 'admin', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (1, 1, 17, '/point-values/{xids}/latest-multiple-points-single-array?limit=1&unitConversion=false&useCache=true&useRendered=false', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (1, 1, 18, 'GET', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (1, 1, 19, '/point-values?unitConversion=false', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),

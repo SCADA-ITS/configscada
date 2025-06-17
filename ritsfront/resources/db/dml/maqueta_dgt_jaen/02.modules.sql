@@ -42,6 +42,7 @@ INSERT INTO ui.modules
 (12003, 9, 'HISTORICAL DATA LUM', 'HISTORICAL DATA', 1, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 (12004, 9, 'HISTORICAL DATA WS', 'HISTORICAL DATA', 1, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 (12005, 9, 'HISTORICAL DATA ANE', 'HISTORICAL DATA', 1, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(12006, 9, 'HISTORICAL DATA VANE', 'HISTORICAL DATA', 1, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 (13001, 9, 'HISTORICAL DATA BARRERAS', 'HISTORICAL DATA', 1, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 (13002, 9, 'HISTORICAL DATA SEMAFOROS', 'HISTORICAL DATA', 1, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 (13003, 9, 'HISTORICAL DATA PRESURIZACION', 'HISTORICAL DATA', 1, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
@@ -100,6 +101,7 @@ INSERT INTO ui.module_values
 (12003, 13, '11'), (12003, 14, 'lum'),(12003, 18,'true'),
 (12004, 13, '11'), (12004, 14, 'ws'),(12004, 18,'true'),
 (12005, 13, '11'), (12005, 14, 'ane'),(12005, 18,'true'),
+(12006, 13, '11'), (12006, 14, 'vane'),(12006, 18,'true'),
 (13001, 13, '11'), (13001, 14, 'barreras'),
 (13002, 13, '11'), (13002, 14, 'semaforos'),
 (13003, 13, '11'), (13003, 14, 'pres'),
@@ -436,6 +438,15 @@ INSERT INTO ui.window_values
 (12005, 11, '#464646'),
 (12005, 12, 'LBL_HISTORICAL_DATA_PRES'),
 (12005, 14, 'true'),
+
+
+(12006, 4, '825'),
+(12006, 5, '1600'),
+(12006, 8, 'true'),
+(12006, 10, 'img/module/default.png'),
+(12006, 11, '#464646'),
+(12006, 12, 'LBL_HISTORICAL_DATA_PRES'),
+(12006, 14, 'true'),
 
 (13001, 4, '825'),
 (13001, 5, '1600'),
