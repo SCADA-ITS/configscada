@@ -2,6 +2,8 @@
 <!DOCTYPE RelativeLayout>
 <DML enabled="true" model="ImsDelayedIncidentReport">
     <SELECT>SELECT i.id as "id",
+                   i.alias as "alias",
+                   i.description as "description",
                    i.incident_type_id as "incidentTypeId",
                    i.location_id as "locationId",
                    i.user_id as "userId",
@@ -19,6 +21,8 @@
     </SELECT>
     <INSERT>INSERT INTO rt.ims_delayed_incident_reports
                        (id,
+                        alias,
+                        description,
                         incident_type_id,
                         location_id,
                         user_id,
@@ -31,6 +35,8 @@
                         created_at,
                         last_update)
                  VALUES (:id=getNextValFromSec{'rt.last_delayed_incident_report_id'},
+                         :alias,
+                         :description,
                          :incidentTypeId,
                          :locationId,
                          :userId,
