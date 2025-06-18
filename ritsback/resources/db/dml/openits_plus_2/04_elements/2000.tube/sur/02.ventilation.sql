@@ -18,21 +18,21 @@ INSERT INTO conf.element_values
 				"alias": "REGIMEN_BAJO",
 				"description": "Regimen bajo tunel para el sentido Sur",
 				"labelAlias": "LBL_REGIME_1",
-				"fans": 3
+				"fans": 4
 			},
 			{
 				"id": 3,
 				"alias": "REGIMEN_MEDIO",
 				"description": "Regimen medio tunel para el sentido Sur",
 				"labelAlias": "LBL_REGIME_2",
-				"fans": 4
+				"fans": 6
 			},
 			{
 				"id": 4,
 				"alias": "REGIMEN_ALTO",
 				"description": "Regimen alto tunel para el sentido Sur",
 				"labelAlias": "LBL_REGIME_3",
-				"fans": 6
+				"fans": 8
 			}],
 	"smConfigs": [
 		{
