@@ -716,11 +716,11 @@ INSERT INTO conf.element_values
 					"elementId": "Element:84:8"
 				},
 				{
-					"commandElementTypeId": "CommandElementType:2:84",
+					"commandElementTypeId": "CommandElementType:1:84",
 					"elementId": "Element:84:9"
 				},
 				{
-					"commandElementTypeId": "CommandElementType:1:84",
+					"commandElementTypeId": "CommandElementType:2:84",
 					"elementId": "Element:84:10"
 				},
 				{
