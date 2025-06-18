@@ -81,12 +81,28 @@ INSERT INTO conf.element_values
 					"elementId": "Element:84:20"
 				},
 				{
-					"commandElementTypeId": "CommandElementType:1:84",
+					"commandElementTypeId": "CommandElementType:2:84",
 					"elementId": "Element:84:21"
 				},
 				{
-					"commandElementTypeId": "CommandElementType:1:84",
+					"commandElementTypeId": "CommandElementType:2:84",
 					"elementId": "Element:84:22"
+				},
+				{
+					"commandElementTypeId": "CommandElementType:2:84",
+					"elementId": "Element:84:23"
+				},
+				{
+					"commandElementTypeId": "CommandElementType:2:84",
+					"elementId": "Element:84:24"
+				},
+				{
+					"commandElementTypeId": "CommandElementType:2:84",
+					"elementId": "Element:84:25"
+				},
+				{
+					"commandElementTypeId": "CommandElementType:2:84",
+					"elementId": "Element:84:26"
 				}
 				]	
 			}]
@@ -165,12 +181,28 @@ INSERT INTO conf.element_values
 					"elementId": "Element:84:20"
 				},
 				{
-					"commandElementTypeId": "CommandElementType:1:84",
+					"commandElementTypeId": "CommandElementType:2:84",
 					"elementId": "Element:84:21"
 				},
 				{
-					"commandElementTypeId": "CommandElementType:1:84",
+					"commandElementTypeId": "CommandElementType:2:84",
 					"elementId": "Element:84:22"
+				},
+				{
+					"commandElementTypeId": "CommandElementType:2:84",
+					"elementId": "Element:84:23"
+				},
+				{
+					"commandElementTypeId": "CommandElementType:2:84",
+					"elementId": "Element:84:24"
+				},
+				{
+					"commandElementTypeId": "CommandElementType:2:84",
+					"elementId": "Element:84:25"
+				},
+				{
+					"commandElementTypeId": "CommandElementType:2:84",
+					"elementId": "Element:84:26"
 				}
 				]	
 			}]
@@ -249,12 +281,28 @@ INSERT INTO conf.element_values
 					"elementId": "Element:84:20"
 				},
 				{
-					"commandElementTypeId": "CommandElementType:1:84",
+					"commandElementTypeId": "CommandElementType:2:84",
 					"elementId": "Element:84:21"
 				},
 				{
-					"commandElementTypeId": "CommandElementType:1:84",
+					"commandElementTypeId": "CommandElementType:2:84",
 					"elementId": "Element:84:22"
+				},
+				{
+					"commandElementTypeId": "CommandElementType:2:84",
+					"elementId": "Element:84:23"
+				},
+				{
+					"commandElementTypeId": "CommandElementType:2:84",
+					"elementId": "Element:84:24"
+				},
+				{
+					"commandElementTypeId": "CommandElementType:2:84",
+					"elementId": "Element:84:25"
+				},
+				{
+					"commandElementTypeId": "CommandElementType:2:84",
+					"elementId": "Element:84:26"
 				}
 				]	
 			}]
@@ -333,12 +381,28 @@ INSERT INTO conf.element_values
 					"elementId": "Element:84:20"
 				},
 				{
-					"commandElementTypeId": "CommandElementType:1:84",
+					"commandElementTypeId": "CommandElementType:2:84",
 					"elementId": "Element:84:21"
 				},
 				{
-					"commandElementTypeId": "CommandElementType:1:84",
+					"commandElementTypeId": "CommandElementType:2:84",
 					"elementId": "Element:84:22"
+				},
+				{
+					"commandElementTypeId": "CommandElementType:2:84",
+					"elementId": "Element:84:23"
+				},
+				{
+					"commandElementTypeId": "CommandElementType:2:84",
+					"elementId": "Element:84:24"
+				},
+				{
+					"commandElementTypeId": "CommandElementType:2:84",
+					"elementId": "Element:84:25"
+				},
+				{
+					"commandElementTypeId": "CommandElementType:2:84",
+					"elementId": "Element:84:26"
 				}
 				]	
 			}]
@@ -417,12 +481,28 @@ INSERT INTO conf.element_values
 					"elementId": "Element:84:20"
 				},
 				{
-					"commandElementTypeId": "CommandElementType:1:84",
+					"commandElementTypeId": "CommandElementType:2:84",
 					"elementId": "Element:84:21"
 				},
 				{
-					"commandElementTypeId": "CommandElementType:1:84",
+					"commandElementTypeId": "CommandElementType:2:84",
 					"elementId": "Element:84:22"
+				},
+				{
+					"commandElementTypeId": "CommandElementType:2:84",
+					"elementId": "Element:84:23"
+				},
+				{
+					"commandElementTypeId": "CommandElementType:2:84",
+					"elementId": "Element:84:24"
+				},
+				{
+					"commandElementTypeId": "CommandElementType:2:84",
+					"elementId": "Element:84:25"
+				},
+				{
+					"commandElementTypeId": "CommandElementType:2:84",
+					"elementId": "Element:84:26"
 				}
 				]	
 			}]
@@ -501,12 +581,28 @@ INSERT INTO conf.element_values
 					"elementId": "Element:84:20"
 				},
 				{
-					"commandElementTypeId": "CommandElementType:1:84",
+					"commandElementTypeId": "CommandElementType:2:84",
 					"elementId": "Element:84:21"
 				},
 				{
-					"commandElementTypeId": "CommandElementType:1:84",
+					"commandElementTypeId": "CommandElementType:2:84",
 					"elementId": "Element:84:22"
+				},
+				{
+					"commandElementTypeId": "CommandElementType:2:84",
+					"elementId": "Element:84:23"
+				},
+				{
+					"commandElementTypeId": "CommandElementType:2:84",
+					"elementId": "Element:84:24"
+				},
+				{
+					"commandElementTypeId": "CommandElementType:2:84",
+					"elementId": "Element:84:25"
+				},
+				{
+					"commandElementTypeId": "CommandElementType:2:84",
+					"elementId": "Element:84:26"
 				}
 				]	
 			}]
@@ -585,12 +681,28 @@ INSERT INTO conf.element_values
 					"elementId": "Element:84:20"
 				},
 				{
-					"commandElementTypeId": "CommandElementType:1:84",
+					"commandElementTypeId": "CommandElementType:2:84",
 					"elementId": "Element:84:21"
 				},
 				{
-					"commandElementTypeId": "CommandElementType:1:84",
+					"commandElementTypeId": "CommandElementType:2:84",
 					"elementId": "Element:84:22"
+				},
+				{
+					"commandElementTypeId": "CommandElementType:2:84",
+					"elementId": "Element:84:23"
+				},
+				{
+					"commandElementTypeId": "CommandElementType:2:84",
+					"elementId": "Element:84:24"
+				},
+				{
+					"commandElementTypeId": "CommandElementType:2:84",
+					"elementId": "Element:84:25"
+				},
+				{
+					"commandElementTypeId": "CommandElementType:2:84",
+					"elementId": "Element:84:26"
 				}
 				]	
 			}]
@@ -669,12 +781,28 @@ INSERT INTO conf.element_values
 					"elementId": "Element:84:20"
 				},
 				{
-					"commandElementTypeId": "CommandElementType:1:84",
+					"commandElementTypeId": "CommandElementType:2:84",
 					"elementId": "Element:84:21"
 				},
 				{
-					"commandElementTypeId": "CommandElementType:1:84",
+					"commandElementTypeId": "CommandElementType:2:84",
 					"elementId": "Element:84:22"
+				},
+				{
+					"commandElementTypeId": "CommandElementType:2:84",
+					"elementId": "Element:84:23"
+				},
+				{
+					"commandElementTypeId": "CommandElementType:2:84",
+					"elementId": "Element:84:24"
+				},
+				{
+					"commandElementTypeId": "CommandElementType:2:84",
+					"elementId": "Element:84:25"
+				},
+				{
+					"commandElementTypeId": "CommandElementType:2:84",
+					"elementId": "Element:84:26"
 				}
 				]	
 			}]
@@ -689,19 +817,19 @@ INSERT INTO conf.element_values
 				"id": 9,
 				"commands": [
 				{
-					"commandElementTypeId": "CommandElementType:1:84",
+					"commandElementTypeId": "CommandElementType:2:84",
 					"elementId": "Element:84:12"
 				},
 				{
-					"commandElementTypeId": "CommandElementType:1:84",
+					"commandElementTypeId": "CommandElementType:2:84",
 					"elementId": "Element:84:13"
 				},	
 				{
-					"commandElementTypeId": "CommandElementType:1:84",
+					"commandElementTypeId": "CommandElementType:2:84",
 					"elementId": "Element:84:14"
 				},
 				{
-					"commandElementTypeId": "CommandElementType:1:84",
+					"commandElementTypeId": "CommandElementType:2:84",
 					"elementId": "Element:84:15"
 				},
 				{
@@ -713,11 +841,11 @@ INSERT INTO conf.element_values
 					"elementId": "Element:84:18"
 				},
 				{
-					"commandElementTypeId": "CommandElementType:2:84",
+					"commandElementTypeId": "CommandElementType:1:84",
 					"elementId": "Element:84:19"
 				},
 				{
-					"commandElementTypeId": "CommandElementType:2:84",
+					"commandElementTypeId": "CommandElementType:1:84",
 					"elementId": "Element:84:20"
 				},
 				{
@@ -727,6 +855,22 @@ INSERT INTO conf.element_values
 				{
 					"commandElementTypeId": "CommandElementType:1:84",
 					"elementId": "Element:84:22"
+				},
+				{
+					"commandElementTypeId": "CommandElementType:1:84",
+					"elementId": "Element:84:23"
+				},
+				{
+					"commandElementTypeId": "CommandElementType:1:84",
+					"elementId": "Element:84:24"
+				},
+				{
+					"commandElementTypeId": "CommandElementType:1:84",
+					"elementId": "Element:84:25"
+				},
+				{
+					"commandElementTypeId": "CommandElementType:1:84",
+					"elementId": "Element:84:26"
 				},
 				{
 					"commandElementTypeId": "CommandElementType:2:85",
