@@ -137,6 +137,7 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_ES', 1, 'LBL_W_CHANGES', 'Cambios', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_WO_AUTOMATISM', 'Sin automatismo', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_INCIDENT_REPORT_FINISH_DATE_WITH_PENDING_TASK', 'Fecha de finalización (finaliza si no hay tareas pendientes)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_INCIDENT_REPORT_ALIAS', 'Alias', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	 
 -- en_GB	 
 ('en_GB', 1, 'LBL_AFFECTION_STRETCH', 'Affection stretch', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -264,6 +265,7 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('en_GB', 1, 'LBL_W_CHANGES', 'Changes', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_WO_AUTOMATISM', 'No automatism', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_INCIDENT_REPORT_FINISH_DATE_WITH_PENDING_TASK', 'Finish date (end if there are no pending tasks)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_INCIDENT_REPORT_ALIAS', 'Alias', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 -- sk_SK
 ('sk_SK', 1, 'LBL_ARE_YOU_SURE_UNDO_TASK_PARAMS', 'Naozaj chcete zmeny vrátiť späť?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -333,7 +335,7 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('sk_SK', 1, 'LBL_TASK_DETAILS','',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 ('sk_SK', 1, 'LBL_TASK_TYPE','Typ zadania',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 ('sk_SK', 1, 'LBL_INCIDENT_REPORT_FINISH_DATE_WITH_PENDING_TASK', 'Dátum ukončenia (skončí, ak neexistujú žiadne čakajúce úlohy)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-
+('sk_SK', 1, 'LBL_INCIDENT_REPORT_ALIAS', 'Alias', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 -- es_CL
 ('es_CL', 1, 'LBL_AFFECTION_STRETCH', 'Tramo afectado', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -460,5 +462,6 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_CL', 1, 'LBL_USER_WITHOUT_PERMISSION_TO_ASSIGN_INCIDENTS_DESCRIPTION', 'El usuario no dispone del permiso para asignar incidencias.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_W_CHANGES', 'Cambios', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_WO_AUTOMATISM', 'Sin automatismo', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('es_CL', 1, 'LBL_INCIDENT_REPORT_FINISH_DATE_WITH_PENDING_TASK', 'Fecha de finalización (finaliza si no hay tareas pendientes)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+('es_CL', 1, 'LBL_INCIDENT_REPORT_FINISH_DATE_WITH_PENDING_TASK', 'Fecha de finalización (finaliza si no hay tareas pendientes)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_INCIDENT_REPORT_ALIAS', 'Alias', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
