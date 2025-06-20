@@ -4,7 +4,7 @@ const appConfig = {
 	restUrl: './api/v1/',
 	stompUrl: function() {
 		
-		const wsUrl = 'ws://10.140.31.20:61614';
+		const wsUrl = 'ws://192.168.88.179:61614';
 		const wssUrl = 'wss://openits.server/ws';
 	
 		return document.location.protocol === "https:" ? wssUrl : wsUrl;	
