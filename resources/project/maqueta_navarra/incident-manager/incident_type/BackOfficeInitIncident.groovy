@@ -1,186 +1,177 @@
 package com.revenga.rits.back.incident.manager.service;
 
-import com.revenga.rits.back.data.core.model.ImsIncidentGroup;
-import com.revenga.rits.back.data.core.model.ImsIncidentLevel;
-import com.revenga.rits.back.data.core.model.ImsIncidentType;
-import com.revenga.rits.back.data.core.model.Location;
-import com.revenga.rits.back.data.core.model.Stretch;
-import com.revenga.rits.back.data.core.model.User;
-import com.revenga.rits.back.incident.manager.service.EntitiesManager;
-import com.revenga.rits.back.incident.manager.service.IncidentEntitiesManager;
-
+import com.revenga.rits.back.data.core.model.*;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.logging.log4j.Logger;
-import com.revenga.rits.back.data.core.model.ImsIncidentReport;
-import com.revenga.rits.back.data.core.model.ImsIncidentReportAlarm;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
+import java.sql.ResultSet;
 
 class BackOfficeInitIncident {
 
-	org.apache.logging.log4j.Logger log
-	private static final String CONNECTION_URL = "jdbc:postgresql://192.168.88.160:5430/rits";
-	private static final String DB_USER = "rits";
-	private static final String DB_PASSWORD = "rits";
-	private static final String DB_SCHEMA = "incidents";
+    private static final String CONNECTION_URL = "jdbc:postgresql://192.168.88.160:5430/rits";
+    private static final String DB_USER = "rits";
+    private static final String DB_PASSWORD = "rits";
+    private static final String DB_SCHEMA = "incidents";
 
-	 BackOfficeInitIncident(org.apache.logging.log4j.Logger log) {
+    private final Logger log;
+
+    BackOfficeInitIncident(Logger log) {
         this.log = log;
     }
 
-	 boolean process(ImsIncidentReport incidentReport) {
-		
-        Connection connection = null;
-        String insertStatement = "";
-        PreparedStatement preparedStatement = null;
-        
+    boolean process(ImsIncidentReport incidentReport) {
+
         try {
-            connection = DriverManager.getConnection(CONNECTION_URL, DB_USER, DB_PASSWORD);
-            
-            if (incidentReport.delayedIncidentReportId != null){
-				
-				insertStatement = copyDelayedIncidentInformation(incidentReport.delayedIncidentReportId);
 
-	            preparedStatement = connection.prepareStatement(insertStatement);
-	            preparedStatement.executeUpdate();
-			}
+	    Connection connection = DriverManager.getConnection(CONNECTION_URL, DB_USER, DB_PASSWORD);
+            connection.setAutoCommit(false);
+                
+	    PreparedStatement ps = connection.prepareStatement(createInsertStatement(incidentReport));
+	    ps.executeUpdate();
 
-            insertStatement = createInsertStatement(incidentReport);
+	    connection.commit();
 
-            preparedStatement = connection.prepareStatement(insertStatement);
-            preparedStatement.executeUpdate();
-            
+            if (incidentReport.delayedIncidentReportId != null) {
 
+		Long incidentIdFromDB = null;
+
+		PreparedStatement psId = connection.prepareStatement(readIncidentId(incidentReport.getId()));
+		ResultSet rs = psId.executeQuery();
+
+		if (rs.next()) {
+    			incidentIdFromDB = rs.getLong(1); 
+		}
+
+		rs.close();
+		psId.close();
+
+                PreparedStatement psMunicipios = connection.prepareStatement(
+                        buildCopyMunicipalitiesStatement(incidentReport.delayedIncidentReportId, incidentIdFromDB));
+                psMunicipios.executeUpdate();
+
+		PreparedStatement psEntidades = connection.prepareStatement(
+                        buildCopyEntitiesStatement(incidentReport.delayedIncidentReportId, incidentIdFromDB));
+                psEntidades.executeUpdate();
+            }
+
+            connection.commit();
             log.info("Groovy executed after Incident Report Confirmed.");
-
             return true;
 
         } catch (SQLException e) {
-            log.error(e.getMessage());
+            log.error("Error during incident processing: " + e.getMessage());
             log.debug(ExceptionUtils.getStackTrace(e));
-        } finally {
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                    log.error("Error closing connection: " + e.getMessage());
-                }
-            }
+            return false;
         }
-
-        return false;
     }
-    
-    String copyDelayedIncidentInformation(Long delayedIncidentReportId){
-		
-		String insertStatement = "INSERT INTO " + DB_SCHEMA + ".assigned_municipalities (id, incident_id, municipality_id)
-									SELECT id, delayed_incident_id, entity_id
-									FROM " + DB_SCHEMA + ".delayed_assigned_municipalities
-									WHERE delayed_incident_id = " + delayedIncidentReportId;
-									
-		return insertStatement;
-	}
 
-    String createInsertStatement(ImsIncidentReport incidentReport) {
-		
+    private String buildCopyMunicipalitiesStatement(Long delayedIncidentReportId, Long incidentId) {
+        return String.format(
+                "INSERT INTO %s.assigned_municipalities (incident_id, municipality_id) " +
+                "SELECT %d, municipality_id FROM %s.delayed_assigned_municipalities WHERE delayed_incident_id = %d",
+                DB_SCHEMA, incidentId, DB_SCHEMA, delayedIncidentReportId);
+    }
+
+    private String buildCopyEntitiesStatement(Long delayedIncidentReportId, Long incidentId) {
+        return String.format(
+                "INSERT INTO %s.assigned_entities (incident_id, entity_id) " +
+                "SELECT %d, entity_id FROM %s.delayed_assigned_entities WHERE delayed_incident_id = %d",
+                DB_SCHEMA, incidentId, DB_SCHEMA, delayedIncidentReportId);
+    }
+
+    private String readIncidentId(Long incidentReportId) {
+        return String.format(
+                "SELECT id FROM %s.incidents WHERE incident_report_id = '%d'",
+                DB_SCHEMA, incidentReportId);
+    }
+
+    private String createInsertStatement(ImsIncidentReport incidentReport) {
         String incidentReportId = null;
-        String detectionType = null;
+        String detectionType;
         String incidentType = null;
         String incidentSubType = null;
         String level = null;
         String location = null;
         String userName = null;
 
-        if (incidentReport != null) {
-            if (incidentReport.getId() != null) {
-                incidentReportId = String.valueOf(incidentReport.getId());
-            }
+        if (incidentReport != null && incidentReport.getId() != null) {
+            incidentReportId = String.valueOf(incidentReport.getId());
 
-            List<ImsIncidentReportAlarm> incidentAlarms = IncidentEntitiesManager.getInstance()
-                    .getIncidentAlarmsByIncidentReport(incidentReport.getId());
-
-            if (!incidentAlarms.isEmpty()) {
-                detectionType = "LBL_AUTO";
-            } else {
-                detectionType = "LBL_MANUAL";
-            }
+            List<ImsIncidentReportAlarm> incidentAlarms =
+                    IncidentEntitiesManager.getInstance().getIncidentAlarmsByIncidentReport(incidentReport.getId());
+            detectionType = incidentAlarms.isEmpty() ? "LBL_MANUAL" : "LBL_AUTO";
 
             if (incidentReport.getIncidentTypeId() != null) {
-                ImsIncidentType imsIncidentType = IncidentEntitiesManager.getInstance().getIncidentType(incidentReport.getIncidentTypeId());
-
-                if (imsIncidentType != null) {
-                    incidentSubType = imsIncidentType.getDescription();
-
-                    if (imsIncidentType.getIncidentGroupId() != null) {
-                        ImsIncidentGroup imsIncidentGroup = IncidentEntitiesManager.getInstance()
-                                .getIncidentGroup(imsIncidentType.getIncidentGroupId());
-                        incidentType = imsIncidentGroup.getAlias();
+                ImsIncidentType type = IncidentEntitiesManager.getInstance().getIncidentType(incidentReport.getIncidentTypeId());
+                if (type != null) {
+                    incidentSubType = type.getDescription();
+                    if (type.getIncidentGroupId() != null) {
+                        ImsIncidentGroup group = IncidentEntitiesManager.getInstance().getIncidentGroup(type.getIncidentGroupId());
+                        if (group != null) {
+                            incidentType = group.getAlias();
+                        }
                     }
                 }
             }
 
             if (incidentReport.getIncidentLevelId() != null) {
-                ImsIncidentLevel incidentLevel = IncidentEntitiesManager.getInstance().getIncidentLevel(incidentReport.getIncidentLevelId());
-
-                if (incidentLevel != null) {
-                    level = incidentLevel.getLabelAlias();
+                ImsIncidentLevel lvl = IncidentEntitiesManager.getInstance().getIncidentLevel(incidentReport.getIncidentLevelId());
+                if (lvl != null) {
+                    level = lvl.getLabelAlias();
                 }
             }
 
             if (incidentReport.getAffectionStretchId() != null && incidentReport.getLocationId() != null) {
                 Stretch stretch = IncidentEntitiesManager.getInstance().getStretch(incidentReport.getAffectionStretchId());
-
-                Location indicentLocation = IncidentEntitiesManager.getInstance().getLocation(incidentReport.getLocationId());
-
-                if (stretch != null && indicentLocation != null) {
-                    location = stretch.getAlias() + " - " + indicentLocation.getAlias();
+                Location loc = IncidentEntitiesManager.getInstance().getLocation(incidentReport.getLocationId());
+                if (stretch != null && loc != null) {
+                    location = stretch.getAlias() + " - " + loc.getAlias();
                 }
             }
 
             if (incidentReport.getCurrentUserId() != null) {
                 User user = EntitiesManager.getInstance().getUser(incidentReport.getCurrentUserId());
-
                 if (user != null) {
                     userName = user.getFullName();
                 }
             }
         }
 
-        List<ColumnValuePair> columnValuePairs = List.of(
-            new ColumnValuePair("incident_report_id", incidentReportId),
-            new ColumnValuePair("incident_type", incidentType),
-            new ColumnValuePair("incident_sub_type", incidentSubType),
-            new ColumnValuePair("level", level),
-            new ColumnValuePair("location", location),
+        List<ColumnValuePair> values = List.of(
+                new ColumnValuePair("incident_report_id", incidentReportId),
+                new ColumnValuePair("incident_type", incidentType),
+                new ColumnValuePair("incident_sub_type", incidentSubType),
+                new ColumnValuePair("level", level),
+                new ColumnValuePair("location", location)
         );
 
         StringBuilder columns = new StringBuilder();
-        StringBuilder values = new StringBuilder();
+        StringBuilder valStr = new StringBuilder();
 
-        for (ColumnValuePair pair : columnValuePairs) {
+        for (ColumnValuePair pair : values) {
             if (pair.value != null) {
                 columns.append(pair.column).append(", ");
-                values.append("'").append(pair.value).append("', ");
+                valStr.append("'").append(pair.value).append("', ");
             }
         }
 
-        columns.delete(columns.length() - 2, columns.length()); // Remove the trailing comma and space
-        values.delete(values.length() - 2, values.length()); // Remove the trailing comma and space
+        // Eliminar la coma final
+        if (columns.length() > 0) columns.setLength(columns.length() - 2);
+        if (valStr.length() > 0) valStr.setLength(valStr.length() - 2);
 
-        String insertStatement = "INSERT INTO " + DB_SCHEMA + ".incidents (" + columns + ") VALUES (" + values + ");";
-
-        return insertStatement;
+        return String.format("INSERT INTO %s.incidents (%s) VALUES (%s);", DB_SCHEMA, columns, valStr);
     }
-    
-    static class ColumnValuePair {
+
+    private static class ColumnValuePair {
         String column;
         String value;
 
-        public ColumnValuePair(String column, String value) {
+        ColumnValuePair(String column, String value) {
             this.column = column;
             this.value = value;
         }
