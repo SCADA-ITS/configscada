@@ -211,8 +211,8 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 ('ExtEntitySubtype:7025', 66, 'waze_weather_hazard.png'),
 ('ExtEntitySubtype:7025', 70, 'waze_weather_hazard.png'),
 
-('ExtEntitySubtype:7026', 66, 'waze_traffic_hazard.png'),
-('ExtEntitySubtype:7026', 70, 'waze_traffic_hazard.png'),
+('ExtEntitySubtype:7026', 66, 'waze_closed_road.png'),
+('ExtEntitySubtype:7026', 70, 'waze_closed_road.png'),
 
 ('ExtEntitySubtype:7027', 66, 'waze_traffic_hazard.png'),
 ('ExtEntitySubtype:7027', 70, 'waze_traffic_hazard.png'),
@@ -220,8 +220,8 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 ('ExtEntitySubtype:7028', 66, 'waze_traffic_hazard.png'),
 ('ExtEntitySubtype:7028', 70, 'waze_traffic_hazard.png'),
 
-('ExtEntitySubtype:7029', 66, 'waze_traffic_hazard.png'),
-('ExtEntitySubtype:7029', 70, 'waze_traffic_hazard.png'),
+('ExtEntitySubtype:7029', 66, 'waze_construction.png'),
+('ExtEntitySubtype:7029', 70, 'waze_construction.png'),
 
 ('ExtEntitySubtype:7030', 66, 'waze_traffic_hazard.png'),
 ('ExtEntitySubtype:7030', 70, 'waze_traffic_hazard.png'),
