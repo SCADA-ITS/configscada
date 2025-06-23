@@ -30,8 +30,9 @@ BEGIN
   	-- smartgen.sg_metadata_tables
   	--
 	INSERT INTO incidents.sg_metadata_tables (id, name, label, label_singular, label_description, mdi_icon, support_images, support_attachments, metadata) VALUES
-	(1, 'incidents', 'LBL_INCIDENTS', 'LBL_INCIDENT', 'LBL_INCIDENTS_DESCRIPTION', 'mdi mdi-message-alert', true, true,NULL);
-
+	(1, 'incidents', 'LBL_INCIDENTS', 'LBL_INCIDENT', 'LBL_INCIDENTS_DESCRIPTION', 'mdi mdi-message-alert', true, true,NULL),
+    (2, 'assigned_entities', 'LBL_ASSIGNED_ENTITIES', 'LBL_ASSIGNED_ENTITY', 'LBL_ASSIGNED_ENTITIES_DESCRIPTION', 'mdi mdi-message-alert', true, true,NULL),
+    (3, 'assigned_municipalities', 'LBL_ASSIGNED_MUNICIPALITIES', 'LBL_ASSIGNED_MUNICIPALITY', 'LBL_ASSIGNED_MUNICIPALITIES_DESCRIPTION', 'mdi mdi-message-alert', true, true,NULL);
 	
 	INSERT INTO incidents.sg_metadata_columns (id, sg_metadata_table_id, column_name, "label", label_description, needs_translation, metadata) VALUES
 	(0101, 1, 'incident_report_id', 'id incidencia', NULL, true, '{"position": 1, "editable": false, "refName": true}'),
@@ -39,9 +40,7 @@ BEGIN
 	(0103, 1, 'incident_sub_type', 'subtipo incidencia', NULL, true, '{"position": 3, "editable": false}'),
 	(0104, 1, 'level', 'nivel', NULL, true, '{"position": 4, "editable": false}'),
 	(0105, 1, 'location', 'localización', NULL, true, '{"position": 5, "editable": false}'),
-	(0106, 1, 'municipalities', 'municipios', NULL, true, '{"position": 6, "editable": false}'),
-	(0107, 1, 'requesting_entities', 'entidad solicitante', NULL, true, '{"position": 7, "editable": false}'),
-	(0108, 1, 'comment', 'comentarios', NULL, true, '{"position": 8, "editable": false}'),
-	(0109, 1, 'created_at', 'fecha', NULL, true, '{"position": 9, "editable": false}');
+	(0106, 1, 'comment', 'comentarios', NULL, true, '{"multiline": 8, "position": 6, "editable": true}'),
+	(0107, 1, 'created_at', 'fecha', NULL, true, '{"position": 7, "editable": false}');
   END IF;
 END $$;

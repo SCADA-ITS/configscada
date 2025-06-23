@@ -16,7 +16,7 @@ INSERT INTO conf.elements (element_type_id, element_subtype_id, element_id, loca
 (2, NULL, 13, 0130002, NULL, NULL, 'Belagua', 'Belagua', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, NULL, 14, 0140002, NULL, NULL, 'Tudela', 'Tudela', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, NULL, 15, 0150002, NULL, NULL, 'Arre', 'Arre', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(2, NULL, 16, 0160002, NULL, NULL, 'Ezkaba túnel Francia', 'Ezkaba túnel Francia', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, NULL, 16, 0160002, NULL, NULL, 'Ezkaba', 'Ezkaba', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, NULL, 17, 0170002, NULL, NULL, 'Tunel_de_Belate', 'Túnel de Belate', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, NULL, 18, 0180002, NULL, NULL, 'Tunel_de_Yesa', 'Túnel de Yesa', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, NULL, 19, 0190002, NULL, NULL, 'Tunel_del_Perdon', 'Túnel del Perdón', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -28,7 +28,7 @@ INSERT INTO conf.elements (element_type_id, element_subtype_id, element_id, loca
 (2, NULL, 25, 0250002, NULL, NULL, 'Bera Tunel Norte 1', 'Bera Tunel Norte 1', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, NULL, 26, 0260002, NULL, NULL, 'Bera Tunel Norte 2', 'Bera Tunel Norte 2', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 --(2, NULL, 27, 0270002, NULL, NULL, 'Endarlatza 2', 'Endarlatza 2', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(2, NULL, 28, 0280002, NULL, NULL, 'Talluntxe LPR ', 'Talluntxe LPR ', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(2, NULL, 28, 0280002, NULL, NULL, 'Talluntxe LPR', 'Talluntxe LPR', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_type_id, element_id, element_value_state_id, value, enabled, visible, created_at, updated_at) VALUES
 (2, 1, 1, 1, NULL, 'Hikvision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 

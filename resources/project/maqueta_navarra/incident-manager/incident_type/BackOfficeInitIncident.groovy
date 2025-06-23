@@ -33,13 +33,25 @@ class BackOfficeInitIncident {
     }
 
 	 boolean process(ImsIncidentReport incidentReport) {
+		
         Connection connection = null;
+        String insertStatement = "";
+        PreparedStatement preparedStatement = null;
+        
         try {
             connection = DriverManager.getConnection(CONNECTION_URL, DB_USER, DB_PASSWORD);
+            
+            if (incidentReport.delayedIncidentReportId != null){
+				
+				insertStatement = copyDelayedIncidentInformation(incidentReport.delayedIncidentReportId);
 
-            String insertStatement = createInsertStatement(incidentReport);
+	            preparedStatement = connection.prepareStatement(insertStatement);
+	            preparedStatement.executeUpdate();
+			}
 
-            PreparedStatement preparedStatement = connection.prepareStatement(insertStatement);
+            insertStatement = createInsertStatement(incidentReport);
+
+            preparedStatement = connection.prepareStatement(insertStatement);
             preparedStatement.executeUpdate();
             
 
@@ -62,6 +74,16 @@ class BackOfficeInitIncident {
 
         return false;
     }
+    
+    String copyDelayedIncidentInformation(Long delayedIncidentReportId){
+		
+		String insertStatement = "INSERT INTO " + DB_SCHEMA + ".assigned_municipalities (id, incident_id, municipality_id)
+									SELECT id, delayed_incident_id, entity_id
+									FROM " + DB_SCHEMA + ".delayed_assigned_municipalities
+									WHERE delayed_incident_id = " + delayedIncidentReportId;
+									
+		return insertStatement;
+	}
 
     String createInsertStatement(ImsIncidentReport incidentReport) {
 		

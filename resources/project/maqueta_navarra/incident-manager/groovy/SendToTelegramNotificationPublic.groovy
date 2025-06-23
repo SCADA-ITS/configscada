@@ -81,22 +81,26 @@ class SendToTelegramNotification {
 	
 			message = IncidentEntitiesManager.getInstance().getIncidentTypeTaskValue(values, TASK_TYPE_PARAM_MESSAGE);
 			
-			message = message.replace("@type", "⚠️ " + IncidentEntitiesManager.getInstance().getImsIncidentType(incidentReport.getIncidentTypeId()).getDescription());
-			message = message.replace("@location", "🚩 " + EntitiesManager.getInstance().getLocation(incidentReport.getLocationId()).getAlias());
+			message = message.replace("@tipo", "⚠️ " + IncidentEntitiesManager.getInstance().getImsIncidentType(incidentReport.getIncidentTypeId()).getDescription());
+			message = message.replace("@localizacion", "🚩 " + EntitiesManager.getInstance().getLocation(incidentReport.getLocationId()).getAlias());
 			
-			if (IncidentEntitiesManager.getInstance().getImsRoadImpact(incidentReport.getRoadImpactId()).getDescription().contains("interrumpida")){
-				message = message.replace("@road_impact", "⚫️ " + IncidentEntitiesManager.getInstance().getImsRoadImpact(incidentReport.getRoadImpactId()).getDescription());
-			}else if (IncidentEntitiesManager.getInstance().getImsRoadImpact(incidentReport.getRoadImpactId()).getDescription().contains("difícil")){
-				message = message.replace("@road_impact", "🔴 " + IncidentEntitiesManager.getInstance().getImsRoadImpact(incidentReport.getRoadImpactId()).getDescription());
-			}else if (IncidentEntitiesManager.getInstance().getImsRoadImpact(incidentReport.getRoadImpactId()).getDescription().contains("irregular")){
-				message = message.replace("@road_impact", "🟡 " + IncidentEntitiesManager.getInstance().getImsRoadImpact(incidentReport.getRoadImpactId()).getDescription());
-			}else if (IncidentEntitiesManager.getInstance().getImsRoadImpact(incidentReport.getRoadImpactId()).getDescription().contains("condicionada")){
-				message = message.replace("@road_impact", "🟠 " + IncidentEntitiesManager.getInstance().getImsRoadImpact(incidentReport.getRoadImpactId()).getDescription());
-			}else{
-				message = message.replace("@road_impact", "Sin información de la circulación");
+			if (IncidentEntitiesManager.getInstance().getImsRoadImpact(incidentReport.getRoadImpactId()) != null){
+				if (IncidentEntitiesManager.getInstance().getImsRoadImpact(incidentReport.getRoadImpactId()).getDescription().contains("interrumpida")){
+					message = message.replace("@afeccion", "⚫️ " + IncidentEntitiesManager.getInstance().getImsRoadImpact(incidentReport.getRoadImpactId()).getDescription());
+				}else if (IncidentEntitiesManager.getInstance().getImsRoadImpact(incidentReport.getRoadImpactId()).getDescription().contains("difícil")){
+					message = message.replace("@afeccion", "🔴 " + IncidentEntitiesManager.getInstance().getImsRoadImpact(incidentReport.getRoadImpactId()).getDescription());
+				}else if (IncidentEntitiesManager.getInstance().getImsRoadImpact(incidentReport.getRoadImpactId()).getDescription().contains("irregular")){
+					message = message.replace("@afeccion", "🟡 " + IncidentEntitiesManager.getInstance().getImsRoadImpact(incidentReport.getRoadImpactId()).getDescription());
+				}else if (IncidentEntitiesManager.getInstance().getImsRoadImpact(incidentReport.getRoadImpactId()).getDescription().contains("condicionada")){
+					message = message.replace("@afeccion", "🟠 " + IncidentEntitiesManager.getInstance().getImsRoadImpact(incidentReport.getRoadImpactId()).getDescription());
+				}else{
+					message = message.replace("@afeccion", "Sin información de la circulación");
+				}
+			} else {
+				message = message.replace("@afeccion", "Sin información de la circulación");
 			}
 					
-		    message = message.replace("@date", "📅 " + fecha(incidentReport.getGeneratedAt()));
+		    message = message.replace("@fecha", "📅 " + fecha(incidentReport.getGeneratedAt()));
 		
 			if (api_token != null && chat_id != null && message != null) {
         

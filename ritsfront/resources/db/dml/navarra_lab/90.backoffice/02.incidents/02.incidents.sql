@@ -23,10 +23,10 @@ BEGIN
 		INSERT INTO incidents.municipalities (alias) VALUES('Elizondo');
 		INSERT INTO incidents.municipalities (alias) VALUES('Lodosa');
 
-		INSERT INTO incidents.requesting_entities (alias) VALUES('Policía');
-		INSERT INTO incidents.requesting_entities (alias) VALUES('Bomberos');
-		INSERT INTO incidents.requesting_entities (alias) VALUES('112');
-		INSERT INTO incidents.requesting_entities (alias) VALUES('Ayuntamiento');
+		INSERT INTO incidents.entities (alias) VALUES('Policía');
+		INSERT INTO incidents.entities (alias) VALUES('Bomberos');
+		INSERT INTO incidents.entities (alias) VALUES('112');
+		INSERT INTO incidents.entities (alias) VALUES('Ayuntamiento');
 
   END IF;
 END $$;
