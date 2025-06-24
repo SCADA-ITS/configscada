@@ -11,5 +11,5 @@ INSERT INTO master.ims_incident_groups (incident_group_id,alias,description,labe
 --
 INSERT INTO conf.ims_incident_types (incident_type_id, ini_incident_state_id, incident_group_id, alias, description, incident_level_id, default_user_id, auto_confirm_incident, cancel_incident, valid_for_min, on_create_execute, enabled, visible, created_at, updated_at) VALUES
 (101, 1, 1, 'F9', 'Incendio',  4, 1001, 180, false, 2880, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(201, 1, 1, 'F13', 'Alarma de CO',  4, 1001, 50, false, 2880, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(301, 1, 1, 'F12', 'Alarma de opacidad',  4, 1001, 50, false, 2880, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(201, 1, 1, 'F13', 'Alarma de CO',  4, 1001, 180, false, 2880, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(301, 1, 1, 'F12', 'Alarma de opacidad',  4, 1001, 180, false, 2880, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
