@@ -39,7 +39,7 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 ('ElementType:1000', 72, 'true'),
 
 ('ExtEntityType:1', 63, 'obras_blanco.png'),
-('ExtEntityType:1', 64, '["ExtEntityTypeParam:1:2","ExtEntityTypeParam:1:6","ExtEntityTypeParam:1:7","ExtEntityTypeParam:1:10"]'),
+('ExtEntityType:1', 64, '["ExtEntityTypeParam:1:2","ExtEntityTypeParam:1:6","ExtEntityTypeParam:1:7","ExtEntityTypeParam:1:10","ExtEntityTypeParam:1:13"]'),
 ('ExtEntityType:1', 65, '#6eabd9'),
 
 ('ExtEntityType:4', 63,  'incidencia_blanco.png'),

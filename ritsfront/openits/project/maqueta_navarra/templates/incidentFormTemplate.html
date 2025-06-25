@@ -452,18 +452,10 @@
 				</tr>
 				<tr class="c18">
 					<td class="c11" colspan="1" rowspan="1">
-						<p class="c7"><span class="c19">Usuario</span></p>
+						<p class="c7"><span class="c19">Fecha</span></p>
 					</td>
 					<td class="c2" colspan="1" rowspan="1">
-						<p class="c6"><span id="field.user_n" class="c19"></span></p>
-					</td>
-				</tr>
-				<tr class="c18">
-					<td class="c11" colspan="1" rowspan="1">
-						<p class="c7"><span class="c19">Tel&eacute;fono</span></p>
-					</td>
-					<td class="c2" colspan="1" rowspan="1">
-						<p class="c6"><span id="field.phone" class="c19"></span></p>
+						<p class="c6"><span id="field.created_at" class="c19"></span></p>
 					</td>
 				</tr>
 			</table>
@@ -487,80 +479,30 @@
 				<td class="c8" colspan="2" rowspan="1">
 					<p class="c7"><span class="c13">Tipo:</span></p>
 				</td>
-				<td class="c8" colspan="2" rowspan="1">
-					<p class="c7"><span class="c10">Subtipo:</span></p>
-				</td>
-				<td class="c8" colspan="2" rowspan="1">
-					<p class="c7"><span class="c10">Gravedad:</span></p>
-				</td>
 			</tr>
 			<tr class="c4">
 				<td class="c8" colspan="2" rowspan="1">
-					<p class="c7"><span id="field.location_id" class="c5"></span></p>
+					<p class="c7"><span id="field.location" class="c5"></span></p>
 				</td>
 				<td class="c8" colspan="2" rowspan="1">
-					<p class="c7"><span id="field.type_id" class="c5"></span></p>
-				</td>
-				<td class="c8" colspan="2" rowspan="1">
-					<p class="c7"><span id="field.sub_type_id" class="c5"></span></p>
-				</td>
-				<td class="c8" colspan="2" rowspan="1">
-					<p class="c7"><span id="field.level_id" class="c5"></span></p>
+					<p class="c7"><span id="field.incident_type" class="c5"></span></p>
 				</td>
 			</tr>
 		</table>
-		<p class="c16"><span class="c0">&nbsp;</span></p>
-		<p class="c1"><span class="c0"></span></p>
-		<p class="c1"><span class="c0"></span></p><a id="t.5fd904f94b6cc91b7272fe17bbea5abc5249207a"></a><a
-			id="t.2"></a>
-		<table class="c15">
-			<tr class="c14">
-				<td class="c9" colspan="8" rowspan="1">
-					<p class="c7"><span class="c17">Datos del equipo</span></p>
-				</td>
-			</tr>
-			<tr class="c4">
-				<td class="c8" colspan="2" rowspan="1">
-					<p class="c7"><span class="c13">Tipo:</span></p>
-				</td>
-				<td class="c8" colspan="2" rowspan="1">
-					<p class="c7"><span class="c13">Origen:</span></p>
-				</td>
-				<td class="c8" colspan="2" rowspan="1">
-					<p class="c7"><span class="c10">Detecci&oacute;n:</span></p>
-				</td>
-				<td class="c8" colspan="2" rowspan="1">
-					<p class="c7"><span class="c10">Otros:</span></p>
-				</td>
-			</tr>
-			<tr class="c4">
-				<td class="c8" colspan="2" rowspan="1">
-					<p class="c7"><span id="field.element_id" class="c5"></span></p>
-				</td>
-				<td class="c8" colspan="2" rowspan="1">
-					<p class="c7"><span id="field.source_id" class="c5"></span></p>
-				</td>
-				<td class="c8" colspan="2" rowspan="1">
-					<p class="c7"><span id="field.type_detection_id" class="c5"></span></p>
-				</td>
-				<td class="c8" colspan="2" rowspan="1">
-					<p class="c7"><span class="c5" id="field.state_id"></span></p>
-				</td>
-			</tr>
-		</table>
+		
 		<p class="c16"><span class="c0">&nbsp;</span></p>
 		<p class="c1"><span class="c0"></span></p>
 
 		<div class="config-tables">
 
-			<table id="field.assigned_pdas" class="c15">
+			<table id="field.assigned_entities" class="c15">
 
 				<tr class="c4">
 					<td class="c8">
-						<p class="c7"><span id="field.assigned_pdas.id" class="c13"></span></p>
+						<p class="c7"><span id="field.assigned_entities.id" class="c13"></span></p>
 					</td>
 					<td class="c8">
-						<p class="c7"><span id="field.assigned_pdas.pda_id" class="c13"></span></p>
+						<p class="c7"><span id="field.assigned_entities.entity_id" class="c13"></span></p>
 					</td>
 				</tr>
 
@@ -568,19 +510,20 @@
 
 		</div>
 
-		<div class="config-list">
+		<div class="config-tables">
 
-			<table id="field.interrupt_agents" class="print-list">
-				<tr>
-					<td class="c19" id="field.interrupt_agents.id">
+			<table id="field.assigned_municipalities" class="c15">
+
+				<tr class="c4">
+					<td class="c8">
+						<p class="c7"><span id="field.assigned_municipalities.id" class="c13"></span></p>
 					</td>
-					<td class="c19" id="field.interrupt_agents.comment">
-					</td>
-					<td class="c19" id="field.interrupt_agents.agents_id">
+					<td class="c8">
+						<p class="c7"><span id="field.assigned_municipalities.municipality_id" class="c13"></span></p>
 					</td>
 				</tr>
-			</table>
 
+			</table>
 
 		</div>
 

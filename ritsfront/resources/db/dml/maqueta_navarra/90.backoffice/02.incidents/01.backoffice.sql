@@ -30,7 +30,37 @@ BEGIN
   	-- smartgen.sg_metadata_tables
   	--
 	INSERT INTO incidents.sg_metadata_tables (id, name, label, label_singular, label_description, mdi_icon, support_images, support_attachments, metadata) VALUES
-	(1, 'incidents', 'LBL_INCIDENTS', 'LBL_INCIDENT', 'LBL_INCIDENTS_DESCRIPTION', 'mdi mdi-message-alert', true, true,NULL),
+	(1, 'incidents', 'LBL_INCIDENTS', 'LBL_INCIDENT', 'LBL_INCIDENTS_DESCRIPTION', 'mdi mdi-message-alert', true, true,'{
+		"formHeight": 800,
+    	"formWidth": 1000,
+	  	 "groupImages": [
+	      	{
+		      "name": "photos",
+		      "label": "LBL_IMAGE_GROUP_EVIDENCE_PHOTOS",
+		      "description": "LBL_IMAGE_GROUP_EVIDENCE_PHOTOS_DESC",
+		      "position": 13,
+		      "height": 300
+	    	},
+	      	{
+		      "name": "sketch",
+		      "label": "LBL_IMAGE_GROUP_SKETCH_ACCIDENT",
+		      "description": "LBL_IMAGE_GROUP_SKETCH_ACCIDENT_DESC",
+		      "position": 15,
+		      "height": 300
+	    	}
+	  	],
+	  	"groupAttachments": [
+	    	{
+	      	"name": "documents",
+		    "label": "LBL_IMAGE_GROUP_EVIDENCE_DOCUMENTS",
+		    "description": "LBL_IMAGE_GROUP_EVIDENCE_DOCUMENTS_DESC",
+	      	"position": 14,
+	      	"height": 200
+	    	}
+	  	],
+		"initialTabLabel": "LBL_INCIDENT_SECTION_MAIN",
+		"srcTemplate": "incidentFormTemplate.html"
+	}'),
     (2, 'assigned_entities', 'LBL_ASSIGNED_ENTITIES', 'LBL_ASSIGNED_ENTITY', 'LBL_ASSIGNED_ENTITIES_DESCRIPTION', 'mdi mdi-message-alert', true, true,NULL),
     (3, 'assigned_municipalities', 'LBL_ASSIGNED_MUNICIPALITIES', 'LBL_ASSIGNED_MUNICIPALITY', 'LBL_ASSIGNED_MUNICIPALITIES_DESCRIPTION', 'mdi mdi-message-alert', true, true,NULL);
 	

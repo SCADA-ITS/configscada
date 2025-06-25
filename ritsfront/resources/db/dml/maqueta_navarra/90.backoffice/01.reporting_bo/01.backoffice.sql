@@ -31,13 +31,29 @@ BEGIN
 	VALUES
 		(1, 'c4_all_ext_entities_with_values', 'LBL_EXT_ENTITY_C4', 'LBL_EXT_ENTITY_C4', 'LBL_EXT_ENTITY_C4_DESCRIPTION', NULL, false, false, 
 			-- sql_view 
-			'SELECT id, categoria, tipo, titulo, afeccion, carretera, localizacion, fecha, estado, latitud, longitud, fecha_finalizacion
-				FROM reporting_bo.c4_ext_entities_with_values'
+			'SELECT 
+				id, fecha_actualizacion, categoria, tipo, titulo, afeccion, carretera, localizacion, fecha, estado, latitud, longitud, fecha_finalizacion
+			 FROM 
+				reporting_bo.c4_ext_entities_with_values t
+			 WHERE
+				fecha_actualizacion = (
+					select max (fecha_actualizacion)
+					from reporting_bo.c4_ext_entities_with_values
+					where id = t.id
+				)'
 			, 4001, null),
 		(2, 'e112_all_ext_entities_with_values', 'LBL_EXT_ENTITY_112', 'LBL_EXT_ENTITY_112', 'LBL_EXT_ENTITY_112_DESCRIPTION', NULL, false, false, 
 			-- sql_view 
-			'SELECT id, categoria, tipo, localizacion, fecha, estado, num_recursos, num_vehiculos, latitud, longitud, fecha_finalizacion, estado112
-				FROM reporting_bo.e112_ext_entities_with_values'
+			'SELECT 
+				id, fecha_actualizacion, categoria, tipo, localizacion, fecha, estado, num_recursos, num_vehiculos, latitud, longitud, fecha_finalizacion, estado112
+			 FROM 
+				reporting_bo.e112_ext_entities_with_values t
+			 WHERE
+				fecha_actualizacion = (
+					select max (fecha_actualizacion)
+					from reporting_bo.e112_ext_entities_with_values
+					where id = t.id
+				)'
 			, 4002, null),
 		(3, 'e112_resources_ext_entities_with_values', 'LBL_EXT_ENTITY_TYPE_112_RESOURCES', 'LBL_EXT_ENTITY_TYPE_112_RESOURCES', 'LBL_EXT_ENTITY_TYPE_112_RESOURCES_DESCRIPTION', NULL, false, false, 
 			-- sql_view 
