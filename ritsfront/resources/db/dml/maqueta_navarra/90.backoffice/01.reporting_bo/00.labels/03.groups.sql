@@ -1,7 +1,7 @@
 DO $$ 
 BEGIN
   IF EXISTS (SELECT 1 FROM pg_tablespace WHERE spcname = 'tbl_reporting_bo') THEN
-	INSERT INTO elements_gip.sg_i18n_labels (locale_code, "label", "translation", created_at, updated_at) VALUES
+	INSERT INTO reporting_bo.sg_i18n_labels (locale_code, "label", "translation", created_at, updated_at) VALUES
     ('es_ES', 'LBL_IMAGE_GROUP_EVIDENCE_PHOTOS', 'Fotos evidencia', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
     ('es_ES', 'LBL_IMAGE_GROUP_EVIDENCE_PHOTOS_DESC', 'Fotos asociadas a la evidencia', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
     
