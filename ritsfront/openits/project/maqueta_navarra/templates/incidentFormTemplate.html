@@ -71,7 +71,7 @@
   </style>
 </head>
 <body>
-  <div class="container">
+  <div id="template" class="container">
     <header>
       <img src="./img/logo-project.svg" alt="Logo Proyecto">
     </header>
@@ -106,29 +106,25 @@
 
     <section>
       <div class="section-title">Entidades Asignadas</div>
-      <table>
-        <tr>
-          <th>ID</th>
-          <th>Entidad</th>
-        </tr>
-        <tr>
-          <td><span id="field.assigned_entities.id"></span></td>
-          <td><span id="field.assigned_entities.entity_id"></span></td>
-        </tr>
+      <table id = "field.assigned_entities">
+		<tbody>
+			<tr>
+					<td id="field.assigned_entities.id"></td>				
+					<td id="field.assigned_entities.entity_id"></td>	
+			</tr>
+		</tbody>
       </table>
     </section>
 
     <section>
       <div class="section-title">Municipios Asignados</div>
-      <table>
-        <tr>
-          <th>ID</th>
-          <th>Municipio</th>
-        </tr>
-        <tr>
-          <td><span id="field.assigned_municipalities.id"></span></td>
-          <td><span id="field.assigned_municipalities.municipality_id"></span></td>
-        </tr>
+      <table id = "field.assigned_municipalities">
+		<tbody>
+			<tr>
+					<td id="field.assigned_municipalities.id"></td>				
+					<td id="field.assigned_municipalities.municipality_id"></td>	
+			</tr>
+		</tbody>
       </table>
     </section>
   </div>
