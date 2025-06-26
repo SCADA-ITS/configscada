@@ -38,14 +38,14 @@ BEGIN
 		      "name": "photos",
 		      "label": "LBL_IMAGE_GROUP_EVIDENCE_PHOTOS",
 		      "description": "LBL_IMAGE_GROUP_EVIDENCE_PHOTOS_DESC",
-		      "position": 13,
+		      "position": 8,
 		      "height": 300
 	    	},
 	      	{
 		      "name": "sketch",
 		      "label": "LBL_IMAGE_GROUP_SKETCH_ACCIDENT",
 		      "description": "LBL_IMAGE_GROUP_SKETCH_ACCIDENT_DESC",
-		      "position": 15,
+		      "position": 10,
 		      "height": 300
 	    	}
 	  	],
@@ -54,15 +54,25 @@ BEGIN
 	      	"name": "documents",
 		    "label": "LBL_IMAGE_GROUP_EVIDENCE_DOCUMENTS",
 		    "description": "LBL_IMAGE_GROUP_EVIDENCE_DOCUMENTS_DESC",
-	      	"position": 14,
+	      	"position": 9,
 	      	"height": 200
 	    	}
 	  	],
 		"initialTabLabel": "LBL_INCIDENT_SECTION_MAIN",
 		"srcTemplate": "incidentFormTemplate.html"
 	}'),
-    (2, 'assigned_entities', 'LBL_ASSIGNED_ENTITIES', 'LBL_ASSIGNED_ENTITY', 'LBL_ASSIGNED_ENTITIES_DESCRIPTION', 'mdi mdi-message-alert', true, true,NULL),
-    (3, 'assigned_municipalities', 'LBL_ASSIGNED_MUNICIPALITIES', 'LBL_ASSIGNED_MUNICIPALITY', 'LBL_ASSIGNED_MUNICIPALITIES_DESCRIPTION', 'mdi mdi-message-alert', true, true,NULL);
+	(2, 'assigned_entities', 'LBL_ASSIGNED_ENTITIES', 'LBL_ASSIGNED_ENTITY', 'LBL_ASSIGNED_ENTITIES_DESCRIPTION', 'mdi mdi-message-alert', true, true, NULL),
+    (3, 'assigned_municipalities', 'LBL_ASSIGNED_MUNICIPALITIES', 'LBL_ASSIGNED_MUNICIPALITY', 'LBL_ASSIGNED_MUNICIPALITIES_DESCRIPTION', 'mdi mdi-message-alert', true, true,NULL),
+    (4, 'delayed_assigned_entities', 'LBL_ASSIGNED_ENTITIES', 'LBL_ASSIGNED_ENTITY', 'LBL_ASSIGNED_ENTITIES_DESCRIPTION', 'mdi mdi-message-alert', true, true,NULL),
+    (5, 'delayed_assigned_municipalities', 'LBL_ASSIGNED_MUNICIPALITIES', 'LBL_ASSIGNED_MUNICIPALITY', 'LBL_ASSIGNED_MUNICIPALITIES_DESCRIPTION', 'mdi mdi-message-alert', true, true,NULL),
+    (6, 'municipalities', 'LBL_ASSIGNED_ENTITIES', 'LBL_ASSIGNED_ENTITY', 'LBL_ASSIGNED_ENTITIES_DESCRIPTION', 'mdi mdi-message-alert', true, true,
+	'{
+		"referTables": []
+	}'),
+	(7, 'entities', 'LBL_ASSIGNED_ENTITIES', 'LBL_ASSIGNED_ENTITY', 'LBL_ASSIGNED_ENTITIES_DESCRIPTION', 'mdi mdi-message-alert', true, true,
+	'{
+		"referTables": []
+	}');
 	
 	INSERT INTO incidents.sg_metadata_columns (id, sg_metadata_table_id, column_name, "label", label_description, needs_translation, metadata) VALUES
 	(0101, 1, 'incident_report_id', 'id incidencia', NULL, true, '{"position": 1, "editable": false, "refName": true}'),
