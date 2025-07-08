@@ -211,6 +211,7 @@ INSERT INTO ui.module_actions(id, module_id, name, description, system_permissio
 (200003, 2000, 'loadIncidentInMap', 'open incident in map', null, null),
 (200004, 2000, 'element', 'open maps and synoptics from element', null, null),
 (200005, 2000, 'loadAlarmInMap', 'open alarm in map', null, null),
+(200006, 2000, 'extEntity', 'open ext entity in map', null, null),
 (103401, 1034, 'edit', 'edit incident type', 'SystemPermission:8', null),
 (103501, 1035, 'edit', 'edit alarm config', null, null),
 (103502, 1035, 'add', 'add alarm config', null, null),

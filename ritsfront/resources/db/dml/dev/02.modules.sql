@@ -20,6 +20,7 @@ INSERT INTO ui.modules(id, module_type_id, "name", description, default_view_typ
 --(1905, 9, 'Infractions', 'Infractions', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 --(1906, 9, 'External entities', 'External entities', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 (1905, 9, 'Drivers', 'Drivers', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(1906, 9, 'ExtEntities', 'ExtEntities', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 
 -- GIP
 (1920, 9, 'Locations', 'Locations', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
@@ -82,6 +83,9 @@ INSERT INTO ui.module_values(module_id, module_param_id, value) VALUES
 
 (1905, 13, '1'),
 (1905, 14, 'vw_drivers'),
+
+(1906, 13, '1'),
+(1906, 14, 'vw_ext_entities'),
 
 /*
 (1905, 13, '1'),

@@ -64,6 +64,7 @@ INSERT INTO ui.menu_items(menu_group_id, "position", module_id, "label", icon, "
 (5, 7, 1927, 'LBL_C4', 'img/menu/default.png', 'incidenciasc4', 'incidenciasc4', true, true),
 (5, 8, 2020, 'LBL_MENU_ITEM_C4', 'img/menu/backofficeincident.png', 'incidenciasc4', 'incidenciasc4', true, true),
 (5, 9, 1905, 'LBL_DRIVERS', 'img/menu/default.png', 'Drivers', 'Drivers', true, true),
+(5, 10, 1906, 'LBL_EXT_ENTITIES', 'img/menu/default.png', 'ExtEntities', 'ExtEntities', true, true),
 
 
 -- GIP

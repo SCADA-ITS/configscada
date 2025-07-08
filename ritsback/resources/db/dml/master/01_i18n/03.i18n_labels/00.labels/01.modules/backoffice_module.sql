@@ -71,6 +71,7 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_ES', 1, 'LBL_BACKOFFICE_SAVE_ADD_NEW_N_DATA', 'Se añadirán los siguientes registros: ', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_BACKOFFICE_MULTIINSERT_SECTION_LABEL', 'Campos que permiten multiinserción', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_BACKOFFICE_MULTIINSERT_ACTIVATION', 'Activación de la multiinserción', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_CMD_VIEW_IN_MAP', 'Mostrar en mapa', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 -- en_GB
 ('en_GB', 1, 'LBL_ARE_YOU_SURE_UNDO_FILTERS', 'Are you sure undo filters?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -133,6 +134,7 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('en_GB', 1, 'LBL_BACKOFFICE_SAVE_ADD_NEW_N_DATA', 'The following records will be added: ', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_BACKOFFICE_MULTIINSERT_SECTION_LABEL', 'Fields that allow multi-insertion', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_BACKOFFICE_MULTIINSERT_ACTIVATION', 'Activate multi-insertion', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_CMD_VIEW_IN_MAP', 'Show in map', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 -- es_CL
 ('es_CL', 1, 'LBL_ARE_YOU_SURE_UNDO_FILTERS', '¿Desea revertir los filtros establecidos?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -194,4 +196,5 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_CL', 1, 'LBL_UNSPECIFIED_ERROR', 'Error no especificado.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_BACKOFFICE_SAVE_ADD_NEW_N_DATA', 'Se añadirán los siguientes registros: ', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_BACKOFFICE_MULTIINSERT_SECTION_LABEL', 'Campos que permiten multiinserción', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('es_CL', 1, 'LBL_BACKOFFICE_MULTIINSERT_ACTIVATION', 'Activación de la multiinserción', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+('es_CL', 1, 'LBL_BACKOFFICE_MULTIINSERT_ACTIVATION', 'Activación de la multiinserción', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_CMD_VIEW_IN_MAP', 'Mostrar en mapa', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

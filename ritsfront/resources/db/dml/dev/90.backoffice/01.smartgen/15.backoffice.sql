@@ -174,7 +174,18 @@ BEGIN
 	           (5, ''C5'', 3, 4),
     	       (6, ''Berlingo'', 3, 4)
 	       ) AS cars(id, model, driver_id, brand_id)
-	    ', null, null);
+	    ', null, null),
+	-- vw_ext_entities
+	(12, 'vw_ext_entities', 'LBL_EXT_ENTITIES', 'LBL_ENTITY', 'LBL_ENTITY_DESCRIPTION', NULL, true, true,
+		'
+			SELECT ROW_NUMBER () OVER (ORDER BY A.ext_entity_id ASC) id, A.*
+       		 FROM ( 
+              SELECT ''ExtEntity:'' || ex.ext_entity_id as "ext_entity_id", ex.alias, ext.label_alias as "type" 
+				FROM rt.ext_entities ex,
+					 static.ext_entity_types ext
+			   WHERE ex.ext_entity_type_id = ext.ext_entity_type_id
+            ) as A
+	    ', null, '{"mapLauncherModuleAction": 200006, "mapLauncherModuleActionViewType": 1}');
 	
 	-- 
   	-- smartgen.sg_metadata_columns
@@ -206,7 +217,12 @@ BEGIN
 	(15, 11, 'id', NULL, NULL, false, null, null),
 	(16, 11, 'model', NULL, NULL, false, null, null),
 	(17, 11, 'driver_id', NULL, NULL, false, null, 7),
-	(18, 11, 'brand_id', NULL, NULL, false, null, 13);
+	(18, 11, 'brand_id', NULL, NULL, false, null, 13),
+	-- vw_ext_entities
+	(19, 12, 'id', NULL, NULL, false, null, null),
+	(20, 12, 'ext_entity_id', NULL, NULL, false, '{ "mappableFieldId": true, "tableVisible": false, "formVisible": false, "searchVisible": false }', null),
+	(21, 12, 'alias', NULL, NULL, false, null, null),
+	(22, 12, 'type', NULL, NULL, true, null, null);
 	
 	-- 
   	-- smartgen.sg_metadata_table_triggers
