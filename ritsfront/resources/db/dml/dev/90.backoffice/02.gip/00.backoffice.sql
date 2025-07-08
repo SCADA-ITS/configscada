@@ -25,7 +25,39 @@ BEGIN
 	    "refAddButton": false
 	}',
 	true);
-	
+  	
+  	INSERT INTO gip.sg_metadata_tables (name,"label",label_singular,label_description,mdi_icon,support_images,support_attachments,sql_view,grid_id,metadata) VALUES
+	 ('vehicle_brands','LBL_VEHICLES_BRANDS','LBL_VEHICLE_BRAND','LBL_VEHICLES_BRANDS_DESCRIPTION',NULL,false,false,NULL,NULL,NULL),
+	 ('vehicle_models','LBL_VEHICLES_MODELS','LBL_VEHICLE_MODEL','LBL_VEHICLES_MODELS_DESCRIPTION',NULL,false,false,NULL,NULL,NULL),
+	 ('vehicles','LBL_VEHICLES','LBL_VEHICLE','LBL_VEHICLES_DESCRIPTION',NULL,false,false,NULL,NULL,
+	 '{
+		"multiInsert": {
+			"enabled": true,
+			"label": "LBL_XXX"
+				}
+			}
+		');
+
+	INSERT INTO gip.sg_metadata_columns (sg_metadata_table_id,column_name,"label",label_description,needs_translation,metadata,ref_view_column_id) VALUES
+	 (3,'vehicle_brand_id','LBL_VEHICLE_BRAND_ID','LBL_VEHICLE_BRAND_ID_DESCRIPTION',false,
+	 '{
+		"multiInsert": {
+			"enabled": true,
+			"label": "LBL_XXX"
+		},
+		"refAddButton": true
+		}'
+	 ,NULL),
+	 (3,'vehicle_model_id','LBL_VEHICLE_BRAND_ID','LBL_VEHICLE_BRAND_ID_DESCRIPTION',false,
+	 '{
+		"multiInsert": {
+			"enabled": true,
+			"label": "LBL_XXX"
+		},
+		"refAddButton": true
+		}'
+	 ,NULL);
+
 
   END IF;
 END $$;
