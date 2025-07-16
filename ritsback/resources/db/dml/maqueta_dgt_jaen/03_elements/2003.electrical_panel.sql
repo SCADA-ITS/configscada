@@ -12,195 +12,196 @@ INSERT INTO conf.element_values
 (2003, 3, 1, 1, '[
 	{
 					"id": 1,
-					"startRampSeconds": 120, 
+					"startRampSeconds": 30, 
 					"startRampNFans": [0]
 	},
 	{
 					"id": 2,
-					"startRampSeconds": 120, 
+					"startRampSeconds": 30, 
 					"startRampNFans": [1]
 	},
 	{
 					"id": 3,
-					"startRampSeconds": 120, 
+					"startRampSeconds": 30, 
 					"startRampNFans": [2]
 	},
 	{
 					"id": 4,
-					"startRampSeconds": 120, 
+					"startRampSeconds": 30, 
 					"startRampNFans": [3]
 	},
 	{
 					"id": 5,
-					"startRampSeconds": 120, 
+					"startRampSeconds": 30, 
 					"startRampNFans": [4]
 	},
 	{
 					"id": 6,
-					"startRampSeconds": 120, 
+					"startRampSeconds": 30, 
 					"startRampNFans": [5]
 	},
 	{
 					"id": 7,
-					"startRampSeconds": 120, 
+					"startRampSeconds": 30, 
 					"startRampNFans": [6]
 	},
 	{
 					"id": 8,
-					"startRampSeconds": 120, 
+					"startRampSeconds": 30, 
 					"startRampNFans": [7]
 	},
 	{
 					"id": 9,
-					"startRampSeconds": 120, 
+					"startRampSeconds": 30, 
 					"startRampNFans": [8]
 	},
 	{
 					"id": 10,
-					"startRampSeconds": 120, 
+					"startRampSeconds": 30, 
 					"startRampNFans": [9]
 	}
 
 ]'
 , true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(2003, 4, 1, 1, '10', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2003, 4, 1, 1, '14', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 
 (2003, 2, 1, 2, '1',true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (2003, 3, 1, 2, '[
 	{
 					"id": 1,
-					"startRampSeconds": 120, 
+					"startRampSeconds": 30, 
 					"startRampNFans": [0]
 	},
 	{
 					"id": 2,
-					"startRampSeconds": 120, 
+					"startRampSeconds": 30, 
 					"startRampNFans": [1]
 	},
 	{
 					"id": 3,
-					"startRampSeconds": 120, 
+					"startRampSeconds": 30, 
 					"startRampNFans": [2]
 	},
 	{
 					"id": 4,
-					"startRampSeconds": 120, 
+					"startRampSeconds": 30, 
 					"startRampNFans": [3]
 	},
 	{
 					"id": 5,
-					"startRampSeconds": 120, 
+					"startRampSeconds": 30, 
 					"startRampNFans": [4]
 	},
 	{
 					"id": 6,
-					"startRampSeconds": 120, 
+					"startRampSeconds": 30, 
 					"startRampNFans": [5]
 	},
 	{
 					"id": 7,
-					"startRampSeconds": 120, 
+					"startRampSeconds": 30, 
 					"startRampNFans": [6]
 	},
 	{
 					"id": 8,
-					"startRampSeconds": 120, 
+					"startRampSeconds": 30, 
 					"startRampNFans": [7]
 	},
 	{
 					"id": 9,
-					"startRampSeconds": 120, 
+					"startRampSeconds": 30, 
 					"startRampNFans": [8]
 	},
 	{
 					"id": 10,
-					"startRampSeconds": 120, 
+					"startRampSeconds": 30, 
 					"startRampNFans": [9]
 	},
 	{
 					"id": 11,
-					"startRampSeconds": 120, 
+					"startRampSeconds": 30, 
 					"startRampNFans": [10]
 	},
 	{
 					"id": 12,
-					"startRampSeconds": 120, 
+					"startRampSeconds": 30, 
 					"startRampNFans": [11]
 	},
 	{
 					"id": 13,
-					"startRampSeconds": 120, 
+					"startRampSeconds": 30, 
 					"startRampNFans": [12]
 	},
 	{
 					"id": 14,
-					"startRampSeconds": 120, 
+					"startRampSeconds": 30, 
 					"startRampNFans": [13]
 	},
 	{
 					"id": 15,
-					"startRampSeconds": 120, 
+					"startRampSeconds": 30, 
 					"startRampNFans": [14]
 	},
 	{
 					"id": 16,
-					"startRampSeconds": 120, 
+					"startRampSeconds": 30, 
 					"startRampNFans": [15]
 	},
 	{
 					"id": 17,
-					"startRampSeconds": 120, 
+					"startRampSeconds": 30, 
 					"startRampNFans": [16]
 	},
 	{
 					"id": 18,
-					"startRampSeconds": 120, 
+					"startRampSeconds": 30, 
 					"startRampNFans": [17]
 	},
 	{
 					"id": 19,
-					"startRampSeconds": 120, 
+					"startRampSeconds": 30, 
 					"startRampNFans": [18]
 	},
 	{
 					"id": 20,
-					"startRampSeconds": 120, 
+					"startRampSeconds": 30, 
 					"startRampNFans": [19]
 	},
 	{
 					"id": 21,
-					"startRampSeconds": 120, 
+					"startRampSeconds": 30, 
 					"startRampNFans": [20]
 	},
 	{
 					"id": 22,
-					"startRampSeconds": 120, 
+					"startRampSeconds": 30, 
 					"startRampNFans": [21]
 	},
 	{
 					"id": 23,
-					"startRampSeconds": 120, 
+					"startRampSeconds": 30, 
 					"startRampNFans": [22]
 	},
 	{
 					"id": 24,
-					"startRampSeconds": 120, 
+					"startRampSeconds": 30, 
 					"startRampNFans": [23]
 	},
 	{
 					"id": 25,
-					"startRampSeconds": 120, 
+					"startRampSeconds": 30, 
 					"startRampNFans": [24]
 	},
 	{
 					"id": 26,
-					"startRampSeconds": 120, 
+					"startRampSeconds": 30, 
 					"startRampNFans": [25]
 	}
 ]'
 , true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(2003, 4, 1, 2, '26', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2003, 4, 1, 2, '20', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
 (2003, 2, 1, 3, '1',true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (2003, 3, 1, 3, '[
 	{
