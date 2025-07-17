@@ -9,12 +9,12 @@ INSERT INTO conf.ims_incident_type_task_values (task_type_id, task_type_param_id
 --1 = TOKEN BOT que usamos para la notifiación
 --2 = CHAT_ID del canal donde vamos a mandar la incidencia
 --3 = MESSAGE_TEXT Definición del texto a enviar en la notificación
-(10, 1, 0106010401, 'tipo
+(10, 1, 0106010401, '@tipo
 @localizacion
 @afeccion
 @fecha', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
-(10, 1, 0206010401, 'tipo
+(10, 1, 0206010401, '@tipo
 @localizacion
 @afeccion
 @fecha', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -23,7 +23,7 @@ INSERT INTO conf.ims_incident_type_task_values (task_type_id, task_type_param_id
 --1 = TOKEN BOT que usamos para la notifiación
 --2 = CHAT_ID del canal donde vamos a mandar la incidencia
 --3 = MESSAGE_TEXT Definición del texto a enviar en la notificación
-(10, 1, 08010401, 'tipo
+(10, 1, 08010401, '@tipo
 @localizacion
 @afeccion
 @fecha', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -46,14 +46,14 @@ INSERT INTO conf.ims_incident_type_task_values (task_type_id, task_type_param_id
 --5 body = Cuerpo del mensaje a enviar
 (8, 1, 0107010401, 'monica.labat.villalba@navarra.es,alberto.egea.corella@navarra.es', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (8, 4, 0107010401, 'Estado de circulación accidente', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),		
-(8, 5, 0107010401, 'tipo
+(8, 5, 0107010401, '@tipo
 @localizacion
 @afeccion
 @fecha', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 (8, 1, 0207010401, 'monica.labat.villalba@navarra.es,alberto.egea.corella@navarra.es', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (8, 4, 0207010401, 'Estado de circulación accidente', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),		
-(8, 5, 0207010401, 'tipo
+(8, 5, 0207010401, '@tipo
 @localizacion
 @afeccion
 @fecha', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),

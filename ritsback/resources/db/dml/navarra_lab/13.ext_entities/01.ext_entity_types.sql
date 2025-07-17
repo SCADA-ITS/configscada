@@ -17,7 +17,8 @@ INSERT INTO static.ext_entity_types(ext_entity_type_id, alias, description, labe
 								{"field": "color", "extEntityTypeParamId": "ExtEntityTypeParam:1:8"},
 								{"field": "fecha", "extEntityTypeParamId": "ExtEntityTypeParam:1:9"},
 								{"field": "categoria", "extEntityTypeParamId": "ExtEntityTypeParam:1:11"},
-								{"field": "id_tipo", "extEntityTypeParamId": "ExtEntityTypeParam:1:12"}
+								{"field": "id_tipo", "extEntityTypeParamId": "ExtEntityTypeParam:1:12"},
+								{"field": "descripcion", "extEntityTypeParamId": "ExtEntityTypeParam:1:13"}
 							],
 	"extEntityFieldsMapping": [ {"srcField": "id_incidencia", "dstField": "uid"},
 								{"srcField": "tipo", "dstField": "alias"},
@@ -258,7 +259,8 @@ true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 								{"field": "city", "extEntityTypeParamId": "ExtEntityTypeParam:8:5"},
 								{"field": "country", "extEntityTypeParamId": "ExtEntityTypeParam:8:6"},
 								{"field": "startNode", "extEntityTypeParamId": "ExtEntityTypeParam:8:7"},
-								{"field": "endNode", "extEntityTypeParamId": "ExtEntityTypeParam:8:8"}
+								{"field": "endNode", "extEntityTypeParamId": "ExtEntityTypeParam:8:8"},
+								{"field": "street", "extEntityTypeParamId": "ExtEntityTypeParam:8:9"}
 							],
 	"extEntityFieldsMapping": [ {"srcField": "uuid", "dstField": "uid"},
 								{"srcField": "street", "dstField": "alias"}

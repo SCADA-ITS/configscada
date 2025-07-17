@@ -13,14 +13,13 @@ import java.sql.ResultSet;
 
 class BackOfficeInitIncident {
 
+    org.apache.logging.log4j.Logger log
     private static final String CONNECTION_URL = "jdbc:postgresql://192.168.88.160:5430/rits";
     private static final String DB_USER = "rits";
     private static final String DB_PASSWORD = "rits";
     private static final String DB_SCHEMA = "incidents";
 
-    private final Logger log;
-
-    BackOfficeInitIncident(Logger log) {
+	 BackOfficeInitIncident(org.apache.logging.log4j.Logger log) {
         this.log = log;
     }
 

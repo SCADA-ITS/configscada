@@ -259,7 +259,8 @@ true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 								{"field": "city", "extEntityTypeParamId": "ExtEntityTypeParam:8:5"},
 								{"field": "country", "extEntityTypeParamId": "ExtEntityTypeParam:8:6"},
 								{"field": "startNode", "extEntityTypeParamId": "ExtEntityTypeParam:8:7"},
-								{"field": "endNode", "extEntityTypeParamId": "ExtEntityTypeParam:8:8"}
+								{"field": "endNode", "extEntityTypeParamId": "ExtEntityTypeParam:8:8"},
+								{"field": "street", "extEntityTypeParamId": "ExtEntityTypeParam:8:9"}
 							],
 	"extEntityFieldsMapping": [ {"srcField": "uuid", "dstField": "uid"},
 								{"srcField": "street", "dstField": "alias"}

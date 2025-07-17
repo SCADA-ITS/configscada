@@ -51,7 +51,7 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 ('ExtEntityType:7', 65, '#6eabd9'),
 
 ('ExtEntityType:8', 63, 'waze.png'),
-('ExtEntityType:8', 64, '["ExtEntityTypeParam:8:2","ExtEntityTypeParam:8:3"]'),
+('ExtEntityType:8', 64, '["ExtEntityTypeParam:8:2","ExtEntityTypeParam:8:3","ExtEntityTypeParam:8:5"]'),
 ('ExtEntityType:8', 65, '#d96e6e'),
 
 ('ExtEntityType:9', 63, 'waze.png'),
