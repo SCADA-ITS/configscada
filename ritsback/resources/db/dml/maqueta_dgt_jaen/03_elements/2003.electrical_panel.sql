@@ -59,6 +59,26 @@ INSERT INTO conf.element_values
 					"id": 10,
 					"startRampSeconds": 30, 
 					"startRampNFans": [9]
+	},
+	{
+					"id": 11,
+					"startRampSeconds": 30, 
+					"startRampNFans": [10]
+	},
+	{
+					"id": 12,
+					"startRampSeconds": 30, 
+					"startRampNFans": [11]
+	},
+	{
+					"id": 13,
+					"startRampSeconds": 30, 
+					"startRampNFans": [12]
+	},
+	{
+					"id": 14,
+					"startRampSeconds": 30, 
+					"startRampNFans": [13]
 	}
 
 ]'
