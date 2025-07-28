@@ -20,7 +20,8 @@ INSERT INTO conf.ims_incident_type_tasks (incident_type_task_id, incident_type_i
 (01110101, 101, 1, 6, 'AVISO', 'Aviso a jefe de emergencias vialidad', 'Aviso al jefe de emergencias vialidad para mantener comunicaciones', false, 10, false, null, null,null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 
-(03040101, 101, 3, 1, 'VENTILACION', 'Arrancar ventilación','Volver al estado anterior la ventilación', true, 1, true, 'TaskTypeVentilation/ByFireDet/StartVentilationByFireDetTask', null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(03040101, 101, 3, 1, 'VENTILACION', 'Parar ventilación','Volver al estado anterior la ventilación', true, 1, true, 'TaskTypeVentilation/ByFireDet/PreStartVentilationByFireDetTask', null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(03050101, 101, 3, 1, 'VENTILACION', 'Arrancar ventilación','Volver al estado anterior la ventilación', true, 2, false, 'TaskTypeVentilation/ByFireDet/StartVentilationByFireDetTask', null, '2', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (03020101, 101, 3, 1, 'PRESURIZACIÓN', 'Presurización', 'Apagado de presurización', true, 3, true, 'SendSignallingToStretch', null,null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (03030101, 101, 3, 3, 'ILUMINACIÓN', 'Iluminación modo automático', 'Iluminación modo automático', true, 4, true, 'TaskTypeTubeLighting/SetIlluminationTask', null ,null,true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
