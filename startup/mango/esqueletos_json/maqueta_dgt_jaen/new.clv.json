@@ -42,7 +42,7 @@
          "pointLocator":{
             "charset":"ASCII",
             "writeType":"SETTABLE",
-            "offset":6,
+            "offset":"{offset_bit_A_state}",
             "slaveId":1,
             "slaveMonitor":false,
             "multiplier":1,
@@ -102,7 +102,7 @@
          "pointLocator":{
             "charset":"ASCII",
             "writeType":"SETTABLE",
-            "offset":7,
+            "offset":"{offset_bit_B_state}",
             "slaveId":1,
             "slaveMonitor":false,
             "multiplier":1,
@@ -162,7 +162,7 @@
          "pointLocator":{
             "charset":"ASCII",
             "writeType":"SETTABLE",
-            "offset":8,
+            "offset":"{offset_bit_C_state}",
             "slaveId":1,
             "slaveMonitor":false,
             "multiplier":1,
@@ -222,7 +222,7 @@
          "pointLocator":{
             "charset":"ASCII",
             "writeType":"SETTABLE",
-            "offset":9,
+            "offset":"{offset_bit_D_state}",
             "slaveId":1,
             "slaveMonitor":false,
             "multiplier":1,
@@ -282,7 +282,7 @@
          "pointLocator":{
             "charset":"ASCII",
             "writeType":"SETTABLE",
-            "offset":518,
+            "offset":"{offset_bit_A_order}",
             "slaveId":1,
             "slaveMonitor":false,
             "multiplier":1,
@@ -342,7 +342,7 @@
          "pointLocator":{
             "charset":"ASCII",
             "writeType":"SETTABLE",
-            "offset":519,
+            "offset":"{offset_bit_B_order}",
             "slaveId":1,
             "slaveMonitor":false,
             "multiplier":1,
@@ -402,7 +402,7 @@
          "pointLocator":{
             "charset":"ASCII",
             "writeType":"SETTABLE",
-            "offset":520,
+            "offset":"{offset_bit_C_order}",
             "slaveId":1,
             "slaveMonitor":false,
             "multiplier":1,
@@ -462,7 +462,7 @@
          "pointLocator":{
             "charset":"ASCII",
             "writeType":"SETTABLE",
-            "offset":521,
+            "offset":"{offset_bit_D_order}",
             "slaveId":1,
             "slaveMonitor":false,
             "multiplier":1,

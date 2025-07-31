@@ -154,7 +154,9 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 ('ElementType:19', 2, 'graphic_icon/19_co.svg'),
 ('ElementType:19', 14, 'grid/element_type_19.png'),
 
-('ElementType:20', 72, 'true'),
+('ElementType:20', 1, '20'),
+('ElementType:20', 2, 'graphic_icon/20_no.svg'),
+('ElementType:20', 14, 'grid/element_type_20.png'),
 
 ('ElementType:21', 1, '21'),
 ('ElementType:21', 2, 'graphic_icon/21_opac.svg'),

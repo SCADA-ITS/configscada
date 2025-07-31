@@ -7,7 +7,9 @@ INSERT INTO conf.elements (element_type_id, element_subtype_id, element_id, loca
 (18, NULL, 6, 0060018, NULL, NULL, 'AN-2-02-DP', 'AN-2-02-DP', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (18, NULL, 7, 0070018, NULL, NULL, 'AN-2-03-DP', 'AN-2-03-DP', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (18, NULL, 8, 0080018, NULL, NULL, 'AN-2-04-DP', 'AN-2-04-DP', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(18, NULL, 9, 0090018, NULL, NULL, 'AN-1-01-CZ', 'AN-1-01-CZ', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(18, NULL, 9, 0090018, NULL, NULL, 'AN-1-01-CZ', 'AN-1-01-CZ', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(18, NULL, 10, 0100018, NULL, NULL, 'AN-1-01-CA', 'AN-1-01-CA', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(18, NULL, 11, 0110018, NULL, NULL, 'AN-2-01-CA', 'AN-2-01-CA', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_type_id, element_id, element_value_state_id, value, enabled, visible, created_at, updated_at) VALUES
 (18, 1, 1, 1, NULL, 'Duran', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -53,7 +55,15 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 (18, 1, 1, 9, NULL, 'Duran', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (18, 2, 1, 9, NULL, '1468', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (18, 3, 1, 9, NULL, 'true', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(18, 1003, 1, 9, NULL, 'AN-1-01-CZ', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(18, 1003, 1, 9, NULL, 'AN-1-01-CZ', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+
+(18, 1, 1, 10, NULL, 'Ortrat', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(18, 3, 1, 10, NULL, 'true', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(18, 1003, 1, 10, NULL, 'AN-1-01-CA', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+
+(18, 1, 1, 11, NULL, 'Ortrat', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(18, 3, 1, 11, NULL, 'false', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(18, 1003, 1, 11, NULL, 'AN-2-01-CA', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO conf.element_io_controller_modules (element_type_id, element_id, module_type_id, module_id, enabled, visible, created_at, updated_at) VALUES
 (18, 1, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -64,4 +74,6 @@ INSERT INTO conf.element_io_controller_modules (element_type_id, element_id, mod
 (18, 6, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (18, 7, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (18, 8, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(18, 9, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(18, 9, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(18, 10, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(18, 11, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

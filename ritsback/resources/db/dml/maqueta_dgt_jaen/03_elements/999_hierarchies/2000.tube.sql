@@ -137,6 +137,7 @@ INSERT INTO conf.element_hierarchies
 --La Cantera
 --Ambientales tubo direccion Madrid
 (2000, 3, 14, 2, NULL, NULL, NULL, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2000, 3, 18, 10, NULL, NULL, NULL, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --circuitos electricos tubo direccion madrid
 (2000, 3, 84, 19, NULL, NULL, NULL, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -147,6 +148,8 @@ INSERT INTO conf.element_hierarchies
 
 --Ambientales tubo direccion Cordoba
 (2000, 4, 14, 3, NULL, NULL, NULL, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2000, 4, 18, 11, NULL, NULL, NULL, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
 --circuitos electricos tubo direccion Cordoba
 (2000, 4, 84, 24, NULL, NULL, NULL, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (2000, 4, 84, 25, NULL, NULL, NULL, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),

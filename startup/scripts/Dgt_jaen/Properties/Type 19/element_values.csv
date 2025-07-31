@@ -7,7 +7,13 @@ item;alias;description;sessionuid;road;stretchs;pk;sentido;on_change_measure;par
 6;SCO-2-02-DP;SCO-2-02-DP;SCO-2-02-DP;Autovía A-4;Despeñaperros;247+400;Córdoba;SendValuesToVentilation.groovy;Duran;Sondeltox
 7;SCO-2-03-DP;SCO-2-03-DP;SCO-2-03-DP;Autovía A-4;Despeñaperros;247+800;Córdoba;SendValuesToVentilation.groovy;Duran;Sondeltox
 8;SCO-2-04-DP;SCO-2-04-DP;SCO-2-04-DP;Autovía A-4;Despeñaperros;248+200;Córdoba;SendValuesToVentilation.groovy;Duran;Sondeltox
-9;SCO-1-01-CA;SCO-1-01-CA;SCO-1-01-CA;Autovía A-4;La Cantera;;Madrid;SendValuesToVentilation.groovy;Duran;Sondeltox
-10;SCO-2-01-CA;SCO-2-01-CA;SCO-2-01-CA;Autovía A-4;La Cantera;;Córdoba;SendValuesToVentilation.groovy;Duran;Sondeltox
+9;SCO-1-01-CA;SCO-1-01-CA;SCO-1-01-CA;Autovía A-4;La Cantera;;Madrid;SendValuesToVentilation.groovy;Ortrat;
+10;SCO-2-01-CA;SCO-2-01-CA;SCO-2-01-CA;Autovía A-4;La Cantera;;Córdoba;SendValuesToVentilation.groovy;Ortrat;
 11;SCO-1-01-CZ;SCO-1-01-CZ;SCO-1-01-CZ;Autovía A-4;El Corzo;;Madrid;SendValuesToVentilation.groovy;Duran;Sondeltox
 12;SCO-2-01-CZ;SCO-2-01-CZ;SCO-2-01-CZ;Autovía A-4;El Corzo;;Córdoba;SendValuesToVentilation.groovy;Duran;Sondeltox
+13;SCO-1-03-CA;SCO-1-03-CA;SCO-1-03-CA;Autovía A-4;La Cantera;;Madrid;SendValuesToVentilation.groovy;Ortrat;
+14;SCO-1-04-CA;SCO-1-04-CA;SCO-1-04-CA;Autovía A-4;La Cantera;;Madrid;SendValuesToVentilation.groovy;Ortrat;
+15;SCO-2-01-CA;SCO-2-01-CA;SCO-2-01-CA;Autovía A-4;La Cantera;;Córdoba;SendValuesToVentilation.groovy;Ortrat;
+16;SCO-2-02-CA;SCO-2-02-CA;SCO-2-02-CA;Autovía A-4;La Cantera;;Córdoba;SendValuesToVentilation.groovy;Ortrat;
+17;SCO-2-03-CA;SCO-2-03-CA;SCO-2-03-CA;Autovía A-4;La Cantera;;Córdoba;SendValuesToVentilation.groovy;Ortrat;
+18;SCO-2-04-CA;SCO-2-04-CA;SCO-2-04-CA;Autovía A-4;La Cantera;;Córdoba;SendValuesToVentilation.groovy;Ortrat;

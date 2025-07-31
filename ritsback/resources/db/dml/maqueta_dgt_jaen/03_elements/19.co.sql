@@ -10,7 +10,13 @@ INSERT INTO conf.elements (element_type_id, element_subtype_id, element_id, loca
 (19, NULL, 9, 0090019, NULL, NULL, 'SCO-1-01-CA', 'SCO-1-01-CA', NULL, NULL, 'SendValuesToVentilation.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (19, NULL, 10, 0100019, NULL, NULL, 'SCO-2-01-CA', 'SCO-2-01-CA', NULL, NULL, 'SendValuesToVentilation.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (19, NULL, 11, 0110019, NULL, NULL, 'SCO-1-01-CZ', 'SCO-1-01-CZ', NULL, NULL, 'SendValuesToVentilation.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(19, NULL, 12, 0120019, NULL, NULL, 'SCO-2-01-CZ', 'SCO-2-01-CZ', NULL, NULL, 'SendValuesToVentilation.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(19, NULL, 12, 0120019, NULL, NULL, 'SCO-2-01-CZ', 'SCO-2-01-CZ', NULL, NULL, 'SendValuesToVentilation.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(19, NULL, 13, 0130019, NULL, NULL, 'SCO-1-03-CA', 'SCO-1-03-CA', NULL, NULL, 'SendValuesToVentilation.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(19, NULL, 14, 0140019, NULL, NULL, 'SCO-1-04-CA', 'SCO-1-04-CA', NULL, NULL, 'SendValuesToVentilation.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(19, NULL, 15, 0150019, NULL, NULL, 'SCO-1-02-CA', 'SCO-1-02-CA', NULL, NULL, 'SendValuesToVentilation.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(19, NULL, 16, 0160019, NULL, NULL, 'SCO-2-02-CA', 'SCO-2-02-CA', NULL, NULL, 'SendValuesToVentilation.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(19, NULL, 17, 0170019, NULL, NULL, 'SCO-2-03-CA', 'SCO-2-03-CA', NULL, NULL, 'SendValuesToVentilation.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(19, NULL, 18, 0180019, NULL, NULL, 'SCO-2-04-CA', 'SCO-2-04-CA', NULL, NULL, 'SendValuesToVentilation.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_type_id, element_id, element_value_state_id, value, enabled, visible, created_at, updated_at) VALUES
 (19, 1, 1, 1, NULL, 'Duran', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -45,12 +51,10 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 (19, 2, 1, 8, NULL, 'Sondeltox', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (19, 1003, 1, 8, NULL, 'SCO-2-04-DP', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
-(19, 1, 1, 9, NULL, 'Duran', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(19, 2, 1, 9, NULL, 'Sondeltox', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(19, 1, 1, 9, NULL, 'Ortrat', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (19, 1003, 1, 9, NULL, 'SCO-1-01-CA', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
-(19, 1, 1, 10, NULL, 'Duran', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(19, 2, 1, 10, NULL, 'Sondeltox', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(19, 1, 1, 10, NULL, 'Ortrat', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (19, 1003, 1, 10, NULL, 'SCO-2-01-CA', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (19, 1, 1, 11, NULL, 'Duran', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -59,7 +63,25 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 
 (19, 1, 1, 12, NULL, 'Duran', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (19, 2, 1, 12, NULL, 'Sondeltox', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(19, 1003, 1, 12, NULL, 'SCO-2-01-CZ', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(19, 1003, 1, 12, NULL, 'SCO-2-01-CZ', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+
+(19, 1, 1, 13, NULL, 'Ortrat', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(19, 1003, 1, 13, NULL, 'SCO-1-03-CA', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+
+(19, 1, 1, 14, NULL, 'Ortrat', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(19, 1003, 1, 14, NULL, 'SCO-1-04-CA', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+
+(19, 1, 1, 15, NULL, 'Ortrat', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(19, 1003, 1, 15, NULL, 'SCO-1-02-CA', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+
+(19, 1, 1, 16, NULL, 'Ortrat', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(19, 1003, 1, 16, NULL, 'SCO-2-02-CA', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+
+(19, 1, 1, 17, NULL, 'Ortrat', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(19, 1003, 1, 17, NULL, 'SCO-2-03-CA', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+
+(19, 1, 1, 18, NULL, 'Ortrat', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(19, 1003, 1, 18, NULL, 'SCO-2-04-CA', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO conf.element_io_controller_modules (element_type_id, element_id, module_type_id, module_id, enabled, visible, created_at, updated_at) VALUES
 (19, 1, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -73,4 +95,10 @@ INSERT INTO conf.element_io_controller_modules (element_type_id, element_id, mod
 (19, 9, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (19, 10, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (19, 11, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(19, 12, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(19, 12, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(19, 13, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(19, 14, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(19, 15, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(19, 16, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(19, 17, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(19, 18, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

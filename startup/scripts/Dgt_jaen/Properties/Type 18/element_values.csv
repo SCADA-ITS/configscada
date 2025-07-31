@@ -8,3 +8,5 @@ item;alias;description;sessionuid;road;stretchs;pk;sentido;param1_brand;param2_m
 7;AN-2-03-DP;AN-2-03-DP;AN-2-03-DP;Autovía A-4;Despeñaperros;247+800;Córdoba;Duran;1468;false
 8;AN-2-04-DP;AN-2-04-DP;AN-2-04-DP;Autovía A-4;Despeñaperros;248+200;Córdoba;Duran;1468;false
 9;AN-1-01-CZ;AN-1-01-CZ;AN-1-01-CZ;Autovía A-4;El Corzo;;Madrid;Duran;1468;true
+10;AN-1-01-CA;AN-1-01-CA;AN-1-01-CA;Autovía A-4;La Cantera;;Madrid;Ortrat;;true
+11;AN-2-01-CA;AN-2-01-CA;AN-2-01-CA;Autovía A-4;La Cantera;;Córdoba;Ortrat;;false

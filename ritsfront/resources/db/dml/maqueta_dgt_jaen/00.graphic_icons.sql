@@ -37,6 +37,7 @@ INSERT INTO ui.graphic_icons
 (00001904, 'CO', 'CO', false, true, 'component/graphicIcon/graphicIconCustom.js', 45, 57.272747, 'img/graphic_icon/19_co.svg', 'component/graphicIcon/custom/co.js',true),
 (00001906, 'CO', 'CO', false, true, 'component/graphicIcon/graphicIconCustom.js', 48, 61.090931, 'img/graphic_icon/19_co.svg', 'component/graphicIcon/custom/co.js',true),
 (00001909, 'CO', 'CO', false, true, 'component/graphicIcon/graphicIconCustom.js', 51.875, 62.25, 'img/graphic_icon/19_co.svg', 'component/graphicIcon/custom/co.js',false),
+(000020, 'NO', 'NO', false, true, 'component/graphicIcon/graphicIconCustom.js', 48, 61.090931, 'img/graphic_icon/20_no.svg', 'component/graphicIcon/custom/no.js',true),
 (000021, 'OPAC', 'OPAC', false, true, 'component/graphicIcon/graphicIconCustom.js', 40, 50.909107, 'img/graphic_icon/21_opac.svg', 'component/graphicIcon/custom/op.js',true),
 (00002105, 'OPAC', 'OPAC', false, true, 'component/graphicIcon/graphicIconCustom.js', 45, 57.272747, 'img/graphic_icon/21_opac.svg', 'component/graphicIcon/custom/op.js',true),
 (00002107, 'OPAC', 'OPAC', false, true, 'component/graphicIcon/graphicIconCustom.js', 48, 61.090931, 'img/graphic_icon/21_opac.svg', 'component/graphicIcon/custom/op.js',true),

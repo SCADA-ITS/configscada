@@ -10,6 +10,7 @@ INSERT INTO ui.grids(id, adapter_id, "label", enabled, visible) VALUES
 (17, 2, 'LBL_ELEMENT_TYPE_GALIBO', true, true),
 (18, 2, 'LBL_ELEMENT_TYPE_ANEM_INT', true, true),
 (19, 2, 'LBL_ELEMENT_TYPE_CO', true, true),
+(20, 2, 'LBL_ELEMENT_TYPE_NO', true, true),
 (21, 2, 'LBL_ELEMENT_TYPE_OPAC', true, true),
 (26, 2, 'LBL_ELEMENT_TYPE_SWITCH_COMM', true, true),
 (27, 2, 'LBL_ELEMENT_TYPE_PLC', true, true),
@@ -138,6 +139,15 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (190006, 19, 3, 6, true, false, false, false, 'LBL_ELEMENT_TYPE_PARAM_CO_CONCENTRATION', 'LBL_ELEMENT_TYPE_PARAM_CO_CONCENTRATION_DESC', 'ElementTypeParam:19:2:1', false, false, 'left', false, false, 200, NULL, true, true, NULL, NULL, NULL, NULL, 2),
 (190007, 19, 1, 7, false, false, true, false, 'LBL_GRID_FIELD_BRAND', 'LBL_GRID_FIELD_BRAND', 'ElementTypeParam:19:1:1', false, false, 'left', false, false, 300, NULL, true, true, NULL, NULL, NULL, NULL,NULL),
 (190008, 19, 1, 8, false, false, true, false, 'LBL_GRID_FIELD_MODEL', 'LBL_GRID_FIELD_MODEL', 'ElementTypeParam:19:1:2', false, false, 'left', false, false, 300, NULL, true, true, NULL, NULL, NULL, NULL,NULL),
+
+(200001, 20, 1, 1, true, false, false, false, 'LBL_GRID_FIELD_ID', 'LBL_GRID_FIELD_ID', 'id', true, false, null, false, false, 500, NULL, true, false, NULL, NULL, NULL, NULL, NULL),
+(200002, 20, 1, 2, true, false, false, true, 'LBL_GRID_FIELD_NAME', 'LBL_GRID_FIELD_NAME', 'alias', false, false, NULL, false, false, 150, NULL, true, true, NULL, NULL, true, NULL, NULL),
+(200003, 20, 1, 3, true, false, false, false, 'LBL_GRID_FIELD_DESCRIPTION', 'LBL_GRID_FIELD_DESCRIPTION', 'description', false, false, NULL, false, false, 150, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(200004, 20, 1, 4, true, true, false, false, NULL, NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(200005, 20, 1, 5, true, true, false, true, 'LBL_GRID_FIELD_STATE_LABEL', 'LBL_GRID_FIELD_STATE_LABEL', 'stateLabel', false, false, NULL, true, false, 150, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(200006, 20, 3, 6, true, false, false, false, 'LBL_ELEMENT_TYPE_PARAM_NO_CONCENTRATION', 'LBL_ELEMENT_TYPE_PARAM_NO_CONCENTRATION_DESC', 'ElementTypeParam:20:2:1', false, false, 'left', false, false, 200, NULL, true, true, NULL, NULL, NULL, NULL, 2),
+(200007, 20, 1, 7, false, false, true, false, 'LBL_GRID_FIELD_BRAND', 'LBL_GRID_FIELD_BRAND', 'ElementTypeParam:20:1:1', false, false, 'left', false, false, 300, NULL, true, true, NULL, NULL, NULL, NULL,NULL),
+
 
 (210001, 21, 1, 1, true, false, false, false, 'LBL_GRID_FIELD_ID', 'LBL_GRID_FIELD_ID', 'id', true, false, null, false, false, 500, NULL, true, false, NULL, NULL, NULL, NULL, NULL),
 (210002, 21, 1, 2, true, false, false, true, 'LBL_GRID_FIELD_NAME', 'LBL_GRID_FIELD_NAME', 'alias', false, false, NULL, false, false, 150, NULL, true, true, NULL, NULL, true, NULL, NULL),
@@ -493,6 +503,22 @@ INSERT INTO ui.grid_option_values(grid_id, grid_option_id, value) VALUES
 (19, 17, 'true'),
 (19, 25, 'true'),
 (19, 26, 'true'),
+
+(20, 1, 'true'),
+(20, 2, 'true'),
+(20, 7, 'true'),
+(20, 8, 'true'),
+(20, 9, 'false'),
+(20, 10, 'true'),
+(20, 11, 'true'),
+(20, 12, 'true'),
+(20, 13, 'true'),
+(20, 14, 'false'),
+(20, 15, 'false'),
+(20, 16, 'img/grid/element_type_20.png'),
+(20, 17, 'true'),
+(20, 25, 'true'),
+(20, 26, 'true'),
 
 (21, 1, 'true'),
 (21, 2, 'true'),
@@ -883,6 +909,10 @@ INSERT INTO ui.grid_commands(grid_id, "position", "label", icon, "default", modu
 (19, 2, 'LBL_CMD_SHOW_IN_MAP', 'mdi mdi-map-search', false, 200004, null, null, false, false, true),
 (19, 3, 'LBL_CMD_SHOW_ALARMS', 'mdi mdi-bell', false, 100501, NULL, NULL, false, false, false),
 
+(20, 1, 'LBL_CMD_VIEW', 'mdi mdi-eye', true, 101401, NULL, NULL, false, false, false),
+(20, 2, 'LBL_CMD_SHOW_IN_MAP', 'mdi mdi-map-search', false, 200004, null, null, false, false, true),
+(20, 3, 'LBL_CMD_SHOW_ALARMS', 'mdi mdi-bell', false, 100501, NULL, NULL, false, false, false),
+
 (21, 1, 'LBL_CMD_VIEW', 'mdi mdi-eye', true, 101401, NULL, NULL, false, false, false),
 (21, 2, 'LBL_CMD_SHOW_IN_MAP', 'mdi mdi-map-search', false, 200004, null, null, false, false, true),
 (21, 3, 'LBL_CMD_SHOW_ALARMS', 'mdi mdi-bell', false, 100501, null, 2, true, true, true),
@@ -1042,6 +1072,12 @@ INSERT INTO ui.grid_field_icons(grid_field_id, icon, value, show_value, badge_co
 (190004, './img/state/stateDown.png', 'ElementTypeState:19:2', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_DOWN'),
 (190004, './img/state/stateAlarm.png', 'ElementTypeState:19:3', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_ALARMS'),
 (190004, './img/state/stateMaintenance.png', 'ElementTypeState:19:4', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_MAINTENANCE'),
+
+(200004, './img/state/stateUnknown.png', 'ElementTypeState:20:0', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_UNKNOWN'),
+(200004, './img/state/stateUp.png', 'ElementTypeState:20:1', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_UP'),
+(200004, './img/state/stateDown.png', 'ElementTypeState:20:2', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_DOWN'),
+(200004, './img/state/stateAlarm.png', 'ElementTypeState:20:3', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_ALARMS'),
+(200004, './img/state/stateMaintenance.png', 'ElementTypeState:20:4', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_MAINTENANCE'),
 
 (210004, './img/state/stateUnknown.png', 'ElementTypeState:21:0', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_UNKNOWN'),
 (210004, './img/state/stateUp.png', 'ElementTypeState:21:1', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_UP'),
