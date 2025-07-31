@@ -58,6 +58,20 @@ class SignallingCommand_8_1 {
             if (driver != null) {
                 driver.send(message)
             }
+
+            Thread.sleep(2000)
+            xidPointValueTimeModel = signallingCommandUtils.getXidPointValueTimeModel(signallingCommand,
+                dataSourceXid + '_' + DOWN_ORDER, FALSE)
+
+             // Enviar solo UDOWN_ORDER = false
+            xidPointValueTimeModels = new ArrayList<>()
+            xidPointValueTimeModels.add(xidPointValueTimeModel)
+
+            message = objectMapper.writeValueAsString(xidPointValueTimeModels)
+            if (driver != null) {
+                driver.send(message)
+            }    
+
         } catch (NumberFormatException | JsonProcessingException e) {
             log.error(e.getMessage())
             log.debug(ExceptionUtils.getStackTrace(e))
