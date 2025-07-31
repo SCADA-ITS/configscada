@@ -264,5 +264,63 @@ INSERT INTO conf.element_values
 		}
 	]
 }'
-, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
+(2001, 1, 1, 2, 
+'{
+	"configs": [
+		{
+			"alias": "El CORZO Sentido Madrid",
+			"windSpeedSensorsId" :["ElementValue:18:9:1:2"],
+			"defaultRangeId": 1,
+			"elementTubeId":"Element:2000:5",
+			"stretchs": [{
+				"stretchId": "Stretch:15013001",
+				"alias": "ZI-1-01-CZ",	
+				"order": 1,
+				"fansOrderId": [ "Element:9:37", "Element:9:38", "Element:9:39", "Element:9:40", "Element:9:41", 
+								 "Element:9:42", "Element:9:43", "Element:9:44"],
+				"candidatesFansId": [ "Element:9:43", "Element:9:44", "Element:9:41", "Element:9:42", "Element:9:39", "Element:9:40", "Element:9:37", "Element:9:38"]
+			},
+			{
+				"stretchs": [{
+					"stretchId": "Stretch:15023001",
+					"alias": "ZI-1-02-CZ",	
+					"order": 2,
+					"candidatesFansId": [ "Element:9:43", "Element:9:44", "Element:9:41", "Element:9:42", "Element:9:37", "Element:9:38", "Element:9:39", "Element:9:40"]
+			},
+			{
+				"stretchs": [{
+					"stretchId": "Stretch:15033001",
+					"alias": "ZI-1-03-CZ",	
+					"order": 3,
+					"candidatesFansId": [ "Element:9:37", "Element:9:38", "Element:9:43", "Element:9:44", "Element:9:39", "Element:9:40", "Element:9:41", "Element:9:42"]
+			},
+			{
+				"stretchs": [{
+					"stretchId": "Stretch:15043001",
+					"alias": "ZI-1-04-CZ",	
+					"order": 4,
+					"candidatesFansId": [ "Element:9:37", "Element:9:38", "Element:9:39", "Element:9:40", "Element:9:41", "Element:9:42", "Element:9:43, "Element:9:44"]
+			}]
+		},
+		{
+			"alias": "El CORZO Sentido Cordoba",
+			"windSpeedSensorsId" :["ElementValue:18:9:1:2"],
+			"defaultRangeId": 1,
+			"elementTubeId":"Element:2000:6",
+			"stretchs": [{
+				"stretchId": "Stretch:15013002",
+				"alias": "ZI-2-01-CZ",	
+				"order": 1,
+			},
+			{
+				"stretchs": [{
+					"stretchId": "Stretch:15023002",
+					"alias": "ZI-2-02-CZ",	
+					"order": 2,
+			}]
+		}
+	]
+}'
+, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
