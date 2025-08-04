@@ -49,10 +49,10 @@ INSERT INTO conf.ims_incident_types (incident_type_id, ini_incident_state_id, in
 (505, 1, 5, 'MET-005', 'Viento', 1, 1, null, false, 2880, 'BackOfficeInitIncident.groovy', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (506, 1, 5, 'MET-006', 'Inundación', 2, 1, null, false, 2880, 'BackOfficeInitIncident.groovy', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
-(601, 1, 5, 'VAR-001', 'Obras', 1, 1, null, false, 2880, 'BackOfficeInitIncident.groovy', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(602, 1, 5, 'VAR-002', 'Señalización', 1, 1, null, false, 2880, 'BackOfficeInitIncident.groovy', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(603, 1, 5, 'VAR-003', 'Limpieza calzada', 1, 1, null, false, 2880, 'BackOfficeInitIncident.groovy', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(604, 1, 5, 'VAR-004', 'Incendio forestal', 2, 1, null, false, 2880, 'BackOfficeInitIncident.groovy', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(605, 1, 5, 'VAR-005', 'Otros', 1, 1, null, false, 2880, 'BackOfficeInitIncident.groovy', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(601, 1, 6, 'VAR-001', 'Obras', 1, 1, null, false, 2880, 'BackOfficeInitIncident.groovy', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(602, 1, 6, 'VAR-002', 'Señalización', 1, 1, null, false, 2880, 'BackOfficeInitIncident.groovy', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(603, 1, 6, 'VAR-003', 'Limpieza calzada', 1, 1, null, false, 2880, 'BackOfficeInitIncident.groovy', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(604, 1, 6, 'VAR-004', 'Incendio forestal', 2, 1, null, false, 2880, 'BackOfficeInitIncident.groovy', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(605, 1, 6, 'VAR-005', 'Otros', 1, 1, null, false, 2880, 'BackOfficeInitIncident.groovy', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 
