@@ -32,7 +32,7 @@ BEGIN
 		(1, 'c4_all_ext_entities_with_values', 'LBL_EXT_ENTITY_C4', 'LBL_EXT_ENTITY_C4', 'LBL_EXT_ENTITY_C4_DESCRIPTION', NULL, false, false, 
 			-- sql_view 
 			'SELECT 
-				id, fecha_actualizacion, categoria, tipo, titulo, afeccion, carretera, localizacion, fecha, estado, latitud, longitud, fecha_finalizacion
+				ext_entity_id, id, fecha_actualizacion, categoria, tipo, titulo, afeccion, carretera, localizacion, fecha, estado, latitud, longitud, fecha_finalizacion
 			 FROM 
 				reporting_bo.c4_ext_entities_with_values t
 			 WHERE
@@ -41,11 +41,11 @@ BEGIN
 					from reporting_bo.c4_ext_entities_with_values
 					where id = t.id
 				)'
-			, 4001, null),
+			, 4001, '{"mapLauncherModuleAction": 200006, "mapLauncherModuleActionViewType": 1}'),
 		(2, 'e112_all_ext_entities_with_values', 'LBL_EXT_ENTITY_112', 'LBL_EXT_ENTITY_112', 'LBL_EXT_ENTITY_112_DESCRIPTION', NULL, false, false, 
 			-- sql_view 
 			'SELECT 
-				id, fecha_actualizacion, categoria, tipo, localizacion, fecha, estado, num_recursos, num_vehiculos, latitud, longitud, fecha_finalizacion, estado112
+				ext_entity_id, id, fecha_actualizacion, categoria, tipo, localizacion, fecha, estado, num_recursos, num_vehiculos, latitud, longitud, fecha_finalizacion, estado112
 			 FROM 
 				reporting_bo.e112_ext_entities_with_values t
 			 WHERE
@@ -54,19 +54,25 @@ BEGIN
 					from reporting_bo.e112_ext_entities_with_values
 					where id = t.id
 				)'
-			, 4002, null),
+			, 4002, '{"mapLauncherModuleAction": 200006, "mapLauncherModuleActionViewType": 1}'),
 		(3, 'e112_resources_ext_entities_with_values', 'LBL_EXT_ENTITY_TYPE_112_RESOURCES', 'LBL_EXT_ENTITY_TYPE_112_RESOURCES', 'LBL_EXT_ENTITY_TYPE_112_RESOURCES_DESCRIPTION', NULL, false, false, 
 			-- sql_view 
-			'SELECT id_incidente,nombre,fecha_salida,agencia,estacion,estado,fecha_ultimo_estado FROM reporting_bo.e112_resources_ext_entities'
+			'SELECT 
+				id_incidente, nombre, fecha_salida, agencia, estacion, estado, fecha_ultimo_estado 
+			 FROM 
+				reporting_bo.e112_resources_ext_entities'
 			, 4003, null),
 		(4, 'e112_vehicles_ext_entities_with_values', 'LBL_EXT_ENTITY_TYPE_112_VEHICLES', 'LBL_EXT_ENTITY_TYPE_112_VEHICLES', 'LBL_EXT_ENTITY_TYPE_112_VEHICLES_DESCRIPTION', NULL, false, false, 
 			-- sql_view 
-			'SELECT id_incidente,matricula,marca,modelo,color FROM reporting_bo.e112_vehicles_ext_entities'
+			'SELECT 
+				id_incidente, matricula, marca, modelo, color 
+			 FROM 
+				reporting_bo.e112_vehicles_ext_entities'
 			, 4004, null),	
 		(5, 'all_waze_traffic_alert_ext_entities_with_values', 'LBL_EXT_ENTITY_WAZE_TRAFFIC_ALERT', 'LBL_EXT_ENTITY_WAZE_TRAFFIC_ALERT', 'LBL_EXT_ENTITY_WAZE_TRAFFIC_ALERT_DESCRIPTION', NULL, false, false, 
 			-- sql_view 
 			'SELECT 
-				id, categoria, tipo, carretera, latitud, longitud, fecha_publicacion, direccion, calle, localidad, pais, valoracion, fiabilidad, confianza, usuario_municipio, estado, fecha_finalizacion
+				ext_entity_id, id, categoria, tipo, carretera, latitud, longitud, fecha_publicacion, direccion, calle, localidad, pais, valoracion, fiabilidad, confianza, usuario_municipio, estado, fecha_finalizacion
 			FROM 
 				reporting_bo.waze_traffic_alert_ext_entities_with_values t
 			WHERE
@@ -75,11 +81,14 @@ BEGIN
 					from reporting_bo.waze_traffic_alert_ext_entities_with_values
 					where id = t.id
 				)'
-			, 4005, null),
+			, 4005, '{"mapLauncherModuleAction": 200006, "mapLauncherModuleActionViewType": 1}'),
 		(6, 'all_waze_traffic_jam_ext_entities_with_values', 'LBL_EXT_ENTITY_WAZE_TRAFFIC_JAM', 'LBL_EXT_ENTITY_WAZE_TRAFFIC_JAM', 'LBL_EXT_ENTITY_WAZE_TRAFFIC_JAM_DESCRIPTION', NULL, false, false, 
 			-- sql_view 
-			'SELECT * FROM reporting_bo.waze_traffic_jam_ext_entities_with_values'
-			, 4006, null);			
+			'SELECT 
+				* 
+			FROM 
+				reporting_bo.waze_traffic_jam_ext_entities_with_values'
+			, 4006, '{"mapLauncherModuleAction": 200006, "mapLauncherModuleActionViewType": 1}');			
 			
 	INSERT INTO reporting_bo.sg_metadata_columns (id, sg_metadata_table_id, column_name, "label", label_description, needs_translation, metadata, ref_view_column_id) VALUES
 		(0101, 1, 'id', 'LBL_EXT_ENTITY_C4_COLUMN_ID', NULL, true, '{"position": 1, "editable": false, "refName": true}', NULL),
@@ -94,6 +103,7 @@ BEGIN
 		(0110, 1, 'fecha_finalizacion', 'fecha_finalizacion', NULL, true, '{"position": 10, "editable": false}', NULL),
 		(0111, 1, 'latitud', 'latitud', NULL, true, '{"position": 11, "editable": false}', NULL),
 		(0112, 1, 'longitud', 'longitud', NULL, true, '{"position": 12, "editable": false}', NULL),
+		(0113, 1, 'ext_entity_id', NULL, NULL, false, '{ "mappableFieldId": true, "tableVisible": false, "formVisible": false, "searchVisible": false }', NULL),
 		
 		(0201, 2, 'id', 'LBL_EXT_ENTITY_112_COLUMN_ID', NULL, true, '{"position": 1, "editable": false, "refName": true}', NULL),
 		(0202, 2, 'categoria', 'LBL_EXT_ENTITY_112_COLUMN_ID', NULL, true, '{"position": 2, "editable": false}', NULL),
@@ -107,6 +117,7 @@ BEGIN
 		(0210, 2, 'fecha_finalizacion', 'fecha_finalizacion', NULL, true, '{"position": 10, "editable": false}', NULL),
 		(0211, 2, 'latitud', 'latitud', NULL, true, '{"position": 11, "editable": false}', NULL),
 		(0212, 2, 'longitud', 'longitud', NULL, true, '{"position": 12, "editable": false}', NULL),
+		(0213, 2, 'ext_entity_id', NULL, NULL, false, '{ "mappableFieldId": true, "tableVisible": false, "formVisible": false, "searchVisible": false }', NULL),
 		
 		(0501, 3, 'id_incidente', 'LBL_EXT_ENTITY_112_COLUMN_ID_INCIDENTE', NULL, true, '{"position": 1, "editable": false, "refName": true}', 201),
 		(0502, 3, 'nombre', 'LBL_EXT_ENTITY_112_COLUMN_NAME', NULL, true, '{"position": 2, "editable": false}', NULL),
@@ -136,6 +147,7 @@ BEGIN
 		(0712, 5, 'fecha_finalizacion', 'fecha_finalizacion', NULL, true, '{"position": 12, "editable": false}', NULL),
 		(0713, 5, 'latitud', 'latitud', NULL, true, '{"position": 13, "editable": false}', NULL),
 		(0714, 5, 'longitud', 'longitud', NULL, true, '{"position": 14, "editable": false}', NULL),
+		(0715, 5, 'ext_entity_id', NULL, NULL, false, '{ "mappableFieldId": true, "tableVisible": false, "formVisible": false, "searchVisible": false }', NULL),
 		
 		(0801, 6, 'id', 'LBL_EXT_ENTITY_WAZE_COLUMN_ID', NULL, true, '{"position": 1, "editable": false, "refName": true}', NULL),
 		(0802, 6, 'circulacion', 'LBL_EXT_ENTITY_WAZE_COLUMN_CIRCULATION', NULL, true, '{"position": 2, "editable": false}', NULL),
@@ -151,6 +163,7 @@ BEGIN
 		(0812, 6, 'estado', 'LBL_EXT_ENTITY_WAZE_COLUMN_STATE', NULL, true, '{"position": 12, "editable": false}', NULL),
 		(0813, 6, 'fecha_finalizacion', 'fecha_finalizacion', NULL, true, '{"position": 13, "editable": false}', NULL),
 		(0814, 6, 'latitud', 'latitud', NULL, true, '{"position": 14, "editable": false}', NULL),
-		(0815, 6, 'longitud', 'longitud', NULL, true, '{"position": 15, "editable": false}', NULL);
+		(0815, 6, 'longitud', 'longitud', NULL, true, '{"position": 15, "editable": false}', NULL),
+		(0816, 6, 'ext_entity_id', NULL, NULL, false, '{ "mappableFieldId": true, "tableVisible": false, "formVisible": false, "searchVisible": false }', NULL);
   END IF;
 END $$;

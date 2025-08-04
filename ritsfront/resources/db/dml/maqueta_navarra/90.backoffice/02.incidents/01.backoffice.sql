@@ -38,14 +38,14 @@ BEGIN
 		      "name": "photos",
 		      "label": "LBL_IMAGE_GROUP_EVIDENCE_PHOTOS",
 		      "description": "LBL_IMAGE_GROUP_EVIDENCE_PHOTOS_DESC",
-		      "position": 8,
+		      "position": 10,
 		      "height": 300
 	    	},
 	      	{
 		      "name": "sketch",
 		      "label": "LBL_IMAGE_GROUP_SKETCH_ACCIDENT",
 		      "description": "LBL_IMAGE_GROUP_SKETCH_ACCIDENT_DESC",
-		      "position": 10,
+		      "position": 12,
 		      "height": 300
 	    	}
 	  	],
@@ -54,29 +54,15 @@ BEGIN
 	      	"name": "documents",
 		    "label": "LBL_IMAGE_GROUP_EVIDENCE_DOCUMENTS",
 		    "description": "LBL_IMAGE_GROUP_EVIDENCE_DOCUMENTS_DESC",
-	      	"position": 9,
+	      	"position": 11,
 	      	"height": 200
 	    	}
 	  	],
 		"initialTabLabel": "LBL_INCIDENT_SECTION_MAIN",
 		"srcTemplate": "incidentFormTemplate.html"
 	}'),
-	(2, 'assigned_entities', 'LBL_ASSIGNED_ENTITIES', 'LBL_ASSIGNED_ENTITY', 'LBL_ASSIGNED_ENTITIES_DESCRIPTION', 'mdi mdi-message-alert', true, true, 
-		'{
-			"multiInsert": {
-				"enabled": true,
-                "label": "LBL_MULTIINSERT_SECTION_LABEL"
-			}
-		}'
-	),
-    (3, 'assigned_municipalities', 'LBL_ASSIGNED_MUNICIPALITIES', 'LBL_ASSIGNED_MUNICIPALITY', 'LBL_ASSIGNED_MUNICIPALITIES_DESCRIPTION', 'mdi mdi-message-alert', true, true, 
-		'{
-			"multiInsert": {
-				"enabled": true,
-                "label": "LBL_MULTIINSERT_SECTION_LABEL"
-			}
-		}'
-	),
+	(2, 'assigned_entities', 'LBL_ASSIGNED_ENTITIES', 'LBL_ASSIGNED_ENTITY', 'LBL_ASSIGNED_ENTITIES_DESCRIPTION', 'mdi mdi-message-alert', true, true, NULL),
+    (3, 'assigned_municipalities', 'LBL_ASSIGNED_MUNICIPALITIES', 'LBL_ASSIGNED_MUNICIPALITY', 'LBL_ASSIGNED_MUNICIPALITIES_DESCRIPTION', 'mdi mdi-message-alert', true, true, NULL),
     (4, 'delayed_assigned_entities', 'LBL_ASSIGNED_ENTITIES', 'LBL_ASSIGNED_ENTITY', 'LBL_ASSIGNED_ENTITIES_DESCRIPTION', 'mdi mdi-message-alert', true, true,NULL),
     (5, 'delayed_assigned_municipalities', 'LBL_ASSIGNED_MUNICIPALITIES', 'LBL_ASSIGNED_MUNICIPALITY', 'LBL_ASSIGNED_MUNICIPALITIES_DESCRIPTION', 'mdi mdi-message-alert', true, true,NULL),
     (6, 'municipalities', 'LBL_ASSIGNED_ENTITIES', 'LBL_ASSIGNED_ENTITY', 'LBL_ASSIGNED_ENTITIES_DESCRIPTION', 'mdi mdi-message-alert', true, true,
@@ -91,21 +77,29 @@ BEGIN
 	INSERT INTO incidents.sg_metadata_columns (id, sg_metadata_table_id, column_name, "label", label_description, needs_translation, metadata) VALUES
 	(0101, 1, 'incident_report_id', 'id incidencia', NULL, true, '{"position": 1, "editable": false, "refName": true}'),
 	(0102, 1, 'incident_type', 'tipo incidencia', NULL, true, '{"position": 2, "editable": false}'),
-	(0103, 1, 'incident_sub_type', 'subtipo incidencia', NULL, true, '{"position": 3, "editable": false}'),
+	(0103, 1, 'description', 'descripción', NULL, true, '{"position": 3, "editable": false}'),
 	(0104, 1, 'level', 'nivel', NULL, true, '{"position": 4, "editable": false}'),
-	(0105, 1, 'location', 'localización', NULL, true, '{"position": 5, "editable": false}'),
-	(0106, 1, 'comment', 'comentarios', NULL, true, '{"multiline": 8, "position": 6, "editable": true}'),
-	(0107, 1, 'created_at', 'fecha', NULL, true, '{"position": 7, "editable": false}'),
+	(0105, 1, 'stretch', 'tramo', NULL, true, '{"position": 5, "editable": false}'),
+	(0106, 1, 'location', 'localización', NULL, true, '{"position": 6, "editable": false}'),
+	(0107, 1, 'comment', 'comentarios', NULL, true, '{"multiline": 8, "position": 7, "editable": true}'),
+	(0108, 1, 'created_at', 'inicio', NULL, true, '{"position": 8, "editable": false}'),
+	(0109, 1, 'finish_at', 'final', NULL, true, '{"position": 9, "editable": false}'),
+	
+	
+	(0201, 2, 'incident_id', 'id incident_id', NULL, true, '{"position": 1, "editable": false, "refName": true}'),
+	(0202, 2, 'entity_id', 'entity_id', NULL, true, 
+		'{
+			"position": 2, 
+			"editable": false,
+			"simpleMultiInsert": true
+		 }'),
 	
 	(0301, 3, 'incident_id', 'id incident_id', NULL, true, '{"position": 1, "editable": false, "refName": true}'),
 	(0302, 3, 'municipality_id', 'municipality_id', NULL, true, 
 		'{
 			"position": 2, 
 			"editable": false,
-			"multiInsert": {
-				"enabled": true,
-				"label": "LBL_XXX"
-			}
+			"simpleMultiInsert": true
 		 }');
   END IF;
 END $$;

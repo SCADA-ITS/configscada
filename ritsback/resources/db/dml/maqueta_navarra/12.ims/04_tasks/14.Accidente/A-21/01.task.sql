@@ -6,8 +6,8 @@
 INSERT INTO conf.ims_incident_type_tasks (incident_type_task_id, stretch_id, incident_type_id, incident_state_id, task_type_id, alias, description, operation_description, mandatory, position, auto, on_change, rerun, road_impact_id, enabled, visible, created_at, updated_at) VALUES
 -- Para sobrescribir la tarea incluyo al inicio del id el <stetch_id>
 --ETAPA = AL SALTAR LA INCIDENCIA - ANTES DE CONFIRMAR - TAREAS GENERALES
-(001201010401, 12, 401, 1, 6, 'INFORMAR A ENTIDAD RESPONSABLE', 'Informar a Autovía del Pirineo', 'Llamar al teléfono 3333-333-33 para informar de que existe una incidencia la A-21', false, 1, false, null, true, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(001301010401, 13, 401, 1, 6, 'INFORMAR A ENTIDAD RESPONSABLE', 'Informar a Autovía del Pirineo', 'Llamar al teléfono 3333-333-33 para informar de que existe una incidencia la A-21', false, 1, false, null, true, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(001201010401, 12, 401, 1, 6, 'INFORMAR A ENTIDAD RESPONSABLE', 'Informar a Autovía del Pirineo', 'Llamar al teléfono 948 88 06 36 para informar de que existe una incidencia la A-21', false, 1, false, null, true, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(001301010401, 13, 401, 1, 6, 'INFORMAR A ENTIDAD RESPONSABLE', 'Informar a Autovía del Pirineo', 'Llamar al teléfono 948 88 06 36 para informar de que existe una incidencia la A-21', false, 1, false, null, true, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 (001202010401, 12, 401, 1, 6, 'RECABAR INFORMACIÓN', 'Llamar a CMC/COTA para informarse', 'Realizar una llamada telefónica a CMC/COTA para recabar la información completa de lo ocurrido en el accidente', false, 2, false, null, true, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (001302010401, 13, 401, 1, 6, 'RECABAR INFORMACIÓN', 'Llamar a CMC/COTA para informarse', 'Realizar una llamada telefónica a CMC/COTA para recabar la información completa de lo ocurrido en el accidente', false, 2, false, null, true, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
