@@ -12,7 +12,7 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 @tipo
 @localizacion
 @afeccion
-@fecha', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+@fecha', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 -- 
 -- Table: master.i18n_labels
 --
