@@ -1,0 +1,53 @@
+<generic_une_v1 name="" version=""
+    xmlns="generic_une_v1"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="generic_une_v1 ../../../adapter-lib/src/main/resources/schemas/une/generic_une_v1.xsd"
+    element_type_id="71">
+    <groovy_adapter file="ProcessFrame_71.groovy"></groovy_adapter>
+
+    <!-- Responses -->
+    <response_list>
+        <response>
+            <code>0x97</code>
+            <alarms>
+                <alarm byte="2" mask="0x01" alarm_config_id="20071"/>
+                <alarm byte="2" mask="0x08" alarm_config_id="80071"/>
+                <alarm byte="2" mask="0x10" alarm_config_id="90071"/>
+                <alarm byte="2" mask="0x20" alarm_config_id="100071"/>
+                <alarm byte="2" mask="0x80" alarm_config_id="70071"/>
+                <alarm byte="5" mask="0x08" alarm_config_id="50071"/>   
+            </alarms>
+        </response>
+        <response>
+            <code>0x9B</code>
+            <use_adapter>true</use_adapter>
+        </response>
+        <response>
+            <code>0x9A</code>
+            <use_adapter>true</use_adapter>
+        </response>
+    </response_list>
+
+    <!-- Requests -->
+    <request_list>
+        <request>
+            <request_frame>0x17</request_frame>
+            <cron_expression>0 * * * * ?</cron_expression>
+            <use_adapter>false</use_adapter>
+        </request>
+        <request>
+            <request_frame>0x1B</request_frame>
+            <cron_expression>0 * * * * ?</cron_expression>
+            <use_adapter>false</use_adapter>
+        </request>
+        <request>
+            <signalling_command_id>2</signalling_command_id>
+            <use_adapter>true</use_adapter>
+        </request>
+        <request>
+            <signalling_command_id>3</signalling_command_id>
+            <use_adapter>true</use_adapter>
+        </request>
+    </request_list>
+
+</generic_une_v1>

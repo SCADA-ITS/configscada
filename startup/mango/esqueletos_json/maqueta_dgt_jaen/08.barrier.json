@@ -317,13 +317,13 @@
                 "contextUpdateEvent": "CONTEXT_CHANGE",
                 "context": [
                     {
-                        "varName": "up_state",
-                        "dataPointXid": "DP_{device_name}_up_state",
+                        "varName": "up_order",
+                        "dataPointXid": "DP_{device_name}_up_order",
                         "updateContext": true
                     },
                     {
-                        "varName": "down_state",
-                        "dataPointXid": "DP_{device_name}_down_state",
+                        "varName": "down_order",
+                        "dataPointXid": "DP_{device_name}_down_order",
                         "updateContext": true
                     }
                 ],
@@ -335,7 +335,7 @@
                 "executionDelaySeconds": 0,
                 "logCount": 5,
                 "logSize": 1.0,
-                "script": "if (up_state.value == true && down_state.value == false) {\n return 1\n } else if (up_state.value == false && down_state.value == true) {\n return 2\n }else{\n return 2\n }",
+                "script": "if (up_order.value == true && down_order.value == false) {\n return 1\n } else if (up_order.value == false && down_order.value == true) {\n return 2\n }else{\n return 2\n }",
                 "settable": false,
                 "updateCronPattern": ""
             },

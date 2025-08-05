@@ -202,12 +202,12 @@
                 "context": [
                     {
                         "varName": "off_state",
-                        "dataPointXid": "DP_{device_name}_off_state",
+                        "dataPointXid": "DP_{barrier}_up_order",
                         "updateContext": true
                     },
                     {
                         "varName": "on_state",
-                        "dataPointXid": "DP_{device_name}_on_state",
+                        "dataPointXid": "DP_{barrier}_down_order",
                         "updateContext": true
                     }
                 ],

@@ -131,11 +131,13 @@ LEFT JOIN LATERAL (
 	LIMIT 1
 ) AS pl ON TRUE
 LEFT JOIN LATERAL (
-	SELECT description
-	FROM hist.ims_incident_reports hir
-	JOIN conf.ims_incident_types cit ON cit.incident_type_id = hir.incident_type_id
+	SELECT hir.description
+	FROM hist.audit_commands ac
+	JOIN hist.ims_incident_reports hir 
+	  ON hir.incident_report_id = CAST(regexp_replace(ac.comment, '^ImsIncidentReport:', '') AS INTEGER)
+	JOIN conf.ims_incident_types cit 
+	  ON cit.incident_type_id = hir.incident_type_id
 	WHERE ac.comment ~* '^ImsIncidentReport:\d+$'
-		AND hir.incident_report_id = CAST(regexp_replace(ac.comment, '^ImsIncidentReport:', '') AS INTEGER)
 	LIMIT 1
 ) AS it ON TRUE
 INNER JOIN master.i18n_labels il ON il.label = ac.command_type

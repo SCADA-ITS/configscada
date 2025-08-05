@@ -88,7 +88,7 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (100306, 1003, 1, 10, true, false, true, false, 'LBL_GRID_FIELD_LOCATION', 'LBL_GRID_FIELD_LOCATION', 'locationAlias', false, false, NULL, false, false, 150, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
 (100307, 1003, 1, 4, true, false, false, false, '', 'INCIDENT_LEVEL_ID', 'incidentLevelId', false, false, NULL, false, false, 50, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
 (100308, 1003, 1, 5, true, false, true, false, 'LBL_GRID_FIELD_INCIDENT_LEVEL_LABEL_ALIAS', 'LBL_GRID_FIELD_INCIDENT_LEVEL_LABEL_ALIAS', 'incidentLevelLabelAlias', false, false, NULL, true, false, 150, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
-(100309, 1003, 1, 11, true, false, false, false, 'LBL_GRID_FIELD_INCIDENT_STATE_LAVEL_ALIAS', 'LBL_GRID_FIELD_INCIDENT_STATE_LAVEL_ALIAS', 'incidentStateLabelAlias', false, false, NULL, true, false, 150, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(100309, 1003, 1, 11, true, false, false, false, 'LBL_GRID_FIELD_INCIDENT_STATE_LABEL_ALIAS', 'LBL_GRID_FIELD_INCIDENT_STATE_LABEL_ALIAS', 'incidentStateLabelAlias', false, false, NULL, true, false, 150, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
 (100310, 1003, 1, 3, true, false, false, false, '', 'CONFIRM', 'confirm', false, false, NULL, false, false, 50, NULL, true, true, NULL, NULL, NULL, 'boolToString', NULL),
 (100311, 1003, 1, 12, true, false, true, false, 'LBL_GRID_FIELD_CURRENT_USER', 'LBL_GRID_FIELD_CURRENT_USER', 'currentUserName', false, false, NULL, false, false, 250, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
 (100312, 1003, 2, 2, true, false, false, false, '', '', 'incidentId', true, false, NULL, false, false, 50, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
@@ -235,7 +235,7 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (105105, 1051, 1, 5, true, false, true, false, 'LBL_GRID_FIELD_INCIDENT_TYPE_DESCRIPTION', 'LBL_GRID_FIELD_INCIDENT_TYPE_DESCRIPTION', 'incidentTypeDescription', false, false, NULL, false, false, 300, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
 (105106, 1051, 1, 6, true, false, false, false, 'LBL_GRID_FIELD_AFFECTION_STRETCH', 'LBL_GRID_FIELD_AFFECTION_STRETCH', 'affectionStretchAlias', false, false, NULL, false, false, 260, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
 (105107, 1051, 1, 7, true, false, true, false, 'LBL_GRID_FIELD_LOCATION', 'LBL_GRID_FIELD_LOCATION', 'locationAlias', false, false, NULL, false, false, 150, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
-(105108, 1051, 1, 8, true, false, false, false, 'LBL_GRID_FIELD_INCIDENT_STATE_LAVEL_ALIAS', 'LBL_GRID_FIELD_INCIDENT_STATE_LAVEL_ALIAS', 'delayedIncidentStateLabelAlias', false, false, NULL, true, false, 150, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(105108, 1051, 1, 8, true, false, false, false, 'LBL_GRID_FIELD_INCIDENT_STATE_LABEL_ALIAS', 'LBL_GRID_FIELD_INCIDENT_STATE_LABEL_ALIAS', 'delayedIncidentStateLabelAlias', false, false, NULL, true, false, 150, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
 (105109, 1051, 1, 9, true, false, false, false, 'LBL_GRID_FIELD_CRONEXPRESION', 'LBL_GRID_FIELD_CRONEXPRESION', 'cronExpression', false, false, NULL, true, false, 250, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
 (105110, 1051, 1, 10, true, false, false, false, 'LBL_GRID_FIELD_NEXT_EXEC', 'LBL_GRID_FIELD_NEXT_EXEC', 'cronExpression', false, false, NULL, false, false, 175, NULL, true, true, NULL, NULL, NULL, 'getNextExec', NULL),
 

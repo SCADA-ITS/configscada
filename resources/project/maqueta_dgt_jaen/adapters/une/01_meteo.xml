@@ -1,0 +1,21 @@
+<generic_une_v1 name="" version=""
+    xmlns="generic_une_v1"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="generic_une_v1 ../../../adapter-lib/src/main/resources/schemas/une/generic_une_v1.xsd"
+    element_type_id="1">
+    <groovy_adapter file="ProcessFrame_1.groovy"></groovy_adapter>
+    <!-- Responses -->
+    <response_list>
+        <response>
+          <code>0x87</code>
+          <use_adapter>true</use_adapter>
+        </response>
+    </response_list>
+   <!-- Requests -->
+    <request_list>
+        <request>
+            <request_frame>0x07</request_frame>
+            <cron_expression>0 * * * * ?</cron_expression>
+        </request>
+    </request_list>
+</generic_une_v1>

@@ -1,9 +1,7 @@
-device_name;url_publisher;source_name;host;port(i);offset_on_state(i);offset_off_state(i)
-SMF-1-03-CA-D;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;ES-03-CA;192.168.88.201;5310;4;3
-SMF-1-03-CA-I;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;ES-03-CA;192.168.88.201;5310;2;1
-SMF-2-01-CA-D;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;ES-06-CA;192.168.88.201;5340;4;3
-SMF-2-01-CA-I;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;ES-06-CA;192.168.88.201;5340;2;1
-SMF-2-01-CA-D;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;ES-04-CZ;192.168.88.201;5370;4;3
-SMF-2-01-CA-I;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;ES-04-CZ;192.168.88.201;5370;2;1
-SMF-2-02-CA-D;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;ES-04-CZ;192.168.88.201;5370;8;7
-SMF-2-02-CA-I;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;ES-04-CZ;192.168.88.201;5370;6;5
+device_name;url_publisher;source_name;host;port(i);barrier;offset_on_state(i);offset_off_state(i)
+SMF-1-03-CA-D;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;ES-03-CA;192.168.88.201;5310;BA-1-01-CA-D;4;3
+SMF-1-03-CA-I;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;ES-03-CA;192.168.88.201;5310;BA-1-01-CA-I;2;1
+SMF-2-01-CA-D;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;ES-06-CA;192.168.88.201;5340;BA-1-01-CA-D;4;3
+SMF-2-01-CA-I;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;ES-06-CA;192.168.88.201;5340;BA-1-01-CA-I;2;1
+SMF-2-03-CZ-D;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;ES-06-CZ;192.168.88.201;5360;BA-2-01-CZ-D;17;16
+SMF-2-03-CZ-I;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;ES-06-CZ;192.168.88.201;5360;BA-2-01-CZ-I;20;19

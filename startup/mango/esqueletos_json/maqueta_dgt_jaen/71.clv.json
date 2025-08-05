@@ -850,7 +850,7 @@
                     "includeTimestamp": false
                 },
                 {
-                    "dataPointId": "DP_{device_name}_content",
+                    "dataPointId": "DP_{device_name}_signal",
                     "parameterName": "content",
                     "includeTimestamp": false
                 }

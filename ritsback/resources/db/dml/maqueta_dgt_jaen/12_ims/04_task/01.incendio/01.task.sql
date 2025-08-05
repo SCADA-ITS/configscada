@@ -5,10 +5,13 @@ INSERT INTO conf.ims_incident_type_tasks (incident_type_task_id, incident_type_i
 -- Para el incident_type_task_id sigo la siguiente convencion: <orden de la tarea dentro del estado><estado en el que está englobada la tarea><tipo de incidente>
 --ETAPA = AL SALTAR LA INCIDENCIA - ANTES DE CONFIRMAR - TAREAS GENERALES
 (00010101, 101, null, 1, 'PARAR VENTILACION', 'Parar ventilación',null, true, 1, true, 'TaskTypeVentilation/ByFireDet/StopVentilationByFireDetTask', null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+--ETAPA = INICIAL - AL CAMBIAR DE AFECCIÓN
 (00040101, 101, 1, 1, 'ENVIAR LIGERO', 'Indicar vehículo ligero',null, true, 1, true, 'TaskTypeVentilation/ByFireDet/EvacuationByFireDetTaskLigero', 10, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (00050101, 101, 1, 1, 'ENVIAR CAMIÓN', 'Indicar vehículo camión',null, true, 1, true, 'TaskTypeVentilation/ByFireDet/EvacuationByFireDetTaskCamion', 20, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (00060101, 101, 1, 1, 'ENVIAR MERCANCIAS PELIGROSAS', 'Indicar vehículo mercancias peligrosas',null, true, 1, true, 'TaskTypeVentilation/ByFireDet/EvacuationByFireDetTaskMPeligrosas', 30, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
+--ETAPA = INICIAL
 (01010101, 101, 1, 3, 'EXTRACCION',null,  'Ejecutar plan automatico de modo extraccion', true, 2, false, 'TaskTypeVentilation/ByFireDet/ExtractionByFireDetTask',null, '600', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (01020101, 101, 1, 1, 'PRESURIZACIÓN', 'Presurización', 'Encendido de presurización', true, 3, true, 'SendSignallingToStretch', null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (01030101, 101, 1, 3, 'ILUMINACIÓN', 'Reforzar iluminación en túnel 100% soleado', 'Encendido de todos los circuitos de alumbrado del túnel con objeto de mejorar las condiciones de visibilidad por existencia de humos en caso de fuego.', true, 4, true, 'TaskTypeTubeLighting/SetIlluminationTask', null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -19,12 +22,13 @@ INSERT INTO conf.ims_incident_type_tasks (incident_type_task_id, incident_type_i
 (01100101, 101, 1, 6, 'AVISO', 'Aviso a vigilantes y equipo de retén', 'Aviso a vigilantes y equipo de retén para poner en marcha el protocolo de cierre de túnel, desviar tráfico y colaborar con cuerpos de emergencia', true, 9, false, null, null,null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (01110101, 101, 1, 6, 'AVISO', 'Aviso a jefe de emergencias vialidad', 'Aviso al jefe de emergencias vialidad para mantener comunicaciones', false, 10, false, null, null,null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
-
-(03040101, 101, 3, 1, 'VENTILACION', 'Parar ventilación','Volver al estado anterior la ventilación', true, 1, true, 'TaskTypeVentilation/ByFireDet/PreStartVentilationByFireDetTask', null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(03050101, 101, 3, 1, 'VENTILACION', 'Arrancar ventilación','Volver al estado anterior la ventilación', true, 2, false, 'TaskTypeVentilation/ByFireDet/StartVentilationByFireDetTask', null, '2', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--ETAPA = RESTITUCIÓN
+(03040101, 101, 3, 1, 'VENTILACION', 'Restaurar ventilación','Volver al estado anterior la ventilación', true, 1, true, 'TaskTypeVentilation/ByFireDet/StartVentilationByFireDetTask', null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (03020101, 101, 3, 1, 'PRESURIZACIÓN', 'Presurización', 'Apagado de presurización', true, 3, true, 'SendSignallingToStretch', null,null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(03030101, 101, 3, 3, 'ILUMINACIÓN', 'Iluminación modo automático', 'Iluminación modo automático', true, 4, true, 'TaskTypeTubeLighting/SetIlluminationTask', null ,null,true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(03030101, 101, 3, 3, 'ILUMINACIÓN', 'Iluminación modo automático', 'Iluminación modo automático', true, 4, true, 'TaskTypeTubeLighting/SetIlluminationTask', null ,null,true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
+--ETAPA = AL CANCELAR LA INCIDENCIA
+(101040101, 101, 101, 1, 'VENTILACION', 'Parar ventilación','Volver al estado anterior la ventilación', true, 1, true, 'TaskTypeVentilation/ByFireDet/StartVentilationByFireDetTask', null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 
 

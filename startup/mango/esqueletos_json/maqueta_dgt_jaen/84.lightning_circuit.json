@@ -65,7 +65,7 @@
             "intervalLoggingType": "INSTANT",
             "purgeType": "YEARS",
             "pointLocator": {
-                "range": "COIL_STATUS",
+                "range": "{state_type}",
                 "modbusDataType": "BINARY",
                 "writeType": "SETTABLE",
                 "additive": 0.0,

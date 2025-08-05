@@ -1,3 +1,5 @@
 device_name;url_publisher;source_name;host;port(i);offset_up_order(i);offset_up_state(i);offset_down_order(i);offset_down_state(i)
 BA-1-01-CA-D;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;ES-03-CA;192.168.88.201;5310;515;3;516;4
 BA-1-01-CA-I;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;ES-03-CA;192.168.88.201;5310;513;1;514;2
+BA-2-01-CZ-D;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;ES-06-CZ;192.168.88.201;5360;530;16;531;17
+BA-2-01-CZ-I;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;ES-06-CZ;192.168.88.201;5360;528;18;529;19
