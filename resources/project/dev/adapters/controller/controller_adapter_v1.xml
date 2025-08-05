@@ -53,5 +53,25 @@
         <p:subscriptor_id_ref>2</p:subscriptor_id_ref>
       </p:subscriptors_ref>
     </p:mod>
+    <p:mod>
+      <p:type>5</p:type>
+      <p:id>1</p:id>
+      <p:enabled>true</p:enabled>
+      <p:threads>1</p:threads>
+      <p:subscriptors_ref>
+        <p:subscriptor_id_ref>1</p:subscriptor_id_ref>
+        <p:subscriptor_id_ref>2</p:subscriptor_id_ref>
+      </p:subscriptors_ref>
+    </p:mod>
+    <p:mod>
+      <p:type>5</p:type>
+      <p:id>2</p:id>
+      <p:enabled>true</p:enabled>
+      <p:threads>1</p:threads>
+      <p:subscriptors_ref>
+        <p:subscriptor_id_ref>1</p:subscriptor_id_ref>
+        <p:subscriptor_id_ref>2</p:subscriptor_id_ref>
+      </p:subscriptors_ref>
+    </p:mod>
   </p:mods>
 </p:controller_adapter_v1>

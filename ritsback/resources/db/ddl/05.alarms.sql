@@ -1,3 +1,4 @@
+--DROP TABLE IF EXISTS conf.modbus_element_alarm_configs
 --DROP TABLE IF EXISTS conf.alarms;
 --DROP TABLE IF EXISTS conf.alarm_target_elements;
 --DROP TABLE IF EXISTS conf.alarm_config_measures;
@@ -186,3 +187,28 @@
 	ALTER TABLE conf.alarms_filtered SET TABLESPACE tbl_conf;
 
 	
+-- 
+-- Table: conf.modbus_element_alarm_configs
+-- Descripción: Direcciones modbus para alarmas
+-- Scope: conf
+--
+	CREATE TABLE conf.modbus_element_alarm_configs (
+		element_type_id int8 NOT NULL,
+		element_id int8 NOT NULL,
+		alarm_config_id int8 NOT NULL,
+		xAddress int4 NOT NULL,
+		enabled bool NULL,
+		visible bool NULL,
+		created_at timestamptz NOT NULL,
+		updated_at timestamptz NOT NULL,
+		CONSTRAINT pk_modbus_element_alarm_configs PRIMARY KEY (element_type_id, element_id, alarm_config_id)
+	);
+
+	CREATE INDEX idx_modbus_element_alarm_configs_elements ON conf.modbus_element_alarm_configs USING btree (element_type_id, element_id);
+	CREATE INDEX idx_modbus_element_alarm_configs_alarm_configs ON conf.modbus_element_alarm_configs USING btree (alarm_config_id);
+
+	ALTER TABLE conf.modbus_element_alarm_configs ADD CONSTRAINT fk_modbus_element_alarm_configs_elements FOREIGN KEY (element_type_id, element_id) REFERENCES conf.elements(element_type_id, element_id);
+	ALTER TABLE conf.modbus_element_alarm_configs ADD CONSTRAINT fk_modbus_element_alarm_configs_alarm_configs FOREIGN KEY (alarm_config_id) REFERENCES conf.alarm_configs(alarm_config_id);
+	
+	ALTER TABLE conf.modbus_element_alarm_configs SET TABLESPACE tbl_conf;
+

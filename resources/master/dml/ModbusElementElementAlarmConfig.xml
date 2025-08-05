@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="ModbusElementElementAlarmConfig">
+	<SELECT>SELECT element_type_id as "elementTypeId",
+				   element_id as "elementId",
+				   alarm_config_id as "alarmConfigId",
+				   xAddress as "xAddress",
+				   enabled as "enabled", 
+				   visible as "visible"
+			  FROM conf.modbus_element_alarm_configs		
+        	 WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>INSERT INTO conf.modbus_element_alarm_configs
+				   (element_type_id,
+				    element_id,
+				    alarm_config_id
+				    xAddress,
+				    enabled,
+				    visible,
+				    created_at, 
+				    updated_at)
+		    VALUES (:elementTypeId
+		    	  , :elementId
+		    	  , :alarmConfigId
+		  		  , :xAddress
+		  		  , :enabled
+		  		  , :visible
+		  		  , CURRENT_TIMESTAMP
+		  		  , CURRENT_TIMESTAMP)
+	</INSERT>
+	<UPDATE>
+	</UPDATE>
+	<DELETE>DELETE FROM conf.modbus_element_alarm_configs
+			 WHERE element_type_id = :elementTypeId
+			   AND element_id = :elementId
+			   AND alarm_config_id = :alarmConfigId 
+	</DELETE>
+</DML>

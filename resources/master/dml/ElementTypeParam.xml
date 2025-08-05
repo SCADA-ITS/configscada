@@ -14,6 +14,8 @@
 				   label_description as "labelDescription",
 				   default_value as "defaultValue",
 				   durable as "durable",
+				   scaling_factor as "scalingFactor",
+				   offset_value as "offsetValue",
 				   enabled as "enabled", 
 				   visible as "visible"
 			  FROM master.element_type_params

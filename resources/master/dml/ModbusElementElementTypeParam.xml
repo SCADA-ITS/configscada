@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="ModbusElementElementTypeParam">
+	<SELECT>SELECT element_type_id as "elementTypeId",
+				   element_type_param_id as "elementTypeParamId",
+				   param_type_id as "paramTypeId",
+				   element_id as "elementId",
+				   xAddress as "xAddress",
+				   enabled as "enabled", 
+				   visible as "visible"
+			  FROM conf.modbus_element_element_type_params		
+        	 WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>INSERT INTO conf.modbus_element_element_type_params
+				   (element_type_id,
+				    element_type_param_id,
+				    param_type_id
+				    element_id,
+				    xAddress,
+				    enabled,
+				    visible,
+				    created_at, 
+				    updated_at)
+		    VALUES (:elementTypeId
+		    	  , :elementTypeParamId
+		    	  , :paramTypeId
+		  		  , :xAddress
+		  		  , :enabled
+		  		  , :visible
+		  		  , CURRENT_TIMESTAMP
+		  		  , CURRENT_TIMESTAMP)
+	</INSERT>
+	<UPDATE>
+	</UPDATE>
+	<DELETE>DELETE FROM conf.modbus_element_element_type_params
+			 WHERE element_type_id = :elementTypeId
+			   AND element_type_param_id = :elementTypeParamId
+			   AND param_type_id = :paramTypeId 
+			   AND element_id = :elementId
+	</DELETE>
+</DML>

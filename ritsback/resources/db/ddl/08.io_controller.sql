@@ -1,3 +1,4 @@
+--DROP TABLE IF EXISTS conf.modbus_element_command_element_types;
 --DROP TABLE IF EXISTS conf.command_element_values;
 --DROP TABLE IF EXISTS conf.command_elements;
 --
@@ -398,3 +399,29 @@ CREATE TABLE conf.command_element_preconditions (
 	ALTER TABLE conf.command_element_values ADD CONSTRAINT fk_command_element_values_command_element FOREIGN KEY (command_element_type_id, element_type_id, command_element_id) REFERENCES conf.command_elements(command_element_type_id, element_type_id, command_element_id);
 
 	ALTER TABLE conf.command_element_values SET TABLESPACE tbl_conf;
+
+-- 
+-- Table: conf.modbus_element_command_element_types
+-- Descripción: Direcciones modbus para comandos
+-- Scope: conf
+--
+	CREATE TABLE conf.modbus_element_command_element_types (
+		command_element_type_id int8 NOT NULL,
+		element_type_id int8 NOT NULL,
+		element_id int8 NOT NULL,
+		xAddress int4 NOT NULL,
+		enabled bool NULL,
+		visible bool NULL,
+		created_at timestamptz NOT NULL,
+		updated_at timestamptz NOT NULL,
+		CONSTRAINT pk_modbus_element_command_element_types PRIMARY KEY (command_element_type_id, element_type_id, element_id)
+	);
+
+	CREATE INDEX idx_modbus_element_command_element_types_command_element_types ON conf.modbus_element_command_element_types USING btree (command_element_type_id, element_type_id);
+	CREATE INDEX idx_modbus_element_command_element_types_elements ON conf.modbus_element_command_element_types USING btree (element_type_id, element_id);
+
+	ALTER TABLE conf.modbus_element_command_element_types ADD CONSTRAINT fk_modbus_element_command_element_types_command_element_types FOREIGN KEY (command_element_type_id, element_type_id) REFERENCES master.command_element_types(command_element_type_id, element_type_id);
+	ALTER TABLE conf.modbus_element_command_element_types ADD CONSTRAINT fk_modbus_element_command_element_types_elements FOREIGN KEY (element_type_id, element_id) REFERENCES conf.elements(element_type_id, element_id);
+	
+	ALTER TABLE conf.modbus_element_command_element_types SET TABLESPACE tbl_conf;
+
