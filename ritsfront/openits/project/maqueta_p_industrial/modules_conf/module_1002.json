@@ -1,0 +1,19 @@
+{
+	"moduleAction": {
+		"edit": 100201
+	},
+	"restEndpoints": {
+		"alarmConfigByElementType": "alarms/alarm_configs/element_type/${id}",
+		"alarmConfigId": "alarms/alarm_configs/${id}",
+		"grids": "grids/${id}"
+	},
+	"action": {
+		"edit": 103501,
+		"add": 103502,
+		"delete": 103503
+	},
+	"requiredPermissions": {
+		"edit": "SystemPermission:22"		
+	}
+	
+}

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ficha del Incidente</title>
+    <style>
+        body {
+			font-family: 'Guardian Sans', sans-serif;
+			margin: 20px;
+		}
+		
+		h2 {
+			font-size: 1.5em;
+			color: #6F605A;
+		}
+
+		.container {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			color: #72BF44;
+		}
+
+		.column {
+			flex: 1;
+		}
+
+		.text-container {
+			text-align: left;
+			margin-left: 250px;
+		}
+
+		.text-container h1 {
+			color: #72BF44;
+		}
+
+		.text-container h2, .text-container span {
+			display: inline;
+			font-size: 1.5em;
+		}
+
+		.text-container span {
+			margin-left: 10px;
+		}
+
+		.myspan {
+			color: #6F605A;
+		}
+		
+		.div-separator{
+			margin-top: 40px;
+		}
+
+		.separator {
+			height: 2px;
+			background-color: #72BF44;
+			border: none;
+			margin: 0;
+		}
+
+		.separator-container {
+			margin-top: 40px;
+			margin-bottom: 40px;
+		}
+
+		.separator-container h1 {
+			margin: 2px;
+			color: #72BF44;
+		}
+
+		.small-h2 {
+			font-size: 1em;
+			background-color: #00BBE7;
+			color: #F2F1EF;
+			padding: 10px;
+			margin: 0;
+			box-sizing: border-box;
+			display: inline-block;
+		}
+
+		.row {
+			display: flex;
+			align-items: center;
+		}
+
+		.row > div {
+			margin: 0 10px;
+		}
+
+		.left-align {
+			flex: 1;
+		}
+
+		.left-align .small-h2 {
+			width: 350px;
+		}
+
+		.left-align span {
+			margin-left: 20px;
+		}
+
+		.right-align {
+			flex: 1;
+			display: flex;
+			align-items: center;
+		}
+
+		.right-align .small-h2 {
+			width: 350px;
+		}
+
+		.right-align span {
+			margin-left: 20px;
+		}
+		
+		table {
+            width: 100%; 
+            border-collapse: collapse; 
+			margin-top: 40px;
+        }
+
+        td {
+            width: 10%; 
+            text-align: left; 
+        }
+		
+        tbody {
+            font-weight: bold; 
+            text-align: center; 
+            color: #6F605A; 
+        }
+		
+		caption {
+            font-size: 2em;
+            font-weight: bold;
+            text-align: left; 
+			color: #72BF44;
+            border-bottom: 3px solid #72BF44;
+        }
+</style>
+</head>
+<div id="template">
+    <div class="container">
+        <div class="column">
+            <img src="./img/logo-project.svg" alt="Logo de la concesionaria">
+        </div>
+        <div class="column text-container">
+            <h1>FICHA DEL INCIDENTE</h1>
+            <h2>Concesión:</h2><span id="class="myspan">Nogales</span>
+        </div>
+    </div>
+
+    <div class="separator-container">
+        <h1>Datos de la incidencia</h1>
+        <hr class="separator">
+    </div>
+
+	<div class="div-separator">
+		<div class="row">
+			<div class="left-align">
+				<h2 class="small-h2">Fecha de inicio del incidente</h2>
+				<span id="field.created_at" class="myspan"></span>
+			</div>
+			<div class="right-align">
+				<h2 class="small-h2">Tipo de detección</h2>			
+				<span id="field.type_detection" class="myspan"></span>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="left-align"></div>
+			<div class="right-align">
+				<h2 class="small-h2">Origen de detección</h2>			
+				<span id="field.source_id" class="myspan"></span>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="left-align"></div>
+			<div class="right-align">
+				<h2 class="small-h2">Elemento de detección</h2>			
+						<span id="field.element_id" class="myspan"></span>
+			</div>
+		</div>
+	</div>
+	
+	<div class="div-separator">
+		<div class="row">
+			<div class="left-align">
+				<h2 class="small-h2">Tipo de evento</h2>
+				<span id="field.incident_type" class="myspan"></span>
+			</div>
+			<div class="right-align">
+				<h2 class="small-h2">Nivel de gravedad</h2>			
+				<span id="field.level" class="myspan"></span>
+			</div>
+		</div>
+	</div>
+	
+	<div class="div-separator">
+		<div class="row">
+			<div class="left-align">
+				<h2 class="small-h2">Nombre de contacto</h2>
+				<span id="field.user_n" class="myspan"></span>
+			</div>
+			<div class="right-align">
+				<h2 class="small-h2">Telefono de contacto</h2>			
+				<span id="field.phone" class="myspan"></span>
+			</div>
+		</div>
+	</div>
+	
+	<div class="separator-container">
+        <h1>Ubicación de la incidencia</h1>
+        <hr class="separator">
+    </div>
+	
+	<div class="div-separator">
+		<div class="row">
+			<div class="left-align">
+				<h2 class="small-h2">km inicial</h2>
+				<span id="field.km_start" class="myspan"></span>
+			</div>
+			<div class="right-align">
+				<h2 class="small-h2">km final</h2>			
+				<span id="field.km_end" class="myspan"></span>
+			</div>
+		</div>
+	</div>
+	
+    <table id = "field.vehicles">
+		<tbody>
+			<tr>
+					<td id="field.vehicles.vehicle_type_id"></td>				
+					<td id="field.vehicles.vehicle_brand_id"></td>					
+					<td id="field.vehicles.vehicle_model_id"></td>					
+					<td id="field.vehicles.patent"></td>				
+					<td id="field.vehicles.color"></td>				
+					<td id="field.vehicles.vehicle_damage_id"></td>				
+					<td id="field.vehicles.attended_id"></td>				
+					<td id="field.vehicles.assistance_type_id"></td>				
+					<td id="field.vehicles.transfer_place_id"></td>			
+					<td id="field.vehicles.comment"></td>
+			</tr>
+		</tbody>
+    </table>
+	
+    <table id = "field.participants">
+		<tbody>
+			<tr>
+					<td id="field.participants.name"></td>				
+					<td id="field.participants.rut"></td>					
+					<td id="field.participants.address"></td>					
+					<td id="field.participants.phone"></td>				
+					<td id="field.participants.age"></td>				
+					<td id="field.participants.gender_id"></td>				
+					<td id="field.participants.stage_id"></td>				
+					<td id="field.participants.user_type_id"></td>				
+					<td id="field.participants.injury_type_id"></td>			
+					<td id="field.participants.injury_level_id"></td>
+			</tr>
+		</tbody>
+    </table>
+	
+    <table id = "field.assigned_resources">
+		<tbody>
+			<tr>
+					<td id="field.assigned_resources.action_id"></td>				
+					<td id="field.assigned_resources.typology_id"></td>					
+					<td id="field.assigned_resources.resource_id"></td>					
+					<td id="field.assigned_resources.release_date"></td>				
+					<td id="field.assigned_resources.comment"></td>		
+			</tr>
+		</tbody>
+    </table>
+	
+    <table id = "field.interrupt_agents">
+		<tbody>
+			<tr>
+					<td id="field.interrupt_agents.agents_id"></td>				
+					<td id="field.interrupt_agents.inicio"></td>					
+					<td id="field.interrupt_agents.final"></td>					
+					<td id="field.interrupt_agents.comentarios"></td>		
+			</tr>
+		</tbody>
+    </table>
+	
+    <table id = "field.unavailable_lanes">
+		<tbody>
+			<tr>
+					<td id="field.unavailable_lanes.lane_action_id"></td>				
+					<td id="field.unavailable_lanes.lane_id"></td>					
+					<td id="field.unavailable_lanes.start_action"></td>					
+					<td id="field.unavailable_lanes.comment"></td>		
+			</tr>
+		</tbody>
+    </table>
+	
+	<div class="separator-container">
+        <h1>Detalle de la incidencia</h1>
+        <hr class="separator">
+    </div>
+	
+	<div class="div-separator">
+		<h2>Descripción breve</h2>
+		<span id="field.comment"></span>
+	</div>
+	
+	<div class="div-separator">
+		<h2>Fotos de la evidencia</h2>
+	</div>
+	
+	<div class="column" id="groupImage.photos"></div>
+
+	<div class="div-separator">
+		<h2>Fotos croquis del accidente</h2>
+	</div>
+	
+	<div class="column" id="groupImage.sketch"></div>
+
+</div>
+</html>
