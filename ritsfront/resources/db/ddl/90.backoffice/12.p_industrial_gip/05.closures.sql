@@ -9,7 +9,9 @@ BEGIN
 		lanes varchar null,
 		entity varchar null,
 		reasons varchar null,
-		comments varchar null,
+		start_hour timestamptz null,
+		end_hour timestamptz null,
+		total_time varchar null,
 		
   		constraint pk_closures primary key (id)
 	) tablespace tbl_backoffice;

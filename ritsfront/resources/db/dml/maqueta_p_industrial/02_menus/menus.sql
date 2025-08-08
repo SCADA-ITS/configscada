@@ -18,4 +18,4 @@ INSERT INTO ui.menu_items(id, menu_group_id, "position", module_id, "label", ico
 
 -- TOOLS
 (0401, 4, 1, 403, 'LBL_MENU_ITEM_REPORTS', 'img/menu/default.png', 'Menu item Reports', 'Menu item Reports', true, true),
-(0402, 4, 2, 1921, 'LBL_MENU_ITEM_EXTERNAL_INCIDENTS', 'img/menu/backofficeincident.png', 'incidencias externas', 'incidencias externas', true, true);
+(0402, 4, 2, 1921, 'LBL_MENU_ITEM_INCIDENT_REPORTS_BACKOFFICE', 'img/menu/backofficeincident.png', 'Backoffice incidencias', 'Backoffice incidencias', true, true);

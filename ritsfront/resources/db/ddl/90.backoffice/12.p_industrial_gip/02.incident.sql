@@ -63,8 +63,8 @@ BEGIN
 			object_crash_id int null,
 			vehicle_crash_id int null,
 			relative_location_id int null,
+			comments varchar null,
 			
-			created_at timestamptz default current_timestamp,
 			constraint pk_incidents primary key (id)
 		) tablespace tbl_backoffice;
 		
