@@ -282,3 +282,9 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 
 ('CommandElementType:2:2', 38, 'INFO'),
 ('CommandElementType:3:2', 38, 'INFO');
+
+UPDATE ui.vo_entity_values set value = '#BFBFBF' where vo_entity_id = 'ImsIncidentLevel:1' and vo_entity_field_id = 10;
+UPDATE ui.vo_entity_values set value = '#A729AA' where vo_entity_id = 'ImsIncidentLevel:2' and vo_entity_field_id = 10;
+UPDATE ui.vo_entity_values set value = '#5B9BD5' where vo_entity_id = 'ImsIncidentLevel:3' and vo_entity_field_id = 10;
+
+
