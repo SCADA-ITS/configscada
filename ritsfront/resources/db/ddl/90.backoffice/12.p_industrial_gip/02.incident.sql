@@ -58,12 +58,24 @@ BEGIN
 			event_id int null,
 			side_id int null,
 			stretch_id int null,
+			comments varchar null,
+			
 			event_type_id int null,
 			collision_id int null,
 			object_crash_id int null,
 			vehicle_crash_id int null,
 			relative_location_id int null,
-			comments varchar null,
+			
+			report_by varchar null,
+			stamped varchar null,
+			court varchar null,
+			citattion_date timestamptz null,
+			report_number varchar null,
+			station varchar null,
+			file_number varchar null,
+			patrol_name varchar null,
+			operator_name varchar null,
+			supervisor_name varchar null,
 			
 			constraint pk_incidents primary key (id)
 		) tablespace tbl_backoffice;

@@ -6,6 +6,7 @@ INSERT INTO ui.selector_tree_nodes(id, selector_tree_id, "label", image, module_
 (03, 1, 'LBL_VEHICLES', null, 6001, true, true),
 (04, 1, 'LBL_PARTICIPANTS', null, 6002, true, true),
 (05, 1, 'LBL_CLOSURES', null, 6003, true, true),
+(06, 1, 'LBL_DAMAGES', null, 6020, true, true),
 
 (02, 1, 'LBL_MASTER', null, null, true, true),
 	(0201, 1, 'LBL_VEHICLES', null, null, true, true),
@@ -39,7 +40,7 @@ INSERT INTO ui.selector_tree_hierarchies(selector_tree_id,  node_parent_id, node
 	(1, 0202, 020201, true, true),
 	(1, 0202, 020202, true, true),
 	(1, 0202, 020203, true, true),
-(1, 03, 0203, true, true),	
+(1, 02, 0203, true, true),	
 	(1, 0203, 020301, true, true),
 	(1, 0203, 020302, true, true),
 	(1, 0203, 020303, true, true),

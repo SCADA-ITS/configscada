@@ -21,7 +21,8 @@ INSERT INTO ui.modules
 (6016, 9, 'INCIDENTS GIP - vehicle_brands', 'Incidents GIP - vehicle_brands', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 (6017, 9, 'INCIDENTS GIP - participant_types', 'Incidents GIP - participant_types', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 (6018, 9, 'INCIDENTS GIP - participant_injuries', 'Incidents GIP - participant_injuries', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
-(6019, 9, 'INCIDENTS GIP - participant_nacionalities', 'Incidents GIP - participant_nacionalities', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL);
+(6019, 9, 'INCIDENTS GIP - participant_nacionalities', 'Incidents GIP - participant_nacionalities', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(6020, 9, 'INCIDENTS GIP - damages', 'Incidents GIP - damages', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL);
 
 INSERT INTO ui.module_values 
 (module_id, module_param_id, value) VALUES 
@@ -46,7 +47,8 @@ INSERT INTO ui.module_values
 (6016, 13, '1'), (6016, 14, 'vehicle_brands'),
 (6017, 13, '1'), (6017, 14, 'participant_types'),
 (6018, 13, '1'), (6018, 14, 'participant_injuries'),
-(6019, 13, '1'), (6019, 14, 'participant_nacionalities');
+(6019, 13, '1'), (6019, 14, 'participant_nacionalities'),
+(6020, 13, '1'), (6020, 14, 'damages');
 
 INSERT INTO ui.window_values 
 (module_id, window_param_id, value) VALUES 
