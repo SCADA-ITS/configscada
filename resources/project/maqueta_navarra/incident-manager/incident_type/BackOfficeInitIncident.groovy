@@ -11,6 +11,10 @@ import java.sql.SQLException;
 import java.util.List;
 import java.sql.ResultSet;
 
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+
 class BackOfficeInitIncident {
 
     org.apache.logging.log4j.Logger log
@@ -97,6 +101,7 @@ class BackOfficeInitIncident {
         String level = null;
         String location = null;
         String userName = null;
+        String finishAt = null;
 
         if (incidentReport != null && incidentReport.getId() != null) {
             incidentReportId = String.valueOf(incidentReport.getId());
@@ -139,6 +144,14 @@ class BackOfficeInitIncident {
                     userName = user.getFullName();
                 }
             }
+            
+            if (incidentReport.getAutoCloseInMin() != null) {
+				Long finishTimestamp = incidentReport.getGeneratedAt() + incidentReport.getAutoCloseInMin()*60000;
+				
+				finishAt = Instant.ofEpochMilli(finishTimestamp)
+                .atZone(ZoneId.systemDefault())
+                .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+			}
         }
 
         List<ColumnValuePair> values = List.of(
@@ -146,7 +159,8 @@ class BackOfficeInitIncident {
                 new ColumnValuePair("incident_type", incidentType),
                 new ColumnValuePair("incident_sub_type", incidentSubType),
                 new ColumnValuePair("level", level),
-                new ColumnValuePair("location", location)
+                new ColumnValuePair("location", location),
+                new ColumnValuePair("finish_at", finishAt)
         );
 
         StringBuilder columns = new StringBuilder();
