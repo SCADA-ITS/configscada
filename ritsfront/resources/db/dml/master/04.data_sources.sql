@@ -80,9 +80,6 @@ INSERT INTO ui.data_sources(id, data_source_type_id, "name", description, entity
 (58, 1, 'getIncidentTypeStates', 'getIncidentTypeStates', 'ImsIncidentTypeStateVO', 'id', true, true),
 (59, 1, 'getNextState', 'getNextState', 'ImsIncidentTypeStateVO', 'id', true, true),
 (60, 1, 'getRoadImpacts', 'getRoadImpacts', 'RoadImpactVO', 'id', true, true),
-(61, 1, 'getRoadImpact', 'getRoadImpact', 'RoadImpactVO', 'id', true, true),
-(62, 1, 'getInitRoadImpacts', 'getInitRoadImpacts', 'RoadImpactVO', 'id', true, true),
-(63, 1, 'getRoadImpactsByIncident', 'getRoadImpactsByIncident', 'RoadImpactVO', 'id', true, true),
 (64, 1, 'getIncidentsSource', 'getIncidentsSource', 'ImsIncidentSourceVO', 'id', true, true),
 (65, 1, 'getIncidentSource', 'getIncidentSource', 'ImsIncidentSourceVO', 'id', true, true),
 (66, 1, 'getExtIncidents', 'getExtIncidents', 'ImsExtIncidentVO', 'id', true, true),
@@ -278,7 +275,9 @@ INSERT INTO ui.data_sources(id, data_source_type_id, "name", description, entity
 (270, 3, 'changeStateTransit', 'changeStateTransit', 'TransitVO', 'id', true, true),
 (271, 3, 'addTransitImage', 'addTransitImage', 'TransitImageVO', 'id', true, true),
 (272, 3, 'updateTransitImage', 'addTransitImage', 'TransitImageVO', 'id', true, true),
-(273, 3, 'deleteTransitImage', 'addTransitImage', 'TransitImageVO', 'id', true, true);
+(273, 3, 'deleteTransitImage', 'addTransitImage', 'TransitImageVO', 'id', true, true),
+(274, 1, 'getImsIncidentAlarmConditionAlarmTypes', 'getImsIncidentAlarmConditionAlarmTypes', 'ImsIncidentAlarmConditionAlarmTypeVO', 'id', true, true),
+(275, 1, 'getImsIncidentAlarmConditionAlarmType', 'getImsIncidentAlarmConditionAlarmType', 'ImsIncidentAlarmConditionAlarmTypeVO', 'id', true, true);
 
 INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) VALUES
 (1, 1, 'http://192.168.88.163:8082/graphql'),
@@ -576,23 +575,8 @@ INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) V
 
 (60, 1, 'http://192.168.88.163:8082/graphql'),
 (60, 2, 'getRoadImpacts'),
-(60, 3, ''),
+(60, 3, 'roadImpactIds'),
 (60, 4, NULL),
-
-(61, 1, 'http://192.168.88.163:8082/graphql'),
-(61, 2, 'getRoadImpact'),
-(61, 3, 'roadImpactId'),
-(61, 4, NULL),
-
-(62, 1, 'http://192.168.88.163:8082/graphql'),
-(62, 2, 'getInitRoadImpacts'),
-(62, 3, 'incidentTypeId'),
-(62, 4, NULL),
-
-(63, 1, 'http://192.168.88.163:8082/graphql'),
-(63, 2, 'getRoadImpactsByIncident'),
-(63, 3, 'incidentId'),
-(63, 4, NULL),
 
 (64, 1, 'http://192.168.88.163:8082/graphql'),
 (64, 2, 'getIncidentsSource'),
@@ -1653,4 +1637,14 @@ INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) V
 (273, 9, 'deleteTransitImage'),
 (273, 10, 'transitImageId'),
 (273, 11, 'String!'),
-(273, 12, NULL);
+(273, 12, NULL),
+
+(274, 1, 'http://192.168.88.163:8082/graphql'),
+(274, 2, 'getImsIncidentAlarmConditionAlarmTypes'),
+(274, 3, ''),
+(274, 4, NULL),
+
+(275, 1, 'http://192.168.88.163:8082/graphql'),
+(275, 2, 'getImsIncidentAlarmConditionAlarmType'),
+(275, 3, 'imsIncidentAlarmConditionAlarmTypeId'),
+(275, 4, NULL);
