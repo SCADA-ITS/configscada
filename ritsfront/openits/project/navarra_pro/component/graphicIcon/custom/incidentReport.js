@@ -28,7 +28,7 @@ export default class IncidentReport {
 		// Update level
 		if (this.gLevel) {
 
-			const fillColor = incident.roadImpact?.affection || INCIDENT_WITHOUT_AFFECTION;
+			const fillColor = incident.roadImpact?.affection || incident.incidentLevel.color;
 			this.gLevel.attr({ fill: fillColor });
 		}
 		

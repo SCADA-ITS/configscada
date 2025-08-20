@@ -32,7 +32,7 @@ BEGIN
 		(1, 'c4_all_ext_entities_with_values', 'LBL_EXT_ENTITY_C4', 'LBL_EXT_ENTITY_C4', 'LBL_EXT_ENTITY_C4_DESCRIPTION', NULL, false, false, 
 			-- sql_view 
 			'SELECT 
-				ext_entity_id, id, fecha_actualizacion, categoria, tipo, titulo, afeccion, carretera, localizacion, fecha, estado, latitud, longitud, fecha_finalizacion
+				id, fecha_actualizacion, categoria, tipo, titulo, afeccion, carretera, localizacion, fecha, estado, latitud, longitud, fecha_finalizacion
 			 FROM 
 				reporting_bo.c4_ext_entities_with_values t
 			 WHERE
@@ -45,7 +45,7 @@ BEGIN
 		(2, 'e112_all_ext_entities_with_values', 'LBL_EXT_ENTITY_112', 'LBL_EXT_ENTITY_112', 'LBL_EXT_ENTITY_112_DESCRIPTION', NULL, false, false, 
 			-- sql_view 
 			'SELECT 
-				ext_entity_id, id, fecha_actualizacion, categoria, tipo, localizacion, fecha, estado, num_recursos, num_vehiculos, latitud, longitud, fecha_finalizacion, estado112
+				id, fecha_actualizacion, categoria, tipo, localizacion, fecha, estado, num_recursos, num_vehiculos, latitud, longitud, fecha_finalizacion, estado112
 			 FROM 
 				reporting_bo.e112_ext_entities_with_values t
 			 WHERE
@@ -72,7 +72,7 @@ BEGIN
 		(5, 'all_waze_traffic_alert_ext_entities_with_values', 'LBL_EXT_ENTITY_WAZE_TRAFFIC_ALERT', 'LBL_EXT_ENTITY_WAZE_TRAFFIC_ALERT', 'LBL_EXT_ENTITY_WAZE_TRAFFIC_ALERT_DESCRIPTION', NULL, false, false, 
 			-- sql_view 
 			'SELECT 
-				ext_entity_id, id, categoria, tipo, carretera, latitud, longitud, fecha_publicacion, direccion, calle, localidad, pais, valoracion, fiabilidad, confianza, usuario_municipio, estado, fecha_finalizacion
+				 id, categoria, tipo, carretera, latitud, longitud, fecha_publicacion, direccion, calle, localidad, pais, valoracion, fiabilidad, confianza, usuario_municipio, estado, fecha_finalizacion
 			FROM 
 				reporting_bo.waze_traffic_alert_ext_entities_with_values t
 			WHERE

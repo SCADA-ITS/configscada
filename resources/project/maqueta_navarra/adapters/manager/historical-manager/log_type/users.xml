@@ -5,7 +5,7 @@
 	xsi:schemaLocation="historical_audit_log_parser_v1 ../../../../../adapter-lib/src/main/resources/schemas/manager/historical_audit_log_parser_v1.xsd"
 	log_type_id="4">
 	<p:target_table>hist.audit_users</p:target_table>
-	<p:table_space>tbs_controltrafico_hist</p:table_space>
+	<p:table_space>tl_hist</p:table_space>
 	<p:field_log_subtype_id>log_subtype_id</p:field_log_subtype_id>
 	<p:fields>
 		<p:field name="session" indexed="true">

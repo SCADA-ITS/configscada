@@ -13,6 +13,12 @@ INSERT INTO ui.module_values(module_id, module_param_id, value) VALUES
 (6001, 13, '2'), (6001, 14, 'municipalities'),
 (6002, 13, '2'), (6002, 14, 'entities'),
 (6011, 13, '2'), (6011, 14, 'incidents'),
+(6012, 13, '2'), (6012, 14, 'vehicles'),
+(6013, 13, '2'), (6013, 14, 'vehicle_brands'),
+(6014, 13, '2'), (6014, 14, 'vehicle_models'),
+(6015, 13, '2'), (6015, 14, 'vehicle_types'),
+(6016, 13, '2'), (6016, 14, 'vehicle_damages'),
+(6017, 13, '2'), (6017, 14, 'affection_details'),
 
 (1950, 13, '1'),
 (1950, 14, 'c4_all_ext_entities_with_values'),

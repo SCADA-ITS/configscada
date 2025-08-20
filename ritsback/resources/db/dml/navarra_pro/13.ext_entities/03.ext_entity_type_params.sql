@@ -11,6 +11,7 @@ INSERT INTO static.ext_entity_type_params (ext_entity_type_id, ext_entity_type_p
 (1, 10, null, 'location', 'Location', 'LBL_EXT_ENTITY_TYPE_PARAM_LOCATION', 'LBL_EXT_ENTITY_TYPE_PARAM_LOCATION_DESC', 2, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (1, 11, null, 'categoria', 'Categoria', 'LBL_EXT_ENTITY_TYPE_PARAM_CATEGORY', 'LBL_EXT_ENTITY_TYPE_PARAM_CATEGORY_DESC', 2, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (1, 12, null, 'id_tipo', 'id_tipo', 'LBL_EXT_ENTITY_TYPE_PARAM_ID_TYPE', 'LBL_EXT_ENTITY_TYPE_PARAM_ID_TYPE_DESC', 1, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 13, null, 'descripcion', 'Descripcion', 'LBL_EXT_ENTITY_TYPE_PARAM_DESCRIPTION', 'LBL_EXT_ENTITY_TYPE_PARAM_DESCRIPTION_DESC', 2, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 (4, 1, null, 'location', 'Location', 'LBL_EXT_ENTITY_TYPE_PARAM_LOCATION', 'LBL_EXT_ENTITY_TYPE_PARAM_LOCATION_DESC', 2, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (4, 2, null, 'status', 'Status', 'LBL_EXT_ENTITY_TYPE_PARAM_STATUS', 'LBL_EXT_ENTITY_TYPE_PARAM_STATUS_DESC', 2, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -43,6 +44,7 @@ INSERT INTO static.ext_entity_type_params (ext_entity_type_id, ext_entity_type_p
 (8, 6, null, 'country', '(see two letters codes in  http://en.wikipedia.org/wiki/ISO_3166-1) ', 'LBL_EXT_ENTITY_TYPE_PARAM_COUNTRY', 'LBL_EXT_ENTITY_TYPE_PARAM_COUNTRY_DESC', 2, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (8, 7, null, 'startNode', 'Nearest Junction/steet/city to jam start (supplied when available)', 'LBL_EXT_ENTITY_TYPE_PARAM_START_NODE', 'LBL_EXT_ENTITY_TYPE_PARAM_START_NODE_DESC', 2, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (8, 8, null, 'endNode', 'Nearest Junction/steet/city to jam end (supplied when available)', 'LBL_EXT_ENTITY_TYPE_PARAM_END_NODE', 'LBL_EXT_ENTITY_TYPE_PARAM_END_NODE_DESC', 2, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(8, 9, null, 'street', 'Street', 'LBL_EXT_ENTITY_TYPE_PARAM_STREET', 'LBL_EXT_ENTITY_TYPE_PARAM_STREET_DESC', 2, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 (9, 1, null, 'length', 'Length of route in meters', 'LBL_EXT_ENTITY_TYPE_PARAM_LENGTH_M', 'LBL_EXT_ENTITY_TYPE_PARAM_LENGTH_M_DESC', 1, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (9, 2, null, 'time', 'Time in seconds it takes to cross the route right now', 'LBL_EXT_ENTITY_TYPE_PARAM_DELAY_S', 'LBL_EXT_ENTITY_TYPE_PARAM_DELAY_S_DESC', 1, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

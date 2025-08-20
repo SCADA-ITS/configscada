@@ -17,11 +17,7 @@ INSERT INTO ui.map_incidents(id, incident_graphic_icon_id, incident_report_modul
 
 INSERT INTO ui.map_layers (id, base_layer, map_id, "name", description, "label", icon, visible) VALUES 
 (2, NULL, 1, 'CAMERA', 'CAMERA', 'LBL_ELEMENT_TYPE_CAMERA', NULL, true), 
---(71, NULL, 1, 'PMV', 'PMV', 'LBL_ELEMENT_TYPE_PMV', NULL, true), 
 (99, NULL, 1, 'RADAR', 'RADAR', 'LBL_ELEMENT_TYPE_TRAFFIC_RADAR', NULL, true);
-
---INSERT INTO ui.map_incidents(id, incident_graphic_icon_id, incident_report_module_action_id, incident_wizard_module_action_id) VALUES
---(1, 1000, 100401, 101303);
 
 --
 -- routes_config format:
@@ -80,8 +76,6 @@ INSERT INTO ui.map_layer_elements (id, layer_id, element_id, graphic_icon_id, "l
 (0260002, 2,'Element:2:26', 2,'Bera Tunel Norte 2', 43.2757475, -1.6956659,  false, null, true, false, null, true ),
 --(0270002, 2,'Element:2:27', 2,'Endarlatza 2', 43.2792225, -1.711128641,  false, null, true, false, null, true ),
 (0280002, 2,'Element:2:28', 2,'Talluntxe LPR ', 42.7755542, -1.6315534,  false, null, true, false, null, true ),
-
---(0010071, 71, 'Element:71:1', 71, 'PMV-VIRTUAL-1', 43.39616189919906, -2.0825991357475653, false, null, true, false, null, true ),
 
 (0010099, 99,'Element:99:1', 99,'RADF-127+670D',43.01762766,-1.90737257, false, null, true, false, null, true ),
 (0020099, 99,'Element:99:2', 99,'RADF-91+358D', 42.07934146,-1.79528762, false, null, true, false, null, true ),

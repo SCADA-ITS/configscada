@@ -150,6 +150,8 @@ CREATE SCHEMA rt;
 		
 	CREATE TABLE rt.ims_incident_reports (
 		incident_report_id int8 default nextval('rt.last_incident_report_id'),
+		alias varchar NULL,
+		description varchar NULL,
 		incident_type_id int8 NOT NULL,
 		incident_type_cause_id int8 NULL,
 		affection_stretch_id int8 NOT NULL,
@@ -412,6 +414,8 @@ CREATE SCHEMA rt;
 	
 	CREATE TABLE rt.ims_delayed_incident_reports (
 	    id int8 DEFAULT nextval('rt.last_delayed_incident_report_id'),
+		alias varchar NULL,
+		description varchar NULL,
 	    incident_type_id int8 NOT NULL,
 	    location_id int8 NULL,
 	    affection_stretch_id int8 NOT NULL,

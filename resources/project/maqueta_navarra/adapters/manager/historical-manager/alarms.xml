@@ -5,7 +5,7 @@
 	xsi:schemaLocation="historical_instant_parser_v2 ../../../../adapter-lib/src/main/resources/schemas/manager/historical_instant_parser_v2.xsd "
 	model="Alarm">
 	<p:target_table>hist.alarms</p:target_table>
-	<p:table_space>tbs_controltrafico_hist</p:table_space>
+	<p:table_space>tl_hist</p:table_space>
 	<p:fields>
 		<p:field name="Alias">
 			<p:soure_field_value>alias</p:soure_field_value>

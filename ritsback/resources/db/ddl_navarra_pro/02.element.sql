@@ -1,3 +1,5 @@
+--DROP TABLE IF EXISTS conf.modbus_element_element_type_params
+--DROP TABLE IF EXISTS conf.modbus_element_element_type_states
 --DROP TABLE IF EXISTS conf.element_values;
 --DROP TABLE IF EXISTS conf.element_hierarchies;
 --DROP TABLE IF EXISTS conf.elements;
@@ -306,6 +308,8 @@
 		threshold_2 varchar NULL,
 		element_type_param_unit_id int8 NULL,
 		durable bool NULL,
+		scaling_factor float8 NULL,
+		offset_value float8 NULL,
 		enabled bool NULL,
 		visible bool NULL,
 		editable bool NULL DEFAULT false,
@@ -706,4 +710,51 @@
 	ALTER TABLE conf.element_values ADD CONSTRAINT fk_element_values_element_value_states FOREIGN KEY (element_value_state_id) REFERENCES master.element_value_states(element_value_state_id);
 	
 	ALTER TABLE conf.element_values SET TABLESPACE tbs_controltrafico_conf;
+	
+-- 
+-- Table: conf.modbus_element_element_type_states
+-- Descripción: Direcciones modbus para estados
+-- Scope: conf
+--
+	CREATE TABLE conf.modbus_element_element_type_states (
+		element_type_id int8 NOT NULL,
+		element_id int8 NOT NULL,
+		xAddress int4 NOT NULL,
+		enabled bool NULL,
+		visible bool NULL,
+		created_at timestamptz NOT NULL,
+		updated_at timestamptz NOT NULL,
+		CONSTRAINT pk_modbus_element_element_type_states PRIMARY KEY (element_type_id, element_id)
+	);
 
+	CREATE INDEX idx_modbus_element_element_type_states_elements ON conf.modbus_element_element_type_states USING btree (element_type_id, element_id);
+
+	ALTER TABLE conf.modbus_element_element_type_states ADD CONSTRAINT fk_modbus_element_element_type_states_elements FOREIGN KEY (element_type_id, element_id) REFERENCES conf.elements(element_type_id, element_id);
+	
+	ALTER TABLE conf.modbus_element_element_type_states SET TABLESPACE tbs_controltrafico_conf;
+	
+-- 
+-- Table: conf.modbus_element_element_type_params
+-- Descripción: Direcciones modbus para medidas
+-- Scope: conf
+--
+	CREATE TABLE conf.modbus_element_element_type_params (
+		element_type_id int8 NOT NULL,
+		element_type_param_id int8 NOT NULL,
+		param_type_id int8 NOT NULL,
+		element_id int8 NOT NULL,
+		xAddress int4 NOT NULL,
+		enabled bool NULL,
+		visible bool NULL,
+		created_at timestamptz NOT NULL,
+		updated_at timestamptz NOT NULL,
+		CONSTRAINT pk_modbus_element_element_type_params PRIMARY KEY (element_type_id, element_type_param_id, param_type_id, element_id)
+	);
+
+	CREATE INDEX idx_modbus_element_element_type_params_elements ON conf.modbus_element_element_type_params USING btree (element_type_id, element_id);
+	CREATE INDEX idx_modbus_element_element_type_params_element_type_params ON conf.modbus_element_element_type_params USING btree (element_type_param_id, element_type_id, param_type_id);
+
+	ALTER TABLE conf.modbus_element_element_type_params ADD CONSTRAINT fk_modbus_element_element_type_params_elements FOREIGN KEY (element_type_id, element_id) REFERENCES conf.elements(element_type_id, element_id);
+	ALTER TABLE conf.modbus_element_element_type_params ADD CONSTRAINT fk_modbus_element_element_type_params_element_type_params FOREIGN KEY (element_type_param_id, element_type_id, param_type_id) REFERENCES master.element_type_params(element_type_param_id, element_type_id, param_type_id);
+	
+	ALTER TABLE conf.modbus_element_element_type_params SET TABLESPACE tbs_controltrafico_conf;

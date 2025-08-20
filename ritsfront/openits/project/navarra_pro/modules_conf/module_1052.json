@@ -7,8 +7,8 @@
     },
 	"backOffice": {
 	    "id": 2,
-	    "tableName": "incidents",
-	    "filterColumnName": "incident_report_id",
+	    "tableName": "delayed_incidents",
+	    "filterColumnName": "delayed_incident_report_id",
 	    "filterColumnValue": null
   	},
     "restEndpoints": {

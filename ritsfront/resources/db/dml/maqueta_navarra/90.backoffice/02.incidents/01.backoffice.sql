@@ -30,7 +30,7 @@ BEGIN
   	-- smartgen.sg_metadata_tables
   	--
 	INSERT INTO incidents.sg_metadata_tables (id, name, label, label_singular, label_description, mdi_icon, support_images, support_attachments, metadata, sql_view, grid_id) VALUES
-	(1, 'incidents_extended', 'LBL_INCIDENTS', 'LBL_INCIDENT', 'LBL_INCIDENTS_DESCRIPTION', 'mdi mdi-message-alert', true, true,'{
+	(1, 'incidents', 'LBL_INCIDENTS', 'LBL_INCIDENT', 'LBL_INCIDENTS_DESCRIPTION', 'mdi mdi-message-alert', true, true,'{
 		"formHeight": 800,
     	"formWidth": 1000,
 	  	 "groupImages": [
@@ -60,11 +60,11 @@ BEGIN
 	  	],
 		"initialTabLabel": "LBL_INCIDENT_SECTION_MAIN",
 		"srcTemplate": "incidentFormTemplate.html"
-	}',
-	'SELECT 
-		*
-	FROM
-		incidents.incidents_extended', 5000),
+	}',null, null),
+--	'SELECT 
+--		*
+--	FROM
+--		incidents.incidents_extended', 5000),
 	(2, 'assigned_entities', 'LBL_ASSIGNED_ENTITIES', 'LBL_ASSIGNED_ENTITY', 'LBL_ASSIGNED_ENTITIES_DESCRIPTION', 'mdi mdi-message-alert', true, true, NULL, NULL, NULL),
     (3, 'assigned_municipalities', 'LBL_ASSIGNED_MUNICIPALITIES', 'LBL_ASSIGNED_MUNICIPALITY', 'LBL_ASSIGNED_MUNICIPALITIES_DESCRIPTION', 'mdi mdi-message-alert', true, true, NULL, NULL, NULL),
     (4, 'delayed_assigned_entities', 'LBL_ASSIGNED_ENTITIES', 'LBL_ASSIGNED_ENTITY', 'LBL_ASSIGNED_ENTITIES_DESCRIPTION', 'mdi mdi-message-alert', true, true,NULL, NULL, NULL),
@@ -85,8 +85,8 @@ BEGIN
 	(13, 'affection_details', 'Detalle afección', 'Detalle afección', 'Detalle afección', NULL, false, false,  NULL, NULL, NULL);
 	
 	INSERT INTO incidents.sg_metadata_columns (id, sg_metadata_table_id, column_name, "label", label_description, needs_translation, metadata) VALUES
-	--(0101, 1, 'id', 'id', NULL, true, '{"position": 1, "editable": false}'),
-	(0102, 1, 'incident_report_id', 'id incidencia', NULL, true, '{"position": 2, "editable": false, "refName": true}'),
+	(0101, 1, 'id', 'id', NULL, true, '{"position": 1, "editable": false, "refName": true}'),
+	(0102, 1, 'incident_report_id', 'id incidencia', NULL, true, '{"position": 2, "editable": false}'),
 	(0103, 1, 'incident_type', 'tipo incidencia', NULL, true, '{"position": 3, "editable": false}'),
 	(0104, 1, 'incident_sub_type', 'descripción', NULL, true, '{"position": 4, "editable": false}'),
 	(0105, 1, 'level', 'nivel', NULL, true, '{"position": 5, "editable": false}'),

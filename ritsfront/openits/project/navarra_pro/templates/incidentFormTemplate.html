@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Reporte de Incidencia</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: #f9f9f9;
+      color: #333;
+      padding: 40px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      background-color: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 40px;
+    }
+
+    header img {
+       width: 100%;     
+       height: auto;    
+       display: block;  
+    }
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 10px;
+      border-bottom: 2px solid #ccc;
+      padding-bottom: 5px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+
+    table th,
+    table td {
+      text-align: left;
+      padding: 10px;
+      border: 1px solid #ddd;
+    }
+
+    caption {
+      font-weight: bold;
+      text-align: left;
+      margin: 10px 0;
+      font-size: 16px;
+    }
+
+    .section-title {
+      margin-top: 40px;
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .field-label {
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div id="template" class="container">
+    <header>
+      <img src="./img/cabecera_informes_navarra.svg" alt="Logo Proyecto">
+    </header>
+
+    <section>
+      <h1>Reporte de Incidencia</h1>
+      <table>
+        <tr>
+          <td class="field-label">Incidencia</td>
+          <td><span id="field.incident_report_id"></span></td>
+        </tr>
+        <tr>
+          <td class="field-label">Fecha</td>
+          <td><span id="field.created_at"></span></td>
+        </tr>
+      </table>
+    </section>
+
+    <section>
+      <div class="section-title">Datos del Evento</div>
+      <table>
+        <tr>
+          <th>Localización</th>
+          <th>Tipo</th>
+        </tr>
+        <tr>
+          <td><span id="field.location"></span></td>
+          <td><span id="field.incident_type"></span></td>
+        </tr>
+      </table>
+    </section>
+
+    <section>
+      <div class="section-title">Entidades Asignadas</div>
+      <table id = "field.assigned_entities">
+		<tbody>
+			<tr>
+					<td id="field.assigned_entities.id"></td>				
+					<td id="field.assigned_entities.entity_id"></td>	
+			</tr>
+		</tbody>
+      </table>
+    </section>
+
+    <section>
+      <div class="section-title">Municipios Asignados</div>
+      <table id = "field.assigned_municipalities">
+		<tbody>
+			<tr>
+					<td id="field.assigned_municipalities.id"></td>				
+					<td id="field.assigned_municipalities.municipality_id"></td>	
+			</tr>
+		</tbody>
+      </table>
+    </section>
+  </div>
+</body>
+</html>

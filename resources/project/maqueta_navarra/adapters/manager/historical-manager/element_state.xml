@@ -5,7 +5,7 @@
 	xsi:schemaLocation="historical_instant_parser_v2 ../../../../adapter-lib/src/main/resources/schemas/manager/historical_instant_parser_v2.xsd "
 	model="ElementState">
 	<p:target_table>hist.element_states</p:target_table>
-	<p:table_space>tbs_controltrafico_hist</p:table_space>
+	<p:table_space>tbl_hist</p:table_space>
 	<p:fields>
 		<p:field name="Element">
 			<p:soure_field_value>alias</p:soure_field_value>

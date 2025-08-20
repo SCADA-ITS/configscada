@@ -7,6 +7,7 @@ import java.util.Map;
 import org.apache.logging.log4j.Logger;
 
 import com.revenga.rits.back.data.core.model.Location;
+import com.revenga.rits.back.data.core.model.Stretch;
 import com.revenga.rits.back.data.core.model.command.SignallingCommand;
 import com.revenga.rits.back.data.core.model.ImsIncidentReport;
 import com.revenga.rits.back.data.core.model.ImsIncidentTypeTask;
@@ -78,11 +79,12 @@ class SendToTelegramNotification {
         if (incidentReport.getAffectionStretchId() != null) {
 
 			Location imsIncidentLocation = EntitiesManager.getInstance().getLocation(incidentReport.getLocationId());
+			Stretch imsIncidentStretch = IncidentEntitiesManager.getInstance().getStretch(incidentReport.getAffectionStretchId());
 	
 			message = IncidentEntitiesManager.getInstance().getIncidentTypeTaskValue(values, TASK_TYPE_PARAM_MESSAGE);
 			
 			message = message.replace("@tipo", "⚠️ " + IncidentEntitiesManager.getInstance().getImsIncidentType(incidentReport.getIncidentTypeId()).getDescription());
-			message = message.replace("@localizacion", "🚩 " + EntitiesManager.getInstance().getLocation(incidentReport.getLocationId()).getAlias());
+			message = message.replace("@localizacion", "🚩 " + imsIncidentStretch.getAlias() + " - " + imsIncidentLocation.getAlias());
 			
 			if (IncidentEntitiesManager.getInstance().getImsRoadImpact(incidentReport.getRoadImpactId()) != null){
 				if (IncidentEntitiesManager.getInstance().getImsRoadImpact(incidentReport.getRoadImpactId()).getDescription().contains("interrumpida")){

@@ -8,9 +8,9 @@ INSERT INTO ui.equip_viewer_tabs (id, equip_viewer_id, module_action_id, alias, 
 INSERT INTO ui.equip_viewer_grp_measures (id, equip_viewer_id, name, description, "label", icon, "position", visible) VALUES
 (0201, 'ElementType:2', 'Medidas', 'Medidas', 'LBL_ELEMENT_MEASURES', NULL, 1, true);
 
-INSERT INTO ui.equip_viewer_measures (equip_viewer_grp_measure_id, vo_entities_id, "position", visible) VALUES
+/*INSERT INTO ui.equip_viewer_measures (equip_viewer_grp_measure_id, vo_entities_id, "position", visible) VALUES
 (0201, 'ElementTypeParam:2:1:1', 1, true),
-(0201, 'ElementTypeParam:2:1:2', 1, true);
+(0201, 'ElementTypeParam:2:1:2', 1, true);*/
 
 INSERT INTO ui.equip_viewer_configs (id, equip_viewer_id, vo_entities_id, "position", visible) VALUES
 (01010002, 'ElementType:2', 'ElementTypeParam:2:1:1' , 1, true),

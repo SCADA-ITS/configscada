@@ -30,7 +30,7 @@ BEGIN
   	-- smartgen.sg_metadata_tables
   	--
 	INSERT INTO incidents.sg_metadata_tables (id, name, label, label_singular, label_description, mdi_icon, support_images, support_attachments, metadata, sql_view, grid_id) VALUES
-	(1, 'incidents_extended', 'LBL_INCIDENTS', 'LBL_INCIDENT', 'LBL_INCIDENTS_DESCRIPTION', 'mdi mdi-message-alert', true, true,'{
+	(1, 'incidents', 'LBL_INCIDENTS', 'LBL_INCIDENT', 'LBL_INCIDENTS_DESCRIPTION', 'mdi mdi-message-alert', true, true,'{
 		"formHeight": 800,
     	"formWidth": 1000,
 	  	 "groupImages": [
@@ -60,11 +60,7 @@ BEGIN
 	  	],
 		"initialTabLabel": "LBL_INCIDENT_SECTION_MAIN",
 		"srcTemplate": "incidentFormTemplate.html"
-	}',
-	'SELECT 
-		*
-	FROM
-		incidents.incidents_extended', 5000),
+	}',null, 5000),
 	(2, 'assigned_entities', 'LBL_ASSIGNED_ENTITIES', 'LBL_ASSIGNED_ENTITY', 'LBL_ASSIGNED_ENTITIES_DESCRIPTION', 'mdi mdi-message-alert', true, true, NULL, NULL, NULL),
     (3, 'assigned_municipalities', 'LBL_ASSIGNED_MUNICIPALITIES', 'LBL_ASSIGNED_MUNICIPALITY', 'LBL_ASSIGNED_MUNICIPALITIES_DESCRIPTION', 'mdi mdi-message-alert', true, true, NULL, NULL, NULL),
     (4, 'delayed_assigned_entities', 'LBL_ASSIGNED_ENTITIES', 'LBL_ASSIGNED_ENTITY', 'LBL_ASSIGNED_ENTITIES_DESCRIPTION', 'mdi mdi-message-alert', true, true,NULL, NULL, NULL),
