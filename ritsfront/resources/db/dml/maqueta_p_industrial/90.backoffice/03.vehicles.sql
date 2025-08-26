@@ -96,6 +96,7 @@ BEGIN
 		INSERT INTO backoffice.vehicle_brands (alias) VALUES('Iveco-pegaso');
 		INSERT INTO backoffice.vehicle_brands (alias) VALUES('Jaguar');
 		INSERT INTO backoffice.vehicle_brands (alias) VALUES('Jeep');
+		INSERT INTO backoffice.vehicle_brands (alias) VALUES('JMC');
 		INSERT INTO backoffice.vehicle_brands (alias) VALUES('Kia');
 		INSERT INTO backoffice.vehicle_brands (alias) VALUES('Lada');
 		INSERT INTO backoffice.vehicle_brands (alias) VALUES('Lamborghini');

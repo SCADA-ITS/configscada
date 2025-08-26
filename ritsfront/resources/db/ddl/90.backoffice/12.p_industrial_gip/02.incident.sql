@@ -49,6 +49,48 @@ BEGIN
 			alias varchar null,
 			constraint pk_relative_location primary key (id)
 		) tablespace tbl_backoffice;
+		
+		create table backoffice.road_conditions (
+			id serial not null,
+			alias varchar null,
+			constraint pk_road_conditions primary key (id)
+		) tablespace tbl_backoffice;
+		
+		create table backoffice.road_types (
+			id serial not null,
+			alias varchar null,
+			constraint pk_road_types primary key (id)
+		) tablespace tbl_backoffice;
+		
+		create table backoffice.road_states (
+			id serial not null,
+			alias varchar null,
+			constraint pk_road_states primary key (id)
+		) tablespace tbl_backoffice;
+		
+		create table backoffice.weather_states (
+			id serial not null,
+			alias varchar null,
+			constraint pk_weather_states  primary key (id)
+		) tablespace tbl_backoffice;
+		
+		create table backoffice.luminosity (
+			id serial not null,
+			alias varchar null,
+			constraint pk_luminosity  primary key (id)
+		) tablespace tbl_backoffice;
+		
+		create table backoffice.ligth (
+			id serial not null,
+			alias varchar null,
+			constraint pk_ligth  primary key (id)
+		) tablespace tbl_backoffice;
+		
+		create table backoffice.causes (
+			id serial not null,
+			alias varchar null,
+			constraint pk_causes  primary key (id)
+		) tablespace tbl_backoffice;
   
 		create table backoffice.incidents (
 			id serial not null,
@@ -65,6 +107,13 @@ BEGIN
 			object_crash_id int null,
 			vehicle_crash_id int null,
 			relative_location_id int null,
+			road_condition_id int null,
+			road_type_id int null,
+			road_state_id int null,
+			weather_state_id int null,
+			luminosity_id int null,
+			ligth_id int null,
+			cause_id int null,
 			
 			report_by varchar null,
 			stamped varchar null,
@@ -111,6 +160,34 @@ BEGIN
 		create index idx_relative_location_id on
 		backoffice.incidents
 			using btree (relative_location_id);
+		
+		create index idx_road_condition_id on
+		backoffice.incidents
+			using btree (road_condition_id);
+		
+		create index idx_road_type_id on
+		backoffice.incidents
+			using btree (road_type_id);
+		
+		create index idx_road_state_id on
+		backoffice.incidents
+			using btree (road_state_id);
+		
+		create index idx_weather_state_id on
+		backoffice.incidents
+			using btree (weather_state_id);
+		
+		create index idx_luminosity_id on
+		backoffice.incidents
+			using btree (luminosity_id);
+		
+		create index idx_ligth_id on
+		backoffice.incidents
+			using btree (ligth_id);
+		
+		create index idx_cause_id on
+		backoffice.incidents
+			using btree (cause_id);
 			
 		alter table backoffice.incidents add constraint fk_type_event_id foreign key (event_id) references backoffice.event(id) ON DELETE CASCADE;
 		alter table backoffice.incidents add constraint fk_type_side_id foreign key (side_id) references backoffice.side(id) ON DELETE CASCADE;
@@ -120,6 +197,13 @@ BEGIN
 		alter table backoffice.incidents add constraint fk_object_crash_id foreign key (object_crash_id) references backoffice.object_crash(id) ON DELETE CASCADE;
 		alter table backoffice.incidents add constraint fk_vehicle_crash_id foreign key (vehicle_crash_id) references backoffice.vehicle_crash(id) ON DELETE CASCADE;
 		alter table backoffice.incidents add constraint fk_relative_location_id foreign key (relative_location_id) references backoffice.relative_location(id) ON DELETE CASCADE;
+		alter table backoffice.incidents add constraint fk_road_condition_id foreign key (road_condition_id) references backoffice.road_conditions(id) ON DELETE CASCADE;
+		alter table backoffice.incidents add constraint fk_road_type_id foreign key (road_type_id) references backoffice.road_types(id) ON DELETE CASCADE;
+		alter table backoffice.incidents add constraint fk_road_state_id foreign key (road_state_id) references backoffice.road_states(id) ON DELETE CASCADE;
+		alter table backoffice.incidents add constraint fk_weather_state_id foreign key (weather_state_id) references backoffice.weather_states(id) ON DELETE CASCADE;
+		alter table backoffice.incidents add constraint fk_luminosity_id foreign key (luminosity_id) references backoffice.luminosity(id) ON DELETE CASCADE;
+		alter table backoffice.incidents add constraint fk_ligth_id foreign key (ligth_id) references backoffice.ligth(id) ON DELETE CASCADE;
+		alter table backoffice.incidents add constraint fk_cause_id foreign key (cause_id) references backoffice.causes(id) ON DELETE CASCADE;
 	END IF;
 END $$;
 

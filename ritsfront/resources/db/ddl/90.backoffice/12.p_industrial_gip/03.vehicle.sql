@@ -39,6 +39,7 @@ BEGIN
 		vehicle_service_id int null,
 		vehicle_consecuence_id int null,
 		vehicle_manoeuvre_id int null,
+		lane varchar null,
 		patent varchar null,
 		vehicle_brand_id int null,
   		constraint pk_vehicles primary key (id)
