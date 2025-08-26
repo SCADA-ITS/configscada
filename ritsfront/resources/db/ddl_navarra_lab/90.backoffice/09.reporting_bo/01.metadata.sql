@@ -4,9 +4,36 @@ DO $$
 BEGIN
   IF EXISTS (SELECT 1 FROM pg_tablespace WHERE spcname = 'tbs_controltrafico_reporting_bo') THEN
   
-	DROP SCHEMA reporting_bo CASCADE;
+	-- 🔹 Borrar todas las vistas, tablas y secuencias del esquema incidents
+    PERFORM 1;
+    DO $inner$
+    DECLARE
+        obj RECORD;
+    BEGIN
+        -- Vistas
+        FOR obj IN SELECT table_name 
+                   FROM information_schema.views 
+                   WHERE table_schema = 'reporting_bo'
+        LOOP
+            EXECUTE 'DROP VIEW reporting_bo.' || quote_ident(obj.table_name) || ' CASCADE';
+        END LOOP;
 
-	CREATE SCHEMA reporting_bo;
+        -- Tablas
+        FOR obj IN SELECT tablename 
+                   FROM pg_tables 
+                   WHERE schemaname = 'reporting_bo'
+        LOOP
+            EXECUTE 'DROP TABLE reporting_bo.' || quote_ident(obj.tablename) || ' CASCADE';
+        END LOOP;
+
+        -- Secuencias
+        FOR obj IN SELECT sequence_name 
+                   FROM information_schema.sequences 
+                   WHERE sequence_schema = 'reporting_bo'
+        LOOP
+            EXECUTE 'DROP SEQUENCE reporting_bo.' || quote_ident(obj.sequence_name) || ' CASCADE';
+        END LOOP;
+    END $inner$;
 
 	-- Table: reporting_bo.sg_metadata_tables
 	-- Descripción: 
