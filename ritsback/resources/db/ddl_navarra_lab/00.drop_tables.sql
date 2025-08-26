@@ -1,7 +1,5 @@
 SET client_min_messages TO WARNING;
 
-DROP TABLE IF EXISTS rt.temp_fk_constraints_rt;
-
 CREATE TABLE rt.temp_fk_constraints_rt AS
 SELECT conrelid::regclass AS tabla,
        conname AS constraint_name,
