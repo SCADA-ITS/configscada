@@ -275,16 +275,16 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 ('ExtEntitySubtype:9005', 73, '#FF0000'),
 ('ExtEntitySubtype:9006', 73, '#4E0E00'),
 
-('RoadImpact:100', 81, '#93CA51'),
-('RoadImpact:200', 81, '#F3EC0C'),
-('RoadImpact:300', 81, '#EE2025'),
-('RoadImpact:400', 81, '#050607'),
+('RoadImpact:100', 81, '#00FF00'),
+('RoadImpact:200', 81, '#FFFF00'),
+('RoadImpact:300', 81, '#FF0000'),
+('RoadImpact:400', 81, '#000000'),
 
 ('CommandElementType:2:2', 38, 'INFO'),
 ('CommandElementType:3:2', 38, 'INFO');
 
-UPDATE ui.vo_entity_values set value = '#BFBFBF' where vo_entity_id = 'ImsIncidentLevel:1' and vo_entity_field_id = 10;
-UPDATE ui.vo_entity_values set value = '#A729AA' where vo_entity_id = 'ImsIncidentLevel:2' and vo_entity_field_id = 10;
-UPDATE ui.vo_entity_values set value = '#5B9BD5' where vo_entity_id = 'ImsIncidentLevel:3' and vo_entity_field_id = 10;
+UPDATE ui.vo_entity_values set value = '#C8C8C8' where vo_entity_id = 'ImsIncidentLevel:1' and vo_entity_field_id = 10;
+UPDATE ui.vo_entity_values set value = '#C800FF' where vo_entity_id = 'ImsIncidentLevel:2' and vo_entity_field_id = 10;
+UPDATE ui.vo_entity_values set value = '#64C8FF' where vo_entity_id = 'ImsIncidentLevel:3' and vo_entity_field_id = 10;
 
 
