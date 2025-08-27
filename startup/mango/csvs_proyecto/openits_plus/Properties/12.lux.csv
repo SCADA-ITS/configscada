@@ -1,9 +1,0 @@
-device_name;source_name;host;measure_port(i);alarm_port(i);url_publisher;offset_luminosity(i);offset_alarm_sensor(i);offset_alarm_fa(i)
-TUN-LUX-1CA;LUX;192.168.88.74;502;503;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/;2770;1520;1521
-TUN-LUX-2CA;LUX;192.168.88.74;502;503;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/;2771;1522;1523
-TUN-LUX-3CA;LUX;192.168.88.74;502;503;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/;2772;1524;1525
-TUN-LUX-4CA;LUX;192.168.88.74;502;503;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/;2773;1526;1527
-TUN-LUX-1MA;LUX;192.168.88.74;502;503;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/;2774;1528;1529
-TUN-LUX-2MA;LUX;192.168.88.74;502;503;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/;2775;1530;1531
-TUN-LUX-3MA;LUX;192.168.88.74;502;503;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/;2776;1532;1533
-TUN-LUX-4MA;LUX;192.168.88.74;502;503;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/;2777;1534;1535

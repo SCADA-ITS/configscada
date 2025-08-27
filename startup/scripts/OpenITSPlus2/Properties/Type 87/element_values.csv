@@ -1,4 +1,0 @@
-item;alias;description;sessionuid;road;stretchs;pk;sentido;on_change_measure
-1;TUN-DEP-DIESEL-PCI;TUN-DEP-DIESEL-PCI;TUN-DEP-DIESEL-PCI;Carretera Tunel;Carretera;173+900;CA;ChangeMeasureHistorical.groovy
-2;TUN-DALJ-1;TUN-DALJ-1;TUN-DALJ-1;Carretera Tunel;Carretera;173+900;CA;ChangeMeasureHistorical.groovy
-3;TUN-DEP-TOX-MA;TUN-DEP-TOX-MA;TUN-DEP-TOX-MA;Carretera Tunel;Carretera;173+900;MA;ChangeMeasureHistorical.groovy

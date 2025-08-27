@@ -1,6 +1,0 @@
-INSERT INTO conf.plan_nodes (node_id, management_area_id, alias, description, plan_id, enabled, visible) VALUES
-(0103, 1, 'Campaña DGT', 'Campaña DGT', NULL, True, True),
-(0104, 1, 'Circule con precaución', 'Circule con precaución', 0101, True, True),
-(0105, 1, 'Túnel', 'Túnel', NULL, True, True),
-(0106, 1, 'Corte de carril', 'Corte de carril', 0102, True, True),
-(0107, 1, 'Restitución Corte de carril', 'Restitución Corte de carril', 0103, True, True);

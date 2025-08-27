@@ -1,2 +1,0 @@
-device_name;source_name;ip;measure_port(i);alarm_port(i);url_publisher;offset_alarm_general(i);offset_group_on(i)
-TUN-DEP-GE;GRUPOS TRASIEGO;192.168.88.74;502;503;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/;3252;3253

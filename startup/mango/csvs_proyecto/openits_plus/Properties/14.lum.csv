@@ -1,3 +1,0 @@
-device_name;source_name;ip;measure_port(i);alarm_port(i);url_publisher;offset_luminosity(i);offset_luminosity_real(i);offset_multiplier(i);offset_alarm_sensor(i)
-TUN-LUM-1CA;LUM;192.168.88.74;502;503;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/;2883;2884;2885;1652
-TUN-LUM-1MA;LUM;192.168.88.74;502;503;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/;2886;2887;2888;1653

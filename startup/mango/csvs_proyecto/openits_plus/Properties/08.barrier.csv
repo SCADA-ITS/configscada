@@ -1,5 +1,0 @@
-device_name;source_name;ip;measure_port(i);alarm_port(i);url_publisher;offset_bar_state(i);offset_bar_cmd(i);offset_barrier_fail_command(i);offset_barrier_down_veh_det(i);offset_barrier_no_return(i);offset_barrier_down_no_red_sem(i)
-TUN-BAR-1CA;BARRERAS;192.168.88.74;502;503;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/;2200;8001;1;2;3;4
-TUN-BAR-2CA;BARRERAS;192.168.88.74;502;503;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/;2201;8002;5;6;7;8
-TUN-BAR-1MA;BARRERAS;192.168.88.74;502;503;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/;2202;8003;9;10;11;12
-TUN-BAR-2MA;BARRERAS;192.168.88.74;502;503;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/;2203;8004;13;14;15;16

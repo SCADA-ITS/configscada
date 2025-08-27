@@ -1,2 +1,0 @@
-device_name;source_name;host;port(i);url_publisher;offset_pump_on(i);offset_angular_speed(i)
-PN-BB-CON;CENTRAL_NUCLEAR;192.168.88.74;504;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/;5009;5010

@@ -1,3 +1,0 @@
-item;alias;description;sessionuid;road;stretchs;pk;sentido;on_change_measure
-1;TUN-FOT-1MA;TUN-FOT-1MA;TUN-FOT-1MA;Carretera Tunel;Carretera;173+900;MA;SendValuesToIllumination.groovy
-2;HOSP-FOT;HOSP-FOT;HOSP-FOT;Nicklaus Childrens Hospital;Hosp P3;;;

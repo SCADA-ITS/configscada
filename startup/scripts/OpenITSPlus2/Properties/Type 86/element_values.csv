@@ -1,8 +1,0 @@
-item;alias;description;sessionuid;road;stretchs;pk;sentido;on_change_measure
-1;TUN-BEL-1;TUN-BEL-1;TUN-BEL-1;Carretera Tunel;Carretera;173+900;CA;ChangeMeasureHistorical.groovy
-2;TUN-BDI-1;TUN-BDI-1;TUN-BDI-1;Carretera Tunel;Carretera;173+900;CA;ChangeMeasureHistorical.groovy
-3;PN-BB-MAR;PN-BB-MAR;PN-BB-MAR;Planta Nuclear;Central;;;ChangeMeasureHistorical.groovy
-4;PN-BB-CON;PN-BB-CON;PN-BB-CON;Planta Nuclear;Central;;;ChangeMeasureHistorical.groovy
-5;PN-BB-RET;PN-BB-RET;PN-BB-RET;Planta Nuclear;Central;;;ChangeMeasureHistorical.groovy
-6;PN-BB-REF;PN-BB-REF;PN-BB-REF;Planta Nuclear;Central;;;ChangeMeasureHistorical.groovy
-7;PN-BB-VAP;PN-BB-VAP;PN-BB-VAP;Planta Nuclear;Central;;;ChangeMeasureHistorical.groovy

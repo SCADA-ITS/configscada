@@ -1,3 +1,0 @@
-item;alias;description;sessionuid;road;stretchs;pk;sentido;on_change_measure;param2_entrance_tunnel_distance
-1;TUN-LUM-1CA;TUN-LUM-1CA;TUN-LUM-1CA;Carretera Tunel;Tunel Norte;173+594;CA;SendValuesToIllumination.groovy;0
-2;TUN-LUM-1MA;TUN-LUM-1MA;TUN-LUM-1MA;Carretera Tunel;Tunel Sur;172+557;MA;SendValuesToIllumination.groovy;0

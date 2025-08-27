@@ -1,7 +1,0 @@
-item;stretch_type;alias;description;pk_ini;pk_end;lanes;road
-1000;Element;Mapa;Mapa georeferenciado;0.0;0.0;0;Carretera Mapa
-1001;Element;Carretera;Túnel 1;0.0;0.0;0;Carretera Tunel
-1002;Element;Hosp P1;Planta 1 del Hospital;0.0;0.0;0;Nicklaus Childrens Hospital
-1003;Element;Hosp P2;Planta 2 del Hospital;0.0;0.0;0;Nicklaus Childrens Hospital
-1004;Element;Hosp P3;Planta 3 del Hospital;0.0;0.0;0;Nicklaus Childrens Hospital
-1005;Element;Central;Central;0.0;0.0;0;Planta Nuclear

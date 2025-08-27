@@ -1,2 +1,0 @@
-device_name;source_name;host;port(i);url_publisher;offset_pump_on(i)
-PN-BB-MAR;CENTRAL_NUCLEAR;192.168.88.74;504;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/;5017

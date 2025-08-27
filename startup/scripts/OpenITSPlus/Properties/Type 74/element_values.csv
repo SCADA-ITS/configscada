@@ -1,3 +1,0 @@
-item;alias;description;sessionuid;road;stretchs;pk;sentido;param5_eru_type;param6_redundante_eru_type;param7_redundant_eru_alias
-1;TUN-ERU-1-MASTER;TUN-ERU-1-MASTER;TUN-ERU-1-MASTER;Carretera Tunel;Carretera;173+626;CA;Redundante;Maestra;TUN-ERU-1-SLAVE
-2;TUN-ERU-1-SLAVE;TUN-ERU-1-SLAVE;TUN-ERU-1-SLAVE;Carretera Tunel;Carretera;173+626;CA;Redundante;Esclava;TUN-ERU-1-MASTER

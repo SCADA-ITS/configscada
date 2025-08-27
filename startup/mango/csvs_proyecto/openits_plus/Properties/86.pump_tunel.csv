@@ -1,3 +1,0 @@
-device_name;source_name;ip;measure_port(i);alarm_port(i);url_publisher;offset_pump_on(i);offset_no_operation(i);offset_no_auto_state(i)
-TUN-BEL-1;BOMBAS;192.168.88.74;502;503;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/;5018;5020;5021
-TUN-BDI-1;BOMBAS;192.168.88.74;502;503;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/;5019;5022;5023

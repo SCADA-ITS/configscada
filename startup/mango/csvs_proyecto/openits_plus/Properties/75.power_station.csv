@@ -1,3 +1,0 @@
-device_name;source_name;host;port(i);url_publisher;offset_grp_temp_refrigerante(i);offset_grp_temp_aceite(i)
-PN-GRUPO_ELECTROGENO;CENTRAL_NUCLEAR;192.168.88.74;504;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/;5005;5006
-TUN-GEL-1MA;GRUPO_ELECTROGENO;192.168.88.74;504;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/;5007;5008

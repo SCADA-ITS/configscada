@@ -1,8 +1,0 @@
-item;alias;description;sessionuid;road;stretchs;pk;sentido;on_change_measure;param1_brand;param2_model
-1;TUN-ETD-1CA;Revenga ETD;TUN-ETD-1CA;Carretera Tunel;Carretera;173+900;MA;EtdParamsAdapterTFA.groovy;Revenga;Revenga ETD
-2;TUN-ETD-1MA;Revenga ETD;TUN-ETD-1MA;Carretera Tunel;Carretera;173+900;MA;EtdParamsAdapterTFA.groovy;Revenga;Revenga ETD
-3;MAP-ETD-1;Revenga ETD;MAP-ETD-1;Carretera Mapa;Mapa;118+300;;EtdParamsAdapterTFA.groovy;Revenga;Revenga ETD
-4;MAP-ETD-2;Revenga ETD;MAP-ETD-2;Carretera Mapa;Mapa;118+700;;EtdParamsAdapterTFA.groovy;Revenga;Revenga ETD
-5;MAP-ETD-3;Revenga ETD;MAP-ETD-3;Carretera Mapa;Mapa;119+200;;EtdParamsAdapterTFA.groovy;Revenga;Revenga ETD
-6;MAP-ETD-4;Revenga ETD;MAP-ETD-4;Carretera Mapa;Mapa;120+600;;EtdParamsAdapterTFA.groovy;Revenga;Revenga ETD
-7;MAP-ETD-5;Revenga ETD;MAP-ETD-5;Carretera Mapa;Mapa;121+400;;EtdParamsAdapterTFA.groovy;Revenga;Revenga ETD

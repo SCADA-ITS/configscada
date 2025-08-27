@@ -1,3 +1,0 @@
-device_name;source_name;ip;measure_port(i);alarm_port(i);url_publisher;offset_leak_water(i)
-TUN-DETFLJ-PCI-1;SENSOR_PERDIDAS_AGUA;192.168.88.74;502;503;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/;3212
-TUN-DETFLJ-PCI-2;SENSOR_PERDIDAS_AGUA;192.168.88.74;502;503;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/;3213

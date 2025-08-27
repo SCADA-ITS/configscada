@@ -1,3 +1,0 @@
-device_name;host;measure_port(i);alarm_port(i);source_name;url_publisher;offset_remote_control(i);offset_pres_fan_1(i);offset_pres_fan_2(i);offset_alarm_emergency_button(i)
-TUN-CUAD-PRES-GAL-CA;192.168.88.74;502;503;PRESURIZACION;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/;3825;3826;3827;2455
-TUN-CUAD-PRES-GAL-MA;192.168.88.74;502;503;PRESURIZACION;http:\/\/192.168.88.30:3000\/api\/v2\/generic\/;3828;3829;3830;2456

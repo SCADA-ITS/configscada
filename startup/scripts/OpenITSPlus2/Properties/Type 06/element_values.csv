@@ -1,7 +1,0 @@
-item;alias;description;sessionuid;road;stretchs;secc;pk;dm;param1_direction;param2_pk_ini;param3_pk_end;param4_name;param5_panels
-1;TT_01;Fuengirola - Marbella;;Carretera Mapa;;;;;false;118.400;151.800;Marbella;MAP-NTCIP-10
-2;TT_02;Fuengirola - San Pedro Alcántara;;Carretera Mapa;;;;;false;118.400;161.800;S Pedro A;MAP-NTCIP-10
-3;TT_03;Fuengirola - Estepona;;Carretera Mapa;;;;;false;118.400;169.800;Estepona;MAP-NTCIP-10
-4;TT_04;Elviria - Marbella;;Carretera Mapa;;;;;false;130.100;151.800;Marbella;MAP-NTCIP-9
-5;TT_05;Elviria - Estepona;;Carretera Mapa;;;;;false;130.100;169.800;Estepona;MAP-NTCIP-9
-6;TT_06;Marbella - Estepona;;Carretera Mapa;;;;;false;152.100;169.800;Estepona;MAP-NTCIP-7
