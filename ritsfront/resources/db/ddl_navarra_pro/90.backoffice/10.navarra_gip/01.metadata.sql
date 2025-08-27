@@ -13,25 +13,25 @@ BEGIN
         -- Vistas
         FOR obj IN SELECT table_name 
                    FROM information_schema.views 
-                   WHERE table_schema = 'reporting_bo'
+                   WHERE table_schema = 'incidents'
         LOOP
-            EXECUTE 'DROP VIEW reporting_bo.' || quote_ident(obj.table_name) || ' CASCADE';
+            EXECUTE 'DROP VIEW incidents.' || quote_ident(obj.table_name) || ' CASCADE';
         END LOOP;
 
         -- Tablas
         FOR obj IN SELECT tablename 
                    FROM pg_tables 
-                   WHERE schemaname = 'reporting_bo'
+                   WHERE schemaname = 'incidents'
         LOOP
-            EXECUTE 'DROP TABLE reporting_bo.' || quote_ident(obj.tablename) || ' CASCADE';
+            EXECUTE 'DROP TABLE incidents.' || quote_ident(obj.tablename) || ' CASCADE';
         END LOOP;
 
         -- Secuencias
         FOR obj IN SELECT sequence_name 
                    FROM information_schema.sequences 
-                   WHERE sequence_schema = 'reporting_bo'
+                   WHERE sequence_schema = 'incidents'
         LOOP
-            EXECUTE 'DROP SEQUENCE reporting_bo.' || quote_ident(obj.sequence_name) || ' CASCADE';
+            EXECUTE 'DROP SEQUENCE incidents.' || quote_ident(obj.sequence_name) || ' CASCADE';
         END LOOP;
     END $inner$;
 

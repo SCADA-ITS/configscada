@@ -1,0 +1,243 @@
+def stringVariable = ""
+
+pipeline {
+    agent any
+    
+    environment {
+        // SSH VARIABLES
+        SSH_HOST = '10.253.5.83'
+        SSH_SERVICE = 'app'
+        SSH_USER = 'admin'
+        PROJECT = 'navarra_lab'
+
+        // BBDD VARIABLES
+        PROFILE_BBDD = 'navarra_lab'
+        HOST_BBDD = '10.253.4.23'
+        PORT_BBDD = '5432'
+        DATABASE = 'controltrafico'
+        USER_DATABASE = 'dbo_controltrafico'
+        PASSWORD_DATABASE = 'ha9t5h57Emh4h1'
+
+        // JENKINS VARIABLES
+        PASSWORD_CREDENTIALS_ID = 'navarra_lab'  // Reemplaza con el ID de tus credenciales
+
+        // GIT VARIABLES
+        GIT_IP = '192.168.88.194'
+
+        // RESOURCES
+        BACK_RESOURCES = 'app/backrits/resources'
+        FRONT_RESOURCES = 'ritsfront/openits/src/main/resources/'
+
+        BACK_BBDD_FOLDER = 'rits/ritsback/resources/db'
+        BACK_BBDD_DDLRT_FOLDER = 'rits/ritsback/resources/db/ddlrt_navarra_lab'
+        BACK_BBDD_DDLHIST_FOLDER = 'rits/ritsback/resources/db/ddlhist_navarra_lab'
+        BACK_BBDD_DDLTRANSIT_FOLDER = 'rits/ritsback/resources/db/ddltrs_navarra_lab'
+        FRONT_BBDD_FOLDER = 'rits/ritsfront/resources/db'
+    }
+
+    stages {
+        stage('Comprobar si ha habido cambios') {
+            steps {
+                script {
+                    // Obtiene la fecha actual y calcula el primer día del mes actual y del mes anterior
+                    def date = new Date()
+                    def firstDayOfCurrentMonth = date.format('yyyy-MM') + '-01'
+                    
+                    // Obtén el primer día del mes anterior
+                    def cal = Calendar.getInstance()
+                    cal.setTime(date)
+                    cal.add(Calendar.MONTH, -1)
+                    def firstDayOfLastMonth = cal.time.format('yyyy-MM') + '-01'
+                    def repos = ['rits', 'ritsback', 'ritsfront']
+                    def contador = 0
+                    for (repo in repos) {
+                        dir(repo) {
+                            git(
+                                url: "ssh://git@${GIT_IP}:3004/~/${repo}.git",
+                                branch: 'master',
+                                changelog: true,
+                                poll: true
+                            )
+                            // Comprobar commits desde el primer día del mes anterior hasta hoy
+                            def changes = sh(script: "git log --since='${firstDayOfLastMonth}' --until='${firstDayOfCurrentMonth}' --oneline", returnStdout: true).trim()
+                            if (changes) {
+                                echo "Se han encontrado cambios desde ${firstDayOfLastMonth} en el repositorio ${repo}, se ejecutará el pipeline."
+                                contador +=1
+                            } else {
+                                echo "No se han encontrado cambios desde ${firstDayOfLastMonth} en el repositorio ${repo}, el pipeline no se ejecutará."
+                            }
+                        }
+                    }
+                    if (contador != 0){
+                        env.CHANGES_FOUND = "true"
+                    }else{
+                        env.CHANGES_FOUND = "false"
+                    }
+                }
+            }
+        }
+
+        stage('Build back') {
+            steps {
+                script {
+                
+					sh 'echo Compilando back'
+                    dir("ritsback/_ritsback") {
+                        
+                        sh 'mvn clean install'
+                    }
+                }
+            }
+        }
+
+        stage('Resources back'){
+            steps {
+                script {
+                    sh "echo Modificando recursos de back"
+                    if (!fileExists(BACK_RESOURCES)) {
+                        sh 'echo El directorio no existe. Creándolo...'
+                        sh "mkdir -p ${BACK_RESOURCES}"
+                        sh 'echo Directorio creado exitosamente.'
+                    } else {
+                        sh 'echo El directorio ya existe.'
+                    }
+        
+                    sh """
+                        echo Eliminando binarios antiguos...
+                        rm -Rf app/backrits/*.jar
+                        
+                        echo Eliminando ficheros de logs...
+                        rm -Rf app/backrits/logs/*
+                        
+                        echo Copiando binarios nuevos...
+                    """
+
+                    def ejecutables= ["data-loader", "equipment-manager", "ep-pub-stomp", "historical-manager", "io-controller",
+					"plan-manager", "service-graphql", "incident-manager", "traffic-manager", "virtual-equipment-manager",
+					"transit-manager", "io-external-manager", "server-launcher"]
+
+                    ejecutables.each { ejecutable ->
+                        sh "cp ritsback/${ejecutable}/target/${ejecutable}.jar app/backrits/${ejecutable}.jar"
+                    }
+
+                    sh """
+                        echo Eliminando ficheros de recursos antiguos...
+                        rm -Rf app/backrits/resources/*
+
+                        echo Modificando recursos...
+                        sed -i 's|\\(<p:path>/home/\\).*|\\1${SSH_USER}/app/backrits/</p:path>|' rits/resources/project/${PROJECT}/adapters/server-launcher/server_launcher_adapter_v1.xml
+                        sed -i 's|\\(<p:broker>ws://\\).*|\\1${SSH_HOST}:61614</p:broker>|' rits/resources/project/${PROJECT}/adapters/pub-stomp/pub_stomp_adapter_v1.xml
+                        sed -i 's|\\(redis.host=\\).*|\\1${SSH_HOST}|' rits/resources/project/${PROJECT}/redis.properties
+                    
+                        echo Copiando ficheros de recursos nuevos
+                        cp -R rits/resources/master/* app/backrits/resources
+                        cp -R rits/resources/project/${PROJECT}/* app/backrits/resources
+                    """
+                    
+                    dir('app') {
+                        sh 'tar zcvf backrits.tar.gz backrits'
+                    }
+                }
+            }
+        }
+        
+        stage('Deploy back') {
+            steps {
+                script {
+                    sh """
+                        echo Actualizando back remotamente...
+
+                        scp app/backrits.tar.gz ${SSH_USER}@${SSH_HOST}:/home/${SSH_USER}/app
+                        ssh ${SSH_USER}@${SSH_HOST} 'cd /home/${SSH_USER}/app && rm -rf backrits && tar zxvf backrits.tar.gz && sleep 15 && exit'
+                    """
+                }
+
+                script {
+                    sh "echo Ejecutando scripts de back"
+
+                    dir(BACK_BBDD_FOLDER){
+                         sh "./make_param_jenkins_navarra_lab.sh ${PROFILE_BBDD} ${HOST_BBDD} ${PORT_BBDD}"
+                    }
+                    
+                    dir(BACK_BBDD_DDLRT_FOLDER){
+                        sh "./ddl_param_jenkins.sh ${HOST_BBDD} ${PORT_BBDD}"
+                    }
+                    
+                    dir(BACK_BBDD_DDLHIST_FOLDER){
+                        sh "./ddl_param_jenkins.sh ${HOST_BBDD} ${PORT_BBDD}"
+                    }
+                    
+                    dir(BACK_BBDD_DDLTRANSIT_FOLDER){
+                        sh "./ddl_param_jenkins.sh ${HOST_BBDD} ${PORT_BBDD}"
+                    }
+                }
+            }
+        } 
+        
+        stage('Resources front') {
+            steps {
+                script {
+                    sh "echo Modificando recursos de front"
+
+                    dir(FRONT_RESOURCES) {
+                        sh """
+                            rm -rf project
+                            cp ${WORKSPACE}/rits/ritsfront/openits/*.properties ${WORKSPACE}/ritsfront/openits/src/main/resources/
+                            cp -r ${WORKSPACE}/rits/ritsfront/openits/static ${WORKSPACE}/ritsfront/openits/src/main/resources/
+                            cp -r ${WORKSPACE}/rits/ritsfront/openits/project ${WORKSPACE}/ritsfront/openits/src/main/resources/
+                        
+                            sed -i 's/\\(spring.profiles.active=\\).*/\\1${PROJECT}/' application.properties
+                            sed -i 's|\\(spring.datasource.url=jdbc:postgresql://\\).*|\\1${HOST_BBDD}:${PORT_BBDD}/${DATABASE}|' application.properties
+                            sed -i 's|^spring.datasource.username=.*|spring.datasource.username=${USER_DATABASE}|' application.properties
+                            sed -i 's|^spring.datasource.password=.*|spring.datasource.password=${PASSWORD_DATABASE}|' application.properties
+                            sed -i 's|^\\(file\\.basedir=\\).*|\\1/home/admin/app/frontrits/resources|' application.properties
+                            sed -i 's|\\(ws://\\).*\\(:61614\\)|\\1${SSH_HOST}\\2|' project/${PROJECT}/data/config.js
+                        """
+                    }
+                }
+            }
+        }
+        
+        stage('Build front') {
+            steps {
+                script {
+					sh 'echo Compilando front'
+			
+                    dir("ritsfront/_ritsfront") {
+                        
+                        sh 'mvn clean install'
+                    }
+                }
+            }
+        }
+        
+        stage('Deploy front') {
+            steps {
+                script {
+					sh """
+                        echo Desplegando front
+                        scp ritsfront/openits/target/openits.jar ${SSH_USER}@${SSH_HOST}:/home/${SSH_USER}/app
+                        ssh ${SSH_USER}@${SSH_HOST} \"cd /home/${SSH_USER}/app/frontrits && rm -rf openits.jar && mv /home/${SSH_USER}/app/openits.jar ./ && sed -i 's|\\(active=\\).*\\( -jar\\)|\\1${PROJECT}\\2|' ~/app/start.sh\"
+
+                        echo Ejecutando scripts de front...
+                    """
+                    
+                    dir(FRONT_BBDD_FOLDER) {
+                        sh "./make_param_jenkins_navarra_lab.sh ${PROFILE_BBDD} ${HOST_BBDD} ${PORT_BBDD} ${SSH_HOST}"
+                    }
+                }
+            }
+        } 
+        
+        stage('Restart app') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: PASSWORD_CREDENTIALS_ID, usernameVariable: 'SSH_USER', passwordVariable: 'SSH_PASSWORD')]) {
+                    script {
+						sh 'echo Relanzando aplicación remotamente tras ser actualizada'
+                        sh 'sshpass -p "${SSH_PASSWORD}" ssh -t -t -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST' + " 'echo \\${SSH_PASSWORD} | sudo -S service ${SSH_SERVICE} restart'"
+                    }
+                }
+            }
+        }
+    }
+}
