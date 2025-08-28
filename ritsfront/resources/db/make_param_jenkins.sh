@@ -7,6 +7,9 @@ if [ $? -ne 0 ]; then
 fi
 
 cd ..
+cd ddlbackoffice/$1
+sh ./ddl_param_jenkins.sh $2 $3
+cd ../..
 cd dml/master
 sh ./dml_param_jenkins.sh $2 $3
 if [ $? -ne 0 ]; then
