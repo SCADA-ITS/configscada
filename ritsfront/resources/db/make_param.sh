@@ -3,6 +3,9 @@ echo Executing sql scripts to generate dev environment... \(errors that occur ar
 cd ddl
 sh ./ddl_param.sh $2 $3
 cd ..
+cd ddlbackoffice/$1
+sh ./ddl_param.sh $2 $3
+cd ../..
 cd dml/master
 sh ./dml_param.sh $2 $3
 cd ../..

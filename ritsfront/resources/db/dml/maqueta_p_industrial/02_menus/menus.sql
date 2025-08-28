@@ -17,5 +17,5 @@ INSERT INTO ui.menu_items(id, menu_group_id, "position", module_id, "label", ico
 (0302, 3, 2, 1024, 'LBL_MENU_ITEM_PLAN_MANAGER', 'img/menu/plan-menu.png', 'Menu item Plan Manager', 'Menu item Plan Manager', true, true),
 
 -- TOOLS
-(0401, 4, 1, 403, 'LBL_MENU_ITEM_REPORTS', 'img/menu/default.png', 'Menu item Reports', 'Menu item Reports', true, true),
+(0401, 4, 1, 1922, 'LBL_MENU_ITEM_REPORTS', 'img/menu/backofficeincident.png', 'Backoffice Reports', 'Backoffice Reports', true, true),
 (0402, 4, 2, 1921, 'LBL_MENU_ITEM_INCIDENT_REPORTS_BACKOFFICE', 'img/menu/backofficeincident.png', 'Backoffice incidencias', 'Backoffice incidencias', true, true);

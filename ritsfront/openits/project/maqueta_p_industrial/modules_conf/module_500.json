@@ -1,0 +1,16 @@
+{
+	"moduleAction": {
+  		"view": 50001
+	 },
+ 	"action": {
+		"equipmentViewer": 101401
+	},
+	"restEndpoints":{
+		"hierarchy": "elements/hierarchy",
+		"elements": "elements/withStates",
+		"elementId": "elements/${id}",
+		"elementsTreeByUser": "elements/trees/${id}"
+	},
+	"treeElements": false,
+	"treeCustom": false
+}
