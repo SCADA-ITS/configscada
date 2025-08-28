@@ -15,9 +15,27 @@
 				<p:param_type_id>2</p:param_type_id>
 			</p:element_type_param>
 		</p:field>
+		<p:field name="temperature">
+			<p:element_type_param>
+				<p:element_type_param_id>2</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
 		<p:field name="data_json">
 			<p:element_type_param>
 				<p:element_type_param_id>3</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+		<p:field name="beacons">
+			<p:element_type_param>
+				<p:element_type_param_id>5</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+		<p:field name="pixel_service">
+			<p:element_type_param>
+				<p:element_type_param_id>6</p:element_type_param_id>
 				<p:param_type_id>2</p:param_type_id>
 			</p:element_type_param>
 		</p:field>
