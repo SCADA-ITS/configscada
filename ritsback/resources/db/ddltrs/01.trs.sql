@@ -59,6 +59,9 @@ DROP TABLE IF EXISTS rt.transits;
 		vehicle_direction bool NULL,
 		vehicle_date_registration timestamptz NULL,
 		vehicle_color varchar(100) NULL,
+		vehicle_brand varchar(100) NULL,
+		vehicle_model varchar(100) NULL,
+		vehicle_type varchar(100) NULL,
 		-- Driver info
 		driver_type_id int8 NULL,
 		driver_id int8 NULL,

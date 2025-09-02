@@ -72,7 +72,6 @@ class SignallingCommand_2_3 {
 							jsonValue = elementDataJson.getValue();
 						}else{
 							jsonValue = '{"up":0.02,"down":-0.02,"right":-0.02,"left":0.02,"zoom_in":0.02,"zoom_out":-0.02}';
-							log.debug("JESUS-------> " + jsonValue)
 						}
 
 						SignallingParam signallingParamSpeedValue = null;
@@ -131,7 +130,6 @@ class SignallingCommand_2_3 {
 									break;
 
 								case RIGHT:
-									log.debug("JESUS------->DERECHA")
 									resp = onvifCamera.relativeMove(jsonObject.right, 0L, 0L);
 									break;
 
@@ -154,7 +152,6 @@ class SignallingCommand_2_3 {
 				}
 			}
 		}
-		log.debug("JESUS------> " + resp)
 		return resp;
 	}
 }
