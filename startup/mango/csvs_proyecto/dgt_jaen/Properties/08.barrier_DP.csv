@@ -1,0 +1,5 @@
+device_name;url_publisher;source_name;host;port(i);offset_up_order(i);offset_up_state(i);offset_down_order(i);offset_down_state(i);offset_power_supply(i)
+BA-1-01-DP-D;http:\/\/172.21.3.202:3000\/api\/v2\/generic\/;M-01-DP;172.21.33.90 ;502;592;288;593;289;596
+BA-1-01-DP-I;http:\/\/172.21.3.202:3000\/api\/v2\/generic\/;M-01-DP;172.21.33.90 ;502;594;290;595;291;596
+BA-2-01-DP-D;http:\/\/172.21.3.202:3000\/api\/v2\/generic\/;M-11-DP;172.21.49.90 ;502;576;264;577;265;580
+BA-2-01-DP-I;http:\/\/172.21.3.202:3000\/api\/v2\/generic\/;M-11-DP;172.21.49.90 ;502;578;266;579;267;580
