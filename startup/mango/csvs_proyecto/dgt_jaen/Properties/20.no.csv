@@ -1,0 +1,9 @@
+device_name;PLC_name;PLC_ip;port(i);url_publisher;offset_no_concentration(i)
+SNO-1-01-CA;CEN-GAS-1-01-CA;172.21.57.97;502;http:\/\/172.21.3.202:3000\/api\/v2\/generic\/;20
+SNO-1-02-CA;CEN-GAS-1-01-CA;172.21.57.97;502;http:\/\/172.21.3.202:3000\/api\/v2\/generic\/;21
+SNO-1-03-CA;CEN-GAS-1-02-CA;172.21.57.98;502;http:\/\/172.21.3.202:3000\/api\/v2\/generic\/;22
+SNO-1-04-CA;CEN-GAS-1-02-CA;172.21.57.98;502;http:\/\/172.21.3.202:3000\/api\/v2\/generic\/;23
+SNO-2-01-CA;CEN-GAS-2-01-CA;172.21.57.99;502;http:\/\/172.21.3.202:3000\/api\/v2\/generic\/;20
+SNO-2-02-CA;CEN-GAS-2-01-CA;172.21.57.99;502;http:\/\/172.21.3.202:3000\/api\/v2\/generic\/;21
+SNO-2-03-CA;CEN-GAS-2-02-CA;172.21.57.100;502;http:\/\/172.21.3.202:3000\/api\/v2\/generic\/;22
+SNO-2-04-CA;CEN-GAS-2-02-CA;172.21.57.100;502;http:\/\/172.21.3.202:3000\/api\/v2\/generic\/;23
