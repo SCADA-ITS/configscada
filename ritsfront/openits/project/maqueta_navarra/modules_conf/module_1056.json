@@ -1,6 +1,7 @@
 {
 	"restEndpoints": {
-		"transit": "trs/transits/${id}"
+		"transit": "trs/transits/${id}",
+		"changeState" : "trs/transits/${id}/changeState/${stateId}"
 	},
 	"moduleAction": {
 		"edit": 105601,
