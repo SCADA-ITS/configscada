@@ -226,42 +226,42 @@ INSERT INTO conf.element_values
 (2003, 3, 1, 3, '[
 	{
 					"id": 1,
-					"startRampSeconds": 120, 
+					"startRampSeconds": 30, 
 					"startRampNFans": [0]
 	},
 	{
 					"id": 2,
-					"startRampSeconds": 120, 
+					"startRampSeconds": 30, 
 					"startRampNFans": [1]
 	},
 	{
 					"id": 3,
-					"startRampSeconds": 120, 
+					"startRampSeconds": 30, 
 					"startRampNFans": [2]
 	},
 	{
 					"id": 4,
-					"startRampSeconds": 120, 
+					"startRampSeconds": 30, 
 					"startRampNFans": [3]
 	},
 	{
 					"id": 5,
-					"startRampSeconds": 120, 
+					"startRampSeconds": 30, 
 					"startRampNFans": [4]
 	},
 	{
 					"id": 6,
-					"startRampSeconds": 120, 
+					"startRampSeconds": 30, 
 					"startRampNFans": [5]
 	},
 	{
 					"id": 7,
-					"startRampSeconds": 120, 
+					"startRampSeconds": 30, 
 					"startRampNFans": [6]
 	},
 	{
 					"id": 8,
-					"startRampSeconds": 120, 
+					"startRampSeconds": 30, 
 					"startRampNFans": [7]
 	}
 ]'

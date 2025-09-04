@@ -283,25 +283,22 @@ INSERT INTO conf.element_values
 				"candidatesFansId": [ "Element:9:43", "Element:9:44", "Element:9:41", "Element:9:42", "Element:9:39", "Element:9:40", "Element:9:37", "Element:9:38"]
 			},
 			{
-				"stretchs": [{
 					"stretchId": "Stretch:15023001",
 					"alias": "ZI-1-02-CZ",	
 					"order": 2,
 					"candidatesFansId": [ "Element:9:43", "Element:9:44", "Element:9:41", "Element:9:42", "Element:9:37", "Element:9:38", "Element:9:39", "Element:9:40"]
 			},
 			{
-				"stretchs": [{
 					"stretchId": "Stretch:15033001",
 					"alias": "ZI-1-03-CZ",	
 					"order": 3,
 					"candidatesFansId": [ "Element:9:37", "Element:9:38", "Element:9:43", "Element:9:44", "Element:9:39", "Element:9:40", "Element:9:41", "Element:9:42"]
 			},
 			{
-				"stretchs": [{
 					"stretchId": "Stretch:15043001",
 					"alias": "ZI-1-04-CZ",	
 					"order": 4,
-					"candidatesFansId": [ "Element:9:37", "Element:9:38", "Element:9:39", "Element:9:40", "Element:9:41", "Element:9:42", "Element:9:43, "Element:9:44"]
+					"candidatesFansId": [ "Element:9:37", "Element:9:38", "Element:9:39", "Element:9:40", "Element:9:41", "Element:9:42", "Element:9:43", "Element:9:44"]
 			}]
 		},
 		{
@@ -312,13 +309,12 @@ INSERT INTO conf.element_values
 			"stretchs": [{
 				"stretchId": "Stretch:15013002",
 				"alias": "ZI-2-01-CZ",	
-				"order": 1,
+				"order": 1
 			},
 			{
-				"stretchs": [{
-					"stretchId": "Stretch:15023002",
-					"alias": "ZI-2-02-CZ",	
-					"order": 2,
+				"stretchId": "Stretch:15023002",
+				"alias": "ZI-2-02-CZ",	
+				"order": 2
 			}]
 		}
 	]

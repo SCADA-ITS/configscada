@@ -61,6 +61,58 @@ INSERT INTO conf.element_values
 					"stateIds": [5]	
 				}
 			]
+		},
+        {
+			"id": 2,
+			"alias": "VENTILATION_SERVICE",
+			"description": "Config to calculate service regime",
+			"mode": 1,
+			"stateMachineId": 1,
+			"changeCurrentRegime": true,
+			"smConfigsRegimes": [
+				{
+					"regimeId": 1,
+					"stateIds": [2]	
+				},
+				{
+					"regimeId": 2,
+					"stateIds": [3]	
+				},
+				{
+					"regimeId": 3,
+					"stateIds": [4]	
+				},
+				{
+					"regimeId": 4,
+					"stateIds": [5]	
+				}
+			]
+		},
+		{
+			"id": 3,
+			"alias": "VENTILATION_CONFORT",
+			"description": "Config to calculate service regime",
+			"mode": 2,
+			"stateMachineId": 2,
+			"changeCurrentRegime": true,
+			"smConfigsRegimes": [
+				{
+					"regimeId": 1,
+					"stateIds": [2]	
+				},
+				{
+					"regimeId": 2,
+					"stateIds": [3]	
+				},
+				{
+					"regimeId": 3,
+					"stateIds": [4]	
+				},
+				{
+					"regimeId": 4,
+					"stateIds": [5]	
+				}
+			]
 		}
     ]
 }'

@@ -28,7 +28,8 @@ INSERT INTO conf.ims_incident_type_tasks (incident_type_task_id, incident_type_i
 (03030101, 101, 3, 3, 'ILUMINACIÓN', 'Iluminación modo automático', 'Iluminación modo automático', true, 4, true, 'TaskTypeTubeLighting/SetIlluminationTask', null ,null,true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --ETAPA = AL CANCELAR LA INCIDENCIA
-(101040101, 101, 101, 1, 'VENTILACION', 'Parar ventilación','Volver al estado anterior la ventilación', true, 1, true, 'TaskTypeVentilation/ByFireDet/StartVentilationByFireDetTask', null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(101020101, 101, 101, 1, 'PRESURIZACIÓN', 'Presurización', 'Apagado de presurización', true, 3, true, 'SendSignallingToStretch', null,null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(101040101, 101, 101, 1, 'VENTILACION', 'Arrancar la ventilación','Volver al estado anterior la ventilación', true, 1, true, 'TaskTypeVentilation/ByFireDet/StartVentilationByFireDetTask', null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 
 
