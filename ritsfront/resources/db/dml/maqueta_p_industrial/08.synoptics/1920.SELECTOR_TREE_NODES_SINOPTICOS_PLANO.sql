@@ -42,6 +42,6 @@ INSERT INTO ui.synoptic_layer_elements
 (192000200, 'Element:2:18', 000002, '00.3-AAE-DOM-01', 1697, 646, false, NULL, true, false, NULL, true),
 (192000400, 'Element:4:2', 000004, 'SEC-2', 870, 831, false, NULL, true, false, NULL, true),
 (192000400, 'Element:4:1', 000004, 'SEC-1', 868, 592, false, NULL, true, false, NULL, true),
-(192007100, 'Element:71:2', 000071, 'PMV-02', 987, 517, false, NULL, true, false, NULL, true),
-(192007100, 'Element:71:1', 000071, 'PMV-01', 103, 863, false, NULL, true, false, NULL, true);
+(192007100, 'Element:71:2', 000071, '05.1-DES-PMV-01', 987, 517, false, NULL, true, false, NULL, true),
+(192007100, 'Element:71:1', 000071, '01.4-ASC-PMV-01', 425, 863, false, NULL, true, false, NULL, true);
 
