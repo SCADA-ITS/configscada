@@ -127,4 +127,18 @@ VALUES
                     "commandElementTypeId": "CommandElementType:2:32",
                     "commandElementValues": [{"commandElementTypeParamId": "CommandElementTypeParam:2:32:1"}]
                     }
+    }]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+--CANCELACION DE INCIDENCIA
+(1, 1, 101020101, '[
+    {
+        "id": 1,
+        "alias": "PRESURIZACION",
+        "from": 1,
+        "to": 1,
+        "elementSubtypeId": "ElementSubtype:3:32",
+        "command": {
+                    "commandElementTypeId": "CommandElementType:2:32",
+                    "commandElementValues": [{"commandElementTypeParamId": "CommandElementTypeParam:2:32:1"}]
+                    }
     }]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
