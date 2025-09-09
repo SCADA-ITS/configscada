@@ -1,0 +1,5 @@
+device_name;url_publisher;source_name;host;port(i);offset_red_order(i);offset_amber_order(i);offset_green_order(i);offset_red_state(i);offset_amber_state(i);offset_green_state(i)
+SMF-2-01-CZ-D;http:\/\/172.21.3.202:3000\/api\/v2\/generic\/;ES-04-CZ;172.21.17.60;502;4116;4119;4118;4100;4103;4102
+SMF-2-01-CZ-I;http:\/\/172.21.3.202:3000\/api\/v2\/generic\/;ES-04-CZ;172.21.17.60;502;4112;4115;4114;4096;4099;4098
+SMF-2-02-CZ-D;http:\/\/172.21.3.202:3000\/api\/v2\/generic\/;ES-04-CZ;172.21.17.60;502;4124;4127;4126;4108;4111;4110
+SMF-2-02-CZ-I;http:\/\/172.21.3.202:3000\/api\/v2\/generic\/;ES-04-CZ;172.21.17.60;502;4020;4123;4122;4104;4107;4106
