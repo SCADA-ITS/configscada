@@ -380,6 +380,10 @@ INSERT INTO master.i18n_labels (locale_code, module_id, "label", "translation", 
     ('es_ES',1,'LBL_ELEMENT_TYPE_BOTONERA', 'Botonera', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
     ('es_ES',1,'LBL_ELEMENT_TYPE_BOTONERA_DESC', 'Botonera', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
+	--ElementType:101
+    ('es_ES',1,'LBL_ELEMENT_TYPE_G_ILUM_EMER', 'Grupo iluminación emergencia', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    ('es_ES',1,'LBL_ELEMENT_TYPE_G_ILUM_EMER_DESC', 'Grupo iluminación emergencia', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
 	--ElementType:1000
 	('es_ES',1,'LBL_ELEMENT_TYPE_CC','Centro de control',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 	('es_ES',1,'LBL_ELEMENT_TYPE_CC_DESC','Centro de control',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
