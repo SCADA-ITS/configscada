@@ -73,11 +73,11 @@ BEGIN
         pv.param_2 AS direccion,
         COALESCE(pv.param_3, ''-'') AS calle,
         COALESCE(pv.param_4, ''-'') AS localidad,
-        pv.param_5 AS pais,
-        pv.param_6 AS valoracion,
-        pv.param_7 AS fiabilidad,
-        pv.param_8 AS confianza,
-        pv.param_9 AS usuario_municipio,
+        COALESCE(pv.param_5, ''-'') AS pais,
+        COALESCE(pv.param_6, ''-'') AS valoracion,
+        COALESCE(pv.param_7, ''-'') AS fiabilidad,
+        COALESCE(pv.param_8, ''-'') AS confianza,
+        COALESCE(pv.param_9, ''-'') AS usuario_municipio,
         CASE 
             WHEN e.status = ''CREATED'' THEN ''ACTIVA''
             WHEN e.status = ''DELETED'' THEN ''FINALIZADA''
