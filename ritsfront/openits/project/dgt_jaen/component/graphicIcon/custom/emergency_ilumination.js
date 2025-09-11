@@ -12,8 +12,6 @@ const COLOR_OFF = "gray";
 
 // Estados del elemento 73
 const ELEMENT_TYPE_STATES_NO_TREATMENT = ["ElementTypeState:73:0", "ElementTypeState:73:2"];
-const ELEMENT_TYPE_STATES_UP = "ElementTypeState:73:1";
-const ELEMENT_TYPE_STATES_ALARM = "ElementTypeState:73:3";
 
 export default class ArcLevelControl extends GraphicIconCustomType {
 
