@@ -34,6 +34,7 @@ element_type;element_subtype;alias;svg_file;js_custom_type_render;keepRatio
 71;22;PMV;71_vms_dg5.svg;vms.js;true
 71;26;PMV;71_vms_clv_af.svg;vms.js;true
 71;27;PMV;71_vms_galibo.svg;vms.js;true
+73;;EMERGENCY_ILUMINATION;73_emergency_ilumination.svg;emergency_ilumination.js;
 75;;GE;75_ge.svg;;true
 84;;LIGHTNING_CIRCUIT;84_switch.svg;switch_ligth.js;true
 84;;LIGHTNING_CIRCUIT;84_switch_light_bulb.svg;switch_ligth_bulb.js;true

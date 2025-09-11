@@ -1,3 +1,5 @@
 item;alias;description;sessionuid;road;stretchs;pk;sentido
-1;SUR;SUR;SUR;Autovía A-4;Despeñaperros;;Córdoba
-2;NORTE;NORTE;NORTE;Autovía A-4;Despeñaperros;;Madrid
+1;SUR_DP;SUR_DP;SUR_DP;Autovía A-4;Despeñaperros;;Córdoba
+2;NORTE_DP;NORTE_DP;NORTE_DP;Autovía A-4;Despeñaperros;;Madrid
+3;SUR_CA;SUR_CA;SUR_CA;Autovía A-4;La Cantera;;Córdoba
+4;NORTE_CA;NORTE_CA;NORTE_CA;Autovía A-4;La Cantera;;Madrid
