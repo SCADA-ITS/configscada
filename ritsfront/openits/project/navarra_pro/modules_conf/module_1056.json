@@ -1,7 +1,11 @@
 {
 	"restEndpoints": {
 		"transit": "trs/transits/${id}",
-		"changeState" : "trs/transits/${id}/changeState/${stateId}"
+		"changeState" : "trs/transits/${id}/changeState/${stateId}",
+		"updateTransit": "trs/transits/update",
+		"addImage": "trs/transits/${id}/addImage",
+		"updateImage": "trs/transits/${id}/updateImage",
+		"deleteImage": "trs/transits/${id}/deleteImage/${transitImageId}"
 	},
 	"moduleAction": {
 		"edit": 105601,

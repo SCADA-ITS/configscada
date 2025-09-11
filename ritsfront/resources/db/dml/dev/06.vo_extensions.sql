@@ -699,7 +699,8 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 					"position": 5,
 					"dataType": "DataType:2",
 					"label": "LBL_TRANSIT_TAB_GENERAL_SUMMARY_PLATE_NUMBER",
-					"enabled": true
+					"enabled": true,
+					"editable": ["TransitState:1", "TransitState:2", "TransitState:3", "TransitState:4"]
 				},
 				{
 					"id": 201,
@@ -708,7 +709,8 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 					"position": 1,
 					"dataType": "DataType:3",
 					"label": "LBL_TRANSIT_TAB_GENERAL_DETAILS_VEHICLE_SPEED",
-					"enabled": true
+					"enabled": true,
+					"editable": ["TransitState:1", "TransitState:2", "TransitState:3", "TransitState:4"]
 				},
 				{
 					"id": 202,
@@ -789,7 +791,9 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 					"dataType": "DataType:2",
 					"calculatedFieldExpresion": "return fieldValue.find(type => type.transitTypeParam.id === \"TransitTypeParam:1:1\")?.value;", 
 					"label": "LBL_TRANSIT_PARAM_1",
-					"enabled": true
+					"enabled": true,
+					"editable": ["TransitState:1", "TransitState:2", "TransitState:3", "TransitState:4"],
+					"param": "TransitTypeParam:1:1"
 				}
 			]
 		},
@@ -825,20 +829,22 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 				{
 					"id": 102,
 					"propertyGroupId": 1,
-					"field": "vehicleModel.vehicleBrand.alias",
+					"field": "vehicleBrandName",
 					"position": 2,
 					"dataType": "DataType:2",
 					"label": "LBL_GRID_FIELD_TRANSIT_VEHICLE_BRAND",
-					"enabled": true
+					"enabled": true,
+					"editable": ["TransitState:1", "TransitState:2", "TransitState:3", "TransitState:4"]
 				},
 				{
 					"id": 103,
 					"propertyGroupId": 1,
-					"field": "vehicleModel.alias",
+					"field": "vehicleModelName",
 					"position": 4,
 					"dataType": "DataType:2",
 					"label": "LBL_GRID_FIELD_TRANSIT_VEHICLE_MODEL",
-					"enabled": true
+					"enabled": true,
+					"editable": ["TransitState:1", "TransitState:2", "TransitState:3", "TransitState:4"]
 				},
 				{
 					"id": 104,
@@ -847,7 +853,20 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 					"position": 5,
 					"dataType": "DataType:2",
 					"label": "LBL_TRANSIT_TAB_GENERAL_SUMMARY_PLATE_NUMBER",
-					"enabled": true
+					"enabled": true,
+					"editable": ["TransitState:1", "TransitState:2", "TransitState:3", "TransitState:4"]
+				},
+				{
+					"id": 105,
+					"propertyGroupId": 1,
+					"field": "transitValues",
+					"position": 6,
+					"dataType": "DataType:2",
+					"calculatedFieldExpresion": "return fieldValue.find(type => type.transitTypeParam.id === \"TransitTypeParam:1:2\")?.value;", 
+					"label": "LBL_TRANSIT_PARAM_2",
+					"enabled": true,
+					"editable": ["TransitState:1", "TransitState:2", "TransitState:3", "TransitState:4"],
+					"param": "TransitTypeParam:1:2"
 				},
 				{
 					"id": 201,
@@ -905,7 +924,8 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 					"position": 2,
 					"dataType": "DataType:2",
 					"label": "LBL_TAB_TRANSIT_DRIVER",
-					"enabled": true
+					"enabled": true,
+					"editable": ["TransitState:1", "TransitState:2"]
 				},
 				{
 					"id": 103,
@@ -914,7 +934,8 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 					"position": 3,
 					"dataType": "DataType:2",
 					"label": "LBL_TRANSIT_TAB_DRIVER_IDENTITY",
-					"enabled": true
+					"enabled": true,
+					"editable": ["TransitState:1", "TransitState:2"]
 				},
 				{
 					"id": 104,
@@ -923,7 +944,8 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 					"position": 4,
 					"dataType": "DataType:4",
 					"label": "LBL_TRANSIT_TAB_DRIVER_BIRTHDAY",
-					"enabled": true
+					"enabled": true,
+					"editable": ["TransitState:1", "TransitState:2"]
 				},
 				{
 					"id": 201,
@@ -932,7 +954,8 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 					"position": 1,
 					"dataType": "DataType:2",
 					"label": "LBL_TRANSIT_TAB_GENERAL_LOCATION_ADDRESS",
-					"enabled": true
+					"enabled": true,
+					"editable": ["TransitState:1", "TransitState:2"]
 				},
 				{
 					"id": 202,
