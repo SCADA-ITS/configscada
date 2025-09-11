@@ -66,7 +66,7 @@
 				"svgFile": "img/graphic_icon/71_vms_dgt.svg",
 				"jsCustomTypeRender": "component/graphicIcon/custom/vms.js"
 			},
-			"alternance": false,
+			"alternance": true,
 			"configAlternance": false,
 			"defaultAlternanceMs": 5000,
 			"blinking": false,
@@ -75,7 +75,7 @@
 			"defaultFlashingOffMs":1000,
 			"textColor": false,
 			"defaultTextColor": "#FFBF00",
-			"textAlign": false
+			"textAlign": true
 		}
 	],
 	"action": {
