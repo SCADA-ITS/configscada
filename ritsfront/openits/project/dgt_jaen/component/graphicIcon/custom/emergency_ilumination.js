@@ -1,4 +1,5 @@
 import GraphicIconCustomType from "../graphicIconCustomType.js";
+import GraphicIcon from './graphicIcon.js';
 
 // Parámetro de arc_level
 const PARAM_ARC_LEVEL = "ElementTypeParam:73:2:1";
