@@ -276,8 +276,8 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 ('ElementType:72', 72, 'true'),
 
 ('ElementType:73', 1, '73'),
-('ElementType:73', 2, 'graphic_icon/89_gate.svg'),
-('ElementType:73', 14, 'grid/element_type_89.png'),
+('ElementType:73', 2, 'graphic_icon/73_emergency_ilumination.svg'),
+('ElementType:73', 14, 'grid/element_type_73.png'),
 ('ElementType:73', 69, 'true'),
 
 ('ElementType:74', 72, 'true'),

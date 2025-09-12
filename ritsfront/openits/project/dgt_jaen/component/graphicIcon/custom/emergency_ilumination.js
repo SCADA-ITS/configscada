@@ -1,5 +1,5 @@
 import GraphicIconCustomType from "../graphicIconCustomType.js";
-import GraphicIcon from './graphicIcon.js';
+import GraphicIcon from '../graphicIcon.js';
 
 // Parámetro de arc_level
 const PARAM_ARC_LEVEL = "ElementTypeParam:73:2:1";
@@ -18,12 +18,10 @@ export default class ArcLevelControl extends GraphicIconCustomType {
 
     constructor(s, g, elementInfo, events) {
         super(s, g, elementInfo, events);
-
+        this.gState = this.g.select("#" + GraphicIcon.G_ID_STATE);
         // Guardamos referencias a las columnas
         this.columns = COLUMN_IDS.map(id => this.g.select("#" + id));
 
-        // Referencia al estado, igual que LightControl
-        this.gState = this.g.select("#" + GraphicIcon.G_ID_STATE);
     }
 
     render(elementInfo) {

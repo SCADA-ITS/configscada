@@ -88,6 +88,7 @@ INSERT INTO ui.graphic_icons
 (11007103, 'PMV', 'PMV', false, true, 'component/graphicIcon/graphicIconCustom.js', 48, 48, 'img/graphic_icon/71_vms_clv_af.svg', 'component/graphicIcon/custom/vms.js',true),
 (11007108, 'PMV', 'PMV', false, true, 'component/graphicIcon/graphicIconCustom.js', 51.875, 51.875, 'img/graphic_icon/71_vms_clv_af.svg', 'component/graphicIcon/custom/vms.js',true),
 (12007106, 'PMV', 'PMV', false, true, 'component/graphicIcon/graphicIconCustom.js', 51.875, 51.875, 'img/graphic_icon/71_vms_clv_af.svg', 'component/graphicIcon/custom/vms.js',true),
+(000073, 'EMERGENCY_ILUMINATION', 'EMERGENCY_ILUMINATION', false, true, 'component/graphicIcon/graphicIconCustom.js', 65, 55, 'img/graphic_icon/73_emergency_ilumination.svg', 'component/graphicIcon/custom/emergency_ilumination.js',true),
 (000075, 'GE', 'GE', false, false, 'component/graphicIcon/graphicIconDefault.js', 85, 85, 'img/graphic_icon/75_ge.svg', 'null',true),
 (00007500, 'GE', 'GE', false, false, 'component/graphicIcon/graphicIconDefault.js', 70, 70, 'img/graphic_icon/75_ge.svg', 'null',true),
 (00007502, 'GE', 'GE', false, false, 'component/graphicIcon/graphicIconDefault.js', 65, 65, 'img/graphic_icon/75_ge.svg', 'null',true),

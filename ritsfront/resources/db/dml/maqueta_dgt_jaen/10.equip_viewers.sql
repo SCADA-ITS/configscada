@@ -47,7 +47,7 @@ INSERT INTO ui.equip_viewers (id, name, description, "label", icon, show_info_ta
 ('ElementSubtype:22:71', 'PMV', 'PMV', 'LBL_ELEMENT_TYPE_PANEL', NULL, true, false, true, null, true, null, null, null, 220071, false, false),
 ('ElementSubtype:26:71', 'PMV', 'PMV', 'LBL_ELEMENT_TYPE_PANEL', NULL, true, false, true, null, true, null, null, null, 260071, false, false),
 ('ElementSubtype:27:71', 'PMV', 'PMV', 'LBL_ELEMENT_TYPE_PANEL', NULL, true, false, false, null, true, null, null, null, 270071, false, false),
-('ElementType:73','GRUPO iLUMINACION EMERGENCIA','GRUPO iLUMINACION EMERGENCIA','LBL_ELEMENT_TYPE_G_ILUM_EMER',null,True,False,True,null,false,300,1,null,null,True, False),
+('ElementType:73','GRUPO iLUMINACION EMERGENCIA','GRUPO iLUMINACION EMERGENCIA','LBL_ELEMENT_TYPE_G_ILUM_EMER',null,True,False,True,null,false,300,1,null,000073,True, False),
 ('ElementType:75','GE','GE','LBL_ELEMENT_TYPE_GE',null, true, False, false, null, true, 300, 3, null,000075,true, false),
 ('ElementSubtype:1:84', 'LIGHTNING_CIRCUIT', 'LIGHTNING_CIRCUIT', 'LBL_ELEMENT_TYPE_LIGHTNING_CIRCUIT', NULL, true, false, true, null, false, 300, 1, null, 000084, true, false),
 ('ElementSubtype:2:84', 'LIGHTNING_CIRCUIT', 'LIGHTNING_CIRCUIT', 'LBL_ELEMENT_TYPE_LIGHTNING_CIRCUIT', NULL, true, false, false, null, true, 300, 1, null, 00008401, true, false),
