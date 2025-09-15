@@ -35,6 +35,13 @@
         <p:param_type_id>2</p:param_type_id>
       </p:input>
     </p:field>
+    <p:field>
+      <p:source>fan_starter_shot</p:source>
+      <p:input>
+        <p:element_type_param_id>30</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:input>
+    </p:field>
   </p:fields>
     <p:alarms>
     <p:alarm source="fan_fail" active_value="true" alarm_config_id="040009"></p:alarm>

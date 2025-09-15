@@ -792,6 +792,11 @@
                         "varName": "fan_direct",
                         "dataPointXid": "DP_{device_name}_fan_direct",
                         "updateContext": false
+                    },
+                    {
+                        "varName": "fan_starter_shot",
+                        "dataPointXid": "DP_{device_name}_fan_starter_shot",
+                        "updateContext": false
                     }
                 ],
                 "logLevel": "NONE",

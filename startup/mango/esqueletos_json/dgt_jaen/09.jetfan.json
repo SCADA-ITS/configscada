@@ -914,6 +914,11 @@
                     "includeTimestamp": false
                 },
                 {
+                    "varName": "fan_starter_shot",
+                    "dataPointXid": "DP_{device_name}_fan_starter_shot",
+                    "updateContext": false
+                },
+                {
                     "dataPointId": "DP_{device_name}_status",
                     "parameterName": "status",
                     "includeTimestamp": false

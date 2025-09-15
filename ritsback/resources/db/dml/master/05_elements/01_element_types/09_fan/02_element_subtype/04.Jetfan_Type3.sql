@@ -14,7 +14,8 @@ INSERT INTO master.element_subtype_active_params
 (4, 9, 2, 2, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (4, 9, 2, 15, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (4, 9, 2, 28, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(4, 9, 2, 29, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(4, 9, 2, 29, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(4, 9, 2, 30, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 -- 
 -- Table: master.element_subtype_active_commands

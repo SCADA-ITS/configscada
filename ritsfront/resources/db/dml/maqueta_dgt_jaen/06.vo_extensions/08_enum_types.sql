@@ -8,7 +8,10 @@ INSERT INTO ui.vo_enum_types(id, alias, description, enabled, visible) VALUES
 (7, 'OpenClose_presurization', 'OpenClose_presurization', true, true),
 (8, 'FanDirection', 'FanDirection', true, true),
 (9, 'Normal', 'Racheado', true, true),
-(10, 'tipo precipitacion', 'tipo precipitacion', true, true);
+(10, 'tipo precipitacion', 'tipo precipitacion', true, true),
+(11, 'Apagado_Encendido', 'Apagado_Encendido', true, true),
+(12, 'Remoto_Local', 'Remoto_Local', true, true);
+
 
 
 
@@ -50,7 +53,14 @@ INSERT INTO ui.vo_enum_type_values(id, vo_enum_type_id, "key", value, "translate
 (23, 10, '1', 'LBL_VO_ENUM_TYPE_VALUES_LLUVIA', TRUE, null),
 (24, 10, '2', 'LBL_VO_ENUM_TYPE_VALUES_LLUVIA_NIEVE', TRUE, null),
 (25, 10, '3', 'LBL_VO_ENUM_TYPE_VALUES_NIEVE', TRUE, null),
-(26, 10, '4', 'LBL_VO_ENUM_TYPE_VALUES_GRANIZO', TRUE, null);
+(26, 10, '4', 'LBL_VO_ENUM_TYPE_VALUES_GRANIZO', TRUE, null),
+
+(27, 11, 'false', 'LBL_VO_ENUM_TYPE_VALUES_ENCENDIDO', TRUE, null),
+(28, 11, 'true', 'LBL_VO_ENUM_TYPE_VALUES_APAGADO', TRUE, null),
+
+(29, 12, 'false', 'LBL_VO_ENUM_TYPE_VALUES_LOCAL', TRUE, null),
+(30, 12, 'true', 'LBL_VO_ENUM_TYPE_VALUES_REMOTE', TRUE, null);
+
 
 
 
@@ -64,6 +74,7 @@ INSERT INTO ui.vo_entity_enum_types(vo_entity_id, enum_type_id) VALUES
 ('ElementTypeParam:9:2:1', 8),
 ('ElementTypeParam:9:2:28', 2),
 ('ElementTypeParam:9:2:29', 2),
+('ElementTypeParam:9:2:30', 4),
 
 ('ElementTypeParam:11:2:15', 6),
 ('ElementTypeParam:13:2:1', 1),
@@ -77,9 +88,17 @@ INSERT INTO ui.vo_entity_enum_types(vo_entity_id, enum_type_id) VALUES
 
 ('ElementTypeParam:57:2:1', 4),
 
+('ElementTypeParam:73:2:2', 11),
+('ElementTypeParam:73:2:3', 12),
+
+
 ('ElementTypeParam:84:2:1', 4),
 
 ('ElementTypeParam:87:2:4', 3);
+
+
+
+
 
 
 
