@@ -31,7 +31,8 @@ INSERT INTO ui.synoptic_layers
 (90302100, 903, 'SYNOPTIC_LAYERS_OPAC', 'LBL_SYNOPTIC_LAYERS_OPAC', true),
 (90306600, 903, 'SYNOPTIC_LAYERS_VANE', 'LBL_SYNOPTIC_LAYERS_VANE', true),
 (90301100, 903, 'SYNOPTIC_LAYERS_SOS', 'LBL_SYNOPTIC_LAYERS_SOS', true),
-(90301500, 903, 'SYNOPTIC_LAYERS_FIRE_DET', 'LBL_SYNOPTIC_LAYERS_FIRE_DET', true);
+(90301500, 903, 'SYNOPTIC_LAYERS_FIRE_DET', 'LBL_SYNOPTIC_LAYERS_FIRE_DET', true),
+(90307300, 903, 'SYNOPTIC_LAYERS_ILUM', 'LBL_SYNOPTIC_LAYERS_ILUM', true);
 
 INSERT INTO ui.synoptic_layer_relationships 
 (synoptic_id, parent_layer_id, child_layer_id) VALUES 
@@ -129,7 +130,7 @@ INSERT INTO ui.synoptic_layer_elements
 (90301100, 'Element:11:48', 00001109, 'PSE-1-02-CA', 1354, 959, false, NULL, true, false, NULL, true),
 (90301100, 'Element:11:47', 00001109, 'PSE-1-01-CA', 751, 959, false, NULL, true, false, NULL, true),
 (90301100, 'Element:11:46', 00001109, 'PSI-2-01-CA', 1019, 123, false, NULL, true, false, NULL, true),
-(90301100, 'Element:11:49', 00001109, 'PSE-2-01-CA', 1363, 124, false, NULL, true, false, NULL, true),
+(90301100, 'Element:11:49', 00001109, 'PSE-2-01-CA', 1375, 124, false, NULL, true, false, NULL, true),
 (90301100, 'Element:11:50', 00001109, 'PSE-2-02-CA', 736, 124, false, NULL, true, false, NULL, true),
 (90301100, 'Element:11:45', 00001109, 'PSI-1-01-CA', 1083, 963, false, NULL, true, false, NULL, true),
 (90301500, 'Element:15:43', 00001512, 'ZI-2-01-CA', 1205, 402, false, NULL, true, false, NULL, true),
@@ -137,6 +138,9 @@ INSERT INTO ui.synoptic_layer_elements
 (90301500, 'Element:15:45', 00001512, 'ZI-2-03-CA', 913, 402, false, NULL, true, false, NULL, true),
 (90301500, 'Element:15:41', 00001512, 'ZI-1-03-CA', 1205, 679, false, NULL, true, false, NULL, true),
 (90301500, 'Element:15:40', 00001512, 'ZI-1-02-CA', 1060, 679, false, NULL, true, false, NULL, true),
-(90301500, 'Element:15:39', 00001512, 'ZI-1-01-CA', 913, 679, false, NULL, true, false, NULL, true);
+(90301500, 'Element:15:39', 00001512, 'ZI-1-01-CA', 913, 679, false, NULL, true, false, NULL, true),
+(90307300, 'Element:73:4', 000073, 'NORTE_CA', 834, 999, false, NULL, true, false, NULL, true),
+(90307300, 'Element:73:3', 000073, 'SUR_CA', 1327, 124, false, NULL, true, false, NULL, true);
+
 
 

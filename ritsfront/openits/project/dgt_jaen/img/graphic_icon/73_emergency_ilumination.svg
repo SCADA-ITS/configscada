@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
-   width="49.859276mm"
-   height="34.96331mm"
-   viewBox="0 0 49.859276 34.963311"
+   width="65"
+   height="55"
+   viewBox="0 0 65 55"
    version="1.1"
    id="svg2"
    inkscape:version="1.1 (c68e22c387, 2021-05-23)"
-   sodipodi:docname="73_emergenci_ilumination.svg"
+   sodipodi:docname="73_emergency_ilumination.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -30,9 +30,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.9313063"
-     inkscape:cx="169.05656"
-     inkscape:cy="53.072886"
+     inkscape:zoom="5.7436996"
+     inkscape:cx="32.470361"
+     inkscape:cy="10.359177"
      inkscape:document-units="mm"
      inkscape:current-layer="main"
      inkscape:document-rotation="0"
@@ -57,57 +57,57 @@
   <g
      inkscape:label="Capa 1"
      inkscape:groupmode="layer"
-     id="main"
-     transform="translate(-7.2730278,-12.076388)">
+     id="main">
     <rect
-       style="fill:#ffcc00;stroke:#000000;stroke-width:0.0847868;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:10"
+       style="fill:#ffcc00;stroke:#000000;stroke-width:0.0847309;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:10"
        id="state"
-       width="64.900734"
-       height="55"
-       ry="5"
-       x="0.27399418" />
+       width="64.915276"
+       height="54.915268"
+       ry="4.9922967"
+       x="0.04236545"
+       y="0.04236545" />
     <rect
        style="fill:#cccccc;stroke:#000000;stroke-width:0.086532;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:10"
        id="rect12"
        width="55.309074"
        height="45"
-       x="4.5547171"
-       y="4.8630028"
+       x="4.3231168"
+       y="4.9053969"
        ry="5" />
     <rect
        style="opacity:1;fill:#000080;fill-rule:evenodd;stroke:#000000;stroke-width:1.5;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;paint-order:stroke markers fill"
        id="seis"
        width="6.4581695"
        height="10.458167"
-       x="18.588566"
-       y="35.817806" />
+       x="18.356964"
+       y="35.860195" />
     <rect
        style="fill:#000080;fill-rule:evenodd;stroke:#000000;stroke-width:1.11125;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;paint-order:stroke markers fill"
        id="cinco"
        width="6.4581695"
        height="5.7398047"
-       x="7.8286529"
-       y="40.536339" />
+       x="7.5970521"
+       y="40.578728" />
     <rect
        style="opacity:1;fill:#000080;fill-rule:evenodd;stroke:#000000;stroke-width:1.5;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;paint-order:stroke markers fill"
        id="siete"
        width="6.0413556"
        height="18.041351"
-       x="29.407974"
-       y="28.020206" />
+       x="29.176374"
+       y="28.062597" />
     <rect
        style="opacity:1;fill:#000080;fill-rule:evenodd;stroke:#000000;stroke-width:1.5;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;paint-order:stroke markers fill"
        id="ocho"
        width="5.7235737"
        height="25.723572"
-       x="40.177864"
-       y="20.359764" />
+       x="39.946262"
+       y="20.402155" />
     <rect
        style="opacity:1;fill:#000080;fill-rule:evenodd;stroke:#000000;stroke-width:1.5;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;paint-order:stroke markers fill"
        id="nueve"
        width="5.4633131"
        height="33.46331"
-       x="50.918991"
-       y="12.826388" />
+       x="50.687389"
+       y="12.868781" />
   </g>
 </svg>
