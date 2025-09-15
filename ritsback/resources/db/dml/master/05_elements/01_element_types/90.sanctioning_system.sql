@@ -10,9 +10,12 @@ VALUES(90, 'SANCTIONING SYSTEM', 'Traffic fines sanctioning system','LBL_ELEMENT
 INSERT INTO master.element_type_params
 (element_type_id, param_type_id, element_type_param_id, element_type_param_unit_id, data_type_id, default_value, alias, description, label_alias, label_description, enabled, visible, editable, created_at, updated_at) VALUES
 --CONFIG
-(90,1,1, NULL,1, null, 'notificationInHand', 'brand', 'LBL_ELEMENT_TYPE_PARAM_NOTIFICATION_IN_HAND', 'LBL_ELEMENT_TYPE_PARAM_NOTIFICATION_IN_HAND_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(90,1,2, NULL,1, null, 'notificationNotInHandCause', 'model', 'LBL_ELEMENT_TYPE_PARAM_NOTIFICATION_NOT_IN_HAND', 'LBL_ELEMENT_TYPE_PARAM_NOTIFICATION_NOT_IN_HAND_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(90,1,3, NULL,1, null, 'agent1Code', 'type', 'LBL_ELEMENT_TYPE_PARAM_AGENT1CODE', 'LBL_ELEMENT_TYPE_PARAM_AGENT1CODE_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(90,1,1, NULL,1, null, 'notificationInHand', 'notificationInHand', 'LBL_ELEMENT_TYPE_PARAM_NOTIFICATION_IN_HAND', 'LBL_ELEMENT_TYPE_PARAM_NOTIFICATION_IN_HAND_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(90,1,2, NULL,1, null, 'notificationNotInHandCause', 'notificationNotInHandCause', 'LBL_ELEMENT_TYPE_PARAM_NOTIFICATION_NOT_IN_HAND', 'LBL_ELEMENT_TYPE_PARAM_NOTIFICATION_NOT_IN_HAND_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(90,1,3, NULL,1, null, 'agent1Code', 'agent1Code', 'LBL_ELEMENT_TYPE_PARAM_AGENT1CODE', 'LBL_ELEMENT_TYPE_PARAM_AGENT1CODE_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(90,1,4, NULL,1, null, 'infractionTypedboidid', 'infractionTypedboidid', 'LBL_ELEMENT_TYPE_PARAM_INFRACTION_TYPE_DBOID_ID', 'LBL_ELEMENT_TYPE_PARAM_INFRACTION_TYPE_DBOID_ID_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(90,1,5, NULL,1, null, 'infractionCorrectedVehicleSpeed', 'infractionCorrectedVehicleSpeed', 'LBL_ELEMENT_TYPE_PARAM_INFRACTION_CORRECTED_VEHICLE_SPEED', 'LBL_ELEMENT_TYPE_PARAM_INFRACTION_CORRECTED_VEHICLE_SPEED_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(90,1,6, NULL,1, null, 'bulletinLetter', 'bulletinLetter', 'LBL_ELEMENT_TYPE_PARAM_BULLETIN_LETTER', 'LBL_ELEMENT_TYPE_PARAM_BULLETIN_LETTER_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 -- 
 -- Table: master.element_type_states
