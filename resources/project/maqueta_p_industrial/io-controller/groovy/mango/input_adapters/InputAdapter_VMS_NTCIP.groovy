@@ -20,6 +20,7 @@ import com.revenga.rits.back.io.controller.service.EntitiesManager;
 
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.nio.charset.Charset;
 
 
 /**
@@ -48,11 +49,25 @@ class InputAdapter_VMS {
 		this.log = log;
 	}
 	
+	String hexToCp850String(String input) {
+	    // Verifica si parece ser bytes en formato hex separados por ":"
+	    if (input ==~ /([0-9a-fA-F]{2}:)+[0-9a-fA-F]{2}/) {
+	        byte[] bytes = input.split(":").collect {
+	            Integer.parseInt(it, 16) as byte
+	        } as byte[]
+	        return new String(bytes, Charset.forName("CP850"))
+	    } else {
+	        // Si no es hex en ese formato, devolver el mismo string
+	        return input
+	    }
+	}
+	
 	boolean content(Element element, String value, List<ElementValue> elementValues) {
 		boolean intermitence = false;
 		String result = "";
 		
 		ElementValue enableGalibo = EntitiesManager.getInstance().getElementValue(element, PARAM_MEASURE_ENABLED, PARAM_TYPE_MEASURE);
+		value = hexToCp850String(value);
 
 		if(value == null || value.equals("")) {
 			ElementValue elementValue = new ElementValue();

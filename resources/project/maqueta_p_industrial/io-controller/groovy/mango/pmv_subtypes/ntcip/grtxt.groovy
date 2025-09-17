@@ -7,6 +7,7 @@ import com.revenga.rits.back.data.core.model.ElementValue;
 import com.revenga.rits.back.io.controller.service.EntitiesManager;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.nio.charset.Charset;
   
 def void grtxt(SignallingCommand signallingCommand, String dataSourceXid, MangoDriver driver, Element element) {	
 	final String TEXT_ALIGN_CENTER = "[jl3]";
@@ -120,7 +121,12 @@ def void grtxt(SignallingCommand signallingCommand, String dataSourceXid, MangoD
 	}else{	
 		multi = multi_main_graphic + multi_main_text + NEW_PAGE + multi_alternate_graphic + multi_alternate_text;
 	}
-    multi = multi.replace("Ñ","N");
+	
+	// Paso 1: convertimos a bytes CP850
+    byte[] bytesCp850 = multi.getBytes(Charset.forName("CP850"));
+
+    // Paso 2: reinterpretamos esos bytes como ISO-8859-1
+    multi = new String(bytesCp850, Charset.forName("ISO-8859-1"));
     
 	pmv.activarVMSNTCIP(multi, dataSourceXid, signallingCommand, driver, pixelServiceB, beaconsB, 255);
 }
