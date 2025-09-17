@@ -14,4 +14,5 @@ INSERT INTO ui.vo_entities(id, vo_entity_type_id, enabled, visible) VALUES
 ('ElementSubtype:26:71', 'ElementSubtypeUI', true, true),
 ('ElementSubtype:27:71', 'ElementSubtypeUI', true, true),
 ('ElementSubtype:1:84', 'ElementSubtypeUI', true, true),
-('ElementSubtype:2:84', 'ElementSubtypeUI', true, true);
+('ElementSubtype:2:84', 'ElementSubtypeUI', true, true),
+('ElementSubtype:3:84', 'ElementSubtypeUI', true, true);

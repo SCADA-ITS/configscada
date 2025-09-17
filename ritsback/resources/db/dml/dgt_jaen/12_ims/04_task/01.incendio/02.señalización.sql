@@ -5,15 +5,6 @@ VALUES
 (3, 1, 01030101, '0', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (3, 2, 01030101, '2', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
---ventilación
-(5, 1, 00020101, '0', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(5, 2, 00020101, '1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-
---ventilación
-(5, 1, 01010101, '3', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(5, 2, 01010101, '1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-
-
 (1, 1, 01040101, '[
     {
         "id": 1,
@@ -122,10 +113,24 @@ VALUES
 
 --RESTITUCION
 --ventilación
-(5, 1, 03010101, '1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--(5, 1, 03010101, '1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (3, 1, 03030101, '1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 (1, 1, 03020101, '[
+    {
+        "id": 1,
+        "alias": "PRESURIZACION",
+        "from": 1,
+        "to": 1,
+        "elementSubtypeId": "ElementSubtype:3:32",
+        "command": {
+                    "commandElementTypeId": "CommandElementType:2:32",
+                    "commandElementValues": [{"commandElementTypeParamId": "CommandElementTypeParam:2:32:1"}]
+                    }
+    }]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+--CANCELACION DE INCIDENCIA
+(1, 1, 101020101, '[
     {
         "id": 1,
         "alias": "PRESURIZACION",

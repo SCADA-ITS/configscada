@@ -32,7 +32,7 @@ INSERT INTO conf.element_values
             "alias": "REGIMEN_MAXIMO",
             "description": "Régimen máximo túnel Despeñaperros para el sentido Madrid",
             "labelAlias": "LBL_REGIME_3",
-            "fans": 24
+            "fans": 16
         }
     ],
     "smConfigs": [

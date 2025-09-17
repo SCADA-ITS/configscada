@@ -27,6 +27,7 @@ INSERT INTO ui.vo_entities(id, vo_entity_type_id, enabled, visible) VALUES
 ('ElementTypeParam:9:2:15', 'ElementTypeParamUI', true, true),
 ('ElementTypeParam:9:2:28', 'ElementTypeParamUI', true, true),
 ('ElementTypeParam:9:2:29', 'ElementTypeParamUI', true, true),
+('ElementTypeParam:9:2:30', 'ElementTypeParamUI', true, true),
 
 ('ElementTypeParam:11:1:1', 'ElementTypeParamUI', true, true),
 ('ElementTypeParam:11:1:2', 'ElementTypeParamUI', true, true),
@@ -82,6 +83,8 @@ INSERT INTO ui.vo_entities(id, vo_entity_type_id, enabled, visible) VALUES
 ('ElementTypeParam:66:2:1', 'ElementTypeParamUI', true, true),
 ('ElementTypeParam:66:2:2', 'ElementTypeParamUI', true, true),
 
+('ElementTypeParam:67:2:1', 'ElementTypeParamUI', true, true),
+
 ('ElementTypeParam:70:1:1', 'ElementTypeParamUI', true, true),
 ('ElementTypeParam:70:1:2', 'ElementTypeParamUI', true, true),
 ('ElementTypeParam:70:2:1', 'ElementTypeParamUI', true, true),
@@ -97,7 +100,18 @@ INSERT INTO ui.vo_entities(id, vo_entity_type_id, enabled, visible) VALUES
 ('ElementTypeParam:71:1:1', 'ElementTypeParamUI', true, true),
 ('ElementTypeParam:71:1:3', 'ElementTypeParamUI', true, true),
 
+('ElementTypeParam:73:2:1', 'ElementTypeParamUI', True, True),
+('ElementTypeParam:73:2:2', 'ElementTypeParamUI', True, True),
+('ElementTypeParam:73:2:3', 'ElementTypeParamUI', True, True),
+
+('ElementTypeParam:84:1:6', 'ElementTypeParamUI', true, true),
+('ElementTypeParam:84:1:7', 'ElementTypeParamUI', true, true),
+('ElementTypeParam:84:1:8', 'ElementTypeParamUI', true, true),
+
+
 ('ElementTypeParam:84:2:1', 'ElementTypeParamUI', true, true),
+('ElementTypeParam:84:2:2', 'ElementTypeParamUI', true, true),
+('ElementTypeParam:84:2:3', 'ElementTypeParamUI', true, true),
 
 ('ElementTypeParam:87:2:4', 'ElementTypeParamUI', true, true),
 
@@ -116,6 +130,13 @@ INSERT INTO ui.vo_entities(id, vo_entity_type_id, enabled, visible) VALUES
 ('CommandElementType:1:71', 'CommandElementTypeUI', true, true),
 ('CommandElementType:2:71', 'CommandElementTypeUI', true, true),
 ('CommandElementType:3:71', 'CommandElementTypeUI', true, true),
+
+('CommandElementType:1:73', 'CommandElementTypeUI', true, true),
+('CommandElementType:2:73', 'CommandElementTypeUI', true, true),
+('CommandElementType:3:73', 'CommandElementTypeUI', true, true),
+('CommandElementType:4:73', 'CommandElementTypeUI', true, true),
+('CommandElementType:5:73', 'CommandElementTypeUI', true, true),
+('CommandElementType:6:73', 'CommandElementTypeUI', true, true),
 
 
 ('CommandElementType:1:2000', 'CommandElementTypeUI', true, true),
@@ -147,5 +168,30 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 
 ('ElementTypeParam:21:2:1', 26, '2'),
 
-('ElementTypeParam:66:2:2', 26, '2');
+('ElementTypeParam:66:2:2', 26, '2'),
 
+
+('CommandElementType:1:8', 38, 'INFO'),
+('CommandElementType:2:8', 38, 'INFO'),
+
+('CommandElementType:1:9', 38, 'INFO'),
+('CommandElementType:2:9', 38, 'INFO'),
+('CommandElementType:3:9', 38, 'INFO'),
+('CommandElementType:11:9', 38, 'INFO'),
+
+('CommandElementType:1:32', 38, 'INFO'),
+('CommandElementType:2:32', 38, 'INFO'),
+
+('CommandElementType:1:71', 38, 'INFO'),
+('CommandElementType:2:71', 38, 'INFO'),
+('CommandElementType:3:71', 38, 'INFO'),
+
+('CommandElementType:1:2000', 38, 'INFO'),
+('CommandElementType:2:2000', 38, 'INFO'),
+('CommandElementType:3:2000', 38, 'INFO'),
+('CommandElementType:4:2000', 38, 'INFO'),
+('CommandElementType:5:2000', 38, 'INFO'),
+('CommandElementType:6:2000', 38, 'INFO'),
+('CommandElementType:7:2000', 38, 'INFO'),
+('CommandElementType:8:2000', 38, 'INFO'),
+('CommandElementType:9:2000', 38, 'INFO');

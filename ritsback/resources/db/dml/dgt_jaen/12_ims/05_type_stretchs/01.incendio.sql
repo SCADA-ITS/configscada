@@ -46,6 +46,7 @@ INSERT INTO conf.ims_incident_type_stretchs (incident_type_id, stretch_id, defau
 (101, 15012002, 0430015, './resources/ims/operational_plans/incendio.png', null, null, null, false, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (101, 15022002, 0440015, './resources/ims/operational_plans/incendio.png', null, null, null, false, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (101, 15032002, 0450015, './resources/ims/operational_plans/incendio.png', null, null, null, false, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--El corzo
 (101, 15013001, 0470015, './resources/ims/operational_plans/incendio.png', null, null, null, false, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (101, 15023001, 0480015, './resources/ims/operational_plans/incendio.png', null, null, null, false, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (101, 15033001, 0490015, './resources/ims/operational_plans/incendio.png', null, null, null, false, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),

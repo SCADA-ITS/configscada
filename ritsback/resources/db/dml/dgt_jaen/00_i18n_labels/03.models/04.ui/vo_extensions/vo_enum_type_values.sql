@@ -33,6 +33,7 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
     ('es_ES', 1, 'LBL_VO_ENUM_TYPE_VALUES_PARADO', 'Parado', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
     ('es_ES', 1, 'LBL_VO_ENUM_TYPE_VALUES_DIRECTA', 'Directa', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
     ('es_ES', 1, 'LBL_VO_ENUM_TYPE_VALUES_INVERSA', 'Inversa', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    ('es_ES', 1, 'LBL_VO_ENUM_TYPE_VALUES_ENCENDIDO', 'Encendido', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
     --postes sos
     ('es_ES', 1, 'LBL_VO_ENUM_TYPE_VALUES_MEG_ENABLED_SOS', 'Encendida', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -49,7 +50,11 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
     --interruptor/circuito electrico
     ('es_ES', 1, 'LBL_VO_ENUM_TYPE_VALUES_OPENED', 'Abierto', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
     ('es_ES', 1, 'LBL_VO_ENUM_TYPE_VALUES_CLOSED', 'Cerrado', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-
+    
+    --Grupo iluminacion emergencia
+    ('es_ES', 1, 'LBL_VO_ENUM_TYPE_VALUES_LOCAL', 'Local', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    ('es_ES', 1, 'LBL_VO_ENUM_TYPE_VALUES_REMOTE', 'Remoto', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+   
 --en_GB
     --meteo
     ('en_GB', 1, 'LBL_VO_ENUM_TYPE_VALUES_NORMAL', 'Normal', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),

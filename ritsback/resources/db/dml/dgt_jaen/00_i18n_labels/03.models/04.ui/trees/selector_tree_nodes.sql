@@ -66,6 +66,8 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
     ('es_ES', 1, 'LBL_ANE_DATA', 'Anemómetros', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
     ('es_ES', 1, 'LBL_VANE_DATA', 'Veletas', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
     ('es_ES', 1, 'LBL_HISTORICAL_DATA', 'Datos históricos', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    ('es_ES', 1, 'LBL_BARRERAS_DATA', 'Barreras', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    ('es_ES', 1, 'LBL_SEMAFOROS_DATA', 'Semáforos', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 
 --en_GB

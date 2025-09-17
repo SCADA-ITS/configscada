@@ -65,11 +65,13 @@ INSERT INTO ui.vo_entities(id, vo_entity_type_id, enabled, visible) VALUES
 ('ElementType:64', 'ElementTypeUI', true, true),
 ('ElementType:65', 'ElementTypeUI', true, true),
 ('ElementType:66', 'ElementTypeUI', true, true),
+('ElementType:67', 'ElementTypeUI', true, true),
 ('ElementType:68', 'ElementTypeUI', true, true),
 ('ElementType:69', 'ElementTypeUI', true, true),
 ('ElementType:70', 'ElementTypeUI', true, true),
 ('ElementType:71', 'ElementTypeUI', true, true),
 ('ElementType:72', 'ElementTypeUI', true, true),
+('ElementType:73','ElementTypeUI' ,True,True),
 ('ElementType:74', 'ElementTypeUI', true, true),
 ('ElementType:75', 'ElementTypeUI', true, true),
 ('ElementType:84', 'ElementTypeUI', true, true),
@@ -253,6 +255,9 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 ('ElementType:66', 2, 'graphic_icon/66_vane.svg'),
 ('ElementType:66', 14, 'grid/element_type_66.png'),
 
+('ElementType:67', 1, '67'),
+('ElementType:67', 2, 'graphic_icon/67_Central_luz_emer.svg'),
+('ElementType:67', 14, 'grid/element_type_67.png'),
 
 ('ElementType:68', 72, 'true'),
 ('ElementType:69', 72, 'true'),
@@ -269,6 +274,12 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 ('ElementType:71', 69, 'true'),
 
 ('ElementType:72', 72, 'true'),
+
+('ElementType:73', 1, '73'),
+('ElementType:73', 2, 'graphic_icon/73_emergency_ilumination.svg'),
+('ElementType:73', 14, 'grid/element_type_84.png'),
+('ElementType:73', 69, 'true'),
+
 ('ElementType:74', 72, 'true'),
 
 ('ElementType:75', 1, '75'),

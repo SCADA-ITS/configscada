@@ -354,7 +354,6 @@ INSERT INTO ui.synoptic_layer_elements
 (90101500, 'Element:15:3', 000015, 'ZI-1-03-DP', 274, 684, false, NULL, true, false, NULL, true),
 (90101500, 'Element:15:2', 000015, 'ZI-1-02-DP', 193, 684, false, NULL, true, false, NULL, true),
 (90101500, 'Element:15:1', 000015, 'ZI-1-01-DP', 119, 684, false, NULL, true, false, NULL, true),
-(90106700, 'Element:67:1', 000067, 'CENTRAL_PRUEBA', 1818, 540, false, NULL, true, false, NULL, true),
 (90107300, 'Element:73:2', 000073, 'NORTE_DP', 96, 984, false, NULL, true, false, NULL, true),
 (90107300, 'Element:73:1', 000073, 'SUR_DP', 1807, 106, false, NULL, true, false, NULL, true);
 

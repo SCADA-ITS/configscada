@@ -7,8 +7,8 @@ INSERT INTO conf.ims_incident_type_tasks (incident_type_task_id, incident_type_i
 
 (0102301, 301, 1, 1, 'SEÑALIZACIÓN', 'Alarma de opacidad', 'Señalización de precaución en el túnel', true, 1, false, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (0202301, 301, 1, 6, 'COMPROBACION DE ALARMA', 'Revisar alarma de opacidad', 'Comprobación de la autenticidad de la alarma', true, 2, false, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(0302301, 301, 1, 6, 'AVISO', 'Aviso a jefe de emergencias', 'Aviso al jefe de emergencias para que revise el equipo en caso de falsa alarma', false, 3, false, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(0402301, 301, 1, 6, 'COMPROBACION DE SISTEMA DE VENTILACION', 'Comprobar sistema de ventilación', 'Comprobación del sistema de ventilación para determinar su buen funcionamiento', true, 4, false, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(0302301, 301, 1, 6, 'AVISO', 'Aviso a jefe de emergencias', 'Aviso al jefe de emergencias para que revise el equipo en caso de falsa alarma', false, 4, false, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(0402301, 301, 1, 6, 'COMPROBACION DE SISTEMA DE VENTILACION', 'Comprobar sistema de ventilación', 'Comprobación del sistema de ventilación para determinar su buen funcionamiento', true, 3, false, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (0502301, 301, 1, 6, 'COMPROBACION DE NIVELES', 'Revisar niveles de opacidad', 'Revision de niveles de opacidad, para determinar si descienden', false, 5, false, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 (0203301, 301, 3, 1, 'SEÑALIZACIÓN', 'Túnel con normalidad', 'Señalización de normalidad en el túnel', true, 1, false, null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

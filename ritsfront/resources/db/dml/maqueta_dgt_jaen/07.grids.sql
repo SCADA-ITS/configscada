@@ -264,6 +264,16 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (710010, 71, 1, 10, false, false, true, false, 'LBL_GRID_FIELD_MODEL', 'LBL_GRID_FIELD_MODEL', 'ElementTypeParam:71:1:2', false, false, 'left', true, false, 100, NULL, true, true, NULL, false, NULL, null, NULL),
 (710011, 71, 1, 11, false, false, true, false, 'LBL_ELEMENT_TYPE_PARAM_PROTOCOL', 'LBL_ELEMENT_TYPE_PARAM_PROTOCOL', 'ElementTypeParam:71:1:3', false, false, 'left', true, false, 100, NULL, true, true, NULL, false, NULL, null, NULL),
 
+
+(730001, 73, 1, 1, true, false, false, false, 'LBL_GRID_FIELD_ID', 'LBL_GRID_FIELD_ID', 'id', true, false, null, false, false, 500, NULL, true, false, NULL, NULL, NULL, NULL,NULL),
+(730002, 73, 1, 2, true, false, false, true, 'LBL_GRID_FIELD_NAME', 'LBL_GRID_FIELD_NAME', 'alias', false, false, null, false, false, 150, NULL, true, true, NULL, NULL, true, NULL,NULL),
+(730003, 73, 1, 3, true, false, false, false, 'LBL_GRID_FIELD_DESCRIPTION', 'LBL_GRID_FIELD_DESCRIPTION', 'description', false, false, null, false, false, 150, NULL, true, true, NULL, NULL, NULL, NULL,NULL),
+(730004, 73, 1, 4, true, true, false, false, NULL, NULL, 'state', false, false, null, false, false, 35, NULL, true, true, NULL, NULL, NULL, NULL,NULL),
+(730005, 73, 1, 5, true, true, false, true, 'LBL_GRID_FIELD_STATE_LABEL', 'LBL_GRID_FIELD_STATE_LABEL', 'stateLabel', false, false, null, true, false, 150, NULL, true, true, NULL, NULL, NULL, NULL,NULL),
+(730006, 73, 2 ,6, true, false, false, false, 'LBL_ELEMENT_TYPE_PARAM_ARC_LEVEL', 'LBL_ELEMENT_TYPE_PARAM_ARC_LEVEL_DESC', 'ElementTypeParam:73:2:1', false, false, 'left', false, false, 200, NULL, true, true, NULL, NULL, NULL, NULL, 0),
+(730007, 73, 1 ,7, true, false, false, false, 'LBL_ELEMENT_TYPE_PARAM_OFF', 'LBL_ELEMENT_TYPE_PARAM_OFF_DESC', 'ElementTypeParam:73:2:2', false, false, 'left', true, false, 200, NULL, true, true, NULL, NULL, NULL, NULL, 0),
+(730008, 73, 1 ,8, true, false, false, false, 'LBL_ELEMENT_TYPE_PARAM_REMOTE', 'LBL_ELEMENT_TYPE_PARAM_REMOTE_DESC', 'ElementTypeParam:73:2:3', false, false, 'left', true, false, 200, NULL, true, true, NULL, NULL, NULL, NULL, 0),
+
 (750001, 75, 1, 1, true, false, false, false, 'LBL_GRID_FIELD_ID', 'LBL_GRID_FIELD_ID', 'id', true, false, null, false, false, 500, NULL, true, false, NULL, NULL, NULL, NULL, NULL),
 (750002, 75, 1, 2, true, false, false, true, 'LBL_GRID_FIELD_NAME', 'LBL_GRID_FIELD_NAME', 'alias', false, false, NULL, false, false, 170, NULL, true, true, NULL, NULL, true, NULL, NULL),
 (750003, 75, 1, 3, true, false, false, false, 'LBL_GRID_FIELD_DESCRIPTION', 'LBL_GRID_FIELD_DESCRIPTION', 'description', false, false, NULL, false, false, 170, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
@@ -297,15 +307,6 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (890003, 89, 1, 3, true, false, false, false, 'LBL_GRID_FIELD_DESCRIPTION', 'LBL_GRID_FIELD_DESCRIPTION', 'description', false, false, null, false, false, 150, NULL, true, true, NULL, NULL, NULL, NULL,NULL),
 (890004, 89, 1, 4, true, true, false, false, NULL, NULL, 'state', false, false, null, false, false, 35, NULL, true, true, NULL, NULL, NULL, NULL,NULL),
 (890005, 89, 1, 5, true, true, false, true, 'LBL_GRID_FIELD_STATE_LABEL', 'LBL_GRID_FIELD_STATE_LABEL', 'stateLabel', false, false, null, true, false, 150, NULL, true, true, NULL, NULL, NULL, NULL,NULL),
-
-(730001, 73, 1, 1, true, false, false, false, 'LBL_GRID_FIELD_ID', 'LBL_GRID_FIELD_ID', 'id', true, false, null, false, false, 500, NULL, true, false, NULL, NULL, NULL, NULL,NULL),
-(730002, 73, 1, 2, true, false, false, true, 'LBL_GRID_FIELD_NAME', 'LBL_GRID_FIELD_NAME', 'alias', false, false, null, false, false, 150, NULL, true, true, NULL, NULL, true, NULL,NULL),
-(730003, 73, 1, 3, true, false, false, false, 'LBL_GRID_FIELD_DESCRIPTION', 'LBL_GRID_FIELD_DESCRIPTION', 'description', false, false, null, false, false, 150, NULL, true, true, NULL, NULL, NULL, NULL,NULL),
-(730004, 73, 1, 4, true, true, false, false, NULL, NULL, 'state', false, false, null, false, false, 35, NULL, true, true, NULL, NULL, NULL, NULL,NULL),
-(730005, 73, 1, 5, true, true, false, true, 'LBL_GRID_FIELD_STATE_LABEL', 'LBL_GRID_FIELD_STATE_LABEL', 'stateLabel', false, false, null, true, false, 150, NULL, true, true, NULL, NULL, NULL, NULL,NULL),
-(730006, 73, 2 ,6, true, false, false, false, 'LBL_ELEMENT_TYPE_PARAM_ARC_LEVEL', 'LBL_ELEMENT_TYPE_PARAM_ARC_LEVEL_DESC', 'ElementTypeParam:73:2:1', false, false, 'left', false, false, 200, NULL, true, true, NULL, NULL, NULL, NULL, 0),
-(730007, 73, 1 ,7, true, false, false, false, 'LBL_ELEMENT_TYPE_PARAM_OFF', 'LBL_ELEMENT_TYPE_PARAM_OFF_DESC', 'ElementTypeParam:73:2:2', false, false, 'left', true, false, 200, NULL, true, true, NULL, NULL, NULL, NULL, 0),
-(730008, 73, 1 ,8, true, false, false, false, 'LBL_ELEMENT_TYPE_PARAM_REMOTE', 'LBL_ELEMENT_TYPE_PARAM_REMOTE_DESC', 'ElementTypeParam:73:2:3', false, false, 'left', true, false, 200, NULL, true, true, NULL, NULL, NULL, NULL, 0),
 
 (2000001, 200, 1, 1, true, false, false, false, 'LBL_GRID_FIELD_ID', 'LBL_GRID_FIELD_ID', 'audit_log_id', true, false, null, false, false, 500, NULL, true, false, NULL, NULL, NULL, NULL,NULL),
 (2000002, 200, 4, 2, true, false, false, true, 'LBL_GRID_FIELD_DATE', 'LBL_GRID_FIELD_DATE', 'time_stamp', false, true, 'left', false, false, 180, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
