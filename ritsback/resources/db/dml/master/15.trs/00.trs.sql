@@ -1,5 +1,14 @@
-SET client_min_messages TO WARNING;
+-- master.transit_states
 
+INSERT INTO master.transit_states (transit_state_id,transit_state_code,alias,description,label_alias,label_description,user_transit_enable,enabled,visible,created_at,updated_at) VALUES
+(1,'IN','Initial','Initial','LBL_TRANSIT_STATE_INITIAL','LBL_TRANSIT_STATE_INITIAL_DESC',true,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+(2,'OC','OCR','OCR','LBL_TRANSIT_STATE_OCR','LBL_TRANSIT_STATE_OCR_DESC',true,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+(3,'IR','In review','In review','LBL_TRANSIT_STATE_IN_REVIEW','LBL_TRANSIT_STATE_IN_REVIEW_DESC',true,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+(4,'VD','Vehicle data','Vehicle data','LBL_TRANSIT_STATE_VEHICLE_DATA','LBL_TRANSIT_STATE_VEHICLE_DATA_DESC',true,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+(5,'PD','Pending dispatch','Pending dispatch','LBL_TRANSIT_STATE_PENDING_DISPATCH','LBL_TRANSIT_STATE_PENDING_DISPATCH_DESC',true,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+(6,'PS','Propose for sanction','Propose for sanction','LBL_TRANSIT_STATE_PROPOSE_FOR_SANCTION','LBL_TRANSIT_STATE_PROPOSE_FOR_SANCTION_DESC',false,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+(7,'DI','Discarded','Discarded','LBL_TRANSIT_STATE_DISCARDED','LBL_TRANSIT_STATE_DISCARDED_DESC',true,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+(8,'AR','Archived','Archived','LBL_TRANSIT_STATE_ARCHIVED','LBL_TRANSIT_STATE_ARCHIVED_DESC',false,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
 
 
 
