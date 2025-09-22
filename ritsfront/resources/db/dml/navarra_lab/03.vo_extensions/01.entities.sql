@@ -106,5 +106,12 @@ INSERT INTO ui.vo_entities(id, vo_entity_type_id, enabled, visible) VALUES
 ('RoadImpact:400', 'RoadImpactUI', true, true),
 
 ('CommandElementType:2:2', 'CommandElementTypeUI', true, true),
-('CommandElementType:3:2', 'CommandElementTypeUI', true, true);
+('CommandElementType:3:2', 'CommandElementTypeUI', true, true),
+
+('TransitState:1', 'TransitStateUI', true, true),
+('TransitState:2', 'TransitStateUI', true, true),
+('TransitState:3', 'TransitStateUI', true, true),
+('TransitState:4', 'TransitStateUI', true, true),
+
+('TransitType:1', 'TransitTypeUI', true, true);
 

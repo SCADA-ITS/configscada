@@ -1,5 +1,5 @@
 INSERT INTO conf.elements (element_type_id, element_subtype_id, element_id, location_id, keep_values_on_disconnected, inherit_state_id, alias, description, on_change_alarm, on_change_state, on_change_measure, on_schedule, enabled, visible, alert, alarm_count, created_at, updated_at) VALUES
-(99, NULL, 1, 0010099, NULL, NULL, 'TRA-C-1223', 'TRA-C-1223', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(99, 1, 1, 0010099, NULL, NULL, 'TRA-C-1223', 'TRA-C-1223', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (99, NULL, 2, 0020099, NULL, NULL, 'TRA-C-1222', 'TRA-C-1222', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (99, NULL, 3, 0030099, NULL, NULL, 'TRA-C-1175', 'TRA-C-1175', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (99, NULL, 4, 0040099, NULL, NULL, 'TRA-C-1380', 'TRA-C-1380', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 

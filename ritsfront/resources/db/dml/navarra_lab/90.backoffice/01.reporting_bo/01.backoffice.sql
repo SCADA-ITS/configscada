@@ -80,14 +80,18 @@ BEGIN
 					select max (fecha_actualizacion)
 					from reporting_bo.waze_traffic_alert_ext_entities_with_values
 					where id = t.id
-				)'
+				)
+			ORDER BY fecha_publicacion DESC
+			FETCH FIRST 1000 ROWS ONLY'
 			, 4005, '{"mapLauncherModuleAction": 200006, "mapLauncherModuleActionViewType": 1}'),
 		(6, 'all_waze_traffic_jam_ext_entities_with_values', 'LBL_EXT_ENTITY_WAZE_TRAFFIC_JAM', 'LBL_EXT_ENTITY_WAZE_TRAFFIC_JAM', 'LBL_EXT_ENTITY_WAZE_TRAFFIC_JAM_DESCRIPTION', NULL, false, false, 
 			-- sql_view 
 			'SELECT 
 				* 
 			FROM 
-				reporting_bo.waze_traffic_jam_ext_entities_with_values'
+				reporting_bo.waze_traffic_jam_ext_entities_with_values
+			ORDER BY fecha_publicacion DESC
+			FETCH FIRST 1000 ROWS ONLY'
 			, 4006, '{"mapLauncherModuleAction": 200006, "mapLauncherModuleActionViewType": 1}');			
 			
 	INSERT INTO reporting_bo.sg_metadata_columns (id, sg_metadata_table_id, column_name, "label", label_description, needs_translation, metadata, ref_view_column_id) VALUES

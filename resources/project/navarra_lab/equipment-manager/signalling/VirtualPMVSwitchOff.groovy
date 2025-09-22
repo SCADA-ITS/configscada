@@ -8,7 +8,7 @@ import com.revenga.rits.back.data.core.model.ElementValue;
 import com.revenga.rits.back.data.core.model.PmCommandElementValue;
 import com.revenga.rits.back.data.core.model.command.SetElementValuesPublishCommand;
 
- class VirtualPMVSignalling {
+ class VirtualPMVSwitchOff {
 	
     //BBDD Params
 	static final Long TYPE_PARAM_CONFIG = 1L;
@@ -20,7 +20,7 @@ import com.revenga.rits.back.data.core.model.command.SetElementValuesPublishComm
 
 	org.apache.logging.log4j.Logger log;
 	
-	 VirtualPMVSignalling(org.apache.logging.log4j.Logger log) {
+	 VirtualPMVSwitchOff(org.apache.logging.log4j.Logger log) {
 
 		this.log = log;
 	}
@@ -30,7 +30,7 @@ import com.revenga.rits.back.data.core.model.command.SetElementValuesPublishComm
 		List<Command> commands = null;
 		List<ElementValue> listElements = new ArrayList();
 		
-		listElements.add(elementSetValue(PARAM_MEASURE_DATA_JSON, TYPE_PARAM_MEASURE, command.getElementId(), ""));	
+		listElements.add(elementSetValue(PARAM_MEASURE_DATA_JSON, TYPE_PARAM_MEASURE, command.getElementId(), "[]"));	
 
 		
 		ElementValue[] itemsArray = new ElementValue[listElements.size()];
