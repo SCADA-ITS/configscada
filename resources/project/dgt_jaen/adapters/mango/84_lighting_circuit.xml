@@ -19,10 +19,28 @@
         <p:param_type_id>2</p:param_type_id>
       </p:input>
     </p:field>
+    <p:field>
+      <p:source>dimming_level</p:source>
+      <p:input>
+        <p:element_type_param_id>2</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:input>
+    </p:field>
+    <p:field>
+      <p:source>type</p:source>
+      <p:input>
+        <p:element_type_param_id>3</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:input>
+    </p:field>
   </p:fields>
   <p:alarms>
 		<p:alarm source="alarm" active_value="true" alarm_config_id="030084"></p:alarm>
     <p:alarm source="without_voltage" active_value="true" alarm_config_id="040084"></p:alarm>
     <p:alarm source="manual" active_value="true" alarm_config_id="050084"></p:alarm>
+    <p:alarm source="emergency_lamp_failure" active_value="true" alarm_config_id="060084"></p:alarm>
+    <p:alarm source="comm_failure" active_value="true" alarm_config_id="070084"></p:alarm>
+    <p:alarm source="general_failure" active_value="true" alarm_config_id="080084"></p:alarm>
+    <p:alarm source="emergency_mode" active_value="true" alarm_config_id="090084"></p:alarm>    
 	</p:alarms>
 </p:json_generic_mango_v1>

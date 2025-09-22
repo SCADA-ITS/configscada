@@ -1,5 +1,3 @@
 item;element_subtype;alias;description;sessionuid;road;stretchs;pk;sentido;param1_brand;param2_model
-1;;MASTER DP;MASTER DP;MASTER DP;Autovía A-4;Despeñaperros;;NA;;
-2;;MASTER CA;MASTER CA;MASTER CA;Autovía A-4;La Cantera;;NA;;
-3;;SLAVE DP;SLAVE DP;SLAVE DP;Autovía A-4;Despeñaperros;;NA;;
-4;;SLAVE CA;SLAVE CA;SLAVE CA;Autovía A-4;La Cantera;;NA;;
+1;NULL; IDNG-MG-DP; IDNG-MG-DP; IDNG-MG-DP;Autovía A-4;Despeñaperros;;NA;;
+2;NULL; IDNG-MG-DP; IDNG-MG-DP; IDNG-MG-DP;Autovía A-4;La Cantera;;NA;;
