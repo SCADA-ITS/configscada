@@ -281,7 +281,272 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 ('RoadImpact:400', 81, '#000000'),
 
 ('CommandElementType:2:2', 38, 'INFO'),
-('CommandElementType:3:2', 38, 'INFO');
+('CommandElementType:3:2', 38, 'INFO'),
+
+('TransitState:1', 78, 'transit_state/IN.png'),
+('TransitState:2', 78, 'transit_state/PT.png'),
+('TransitState:3', 78, 'transit_state/EN.png'),
+('TransitState:4', 78, 'transit_state/CA.png'),
+
+('TransitState:1', 79, '#bddcf0'),
+('TransitState:2', 79, '#e1d86e'),
+('TransitState:3', 79, '#a6c8c5'),
+('TransitState:4', 79, '#eb7474'),
+
+('TransitType:1', 80, '[
+	{
+		"id": 1,
+		"label": "LBL_TAB_TRANSIT_GENERAL",
+		"position": 1,
+		"enabled": true,
+		"propertyGroups": [
+			{
+				"id": 1,
+				"position": 1,
+				"label": "LBL_TRANSIT_TAB_GENERAL_SUMMARY",
+				"enabled": true
+			},
+			{
+				"id": 2,
+				"position": 2,
+				"label": "LBL_TRANSIT_TAB_GENERAL_DETAILS",
+				"enabled": true
+			},
+			{
+				"id": 3,
+				"position": 3,
+				"label": "LBL_TRANSIT_TAB_GENERAL_LOCATION",
+				"enabled": true
+			},
+			{
+				"id": 4,
+				"position": 4,
+				"label": "LBL_TRANSIT_TAB_GENERAL_EQUIPMENT",
+				"enabled": true
+			}
+		],
+		"properties": [
+			{
+				"id": 100,
+				"propertyGroupId": 1,
+				"position": 1,
+				"dataType": "DataType:1",
+				"field": "id",
+				"calculatedFieldExpresion": "return util.getSimpleId(fieldValue, 1);", 
+				"label": "LBL_TRANSIT_TAB_GENERAL_SUMMARY_ID",
+				"enabled": true
+			},
+			{
+				"id": 102,
+				"propertyGroupId": 1,
+				"field": "transitCode",
+				"position": 2,
+				"dataType": "DataType:2",
+				"label": "LBL_TRANSIT_TAB_GENERAL_SUMMARY_CODE",
+				"enabled": true
+			},
+			{
+				"id": 103,
+				"propertyGroupId": 1,
+				"field": "transitState.labelAlias",
+				"position": 3,
+				"dataType": "DataType:2",
+				"label": "LBL_TRANSIT_TAB_GENERAL_SUMMARY_STATE",
+				"enabled": true
+			},
+			{
+				"id": 104,
+				"propertyGroupId": 1,
+				"field": "dateTransit",
+				"position": 4,
+				"dataType": "DataType:4",
+				"label": "LBL_TRANSIT_TAB_GENERAL_SUMMARY_DATE",
+				"enabled": true
+			},
+			{
+				"id": 105,
+				"propertyGroupId": 1,
+				"field": "vehiclePlateNumber",
+				"position": 5,
+				"dataType": "DataType:2",
+				"label": "LBL_TRANSIT_TAB_GENERAL_SUMMARY_PLATE_NUMBER",
+				"enabled": true,
+				"editable": ["TransitState:3"]
+			},
+			{
+				"id": 201,
+				"propertyGroupId": 2,
+				"field": "speed",
+				"position": 1,
+				"dataType": "DataType:3",
+				"label": "LBL_TRANSIT_TAB_GENERAL_DETAILS_VEHICLE_SPEED",
+				"enabled": true
+			},
+			{
+				"id": 202,
+				"propertyGroupId": 2,
+				"position": 2,
+				"dataType": "DataType:3",
+				"label": "LBL_TRANSIT_TAB_GENERAL_DETAILS_ROAD_SPEED_LIMIT",
+				"enabled": false
+			},
+			{
+				"id": 301,
+				"propertyGroupId": 3,
+				"field": "address",
+				"position": 1,
+				"dataType": "DataType:2",
+				"label": "LBL_TRANSIT_TAB_GENERAL_LOCATION_ADDRESS",
+				"enabled": true
+			},
+			{
+				"id": 302,
+				"propertyGroupId": 3,
+				"field": "locality",
+				"position": 2,
+				"dataType": "DataType:2",
+				"label": "LBL_TRANSIT_TAB_GENERAL_LOCATION_LOCALITY",
+				"enabled": true	
+			},
+			{
+				"id": 302,
+				"propertyGroupId": 3,
+				"field": "towards",
+				"position": 3,
+				"dataType": "DataType:2",
+				"label": "LBL_TRANSIT_TAB_GENERAL_LOCATION_TOWARDS",
+				"enabled": true	
+			},
+			{
+				"id": 401,
+				"propertyGroupId": 4,
+				"field": "element.elementType.labelAlias",
+				"position": 1,
+				"dataType": "DataType:2",
+				"label": "LBL_TRANSIT_TAB_GENERAL_EQUIPMENT_TYPE",
+				"enabled": true
+			},
+			{
+				"id": 402,
+				"propertyGroupId": 4,
+				"field": "element.alias",
+				"position": 2,
+				"dataType": "DataType:2",
+				"label": "LBL_TRANSIT_TAB_GENERAL_EQUIPMENT_NAME",
+				"enabled": true
+			},
+			{
+				"id": 403,
+				"propertyGroupId": 4,
+				"field": "installationCode",
+				"position": 3,
+				"dataType": "DataType:2",
+				"label": "LBL_TRANSIT_TAB_GENERAL_EQUIPMENT_INSTALLATION_CODE",
+				"enabled": true
+			},
+			{
+				"id": 404,
+				"propertyGroupId": 4,
+				"field": "detectionPointCode",
+				"position": 4,
+				"dataType": "DataType:2",
+				"label": "LBL_TRANSIT_TAB_GENERAL_EQUIPMENT_DETECTION_POINT_CODE",
+				"enabled": true
+			}
+		]
+	},
+	{
+		"id": 2,
+		"label": "LBL_TAB_TRANSIT_VEHICLE",
+		"position": 2,
+		"enabled": true,
+		"propertyGroups": [
+			{
+				"id": 1,
+				"position": 1,
+				"label": "LBL_TRANSIT_TAB_GENERAL_SUMMARY",
+				"enabled": true
+			},
+			{
+				"id": 2,
+				"position": 2,
+				"label": "LBL_TRANSIT_VEHICLE_CLASS",
+				"enabled": true
+			}
+		],
+		"properties": [
+			{
+				"id": 101,
+				"propertyGroupId": 1,
+				"field": "transitCode",
+				"position": 1,
+				"dataType": "DataType:2",
+				"label": "LBL_TRANSIT_TAB_GENERAL_SUMMARY_STATE",
+				"enabled": true
+			},
+			{
+				"id": 102,
+				"propertyGroupId": 1,
+				"field": "vehicleModel.vehicleBrand.alias",
+				"position": 2,
+				"dataType": "DataType:2",
+				"label": "LBL_GRID_FIELD_TRANSIT_VEHICLE_BRAND",
+				"enabled": true
+			},
+			{
+				"id": 103,
+				"propertyGroupId": 1,
+				"field": "vehicleModel.alias",
+				"position": 4,
+				"dataType": "DataType:2",
+				"label": "LBL_GRID_FIELD_TRANSIT_VEHICLE_MODEL",
+				"enabled": true
+			},
+			{
+				"id": 104,
+				"propertyGroupId": 1,
+				"field": "vehiclePlateNumber",
+				"position": 5,
+				"dataType": "DataType:2",
+				"label": "LBL_TRANSIT_TAB_GENERAL_SUMMARY_PLATE_NUMBER",
+				"enabled": true
+			},
+			{
+				"id": 201,
+				"propertyGroupId": 2,
+				"field": "vehicleModel.vehicleType.alias",
+				"position": 1,
+				"dataType": "DataType:2",
+				"label": "LBL_GRID_FIELD_TRANSIT_ELEMENT_TYPE",
+				"enabled": true
+			},
+			{
+				"id": 202,
+				"propertyGroupId": 2,
+				"position": 2,
+				"field": "vehicleClass.labelAlias",
+				"dataType": "DataType:3",
+				"label": "LBL_VEHICLE_CLASS",
+				"enabled": false
+			}
+		]
+	},	
+	{
+		"id": 4,
+		"label": "LBL_TAB_TRANSIT_ATTACHMENTS",
+		"position": 4,
+		"enabled": true,
+		"jsFile": "modules/trs/transitEditorTabAttachment.js",
+		"context": "getTransitAttachmentContext"
+	},
+	{
+		"id": 5,
+		"label": "LBL_TAB_TRANSIT_LOGS",
+		"position": 5,
+		"enabled": true,
+		"jsFile": "modules/trs/transitEditorTabLog.js"
+	}
+]');
 
 UPDATE ui.vo_entity_values set value = '#C8C8C8' where vo_entity_id = 'ImsIncidentLevel:1' and vo_entity_field_id = 10;
 UPDATE ui.vo_entity_values set value = '#C800FF' where vo_entity_id = 'ImsIncidentLevel:2' and vo_entity_field_id = 10;

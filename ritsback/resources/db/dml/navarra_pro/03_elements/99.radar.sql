@@ -1,5 +1,5 @@
 INSERT INTO conf.elements (element_type_id, element_subtype_id, element_id, location_id, keep_values_on_disconnected, inherit_state_id, alias, description, on_change_alarm, on_change_state, on_change_measure, on_schedule, enabled, visible, alert, alarm_count, created_at, updated_at) VALUES
-(99, NULL, 1, 0010099, NULL, NULL, 'TRA-C-1223', 'TRA-C-1223', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(99, 1, 1, 0010099, NULL, NULL, 'TRA-C-1223', 'TRA-C-1223', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (99, NULL, 2, 0020099, NULL, NULL, 'TRA-C-1222', 'TRA-C-1222', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (99, NULL, 3, 0030099, NULL, NULL, 'TRA-C-1175', 'TRA-C-1175', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (99, NULL, 4, 0040099, NULL, NULL, 'TRA-C-1380', 'TRA-C-1380', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -17,7 +17,16 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 (99, 7, 1, 1, NULL, 'TIPO II', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (99, 8, 1, 1, NULL, 'CABINA', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (99, 9, 1, 1, NULL, '20/10/25', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(99, 10, 1, 1, NULL, '101800000047961707830', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(99, 11, 1, 1, NULL, '00002', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(99, 12, 1, 1, NULL, '5', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(99, 13, 1, 1, NULL, 'R', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (99, 1003, 1, 1, NULL, 'TRA-C-1223', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(99, 5001, 1, 1, NULL, '192.168.88.163', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(99, 5002, 1, 1, NULL, '22', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(99, 5003, 1, 1, NULL, 'admin', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(99, 5004, 1, 1, NULL, 'xwwWugWPXoZtxgitWOGq5w==', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(99, 5005, 1, 1, NULL, '/radar/subtipo1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 (99, 1, 1, 2, NULL, 'TRADESEGUR', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (99, 2, 1, 2, NULL, '6F-MR', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
