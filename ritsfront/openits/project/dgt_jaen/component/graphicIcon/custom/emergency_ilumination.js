@@ -14,6 +14,16 @@ const COLOR_OFF = "gray";
 // Estados del elemento 73
 const ELEMENT_TYPE_STATES_NO_TREATMENT = ["ElementTypeState:73:0", "ElementTypeState:73:2"];
 
+// Mapeo de valores a índice de columna máxima encendida
+// 0 -> columna 0 ("cinco"), 100 -> columna 4 ("nueve")
+const VALUE_TO_COLUMN_INDEX = {
+    0: 0,
+    2: 1,
+    10: 2,
+    20: 3,
+    100: 4
+};
+
 export default class ArcLevelControl extends GraphicIconCustomType {
 
     constructor(s, g, elementInfo, events) {
@@ -21,7 +31,6 @@ export default class ArcLevelControl extends GraphicIconCustomType {
         this.gState = this.g.select("#" + GraphicIcon.G_ID_STATE);
         // Guardamos referencias a las columnas
         this.columns = COLUMN_IDS.map(id => this.g.select("#" + id));
-
     }
 
     render(elementInfo) {
@@ -32,7 +41,7 @@ export default class ArcLevelControl extends GraphicIconCustomType {
             this.gState.attr({ fill: elementInfo.state.color });
         }
 
-		let treatmentValue = (ELEMENT_TYPE_STATES_NO_TREATMENT.indexOf(elementInfo.state.id) === -1);
+        let treatmentValue = (ELEMENT_TYPE_STATES_NO_TREATMENT.indexOf(elementInfo.state.id) === -1);
 
         // Si NO_TREATMENT → apagar columnas y salir
         if (!treatmentValue) {
@@ -43,11 +52,13 @@ export default class ArcLevelControl extends GraphicIconCustomType {
         // Leer valor de arc_level
         let arcLevelValue = parseInt(this.getValue(PARAM_ARC_LEVEL));
 
-        // Iluminar columnas desde la primera hasta el valor de arc_level
+        // Determinar hasta qué columna encender
+        let maxIndex = VALUE_TO_COLUMN_INDEX[arcLevelValue];
+
+        // Encender desde la primera hasta maxIndex
         this.columns.forEach((col, index) => {
             if (col) {
-                let colNumber = 5 + index; // primera columna = 5
-                col.attr({ fill: (arcLevelValue >= colNumber) ? COLOR_ON : COLOR_OFF });
+                col.attr({ fill: (index <= maxIndex) ? COLOR_ON : COLOR_OFF });
             }
         });
     }

@@ -32,7 +32,7 @@ class SignallingCommand_73_3 {
 	//Values
 	static final boolean ON = true;
 	static final boolean OFF = false;
-	static final long SIX = 2;
+	static final long TWO = 2;
 	
 	
 	org.apache.logging.log4j.Logger log;
@@ -59,7 +59,7 @@ class SignallingCommand_73_3 {
 			xidPointValueTimeModels.add(xidPointValueTimeModel);
 
 			xidPointValueTimeModel = signallingCommandUtils.getXidPointValueTimeModel(signallingCommand, 
-					dataSourceXid + "_" + ARC_LEVEL, SIX);
+					dataSourceXid + "_" + ARC_LEVEL, TWO);
 			xidPointValueTimeModels.add(xidPointValueTimeModel);
 
 			ObjectMapper objectMapper = new ObjectMapper();

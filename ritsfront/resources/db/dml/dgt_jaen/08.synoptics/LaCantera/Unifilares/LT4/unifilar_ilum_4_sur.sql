@@ -44,7 +44,7 @@ INSERT INTO ui.synoptic_layer_elements
 (91105700, 'Element:57:191', 000057, 'INT-SOL-IZQ-2-ILU-SUR-4', 404, 321, false, NULL, true, false, NULL, true),
 (91105700, 'Element:57:190', 000057, 'INT-SOL-IZQ-1-ILU-SUR-4', 251, 321, false, NULL, true, false, NULL, true),
 (91105700, 'Element:57:189', 000057, 'INT-MANI-ILU-SUR-4', 89, 321, false, NULL, true, false, NULL, true),
-(91105700, 'Element:57:187', 000057, 'INT-Q26-ILU-SUR-4', 937, 156, false, NULL, true, false, NULL, true),
+(91105700, 'Element:57:187', 00005704, 'INT-Q26-ILU-SUR-4', 937, 156, false, NULL, true, false, NULL, true),
 (91105700, 'Element:57:188', 00005702, 'INT-K01-ILU-SUR-4', 927, 217, false, NULL, true, false, NULL, true),
 (91108400, 'Element:84:148', 00008401, 'EXT-SAL-ILU-SUR-4', 1778, 869, false, NULL, true, false, NULL, true),
 (91108400, 'Element:84:147', 00008401, 'EXT-ENT-ILU-SUR-4', 1624, 869, false, NULL, true, false, NULL, true),

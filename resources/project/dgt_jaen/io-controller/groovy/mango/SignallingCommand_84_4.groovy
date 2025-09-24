@@ -16,28 +16,28 @@ import com.revenga.rits.back.data.core.util.ResourcesUtil;
 
 /**
  * 
- * SignallingCommand_73_5: ON 0.2% signalling command 
+ * SignallingCommand_84_4: ON 0% signalling command 
  * 
  */
-class SignallingCommand_73_5 {
+class SignallingCommand_84_4 {
 
 	GroovyShell shell;
 	def signallingCommandUtils;
 	
 	//XIDs
-	static final String ARC_LEVEL = "arc_level";
+	static final String ARC_LEVEL = "dimming_level";
 	static final String APAGADO = "apagado";
 	static final String REMOTE = "remote";
 	
 	//Values
 	static final boolean ON = true;
 	static final boolean OFF = false;
-	static final long TWENTY = 20;
+	static final long ZERO = 0;
 	
 	
 	org.apache.logging.log4j.Logger log;
 	
-	SignallingCommand_73_5(org.apache.logging.log4j.Logger log) {
+	SignallingCommand_84_4(org.apache.logging.log4j.Logger log) {
 	
 		shell = new GroovyShell();
 		signallingCommandUtils = shell.parse(new File(ResourcesUtil.getPath("io-controller/groovy/mango/SignallingCommandUtils.groovy")));
@@ -59,7 +59,7 @@ class SignallingCommand_73_5 {
 			xidPointValueTimeModels.add(xidPointValueTimeModel);
 
 			xidPointValueTimeModel = signallingCommandUtils.getXidPointValueTimeModel(signallingCommand, 
-					dataSourceXid + "_" + ARC_LEVEL, TWENTY);
+					dataSourceXid + "_" + ARC_LEVEL, ZERO);
 			xidPointValueTimeModels.add(xidPointValueTimeModel);
 
 			ObjectMapper objectMapper = new ObjectMapper();

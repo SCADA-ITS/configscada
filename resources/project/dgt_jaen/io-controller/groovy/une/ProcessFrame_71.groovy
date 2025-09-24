@@ -11,110 +11,94 @@ import com.revenga.rits.back.data.core.util.FrameHelper;
 import com.revenga.rits.back.data.core.util.ResourcesUtil;
 
 
-public class ProcessFrame_71{
+public class ProcessFrame_71 {
 
-	static final Long GR_TXT_PMV = 18L;
-	static final Long GR_TXT_GR_PMV = 22L;
+    static final Long GR_TXT_PMV = 18L
+    static final Long GR_TXT_GR_PMV = 22L
 
-	GroovyShell shell;
-
-    private org.apache.logging.log4j.Logger log;
+    GroovyShell shell
+    private org.apache.logging.log4j.Logger log
 
     public ProcessFrame_71(org.apache.logging.log4j.Logger log) {
-		shell = new GroovyShell();
-		this.log = log;
-	}
+        shell = new GroovyShell()
+        this.log = log
+    }
 
-    public void processResponse_0x9B(Element element, List<Byte> data, List<ElementValue> elementValuesToSend,
-			List<AlarmConfig> activateAlarmsToSend, List<AlarmConfig> deactivateAlarmsToSend) {
-		
-		def pmv;
+    public void processResponse_0x9B(Element element, byte[] data,
+            List<ElementValue> elementValuesToSend,
+            List<AlarmConfig> activateAlarmsToSend,
+            List<AlarmConfig> deactivateAlarmsToSend) {
 
-		try{
+        def pmv
+        try {
+            List<Byte> dataList = data.toList()   // conversión de byte[] a List<Byte>
 
-			if(element.getElementSubtypeId() == GR_TXT_PMV){
-				pmv = shell.parse(new File(ResourcesUtil.getPath("io-controller/groovy/une/pmv_subtypes/dgt/ElementSubtype_18_71.groovy")));
-				pmv.content(element, data, elementValuesToSend, log);
-			
-			}else if(element.getElementSubtypeId() == GR_TXT_GR_PMV){
-				pmv = shell.parse(new File(ResourcesUtil.getPath("io-controller/groovy/une/pmv_subtypes/dgt/ElementSubtype_22_71.groovy")));
-				pmv.content(element, data, elementValuesToSend, log);
-			
-			}else{
-				log.debug("No se encuentra el subtipo del panel")
-			}
+            if (element.getElementSubtypeId() == GR_TXT_PMV) {
+                pmv = shell.parse(new File(ResourcesUtil.getPath("io-controller/groovy/une/pmv_subtypes/dgt/ElementSubtype_18_71.groovy")))
+                pmv.content(element, dataList, elementValuesToSend, log)
 
-		}catch(Exception e) {
-			log.debug(e.getMessage());
-		}
+            } else if (element.getElementSubtypeId() == GR_TXT_GR_PMV) {
+                pmv = shell.parse(new File(ResourcesUtil.getPath("io-controller/groovy/une/pmv_subtypes/dgt/ElementSubtype_22_71.groovy")))
+                pmv.content(element, dataList, elementValuesToSend, log)
 
-	}
+            } else {
+                log.debug("No se encuentra el subtipo del panel")
+            }
+        } catch (Exception e) {
+            log.debug(e.getMessage())
+        }
+    }
 
-    public void processResponse_0x9A(Element element, List<Byte> data, List<ElementValue> elementValuesToSend,
-			List<AlarmConfig> activateAlarmsToSend, List<AlarmConfig> deactivateAlarmsToSend) {
-		
-		def pmv;
+    public void processResponse_0x9A(Element element, byte[] data,
+            List<ElementValue> elementValuesToSend,
+            List<AlarmConfig> activateAlarmsToSend,
+            List<AlarmConfig> deactivateAlarmsToSend) {
 
-		try{
+        def pmv
+        try {
+            List<Byte> dataList = data.toList()   // conversión de byte[] a List<Byte>
 
-			if(element.getElementSubtypeId() == GR_TXT_PMV){
-				pmv = shell.parse(new File(ResourcesUtil.getPath("io-controller/groovy/une/pmv_subtypes/dgt/ElementSubtype_18_71.groovy")));
-				pmv.content(element, data, elementValuesToSend, log);
-			
-			}else if(element.getElementSubtypeId() == GR_TXT_GR_PMV){
-				pmv = shell.parse(new File(ResourcesUtil.getPath("io-controller/groovy/une/pmv_subtypes/dgt/ElementSubtype_22_71.groovy")));
-				pmv.content(element, data, elementValuesToSend, log);
-			
-			}else{
-				log.debug("No se encuentra el subtipo del panel")
-			}
+            if (element.getElementSubtypeId() == GR_TXT_PMV) {
+                pmv = shell.parse(new File(ResourcesUtil.getPath("io-controller/groovy/une/pmv_subtypes/dgt/ElementSubtype_18_71.groovy")))
+                pmv.content(element, dataList, elementValuesToSend, log)
 
-		}catch(Exception e) {
-			log.debug(e.getMessage());
-		}
+            } else if (element.getElementSubtypeId() == GR_TXT_GR_PMV) {
+                pmv = shell.parse(new File(ResourcesUtil.getPath("io-controller/groovy/une/pmv_subtypes/dgt/ElementSubtype_22_71.groovy")))
+                pmv.content(element, dataList, elementValuesToSend, log)
 
-	}
+            } else {
+                log.debug("No se encuentra el subtipo del panel")
+            }
+        } catch (Exception e) {
+            log.debug(e.getMessage())
+        }
+    }
 
     public List<Byte> processSignallingCommand_2(SignallingCommand signallingCommand, Element element) {
+        List<Byte> frame = []
+        String result = ""
 
-		List<Byte> frame = new ArrayList<>();
-		String result = "";
+        try {
+            def pmv = shell.parse(new File(ResourcesUtil.getPath("io-controller/groovy/une/signallingCommand/SignallingCommand_71_2.groovy")))
+            result = pmv.sendMessage(element, signallingCommand, log)
+            frame = result.decodeHex()
+        } catch (Exception e) {
+            log.debug(e.getMessage())
+        }
+        return frame
+    }
 
-		def pmv;
+    public List<Byte> processSignallingCommand_3(SignallingCommand signallingCommand, Element element) {
+        List<Byte> frame = []
+        String result = ""
 
-		try{
-			pmv = shell.parse(new File(ResourcesUtil.getPath("io-controller/groovy/une/signallingCommand/SignallingCommand_71_2.groovy")));
-
-			result = pmv.sendMessage(element, signallingCommand, log);
-
-			frame = result.decodeHex()
-
-		}catch(Exception e) {
-			log.debug(e.getMessage());
-		}
-		
-		return frame;
-	}
-
-	public List<Byte> processSignallingCommand_3(SignallingCommand signallingCommand, Element element) {
-
-		//TODO
-		List<Byte> frame = new ArrayList<>();
-		String result = "";
-
-		def pmv;
-
-		try{
-			pmv = shell.parse(new File(ResourcesUtil.getPath("io-controller/groovy/une/signallingCommand/SignallingCommand_71_3.groovy")));
-			result = pmv.shutdown(element, signallingCommand);
-
-			frame = result.decodeHex()
-
-		}catch(Exception e) {
-			log.debug(e.getMessage());
-		}
-		
-		return frame;
-	}
-
+        try {
+            def pmv = shell.parse(new File(ResourcesUtil.getPath("io-controller/groovy/une/signallingCommand/SignallingCommand_71_3.groovy")))
+            result = pmv.shutdown(element, signallingCommand)
+            frame = result.decodeHex()
+        } catch (Exception e) {
+            log.debug(e.getMessage())
+        }
+        return frame
+    }
 }

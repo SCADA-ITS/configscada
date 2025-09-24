@@ -51,7 +51,7 @@ export default class PressurizationFan extends GraphicIconCustomType {
 			let cmdRejillaValue = this.getValue(PARAM_FAN_3);
 			let treatmentValue = (ELEMENT_TYPE_STATES_NO_TREATMENT.indexOf(elementInfo.state.id) === -1);
 			// Ajustar la velocidad de la animación en función de cmdFanValue1 o cmdFanValue2
-			let speedFanValue = (cmdFanValue2 === CMD_FAN_ON ? 6 : (cmdFanValue1 === CMD_FAN_ON ? 10 : 0));
+			let speedFanValue = (cmdFanValue2 === CMD_FAN_ON ? 10 : (cmdFanValue1 === CMD_FAN_ON ? 6 : 0));
 			let timeFanRotate = MAX_TIME_ROTATE + 1 - speedFanValue + "s";
 
 			if (cmdRejillaValue != CMD_FAN_ON && treatmentValue) {

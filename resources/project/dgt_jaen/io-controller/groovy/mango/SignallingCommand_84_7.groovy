@@ -16,16 +16,16 @@ import com.revenga.rits.back.data.core.util.ResourcesUtil;
 
 /**
  * 
- * SignallingCommand_73_5: ON 0.2% signalling command 
+ * SignallingCommand_84_7: ON 0.2% signalling command 
  * 
  */
-class SignallingCommand_73_5 {
+class SignallingCommand_84_7 {
 
 	GroovyShell shell;
 	def signallingCommandUtils;
 	
 	//XIDs
-	static final String ARC_LEVEL = "arc_level";
+	static final String ARC_LEVEL = "dimming_level";
 	static final String APAGADO = "apagado";
 	static final String REMOTE = "remote";
 	
@@ -37,7 +37,7 @@ class SignallingCommand_73_5 {
 	
 	org.apache.logging.log4j.Logger log;
 	
-	SignallingCommand_73_5(org.apache.logging.log4j.Logger log) {
+	SignallingCommand_84_7(org.apache.logging.log4j.Logger log) {
 	
 		shell = new GroovyShell();
 		signallingCommandUtils = shell.parse(new File(ResourcesUtil.getPath("io-controller/groovy/mango/SignallingCommandUtils.groovy")));

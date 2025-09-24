@@ -283,7 +283,7 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (840005, 84, 1, 5, true, true, false, true, 'LBL_GRID_FIELD_STATE_LABEL', 'LBL_GRID_FIELD_STATE_LABEL', 'stateLabel', false, false, NULL, true, false, 150, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
 (840006, 84, 1 ,6, true, false, false, false, 'LBL_ELEMENT_TYPE_PARAM_CIRCUIT_STATE', 'LBL_ELEMENT_TYPE_PARAM_CIRCUIT_STATE_DESC', 'ElementTypeParam:84:2:1', false, false, 'left', true, false, 200, NULL, true, true, NULL, NULL, NULL, NULL, 0),
 (840007, 84, 2 ,7, true, false, false, false, 'LBL_ELEMENT_TYPE_PARAM_DIMING_LEVEL', 'LBL_ELEMENT_TYPE_PARAM_DIMING_LEVEL_DESC', 'ElementTypeParam:84:2:2', false, false, 'left', false, false, 200, NULL, true, true, NULL, NULL, NULL, NULL, 0),
-(840008, 84, 1 ,8, true, false, false, false, 'LBL_ELEMENT_TYPE_PARAM_CIRCUIT_TYPE', 'LBL_ELEMENT_TYPE_PARAM_CIRCUIT_TYPE_DESC', 'ElementTypeParam:84:2:3', false, false, 'left', false, false, 200, NULL, true, true, NULL, NULL, NULL, NULL, 0),
+(840008, 84, 2 ,8, true, false, false, false, 'LBL_ELEMENT_TYPE_PARAM_CIRCUIT_TYPE', 'LBL_ELEMENT_TYPE_PARAM_CIRCUIT_TYPE_DESC', 'ElementTypeParam:84:2:3', false, false, 'left', true, false, 200, NULL, true, true, NULL, NULL, NULL, NULL, 0),
 
 (860001, 86, 1, 1, true, false, false, false, 'LBL_GRID_FIELD_ID', 'LBL_GRID_FIELD_ID', 'id', true, false, null, false, false, 500, NULL, true, false, NULL, NULL, NULL, NULL, NULL),
 (860002, 86, 1, 2, true, false, false, true, 'LBL_GRID_FIELD_NAME', 'LBL_GRID_FIELD_NAME', 'alias', false, false, NULL, false, false, 170, NULL, true, true, NULL, NULL, true, NULL, NULL),
@@ -1236,6 +1236,9 @@ INSERT INTO ui.grid_field_replacements(grid_field_id, "label", value, enabled) V
 
 (840006, 'LBL_GRID_FIELD_REPLACEMENTS_CLOSED', '1', true),
 (840006, 'LBL_GRID_FIELD_REPLACEMENTS_OPENED', '0', true),
+
+(840008, 'LBL_GRID_FIELD_REPLACEMENTS_EMERGENCY', '1', true),
+(840008, 'LBL_GRID_FIELD_REPLACEMENTS_GENERAL', '6', true),
 
 (870006, 'LBL_GRID_FIELD_REPLACEMENTS_FULL', '1', true),
 (870006, 'LBL_GRID_FIELD_REPLACEMENTS_HALF', '0', true);

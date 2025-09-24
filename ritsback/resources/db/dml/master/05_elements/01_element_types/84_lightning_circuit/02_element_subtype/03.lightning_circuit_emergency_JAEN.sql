@@ -7,3 +7,12 @@ INSERT INTO master.element_subtype_active_params
 (3, 84, 2, 2, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (3, 84, 2, 3, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
+INSERT INTO master.element_subtype_active_commands (element_subtype_id, command_element_type_id, element_type_id, enabled, visible, created_at, updated_at) VALUES
+(3, 3, 84, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(3, 4, 84, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(3, 5, 84, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(3, 6, 84, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(3, 7, 84, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(3, 8, 84, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+

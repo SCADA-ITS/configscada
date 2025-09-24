@@ -16,7 +16,7 @@ INSERT INTO master.element_type_params (element_type_id, param_type_id, element_
 (84, 1, 1003, NULL, 2, NULL, 'MANGO SESSION_UID', 'MANGO SESSION_UID', 'LBL_ELEMENT_TYPE_PARAM_MANGO_SESSION_UID' , 'LBL_ELEMENT_TYPE_PARAM_MANGO_SESSION_UID_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 --MEASURE
 (84, 2, 1, NULL, 5, '0', 'state', 'state for circuit 0 Off, 1 On', 'LBL_ELEMENT_TYPE_PARAM_CIRCUIT_STATE' , 'LBL_ELEMENT_TYPE_PARAM_CIRCUIT_STATE_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(84, 2, 2, NULL, 3, NULL, 'level', 'device dimming level', 'LBL_ELEMENT_TYPE_PARAM_DIMING_LEVEL' , 'LBL_ELEMENT_TYPE_PARAM_DIMING_LEVEL_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(84, 2, 2, 3, 3, NULL, 'level', 'device dimming level', 'LBL_ELEMENT_TYPE_PARAM_DIMING_LEVEL' , 'LBL_ELEMENT_TYPE_PARAM_DIMING_LEVEL_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --JAEN LUMINARIAS EMERGENCIA
 --CONFIG
@@ -61,7 +61,15 @@ INSERT INTO master.element_type_state_transitions
 INSERT INTO master.command_element_types
 (command_element_type_id, element_type_id, alias, description, label_alias, label_description, on_change, enabled, visible, created_at, updated_at) VALUES
 (1, 84, 'CIRCUIT OFF', 'Circuit off', 'LBL_COMMAND_ELEMENT_TYPE_CIRCUIT_OFF', null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(2, 84, 'CIRCUIT ON', 'Cicuit on', 'LBL_COMMAND_ELEMENT_TYPE_CIRCUIT_ON', null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(2, 84, 'CIRCUIT ON', 'Cicuit on', 'LBL_COMMAND_ELEMENT_TYPE_CIRCUIT_ON', null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--iluminacion de emergencia
+(3, 84, 'OFF', 'OFF', 'LBL_COMMAND_ELEMENT_TYPE_OFF', null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(4, 84, 'ON 0 percent', 'ON 0 percent', 'LBL_COMMAND_ELEMENT_TYPE_ON_0', null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(5, 84, 'ON 0.02 percent', 'ON 0.02 percent', 'LBL_COMMAND_ELEMENT_TYPE_ON_0_02', null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(6, 84, 'ON 0.1 percent', 'ON 0.1 percent', 'LBL_COMMAND_ELEMENT_TYPE_ON_0_1', null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(7, 84, 'ON 0.2 percent', 'ON 0.2 percent', 'LBL_COMMAND_ELEMENT_TYPE_ON_0_2', null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(8, 84, 'ON 1 percent', 'ON 1 percent', 'LBL_COMMAND_ELEMENT_TYPE_ON_1', null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
 
 -- 
 -- Table: master.io_controller_module_type_element_types

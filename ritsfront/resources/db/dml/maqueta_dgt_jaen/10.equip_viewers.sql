@@ -51,7 +51,7 @@ INSERT INTO ui.equip_viewers (id, name, description, "label", icon, show_info_ta
 ('ElementType:75','GE','GE','LBL_ELEMENT_TYPE_GE',null, true, False, false, null, true, 300, 3, null,000075,true, false),
 ('ElementSubtype:1:84', 'LIGHTNING_CIRCUIT', 'LIGHTNING_CIRCUIT', 'LBL_ELEMENT_TYPE_LIGHTNING_CIRCUIT', NULL, true, false, true, null, false, 300, 1, null, 000084, true, false),
 ('ElementSubtype:2:84', 'LIGHTNING_CIRCUIT', 'LIGHTNING_CIRCUIT', 'LBL_ELEMENT_TYPE_LIGHTNING_CIRCUIT', NULL, true, false, false, null, true, 300, 1, null, 00008401, true, false),
-('ElementSubtype:3:84', 'LIGHTNING_CIRCUIT', 'LIGHTNING_CIRCUIT', 'LBL_ELEMENT_TYPE_LIGHTNING_CIRCUIT', NULL, true, false, false, null, false, 300, 1, null, 00008401, false, false),
+('ElementSubtype:3:84', 'LIGHTNING_CIRCUIT', 'LIGHTNING_CIRCUIT', 'LBL_ELEMENT_TYPE_LIGHTNING_CIRCUIT', NULL, true, false, true, null, false, 300, 1, null, 00008401, false, false),
 ('Element:86:1','PUMP','PUMP','LBL_ELEMENT_TYPE_PUMP',null, true, False, false, null, true, 300, 3, null,00008601,true, false),
 ('Element:86:2','PUMP','PUMP','LBL_ELEMENT_TYPE_PUMP',null, true, False, false, null, true, 300, 3, null,00008601,true, false),
 ('Element:86:3','PUMP','PUMP','LBL_ELEMENT_TYPE_PUMP',null, true, False, false, null, true, 300, 3, null,00008601,true, false),
