@@ -26,6 +26,7 @@ class SignallingCommand_9_3 {
 	
 	static final String FAN_DIRECT_ORDER = "fan_direct_order";
 	static final String FAN_REVERSE_ORDER = "fan_reverse_order";
+	static final String FAN_STOP_ORDER = "fan_stop_order";
 	static final boolean ON = true;	
 	static final boolean OFF = false;	
 	
@@ -78,6 +79,11 @@ class SignallingCommand_9_3 {
 			}else{
 				xidPointValueTimeModel = signallingCommandUtils.getXidPointValueTimeModel(signallingCommand, 
 						dataSourceXid + "_" + FAN_REVERSE_ORDER, ON);
+							
+				xidPointValueTimeModels.add(xidPointValueTimeModel);
+
+				xidPointValueTimeModel = signallingCommandUtils.getXidPointValueTimeModel(signallingCommand, 
+						dataSourceXid + "_" + FAN_STOP_ORDER, ON);
 							
 				xidPointValueTimeModels.add(xidPointValueTimeModel);
 

@@ -42,8 +42,6 @@ class SignallingCommand_9_1 {
 
 		try {
 
-
-
 			List<XidPointValueTimeModel> xidPointValueTimeModels = new ArrayList<>();
 			XidPointValueTimeModel xidPointValueTimeModel = null;
 			if (dataSourceXid.contains("CZ")) {
@@ -80,6 +78,12 @@ class SignallingCommand_9_1 {
 					driver.send(offMessage);
 				}
 			}else{
+				log.debug("ENTRA")
+
+				xidPointValueTimeModel = signallingCommandUtils.getXidPointValueTimeModel(signallingCommand, 
+						dataSourceXid + "_" + FAN_STOP_ORDER, OFF);
+				xidPointValueTimeModels.add(xidPointValueTimeModel);
+
 				xidPointValueTimeModel = signallingCommandUtils.getXidPointValueTimeModel(signallingCommand, 
 						dataSourceXid + "_" + FAN_DIRECT_ORDER, OFF);
 							
@@ -93,7 +97,7 @@ class SignallingCommand_9_1 {
 				ObjectMapper objectMapper = new ObjectMapper();
 				objectMapper.setSerializationInclusion(Include.NON_NULL);
 				String message = objectMapper.writeValueAsString(xidPointValueTimeModels);
-
+				log.debug("MENSAJE FAN-------> " + message)
 				if (driver != null) {
 				
 					driver.send(message);
