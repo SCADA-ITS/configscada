@@ -5,7 +5,12 @@ INSERT INTO static.transit_types (transit_type_id,alias,description,label_alias,
 
 -- static.transit_type_params
 INSERT INTO static.transit_type_params (transit_type_id, transit_type_param_id, data_type_id, transit_type_param_group_id, alias, description, label_alias, label_description, enabled, visible, created_at, updated_at) VALUES
-(1, 1, 2, null, 'Road Speed limit', 'Road Speed limit', 'LBL_TRANSIT_PARAM_ROAD_SPEED_LIMIT', 'LBL_TRANSIT_PARAM_ROAD_SPEED_LIMIT_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(1, 1, 2, null, 'Road Speed limit', 'Road Speed limit', 'LBL_TRANSIT_PARAM_ROAD_SPEED_LIMIT', 'LBL_TRANSIT_PARAM_ROAD_SPEED_LIMIT_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 2, 2, null, 'API Vehicle Plate Number', 'API Vehicle Plate Number', 'LBL_TRANSIT_PARAM_API_VEHICLE_PLATE_NUMBER', 'LBL_TRANSIT_PARAM_API_PLATE_NUMBER_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 3, 2, null, 'API Vehicle Brand', 'API Vehicle Brand', 'LBL_TRANSIT_PARAM_API_VEHICLE_BRAND', 'LBL_TRANSIT_PARAM_API_VEHICLE_BRAND_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 4, 2, null, 'API Vehicle Model', 'API Vehicle Model', 'LBL_TRANSIT_PARAM_API_VEHICLE_MODEL', 'LBL_TRANSIT_PARAM_API_VEHICLE_MODEL_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 5, 2, null, 'API Vehicle Color', 'API Vehicle Color', 'LBL_TRANSIT_PARAM_API_VEHICLE_COLOR', 'LBL_TRANSIT_PARAM_API_VEHICLE_COLOR_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 6, 2, null, 'API Vehicle Type', 'API Vehicle Type', 'LBL_TRANSIT_PARAM_API_VEHICLE_TYPE', 'LBL_TRANSIT_PARAM_API_VEHICLE_TYPE_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 	
 -- static.transit_type_state_transitions
 INSERT INTO static.transit_type_state_transitions (transit_type_id,parent_transit_state_id,child_transit_state_id,auto,groovy_file,enabled,visible,created_at,updated_at) VALUES

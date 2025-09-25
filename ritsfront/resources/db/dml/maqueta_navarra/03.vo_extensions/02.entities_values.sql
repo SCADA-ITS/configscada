@@ -284,14 +284,22 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 ('CommandElementType:3:2', 38, 'INFO'),
 
 ('TransitState:1', 78, 'transit_state/IN.png'),
-('TransitState:2', 78, 'transit_state/PT.png'),
-('TransitState:3', 78, 'transit_state/EN.png'),
-('TransitState:4', 78, 'transit_state/CA.png'),
+('TransitState:2', 78, 'transit_state/OC.png'),
+('TransitState:3', 78, 'transit_state/IR.png'),
+('TransitState:4', 78, 'transit_state/VD.png'),
+('TransitState:5', 78, 'transit_state/PD.png'),
+('TransitState:6', 78, 'transit_state/PS.png'),
+('TransitState:7', 78, 'transit_state/DI.png'),
+('TransitState:8', 78, 'transit_state/AR.png'),
 
-('TransitState:1', 79, '#bddcf0'),
-('TransitState:2', 79, '#e1d86e'),
-('TransitState:3', 79, '#a6c8c5'),
-('TransitState:4', 79, '#eb7474'),
+('TransitState:1', 79, '#6C757D'),
+('TransitState:2', 79, '#17A2B8'),
+('TransitState:3', 79, '#FFC107'),
+('TransitState:4', 79, '#007BFF'),
+('TransitState:5', 79, '#FD7E14'),
+('TransitState:6', 79, '#DC3545'),
+('TransitState:7', 79, '#6F42C1'),
+('TransitState:8', 79, '#28A745'),
 
 ('TransitType:1', 80, '[
 	{
@@ -409,7 +417,7 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 				"enabled": true	
 			},
 			{
-				"id": 302,
+				"id": 303,
 				"propertyGroupId": 3,
 				"field": "towards",
 				"position": 3,
@@ -464,13 +472,19 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 			{
 				"id": 1,
 				"position": 1,
-				"label": "LBL_TRANSIT_TAB_GENERAL_SUMMARY",
+				"label": "Información Radar",
 				"enabled": true
 			},
 			{
 				"id": 2,
 				"position": 2,
 				"label": "LBL_TRANSIT_VEHICLE_CLASS",
+				"enabled": true
+			},
+			{
+				"id": 3,
+				"position": 3,
+				"label": "Información consulta al sancionador",
 				"enabled": true
 			}
 		],
@@ -497,7 +511,7 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 				"id": 103,
 				"propertyGroupId": 1,
 				"field": "vehicleModel.alias",
-				"position": 4,
+				"position": 3,
 				"dataType": "DataType:2",
 				"label": "LBL_GRID_FIELD_TRANSIT_VEHICLE_MODEL",
 				"enabled": true
@@ -506,7 +520,7 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 				"id": 104,
 				"propertyGroupId": 1,
 				"field": "vehiclePlateNumber",
-				"position": 5,
+				"position": 4,
 				"dataType": "DataType:2",
 				"label": "LBL_TRANSIT_TAB_GENERAL_SUMMARY_PLATE_NUMBER",
 				"enabled": true
@@ -528,6 +542,50 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 				"dataType": "DataType:3",
 				"label": "LBL_VEHICLE_CLASS",
 				"enabled": false
+			},
+			{
+				"id": 301,
+				"propertyGroupId": 3,
+				"position": 1,
+				"field": "transitValues",
+				"dataType": "DataType:2",
+				"label": "Matricula",
+				"enabled": true,
+				"calculatedFieldExpresion": "return fieldValue.find(type => type.transitTypeParam.id === \"TransitTypeParam:1:2\")?.value;", 
+				"param": "TransitTypeParam:1:2"
+			},
+			{
+				"id": 302,
+				"propertyGroupId": 3,
+				"position": 2,
+				"field": "transitValues",
+				"dataType": "DataType:2",
+				"label": "Marca",
+				"enabled": true,
+				"calculatedFieldExpresion": "return fieldValue.find(type => type.transitTypeParam.id === \"TransitTypeParam:1:3\")?.value;", 
+				"param": "TransitTypeParam:1:3"
+			},
+			{
+				"id": 303,
+				"propertyGroupId": 3,
+				"position": 3,
+				"field": "transitValues",
+				"dataType": "DataType:2",
+				"label": "Modelo",
+				"enabled": true,
+				"calculatedFieldExpresion": "return fieldValue.find(type => type.transitTypeParam.id === \"TransitTypeParam:1:4\")?.value;", 
+				"param": "TransitTypeParam:1:4"
+			},
+			{
+				"id": 304,
+				"propertyGroupId": 3,
+				"position": 4,
+				"field": "transitValues",
+				"dataType": "DataType:2",
+				"label": "Color",
+				"enabled": true,
+				"calculatedFieldExpresion": "return fieldValue.find(type => type.transitTypeParam.id === \"TransitTypeParam:1:5\")?.value;", 
+				"param": "TransitTypeParam:1:5"
 			}
 		]
 	},	
