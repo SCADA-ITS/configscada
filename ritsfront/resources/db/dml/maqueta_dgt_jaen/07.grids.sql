@@ -82,7 +82,6 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (090007, 9, 3, 7, true, false, false, false, 'LBL_ELEMENT_TYPE_PARAM_FAN_VIBRATION', 'LBL_ELEMENT_TYPE_PARAM_FAN_VIBRATION_DESC', 'ElementTypeParam:9:2:2', false, false, 'left', false, false, 200, NULL, true, true, NULL, NULL, NULL, NULL, 0),
 (090008, 9, 1, 8, true, false, false, false, 'LBL_ELEMENT_TYPE_PARAM_FAN_MANUAL', 'LBL_ELEMENT_TYPE_PARAM_FAN_MANUAL_DESC', 'ElementTypeParam:9:2:28', false, false, 'left', true, false, 200, NULL, true, true, NULL, NULL, NULL, NULL, 0),
 (090009, 9, 1, 9, true, false, false, false, 'LBL_ELEMENT_TYPE_PARAM_FAN_AUTOMATIC', 'LBL_ELEMENT_TYPE_PARAM_FAN_AUTOMATIC_DESC', 'ElementTypeParam:9:2:29', false, false, 'left', true, false, 200, NULL, true, true, NULL, NULL, NULL, NULL, 0),
-(090010, 9, 1, 10, true, false, false, false, 'LBL_ELEMENT_TYPE_PARAM_FAN_STARTER_SHOT', 'LBL_ELEMENT_TYPE_PARAM_FAN_STARTER_SHOT_DESC', 'ElementTypeParam:9:2:30', false, false, 'left', true, false, 200, NULL, true, true, NULL, NULL, NULL, NULL, 0),
 (090011, 9, 1, 11, false, false, true, false, 'LBL_GRID_FIELD_BRAND', 'LBL_GRID_FIELD_BRAND', 'ElementTypeParam:9:1:1', false, false, 'left', false, false, 300, NULL, true, true, NULL, NULL, NULL, NULL,NULL),
 (090012, 9, 1, 12, false, false, true, false, 'LBL_GRID_FIELD_MODEL', 'LBL_GRID_FIELD_MODEL', 'ElementTypeParam:9:1:2', false, false, 'left', false, false, 300, NULL, true, true, NULL, NULL, NULL, NULL,NULL),
 
@@ -2218,10 +2217,6 @@ INSERT INTO ui.grid_field_replacements(grid_field_id, "label", value, enabled) V
 
 (090009, 'LBL_GRID_FIELD_REPLACEMENTS_YES', '1', true),
 (090009, 'LBL_GRID_FIELD_REPLACEMENTS_NO', '0', true),
-
-(090010, 'LBL_GRID_FIELD_REPLACEMENTS_CLOSED', '0', true),
-(090010, 'LBL_GRID_FIELD_REPLACEMENTS_OPENED', '1', true),
-
 
 (110007, 'LBL_GRID_FIELD_REPLACEMENTS_ENABLED', '255', true),
 (110007, 'LBL_GRID_FIELD_REPLACEMENTS_DISABLED', '0', true),

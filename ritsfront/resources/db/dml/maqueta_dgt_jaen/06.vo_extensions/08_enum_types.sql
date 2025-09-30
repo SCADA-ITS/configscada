@@ -80,7 +80,6 @@ INSERT INTO ui.vo_entity_enum_types(vo_entity_id, enum_type_id) VALUES
 ('ElementTypeParam:9:2:1', 8),
 ('ElementTypeParam:9:2:28', 2),
 ('ElementTypeParam:9:2:29', 2),
-('ElementTypeParam:9:2:30', 4),
 
 ('ElementTypeParam:11:2:15', 6),
 ('ElementTypeParam:13:2:1', 1),
