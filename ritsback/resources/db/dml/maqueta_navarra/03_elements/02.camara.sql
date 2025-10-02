@@ -173,14 +173,14 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 --(2, 1003, 1, 27, NULL, 'Endarlatza 2', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (2, 1, 1, 28, NULL, 'LectorVision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(2, 1003, 1, 28, NULL, 'Talluntxe LPR', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(2, 4001, 1, 28, NULL, '192.168.88.125', true, true, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), 
+(2, 1003, 1, 28, NULL, 'Talluntxe LPR', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+/*(2, 4001, 1, 28, NULL, '192.168.88.125', true, true, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), 
 (2, 4002, 1, 28, NULL, '3051', true, true, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), 
 (2, 4003, 1, 28, NULL, '0x02 0x01 0x00 0x03', true, true, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), 
 (2, 4004, 1, 28, NULL, '0x02 0x01 0xFF 0x03', true, true, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), 
 (2, 4005, 1, 28, NULL, '0x01', true, true, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), 
 (2, 4006, 1, 28, NULL, 'keystore2.jks', true, true, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), 
-(2, 4007, 1, 28, NULL, 'k/7x4pJrPbHAr7opLlK7Mg==', true, true, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
+(2, 4007, 1, 28, NULL, 'k/7x4pJrPbHAr7opLlK7Mg==', true, true, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);*/
 
 INSERT INTO conf.element_io_controller_modules (element_type_id, element_id, module_type_id, module_id, enabled, visible, created_at, updated_at) VALUES
 (2, 1, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 

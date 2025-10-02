@@ -79,6 +79,7 @@ INSERT INTO ui.map_layer_elements (id, layer_id, element_id, graphic_icon_id, "l
 (0280002, 2,'Element:2:28', 2,'Talluntxe LPR ', 42.7755542, -1.6315534,  false, null, true, false, null, true ),
 
 (0010071, 71, 'Element:71:1', 71, 'PMV-VIRTUAL-1', 43.39616189919906, -2.0825991357475653, false, null, true, false, null, true ),
+(0020071, 71, 'Element:71:2', 71, 'PMV-VIRTUAL-2', 43.39616189919906, -2.5795991357475653, false, null, true, false, null, true ),
 
 (0010099, 99,'Element:99:1', 99,'RADF-127+670D',43.01762766,-1.90737257, false, null, true, false, null, true ),
 (0020099, 99,'Element:99:2', 99,'RADF-91+358D', 42.07934146,-1.79528762, false, null, true, false, null, true ),

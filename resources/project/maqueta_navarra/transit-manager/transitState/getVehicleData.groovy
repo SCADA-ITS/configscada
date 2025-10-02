@@ -13,10 +13,11 @@ import com.revenga.rits.back.transit.manager.service.EntitiesManager;
 class getVehicleData {
 
 	final Long TRANSIT_TYPE_ID = 1L;
-	final Long TRANSIT_TYPE_PARAM_API_VEHICLE_PLATE_NUMBER = 2L;
-	final Long TRANSIT_TYPE_PARAM_API_VEHICLE_BRAND = 3L;
-	final Long TRANSIT_TYPE_PARAM_API_VEHICLE_MODEL = 4L;
-	final Long TRANSIT_TYPE_PARAM_API_VEHICLE_COLOR = 5L;
+	final Long TRANSIT_TYPE_PARAM_API_VEHICLE_BRAND = 2L;
+	final Long TRANSIT_TYPE_PARAM_API_VEHICLE_MODEL = 3L;
+	final Long TRANSIT_TYPE_PARAM_API_VEHICLE_COLOR = 4L;
+	final Long TRANSIT_TYPE_PARAM_API_VEHICLE_TYPE = 5L;
+	final Long TRANSIT_TYPE_PARAM_API_VEHICLE_ITV_DATE = 6L;
 
 	org.apache.logging.log4j.Logger log;		
 	private CgiApiMultasClient client;
@@ -45,42 +46,38 @@ class getVehicleData {
 				  " currentState = " + transitTypeStateTransition.getParentTransitStateId() + 
 				  " nextState = " + transitTypeStateTransition.getChildTransitStateId());		
 
-		client = CgiApiMultasClientHelper.getClient();		
-		cgiApiMultasPlateNumberResponseDto = client.getByPlateNumber(transit.getVehiclePlateNumber());		
-		log.debug("--> cgiApiMultasPlateNumberResponseDto: " + cgiApiMultasPlateNumberResponseDto);
-		
-		
-		TransitValue apiVehiclePlateNumber = new TransitValue();
-		apiVehiclePlateNumber.setTransitTypeId(TRANSIT_TYPE_ID);		
-		apiVehiclePlateNumber.setTransitTypeParamId(TRANSIT_TYPE_PARAM_API_VEHICLE_PLATE_NUMBER);
-		apiVehiclePlateNumber.setValue(cgiApiMultasPlateNumberResponseDto.getIdentificacion().getMatriculacion().getMatricula());
-		transitValues.add(apiVehiclePlateNumber);
-		
-		TransitValue apiVehicleBrand = new TransitValue();
-		apiVehicleBrand.setTransitTypeId(TRANSIT_TYPE_ID);		
-		apiVehicleBrand.setTransitTypeParamId(TRANSIT_TYPE_PARAM_API_VEHICLE_BRAND);
-		apiVehicleBrand.setValue(cgiApiMultasPlateNumberResponseDto.getIdentificacion().getDescripcionVehiculo().getMarca().getDescripcion());
-		transitValues.add(apiVehicleBrand);
-		
-		TransitValue apiVehicleModel = new TransitValue();
-		apiVehicleModel.setTransitTypeId(TRANSIT_TYPE_ID);		
-		apiVehicleModel.setTransitTypeParamId(TRANSIT_TYPE_PARAM_API_VEHICLE_MODEL);
-		apiVehicleModel.setValue(cgiApiMultasPlateNumberResponseDto.getIdentificacion().getDescripcionVehiculo().getModelo());
-		transitValues.add(apiVehicleModel);
-		
-		TransitValue apiVehicleColor = new TransitValue();
-		apiVehicleColor.setTransitTypeId(TRANSIT_TYPE_ID);		
-		apiVehicleColor.setTransitTypeParamId(TRANSIT_TYPE_PARAM_API_VEHICLE_COLOR);
-		apiVehicleColor.setValue(cgiApiMultasPlateNumberResponseDto.getIdentificacion().getDescripcionVehiculo().getColor().getDescripcion());
-		transitValues.add(apiVehicleColor);
-		
-		transit.setTransitValues(transitValues);
-		log.debug("--> transit: " + transit);
-		
-		transit.setVehiclePlateNumber(cgiApiMultasPlateNumberResponseDto.getIdentificacion().getMatriculacion().getMatricula());
-		EntitiesManager.getInstance().updateTransit(transit);
-				  
-		log.debug("onAfterChangeTransitState out");
+		if (transit.getVehiclePlateNumber()){
+			try{
+				client = CgiApiMultasClientHelper.getClient();		
+				cgiApiMultasPlateNumberResponseDto = client.getByPlateNumber(transit.getVehiclePlateNumber());		
+				log.debug("--> cgiApiMultasPlateNumberResponseDto: " + cgiApiMultasPlateNumberResponseDto);
+				
+				transit.setVehicleBrandName(cgiApiMultasPlateNumberResponseDto.getIdentificacion().getDescripcionVehiculo().getMarca().getDescripcion());
+				transit.setVehicleModelName(cgiApiMultasPlateNumberResponseDto.getIdentificacion().getDescripcionVehiculo().getModelo());
+				transit.setVehicleColor(cgiApiMultasPlateNumberResponseDto.getIdentificacion().getDescripcionVehiculo().getColor().getDescripcion());
+				transit.setVehicleTypeName(cgiApiMultasPlateNumberResponseDto.getIdentificacion().getDescripcionVehiculo().getTipoVehiculo().getDescripcion());
+				
+				TransitValue apiVehicleITV = new TransitValue();
+				apiVehicleITV.setTransitTypeId(TRANSIT_TYPE_ID);		
+				apiVehicleITV.setTransitTypeParamId(TRANSIT_TYPE_PARAM_API_VEHICLE_ITV_DATE);						
+				String fechaOriginal = "2014-12-28T23:00:00.000+00:00";
+				OffsetDateTime odt = OffsetDateTime.parse(fechaOriginal);
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+				String fechaFormateada = odt.format(formatter);	
+				apiVehicleITV.setValue(fechaFormateada);	
+				
+				transitValues.add(apiVehicleITV);
+				transit.setTransitValues(transitValues);
+				
+				EntitiesManager.getInstance().updateTransit(transit);
+						  
+				log.debug("onAfterChangeTransitState out");
+			}catch(Exception e){
+				log.error("Se ha producido un error en la petición de datos de vehículo con la matrícula: " + transit.getVehiclePlateNumber());
+			}
+		}else{
+			log.debug("No se realiza la consulta de datos de vehículo por no tener ninguna matrícula asociada");
+		}
 			
         return true;
     }
