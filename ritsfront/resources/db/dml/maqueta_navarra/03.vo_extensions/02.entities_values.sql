@@ -463,7 +463,7 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 				"dataType": "DataType:2",
 				"label": "LBL_GRID_FIELD_TRANSIT_VEHICLE_PLATE_NUMBER",
 				"enabled": true,
-				"editable": ["TransitState:3"]
+				"editable": ["TransitState:3", "TransitState:9"]
 			},
 			{
 				"id": 102,

@@ -38,7 +38,7 @@ INSERT INTO static.transit_type_state_transitions (transit_type_id,parent_transi
 (1,6,8,false,null,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), --Archived
 
 --Failed
-(1,9,3,false,null,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP); --In Review
+(1,9,5,false,null,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP); --In Review
 
 -- static.vehicle_classes 
 INSERT INTO static.vehicle_classes (vehicle_class_id,alias,label_alias,enabled,visible,created_at,updated_at) VALUES
