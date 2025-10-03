@@ -15,9 +15,9 @@ const COLOR_OFF = "gray";
 const ELEMENT_TYPE_STATES_NO_TREATMENT = ["ElementTypeState:73:0", "ElementTypeState:73:2"];
 
 // Mapeo de valores a índice de columna máxima encendida
-// 0 -> columna 0 ("cinco"), 100 -> columna 4 ("nueve")
+// -1 -> ninguna columna encendida
 const VALUE_TO_COLUMN_INDEX = {
-    0: 0,
+    0: -1,
     2: 1,
     10: 2,
     20: 3,
@@ -52,8 +52,10 @@ export default class ArcLevelControl extends GraphicIconCustomType {
         // Leer valor de arc_level
         let arcLevelValue = parseInt(this.getValue(PARAM_ARC_LEVEL));
 
-        // Determinar hasta qué columna encender
-        let maxIndex = VALUE_TO_COLUMN_INDEX[arcLevelValue];
+        // Determinar hasta qué columna encender, si no existe el valor → -1
+        let maxIndex = VALUE_TO_COLUMN_INDEX.hasOwnProperty(arcLevelValue)
+            ? VALUE_TO_COLUMN_INDEX[arcLevelValue]
+            : -1;
 
         // Encender desde la primera hasta maxIndex
         this.columns.forEach((col, index) => {

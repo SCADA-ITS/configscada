@@ -1,7 +1,7 @@
 import GraphicIconCustomType from "../graphicIconCustomType.js";
 import GraphicIcon from "../graphicIcon.js";
 
-const PARAM_SWITCH_COMMAND = "ElementTypeParam:57:2:1";
+const PARAM_SWITCH_COMMAND = "ElementTypeParam:57:2:2";
 
 const G_ID_SWITCH = "switch";
 

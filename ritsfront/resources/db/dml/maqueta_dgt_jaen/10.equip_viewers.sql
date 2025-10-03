@@ -19,7 +19,8 @@ INSERT INTO ui.equip_viewers (id, name, description, "label", icon, show_info_ta
 ('ElementType:29','FIBROLASER_CT','FIBROLASER_CT','LBL_ELEMENT_TYPE_FIBROLASER_CT',null, true, False, false, null, true, 300, 3, null,29,false, false),
 ('ElementSubtype:3:32', 'PRESSURIZATION', 'PRESSURIZATION', 'LBL_ELEMENT_TYPE_PRESURIZACION', NULL, true, false, true, null,null, 300, 3, null,030032, true, false),
 ('ElementSubtype:2:53', 'SEM_2_GRUPOS', 'SEM_2_GRUPOS', 'LBL_ELEMENT_TYPE_SEM_2_LUCES', NULL, true, false, false, null, false, null, null, null, 020053, true, false),
-('ElementType:57', 'SWITCH', 'SWITCH', 'LBL_ELEMENT_TYPE_SWITCH', NULL, true, false, false, null, false, 300, 1, null, 000057, true, false),
+('ElementSubtype:1:57', 'SWITCH', 'SWITCH', 'LBL_ELEMENT_TYPE_SWITCH', NULL, true, false, false, null, false, 300, 1, null, 000057, true, false),
+('ElementSubtype:2:57', 'SWITCH', 'SWITCH', 'LBL_ELEMENT_TYPE_SWITCH', NULL, true, false, false, null, false, 300, 1, null, 00005704, true, false),
 ('Element:57:2', 'SWITCH', 'SWITCH', 'LBL_ELEMENT_TYPE_SWITCH', NULL, true, false, false, null, false, 300, 1, null, 00005701, true, false),
 ('Element:57:29', 'SWITCH', 'SWITCH', 'LBL_ELEMENT_TYPE_SWITCH', NULL, true, false, false, null, false, 300, 1, null, 00005701, true, false),
 ('Element:57:43', 'SWITCH', 'SWITCH', 'LBL_ELEMENT_TYPE_SWITCH', NULL, true, false, false, null, false, 300, 1, null, 00005701, true, false),
@@ -84,7 +85,8 @@ INSERT INTO ui.equip_viewer_tabs (equip_viewer_id, module_action_id, alias, desc
 ('ElementType:29',100501,'Alarms module' ,'Alarms module', 'LBL_ALARMS', null,  1, true ),
 ('ElementSubtype:3:32', 100501, 'Alarms module', 'Alarms module', 'LBL_ALARMS', NULL, 1, true),
 ('ElementSubtype:2:53', 100501, 'Alarms module', 'Alarms module', 'LBL_ALARMS', NULL, 1, true),
-('ElementType:57', 100501, 'Alarms module', 'Alarms module', 'LBL_ALARMS', NULL, 1, true),
+('ElementSubtype:1:57', 100501, 'Alarms module', 'Alarms module', 'LBL_ALARMS', NULL, 1, true),
+('ElementSubtype:2:57', 100501, 'Alarms module', 'Alarms module', 'LBL_ALARMS', NULL, 1, true),
 ('Element:57:2',100501,'Alarms module' ,'Alarms module', 'LBL_ALARMS', null,  1, true ),
 ('Element:57:29',100501,'Alarms module' ,'Alarms module', 'LBL_ALARMS', null,  1, true ),
 ('Element:57:43',100501,'Alarms module' ,'Alarms module', 'LBL_ALARMS', null,  1, true ),
@@ -144,7 +146,8 @@ INSERT INTO ui.equip_viewer_grp_measures (id, equip_viewer_id, name, description
 (2901, 'ElementType:29', 'Measures', 'Measures', 'LBL_ELEMENT_MEASURES', null, 1, true),
 (033201, 'ElementSubtype:3:32', 'Medidas', 'Medidas', 'LBL_ELEMENT_MEASURES', NULL, 1, true),
 (025301, 'ElementSubtype:2:53', 'Medidas', 'Medidas', 'LBL_ELEMENT_MEASURES', NULL, 1, true),
-(5701, 'ElementType:57', 'Medidas', 'Medidas', 'LBL_ELEMENT_MEASURES', NULL, 1, false),
+(5701, 'ElementSubtype:1:57', 'Medidas', 'Medidas', 'LBL_ELEMENT_MEASURES', NULL, 1, false),
+(5718, 'ElementSubtype:2:57', 'Medidas', 'Medidas', 'LBL_ELEMENT_MEASURES', NULL, 1, false),
 (5702, 'Element:57:2', 'Medidas', 'Medidas', 'LBL_ELEMENT_MEASURES', NULL, 1, false),
 (5703, 'Element:57:29', 'Medidas', 'Medidas', 'LBL_ELEMENT_MEASURES', NULL, 1, false),
 (5704, 'Element:57:43', 'Medidas', 'Medidas', 'LBL_ELEMENT_MEASURES', NULL, 1, false),
@@ -258,6 +261,8 @@ INSERT INTO ui.equip_viewer_measures (equip_viewer_grp_measure_id, vo_entities_i
 (5716,'ElementTypeParam:57:2:1', 1, true),
 
 (5717,'ElementTypeParam:57:2:1', 1, true),
+
+(5718,'ElementTypeParam:57:2:2', 1, true),
 
 (6601,'ElementTypeParam:66:2:1', 1, true),
 (6601,'ElementTypeParam:66:2:2', 2, true),
