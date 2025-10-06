@@ -1,5 +1,7 @@
 INSERT INTO ui.modules 
 (id, module_type_id, "name", description, default_view_type_id, default_system_permission_id, js_file, js_method_draw, js_method_callbacks, data_query, wss_topic, enabled, visible, autoload) VALUES 
+(970, 3, 'Map', 'Map', 1, null, 'modules/mapModule.js', 'getView', 'loadData', NULL, NULL, true, true, true),
+
 (1920, 4, 'SELECTOR_TREE_NODES_SINOPTICOS_PLANO', 'SELECTOR_TREE_NODES_SINOPTICOS_PLANO', 1, NULL, 'modules/synopticModule.js', 'getView', 'loadData', NULL, NULL, true, true, true),
 (1921, 8, 'Selector Tree Incidencias', 'Selector Tree Incidencias', 1, null, 'modules/selectorModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 (1922, 8, 'Selector Tree Reportes', 'Selector Tree Reportes', 1, null, 'modules/selectorModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
@@ -24,7 +26,23 @@ INSERT INTO ui.modules
 (6017, 9, 'INCIDENTS GIP - participant_types', 'Incidents GIP - participant_types', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 (6018, 9, 'INCIDENTS GIP - participant_injuries', 'Incidents GIP - participant_injuries', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 (6019, 9, 'INCIDENTS GIP - participant_nacionalities', 'Incidents GIP - participant_nacionalities', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
-(6020, 9, 'INCIDENTS GIP - damages', 'Incidents GIP - damages', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(6020, 9, 'INCIDENTS GIP - support_services', 'Incidents GIP - participant_nacionalities', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(6021, 9, 'INCIDENTS GIP - damages_responsabilities', 'Incidents GIP - participant_nacionalities', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(6022, 9, 'INCIDENTS GIP - damages_evaluations', 'Incidents GIP - participant_nacionalities', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(6023, 9, 'INCIDENTS GIP - owner_types', 'Incidents GIP - participant_nacionalities', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(6024, 9, 'INCIDENTS GIP - support_service_types', 'Incidents GIP - participant_nacionalities', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(6025, 9, 'INCIDENTS GIP - support_service_subtypes', 'Incidents GIP - participant_nacionalities', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(6026, 9, 'INCIDENTS GIP - road_conditions', 'Incidents GIP - participant_nacionalities', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(6027, 9, 'INCIDENTS GIP - road_types', 'Incidents GIP - participant_nacionalities', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(6028, 9, 'INCIDENTS GIP - road_states', 'Incidents GIP - participant_nacionalities', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(6029, 9, 'INCIDENTS GIP - weather_states', 'Incidents GIP - participant_nacionalities', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(6030, 9, 'INCIDENTS GIP - luminosity', 'Incidents GIP - participant_nacionalities', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(6031, 9, 'INCIDENTS GIP - ligth', 'Incidents GIP - participant_nacionalities', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(6032, 9, 'INCIDENTS GIP - causes', 'Incidents GIP - participant_nacionalities', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+
+(6050, 9, 'SUMMARY - annual', 'SUMMARY - annual', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(6051, 9, 'SUMMARY - month', 'SUMMARY - month', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(6052, 9, 'SUMMARY - incidents', 'SUMMARY - incidents', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 
 (6100, 9, 'REPORTS - alarms', 'REPORTS GIP - alarms', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 (6101, 9, 'REPORTS - states', 'REPORTS GIP - states', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL);
@@ -32,6 +50,7 @@ INSERT INTO ui.modules
 
 INSERT INTO ui.module_values 
 (module_id, module_param_id, value) VALUES 
+(970, 6, '1'),
 (1920, 4, '1920'),
 (1921, 9, '1'),
 (1922, 9, '2'),
@@ -55,12 +74,31 @@ INSERT INTO ui.module_values
 (6017, 13, '1'), (6017, 14, 'participant_types'),
 (6018, 13, '1'), (6018, 14, 'participant_injuries'),
 (6019, 13, '1'), (6019, 14, 'participant_nacionalities'),
-(6020, 13, '1'), (6020, 14, 'damages_responsabilities'),
+(6020, 13, '1'), (6020, 14, 'support_services'),
+(6021, 13, '1'), (6021, 14, 'damages_responsabilities'),
+(6022, 13, '1'), (6022, 14, 'damages_evaluations'),
+(6023, 13, '1'), (6023, 14, 'owner_types'),
+(6024, 13, '1'), (6024, 14, 'support_service_types'),
+(6025, 13, '1'), (6025, 14, 'support_service_subtypes'),
+(6026, 13, '1'), (6026, 14, 'road_conditions'),
+(6027, 13, '1'), (6027, 14, 'road_types'),
+(6028, 13, '1'), (6028, 14, 'road_states'),
+(6029, 13, '1'), (6029, 14, 'weather_states'),
+(6030, 13, '1'), (6030, 14, 'luminosity'),
+(6031, 13, '1'), (6031, 14, 'ligth'),
+(6032, 13, '1'), (6032, 14, 'causes'),
+
+(6050, 13, '1'), (6050, 14, 'annual_summary'),
+(6051, 13, '1'), (6051, 14, 'month_summary'),
+(6052, 13, '1'), (6052, 14, 'incidents_summary'),
+
 (6100, 13, '2'), (6100, 14, 'alarmas_hist'),
 (6101, 13, '2'), (6101, 14, 'estados_hist');
 
 INSERT INTO ui.window_values 
 (module_id, window_param_id, value) VALUES 
+(970, 12, 'LBL_MENU_ITEM_MAP'),
+
 (1920, 4, '825'),
 (1920, 8, 'true'),
 (1920, 9, 'img/module/default.png'),

@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ficha del Incidente</title>
+    <style>
+		#template {
+			width: 100%;
+			height: 100%;
+			margin: auto;           
+			position: absolute;     
+			top: 0; bottom: 0;
+			left: 0; right: 0;
+		}
+		
+		.separador {
+			height: 3px;
+			background-color: #71be44;
+			width: 100%;
+			margin: 20px 0; 
+		}
+
+		.container {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			color: #72BF44;
+		}
+
+		.column caption
+		{
+			display: none;
+		}
+
+		.column {
+			flex: 1;
+		}
+		
+		.tabla-anual {
+		  width: 100%;
+		  border-collapse: collapse; 
+		  border: 1px solid black; 
+		}
+		
+		.tabla-anual th{
+		  text-align: center;
+		  vertical-align: middle;
+		  background-color: yellow;
+		  border: 1px solid black; 
+		}
+		
+		.tabla-anual td {
+		  text-align: center;
+		  vertical-align: middle;
+		  border: 1px solid black;   
+		}
+		
+		.tabla-anual caption
+		{
+			display: none;
+		}
+	</style>
+</head>
+</body>
+<div id="template" class="portrait">
+	<table>
+		<tbody>
+			<tr>
+				<td>
+					<div class="container">
+						<div class="column">
+							<img src="./img/logo-project.svg" alt="Logo de la concesionaria">
+						</div>
+					</div>
+				<td>
+				<td>
+					<div>
+						<h3 style="margin-left: 100px;text-align: center;">
+							<span>Estadística Anual de Accidentes (Inicio de la Etapa de Explotación)</span>
+							<br> 
+							<span> Obra concesionada: </span>
+						</h3>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+					
+	<div class="separador"></div>
+	
+	<table class="tabla-anual">
+		<tr style="background-color: yellow;">
+			<th rowspan="2">Año</th>
+			<th colspan="2">Accidentes</th>
+			<th colspan="4">Víctimas</th>
+			<th rowspan="2">Total lesionados</th>
+			<th colspan="7">Tipos de Accidentes con lesionados</th>
+		</tr>
+		<tr style="background-color: yellow;">
+			<th>Total</th>
+			<th>Con lesionados</th>
+			<th>Muertos</th>
+			<th>Graves</th>
+			<th>M Graves</th>
+			<th>Leves</th>
+			<th>Atropello</th>
+			<th>Caída</th>
+			<th>Volcadura</th>
+			<th>Colisión</th>
+			<th>Choque</th>
+			<th>Otros</th>
+		</tr>
+		<tr>
+			<td class="anio"></td>
+			<td id="field.total_accidentes"></td>
+			<td id="field.con_lesionados"></td>
+			<td id="field.muertos"></td>
+			<td id="field.graves"></td>
+			<td id="field.menos_graves"></td>
+			<td id="field.leves"></td>
+			<td id="field.lesionados"></td>
+			<td id="field.atropello"></td>
+			<td id="field.caida"></td>
+			<td id="field.volcadura"></td>
+			<td id="field.colision"></td>
+			<td id="field.choque"></td>
+			<td id="field.otros"></td>
+		</tr>
+	</table>
+	
+	
+	<div class="separador"></div>
+	
+	<h3 style="text-align: center;"> Estadística Anual de accidentes <br> Año: <span class="anio"></span></h3>
+
+	<table class="tabla-anual" id="field.month_summary">
+		<tr>
+			<th id="field.month_summary.mes"></th>
+			<th id="field.month_summary.total_accidentes"></th>
+			<th id="field.month_summary.con_lesionados"></th>
+			<th id="field.month_summary.muertos"></th>
+			<th id="field.month_summary.graves"></th>
+			<th id="field.month_summary.menos_graves"></th>
+			<th id="field.month_summary.leves"></th>
+			<th id="field.month_summary.lesionados"></th>
+			<th id="field.month_summary.atropello"></th>
+			<th id="field.month_summary.caida"></th>
+			<th id="field.month_summary.volcadura"></th>
+			<th id="field.month_summary.colision"></th>
+			<th id="field.month_summary.choque"></th>
+			<th id="field.month_summary.otros"></th>
+		</tr>
+	</table>
+	
+	<div class="separador"></div>
+	
+	<h3 style="text-align: center;"> Estadística Mensual de accidentes <br> Año: <span class="anio"></span></h3>
+	
+	<h3 style="text-align: center;">Enero</h3>
+	<table class="tabla-anual" id="field.m_january">
+		<tr style="background-color: yellow;">
+			<th id="field.m_january.num_registro"></th>
+			<th id="field.m_january.dia"></th>
+			<th id="field.m_january.hora"></th>
+			<th id="field.m_january.km"></th>
+			<th id="field.m_january.tipo_accidente"></th>
+			<th id="field.m_january.ilesos"></th>
+			<th id="field.m_january.muertos"></th>
+			<th id="field.m_january.graves"></th>
+			<th id="field.m_january.menos_graves"></th>
+			<th id="field.m_january.leves"></th>
+			<th id="field.m_january.lesionados"></th>
+			<th id="field.m_january.causa"></th>
+			<th id="field.m_january.ubicacion_relativa"></th>
+			<th id="field.m_january.internas"></th>
+			<th id="field.m_january.externas"></th>
+		</tr>
+	</table>
+	
+	<h3 style="text-align: center;">Febrero</h3>
+	<table class="tabla-anual" id="field.m_february">
+		<tr style="background-color: yellow;">
+			<th id="field.m_february.num_registro"></th>
+			<th id="field.m_february.dia"></th>
+			<th id="field.m_february.hora"></th>
+			<th id="field.m_february.km"></th>
+			<th id="field.m_february.tipo_accidente"></th>
+			<th id="field.m_february.ilesos"></th>
+			<th id="field.m_february.muertos"></th>
+			<th id="field.m_february.graves"></th>
+			<th id="field.m_february.menos_graves"></th>
+			<th id="field.m_february.leves"></th>
+			<th id="field.m_february.lesionados"></th>
+			<th id="field.m_february.causa"></th>
+			<th id="field.m_february.ubicacion_relativa"></th>
+			<th id="field.m_february.internas"></th>
+			<th id="field.m_february.externas"></th>
+		</tr>
+	</table>
+	
+	<h3 style="text-align: center;">Marzo</h3>
+	<table class="tabla-anual" id="field.m_march">
+		<tr style="background-color: yellow;">
+			<th id="field.m_march.num_registro"></th>
+			<th id="field.m_march.dia"></th>
+			<th id="field.m_march.hora"></th>
+			<th id="field.m_march.km"></th>
+			<th id="field.m_march.tipo_accidente"></th>
+			<th id="field.m_march.ilesos"></th>
+			<th id="field.m_march.muertos"></th>
+			<th id="field.m_march.graves"></th>
+			<th id="field.m_march.menos_graves"></th>
+			<th id="field.m_march.leves"></th>
+			<th id="field.m_march.lesionados"></th>
+			<th id="field.m_march.causa"></th>
+			<th id="field.m_march.ubicacion_relativa"></th>
+			<th id="field.m_march.internas"></th>
+			<th id="field.m_march.externas"></th>
+		</tr>
+	</table>
+	
+	<h3 style="text-align: center;">Abril</h3>
+	<table class="tabla-anual" id="field.m_april">
+		<tr style="background-color: yellow;">
+			<th id="field.m_april.num_registro"></th>
+			<th id="field.m_april.dia"></th>
+			<th id="field.m_april.hora"></th>
+			<th id="field.m_april.km"></th>
+			<th id="field.m_april.tipo_accidente"></th>
+			<th id="field.m_april.ilesos"></th>
+			<th id="field.m_april.muertos"></th>
+			<th id="field.m_april.graves"></th>
+			<th id="field.m_april.menos_graves"></th>
+			<th id="field.m_april.leves"></th>
+			<th id="field.m_april.lesionados"></th>
+			<th id="field.m_april.causa"></th>
+			<th id="field.m_april.ubicacion_relativa"></th>
+			<th id="field.m_april.internas"></th>
+			<th id="field.m_april.externas"></th>
+		</tr>
+	</table>
+	
+	<h3 style="text-align: center;">Mayo</h3>
+	<table class="tabla-anual" id="field.m_may">
+		<tr style="background-color: yellow;">
+			<th id="field.m_may.num_registro"></th>
+			<th id="field.m_may.dia"></th>
+			<th id="field.m_may.hora"></th>
+			<th id="field.m_may.km"></th>
+			<th id="field.m_may.tipo_accidente"></th>
+			<th id="field.m_may.ilesos"></th>
+			<th id="field.m_may.muertos"></th>
+			<th id="field.m_may.graves"></th>
+			<th id="field.m_may.menos_graves"></th>
+			<th id="field.m_may.leves"></th>
+			<th id="field.m_may.lesionados"></th>
+			<th id="field.m_may.causa"></th>
+			<th id="field.m_may.ubicacion_relativa"></th>
+			<th id="field.m_may.internas"></th>
+			<th id="field.m_may.externas"></th>
+		</tr>
+	</table>
+	
+	<h3 style="text-align: center;">Junio</h3>
+	<table class="tabla-anual" id="field.m_june">
+		<tr style="background-color: yellow;">
+			<th id="field.m_june.num_registro"></th>
+			<th id="field.m_june.dia"></th>
+			<th id="field.m_june.hora"></th>
+			<th id="field.m_june.km"></th>
+			<th id="field.m_june.tipo_accidente"></th>
+			<th id="field.m_june.ilesos"></th>
+			<th id="field.m_june.muertos"></th>
+			<th id="field.m_june.graves"></th>
+			<th id="field.m_june.menos_graves"></th>
+			<th id="field.m_june.leves"></th>
+			<th id="field.m_june.lesionados"></th>
+			<th id="field.m_june.causa"></th>
+			<th id="field.m_june.ubicacion_relativa"></th>
+			<th id="field.m_june.internas"></th>
+			<th id="field.m_june.externas"></th>
+		</tr>
+	</table>
+	
+	<h3 style="text-align: center;">Julio</h3>
+	<table class="tabla-anual" id="field.m_july">
+		<tr style="background-color: yellow;">
+			<th id="field.m_july.num_registro"></th>
+			<th id="field.m_july.dia"></th>
+			<th id="field.m_july.hora"></th>
+			<th id="field.m_july.km"></th>
+			<th id="field.m_july.tipo_accidente"></th>
+			<th id="field.m_july.ilesos"></th>
+			<th id="field.m_july.muertos"></th>
+			<th id="field.m_july.graves"></th>
+			<th id="field.m_july.menos_graves"></th>
+			<th id="field.m_july.leves"></th>
+			<th id="field.m_july.lesionados"></th>
+			<th id="field.m_july.causa"></th>
+			<th id="field.m_july.ubicacion_relativa"></th>
+			<th id="field.m_july.internas"></th>
+			<th id="field.m_july.externas"></th>
+		</tr>
+	</table>
+	
+	<h3 style="text-align: center;">Agosto</h3>
+	<table class="tabla-anual" id="field.m_august">
+		<tr style="background-color: yellow;">
+			<th id="field.m_august.num_registro"></th>
+			<th id="field.m_august.dia"></th>
+			<th id="field.m_august.hora"></th>
+			<th id="field.m_august.km"></th>
+			<th id="field.m_august.tipo_accidente"></th>
+			<th id="field.m_august.ilesos"></th>
+			<th id="field.m_august.muertos"></th>
+			<th id="field.m_august.graves"></th>
+			<th id="field.m_august.menos_graves"></th>
+			<th id="field.m_august.leves"></th>
+			<th id="field.m_august.lesionados"></th>
+			<th id="field.m_august.causa"></th>
+			<th id="field.m_august.ubicacion_relativa"></th>
+			<th id="field.m_august.internas"></th>
+			<th id="field.m_august.externas"></th>
+		</tr>
+	</table>
+	
+	<h3 style="text-align: center;">Septiembre</h3>
+	<table class="tabla-anual" id="field.m_september">
+		<tr style="background-color: yellow;">
+			<th id="field.m_september.num_registro"></th>
+			<th id="field.m_september.dia"></th>
+			<th id="field.m_september.hora"></th>
+			<th id="field.m_september.km"></th>
+			<th id="field.m_september.tipo_accidente"></th>
+			<th id="field.m_september.ilesos"></th>
+			<th id="field.m_september.muertos"></th>
+			<th id="field.m_september.graves"></th>
+			<th id="field.m_september.menos_graves"></th>
+			<th id="field.m_september.leves"></th>
+			<th id="field.m_september.lesionados"></th>
+			<th id="field.m_september.causa"></th>
+			<th id="field.m_september.ubicacion_relativa"></th>
+			<th id="field.m_september.internas"></th>
+			<th id="field.m_september.externas"></th>
+		</tr>
+	</table>
+	
+	<h3 style="text-align: center;">Octubre</h3>
+	<table class="tabla-anual" id="field.m_october">
+		<tr style="background-color: yellow;">
+			<th id="field.m_october.num_registro"></th>
+			<th id="field.m_october.dia"></th>
+			<th id="field.m_october.hora"></th>
+			<th id="field.m_october.km"></th>
+			<th id="field.m_october.tipo_accidente"></th>
+			<th id="field.m_october.ilesos"></th>
+			<th id="field.m_october.muertos"></th>
+			<th id="field.m_october.graves"></th>
+			<th id="field.m_october.menos_graves"></th>
+			<th id="field.m_october.leves"></th>
+			<th id="field.m_october.lesionados"></th>
+			<th id="field.m_october.causa"></th>
+			<th id="field.m_october.ubicacion_relativa"></th>
+			<th id="field.m_october.internas"></th>
+			<th id="field.m_october.externas"></th>
+		</tr>
+	</table>
+	
+	<h3 style="text-align: center;">Noviembre</h3>
+	<table class="tabla-anual" id="field.m_november">
+		<tr style="background-color: yellow;">
+			<th id="field.m_november.num_registro"></th>
+			<th id="field.m_november.dia"></th>
+			<th id="field.m_november.hora"></th>
+			<th id="field.m_november.km"></th>
+			<th id="field.m_november.tipo_accidente"></th>
+			<th id="field.m_november.ilesos"></th>
+			<th id="field.m_november.muertos"></th>
+			<th id="field.m_november.graves"></th>
+			<th id="field.m_november.menos_graves"></th>
+			<th id="field.m_november.leves"></th>
+			<th id="field.m_november.lesionados"></th>
+			<th id="field.m_november.causa"></th>
+			<th id="field.m_november.ubicacion_relativa"></th>
+			<th id="field.m_november.internas"></th>
+			<th id="field.m_november.externas"></th>
+		</tr>
+	</table>
+	
+	<h3 style="text-align: center;">Diciembre</h3>
+	<table class="tabla-anual" id="field.m_december">
+		<tr style="background-color: yellow;">
+			<th id="field.m_december.num_registro"></th>
+			<th id="field.m_december.dia"></th>
+			<th id="field.m_december.hora"></th>
+			<th id="field.m_december.km"></th>
+			<th id="field.m_december.tipo_accidente"></th>
+			<th id="field.m_december.ilesos"></th>
+			<th id="field.m_december.muertos"></th>
+			<th id="field.m_december.graves"></th>
+			<th id="field.m_december.menos_graves"></th>
+			<th id="field.m_december.leves"></th>
+			<th id="field.m_december.lesionados"></th>
+			<th id="field.m_december.causa"></th>
+			<th id="field.m_december.ubicacion_relativa"></th>
+			<th id="field.m_december.internas"></th>
+			<th id="field.m_december.externas"></th>
+		</tr>
+	</table>
+</div>
+</body>
+</html>

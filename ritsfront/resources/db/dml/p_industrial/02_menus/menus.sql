@@ -6,7 +6,8 @@ INSERT INTO ui.menu_groups(id, "label", icon, "name", description, enabled, visi
 
 INSERT INTO ui.menu_items(id, menu_group_id, "position", module_id, "label", icon, "name", description, enabled, visible) VALUES
 -- MAPS & SYNOPTICS
-(0101, 1, 2, 1920, 'LBL_MENU_ITEM_SYNOPTIC', 'img/menu/synoptic-menu.png', 'Menu item Synoptic', 'Menu item Synoptic', true, true),
+(0101, 1, 1, 1920, 'LBL_MENU_ITEM_SYNOPTIC', 'img/menu/synoptic-menu.png', 'Menu item Synoptic', 'Menu item Synoptic', true, true),
+(0102, 1, 2, 970, 'LBL_MENU_ITEM_MAP', 'img/menu/map-menu.png', 'Menu item Map', 'Menu item Map', true, true),
 
 -- EQUIPMENT
 (0201, 2, 1, 500, 'LBL_MENU_ITEM_EQUIPMENTS', 'img/menu/equipment-menu.png', 'Menu item Equipments', 'Menu item Equipments', true, true),

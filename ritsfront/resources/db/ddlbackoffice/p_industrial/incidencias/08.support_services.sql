@@ -10,9 +10,12 @@ BEGIN
 	
   	create table backoffice.support_service_subtypes (
 		id serial not null,
+		support_service_type_id int null,
 		alias varchar null,
 		constraint pk_support_service_subtypes primary key (id)
 	) tablespace tbl_backoffice;
+	
+	alter table backoffice.support_service_subtypes add constraint fk_support_service_type_id foreign key (support_service_type_id) references backoffice.support_service_types(id) ON DELETE CASCADE;
   
 	create table backoffice.support_services (			
 		id serial not null,

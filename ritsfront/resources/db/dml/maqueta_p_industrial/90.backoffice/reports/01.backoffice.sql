@@ -8,8 +8,8 @@ BEGIN
 	'{}',
 	-- default_metadata_table
 	'{
-		"formHeight": 700,
-    	"formWidth": 900,
+		"formHeight": 850,
+    	"formWidth": 1100,
     	"tableHeight": 700,
     	"tableWidth": 900,
     	"showIdForm": false,

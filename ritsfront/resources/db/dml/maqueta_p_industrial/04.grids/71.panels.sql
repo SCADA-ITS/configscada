@@ -5,9 +5,9 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 --el id lo definimos como: <tipo><numero de fila 4 numeros>
 (710001, 71, 1, 1, true, false, false, false, 'LBL_ID', 'LBL_ID', 'id', true, false, null, false, false, 500, NULL, true, false, NULL, NULL, NULL, NULL),
 (710002, 71, 1, 2, true, false, false, true, 'LBL_NAME', 'LBL_NAME', 'alias', false, false, NULL, false, false, 150, NULL, true, true, NULL, NULL, true, NULL),
-(710003, 71, 1, 3, true, false, false, false, 'LBL_LOCATION', 'LBL_LOCATION', 'locationAlias', false, false, NULL, false, false, 120, NULL, true, true, NULL, NULL, NULL, NULL),
+(710003, 71, 1, 3, true, false, false, true, 'LBL_LOCATION', 'LBL_LOCATION', 'locationAlias', false, false, NULL, false, false, 120, NULL, true, true, NULL, NULL, NULL, NULL),
 (710004, 71, 1, 4, true, true, false, false, NULL, NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true, NULL, NULL, NULL, NULL),
-(710005, 71, 1, 5, true, true, false, false, 'LBL_STATE_LABEL', 'LBL_STATE_LABEL', 'stateLabel', false, false, NULL, true, false, 120, NULL, true, true, NULL, NULL, NULL, NULL);
+(710005, 71, 1, 5, true, true, false, true, 'LBL_STATE_LABEL', 'LBL_STATE_LABEL', 'stateLabel', false, false, NULL, true, false, 120, NULL, true, true, NULL, NULL, NULL, NULL);
 
 INSERT INTO ui.grid_option_values(grid_id, grid_option_id, value) VALUES
 (71, 1, 'true'),

@@ -13,5 +13,6 @@
   </p:state>
 	<p:alarms>
 		<p:alarm source="door_open" active_value="false" alarm_config_id="020002"></p:alarm>
+		<p:alarm source="plc_status" active_value="false" alarm_config_id="050002"></p:alarm>
 	</p:alarms>
 </p:json_generic_mango_v1>
