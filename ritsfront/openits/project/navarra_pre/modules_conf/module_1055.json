@@ -1,0 +1,124 @@
+{
+	"restEndpoints": {
+		"transits": "trs/transits",
+		"grid": "grids/${id}"
+	},
+	"gridTransits": 1052,
+	"thumbnails": {
+		"enabled": true,
+		"baseUrl": "trs",
+		"fileName": "thumbnail.jpg",
+		"iconSize": {
+			"width": 190,
+			"height": 160
+		},
+		"fields": [
+			{
+				"id": 1,
+				"label": "LBL_VEHICLE_PLATE_NUMBER",
+				"dataType": "DataType:2",
+				"field": "vehiclePlateNumber",
+				"defaultSort": false,
+				"order": "asc",
+				"position": 1,
+				"style": "display: inline-flex; align-items: center; background-color: white; color: #475466; font-weight: bold; font-family: Arial, sans-serif; font-size: 13px; padding: 3px 10px; border-radius: 3px; border: 1px solid #475466; letter-spacing: 2px; text-transform: uppercase; position: relative; box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5), inset 0px 0px 10px rgba(0, 0, 0, 0.2);",
+				"enabled": true
+			},
+			{
+				"id": 2,
+				"label": "LBL_TRANSIT_DATE",
+				"dataType": "DataType:4",
+				"field": "dateTransit",
+				"defaultSort": true,
+				"order": "desc",
+				"position": 2,
+				"icon": "mdi mdi-calendar-clock",
+				"enabled": true
+			}
+		]
+	},
+	"defaultDaysFiltered": 1,
+	"transitFilterGroups": [
+		{
+			"id": 1,
+			"label": "LBL_GROUP_GENERAL",
+			"position": 1,
+			"enabled": true
+		},
+		{
+			"id": 2,
+			"label": "LBL_GROUP_VEHICLE",
+			"position": 2,
+			"enabled": true
+		}
+	],
+	"transitFilterFields": [
+		{
+			"id":1,
+			"transitFilterGroupId": 1,
+			"dataType": "DataType:2",
+			"label": "LBL_TRANSIT_CODE",
+			"targetFields": ["transitCode"],
+			"position": 1,
+			"enabled": true
+		},
+		{
+			"id": 2,
+			"transitFilterGroupId": 1,
+			"dataType": "DataType:1",
+			"label": "LBL_TRANSIT_TYPE",
+			"refFieldEndpoint": {
+				"type": "REST",
+				"value": "trs/transits/types",
+				"sourceFieldId": "id",
+				"sourceFieldValue": "labelAlias",
+				"sourceFieldOthers": ["labelAlias=LBL_TRANSIT_TYPE"]
+			},
+			"targetFields": ["transitTypeId"],
+			"position": 2,
+			"enabled": true
+		},
+		{
+			"id": 3,
+			"transitFilterGroupId": 1,
+			"dataType": "DataType:1",
+			"label": "LBL_TRANSIT_RADAR",
+			"refFieldEndpoint": {
+				"type": "CACHE",
+				"value": "EntityType.ELEMENT",
+				"filter": "item.elementType.id === \"ElementType:99\"",
+				"sourceFieldId": "id",
+				"sourceFieldValue": "alias",
+				"sourceFieldOthers": ["alias=LBL_ALIAS","elementType.labelAlias=LBL_ELEMENT_TYPE"]
+			},
+			"targetFields": ["elementTypeId", "elementId"],
+			"position": 3,
+			"enabled": true
+		},
+		{
+			"id": 4,
+			"transitFilterGroupId": 2,
+			"dataType": "DataType:2",
+			"label": "LBL_TRANSIT_VEHICLE_PLATE_NUMBER",
+			"targetFields": ["vehiclePlateNumber"],
+			"position": 4,
+			"enabled": true
+		},
+		{
+			"id": 5,
+			"transitFilterGroupId": 2,
+			"dataType": "DataType:1",
+			"label": "LBL_TRANSIT_VEHICLE_CLASS",
+			"refFieldEndpoint": {
+				"type": "REST",
+				"value": "trs/transits/vehicleClasses",
+				"sourceFieldId": "id",
+				"sourceFieldValue": "labelAlias",
+				"sourceFieldOthers": ["labelAlias=LBL_VEHICLE_CLASS"]
+			},
+			"targetFields": ["vehicleClassId"],
+			"position": 6,
+			"enabled": true
+		}
+	] 
+}
