@@ -15,6 +15,20 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 ('ImsIncidentType:301', 34, 'rodaje.png'),
 
 ('ImsIncidentType:401', 34, 'accidente.png'),
+('ImsIncidentType:402', 34, 'accidente.png'),
+
+('ImsIncidentType:501', 34, 'niebla.png'),
+('ImsIncidentType:502', 34, 'copo_nieve.png'),
+('ImsIncidentType:503', 34, 'lluvia.png'),
+('ImsIncidentType:504', 34, 'nevada.png'),
+('ImsIncidentType:505', 34, 'viento.png'),
+('ImsIncidentType:506', 34, 'inundacion.png'),
+
+('ImsIncidentType:601', 34, 'obras.png'),
+('ImsIncidentType:602', 34, 'incidencia_trafico.png'),
+('ImsIncidentType:603', 34, 'incidencia_trafico.png'),
+('ImsIncidentType:604', 34, 'incendio.png'),
+('ImsIncidentType:605', 34, 'incidencia_trafico.png'),
 
 ('ElementType:2', 1, '2'),
 ('ElementType:2', 2, 'graphic_icon/02_camera.svg'),
