@@ -5,4 +5,5 @@ INSERT INTO ui.graphic_icons (id, "name", description, alarms, measures, js_draw
 (19471, 'PANEL GR_TXT', 'PANEL GR_TXT', false, true, 'component/graphicIcon/graphicIconCustom.js', 200, 80, null, 'img/graphic_icon/71_vms_dgt_gr_txt.svg', 'component/graphicIcon/custom/vms.js'),
 (22171, 'PMV', 'PMV', false, true, 'component/graphicIcon/graphicIconCustom.js', 120, 40, null, 'img/graphic_icon/71_vms_dgt.svg', 'component/graphicIcon/custom/vms.js'),
 (22271, 'PMV', 'PMV', false, true, 'component/graphicIcon/graphicIconCustom.js', 240, 120, null, 'img/graphic_icon/71_vms_dgt.svg', 'component/graphicIcon/custom/vms.js'),
-(0701, 'TUNEL', 'TUNEL', false, false, 'component/graphicIcon/graphicIconDefault.js', 35, 35, null, 'img/graphic_icon/07_zone.svg', null);
+(0701, 'TUNEL', 'TUNEL', false, false, 'component/graphicIcon/graphicIconDefault.js', 35, 35, null, 'img/graphic_icon/07_zone.svg', null),
+(010001, 'EXT_ENTITY', 'EXT_ENTITY', false, true, 'component/graphicIcon/graphicIconCustom.js', 45, 45, null, 'img/graphic_icon/ext_entity.svg', 'component/graphicIcon/custom/ext_entity.js');

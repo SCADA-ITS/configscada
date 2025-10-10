@@ -67,3 +67,14 @@ INSERT INTO ui.map_zones (id, map_id, name, description, label, icon, longitude,
 (10,1, 'NG', 'Nagüeres', 'LBL_TREE_NAGUELES', NULL,	-4.938727777777778, 36.51513888888889,	15);
 
 
+INSERT INTO ui.map_ext_entities (id, default_graphic_icon_id, default_module_action_id, ext_entity_types_config) VALUES
+(1, 010001, NULL, 
+'[
+    { 
+        "extEntityTypeId": "ExtEntityType:1",
+        "visible": true,
+        "enabled": true,
+        "animate": false
+    }
+]'
+);
