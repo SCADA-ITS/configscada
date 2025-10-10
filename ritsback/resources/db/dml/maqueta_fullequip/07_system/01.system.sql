@@ -42,4 +42,6 @@ INSERT INTO conf.system_param_values
 -- Número máximo de sesiones simultáneas
 (16, '10', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 -- Número máximo de log permitidas sin reconocer
-(17, '100', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(17, '100', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+-- App de pintado de puntos kilométricos
+(18, 'http://192.168.88.71:8702/api', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
