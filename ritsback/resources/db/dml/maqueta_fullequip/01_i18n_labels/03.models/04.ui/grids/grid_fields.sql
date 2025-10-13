@@ -68,8 +68,8 @@ INSERT INTO master.i18n_labels (locale_code, module_id, "label", "translation", 
 --Bomba
 ('es_ES',1,'LBL_PUMP_ON','Bomba activa',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 
---Circuito eléctrico de iluminación/Interruptor
-('es_ES',1,'LBL_STATE','Estado',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+--Circuito eléctrico de iluminación/Interruptor (duplicado en master)
+--('es_ES',1,'LBL_STATE','Estado',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 
 --Dali
 ('es_ES',1,'LBL_REGIMEN','Régimen',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
@@ -247,8 +247,8 @@ INSERT INTO master.i18n_labels (locale_code, module_id, "label", "translation", 
 --Bomba
 ('en_GB',1,'LBL_PUMP_ON','Pump on',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 
---Circuito eléctrico de iluminación/Interruptor
-('en_GB',1,'LBL_STATE','State',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+--Circuito eléctrico de iluminación/Interruptor (duplicado en master)
+--('en_GB',1,'LBL_STATE','State',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 
 --Dali
 ('en_GB',1,'LBL_REGIMEN','Regime',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
@@ -426,8 +426,8 @@ INSERT INTO master.i18n_labels (locale_code, module_id, "label", "translation", 
 --Bomba
 ('es_CL',1,'LBL_PUMP_ON','Bomba activa',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 
---Circuito eléctrico de iluminación/Interruptor
-('es_CL',1,'LBL_STATE','Estado',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+--Circuito eléctrico de iluminación/Interruptor (duplicado en master)
+--('es_CL',1,'LBL_STATE','Estado',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 
 --Dali
 ('es_CL',1,'LBL_REGIMEN','Régimen',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
