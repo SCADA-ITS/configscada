@@ -11,8 +11,9 @@ INSERT INTO ui.menu_groups(id, "label", icon, "name", description, enabled, visi
 INSERT INTO ui.menu_items(id, menu_group_id, "position", module_id, "label", icon, "name", description, enabled, visible) VALUES
 -- MAPS & SYNOPTICS
 (0101, 1, 1, 200, 'LBL_MENU_ITEM_MAP', 'img/menu/map-menu.png', 'Mapa Navarra', 'Mapa Navarra', true, true),
-(0102, 1, 2, 401, 'LBL_MENU_ITEM_MAP_GOOGLE_SIMPLE', 'img/menu/map-menu.png', 'Mapa Google simplificado', 'Mapa Google simplificado', true, true),
-(0103, 1, 2, 402, 'LBL_MENU_ITEM_MAP_GOOGLE_COMPLEJO', 'img/menu/map-menu.png', 'Mapa Google simplificado', 'Mapa Google simplificado', true, true),
+(0102, 1, 2, 1057, 'LBL_MENU_ITEM_MAP', 'img/menu/map-menu.png', 'Mapa Navarra', 'Mapa Navarra', true, true),
+(0103, 1, 3, 401, 'LBL_MENU_ITEM_MAP_GOOGLE_SIMPLE', 'img/menu/map-menu.png', 'Mapa Google simplificado', 'Mapa Google simplificado', true, true),
+(0104, 1, 4, 402, 'LBL_MENU_ITEM_MAP_GOOGLE_COMPLEJO', 'img/menu/map-menu.png', 'Mapa Google simplificado', 'Mapa Google simplificado', true, true),
 
 -- EQUIPMENT
 (0201, 2, 1, 500, 'LBL_MENU_ITEM_EQUIPMENTS', 'img/menu/equipment-menu.png', 'Menu item Equipments', 'Menu item Equipments', true, true),
