@@ -94,7 +94,10 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 	('es_ES',1,'LBL_TRS_SAVE','Guardar',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 	('es_ES',1,'LBL_TRS_SAVE_CONFIRM','¿Desea guardar los cambios realizados en el tránsito?',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 	('es_ES',1,'LBL_TRS_NO_CHANGES_TO_SAVE','No hay cambios que guardar.',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
-	 
+	('es_ES',1,'LBL_TRS_MANUAL_LOG','Añadir registro manual',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+	('es_ES',1,'LBL_TRS_REQUIRED_TEXT_LOG','Se requiere añadir texto al registro.',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+
+
 --en_GB
 	('en_GB',1,'LBL_TRANSIT_LIST_MODULE','Transit manager',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 	('en_GB',1,'LBL_TRANSIT_LIST','List',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
@@ -171,7 +174,9 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 	('en_GB',1,'LBL_TRS_SAVE','Save','2025-02-26 15:51:47.928333+01','2025-02-26 15:51:47.928333+01'),
 	('en_GB',1,'LBL_TRS_SAVE_CONFIRM','Do you want to save the changes in transit?','2025-02-26 15:51:47.928333+01','2025-02-26 15:51:47.928333+01'),
 	('en_GB',1,'LBL_TRS_NO_CHANGES_TO_SAVE','No changes to save.','2025-02-26 15:51:47.928333+01','2025-02-26 15:51:47.928333+01'),
-	 
+	('en_GB',1,'LBL_TRS_MANUAL_LOG','Add manual log.','2025-02-26 15:51:47.928333+01','2025-02-26 15:51:47.928333+01'),
+	('en_GB',1,'LBL_TRS_REQUIRED_TEXT_LOG','Required text log.','2025-02-26 15:51:47.928333+01','2025-02-26 15:51:47.928333+01'),
+
 --es_CL
 	('es_CL',1,'LBL_TRANSIT_LIST_MODULE','Gestor de tránsitos',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 	('es_CL',1,'LBL_TRANSIT_LIST','Lista',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
@@ -248,4 +253,6 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 	('es_CL',1,'LBL_TRS_TRANSITION_STATE_TO','Cambiar estado a: ',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 	('es_CL',1,'LBL_TRS_SAVE','Guardar','2025-02-26 15:51:47.928333+01','2025-02-26 15:51:47.928333+01'),
 	('es_CL',1,'LBL_TRS_SAVE_CONFIRM','¿Desea guardar los cambios realizados en el tránsito?','2025-02-26 15:51:47.928333+01','2025-02-26 15:51:47.928333+01'),
-	('es_CL',1,'LBL_TRS_NO_CHANGES_TO_SAVE','No hay cambios que guardar.','2025-02-26 15:51:47.928333+01','2025-02-26 15:51:47.928333+01');
+	('es_CL',1,'LBL_TRS_NO_CHANGES_TO_SAVE','No hay cambios que guardar.','2025-02-26 15:51:47.928333+01','2025-02-26 15:51:47.928333+01'),
+	('es_CL',1,'LBL_TRS_MANUAL_LOG','Añadir registro manual.','2025-02-26 15:51:47.928333+01','2025-02-26 15:51:47.928333+01'),
+	('es_CL',1,'LBL_TRS_REQUIRED_TEXT_LOG','Se requiere añadir texto al registro.','2025-02-26 15:51:47.928333+01','2025-02-26 15:51:47.928333+01');
