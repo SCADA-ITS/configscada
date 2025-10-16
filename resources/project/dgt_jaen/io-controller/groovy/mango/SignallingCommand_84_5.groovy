@@ -25,9 +25,9 @@ class SignallingCommand_84_5 {
 	def signallingCommandUtils;
 	
 	//XIDs
-	static final String ARC_LEVEL = "dimming_level";
-	static final String APAGADO = "apagado";
-	static final String REMOTE = "remote";
+	static final String ARC_LEVEL = "dimming_level_order";
+	static final String APAGADO = "off_order";
+	static final String REMOTE = "remote_order";
 	
 	//Values
 	static final boolean ON = true;

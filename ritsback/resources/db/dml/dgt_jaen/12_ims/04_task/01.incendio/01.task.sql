@@ -12,7 +12,7 @@ INSERT INTO conf.ims_incident_type_tasks (incident_type_task_id, incident_type_i
 (00060101, 101, 1, 1, 'ENVIAR MERCANCIAS PELIGROSAS', 'Indicar vehículo mercancias peligrosas',null, true, 1, true, 'TaskTypeVentilation/ByFireDet/EvacuationByFireDetTaskMPeligrosas', 30, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --ETAPA = INICIAL
-(01010101, 101, 1, 3, 'EXTRACCION',null,  'Ejecutar plan automatico de modo extraccion', true, 2, false, 'TaskTypeVentilation/ByFireDet/ExtractionByFireDetTask',null, '600', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(01010101, 101, 1, 3, 'EXTRACCION',null,  'Ejecutar plan automatico de modo extraccion', false, 2, false, 'TaskTypeVentilation/ByFireDet/ExtractionByFireDetTask',null, NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (01020101, 101, 1, 1, 'PRESURIZACIÓN', 'Presurización', 'Encendido de presurización', true, 3, true, 'SendSignallingToStretch', null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (01030101, 101, 1, 3, 'ILUMINACIÓN', 'Reforzar iluminación en túnel 100% soleado', 'Encendido de todos los circuitos de alumbrado del túnel con objeto de mejorar las condiciones de visibilidad por existencia de humos en caso de fuego.', true, 4, true, 'TaskTypeTubeLighting/SetIlluminationTask', null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (01040101, 101, 1, 1, 'SEÑALIZACIÓN', 'Incendio', 'Señalización de cierre de túnel', true, 5, true, 'SendSignallingToStretch', null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),

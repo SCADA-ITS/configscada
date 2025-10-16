@@ -139,8 +139,8 @@ INSERT INTO ui.synoptic_layer_elements
 (90301500, 'Element:15:41', 00001512, 'ZI-1-03-CA', 1205, 679, false, NULL, true, false, NULL, true),
 (90301500, 'Element:15:40', 00001512, 'ZI-1-02-CA', 1060, 679, false, NULL, true, false, NULL, true),
 (90301500, 'Element:15:39', 00001512, 'ZI-1-01-CA', 913, 679, false, NULL, true, false, NULL, true),
-(90307300, 'Element:73:4', 000073, 'NORTE_CA', 834, 999, false, NULL, true, false, NULL, true),
-(90307300, 'Element:73:3', 000073, 'SUR_CA', 1327, 124, false, NULL, true, false, NULL, true);
+(90307300, 'Element:73:4', 000073, 'ILUM-EMER-GRU-CA1', 834, 999, false, NULL, true, false, NULL, true),
+(90307300, 'Element:73:3', 000073, 'ILUM-EMER-GRU-CA2', 1327, 124, false, NULL, true, false, NULL, true);
 
 
 

@@ -102,7 +102,7 @@
             "multiplier":1,
             "multistateNumeric":false,
             "registerCount":0,
-            "range":"HOLDING_REGISTER",
+            "range":"INPUT_REGISTER",
             "modbusDataType":"TWO_BYTE_INT_UNSIGNED",
             "bit":0,
             "additive":0
@@ -162,7 +162,7 @@
             "multiplier":1,
             "multistateNumeric":false,
             "registerCount":0,
-            "range":"HOLDING_REGISTER",
+            "range":"INPUT_REGISTER",
             "modbusDataType":"TWO_BYTE_INT_UNSIGNED",
             "bit":0,
             "additive":0
@@ -222,7 +222,7 @@
             "multiplier":1,
             "multistateNumeric":false,
             "registerCount":6,
-            "range":"HOLDING_REGISTER",
+            "range":"INPUT_REGISTER",
             "modbusDataType":"TWO_BYTE_INT_UNSIGNED",
             "bit":0,
             "additive":0
@@ -282,7 +282,7 @@
             "multiplier":1,
             "multistateNumeric":false,
             "registerCount":0,
-            "range":"HOLDING_REGISTER",
+            "range":"INPUT_REGISTER",
             "modbusDataType":"TWO_BYTE_INT_UNSIGNED",
             "bit":0,
             "additive":0
@@ -342,7 +342,7 @@
             "multiplier":1,
             "multistateNumeric":false,
             "registerCount":0,
-            "range":"HOLDING_REGISTER",
+            "range":"INPUT_REGISTER",
             "modbusDataType":"TWO_BYTE_INT_UNSIGNED",
             "bit":0,
             "additive":0
@@ -402,7 +402,7 @@
             "multiplier":1,
             "multistateNumeric":false,
             "registerCount":0,
-            "range":"HOLDING_REGISTER",
+            "range":"INPUT_REGISTER",
             "modbusDataType":"TWO_BYTE_INT_UNSIGNED",
             "bit":0,
             "additive":0

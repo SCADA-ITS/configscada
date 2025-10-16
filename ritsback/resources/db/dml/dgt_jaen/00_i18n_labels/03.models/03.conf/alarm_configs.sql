@@ -22,6 +22,7 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 --es_ES
 --Element:9 -> jetfan
 ('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_JETFAN_STARTER_SHOT', 'Alarma de arranque de ventilador', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_JETFAN_NO_AUTO', 'Alarma ventilador en local', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --es_ES
 --ElementType:19 -> CO

@@ -1,5 +1,5 @@
 item;alias;description;sessionuid;road;stretchs;pk;sentido
-1;SUR_DP;SUR_DP;SUR_DP;Autovía A-4;Despeñaperros;;Córdoba
-2;NORTE_DP;NORTE_DP;NORTE_DP;Autovía A-4;Despeñaperros;;Madrid
-3;SUR_CA;SUR_CA;SUR_CA;Autovía A-4;La Cantera;;Córdoba
-4;NORTE_CA;NORTE_CA;NORTE_CA;Autovía A-4;La Cantera;;Madrid
+1;ILUM-EMER-GRU-DP2;ILUM-EMER-GRU-DP2;ILUM-EMER-GRU-DP2;Autovía A-4;Despeñaperros;;Córdoba
+2;ILUM-EMER-GRU-DP1;ILUM-EMER-GRU-DP1;ILUM-EMER-GRU-DP1;Autovía A-4;Despeñaperros;;Madrid
+3;ILUM-EMER-GRU-CA2;ILUM-EMER-GRU-CA2;ILUM-EMER-GRU-CA2;Autovía A-4;La Cantera;;Córdoba
+4;ILUM-EMER-GRU-CA1;ILUM-EMER-GRU-CA1;ILUM-EMER-GRU-CA1;Autovía A-4;La Cantera;;Madrid

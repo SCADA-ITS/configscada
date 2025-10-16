@@ -27,7 +27,7 @@ class SignallingCommand_73_5 {
 	//XIDs
 	static final String ARC_LEVEL = "arc_level";
 	static final String APAGADO = "apagado";
-	static final String REMOTE = "remote";
+	static final String REMOTE = "remote_group_order";
 	
 	//Values
 	static final boolean ON = true;

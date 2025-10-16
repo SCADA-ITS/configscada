@@ -8,3 +8,8 @@
 -- 
 -- Table: master.i18n_labels
 --
+INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) VALUES
+	 ('es_ES', 1, 'LBL_ELEMENT_GENERAL', 'General', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+	 ('es_ES', 1, 'LBL_ELEMENT_SPEED_CLASSIFICATION', 'Clasificación velocidad', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	 ('es_ES', 1, 'LBL_ELEMENT_LONG_CLASSIFICATION', 'Clasificación longitud', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

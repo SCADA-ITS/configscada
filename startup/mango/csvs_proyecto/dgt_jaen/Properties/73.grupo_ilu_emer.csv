@@ -1,0 +1,5 @@
+PLC_name;device_name;url_publisher;PLC_ip;port(i);offset_arc_level(i);offset_apagado(i);offset_remote_group_order(i)
+IDNG-MG-DP;ILUM-EMER-GRU-DP2;http:\/\/172.21.3.202:3000\/api\/v2\/generic\/;172.21.03.223;502;20080;20083;20090
+IDNG-MG-DP;ILUM-EMER-GRU-DP1;http:\/\/172.21.3.202:3000\/api\/v2\/generic\/;172.21.03.223;502;20096;20099;20106
+IDNG-MG-CA;ILUM-EMER-GRU-CA2;http:\/\/172.21.3.202:3000\/api\/v2\/generic\/;172.21.03.221;502;20080;20083;20090
+IDNG-MG-CA;ILUM-EMER-GRU-CA1;http:\/\/172.21.3.202:3000\/api\/v2\/generic\/;172.21.03.221;502;20096;20099;20106
