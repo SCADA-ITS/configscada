@@ -16,7 +16,6 @@ VALUES
                 {"field": "numero_vehiculos", "extEntityTypeParamId": "ExtEntityTypeParam:1:7"},
                 {"field": "numero_personas", "extEntityTypeParamId": "ExtEntityTypeParam:1:8"},
                 {"field": "numero_heridos_leves", "extEntityTypeParamId": "ExtEntityTypeParam:1:9"},
-                {"field": "pk", "extEntityTypeParamId": "ExtEntityTypeParam:1:10"},
                 {"field": "numero_fallecidos", "extEntityTypeParamId": "ExtEntityTypeParam:1:11"},
                 {"field": "codigo_via", "extEntityTypeParamId": "ExtEntityTypeParam:1:12"},
                 {"field": "sentido", "extEntityTypeParamId": "ExtEntityTypeParam:1:13"},
