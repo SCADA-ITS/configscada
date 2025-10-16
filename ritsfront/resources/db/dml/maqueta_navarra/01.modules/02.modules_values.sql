@@ -1,5 +1,8 @@
 INSERT INTO ui.module_values(module_id, module_param_id, value) VALUES
 (200, 6, '1'),
+(201, 6, '2'),
+(202, 6, '3'),
+(203, 6, '4'),
 
 (401, 5, 'http://192.168.88.163:8000/google_simple.html'),
 (402, 5, 'http://192.168.88.163:8000/google_complejo.html'),
@@ -39,5 +42,6 @@ INSERT INTO ui.module_values(module_id, module_param_id, value) VALUES
 (8001, 13, '1'), 
 (8001, 14, 'all_waze_traffic_jam_ext_entities_with_values'),
 
-(2020, 9, '1');
+(2020, 9, '1'),
+(2021, 9, '3');
 
