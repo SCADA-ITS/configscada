@@ -1,0 +1,6 @@
+item;alias;description;sessionuid;road;stretchs;pk;sentido;on_change_measure;param1_brand;param2_model
+1;ETD-1-1-DP;Revenga ETD;ETD-1-1-DP;Autovía A-4;Despeñaperros;;;EtdParamsAdapterTFA.groovy;Revenga;Revenga ETD
+2;ETD-1-1-CZ;Revenga ETD;ETD-1-1-CZ;Autovía A-4;El Corzo;;;EtdParamsAdapterTFA.groovy;Revenga;Revenga ETD
+3;ETD-2-1-CZ;Revenga ETD;ETD-2-1-CZ;Autovía A-4;El Corzo;;;EtdParamsAdapterTFA.groovy;Revenga;Revenga ETD
+4;ETD-1-1-CA;Revenga ETD;ETD-1-1-CA;Autovía A-4;La Cantera;;;EtdParamsAdapterTFA.groovy;Revenga;Revenga ETD
+5;ETD-1-2-CA;Revenga ETD;ETD-1-2-CA;Autovía A-4;La Cantera;;;EtdParamsAdapterTFA.groovy;Revenga;Revenga ETD

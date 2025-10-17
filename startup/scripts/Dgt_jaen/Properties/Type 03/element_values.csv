@@ -1,0 +1,25 @@
+item;alias;description;sessionuid;road;stretchs;pk;sentido;param1_direction;param2_order;param3_mask_validation;param4_delay
+1;DET-ETD-1-1-DP-1;DET-ETD-1-1-DP-1;DET-ETD-1-1-DP-1;Autovía A-4;Despeñaperros;;Cordoba;true;1;0;0
+2;DET-ETD-1-1-DP-2;DET-ETD-1-1-DP-2;DET-ETD-1-1-DP-2;Autovía A-4;Despeñaperros;;Cordoba;true;2;0;0
+3;DET-ETD-1-1-DP-3;DET-ETD-1-1-DP-3;DET-ETD-1-1-DP-3;Autovía A-4;Despeñaperros;;Cordoba;true;3;0;0
+4;DET-ETD-1-1-DP-4;DET-ETD-1-1-DP-4;DET-ETD-1-1-DP-4;Autovía A-4;Despeñaperros;;Madrid;true;4;0;0
+5;DET-ETD-1-1-DP-5;DET-ETD-1-1-DP-5;DET-ETD-1-1-DP-5;Autovía A-4;Despeñaperros;;Madrid;true;5;0;0
+6;DET-ETD-1-1-DP-6;DET-ETD-1-1-DP-6;DET-ETD-1-1-DP-6;Autovía A-4;Despeñaperros;;Madrid;true;6;0;0
+7;DET-ETD-1-1-CZ-1;DET-ETD-1-1-CZ-1;DET-ETD-1-1-CZ-1;Autovía A-4;El Corzo;;Madrid;true;1;0;0
+8;DET-ETD-1-1-CZ-2;DET-ETD-1-1-CZ-2;DET-ETD-1-1-CZ-2;Autovía A-4;El Corzo;;Madrid;true;2;0;0
+9;DET-ETD-1-1-CZ-3;DET-ETD-1-1-CZ-3;DET-ETD-1-1-CZ-3;Autovía A-4;El Corzo;;Madrid;true;3;0;0
+10;DET-ETD-2-1-CZ-1;DET-ETD-2-1-CZ-1;DET-ETD-2-1-CZ-1;Autovía A-4;El Corzo;;Cordoba;true;1;0;0
+11;DET-ETD-2-1-CZ-2;DET-ETD-2-1-CZ-2;DET-ETD-2-1-CZ-2;Autovía A-4;El Corzo;;Cordoba;true;2;0;0
+12;DET-ETD-2-1-CZ-3;DET-ETD-2-1-CZ-3;DET-ETD-2-1-CZ-3;Autovía A-4;El Corzo;;Cordoba;true;3;0;0
+13;DET-ETD-1-1-CA-1;DET-ETD-1-1-CA-1;DET-ETD-1-1-CA-1;Autovía A-4;La Cantera;;Cordoba;true;1;0;0
+14;DET-ETD-1-1-CA-2;DET-ETD-1-1-CA-2;DET-ETD-1-1-CA-2;Autovía A-4;La Cantera;;Cordoba;true;2;0;0
+15;DET-ETD-1-1-CA-3;DET-ETD-1-1-CA-3;DET-ETD-1-1-CA-3;Autovía A-4;La Cantera;;Cordoba;true;3;0;0
+16;DET-ETD-1-1-CA-4;DET-ETD-1-1-CA-4;DET-ETD-1-1-CA-4;Autovía A-4;La Cantera;;Madrid;true;4;0;0
+17;DET-ETD-1-1-CA-5;DET-ETD-1-1-CA-5;DET-ETD-1-1-CA-5;Autovía A-4;La Cantera;;Madrid;true;5;0;0
+18;DET-ETD-1-1-CA-6;DET-ETD-1-1-CA-6;DET-ETD-1-1-CA-6;Autovía A-4;La Cantera;;Madrid;true;6;0;0
+19;DET-ETD-1-2-CA-1;DET-ETD-1-2-CA-1;DET-ETD-1-2-CA-1;Autovía A-4;La Cantera;;Cordoba;true;1;0;0
+20;DET-ETD-1-2-CA-2;DET-ETD-1-2-CA-2;DET-ETD-1-2-CA-2;Autovía A-4;La Cantera;;Cordoba;true;2;0;0
+21;DET-ETD-1-2-CA-3;DET-ETD-1-2-CA-3;DET-ETD-1-2-CA-3;Autovía A-4;La Cantera;;Cordoba;true;3;0;0
+22;DET-ETD-1-2-CA-4;DET-ETD-1-2-CA-4;DET-ETD-1-2-CA-4;Autovía A-4;La Cantera;;Madrid;true;4;0;0
+23;DET-ETD-1-2-CA-5;DET-ETD-1-2-CA-5;DET-ETD-1-2-CA-5;Autovía A-4;La Cantera;;Madrid;true;5;0;0
+24;DET-ETD-1-2-CA-6;DET-ETD-1-2-CA-6;DET-ETD-1-2-CA-6;Autovía A-4;La Cantera;;Madrid;true;6;0;0

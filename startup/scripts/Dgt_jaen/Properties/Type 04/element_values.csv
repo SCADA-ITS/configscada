@@ -1,0 +1,9 @@
+item;element_subtype;alias;description;sessionuid;road;stretchs;pk;sentido;param1_direction;param2_virtual;param3_los_type;param4_los_soften;param5_los_flatten;param6_los_threshold_speed;param7_los_threshold_occupancy;param8_imd_graphics;param9_vel_media_graphics;param60_cat_veh_length1;param61_cat_veh_length2;param80_cat_veh_speed1;param81_cat_veh_speed2;param82_cat_veh_speed3;param10_pk
+1;2;PM-2-1-DP;PM-2-1-DP;PM-2-1-DP;Autovía A-4;Despeñaperros;;Cordoba;true;false;0;false;false;[8, 32, 72];[16, 28, 35];;;[1];[2];[1];[2];[3];
+2;2;PM-1-1-DP;PM-1-1-DP;PM-1-1-DP;Autovía A-4;Despeñaperros;;Madrid;true;false;0;false;false;[8, 32, 72];[16, 28, 35];;;[1];[2];[1];[2];[3];
+3;2;PM-1-1-CZ;PM-1-1-CZ;PM-1-1-CZ;Autovía A-4;El Corzo;;Madrid;true;false;0;false;false;[8, 32, 72];[16, 28, 35];;;[1];[2];[1];[2];[3];
+4;2;PM-2-1-CZ;PM-2-1-CZ;PM-2-1-CZ;Autovía A-4;El Corzo;;Cordoba;true;false;0;false;false;[8, 32, 72];[16, 28, 35];;;[1];[2];[1];[2];[3];
+5;2;PM-2-1-CA;PM-2-1-CA;PM-2-1-CA;Autovía A-4;La Cantera;;Cordoba;true;false;0;false;false;[8, 32, 72];[16, 28, 35];;;[1];[2];[1];[2];[3];
+6;2;PM-1-1-CA;PM-1-1-CA;PM-1-1-CA;Autovía A-4;La Cantera;;Madrid;true;false;0;false;false;[8, 32, 72];[16, 28, 35];;;[1];[2];[1];[2];[3];
+7;2;PM-2-2-CA;PM-2-2-CA;PM-2-2-CA;Autovía A-4;La Cantera;;Cordoba;true;false;0;false;false;[8, 32, 72];[16, 28, 35];;;[1];[2];[1];[2];[3];
+8;2;PM-1-2-CA;PM-1-2-CA;PM-1-2-CA;Autovía A-4;La Cantera;;Madrid;true;false;0;false;false;[8, 32, 72];[16, 28, 35];;;[1];[2];[1];[2];[3];
