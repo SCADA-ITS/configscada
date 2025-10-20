@@ -6,7 +6,7 @@
 		"addImage": "trs/transits/${id}/addImage",
 		"updateImage": "trs/transits/${id}/updateImage",
 		"deleteImage": "trs/transits/${id}/deleteImage/${transitImageId}",
-		"addLog": "trs/transits/${id}/addLog"
+		"addLog": "trs/transits/addLog"
 	},
 	"moduleAction": {
 		"edit": 105601,
@@ -18,7 +18,7 @@
 		"initial": "TransitState:1",
 		"pending": "TransitState:2",
 		"validated": "TransitState:3",
-		"discarded": "TransitState:4",
+		"discarded": "TransitState:7",
 		"archived": "TransitState:5"
 	},
 	"tabs": [

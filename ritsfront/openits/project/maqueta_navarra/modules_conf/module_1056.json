@@ -6,7 +6,7 @@
 		"addImage": "trs/transits/${id}/addImage",
 		"updateImage": "trs/transits/${id}/updateImage",
 		"deleteImage": "trs/transits/${id}/deleteImage/${transitImageId}",
-		"addLog": "trs/transits/${id}/addLog"
+		"addLog": "trs/transits/addLog"
 	},
 	"moduleAction": {
 		"edit": 105601,

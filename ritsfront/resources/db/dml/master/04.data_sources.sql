@@ -278,7 +278,9 @@ INSERT INTO ui.data_sources(id, data_source_type_id, "name", description, entity
 (273, 3, 'deleteTransitImage', 'addTransitImage', 'TransitImageVO', 'id', true, true),
 (274, 1, 'getImsIncidentAlarmConditionAlarmTypes', 'getImsIncidentAlarmConditionAlarmTypes', 'ImsIncidentAlarmConditionAlarmTypeVO', 'id', true, true),
 (275, 1, 'getImsIncidentAlarmConditionAlarmType', 'getImsIncidentAlarmConditionAlarmType', 'ImsIncidentAlarmConditionAlarmTypeVO', 'id', true, true),
-(276, 3, 'updateTransit', 'update data transit', 'TransitVO', 'id', true, true);
+(276, 3, 'updateTransit', 'update data transit', 'TransitVO', 'id', true, true),
+(277, 3, 'addTransitLog', 'addTransitLog', 'TransitLogVO', 'id', true, true),
+(278, 3, 'deleteTransitLog', 'deleteTransitLog', 'TransitLogVO', 'id', true, true);
 
 INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) VALUES
 (1, 1, 'http://192.168.88.163:8082/graphql'),
@@ -1654,4 +1656,16 @@ INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) V
 (276, 9, 'updateTransit'),
 (276, 10, 'transit'),
 (276, 11, 'TransitVO!'),
-(276, 12, NULL);
+(276, 12, NULL),
+
+(277, 8, 'http://localhost:8082/graphql'),
+(277, 9, 'addTransitLog'),
+(277, 10, 'transitLog'),
+(277, 11, 'TransitLogVO!'),
+(277, 12, NULL),
+
+(278, 8, 'http://localhost:8082/graphql'),
+(278, 9, 'deleteTransitLog'),
+(278, 10, 'transitLogId'),
+(278, 11, 'String!'),
+(278, 12, NULL);
