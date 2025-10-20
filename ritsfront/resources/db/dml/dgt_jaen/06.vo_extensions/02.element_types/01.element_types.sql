@@ -102,8 +102,18 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 ('ElementType:2', 14, 'grid/element_type_02.png'),
 ('ElementType:2', 69, 'true'),
 
-('ElementType:3', 72, 'true'),
-('ElementType:4', 72, 'true'),
+
+('ElementType:3', 1, '3'),
+('ElementType:3', 2, 'graphic_icon/03_detector.svg'),
+('ElementType:3', 14, 'grid/element_type_03.png'),
+
+
+
+('ElementType:4', 1, '4'),
+('ElementType:4', 2, 'graphic_icon/04_section.svg'),
+('ElementType:4', 14, 'grid/element_type_04.png'),
+
+
 ('ElementType:5', 72, 'true'),
 ('ElementType:6', 72, 'true'),
 ('ElementType:7', 72, 'true'),
@@ -211,7 +221,12 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 ('ElementType:48', 72, 'true'),
 ('ElementType:49', 72, 'true'),
 ('ElementType:50', 72, 'true'),
-('ElementType:51', 72, 'true'),
+
+('ElementType:51', 1, '51'),
+('ElementType:51', 2, 'graphic_icon/51_etd.svg'),
+('ElementType:51', 14, 'grid/element_type_51.png'),
+('ElementType:51', 69, 'true'),
+
 ('ElementType:52', 72, 'true'),
 
 ('ElementType:53', 1, '53'),

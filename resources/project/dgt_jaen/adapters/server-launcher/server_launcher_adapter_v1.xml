@@ -74,7 +74,7 @@
 				<p:param>-Dfile.encoding=UTF-8</p:param>
 			</p:parameters>
 		</p:proc>
-		<p:proc id="7" enabled="false">
+		<p:proc id="7" enabled="true">
 			<p:name>TRAFFIC-MANAGER</p:name>
 			<p:path>/home/admin/app/backrits/</p:path>
 			<p:executable>traffic-manager.jar</p:executable>

@@ -32,7 +32,8 @@ INSERT INTO ui.synoptic_layers
 (90306600, 903, 'SYNOPTIC_LAYERS_VANE', 'LBL_SYNOPTIC_LAYERS_VANE', true),
 (90301100, 903, 'SYNOPTIC_LAYERS_SOS', 'LBL_SYNOPTIC_LAYERS_SOS', true),
 (90301500, 903, 'SYNOPTIC_LAYERS_FIRE_DET', 'LBL_SYNOPTIC_LAYERS_FIRE_DET', true),
-(90307300, 903, 'SYNOPTIC_LAYERS_ILUM', 'LBL_SYNOPTIC_LAYERS_ILUM', true);
+(90307300, 903, 'SYNOPTIC_LAYERS_ILUM', 'LBL_SYNOPTIC_LAYERS_ILUM', true),
+(90300400, 903, 'SYNOPTIC_LAYERS_ETD', 'LBL_SYNOPTIC_LAYERS_ETD', true);
 
 INSERT INTO ui.synoptic_layer_relationships 
 (synoptic_id, parent_layer_id, child_layer_id) VALUES 
@@ -140,7 +141,12 @@ INSERT INTO ui.synoptic_layer_elements
 (90301500, 'Element:15:40', 00001512, 'ZI-1-02-CA', 1060, 679, false, NULL, true, false, NULL, true),
 (90301500, 'Element:15:39', 00001512, 'ZI-1-01-CA', 913, 679, false, NULL, true, false, NULL, true),
 (90307300, 'Element:73:4', 000073, 'ILUM-EMER-GRU-CA1', 834, 999, false, NULL, true, false, NULL, true),
-(90307300, 'Element:73:3', 000073, 'ILUM-EMER-GRU-CA2', 1327, 124, false, NULL, true, false, NULL, true);
+(90307300, 'Element:73:3', 000073, 'ILUM-EMER-GRU-CA2', 1327, 124, false, NULL, true, false, NULL, true),
+(90300400, 'Element:4:5', 020004, 'PM-2-1-CA', 1589, 302, false, NULL, true, false, NULL, true),
+(90300400, 'Element:4:7', 020004, 'PM-2-2-CA', 499, 302, false, NULL, true, false, NULL, true),
+(90300400, 'Element:4:8', 020004, 'PM-1-2-CA', 499, 775, false, NULL, true, false, NULL, true),
+(90300400, 'Element:4:6', 020004, 'PM-1-1-CA', 1583, 779, false, NULL, true, false, NULL, true);
+
 
 
 

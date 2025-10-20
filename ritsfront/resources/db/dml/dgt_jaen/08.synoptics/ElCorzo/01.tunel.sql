@@ -31,7 +31,8 @@ INSERT INTO ui.synoptic_layers
 (91301900, 913, 'SYNOPTIC_LAYERS_CO', 'LBL_SYNOPTIC_LAYERS_CO', true),
 (91302100, 913, 'SYNOPTIC_LAYERS_OPAC', 'LBL_SYNOPTIC_LAYERS_OPAC', true),
 (91301400, 913, 'SYNOPTIC_LAYERS_LUMINANCIMETER', 'LBL_SYNOPTIC_LAYERS_LUMINANCIMETER', true),
-(91301500, 913, 'SYNOPTIC_LAYERS_FIRE_DET', 'LBL_SYNOPTIC_LAYERS_FIRE_DET', true);
+(91301500, 913, 'SYNOPTIC_LAYERS_FIRE_DET', 'LBL_SYNOPTIC_LAYERS_FIRE_DET', true),
+(91300402, 913, 'SYNOPTIC_LAYERS_ETD', 'LBL_SYNOPTIC_LAYERS_ETD', true);
 
 INSERT INTO ui.synoptic_layer_relationships 
 (synoptic_id, parent_layer_id, child_layer_id) VALUES 
@@ -124,5 +125,8 @@ INSERT INTO ui.synoptic_layer_elements
 (91301500, 'Element:15:48', 00001513, 'ZI-1-02-CZ', 770, 689, false, NULL, true, false, NULL, true),
 (91301500, 'Element:15:47', 00001513, 'ZI-1-01-CZ', 616, 689, false, NULL, true, false, NULL, true),
 (91301500, 'Element:15:51', 00001513, 'ZI-2-01-CZ', 949, 410, false, NULL, true, false, NULL, true),
-(91301500, 'Element:15:52', 00001513, 'ZI-2-02-CZ', 735, 410, false, NULL, true, false, NULL, true);
+(91301500, 'Element:15:52', 00001513, 'ZI-2-02-CZ', 735, 410, false, NULL, true, false, NULL, true),
+(91300402, 'Element:4:4', 020004, 'PM-2-1-CZ', 1393, 311, false, NULL, true, false, NULL, true),
+(91300402, 'Element:4:3', 020004, 'PM-1-1-CZ', 1393, 807, false, NULL, true, false, NULL, true);
+
 
