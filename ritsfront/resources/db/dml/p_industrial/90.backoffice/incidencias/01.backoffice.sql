@@ -28,7 +28,7 @@ BEGIN
 	-- 
   	-- smartgen.sg_metadata_tables
   	--
-	INSERT INTO backoffice.sg_metadata_tables (id, name, label, label_singular, label_description, mdi_icon, support_images, support_attachments, metadata) VALUES
+	INSERT INTO backoffice.sg_metadata_tables (id, name, label, label_singular, label_description, mdi_icon, support_images, support_attachments, metadata, sql_view) VALUES
 	(1, 'incidents', 'Incidencias', 'Incidencias', 'LBL_INCIDENTS_DESCRIPTION', 'mdi mdi-message-alert', true, true, 
 	'{
 		  "tabs": [

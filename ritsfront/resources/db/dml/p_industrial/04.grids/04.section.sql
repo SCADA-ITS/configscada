@@ -9,16 +9,20 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (040004, 4, 1, 4, true, true, false, false, NULL, NULL, 'state', false, false, null, false, false, 30, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
 (040005, 4, 1, 5, true, true, false, true, 'LBL_GRID_FIELD_STATE_LABEL', 'LBL_GRID_FIELD_STATE_LABEL', 'stateLabel', false, false, null, true, false, 150, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
 (040006, 4, 4, 6, true, false, false, true, 'LBL_DATE', 'LBL_DATE', 'ElementTypeParam:4:2:1', false, true, 'left', false, false, 200, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
-(040007, 4, 2, 7, true, false, false, true, 'LBL_SPEED', 'LBL_SPEED', 'ElementTypeParam:4:2:9', false, false, 'left', false, false, 100, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
-(040008, 4, 2, 8, true, false, false, true, 'LBL_N_VEHICLES', 'LBL_N_VEHICLES', 'ElementTypeParam:4:2:4', false, false, 'left', false, false, 200, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
-(040010, 4, 2, 10, true, false, false, true, 'LBL_OCCUPANCY', 'LBL_OCCUPANCY', 'ElementTypeParam:4:2:6', false, false, 'left', false, false, 100, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
-(040011, 4, 2, 11, true, false, false, true, 'LBL_VEH_LENGTH_1', 'LBL_VEH_LENGTH_1', 'ElementTypeParam:4:2:60', false, false, 'left', false, false, 150, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
-(040012, 4, 2, 12, true, false, false, true, 'LBL_VEH_LENGTH_2', 'LBL_VEH_LENGTH_2', 'ElementTypeParam:4:2:61', false, false, 'left', false, false, 150, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
-(040013, 4, 2, 13, true, false, false, true, 'LBL_VEH_LENGTH_3', 'LBL_VEH_LENGTH_3', 'ElementTypeParam:4:2:62', false, false, 'left', false, false, 150, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
-(040014, 4, 2, 14, true, false, false, true, 'LBL_VEH_SPEED_1', 'LBL_VEH_SPEED_1', 'ElementTypeParam:4:2:80', false, false, 'left', false, false, 100, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
-(040015, 4, 2, 15, true, false, false, true, 'LBL_VEH_SPEED_2', 'LBL_VEH_SPEED_2', 'ElementTypeParam:4:2:81', false, false, 'left', false, false, 100, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
-(040016, 4, 2, 16, true, false, false, true, 'LBL_VEH_SPEED_3', 'LBL_VEH_SPEED_3', 'ElementTypeParam:4:2:82', false, false, 'left', false, false, 100, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
-(040017, 4, 2, 17, true, false, false, true, 'LBL_VEH_SPEED_4', 'LBL_VEH_SPEED_4', 'ElementTypeParam:4:2:83', false, false, 'left', false, false, 100, NULL, true, true, NULL, NULL, NULL, NULL, NULL);
+(040007, 4, 2, 7, true, false, false, true, 'LBL_N_VEHICLES', 'LBL_N_VEHICLES', 'ElementTypeParam:4:2:4', false, false, 'left', false, false, 200, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(040008, 4, 2, 8, true, false, false, true, 'LBL_SPEED', 'LBL_SPEED', 'ElementTypeParam:4:2:9', false, false, 'left', false, false, 100, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(040009, 4, 2, 9, true, false, false, true, 'LBL_LENGTH', 'LBL_LENGTH', 'ElementTypeParam:4:2:18', false, false, 'left', false, false, 100, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(040010, 4, 2, 10, true, false, false, true, 'LBL_CONGESTION', 'LBL_CONGESTION', 'ElementTypeParam:4:2:7', false, false, 'left', false, false, 100, NULL, true, true, NULL, NULL, NULL, 'boolToString', NULL),
+(040011, 4, 2, 11, true, false, false, true, 'LBL_KAMIKAZE', 'LBL_KAMIKAZE', 'ElementTypeParam:4:2:8', false, false, 'left', false, false, 100, NULL, true, true, NULL, NULL, NULL, 'boolToString', NULL),
+(040012, 4, 2, 12, true, false, false, true, 'LBL_OCCUPANCY', 'LBL_OCCUPANCY', 'ElementTypeParam:4:2:6', false, false, 'left', false, false, 100, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(040013, 4, 2, 13, true, false, false, true, 'LBL_VEH_SPEED_1', 'LBL_VEH_SPEED_1', 'ElementTypeParam:4:2:80', false, false, 'left', false, false, 100, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(040014, 4, 2, 14, true, false, false, true, 'LBL_VEH_SPEED_2', 'LBL_VEH_SPEED_2', 'ElementTypeParam:4:2:81', false, false, 'left', false, false, 100, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(040015, 4, 2, 15, true, false, false, true, 'LBL_VEH_SPEED_3', 'LBL_VEH_SPEED_3', 'ElementTypeParam:4:2:82', false, false, 'left', false, false, 100, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(040016, 4, 2, 16, true, false, false, true, 'LBL_VEH_SPEED_4', 'LBL_VEH_SPEED_4', 'ElementTypeParam:4:2:83', false, false, 'left', false, false, 100, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(040017, 4, 2, 17, true, false, false, true, 'LBL_VEH_PA_1', 'LBL_VEH_PA_1', 'ElementTypeParam:4:2:140', false, false, 'left', false, false, 100, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(040018, 4, 2, 18, true, false, false, true, 'LBL_VEH_PA_2', 'LBL_VEH_PA_2', 'ElementTypeParam:4:2:141', false, false, 'left', false, false, 100, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(040019, 4, 2, 19, true, false, false, true, 'LBL_VEH_PA_3', 'LBL_VEH_PA_3', 'ElementTypeParam:4:2:142', false, false, 'left', false, false, 100, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(040020, 4, 2, 20, true, false, false, true, 'LBL_VEH_PA_4', 'LBL_VEH_PA_4', 'ElementTypeParam:4:2:143', false, false, 'left', false, false, 100, NULL, true, true, NULL, NULL, NULL, NULL, NULL);
 
 
 INSERT INTO ui.grid_option_values(grid_id, grid_option_id, value) VALUES
@@ -35,6 +39,13 @@ INSERT INTO ui.grid_option_values(grid_id, grid_option_id, value) VALUES
 (4, 15, 'false'),
 (4, 16, 'img/grid/element_type_04.png'),
 (4, 17, 'true');
+
+INSERT INTO ui.grid_field_replacements(grid_field_id, "label", value, enabled) VALUES
+(040010, 'NO', 'false', true),
+(040010, 'SI', 'true', true),
+
+(040011, 'NO', 'false', true),
+(040011, 'SI', 'true', true);
 
 INSERT INTO ui.grid_field_icons(grid_field_id, icon, value, show_value, badge_color, avatar, enabled, label_value) VALUES
 (040004, './img/state/stateUnknown.png', 'ElementTypeState:4:0', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_UNKNOWN'),

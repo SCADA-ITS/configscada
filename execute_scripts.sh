@@ -2,12 +2,12 @@
 
 # Configuración
 REMOTE_USER="admin"
-REMOTE_HOST="192.168.88.160"
-SCADA_HOST="192.168.88.163"
+REMOTE_HOST=$2
+SCADA_HOST=$3
 REMOTE_PATH="/home/admin/scripts"
 ARCHIVO_TAR="backup_sql.tar.gz"
 LOCAL_FOLDERS=("ritsback/resources/db" "ritsfront/resources/db")
-PROYECTO="maqueta_navarra"
+PROYECTO=$1
 
 # Comprimir las carpetas antes de subirlas
 echo "Comprimiendo carpetas locales..."
@@ -30,12 +30,12 @@ rm $ARCHIVO_TAR
 
 # Ejecutar los scripts SQL en el servidor remoto
 cd ritsback/resources/db
-./make_param.sh $PROYECTO $REMOTE_HOST 5430 2>/dev/null
+./make_param.sh $PROYECTO $REMOTE_HOST 5430 
 cd ../../../ritsfront/resources/db
-./make_param.sh $PROYECTO $REMOTE_HOST 5430 $SCADA_HOST 2>/dev/null
+./make_param.sh $PROYECTO $REMOTE_HOST 5430 $SCADA_HOST
 EOF
 
 # Limpiar el archivo comprimido localmente
-rm $ARCHIVO_TAR
+rm -rf $REMOTE_PATH
 
 echo "Proceso completado exitosamente."

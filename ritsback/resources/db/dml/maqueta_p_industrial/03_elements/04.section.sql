@@ -1,6 +1,6 @@
 INSERT INTO conf.elements (element_type_id, element_subtype_id, element_id, location_id, keep_values_on_disconnected, inherit_state_id, alias, description, on_change_alarm, on_change_state, on_change_measure, on_schedule, enabled, visible, alert, alarm_count, created_at, updated_at) VALUES
-(4, 2, 1, 0010004, NULL, NULL, '01.8-MR1-ETD-01_SEC-1', '01.8-MR1-ETD-01_SEC-1', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(4, 2, 2, 0020004, NULL, NULL, '01.8-MR1-ETD-01_SEC-2', '01.8-MR1-ETD-01_SEC-2', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(4, 2, 1, 0010004, NULL, NULL, '01.8-MR1-ETD-01-SEC1', '01.8-MR1-ETD-01-SEC1', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(4, 2, 2, 0020004, NULL, NULL, '01.8-MR1-ETD-01-SEC2', '01.8-MR1-ETD-01-SEC2', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_type_id, element_id, element_value_state_id, value, enabled, visible, created_at, updated_at) VALUES
 (4, 1, 1, 1, NULL, 'true', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -10,14 +10,18 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 (4, 5, 1, 1, NULL, 'false', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 6, 1, 1, NULL, '[8,32,72]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 7, 1, 1, NULL, '[16,28,35]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(4, 60, 1, 1, NULL, '[1]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(4, 61, 1, 1, NULL, '[2]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(4, 62, 1, 1, NULL, '[3]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 80, 1, 1, NULL, '[1]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 81, 1, 1, NULL, '[2]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 82, 1, 1, NULL, '[3]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 83, 1, 1, NULL, '[4]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(4, 10, 1, 1, NULL, '177+250', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(4, 100, 1, 1, NULL, '[1]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(4, 101, 1, 1, NULL, '[2]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(4, 102, 1, 1, NULL, '[3]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(4, 103, 1, 1, NULL, '[4]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(4, 104, 1, 1, NULL, '[5]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(4, 105, 1, 1, NULL, '[6]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(4, 106, 1, 1, NULL, '[7]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(4, 10, 1, 1, NULL, '1+800', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (4, 1, 1, 2, NULL, 'true', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 2, 1, 2, NULL, 'false', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -26,15 +30,15 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 (4, 5, 1, 2, NULL, 'false', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 6, 1, 2, NULL, '[8,32,72]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 7, 1, 2, NULL, '[16,28,35]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(4, 60, 1, 2, NULL, '[1]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(4, 61, 1, 2, NULL, '[2]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(4, 62, 1, 2, NULL, '[3]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(4, 80, 1, 2, NULL, '[1]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(4, 81, 1, 2, NULL, '[2]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(4, 82, 1, 2, NULL, '[3]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(4, 83, 1, 2, NULL, '[4]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(4, 10, 1, 2, NULL, '177+250', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-
-INSERT INTO conf.element_io_controller_modules (element_type_id, element_id, module_type_id, module_id, enabled, visible, created_at, updated_at) VALUES
-(4, 1, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(4, 2, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(4, 80, 1, 1, NULL, '[1]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(4, 81, 1, 1, NULL, '[2]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(4, 82, 1, 1, NULL, '[3]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(4, 83, 1, 1, NULL, '[4]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(4, 100, 1, 1, NULL, '[1]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(4, 101, 1, 1, NULL, '[2]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(4, 102, 1, 1, NULL, '[3]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(4, 103, 1, 1, NULL, '[4]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(4, 104, 1, 1, NULL, '[5]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(4, 105, 1, 1, NULL, '[6]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(4, 106, 1, 1, NULL, '[7]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(4, 10, 1, 2, NULL, '1+800', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

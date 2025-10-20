@@ -45,7 +45,8 @@ INSERT INTO ui.modules
 (6052, 9, 'SUMMARY - incidents', 'SUMMARY - incidents', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 
 (6100, 9, 'REPORTS - alarms', 'REPORTS GIP - alarms', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
-(6101, 9, 'REPORTS - states', 'REPORTS GIP - states', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL);
+(6101, 9, 'REPORTS - states', 'REPORTS GIP - states', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(6102, 9, 'REPORTS - ETD historical data', 'REPORTS GIP - ETD historical data', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL);
 
 
 INSERT INTO ui.module_values 
@@ -93,7 +94,8 @@ INSERT INTO ui.module_values
 (6052, 13, '1'), (6052, 14, 'incidents_summary'),
 
 (6100, 13, '2'), (6100, 14, 'alarmas_hist'),
-(6101, 13, '2'), (6101, 14, 'estados_hist');
+(6101, 13, '2'), (6101, 14, 'estados_hist'),
+(6102, 13, '3'), (6102, 14, 'ETD_hist_data');
 
 INSERT INTO ui.window_values 
 (module_id, window_param_id, value) VALUES 
