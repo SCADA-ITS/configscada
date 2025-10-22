@@ -377,6 +377,8 @@ INSERT INTO master.i18n_labels (locale_code, module_id, "label", "translation", 
 --ElementType:66 = Veleta
 ('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_VANE_NO_CONNECTION', 'Veleta no comunica', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_ALARM_CONFIGS_VANE_SENSOR_OUT_OF_RANGE', 'Sensor fuera de rango', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--ElementType:67 = Central de iluminacion de emergencia
+('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_CENTRAL_DISCONNECTED', 'Central fuera de comunicaciones', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --ElementType:68 = TFA_3D
 ('es_ES', 1, 'LBL_ALARM_CONFIGS_WIM_DIAGNOSTIC_FAULT', 'Fallo diagnóstico WIM', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
