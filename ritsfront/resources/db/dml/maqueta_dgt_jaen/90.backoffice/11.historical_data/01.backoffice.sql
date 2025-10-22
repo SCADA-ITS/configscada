@@ -482,13 +482,16 @@ SELECT *
 FROM ventilation_data
 ORDER BY time_stamp DESC;
 
+
+
+
 --ANALOGICOS
 --co
-CREATE VIEW historical_data.co AS
+CREATE OR REPLACE VIEW historical_data.co AS
 SELECT 
     ev.value::varchar AS equipo,
     c.timestamp_at, 
-    c.concentration
+    c.concentration::varchar AS concentration
 FROM 
     hist.co c
 INNER JOIN conf.element_values ev 
@@ -501,12 +504,13 @@ WHERE
 ORDER BY 
     c.timestamp_at DESC;
 
+
 --opac
 CREATE VIEW historical_data.opac AS
 SELECT 
     ev.value::varchar AS equipo,
     c.timestamp_at, 
-    c.concentration
+    c.concentration ::varchar AS concentration
 FROM 
     hist.opac c
 INNER JOIN conf.element_values ev 
@@ -524,7 +528,7 @@ CREATE VIEW historical_data.lum AS
 SELECT 
     ev.value::varchar AS equipo,
     c.timestamp_at, 
-    c.luminosity_real
+    c.luminosity_real ::varchar AS luminosity_real
 FROM 
     hist.lum c
 INNER JOIN conf.element_values ev 
@@ -542,18 +546,18 @@ CREATE VIEW historical_data.ws AS
 SELECT 
     e.alias AS equipo,  
     c.timestamp_at,  
-    c.date,  
-    c.period,  
-    c.air_pressure,
-    c.air_temperature,
-    c.dew_point_temperature,
-    c.relative_humidity,
-    c.visibility,
-    c.wind_direction,
-    c.wind_speed,
-    c.wind_type,
-    c.precipitation_intensity,  
-    c.precipitation_quantity   
+    c.date ::varchar AS date,  
+    c.period ::varchar AS period,  
+    c.air_pressure ::varchar AS air_pressure,
+    c.air_temperature ::varchar AS air_temperature,
+    c.dew_point_temperature ::varchar AS dew_point_temperature,
+    c.relative_humidity ::varchar AS relative_humidity,
+    c.visibility ::varchar AS visibility,
+    c.wind_direction ::varchar AS wind_direction,
+    c.wind_speed ::varchar AS wind_speed,
+    c.wind_type ::varchar AS wind_type,
+    c.precipitation_intensity ::varchar AS precipitation_intensity,  
+    c.precipitation_quantity  ::varchar AS precipitation_quantity
 FROM 
     hist.ws c
 LEFT JOIN conf.elements e 
@@ -570,7 +574,7 @@ CREATE VIEW historical_data.ane AS
 SELECT 
     ev.value::varchar AS equipo,
     c.timestamp_at, 
-    c.wind_speed
+    c.wind_speed ::varchar AS wind_speed
 FROM 
     hist.ane c
 INNER JOIN conf.element_values ev 
@@ -588,8 +592,8 @@ CREATE VIEW historical_data.vane AS
 SELECT 
     ev.value::varchar AS equipo,
     c.timestamp_at, 
-    c.wind_speed,
-    c.wind_direction
+    c.wind_speed ::varchar AS wind_speed,
+    c.wind_direction ::varchar AS wind_direction
 FROM 
     hist.vane c
 INNER JOIN conf.element_values ev 
@@ -601,6 +605,9 @@ WHERE
     AND c.timestamp_at <= NOW()
 ORDER BY 
     c.timestamp_at DESC;
+
+
+
 
 --HISTORICOS
 --BARRERAS
@@ -821,7 +828,11 @@ ORDER BY cn.timestamp_at DESC;
 
     (15, 'paneles', 'LBL_BACKOFFICE_SG_METADATA_TABLES_WS', 'LBL_BACKOFFICE_SG_METADATA_TABLES_WS', 'LBL_BACKOFFICE_SG_METADATA_TABLES_WS_DESCRIPTION', NULL, true, true, 
 	--sql_view
-	'SELECT * FROM historical_data.pmv', NULL, NULL);
+	'SELECT * FROM historical_data.pmv', 201, NULL),
+
+    (16, 'semaforos', 'LBL_BACKOFFICE_SG_METADATA_TABLES_WS', 'LBL_BACKOFFICE_SG_METADATA_TABLES_WS', 'LBL_BACKOFFICE_SG_METADATA_TABLES_WS_DESCRIPTION', NULL, true, true, 
+	--sql_view
+	'SELECT * FROM historical_data.semaforos', NULL, NULL);  
 
 
 
@@ -870,7 +881,7 @@ ORDER BY cn.timestamp_at DESC;
  	(6, 'comment', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_COMMENT', NULL, false, '{"editable": false}'),
 	(6, 'element', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ELEMENT', NULL, false, '{"editable": false}'),
 	(6, 'regimen', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_REGIMEN', NULL, false, '{"editable": false}'),
-
+--ANALOGICOS
     --CO
 	(7, 'timestamp_at', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_DATE', NULL, false, '{"editable": false}'),
 	(7, 'concentration', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_CONCENTRATION', NULL, false, '{"editable": false}'),
@@ -907,9 +918,20 @@ ORDER BY cn.timestamp_at DESC;
     (12, 'timestamp_at', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_DATE', NULL, false, '{"editable": false}'),
 	(12, 'wind_speed', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_WIND_SPEED', NULL, false, '{"editable": false}'),
     (12, 'wind_direction', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_WIND_DIRECTION', NULL, false, '{"editable": false}'),
-	(12, 'equipo', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ELEMENT', NULL, false, '{"editable": false}');
+	(12, 'equipo', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ELEMENT', NULL, false, '{"editable": false}'),
 
+    (13, 'timestamp_at', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_DATE', NULL, false, '{"editable": false}'),
+	(13, 'estado_barrera', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ESTADO_BARRERA', NULL, false, '{"editable": false}'),
+	(13, 'equipo', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ELEMENT', NULL, false, '{"editable": false}'),
 
+    (14, 'timestamp_at', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_DATE', NULL, false, '{"editable": false}'),
+	(14, 'fan_speed', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_FAN_SPEED', NULL, false, '{"editable": false}'),
+    (14, 'grid_gate_state', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_GRID_GATE_STATE', NULL, false, '{"editable": false}'),
+	(14, 'equipo', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ELEMENT', NULL, false, '{"editable": false}'),
+
+    (16, 'timestamp_at', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_DATE', NULL, false, '{"editable": false}'),
+	(16, 'estado_semaforo', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ESTADO_SEM', NULL, false, '{"editable": false}'),
+	(16, 'equipo', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ELEMENT', NULL, false, '{"editable": false}');
 
   END IF;
   

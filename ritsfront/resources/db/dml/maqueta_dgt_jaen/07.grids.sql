@@ -363,21 +363,21 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (2000004, 200, 1, 4, true, false, false, true, 'LBL_GRID_FIELD_COMMAND', 'LBL_GRID_FIELD_COMMAND', 'translation', false, false, null, false, false, 150, NULL, true, true, NULL, NULL, true, NULL,NULL),
 (2000005, 200, 1, 5, true, false, false, true, 'LBL_GRID_FIELD_EQUIPO', 'LBL_GRID_FIELD_EQUIPO', 'element', false, false, null, false, false, 150, NULL, true, true, NULL, NULL, true, NULL,NULL),
 (2000006, 200, 1, 6, true, false, false, true, 'LBL_GRID_FIELD_ORIGEN', 'LBL_GRID_FIELD_ORIGEN', 'comment', false, false, null, false, false, 280, NULL, true, true, NULL, NULL, true, NULL,NULL),
-(2000007, 200, 1, 7, true, false, false, true, NULL, NULL, 'zona_grafico_1', false, false, 'center', false, false, 35, NULL, true, true, NULL, NULL, true, NULL,NULL),
+(2000007, 200, 1, 7, true, false, false, true, NULL, NULL, 'zona_grafico_1', false, false, 'center', false, false, 40, NULL, true, true, NULL, NULL, true, NULL,NULL),
 (2000008, 200, 1, 8, true, false, false, true, 'LBL_GRID_FIELD_MENSAJE', 'LBL_GRID_FIELD_MENSAJE', 'mensaje', false, false, null, false, false, 280, NULL, true, true, NULL, NULL, true, NULL,NULL),
-(2000009, 200, 1, 10, true, false, false, true, NULL, NULL, 'alternancia_zona_grafico_1', false, false, 'center', false, false, 35, NULL, true, true, NULL, NULL, true, NULL,NULL),
-(2000010, 200, 1, 9, true, false, false, true, NULL, NULL, 'zona_grafico_2', false, false, 'left', false, false, 50, NULL, true, true, NULL, NULL, true, NULL,NULL),
+(2000009, 200, 1, 10, true, false, false, true, NULL, NULL, 'alternancia_zona_grafico_1', false, false, 'center', false, false, 40, NULL, true, true, NULL, NULL, true, NULL,NULL),
+(2000010, 200, 1, 9, true, false, false, true, NULL, NULL, 'zona_grafico_2', false, false, 'left', false, false, 42, NULL, true, true, NULL, NULL, true, NULL,NULL),
 (2000011, 200, 1, 11, true, false, false, true, 'LBL_GRID_FIELD_ALTER_MENSAJE', 'LBL_GRID_FIELD_ALTER_MENSAJE', 'mensaje_alternancia', false, false, null, false, false, 280, NULL, true, true, NULL, NULL, true, NULL,NULL),
-(2000012, 200, 1, 12, true, false, false, true, NULL, NULL, 'alternancia_zona_grafico_2', false, false, 'center', false, false, 35, NULL, true, true, NULL, NULL, true, NULL,NULL),
+(2000012, 200, 1, 12, true, false, false, true, NULL, NULL, 'alternancia_zona_grafico_2', false, false, 'center', false, false, 45, NULL, true, true, NULL, NULL, true, NULL,NULL),
 
-(2010001, 201, 1, 1, true, false, false, false, 'LBL_GRID_FIELD_ID', 'LBL_GRID_FIELD_ID', 'f_element_id', true, false, null, false, false, 500, NULL, true, false, NULL, NULL, NULL, NULL,NULL),
-(2010002, 201, 4, 2, true, false, false, true, 'LBL_GRID_FIELD_DATE', 'LBL_GRID_FIELD_DATE', 'timestamp_at', false, true, 'left', false, false, 180, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
-(2010007, 201, 1, 7, true, false, false, true, NULL, NULL, 'zona_grafico_1', false, false, 'center', false, false, 35, NULL, true, true, NULL, NULL, true, NULL,NULL),
-(2010008, 201, 1, 8, true, false, false, true, 'LBL_GRID_FIELD_MENSAJE', 'LBL_GRID_FIELD_MENSAJE', 'mensaje', false, false, null, false, false, 280, NULL, true, true, NULL, NULL, true, NULL,NULL),
-(2010009, 201, 1, 10, true, false, false, true, NULL, NULL, 'alternancia_zona_grafico_1', false, false, 'center', false, false, 35, NULL, true, true, NULL, NULL, true, NULL,NULL),
-(2010010, 201, 1, 9, true, false, false, true, NULL, NULL, 'zona_grafico_2', false, false, 'left', false, false, 50, NULL, true, true, NULL, NULL, true, NULL,NULL),
-(2010011, 201, 1, 11, true, false, false, true, 'LBL_GRID_FIELD_ALTER_MENSAJE', 'LBL_GRID_FIELD_ALTER_MENSAJE', 'mensaje_alternancia', false, false, null, false, false, 280, NULL, true, true, NULL, NULL, true, NULL,NULL),
-(2010012, 201, 1, 12, true, false, false, true, NULL, NULL, 'alternancia_zona_grafico_2', false, false, 'center', false, false, 35, NULL, true, true, NULL, NULL, true, NULL,NULL);
+(2010001, 201, 1, 1, true, false, false, true, 'LBL_GRID_FIELD_EQUIPO', 'LBL_GRID_FIELD_EQUIPO', 'equipo', false, false, 'left', false, false, 200, NULL, true, true, NULL, NULL, NULL, NULL,NULL),
+(2010002, 201, 4, 2, true, false, false, true, 'LBL_GRID_FIELD_DATE', 'LBL_GRID_FIELD_DATE', 'timestamp_at', false, true, 'left', false, false, 500, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(2010007, 201, 1, 3, true, false, false, true, null, null, 'zona_grafico_1', false, false, 'center', false, false, 68, NULL, true, true, NULL, NULL, true, NULL,NULL),
+(2010008, 201, 1, 4, true, false, false, true, 'LBL_GRID_FIELD_MENSAJE', 'LBL_GRID_FIELD_MENSAJE', 'mensaje', false, false, 'left', false, false, 300, NULL, true, true, NULL, NULL, true, NULL,NULL),
+(2010009, 201, 1, 6, true, false, false, true, NULL, NULL, 'alternancia_zona_grafico_1', false, false, 'center', false, false, 68, NULL, true, true, NULL, NULL, true, NULL,NULL),
+(2010010, 201, 1, 5, true, false, false, true, NULL, NULL, 'zona_grafico_2', false, false, 'center', false, false, 68, NULL, true, true, NULL, NULL, true, NULL,NULL),
+(2010011, 201, 1, 7, true, false, false, true, 'LBL_GRID_FIELD_ALTER_MENSAJE', 'LBL_GRID_FIELD_ALTER_MENSAJE', 'mensaje_alternancia', false, false, null, false, false, 300, NULL, true, true, NULL, NULL, true, NULL,NULL),
+(2010012, 201, 1, 8, true, false, false, true, NULL, NULL, 'alternancia_zona_grafico_2', false, false, 'center', false, false, 68, NULL, true, true, NULL, NULL, true, NULL,NULL);
 
 UPDATE ui.grid_fields
 SET enabled=false, visible=false
