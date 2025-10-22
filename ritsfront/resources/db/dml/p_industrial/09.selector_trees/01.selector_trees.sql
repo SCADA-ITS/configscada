@@ -46,7 +46,12 @@ INSERT INTO ui.selector_tree_nodes(id, selector_tree_id, "label", image, module_
 	(010403, 1, 'LBL_INCIDENTS_SUMMARY', null, 6052, true, true, 41),
 	
 (0201, 2, 'LBL_REPORT_ALARMS', null, 6100, true, true, 1),
-(0202, 2, 'LBL_REPORT_STATES', null, 6101, true, true, 1);
+(0202, 2, 'LBL_REPORT_STATES', null, 6101, true, true, 1),
+(0203, 2, 'ETD', null, null, true, true, 1),
+	(020301, 2, 'minutos', null, 6102, true, true, 1),
+	(020302, 2, 'horas', null, 6103, true, true, 1),
+	(020303, 2, 'dias', null, 6104, true, true, 1),
+	(020304, 2, 'meses', null, 6105, true, true, 1);
 
 INSERT INTO ui.selector_tree_hierarchies(selector_tree_id,  node_parent_id, node_child_id, enabled, visible) VALUES
 (1, 0102, 010201, true, true),
@@ -85,7 +90,12 @@ INSERT INTO ui.selector_tree_hierarchies(selector_tree_id,  node_parent_id, node
 (1, 0103, 010304, true, true),
 (1, 0104, 010401, true, true),
 (1, 0104, 010402, true, true),
-(1, 0104, 010403, true, true);
+(1, 0104, 010403, true, true),
+
+(2, 0203, 020301, true, true),
+(2, 0203, 020302, true, true),
+(2, 0203, 020303, true, true),
+(2, 0203, 020304, true, true);
 
 
 
