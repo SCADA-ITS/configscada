@@ -93,5 +93,16 @@
 				<p:executor_param_value><![CDATA[max_transits_to_archive=50]]></p:executor_param_value>
 			</p:executor_params>	
 		</p:executor>
+		<p:executor>
+			<p:id>9</p:id>
+			<p:enabled>true</p:enabled>
+			<p:merge_wait_time>1</p:merge_wait_time>
+			<p:manager_class>com.revenga.rits.back.transit.manager.transit.recovery.une199121.TransitRecoveryUne199121Executor</p:manager_class>
+			<p:executor_params>
+				<p:executor_param_value>cron_job=TransitRecoveryJob;recoveryUne199121_4Transits;40 * * * * ?;300;LectorVision_secret.gpg;RwjnMIVuE4qM3ah0k6RQyQ==</p:executor_param_value>
+				<p:executor_param_value>elementType=99</p:executor_param_value>
+				<p:executor_param_value>elementSubtype=5</p:executor_param_value>
+			</p:executor_params>
+		</p:executor>
 	</p:executors>
 </p:manager_adapter_v1>

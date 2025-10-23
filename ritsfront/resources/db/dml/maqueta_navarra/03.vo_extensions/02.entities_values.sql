@@ -551,33 +551,28 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 		"discardedOptions": [
 			{
 				"id": 1,
-				"label": "LBL_TRS_OPTION_1",
-				"message": "LBL_TRS_OPTION_1_DESCRIPTION"
+				"label": "No se puede identificar la matrícula",
+				"message": "No se puede identificar la matrícula"
 			},
 			{
 				"id": 2,
-				"label": "LBL_TRS_OPTION_2",
-				"message": "LBL_TRS_OPTION_2_DESCRIPTION"
+				"label": "No coincide la marca, modelo, color o tipo de vehículo",
+				"message": "No coincide la marca, modelo, color o tipo de vehículo"
 			},
 			{
 				"id": 3,
-				"label": "LBL_TRS_OPTION_3",
-				"message": "LBL_TRS_OPTION_3_DESCRIPTION"
+				"label": "Imagen no válida (oscura, borrosa, sin vehículo…)",
+				"message": "Imagen no válida (oscura, borrosa, sin vehículo…)"
 			},
 			{
 				"id": 4,
-				"label": "LBL_TRS_OPTION_4",
-				"message": "LBL_TRS_OPTION_4_DESCRIPTION"
+				"label": "Vehículo prioritario (policial, bomberos, ambulancias, …)",
+				"message": "Vehículo prioritario (policial, bomberos, ambulancias, …)"
 			},
 			{
 				"id": 5,
-				"label": "LBL_TRS_OPTION_5",
-				"message": "LBL_TRS_OPTION_5_DESCRIPTION"
-			},
-			{
-				"id": 6,
-				"label": "LBL_TRS_OPTION_6",
-				"message": "LBL_TRS_OPTION_6_DESCRIPTION"
+				"label": "Vehículo en lista blanca",
+				"message": "Vehículo en lista blanca"
 			}
 		]
 	}

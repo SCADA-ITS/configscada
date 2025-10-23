@@ -16,10 +16,10 @@
 	"readOnly": true,
 	"transitStates": {
 		"initial": "TransitState:1",
-		"pending": "TransitState:2",
-		"validated": "TransitState:3",
+		"pending": "TransitState:5",
+		"validated": "TransitState:6",
 		"discarded": "TransitState:7",
-		"archived": "TransitState:5"
+		"archived": "TransitState:8"
 	},
 	"tabs": [
 		{

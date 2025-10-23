@@ -28,7 +28,25 @@ INSERT INTO conf.elements (element_type_id, element_subtype_id, element_id, loca
 (2, NULL, 25, 0250002, NULL, NULL, 'Bera Tunel Norte 1', 'Bera Tunel Norte 1', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, NULL, 26, 0260002, NULL, NULL, 'Bera Tunel Norte 2', 'Bera Tunel Norte 2', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 --(2, NULL, 27, 0270002, NULL, NULL, 'Endarlatza 2', 'Endarlatza 2', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(2, NULL, 28, 0280002, NULL, NULL, 'Talluntxe LPR', 'Talluntxe LPR', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(2, NULL, 28, 0280002, NULL, NULL, 'Talluntxe LPR', 'Talluntxe LPR', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, NULL, 29, 0290002, NULL, NULL, 'TV1 PA-30', 'TV1 PA-30', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, NULL, 30, 0300002, NULL, NULL, 'TV2 PA-30', 'TV2 PA-30', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, NULL, 31, 0310002, NULL, NULL, 'TV3.1 PA-30', 'TV3.1 PA-30', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, NULL, 32, 0320002, NULL, NULL, 'TV3.2 PA-30', 'TV3.2 PA-30', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, NULL, 33, 0330002, NULL, NULL, 'TV4.1 PA-30', 'TV4.1 PA-30', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, NULL, 34, 0340002, NULL, NULL, 'TV4.2 PA-30', 'TV4.2 PA-30', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, NULL, 35, 0350002, NULL, NULL, 'TV5.1 PA-30', 'TV5.1 PA-30', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, NULL, 36, 0360002, NULL, NULL, 'TV5.2 PA-30', 'TV5.2 PA-30', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, NULL, 37, 0370002, NULL, NULL, 'TV6.1 PA-30', 'TV6.1 PA-30', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, NULL, 38, 0380002, NULL, NULL, 'TV6.2 PA-30', 'TV6.2 PA-30', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, NULL, 39, 0390002, NULL, NULL, 'TV7.1 PA-30', 'TV7.1 PA-30', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, NULL, 40, 0400002, NULL, NULL, 'TV7.2 PA-30', 'TV7.2 PA-30', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, NULL, 41, 0410002, NULL, NULL, 'TV8.1 PA-30', 'TV8.1 PA-30', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, NULL, 42, 0420002, NULL, NULL, 'TV8.2 PA-30', 'TV8.2 PA-30', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, NULL, 43, 0430002, NULL, NULL, 'TV9.1 PA-30', 'TV9.1 PA-30', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, NULL, 44, 0440002, NULL, NULL, 'TV9.2 PA-30', 'TV9.2 PA-30', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, NULL, 45, 0450002, NULL, NULL, 'TV00 PK 6+930', 'TV00 PK 6+930', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, NULL, 46, 0460002, NULL, NULL, 'TV09B PK 40+380', 'TV09B PK 40+380', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_type_id, element_id, element_value_state_id, value, enabled, visible, created_at, updated_at) VALUES
 (2, 1, 1, 1, NULL, 'Hikvision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -199,7 +217,97 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 (2, 4004, 1, 28, NULL, '0x02 0x01 0xFF 0x03', true, true, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), 
 (2, 4005, 1, 28, NULL, '0x01', true, true, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), 
 (2, 4006, 1, 28, NULL, 'keystore2.jks', true, true, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), 
-(2, 4007, 1, 28, NULL, 'k/7x4pJrPbHAr7opLlK7Mg==', true, true, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
+(2, 4007, 1, 28, NULL, 'k/7x4pJrPbHAr7opLlK7Mg==', true, true, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+
+(2, 1, 1, 29, NULL, 'Hikvision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 2, 1, 29, NULL, 'DS-2CD3047G2-LS', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 3, 1, 29, NULL, 'https://descontroltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=TV1-PA-30', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 1003, 1, 29, NULL, 'TV1-PA-30', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(2, 1, 1, 30, NULL, 'Hikvision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 2, 1, 30, NULL, 'DS-2CD3047G2-LS', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 3, 1, 30, NULL, 'https://descontroltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=TV2-PA-30', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 1003, 1, 30, NULL, 'TV2-PA-30', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(2, 1, 1, 31, NULL, 'Hikvision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 2, 1, 31, NULL, 'DS-2CD3047G2-LS', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 3, 1, 31, NULL, 'https://descontroltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=TV3.1-PA-30', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 1003, 1, 31, NULL, 'TV3.1-PA-30', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(2, 1, 1, 32, NULL, 'Hikvision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 2, 1, 32, NULL, 'DS-2CD3047G2-LS', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 3, 1, 32, NULL, 'https://descontroltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=TV3.2-PA-30', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 1003, 1, 32, NULL, 'TV3.2-PA-30', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(2, 1, 1, 33, NULL, 'Hikvision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 2, 1, 33, NULL, 'DS-2CD3047G2-LS', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 3, 1, 33, NULL, 'https://descontroltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=TV4.1-PA-30', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 1003, 1, 33, NULL, 'TV4.1-PA-30', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(2, 1, 1, 34, NULL, 'Hikvision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 2, 1, 34, NULL, 'DS-2CD3047G2-LS', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 3, 1, 34, NULL, 'https://descontroltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=TV4.2-PA-30', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 1003, 1, 34, NULL, 'TV4.2-PA-30', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(2, 1, 1, 35, NULL, 'Hikvision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 2, 1, 35, NULL, 'DS-2CD3047G2-LS', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 3, 1, 35, NULL, 'https://descontroltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=TV5.1-PA-30', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 1003, 1, 35, NULL, 'TV5.1-PA-30', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(2, 1, 1, 36, NULL, 'Hikvision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 2, 1, 36, NULL, 'DS-2CD3047G2-LS', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 3, 1, 36, NULL, 'https://descontroltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=TV5.2-PA-30', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 1003, 1, 36, NULL, 'TV5.2-PA-30', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(2, 1, 1, 37, NULL, 'Hikvision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 2, 1, 37, NULL, 'DS-2CD3047G2-LS', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 3, 1, 37, NULL, 'https://descontroltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=TV6.1-PA-30', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 1003, 1, 37, NULL, 'TV6.1-PA-30', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(2, 1, 1, 38, NULL, 'Hikvision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 2, 1, 38, NULL, 'DS-2CD3047G2-LS', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 3, 1, 38, NULL, 'https://descontroltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=TV6.2-PA-30', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 1003, 1, 38, NULL, 'TV6.2-PA-30', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(2, 1, 1, 39, NULL, 'Hikvision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 2, 1, 39, NULL, 'DS-2CD3047G2-LS', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 3, 1, 39, NULL, 'https://descontroltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=TV7.1-PA-30', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 1003, 1, 39, NULL, 'TV7.1-PA-30', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(2, 1, 1, 40, NULL, 'Hikvision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 2, 1, 40, NULL, 'DS-2CD3047G2-LS', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 3, 1, 40, NULL, 'https://descontroltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=TV7.2-PA-30', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 1003, 1, 40, NULL, 'TV7.2-PA-30', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(2, 1, 1, 41, NULL, 'Hikvision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 2, 1, 41, NULL, 'DS-2CD3047G2-LS', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 3, 1, 41, NULL, 'https://descontroltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=TV8.1-PA-30', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 1003, 1, 41, NULL, 'TV8.1-PA-30', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(2, 1, 1, 42, NULL, 'Hikvision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 2, 1, 42, NULL, 'DS-2CD3047G2-LS', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 3, 1, 42, NULL, 'https://descontroltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=TV8.2-PA-30', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 1003, 1, 42, NULL, 'TV8.29-PA-30', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(2, 1, 1, 43, NULL, 'Hikvision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 2, 1, 43, NULL, 'DS-2CD3047G2-LS', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 3, 1, 43, NULL, 'https://descontroltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=TV9.1-PA-30', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 1003, 1, 43, NULL, 'TV9.1-PA-30', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(2, 1, 1, 44, NULL, 'Hikvision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 2, 1, 44, NULL, 'DS-2CD3047G2-LS', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 3, 1, 44, NULL, 'https://descontroltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=TV9.2-PA-30', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 1003, 1, 44, NULL, 'TV9.2-PA-30', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(2, 1, 1, 45, NULL, 'Hikvision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 2, 1, 45, NULL, 'DS-2CD3047G2-LS', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 3, 1, 45, NULL, 'https://descontroltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=TV00-PK6+930', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 1003, 1, 45, NULL, 'TV00-PK6+930', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(2, 1, 1, 46, NULL, 'Hikvision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 2, 1, 46, NULL, 'DS-2CD3047G2-LS', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 3, 1, 46, NULL, 'https://descontroltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=TV09B-PK40+380', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 1003, 1, 46, NULL, 'TV09B-PK40+380', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO conf.element_io_controller_modules (element_type_id, element_id, module_type_id, module_id, enabled, visible, created_at, updated_at) VALUES
 (2, 1, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -229,4 +337,22 @@ INSERT INTO conf.element_io_controller_modules (element_type_id, element_id, mod
 (2, 25, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 26, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 --(2, 27, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(2, 28, 4, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(2, 28, 4, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 29, 4, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 30, 4, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 31, 4, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 32, 4, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 33, 4, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 34, 4, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 35, 4, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 36, 4, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 37, 4, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 38, 4, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 39, 4, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 40, 4, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 41, 4, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 42, 4, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 43, 4, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 44, 4, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 45, 4, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 46, 4, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

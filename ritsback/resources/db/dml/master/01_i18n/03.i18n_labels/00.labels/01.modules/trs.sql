@@ -98,6 +98,7 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 	('es_ES',1,'LBL_TRS_REQUIRED_TEXT_LOG','Se requiere añadir texto al registro.',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 	('es_ES',1,'LBL_TRS_SELECT_DISCARDED_OPTION','Seleccione una opción.',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 	('es_ES',1,'LBL_TRS_REGISTER_LOG','Registro',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+	('es_ES',1,'lbl_transit_tab_general_summary_plate_number', 'Modificación de matrícula',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 
 --en_GB
 	('en_GB',1,'LBL_TRANSIT_LIST_MODULE','Transit manager',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),

@@ -1,0 +1,133 @@
+api:
+  listen: ":8080"
+  base_path: "/rtc"
+  static_dir: ""
+  origin: ""
+
+streams:
+  Areta: 
+    - rtsp://traficonavarra:Trafico_011@10.191.80.10
+    - ffmpeg:Areta#video=mjpeg
+    
+  AlmandozNorte: 
+    - rtsp://traficonavarra@navarra.es:Trafico_011@10.191.20.64
+    - ffmpeg:AlmandozNorte#video=mjpeg
+    
+  N121pk26: 
+    - rtsp://Traficonavarra:Trafico_011@10.191.20.226:554/Streaming/channels/101
+    - ffmpeg:N121pk26#video=mjpeg
+    
+  BeraTunelSur1: 
+    - rtsp://Traficonavarra:Trafico_011@10.191.46.42:554/axis-media/media.amp
+    - ffmpeg:BeraTunelSur1#video=mjpeg
+    
+  BeraTunelSur2: 
+    - rtsp://Traficonavarra:Trafico_011@10.191.46.21:554/axis-media/media.amp
+    - ffmpeg:BeraTunelSur2#video=mjpeg
+    
+  BeraTunelNorte1: 
+    - rtsp://Traficonavarra:Trafico_011@10.191.46.23:554/axis-media/media.amp
+    - ffmpeg:BeraTunelNorte1#video=mjpeg
+    
+  BeraTunelNorte2: 
+    - rtsp://Traficonavarra:Trafico_011@10.191.46.22:554/axis-media/media.amp
+    - ffmpeg:BeraTunelNorte2#video=mjpeg
+    
+  Ezkaba: 
+    - rtsp://traficonavarra@navarra.es:Trafico_011@10.191.22.92
+    - ffmpeg:Ezkaba#video=mjpeg
+
+  Berriozar: 
+    - rtsp://traficonavarra@navarra.es:Trafico_011@10.191.10.11
+    - ffmpeg:Berriozar#video=mjpeg
+    
+  Endarlatza1: 
+    - rtsp://Traficonavarra:Trafico_011@10.191.46.25:554/axis-media/media.amp
+    - ffmpeg:Endarlatza1#video=mjpeg
+    
+  Talluntxe: 
+    - rtsp://10.191.80.23:554/color
+    - ffmpeg:Talluntxe#video=mjpeg
+
+  TV1-PA-30:
+    - rtsp://traficonavarra:Trafico_011@10.191.22.151
+    - ffmpeg:TV1-PA-30#video=mjpeg
+    
+  TV2-PA-30:
+    - rtsp://traficonavarra:Trafico_011@10.191.22.152
+    - ffmpeg:TV2-PA-30#video=mjpeg
+
+  TV3.1-PA-30:
+    - rtsp://traficonavarra:Trafico_011@10.191.22.153
+    - ffmpeg:TV3.1-PA-30#video=mjpeg
+
+  TV3.2-PA-30:
+    - rtsp://traficonavarra:Trafico_011@10.191.22.154
+    - ffmpeg:TV3.2-PA-30#video=mjpeg
+
+  TV4.1-PA-30:
+    - rtsp://traficonavarra:Trafico_011@10.191.22.155
+    - ffmpeg:TV4.1-PA-30#video=mjpeg
+
+  TV4.2-PA-30:
+    - rtsp://traficonavarra:Trafico_011@10.191.22.156
+    - ffmpeg:TV4.2-PA-30#video=mjpeg
+
+  TV5.1-PA-30:
+    - rtsp://traficonavarra:Trafico_011@10.191.22.157
+    - ffmpeg:TV5.1-PA-30#video=mjpeg
+
+  TV5.2-PA-30:
+    - rtsp://traficonavarra:Trafico_011@10.191.22.158
+    - ffmpeg:TV5.2-PA-30#video=mjpeg
+
+  TV6.1-PA-30:
+    - rtsp://traficonavarra:Trafico_011@10.191.22.159
+    - ffmpeg:TV6.1-PA-30#video=mjpeg
+
+  TV6.2-PA-30:
+    - rtsp://traficonavarra:Trafico_011@10.191.22.160
+    - ffmpeg:TV6.2-PA-30#video=mjpeg
+
+  TV7.1-PA-30:
+    - rtsp://traficonavarra:Trafico_011@10.191.22.161
+    - ffmpeg:TV7.1-PA-30#video=mjpeg
+
+  TV7.2-PA-30:
+    - rtsp://traficonavarra:Trafico_011@10.191.22.162
+    - ffmpeg:TV7.2-PA-30#video=mjpeg
+
+  TV8.1-PA-30:
+    - rtsp://traficonavarra:Trafico_011@10.191.22.163
+    - ffmpeg:TV8.1-PA-30#video=mjpeg
+
+  TV8.2-PA-30:
+    - rtsp://traficonavarra:Trafico_011@10.191.22.164
+    - ffmpeg:TV8.2-PA-30#video=mjpeg
+
+  TV9.1-PA-30:
+    - rtsp://traficonavarra:Trafico_011@10.191.22.165
+    - ffmpeg:TV9.1 PA-30#video=mjpeg
+
+  TV9.2-PA-30:
+    - rtsp://traficonavarra:Trafico_011@10.191.22.166
+    - ffmpeg:TV9.2-PA-30#video=mjpeg
+
+  TV00-PK6+930:
+    - rtsp://live:TrafNav02@10.191.64.138
+    - ffmpeg:TV00-PK6+930#video=mjpeg
+
+  TV09B-PK40+380:
+    - rtsp://live:TrafNav02@10.191.64.148
+    - ffmpeg:TV09B-PK40+380#video=mjpeg
+
+
+    
+log:
+  level: info  # default level
+  api: trace
+  exec: debug
+  ngrok: info
+  rtsp: warn
+  streams: error
+  webrtc: fatal
