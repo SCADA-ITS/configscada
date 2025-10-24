@@ -20,6 +20,7 @@ INSERT INTO ui.menu_items(id, menu_group_id, "position", module_id, "label", ico
 -- TOOLS
 (0401, 4, 1, 403, 'LBL_MENU_ITEM_REPORTS', 'img/menu/report.png', 'Menu item Reports', 'Menu item Reports', true, true),
 (0402, 4, 2, 1045, 'LBL_HISTORICAL_CHARTS', 'img/menu/chart-menu.png', 'Historical charts', 'Historical Charts', true, true),
+(0403, 4, 3, 11000, 'LBL_MENU_ITEM_BACKOFFICE_HISTORICAL_DATA', 'img/menu/alarm-monitor-menu-1.png', 'HISTORICAL_DATA', 'Historical data', true, true),
 
 --MANAGER
 (0501, 5, 1, 1003, 'LBL_MENU_ITEM_INCIDENT_REPORTS', 'img/menu/incident.png', 'Menu item incindet report', 'Menu item incident report', true, true),
