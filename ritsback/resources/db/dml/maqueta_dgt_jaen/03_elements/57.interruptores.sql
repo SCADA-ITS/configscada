@@ -307,7 +307,6 @@ INSERT INTO conf.elements (element_type_id, element_subtype_id, element_id, loca
 (57, 1, 310, 3100057, NULL, NULL, 'INT-PMV-GA-SAI-NOR-1', 'INT-PMV-GA-SAI-NOR-1', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, 1, 311, 3110057, NULL, NULL, 'INT-RED-FLUJO-SAI-NOR-1', 'INT-RED-FLUJO-SAI-NOR-1', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, 1, 312, 3120057, NULL, NULL, 'INT-EMER-PERM-DER-SAI-NOR-1', 'INT-EMER-PERM-DER-SAI-NOR-1', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(57, 1, 314, 3140057, NULL, NULL, 'INT-K01-ILU-SUR-1', 'INT-K01-ILU-SUR-1', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, 1, 315, 3150057, NULL, NULL, 'INT-DET-FASE-SAI-SUR-1', 'INT-DET-FASE-SAI-SUR-1', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, 1, 316, 3160057, NULL, NULL, 'INT-SOS-SAI-SUR-1', 'INT-SOS-SAI-SUR-1', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, 1, 317, 3170057, NULL, NULL, 'INT-SMF-STOP-SAI-SUR-1', 'INT-SMF-STOP-SAI-SUR-1', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -996,7 +995,6 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 
 (57, 1003, 1, 312, NULL, 'INT-EMER-PERM-DER-SAI-NOR-1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
-(57, 1003, 1, 314, NULL, 'INT-K01-ILU-SUR-1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (57, 1003, 1, 315, NULL, 'INT-DET-FASE-SAI-SUR-1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
@@ -1447,7 +1445,6 @@ INSERT INTO conf.element_io_controller_modules (element_type_id, element_id, mod
 (57, 310, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, 311, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, 312, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(57, 314, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, 315, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, 316, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, 317, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
