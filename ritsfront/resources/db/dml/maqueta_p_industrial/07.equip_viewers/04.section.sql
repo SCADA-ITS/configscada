@@ -15,17 +15,16 @@ INSERT INTO ui.equip_viewer_measures (equip_viewer_grp_measure_id, vo_entities_i
 (0401, 'ElementTypeParam:4:2:4', 3, true),
 (0401, 'ElementTypeParam:4:2:6', 4, true),
 (0401, 'ElementTypeParam:4:2:7', 5, true),
-(0401, 'ElementTypeParam:4:2:18', 6, true),
+(0401, 'ElementTypeParam:4:2:8', 6, true),
+(0401, 'ElementTypeParam:4:2:9', 7, true),
+(0401, 'ElementTypeParam:4:2:18', 8, true),
 
 (0402, 'ElementTypeParam:4:2:80', 1, true),
 (0402, 'ElementTypeParam:4:2:81', 2, true),
 (0402, 'ElementTypeParam:4:2:82', 3, true),
-(0402, 'ElementTypeParam:4:2:83', 4, true),
+(0402, 'ElementTypeParam:4:2:83', 3, true),
 
 (0403, 'ElementTypeParam:4:2:140', 1, true),
 (0403, 'ElementTypeParam:4:2:141', 2, true),
 (0403, 'ElementTypeParam:4:2:142', 3, true),
-(0403, 'ElementTypeParam:4:2:143', 4, true),
-(0403, 'ElementTypeParam:4:2:144', 5, true),
-(0403, 'ElementTypeParam:4:2:145', 6, true),
-(0403, 'ElementTypeParam:4:2:146', 7, true);
+(0403, 'ElementTypeParam:4:2:143', 4, true);

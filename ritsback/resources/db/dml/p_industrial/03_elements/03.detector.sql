@@ -71,23 +71,23 @@ INSERT INTO master.element_subtype_active_params
 (1, 3, 2, 120, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 
-update master.i18n_labels set translation = '<= 60 (km/h)' where label = 'LBL_ELEMENT_TYPE_PARAM_DETECTOR_VEH_SPEED_1' and locale_code = 'es_CL';
-update master.i18n_labels set translation = '61-100 (km/h)' where label = 'LBL_ELEMENT_TYPE_PARAM_DETECTOR_VEH_SPEED_2' and locale_code = 'es_CL';
-update master.i18n_labels set translation = '101-120 (km/h)' where label = 'LBL_ELEMENT_TYPE_PARAM_DETECTOR_VEH_SPEED_3' and locale_code = 'es_CL';
-update master.i18n_labels set translation = '>= 120 (km/h)' where label = 'LBL_ELEMENT_TYPE_PARAM_DETECTOR_VEH_SPEED_4' and locale_code = 'es_CL';
-update master.i18n_labels set translation = '<= 60 (km/h)' where label = 'LBL_ELEMENT_TYPE_PARAM_DETECTOR_VEH_SPEED_1_DESC' and locale_code = 'es_CL';
-update master.i18n_labels set translation = '61-100 (km/h)' where label = 'LBL_ELEMENT_TYPE_PARAM_DETECTOR_VEH_SPEED_2_DESC' and locale_code = 'es_CL';
-update master.i18n_labels set translation = '101-120 (km/h)' where label = 'LBL_ELEMENT_TYPE_PARAM_DETECTOR_VEH_SPEED_3_DESC' and locale_code = 'es_CL';
-update master.i18n_labels set translation = '>= 120 (km/h)' where label = 'LBL_ELEMENT_TYPE_PARAM_DETECTOR_VEH_SPEED_4_DESC' and locale_code = 'es_CL';
+update master.i18n_labels set translation = 'Catg. Vel 1 (<= 60 km/h)' where label = 'LBL_ELEMENT_TYPE_PARAM_DETECTOR_VEH_SPEED_1' and locale_code = 'es_CL';
+update master.i18n_labels set translation = 'Catg. Vel 2 (61-100 km/h)' where label = 'LBL_ELEMENT_TYPE_PARAM_DETECTOR_VEH_SPEED_2' and locale_code = 'es_CL';
+update master.i18n_labels set translation = 'Catg. Vel 3 (101-120 km/h)' where label = 'LBL_ELEMENT_TYPE_PARAM_DETECTOR_VEH_SPEED_3' and locale_code = 'es_CL';
+update master.i18n_labels set translation = 'Catg. Vel 4 (>= 120 km/h)' where label = 'LBL_ELEMENT_TYPE_PARAM_DETECTOR_VEH_SPEED_4' and locale_code = 'es_CL';
+update master.i18n_labels set translation = 'Catg. Vel 1 (<= 60 km/h)' where label = 'LBL_ELEMENT_TYPE_PARAM_DETECTOR_VEH_SPEED_1_DESC' and locale_code = 'es_CL';
+update master.i18n_labels set translation = 'Catg. Vel 2 (61-100 km/h)' where label = 'LBL_ELEMENT_TYPE_PARAM_DETECTOR_VEH_SPEED_2_DESC' and locale_code = 'es_CL';
+update master.i18n_labels set translation = 'Catg. Vel 3 (101-120 km/h)' where label = 'LBL_ELEMENT_TYPE_PARAM_DETECTOR_VEH_SPEED_3_DESC' and locale_code = 'es_CL';
+update master.i18n_labels set translation = 'Catg. Vel 4 (>= 120 km/h)' where label = 'LBL_ELEMENT_TYPE_PARAM_DETECTOR_VEH_SPEED_4_DESC' and locale_code = 'es_CL';
 
-update master.i18n_labels set translation = 'Autos y camionetas' where label = 'LBL_ELEMENT_TYPE_PARAM_DETECTOR_VEH_PA_1' and locale_code = 'es_CL';
-update master.i18n_labels set translation = 'Camionetas doble rueda trasera y/o autos y camionetas con remolque' where label = 'LBL_ELEMENT_TYPE_PARAM_DETECTOR_VEH_PA_2' and locale_code = 'es_CL';
-update master.i18n_labels set translation = 'Camiones de dos ejes, maquinaria agrícola o de construcción ' where label = 'LBL_ELEMENT_TYPE_PARAM_DETECTOR_VEH_PA_3' and locale_code = 'es_CL';
-update master.i18n_labels set translation = 'Motos, cuatrimotos y motonetas' where label = 'LBL_ELEMENT_TYPE_PARAM_DETECTOR_VEH_PA_4' and locale_code = 'es_CL';
-update master.i18n_labels set translation = 'Autos y camionetas' where label = 'LBL_ELEMENT_TYPE_PARAM_DETECTOR_VEH_PA_1_DESC' and locale_code = 'es_CL';
-update master.i18n_labels set translation = 'Camionetas doble rueda trasera y/o autos y camionetas con remolque' where label = 'LBL_ELEMENT_TYPE_PARAM_DETECTOR_VEH_PA_2_DESC' and locale_code = 'es_CL';
-update master.i18n_labels set translation = 'Camiones de dos ejes, maquinaria agrícola o de construcción ' where label = 'LBL_ELEMENT_TYPE_PARAM_DETECTOR_VEH_PA_3_DESC' and locale_code = 'es_CL';
-update master.i18n_labels set translation = 'Motos, cuatrimotos y motonetas' where label = 'LBL_ELEMENT_TYPE_PARAM_DETECTOR_VEH_PA_4_DESC' and locale_code = 'es_CL';
+update master.i18n_labels set translation = 'Clase 1 = Autos y camionetas' where label = 'LBL_ELEMENT_TYPE_PARAM_DETECTOR_VEH_PA_1' and locale_code = 'es_CL';
+update master.i18n_labels set translation = 'Clase 2 = Camionetas doble rueda trasera y/o autos y camionetas con remolque' where label = 'LBL_ELEMENT_TYPE_PARAM_DETECTOR_VEH_PA_2' and locale_code = 'es_CL';
+update master.i18n_labels set translation = 'Clase 3 = Camiones de dos ejes, maquinaria agrícola o de construcción ' where label = 'LBL_ELEMENT_TYPE_PARAM_DETECTOR_VEH_PA_3' and locale_code = 'es_CL';
+update master.i18n_labels set translation = 'Clase 4 = Motos, cuatrimotos y motonetas' where label = 'LBL_ELEMENT_TYPE_PARAM_DETECTOR_VEH_PA_4' and locale_code = 'es_CL';
+update master.i18n_labels set translation = 'Clase 1 = Autos y camionetas' where label = 'LBL_ELEMENT_TYPE_PARAM_DETECTOR_VEH_PA_1_DESC' and locale_code = 'es_CL';
+update master.i18n_labels set translation = 'Clase 2 = Camionetas doble rueda trasera y/o autos y camionetas con remolque' where label = 'LBL_ELEMENT_TYPE_PARAM_DETECTOR_VEH_PA_2_DESC' and locale_code = 'es_CL';
+update master.i18n_labels set translation = 'Clase 3 = Camiones de dos ejes, maquinaria agrícola o de construcción ' where label = 'LBL_ELEMENT_TYPE_PARAM_DETECTOR_VEH_PA_3_DESC' and locale_code = 'es_CL';
+update master.i18n_labels set translation = 'Clase 4 = Motos, cuatrimotos y motonetas' where label = 'LBL_ELEMENT_TYPE_PARAM_DETECTOR_VEH_PA_4_DESC' and locale_code = 'es_CL';
 
 update master.i18n_labels set translation = 'Detector PAT' where label = 'LBL_ELEMENT_SUBTYPE_DETECTOR_KINEO' and locale_code = 'es_CL';
 update master.i18n_labels set translation = 'Detector PAT' where label = 'LBL_ELEMENT_SUBTYPE_DETECTOR_KINEO_DESC' and locale_code = 'es_CL';

@@ -62,10 +62,27 @@ BEGIN
 			FROM 
 				hist.element_states es 
 			ORDER BY fecha desc'
-			, null, null);
+			, null, null),
+	(3, 'pmv_commands', 'Comandos enviados a PMVs', 'Comandos enviados a PMVs', 'Comandos enviados a PMVs', NULL, false, false, 
+			-- sql_view 
+			'SELECT 
+				*
+			FROM 
+				reports.vw_pmv_completa 
+			ORDER BY time_stamp desc'
+			, 0171, null);
 			
-	--INSERT INTO backoffice.sg_metadata_columns (id, sg_metadata_table_id, column_name, "label", label_description, needs_translation, metadata) VALUES
+	INSERT INTO reports.sg_metadata_columns (id, sg_metadata_table_id, column_name, "label", label_description, needs_translation, metadata) VALUES
+	(0301, 3, 'id', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ID', NULL, false, '{"formVisible": false, "tableVisible": false}'),
+	(0302, 3, 'time_stamp', 'LBL_GRID_FIELD_DATE', NULL, false, '{"editable": false}'),
+	(0303, 3, 'user_name', 'LBL_GRID_FIELD_USER', NULL, false, '{"editable": false}'),
+	(0304, 3, 'translation', 'LBL_GRID_FIELD_COMMAND', NULL, false, '{"editable": false}'),
+	(0305, 3, 'comment', 'LBL_GRID_FIELD_ORIGEN', NULL, false, '{"editable": false}'),
+	(0306, 3, 'element', 'LBL_GRID_FIELD_EQUIPO', NULL, false, '{"editable": false}'),
+	(0307, 3, 'zona_grafico_1', 'grafico principal', NULL, false, '{"editable": false}'),
+	(0308, 3, 'mensaje', 'LBL_GRID_FIELD_MENSAJE', NULL, false, '{"editable": false}'),
+	(0309, 3, 'alternancia_zona_grafico_1', 'grafico alternancia', NULL, false, '{"editable": false}'),
+	(0310, 3, 'mensaje_alternancia', 'LBL_GRID_FIELD_ALTER_MENSAJE', NULL, false, '{"editable": false}');
 	
- 
   END IF;
 END $$;
