@@ -1019,7 +1019,7 @@
       "pointLocator":{
         "range":"HOLDING_REGISTER",
         "modbusDataType":"TWO_BYTE_INT_UNSIGNED",
-        "writeType":"SETTABLE",
+        "writeType":"WRITE_ONLY",
         "additive":0.0,
         "bit":0,
         "charset":"ASCII",
@@ -1079,7 +1079,7 @@
       "pointLocator":{
         "range":"HOLDING_REGISTER",
         "modbusDataType":"TWO_BYTE_INT_UNSIGNED",
-        "writeType":"SETTABLE",
+        "writeType":"WRITE_ONLY",
         "additive":0.0,
         "bit":0,
         "charset":"ASCII",
@@ -1139,7 +1139,7 @@
       "pointLocator":{
         "range":"HOLDING_REGISTER",
         "modbusDataType":"TWO_BYTE_INT_UNSIGNED",
-        "writeType":"SETTABLE",
+        "writeType":"WRITE_ONLY",
         "additive":0.0,
         "bit":0,
         "charset":"ASCII",

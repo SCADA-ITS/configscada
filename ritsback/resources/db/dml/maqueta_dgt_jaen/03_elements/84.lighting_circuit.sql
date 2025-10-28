@@ -941,7 +941,8 @@ INSERT INTO conf.elements (element_type_id, element_subtype_id, element_id, loca
 (84, 3, 940, 9400084, NULL, NULL, 'LUMI-EMER-DC-4A-CAZ', 'LUMI-EMER-DC-4A-CAZ', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (84, 3, 941, 9410084, NULL, NULL, 'LUMI-EMER-04-F4-CAZ', 'LUMI-EMER-04-F4-CAZ', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (84, 3, 942, 9420084, NULL, NULL, 'LUMI-EMER-DC-48-CAZ', 'LUMI-EMER-DC-48-CAZ', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(84, 3, 943, 9430084, NULL, NULL, 'LUMI-EMER-DC-47-CAZ', 'LUMI-EMER-DC-47-CAZ', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(84, 3, 943, 9430084, NULL, NULL, 'LUMI-EMER-DC-47-CAZ', 'LUMI-EMER-DC-47-CAZ', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(84, 3, 944, 9440084, NULL, NULL, 'LUMI-EMER-E1-0A-DPZ', 'LUMI-EMER-E1-0A-DPZ', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_type_id, element_id, element_value_state_id, value, enabled, visible, created_at, updated_at) VALUES
 (84, 1003, 1, 1, NULL, 'CONT-SOL-ILU-SUR-2', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -5111,7 +5112,12 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 (84, 6, 1, 943, NULL, 'MADRID', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (84, 7, 1, 943, NULL, 'RÁPIDO', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (84, 8, 1, 943, NULL, '21-C', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(84, 1003, 1, 943, NULL, 'LUMI-EMER-DC-47-CAZ', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(84, 1003, 1, 943, NULL, 'LUMI-EMER-DC-47-CAZ', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+
+(84, 6, 1, 944, NULL, 'MADRID', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(84, 7, 1, 944, NULL, 'RÁPIDO', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(84, 8, 1, 944, NULL, '132', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(84, 1003, 1, 944, NULL, 'LUMI-EMER-E1-0A-DPZ', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO conf.element_io_controller_modules (element_type_id, element_id, module_type_id, module_id, enabled, visible, created_at, updated_at) VALUES
 (84, 1, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -6056,4 +6062,5 @@ INSERT INTO conf.element_io_controller_modules (element_type_id, element_id, mod
 (84, 940, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (84, 941, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (84, 942, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(84, 943, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(84, 943, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(84, 944, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

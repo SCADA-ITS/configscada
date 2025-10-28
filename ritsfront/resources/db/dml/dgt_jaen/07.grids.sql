@@ -320,8 +320,8 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (730004, 73, 1, 4, true, true, false, false, NULL, NULL, 'state', false, false, null, false, false, 35, NULL, true, true, NULL, NULL, NULL, NULL,NULL),
 (730005, 73, 1, 5, true, true, false, true, 'LBL_GRID_FIELD_STATE_LABEL', 'LBL_GRID_FIELD_STATE_LABEL', 'stateLabel', false, false, null, true, false, 150, NULL, true, true, NULL, NULL, NULL, NULL,NULL),
 (730006, 73, 2 ,6, true, false, false, false, 'LBL_ELEMENT_TYPE_PARAM_ARC_LEVEL', 'LBL_ELEMENT_TYPE_PARAM_ARC_LEVEL_DESC', 'ElementTypeParam:73:2:1', false, false, 'left', false, false, 200, NULL, true, true, NULL, NULL, NULL, NULL, 0),
-(730007, 73, 1 ,7, true, false, false, false, 'LBL_ELEMENT_TYPE_PARAM_OFF', 'LBL_ELEMENT_TYPE_PARAM_OFF_DESC', 'ElementTypeParam:73:2:2', false, false, 'left', true, false, 200, NULL, true, true, NULL, NULL, NULL, NULL, 0),
-(730008, 73, 1 ,8, true, false, false, false, 'LBL_ELEMENT_TYPE_PARAM_REMOTE', 'LBL_ELEMENT_TYPE_PARAM_REMOTE_DESC', 'ElementTypeParam:73:2:3', false, false, 'left', true, false, 200, NULL, true, true, NULL, NULL, NULL, NULL, 0),
+(730007, 73, 2 ,7, true, false, false, false, 'LBL_ELEMENT_TYPE_PARAM_OFF', 'LBL_ELEMENT_TYPE_PARAM_OFF_DESC', 'ElementTypeParam:73:2:2', false, false, 'left', true, false, 200, NULL, true, true, NULL, NULL, NULL, NULL, 0),
+(730008, 73, 2 ,8, true, false, false, false, 'LBL_ELEMENT_TYPE_PARAM_REMOTE', 'LBL_ELEMENT_TYPE_PARAM_REMOTE_DESC', 'ElementTypeParam:73:2:3', false, false, 'left', true, false, 200, NULL, true, true, NULL, NULL, NULL, NULL, 0),
 
 (750001, 75, 1, 1, true, false, false, false, 'LBL_GRID_FIELD_ID', 'LBL_GRID_FIELD_ID', 'id', true, false, null, false, false, 500, NULL, true, false, NULL, NULL, NULL, NULL, NULL),
 (750002, 75, 1, 2, true, false, false, true, 'LBL_GRID_FIELD_NAME', 'LBL_GRID_FIELD_NAME', 'alias', false, false, NULL, false, false, 170, NULL, true, true, NULL, NULL, true, NULL, NULL),

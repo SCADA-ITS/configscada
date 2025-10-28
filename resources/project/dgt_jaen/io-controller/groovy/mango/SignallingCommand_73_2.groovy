@@ -51,11 +51,11 @@ class SignallingCommand_73_2 {
 			XidPointValueTimeModel xidPointValueTimeModel;
 
 			xidPointValueTimeModel = signallingCommandUtils.getXidPointValueTimeModel(signallingCommand, 
-					dataSourceXid + "_" + APAGADO, OFF);
+					dataSourceXid + "_" + APAGADO, ZERO);
 			xidPointValueTimeModels.add(xidPointValueTimeModel);
 
 			xidPointValueTimeModel = signallingCommandUtils.getXidPointValueTimeModel(signallingCommand, 
-					dataSourceXid + "_" + REMOTE, OFF);
+					dataSourceXid + "_" + REMOTE, ZERO);
 			xidPointValueTimeModels.add(xidPointValueTimeModel);
 
 			xidPointValueTimeModel = signallingCommandUtils.getXidPointValueTimeModel(signallingCommand, 

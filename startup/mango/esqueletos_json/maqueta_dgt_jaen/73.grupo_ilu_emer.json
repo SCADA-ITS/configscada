@@ -49,7 +49,7 @@
       "pointLocator":{
         "range":"HOLDING_REGISTER",
         "modbusDataType":"TWO_BYTE_INT_UNSIGNED",
-        "writeType":"SETTABLE",
+        "writeType":"WRITE_ONLY",
         "additive":0.0,
         "bit":0,
         "charset":"ASCII",
@@ -109,7 +109,7 @@
       "pointLocator":{
         "range":"HOLDING_REGISTER",
         "modbusDataType":"TWO_BYTE_INT_UNSIGNED",
-        "writeType":"SETTABLE",
+        "writeType":"WRITE_ONLY",
         "additive":0.0,
         "bit":0,
         "charset":"ASCII",
@@ -169,7 +169,7 @@
       "pointLocator":{
         "range":"HOLDING_REGISTER",
         "modbusDataType":"TWO_BYTE_INT_UNSIGNED",
-        "writeType":"SETTABLE",
+        "writeType":"WRITE_ONLY",
         "additive":0.0,
         "bit":0,
         "charset":"ASCII",
@@ -241,7 +241,7 @@
                "includeTimestamp":false
             },
             {
-               "dataPointId":"DP_{device_name}_arc_level",
+               "dataPointId":"DP_{device_name_ilu}_dimming_level",
                "parameterName":"arc_level",
                "includeTimestamp":false
             },
