@@ -10,39 +10,33 @@ AND contype = 'f'
 AND connamespace::regnamespace::text = 'rt';
 
 DO $$
+DECLARE
+    r RECORD;
 BEGIN
-    IF EXISTS (
-        SELECT schema_name 
-        FROM information_schema.schemata 
-        WHERE schema_name = 'conf'
-    ) THEN
-        DROP SCHEMA conf CASCADE;
-    END IF;
+    -- Borrar todas las tablas del esquema conf
+    FOR r IN
+        SELECT tablename 
+        FROM pg_tables 
+        WHERE schemaname = 'conf'
+    LOOP
+        EXECUTE format('DROP TABLE IF EXISTS conf.%I CASCADE', r.tablename);
+    END LOOP;
+
+    -- Borrar todas las tablas del esquema static
+    FOR r IN
+        SELECT tablename 
+        FROM pg_tables 
+        WHERE schemaname = 'static'
+    LOOP
+        EXECUTE format('DROP TABLE IF EXISTS static.%I CASCADE', r.tablename);
+    END LOOP;
+
+    -- Borrar todas las tablas del esquema master
+    FOR r IN
+        SELECT tablename 
+        FROM pg_tables 
+        WHERE schemaname = 'master'
+    LOOP
+        EXECUTE format('DROP TABLE IF EXISTS master.%I CASCADE', r.tablename);
+    END LOOP;
 END $$;
-
-DO $$
-BEGIN
-    IF EXISTS (
-        SELECT schema_name 
-        FROM information_schema.schemata 
-        WHERE schema_name = 'static'
-    ) THEN
-        DROP SCHEMA static CASCADE;
-    END IF;
-END $$;
-
-
-DO $$
-BEGIN
-    IF EXISTS (
-        SELECT schema_name 
-        FROM information_schema.schemata 
-        WHERE schema_name = 'master'
-    ) THEN
-        DROP SCHEMA master CASCADE;
-    END IF;
-END $$;
-
-CREATE SCHEMA conf;
-CREATE SCHEMA static;
-CREATE SCHEMA master;

@@ -7,7 +7,7 @@ INSERT INTO ui.maps (id, name, description, "label", icon, longitude, latitude, 
 	}');
 INSERT INTO ui.map_layers (id, base_layer, map_id, "name", description, "label", icon, visible) VALUES 
 (0202, NULL, 2, 'CAMERA', 'CAMERA', 'LBL_ELEMENT_TYPE_CAMERA', NULL, true), 
-(0271, NULL, 2, 'PMV', 'PMV', 'LBL_ELEMENT_TYPE_PMV', NULL, true), 
+(0271, NULL, 2, 'PMV', 'PMV', 'LBL_ELEMENT_TYPE_PANEL', NULL, true), 
 (0299, NULL, 2, 'RADAR', 'RADAR', 'LBL_ELEMENT_TYPE_TRAFFIC_RADAR', NULL, true);
 
 

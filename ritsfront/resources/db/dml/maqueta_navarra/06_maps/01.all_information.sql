@@ -17,7 +17,7 @@ INSERT INTO ui.map_incidents(id, incident_graphic_icon_id, incident_report_modul
 
 INSERT INTO ui.map_layers (id, base_layer, map_id, "name", description, "label", icon, visible) VALUES 
 (2, NULL, 1, 'CAMERA', 'CAMERA', 'LBL_ELEMENT_TYPE_CAMERA', NULL, true), 
-(71, NULL, 1, 'PMV', 'PMV', 'LBL_ELEMENT_TYPE_PMV', NULL, true), 
+(71, NULL, 1, 'PMV', 'PMV', 'LBL_ELEMENT_TYPE_PANEL', NULL, true), 
 (99, NULL, 1, 'RADAR', 'RADAR', 'LBL_ELEMENT_TYPE_TRAFFIC_RADAR', NULL, true);
 
 --
