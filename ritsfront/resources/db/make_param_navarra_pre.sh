@@ -1,7 +1,7 @@
 #!/bin/bash 
 echo Executing sql scripts to generate dev environment... \(errors that occur are shown below\)
 cd ddl_navarra_pre
-sh ./ddl.sh $1
+sh ./ddl_param.sh $1
 cd ..
 cd dml/master
 sh ./dml_param_navarra_pre.sh $1

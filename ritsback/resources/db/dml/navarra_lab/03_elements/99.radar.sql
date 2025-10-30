@@ -124,11 +124,15 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 (99, 8, 1, 7, NULL, 'CABINA', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (99, 1003, 1, 7, NULL, 'TRA-C-1390', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
-INSERT INTO conf.element_io_controller_modules (element_type_id, element_id, module_type_id, module_id, enabled, visible, created_at, updated_at) VALUES
+update master.element_types
+set initial_element_type_state_id = 2
+where element_type_id = 99;
+
+/*INSERT INTO conf.element_io_controller_modules (element_type_id, element_id, module_type_id, module_id, enabled, visible, created_at, updated_at) VALUES
 (99, 1, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (99, 2, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (99, 3, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (99, 4, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (99, 5, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (99, 6, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(99, 7, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(99, 7, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);*/

@@ -14,6 +14,12 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 (71, 4, 1, 2, NULL, '[{"zone":1,"type":"graphic","vms_group_id":22},{"zone":2,"type":"text","maxCharsPerLine":16},{"zone":3,"type":"graphic","vms_group_id":22}]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (71, 9, 1, 2, NULL, 'true', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
+INSERT INTO master.element_subtype_active_params
+(element_subtype_id, element_type_id, param_type_id, element_type_param_id, enabled, visible, created_at, updated_at)VALUES
+(22, 71, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(22, 71, 1, 2, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(22, 71, 1, 4, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
 update master.command_element_types
 set on_change = 'VirtualPMVSignalling'
 where element_type_id = 71 and command_element_type_id = 2;

@@ -1,7 +1,7 @@
 -- 
 -- Table: conf.io_controller_modules
 --
-INSERT INTO conf.io_controller_modules
+/*INSERT INTO conf.io_controller_modules
 (module_type_id, module_id, alias, description, enabled, visible, created_at, updated_at) VALUES
 (1, 1, 'MANGO', 'MANGO', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
@@ -37,4 +37,4 @@ INSERT INTO conf.io_controller_module_values
 (1, 1, 29, '/users/current', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (1, 1, 30, 'GET', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (1, 1, 31, '/data-points', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(1, 1, 32, 'GET', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(1, 1, 32, 'GET', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);*/
