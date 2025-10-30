@@ -13,38 +13,8 @@
     </p:subscriptor>
   </p:subscriptors>
   <p:mods>
-    <p:mod>
-      <p:type>1</p:type>
-      <p:id>1</p:id>
-      <p:enabled>true</p:enabled>
-      <p:threads>12</p:threads>
-      <p:subscriptors_ref>
-        <p:subscriptor_id_ref>1</p:subscriptor_id_ref>
-        <p:subscriptor_id_ref>2</p:subscriptor_id_ref>
-      </p:subscriptors_ref>
-    </p:mod>
-    <p:mod>
-      <p:type>2</p:type>
-      <p:id>1</p:id>
-      <p:enabled>true</p:enabled>
-      <p:threads>1</p:threads>
-      <p:subscriptors_ref>
-        <p:subscriptor_id_ref>1</p:subscriptor_id_ref>
-        <p:subscriptor_id_ref>2</p:subscriptor_id_ref>
-      </p:subscriptors_ref>
-    </p:mod>
-    <p:mod>
-      <p:type>3</p:type>
-      <p:id>1</p:id>
-      <p:enabled>true</p:enabled>
-      <p:threads>4</p:threads>
-      <p:subscriptors_ref>
-        <p:subscriptor_id_ref>1</p:subscriptor_id_ref>
-        <p:subscriptor_id_ref>2</p:subscriptor_id_ref>
-      </p:subscriptors_ref>
-    </p:mod>
      <p:mod>
-      <p:type>4</p:type>
+      <p:type>6</p:type>
       <p:id>1</p:id>
       <p:enabled>true</p:enabled>
       <p:threads>1</p:threads>
