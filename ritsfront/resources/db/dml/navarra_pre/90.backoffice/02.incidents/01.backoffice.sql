@@ -3,7 +3,7 @@ BEGIN
   IF EXISTS (SELECT 1 FROM pg_tablespace WHERE spcname = 'tbs_controltrafico_incidents') THEN
 	
   	INSERT INTO ui.backoffices (id, "name", description, "label", jdbc, "user", "password", "schema", default_metadata_backoffice, default_metadata_table, default_metadata_column, enabled) 
-	VALUES(2, 'incidents', NULL, NULL, 'jdbc:postgresql://10.238.4.128:5432/controltrafico', 'dbo_controltrafico', 'HQK1Ix3eeT1oNm0DK5SeFw==', 'incidents',
+	VALUES(2, 'incidents', NULL, NULL, 'jdbc:postgresql://10.238.4.127:5432/controltrafico', 'dbo_controltrafico', '2T+azild9EzOOimGtdZi0A==', 'incidents',
 	-- default_metadata_backoffice
 	'{}',
 	-- default_metadata_table

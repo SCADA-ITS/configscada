@@ -44,7 +44,7 @@ INSERT INTO conf.system_param_values
 -- Número máximo de log permitidas sin reconocer
 (17, '100', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 -- URL de conexión al smart road info
-(18, 'https://controltrafico.admon-cfnavarra.es/api', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(18, 'https://precontroltrafico.admon-cfnavarra.es/api', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 -- Path para servidor de ficheros
 (19, '/home/admin/app/frontrits/resources/trs', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 

@@ -18,9 +18,9 @@ import java.time.format.DateTimeFormatter;
 class BackOfficeInitIncident {
 
     org.apache.logging.log4j.Logger log
-    private static final String CONNECTION_URL = "jdbc:postgresql://10.238.4.128:5432/controltrafico";
+    private static final String CONNECTION_URL = "jdbc:postgresql://10.238.4.127:5432/controltrafico";
     private static final String DB_USER = "dbo_controltrafico";
-    private static final String DB_PASSWORD = "12hJklfj9.pha9";
+    private static final String DB_PASSWORD = "fj9.pha9t5h57E";
     private static final String DB_SCHEMA = "incidents";
 
 	 BackOfficeInitIncident(org.apache.logging.log4j.Logger log) {

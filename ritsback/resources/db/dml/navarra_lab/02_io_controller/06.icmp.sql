@@ -11,4 +11,4 @@ INSERT INTO conf.io_controller_modules
 INSERT INTO conf.io_controller_module_values
 (module_type_id, module_id, module_type_param_id, value, enabled, visible, created_at, updated_at)VALUES
 (6, 1, 1, 'true', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(6, 1, 2, '0 * * ? * * *', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(6, 1, 2, '0 0/10 * ? * * *', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
