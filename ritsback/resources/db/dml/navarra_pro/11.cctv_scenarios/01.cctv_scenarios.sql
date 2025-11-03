@@ -4,7 +4,8 @@
 
 INSERT INTO conf.cctv_scenarios (scenario_id, alias, description, n_rows, n_columns, enabled, visible) VALUES
 (1, 'IMAGENES', 'IMAGENES', 4, 4, true, true),
-(2, 'FLUJO VIDEO', 'FLUJO VIDEO', 3, 3, true, true);
+(2, 'FLUJO VIDEO', 'FLUJO VIDEO', 3, 3, true, true),
+(3, 'FLUJO VIDEO PA-30', 'FLUJO VIDEO PA-30', 2, 2, true, true);
 
 -- 
 -- Table: config.cctv_scenario_elements
@@ -40,7 +41,28 @@ INSERT INTO conf.cctv_scenario_elements (scenario_id, element_type_id, element_i
 (2, 2, 25, 9, true, true),
 (2, 2, 26, 10, true, true),
 --(2, 2, 27, 11, true, true),
-(2, 2, 28, 12, true, true);
+(2, 2, 28, 12, true, true),
+
+--FLUJO VIDEO PA-30
+(3, 2, 29, 1, true, true),
+(3, 2, 30, 2, true, true),
+(3, 2, 31, 3, true, true),
+(3, 2, 32, 4, true, true),
+(3, 2, 33, 5, true, true),
+(3, 2, 34, 6, true, true),
+(3, 2, 35, 7, true, true),
+(3, 2, 36, 8, true, true),
+(3, 2, 37, 9, true, true),
+(3, 2, 38, 10, true, true),
+(3, 2, 39, 11, true, true),
+(3, 2, 40, 12, true, true),
+(3, 2, 41, 13, true, true),
+(3, 2, 42, 14, true, true),
+(3, 2, 43, 15, true, true),
+(3, 2, 44, 16, true, true),
+(3, 2, 45, 17, true, true),
+(3, 2, 46, 18, true, true);
+
 
 
 

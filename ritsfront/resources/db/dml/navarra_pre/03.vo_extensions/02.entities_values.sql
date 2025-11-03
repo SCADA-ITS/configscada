@@ -15,6 +15,26 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 ('ImsIncidentType:301', 34, 'rodaje.png'),
 
 ('ImsIncidentType:401', 34, 'accidente.png'),
+('ImsIncidentType:402', 34, 'accidente.png'),
+('ImsIncidentType:403', 34, 'incidencia_trafico.png'),
+('ImsIncidentType:404', 34, 'incidencia_trafico.png'),
+('ImsIncidentType:405', 34, 'incidencia_trafico.png'),
+('ImsIncidentType:406', 34, 'obstaculo.png'),
+('ImsIncidentType:407', 34, 'animal.png'),
+('ImsIncidentType:408', 34, 'incidencia_trafico.png'),
+('ImsIncidentType:409', 34, 'incidencia_trafico.png'),
+('ImsIncidentType:410', 34, 'parado.png'),
+
+('ImsIncidentType:501', 34, 'niebla.png'),
+('ImsIncidentType:502', 34, 'copo_nieve.png'),
+('ImsIncidentType:503', 34, 'lluvia.png'),
+('ImsIncidentType:504', 34, 'copo_nieve.png'),
+('ImsIncidentType:505', 34, 'viento.png'),
+('ImsIncidentType:506', 34, 'inundacion.png'),
+
+('ImsIncidentType:601', 34, 'obras.png'),
+('ImsIncidentType:602', 34, 'valla.png'),
+('ImsIncidentType:604', 34, 'fuego.png'),
 
 ('ElementType:2', 1, '2'),
 ('ElementType:2', 2, 'graphic_icon/02_camera.svg'),
@@ -27,6 +47,9 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 ('ElementType:71', 14, 'grid/element_type_71.png'),
 ('ElementType:71', 23, '102601'),
 ('ElementType:71', 30, '102602'),
+('ElementType:71', 71, '[71]'),
+
+('ElementType:90', 72, 'true'),
 
 ('ElementType:98', 72, 'true'),
 
@@ -284,14 +307,24 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 ('CommandElementType:3:2', 38, 'INFO'),
 
 ('TransitState:1', 78, 'transit_state/IN.png'),
-('TransitState:2', 78, 'transit_state/PT.png'),
-('TransitState:3', 78, 'transit_state/EN.png'),
-('TransitState:4', 78, 'transit_state/CA.png'),
+('TransitState:2', 78, 'transit_state/OC.png'),
+('TransitState:3', 78, 'transit_state/IR.png'),
+('TransitState:4', 78, 'transit_state/VD.png'),
+('TransitState:5', 78, 'transit_state/PD.png'),
+('TransitState:6', 78, 'transit_state/PS.png'),
+('TransitState:7', 78, 'transit_state/DI.png'),
+('TransitState:8', 78, 'transit_state/AR.png'),
+('TransitState:9', 78, 'transit_state/FL.png'),
 
-('TransitState:1', 79, '#bddcf0'),
-('TransitState:2', 79, '#e1d86e'),
-('TransitState:3', 79, '#a6c8c5'),
-('TransitState:4', 79, '#eb7474'),
+('TransitState:1', 79, '#6C757D'),
+('TransitState:2', 79, '#17A2B8'),
+('TransitState:3', 79, '#FFC107'),
+('TransitState:4', 79, '#007BFF'),
+('TransitState:5', 79, '#FD7E14'),
+('TransitState:6', 79, '#DC3545'),
+('TransitState:7', 79, '#6F42C1'),
+('TransitState:8', 79, '#28A745'),
+('TransitState:9', 79, '#FF0000'),
 
 ('TransitType:1', 80, '[
 	{
@@ -303,24 +336,18 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 			{
 				"id": 1,
 				"position": 1,
-				"label": "LBL_TRANSIT_TAB_GENERAL_SUMMARY",
+				"label": "LBL_TRANSIT_TAB_GENERAL_INFRACTION",
 				"enabled": true
 			},
 			{
 				"id": 2,
 				"position": 2,
-				"label": "LBL_TRANSIT_TAB_GENERAL_DETAILS",
+				"label": "LBL_TRANSIT_TAB_GENERAL_LOCATION",
 				"enabled": true
 			},
 			{
 				"id": 3,
 				"position": 3,
-				"label": "LBL_TRANSIT_TAB_GENERAL_LOCATION",
-				"enabled": true
-			},
-			{
-				"id": 4,
-				"position": 4,
 				"label": "LBL_TRANSIT_TAB_GENERAL_EQUIPMENT",
 				"enabled": true
 			}
@@ -333,66 +360,48 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 				"dataType": "DataType:1",
 				"field": "id",
 				"calculatedFieldExpresion": "return util.getSimpleId(fieldValue, 1);", 
-				"label": "LBL_TRANSIT_TAB_GENERAL_SUMMARY_ID",
+				"label": "LBL_TRANSIT_TAB_GENERAL_INFRACTION_ID",
+				"enabled": true
+			},
+			{
+				"id": 101,
+				"propertyGroupId": 1,
+				"field": "transitCode",
+				"position": 2,
+				"dataType": "DataType:2",
+				"label": "LBL_TRANSIT_TAB_GENERAL_INFRACTION_CODE",
 				"enabled": true
 			},
 			{
 				"id": 102,
 				"propertyGroupId": 1,
-				"field": "transitCode",
-				"position": 2,
+				"field": "transitState.labelAlias",
+				"position": 3,
 				"dataType": "DataType:2",
-				"label": "LBL_TRANSIT_TAB_GENERAL_SUMMARY_CODE",
+				"label": "LBL_TRANSIT_TAB_GENERAL_INFRACTION_STATE",
 				"enabled": true
 			},
 			{
 				"id": 103,
 				"propertyGroupId": 1,
-				"field": "transitState.labelAlias",
-				"position": 3,
-				"dataType": "DataType:2",
-				"label": "LBL_TRANSIT_TAB_GENERAL_SUMMARY_STATE",
+				"field": "dateTransit",
+				"position": 4,
+				"dataType": "DataType:4",
+				"label": "LBL_TRANSIT_TAB_GENERAL_INFRACTION_DATE",
 				"enabled": true
 			},
 			{
 				"id": 104,
 				"propertyGroupId": 1,
-				"field": "dateTransit",
-				"position": 4,
-				"dataType": "DataType:4",
-				"label": "LBL_TRANSIT_TAB_GENERAL_SUMMARY_DATE",
-				"enabled": true
-			},
-			{
-				"id": 105,
-				"propertyGroupId": 1,
-				"field": "vehiclePlateNumber",
+				"field": "speed",
 				"position": 5,
-				"dataType": "DataType:2",
-				"label": "LBL_TRANSIT_TAB_GENERAL_SUMMARY_PLATE_NUMBER",
-				"enabled": true,
-				"editable": ["TransitState:3"]
+				"dataType": "DataType:3",
+				"label": "LBL_TRANSIT_TAB_GENERAL_INFRACTION_VEHICLE_SPEED",
+				"enabled": true
 			},
 			{
 				"id": 201,
 				"propertyGroupId": 2,
-				"field": "speed",
-				"position": 1,
-				"dataType": "DataType:3",
-				"label": "LBL_TRANSIT_TAB_GENERAL_DETAILS_VEHICLE_SPEED",
-				"enabled": true
-			},
-			{
-				"id": 202,
-				"propertyGroupId": 2,
-				"position": 2,
-				"dataType": "DataType:3",
-				"label": "LBL_TRANSIT_TAB_GENERAL_DETAILS_ROAD_SPEED_LIMIT",
-				"enabled": false
-			},
-			{
-				"id": 301,
-				"propertyGroupId": 3,
 				"field": "address",
 				"position": 1,
 				"dataType": "DataType:2",
@@ -400,8 +409,8 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 				"enabled": true
 			},
 			{
-				"id": 302,
-				"propertyGroupId": 3,
+				"id": 202,
+				"propertyGroupId": 2,
 				"field": "locality",
 				"position": 2,
 				"dataType": "DataType:2",
@@ -409,17 +418,17 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 				"enabled": true	
 			},
 			{
-				"id": 302,
-				"propertyGroupId": 3,
+				"id": 203,
+				"propertyGroupId": 2,
 				"field": "towards",
-				"position": 3,
+				"position": 2,
 				"dataType": "DataType:2",
 				"label": "LBL_TRANSIT_TAB_GENERAL_LOCATION_TOWARDS",
 				"enabled": true	
 			},
 			{
-				"id": 401,
-				"propertyGroupId": 4,
+				"id": 301,
+				"propertyGroupId": 3,
 				"field": "element.elementType.labelAlias",
 				"position": 1,
 				"dataType": "DataType:2",
@@ -427,8 +436,8 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 				"enabled": true
 			},
 			{
-				"id": 402,
-				"propertyGroupId": 4,
+				"id": 302,
+				"propertyGroupId": 3,
 				"field": "element.alias",
 				"position": 2,
 				"dataType": "DataType:2",
@@ -436,8 +445,8 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 				"enabled": true
 			},
 			{
-				"id": 403,
-				"propertyGroupId": 4,
+				"id": 303,
+				"propertyGroupId": 3,
 				"field": "installationCode",
 				"position": 3,
 				"dataType": "DataType:2",
@@ -445,8 +454,8 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 				"enabled": true
 			},
 			{
-				"id": 404,
-				"propertyGroupId": 4,
+				"id": 304,
+				"propertyGroupId": 3,
 				"field": "detectionPointCode",
 				"position": 4,
 				"dataType": "DataType:2",
@@ -464,13 +473,7 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 			{
 				"id": 1,
 				"position": 1,
-				"label": "LBL_TRANSIT_TAB_GENERAL_SUMMARY",
-				"enabled": true
-			},
-			{
-				"id": 2,
-				"position": 2,
-				"label": "LBL_TRANSIT_VEHICLE_CLASS",
+				"label": "Información DGT",
 				"enabled": true
 			}
 		],
@@ -478,16 +481,17 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 			{
 				"id": 101,
 				"propertyGroupId": 1,
-				"field": "transitCode",
-				"position": 1,
+				"field": "vehiclePlateNumber",
+				"position": 2,
 				"dataType": "DataType:2",
-				"label": "LBL_TRANSIT_TAB_GENERAL_SUMMARY_STATE",
-				"enabled": true
+				"label": "LBL_GRID_FIELD_TRANSIT_VEHICLE_PLATE_NUMBER",
+				"enabled": true,
+				"editable": ["TransitState:3", "TransitState:9"]
 			},
 			{
 				"id": 102,
 				"propertyGroupId": 1,
-				"field": "vehicleModel.vehicleBrand.alias",
+				"field": "vehicleBrandName",
 				"position": 2,
 				"dataType": "DataType:2",
 				"label": "LBL_GRID_FIELD_TRANSIT_VEHICLE_BRAND",
@@ -496,8 +500,8 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 			{
 				"id": 103,
 				"propertyGroupId": 1,
-				"field": "vehicleModel.alias",
-				"position": 4,
+				"field": "vehicleModelName",
+				"position": 3,
 				"dataType": "DataType:2",
 				"label": "LBL_GRID_FIELD_TRANSIT_VEHICLE_MODEL",
 				"enabled": true
@@ -505,29 +509,31 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 			{
 				"id": 104,
 				"propertyGroupId": 1,
-				"field": "vehiclePlateNumber",
+				"field": "vehicleColor",
+				"position": 4,
+				"dataType": "DataType:2",
+				"label": "LBL_GRID_FIELD_TRANSIT_VEHICLE_COLOR",
+				"enabled": true
+			},
+			{
+				"id": 105,
+				"propertyGroupId": 1,
+				"field": "vehicleTypeName",
 				"position": 5,
 				"dataType": "DataType:2",
-				"label": "LBL_TRANSIT_TAB_GENERAL_SUMMARY_PLATE_NUMBER",
+				"label": "LBL_GRID_FIELD_TRANSIT_VEHICLE_TYPE",
 				"enabled": true
 			},
 			{
-				"id": 201,
-				"propertyGroupId": 2,
-				"field": "vehicleModel.vehicleType.alias",
-				"position": 1,
+				"id": 106,
+				"propertyGroupId": 1,
+				"field": "transitValues",
+				"position": 6,
 				"dataType": "DataType:2",
-				"label": "LBL_GRID_FIELD_TRANSIT_ELEMENT_TYPE",
-				"enabled": true
-			},
-			{
-				"id": 202,
-				"propertyGroupId": 2,
-				"position": 2,
-				"field": "vehicleClass.labelAlias",
-				"dataType": "DataType:3",
-				"label": "LBL_VEHICLE_CLASS",
-				"enabled": false
+				"calculatedFieldExpresion": "return fieldValue.find(type => type.transitTypeParam.id === \"TransitTypeParam:1:6\")?.value;", 
+				"label": "LBL_GRID_FIELD_TRANSIT_VEHICLE_ITV_DATE",
+				"enabled": true,
+				"param": "TransitTypeParam:1:6"
 			}
 		]
 	},	
@@ -544,7 +550,34 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 		"label": "LBL_TAB_TRANSIT_LOGS",
 		"position": 5,
 		"enabled": true,
-		"jsFile": "modules/trs/transitEditorTabLog.js"
+		"jsFile": "modules/trs/transitEditorTabLog.js",
+		"discardedOptions": [
+			{
+				"id": 1,
+				"label": "No se puede identificar la matrícula",
+				"message": "No se puede identificar la matrícula"
+			},
+			{
+				"id": 2,
+				"label": "No coincide la marca, modelo, color o tipo de vehículo",
+				"message": "No coincide la marca, modelo, color o tipo de vehículo"
+			},
+			{
+				"id": 3,
+				"label": "Imagen no válida (oscura, borrosa, sin vehículo…)",
+				"message": "Imagen no válida (oscura, borrosa, sin vehículo…)"
+			},
+			{
+				"id": 4,
+				"label": "Vehículo prioritario (policial, bomberos, ambulancias, …)",
+				"message": "Vehículo prioritario (policial, bomberos, ambulancias, …)"
+			},
+			{
+				"id": 5,
+				"label": "Vehículo en lista blanca",
+				"message": "Vehículo en lista blanca"
+			}
+		]
 	}
 ]');
 

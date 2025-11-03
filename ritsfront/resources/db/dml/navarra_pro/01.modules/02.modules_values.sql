@@ -1,5 +1,8 @@
 INSERT INTO ui.module_values(module_id, module_param_id, value) VALUES
 (200, 6, '1'),
+(201, 6, '2'),
+(202, 6, '3'),
+(203, 6, '4'),
 
 (402, 5, 'https://controltrafico.admon-cfnavarra.es/google/google_complejo.html'),
 (403, 5, 'https://controltrafico.admon-cfnavarra.es/jasperserver/flow.html?_flowId=searchFlow&j_username=user&j_password=traficonavarra&userLocale=es_ES&folderUri=/Informes'),
@@ -38,5 +41,6 @@ INSERT INTO ui.module_values(module_id, module_param_id, value) VALUES
 (8001, 13, '1'), 
 (8001, 14, 'all_waze_traffic_jam_ext_entities_with_values'),
 
-(2020, 9, '1');
+(2020, 9, '1'),
+(2021, 9, '3');
 
