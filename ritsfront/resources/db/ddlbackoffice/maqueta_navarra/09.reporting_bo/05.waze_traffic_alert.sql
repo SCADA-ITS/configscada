@@ -12,6 +12,7 @@ BEGIN
     CREATE OR REPLACE VIEW reporting_bo.waze_traffic_alert_ext_entities_with_values AS
     SELECT 
         e.uid as id,
+		''ExtEntity:'' || e.ext_entity_id AS ext_entity_id,
 		e.last_update as fecha_actualizacion,
 		CASE
 			WHEN e.ext_entity_subtype_id in (''7001'', ''7002'') THEN ''Accidente''

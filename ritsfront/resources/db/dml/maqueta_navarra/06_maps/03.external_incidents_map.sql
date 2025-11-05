@@ -6,7 +6,7 @@ INSERT INTO ui.maps (id, name, description, "label", icon, longitude, latitude, 
         "smartRoadInfo": {"enabled": true, "url": "http://192.168.88.161:8702/api"}
 	}');
 	
-INSERT INTO ui.map_ext_entities (id, default_graphic_icon_id, default_module_action_id, ext_entity_types_config) VALUES
+/*INSERT INTO ui.map_ext_entities (id, default_graphic_icon_id, default_module_action_id, ext_entity_types_config) VALUES
 (3, 010001, NULL, 
 	'[
 		{ 
@@ -29,6 +29,18 @@ INSERT INTO ui.map_ext_entities (id, default_graphic_icon_id, default_module_act
 		},
 		{ 
 			"extEntityTypeId": "ExtEntityType:8",
+			"visible": true,
+			"enabled": true,
+			"animate": false
+		}
+	]'
+);*/
+	
+INSERT INTO ui.map_ext_entities (id, default_graphic_icon_id, default_module_action_id, ext_entity_types_config) VALUES
+(3, 010001, NULL, 
+	'[
+		{ 
+			"extEntityTypeId": "ExtEntityType:7",
 			"visible": true,
 			"enabled": true,
 			"animate": false

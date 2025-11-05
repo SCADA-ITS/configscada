@@ -12,6 +12,7 @@ BEGIN
     CREATE OR REPLACE VIEW reporting_bo.c4_ext_entities_with_values AS
     SELECT 
         e.uid as id,
+		''ExtEntity:'' || e.ext_entity_id AS ext_entity_id,
 		e.last_update as fecha_actualizacion,
         pv.param_11 AS categoria,
         e.alias AS tipo,
