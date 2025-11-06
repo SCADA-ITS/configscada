@@ -58,11 +58,11 @@ INSERT INTO ui.vo_enum_type_values(id, vo_enum_type_id, "key", value, "translate
 (25, 10, '3', 'LBL_VO_ENUM_TYPE_VALUES_NIEVE', TRUE, null),
 (26, 10, '4', 'LBL_VO_ENUM_TYPE_VALUES_GRANIZO', TRUE, null),
 
-(27, 11, 'false', 'LBL_VO_ENUM_TYPE_VALUES_ENCENDIDO', TRUE, null),
-(28, 11, 'true', 'LBL_VO_ENUM_TYPE_VALUES_APAGADO', TRUE, null),
+(27, 11, '0', 'LBL_VO_ENUM_TYPE_VALUES_ENCENDIDO', TRUE, null),
+(28, 11, '1', 'LBL_VO_ENUM_TYPE_VALUES_APAGADO', TRUE, null),
 
-(29, 12, 'false', 'LBL_VO_ENUM_TYPE_VALUES_LOCAL', TRUE, null),
-(30, 12, 'true', 'LBL_VO_ENUM_TYPE_VALUES_REMOTE', TRUE, null),
+(29, 12, '0', 'LBL_VO_ENUM_TYPE_VALUES_LOCAL', TRUE, null),
+(30, 12, '1', 'LBL_VO_ENUM_TYPE_VALUES_REMOTE', TRUE, null),
 
 (31, 13, '1', 'LBL_VO_ENUM_TYPE_VALUES_EMERGENCY', TRUE, null),
 (32, 13, '6', 'LBL_VO_ENUM_TYPE_VALUES_GENERAL', TRUE, null),
