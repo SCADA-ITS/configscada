@@ -6,7 +6,7 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (020099, 99, 1, 2, true, false, false, true, 'LBL_NAME', 'LBL_NAME', 'alias', false, false, null, false, false, 130, NULL, true, true, NULL, NULL, NULL, NULL),
 (030099, 99, 1, 3, true, true, false, false, NULL, NULL, 'state', false, false, null, false, false, 35, NULL, true, true, NULL, NULL, NULL, NULL),
 (040099, 99, 1, 4, true, true, false, true, 'LBL_STATE_LABEL', 'LBL_STATE_LABEL', 'stateLabel', false, false, null, true, false, 120, NULL, true, true, NULL, NULL, NULL, NULL),
-(050099, 99, 1, 5, true, true, false, true, 'LBL_GRID_FIELD_LOCATION', 'LBL_GRID_FIELD_LOCATION', 'locationAlias', false, false, null, true, false, 250, NULL, true, true, NULL, NULL, NULL, NULL),
+(050099, 99, 1, 5, true, false, false, true, 'LBL_GRID_FIELD_LOCATION', 'LBL_GRID_FIELD_LOCATION', 'locationAlias', false, false, null, true, false, 250, NULL, true, true, NULL, NULL, NULL, NULL),
 (060099, 99, 1, 6, true, false, true, true, 'LBL_GRID_FIELD_BRAND', 'LBL_GRID_FIELD_BRAND', 'ElementTypeParam:99:1:1', false, false, 'left', false, false, 150, NULL, true, true, NULL, NULL, NULL, NULL),
 (070099, 99, 1, 7, true, false, true, true, 'LBL_GRID_FIELD_MODEL', 'LBL_GRID_FIELD_MODEL', 'ElementTypeParam:99:1:2', false, false, 'left', false, false, 150, NULL, true, true, NULL, NULL, NULL, NULL),
 (080099, 99, 1, 8, true, false, true, true, 'LBL_GRID_FIELD_TYPE', 'LBL_GRID_FIELD_TYPE', 'ElementTypeParam:99:1:3', false, false, 'left', false, false, 100, NULL, true, true, NULL, NULL, NULL, NULL),
