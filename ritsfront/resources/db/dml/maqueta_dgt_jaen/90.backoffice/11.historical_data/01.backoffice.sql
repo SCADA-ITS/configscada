@@ -24,748 +24,6 @@ BEGIN
 	    "refAddButton": false
 	}',
 	true);
---PMV
-CREATE OR REPLACE VIEW historical_data.vw_pmv_completa AS
-WITH comando_normalizado AS (
-	SELECT
-		ac.audit_log_id,
-		ac.time_stamp,
-		ac.user_name,
-		ac.command_values,
-		CASE
-			WHEN jsonb_typeof(ac.command_values::jsonb) = 'string' THEN
-				(ac.command_values::jsonb)::text::jsonb
-			WHEN jsonb_typeof(ac.command_values::jsonb) = 'array'
-				AND jsonb_typeof((ac.command_values::jsonb)->0->'value') = 'string'
-			THEN ((ac.command_values::jsonb)->0->>'value')::jsonb
-			WHEN jsonb_typeof(ac.command_values::jsonb) = 'array' THEN
-				(ac.command_values::jsonb)
-			ELSE NULL
-		END AS comando_json
-	FROM hist.audit_commands ac
-)
-
-SELECT
-	ac.audit_log_id,
-	ac.time_stamp,
-	COALESCE(                                                                                            
-		CASE
-			WHEN ac.comment ~* '^Plan:\d+$' THEN (
-				SELECT ap.user_name
-				FROM hist.audit_plans ap
-				INNER JOIN conf.plans p ON p.alias = ap.plan
-				WHERE p.plan_id = CAST(regexp_replace(ac.comment, '^Plan:', '', 'i') AS INTEGER)
-				AND ap.log_subtype_id = 3
-				LIMIT 1
-			)
-			ELSE ac.user_name
-		END,
-		'Usuario') AS user_name,
-	il.translation,
-	ac.element, 
-	COALESCE(
-		CASE
-			WHEN ac.comment ~* '^Plan:\d+$' THEN 'plan: ' || pl.alias
-			WHEN ac.comment ~* '^ImsIncidentReport:\d+$' THEN 'incidencia: ' || it.description
-			ELSE ac.comment
-		END,
-		'Usuario') AS comment,
-
-	-- Zona gráfica 1
-	COALESCE((
-		SELECT
-			TRIM(BOTH ' ' FROM string_agg(NULLIF(g->>'value', '0'), ' '))
-		FROM jsonb_array_elements(cn.comando_json) zone
-		CROSS JOIN LATERAL jsonb_array_elements(zone->'graphics') g
-		WHERE zone->>'zone' = '1'
-	), ' ') AS zona_grafico_1,
-
-	-- Mensaje
-	COALESCE((
-		SELECT string_agg(t->>'value', ' / ' ORDER BY (t->>'id')::int)
-		FROM jsonb_array_elements(cn.comando_json) zone
-		CROSS JOIN LATERAL jsonb_array_elements(zone->'texts') t
-		WHERE zone->>'zone' = '2'
-	), ' ') AS mensaje,
-
-	-- Alternancia zona gráfica 1
-	COALESCE((
-		SELECT TRIM(BOTH ' ' FROM string_agg(NULLIF(g->>'alternance', '0'), ' '))
-		FROM jsonb_array_elements(cn.comando_json) zone
-		CROSS JOIN LATERAL jsonb_array_elements(zone->'graphics') g
-		WHERE zone->>'zone' = '1'
-	), ' ') AS alternancia_zona_grafico_1,
-
-	-- Zona gráfica 2
-	COALESCE((
-		SELECT
-			TRIM(BOTH ' ' FROM string_agg(NULLIF(g->>'value', '0'), ' '))
-		FROM jsonb_array_elements(cn.comando_json) zone
-		CROSS JOIN LATERAL jsonb_array_elements(zone->'graphics') g
-		WHERE zone->>'zone' = '3'
-	), ' ') AS zona_grafico_2,
-
-	-- Alternancia del mensaje
-	COALESCE((
-		SELECT string_agg(NULLIF(t->>'alternance', ''), E' / ' ORDER BY (t->>'id')::int)
-		FROM jsonb_array_elements(cn.comando_json) zone
-		CROSS JOIN LATERAL jsonb_array_elements(zone->'texts') t
-		WHERE zone->>'zone' = '2' AND NULLIF(t->>'alternance', '') IS NOT NULL
-	), ' ') AS mensaje_alternancia,
-
-	-- Alternancia zona gráfica 2
-	COALESCE((
-		SELECT TRIM(BOTH ' ' FROM string_agg(NULLIF(g->>'alternance', '0'), ' '))
-		FROM jsonb_array_elements(cn.comando_json) zone
-		CROSS JOIN LATERAL jsonb_array_elements(zone->'graphics') g
-		WHERE zone->>'zone' = '3'
-	), ' ') AS alternancia_zona_grafico_2
-
-FROM hist.audit_commands ac
-LEFT JOIN comando_normalizado cn ON ac.audit_log_id = cn.audit_log_id
-LEFT JOIN LATERAL (
-	SELECT alias
-	FROM conf.plans
-	WHERE ac.comment ~* '^Plan:\d+$'
-		AND plan_id = CAST(regexp_replace(ac.comment, '^Plan:', '', 'i') AS INTEGER)
-	LIMIT 1
-) AS pl ON TRUE
-LEFT JOIN LATERAL (
-	SELECT hir.description
-	FROM hist.audit_commands ac
-	JOIN hist.ims_incident_reports hir 
-	  ON hir.incident_report_id = CAST(regexp_replace(ac.comment, '^ImsIncidentReport:', '') AS INTEGER)
-	JOIN conf.ims_incident_types cit 
-	  ON cit.incident_type_id = hir.incident_type_id
-	WHERE ac.comment ~* '^ImsIncidentReport:\d+$'
-	LIMIT 1
-) AS it ON TRUE
-INNER JOIN master.i18n_labels il ON il.label = ac.command_type
-INNER JOIN conf.elements el ON el.alias = ac.element
-WHERE il.locale_code = 'es_ES'
-	AND el.element_type_id = 71
-	AND ac.log_subtype_id = 1
-	AND ac.time_stamp >= now() - INTERVAL '1 month'
-	AND ac.time_stamp <= now()
-ORDER BY ac.time_stamp DESC;
---SEM
-CREATE OR REPLACE VIEW historical_data.view_barriers_commands AS
-SELECT
-    ac.audit_log_id,
-    ac.time_stamp,
-    ac.user_name,
-    il.translation,
-    ac.element,
-    COALESCE(
-        CASE
-            WHEN ac.comment ~* '^Plan:\d+$' THEN 'plan: ' || pl.alias
-            WHEN ac.comment ~* '^ImsIncidentReport:\d+$' THEN 'incidencia: ' || it.description
-            ELSE ac.comment
-        END,
-        'Usuario'
-    ) AS comment
-FROM hist.audit_commands ac
-LEFT JOIN LATERAL (
-    SELECT alias
-    FROM conf.plans
-    WHERE ac.comment ~* '^Plan:\d+$'
-      AND plan_id = CAST(regexp_replace(ac.comment, '^Plan:', '', 'i') AS INTEGER)
-    LIMIT 1
-) AS pl ON TRUE
-LEFT JOIN LATERAL (
-    SELECT cit.description
-    FROM hist.ims_incident_reports hir
-    JOIN conf.ims_incident_types cit ON cit.incident_type_id = hir.incident_type_id
-    WHERE ac.comment ~* '^ImsIncidentReport:\d+$'
-      AND hir.incident_report_id = CAST(regexp_replace(ac.comment, '^ImsIncidentReport:', '', 'i') AS INTEGER)
-    LIMIT 1
-) AS it ON TRUE
-INNER JOIN master.i18n_labels il ON il.label = ac.command_type
-INNER JOIN conf.elements el ON el.alias = ac.element
-WHERE il.locale_code = 'es_ES'
-  AND el.element_type_id = 13
-  AND ac.log_subtype_id = 1
-  AND ac.time_stamp >= NOW() - INTERVAL '1 month'
-  AND ac.time_stamp <= NOW()
-ORDER BY ac.time_stamp DESC;
---PRESURIZATION
-CREATE OR REPLACE VIEW historical_data.presurization AS
-SELECT
-    ac.audit_log_id,
-    ac.time_stamp,
-    ac.user_name,
-    il.translation,
-    ac.element,
-    COALESCE(
-        CASE
-            WHEN ac.comment ~* '^Plan:\d+$' THEN 'plan: ' || pl.alias
-            WHEN ac.comment ~* '^ImsIncidentReport:\d+$' THEN 'incidencia: ' || it.description
-            ELSE ac.comment
-        END,
-        'Usuario'
-    ) AS comment
-FROM hist.audit_commands ac
-LEFT JOIN LATERAL (
-    SELECT alias
-    FROM conf.plans
-    WHERE ac.comment ~* '^Plan:\d+$'
-      AND plan_id = CAST(regexp_replace(ac.comment, '^Plan:', '', 'i') AS INTEGER)
-    LIMIT 1
-) AS pl ON TRUE
-LEFT JOIN LATERAL (
-    SELECT cit.description
-    FROM hist.ims_incident_reports hir
-    JOIN conf.ims_incident_types cit ON cit.incident_type_id = hir.incident_type_id
-    WHERE ac.comment ~* '^ImsIncidentReport:\d+$'
-      AND hir.incident_report_id = CAST(regexp_replace(ac.comment, '^ImsIncidentReport:', '', 'i') AS INTEGER)
-    LIMIT 1
-) AS it ON TRUE
-INNER JOIN master.i18n_labels il ON il.label = ac.command_type
-INNER JOIN conf.elements el ON el.alias = ac.element
-WHERE il.locale_code = 'es_ES'
-  AND el.element_type_id = 32
-  AND ac.log_subtype_id = 1
-  AND ac.time_stamp >= NOW() - INTERVAL '1 month'
-  AND ac.time_stamp <= NOW()
-ORDER BY ac.time_stamp DESC;
-
---ILUMINATION
-CREATE OR REPLACE VIEW historical_data.lightning_circuit AS
-WITH circuit_data AS (
-    SELECT
-        ac.audit_log_id,
-        ac.time_stamp,
-        ac.user_name,
-        il.translation,
-        CASE
-            WHEN el84.alias IS NOT NULL THEN el84.alias
-            ELSE el.alias
-        END AS element,
-        COALESCE(
-            CASE
-                WHEN ac.comment ~* '^Plan:\d+$' THEN 'plan: ' || pl.alias
-                WHEN ac.comment ~* '^ImsIncidentReport:\d+$' THEN 'incidencia: ' || it.description
-                ELSE ac.comment
-            END,
-            'Usuario'
-        ) AS comment,
-        modo.regimen::varchar AS regimen
-    FROM hist.audit_commands ac
-
-    LEFT JOIN LATERAL (
-        SELECT e.alias
-        FROM conf.elements e
-        WHERE EXISTS (
-            SELECT 1
-            FROM regexp_matches(ac.command_values, 'Element:84:(\d+)', 'g') AS m(id)
-            WHERE
-                e.element_type_id = 84
-                AND e.element_id = CAST(m[1] AS INTEGER)
-            LIMIT 1
-        )
-        LIMIT 1
-    ) AS el84 ON TRUE
-
-    LEFT JOIN LATERAL (
-        SELECT alias
-        FROM conf.plans
-        WHERE ac.comment ~* '^Plan:\d+$'
-        AND plan_id = CAST(regexp_replace(ac.comment, '^Plan:', '', 'i') AS INTEGER)
-        LIMIT 1
-    ) AS pl ON TRUE
-
-    LEFT JOIN LATERAL (
-        SELECT cit.description
-        FROM hist.ims_incident_reports hir
-        JOIN conf.ims_incident_types cit ON cit.incident_type_id = hir.incident_type_id
-        WHERE ac.comment ~* '^ImsIncidentReport:\d+$'
-        AND hir.incident_report_id = CAST(regexp_replace(ac.comment, '^ImsIncidentReport:', '', 'i') AS INTEGER)
-        LIMIT 1
-    ) AS it ON TRUE
-
-    -- Lógica combinada para regimen y modo de operación
-    LEFT JOIN LATERAL (
-        SELECT
-            CASE
-                WHEN e.element_type_id = 2000 AND ac.command_type ~* 'ILLUMINATION' AND ac.command_type ~* 'MODE' THEN
-                    CASE
-                        WHEN ac.command_values LIKE '%0%' THEN 'Automático'
-                        WHEN ac.command_values LIKE '%1%' THEN 'Manual'
-                        ELSE ''
-                    END
-                WHEN ac.command_values ~* 'Element:84:\d+' THEN ''
-                WHEN ac.command_values ~* '^\[.*\]$' THEN
-                    CASE
-                        WHEN ac.command_values LIKE '%2%' THEN 'Soleado'
-                        WHEN ac.command_values LIKE '%3%' THEN 'Nublado'
-                        WHEN ac.command_values LIKE '%4%' THEN 'Crepuscular'
-                        WHEN ac.command_values LIKE '%5%' THEN 'Nocturno'
-                        WHEN ac.command_values LIKE '%6%' THEN 'Exterior/Nocturno'
-                        ELSE ''
-                    END
-                WHEN ac.command_values LIKE '%2%' THEN 'Soleado'
-                WHEN ac.command_values LIKE '%3%' THEN 'Nublado'
-                WHEN ac.command_values LIKE '%4%' THEN 'Crepuscular'
-                WHEN ac.command_values LIKE '%5%' THEN 'Nocturno'
-                WHEN ac.command_values LIKE '%6%' THEN 'Exterior/Nocturno'
-                ELSE ''
-            END AS regimen
-        FROM conf.elements e
-        WHERE e.alias = ac.element
-        LIMIT 1
-    ) AS modo ON TRUE
-
-    INNER JOIN master.i18n_labels il ON il.label = ac.command_type
-    INNER JOIN conf.elements el ON el.alias = ac.element
-
-    WHERE il.locale_code = 'es_ES'
-      AND (
-        el.element_type_id = 84
-        OR (el.element_type_id = 2000 AND ac.command_type ~* '(ILLUMINATION|CIRCUIT)')
-      )
-      AND ac.log_subtype_id = 1 
-      AND ac.time_stamp >= now() - INTERVAL '1 month'
-      AND ac.time_stamp <= now()
-)
-SELECT *
-FROM circuit_data
-ORDER BY time_stamp DESC;
-
---BARRIER
-CREATE VIEW historical_data.barrier AS
-SELECT 
-    ac.audit_log_id, 
-    ac.time_stamp, 
-    ac.user_name, 
-    il.translation, 
-    ac.element, 
-    COALESCE(
-        CASE
-            WHEN ac.comment ~* '^Plan:\d+$' THEN 'plan: ' || pl.alias
-            WHEN ac.comment ~* '^ImsIncidentReport:\d+$' THEN 'incidencia: ' || it.description
-            ELSE ac.comment
-        END,
-        'Usuario'
-    ) AS comment
-FROM 
-    hist.audit_commands ac
-INNER JOIN master.i18n_labels il 
-    ON il.label = ac.command_type
-INNER JOIN conf.elements el 
-    ON el.alias = ac.element
-LEFT JOIN LATERAL (
-    SELECT alias
-    FROM conf.plans
-    WHERE ac.comment ~* '^Plan:\d+$'
-      AND plan_id = CAST(regexp_replace(ac.comment, '^Plan:', '', 'i') AS INTEGER)
-    LIMIT 1
-) AS pl ON TRUE
-LEFT JOIN LATERAL (
-    SELECT cit.description
-    FROM hist.ims_incident_reports hir
-    JOIN conf.ims_incident_types cit 
-        ON cit.incident_type_id = hir.incident_type_id
-    WHERE ac.comment ~* '^ImsIncidentReport:\d+$'
-      AND hir.incident_report_id = CAST(regexp_replace(ac.comment, '^ImsIncidentReport:', '', 'i') AS INTEGER)
-    LIMIT 1
-) AS it ON TRUE
-WHERE 
-    il.locale_code = 'es_ES'
-    AND el.element_type_id = 8 
-    AND ac.log_subtype_id = 1 
-    AND ac.time_stamp >= NOW() - INTERVAL '1 month'
-    AND ac.time_stamp <= NOW()
-ORDER BY 
-    ac.time_stamp DESC;
-
---ventilation
-CREATE OR REPLACE VIEW historical_data.ventilation AS
-WITH ventilation_data AS (
-    SELECT
-        ac.audit_log_id,
-        ac.time_stamp,
-        ac.user_name,
-        il.translation,
-        -- Alias del elemento
-        CASE
-            WHEN el9.alias IS NOT NULL THEN el9.alias
-            ELSE el.alias
-        END AS element,
-        COALESCE(
-            CASE
-                WHEN ac.comment ~* '^Plan:\d+$' THEN 'plan: ' || pl.alias
-                WHEN ac.comment ~* '^ImsIncidentReport:\d+$' THEN 'incidencia: ' || it.description
-                ELSE ac.comment
-            END,
-            'Usuario'
-        ) AS comment,
-        modo.regimen::varchar AS regimen
-    FROM hist.audit_commands ac
-
-    LEFT JOIN LATERAL (
-        -- Alias del Element:9:<id> si existe
-        SELECT e.alias
-        FROM conf.elements e
-        WHERE EXISTS (
-            SELECT 1
-            FROM regexp_matches(ac.command_values, 'Element:9:(\d+)', 'g') AS m(id)
-            WHERE
-                e.element_type_id = 9
-                AND e.element_id = CAST(m[1] AS INTEGER)
-            LIMIT 1
-        )
-        LIMIT 1
-    ) AS el9 ON TRUE
-
-    LEFT JOIN LATERAL (
-        SELECT alias
-        FROM conf.plans
-        WHERE ac.comment ~* '^Plan:\d+$'
-        AND plan_id = CAST(regexp_replace(ac.comment, '^Plan:', '', 'i') AS INTEGER)
-        LIMIT 1
-    ) AS pl ON TRUE
-
-    LEFT JOIN LATERAL (
-        SELECT cit.description
-        FROM hist.ims_incident_reports hir
-        JOIN conf.ims_incident_types cit ON cit.incident_type_id = hir.incident_type_id
-        WHERE ac.comment ~* '^ImsIncidentReport:\d+$'
-        AND hir.incident_report_id = CAST(regexp_replace(ac.comment, '^ImsIncidentReport:', '', 'i') AS INTEGER)
-        LIMIT 1
-    ) AS it ON TRUE
-
-    -- Columna "regimen", que muestra modo o régimen según el tipo de comando
-    LEFT JOIN LATERAL (
-        SELECT
-            CASE
-                WHEN e.element_type_id = 2000 AND ac.command_type ~* 'VENTILATION' AND ac.command_type ~* 'MODE' THEN
-                    CASE
-                        WHEN ac.command_values LIKE '%0%' THEN 'Automático'
-                        WHEN ac.command_values LIKE '%1%' THEN 'Manual'
-                        WHEN ac.command_values LIKE '%2%' THEN 'Mantenimiento'
-                        WHEN ac.command_values LIKE '%3%' THEN 'Incendio'
-                        ELSE ''
-                    END
-                WHEN ac.command_values ~* 'Element:9:\d+' THEN ''
-                WHEN ac.command_values ~* '^\[.*\]$' THEN
-                    CASE
-                        WHEN ac.command_values LIKE '%1%' THEN 'Normal'
-                        WHEN ac.command_values LIKE '%2%' THEN 'Alto'
-                        WHEN ac.command_values LIKE '%3%' THEN 'Alto-Alto'
-                        WHEN ac.command_values LIKE '%4%' THEN 'Máximo'
-                        ELSE ''
-                    END
-                WHEN ac.command_values LIKE '%1%' THEN 'Normal'
-                WHEN ac.command_values LIKE '%2%' THEN 'Alto'
-                WHEN ac.command_values LIKE '%3%' THEN 'Alto-Alto'
-                WHEN ac.command_values LIKE '%4%' THEN 'Máximo'
-                ELSE ''
-            END AS regimen
-        FROM conf.elements e
-        WHERE e.alias = ac.element
-        LIMIT 1
-    ) AS modo ON TRUE
-
-    INNER JOIN master.i18n_labels il ON il.label = ac.command_type
-    INNER JOIN conf.elements el ON el.alias = ac.element
-
-    WHERE il.locale_code = 'es_ES'
-      AND (
-        el.element_type_id = 9
-        OR (el.element_type_id = 2000 AND ac.command_type ~* '(VENTILATION|FANS)')
-      )
-      AND ac.log_subtype_id = 1 
-      AND ac.time_stamp >= now() - INTERVAL '1 month'
-      AND ac.time_stamp <= now()
-)
-SELECT *
-FROM ventilation_data
-ORDER BY time_stamp DESC;
-
-
-
-
---ANALOGICOS
---co
-CREATE OR REPLACE VIEW historical_data.co AS
-SELECT 
-    ev.value::varchar AS equipo,
-    c.timestamp_at, 
-    c.concentration::varchar AS concentration
-FROM 
-    hist.co c
-INNER JOIN conf.element_values ev 
-    ON ev.element_id = c.f_element_id
-WHERE 
-    ev.element_type_id = 19
-    AND ev.element_type_param_id = 1003
-    AND c.timestamp_at >= NOW() - INTERVAL '1 month'
-    AND c.timestamp_at <= NOW()
-ORDER BY 
-    c.timestamp_at DESC;
-
-
---opac
-CREATE VIEW historical_data.opac AS
-SELECT 
-    ev.value::varchar AS equipo,
-    c.timestamp_at, 
-    c.concentration ::varchar AS concentration
-FROM 
-    hist.opac c
-INNER JOIN conf.element_values ev 
-    ON ev.element_id = c.f_element_id
-WHERE 
-    ev.element_type_id = 21
-    AND ev.element_type_param_id = 1003
-    AND c.timestamp_at >= NOW() - INTERVAL '1 month'
-    AND c.timestamp_at <= NOW()
-ORDER BY 
-    c.timestamp_at DESC;
-
-    --LUM
-CREATE VIEW historical_data.lum AS
-SELECT 
-    ev.value::varchar AS equipo,
-    c.timestamp_at, 
-    c.luminosity_real ::varchar AS luminosity_real
-FROM 
-    hist.lum c
-INNER JOIN conf.element_values ev 
-    ON ev.element_id = c.f_element_id
-WHERE 
-    ev.element_type_id = 14
-    AND ev.element_type_param_id = 1003
-    AND c.timestamp_at >= NOW() - INTERVAL '1 month'
-    AND c.timestamp_at <= NOW()
-ORDER BY 
-    c.timestamp_at DESC;
-
---ws
-CREATE VIEW historical_data.ws AS
-SELECT 
-    e.alias AS equipo,  
-    c.timestamp_at,  
-    c.date ::varchar AS date,  
-    c.period ::varchar AS period,  
-    c.air_pressure ::varchar AS air_pressure,
-    c.air_temperature ::varchar AS air_temperature,
-    c.dew_point_temperature ::varchar AS dew_point_temperature,
-    c.relative_humidity ::varchar AS relative_humidity,
-    c.visibility ::varchar AS visibility,
-    c.wind_direction ::varchar AS wind_direction,
-    c.wind_speed ::varchar AS wind_speed,
-    c.wind_type ::varchar AS wind_type,
-    c.precipitation_intensity ::varchar AS precipitation_intensity,  
-    c.precipitation_quantity  ::varchar AS precipitation_quantity
-FROM 
-    hist.ws c
-LEFT JOIN conf.elements e 
-    ON e.element_id = c.f_element_id
-    AND e.element_type_id = 1  
-WHERE 
-    c.timestamp_at >= NOW() - INTERVAL '1 month'
-    AND c.timestamp_at <= NOW()
-ORDER BY 
-    c.timestamp_at DESC;
-
---ANE
-CREATE VIEW historical_data.ane AS
-SELECT 
-    ev.value::varchar AS equipo,
-    c.timestamp_at, 
-    c.wind_speed ::varchar AS wind_speed
-FROM 
-    hist.ane c
-INNER JOIN conf.element_values ev 
-    ON ev.element_id = c.f_element_id
-WHERE 
-    ev.element_type_id = 18
-    AND ev.element_type_param_id = 1003
-    AND c.timestamp_at >= NOW() - INTERVAL '1 month'
-    AND c.timestamp_at <= NOW()
-ORDER BY 
-    c.timestamp_at DESC;
-
---VANE
-CREATE VIEW historical_data.vane AS
-SELECT 
-    ev.value::varchar AS equipo,
-    c.timestamp_at, 
-    c.wind_speed ::varchar AS wind_speed,
-    c.wind_direction ::varchar AS wind_direction
-FROM 
-    hist.vane c
-INNER JOIN conf.element_values ev 
-    ON ev.element_id = c.f_element_id
-WHERE 
-    ev.element_type_id = 66
-    AND ev.element_type_param_id = 1003
-    AND c.timestamp_at >= NOW() - INTERVAL '1 month'
-    AND c.timestamp_at <= NOW()
-ORDER BY 
-    c.timestamp_at DESC;
-
-
-
-
---HISTORICOS
---BARRERAS
-CREATE VIEW historical_data.barreras AS
-SELECT 
-    ev.value::varchar AS equipo,
-    c.timestamp_at, 
-    CASE 
-        WHEN c.bar_state = 1 THEN 'Abierta'
-        WHEN c.bar_state = 2 THEN 'Cerrada'
-        ELSE 'Desconocido'
-    END::varchar AS estado_barrera  
-FROM 
-    hist.barrier c
-INNER JOIN conf.element_values ev 
-    ON ev.element_id = c.f_element_id
-WHERE 
-    ev.element_type_id = 8  -- 
-    AND ev.element_type_param_id = 1003
-    AND c.timestamp_at >= NOW() - INTERVAL '1 month'  -- Intervalo de 1 mes
-    AND c.timestamp_at <= NOW()
-ORDER BY 
-    c.timestamp_at DESC;
-
---SEMÁFOROS
-CREATE VIEW historical_data.semaforos AS
-SELECT 
-    ev.value::varchar AS equipo,
-    c.timestamp_at, 
-    CASE 
-        WHEN c.light = 0 THEN 'Ámbar intermitente'
-        WHEN c.light = 1 THEN 'Rojo'
-        WHEN c.light = 2 THEN 'Ámbar fijo'
-        WHEN c.light = 4 THEN 'Verde'
-        WHEN c.light = 7 THEN 'Apagado'
-        ELSE 'Desconocido'
-    END::varchar AS estado_semaforo
-FROM 
-    hist.sem c
-INNER JOIN conf.element_values ev 
-    ON ev.element_id = c.f_element_id
-WHERE 
-    ev.element_type_id = 13
-    AND ev.element_type_param_id = 1003
-    AND c.timestamp_at >= NOW() - INTERVAL '1 month'
-    AND c.timestamp_at <= NOW()
-ORDER BY 
-    c.timestamp_at DESC;
-    
---PRESURIZACIÓN
-CREATE VIEW historical_data.pres AS
-SELECT 
-    ev.value::varchar AS equipo,
-    c.timestamp_at, 
-    CASE 
-        WHEN c.fan_low_speed_state = true AND c.fan_high_speed_state = false THEN 'Lenta'
-        WHEN c.fan_low_speed_state = false AND c.fan_high_speed_state = true THEN 'Rápida'
-        ELSE 'Desconocido'
-    END::varchar AS fan_speed,
-    CASE 
-        WHEN c.grid_gate_clousure_state = true THEN 'Abierta'
-        WHEN c.grid_gate_clousure_state = false THEN 'Cerrada'
-        ELSE 'Desconocido'
-    END::varchar AS grid_gate_state
-FROM 
-    hist.pressurization c
-INNER JOIN conf.element_values ev 
-    ON ev.element_id = c.f_element_id
-WHERE 
-    ev.element_type_id = 32
-    AND ev.element_type_param_id = 1003
-    AND c.timestamp_at >= NOW() - INTERVAL '1 month'
-    AND c.timestamp_at <= NOW()
-ORDER BY 
-    c.timestamp_at DESC;
-
---PANELES
-CREATE OR REPLACE VIEW historical_data.pmv AS
-WITH comando_normalizado AS (
-    SELECT
-        p.f_element_id,
-        p.timestamp_at,
-        p.data_json,
-        CASE
-            WHEN jsonb_typeof(p.data_json::jsonb) = 'string' THEN
-                (p.data_json::jsonb)::text::jsonb
-            WHEN jsonb_typeof(p.data_json::jsonb) = 'array'
-                AND jsonb_typeof((p.data_json::jsonb)->0->'value') = 'string'
-            THEN ((p.data_json::jsonb)->0->>'value')::jsonb
-            WHEN jsonb_typeof(p.data_json::jsonb) = 'array' THEN
-                (p.data_json::jsonb)
-            ELSE NULL
-        END AS comando_json
-    FROM hist.pmv p
-    WHERE p.timestamp_at >= now() - interval '1 month'
-      AND p.timestamp_at <= now()
-)
-
-SELECT
-    ev.value::varchar AS equipo,
-    cn.timestamp_at,
-
-    -- Zona gráfica 1
-    COALESCE((
-        SELECT TRIM(BOTH ' ' FROM string_agg(NULLIF(g->>'value', '0')::varchar, ' '))
-        FROM jsonb_array_elements(cn.comando_json) zone
-        CROSS JOIN LATERAL jsonb_array_elements(zone->'graphics') g
-        WHERE zone->>'zone' = '1'
-    ), ' ')::varchar AS zona_grafico_1,
-
-    -- Mensaje
-    COALESCE((
-        SELECT string_agg(t->>'value'::varchar, ' / ' ORDER BY (t->>'id')::int)
-        FROM jsonb_array_elements(cn.comando_json) zone
-        CROSS JOIN LATERAL jsonb_array_elements(zone->'texts') t
-        WHERE zone->>'zone' = '2'
-    ), ' ')::varchar AS mensaje,
-
-    -- Zona gráfica 2
-    COALESCE((
-        SELECT TRIM(BOTH ' ' FROM string_agg(NULLIF(g->>'value', '0')::varchar, ' '))
-        FROM jsonb_array_elements(cn.comando_json) zone
-        CROSS JOIN LATERAL jsonb_array_elements(zone->'graphics') g
-        WHERE zone->>'zone' = '3'
-    ), ' ')::varchar AS zona_grafico_2,
-
-    -- Alternancia zona gráfica 1
-    COALESCE((
-        SELECT TRIM(BOTH ' ' FROM string_agg(NULLIF(g->>'alternance', '0')::varchar, ' '))
-        FROM jsonb_array_elements(cn.comando_json) zone
-        CROSS JOIN LATERAL jsonb_array_elements(zone->'graphics') g
-        WHERE zone->>'zone' = '1'
-    ), ' ')::varchar AS alternancia_zona_grafico_1,
-
-    -- Alternancia del mensaje
-    COALESCE((
-        SELECT string_agg(NULLIF(t->>'alternance', '')::varchar, E' / ' ORDER BY (t->>'id')::int)
-        FROM jsonb_array_elements(cn.comando_json) zone
-        CROSS JOIN LATERAL jsonb_array_elements(zone->'texts') t
-        WHERE zone->>'zone' = '2' AND NULLIF(t->>'alternance', '') IS NOT NULL
-    ), ' ')::varchar AS mensaje_alternancia,
-
-    -- Alternancia zona gráfica 2
-    COALESCE((
-        SELECT TRIM(BOTH ' ' FROM string_agg(NULLIF(g->>'alternance', '0')::varchar, ' '))
-        FROM jsonb_array_elements(cn.comando_json) zone
-        CROSS JOIN LATERAL jsonb_array_elements(zone->'graphics') g
-        WHERE zone->>'zone' = '3'
-    ), ' ')::varchar AS alternancia_zona_grafico_2
-
-FROM comando_normalizado cn
-INNER JOIN conf.element_values ev 
-    ON ev.element_id = cn.f_element_id
-WHERE 
-    ev.element_type_id = 71  -- PMV
-    AND ev.element_type_param_id = 1003
-ORDER BY cn.timestamp_at DESC;
-
 
   	-- historical_data.sg_metadata_tables
   	--
@@ -779,7 +37,8 @@ ORDER BY cn.timestamp_at DESC;
 
 	(3, 'pressurization', 'LBL_BACKOFFICE_SG_METADATA_TABLES_PRES', 'LBL_BACKOFFICE_SG_METADATA_TABLES_PRES', 'LBL_BACKOFFICE_SG_METADATA_TABLES_PRES_DESCRIPTION', NULL, true, true, 
 	--sql_view
-	'SELECT * FROM historical_data.presurization', NULL, NULL),
+	'SELECT * FROM historical_data.presurization', NULL, '{"formHeight": 800,
+    	"formWidth": 1000}'),
 
 	(4, 'lightning_circuit', 'LBL_BACKOFFICE_SG_METADATA_TABLES_LIGHTNING_CIRCUIT', 'LBL_BACKOFFICE_SG_METADATA_TABLES_LIGHTNING_CIRCUIT', 'LBL_BACKOFFICE_SG_METADATA_TABLES_LIGHTNING_CIRCUIT_DESCRIPTION', NULL, true, true, 
 	--sql_view
@@ -839,99 +98,146 @@ ORDER BY cn.timestamp_at DESC;
 	-- 
   	-- historical_data.sg_metadata_columns
   	--
-	INSERT INTO historical_data.sg_metadata_columns (sg_metadata_table_id, column_name, "label", label_description, needs_translation, metadata) VALUES
+	INSERT INTO historical_data.sg_metadata_columns (id, sg_metadata_table_id, column_name, "label", label_description, needs_translation, metadata) VALUES
+	--pmv
+	(0101, 1, 'id', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ID', NULL, true, '{"position": 1, "editable": false, "formVisible": false, "tableVisible": false}'),
+	(0102, 1, 'audit_log_id', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ID', NULL, false, '{"editable": false, formVisible": false, "tableVisible": false}'),
+    (0103, 1, 'time_stamp', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_DATE', NULL, false, '{"editable": false}'),
+	(0104, 1, 'user_name', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_USER', NULL, false, '{"editable": false}'),
+	(0105, 1, 'translation', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_COMMAND', NULL, false, '{"editable": false}'),
+	(0106, 1, 'element', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ELEMENT', NULL, false, '{"editable": false, "refName":true}'),
+	(0107, 1, 'comment', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ORIGEN', NULL, false, '{"editable": false}'),
+	(0108, 1, 'zona_grafico_1', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_GRAPHIC_1', NULL, false, '{"editable": false, "formVisible": false}'),
+	(0109, 1, 'mensaje', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_TEXT', NULL, false, '{"editable": false}'),
+	(0110, 1, 'zona_grafico_2', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_GRAPHIC_2', NULL, false, '{"editable": false, "formVisible": false}'),
+	(0111, 1, 'alternancia_zona_grafico_1', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_GRAPHIC_ALT_1', NULL, false, '{"editable": false, "formVisible": false}'),
+	(0112, 1, 'mensaje_alternancia', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_TEXT_ALT', NULL, false, '{"editable": false}'),
+	(0113, 1, 'alternancia_zona_grafico_2', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_GRAPHIC_ALT_2', NULL, false, '{"editable": false, "formVisible": false}'),
+	(0114, 1, 'zona_grafico_1_label', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_GRAPHIC_1', NULL, false, '{"editable": false}'),
+	(0115, 1, 'zona_grafico_2_label', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_GRAPHIC_2', NULL, false, '{"editable": false}'),
+	(0116, 1, 'alternancia_zona_grafico_1_label', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_GRAPHIC_ALT_1', NULL, false, '{"editable": false}'),
+	(0117, 1, 'alternancia_zona_grafico_2_label', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_GRAPHIC_ALT_2', NULL, false, '{"editable": false}'),
+
 	--sem
-	(2, 'audit_log_id', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ID', NULL, false, '{"formVisible": false, "tableVisible": false}'),
-	(2, 'time_stamp', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_DATE', NULL, false, '{"editable": false}'),
-	(2, 'user_name', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_USER', NULL, false, '{"editable": false}'),
-	(2, 'translation', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_COMMAND', NULL, false, '{"editable": false}'),
-	(2, 'comment', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_COMMENT', NULL, false, '{"editable": false}'),
-	(2, 'element', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ELEMENT', NULL, false, '{"editable": false}'),
+	(0201,2, 'id', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ID', NULL, true, '{"position": 1, "editable": false, "formVisible": false, "tableVisible": false}'),
+	(0202,2, 'audit_log_id', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ID', NULL, false, '{"tableVisible": false}'),
+	(0203,2, 'time_stamp', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_DATE', NULL, false, '{"editable": true}'),
+	(0204,2, 'user_name', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_USER', NULL, false, '{"editable": true}'),
+	(0205,2, 'translation', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_COMMAND', NULL, false, '{"editable": true}'),
+	(0206,2, 'comment', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_COMMENT', NULL, false, '{"editable": true}'),
+	(0207,2, 'element', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ELEMENT', NULL, false, '{"editable": true, "refName":true}'),
 
 	--pressurization
-	(3, 'audit_log_id', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ID', NULL, false, '{"formVisible": false, "tableVisible": false}'),
-	(3, 'time_stamp', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_DATE', NULL, false, '{"editable": false}'),
-	(3, 'user_name', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_USER', NULL, false, '{"editable": false}'),
-	(3, 'translation', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_COMMAND', NULL, false, '{"editable": false}'),
- 	(3, 'comment', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_COMMENT', NULL, false, '{"editable": false}'),
-	(3, 'element', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ELEMENT', NULL, false, '{"editable": false}'),
+	(0301,3, 'id', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ID', NULL, true, '{"editable": false, "formVisible": false, "tableVisible": false}'),
+	(0302,3, 'audit_log_id', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ID', NULL, false, '{"tableVisible": false}'),
+	(0303,3, 'time_stamp', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_DATE', NULL, false, '{"editable": false}'),
+	(0304,3, 'user_name', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_USER', NULL, false, '{"editable": false}'),
+	(0305,3, 'translation', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_COMMAND', NULL, false, '{"editable": false}'),
+ 	(0306,3, 'comment', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_COMMENT', NULL, false, '{"editable": false}'),
+	(0307,3, 'element', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ELEMENT', NULL, false, '{"editable": false, "refName":true}'),
 
 	--lightning_circuit
-	(4, 'audit_log_id', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ID', NULL, false, '{"formVisible": false, "tableVisible": false}'),
-	(4, 'time_stamp', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_DATE', NULL, false, '{"editable": false}'),
-	(4, 'user_name', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_USER', NULL, false, '{"editable": false}'),
-	(4, 'translation', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_COMMAND', NULL, false, '{"editable": false}'),
- 	(4, 'comment', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_COMMENT', NULL, false, '{"editable": false}'),
-	(4, 'element', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ELEMENT', NULL, false, '{"editable": false}'),
-	(4, 'regimen', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_REGIMEN', NULL, false, '{"editable": false}'),
+	(0401, 4, 'id', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ID', NULL, false, '{"position": 1, "editable": false, "formVisible": false, "tableVisible": false}'),
+	(0402, 4, 'audit_log_id', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ID', NULL, false, '{"position": 2, "tableVisible": false}'),
+	(0403, 4, 'time_stamp', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_DATE', NULL, false, '{"position": 3, "editable": false}'),
+	(0404, 4, 'user_name', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_USER', NULL, false, '{"position": 4, "editable": false}'),
+	(0405, 4, 'translation', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_COMMAND', NULL, false, '{"position": 5, "editable": false}'),
+	(0407, 4, 'element', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ELEMENT', NULL, false, '{"position": 7, "editable": false, "refName":true}'),
+ 	(0406, 4, 'comment', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_COMMENT', NULL, false, '{"position": 6, "editable": false}'),
+	(0408, 4, 'regimen', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_REGIMEN', NULL, true, '{"position": 8, "editable": false}'),
 
 	--barrier
-	(5, 'audit_log_id', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ID', NULL, false, '{"formVisible": false, "tableVisible": false}'),
-	(5, 'time_stamp', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_DATE', NULL, false, '{"editable": false}'),
-	(5, 'user_name', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_USER', NULL, false, '{"editable": false}'),
-	(5, 'translation', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_COMMAND', NULL, false, '{"editable": false}'),
-	(5, 'comment', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_COMMENT', NULL, false, '{"editable": false}'),
-	(5, 'element', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ELEMENT', NULL, false, '{"editable": false}'),
+	(0501, 5, 'id', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ID', NULL, true, '{"position": 1, "editable": false, "formVisible": false, "tableVisible": false}'),
+	(0502, 5, 'audit_log_id', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ID', NULL, false, '{"tableVisible": false}'),
+	(0503, 5, 'time_stamp', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_DATE', NULL, false, '{"editable": false}'),
+	(0504, 5, 'user_name', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_USER', NULL, false, '{"editable": false}'),
+	(0505, 5, 'translation', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_COMMAND', NULL, false, '{"editable": false}'),
+	(0506, 5, 'comment', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_COMMENT', NULL, false, '{"editable": false}'),
+	(0507, 5, 'element', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ELEMENT', NULL, false, '{"editable": false, "refName":true}'),
 
 		--Ventilation
-	(6, 'audit_log_id', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ID', NULL, false, '{"formVisible": false, "tableVisible": false}'),
-	(6, 'time_stamp', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_DATE', NULL, false, '{"editable": false}'),
-	(6, 'user_name', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_USER', NULL, false, '{"editable": false}'),
-	(6, 'translation', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_COMMAND', NULL, false, '{"editable": false}'),
- 	(6, 'comment', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_COMMENT', NULL, false, '{"editable": false}'),
-	(6, 'element', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ELEMENT', NULL, false, '{"editable": false}'),
-	(6, 'regimen', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_REGIMEN', NULL, false, '{"editable": false}'),
+	(0601, 6, 'id', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ID', NULL, true, '{"position": 1, "editable": false, "formVisible": false, "tableVisible": false}'),
+	(0602, 6, 'audit_log_id', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ID', NULL, false, '{"tableVisible": false}'),
+	(0603, 6, 'time_stamp', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_DATE', NULL, false, '{"editable": false}'),
+	(0604, 6, 'user_name', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_USER', NULL, false, '{"editable": false}'),
+	(0605, 6, 'translation', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_COMMAND', NULL, false, '{"editable": false}'),
+ 	(0606, 6, 'comment', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_COMMENT', NULL, false, '{"editable": false}'),
+	(0607, 6, 'element', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ELEMENT', NULL, false, '{"editable": false, "refName":true}'),
+	(0608, 6, 'regimen', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_REGIMEN', NULL, true, '{"editable": false}'),
 --ANALOGICOS
     --CO
-	(7, 'timestamp_at', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_DATE', NULL, false, '{"editable": false}'),
-	(7, 'concentration', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_CONCENTRATION', NULL, false, '{"editable": false}'),
-	(7, 'equipo', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ELEMENT', NULL, false, '{"editable": false}'),
+	(0701, 7, 'id', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ID', NULL, true, '{"position": 1, "editable": false, "formVisible": false, "tableVisible": false}'),
+	(0702, 7, 'timestamp_at', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_DATE', NULL, false, '{"editable": false}'),
+	(0703, 7, 'concentration', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_CONCENTRATION', NULL, false, '{"editable": false}'),
+	(0704, 7, 'equipo', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ELEMENT', NULL, false, '{"editable": false, "refName":true}'),
     --opac
-	(8, 'timestamp_at', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_DATE', NULL, false, '{"editable": false}'),
-	(8, 'concentration', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_CONCENTRATION', NULL, false, '{"editable": false}'),
-	(8, 'equipo', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ELEMENT', NULL, false, '{"editable": false}'),
+	(0801, 8, 'id', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ID', NULL, true, '{"position": 1, "editable": false, "formVisible": false, "tableVisible": false}'),
+	(0802, 8, 'timestamp_at', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_DATE', NULL, false, '{"editable": false}'),
+	(0803, 8, 'concentration', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_CONCENTRATION', NULL, false, '{"editable": false}'),
+	(0804, 8, 'equipo', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ELEMENT', NULL, false, '{"editable": false, "refName":true}'),
     --LUM
-	(9, 'timestamp_at', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_DATE', NULL, false, '{"editable": false}'),
-	(9, 'luminosity_real', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_LUMINOSITY_REAL', NULL, false, '{"editable": false}'),
-	(9, 'equipo', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ELEMENT', NULL, false, '{"editable": false}'),
+	(0901, 9, 'id', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ID', NULL, true, '{"position": 1, "editable": false, "formVisible": false, "tableVisible": false}'),
+	(0902, 9, 'timestamp_at', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_DATE', NULL, false, '{"editable": false}'),
+	(0903, 9, 'luminosity_real', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_LUMINOSITY_REAL', NULL, false, '{"editable": false}'),
+	(0904, 9, 'equipo', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ELEMENT', NULL, false, '{"editable": false, "refName":true}'),
     --WS
-	(10, 'timestamp_at', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_DATE', NULL, false, '{"editable": false}'),
-	(10, 'equipo', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ELEMENT', NULL, false, '{"editable": false}'),
-	(10, 'air_pressure', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_AIR_PRESSURE', NULL, false, '{"editable": false}'),
-	(10, 'air_temperature', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_AIR_TEMP', NULL, false, '{"editable": false}'),
-	(10, 'dew_point_temperature', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_DEW_POINT_TEMP', NULL, false, '{"editable": false}'),
-	(10, 'period', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_PERIOD', NULL, false, '{"editable": false}'),
-	(10, 'relative_humidity', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_RELATIVE_HUMIDITY', NULL, false, '{"editable": false}'),
-	(10, 'visibility', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_VISIBILITY', NULL, false, '{"editable": false}'),
-	(10, 'wind_direction', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_WIND_DIRECTION', NULL, false, '{"editable": false}'),
-	(10, 'wind_speed', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_WIND_SPEED', NULL, false, '{"editable": false}'),
-	(10, 'wind_type', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_WIND_TYPE', NULL, false, '{"editable": false}'),
-	(10, 'date', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_DATE_WS', NULL, false, '{"editable": false}'),
-	(10, 'precipitation_type', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_PRECIPITATION_TYPE', NULL, false, '{"editable": false}'),
-	(10, 'precipitation_quantity', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_PRECIPITATION_QUANTITY', NULL, false, '{"editable": false}'),
-	(10, 'precipitation_intensity', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_PRECIPITATION_INTENSITY', NULL, false, '{"editable": false}'),
+	(1001, 10, 'id', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ID', NULL, true, '{"position": 1, "editable": false, "formVisible": false, "tableVisible": false}'),
+	(1002, 10, 'timestamp_at', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_DATE', NULL, false, '{"editable": false}'),
+	(1003, 10, 'equipo', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ELEMENT', NULL, false, '{"editable": false, "refName":true}'),
+	(1004, 10, 'air_pressure', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_AIR_PRESSURE', NULL, false, '{"editable": false}'),
+	(1005, 10, 'air_temperature', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_AIR_TEMP', NULL, false, '{"editable": false}'),
+	(1006, 10, 'dew_point_temperature', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_DEW_POINT_TEMP', NULL, false, '{"editable": false}'),
+	(1007, 10, 'period', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_PERIOD', NULL, false, '{"editable": false}'),
+	(1008, 10, 'relative_humidity', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_RELATIVE_HUMIDITY', NULL, false, '{"editable": false}'),
+	(1009, 10, 'visibility', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_VISIBILITY', NULL, false, '{"editable": false}'),
+	(1010, 10, 'wind_direction', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_WIND_DIRECTION', NULL, false, '{"editable": false}'),
+	(1011, 10, 'wind_speed', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_WIND_SPEED', NULL, false, '{"editable": false}'),
+	(1012, 10, 'wind_type', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_WIND_TYPE', NULL, false, '{"editable": false}'),
+	(1013, 10, 'date', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_DATE_WS', NULL, false, '{"editable": false}'),
+	(1014, 10, 'precipitation_type', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_PRECIPITATION_TYPE', NULL, false, '{"editable": false}'),
+	(1015, 10, 'precipitation_quantity', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_PRECIPITATION_QUANTITY', NULL, false, '{"editable": false}'),
+	(1016, 10, 'precipitation_intensity', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_PRECIPITATION_INTENSITY', NULL, false, '{"editable": false}'),
 
-    (11, 'timestamp_at', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_DATE', NULL, false, '{"editable": false}'),
-	(11, 'wind_speed', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_WIND_SPEED', NULL, false, '{"editable": false}'),
-	(11, 'equipo', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ELEMENT', NULL, false, '{"editable": false}'),
+	(1101, 11, 'id', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ID', NULL, true, '{"position": 1, "editable": false, "formVisible": false, "tableVisible": false}'),
+    (1102, 11, 'timestamp_at', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_DATE', NULL, false, '{"editable": false}'),
+	(1103, 11, 'wind_speed', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_WIND_SPEED', NULL, false, '{"editable": false}'),
+	(1104, 11, 'equipo', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ELEMENT', NULL, false, '{"editable": false, "refName":true}'),
 
-    (12, 'timestamp_at', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_DATE', NULL, false, '{"editable": false}'),
-	(12, 'wind_speed', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_WIND_SPEED', NULL, false, '{"editable": false}'),
-    (12, 'wind_direction', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_WIND_DIRECTION', NULL, false, '{"editable": false}'),
-	(12, 'equipo', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ELEMENT', NULL, false, '{"editable": false}'),
+	(1201, 12, 'id', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ID', NULL, true, '{"position": 1, "editable": false, "formVisible": false, "tableVisible": false}'),
+    (1202, 12, 'timestamp_at', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_DATE', NULL, false, '{"editable": false}'),
+	(1203, 12, 'wind_speed', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_WIND_SPEED', NULL, false, '{"editable": false}'),
+    (1204, 12, 'wind_direction', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_WIND_DIRECTION', NULL, false, '{"editable": false}'),
+	(1205, 12, 'equipo', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ELEMENT', NULL, false, '{"editable": false, "refName":true}'),
 
-    (13, 'timestamp_at', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_DATE', NULL, false, '{"editable": false}'),
-	(13, 'estado_barrera', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ESTADO_BARRERA', NULL, false, '{"editable": false}'),
-	(13, 'equipo', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ELEMENT', NULL, false, '{"editable": false}'),
+	(1301, 13, 'id', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ID', NULL, true, '{"position": 1, "editable": false, "formVisible": false, "tableVisible": false}'),
+    (1302, 13, 'timestamp_at', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_DATE', NULL, false, '{"editable": false}'),
+	(1303, 13, 'estado_barrera', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ESTADO_BARRERA', NULL, false, '{"editable": false}'),
+	(1304, 13, 'equipo', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ELEMENT', NULL, false, '{"editable": false, "refName":true}'),
 
-    (14, 'timestamp_at', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_DATE', NULL, false, '{"editable": false}'),
-	(14, 'fan_speed', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_FAN_SPEED', NULL, false, '{"editable": false}'),
-    (14, 'grid_gate_state', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_GRID_GATE_STATE', NULL, false, '{"editable": false}'),
-	(14, 'equipo', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ELEMENT', NULL, false, '{"editable": false}'),
+	(1401, 14, 'id', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ID', NULL, true, '{"position": 1, "editable": false, "formVisible": false, "tableVisible": false}'),
+    (1402, 14, 'timestamp_at', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_DATE', NULL, false, '{"editable": false}'),
+	(1403, 14, 'fan_speed', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_FAN_SPEED', NULL, false, '{"editable": false}'),
+    (1404, 14, 'grid_gate_state', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_GRID_GATE_STATE', NULL, false, '{"editable": false}'),
+	(1405, 14, 'equipo', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ELEMENT', NULL, false, '{"editable": false, "refName":true}'),
 
-    (16, 'timestamp_at', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_DATE', NULL, false, '{"editable": false}'),
-	(16, 'estado_semaforo', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ESTADO_SEM', NULL, false, '{"editable": false}'),
-	(16, 'equipo', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ELEMENT', NULL, false, '{"editable": false}');
+	(1501, 15, 'id', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ID', NULL, true, '{"position": 1, "editable": false, "formVisible": false, "tableVisible": false}'),
+	(1502, 15, 'equipo', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ELEMENT', NULL, false, '{"editable": false, "refName":true}'),
+    (1503, 15, 'timestamp_at', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_DATE', NULL, false, '{"editable": false}'),
+	(1504, 15, 'zona_grafico_1', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_GRAPHIC_1', NULL, false, '{"editable": false, "formVisible": false}'),
+	(1505, 15, 'mensaje', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_TEXT', NULL, false, '{"editable": false}'),
+	(1506, 15, 'zona_grafico_2', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_GRAPHIC_2', NULL, false, '{"editable": false, "formVisible": false}'),
+	(1507, 15, 'alternancia_zona_grafico_1', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_GRAPHIC_ALT_1', NULL, false, '{"editable": false, "formVisible": false}'),
+	(1508, 15, 'mensaje_alternancia', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_TEXT_ALT', NULL, false, '{"editable": false}'),
+	(1509, 15, 'alternancia_zona_grafico_2', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_GRAPHIC_ALT_2', NULL, false, '{"editable": false, "formVisible": false}'),
+	(1510, 15, 'zona_grafico_1_label', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_GRAPHIC_1', NULL, false, '{"editable": false}'),
+	(1511, 15, 'zona_grafico_2_label', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_GRAPHIC_2', NULL, false, '{"editable": false}'),
+	(1512, 15, 'alternancia_zona_grafico_1_label', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_GRAPHIC_ALT_1', NULL, false, '{"editable": false}'),
+	(1513, 15, 'alternancia_zona_grafico_2_label', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_GRAPHIC_ALT_2', NULL, false, '{"editable": false}'),
+
+	(1601, 16, 'id', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ID', NULL, true, '{"position": 1, "editable": false, "formVisible": false, "tableVisible": false}'),
+    (1602, 16, 'timestamp_at', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_DATE', NULL, false, '{"editable": false}'),
+	(1603, 16, 'estado_semaforo', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ESTADO_SEM', NULL, false, '{"editable": false}'),
+	(1604, 16, 'equipo', 'LBL_BACKOFFICE_SG_METADATA_COLUMNS_ELEMENT', NULL, false, '{"editable": false, "refName":true}');
 
   END IF;
   
