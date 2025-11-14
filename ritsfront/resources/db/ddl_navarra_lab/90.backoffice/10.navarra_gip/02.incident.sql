@@ -15,12 +15,16 @@ BEGIN
 			incident_sub_type varchar null,
 			level varchar null,
 			location varchar null,
+			stretch varchar null,
+			lat varchar null,
+			lon varchar null,
 			comment  varchar null,
 			created_at timestamptz default current_timestamp,
 			finish_at timestamptz,
 			affection_detail_id int null,
 			deceassed boolean null,
 			num_decesseased int null,
+			max_affection varchar null,
 			constraint pk_incidents primary key (id)
 		) tablespace tbs_controltrafico_incidents;	
 		
