@@ -100,6 +100,9 @@ class BackOfficeInitIncident {
         String incidentSubType = null;
         String level = null;
         String location = null;
+        String stretch = null;
+        String lat = null;
+        String lon = null;
         String userName = null;
         String finishAt = null;
 
@@ -134,7 +137,10 @@ class BackOfficeInitIncident {
                 Stretch stretch = IncidentEntitiesManager.getInstance().getStretch(incidentReport.getAffectionStretchId());
                 Location loc = IncidentEntitiesManager.getInstance().getLocation(incidentReport.getLocationId());
                 if (stretch != null && loc != null) {
-                    location = stretch.getAlias() + " - " + loc.getAlias();
+                    location = loc.getAlias();
+                    stretch = stretch.getAlias();
+                    lat = String.valueOf(loc.getLat());
+                    lon = String.valueOf(loc.getLon());
                 }
             }
 

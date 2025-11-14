@@ -107,6 +107,15 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 	--SystemPermission:33
 	('es_ES', 1, 'LBL_SYSTEM_PERMISSION_EDIT_ROUTES', 'Editor de rutas', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	('es_ES', 1, 'LBL_SYSTEM_PERMISSION_EDIT_ROUTES_DESC', 'Editor de rutas', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	--SystemPermission:34
+	('es_ES', 1, 'LBL_SYSTEM_PERMISSION_SHOW_EQUIPMENT', 'Permite visualizar el menú que muestr el grid con los tipos de equipos y su información', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_ES', 1, 'LBL_SYSTEM_PERMISSION_SHOW_EQUIPMENT_DESC', 'Permite visualizar el menú que muestr el grid con los tipos de equipos y su información', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	--SystemPermission:35
+	('es_ES', 1, 'LBL_SYSTEM_PERMISSION_SHOW_INCIDENT_BACKOFFICE', 'Permite visualizar la bitácora de incidencias', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_ES', 1, 'LBL_SYSTEM_PERMISSION_SHOW_INCIDENT_BACKOFFICE_DESC', 'Permite visualizar la bitácora de incidencias', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	--SystemPermission:36
+	('es_ES', 1, 'LBL_SYSTEM_PERMISSION_SHOW_EXTERNAL_INCIDENTS', 'Permite visualizar la tabla con la información de las incidencias externas', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_ES', 1, 'LBL_SYSTEM_PERMISSION_SHOW_EXTERNAL_INCIDENTS_DESC', 'Permite visualizar la tabla con la información de las incidencias externas', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	
 --en_GB
 	--SystemPermission:1
@@ -205,6 +214,15 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 	--SystemPermission:33
 	('en_GB', 1, 'LBL_SYSTEM_PERMISSION_EDIT_ROUTES', 'Edit routes', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	('en_GB', 1, 'LBL_SYSTEM_PERMISSION_EDIT_ROUTES_DESC', 'Edit routes', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	--SystemPermission:34
+	('en_GB', 1, 'LBL_SYSTEM_PERMISSION_SHOW_EQUIPMENT', 'It allows you to view the menu that displays the grid with the types of equipment and their information', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('en_GB', 1, 'LBL_SYSTEM_PERMISSION_SHOW_EQUIPMENT_DESC', 'It allows you to view the menu that displays the grid with the types of equipment and their information', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	--SystemPermission:35
+	('en_GB', 1, 'LBL_SYSTEM_PERMISSION_SHOW_INCIDENT_BACKOFFICE', 'It allows you to view the incident log', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('en_GB', 1, 'LBL_SYSTEM_PERMISSION_SHOW_INCIDENT_BACKOFFICE_DESC', 'It allows you to view the incident log', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	--SystemPermission:36
+	('en_GB', 1, 'LBL_SYSTEM_PERMISSION_SHOW_EXTERNAL_INCIDENTS', 'It allows you to view the table with information on external incidents', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('en_GB', 1, 'LBL_SYSTEM_PERMISSION_SHOW_EXTERNAL_INCIDENTS_DESC', 'It allows you to view the table with information on external incidents', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --sk_SK
 	--SystemPermission:1
@@ -388,4 +406,13 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 	('es_CL', 1, 'LBL_SYSTEM_PERMISSION_EDIT_LOCATIONS_DESC', 'Editor de localizaciones', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	--SystemPermission:33
 	('es_CL', 1, 'LBL_SYSTEM_PERMISSION_EDIT_ROUTES', 'Editor de rutas', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-	('es_CL', 1, 'LBL_SYSTEM_PERMISSION_EDIT_ROUTES_DESC', 'Editor de rutas', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+	('es_CL', 1, 'LBL_SYSTEM_PERMISSION_EDIT_ROUTES_DESC', 'Editor de rutas', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	--SystemPermission:34
+	('es_CL', 1, 'LBL_SYSTEM_PERMISSION_SHOW_EQUIPMENT', 'Permite visualizar el menú que muestr el grid con los tipos de equipos y su información', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_CL', 1, 'LBL_SYSTEM_PERMISSION_SHOW_EQUIPMENT_DESC', 'Permite visualizar el menú que muestr el grid con los tipos de equipos y su información', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	--SystemPermission:35
+	('es_CL', 1, 'LBL_SYSTEM_PERMISSION_SHOW_INCIDENT_BACKOFFICE', 'Permite visualizar la bitácora de incidencias', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_CL', 1, 'LBL_SYSTEM_PERMISSION_SHOW_INCIDENT_BACKOFFICE_DESC', 'Permite visualizar la bitácora de incidencias', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	--SystemPermission:36
+	('es_CL', 1, 'LBL_SYSTEM_PERMISSION_SHOW_EXTERNAL_INCIDENTS', 'Permite visualizar la tabla con la información de las incidencias externas', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_CL', 1, 'LBL_SYSTEM_PERMISSION_SHOW_EXTERNAL_INCIDENTS_DESC', 'Permite visualizar la tabla con la información de las incidencias externas', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
