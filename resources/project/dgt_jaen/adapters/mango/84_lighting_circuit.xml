@@ -35,7 +35,6 @@
     </p:field>
   </p:fields>
   <p:alarms>
-		<p:alarm source="alarm" active_value="true" alarm_config_id="030084"></p:alarm>
     <p:alarm source="without_voltage" active_value="true" alarm_config_id="040084"></p:alarm>
     <p:alarm source="manual" active_value="true" alarm_config_id="050084"></p:alarm>
     <p:alarm source="emergency_lamp_failure" active_value="true" alarm_config_id="060084"></p:alarm>
