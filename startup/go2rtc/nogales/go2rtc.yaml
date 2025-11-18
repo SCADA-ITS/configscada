@@ -1,0 +1,29 @@
+api:
+    listen: ":1984"
+    base_path: ""
+    static_dir: ""
+    origin: ""
+
+streams:
+    NO-S2-CCTV-01:
+        - rtsp://admin:Revenga2023.@10.50.3.10/Streaming/Channels/103
+        - ffmpeg:NO-S2-CCTV-01#video=mjpeg
+    NO-S2-CCTV-02:
+        - rtsp://admin:Revenga2023.@10.50.3.11/Streaming/Channels/103
+        - ffmpeg:NO-S2-CCTV-02#video=mjpeg
+    NO-S2-CCTV-03:
+        - rtsp://admin:Revenga2023.@10.50.3.12/Streaming/Channels/103
+        - ffmpeg:NO-S2-CCTV-03#video=mjpeg
+    NO-S2-CCTV-04:
+        - rtsp://admin:Revenga2023.@10.50.3.13/Streaming/Channels/103
+        - ffmpeg:NO-S2-CCTV-04#video=mjpeg
+
+log:
+  level: info  # default level
+  api: trace
+  exec: debug
+  ngrok: info
+  rtsp: warn
+  streams: error
+  webrtc: fatal
+    
