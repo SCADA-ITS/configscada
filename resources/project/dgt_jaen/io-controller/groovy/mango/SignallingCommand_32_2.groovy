@@ -19,7 +19,7 @@ import com.revenga.rits.back.data.core.util.ResourcesUtil;
 
 /**
  * 
- * SignallingCommand_32_1: Fire pressurization ON
+ * SignallingCommand_32_1: Fire pressurization OFF
  * 
  */
 class SignallingCommand_32_1 {
@@ -28,12 +28,12 @@ class SignallingCommand_32_1 {
 	def signallingCommandUtils;
 	
 	static final String FIRE_PRESSURIZATION_CMD = "fan_activation_order";
-	static final String FIRE_VENTILATION_GATE_CMD = "ventilation_gate_closure_order";
-	static final String FIRE_GRID_GATE_CMD = "grid_gate_closure_order";
+	static final String FIRE_VENTILATION_GATE_CMD = "ventilation_gate_clousure_order";
+	static final String FIRE_GRID_GATE_CMD = "grid_gate_clousure_order";
 	
 	static final Boolean FIRE_PRESSURIZATION_CMD_VALUE_OFF = 0;
-	static final Boolean FIRE_VENTILATION_GATE_CMD_VALUE_OFF = 1;
-	static final Boolean FIRE_GRID_GATE_CMD_VALUE_OFF = 1;
+	static final Boolean FIRE_VENTILATION_GATE_CMD_VALUE_OFF = 0;
+	static final Boolean FIRE_GRID_GATE_CMD_VALUE_OFF = 0;
 	
 	org.apache.logging.log4j.Logger log;
 	

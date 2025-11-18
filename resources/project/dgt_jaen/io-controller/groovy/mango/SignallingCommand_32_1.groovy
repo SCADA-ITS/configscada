@@ -28,12 +28,12 @@ class SignallingCommand_32_1 {
 	def signallingCommandUtils;
 	
 	static final String FIRE_PRESSURIZATION_CMD = "fan_activation_order";
-	static final String FIRE_VENTILATION_GATE_CMD = "ventilation_gate_closure_order";
-	static final String FIRE_GRID_GATE_CMD = "grid_gate_closure_order";
+	static final String FIRE_VENTILATION_GATE_CMD = "ventilation_gate_clousure_order";
+	static final String FIRE_GRID_GATE_CMD = "grid_gate_clousure_order";
 	
 	static final Boolean FIRE_PRESSURIZATION_CMD_VALUE_ON = 1;
-	static final Boolean FIRE_VENTILATION_GATE_CMD_VALUE_ON = 0;
-	static final Boolean FIRE_GRID_GATE_CMD_VALUE_ON = 0;
+	static final Boolean FIRE_VENTILATION_GATE_CMD_VALUE_ON = 1;
+	static final Boolean FIRE_GRID_GATE_CMD_VALUE_ON = 1;
 	
 	org.apache.logging.log4j.Logger log;
 	
@@ -71,11 +71,11 @@ class SignallingCommand_32_1 {
 					dataSourceXid + "_" + FIRE_GRID_GATE_CMD, FIRE_GRID_GATE_CMD_VALUE_ON);
 
 			xidPointValueTimeModels.add(xidPointValueTimeModel);
-
+			
 			ObjectMapper objectMapper = new ObjectMapper();
 			objectMapper.setSerializationInclusion(Include.NON_NULL);
 			String message = objectMapper.writeValueAsString(xidPointValueTimeModels);
-			
+			log.debug("message------->>>>> " + message)
 			if (driver != null) {
 			
 				driver.send(message);
