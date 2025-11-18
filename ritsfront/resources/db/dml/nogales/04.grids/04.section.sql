@@ -38,4 +38,3 @@
 --(040004, './img/state/stateUp.png', 'ElementTypeState:4:1', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_VALID'),
 --(040004, './img/state/stateDown.png', 'ElementTypeState:4:2', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_INVALID'),
 --(040004, './img/state/stateAlarm.png', 'ElementTypeState:4:3', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_ALARMS');
-

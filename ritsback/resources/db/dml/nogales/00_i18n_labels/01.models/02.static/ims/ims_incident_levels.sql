@@ -8,3 +8,19 @@
 -- 
 -- Table: master.i18n_labels
 --
+INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) VALUES
+--es_ES
+	 ('es_ES', 1, 'LBL_INCIDENT_LEVEL_1', 'Emergencia de Nivel 1', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	 ('es_ES', 1, 'LBL_INCIDENT_LEVEL_2', 'Emergencia de Nivel 2', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	 ('es_ES', 1, 'LBL_INCIDENT_LEVEL_3', 'Emergencia de Nivel 3', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	 
+--en_GB
+	 ('en_GB', 1, 'LBL_INCIDENT_LEVEL_1', 'Level 1 emergency', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	 ('en_GB', 1, 'LBL_INCIDENT_LEVEL_2', 'Level 2 emergency', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	 ('en_GB', 1, 'LBL_INCIDENT_LEVEL_3', 'Level 3 emergency', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	
+--es_CL
+	 ('es_CL', 1, 'LBL_INCIDENT_LEVEL_1', 'Emergencia de Nivel 1', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	 ('es_CL', 1, 'LBL_INCIDENT_LEVEL_2', 'Emergencia de Nivel 2', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	 ('es_CL', 1, 'LBL_INCIDENT_LEVEL_3', 'Emergencia de Nivel 3', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+

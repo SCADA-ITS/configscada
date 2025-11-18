@@ -19,11 +19,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
  * 
  */
 class SignallingCommand_71_2 {
-	static final Long SUBTYPE_PANEL_MODBUS_CLV = 11;
-	static final Long SUBTYPE_PANEL_MODBUS_AF = 12;
-	static final Long SUBTYPE_PANEL_NTCIP_TXT = 16;
-	static final Long SUBTYPE_PANEL_NTCIP_GR_TXT = 19;
-	static final Long SUBTYPE_PANEL_NTCIP_TARIFARIO = 21;
 
 	GroovyShell shell;
 	def signallingCommandUtils;
@@ -43,28 +38,8 @@ class SignallingCommand_71_2 {
 		Element element = EntitiesManager.getInstance().getElement(signallingCommand.elementTypeId, signallingCommand.elementId);
 
 		try {
-			if(element.elementSubtypeId == SUBTYPE_PANEL_MODBUS_CLV){
-			   
-				def pmv = shell.parse(new File(ResourcesUtil.getPath("io-controller/groovy/mango/pmv_subtypes/modbus/CLV.groovy")));
-				pmv.CLV(signallingCommand, dataSourceXid, driver, element);	
-			} else if(element.elementSubtypeId == SUBTYPE_PANEL_MODBUS_AF){
-			   
-				def pmv = shell.parse(new File(ResourcesUtil.getPath("io-controller/groovy/mango/pmv_subtypes/modbus/AF.groovy")));
-				pmv.AF(signallingCommand, dataSourceXid, driver, element);	
-			}else if(element.elementSubtypeId == SUBTYPE_PANEL_NTCIP_TXT){
-			   
-				def pmv = shell.parse(new File(ResourcesUtil.getPath("io-controller/groovy/mango/pmv_subtypes/ntcip/txt1line.groovy")));
-				pmv.txt1line(signallingCommand, dataSourceXid, driver, element);	
-			}else if(element.elementSubtypeId == SUBTYPE_PANEL_NTCIP_GR_TXT){
-			
-				def pmv = shell.parse(new File(ResourcesUtil.getPath("io-controller/groovy/mango/pmv_subtypes/ntcip/grtxt.groovy")));
-				pmv.grtxt(signallingCommand, dataSourceXid, driver, element);	
-			}else if(element.elementSubtypeId == SUBTYPE_PANEL_NTCIP_TARIFARIO){
-				String multi = signallingCommand.getSignallingParams().get(0).getValue();
-
-				def pmv = shell.parse(new File(ResourcesUtil.getPath("io-controller/groovy/mango/pmv_subtypes/ntcip/tarifario.groovy")));
-				pmv.tarifario(signallingCommand, dataSourceXid, driver, element, multi, log);	
-			}
+			def pmv = shell.parse(new File(ResourcesUtil.getPath("io-controller/groovy/mango/pmv_subtypes/ntcip/grtxt.groovy")));
+			pmv.grtxt(signallingCommand, dataSourceXid, driver, element);	
 		}catch (NumberFormatException | JsonProcessingException e) {
 			log.error(e.getMessage());
 			log.debug(ExceptionUtils.getStackTrace(e));

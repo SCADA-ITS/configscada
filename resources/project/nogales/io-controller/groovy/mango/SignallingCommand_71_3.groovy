@@ -48,18 +48,10 @@ class SignallingCommand_71_3 {
 			List<XidPointValueTimeModel> xidPointValueTimeModels = new ArrayList<>();
 			ObjectMapper mapper = new ObjectMapper();
 			XidPointValueTimeModel xidPointValueTimeModel;		
-			Element element = EntitiesManager.getInstance().getElement(signallingCommand.elementTypeId, signallingCommand.elementId);
 
-			if(element.elementSubtypeId == SUBTYPE_PANEL_MODBUS_CLV || element.elementSubtypeId == SUBTYPE_PANEL_MODBUS_AF){
-
-				def pmv = shell.parse(new File(ResourcesUtil.getPath("io-controller/groovy/mango/pmv_subtypes/modbus/shutdownModbus.groovy")));
-				xidPointValueTimeModel = pmv.shutdownModbus(signallingCommand, dataSourceXid);	
-			}else if(element.elementSubtypeId == SUBTYPE_PANEL_NTCIP_TXT || element.elementSubtypeId == SUBTYPE_PANEL_NTCIP_GR_TXT ||
-					element.elementSubtypeId == SUBTYPE_PANEL_NTCIP_TARIFARIO){
-
-				def pmv = shell.parse(new File(ResourcesUtil.getPath("io-controller/groovy/mango/pmv_subtypes/ntcip/shutdownNTCIP.groovy")));
-				xidPointValueTimeModel = pmv.shutdownNTCIP(signallingCommand, dataSourceXid);
-			}
+			def pmv = shell.parse(new File(ResourcesUtil.getPath("io-controller/groovy/mango/pmv_subtypes/ntcip/shutdownNTCIP.groovy")));
+	
+			xidPointValueTimeModel = pmv.shutdownNTCIP(signallingCommand, dataSourceXid);
 			xidPointValueTimeModels.add(xidPointValueTimeModel);	
 			
 			ObjectMapper objectMapper = new ObjectMapper();

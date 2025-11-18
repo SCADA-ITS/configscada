@@ -9,16 +9,13 @@ INSERT INTO ui.menu_items(id, menu_group_id, "position", module_id, "label", ico
 (0102, 1, 2, 200, 'LBL_MENU_ITEM_MAP', 'img/menu/map-menu.png', 'NOGALES_MAP', 'NOGALES_MAP', true, true),
 
 -- EQUIPMENT
-(0201, 2, 1, 500, 'LBL_MENU_ITEM_EQUIPMENTS', 'img/menu/equipment-menu.png', 'Menu item Equipments', 'Menu item Equipments', true, true),
+(0201, 2, 1, 500, 'LBL_MENU_ITEM_ALARM_MONITOR', 'img/menu/equipment-menu.png', 'Menu item Equipments', 'Menu item Equipments', true, true),
 (0202, 2, 2, 1005, 'LBL_MENU_ITEM_ALARM_MONITOR', 'img/menu/alarm_monitor.png', 'Menu item alarm monitor', 'Menu item alarm monitor', true, true),
-(0203, 2, 1, 1020, 'LBL_MENU_ITEM_CCTV', 'img/menu/camera-menu.png', 'Menu item CCTV', 'Menu item CCTV', true, true),
 
 -- MANAGEMENT
-(0301, 3, 1, 1003, 'LBL_MENU_ITEM_INCIDENT_REPORTS', 'img/menu/incident.png', 'Menu item incindet report', 'Menu item incident report', true, true),
 (0302, 3, 2, 1024, 'LBL_MENU_ITEM_PLAN_MANAGER', 'img/menu/plan-menu.png', 'Menu item Plan Manager', 'Menu item Plan Manager', true, true),
 (0303, 3, 3, 1040, 'LBL_MENU_ITEM_VMS_SIGNALING', 'img/menu/signaling-menu.png', 'Menu item VMS Signaling', 'Menu item VMS Signaling', true, true),
 
 -- TOOLS
-(0401, 4, 1, 403, 'LBL_MENU_ITEM_REPORTS', 'img/menu/default.png', 'Menu item Reports', 'Menu item Reports', true, true),
-(0402, 4, 2, 1920, 'LBL_GIP', 'img/menu/default.png', 'NOGALES_GIP', 'Nogales GIP', true, true),
-(0403, 4, 3, 6011, 'LBL_GIP_INCIDENT', 'img/menu/default.png', 'NOGALES_GIP_INCIDENT', 'Nogales GIP', true, true);
+(0401, 4, 1, 1922, 'LBL_MENU_ITEM_REPORTS', 'img/menu/backofficeincident.png', 'Backoffice Reports', 'Backoffice Reports', true, true),
+(0402, 4, 2, 1921, 'LBL_MENU_ITEM_INCIDENT_REPORTS_BACKOFFICE', 'img/menu/backofficeincident.png', 'Backoffice incidencias', 'Backoffice incidencias', true, true);
