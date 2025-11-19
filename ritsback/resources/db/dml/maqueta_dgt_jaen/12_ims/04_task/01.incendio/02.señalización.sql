@@ -29,7 +29,7 @@ VALUES
                     }
     },
 	{
-        "id": 5,
+        "id": 3,
         "alias": "Aspa-Flecha",
         "from": 1,
         "to": 1,
@@ -43,7 +43,7 @@ VALUES
 		}
 	},
 	{
-		"id": 6,
+		"id": 4,
 		"alias": "CLV",
 		"from": 1,
         "to": 1,
@@ -56,7 +56,7 @@ VALUES
 		}
 	},
     {
-        "id": 7,
+        "id": 5,
         "alias": "PMV",
         "from": 1,
         "to": 1,
@@ -70,7 +70,7 @@ VALUES
 		}
 	},
     {
-        "id": 8,
+        "id": 6,
         "alias": "PMV",
         "from": 1,
         "to": 1,
@@ -84,7 +84,7 @@ VALUES
 		}
 	},
     {
-        "id": 9,
+        "id": 7,
         "alias": "STOP",
         "from": 1,
         "to": 1,
@@ -97,7 +97,7 @@ VALUES
 		}
 	},
     {
-        "id": 10,
+        "id": 8,
         "alias": "PRESURIZACION",
         "from": 1,
         "to": 1,
@@ -108,8 +108,16 @@ VALUES
                     }
     }
 ]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-
-
+(1, 1, 01120101, '[
+    {
+        "id": 1,
+        "alias": "ILUMINACION DE EMERGENCIA",
+        "from": 1,
+        "to": 1,
+        "command": {
+                    "commandElementTypeId": "CommandElementType:6:73"
+                }
+    }]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --RESTITUCION
 --ventilación

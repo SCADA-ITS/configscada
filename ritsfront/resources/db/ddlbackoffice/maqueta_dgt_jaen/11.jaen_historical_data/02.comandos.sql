@@ -28,7 +28,7 @@ WITH comando_normalizado AS (
             WHEN jsonb_typeof(ac.command_values::jsonb) = 'string' THEN
                 (ac.command_values::jsonb)::text::jsonb
             WHEN jsonb_typeof(ac.command_values::jsonb) = 'array'
-                AND jsonb_typeof((ac.command_values::jsonb)->0->'value') = 'string'
+                 AND jsonb_typeof((ac.command_values::jsonb)->0->'value') = 'string'
             THEN ((ac.command_values::jsonb)->0->>'value')::jsonb
             WHEN jsonb_typeof(ac.command_values::jsonb) = 'array' THEN
                 (ac.command_values::jsonb)
@@ -36,7 +36,6 @@ WITH comando_normalizado AS (
         END AS comando_json
     FROM hist.audit_commands ac
 ),
--- tabla auxiliar para asegurar una sola label por value
 icon_labels AS (
     SELECT value, MAX(label_value) AS label_value
     FROM ui.grid_field_icons
@@ -46,13 +45,15 @@ SELECT
     ac.audit_log_id::bigint AS id,
     ac.audit_log_id::bigint AS audit_log_id,
     ac.time_stamp::timestamp without time zone AS time_stamp,
+
+    -- user_name igual que antes
     COALESCE(
         CASE
-            WHEN ac.comment ~* '^Plan:\\d+$' THEN (
+            WHEN ac.comment ~* '^Plan:\d+$' THEN (
                 SELECT ap.user_name
                 FROM hist.audit_plans ap
                 INNER JOIN conf.plans p ON p.alias = ap.plan
-                WHERE p.plan_id = CAST(regexp_replace(ac.comment, '^Plan:', '', 'i') AS INTEGER)
+                WHERE p.plan_id = CAST(regexp_replace(ac.comment, '\D', '', 'g') AS INTEGER)
                   AND ap.log_subtype_id = 3
                 LIMIT 1
             )
@@ -64,13 +65,16 @@ SELECT
     il.translation::varchar AS translation,
     ac.element::varchar AS element,
 
+    -- comment corregido para Plan y Incidencia
     COALESCE(
         CASE
-            WHEN ac.comment ~* '^Plan:\\d+$' THEN ('plan: ' || pl.alias)
-            WHEN ac.comment ~* '^ImsIncidentReport:\\d+$' THEN ('incidencia: ' || COALESCE(it.description, '')::varchar)
-            ELSE COALESCE(ac.comment, '')
+            WHEN ac.comment ~* '^Plan:\d+$' THEN
+                'Plan: ' || pl.alias
+            WHEN ac.comment ~* '^ImsIncidentReport:\d+$' THEN
+                'Incidencia: ' || COALESCE(it.description, '')
+            ELSE COALESCE(ac.comment, 'Usuario')
         END,
-        ''
+        'Usuario'
     )::varchar AS comment,
 
     -- zona_grafico_1
@@ -81,7 +85,7 @@ SELECT
         WHERE zone->>'zone' = '1'
     ), '')::varchar AS zona_grafico_1,
 
-    -- label zona_grafico_1 traducida
+    -- label zona_grafico_1
     COALESCE((
         SELECT mil.translation
         FROM jsonb_array_elements(coalesce(cn.comando_json, '[]'::jsonb)) zone
@@ -92,15 +96,15 @@ SELECT
         LIMIT 1
     ), '')::varchar AS zona_grafico_1_label,
 
-    -- mensaje (zona 2)
-    COALESCE(( 
+    -- mensaje zona 2
+    COALESCE((
         SELECT string_agg(t->>'value', ' / ' ORDER BY (t->>'id')::int)
         FROM jsonb_array_elements(coalesce(cn.comando_json, '[]'::jsonb)) zone
         CROSS JOIN LATERAL jsonb_array_elements(coalesce(zone->'texts','[]'::jsonb)) t
         WHERE zone->>'zone' = '2'
     ), '')::varchar AS mensaje,
 
-    -- alternancia zona grafico 1
+    -- alternancia zona 1
     COALESCE((
         SELECT TRIM(BOTH ' ' FROM string_agg(NULLIF(g->>'alternance','0'), ' '))
         FROM jsonb_array_elements(coalesce(cn.comando_json, '[]'::jsonb)) zone
@@ -108,7 +112,7 @@ SELECT
         WHERE zone->>'zone' = '1'
     ), '')::varchar AS alternancia_zona_grafico_1,
 
-    -- label alternancia zona grafico 1 traducida
+    -- label alternancia zona 1
     COALESCE((
         SELECT mil.translation
         FROM jsonb_array_elements(coalesce(cn.comando_json, '[]'::jsonb)) zone
@@ -119,7 +123,7 @@ SELECT
         LIMIT 1
     ), '')::varchar AS alternancia_zona_grafico_1_label,
 
-    -- zona_grafico_2 (zone '3')
+    -- zona_grafico_2
     COALESCE((
         SELECT TRIM(BOTH ' ' FROM string_agg(NULLIF(g->>'value','0'), ' '))
         FROM jsonb_array_elements(coalesce(cn.comando_json, '[]'::jsonb)) zone
@@ -127,7 +131,7 @@ SELECT
         WHERE zone->>'zone' = '3'
     ), '')::varchar AS zona_grafico_2,
 
-    -- label zona_grafico_2 traducida
+    -- label zona_grafico_2
     COALESCE((
         SELECT mil.translation
         FROM jsonb_array_elements(coalesce(cn.comando_json, '[]'::jsonb)) zone
@@ -138,15 +142,15 @@ SELECT
         LIMIT 1
     ), '')::varchar AS zona_grafico_2_label,
 
-    -- mensaje_alternancia (zone '2')
-    COALESCE(( 
+    -- mensaje alternancia
+    COALESCE((
         SELECT string_agg(NULLIF(t->>'alternance',''), E' / ' ORDER BY (t->>'id')::int)
         FROM jsonb_array_elements(coalesce(cn.comando_json, '[]'::jsonb)) zone
         CROSS JOIN LATERAL jsonb_array_elements(coalesce(zone->'texts','[]'::jsonb)) t
         WHERE zone->>'zone' = '2' AND NULLIF(t->>'alternance','') IS NOT NULL
     ), '')::varchar AS mensaje_alternancia,
 
-    -- alternancia zona grafico 2
+    -- alternancia zona 2
     COALESCE((
         SELECT TRIM(BOTH ' ' FROM string_agg(NULLIF(g->>'alternance','0'), ' '))
         FROM jsonb_array_elements(coalesce(cn.comando_json, '[]'::jsonb)) zone
@@ -154,7 +158,7 @@ SELECT
         WHERE zone->>'zone' = '3'
     ), '')::varchar AS alternancia_zona_grafico_2,
 
-    -- label alternancia zona grafico 2 traducida
+    -- label alternancia zona 2
     COALESCE((
         SELECT mil.translation
         FROM jsonb_array_elements(coalesce(cn.comando_json, '[]'::jsonb)) zone
@@ -167,21 +171,26 @@ SELECT
 
 FROM hist.audit_commands ac
 LEFT JOIN comando_normalizado cn ON ac.audit_log_id = cn.audit_log_id
+
+-- Plan
 LEFT JOIN LATERAL (
     SELECT alias
     FROM conf.plans
-    WHERE ac.comment ~* '^Plan:\\d+$'
-      AND plan_id = CAST(regexp_replace(ac.comment, '^Plan:', '', 'i') AS INTEGER)
+    WHERE plan_id = CAST(regexp_replace(ac.comment, '\D', '', 'g') AS INTEGER)
     LIMIT 1
-) pl ON TRUE
+) pl ON ac.comment ~* '^Plan:\d+$'
+
+-- Incidencia
 LEFT JOIN LATERAL (
-    SELECT hir.description
-    FROM hist.ims_incident_reports hir 
-    JOIN conf.ims_incident_types cit ON cit.incident_type_id = hir.incident_type_id
-    WHERE hir.incident_report_id = CAST(regexp_replace(ac.comment, '^ImsIncidentReport:', '') AS INTEGER)
-      AND ac.comment ~* '^ImsIncidentReport:\\d+$'
+    SELECT cit.description
+    FROM hist.ims_incident_reports hir
+    JOIN conf.ims_incident_types cit 
+      ON cit.incident_type_id = hir.incident_type_id
+    WHERE hir.incident_report_id = CAST(regexp_replace(ac.comment, '\D', '', 'g') AS INTEGER)
+      AND ac.comment ~* '^ImsIncidentReport:\d+$'
     LIMIT 1
 ) it ON TRUE
+
 INNER JOIN master.i18n_labels il ON il.label = ac.command_type
 INNER JOIN conf.elements el ON el.alias = ac.element
 WHERE il.locale_code = 'es_ES'
@@ -190,6 +199,10 @@ WHERE il.locale_code = 'es_ES'
   AND ac.time_stamp >= now() - INTERVAL '1 month'
   AND ac.time_stamp <= now()
 ORDER BY ac.time_stamp DESC;
+
+
+
+
 
 
 

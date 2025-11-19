@@ -20,9 +20,9 @@ INSERT INTO static.sm_thresholds
 (2002, 'Threshold_CO_1', 'Threshold CO 1 (ppm)', 'LBL_THRESHOLD_CO_1', 'LBL_THRESHOLD_CO_1', 3, '30', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (3002, 'Threshold_CO_2', 'Threshold CO 2 (ppm)', 'LBL_THRESHOLD_CO_2', 'LBL_THRESHOLD_CO_2', 3, '100', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
-(4002, 'Threshold_K_0', 'Threshold K 0 (k-1)', 'LBL_THRESHOLD_K_0', 'LBL_THRESHOLD_K_0', 3, '2.25', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(5002, 'Threshold_K_1', 'Threshold K 1 (k-1)', 'LBL_THRESHOLD_K_1', 'LBL_THRESHOLD_K_1', 3, '4.5', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(6002, 'Threshold_K_2', 'Threshold K 2 (k-1)', 'LBL_THRESHOLD_K_2', 'LBL_THRESHOLD_K_2', 3, '7.5', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(4002, 'Threshold_K_0', 'Threshold K 0 (k-1)', 'LBL_THRESHOLD_K_0', 'LBL_THRESHOLD_K_0', 3, '10', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(5002, 'Threshold_K_1', 'Threshold K 1 (k-1)', 'LBL_THRESHOLD_K_1', 'LBL_THRESHOLD_K_1', 3, '20', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(6002, 'Threshold_K_2', 'Threshold K 2 (k-1)', 'LBL_THRESHOLD_K_2', 'LBL_THRESHOLD_K_2', 3, '33', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 
 INSERT INTO static.sm_transitions

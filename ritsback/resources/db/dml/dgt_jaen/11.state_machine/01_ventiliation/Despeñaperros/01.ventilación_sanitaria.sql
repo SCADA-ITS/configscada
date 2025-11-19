@@ -20,17 +20,17 @@ INSERT INTO static.sm_thresholds
 (2, 'Threshold_CO_1', 'Threshold CO 1 (ppm)', 'LBL_THRESHOLD_CO_1', 'LBL_THRESHOLD_CO_1', 3, '60', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (3, 'Threshold_CO_2', 'Threshold CO 2 (ppm)', 'LBL_THRESHOLD_CO_2', 'LBL_THRESHOLD_CO_2', 3, '200', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
-(4, 'Threshold_K_0', 'Threshold K 0 (k-1)', 'LBL_THRESHOLD_K_0', 'LBL_THRESHOLD_K_0', 3, '4.5', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(5, 'Threshold_K_1', 'Threshold K 1 (k-1)', 'LBL_THRESHOLD_K_1', 'LBL_THRESHOLD_K_1', 3, '9', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(6, 'Threshold_K_2', 'Threshold K 2 (k-1)', 'LBL_THRESHOLD_K_2', 'LBL_THRESHOLD_K_2', 3, '15', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(4, 'Threshold_K_0', 'Threshold K 0 (k-1)', 'LBL_THRESHOLD_K_0', 'LBL_THRESHOLD_K_0', 3, '20', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(5, 'Threshold_K_1', 'Threshold K 1 (k-1)', 'LBL_THRESHOLD_K_1', 'LBL_THRESHOLD_K_1', 3, '40', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(6, 'Threshold_K_2', 'Threshold K 2 (k-1)', 'LBL_THRESHOLD_K_2', 'LBL_THRESHOLD_K_2', 3, '66', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 (7, 'Threshold_CO_3', 'Threshold CO 3 (ppm)', 'LBL_THRESHOLD_CO_3', 'LBL_THRESHOLD_CO_3', 3, '28.5', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (8, 'Threshold_CO_4', 'Threshold CO 4 (ppm)', 'LBL_THRESHOLD_CO_4', 'LBL_THRESHOLD_CO_4', 3, '57', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (9, 'Threshold_CO_5', 'Threshold CO 5 (ppm)', 'LBL_THRESHOLD_CO_5', 'LBL_THRESHOLD_CO_5', 3, '190', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
-(10, 'Threshold_K_3', 'Threshold K 3 (k-1)', 'LBL_THRESHOLD_K_3', 'LBL_THRESHOLD_K_3', 3, '4.275', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(11, 'Threshold_K_4', 'Threshold K 4 (k-1)', 'LBL_THRESHOLD_K_4', 'LBL_THRESHOLD_K_4', 3, '8.55', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(12, 'Threshold_K_5', 'Threshold K 5 (k-1)', 'LBL_THRESHOLD_K_5', 'LBL_THRESHOLD_K_5', 3, '14.25', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(10, 'Threshold_K_3', 'Threshold K 3 (k-1)', 'LBL_THRESHOLD_K_3', 'LBL_THRESHOLD_K_3', 3, '18', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(11, 'Threshold_K_4', 'Threshold K 4 (k-1)', 'LBL_THRESHOLD_K_4', 'LBL_THRESHOLD_K_4', 3, '38', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(12, 'Threshold_K_5', 'Threshold K 5 (k-1)', 'LBL_THRESHOLD_K_5', 'LBL_THRESHOLD_K_5', 3, '64', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 
 INSERT INTO static.sm_transitions
@@ -62,17 +62,17 @@ INSERT INTO static.sm_conditions
 (3, 1, 2, 3, 19, 1, 2, NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), -- > 60 CO < 200 CO 
 (4, 4, 3, NULL, 19, 1, 2, NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), -- > 200 CO
 
-(5, 6, 4, NULL, 21, 1, 2, NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), --< 4.5 opac
-(6, 1, 4, 5, 21, 1, 2, NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), -- > 4.5 opac < 9 opac
-(7, 1, 5, 6, 21, 1, 2, NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), -- > 9 opac < 15 opac
-(8, 4, 6, NULL, 21, 1, 2, NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), -- > 15 opac
+(5, 6, 4, NULL, 21, 1, 2, NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), --< 20 opac
+(6, 1, 4, 5, 21, 1, 2, NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), -- > 20 opac < 40 opac
+(7, 1, 5, 6, 21, 1, 2, NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), -- > 40 opac < 66 opac
+(8, 4, 6, NULL, 21, 1, 2, NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), -- > 66 opac
 
 (9, 6, 7, NULL, 19, 1, 2, NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), --< 28.5 CO
 (10, 1, 1, 8, 19, 1, 2, NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), --> 30 CO  < 57 CO 
 (11, 1, 2, 9, 19, 1, 2, NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), -- > 60 CO < 190 CO 
 
 (12, 6, 10, NULL, 21, 1, 2, NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), --< 4.275 opac
-(13, 1, 4, 11, 21, 1, 2, NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), -- > 4.5 opac < 8.55 opac
+(13, 1, 4, 11, 21, 1, 2, NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), -- > 20 opac < 8.55 opac
 (14, 1, 5, 12, 21, 1, 2, NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP); -- > 9 opac < 14.25 opac
 
 

@@ -136,7 +136,6 @@ INSERT INTO conf.command_element_values (command_element_type_id,element_type_id
 	 (2,71,1,255,'[{"zone":1,"graphics":[{"id":1,"value":"317"}]}]',true,true,CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	 (2,71,1,256,'[{"zone":1,"graphics":[{"id":1,"value":"317"}]}]',true,true,CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	 (2,71,1,257,'[{"zone":1,"graphics":[{"id":1,"value":"317"}]}]',true,true,CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-	 (2,71,1,564,'[{"zone":1,"graphics":[]},{"zone":2,"align":"left","texts":[{"id":1,"value":"CIRCULE","color":"#FFBF00"},{"id":2,"value":"CON","color":"#FFBF00"},{"id":3,"value":"PRECAUCION","color":"#FFBF00"}]}]',true,true,CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	 (2,71,1,565,'[{"zone":1,"graphics":[{"id":1,"value":"745"}]}]',true,true,CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	 (2,71,1,566,'[{"zone":1,"graphics":[{"id":1,"value":"745"}]}]',true,true,CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	 (2,71,1,567,'[{"zone":1,"graphics":[{"id":1,"value":"745"}]}]',true,true,CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -569,7 +568,6 @@ INSERT INTO conf.command_element_values (command_element_type_id,element_type_id
 	 (2,71,1,897,'[{"zone":1,"graphics":[{"id":1,"value":"746"}]}]',true,true,CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	 (2,71,1,898,'[{"zone":1,"graphics":[{"id":1,"value":"746"}]}]',true,true,CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	 (2,71,1,899,'[{"zone":1,"graphics":[{"id":1,"value":"746"}]}]',true,true,CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-	 (2,71,1,900,'[{"zone":1,"graphics":[]},{"zone":2,"align":"left","texts":[{"id":1,"value":"CIRCULE","color":"#FFBF00"},{"id":2,"value":"CON","color":"#FFBF00"},{"id":3,"value":"PRECAUCION","color":"#FFBF00"}]}]',true,true,CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	 (2,71,1,901,'[{"zone":1,"graphics":[{"id":1,"value":"745"}]}]',true,true,CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	 (2,71,1,902,'[{"zone":1,"graphics":[{"id":1,"value":"745"}]}]',true,true,CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	 (2,71,1,903,'[{"zone":1,"graphics":[{"id":1,"value":"745"}]}]',true,true,CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -937,4 +935,6 @@ INSERT INTO conf.command_element_values (command_element_type_id,element_type_id
 	 (2,71,1,1279,'[{"zone":1,"graphics":[{"id":1,"value":"319"}]}]',true,true,CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	 (2,71,1,1280,'[{"zone":1,"graphics":[{"id":1,"value":"319"}]}]',true,true,CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	 (2,71,1,1281,'[{"zone":1,"graphics":[{"id":1,"value":"319"}]}]',true,true,CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-	 (2,71,1,1282,'[{"zone":2,"alternance_ms":3000,"align":"center","texts":[{"id":1,"value":"ATENCION","alternance":"CIRCULE","color":"#FFBF00"},{"id":2,"value":"VISIBILIDAD","alternance":"CON","color":"#FFBF00"},{"id":3,"value":"REDUCIDA","alternance":"PRECAUCION","color":"#FFBF00"}]},{"zone":1,"alternance_ms":3000,"graphics":[{"id":1,"value":"319","alternance":"319"}]}]',true,true,CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+	 (2,71,1,1282,'[{"zone":2,"alternance_ms":3000,"align":"center","texts":[{"id":1,"value":"ATENCION","alternance":"CIRCULE","color":"#FFBF00"},{"id":2,"value":"VISIBILIDAD","alternance":"CON","color":"#FFBF00"},{"id":3,"value":"REDUCIDA","alternance":"PRECAUCION","color":"#FFBF00"}]},{"zone":1,"alternance_ms":3000,"graphics":[{"id":1,"value":"319","alternance":"319"}]}]',true,true,CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	 (2,71,1,1283,'[{"zone":1,"alternance_ms":3000,"graphics":[{"id":1,"value":"434","alternance":"311"}]},{"zone":2,"alternance_ms":3000,"align":"left","texts":[{"id":1,"value":"OBLIGATORIO","alternance":"MANTENGA","color":"#FFBF00"},{"id":2,"value":"USO","alternance":"DISTANCIA","color":"#FFBF00"},{"id":3,"value":"ALUMBRADO","alternance":"SEGURIDAD","color":"#FFBF00"}]}]',true,true,CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	 (2,71,1,1284,'[{"zone":1,"alternance_ms":3000,"graphics":[{"id":1,"value":"434","alternance":"311"}]},{"zone":2,"alternance_ms":3000,"align":"left","texts":[{"id":1,"value":"OBLIGATORIO","alternance":"MANTENGA","color":"#FFBF00"},{"id":2,"value":"USO","alternance":"DISTANCIA","color":"#FFBF00"},{"id":3,"value":"ALUMBRADO","alternance":"SEGURIDAD","color":"#FFBF00"}]}]',true,true,CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
