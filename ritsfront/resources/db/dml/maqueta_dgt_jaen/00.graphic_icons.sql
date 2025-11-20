@@ -12,7 +12,7 @@ INSERT INTO ui.graphic_icons
 (01000201, 'CAMERA_DOMO', 'CAMERA_DOMO', false, false, 'component/graphicIcon/graphicIconDefault.js', 51.875, 51.875, 'img/graphic_icon/02_camera_domo.svg', 'null',true),
 (02000202, 'CAMERA_DAI', 'CAMERA_DAI', false, false, 'component/graphicIcon/graphicIconDefault.js', 51.875, 51.875, 'img/graphic_icon/02_camera.svg', 'null',true),
 (3, 'Detector', 'Detector', false, false, 'component/graphicIcon/graphicIconDefault.js', 50, 50, 'img/graphic_icon/03_detector.svg', null, null),
-(020004, 'SEC', 'SEC', false, false, 'component/graphicIcon/graphicIconDefault.js', 68, 60, 'img/graphic_icon/04_section.svg', 'null',true),
+(020004, 'SEC', 'SEC', false, true, 'component/graphicIcon/graphicIconCustom.js', 68, 60, 'img/graphic_icon/04_section.svg', 'component/graphicIcon/custom/section.js',true),
 (51, 'ETD', 'ETD', false, false, 'component/graphicIcon/graphicIconDefault.js', 50, 50, 'img/graphic_icon/51_etd.svg', null, null),
 (000008, 'BARRIER', 'BARRIER', false, true, 'component/graphicIcon/graphicIconCustom.js', 48, 48, 'img/graphic_icon/08_barrier.svg', 'component/graphicIcon/custom/barrier.js',true),
 (00000801, 'BARRIER', 'BARRIER', false, true, 'component/graphicIcon/graphicIconCustom.js', 40, 40, 'img/graphic_icon/08_barrier.svg', 'component/graphicIcon/custom/barrier.js',true),
