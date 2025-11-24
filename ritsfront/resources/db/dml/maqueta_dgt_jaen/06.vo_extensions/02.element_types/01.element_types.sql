@@ -89,7 +89,8 @@ INSERT INTO ui.vo_entities(id, vo_entity_type_id, enabled, visible) VALUES
 ('ElementType:100', 'ElementTypeUI', true, true),
 ('ElementType:1000', 'ElementTypeUI', true, true),
 ('ElementType:2003', 'ElementTypeUI', true, true),
-('Element:2001:1', 'ElementUI', true, true);
+('Element:2001:1', 'ElementUI', true, true),
+('ImsIncidentTypeTask:1010101', 'ImsIncidentTypeTaskUI', true, true);
 
 
 INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
@@ -344,5 +345,8 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 ('ElementType:2000', 69, 'true'),
 ('ElementType:2001', 69, 'true'),
 ('ElementType:2002', 69, 'true'),
-('ElementType:2003', 69, 'true');
+('ElementType:2003', 69, 'true'),
+
+('ImsIncidentTypeTask:1010101', 40, 'LBL_BUTTON_TEXT');
+
 
