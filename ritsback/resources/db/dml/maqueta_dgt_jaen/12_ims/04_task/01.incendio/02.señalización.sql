@@ -106,6 +106,54 @@ VALUES
                     "commandElementTypeId": "CommandElementType:1:32",
                     "commandElementValues": [{"commandElementTypeParamId": "CommandElementTypeParam:2:32:1"}]
                     }
+    },
+    {
+        "id": 9,
+        "alias": "PMV",
+        "from": 2,
+        "to": 2,
+        "elementSubtypeId": "ElementSubtype:18:71",
+		"command": {
+					"commandElementTypeId": "CommandElementType:3:71",
+					"commandElementValues": [{
+						"commandElementTypeParamId": "CommandElementTypeParam:2:71:1"
+					}]	
+		}
+	},
+	{
+        "id": 10,
+        "alias": "Aspa-Flecha",
+        "from": 2,
+        "to": 2,
+        "elementSubtypeId": "ElementSubtype:12:71",
+		"command": {
+					"commandElementTypeId": "CommandElementType:3:71",
+					"commandElementValues": [{
+						"commandElementTypeParamId": "CommandElementTypeParam:2:71:1"
+					}]	
+		}
+	},
+    {
+        "id": 11,
+        "alias": "Semáforos",
+        "from": 2,
+        "to": 2,
+        "elementSubtypeId": "ElementSubtype:1:13",
+        "command": {
+                    "commandElementTypeId": "CommandElementType:4:13",
+                    "commandElementValues": [{"commandElementTypeParamId": "CommandElementTypeParam:2:13:1"}]
+                    }
+    },
+    {
+        "id": 12,
+        "alias": "Semáforos",
+        "from": 2,
+        "to": 2,
+        "elementSubtypeId": "ElementSubtype:2:13",
+        "command": {
+                    "commandElementTypeId": "CommandElementType:4:13",
+                    "commandElementValues": [{"commandElementTypeParamId": "CommandElementTypeParam:2:13:1"}]
+                    }
     }
 ]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (1, 1, 01120101, '[
@@ -137,6 +185,16 @@ VALUES
                     }
     }]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
+(1, 1, 03050101, '[
+    {
+        "id": 1,
+        "alias": "ILUMINACION DE EMERGENCIA",
+        "from": 1,
+        "to": 1,
+        "command": {
+                    "commandElementTypeId": "CommandElementType:3:73"
+                }
+    }]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 --CANCELACION DE INCIDENCIA
 (1, 1, 101020101, '[
     {
@@ -150,3 +208,5 @@ VALUES
                     "commandElementValues": [{"commandElementTypeParamId": "CommandElementTypeParam:2:32:1"}]
                     }
     }]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+
