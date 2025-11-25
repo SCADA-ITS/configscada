@@ -85,8 +85,8 @@ INSERT INTO ui.synoptic_layer_elements
 (90301400, 'Element:14:2', 00001403, 'LUM-0-01-CA', 672, 967, false, NULL, true, false, NULL, true),
 (90301400, 'Element:14:3', 00001403, 'LUM-0-02-CA', 1494, 529, false, NULL, true, false, NULL, true),
 (90301700, 'Element:17:1', 000017, 'GA-1-01-CA', 23, 961, false, NULL, true, false, NULL, true),
---(90305302, 'Element:53:3', 020053, 'SMF-2-01-CA-D', 1459, 282, false, NULL, true, false, NULL, true),
---(90305302, 'Element:53:4', 020053, 'SMF-2-01-CA-I', 1459, 382, false, NULL, true, false, NULL, true),
+(90305302, 'Element:53:3', 020053, 'SMF-2-01-CA-D', 1459, 282, false, NULL, true, false, NULL, true),
+(90305302, 'Element:53:4', 020053, 'SMF-2-01-CA-I', 1459, 382, false, NULL, true, false, NULL, true),
 (90305302, 'Element:53:2', 020053, 'SMF-1-03-CA-I', 695, 705, false, NULL, true, false, NULL, true),
 (90305302, 'Element:53:1', 020053, 'SMF-1-03-CA-D', 695, 804, false, NULL, true, false, NULL, true),
 (90307112, 'Element:71:66', 12007100, 'AF-2-01-CA-D', 1269, 183, false, NULL, true, false, NULL, true),
@@ -145,7 +145,9 @@ INSERT INTO ui.synoptic_layer_elements
 (90300400, 'Element:4:5', 020004, 'PM-2-1-CA', 1589, 302, false, NULL, true, false, NULL, true),
 (90300400, 'Element:4:7', 020004, 'PM-2-2-CA', 499, 302, false, NULL, true, false, NULL, true),
 (90300400, 'Element:4:8', 020004, 'PM-1-2-CA', 499, 775, false, NULL, true, false, NULL, true),
-(90300400, 'Element:4:6', 020004, 'PM-1-1-CA', 1583, 779, false, NULL, true, false, NULL, true);
+(90300400, 'Element:4:6', 020004, 'PM-1-1-CA', 1583, 779, false, NULL, true, false, NULL, true),
+(90300800, 'Element:8:9', 000008, 'BA-2-01-CA-D', 1459, 234, false, NULL, true, false, NULL, true),
+(90300800, 'Element:8:10', 000008, 'BA-2-01-CA-I', 1459, 334, false, NULL, true, false, NULL, true);
 
 
 

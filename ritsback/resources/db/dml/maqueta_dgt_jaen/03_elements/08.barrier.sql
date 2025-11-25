@@ -6,7 +6,9 @@ INSERT INTO conf.elements (element_type_id, element_subtype_id, element_id, loca
 (8, NULL, 5, 0050008, NULL, NULL, 'BA-1-01-DP-D', 'BA-1-01-DP-D', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (8, NULL, 6, 0060008, NULL, NULL, 'BA-1-01-DP-I', 'BA-1-01-DP-I', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (8, NULL, 7, 0070008, NULL, NULL, 'BA-2-01-DP-D', 'BA-2-01-DP-D', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(8, NULL, 8, 0080008, NULL, NULL, 'BA-2-01-DP-I', 'BA-2-01-DP-I', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(8, NULL, 8, 0080008, NULL, NULL, 'BA-2-01-DP-I', 'BA-2-01-DP-I', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(8, NULL, 9, 0090008, NULL, NULL, 'BA-2-01-CA-D', 'BA-2-01-CA-D', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(8, NULL, 10, 0100008, NULL, NULL, 'BA-2-01-CA-I', 'BA-2-01-CA-I', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_type_id, element_id, element_value_state_id, value, enabled, visible, created_at, updated_at) VALUES
 (8, 1003, 1, 1, NULL, 'BA-1-01-CA-D', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -23,7 +25,11 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 
 (8, 1003, 1, 7, NULL, 'BA-2-01-DP-D', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
-(8, 1003, 1, 8, NULL, 'BA-2-01-DP-I', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(8, 1003, 1, 8, NULL, 'BA-2-01-DP-I', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+
+(8, 1003, 1, 9, NULL, 'BA-2-01-CA-D', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+
+(8, 1003, 1, 10, NULL, 'BA-2-01-CA-I', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO conf.element_io_controller_modules (element_type_id, element_id, module_type_id, module_id, enabled, visible, created_at, updated_at) VALUES
 (8, 1, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -33,4 +39,6 @@ INSERT INTO conf.element_io_controller_modules (element_type_id, element_id, mod
 (8, 5, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (8, 6, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (8, 7, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(8, 8, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(8, 8, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(8, 9, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(8, 10, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
