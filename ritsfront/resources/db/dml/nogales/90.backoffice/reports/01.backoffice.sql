@@ -3,7 +3,7 @@ BEGIN
   IF EXISTS (SELECT 1 FROM pg_namespace WHERE nspname = 'hist') THEN
 	
   	INSERT INTO ui.backoffices (id, "name", description, "label", jdbc, "user", "password", "schema", default_metadata_backoffice, default_metadata_table, default_metadata_column, enabled) 
-	VALUES(2, 'reports', NULL, NULL, 'jdbc:postgresql://192.168.88.191:5430/rits', 'rits', 'uMuD7Uy0gpCRL4Jo1w6SOQ==', 'reports',
+	VALUES(2, 'reports', NULL, NULL, 'jdbc:postgresql://10.133.51.20:5430/rits', 'rits', 'uMuD7Uy0gpCRL4Jo1w6SOQ==', 'reports',
 	-- default_metadata_backoffice
 	'{}',
 	-- default_metadata_table
