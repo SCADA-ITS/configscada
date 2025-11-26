@@ -99,8 +99,8 @@ BEGIN
 	(0112, 1, 'finish_at', 'final', NULL, true, '{"position": 12, "editable": false}'),
 	(0113, 1, 'end_value', 'afección máxima', NULL, true, '{"position": 13, "editable": false}'),
 	(0114, 1, 'affection_detail_id', 'detalle afección', NULL, true, '{"position": 14, "editable": true}'),
-	(0115, 1, 'deceassed', 'victimas mortales', NULL, true, '{"position": 15, "editable": true}'),
-	(0116, 1, 'num_decesseased', 'número víctimas', NULL, true, '{"position": 16, "editable": true}'),
+	(0115, 1, 'deceassed', 'victimas', NULL, true, '{"position": 15, "editable": true}'),
+	(0116, 1, 'num_decesseased', 'nº fallecidos', NULL, true, '{"position": 16, "editable": true}'),
 	(0117, 1, 'max_affection', 'afección máxima', NULL, true, '{"position": 17, "editable": true}'),
 	
 	(0201, 2, 'incident_id', 'id incident_id', NULL, true, '{"position": 1, "editable": false, "refName": true}'),

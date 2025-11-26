@@ -134,11 +134,11 @@ class BackOfficeInitIncident {
             }
 
             if (incidentReport.getAffectionStretchId() != null && incidentReport.getLocationId() != null) {
-                Stretch stretch = IncidentEntitiesManager.getInstance().getStretch(incidentReport.getAffectionStretchId());
+                Stretch str = IncidentEntitiesManager.getInstance().getStretch(incidentReport.getAffectionStretchId());
                 Location loc = IncidentEntitiesManager.getInstance().getLocation(incidentReport.getLocationId());
-                if (stretch != null && loc != null) {
+                if (str != null && loc != null) {
                     location = loc.getAlias();
-                    stretch = stretch.getAlias();
+                    stretch = str.getAlias();
                     lat = String.valueOf(loc.getLat());
                     lon = String.valueOf(loc.getLon());
                 }
@@ -166,6 +166,10 @@ class BackOfficeInitIncident {
                 new ColumnValuePair("incident_sub_type", incidentSubType),
                 new ColumnValuePair("level", level),
                 new ColumnValuePair("location", location),
+                new ColumnValuePair("stretch", stretch),
+                new ColumnValuePair("lat", lat),
+                new ColumnValuePair("lon", lon),                
+		new ColumnValuePair("num_decesseased", "0"),
                 new ColumnValuePair("finish_at", finishAt)
         );
 
