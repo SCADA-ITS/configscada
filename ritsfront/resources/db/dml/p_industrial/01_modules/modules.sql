@@ -116,6 +116,7 @@ INSERT INTO ui.module_values
 
 INSERT INTO ui.window_values 
 (module_id, window_param_id, value) VALUES 
+(970, 8, 'true'),
 (970, 12, 'LBL_MENU_ITEM_MAP'),
 
 (1920, 4, '825'),
