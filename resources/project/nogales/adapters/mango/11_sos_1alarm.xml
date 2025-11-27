@@ -77,7 +77,7 @@
     </p:field>
   </p:fields>
   <p:alarms>
-    <p:alarm source="sos_door_open" active_value="false" alarm_config_id="020011"></p:alarm>
+    <p:alarm source="sos_door_open" active_value="true" alarm_config_id="020011"></p:alarm>
     <p:alarm source="sip" active_value="true" alarm_config_id="080011"></p:alarm>
   </p:alarms>
 </p:json_generic_mango_v1>
