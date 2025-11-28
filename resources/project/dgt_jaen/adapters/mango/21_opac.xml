@@ -20,5 +20,6 @@
   </p:fields>
   <p:alarms>
     <p:alarm source="alarm_sensor" active_value="true" alarm_config_id="020021"></p:alarm>
+    <p:alarm source="inhibir" active_value="true" alarm_config_id="040021"></p:alarm>
   </p:alarms>
 </p:json_generic_mango_v1>

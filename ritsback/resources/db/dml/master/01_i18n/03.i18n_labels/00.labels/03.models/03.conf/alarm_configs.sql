@@ -154,11 +154,13 @@ INSERT INTO master.i18n_labels (locale_code, module_id, "label", "translation", 
 ('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_ANEM_INT_NO_CONNECTION', 'Anemómetro interior no comunica', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_ANEM_SENSOR', 'Medida de sensor fuera de rango', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_ANEM_FA', 'Anemómetro interior sin tensión por fallo fuente de alimentación', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_ANEM_INHIBIR', 'Equipo inhibido', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --ElementType:19 = CO
 ('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_CO_NO_CONNECTION', 'Detector CO no comunica', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_CO_FA', 'Detector CO sin tensión por fallo fuente alimentación', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_CO_SENSOR', 'Detector CO  medida de sensor fuera de rango', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_CO_INHIBIR', 'Equipo inhibido', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --ElementType:20 = NO
 ('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_NO_FA', 'Detector NO sin tensión por fallo de fuente de alimentación', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -169,7 +171,8 @@ INSERT INTO master.i18n_labels (locale_code, module_id, "label", "translation", 
 ('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_OPAC_FA', 'Opacímetro sin tensión por fallo de fuente de alimentación', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_OPAC_SENSOR', 'Opacímetro medida de sensor fuera de rango', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_OPAC_NO_CONNECTION', 'Opacímetro no comunica', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
- 
+('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_OPAC_INHIBIR', 'Equipo inhibido', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
 --ElementType:22 = Valvulas
 ('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_VALVULA_NO_CONNECTION', 'Válvula de red PCI no comunica', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_VALVULA_CERRADA', 'Válvula cerrada', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),

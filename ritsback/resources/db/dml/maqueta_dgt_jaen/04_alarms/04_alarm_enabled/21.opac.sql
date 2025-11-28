@@ -4,3 +4,4 @@ UPDATE conf.alarm_configs SET alarm_level_id = 3, enabled = false, treatment = T
 UPDATE conf.alarm_configs SET alarm_level_id = 4, enabled = true, treatment = True WHERE element_type_id = 21 AND alarm_config_id = 3010021; --LBL_ALARM_CONFIGS_ALARM_OPAC_VISIBILITY
 UPDATE conf.alarm_configs SET alarm_level_id = 4, enabled = true, treatment = True WHERE element_type_id = 21 AND alarm_config_id = 3020021; --LBL_ALARM_CONFIGS_ALARM_OPAC_REDUCED_VISIBILITY
 UPDATE conf.alarm_configs SET alarm_level_id = 5, enabled = true, treatment = True WHERE element_type_id = 21 AND alarm_config_id = 3030021; --LBL_ALARM_CONFIGS_ALARM_OPAC_EXCESSIVE_OPACITY
+UPDATE conf.alarm_configs SET alarm_level_id = 3, enabled = true, treatment = True WHERE element_type_id = 21 AND alarm_config_id = 40021; --LBL_ALARM_CONFIGS_ALARM_OPAC_INHIBIR

@@ -42,6 +42,11 @@ INSERT INTO master.element_type_state_transitions
 (18, 0, 1, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (18, 0, 2, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
+INSERT INTO master.command_element_types
+(command_element_type_id, element_type_id, alias, description, label_alias, label_description, enabled, visible, created_at, updated_at) VALUES
+(1, 18, 'INHIBIR', 'INHIBIR', 'LBL_COMMAND_ELEMENT_TYPE_ANEM_INHIBIR', null, false, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 18, 'DESINHIBIR', 'DESINHIBIR', 'LBL_COMMAND_ELEMENT_TYPE_ANEM_DESINHIBIR', null, false, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
 -- 
 -- Table: master.io_controller_module_type_element_types
 --
@@ -56,7 +61,10 @@ INSERT INTO conf.alarm_configs
 (alarm_config_id, alarm_type_id, alarm_level_id, element_type_id, element_id, element_type_state_id, mine, treatment, alias, description, label_alias, label_description, enabled, visible, created_at, updated_at)VALUES
 (010018, 2, 3, 18, NULL, NULL, true, true, 'ALARM ANEM_INT NO CONNECTION', 'ALARM ANEM_INT NO CONNECTION', 'LBL_ALARM_CONFIGS_ALARM_ANEM_INT_NO_CONNECTION', 'LBL_ALARM_CONFIGS_ALARM_ANEM_INT_NO_CONNECTION_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (020018, 2, 3, 18, NULL, 3, true, true, 'ALARM SENSOR', 'ALARM SENSOR', 'LBL_ALARM_CONFIGS_ALARM_ANEM_SENSOR', 'LBL_ALARM_CONFIGS_ALARM_SENSOR_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(030018, 2, 3, 18, NULL, 3, true, true, 'ALARM FA', 'ALARM FA', 'LBL_ALARM_CONFIGS_ALARM_ANEM_FA', 'LBL_ALARM_CONFIGS_ALARM_FA_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(030018, 2, 3, 18, NULL, 3, true, true, 'ALARM FA', 'ALARM FA', 'LBL_ALARM_CONFIGS_ALARM_ANEM_FA', 'LBL_ALARM_CONFIGS_ALARM_FA_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--DESPEÑAPERROS
+(040018, 2, 3, 18, NULL, 3, true, true, 'ALARM INHIBIR EQUIPO', 'ALARM INHIBIR EQUIPO', 'LBL_ALARM_CONFIGS_ALARM_ANEM_INHIBIR', 'LBL_ALARM_CONFIGS_ALARM_AN_INHIBIR_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
 
 -- 
 -- Table: conf.element_state_alarms

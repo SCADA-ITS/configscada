@@ -18,4 +18,7 @@
     <p:use_adapter>true</p:use_adapter>
     </p:field>
   </p:fields>
+  <p:alarms>
+    <p:alarm source="inhibir" active_value="true" alarm_config_id="040018"></p:alarm>
+	</p:alarms>
 </p:json_generic_mango_v1>

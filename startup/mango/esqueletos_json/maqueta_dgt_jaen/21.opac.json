@@ -113,7 +113,61 @@
          "chartColour":"",
          "preventSetExtremeValues":false,
          "simplifyType":"NONE"
-      }
+      },
+    {
+      "xid":"DP_{device_name}_inhibir",
+      "name":"inhibir",
+      "enabled":true,
+      "loggingType":"NONE",
+      "intervalLoggingPeriodType":"MINUTES",
+      "intervalLoggingType":"INSTANT",
+      "purgeType":"YEARS",
+      "pointLocator":{
+        "dataType":"BINARY",
+        "changeType":{
+          "type":"NO_CHANGE",
+          "startValue":"false"
+        },
+        "settable":true
+      },
+      "eventDetectors":[
+      ],
+      "plotType":"STEP",
+      "rollup":"NONE",
+      "unit":"",
+      "simplifyType":"NONE",
+      "chartColour":"",
+      "chartRenderer":{
+        "type":"TABLE",
+        "limit":10
+      },
+      "dataSourceXid":"DS_OPAC_ALARM",
+      "defaultCacheSize":1,
+      "deviceName":"{device_name}",
+      "discardExtremeValues":false,
+      "discardHighLimit":1.7976931348623157E308,
+      "discardLowLimit":-1.7976931348623157E308,
+      "intervalLoggingPeriod":1,
+      "intervalLoggingSampleWindowSize":0,
+      "overrideIntervalLoggingSamples":false,
+      "preventSetExtremeValues":false,
+      "purgeOverride":false,
+      "purgePeriod":1,
+      "readPermission":"",
+      "setExtremeHighLimit":1.7976931348623157E308,
+      "setExtremeLowLimit":-1.7976931348623157E308,
+      "setPermission":"",
+      "tags":{
+      },
+      "textRenderer":{
+        "type":"BINARY",
+        "oneColour":"#00ff00",
+        "oneLabel":"one",
+        "zeroColour":"#0000ff",
+        "zeroLabel":"zero"
+      },
+      "tolerance":0.0
+    }
    ],
    "publishers":[
       {
@@ -139,6 +193,11 @@
             {
                "dataPointId":"DP_{device_name}_status",
                "parameterName":"status",
+               "includeTimestamp":false
+            },
+            {
+               "dataPointId":"DP_{device_name}_inhibir",
+               "parameterName":"inhibir",
                "includeTimestamp":false
             }
          ],
@@ -215,6 +274,24 @@
          "quantize":false,
          "editPermission":"",
          "purgeType":"YEARS"
-      }
+      },
+    {
+      "xid":"DS_OPAC_ALARM",
+      "name":"OPAC_ALARM",
+      "enabled":true,
+      "type":"VIRTUAL",
+      "alarmLevels":{
+        "POLL_ABORTED":"DO_NOT_LOG"
+      },
+      "purgeType":"YEARS",
+      "updatePeriods":10,
+      "updatePeriodType":"SECONDS",
+      "polling":true,
+      "quantize":false,
+      "useCron":false,
+      "editPermission":"",
+      "purgeOverride":false,
+      "purgePeriod":1
+    }
    ]
 }

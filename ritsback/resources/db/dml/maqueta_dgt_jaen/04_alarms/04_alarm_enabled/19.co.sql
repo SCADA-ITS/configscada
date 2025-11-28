@@ -4,3 +4,4 @@ UPDATE conf.alarm_configs SET alarm_level_id = 3, enabled = false, treatment = T
 UPDATE conf.alarm_configs SET alarm_level_id = 4, enabled = true, treatment = True WHERE element_type_id = 19 AND alarm_config_id = 3010019; --LBL_ALARM_CONFIGS_ALARM_CO_CONCENTRATION
 UPDATE conf.alarm_configs SET alarm_level_id = 4, enabled = true, treatment = True WHERE element_type_id = 19 AND alarm_config_id = 3020019; --LBL_ALARM_CONFIGS_ALARM_CO_HIGH_CONCENTRATION
 UPDATE conf.alarm_configs SET alarm_level_id = 5, enabled = true, treatment = True WHERE element_type_id = 19 AND alarm_config_id = 3030019; --LBL_ALARM_CONFIGS_ALARM_CO_EXCESIVE_CONCENTRATION
+UPDATE conf.alarm_configs SET alarm_level_id = 6, enabled = true, treatment = True WHERE element_type_id = 19 AND alarm_config_id = 40019; --LBL_ALARM_CONFIGS_ALARM_CO_INHIBIR
