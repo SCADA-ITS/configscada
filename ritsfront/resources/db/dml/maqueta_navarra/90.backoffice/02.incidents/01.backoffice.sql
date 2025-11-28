@@ -38,14 +38,14 @@ BEGIN
 		      "name": "photos",
 		      "label": "LBL_IMAGE_GROUP_EVIDENCE_PHOTOS",
 		      "description": "LBL_IMAGE_GROUP_EVIDENCE_PHOTOS_DESC",
-		      "position": 14,
+		      "position": 18,
 		      "height": 300
 	    	},
 	      	{
 		      "name": "sketch",
 		      "label": "LBL_IMAGE_GROUP_SKETCH_ACCIDENT",
 		      "description": "LBL_IMAGE_GROUP_SKETCH_ACCIDENT_DESC",
-		      "position": 16,
+		      "position": 20,
 		      "height": 300
 	    	}
 	  	],
@@ -54,7 +54,7 @@ BEGIN
 	      	"name": "documents",
 		    "label": "LBL_IMAGE_GROUP_EVIDENCE_DOCUMENTS",
 		    "description": "LBL_IMAGE_GROUP_EVIDENCE_DOCUMENTS_DESC",
-	      	"position": 15,
+	      	"position": 19,
 	      	"height": 200
 	    	}
 	  	],
