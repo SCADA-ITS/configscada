@@ -31,7 +31,9 @@ INSERT INTO conf.ims_incident_type_tasks (incident_type_task_id, incident_type_i
 
 --ETAPA = AL CANCELAR LA INCIDENCIA
 (101020101, 101, 101, 1, 'PRESURIZACIÓN', 'Presurización', 'Apagado de presurización', true, 3, true, 'SendSignallingToStretch', null,null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(101040101, 101, 101, 1, 'VENTILACION', 'Arrancar la ventilación','Volver al estado anterior la ventilación', true, 1, true, 'TaskTypeVentilation/ByFireDet/StartVentilationByFireDetTask', null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(101040101, 101, 101, 1, 'VENTILACION', 'Arrancar la ventilación','Volver al estado anterior la ventilación', true, 1, true, 'TaskTypeVentilation/ByFireDet/StartVentilationByFireDetTask', null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(101050101, 101, 101, 1, 'ILUMINACIÓN DE EMERGENCIA', 'Apagar iluminacion de emergencia al 100%', 'Apagar iluminacion de emergencia al 100%.', true, 5, true, 'SendSignallingToStretch', null, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
 
 
 
