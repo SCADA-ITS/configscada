@@ -1,5 +1,9 @@
-device_name;url_publisher;source_name;host;port(i);offset_up_order(i);offset_up_state(i);offset_down_order(i);offset_down_state(i);offset_power_supply(i)
-BA-1-01-DP-D;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;M-11-DP;192.168.88.201;5310;576;264;577;265;580
-BA-1-01-DP-I;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;M-11-DP;192.168.88.201;5310;578;266;579;267;580
-BA-2-01-DP-D;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;M-01-DP;192.168.88.201;5030;592;288;593;289;596
-BA-2-01-DP-I;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;M-01-DP;192.168.88.201;5020;594;290;595;291;596
+device_name;url_publisher;source_name;Power_source_name;host;port(i);offset_up_order(i);offset_up_state(i);offset_down_order(i);offset_down_state(i);offset_power_supply(i)
+BA-1-01-DP-D;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;M-11-DP;M-11-DP;192.168.88.201;5310;576;264;577;265;580
+BA-1-01-DP-I;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;M-11-DP;M-11-DP;192.168.88.201;5310;578;266;579;267;580
+BA-2-01-DP-D;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;M-01-DP;M-01-DP;192.168.88.201;5030;592;288;593;289;596
+BA-2-01-DP-I;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;M-01-DP;M-01-DP;192.168.88.201;5020;594;290;595;291;596
+BA-1-01-CA-D;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;ES-03-CA;ES-05-CA;192.168.88.201;5310;515;3;516;4;527
+BA-1-01-CA-I;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;ES-03-CA;ES-03-CA;192.168.88.201;5310;513;1;514;2;517
+BA-2-01-CA-D;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;ES-13-CA;ES-05-CA;192.168.88.201;5310;512;1;513;2;526
+BA-2-01-CA-I;http:\/\/192.168.88.201:3000\/api\/v2\/generic\/;ES-13-CA;ES-05-CA;192.168.88.201;5310;514;3;515;4;526

@@ -335,7 +335,7 @@
                 "type": "TABLE",
                 "limit": 10
             },
-            "dataSourceXid": "DS_{source_name}",
+            "dataSourceXid": "DS_{Power_source_name}",
             "defaultCacheSize": 1,
             "deviceName": "{device_name}",
             "discardExtremeValues": false,

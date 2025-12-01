@@ -80,7 +80,7 @@
             "intervalLoggingType": "INSTANT",
             "purgeType": "YEARS",
             "pointLocator": {
-                "range": "COIL_STATUS",
+                "range": "HOLDING_REGISTER",
                 "modbusDataType": "BINARY",
                 "writeType": "SETTABLE",
                 "additive": 0.0,
@@ -138,7 +138,7 @@
             "intervalLoggingType": "INSTANT",
             "purgeType": "YEARS",
             "pointLocator": {
-                "range": "INPUT_STATUS",
+                "range": "HOLDING_REGISTER",
                 "modbusDataType": "BINARY",
                 "writeType": "SETTABLE",
                 "additive": 0.0,
@@ -196,7 +196,7 @@
             "intervalLoggingType": "INSTANT",
             "purgeType": "YEARS",
             "pointLocator": {
-                "range": "COIL_STATUS",
+                "range": "HOLDING_REGISTER",
                 "modbusDataType": "BINARY",
                 "writeType": "SETTABLE",
                 "additive": 0.0,
@@ -254,7 +254,7 @@
             "intervalLoggingType": "INSTANT",
             "purgeType": "YEARS",
             "pointLocator": {
-                "range": "INPUT_STATUS",
+                "range": "HOLDING_REGISTER",
                 "modbusDataType": "BINARY",
                 "writeType": "SETTABLE",
                 "additive": 0.0,
@@ -312,7 +312,7 @@
             "intervalLoggingType": "INSTANT",
             "purgeType": "YEARS",
             "pointLocator": {
-                "range": "COIL_STATUS",
+                "range": "HOLDING_REGISTER",
                 "modbusDataType": "BINARY",
                 "writeType": "SETTABLE",
                 "additive": 0.0,
@@ -335,7 +335,7 @@
                 "type": "TABLE",
                 "limit": 10
             },
-            "dataSourceXid": "DS_{source_name}",
+            "dataSourceXid": "DS_{Power_source_name}",
             "defaultCacheSize": 1,
             "deviceName": "{device_name}",
             "discardExtremeValues": false,
@@ -375,13 +375,13 @@
                 "contextUpdateEvent": "CONTEXT_CHANGE",
                 "context": [
                     {
-                        "varName": "up_state",
-                        "dataPointXid": "DP_{device_name}_up_state",
+                        "varName": "up_order",
+                        "dataPointXid": "DP_{device_name}_up_order",
                         "updateContext": true
                     },
                     {
                         "varName": "down_order",
-                        "dataPointXid": "DP_{device_name}_down_state",
+                        "dataPointXid": "DP_{device_name}_down_order",
                         "updateContext": true
                     }
                 ],
@@ -393,7 +393,7 @@
                 "executionDelaySeconds": 0,
                 "logCount": 5,
                 "logSize": 1.0,
-                "script": "if (up_state.value == true && down_order.value == false) {\n return 1\n } else if (up_state.value == false && down_order.value == true) {\n return 2\n }else{\n return 2\n }",
+                "script": "if (up_order.value == true && down_order.value == false) {\n return 1\n } else if (up_order.value == false && down_order.value == true) {\n return 2\n }else{\n return 2\n }",
                 "settable": false,
                 "updateCronPattern": ""
             },
