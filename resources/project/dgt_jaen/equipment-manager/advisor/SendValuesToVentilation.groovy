@@ -27,6 +27,8 @@ class SendValuesToVentilation {
 	static final Long FAN = 9
 	static final Long CO = 19
 	static final Long OPAC = 21
+	static final Long CO_ALARM = 40019L
+	static final Long OPAC_ALARM = 40021L
 
 	SendValuesToVentilation(org.apache.logging.log4j.Logger log) {
 
@@ -43,13 +45,28 @@ class SendValuesToVentilation {
 
 				for (Pair<ElementValue, ElementValue> pair : elementValues) {
 
-					if(pair.getRight() != null && Long.valueOf(ParamType.MEASURE).equals(pair.getRight().getParamTypeId()) && 
-						(pair.getRight().getElementValueStateId() == null ||
-							pair.getRight().getElementValueStateId().equals(ElementValueState.STATE_ONLINE) ||
-							pair.getRight().getElementValueStateId().equals(ElementValueState.STATE_ALERTED)) &&
-						elementTypeParamIdList.contains(pair.getRight().getElementTypeParamId())) {
+					if(pair.getRight() != null && 
+					Long.valueOf(ParamType.MEASURE).equals(pair.getRight().getParamTypeId()) && 
+					(pair.getRight().getElementValueStateId() == null ||
+						pair.getRight().getElementValueStateId().equals(ElementValueState.STATE_ONLINE) ||
+						pair.getRight().getElementValueStateId().equals(ElementValueState.STATE_ALERTED)) &&
+					elementTypeParamIdList.contains(pair.getRight().getElementTypeParamId())) {
 
-						values.add(pair.getRight());
+						// Determinar el alarmConfigId según el tipo de elemento
+						Long alarmConfigId = null
+						if(element.elementTypeId == OPAC) {
+							alarmConfigId = OPAC_ALARM
+						} else if(element.elementTypeId == CO) {
+							alarmConfigId = CO_ALARM
+						}
+
+						// Solo añadir si no hay alarma activa
+						if(alarmConfigId == null || 
+						!EntitiesManager.getInstance().hasActiveAlarm(element.id, element.elementTypeId, alarmConfigId)) {
+							values.add(pair.getRight())
+						}else{
+							log.debug("MEDIDA DESCARTADA POR ALARMA " + alarmConfigId)
+						}
 					}
 				}
 				EntitiesManager.getInstance().sendElementValuesToVentilation(values);
