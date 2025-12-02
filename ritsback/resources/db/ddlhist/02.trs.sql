@@ -197,6 +197,7 @@ DROP TABLE IF EXISTS hist.transits;
 		transit_id int8 NOT NULL,
 		path varchar(400) NOT NULL,
 		read_only bool NULL,
+		to_send bool NULL,
 		visible bool NULL,
 		created_at timestamptz NOT NULL,
 		updated_at timestamptz NOT NULL,

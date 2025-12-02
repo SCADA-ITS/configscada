@@ -5,6 +5,7 @@
 				   transit_id as "transitId",
 				   path as "path",
 				   read_only as "readOnly",
+				   to_send as "toSend",
 				   visible as "visible",
 				   created_at as "createdAt",
 				   updated_at as "updatedAt"
@@ -15,6 +16,7 @@
 						transit_id,
 						path,
 						read_only,
+						to_send,
 						visible,
 						created_at,
 						updated_at)
@@ -23,6 +25,7 @@
 						:transitId,
 						:path,
 						:readOnly,
+						:toSend,
 						:visible,
 						CURRENT_TIMESTAMP,
 						CURRENT_TIMESTAMP)
@@ -30,6 +33,7 @@
 	<UPDATE>UPDATE rt.transit_images SET
 					path = :path,
 					read_only = :readOnly,
+					to_send = :toSend, 
 					updated_at = CURRENT_TIMESTAMP
 			 WHERE transit_image_id = :id
 			   AND transit_id = :transitId
@@ -43,6 +47,7 @@
 						transit_id,
 						path,
 						read_only,
+						to_send,
 						visible,
 						created_at,
 						updated_at)
@@ -51,6 +56,7 @@
 						:transitId,
 						:path,
 						:readOnly,
+						:toSend,
 						:visible,
 						CURRENT_TIMESTAMP,
 						CURRENT_TIMESTAMP)
