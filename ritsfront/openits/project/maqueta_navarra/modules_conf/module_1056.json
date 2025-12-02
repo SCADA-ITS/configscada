@@ -16,10 +16,14 @@
 	"readOnly": true,
 	"transitStates": {
 		"initial": "TransitState:1",
-		"pending": "TransitState:5",
-		"validated": "TransitState:6",
+		"ocr": "TransitState:2",
+		"inReview": "TransitState:3",
+		"vehicleData": "TransitState:4",
+		"pendingDispatch": "TransitState:5",
+		"proposeForSanction": "TransitState:6",
 		"discarded": "TransitState:7",
-		"archived": "TransitState:8"
+		"archived": "TransitState:8",
+		"failed": "TransitState:9"
 	},
 	"tabs": [
 		{
