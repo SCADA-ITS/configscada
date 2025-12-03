@@ -106,7 +106,8 @@ INSERT INTO ui.vo_entity_fields (id, vo_entity_type_id, field, description, labe
 (79, 'TransitStateUI', 'color', 'Color for Transit State', 'LBL_TRANSIT_STATE_COLOR', 'LBL_TRANSIT_STATE_COLOR_DESCRIPTION', true, true),
 (80, 'TransitTypeUI', 'tabsConfig', 'Tabs config', 'LBL_TRANSIT_EDITOR_TABS_CONFIG', 'LBL_TRANSIT_EDITOR_TABS_CONFIG_DESCRIPTION', true, true),
 (81, 'RoadImpactUI', 'affection', 'affection', 'LBL_ENTITIE_FIELDS_AFFECTION', 'LBL_ENTITIE_FIELDS_AFFECTION_DESCRIPTION', true, true),
-(82, 'ImsIncidentTypeUI', 'map', 'map', 'LBL_VO_MAP_ID_FROM_INCIDENT_TYPE', 'LBL_VO_MAP_ID_FROM_INCIDENT_TYPE_DESCRIPTION', true, true);
+(82, 'ImsIncidentTypeUI', 'map', 'map', 'LBL_VO_MAP_ID_FROM_INCIDENT_TYPE', 'LBL_VO_MAP_ID_FROM_INCIDENT_TYPE_DESCRIPTION', true, true),
+(83, 'TransitTypeUI', 'showImageEditorSelectionWindow', 'show image editor window to select images', 'LBL_TRANSIT_EDITOR_SELECTION_WINDOW', 'LBL_TRANSIT_EDITOR_SELECTION_WINDOW_DESCRIPTION', true, true);
 
 INSERT INTO ui.vo_entities(id, vo_entity_type_id, enabled, visible) VALUES
 ('AlarmLevel:1', 'AlarmLevelUI', true, true),

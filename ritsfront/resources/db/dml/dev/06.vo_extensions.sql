@@ -1033,7 +1033,8 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 				}
 			]
 		}
-	]');
+	]'),
+('TransitType:1', 83, 'true');
 
 
 INSERT INTO ui.vo_enum_types(id, alias, description, enabled, visible) VALUES
