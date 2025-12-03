@@ -9,7 +9,7 @@ INSERT INTO ui.menu_items(id, menu_group_id, "position", module_id, "label", ico
 (0102, 1, 2, 200, 'LBL_MENU_ITEM_MAP', 'img/menu/map-menu.png', 'NOGALES_MAP', 'NOGALES_MAP', true, true),
 
 -- EQUIPMENT
-(0201, 2, 1, 500, 'LBL_MENU_ITEM_ALARM_MONITOR', 'img/menu/equipment-menu.png', 'Menu item Equipments', 'Menu item Equipments', true, true),
+(0201, 2, 1, 500, 'LBL_MENU_ITEM_EQUIPMENTS', 'img/menu/equipment-menu.png', 'Menu item Equipments', 'Menu item Equipments', true, true),
 (0202, 2, 2, 1005, 'LBL_MENU_ITEM_ALARM_MONITOR', 'img/menu/alarm_monitor.png', 'Menu item alarm monitor', 'Menu item alarm monitor', true, true),
 
 -- MANAGEMENT
