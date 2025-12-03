@@ -32,7 +32,11 @@ INSERT INTO ui.synoptic_layers
 (91302100, 913, 'SYNOPTIC_LAYERS_OPAC', 'LBL_SYNOPTIC_LAYERS_OPAC', true),
 (91301400, 913, 'SYNOPTIC_LAYERS_LUMINANCIMETER', 'LBL_SYNOPTIC_LAYERS_LUMINANCIMETER', true),
 (91301500, 913, 'SYNOPTIC_LAYERS_FIRE_DET', 'LBL_SYNOPTIC_LAYERS_FIRE_DET', true),
-(91300402, 913, 'SYNOPTIC_LAYERS_ETD', 'LBL_SYNOPTIC_LAYERS_ETD', true);
+(91300402, 913, 'SYNOPTIC_LAYERS_ETD', 'LBL_SYNOPTIC_LAYERS_ETD', true),
+(91300004, 913, 'SYNOPTIC_LAYERS_ILUM', 'LBL_SYNOPTIC_LAYERS_ILUM', true),
+(91302000, 913, 'SYNOPTIC_LAYERS_ILUM_REG', 'LBL_SYNOPTIC_LAYERS_ILUM_REG', true);
+
+
 
 INSERT INTO ui.synoptic_layer_relationships 
 (synoptic_id, parent_layer_id, child_layer_id) VALUES 
@@ -52,7 +56,9 @@ INSERT INTO ui.synoptic_layer_relationships
 (913, 91300008, 91301800),
 (913, 91300008, 91301900),
 (913, 91300008, 91302100),
-(913, 91300008, 91301400);
+(913, 91300008, 91301400),
+(913, 91300004, 91302000);
+
 
 INSERT INTO ui.synoptic_commands 
 (id, synoptic_id, position, label, icon, "default", module_action_id, args, view_type_id, multiselect, show_text, item_required, context) VALUES 
@@ -127,6 +133,9 @@ INSERT INTO ui.synoptic_layer_elements
 (91301500, 'Element:15:51', 00001513, 'ZI-2-01-CZ', 949, 410, false, NULL, true, false, NULL, true),
 (91301500, 'Element:15:52', 00001513, 'ZI-2-02-CZ', 735, 410, false, NULL, true, false, NULL, true),
 (91300402, 'Element:4:4', 020004, 'PM-2-1-CZ', 1393, 311, false, NULL, true, false, NULL, true),
-(91300402, 'Element:4:3', 020004, 'PM-1-1-CZ', 1393, 807, false, NULL, true, false, NULL, true);
+(91300402, 'Element:4:3', 020004, 'PM-1-1-CZ', 1393, 807, false, NULL, true, false, NULL, true),
+(91302000, 'Element:2000:5', 2000, 'CZ Sentido Madrid', 1157, 807, false, NULL, true, false, NULL, true),
+(91302000, 'Element:2000:6', 2000, 'CZ Sentido Córdoba', 744, 242, false, NULL, true, false, NULL, true);
+
 
 

@@ -43,3 +43,4 @@ element_type;element_subtype;alias;svg_file;js_custom_type_render;keepRatio
 87;;TANK;87_tank.svg;tank_jaen.js;true
 89;;GATE;89_gate.svg;;true
 4;2;SEC;04_section.svg;;true
+2000;;ILUM_REG;2000_light_control_tube.svg;;true

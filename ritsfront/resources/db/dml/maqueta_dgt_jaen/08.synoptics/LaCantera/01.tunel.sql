@@ -32,7 +32,9 @@ INSERT INTO ui.synoptic_layers
 (90306600, 903, 'SYNOPTIC_LAYERS_VANE', 'LBL_SYNOPTIC_LAYERS_VANE', true),
 (90301100, 903, 'SYNOPTIC_LAYERS_SOS', 'LBL_SYNOPTIC_LAYERS_SOS', true),
 (90301500, 903, 'SYNOPTIC_LAYERS_FIRE_DET', 'LBL_SYNOPTIC_LAYERS_FIRE_DET', true),
-(90307300, 903, 'SYNOPTIC_LAYERS_ILUM', 'LBL_SYNOPTIC_LAYERS_ILUM', true),
+(90307300, 903, 'SYNOPTIC_LAYERS_ILUM_EMER', 'LBL_SYNOPTIC_LAYERS_ILUM_EMER', true),
+(90320000, 903, 'SYNOPTIC_LAYERS_ILUM_REG', 'LBL_SYNOPTIC_LAYERS_ILUM_REG', true),
+(90300006, 903, 'SYNOPTIC_LAYERS_ILUM', 'LBL_SYNOPTIC_LAYERS_ILUM', true),
 (90300400, 903, 'SYNOPTIC_LAYERS_ETD', 'LBL_SYNOPTIC_LAYERS_ETD', true);
 
 INSERT INTO ui.synoptic_layer_relationships 
@@ -54,7 +56,10 @@ INSERT INTO ui.synoptic_layer_relationships
 (903, 90300005, 90301900),
 (903, 90300005, 90302000),
 (903, 90300005, 90302100),
-(903, 90300005, 90306600);
+(903, 90300005, 90306600),
+(903, 90300006, 90307300),
+(903, 90300006, 90320000);
+
 
 INSERT INTO ui.synoptic_commands 
 (id, synoptic_id, position, label, icon, "default", module_action_id, args, view_type_id, multiselect, show_text, item_required, context) VALUES 
@@ -147,7 +152,9 @@ INSERT INTO ui.synoptic_layer_elements
 (90300400, 'Element:4:8', 020004, 'PM-1-2-CA', 499, 775, false, NULL, true, false, NULL, true),
 (90300400, 'Element:4:6', 020004, 'PM-1-1-CA', 1583, 779, false, NULL, true, false, NULL, true),
 (90300800, 'Element:8:9', 000008, 'BA-2-01-CA-D', 1459, 234, false, NULL, true, false, NULL, true),
-(90300800, 'Element:8:10', 000008, 'BA-2-01-CA-I', 1459, 334, false, NULL, true, false, NULL, true);
+(90300800, 'Element:8:10', 000008, 'BA-2-01-CA-I', 1459, 334, false, NULL, true, false, NULL, true),
+(90320000, 'Element:2000:3', 2000, 'CA Sentido Madrid', 1078, 774, false, NULL, true, false, NULL, true),
+(90320000, 'Element:2000:4', 2000, 'CA Sentido Córdoba', 911, 297, false, NULL, true, false, NULL, true);
 
 
 

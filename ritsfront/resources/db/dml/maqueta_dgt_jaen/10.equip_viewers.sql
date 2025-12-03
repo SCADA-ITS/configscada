@@ -61,7 +61,10 @@ INSERT INTO ui.equip_viewers (id, name, description, "label", icon, show_info_ta
 ('Element:86:3','PUMP','PUMP','LBL_ELEMENT_TYPE_PUMP',null, true, False, false, null, true, 300, 3, null,00008601,true, false),
 ('Element:86:4','PUMP','PUMP','LBL_ELEMENT_TYPE_PUMP',null, true, False, false, null, true, 300, 3, null,01008601,true, false),
 ('ElementType:87', 'TANK', 'TANK', 'LBL_ELEMENT_TYPE_TANK', NULL, true, false, false, null, false, 300, 1, null, 000087, true, false),
-('ElementType:89', 'GATE', 'GATE', 'LBL_ELEMENT_TYPE_GATE', NULL, true, false, false, null, false, 300, 1, null, 000089, true, false);
+('ElementType:89', 'GATE', 'GATE', 'LBL_ELEMENT_TYPE_GATE', NULL, true, false, false, null, false, 300, 1, null, 000089, true, false),
+('ElementType:2000', 'Tube', 'Tube', 'LBL_ELEMENT_TYPE_Tube', NULL, true, false, true, null, true, 300, 3, null, 2000, true, false),
+('ElementType:2001', 'Ventilation manager', 'Ventilation manager', 'LBL_ELEMENT_TYPE_VENTILATION', NULL, false, false, false, null, false, 300, 3, null, null, null, false),
+('ElementType:2002', 'Lighting manager', 'Lighting manager', 'LBL_ELEMENT_TYPE_ILUMINATION', NULL, false, false, false, null, false, 300, 3, null, null, null, false);
 
 
 
@@ -129,7 +132,9 @@ INSERT INTO ui.equip_viewer_tabs (equip_viewer_id, module_action_id, alias, desc
 ('Element:86:3',100501,'Alarms module' ,'Alarms module', 'LBL_ALARMS', null,  1, true ),
 ('Element:86:4',100501,'Alarms module' ,'Alarms module', 'LBL_ALARMS', null,  1, true ),
 ('ElementType:87', 100501, 'Alarms module', 'Alarms module', 'LBL_ALARMS', NULL, 1, true),
-('ElementType:89', 100501, 'Alarms module', 'Alarms module', 'LBL_ALARMS', NULL, 1, true);
+('ElementType:89', 100501, 'Alarms module', 'Alarms module', 'LBL_ALARMS', NULL, 1, true),
+('ElementType:2001', 200002, 'Synoptic', 'Synoptic', 'LBL_SYNOPTIC', NULL, 1, true),
+('ElementType:2002', 200002, 'Synoptic', 'Synoptic', 'LBL_SYNOPTIC', NULL, 1, true);
 
 
 

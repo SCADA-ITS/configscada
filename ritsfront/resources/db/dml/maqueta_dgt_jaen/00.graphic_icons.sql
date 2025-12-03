@@ -105,4 +105,6 @@ INSERT INTO ui.graphic_icons
 (01008601, 'PUMP', 'PUMP', false, true, 'component/graphicIcon/graphicIconCustom.js', 85, 85, 'img/graphic_icon/86_jockey_pump.svg', 'component/graphicIcon/custom/pump_animation_alarmed.js',true),
 (000087, 'TANK', 'TANK', false, true, 'component/graphicIcon/graphicIconCustom.js', 85, 108.18185, 'img/graphic_icon/87_tank.svg', 'component/graphicIcon/custom/tank_jaen.js',true),
 (000089, 'GATE', 'GATE', false, false, 'component/graphicIcon/graphicIconDefault.js', 40, 40, 'img/graphic_icon/89_gate.svg', 'null',true),
-(00008900, 'GATE', 'GATE', false, false, 'component/graphicIcon/graphicIconDefault.js', 85, 85, 'img/graphic_icon/89_gate.svg', 'null',true);
+(00008900, 'GATE', 'GATE', false, false, 'component/graphicIcon/graphicIconDefault.js', 85, 85, 'img/graphic_icon/89_gate.svg', 'null',true),
+(2000, 'TUBE', 'TUBE', false, true, 'component/graphicIcon/graphicIconCustom.js', 150, 60, 'img/graphic_icon/2000_light_control_tube.svg', 'component/graphicIcon/custom/light_control_tube.js',null);
+

@@ -12,6 +12,7 @@ INSERT INTO ui.synoptic_layers
 (id, synoptic_id, name, label, visible) VALUES 
 (90100000, 901, 'SYNOPTIC_LAYERS_CONTROL_DE_ACCESSOS', 'LBL_SYNOPTIC_LAYERS_CONTROL_DE_ACCESSOS', true),
 (90100001, 901, 'SYNOPTIC_LAYERS_VENTILACION', 'LBL_SYNOPTIC_LAYERS_VENTILACION', true),
+(90100004, 901, 'SYNOPTIC_LAYERS_ILUM', 'LBL_SYNOPTIC_LAYERS_ILUM', true),
 (90100201, 901, 'SYNOPTIC_LAYERS_DOMO_CAMERAS', 'LBL_SYNOPTIC_LAYERS_DOMO_CAMERAS', true),
 (90100202, 901, 'SYNOPTIC_LAYERS_DAI_CAMERAS', 'LBL_SYNOPTIC_LAYERS_DAI_CAMERAS', true),
 (90100800, 901, 'SYNOPTIC_LAYERS_BARRERAS', 'LBL_SYNOPTIC_LAYERS_BARRERAS', true),
@@ -31,8 +32,10 @@ INSERT INTO ui.synoptic_layers
 (90106600, 901, 'SYNOPTIC_LAYERS_VANE', 'LBL_SYNOPTIC_LAYERS_VANE', true),
 (90101100, 901, 'SYNOPTIC_LAYERS_SOS', 'LBL_SYNOPTIC_LAYERS_SOS', true),
 (90101500, 901, 'SYNOPTIC_LAYERS_FIRE_DET', 'LBL_SYNOPTIC_LAYERS_FIRE_DET', true),
-(90107300, 901, 'SYNOPTIC_LAYERS_ILUM', 'LBL_SYNOPTIC_LAYERS_ILUM', true),
-(90100400, 901, 'SYNOPTIC_LAYERS_ETD', 'LBL_SYNOPTIC_LAYERS_ETD', true);
+(90107300, 901, 'SYNOPTIC_LAYERS_ILUM_EMER', 'LBL_SYNOPTIC_LAYERS_ILUM_EMER', true),
+(90100400, 901, 'SYNOPTIC_LAYERS_ETD', 'LBL_SYNOPTIC_LAYERS_ETD', true),
+(90102000, 901, 'SYNOPTIC_LAYERS_ILUM_REG', 'LBL_SYNOPTIC_LAYERS_ILUM_REG', true);
+
 
 INSERT INTO ui.synoptic_layer_relationships 
 (synoptic_id, parent_layer_id, child_layer_id) VALUES 
@@ -50,7 +53,10 @@ INSERT INTO ui.synoptic_layer_relationships
 (901, 90100003, 90101800),
 (901, 90100003, 90101900),
 (901, 90100003, 90102100),
-(901, 90100003, 90106600);
+(901, 90100003, 90106600),
+(901, 90100004, 90107300),
+(901, 90100004, 90102000);
+
 
 INSERT INTO ui.synoptic_commands 
 (id, synoptic_id, position, label, icon, "default", module_action_id, args, view_type_id, multiselect, show_text, item_required, context) VALUES 
@@ -357,5 +363,7 @@ INSERT INTO ui.synoptic_layer_elements
 (90107300, 'Element:73:2', 000073, 'ILUM-EMER-GRU-DP1', 96, 984, false, NULL, true, false, NULL, true),
 (90107300, 'Element:73:1', 000073, 'ILUM-EMER-GRU-DP2', 1807, 106, false, NULL, true, false, NULL, true),
 (90100400, 'Element:4:2', 020004, 'PM-1-1-DP', 1850, 777, false, NULL, true, false, NULL, true),
-(90100400, 'Element:4:1', 020004, 'PM-2-1-DP', 1850, 307, false, NULL, true, false, NULL, true);
+(90100400, 'Element:4:1', 020004, 'PM-2-1-DP', 1850, 307, false, NULL, true, false, NULL, true),
+(90102000, 'Element:2000:1', 2000, 'DP Sentido Madrid', 1026, 873, false, NULL, true, false, NULL, true),
+(90102000, 'Element:2000:2', 2000, 'DP Sentido Córdoba', 918, 201, false, NULL, true, false, NULL, true);
 

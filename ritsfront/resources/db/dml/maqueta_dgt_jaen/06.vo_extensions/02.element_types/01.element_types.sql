@@ -88,8 +88,8 @@ INSERT INTO ui.vo_entities(id, vo_entity_type_id, enabled, visible) VALUES
 ('ElementType:99', 'ElementTypeUI', true, true),
 ('ElementType:100', 'ElementTypeUI', true, true),
 ('ElementType:1000', 'ElementTypeUI', true, true),
+
 ('ElementType:2003', 'ElementTypeUI', true, true),
-('Element:2001:1', 'ElementUI', true, true),
 ('ImsIncidentTypeTask:1010101', 'ImsIncidentTypeTaskUI', true, true);
 
 
@@ -335,14 +335,21 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 ('ElementType:99', 72, 'true'),
 ('ElementType:100', 72, 'true'),
 ('ElementType:1000', 72, 'true'),
+
+('ElementType:2000', 2, 'graphic_icon/2000_light_control_tube.svg'),
 ('ElementType:2000', 72, 'true'),
+('ElementType:2000', 23, '102802'),
+('ElementType:2000', 14, 'grid/element_type_07.png'),
+('ElementType:2000', 56, 'false'),
+
 ('ElementType:2001', 72, 'true'),
 ('ElementType:2002', 72, 'true'),
 ('ElementType:2003', 72, 'true'),
 
 ('ElementType:98', 69, 'true'),
 ('ElementType:1000', 69, 'true'),
-('ElementType:2000', 69, 'true'),
+
+
 ('ElementType:2001', 69, 'true'),
 ('ElementType:2002', 69, 'true'),
 ('ElementType:2003', 69, 'true'),
