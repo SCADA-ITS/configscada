@@ -63,6 +63,7 @@ INSERT INTO ui.graphic_icons
 (00005703, 'INTERRUPTOR', 'INTERRUPTOR', false, true, 'component/graphicIcon/graphicIconCustom.js', 45, 45, 'img/graphic_icon/57_switch_horizontal.svg', 'component/graphicIcon/custom/switch_horizontal.js',true),
 (00005704, 'INTERRUPTOR', 'INTERRUPTOR', false, true, 'component/graphicIcon/graphicIconCustom.js', 45, 45, 'img/graphic_icon/57_switch.svg', 'component/graphicIcon/custom/switch_inv.js',true),
 (00005705, 'INTERRUPTOR', 'INTERRUPTOR', false, true, 'component/graphicIcon/graphicIconCustom.js', 45, 45, 'img/graphic_icon/57_switch_horizontal.svg', 'component/graphicIcon/custom/switch_horizontal_inv.js',true),
+(00005706, 'INTERRUPTOR', 'INTERRUPTOR', false, true, 'component/graphicIcon/graphicIconCustom.js', 45, 45, 'img/graphic_icon/57_switch.svg', 'component/graphicIcon/custom/switch_sbtype2.js',true),
 (000061, 'FIRE_CT', 'FIRE_CT', false, false, 'component/graphicIcon/graphicIconDefault.js', 85, 85, 'img/graphic_icon/61_fire_det_ct.svg', 'null',true),
 (000065, 'SAI', 'SAI', false, false, 'component/graphicIcon/graphicIconDefault.js', 85, 85, 'img/graphic_icon/65_sai.svg', 'null',true),
 (00006501, 'SAI', 'SAI', false, false, 'component/graphicIcon/graphicIconDefault.js', 55, 55, 'img/graphic_icon/65_sai.svg', 'null',true),
