@@ -1141,6 +1141,10 @@ WHERE grid_id = 1012 and label = ('LBL_SEND_FAN_START_REVERSE');
 DELETE FROM ui.grid_commands
 WHERE grid_id = 1012 AND label in ('LBL_SEND_FAN_RESET_PARTIAL_HOURS', 'LBL_SEND_FAN_RESET_TOTAL_HOURS');
 
+DELETE FROM ui.grid_commands
+WHERE grid_id = 1012
+  AND position = 6;
+  
 INSERT INTO ui.grid_field_icons(grid_field_id, icon, value, show_value, badge_color, avatar, enabled, label_value) VALUES
 (010004, './img/state/stateUnknown.png', 'ElementTypeState:1:0', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_UNKNOWN'),
 (010004, './img/state/stateUp.png', 'ElementTypeState:1:1', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_UP'),
