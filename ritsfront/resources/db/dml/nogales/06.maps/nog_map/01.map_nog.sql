@@ -67,8 +67,8 @@ INSERT INTO ui.map_layer_elements (id, layer_id, element_id, graphic_icon_id, "l
 (52,2,'Element:2:19',2,'NO-S2-CCTV-03',-71.429647,-32.687794,false,null,true,false,null,true),
 (53,2,'Element:2:20',2,'NO-S2-CCTV-04',-71.425531,-32.68045, false,null,true,false,null,true),
 
-(54,4,'Element:4:19',2,'NO-S2-SEC-OP',-71.425531,-32.687794,false,null,true,false,null,true),
-(55,4,'Element:4:20',2,'NO-S2-SEC-PO',-71.425531,-32.68045, false,null,true,false,null,true);
+(54,4,'Element:4:7',4,'NO-S2-SEC-OP',-71.440315, -32.7150631, false,null,true,false,null,true),
+(55,4,'Element:4:8',4,'NO-S2-SEC-PO',-71.440315, -32.7150631, false,null,true,false,null,true);
 
 INSERT INTO ui.map_layer_element_zooms (map_layer_element_id, zoom_lower, zoom_upper, graphic_icon_id, longitude, latitude, horizontal_flip, rotate, tooltip, show_text, text_color, z_index_front) VALUES
 
@@ -128,8 +128,8 @@ INSERT INTO ui.map_layer_element_zooms (map_layer_element_id, zoom_lower, zoom_u
 (52, 10, 13, 2, -71.429647,-32.687794, false, null, true, false, '#000000', null),
 (53, 10, 13, 2, -71.425531,-32.68045,  false, null, true, false, '#000000', null),
 
-(54, 10, 13, 4, -71.425531,-32.687794, false, null, true, false, '#000000', null),
-(55, 10, 13, 4, -71.425531,-32.68045,  false, null, true, false, '#000000', null),
+(54, 10, 13, 4, -71.445, -32.7150631, false, null, true, false, '#000000', null),
+(55, 10, 13, 4, -71.435, -32.7150631,  false, null, true, false, '#000000', null),
 
 (6, 14, 14, 11, -71.225498,-32.728264, false, null, true, false, '#000000', null),
 (7, 14, 14, 11, -71.240504,-32.734609, false, null, true, false, '#000000', null),
