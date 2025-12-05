@@ -257,21 +257,6 @@ GROUP BY
 
 
 
-SELECT *
-FROM (
-    SELECT 
-        *,
-        ROW_NUMBER() OVER (
-            PARTITION BY NroCarril
-            ORDER BY fecha DESC, hora DESC
-        ) AS rn
-    FROM dbo.Agrupados
-    WHERE IDEquipo = 1
-) AS t
-WHERE rn = 1;
-
-
-
 
 
 
@@ -290,8 +275,8 @@ CREATE VIEW reports.minutos_sec AS
 SELECT 
     ROW_NUMBER() OVER (ORDER BY Fecha DESC , Hora DESC) AS id,
     CASE 
-        WHEN NroCarril IN (1, 2) THEN 'Sentido San Pedro de la Paz'
-        WHEN NroCarril IN (3, 4) THEN 'Sentido Hualpén'
+        WHEN NroCarril IN (1, 2) THEN 'Sentido Nogales'
+        WHEN NroCarril IN (3, 4) THEN 'Sentido Puchuncaví'
     END AS GrupoCarril,
     Fecha,
     Hora,
@@ -324,8 +309,8 @@ FROM reports.minutos
 WHERE NroCarril IN (1, 2, 3, 4)
 GROUP BY 
     CASE 
-        WHEN NroCarril IN (1, 2) THEN 'Sentido San Pedro de la Paz'
-        WHEN NroCarril IN (3, 4) THEN 'Sentido Hualpén'
+        WHEN NroCarril IN (1, 2) THEN 'Sentido Nogales'
+        WHEN NroCarril IN (3, 4) THEN 'Sentido Puchuncaví'
     END,
     Fecha,
     Hora;
@@ -336,8 +321,8 @@ CREATE VIEW reports.horas_sec AS
 SELECT
     ROW_NUMBER() OVER (ORDER BY Fecha DESC , Hora DESC) AS id,
     CASE 
-        WHEN NroCarril IN (1, 2) THEN 'Sentido San Pedro de la Paz'
-        WHEN NroCarril IN (3, 4) THEN 'Sentido Hualpén'
+        WHEN NroCarril IN (1, 2) THEN 'Sentido Nogales'
+        WHEN NroCarril IN (3, 4) THEN 'Sentido Puchuncaví'
     END AS GrupoCarril,
     Fecha,
     Hora,
@@ -355,8 +340,8 @@ FROM reports.horas
 WHERE NroCarril IN (1, 2, 3, 4)
 GROUP BY
     CASE 
-        WHEN NroCarril IN (1, 2) THEN 'Sentido San Pedro de la Paz'
-        WHEN NroCarril IN (3, 4) THEN 'Sentido Hualpén'
+        WHEN NroCarril IN (1, 2) THEN 'Sentido Nogales'
+        WHEN NroCarril IN (3, 4) THEN 'Sentido Puchuncaví'
     END,
     Fecha,
     Hora;
@@ -365,8 +350,8 @@ CREATE VIEW reports.dias_sec AS
 SELECT
     ROW_NUMBER() OVER (ORDER BY Fecha DESC) AS id,
     CASE 
-        WHEN NroCarril IN (1, 2) THEN 'Sentido San Pedro de la Paz'
-        WHEN NroCarril IN (3, 4) THEN 'Sentido Hualpén'
+        WHEN NroCarril IN (1, 2) THEN 'Sentido Nogales'
+        WHEN NroCarril IN (3, 4) THEN 'Sentido Puchuncaví'
     END AS GrupoCarril,
     Fecha,
     -- Agregaciones
@@ -383,8 +368,8 @@ FROM reports.dias
 WHERE NroCarril IN (1, 2, 3, 4)
 GROUP BY 
     CASE 
-        WHEN NroCarril IN (1, 2) THEN 'Sentido San Pedro de la Paz'
-        WHEN NroCarril IN (3, 4) THEN 'Sentido Hualpén'
+        WHEN NroCarril IN (1, 2) THEN 'Sentido Nogales'
+        WHEN NroCarril IN (3, 4) THEN 'Sentido Puchuncaví'
     END,
     Fecha;
 
@@ -393,8 +378,8 @@ CREATE VIEW reports.meses_sec AS
 SELECT
     ROW_NUMBER() OVER (ORDER BY Anio DESC , Mes DESC) AS id,
     CASE 
-        WHEN NroCarril IN (1, 2) THEN 'Sentido San Pedro de la Paz'
-        WHEN NroCarril IN (3, 4) THEN 'Sentido Hualpén'
+        WHEN NroCarril IN (1, 2) THEN 'Sentido Nogales'
+        WHEN NroCarril IN (3, 4) THEN 'Sentido Puchuncaví'
     END AS GrupoCarril,
     Anio,
     Mes,
@@ -412,8 +397,8 @@ FROM reports.meses
 WHERE NroCarril IN (1, 2, 3, 4)
 GROUP BY 
     CASE 
-        WHEN NroCarril IN (1, 2) THEN 'Sentido San Pedro de la Paz'
-        WHEN NroCarril IN (3, 4) THEN 'Sentido Hualpén'
+        WHEN NroCarril IN (1, 2) THEN 'Sentido Nogales'
+        WHEN NroCarril IN (3, 4) THEN 'Sentido Puchuncaví'
     END,
     Anio,
     Mes;*/
