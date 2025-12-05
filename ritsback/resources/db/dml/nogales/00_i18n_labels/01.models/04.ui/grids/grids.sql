@@ -26,7 +26,8 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 	 ('es_CL', 1, 'LBL_SPEED', 'Velocidad', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),	
 	 ('es_CL', 1, 'LBL_LENGTH', 'Longitud', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),	 
 	 ('es_CL', 1, 'LBL_OCCUPANCY', 'Ocupación', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-	 ('es_CL', 1, 'LBL_VEH_SPEED_4', '< 100 km/h', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),	 
+	 ('es_CL', 1, 'LBL_VEH_SPEED_4', '< 100 km/h', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	 ('es_CL', 1, 'LBL_VOL_MIC', 'Volumen micro', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),		 
 	 ('es_CL', 1, 'LBL_GRID_PANEL', 'PANEL', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 --en_GB
