@@ -43,5 +43,13 @@ INSERT INTO ui.modules(id, module_type_id, "name", description, default_view_typ
 
 (6100, 9, 'REPORTS - alarms', 'REPORTS - alarms', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 (6101, 9, 'REPORTS - states', 'REPORTS - states', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(6102, 9, 'REPORTS - ETD historical data minutes', 'REPORTS - SECTION historical data minutes', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(6103, 9, 'REPORTS - ETD historical data hours', 'REPORTS - SECTION historical data hours', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(6104, 9, 'REPORTS - ETD historical data days', 'REPORTS - SECTION historical data days', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(6105, 9, 'REPORTS - ETD historical data months', 'REPORTS - SECTION historical data months', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(6106, 9, 'REPORTS - SECTION historical data minutes', 'REPORTS - SECTION historical data minutes', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(6107, 9, 'REPORTS - SECTION historical data hours', 'REPORTS - SECTION historical data hours', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(6108, 9, 'REPORTS - SECTION historical data days', 'REPORTS - SECTION historical data days', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(6109, 9, 'REPORTS - SECTION historical data months', 'REPORTS - SECTION historical data months', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 (6110, 9, 'REPORTS - PMVs send commands', 'REPORTS - PMVs send commands', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL);
 

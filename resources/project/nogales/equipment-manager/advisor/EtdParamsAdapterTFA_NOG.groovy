@@ -24,7 +24,7 @@ import com.revenga.rits.back.data.core.model.AlarmConfig;
  * EtdParamsAdapterTFA: Save de measures to detectors of ETD
  *
  */
-class EtdParamsAdapterTFA_AVO {
+class EtdParamsAdapterTFA {
 
     //BBDD Params
 	static final Long TYPE_PARAM_CONFIG = 1L;
@@ -45,20 +45,16 @@ class EtdParamsAdapterTFA_AVO {
 	static final Long PARAM_MEASURE_FAIL_DATA = 13L;
 	static final Long PARAM_MEASURE_LENGTH = 17L;
 	
-	static final Long PARAM_MEASURE_VEH_LENGTH_1 = 20L;
-	static final Long PARAM_MEASURE_VEH_LENGTH_2 = 21L;
-
-	static final Long PARAM_MEASURE_VEH_SPEED_1 = 40L;
-	static final Long PARAM_MEASURE_VEH_SPEED_2 = 41L;
-	static final Long PARAM_MEASURE_VEH_SPEED_3 = 42L;
-
 	static final Long PARAM_MEASURE_VEH_PA_1 = 100L;
 	static final Long PARAM_MEASURE_VEH_PA_2 = 101L;
 	static final Long PARAM_MEASURE_VEH_PA_3 = 102L;
 	static final Long PARAM_MEASURE_VEH_PA_4 = 103L;
-	static final Long PARAM_MEASURE_VEH_PA_5 = 104L;
-	static final Long PARAM_MEASURE_VEH_PA_6 = 105L;
-	static final Long PARAM_MEASURE_VEH_PA_7 = 106L;
+
+
+	static final Long PARAM_MEASURE_VEH_SPEED_1 = 40L;
+	static final Long PARAM_MEASURE_VEH_SPEED_2 = 41L;
+	static final Long PARAM_MEASURE_VEH_SPEED_3 = 42L;	
+	static final Long PARAM_MEASURE_VEH_SPEED_4 = 43L;	
 
 	//Alarms
 	static final Long ALARM_DETECTOR_FAIL = 34L;
@@ -66,7 +62,7 @@ class EtdParamsAdapterTFA_AVO {
 	
 	org.apache.logging.log4j.Logger log;
 	
-	EtdParamsAdapterTFA_AVO(org.apache.logging.log4j.Logger log) {
+	EtdParamsAdapterTFA(org.apache.logging.log4j.Logger log) {
 
 		this.log = log;
 	}
@@ -79,9 +75,9 @@ class EtdParamsAdapterTFA_AVO {
 		List<Alarm> listAlarmsRemove;
 		List<ElementValue> listElements;
 		
-		log.debug("Ejecutando EtdParamsAdapterTFA_AVO Element" + element.getElementTypeId() + ":" + element.getId());
+		log.debug("Ejecutando EtdParamsAdapterTFA Element" + element.getElementTypeId() + ":" + element.getId());
 		try {
-			print("entra en groovy")
+
 			if (elementValues != null) {
 				// Search detector childs of ETDs
 				List<ElementHierarchy> childs;
@@ -90,6 +86,7 @@ class EtdParamsAdapterTFA_AVO {
 				// Parse the json value
 				def etd_info = new JsonSlurper().parseText(elementValues.get(0).getRight().getValue());	
 				
+				if (!etd_info) return true;
 				for (ElementHierarchy child : childs){
 					Element childElement = EntitiesManager.getInstance().getElement(child.getChildElementTypeId(), child.getChildElementId());					
 					ElementValue detOrder = EntitiesManager.getInstance().getElementValueConfig(childElement, PARAM_CONFIG_ORDER);	
@@ -108,8 +105,8 @@ class EtdParamsAdapterTFA_AVO {
 					listElements.add(elementSetValue(PARAM_MEASURE_OCCUPANCY, TYPE_PARAM_MEASURE, childElement.getId(),String.valueOf(Math.round(Double.valueOf(etd_info.get(detArrayPos).occupancy)))));	
 					listElements.add(elementSetValue(PARAM_MEASURE_KAMIKAZE, TYPE_PARAM_MEASURE, childElement.getId(),String.valueOf(etd_info.get(detArrayPos).kamikaze)));	
 					listElements.add(elementSetValue(PARAM_MEASURE_SPEED, TYPE_PARAM_MEASURE, childElement.getId(),String.valueOf(Math.round(Double.valueOf(etd_info.get(detArrayPos).average_speed)))));	
-					listElements.add(elementSetValue(PARAM_MEASURE_GAP, TYPE_PARAM_MEASURE, childElement.getId(),String.valueOf(etd_info.get(detArrayPos).gap)));	
 					listElements.add(elementSetValue(PARAM_MEASURE_LENGTH, TYPE_PARAM_MEASURE, childElement.getId(),String.valueOf(Math.round(Double.valueOf(etd_info.get(detArrayPos).average_length)))));	
+					listElements.add(elementSetValue(PARAM_MEASURE_GAP, TYPE_PARAM_MEASURE, childElement.getId(),String.valueOf(etd_info.get(detArrayPos).gap)));		
 										
 					listElements.add(elementSetValue(PARAM_MEASURE_CONGESTION, TYPE_PARAM_MEASURE, childElement.getId(),String.valueOf(etd_info.get(detArrayPos).congestion)));	
 					if(etd_info.get(detArrayPos).congestion){
@@ -124,12 +121,6 @@ class EtdParamsAdapterTFA_AVO {
 					}else{
 						setDeactivationAlarmsCommandList.add(childElement, EntitiesManager.getInstance().getAlarmConfig(ALARM_DETECTOR_FAIL));
 					}
-
-					val = String.valueOf(etd_info.get(detArrayPos).veh_length_1 == null ? 0 : etd_info.get(detArrayPos).veh_length_1);
-					listElements.add(elementSetValue(PARAM_MEASURE_VEH_LENGTH_1, TYPE_PARAM_MEASURE, childElement.getId(),val));
-					
-					val = String.valueOf(etd_info.get(detArrayPos).veh_length_2 == null ? 0 : etd_info.get(detArrayPos).veh_length_2);
-					listElements.add(elementSetValue(PARAM_MEASURE_VEH_LENGTH_2, TYPE_PARAM_MEASURE, childElement.getId(),val));
 					
 					val = String.valueOf(etd_info.get(detArrayPos).veh_speed_1 == null ? 0 : etd_info.get(detArrayPos).veh_speed_1);
 					listElements.add(elementSetValue(PARAM_MEASURE_VEH_SPEED_1, TYPE_PARAM_MEASURE, childElement.getId(),val));
@@ -139,6 +130,9 @@ class EtdParamsAdapterTFA_AVO {
 					
 					val = String.valueOf(etd_info.get(detArrayPos).veh_speed_3 == null ? 0 : etd_info.get(detArrayPos).veh_speed_3);
 					listElements.add(elementSetValue(PARAM_MEASURE_VEH_SPEED_3, TYPE_PARAM_MEASURE, childElement.getId(),val));
+					
+					val = String.valueOf(etd_info.get(detArrayPos).veh_speed_4 == null ? 0 : etd_info.get(detArrayPos).veh_speed_4);
+					listElements.add(elementSetValue(PARAM_MEASURE_VEH_SPEED_4, TYPE_PARAM_MEASURE, childElement.getId(),val));
 
 					val = String.valueOf(etd_info.get(detArrayPos).veh_pa_1 == null ? 0 : etd_info.get(detArrayPos).veh_pa_1);
 					listElements.add(elementSetValue(PARAM_MEASURE_VEH_PA_1, TYPE_PARAM_MEASURE, childElement.getId(),val));
@@ -148,18 +142,9 @@ class EtdParamsAdapterTFA_AVO {
 					
 					val = String.valueOf(etd_info.get(detArrayPos).veh_pa_3 == null ? 0 : etd_info.get(detArrayPos).veh_pa_3);
 					listElements.add(elementSetValue(PARAM_MEASURE_VEH_PA_3, TYPE_PARAM_MEASURE, childElement.getId(),val));
-
+					
 					val = String.valueOf(etd_info.get(detArrayPos).veh_pa_4 == null ? 0 : etd_info.get(detArrayPos).veh_pa_4);
 					listElements.add(elementSetValue(PARAM_MEASURE_VEH_PA_4, TYPE_PARAM_MEASURE, childElement.getId(),val));
-
-					val = String.valueOf(etd_info.get(detArrayPos).veh_pa_5 == null ? 0 : etd_info.get(detArrayPos).veh_pa_5);
-					listElements.add(elementSetValue(PARAM_MEASURE_VEH_PA_5, TYPE_PARAM_MEASURE, childElement.getId(),val));
-
-					val = String.valueOf(etd_info.get(detArrayPos).veh_pa_6 == null ? 0 : etd_info.get(detArrayPos).veh_pa_6);
-					listElements.add(elementSetValue(PARAM_MEASURE_VEH_PA_6, TYPE_PARAM_MEASURE, childElement.getId(),val));
-
-					val = String.valueOf(etd_info.get(detArrayPos).veh_pa_7 == null ? 0 : etd_info.get(detArrayPos).veh_pa_7);
-					listElements.add(elementSetValue(PARAM_MEASURE_VEH_PA_7, TYPE_PARAM_MEASURE, childElement.getId(),val));
 					
 					ElementValue[] itemsArray = new ElementValue[listElements.size()];
 					itemsArray = listElements.toArray(itemsArray);

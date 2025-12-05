@@ -162,3 +162,61 @@ INSERT INTO conf.element_io_controller_modules (element_type_id, element_id, mod
 (4, 6, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 7, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 8, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+delete from master.element_subtype_active_params where element_type_id = 4 and element_subtype_id = 1;
+
+update master.element_type_params set element_type_param_unit_id = 37 where element_type_id = 3 and param_type_id = 2 and element_type_param_id = 5;
+update master.element_type_params set element_type_param_unit_id = 37 where element_type_id = 3 and param_type_id = 2 and element_type_param_id = 140;
+update master.element_type_params set element_type_param_unit_id = 37 where element_type_id = 3 and param_type_id = 2 and element_type_param_id = 141;
+update master.element_type_params set element_type_param_unit_id = 37 where element_type_id = 3 and param_type_id = 2 and element_type_param_id = 142;
+update master.element_type_params set element_type_param_unit_id = 37 where element_type_id = 3 and param_type_id = 2 and element_type_param_id = 143;
+
+update master.i18n_labels set translation = 'Sección PAT' where label = 'LBL_ELEMENT_SUBTYPE_SECTION_KINEO' and locale_code = 'es_CL';
+update master.i18n_labels set translation = 'Sección PAT' where label = 'LBL_ELEMENT_SUBTYPE_SECTION_KINEO_DESC' and locale_code = 'es_CL';
+
+update master.i18n_labels set translation = 'Catg. Vel 1 (<= 60 (km/h)' where label = 'LBL_ELEMENT_TYPE_PARAM_SECTION_VEH_SPEED_1' and locale_code = 'es_CL';
+update master.i18n_labels set translation = 'Catg. Vel 2 (61-100 (km/h)' where label = 'LBL_ELEMENT_TYPE_PARAM_SECTION_VEH_SPEED_2' and locale_code = 'es_CL';
+update master.i18n_labels set translation = 'Catg. Vel 3 (101-120 (km/h)' where label = 'LBL_ELEMENT_TYPE_PARAM_SECTION_VEH_SPEED_3' and locale_code = 'es_CL';
+update master.i18n_labels set translation = 'Catg. Vel 4 (>= 120 (km/h)' where label = 'LBL_ELEMENT_TYPE_PARAM_SECTION_VEH_SPEED_4' and locale_code = 'es_CL';
+update master.i18n_labels set translation = 'Catg. Vel 1 (<= 60 (km/h)' where label = 'LBL_ELEMENT_TYPE_PARAM_SECTION_VEH_SPEED_1_DESC' and locale_code = 'es_CL';
+update master.i18n_labels set translation = 'Catg. Vel 2 (61-100 (km/h)' where label = 'LBL_ELEMENT_TYPE_PARAM_SECTION_VEH_SPEED_2_DESC' and locale_code = 'es_CL';
+update master.i18n_labels set translation = 'Catg. Vel 3 (101-120 (km/h)' where label = 'LBL_ELEMENT_TYPE_PARAM_SECTION_VEH_SPEED_3_DESC' and locale_code = 'es_CL';
+update master.i18n_labels set translation = 'Catg. Vel 4 (>= 120 (km/h)' where label = 'LBL_ELEMENT_TYPE_PARAM_SECTION_VEH_SPEED_4_DESC' and locale_code = 'es_CL';
+
+update master.i18n_labels set translation = 'Clase 1 = Autos y camionetas' where label = 'LBL_ELEMENT_TYPE_PARAM_SECTION_VEH_PA_1' and locale_code = 'es_CL';
+update master.i18n_labels set translation = 'Clase 2 = Camionetas doble rueda trasera y/o autos y camionetas con remolque' where label = 'LBL_ELEMENT_TYPE_PARAM_SECTION_VEH_PA_2' and locale_code = 'es_CL';
+update master.i18n_labels set translation = 'Clase 3 = Camiones de dos ejes, maquinaria agrícola o de construcción ' where label = 'LBL_ELEMENT_TYPE_PARAM_SECTION_VEH_PA_3' and locale_code = 'es_CL';
+update master.i18n_labels set translation = 'Clase 4 = Motos, cuatrimotos y motonetas' where label = 'LBL_ELEMENT_TYPE_PARAM_SECTION_VEH_PA_4' and locale_code = 'es_CL';
+update master.i18n_labels set translation = 'Clase 1 = Autos y camionetas' where label = 'LBL_ELEMENT_TYPE_PARAM_SECTION_VEH_PA_1_DESC' and locale_code = 'es_CL';
+update master.i18n_labels set translation = 'Clase 2 = Camionetas doble rueda trasera y/o autos y camionetas con remolque' where label = 'LBL_ELEMENT_TYPE_PARAM_SECTION_VEH_PA_2_DESC' and locale_code = 'es_CL';
+update master.i18n_labels set translation = 'Clase 3 = Camiones de dos ejes, maquinaria agrícola o de construcción ' where label = 'LBL_ELEMENT_TYPE_PARAM_SECTION_VEH_PA_3_DESC' and locale_code = 'es_CL';
+update master.i18n_labels set translation = 'Clase 4 = Motos, cuatrimotos y motonetas' where label = 'LBL_ELEMENT_TYPE_PARAM_SECTION_VEH_PA_4_DESC' and locale_code = 'es_CL';
+
+
+INSERT INTO master.element_subtype_active_params
+(element_subtype_id, element_type_id, param_type_id, element_type_param_id, enabled, visible, created_at, updated_at)VALUES
+(1, 4, 2, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 4, 2, 2, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 4, 2, 4, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 4, 2, 5, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 4, 2, 6, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 4, 2, 7, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 4, 2, 8, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 4, 2, 9, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 4, 2, 10, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 4, 2, 12, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 4, 2, 13, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 4, 2, 17, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 4, 2, 18, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(1, 4, 2, 80, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 4, 2, 81, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 4, 2, 82, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 4, 2, 83, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(1, 4, 2, 160, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(1, 4, 2, 140, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 4, 2, 141, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 4, 2, 142, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 4, 2, 143, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

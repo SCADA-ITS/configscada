@@ -1,13 +1,13 @@
 INSERT INTO ui.equip_viewers (id, name, description, "label", icon, show_info_tab, show_childs, show_actions, initial_tab, measure_width, measure_max_rows, measure_only, graphic_icon_id, info_tab_mode, no_show_properties) VALUES
-('ElementSubtype:1:3', 'Detector', 'Detector', 'LBL_ELEMENT_TYPE_DETECTOR', NULL, true, false, false, null, 300, 3, null, 3,2,true);
+('ElementType:3', 'Detector', 'Detector', 'LBL_ELEMENT_TYPE_DETECTOR', NULL, true, false, false, null, 300, 3, null, 000003,2,true);
 
 INSERT INTO ui.equip_viewer_tabs (equip_viewer_id, module_action_id, alias, description, "label", icon, "position", visible) VALUES
-('ElementSubtype:1:3', 100501, 'Alarms module', 'Alarms module', 'LBL_ALARMS', NULL, 1, true);
+('ElementType:3', 100501, 'Alarms module', 'Alarms module', 'LBL_ALARMS', NULL, 1, true);
 
 INSERT INTO ui.equip_viewer_grp_measures (id, equip_viewer_id, name, description, "label", icon, "position", visible) VALUES
-(0301, 'ElementSubtype:1:3', 'General', 'General', 'LBL_ELEMENT_GENERAL', NULL, 1, true),
-(0302, 'ElementSubtype:1:3', 'Clas.Velocidad', 'Clas.Velocidad', 'LBL_ELEMENT_CLASSIFICATIONS_VEL', NULL, 2, true),
-(0303, 'ElementSubtype:1:3', 'Clas.Categorias', 'Clas.Categorias', 'LBL_ELEMENT_CLASSIFICATIONS_CAT', NULL, 3, true);
+(0301, 'ElementType:3', 'General', 'General', 'LBL_ELEMENT_GENERAL', NULL, 1, true),
+(0302, 'ElementType:3', 'Clas.Velocidad', 'Clas.Velocidad', 'LBL_ELEMENT_SPEED_CLASSIFICATION', NULL, 2, true),
+(0303, 'ElementType:3', 'Clas.Tipo', 'Clas.Tipo', 'LBL_ELEMENT_TYPE_CLASSIFICATION', NULL, 3, true);
 
 INSERT INTO ui.equip_viewer_measures (equip_viewer_grp_measure_id, vo_entities_id, "position", visible) VALUES
 (0301, 'ElementTypeParam:3:2:1', 1, true),
@@ -17,14 +17,13 @@ INSERT INTO ui.equip_viewer_measures (equip_viewer_grp_measure_id, vo_entities_i
 (0301, 'ElementTypeParam:3:2:7', 5, true),
 (0301, 'ElementTypeParam:3:2:8', 6, true),
 (0301, 'ElementTypeParam:3:2:9', 7, true),
+(0301, 'ElementTypeParam:3:2:17', 8, true),
 (0302, 'ElementTypeParam:3:2:40', 1, true),
 (0302, 'ElementTypeParam:3:2:41', 2, true),
 (0302, 'ElementTypeParam:3:2:42', 3, true),
+(0302, 'ElementTypeParam:3:2:43', 4, true),
 (0303, 'ElementTypeParam:3:2:100', 1, true),
 (0303, 'ElementTypeParam:3:2:101', 2, true),
 (0303, 'ElementTypeParam:3:2:102', 3, true),
-(0303, 'ElementTypeParam:3:2:103', 4, true),
-(0303, 'ElementTypeParam:3:2:104', 5, true),
-(0303, 'ElementTypeParam:3:2:105', 6, true),
-(0303, 'ElementTypeParam:3:2:106', 7, true);
+(0303, 'ElementTypeParam:3:2:103', 4, true);
 

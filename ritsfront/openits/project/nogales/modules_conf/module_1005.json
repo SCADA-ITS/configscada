@@ -19,8 +19,8 @@
 	"topic": "/topic/alarm.>",
 	"gridNoRecognized": 1004,
 	"gridRecognized": 1005,
-	"treeElements": true,
-	"treeCustom": true,
+	"treeElements": false,
+	"treeCustom": false,
 	"levels": {
 		"critical": [ "AlarmLevel:5", "AlarmLevel:6" ],
 		"warn": [ "AlarmLevel:3", "AlarmLevel:4" ],
@@ -36,6 +36,6 @@
 		"locate": 200004
 	},
 	"requiredPermissions": {
-		"edit": "SystemPermission:22"		
+		"edit": "SystemPermission:19"		
 	}
 }

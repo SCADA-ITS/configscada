@@ -2,10 +2,10 @@ INSERT INTO ui.maps (id, name, description, "label", icon, longitude, latitude, 
 (1, 'NOG_MAP', 'NOG Map', 'LBL_MAP', NULL, -71.25, -32.75, 10, 16, 10, -71.5, -33, -71, -32.5, null, null, false);
 
 INSERT INTO ui.map_layers (id, base_layer, map_id, "name", description, "label", icon, visible) VALUES 
-(11, NULL, 1, 'SOS', 'SOS', 'LBL_SOS', NULL, true),
-(71, NULL, 1, 'PMV', 'PMV', 'LBL_PMV', NULL, true),
-(2, NULL, 1, 'CCTV', 'CCTV', 'LBL_CCTV', NULL, true),
-(4, NULL, 1, 'SECCION', 'CCSECCIONTV', 'LBL_SECTION', NULL, true);
+(2, NULL, 1, 'CCTV', 'CCTV', 'LBL_ELEMENT_TYPE_CAMERA', NULL, true),
+(4, NULL, 1, 'SECTION', 'SECTION', 'LBL_ELEMENT_TYPE_SECTION', NULL, true),
+(11, NULL, 1, 'SOS', 'SOS', 'LBL_ELEMENT_TYPE_SOS', NULL, true),
+(71, NULL, 1, 'PMV', 'PMV', 'LBL_ELEMENT_TYPE_PANEL', NULL, true);
 
 INSERT INTO ui.map_layer_elements (id, layer_id, element_id, graphic_icon_id, "label", longitude, latitude, horizontal_flip, rotate, tooltip, show_text, text_color, selectable) VALUES 
 (1,71,'Element:71:1',71,'NO-S1S1-PMV-01',-71.2061652,-32.723549,false,null,true,false,null,true),
