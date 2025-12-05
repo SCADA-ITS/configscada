@@ -32,7 +32,7 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 (2, 9, 1, 1, NULL, '10.50.17.6', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 10, 1, 1, NULL, 'admin', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 11, 1, 1, NULL, 'Revenga2023.', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(2, 12, 1, 1, NULL, '{"up":0.02,"down":-0.02,"right":0.02,"left":-0.02,"zoom_in":0.02,"zoom_out":-0.02}', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 12, 1, 1, NULL, '[{"id":1,"up":0.02,"down":-0.02,"right":0.02,"left":-0.02,"zoom_in":0.02,"zoom_out":-0.02},{"id":2,"up":0.01,"down":-0.01,"right":0.01,"left":-0.01,"zoom_in":0.01,"zoom_out":-0.01}]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 1003, 1, 1, NULL, 'NO-S1S1-CCTV-01', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (2, 1, 1, 2, NULL, 'HIKVISION', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -43,7 +43,7 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 (2, 9, 1, 2, NULL, '10.50.17.6', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 10, 1, 2, NULL, 'admin', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 11, 1, 2, NULL, 'Revenga2023.', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(2, 12, 1, 2, NULL, '{"up":0.02,"down":-0.02,"right":0.02,"left":-0.02,"zoom_in":0.02,"zoom_out":-0.02}', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 12, 1, 2, NULL, '[{"id":1,"up":0.02,"down":-0.02,"right":0.02,"left":-0.02,"zoom_in":0.02,"zoom_out":-0.02},{"id":2,"up":0.01,"down":-0.01,"right":0.01,"left":-0.01,"zoom_in":0.01,"zoom_out":-0.01}]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 1003, 1, 2, NULL, 'NO-S1S1-CCTV-02', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (2, 1, 1, 3, NULL, 'HIKVISION', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -54,7 +54,7 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 (2, 9, 1, 3, NULL, '10.50.17.6', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 10, 1, 3, NULL, 'admin', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 11, 1, 3, NULL, 'Revenga2023.', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(2, 12, 1, 3, NULL, '{"up":0.02,"down":-0.02,"right":0.02,"left":-0.02,"zoom_in":0.02,"zoom_out":-0.02}', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 12, 1, 3, NULL, '[{"id":1,"up":0.02,"down":-0.02,"right":0.02,"left":-0.02,"zoom_in":0.02,"zoom_out":-0.02},{"id":2,"up":0.01,"down":-0.01,"right":0.01,"left":-0.01,"zoom_in":0.01,"zoom_out":-0.01}]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 1003, 1, 3, NULL, 'NO-S1S1-CCTV-03', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (2, 1, 1, 4, NULL, 'HIKVISION', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -65,7 +65,7 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 (2, 9, 1, 4, NULL, '10.50.17.6', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 10, 1, 4, NULL, 'admin', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 11, 1, 4, NULL, 'Revenga2023.', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(2, 12, 1, 4, NULL, '{"up":0.02,"down":-0.02,"right":0.02,"left":-0.02,"zoom_in":0.02,"zoom_out":-0.02}', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 12, 1, 4, NULL, '[{"id":1,"up":0.02,"down":-0.02,"right":0.02,"left":-0.02,"zoom_in":0.02,"zoom_out":-0.02},{"id":2,"up":0.01,"down":-0.01,"right":0.01,"left":-0.01,"zoom_in":0.01,"zoom_out":-0.01}]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 1003, 1, 4, NULL, 'NO-S1S1-CCTV-04', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (2, 1, 1, 5, NULL, 'HIKVISION', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -76,7 +76,7 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 (2, 9, 1, 5, NULL, '10.50.17.6', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 10, 1, 5, NULL, 'admin', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 11, 1, 5, NULL, 'Revenga2023.', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(2, 12, 1, 5, NULL, '{"up":0.02,"down":-0.02,"right":0.02,"left":-0.02,"zoom_in":0.02,"zoom_out":-0.02}', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 12, 1, 5, NULL, '[{"id":1,"up":0.02,"down":-0.02,"right":0.02,"left":-0.02,"zoom_in":0.02,"zoom_out":-0.02},{"id":2,"up":0.01,"down":-0.01,"right":0.01,"left":-0.01,"zoom_in":0.01,"zoom_out":-0.01}]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 1003, 1, 5, NULL, 'NO-S1S1-CCTV-05', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (2, 1, 1, 6, NULL, 'HIKVISION', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -87,7 +87,7 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 (2, 9, 1, 6, NULL, '10.50.17.6', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 10, 1, 6, NULL, 'admin', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 11, 1, 6, NULL, 'Revenga2023.', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(2, 12, 1, 6, NULL, '{"up":0.02,"down":-0.02,"right":0.02,"left":-0.02,"zoom_in":0.02,"zoom_out":-0.02}', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 12, 1, 6, NULL, '[{"id":1,"up":0.02,"down":-0.02,"right":0.02,"left":-0.02,"zoom_in":0.02,"zoom_out":-0.02},{"id":2,"up":0.01,"down":-0.01,"right":0.01,"left":-0.01,"zoom_in":0.01,"zoom_out":-0.01}]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 1003, 1, 6, NULL, 'NO-S1S1-CCTV-06', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (2, 1, 1, 7, NULL, 'HIKVISION', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -98,7 +98,7 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 (2, 9, 1, 7, NULL, '10.50.17.6', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 10, 1, 7, NULL, 'admin', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 11, 1, 7, NULL, 'Revenga2023.', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(2, 12, 1, 7, NULL, '{"up":0.02,"down":-0.02,"right":0.02,"left":-0.02,"zoom_in":0.02,"zoom_out":-0.02}', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 12, 1, 7, NULL, '[{"id":1,"up":0.02,"down":-0.02,"right":0.02,"left":-0.02,"zoom_in":0.02,"zoom_out":-0.02},{"id":2,"up":0.01,"down":-0.01,"right":0.01,"left":-0.01,"zoom_in":0.01,"zoom_out":-0.01}]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 1003, 1, 7, NULL, 'NO-S1S2-CCTV-01', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (2, 1, 1, 8, NULL, 'HIKVISION', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -109,7 +109,7 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 (2, 9, 1, 8, NULL, '10.50.17.6', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 10, 1, 8, NULL, 'admin', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 11, 1, 8, NULL, 'Revenga2023.', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(2, 12, 1, 8, NULL, '{"up":0.02,"down":-0.02,"right":0.02,"left":-0.02,"zoom_in":0.02,"zoom_out":-0.02}', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 12, 1, 8, NULL, '[{"id":1,"up":0.02,"down":-0.02,"right":0.02,"left":-0.02,"zoom_in":0.02,"zoom_out":-0.02},{"id":2,"up":0.01,"down":-0.01,"right":0.01,"left":-0.01,"zoom_in":0.01,"zoom_out":-0.01}]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 1003, 1, 8, NULL, 'NO-S1S2-CCTV-02', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (2, 1, 1, 9, NULL, 'HIKVISION', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -120,7 +120,7 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 (2, 9, 1, 9, NULL, '10.50.17.6', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 10, 1, 9, NULL, 'admin', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 11, 1, 9, NULL, 'Revenga2023.', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(2, 12, 1, 9, NULL, '{"up":0.02,"down":-0.02,"right":0.02,"left":-0.02,"zoom_in":0.02,"zoom_out":-0.02}', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 12, 1, 9, NULL, '[{"id":1,"up":0.02,"down":-0.02,"right":0.02,"left":-0.02,"zoom_in":0.02,"zoom_out":-0.02},{"id":2,"up":0.01,"down":-0.01,"right":0.01,"left":-0.01,"zoom_in":0.01,"zoom_out":-0.01}]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 1003, 1, 9, NULL, 'NO-S1S2-CCTV-03', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (2, 1, 1, 10, NULL, 'HIKVISION', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -131,7 +131,7 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 (2, 9, 1, 10, NULL, '10.50.17.6', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 10, 1, 10, NULL, 'admin', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 11, 1, 10, NULL, 'Revenga2023.', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(2, 12, 1, 10, NULL, '{"up":0.02,"down":-0.02,"right":0.02,"left":-0.02,"zoom_in":0.02,"zoom_out":-0.02}', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 12, 1, 10, NULL, '[{"id":1,"up":0.02,"down":-0.02,"right":0.02,"left":-0.02,"zoom_in":0.02,"zoom_out":-0.02},{"id":2,"up":0.01,"down":-0.01,"right":0.01,"left":-0.01,"zoom_in":0.01,"zoom_out":-0.01}]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 1003, 1, 10, NULL, 'NO-S1S2-CCTV-04', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (2, 1, 1, 11, NULL, 'HIKVISION', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -142,7 +142,7 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 (2, 9, 1, 11, NULL, '10.50.17.6', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 10, 1, 11, NULL, 'admin', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 11, 1, 11, NULL, 'Revenga2023.', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(2, 12, 1, 11, NULL, '{"up":0.02,"down":-0.02,"right":0.02,"left":-0.02,"zoom_in":0.02,"zoom_out":-0.02}', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 12, 1, 11, NULL, '[{"id":1,"up":0.02,"down":-0.02,"right":0.02,"left":-0.02,"zoom_in":0.02,"zoom_out":-0.02},{"id":2,"up":0.01,"down":-0.01,"right":0.01,"left":-0.01,"zoom_in":0.01,"zoom_out":-0.01}]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 1003, 1, 11, NULL, 'NO-S1S2-CCTV-05', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (2, 1, 1, 12, NULL, 'HIKVISION', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -153,7 +153,7 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 (2, 9, 1, 12, NULL, '10.50.17.6', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 10, 1, 12, NULL, 'admin', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 11, 1, 12, NULL, 'Revenga2023.', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(2, 12, 1, 12, NULL, '{"up":0.02,"down":-0.02,"right":0.02,"left":-0.02,"zoom_in":0.02,"zoom_out":-0.02}', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 12, 1, 12, NULL, '[{"id":1,"up":0.02,"down":-0.02,"right":0.02,"left":-0.02,"zoom_in":0.02,"zoom_out":-0.02},{"id":2,"up":0.01,"down":-0.01,"right":0.01,"left":-0.01,"zoom_in":0.01,"zoom_out":-0.01}]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 1003, 1, 12, NULL, 'NO-S1S2-CCTV-06', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (2, 1, 1, 13, NULL, 'HIKVISION', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -164,7 +164,7 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 (2, 9, 1, 13, NULL, '10.50.17.6', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 10, 1, 13, NULL, 'admin', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 11, 1, 13, NULL, 'Revenga2023.', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(2, 12, 1, 13, NULL, '{"up":0.02,"down":-0.02,"right":0.02,"left":-0.02,"zoom_in":0.02,"zoom_out":-0.02}', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 12, 1, 13, NULL, '[{"id":1,"up":0.02,"down":-0.02,"right":0.02,"left":-0.02,"zoom_in":0.02,"zoom_out":-0.02},{"id":2,"up":0.01,"down":-0.01,"right":0.01,"left":-0.01,"zoom_in":0.01,"zoom_out":-0.01}]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 1003, 1, 13, NULL, 'NO-S1S2-CCTV-07', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (2, 1, 1, 14, NULL, 'HIKVISION', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -175,7 +175,7 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 (2, 9, 1, 14, NULL, '10.50.17.6', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 10, 1, 14, NULL, 'admin', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 11, 1, 14, NULL, 'Revenga2023.', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(2, 12, 1, 14, NULL, '{"up":0.02,"down":-0.02,"right":0.02,"left":-0.02,"zoom_in":0.02,"zoom_out":-0.02}', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 12, 1, 14, NULL, '[{"id":1,"up":0.02,"down":-0.02,"right":0.02,"left":-0.02,"zoom_in":0.02,"zoom_out":-0.02},{"id":2,"up":0.01,"down":-0.01,"right":0.01,"left":-0.01,"zoom_in":0.01,"zoom_out":-0.01}]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 1003, 1, 14, NULL, 'NO-S1S3-CCTV-01', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (2, 1, 1, 15, NULL, 'HIKVISION', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -186,7 +186,7 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 (2, 9, 1, 15, NULL, '10.50.17.6', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 10, 1, 15, NULL, 'admin', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 11, 1, 15, NULL, 'Revenga2023.', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(2, 12, 1, 15, NULL, '{"up":0.02,"down":-0.02,"right":0.02,"left":-0.02,"zoom_in":0.02,"zoom_out":-0.02}', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 12, 1, 15, NULL, '[{"id":1,"up":0.02,"down":-0.02,"right":0.02,"left":-0.02,"zoom_in":0.02,"zoom_out":-0.02},{"id":2,"up":0.01,"down":-0.01,"right":0.01,"left":-0.01,"zoom_in":0.01,"zoom_out":-0.01}]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 1003, 1, 15, NULL, 'NO-S1S3-CCTV-02', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (2, 1, 1, 16, NULL, 'HIKVISION', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -197,7 +197,7 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 (2, 9, 1, 16, NULL, '10.50.12.10', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 10, 1, 16, NULL, 'admin', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 11, 1, 16, NULL, 'Revenga2023.', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(2, 12, 1, 16, NULL, '{"up":0.02,"down":-0.02,"right":0.02,"left":-0.02,"zoom_in":0.02,"zoom_out":-0.02}', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 12, 1, 16, NULL, '[{"id":1,"up":0.02,"down":-0.02,"right":0.02,"left":-0.02,"zoom_in":0.02,"zoom_out":-0.02},{"id":2,"up":0.01,"down":-0.01,"right":0.01,"left":-0.01,"zoom_in":0.01,"zoom_out":-0.01}]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 1003, 1, 16, NULL, 'NO-S1S3-CCTV-03', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (2, 1, 1, 17, NULL, 'HIKVISION', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -208,7 +208,7 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 (2, 9, 1, 17, NULL, '10.50.3.13', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 10, 1, 17, NULL, 'admin', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 11, 1, 17, NULL, 'Revenga2023.', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(2, 12, 1, 17, NULL, '{"up":0.02,"down":-0.02,"right":0.02,"left":-0.02,"zoom_in":0.02,"zoom_out":-0.02}', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 12, 1, 17, NULL, '[{"id":1,"up":0.02,"down":-0.02,"right":0.02,"left":-0.02,"zoom_in":0.02,"zoom_out":-0.02},{"id":2,"up":0.01,"down":-0.01,"right":0.01,"left":-0.01,"zoom_in":0.01,"zoom_out":-0.01}]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 1003, 1, 17, NULL, 'NO-S2-CCTV-01', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (2, 1, 1, 18, NULL, 'HIKVISION', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -219,7 +219,7 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 (2, 9, 1, 18, NULL, '10.50.3.11', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 10, 1, 18, NULL, 'admin', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 11, 1, 18, NULL, 'Revenga2023.', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(2, 12, 1, 18, NULL, '{"up":0.02,"down":-0.02,"right":0.02,"left":-0.02,"zoom_in":0.02,"zoom_out":-0.02}', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 12, 1, 18, NULL, '[{"id":1,"up":0.02,"down":-0.02,"right":0.02,"left":-0.02,"zoom_in":0.02,"zoom_out":-0.02},{"id":2,"up":0.01,"down":-0.01,"right":0.01,"left":-0.01,"zoom_in":0.01,"zoom_out":-0.01}]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 1003, 1, 18, NULL, 'NO-S2-CCTV-02', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (2, 1, 1, 19, NULL, 'HIKVISION', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -230,7 +230,7 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 (2, 9, 1, 19, NULL, '10.50.3.12', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 10, 1, 19, NULL, 'admin', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 11, 1, 19, NULL, 'Revenga2023.', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(2, 12, 1, 19, NULL, '{"up":0.02,"down":-0.02,"right":0.02,"left":-0.02,"zoom_in":0.02,"zoom_out":-0.02}', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 12, 1, 19, NULL, '[{"id":1,"up":0.02,"down":-0.02,"right":0.02,"left":-0.02,"zoom_in":0.02,"zoom_out":-0.02},{"id":2,"up":0.01,"down":-0.01,"right":0.01,"left":-0.01,"zoom_in":0.01,"zoom_out":-0.01}]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 1003, 1, 19, NULL, 'NO-S2-CCTV-03', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (2, 1, 1, 20, NULL, 'HIKVISION', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -241,7 +241,7 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 (2, 9, 1, 20, NULL, '10.50.3.13', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 10, 1, 20, NULL, 'admin', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 11, 1, 20, NULL, 'Revenga2023.', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(2, 12, 1, 20, NULL, '{"up":0.02,"down":-0.02,"right":0.02,"left":-0.02,"zoom_in":0.02,"zoom_out":-0.02}', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 12, 1, 20, NULL, '[{"id":1,"up":0.02,"down":-0.02,"right":0.02,"left":-0.02,"zoom_in":0.02,"zoom_out":-0.02},{"id":2,"up":0.01,"down":-0.01,"right":0.01,"left":-0.01,"zoom_in":0.01,"zoom_out":-0.01}]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 1003, 1, 20, NULL, 'NO-S2-CCTV-04', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO conf.element_io_controller_modules (element_type_id, element_id, module_type_id, module_id, enabled, visible, created_at, updated_at) VALUES
