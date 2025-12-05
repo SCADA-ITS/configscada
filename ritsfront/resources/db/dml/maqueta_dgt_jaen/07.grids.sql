@@ -384,11 +384,6 @@ UPDATE ui.grid_fields
 SET enabled=false, visible=false
 WHERE id in(101205,101209,101210);
 
-INSERT INTO ui.grid_field_icons(grid_field_id, icon, value, show_value, badge_color, avatar, enabled, label_value) VALUES
-(100307, './img/incident_level/incident_level_1.png', 'ImsIncidentLevel:1', false, false, false, true, 'LBL_ICON_IMS_INCIDENT_LEVEL_1'),
-(100307, './img/incident_level/incident_level_2.png', 'ImsIncidentLevel:2', false, false, false, true, 'LBL_ICON_IMS_INCIDENT_LEVEL_2'),
-(100307, './img/incident_level/incident_level_3.png', 'ImsIncidentLevel:3', false, false, false, true, 'LBL_ICON_IMS_INCIDENT_LEVEL_3'),
-(100307, './img/incident_level/incident_level_4.png', 'ImsIncidentLevel:4', false, false, false, true, 'LBL_ICON_IMS_INCIDENT_LEVEL_4');
 
 INSERT INTO ui.grid_option_values(grid_id, grid_option_id, value) VALUES
 (1, 1, 'true'),
@@ -1143,10 +1138,6 @@ UPDATE ui.grid_commands
 SET args='[{"command": "CommandElementType:3:2000", "ids": "CommandElementTypeParam:3:2000:1"}]'
 WHERE grid_id = 1012 and label = ('LBL_SEND_FAN_START_REVERSE');
 
-UPDATE ui.grid_commands
-SET args='[{"elementSubtype":"ElementSubtype:5:9", "command": "CommandElementType:12:2000", "ids": "CommandElementTypeParam:12:2000:1"}]'
-WHERE grid_id = 1012 and label = ('LBL_SEND_FAN_RESET_ALARMS');
-
 DELETE FROM ui.grid_commands
 WHERE grid_id = 1012 AND label in ('LBL_SEND_FAN_RESET_PARTIAL_HOURS', 'LBL_SEND_FAN_RESET_TOTAL_HOURS');
 
@@ -1361,10 +1352,10 @@ INSERT INTO ui.grid_field_icons(grid_field_id, icon, value, show_value, badge_co
 (890004, './img/state/stateAlarm.png', 'ElementTypeState:89:3', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_ALARMS'),
 (890004, './img/state/stateMaintenance.png', 'ElementTypeState:89:4', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_MAINTENANCE'),
 
-(100307, './img/incident_level/incident_level_1.png', 'ImsIncidentLevel:1', false, false, false, true, 'LBL_ICON_IMS_INCIDENT_LEVEL_1'),
-(100307, './img/incident_level/incident_level_2.png', 'ImsIncidentLevel:2', false, false, false, true, 'LBL_ICON_IMS_INCIDENT_LEVEL_2'),
-(100307, './img/incident_level/incident_level_3.png', 'ImsIncidentLevel:3', false, false, false, true, 'LBL_ICON_IMS_INCIDENT_LEVEL_3'),
-(100307, './img/incident_level/incident_level_4.png', 'ImsIncidentLevel:4', false, false, false, true, 'LBL_ICON_IMS_INCIDENT_LEVEL_4'),
+(100307, './img/incident_level/ausol/incident_level_1.png', 'ImsIncidentLevel:1', false, false, false, true, 'LBL_ICON_IMS_INCIDENT_LEVEL_1'),
+(100307, './img/incident_level/ausol/incident_level_2.png', 'ImsIncidentLevel:2', false, false, false, true, 'LBL_ICON_IMS_INCIDENT_LEVEL_LEVE'),
+(100307, './img/incident_level/ausol/incident_level_3.png', 'ImsIncidentLevel:3', false, false, false, true, 'LBL_ICON_IMS_INCIDENT_LEVEL_MEDIO'),
+(100307, './img/incident_level/ausol/incident_level_4.png', 'ImsIncidentLevel:4', false, false, false, true, 'LBL_ICON_IMS_INCIDENT_LEVEL_GRAVE'),
 
 
 (2000007, './img/pictograms/8000.bmp', '8000', false, false, false, true, 'LBL_ICON_IMS_DGT'),
