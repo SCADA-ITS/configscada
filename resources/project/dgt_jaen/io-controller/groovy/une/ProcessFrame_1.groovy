@@ -58,25 +58,21 @@ public class ProcessFrame_1 {
         this.log = log;
     }
 
-    public void processResponse_0x87(Element element, List<Byte> data, List<ElementValue> elementValuesToSend,
-                                     List<AlarmConfig> activateAlarmsToSend, List<AlarmConfig> deactivateAlarmsToSend) {
-        StringBuilder dataHex = new StringBuilder();
-        log.debug("ENTRA")
-        for (Byte b : data) {
-            dataHex.append(String.format("%02X", b & 0xFF)); // Se eliminan los espacios
-        }
+    public void processResponse_0x87(Element element, byte[] data,
+                                 List<ElementValue> elementValuesToSend,
+                                 List<AlarmConfig> activateAlarmsToSend,
+                                 List<AlarmConfig> deactivateAlarmsToSend) {
 
-        String dataString = dataHex.toString(); // Convertimos a String final sin espacios
+    List<Byte> dataList = data.toList()   // igual que paneles
 
-         // Validar si empieza con "00" (NO_DATA)
-        if (dataString.startsWith(NO_DATA)) {
-            log.error("Error: No hay datos de sensores válidos en la trama de la Meteo Element:1:" + element.getId());
-            return;
-        }
+    StringBuilder dataHex = new StringBuilder();
 
-        // Capturar la fecha y hora
-        capturarFechaHora(dataString, element);
+    for (Byte b : dataList) {
+        dataHex.append(String.format("%02X", b & 0xFF));
+    }
 
+    String dataString = dataHex.toString();
+    capturarFechaHora(dataString, element)
 		// Procesar la trama
         def medidas = [
             "01": "Temperatura del aire",
@@ -93,7 +89,8 @@ public class ProcessFrame_1 {
         ]
 		int startIndex = 11 // El primer byte de las medidas, se empieza en 11 por que despues de quitar los bytes especiales la primera medida comienza en esa posicion.
         encontrarMedidas(dataString, medidas, startIndex)
-        log.debug("TEMPERATURA----------> " + airTempValue)
+        
+
         List<ElementValue> listElements = new ArrayList();
         listElements.add(elementSetValue(PARAM_MEASURE_AIR_RPESSURE, TYPE_PARAM_MEASURE,element.getId(), airPressureValue.toString()))
         listElements.add(elementSetValue(PARAM_MEASURE_RELATIVE_HUMIDITY, TYPE_PARAM_MEASURE,element.getId(), relHumValue.toString()))
@@ -171,8 +168,7 @@ public class ProcessFrame_1 {
 
             // Capturar el valor en bytes
             valor = bytes[i..(i + numBytes - 1)]
-            log.debug("VALOR-------> " + valor)
-            log.debug("CODIGO-------> " + codigo)
+
             i += numBytes
 
             if (valor.size() == numBytes) {

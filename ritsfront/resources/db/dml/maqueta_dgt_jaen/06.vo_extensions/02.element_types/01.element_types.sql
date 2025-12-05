@@ -88,7 +88,6 @@ INSERT INTO ui.vo_entities(id, vo_entity_type_id, enabled, visible) VALUES
 ('ElementType:99', 'ElementTypeUI', true, true),
 ('ElementType:100', 'ElementTypeUI', true, true),
 ('ElementType:1000', 'ElementTypeUI', true, true),
-
 ('ElementType:2003', 'ElementTypeUI', true, true),
 ('ImsIncidentTypeTask:1010101', 'ImsIncidentTypeTaskUI', true, true);
 
