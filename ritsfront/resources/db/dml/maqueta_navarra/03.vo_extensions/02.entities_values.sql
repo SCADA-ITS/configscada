@@ -400,6 +400,39 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 				"enabled": true
 			},
 			{
+				"id": 105,
+				"propertyGroupId": 1,
+				"field": "transitValues",
+				"position": 6,
+				"dataType": "DataType:3",
+				"calculatedFieldExpresion": "return fieldValue.find(type => type.transitTypeParam.id === \"TransitTypeParam:1:1\")?.value;", 
+				"label": "LBL_TRANSIT_TAB_GENERAL_INFRACTION_ROAD_SPEED_LIMIT",
+				"enabled": true,
+				"param": "TransitTypeParam:1:1"
+			},
+			{
+				"id": 106,
+				"propertyGroupId": 1,
+				"field": "transitValues",
+				"position": 7,
+				"dataType": "DataType:3",
+				"calculatedFieldExpresion": "return fieldValue.find(type => type.transitTypeParam.id === \"TransitTypeParam:1:7\")?.value;", 
+				"label": "LBL_TRANSIT_TAB_GENERAL_INFRACTION_ROAD_SPEED_LIMIT_LIGTH",
+				"enabled": true,
+				"param": "TransitTypeParam:1:7"
+			},
+			{
+				"id": 107,
+				"propertyGroupId": 1,
+				"field": "transitValues",
+				"position": 8,
+				"dataType": "DataType:3",
+				"calculatedFieldExpresion": "return fieldValue.find(type => type.transitTypeParam.id === \"TransitTypeParam:1:8\")?.value;", 
+				"label": "LBL_TRANSIT_TAB_GENERAL_INFRACTION_ROAD_SPEED_LIMIT_HEAVY",
+				"enabled": true,
+				"param": "TransitTypeParam:1:8"
+			},
+			{
 				"id": 201,
 				"propertyGroupId": 2,
 				"field": "address",

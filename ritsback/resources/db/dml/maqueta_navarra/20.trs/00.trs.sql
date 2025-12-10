@@ -10,7 +10,9 @@ INSERT INTO static.transit_type_params (transit_type_id, transit_type_param_id, 
 (1, 3, 2, null, 'API Vehicle Model', 'API Vehicle Model', 'LBL_TRANSIT_PARAM_API_VEHICLE_MODEL', 'LBL_TRANSIT_PARAM_API_VEHICLE_MODEL_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (1, 4, 2, null, 'API Vehicle Color', 'API Vehicle Color', 'LBL_TRANSIT_PARAM_API_VEHICLE_COLOR', 'LBL_TRANSIT_PARAM_API_VEHICLE_COLOR_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (1, 5, 2, null, 'API Vehicle Type', 'API Vehicle Type', 'LBL_TRANSIT_PARAM_API_VEHICLE_TYPE', 'LBL_TRANSIT_PARAM_API_VEHICLE_TYPE_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(1, 6, 2, null, 'API Vehicle ITV Date', 'API Vehicle ITV Date', 'LBL_TRANSIT_PARAM_API_VEHICLE_ITV_DATE', 'LBL_TRANSIT_PARAM_API_VEHICLE_ITV_DATE_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(1, 6, 2, null, 'API Vehicle ITV Date', 'API Vehicle ITV Date', 'LBL_TRANSIT_PARAM_API_VEHICLE_ITV_DATE', 'LBL_TRANSIT_PARAM_API_VEHICLE_ITV_DATE_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 7, 2, null, 'Speed Threshold Light', 'Speed Threshold Light', 'LBL_TRANSIT_PARAM_SPEED_THRESHOLD_LIGTH', 'LBL_TRANSIT_PARAM_SPEED_THRESHOLD_LIGTH_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 8, 2, null, 'Speed Threshold Heavy', 'Speed Threshold Heavy', 'LBL_TRANSIT_PARAM_SPEED_THRESHOLD_HEAVY', 'LBL_TRANSIT_PARAM_SPEED_THRESHOLD_HEAVY_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 	
 -- static.transit_type_state_transitions
 INSERT INTO static.transit_type_state_transitions (transit_type_id,parent_transit_state_id,child_transit_state_id,auto,groovy_file,enabled,visible,created_at,updated_at) VALUES
