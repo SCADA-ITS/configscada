@@ -158,7 +158,7 @@ INSERT INTO conf.elements (element_type_id, element_subtype_id, element_id, loca
 (57, 1, 157, 1570057, NULL, NULL, 'INT-VENT-3-12-CGBT-DP3', 'INT-VENT-3-12-CGBT-DP3', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, 1, 158, 1580057, NULL, NULL, 'INT-VENT-3-13-CGBT-DP3', 'INT-VENT-3-13-CGBT-DP3', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, 1, 159, 1590057, NULL, NULL, 'INT-VENT-3-14-CGBT-DP3', 'INT-VENT-3-14-CGBT-DP3', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(57, 1, 160, 1600057, NULL, NULL, 'INT-Q3-CGBT-DP3', 'INT-Q3-CGBT-DP3', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(57, 2, 160, 1600057, NULL, NULL, 'INT-Q3-CGBT-DP3', 'INT-Q3-CGBT-DP3', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, 1, 161, 1610057, NULL, NULL, 'INT-Q6-CGBT-DP3', 'INT-Q6-CGBT-DP3', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, 1, 162, 1620057, NULL, NULL, 'INT-K02-GRU-CGBT-DP3', 'INT-K02-GRU-CGBT-DP3', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, 1, 164, 1640057, NULL, NULL, 'INT-F6-CGBT-DP3', 'INT-F6-CGBT-DP3', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 

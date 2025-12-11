@@ -12,7 +12,7 @@ INSERT INTO ui.graphic_icons
 (01000201, 'CAMERA_DOMO', 'CAMERA_DOMO', false, false, 'component/graphicIcon/graphicIconDefault.js', 51.875, 51.875, 'img/graphic_icon/02_camera_domo.svg', 'null',true),
 (02000202, 'CAMERA_DAI', 'CAMERA_DAI', false, false, 'component/graphicIcon/graphicIconDefault.js', 51.875, 51.875, 'img/graphic_icon/02_camera.svg', 'null',true),
 (3, 'Detector', 'Detector', false, false, 'component/graphicIcon/graphicIconDefault.js', 50, 50, 'img/graphic_icon/03_detector.svg', null, null),
-(020004, 'SEC', 'SEC', false, false, 'component/graphicIcon/graphicIconDefault.js', 68, 60, 'img/graphic_icon/04_section.svg', 'null',true),
+(020004, 'SEC', 'SEC', false, true, 'component/graphicIcon/graphicIconCustom.js', 68, 60, 'img/graphic_icon/04_section.svg', 'component/graphicIcon/custom/section.js',true),
 (51, 'ETD', 'ETD', false, false, 'component/graphicIcon/graphicIconDefault.js', 50, 50, 'img/graphic_icon/51_etd.svg', null, null),
 (000008, 'BARRIER', 'BARRIER', false, true, 'component/graphicIcon/graphicIconCustom.js', 48, 48, 'img/graphic_icon/08_barrier.svg', 'component/graphicIcon/custom/barrier.js',true),
 (00000801, 'BARRIER', 'BARRIER', false, true, 'component/graphicIcon/graphicIconCustom.js', 40, 40, 'img/graphic_icon/08_barrier.svg', 'component/graphicIcon/custom/barrier.js',true),
@@ -63,6 +63,8 @@ INSERT INTO ui.graphic_icons
 (00005703, 'INTERRUPTOR', 'INTERRUPTOR', false, true, 'component/graphicIcon/graphicIconCustom.js', 45, 45, 'img/graphic_icon/57_switch_horizontal.svg', 'component/graphicIcon/custom/switch_horizontal.js',true),
 (00005704, 'INTERRUPTOR', 'INTERRUPTOR', false, true, 'component/graphicIcon/graphicIconCustom.js', 45, 45, 'img/graphic_icon/57_switch.svg', 'component/graphicIcon/custom/switch_inv.js',true),
 (00005705, 'INTERRUPTOR', 'INTERRUPTOR', false, true, 'component/graphicIcon/graphicIconCustom.js', 45, 45, 'img/graphic_icon/57_switch_horizontal.svg', 'component/graphicIcon/custom/switch_horizontal_inv.js',true),
+(00005706, 'INTERRUPTOR', 'INTERRUPTOR', false, true, 'component/graphicIcon/graphicIconCustom.js', 45, 45, 'img/graphic_icon/57_switch.svg', 'component/graphicIcon/custom/switch_sbtype2.js',true),
+(00005707, 'INTERRUPTOR', 'INTERRUPTOR', false, true, 'component/graphicIcon/graphicIconCustom.js', 45, 45, 'img/graphic_icon/57_switch.svg', 'component/graphicIcon/custom/switch_inv_v1.js',true),
 (000061, 'FIRE_CT', 'FIRE_CT', false, false, 'component/graphicIcon/graphicIconDefault.js', 85, 85, 'img/graphic_icon/61_fire_det_ct.svg', 'null',true),
 (000065, 'SAI', 'SAI', false, false, 'component/graphicIcon/graphicIconDefault.js', 85, 85, 'img/graphic_icon/65_sai.svg', 'null',true),
 (00006501, 'SAI', 'SAI', false, false, 'component/graphicIcon/graphicIconDefault.js', 55, 55, 'img/graphic_icon/65_sai.svg', 'null',true),
@@ -105,4 +107,6 @@ INSERT INTO ui.graphic_icons
 (01008601, 'PUMP', 'PUMP', false, true, 'component/graphicIcon/graphicIconCustom.js', 85, 85, 'img/graphic_icon/86_jockey_pump.svg', 'component/graphicIcon/custom/pump_animation_alarmed.js',true),
 (000087, 'TANK', 'TANK', false, true, 'component/graphicIcon/graphicIconCustom.js', 85, 108.18185, 'img/graphic_icon/87_tank.svg', 'component/graphicIcon/custom/tank_jaen.js',true),
 (000089, 'GATE', 'GATE', false, false, 'component/graphicIcon/graphicIconDefault.js', 40, 40, 'img/graphic_icon/89_gate.svg', 'null',true),
-(00008900, 'GATE', 'GATE', false, false, 'component/graphicIcon/graphicIconDefault.js', 85, 85, 'img/graphic_icon/89_gate.svg', 'null',true);
+(00008900, 'GATE', 'GATE', false, false, 'component/graphicIcon/graphicIconDefault.js', 85, 85, 'img/graphic_icon/89_gate.svg', 'null',true),
+(2000, 'TUBE', 'TUBE', false, true, 'component/graphicIcon/graphicIconCustom.js', 150, 60, 'img/graphic_icon/2000_light_control_tube.svg', 'component/graphicIcon/custom/light_control_tube.js',null);
+

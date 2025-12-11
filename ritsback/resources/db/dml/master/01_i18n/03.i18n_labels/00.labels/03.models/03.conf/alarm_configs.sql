@@ -494,8 +494,8 @@ INSERT INTO master.i18n_labels (locale_code, module_id, "label", "translation", 
 ('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_LEAK_WATER_DETECTED', 'Detector flujo red PCI con circulación de agua', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --ElementType:89 = Puerta
-('es_ES', 1, 'LBL_ALARM_CONFIGS_GATE_DISCONNECTED', 'Galería emergencia sensor puerta abierta no comunica', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('es_ES', 1, 'LBL_ALARM_CONFIGS_GATE_OPEN', 'Galería emergencia puerta abierta', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_ALARM_CONFIGS_GATE_DISCONNECTED', 'Sensor puerta abierta no comunica', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_ALARM_CONFIGS_GATE_OPEN', 'Puerta abierta', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --ElementType:93 = Grupo de trasiego
 ('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_TRANSFER_GROUP_DISCONNECTED', 'Bomba de trasiego no comunica', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),

@@ -12,10 +12,10 @@ INSERT INTO ui.equip_viewers (id, name, description, "label", icon, show_info_ta
 ('ElementType:14', 'LUM', 'LUM', 'LBL_ELEMENT_TYPE_LUM', NULL, true, false, false, null, false, 300, 1, true, 000014, true, false),
 ('ElementType:15', 'FIRE_DET', 'FIRE_DET', 'LBL_ELEMENT_TYPE_FIRE_DET', NULL, true, false, false, null, false, 300, 1, true, 000015, true, false),
 ('ElementType:17','GALIBO','GALIBO','LBL_ELEMENT_TYPE_GALIBO',null,true,False,false,null,true, 300,3,null,17, true,false),
-('ElementType:18','ANEM_INT','ANEM_INT','LBL_ELEMENT_TYPE_ANEM_INT',null,true,False,false,null,false, 300,3,null,18, false,false),
-('ElementType:19','CO','CO','LBL_ELEMENT_TYPE_CO',null, true, False, false, null, false, 300, 3, null,19,false, false),
+('ElementType:18','ANEM_INT','ANEM_INT','LBL_ELEMENT_TYPE_ANEM_INT',null,true,False,true,null,false, 300,3,null,18, false,false),
+('ElementType:19','CO','CO','LBL_ELEMENT_TYPE_CO',null, true, False, true, null, false, 300, 3, null,19,false, false),
 ('ElementType:20','NO','NO','LBL_ELEMENT_TYPE_NO',null, true, False, false, null, false, 300, 3, null,20,false, false),
-('ElementType:21','OPAC','OPAC','LBL_ELEMENT_TYPE_OPAC',null, true, False, false, null, false, 300, 3, null,21,false, false),
+('ElementType:21','OPAC','OPAC','LBL_ELEMENT_TYPE_OPAC',null, true, False, true, null, false, 300, 3, null,21,false, false),
 ('ElementType:26','SWITCH','SWITCH','LBL_ELEMENT_TYPE_SWITCH',null, true, False, false, null, false, 300, 3, null,26,false, false),
 ('ElementType:27','PLC','PLC','LBL_ELEMENT_TYPE_PLC',null, true, False, false, null, false, 300, 3, null,27,false, false),
 ('ElementType:29','FIBROLASER_CT','FIBROLASER_CT','LBL_ELEMENT_TYPE_FIBROLASER_CT',null, true, False, false, null, true, 300, 3, null,29,false, false),
@@ -61,7 +61,10 @@ INSERT INTO ui.equip_viewers (id, name, description, "label", icon, show_info_ta
 ('Element:86:3','PUMP','PUMP','LBL_ELEMENT_TYPE_PUMP',null, true, False, false, null, true, 300, 3, null,00008601,true, false),
 ('Element:86:4','PUMP','PUMP','LBL_ELEMENT_TYPE_PUMP',null, true, False, false, null, true, 300, 3, null,01008601,true, false),
 ('ElementType:87', 'TANK', 'TANK', 'LBL_ELEMENT_TYPE_TANK', NULL, true, false, false, null, false, 300, 1, null, 000087, true, false),
-('ElementType:89', 'GATE', 'GATE', 'LBL_ELEMENT_TYPE_GATE', NULL, true, false, false, null, false, 300, 1, null, 000089, true, false);
+('ElementType:89', 'GATE', 'GATE', 'LBL_ELEMENT_TYPE_GATE', NULL, true, false, false, null, false, 300, 1, null, 000089, true, false),
+('ElementType:2000', 'Tube', 'Tube', 'LBL_ELEMENT_TYPE_Tube', NULL, true, false, true, null, true, 300, 3, null, 2000, true, false),
+('ElementType:2001', 'Ventilation manager', 'Ventilation manager', 'LBL_ELEMENT_TYPE_VENTILATION', NULL, false, false, false, null, false, 300, 3, null, null, null, false),
+('ElementType:2002', 'Lighting manager', 'Lighting manager', 'LBL_ELEMENT_TYPE_ILUMINATION', NULL, false, false, false, null, false, 300, 3, null, null, null, false);
 
 
 
@@ -80,7 +83,7 @@ INSERT INTO ui.equip_viewer_tabs (equip_viewer_id, module_action_id, alias, desc
 ('ElementType:14', 100501, 'Alarms module', 'Alarms module', 'LBL_ALARMS', NULL, 1, true),
 ('ElementType:15', 100501, 'Alarms module', 'Alarms module', 'LBL_ALARMS', NULL, 1, true),
 ('ElementType:17', 100501, 'Alarms module', 'Alarms module', 'LBL_ALARMS', NULL, 1, true),
---('ElementType:18',100501,'Alarms module' ,'Alarms module', 'LBL_ALARMS', null,  1, true ),
+('ElementType:18',100501,'Alarms module' ,'Alarms module', 'LBL_ALARMS', null,  1, true ),
 ('ElementType:19',100501,'Alarms module' ,'Alarms module', 'LBL_ALARMS', null,  1, true ),
 ('ElementType:20',100501,'Alarms module' ,'Alarms module', 'LBL_ALARMS', null,  1, true ),
 ('ElementType:21',100501,'Alarms module' ,'Alarms module', 'LBL_ALARMS', null,  1, true ),
@@ -129,7 +132,9 @@ INSERT INTO ui.equip_viewer_tabs (equip_viewer_id, module_action_id, alias, desc
 ('Element:86:3',100501,'Alarms module' ,'Alarms module', 'LBL_ALARMS', null,  1, true ),
 ('Element:86:4',100501,'Alarms module' ,'Alarms module', 'LBL_ALARMS', null,  1, true ),
 ('ElementType:87', 100501, 'Alarms module', 'Alarms module', 'LBL_ALARMS', NULL, 1, true),
-('ElementType:89', 100501, 'Alarms module', 'Alarms module', 'LBL_ALARMS', NULL, 1, true);
+('ElementType:89', 100501, 'Alarms module', 'Alarms module', 'LBL_ALARMS', NULL, 1, true),
+('ElementType:2001', 200002, 'Synoptic', 'Synoptic', 'LBL_SYNOPTIC', NULL, 1, true),
+('ElementType:2002', 200002, 'Synoptic', 'Synoptic', 'LBL_SYNOPTIC', NULL, 1, true);
 
 
 
@@ -229,6 +234,7 @@ INSERT INTO ui.equip_viewer_measures (equip_viewer_grp_measure_id, vo_entities_i
 (0401, 'ElementTypeParam:4:2:6', 3, true),
 (0401, 'ElementTypeParam:4:2:7', 4, true),
 (0401, 'ElementTypeParam:4:2:18', 5, true),
+(0401, 'ElementTypeParam:4:2:100', 7, true),
 (0402, 'ElementTypeParam:4:2:80', 1, true),
 (0402, 'ElementTypeParam:4:2:81', 2, true),
 (0402, 'ElementTypeParam:4:2:82', 3, true),

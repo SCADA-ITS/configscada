@@ -26,7 +26,7 @@ INSERT INTO ui.synoptic_layer_elements
 (91805700, 'Element:57:289', 00005705, 'SEC-L3-2-CGMT', 1488, 453, false, NULL, true, false, NULL, true),
 (91805700, 'Element:57:288', 00005704, 'INT-L3-2-CGMT', 1523, 336, false, NULL, true, false, NULL, true),
 (91805700, 'Element:57:287', 00005704, 'INT-L3-1-CGMT', 1404, 336, false, NULL, true, false, NULL, true),
-(91805700, 'Element:57:286', 000057, 'INT-L2-3-CGMT', 1271, 336, false, NULL, true, false, NULL, true),
+(91805700, 'Element:57:286', 00005707, 'INT-L2-3-CGMT', 1271, 336, false, NULL, true, false, NULL, true),
 (91805700, 'Element:57:285', 00005705, 'SEC-L2-2-CGMT', 1112, 453, false, NULL, true, false, NULL, true),
 (91805700, 'Element:57:284', 00005704, 'INT-L2-2-CGMT', 1148, 336, false, NULL, true, false, NULL, true),
 (91805700, 'Element:57:283', 00005704, 'INT-L2-1-CGMT', 1022, 336, false, NULL, true, false, NULL, true),

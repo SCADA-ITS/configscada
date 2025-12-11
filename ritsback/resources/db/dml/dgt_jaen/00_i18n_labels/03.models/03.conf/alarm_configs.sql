@@ -31,9 +31,9 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_CO_EXCESIVE_CONCENTRATION', 'Detector CO excesiva concentración (>200 ppm)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --ElementType:21 -> Opacimetro
-('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_OPAC_VISIBILITY', 'Opacímetros visibilidad reducida (4.6 km-1 < k < 9 km-1)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_OPAC_REDUCED_VISIBILITY', 'Opacímetros visibilidad muy reducida (9 km-1 < k < 15 km-1)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_OPAC_EXCESSIVE_OPACITY', 'Opacímetro visibilidad excesivamente reducida (k > 15 km-1))', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_OPAC_VISIBILITY', 'Opacímetros visibilidad reducida (20 km-1 < k < 40 km-1)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_OPAC_REDUCED_VISIBILITY', 'Opacímetros visibilidad muy reducida (40 km-1 < k < 66 km-1)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_OPAC_EXCESSIVE_OPACITY', 'Opacímetro visibilidad excesivamente reducida (k > 66 km-1))', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --ElementType:71 subtipo 27 -> panel gálibo
 ('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_EXCESS_CLEARANCE', 'Exceso de Gálibo', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),

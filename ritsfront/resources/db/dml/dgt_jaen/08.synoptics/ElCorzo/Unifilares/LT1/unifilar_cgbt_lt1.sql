@@ -1,4 +1,4 @@
--- Para los identificadores de los sinopticos seguiremos los siguientes criterios
+ -- Para los identificadores de los sinopticos seguiremos los siguientes criterios
 -- Id iterado --> 3 cifras
 INSERT INTO ui.synoptics 
 (id, name, description, label, icon, base_layer, exclusive_layers) VALUES 
@@ -40,7 +40,7 @@ INSERT INTO ui.synoptic_layer_elements
 (91405700, 'Element:57:233', 000057, 'INT-Q4-CGBT-DP1', 480, 729, false, NULL, true, false, NULL, true),
 (91405700, 'Element:57:226', 000057, 'INT-Q1-GEN-CGBT-DP1', 691, 196, false, NULL, true, false, NULL, true),
 (91405700, 'Element:57:241', 000057, 'INT-F4-CGBT-DP1', 1265, 459, false, NULL, true, false, NULL, true),
-(91405700, 'Element:57:238', 000057, 'INT-Q3-CGBT-DP1', 1163, 459, false, NULL, true, false, NULL, true),
+(91405700, 'Element:57:238', 00005706, 'INT-Q3-CGBT-DP1', 1163, 459, false, NULL, true, false, NULL, true),
 (91405700, 'Element:57:231', 00005704, 'INT-Q1-RED-CGBT-DP1', 691, 459, false, NULL, true, false, NULL, true),
 (91405700, 'Element:57:228', 000057, 'INT-F1-CGBT-DP1', 588, 459, false, NULL, true, false, NULL, true),
 (91405700, 'Element:57:227', 00005702, 'INT-K01-GEN-CGBT-DP1', 684, 292, false, NULL, true, false, NULL, true),
