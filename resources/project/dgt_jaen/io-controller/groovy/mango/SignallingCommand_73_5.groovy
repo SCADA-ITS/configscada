@@ -33,7 +33,7 @@ class SignallingCommand_73_5 {
 	static final boolean ON = true;
 	static final boolean OFF = false;
 	static final long TWENTY = 20;
-	
+	static final long ZERO = 0;	
 	
 	org.apache.logging.log4j.Logger log;
 	

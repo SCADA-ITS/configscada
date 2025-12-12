@@ -83,7 +83,7 @@ INSERT INTO ui.equip_viewer_tabs (equip_viewer_id, module_action_id, alias, desc
 ('ElementType:14', 100501, 'Alarms module', 'Alarms module', 'LBL_ALARMS', NULL, 1, true),
 ('ElementType:15', 100501, 'Alarms module', 'Alarms module', 'LBL_ALARMS', NULL, 1, true),
 ('ElementType:17', 100501, 'Alarms module', 'Alarms module', 'LBL_ALARMS', NULL, 1, true),
---('ElementType:18',100501,'Alarms module' ,'Alarms module', 'LBL_ALARMS', null,  1, true ),
+('ElementType:18',100501,'Alarms module' ,'Alarms module', 'LBL_ALARMS', null,  1, true ),
 ('ElementType:19',100501,'Alarms module' ,'Alarms module', 'LBL_ALARMS', null,  1, true ),
 ('ElementType:20',100501,'Alarms module' ,'Alarms module', 'LBL_ALARMS', null,  1, true ),
 ('ElementType:21',100501,'Alarms module' ,'Alarms module', 'LBL_ALARMS', null,  1, true ),
