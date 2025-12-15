@@ -38,14 +38,14 @@ BEGIN
 		      "name": "photos",
 		      "label": "LBL_IMAGE_GROUP_EVIDENCE_PHOTOS",
 		      "description": "LBL_IMAGE_GROUP_EVIDENCE_PHOTOS_DESC",
-		      "position": 14,
+		      "position": 18,
 		      "height": 300
 	    	},
 	      	{
 		      "name": "sketch",
 		      "label": "LBL_IMAGE_GROUP_SKETCH_ACCIDENT",
 		      "description": "LBL_IMAGE_GROUP_SKETCH_ACCIDENT_DESC",
-		      "position": 16,
+		      "position": 20,
 		      "height": 300
 	    	}
 	  	],
@@ -54,7 +54,7 @@ BEGIN
 	      	"name": "documents",
 		    "label": "LBL_IMAGE_GROUP_EVIDENCE_DOCUMENTS",
 		    "description": "LBL_IMAGE_GROUP_EVIDENCE_DOCUMENTS_DESC",
-	      	"position": 15,
+	      	"position": 19,
 	      	"height": 200
 	    	}
 	  	],
@@ -92,13 +92,16 @@ BEGIN
 	(0105, 1, 'level', 'nivel', NULL, true, '{"position": 5, "editable": false}'),
 	(0106, 1, 'stretch', 'tramo', NULL, true, '{"position": 6, "editable": false}'),
 	(0107, 1, 'location', 'localización', NULL, true, '{"position": 7, "editable": false}'),
-	(0108, 1, 'comment', 'comentarios', NULL, true, '{"multiline": 8, "position": 8, "editable": true}'),
-	(0109, 1, 'created_at', 'inicio', NULL, true, '{"position": 9, "editable": false}'),
-	(0110, 1, 'finish_at', 'final', NULL, true, '{"position": 10, "editable": false}'),
-	(0111, 1, 'end_value', 'afección máxima', NULL, true, '{"position": 11, "editable": false}'),
-	(0112, 1, 'affection_detail_id', 'detalle afección', NULL, true, '{"position": 12, "editable": true}'),
-	(0113, 1, 'deceassed', 'victimas mortales', NULL, true, '{"position": 13, "editable": true}'),
-	(0114, 1, 'num_decesseased', 'número víctimas', NULL, true, '{"position": 14, "editable": true}'),
+	(0108, 1, 'lat', 'latitud', NULL, true, '{"position": 8, "editable": false}'),
+	(0109, 1, 'lon', 'longitud', NULL, true, '{"position": 9, "editable": false}'),
+	(0110, 1, 'comment', 'comentarios', NULL, true, '{"multiline": 8, "position": 10, "editable": true}'),
+	(0111, 1, 'created_at', 'inicio', NULL, true, '{"position": 11, "editable": false}'),
+	(0112, 1, 'finish_at', 'final', NULL, true, '{"position": 12, "editable": false}'),
+	(0113, 1, 'end_value', 'afección máxima', NULL, true, '{"position": 13, "editable": false}'),
+	(0114, 1, 'affection_detail_id', 'detalle afección', NULL, true, '{"position": 14, "editable": true}'),
+	(0115, 1, 'deceassed', 'victimas', NULL, true, '{"position": 15, "editable": true}'),
+	(0116, 1, 'num_decesseased', 'nº fallecidos', NULL, true, '{"position": 16, "editable": true}'),
+	(0117, 1, 'max_affection', 'afección máxima', NULL, true, '{"position": 17, "editable": true}'),
 	
 	(0201, 2, 'incident_id', 'id incident_id', NULL, true, '{"position": 1, "editable": false, "refName": true}'),
 	(0202, 2, 'entity_id', 'entity_id', NULL, true, 
@@ -124,6 +127,12 @@ BEGIN
 	(1206, 12, 'color', 'color', NULL, true, '{"position": 6}'),
 	(1207, 12, 'vehicle_damage_id', 'daños', NULL, true, '{"position": 7}'),
 	(1208, 12, 'comment', 'comentarios', NULL, false, '{ "multiline": 5, "position": 8}');
+	
+	-- 
+  	-- smartgen.sg_metadata_tasks
+  	--
+	INSERT INTO incidents.sg_metadata_tasks (id, name, cron_expression, groovy, params) VALUES
+	(1, 'MaxAffection', '0 0/1 * ? * * *', 'config/groovy/backoffice/common/task/MaxAffection.groovy', null);
 	
   END IF;
 END $$;

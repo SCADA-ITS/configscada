@@ -27,12 +27,12 @@ INSERT INTO conf.system_param_values
 '{
 	"mail.smtp.auth": "true",
 	"mail.smtp.starttls.enable": "true",
-	"mail.smtp.host": "smtp.gmail.com",
+	"mail.smtp.host": "smtp.serviciodecorreo.es ",
 	"mail.smtp.port": "587",
 	"mail.smtp.ssl.trust": "*",
 	"mail.smtp.ssl.protocols": "TLSv1.2",
-	"mail.smtp.user": "natrafico@gmail.com",
-	"mail.smtp.password": "oaxgloogmvmahsrf"
+	"mail.smtp.user": "cgt@traficonavarra.es",
+	"mail.smtp.password": "TraficoNavarra2@"
 }'
 , true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 -- Número máximo de alarmas sin reconocer permitidas

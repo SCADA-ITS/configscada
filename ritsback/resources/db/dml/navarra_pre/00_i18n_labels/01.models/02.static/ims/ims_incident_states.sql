@@ -9,6 +9,7 @@
 INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) VALUES
 --es_ES
 ('es_ES', 1, 'LBL_ENTER_VALUE_TAGS', 'Introduzca un nuevo valor. Tags disponibles: 
+@alias
 @tipo
 @localizacion
 @afeccion

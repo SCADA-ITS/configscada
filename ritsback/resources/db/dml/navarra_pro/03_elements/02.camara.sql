@@ -137,7 +137,7 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 (2, 1, 1, 16, NULL, 'Hikvision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 2, 1, 16, NULL, 'DS-2CD3047G2-LS', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 3, 1, 16, NULL, 'https://controltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=Ezkaba', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(2, 9, 1, 16, NULL, 'https://controltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=Ezkaba', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 9, 1, 16, NULL, '10.191.22.92', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (2, 1, 1, 17, NULL, 'Hikvision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 2, 1, 17, NULL, 'DS-2CD3047G2-LS_SNAP', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -157,7 +157,7 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 (2, 1, 1, 20, NULL, 'Axis', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 2, 1, 20, NULL, 'P1375-E', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 3, 1, 20, NULL, 'https://controltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=Endarlatza1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(2, 9, 1, 20, NULL, 'https://controltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=Endarlatza1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 9, 1, 20, NULL, '10.191.46.25', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (2, 1, 1, 21, NULL, 'Bosch', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 2, 1, 21, NULL, 'Starlight-7000', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -172,7 +172,7 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 (2, 1, 1, 22, NULL, 'Hikvision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 2, 1, 22, NULL, 'IDS-2CD7A86G0-IZHSY', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 3, 1, 22, NULL, 'https://controltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=N121pk26', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(2, 9, 1, 22, NULL, 'https://controltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=N121pk26', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 9, 1, 22, NULL, '10.191.20.226', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (2, 1, 1, 23, NULL, 'Axis', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 2, 1, 23, NULL, 'P1375-E', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -187,17 +187,17 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 (2, 1, 1, 24, NULL, 'Axis', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 2, 1, 24, NULL, 'P1375-E', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 3, 1, 24, NULL, 'https://controltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=BeraTunelSur2', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(2, 9, 1, 24, NULL, 'https://controltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=BeraTunelSur2', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 9, 1, 24, NULL, '10.191.46.21', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (2, 1, 1, 25, NULL, 'Axis', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 2, 1, 25, NULL, 'P1375-E', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 3, 1, 25, NULL, 'https://controltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=BeraTunelNorte1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(2, 9, 1, 25, NULL, 'https://controltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=BeraTunelNorte1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 9, 1, 25, NULL, '10.191.46.23', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (2, 1, 1, 26, NULL, 'Axis', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 2, 1, 26, NULL, 'P1375-E', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 3, 1, 26, NULL, 'https://controltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=BeraTunelNorte2', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(2, 9, 1, 26, NULL, 'https://controltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=BeraTunelNorte2', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 9, 1, 26, NULL, '10.191.46.22', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 --(2, 1, 1, 27, NULL, 'Axis', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 --(2, 2, 1, 27, NULL, 'P1375-E', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -207,7 +207,7 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 (2, 1, 1, 28, NULL, 'LectorVision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 2, 1, 28, NULL, 'Traffic-eye-smart-sensor-HR-overview', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 3, 1, 28, NULL, 'https://controltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=Talluntxe', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(2, 9, 1, 28, NULL, 'https://controltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=Talluntxe', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 9, 1, 28, NULL, '10.191.80.23', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 4001, 1, 28, NULL, '10.191.80.23', true, true, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), 
 (2, 4002, 1, 28, NULL, '3051', true, true, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), 
 (2, 4003, 1, 28, NULL, '0x02 0x01 0x00 0x03', true, true, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), 
@@ -219,92 +219,92 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 (2, 1, 1, 29, NULL, 'Hikvision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 2, 1, 29, NULL, 'DS-2CD3047G2-LS', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 3, 1, 29, NULL, 'https://controltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=TV1-PA-30', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(2, 9, 1, 29, NULL, 'https://controltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=TV1-PA-30', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 9, 1, 29, NULL, '10.191.22.151', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (2, 1, 1, 30, NULL, 'Hikvision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 2, 1, 30, NULL, 'DS-2CD3047G2-LS', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 3, 1, 30, NULL, 'https://controltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=TV2-PA-30', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(2, 9, 1, 30, NULL, 'https://controltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=TV2-PA-30', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 9, 1, 30, NULL, '10.191.22.152', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (2, 1, 1, 31, NULL, 'Hikvision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 2, 1, 31, NULL, 'DS-2CD3047G2-LS', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 3, 1, 31, NULL, 'https://controltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=TV3.1-PA-30', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(2, 9, 1, 31, NULL, 'https://controltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=TV3.1-PA-30', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 9, 1, 31, NULL, '10.191.22.153', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (2, 1, 1, 32, NULL, 'Hikvision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 2, 1, 32, NULL, 'DS-2CD3047G2-LS', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 3, 1, 32, NULL, 'https://controltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=TV3.2-PA-30', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(2, 9, 1, 32, NULL, 'https://controltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=TV3.2-PA-30', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 9, 1, 32, NULL, '10.191.22.154', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (2, 1, 1, 33, NULL, 'Hikvision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 2, 1, 33, NULL, 'DS-2CD3047G2-LS', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 3, 1, 33, NULL, 'https://controltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=TV4.1-PA-30', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(2, 9, 1, 33, NULL, 'https://controltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=TV4.1-PA-30', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 9, 1, 33, NULL, '10.191.22.155', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (2, 1, 1, 34, NULL, 'Hikvision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 2, 1, 34, NULL, 'DS-2CD3047G2-LS', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 3, 1, 34, NULL, 'https://controltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=TV4.2-PA-30', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(2, 9, 1, 34, NULL, 'https://controltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=TV4.2-PA-30', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 9, 1, 34, NULL, '10.191.22.156', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (2, 1, 1, 35, NULL, 'Hikvision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 2, 1, 35, NULL, 'DS-2CD3047G2-LS', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 3, 1, 35, NULL, 'https://controltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=TV5.1-PA-30', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(2, 9, 1, 35, NULL, 'https://controltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=TV5.1-PA-30', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 9, 1, 35, NULL, '10.191.22.157', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (2, 1, 1, 36, NULL, 'Hikvision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 2, 1, 36, NULL, 'DS-2CD3047G2-LS', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 3, 1, 36, NULL, 'https://controltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=TV5.2-PA-30', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(2, 9, 1, 36, NULL, 'https://controltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=TV5.2-PA-30', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 9, 1, 36, NULL, '10.191.22.158', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (2, 1, 1, 37, NULL, 'Hikvision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 2, 1, 37, NULL, 'DS-2CD3047G2-LS', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 3, 1, 37, NULL, 'https://controltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=TV6.1-PA-30', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(2, 9, 1, 37, NULL, 'https://controltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=TV6.1-PA-30', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 9, 1, 37, NULL, '10.191.22.159', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (2, 1, 1, 38, NULL, 'Hikvision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 2, 1, 38, NULL, 'DS-2CD3047G2-LS', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 3, 1, 38, NULL, 'https://controltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=TV6.2-PA-30', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(2, 9, 1, 38, NULL, 'https://controltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=TV6.2-PA-30', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 9, 1, 38, NULL, '10.191.22.160', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (2, 1, 1, 39, NULL, 'Hikvision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 2, 1, 39, NULL, 'DS-2CD3047G2-LS', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 3, 1, 39, NULL, 'https://controltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=TV7.1-PA-30', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(2, 9, 1, 39, NULL, 'https://controltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=TV7.1-PA-30', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 9, 1, 39, NULL, '10.191.22.161', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (2, 1, 1, 40, NULL, 'Hikvision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 2, 1, 40, NULL, 'DS-2CD3047G2-LS', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 3, 1, 40, NULL, 'https://controltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=TV7.2-PA-30', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(2, 9, 1, 40, NULL, 'https://controltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=TV7.2-PA-30', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 9, 1, 40, NULL, '10.191.22.162', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (2, 1, 1, 41, NULL, 'Hikvision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 2, 1, 41, NULL, 'DS-2CD3047G2-LS', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 3, 1, 41, NULL, 'https://controltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=TV8.1-PA-30', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(2, 9, 1, 41, NULL, 'https://controltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=TV8.1-PA-30', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 9, 1, 41, NULL, '10.191.22.163', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (2, 1, 1, 42, NULL, 'Hikvision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 2, 1, 42, NULL, 'DS-2CD3047G2-LS', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 3, 1, 42, NULL, 'https://controltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=TV8.2-PA-30', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(2, 9, 1, 42, NULL, 'https://controltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=TV8.2-PA-30', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 9, 1, 42, NULL, '10.191.22.164', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (2, 1, 1, 43, NULL, 'Hikvision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 2, 1, 43, NULL, 'DS-2CD3047G2-LS', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 3, 1, 43, NULL, 'https://controltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=TV9.1-PA-30', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(2, 9, 1, 43, NULL, 'https://controltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=TV9.1-PA-30', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 9, 1, 43, NULL, '10.191.22.165', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (2, 1, 1, 44, NULL, 'Hikvision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 2, 1, 44, NULL, 'DS-2CD3047G2-LS', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 3, 1, 44, NULL, 'https://controltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=TV9.2-PA-30', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(2, 9, 1, 44, NULL, 'https://controltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=TV9.2-PA-30', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 9, 1, 44, NULL, '10.191.22.166', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (2, 1, 1, 45, NULL, 'Hikvision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 2, 1, 45, NULL, 'DS-2CD3047G2-LS', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 3, 1, 45, NULL, 'https://controltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=TV00-PK6+930', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(2, 9, 1, 45, NULL, 'https://controltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=TV00-PK6+930', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(2, 9, 1, 45, NULL, '10.191.64.138', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (2, 1, 1, 46, NULL, 'Hikvision', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 2, 1, 46, NULL, 'DS-2CD3047G2-LS', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (2, 3, 1, 46, NULL, 'https://controltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=TV09B-PK40+380', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(2, 9, 1, 46, NULL, 'https://controltrafico.admon-cfnavarra.es/rtc/api/stream.mjpeg?src=TV09B-PK40+380', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(2, 9, 1, 46, NULL, '10.191.64.148', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO conf.element_io_controller_modules (element_type_id, element_id, module_type_id, module_id, enabled, visible, created_at, updated_at) VALUES
 (2, 1, 6, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 

@@ -81,6 +81,7 @@ class SendToTelegramNotification {
 	
 			message = IncidentEntitiesManager.getInstance().getIncidentTypeTaskValue(values, TASK_TYPE_PARAM_MESSAGE);
 			
+			message = message.replace("@alias", incidentReport.getAlias());
 			message = message.replace("@tipo", "⚠️ " + IncidentEntitiesManager.getInstance().getImsIncidentType(incidentReport.getIncidentTypeId()).getDescription());
 			message = message.replace("@localizacion", "🚩 " + imsIncidentStretch.getAlias() + " - " + imsIncidentLocation.getAlias());
 			

@@ -12,6 +12,6 @@ VALUES(1, false, 'INITIAL', 'INITIAL', 'LBL_IMS_INCIDENT_STATE_INITIAL', null, t
 --
 INSERT INTO static.ims_incident_levels 
 (incident_level_id, priority, alias, description, label_alias, label_description, enabled, visible, created_at, updated_at) VALUES
-(1, 0, 'LEVEL_0', 'Explotación', 'LBL_INCIDENT_LEVEL_0', null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(2, 1, 'LEVEL_1', 'Emergencia', 'LBL_INCIDENT_LEVEL_1', null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(3, 2, 'LEVEL_2', 'Eventos', 'LBL_INCIDENT_LEVEL_2', null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(1, 0, 'Explotación', 'Explotación', 'Explotación', null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 1, 'Emergencia', 'Emergencia', 'Emergencia', null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(3, 2, 'Eventos', 'Eventos', 'Eventos', null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
