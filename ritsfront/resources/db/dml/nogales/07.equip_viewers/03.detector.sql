@@ -25,5 +25,8 @@ INSERT INTO ui.equip_viewer_measures (equip_viewer_grp_measure_id, vo_entities_i
 (0303, 'ElementTypeParam:3:2:100', 1, true),
 (0303, 'ElementTypeParam:3:2:101', 2, true),
 (0303, 'ElementTypeParam:3:2:102', 3, true),
-(0303, 'ElementTypeParam:3:2:103', 4, true);
+(0303, 'ElementTypeParam:3:2:103', 4, true),
+(0303, 'ElementTypeParam:3:2:104', 5, true),
+(0303, 'ElementTypeParam:3:2:105', 6, true),
+(0303, 'ElementTypeParam:3:2:106', 7, true);
 

@@ -24,10 +24,13 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (030019, 3, 2, 19, true, false, false, true, 'LBL_VEH_PA_2', 'LBL_VEH_PA_2', 'ElementTypeParam:3:2:101', false, false, 'left', false, false, 100, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
 (030020, 3, 2, 20, true, false, false, true, 'LBL_VEH_PA_3', 'LBL_VEH_PA_3', 'ElementTypeParam:3:2:102', false, false, 'left', false, false, 100, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
 (030021, 3, 2, 21, true, false, false, true, 'LBL_VEH_PA_4', 'LBL_VEH_PA_4', 'ElementTypeParam:3:2:103', false, false, 'left', false, false, 100, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
-(030022, 3, 1, 22, false, false, true, true, 'LBL_ORDER', 'LBL_ORDER', 'ElementTypeParam:3:1:2', false, false, 'left', false, false, 100, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
-(030023, 3, 1, 23, false, false, true, true, 'LBL_PK', 'LBL_PK', 'ElementTypeParam:3:1:10', false, false, 'left', false, false, 100, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
-(030024, 3, 1, 24, false, false, true, true, 'LBL_GRID_FIELD_ROAD', 'LBL_GRID_FIELD_ROAD', 'ElementTypeParam:3:1:11', false, false, 'left', false, false, 180, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
-(030025, 3, 1, 25, false, false, true, true, 'LBL_GRID_FIELD_SECTION', 'LBL_GRID_FIELD_SECTION', 'ElementTypeParam:3:1:12', false, false, 'left', false, false, 200, NULL, true, true, NULL, NULL, NULL, NULL, NULL);
+(030022, 3, 2, 22, true, false, false, true, 'LBL_VEH_PA_5', 'LBL_VEH_PA_5', 'ElementTypeParam:3:2:104', false, false, 'left', false, false, 100, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(030023, 3, 2, 23, true, false, false, true, 'LBL_VEH_PA_6', 'LBL_VEH_PA_6', 'ElementTypeParam:3:2:105', false, false, 'left', false, false, 100, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(030024, 3, 2, 24, true, false, false, true, 'LBL_VEH_PA_7', 'LBL_VEH_PA_7', 'ElementTypeParam:3:2:106', false, false, 'left', false, false, 100, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(030025, 3, 1, 25, false, false, true, true, 'LBL_ORDER', 'LBL_ORDER', 'ElementTypeParam:3:1:2', false, false, 'left', false, false, 100, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(030026, 3, 1, 26, false, false, true, true, 'LBL_PK', 'LBL_PK', 'ElementTypeParam:3:1:10', false, false, 'left', false, false, 100, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(030027, 3, 1, 27, false, false, true, true, 'LBL_GRID_FIELD_ROAD', 'LBL_GRID_FIELD_ROAD', 'ElementTypeParam:3:1:11', false, false, 'left', false, false, 180, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(030028, 3, 1, 28, false, false, true, true, 'LBL_GRID_FIELD_SECTION', 'LBL_GRID_FIELD_SECTION', 'ElementTypeParam:3:1:12', false, false, 'left', false, false, 200, NULL, true, true, NULL, NULL, NULL, NULL, NULL);
 
 INSERT INTO ui.grid_option_values(grid_id, grid_option_id, value) VALUES
 (3, 1, 'true'),

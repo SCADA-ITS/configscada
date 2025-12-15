@@ -19,6 +19,7 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 (4, 80, 1, 1, NULL, '[1]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 81, 1, 1, NULL, '[2]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 82, 1, 1, NULL, '[3]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(4, 83, 1, 1, NULL, '[4]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 100, 1, 1, NULL, '[1]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 101, 1, 1, NULL, '[2]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 102, 1, 1, NULL, '[3]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -37,6 +38,7 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 (4, 80, 1, 2, NULL, '[1]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 81, 1, 2, NULL, '[2]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 82, 1, 2, NULL, '[3]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(4, 83, 1, 2, NULL, '[4]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 100, 1, 2, NULL, '[1]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 101, 1, 2, NULL, '[2]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 102, 1, 2, NULL, '[3]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -55,6 +57,7 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 (4, 80, 1, 3, NULL, '[1]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 81, 1, 3, NULL, '[2]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 82, 1, 3, NULL, '[3]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(4, 83, 1, 3, NULL, '[4]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 100, 1, 3, NULL, '[1]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 101, 1, 3, NULL, '[2]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 102, 1, 3, NULL, '[3]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -73,6 +76,7 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 (4, 80, 1, 4, NULL, '[1]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 81, 1, 4, NULL, '[2]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 82, 1, 4, NULL, '[3]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(4, 83, 1, 4, NULL, '[4]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 100, 1, 4, NULL, '[1]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 101, 1, 4, NULL, '[2]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 102, 1, 4, NULL, '[3]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -91,6 +95,7 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 (4, 80, 1, 5, NULL, '[1]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 81, 1, 5, NULL, '[2]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 82, 1, 5, NULL, '[3]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(4, 83, 1, 5, NULL, '[4]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 100, 1, 5, NULL, '[1]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 101, 1, 5, NULL, '[2]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 102, 1, 5, NULL, '[3]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -109,6 +114,7 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 (4, 80, 1, 6, NULL, '[1]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 81, 1, 6, NULL, '[2]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 82, 1, 6, NULL, '[3]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(4, 83, 1, 6, NULL, '[4]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 100, 1, 6, NULL, '[1]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 101, 1, 6, NULL, '[2]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 102, 1, 6, NULL, '[3]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -127,6 +133,7 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 (4, 80, 1, 7, NULL, '[1]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 81, 1, 7, NULL, '[2]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 82, 1, 7, NULL, '[3]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(4, 83, 1, 7, NULL, '[4]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 100, 1, 7, NULL, '[1]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 101, 1, 7, NULL, '[2]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 102, 1, 7, NULL, '[3]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -145,6 +152,7 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 (4, 80, 1, 8, NULL, '[1]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 81, 1, 8, NULL, '[2]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 82, 1, 8, NULL, '[3]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(4, 83, 1, 8, NULL, '[4]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 100, 1, 8, NULL, '[1]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 101, 1, 8, NULL, '[2]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (4, 102, 1, 8, NULL, '[3]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -187,10 +195,16 @@ update master.i18n_labels set translation = 'Clase 1 = Autos y camionetas' where
 update master.i18n_labels set translation = 'Clase 2 = Camionetas doble rueda trasera y/o autos y camionetas con remolque' where label = 'LBL_ELEMENT_TYPE_PARAM_SECTION_VEH_PA_2' and locale_code = 'es_CL';
 update master.i18n_labels set translation = 'Clase 3 = Camiones de dos ejes, maquinaria agrícola o de construcción ' where label = 'LBL_ELEMENT_TYPE_PARAM_SECTION_VEH_PA_3' and locale_code = 'es_CL';
 update master.i18n_labels set translation = 'Clase 4 = Motos, cuatrimotos y motonetas' where label = 'LBL_ELEMENT_TYPE_PARAM_SECTION_VEH_PA_4' and locale_code = 'es_CL';
+update master.i18n_labels set translation = 'Clase 5 = Buses de dos ejes' where label = 'LBL_ELEMENT_TYPE_PARAM_SECTION_VEH_PA_5' and locale_code = 'es_CL';
+update master.i18n_labels set translation = 'Clase 6 = Buses de más de dos ejes' where label = 'LBL_ELEMENT_TYPE_PARAM_SECTION_VEH_PA_6' and locale_code = 'es_CL';
+update master.i18n_labels set translation = 'Clase 7 = Motos y motonetas' where label = 'LBL_ELEMENT_TYPE_PARAM_SECTION_VEH_PA_7' and locale_code = 'es_CL';
 update master.i18n_labels set translation = 'Clase 1 = Autos y camionetas' where label = 'LBL_ELEMENT_TYPE_PARAM_SECTION_VEH_PA_1_DESC' and locale_code = 'es_CL';
 update master.i18n_labels set translation = 'Clase 2 = Camionetas doble rueda trasera y/o autos y camionetas con remolque' where label = 'LBL_ELEMENT_TYPE_PARAM_SECTION_VEH_PA_2_DESC' and locale_code = 'es_CL';
 update master.i18n_labels set translation = 'Clase 3 = Camiones de dos ejes, maquinaria agrícola o de construcción ' where label = 'LBL_ELEMENT_TYPE_PARAM_SECTION_VEH_PA_3_DESC' and locale_code = 'es_CL';
 update master.i18n_labels set translation = 'Clase 4 = Motos, cuatrimotos y motonetas' where label = 'LBL_ELEMENT_TYPE_PARAM_SECTION_VEH_PA_4_DESC' and locale_code = 'es_CL';
+update master.i18n_labels set translation = 'Clase 5 = Buses de dos ejes' where label = 'LBL_ELEMENT_TYPE_PARAM_SECTION_VEH_PA_5_DESC' and locale_code = 'es_CL';
+update master.i18n_labels set translation = 'Clase 6 = Buses de más de dos ejes' where label = 'LBL_ELEMENT_TYPE_PARAM_SECTION_VEH_PA_6_DESC' and locale_code = 'es_CL';
+update master.i18n_labels set translation = 'Clase 7 = Motos y motonetas' where label = 'LBL_ELEMENT_TYPE_PARAM_SECTION_VEH_PA_7_DESC' and locale_code = 'es_CL';
 
 
 INSERT INTO master.element_subtype_active_params
@@ -219,4 +233,7 @@ INSERT INTO master.element_subtype_active_params
 (1, 4, 2, 140, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (1, 4, 2, 141, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (1, 4, 2, 142, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(1, 4, 2, 143, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(1, 4, 2, 143, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 4, 2, 144, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 4, 2, 145, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 4, 2, 146, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

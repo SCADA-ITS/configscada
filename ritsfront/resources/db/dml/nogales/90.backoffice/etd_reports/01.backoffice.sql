@@ -49,7 +49,10 @@ BEGIN
 	        Categoria1,
 	        Categoria2,
 	        Categoria3,
-	        Categoria4
+	        Categoria4,
+	        Categoria5,
+	        Categoria6,
+	        Categoria7
 	     FROM reports.minutos r
 	     WHERE Fecha >= DATEADD(DAY, -1, CAST(GETDATE() AS DATE))
 	     ORDER BY Fecha DESC, Hora DESC',
@@ -66,7 +69,10 @@ BEGIN
 	        Categoria1,
 	        Categoria2,
 	        Categoria3,
-	        Categoria4
+	        Categoria4,
+	        Categoria5,
+	        Categoria6,
+	        Categoria7
 	     FROM reports.horas r
 	     WHERE Fecha >= DATEADD(DAY, -1, CAST(GETDATE() AS DATE))
 	     ORDER BY Fecha DESC, Hora DESC',
@@ -82,7 +88,10 @@ BEGIN
 	        Categoria1,
 	        Categoria2,
 	        Categoria3,
-	        Categoria4
+	        Categoria4,
+	        Categoria5,
+	        Categoria6,
+	        Categoria7
 	     FROM reports.dias r
 	     WHERE Fecha >= DATEADD(DAY, -1, CAST(GETDATE() AS DATE))
 	     ORDER BY Fecha DESC',
@@ -99,7 +108,10 @@ BEGIN
 	        Categoria1,
 	        Categoria2,
 	        Categoria3,
-	        Categoria4
+	        Categoria4,
+	        Categoria5,
+	        Categoria6,
+	        Categoria7
 	     FROM reports.meses r
 	     ORDER BY Anio DESC, Mes DESC',
 	     NULL, NULL
@@ -117,7 +129,10 @@ BEGIN
         Categoria1,
         Categoria2,
         Categoria3,
-        Categoria4
+        Categoria4,
+	    Categoria5,
+	    Categoria6,
+	    Categoria7
      FROM reports.minutos_sec r
      WHERE Fecha >= DATEADD(DAY, -7, CAST(GETDATE() AS DATE))
 	 ORDER BY id ASC',
@@ -134,7 +149,10 @@ BEGIN
         Categoria1,
         Categoria2,
         Categoria3,
-        Categoria4
+        Categoria4,
+	    Categoria5,
+	    Categoria6,
+	    Categoria7
      FROM reports.horas_sec r
      WHERE Fecha >= DATEADD(DAY, -90, CAST(GETDATE() AS DATE))
 	 ORDER BY id ASC',
@@ -150,7 +168,10 @@ BEGIN
         Categoria1,
         Categoria2,
         Categoria3,
-        Categoria4
+        Categoria4,
+	    Categoria5,
+	    Categoria6,
+	    Categoria7
      FROM reports.dias_sec r
      WHERE Fecha >= DATEADD(DAY, -90, CAST(GETDATE() AS DATE))
 	 ORDER BY id ASC',
@@ -167,7 +188,10 @@ BEGIN
         Categoria1,
         Categoria2,
         Categoria3,
-        Categoria4
+        Categoria4,
+	    Categoria5,
+	    Categoria6,
+	    Categoria7
      FROM reports.meses_sec r
 	 ORDER BY id ASC',
      NULL, NULL
@@ -188,7 +212,10 @@ INSERT INTO reports.sg_metadata_columns (id, sg_metadata_table_id, column_name, 
 (0308, 3, 'Categoria1', 'Autos y camionetas', NULL, 1, '{"position": 8, "editable": false, "tableVisible": true}', null),
 (0309, 3, 'Categoria2', 'Camionetas doble rueda trasera y/o autos y camionetas con remolque', NULL, 1, '{"position": 9, "editable": false, "tableVisible": true}', null),
 (0310, 3, 'Categoria3', 'Camiones de dos ejes, maquinaria agrícola o de construcción', NULL, 1, '{"position": 10, "editable": false, "tableVisible": true}', null),
-(0311, 3, 'Categoria4', 'Motos, cuatrimotos y motonetas', NULL, 1, '{"position": 11, "editable": false, "tableVisible": true}', null),
+(0311, 3, 'Categoria4', 'Camiones de más de dos ejes', NULL, 1, '{"position": 11, "editable": false, "tableVisible": true}', null),
+(0312, 3, 'Categoria5', 'Buses de dos ejes', NULL, 1, '{"position": 12, "editable": false, "tableVisible": true}', null),
+(0313, 3, 'Categoria6', 'Buses de más de dos ejes', NULL, 1, '{"position": 13, "editable": false, "tableVisible": true}', null),
+(0314, 3, 'Categoria7', 'Motos y motonetas', NULL, 1, '{"position": 14, "editable": false, "tableVisible": true}', null),
 
 (0401, 4, 'id', 'Identificador', NULL, 1, '{"position": 1, "tableVisible": true, "editable": false, "refName": true}', null),
 (0402, 4, 'Fecha', 'Fecha', NULL, 1, '{"position": 2, "editable": false, "tableVisible": true}', null),
@@ -199,7 +226,10 @@ INSERT INTO reports.sg_metadata_columns (id, sg_metadata_table_id, column_name, 
 (0407, 4, 'Categoria1', 'Autos y camionetas', NULL, 1, '{"position": 7, "editable": false, "tableVisible": true}', null),
 (0408, 4, 'Categoria2', 'Camionetas doble rueda trasera y/o autos y camionetas con remolque', NULL, 1, '{"position": 8, "editable": false, "tableVisible": true}', null),
 (0409, 4, 'Categoria3', 'Camiones de dos ejes, maquinaria agrícola o de construcción', NULL, 1, '{"position": 9, "editable": false, "tableVisible": true}', null),
-(0410, 4, 'Categoria4', 'Motos, cuatrimotos y motonetas', NULL, 1, '{"position": 10, "editable": false, "tableVisible": true}', null),
+(0410, 4, 'Categoria4', 'Camiones de más de dos ejes', NULL, 1, '{"position": 10, "editable": false, "tableVisible": true}', null),
+(0411, 4, 'Categoria5', 'Buses de dos ejes', NULL, 1, '{"position": 11, "editable": false, "tableVisible": true}', null),
+(0412, 4, 'Categoria6', 'Buses de más de dos ejes', NULL, 1, '{"position": 12, "editable": false, "tableVisible": true}', null),
+(0413, 4, 'Categoria7', 'Motos y motonetas', NULL, 1, '{"position": 13, "editable": false, "tableVisible": true}', null),
 
 (0501, 5, 'id', 'Identificador', NULL, 1, '{"position": 1, "tableVisible": true, "editable": false, "refName": true}', null),
 (0502, 5, 'Fecha', 'Fecha', NULL, 1, '{"position": 2, "editable": false, "tableVisible": true}', null),
@@ -210,7 +240,10 @@ INSERT INTO reports.sg_metadata_columns (id, sg_metadata_table_id, column_name, 
 (0507, 5, 'Categoria1', 'Autos y camionetas', NULL, 1, '{"position": 7, "editable": false, "tableVisible": true}', null),
 (0508, 5, 'Categoria2', 'Camionetas doble rueda trasera y/o autos y camionetas con remolque', NULL, 1, '{"position": 8, "editable": false, "tableVisible": true}', null),
 (0509, 5, 'Categoria3', 'Camiones de dos ejes, maquinaria agrícola o de construcción', NULL, 1, '{"position": 9, "editable": false, "tableVisible": true}', null),
-(0510, 5, 'Categoria4', 'Motos, cuatrimotos y motonetas', NULL, 1, '{"position": 10, "editable": false, "tableVisible": true}', null),
+(0510, 5, 'Categoria4', 'Camiones de más de dos ejes', NULL, 1, '{"position": 10, "editable": false, "tableVisible": true}', null),
+(0511, 5, 'Categoria5', 'Buses de dos ejes', NULL, 1, '{"position": 11, "editable": false, "tableVisible": true}', null),
+(0512, 5, 'Categoria6', 'Buses de más de dos ejes', NULL, 1, '{"position": 12, "editable": false, "tableVisible": true}', null),
+(0513, 5, 'Categoria7', 'Motos y motonetas', NULL, 1, '{"position": 13, "editable": false, "tableVisible": true}', null),
 
 (0601, 6, 'id', 'Identificador', NULL, 1, '{"position": 1, "tableVisible": true, "editable": false, "refName": true}', null),
 (0602, 6, 'Fecha', 'Fecha', NULL, 1, '{"position": 2, "editable": false, "tableVisible": true}', null),
@@ -221,7 +254,10 @@ INSERT INTO reports.sg_metadata_columns (id, sg_metadata_table_id, column_name, 
 (0607, 6, 'Categoria1', 'Autos y camionetas', NULL, 1, '{"position": 7, "editable": false, "tableVisible": true}', null),
 (0608, 6, 'Categoria2', 'Camionetas doble rueda trasera y/o autos y camionetas con remolque', NULL, 1, '{"position": 8, "editable": false, "tableVisible": true}', null),
 (0609, 6, 'Categoria3', 'Camiones de dos ejes, maquinaria agrícola o de construcción', NULL, 1, '{"position": 9, "editable": false, "tableVisible": true}', null),
-(0610, 6, 'Categoria4', 'Motos, cuatrimotos y motonetas', NULL, 1, '{"position": 10, "editable": false, "tableVisible": true}', null),
+(0610, 6, 'Categoria4', 'Camiones de más de dos ejes', NULL, 1, '{"position": 10, "editable": false, "tableVisible": true}', null),
+(0611, 6, 'Categoria5', 'Buses de dos ejes', NULL, 1, '{"position": 11, "editable": false, "tableVisible": true}', null),
+(0612, 6, 'Categoria6', 'Buses de más de dos ejes', NULL, 1, '{"position": 12, "editable": false, "tableVisible": true}', null),
+(0613, 6, 'Categoria7', 'Motos y motonetas', NULL, 1, '{"position": 13, "editable": false, "tableVisible": true}', null),
 
 (0701, 7, 'id', 'Identificador', NULL, 1, '{"position": 1, "tableVisible": true, "editable": false, "refName": true}', null),
 (0702, 7, 'Fecha', 'Fecha', NULL, 1, '{"position": 2, "editable": false, "tableVisible": true}', null),
@@ -233,7 +269,10 @@ INSERT INTO reports.sg_metadata_columns (id, sg_metadata_table_id, column_name, 
 (0708, 7, 'Categoria1', 'Autos y camionetas', NULL, 1, '{"position": 8, "editable": false, "tableVisible": true}', null),
 (0709, 7, 'Categoria2', 'Camionetas doble rueda trasera y/o autos y camionetas con remolque', NULL, 1, '{"position": 9, "editable": false, "tableVisible": true}', null),
 (0710, 7, 'Categoria3', 'Camiones de dos ejes, maquinaria agrícola o de construcción', NULL, 1, '{"position": 10, "editable": false, "tableVisible": true}', null),
-(0711, 7, 'Categoria4', 'Motos, cuatrimotos y motonetas', NULL, 1, '{"position": 11, "editable": false, "tableVisible": true}', null),
+(0711, 7, 'Categoria4', 'Camiones de más de dos ejes', NULL, 1, '{"position": 11, "editable": false, "tableVisible": true}', null),
+(0712, 7, 'Categoria5', 'Buses de dos ejes', NULL, 1, '{"position": 12, "editable": false, "tableVisible": true}', null),
+(0713, 7, 'Categoria6', 'Buses de más de dos ejes', NULL, 1, '{"position": 13, "editable": false, "tableVisible": true}', null),
+(0714, 7, 'Categoria7', 'Motos y motonetas', NULL, 1, '{"position": 14, "editable": false, "tableVisible": true}', null),
 
 (0801, 8, 'id', 'Identificador', NULL, 1, '{"position": 1, "tableVisible": true, "editable": false, "refName": true}', null),
 (0802, 8, 'Fecha', 'Fecha', NULL, 1, '{"position": 2, "editable": false, "tableVisible": true}', null),
@@ -244,7 +283,10 @@ INSERT INTO reports.sg_metadata_columns (id, sg_metadata_table_id, column_name, 
 (0807, 8, 'Categoria1', 'Autos y camionetas', NULL, 1, '{"position": 7, "editable": false, "tableVisible": true}', null),
 (0808, 8, 'Categoria2', 'Camionetas doble rueda trasera y/o autos y camionetas con remolque', NULL, 1, '{"position": 8, "editable": false, "tableVisible": true}', null),
 (0809, 8, 'Categoria3', 'Camiones de dos ejes, maquinaria agrícola o de construcción', NULL, 1, '{"position": 9, "editable": false, "tableVisible": true}', null),
-(0810, 8, 'Categoria4', 'Motos, cuatrimotos y motonetas', NULL, 1, '{"position": 10, "editable": false, "tableVisible": true}', null),
+(0810, 8, 'Categoria4', 'Camiones de más de dos ejes', NULL, 1, '{"position": 10, "editable": false, "tableVisible": true}', null),
+(0811, 8, 'Categoria5', 'Buses de dos ejes', NULL, 1, '{"position": 11, "editable": false, "tableVisible": true}', null),
+(0812, 8, 'Categoria6', 'Buses de más de dos ejes', NULL, 1, '{"position": 12, "editable": false, "tableVisible": true}', null),
+(0813, 8, 'Categoria7', 'Motos y motonetas', NULL, 1, '{"position": 13, "editable": false, "tableVisible": true}', null),
 
 (0901, 9, 'id', 'Identificador', NULL, 1, '{"position": 1, "tableVisible": true, "editable": false, "refName": true}', null),
 (0902, 9, 'Fecha', 'Fecha', NULL, 1, '{"position": 2, "editable": false, "tableVisible": true}', null),
@@ -255,7 +297,10 @@ INSERT INTO reports.sg_metadata_columns (id, sg_metadata_table_id, column_name, 
 (0907, 9, 'Categoria1', 'Autos y camionetas', NULL, 1, '{"position": 7, "editable": false, "tableVisible": true}', null),
 (0908, 9, 'Categoria2', 'Camionetas doble rueda trasera y/o autos y camionetas con remolque', NULL, 1, '{"position": 8, "editable": false, "tableVisible": true}', null),
 (0909, 9, 'Categoria3', 'Camiones de dos ejes, maquinaria agrícola o de construcción', NULL, 1, '{"position": 9, "editable": false, "tableVisible": true}', null),
-(0910, 9, 'Categoria4', 'Motos, cuatrimotos y motonetas', NULL, 1, '{"position": 10, "editable": false, "tableVisible": true}', null),
+(0910, 9, 'Categoria4', 'Camiones de más de dos ejes', NULL, 1, '{"position": 10, "editable": false, "tableVisible": true}', null),
+(0911, 9, 'Categoria5', 'Buses de dos ejes', NULL, 1, '{"position": 11, "editable": false, "tableVisible": true}', null),
+(0912, 9, 'Categoria6', 'Buses de más de dos ejes', NULL, 1, '{"position": 12, "editable": false, "tableVisible": true}', null),
+(0913, 9, 'Categoria7', 'Motos y motonetas', NULL, 1, '{"position": 13, "editable": false, "tableVisible": true}', null),
 
 (1001, 10, 'id', 'Identificador', NULL, 1, '{"position": 1, "tableVisible": true, "editable": false, "refName": true}', null),
 (1002, 10, 'Fecha', 'Fecha', NULL, 1, '{"position": 2, "editable": false, "tableVisible": true}', null),
@@ -266,8 +311,11 @@ INSERT INTO reports.sg_metadata_columns (id, sg_metadata_table_id, column_name, 
 (1007, 10, 'Categoria1', 'Autos y camionetas', NULL, 1, '{"position": 7, "editable": false, "tableVisible": true}', null),
 (1008, 10, 'Categoria2', 'Camionetas doble rueda trasera y/o autos y camionetas con remolque', NULL, 1, '{"position": 8, "editable": false, "tableVisible": true}', null),
 (1009, 10, 'Categoria3', 'Camiones de dos ejes, maquinaria agrícola o de construcción', NULL, 1, '{"position": 9, "editable": false, "tableVisible": true}', null),
-(1010, 10, 'Categoria4', 'Motos, cuatrimotos y motonetas', NULL, 1, '{"position": 10, "editable": false, "tableVisible": true}', null);
-	
+(1010, 10, 'Categoria4', 'Camiones de más de dos ejes', NULL, 1, '{"position": 10, "editable": false, "tableVisible": true}', null);
+(1011, 10, 'Categoria5', 'Buses de dos ejes', NULL, 1, '{"position": 11, "editable": false, "tableVisible": true}', null),
+(1012, 10, 'Categoria6', 'Buses de más de dos ejes', NULL, 1, '{"position": 12, "editable": false, "tableVisible": true}', null),
+(1013, 10, 'Categoria7', 'Motos y motonetas', NULL, 1, '{"position": 13, "editable": false, "tableVisible": true}', null),
+
 	
 SET IDENTITY_INSERT reports.sg_metadata_columns OFF;*/
 	

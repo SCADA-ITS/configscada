@@ -1,138 +1,202 @@
-CREATE TABLE reports.sg_metadata_tables (
-    id INT IDENTITY(1,1) NOT NULL,
-    name VARCHAR(255) UNIQUE NOT NULL,
-    label VARCHAR(255) NULL,
-    label_singular VARCHAR(255) NULL,
-    label_description VARCHAR(255) NULL,
-    mdi_icon VARCHAR(255) NULL,
-    support_images BIT NOT NULL,
-    support_attachments BIT NOT NULL,
-    sql_view VARCHAR(4000) NULL,
-    grid_id INT NULL,
-    metadata VARCHAR(MAX) NULL,
-    CONSTRAINT pk_sg_metadata_tables PRIMARY KEY (id)
-);
+SET client_min_messages TO WARNING;
 
-CREATE TABLE reports.sg_metadata_table_images (
-	id INT IDENTITY(1,1) NOT NULL,
-	sg_metadata_table_id int NOT NULL,
-	id_value int NOT NULL,
-	group_name VARCHAR(255) NOT NULL,
-	file_name VARCHAR(255) NOT NULL,
-	description VARCHAR(255) NULL,
-	position int NOT NULL,
-	CONSTRAINT pk_sg_metadata_table_images PRIMARY KEY (id)
-);
+DO $$ 
+BEGIN
+  IF EXISTS (SELECT 1 FROM pg_tablespace WHERE spcname = 'tbl_reports') THEN
+  
+	DROP SCHEMA reports CASCADE;
 
-CREATE INDEX idx_sg_metadata_table_images_sg_metadata_table_id ON reports.sg_metadata_table_images (sg_metadata_table_id);
+	CREATE SCHEMA reports;
 
-ALTER TABLE reports.sg_metadata_table_images ADD CONSTRAINT fk_sg_metadata_table_images_sg_metadata_table_id FOREIGN KEY (sg_metadata_table_id) REFERENCES reports.sg_metadata_tables(id);
+	-- Table: reports.sg_metadata_tables
+	-- Descripción: 
+	-- Scope: 
+	--
+	CREATE TABLE reports.sg_metadata_tables (
+		id serial NOT NULL,
+		name varchar UNIQUE NOT NULL,
+		label varchar NULL,
+		label_singular varchar NULL,
+		label_description varchar NULL,
+		mdi_icon varchar NULL,
+		support_images bool NOT NULL,
+		support_attachments bool NOT NULL,
+		sql_view varchar(4000) null,
+		grid_id int NULL,
+		metadata varchar null,
+		CONSTRAINT pk_sg_metadata_tables PRIMARY KEY (id)
+	);
 	
-
-CREATE TABLE reports.sg_metadata_table_attachments (
-	id INT IDENTITY(1,1) NOT NULL,
-	sg_metadata_table_id int NOT NULL,
-	id_value int NOT NULL,
-	group_name VARCHAR(255) NOT NULL,
-	file_name VARCHAR(255) NOT NULL,
-	description VARCHAR(255) NULL,
-	position int NOT NULL,
-	CONSTRAINT pk_sg_metadata_table_attachments PRIMARY KEY (id)
-);
-
-CREATE INDEX idx_sg_metadata_table_attachments_sg_metadata_table_id ON reports.sg_metadata_table_attachments (sg_metadata_table_id);
-
-ALTER TABLE reports.sg_metadata_table_attachments ADD CONSTRAINT fk_sg_metadata_table_attachments_sg_metadata_table_id FOREIGN KEY (sg_metadata_table_id) REFERENCES reports.sg_metadata_tables(id);
-
-
-CREATE TABLE reports.sg_metadata_table_triggers (
-	id INT IDENTITY(1,1) NOT NULL,
-	sg_metadata_table_id int NOT NULL,
-	name VARCHAR(255) NULL,
-	groovy VARCHAR(255) NOT NULL,
-	CONSTRAINT pk_sg_metadata_table_triggers PRIMARY KEY (id)
-);
-
-CREATE INDEX idx_sg_metadata_table_triggers_sg_metadata_table_id ON reports.sg_metadata_table_triggers (sg_metadata_table_id);
-
-ALTER TABLE reports.sg_metadata_table_triggers ADD CONSTRAINT fk_sg_metadata_table_triggers_sg_metadata_table_id FOREIGN KEY (sg_metadata_table_id) REFERENCES reports.sg_metadata_tables(id);
-
-
-CREATE TABLE reports.sg_metadata_table_commands (
-	id INT IDENTITY(1,1) NOT NULL,
-	sg_metadata_table_id int NOT NULL,
-	name VARCHAR(255) NOT NULL,
-	label VARCHAR(255) NULL,
-	label_description varchar NULL,
-	mdi_icon VARCHAR(255) NULL,
-	require_confirmation BIT NOT NULL,
-	available_in_form BIT NOT NULL,
-	available_in_table BIT NOT NULL,
-	groovy VARCHAR(255) NOT NULL,
-	custom_js VARCHAR(255) NULL,
-	CONSTRAINT pk_sg_metadata_table_commands PRIMARY KEY (id)
-);
-
-CREATE INDEX idx_sg_metadata_table_commands_sg_metadata_table_id ON reports.sg_metadata_table_commands (sg_metadata_table_id);
-
-ALTER TABLE reports.sg_metadata_table_commands ADD CONSTRAINT fk_sg_metadata_table_commands_sg_metadata_table_id FOREIGN KEY (sg_metadata_table_id) REFERENCES reports.sg_metadata_tables(id);
-
-ALTER TABLE reports.sg_metadata_table_commands ADD CONSTRAINT unique_sg_metadata_table_commands UNIQUE (sg_metadata_table_id, name);
-
-
-CREATE TABLE reports.sg_metadata_columns (
-	id INT IDENTITY(1,1) NOT NULL,
-	sg_metadata_table_id int NOT NULL,
-	column_name VARCHAR(255) NOT NULL,
-	label VARCHAR(255) NULL,
-	label_description VARCHAR(255) NULL,
-	needs_translation BIT NOT NULL,
-	metadata VARCHAR(MAX) null,
-	ref_view_column_id int NULL,
-	CONSTRAINT pk_sg_metadata_columns PRIMARY KEY (id)
-);
-
-CREATE INDEX idx_sg_metadata_columns_sg_metadata_table_id ON reports.sg_metadata_columns (sg_metadata_table_id);
-
-ALTER TABLE reports.sg_metadata_columns ADD CONSTRAINT fk_sg_metadata_columns_sg_metadata_table_id FOREIGN KEY (sg_metadata_table_id) REFERENCES reports.sg_metadata_tables(id);
-
-ALTER TABLE reports.sg_metadata_columns ADD CONSTRAINT fk_sg_metadata_columns_sg_metadata_column_id FOREIGN KEY (ref_view_column_id) REFERENCES reports.sg_metadata_columns(id);
-
-ALTER TABLE reports.sg_metadata_columns ADD CONSTRAINT unique_sg_metadata_columns UNIQUE (sg_metadata_table_id, column_name);
-
-
-
-CREATE TABLE reports.sg_metadata_column_fillers (
-	id INT IDENTITY(1,1) NOT NULL,
-	sg_metadata_column_id int NOT NULL,
-	name VARCHAR(255) NULL,
-	groovy VARCHAR(255) NOT NULL,
-	CONSTRAINT pk_sg_metadata_column_fillers PRIMARY KEY (id)
-);
-
-CREATE INDEX idx_sg_metadata_column_fillers_sg_metadata_column_id ON reports.sg_metadata_column_fillers (sg_metadata_column_id);
-
-ALTER TABLE reports.sg_metadata_column_fillers ADD CONSTRAINT fk_sg_metadata_column_fillers_sg_metadata_column_id FOREIGN KEY (sg_metadata_column_id) REFERENCES reports.sg_metadata_columns(id);
-
-
-CREATE TABLE reports.sg_metadata_tasks (
-	id INT IDENTITY(1,1) NOT NULL,
-	name VARCHAR(255) NULL,
-	cron_expression varchar NOT NULL,
-	groovy VARCHAR(255) NOT NULL,
-	params VARCHAR(255) NULL,
-	CONSTRAINT pk_sg_metadata_tasks PRIMARY KEY (id)
-);
-
-
-CREATE TABLE reports.sg_i18n_labels (
-	id INT IDENTITY(1,1) NOT NULL,
-	locale_code VARCHAR(255) NOT NULL,
-	label VARCHAR(255) NOT NULL,
-	translation VARCHAR(255) NOT NULL,
-	created_at datetimeoffset  NOT NULL,
-	updated_at datetimeoffset  NOT NULL,
-	CONSTRAINT pk_sg_i18n_labels PRIMARY KEY (id)
-);
+	ALTER TABLE reports.sg_metadata_tables SET TABLESPACE tbl_reports;
 	
-ALTER TABLE reports.sg_i18n_labels ADD CONSTRAINT unique_sg_i18n_labels UNIQUE (locale_code, label);
+	-- Table: reports.sg_metadata_table_images
+	-- Descripción: 
+	-- Scope: 
+	--
+	CREATE TABLE reports.sg_metadata_table_images (
+		id serial NOT NULL,
+		sg_metadata_table_id int NOT NULL,
+		id_value int NOT NULL,
+		group_name varchar NOT NULL,
+		file_name varchar NOT NULL,
+		description varchar NULL,
+		position int NOT NULL,
+		CONSTRAINT pk_sg_metadata_table_images PRIMARY KEY (id)
+	);
+	
+	CREATE INDEX idx_sg_metadata_table_images_sg_metadata_table_id ON reports.sg_metadata_table_images USING btree (sg_metadata_table_id);
+
+	ALTER TABLE reports.sg_metadata_table_images ADD CONSTRAINT fk_sg_metadata_table_images_sg_metadata_table_id FOREIGN KEY (sg_metadata_table_id) references reports.sg_metadata_tables(id);
+	
+	ALTER TABLE reports.sg_metadata_table_images SET TABLESPACE tbl_reports;
+	
+	-- Table: reports.sg_metadata_table_attachments
+	-- Descripción: 
+	-- Scope: 
+	--
+	CREATE TABLE reports.sg_metadata_table_attachments (
+		id serial NOT NULL,
+		sg_metadata_table_id int NOT NULL,
+		id_value int NOT NULL,
+		group_name varchar NOT NULL,
+		file_name varchar NOT NULL,
+		description varchar NULL,
+		position int NOT NULL,
+		CONSTRAINT pk_sg_metadata_table_attachments PRIMARY KEY (id)
+	);
+	
+	CREATE INDEX idx_sg_metadata_table_attachments_sg_metadata_table_id ON reports.sg_metadata_table_attachments USING btree (sg_metadata_table_id);
+
+	ALTER TABLE reports.sg_metadata_table_attachments ADD CONSTRAINT fk_sg_metadata_table_attachments_sg_metadata_table_id FOREIGN KEY (sg_metadata_table_id) references reports.sg_metadata_tables(id);
+	
+	ALTER TABLE reports.sg_metadata_table_attachments SET TABLESPACE tbl_reports;
+	
+	-- 
+	-- Table: reports.sg_metadata_table_triggers
+	-- Descripción: 
+	-- Scope: 
+	--
+	CREATE TABLE reports.sg_metadata_table_triggers (
+		id serial NOT NULL,
+		sg_metadata_table_id int NOT NULL,
+		name varchar NULL,
+		groovy varchar NOT NULL,
+		CONSTRAINT pk_sg_metadata_table_triggers PRIMARY KEY (id)
+	);
+
+	CREATE INDEX idx_sg_metadata_table_triggers_sg_metadata_table_id ON reports.sg_metadata_table_triggers USING btree (sg_metadata_table_id);
+
+	ALTER TABLE reports.sg_metadata_table_triggers ADD CONSTRAINT fk_sg_metadata_table_triggers_sg_metadata_table_id FOREIGN KEY (sg_metadata_table_id) references reports.sg_metadata_tables(id);
+	
+	ALTER TABLE reports.sg_metadata_table_triggers SET TABLESPACE tbl_reports;
+
+	-- 
+	-- Table: reports.sg_metadata_table_commands
+	-- Descripción: 
+	-- Scope: 
+	--
+	CREATE TABLE reports.sg_metadata_table_commands (
+		id serial NOT NULL,
+		sg_metadata_table_id int NOT NULL,
+		name varchar NOT NULL,
+		label varchar NULL,
+		label_description varchar NULL,
+		mdi_icon varchar NULL,
+		require_confirmation bool NOT NULL,
+		available_in_form bool NOT NULL,
+		available_in_table bool NOT NULL,
+		groovy varchar NOT NULL,
+		custom_js varchar(200) NULL,
+		CONSTRAINT pk_sg_metadata_table_commands PRIMARY KEY (id)
+	);
+
+	CREATE INDEX idx_sg_metadata_table_commands_sg_metadata_table_id ON reports.sg_metadata_table_commands USING btree (sg_metadata_table_id);
+
+	ALTER TABLE reports.sg_metadata_table_commands ADD CONSTRAINT fk_sg_metadata_table_commands_sg_metadata_table_id FOREIGN KEY (sg_metadata_table_id) references reports.sg_metadata_tables(id);
+
+	ALTER TABLE reports.sg_metadata_table_commands ADD CONSTRAINT unique_sg_metadata_table_commands UNIQUE (sg_metadata_table_id, name);
+	
+	ALTER TABLE reports.sg_metadata_table_commands SET TABLESPACE tbl_reports;
+	
+	-- 
+	-- Table: reports.sg_metadata_columns
+	-- Descripción: 
+	-- Scope: 
+	--
+	CREATE TABLE reports.sg_metadata_columns (
+		id serial NOT NULL,
+		sg_metadata_table_id int NOT NULL,
+		column_name varchar NOT NULL,
+		label varchar NULL,
+		label_description varchar NULL,
+		needs_translation bool NOT NULL,
+		metadata varchar null,
+		ref_view_column_id int NULL,
+		CONSTRAINT pk_sg_metadata_columns PRIMARY KEY (id)
+	);
+
+	CREATE INDEX idx_sg_metadata_columns_sg_metadata_table_id ON reports.sg_metadata_columns USING btree (sg_metadata_table_id);
+
+	ALTER TABLE reports.sg_metadata_columns ADD CONSTRAINT fk_sg_metadata_columns_sg_metadata_table_id FOREIGN KEY (sg_metadata_table_id) references reports.sg_metadata_tables(id);
+	
+	ALTER TABLE reports.sg_metadata_columns ADD CONSTRAINT fk_sg_metadata_columns_sg_metadata_column_id FOREIGN KEY (ref_view_column_id) references reports.sg_metadata_columns(id);
+	
+	ALTER TABLE reports.sg_metadata_columns ADD CONSTRAINT unique_sg_metadata_columns UNIQUE (sg_metadata_table_id, column_name);
+	
+	ALTER TABLE reports.sg_metadata_columns SET TABLESPACE tbl_reports;
+	
+	-- 
+	-- Table: reports.sg_metadata_columnm_fillers
+	-- Descripción: 
+	-- Scope: 
+	--
+	CREATE TABLE reports.sg_metadata_column_fillers (
+		id serial NOT NULL,
+		sg_metadata_column_id int NOT NULL,
+		name varchar NULL,
+		groovy varchar NOT NULL,
+		CONSTRAINT pk_sg_metadata_column_fillers PRIMARY KEY (id)
+	);
+
+	CREATE INDEX idx_sg_metadata_column_fillers_sg_metadata_column_id ON reports.sg_metadata_column_fillers USING btree (sg_metadata_column_id);
+
+	ALTER TABLE reports.sg_metadata_column_fillers ADD CONSTRAINT fk_sg_metadata_column_fillers_sg_metadata_column_id FOREIGN KEY (sg_metadata_column_id) references reports.sg_metadata_columns(id);
+	
+	ALTER TABLE reports.sg_metadata_column_fillers SET TABLESPACE tbl_reports;
+	
+	-- 
+	-- Table: reports.sg_metadata_tasks
+	-- Descripción: 
+	-- Scope: 
+	--
+	CREATE TABLE reports.sg_metadata_tasks (
+		id serial NOT NULL,
+		name varchar NULL,
+		cron_expression varchar NOT NULL,
+		groovy varchar NOT NULL,
+		params varchar NULL,
+		CONSTRAINT pk_sg_metadata_tasks PRIMARY KEY (id)
+	);
+	
+	ALTER TABLE reports.sg_metadata_tasks SET TABLESPACE tbl_reports;
+	
+	-- 
+	-- Table: reports.sg_i18n_labels
+	-- Descripción: Traducciones
+	-- Scope:
+	--
+	CREATE TABLE reports.sg_i18n_labels (
+		id serial NOT NULL,
+		locale_code varchar NOT NULL,
+		label varchar NOT NULL,
+		translation varchar NOT NULL,
+		created_at timestamptz NOT NULL,
+		updated_at timestamptz NOT NULL,
+		CONSTRAINT pk_sg_i18n_labels PRIMARY KEY (id)
+	);
+	
+	ALTER TABLE reports.sg_i18n_labels ADD CONSTRAINT unique_sg_i18n_labels UNIQUE (locale_code, label);
+
+	ALTER TABLE reports.sg_i18n_labels SET TABLESPACE tbl_reports;
+  END IF;
+END $$;

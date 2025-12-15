@@ -1,3 +1,144 @@
+/*CREATE TABLE reports.sg_metadata_tables (
+    id INT IDENTITY(1,1) NOT NULL,
+    name VARCHAR(255) UNIQUE NOT NULL,
+    label VARCHAR(255) NULL,
+    label_singular VARCHAR(255) NULL,
+    label_description VARCHAR(255) NULL,
+    mdi_icon VARCHAR(255) NULL,
+    support_images BIT NOT NULL,
+    support_attachments BIT NOT NULL,
+    sql_view VARCHAR(4000) NULL,
+    grid_id INT NULL,
+    metadata VARCHAR(MAX) NULL,
+    CONSTRAINT pk_sg_metadata_tables PRIMARY KEY (id)
+);
+
+CREATE TABLE reports.sg_metadata_table_images (
+	id INT IDENTITY(1,1) NOT NULL,
+	sg_metadata_table_id int NOT NULL,
+	id_value int NOT NULL,
+	group_name VARCHAR(255) NOT NULL,
+	file_name VARCHAR(255) NOT NULL,
+	description VARCHAR(255) NULL,
+	position int NOT NULL,
+	CONSTRAINT pk_sg_metadata_table_images PRIMARY KEY (id)
+);
+
+CREATE INDEX idx_sg_metadata_table_images_sg_metadata_table_id ON reports.sg_metadata_table_images (sg_metadata_table_id);
+
+ALTER TABLE reports.sg_metadata_table_images ADD CONSTRAINT fk_sg_metadata_table_images_sg_metadata_table_id FOREIGN KEY (sg_metadata_table_id) REFERENCES reports.sg_metadata_tables(id);
+	
+
+CREATE TABLE reports.sg_metadata_table_attachments (
+	id INT IDENTITY(1,1) NOT NULL,
+	sg_metadata_table_id int NOT NULL,
+	id_value int NOT NULL,
+	group_name VARCHAR(255) NOT NULL,
+	file_name VARCHAR(255) NOT NULL,
+	description VARCHAR(255) NULL,
+	position int NOT NULL,
+	CONSTRAINT pk_sg_metadata_table_attachments PRIMARY KEY (id)
+);
+
+CREATE INDEX idx_sg_metadata_table_attachments_sg_metadata_table_id ON reports.sg_metadata_table_attachments (sg_metadata_table_id);
+
+ALTER TABLE reports.sg_metadata_table_attachments ADD CONSTRAINT fk_sg_metadata_table_attachments_sg_metadata_table_id FOREIGN KEY (sg_metadata_table_id) REFERENCES reports.sg_metadata_tables(id);
+
+
+CREATE TABLE reports.sg_metadata_table_triggers (
+	id INT IDENTITY(1,1) NOT NULL,
+	sg_metadata_table_id int NOT NULL,
+	name VARCHAR(255) NULL,
+	groovy VARCHAR(255) NOT NULL,
+	CONSTRAINT pk_sg_metadata_table_triggers PRIMARY KEY (id)
+);
+
+CREATE INDEX idx_sg_metadata_table_triggers_sg_metadata_table_id ON reports.sg_metadata_table_triggers (sg_metadata_table_id);
+
+ALTER TABLE reports.sg_metadata_table_triggers ADD CONSTRAINT fk_sg_metadata_table_triggers_sg_metadata_table_id FOREIGN KEY (sg_metadata_table_id) REFERENCES reports.sg_metadata_tables(id);
+
+
+CREATE TABLE reports.sg_metadata_table_commands (
+	id INT IDENTITY(1,1) NOT NULL,
+	sg_metadata_table_id int NOT NULL,
+	name VARCHAR(255) NOT NULL,
+	label VARCHAR(255) NULL,
+	label_description varchar NULL,
+	mdi_icon varchar NULL,
+	require_confirmation BIT NOT NULL,
+	available_in_form BIT NOT NULL,
+	available_in_table BIT NOT NULL,
+	groovy VARCHAR(255) NOT NULL,
+	custom_js VARCHAR(255) NULL,
+	CONSTRAINT pk_sg_metadata_table_commands PRIMARY KEY (id)
+);
+
+CREATE INDEX idx_sg_metadata_table_commands_sg_metadata_table_id ON reports.sg_metadata_table_commands (sg_metadata_table_id);
+
+ALTER TABLE reports.sg_metadata_table_commands ADD CONSTRAINT fk_sg_metadata_table_commands_sg_metadata_table_id FOREIGN KEY (sg_metadata_table_id) REFERENCES reports.sg_metadata_tables(id);
+
+ALTER TABLE reports.sg_metadata_table_commands ADD CONSTRAINT unique_sg_metadata_table_commands UNIQUE (sg_metadata_table_id, name);
+
+
+CREATE TABLE reports.sg_metadata_columns (
+	id INT IDENTITY(1,1) NOT NULL,
+	sg_metadata_table_id int NOT NULL,
+	column_name VARCHAR(255) NOT NULL,
+	label VARCHAR(255) NULL,
+	label_description VARCHAR(255) NULL,
+	needs_translation BIT NOT NULL,
+	metadata VARCHAR(MAX) null,
+	ref_view_column_id int NULL,
+	CONSTRAINT pk_sg_metadata_columns PRIMARY KEY (id)
+);
+
+CREATE INDEX idx_sg_metadata_columns_sg_metadata_table_id ON reports.sg_metadata_columns (sg_metadata_table_id);
+
+ALTER TABLE reports.sg_metadata_columns ADD CONSTRAINT fk_sg_metadata_columns_sg_metadata_table_id FOREIGN KEY (sg_metadata_table_id) REFERENCES reports.sg_metadata_tables(id);
+
+ALTER TABLE reports.sg_metadata_columns ADD CONSTRAINT fk_sg_metadata_columns_sg_metadata_column_id FOREIGN KEY (ref_view_column_id) REFERENCES reports.sg_metadata_columns(id);
+
+ALTER TABLE reports.sg_metadata_columns ADD CONSTRAINT unique_sg_metadata_columns UNIQUE (sg_metadata_table_id, column_name);
+
+
+
+CREATE TABLE reports.sg_metadata_column_fillers (
+	id INT IDENTITY(1,1) NOT NULL,
+	sg_metadata_column_id int NOT NULL,
+	name VARCHAR(255) NULL,
+	groovy VARCHAR(255) NOT NULL,
+	CONSTRAINT pk_sg_metadata_column_fillers PRIMARY KEY (id)
+);
+
+CREATE INDEX idx_sg_metadata_column_fillers_sg_metadata_column_id ON reports.sg_metadata_column_fillers (sg_metadata_column_id);
+
+ALTER TABLE reports.sg_metadata_column_fillers ADD CONSTRAINT fk_sg_metadata_column_fillers_sg_metadata_column_id FOREIGN KEY (sg_metadata_column_id) REFERENCES reports.sg_metadata_columns(id);
+
+
+CREATE TABLE reports.sg_metadata_tasks (
+	id INT IDENTITY(1,1) NOT NULL,
+	name VARCHAR(255) NULL,
+	cron_expression varchar NOT NULL,
+	groovy VARCHAR(255) NOT NULL,
+	params VARCHAR(255) NULL,
+	CONSTRAINT pk_sg_metadata_tasks PRIMARY KEY (id)
+);
+
+
+CREATE TABLE reports.sg_i18n_labels (
+	id INT IDENTITY(1,1) NOT NULL,
+	locale_code VARCHAR(255) NOT NULL,
+	label VARCHAR(255) NOT NULL,
+	translation VARCHAR(255) NOT NULL,
+	created_at datetimeoffset NOT NULL,
+	updated_at datetimeoffset NOT NULL,
+	CONSTRAINT pk_sg_i18n_labels PRIMARY KEY (id)
+);
+	
+ALTER TABLE reports.sg_i18n_labels ADD CONSTRAINT unique_sg_i18n_labels UNIQUE (locale_code, label);*/
+
+
+
 /*-- dbo.VistaAgrupados source
 
 --SELECT OBJECT_DEFINITION(OBJECT_ID('dbo.VistaAgrupados')) AS ScriptVista;
@@ -93,11 +234,13 @@ SELECT
     ISNULL(a.ReverseDirection, 0) AS ReverseDirection,  
     ISNULL(a.Length, 0) AS Length,  
     ISNULL(a.Categoria1, 0) + ISNULL(a.Categoria2, 0) AS Categoria1, 
-    ISNULL(a.Categoria3, 0) + ISNULL(a.Categoria2, 0) AS Categoria2, 
-    ISNULL(a.Categoria4, 0) + ISNULL(a.Categoria5, 0) + ISNULL(a.Categoria6, 0) + 
-    ISNULL(a.Categoria7, 0) + ISNULL(a.Categoria8, 0) + ISNULL(a.Categoria9, 0) + 
-    ISNULL(a.Categoria10, 0) + ISNULL(a.Categoria11, 0) AS Categoria3,   
-    ISNULL(a.Categoria12, 0) AS Categoria4,   
+    ISNULL(a.Categoria3, 0) AS Categoria2, 
+    ISNULL(a.Categoria4, 0) AS Categoria3, 
+    ISNULL(a.Categoria5, 0) + ISNULL(a.Categoria6, 0) + 
+    ISNULL(a.Categoria7, 0) + ISNULL(a.Categoria8, 0) AS Categoria4,  
+    ISNULL(a.Categoria9, 0) AS Categoria5,  
+    ISNULL(a.Categoria10, 0) + ISNULL(a.Categoria11, 0) AS Categoria6, 
+    ISNULL(a.Categoria12, 0) AS Categoria7,  
     ISNULL(a.Speed1, 0) AS Speed1,  
     ISNULL(a.Speed2, 0) AS Speed2,  
     ISNULL(a.Speed3, 0) AS Speed3,  
@@ -140,11 +283,14 @@ SELECT
     IDEquipo,
     SUM(Volumen) AS Volumen,
     AVG(Speed) AS Speed,
-    SUM(Categoria1) + SUM(Categoria2) AS Categoria1,
-    SUM(Categoria3) AS Categoria2,
-    SUM(Categoria4) + SUM(Categoria5) + SUM(Categoria6) + SUM(Categoria7) + 
-    SUM(Categoria8) + SUM(Categoria9) + SUM(Categoria10) + SUM(Categoria11) AS Categoria3, 
-    SUM(Categoria12) AS Categoria4 
+    SUM(Categoria1) + SUM(Categoria2) AS Categoria1, 
+    SUM(Categoria3) AS Categoria2, 
+    SUM(Categoria4) AS Categoria3, 
+    SUM(Categoria5) + SUM(Categoria6) + 
+    SUM(Categoria7) + SUM(Categoria8) AS Categoria4,  
+    SUM(Categoria9) AS Categoria5,  
+    SUM(Categoria10) + SUM(Categoria11) AS Categoria6, 
+    SUM(Categoria12) AS Categoria7
 FROM Datos
 GROUP BY
     Fecha,
@@ -183,11 +329,14 @@ SELECT
     SUM(Volumen) AS Volumen,
     AVG(Speed) AS Speed,
     -- Categorías agrupadas
-    SUM(Categoria1) + SUM(Categoria2) AS Categoria1,
-    SUM(Categoria3) AS Categoria2,
-    SUM(Categoria4) + SUM(Categoria5) + SUM(Categoria6) + SUM(Categoria7)
-        + SUM(Categoria8) + SUM(Categoria9) + SUM(Categoria10) + SUM(Categoria11) AS Categoria3,
-    SUM(Categoria12) AS Categoria4
+    SUM(Categoria1) + SUM(Categoria2) AS Categoria1, 
+    SUM(Categoria3) AS Categoria2, 
+    SUM(Categoria4) AS Categoria3, 
+    SUM(Categoria5) + SUM(Categoria6) + 
+    SUM(Categoria7) + SUM(Categoria8) AS Categoria4,  
+    SUM(Categoria9) AS Categoria5,  
+    SUM(Categoria10) + SUM(Categoria11) AS Categoria6, 
+    SUM(Categoria12) AS Categoria7
 FROM Datos
 GROUP BY
     Fecha,
@@ -241,11 +390,14 @@ SELECT
     SUM(Volumen) AS Volumen,
     AVG(Speed) AS Speed,
     -- Categorías agrupadas
-    SUM(Categoria1) + SUM(Categoria2) AS Categoria1,
-    SUM(Categoria3) AS Categoria2,
-    SUM(Categoria4) + SUM(Categoria5) + SUM(Categoria6) + SUM(Categoria7)
-        + SUM(Categoria8) + SUM(Categoria9) + SUM(Categoria10) + SUM(Categoria11) AS Categoria3,
-    SUM(Categoria12) AS Categoria4
+    SUM(Categoria1) + SUM(Categoria2) AS Categoria1, 
+    SUM(Categoria3) AS Categoria2, 
+    SUM(Categoria4) AS Categoria3, 
+    SUM(Categoria5) + SUM(Categoria6) + 
+    SUM(Categoria7) + SUM(Categoria8) AS Categoria4,  
+    SUM(Categoria9) AS Categoria5,  
+    SUM(Categoria10) + SUM(Categoria11) AS Categoria6, 
+    SUM(Categoria12) AS Categoria7
 FROM Datos
 GROUP BY
     Anio,
@@ -294,6 +446,9 @@ SELECT
     SUM(CAST(Categoria2 AS BIGINT)) AS Categoria2,
     SUM(CAST(Categoria3 AS BIGINT)) AS Categoria3,
     SUM(CAST(Categoria4 AS BIGINT)) AS Categoria4,
+    SUM(CAST(Categoria5 AS BIGINT)) AS Categoria5,
+    SUM(CAST(Categoria6 AS BIGINT)) AS Categoria6,
+    SUM(CAST(Categoria7 AS BIGINT)) AS Categoria7,
     MAX(CASE WHEN ErrorDatos = 1 THEN 1 ELSE 0 END) AS ErrorDatos,
     CASE
 	    WHEN SUM(Volumen) = 0 THEN 0
@@ -335,7 +490,10 @@ SELECT
     SUM(Categoria1) AS Categoria1,
     SUM(Categoria2) AS Categoria2,
     SUM(Categoria3) AS Categoria3,
-    SUM(Categoria4) AS Categoria4
+    SUM(Categoria4) AS Categoria4,
+    SUM(Categoria5) AS Categoria5,
+    SUM(Categoria6) AS Categoria6,
+    SUM(Categoria7) AS Categoria7
 FROM reports.horas
 WHERE NroCarril IN (1, 2, 3, 4)
 GROUP BY
@@ -363,7 +521,10 @@ SELECT
     SUM(Categoria1) AS Categoria1,
     SUM(Categoria2) AS Categoria2,
     SUM(Categoria3) AS Categoria3,
-    SUM(Categoria4) AS Categoria4
+    SUM(Categoria4) AS Categoria4,
+    SUM(Categoria5) AS Categoria5,
+    SUM(Categoria6) AS Categoria6,
+    SUM(Categoria7) AS Categoria7
 FROM reports.dias
 WHERE NroCarril IN (1, 2, 3, 4)
 GROUP BY 
@@ -392,7 +553,10 @@ SELECT
     SUM(Categoria1) AS Categoria1,
     SUM(Categoria2) AS Categoria2,
     SUM(Categoria3) AS Categoria3,
-    SUM(Categoria4) AS Categoria4
+    SUM(Categoria4) AS Categoria4,
+    SUM(Categoria5) AS Categoria5,
+    SUM(Categoria6) AS Categoria6,
+    SUM(Categoria7) AS Categoria7
 FROM reports.meses
 WHERE NroCarril IN (1, 2, 3, 4)
 GROUP BY 

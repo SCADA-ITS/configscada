@@ -22,7 +22,10 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (040017, 4, 2, 17, true, false, false, true, 'LBL_VEH_PA_1', 'LBL_VEH_PA_1', 'ElementTypeParam:4:2:140', false, false, 'left', false, false, 100, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
 (040018, 4, 2, 18, true, false, false, true, 'LBL_VEH_PA_2', 'LBL_VEH_PA_2', 'ElementTypeParam:4:2:141', false, false, 'left', false, false, 100, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
 (040019, 4, 2, 19, true, false, false, true, 'LBL_VEH_PA_3', 'LBL_VEH_PA_3', 'ElementTypeParam:4:2:142', false, false, 'left', false, false, 100, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
-(040020, 4, 2, 20, true, false, false, true, 'LBL_VEH_PA_4', 'LBL_VEH_PA_4', 'ElementTypeParam:4:2:143', false, false, 'left', false, false, 100, NULL, true, true, NULL, NULL, NULL, NULL, NULL);
+(040020, 4, 2, 20, true, false, false, true, 'LBL_VEH_PA_4', 'LBL_VEH_PA_4', 'ElementTypeParam:4:2:143', false, false, 'left', false, false, 100, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(040021, 4, 2, 21, true, false, false, true, 'LBL_VEH_PA_5', 'LBL_VEH_PA_5', 'ElementTypeParam:4:2:144', false, false, 'left', false, false, 100, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(040022, 4, 2, 22, true, false, false, true, 'LBL_VEH_PA_6', 'LBL_VEH_PA_6', 'ElementTypeParam:4:2:145', false, false, 'left', false, false, 100, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
+(040023, 4, 2, 23, true, false, false, true, 'LBL_VEH_PA_7', 'LBL_VEH_PA_7', 'ElementTypeParam:4:2:146', false, false, 'left', false, false, 100, NULL, true, true, NULL, NULL, NULL, NULL, NULL);
 
 
 INSERT INTO ui.grid_option_values(grid_id, grid_option_id, value) VALUES

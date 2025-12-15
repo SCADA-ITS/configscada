@@ -49,6 +49,9 @@ class EtdParamsAdapterTFA {
 	static final Long PARAM_MEASURE_VEH_PA_2 = 101L;
 	static final Long PARAM_MEASURE_VEH_PA_3 = 102L;
 	static final Long PARAM_MEASURE_VEH_PA_4 = 103L;
+	static final Long PARAM_MEASURE_VEH_PA_5 = 104L;
+	static final Long PARAM_MEASURE_VEH_PA_6 = 105L;
+	static final Long PARAM_MEASURE_VEH_PA_7 = 106L;
 
 
 	static final Long PARAM_MEASURE_VEH_SPEED_1 = 40L;
@@ -145,6 +148,15 @@ class EtdParamsAdapterTFA {
 					
 					val = String.valueOf(etd_info.get(detArrayPos).veh_pa_4 == null ? 0 : etd_info.get(detArrayPos).veh_pa_4);
 					listElements.add(elementSetValue(PARAM_MEASURE_VEH_PA_4, TYPE_PARAM_MEASURE, childElement.getId(),val));
+					
+					val = String.valueOf(etd_info.get(detArrayPos).veh_pa_5 == null ? 0 : etd_info.get(detArrayPos).veh_pa_5);
+					listElements.add(elementSetValue(PARAM_MEASURE_VEH_PA_5, TYPE_PARAM_MEASURE, childElement.getId(),val));
+					
+					val = String.valueOf(etd_info.get(detArrayPos).veh_pa_6 == null ? 0 : etd_info.get(detArrayPos).veh_pa_6);
+					listElements.add(elementSetValue(PARAM_MEASURE_VEH_PA_6, TYPE_PARAM_MEASURE, childElement.getId(),val));
+					
+					val = String.valueOf(etd_info.get(detArrayPos).veh_pa_7 == null ? 0 : etd_info.get(detArrayPos).veh_pa_7);
+					listElements.add(elementSetValue(PARAM_MEASURE_VEH_PA_7, TYPE_PARAM_MEASURE, childElement.getId(),val));
 					
 					ElementValue[] itemsArray = new ElementValue[listElements.size()];
 					itemsArray = listElements.toArray(itemsArray);
