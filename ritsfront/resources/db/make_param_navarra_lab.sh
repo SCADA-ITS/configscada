@@ -3,6 +3,9 @@ echo Executing sql scripts to generate dev environment... \(errors that occur ar
 cd ddl_navarra_lab
 sh ./ddl.sh $1
 cd ..
+cd ddlbackoffice/navarra_lab
+sh ./ddl_param.sh $1 $2
+cd ../..
 cd dml/master
 sh ./dml_param_navarra_lab.sh $1
 cd ../..
