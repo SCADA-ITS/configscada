@@ -189,21 +189,21 @@ BEGIN
 		backoffice.incidents
 			using btree (cause_id);
 			
-		alter table backoffice.incidents add constraint fk_type_event_id foreign key (event_id) references backoffice.event(id) ON DELETE CASCADE;
-		alter table backoffice.incidents add constraint fk_type_side_id foreign key (side_id) references backoffice.side(id) ON DELETE CASCADE;
-		alter table backoffice.incidents add constraint fk_type_stretch_id foreign key (stretch_id) references backoffice.stretch(id) ON DELETE CASCADE;
-		alter table backoffice.incidents add constraint fk_type_event_type_id foreign key (event_type_id) references backoffice.event_type(id) ON DELETE CASCADE;
-		alter table backoffice.incidents add constraint fk_collision_id foreign key (collision_id) references backoffice.collision(id) ON DELETE CASCADE;
-		alter table backoffice.incidents add constraint fk_object_crash_id foreign key (object_crash_id) references backoffice.object_crash(id) ON DELETE CASCADE;
-		alter table backoffice.incidents add constraint fk_vehicle_crash_id foreign key (vehicle_crash_id) references backoffice.vehicle_crash(id) ON DELETE CASCADE;
-		alter table backoffice.incidents add constraint fk_relative_location_id foreign key (relative_location_id) references backoffice.relative_location(id) ON DELETE CASCADE;
-		alter table backoffice.incidents add constraint fk_road_condition_id foreign key (road_condition_id) references backoffice.road_conditions(id) ON DELETE CASCADE;
-		alter table backoffice.incidents add constraint fk_road_type_id foreign key (road_type_id) references backoffice.road_types(id) ON DELETE CASCADE;
-		alter table backoffice.incidents add constraint fk_road_state_id foreign key (road_state_id) references backoffice.road_states(id) ON DELETE CASCADE;
-		alter table backoffice.incidents add constraint fk_weather_state_id foreign key (weather_state_id) references backoffice.weather_states(id) ON DELETE CASCADE;
-		alter table backoffice.incidents add constraint fk_luminosity_id foreign key (luminosity_id) references backoffice.luminosity(id) ON DELETE CASCADE;
-		alter table backoffice.incidents add constraint fk_ligth_id foreign key (ligth_id) references backoffice.ligth(id) ON DELETE CASCADE;
-		alter table backoffice.incidents add constraint fk_cause_id foreign key (cause_id) references backoffice.causes(id) ON DELETE CASCADE;
+		alter table backoffice.incidents add constraint fk_type_event_id foreign key (event_id) references backoffice.event(id) ON DELETE RESTRICT;
+		alter table backoffice.incidents add constraint fk_type_side_id foreign key (side_id) references backoffice.side(id) ON DELETE RESTRICT;
+		alter table backoffice.incidents add constraint fk_type_stretch_id foreign key (stretch_id) references backoffice.stretch(id) ON DELETE RESTRICT;
+		alter table backoffice.incidents add constraint fk_type_event_type_id foreign key (event_type_id) references backoffice.event_type(id) ON DELETE RESTRICT;
+		alter table backoffice.incidents add constraint fk_collision_id foreign key (collision_id) references backoffice.collision(id) ON DELETE RESTRICT;
+		alter table backoffice.incidents add constraint fk_object_crash_id foreign key (object_crash_id) references backoffice.object_crash(id) ON DELETE RESTRICT;
+		alter table backoffice.incidents add constraint fk_vehicle_crash_id foreign key (vehicle_crash_id) references backoffice.vehicle_crash(id) ON DELETE RESTRICT;
+		alter table backoffice.incidents add constraint fk_relative_location_id foreign key (relative_location_id) references backoffice.relative_location(id) ON DELETE RESTRICT;
+		alter table backoffice.incidents add constraint fk_road_condition_id foreign key (road_condition_id) references backoffice.road_conditions(id) ON DELETE RESTRICT;
+		alter table backoffice.incidents add constraint fk_road_type_id foreign key (road_type_id) references backoffice.road_types(id) ON DELETE RESTRICT;
+		alter table backoffice.incidents add constraint fk_road_state_id foreign key (road_state_id) references backoffice.road_states(id) ON DELETE RESTRICT;
+		alter table backoffice.incidents add constraint fk_weather_state_id foreign key (weather_state_id) references backoffice.weather_states(id) ON DELETE RESTRICT;
+		alter table backoffice.incidents add constraint fk_luminosity_id foreign key (luminosity_id) references backoffice.luminosity(id) ON DELETE RESTRICT;
+		alter table backoffice.incidents add constraint fk_ligth_id foreign key (ligth_id) references backoffice.ligth(id) ON DELETE RESTRICT;
+		alter table backoffice.incidents add constraint fk_cause_id foreign key (cause_id) references backoffice.causes(id) ON DELETE RESTRICT;
 	END IF;
 END $$;
 
