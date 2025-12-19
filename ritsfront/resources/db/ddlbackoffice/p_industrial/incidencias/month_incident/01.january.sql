@@ -47,24 +47,24 @@ BEGIN
            FROM backoffice.support_services ss
            LEFT JOIN backoffice.support_service_subtypes sst 
              ON ss.subtype_id = sst.id
-          WHERE ss.type_id = 2 and ss.incident_id = i.incident_report_id::int8) as internas,
+          WHERE ss.type_id = 2 and ss.incident_id = i.id) as internas,
         (SELECT string_agg(sst.alias::text, ''-'' ORDER BY sst.alias)
            FROM backoffice.support_services ss
            LEFT JOIN backoffice.support_service_subtypes sst 
              ON ss.subtype_id = sst.id
-          WHERE ss.type_id = 1 and ss.incident_id = i.incident_report_id::int8) as externas
+          WHERE ss.type_id = 1 and ss.incident_id = i.id) as externas
       FROM backoffice.incidents i
       LEFT JOIN backoffice.event_type et 
         ON i.event_id = et.id
       LEFT JOIN backoffice.participants p 
-        ON i.incident_report_id::int = p.incident_id
+        ON i.id = p.incident_id
       LEFT JOIN backoffice.causes c 
         ON i.cause_id = c.id 
       LEFT JOIN backoffice.relative_location rl 
         ON i.relative_location_id = rl.id
 	  WHERE
 		extract(month from i.date) = 1
-      GROUP BY i."date", i.km, et.alias, c.alias, rl.alias, i.incident_report_id
+      GROUP BY i."date", i.km, et.alias, c.alias, rl.alias, i.id
       ORDER BY i."date"';
   END IF;
 END $do$;
