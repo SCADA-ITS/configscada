@@ -32,6 +32,7 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_ES', 1, 'LBL_IMAGE_EDITOR_CONFIRM_SELECTED_IMAGES_DESCRIPTION', 'Confirme la selección de imágenes', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_IMAGE_EDITOR_CONFIRM_SELECTED_IMAGES', '¿Desea seleccionar las imágenes mostradas?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_IMAGE_EDITOR_NO_SELECTED_IMAGES', 'No se ha seleccionado ninguna imagen.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_IMAGE_EDITOR_EDITABLE_IMAGE', 'Imagen editable', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --en_GB
 ('en_GB', 1, 'LBL_IMAGE_EDITOR_SAVED_ERROR', 'Error to save the image', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -56,6 +57,7 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('en_GB', 1, 'LBL_IMAGE_EDITOR_CONFIRM_SELECTED_IMAGES_DESCRIPTION', 'Confirm the images selected', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_IMAGE_EDITOR_CONFIRM_SELECTED_IMAGES', 'Do you want to select the displayed images?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_IMAGE_EDITOR_NO_SELECTED_IMAGES', 'No image has been selected.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_IMAGE_EDITOR_EDITABLE_IMAGE', 'Editable image', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --sk_SK
 
@@ -81,4 +83,5 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_CL', 1, 'LBL_IMAGE_EDITOR_CONFIRM_SELECTED_IMAGES_TITLE', 'Imágenes seleccionadas', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_IMAGE_EDITOR_CONFIRM_SELECTED_IMAGES_DESCRIPTION', 'Confirme la selección de imágenes', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_IMAGE_EDITOR_CONFIRM_SELECTED_IMAGES', '¿Desea seleccionar las imágenes mostradas?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('es_CL', 1, 'LBL_IMAGE_EDITOR_NO_SELECTED_IMAGES', 'No se ha seleccionado ninguna imagen.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+('es_CL', 1, 'LBL_IMAGE_EDITOR_NO_SELECTED_IMAGES', 'No se ha seleccionado ninguna imagen.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_IMAGE_EDITOR_EDITABLE_IMAGE', 'Imagen editable', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
