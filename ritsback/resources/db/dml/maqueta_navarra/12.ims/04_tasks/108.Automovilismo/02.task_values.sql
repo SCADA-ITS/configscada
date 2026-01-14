@@ -3,7 +3,7 @@ INSERT INTO conf.ims_incident_type_task_values (task_type_id, task_type_param_id
 --1 = TOKEN BOT que usamos para la notifiación
 --2 = CHAT_ID del canal donde vamos a mandar la incidencia
 --3 = MESSAGE_TEXT Definición del texto a enviar en la notificación
-(10, 1, 01010107, 'Inicio de evento de automovilismo 
+(10, 1, 01010108, 'Inicio de evento de automovilismo 
 @alias
 @localizacion
 @afeccion
