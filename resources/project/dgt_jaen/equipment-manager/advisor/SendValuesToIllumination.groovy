@@ -10,6 +10,7 @@ import com.revenga.rits.back.data.core.model.Element;
 import com.revenga.rits.back.data.core.model.ElementValue;
 import com.revenga.rits.back.data.core.model.ElementValueState;
 import com.revenga.rits.back.equipment.manager.service.EntitiesManager;
+import com.revenga.rits.back.equipment.manager.helper.GroovyHelper;
 
 class SendValuesToIllumination {
 
