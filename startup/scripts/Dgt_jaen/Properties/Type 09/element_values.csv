@@ -35,11 +35,11 @@ item;element_subtype;alias;description;sessionuid;road;stretchs;pk;sentido;param
 34;4;VEN-3-24-DP-2;VEN-3-24-DP-2;VEN-3-24-DP-2;Autovía A-4;Despeñaperros;246+425;Córdoba;Zitrón;JZR 16-55/4;true;SendAlarmsToVentilation.groovy;SendFanStateToVentilation.groovy;SendValuesToVentilation.groovy
 35;4;VEN-3-25-DP-2;VEN-3-25-DP-2;VEN-3-25-DP-2;Autovía A-4;Despeñaperros;246+350;Córdoba;Zitrón;JZR 16-55/4;true;SendAlarmsToVentilation.groovy;SendFanStateToVentilation.groovy;SendValuesToVentilation.groovy
 36;4;VEN-3-26-DP-2;VEN-3-26-DP-2;VEN-3-26-DP-2;Autovía A-4;Despeñaperros;246+350;Córdoba;Zitrón;JZR 16-55/4;true;SendAlarmsToVentilation.groovy;SendFanStateToVentilation.groovy;SendValuesToVentilation.groovy
-37;5;VEN-1-01-CZ;VEN-1-01-CZ;VEN-1-01-CZ;Autovía A-4;El Corzo;;Madrid;Zitrón;JZR 16-55/4;true;SendAlarmsToVentilation.groovy;SendFanStateToVentilation.groovy;SendValuesToVentilation.groovy
-38;5;VEN-1-02-CZ;VEN-1-02-CZ;VEN-1-02-CZ;Autovía A-4;El Corzo;;Madrid;Zitrón;JZR 16-55/4;true;SendAlarmsToVentilation.groovy;SendFanStateToVentilation.groovy;SendValuesToVentilation.groovy
-39;5;VEN-1-03-CZ;VEN-1-03-CZ;VEN-1-03-CZ;Autovía A-4;El Corzo;;Madrid;Zitrón;JZR 16-55/4;true;SendAlarmsToVentilation.groovy;SendFanStateToVentilation.groovy;SendValuesToVentilation.groovy
-40;5;VEN-1-04-CZ;VEN-1-04-CZ;VEN-1-04-CZ;Autovía A-4;El Corzo;;Madrid;Zitrón;JZR 16-55/4;true;SendAlarmsToVentilation.groovy;SendFanStateToVentilation.groovy;SendValuesToVentilation.groovy
-41;5;VEN-1-05-CZ;VEN-1-05-CZ;VEN-1-05-CZ;Autovía A-4;El Corzo;;Madrid;Zitrón;JZR 16-55/4;true;SendAlarmsToVentilation.groovy;SendFanStateToVentilation.groovy;SendValuesToVentilation.groovy
-42;5;VEN-1-06-CZ;VEN-1-06-CZ;VEN-1-06-CZ;Autovía A-4;El Corzo;;Madrid;Zitrón;JZR 16-55/4;true;SendAlarmsToVentilation.groovy;SendFanStateToVentilation.groovy;SendValuesToVentilation.groovy
-43;5;VEN-1-07-CZ;VEN-1-07-CZ;VEN-1-07-CZ;Autovía A-4;El Corzo;;Madrid;Zitrón;JZR 16-55/4;true;SendAlarmsToVentilation.groovy;SendFanStateToVentilation.groovy;SendValuesToVentilation.groovy
-44;5;VEN-1-08-CZ;VEN-1-08-CZ;VEN-1-08-CZ;Autovía A-4;El Corzo;;Madrid;Zitrón;JZR 16-55/4;true;SendAlarmsToVentilation.groovy;SendFanStateToVentilation.groovy;SendValuesToVentilation.groovy
+37;5;VEN-1-01-CZ;VEN-1-01-CZ;VEN-1-01-CZ;Autovía A-4;El Corzo;245+570;Madrid;Zitrón;JZR 16-55/4;true;SendAlarmsToVentilation.groovy;SendFanStateToVentilation.groovy;SendValuesToVentilation.groovy
+38;5;VEN-1-02-CZ;VEN-1-02-CZ;VEN-1-02-CZ;Autovía A-4;El Corzo;245+570;Madrid;Zitrón;JZR 16-55/4;true;SendAlarmsToVentilation.groovy;SendFanStateToVentilation.groovy;SendValuesToVentilation.groovy
+39;5;VEN-1-03-CZ;VEN-1-03-CZ;VEN-1-03-CZ;Autovía A-4;El Corzo;245+465;Madrid;Zitrón;JZR 16-55/4;true;SendAlarmsToVentilation.groovy;SendFanStateToVentilation.groovy;SendValuesToVentilation.groovy
+40;5;VEN-1-04-CZ;VEN-1-04-CZ;VEN-1-04-CZ;Autovía A-4;El Corzo;245+465;Madrid;Zitrón;JZR 16-55/4;true;SendAlarmsToVentilation.groovy;SendFanStateToVentilation.groovy;SendValuesToVentilation.groovy
+41;5;VEN-1-05-CZ;VEN-1-05-CZ;VEN-1-05-CZ;Autovía A-4;El Corzo;245+360;Madrid;Zitrón;JZR 16-55/4;true;SendAlarmsToVentilation.groovy;SendFanStateToVentilation.groovy;SendValuesToVentilation.groovy
+42;5;VEN-1-06-CZ;VEN-1-06-CZ;VEN-1-06-CZ;Autovía A-4;El Corzo;245+360;Madrid;Zitrón;JZR 16-55/4;true;SendAlarmsToVentilation.groovy;SendFanStateToVentilation.groovy;SendValuesToVentilation.groovy
+43;5;VEN-1-07-CZ;VEN-1-07-CZ;VEN-1-07-CZ;Autovía A-4;El Corzo;245+260;Madrid;Zitrón;JZR 16-55/4;true;SendAlarmsToVentilation.groovy;SendFanStateToVentilation.groovy;SendValuesToVentilation.groovy
+44;5;VEN-1-08-CZ;VEN-1-08-CZ;VEN-1-08-CZ;Autovía A-4;El Corzo;245+260;Madrid;Zitrón;JZR 16-55/4;true;SendAlarmsToVentilation.groovy;SendFanStateToVentilation.groovy;SendValuesToVentilation.groovy
