@@ -15,7 +15,7 @@
     <request_list>
         <request>
             <request_frame>0x07</request_frame>
-            <cron_expression>0 * * * * ?</cron_expression>
+            <cron_expression>1 0/10 * * * ?</cron_expression>
         </request>
     </request_list>
 </generic_une_v1>

@@ -130,7 +130,8 @@ public class ProcessFrame_1 {
 
     def convertToTimestamp(dia, mes, anio, hora, minuto, segundo) {
         // Crear un objeto Calendar y establecer cada componente
-        Calendar calendar = Calendar.getInstance();
+        TimeZone tz = TimeZone.getTimeZone("Europe/Madrid")
+        Calendar calendar = Calendar.getInstance(tz)
         calendar.set(Calendar.YEAR, anio); // Establece el año
         calendar.set(Calendar.MONTH, mes - 1); // Mes en Calendar es 0-based
         calendar.set(Calendar.DATE, dia); // Establece el día
