@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<p:server_launcher_adapter_v1 name="" version="" xmlns:p="server_launcher_adapter_v1" xmlns:xsi="http:/www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="server_launcher_adapter_v1 ../../../adapter-lib/src/main/resources/schemas/server-launcher/server_launcher_adapter_v1.xsd ">
+	<p:general>
+		<p:check_alive_s>5</p:check_alive_s>
+		<p:trace_stats_s>60</p:trace_stats_s>
+	</p:general>
+	<p:processes>
+		<p:proc id="1" enabled="true">
+			<p:name>EP-PUB-STOMP</p:name>
+			<p:path>/home/admin/app/backrits/</p:path>
+			<p:executable>ep-pub-stomp.jar</p:executable>
+			<p:xml_adapter>pub_stomp_adapter_v1.xml</p:xml_adapter>
+			<p:restart_on_fail>true</p:restart_on_fail>
+			<p:parameters>
+				<p:param>-Dfile.encoding=UTF-8</p:param>
+			</p:parameters>
+			<p:thresholds>
+    			<p:threshold><![CDATA[heapSize,>,3000000000]]></p:threshold>
+			</p:thresholds>
+		</p:proc>
+		<p:proc id="2" enabled="true">
+			<p:name>EQUIPMENT-MANAGER</p:name>
+			<p:path>/home/admin/app/backrits/</p:path>
+			<p:executable>equipment-manager.jar</p:executable>
+			<p:xml_adapter>equipment_manager_adapter_v1.xml</p:xml_adapter>
+			<p:restart_on_fail>true</p:restart_on_fail>
+			<p:parameters>
+				<p:param>-Dfile.encoding=UTF-8</p:param>
+			</p:parameters>
+		</p:proc>
+		<p:proc id="3" enabled="true">
+			<p:name>SERVICE-GRAPHQL</p:name>
+			<p:path>/home/admin/app/backrits/</p:path>
+			<p:executable>service-graphql.jar</p:executable>
+			<p:xml_adapter>service_graphql_adapter_v1.xml</p:xml_adapter>
+			<p:restart_on_fail>true</p:restart_on_fail>
+			<p:parameters>
+				<p:param>-Dfile.encoding=UTF-8</p:param>
+			</p:parameters>
+		</p:proc>
+		<p:proc id="4" enabled="true">
+			<p:name>PLAN-MANAGER</p:name>
+			<p:path>/home/admin/app/backrits/</p:path>
+			<p:executable>plan-manager.jar</p:executable>
+			<p:xml_adapter>plan_manager_adapter_v1.xml</p:xml_adapter>
+			<p:restart_on_fail>true</p:restart_on_fail>
+			<p:dependencies>3</p:dependencies>
+			<p:time_out>300000</p:time_out>
+			<p:parameters>
+				<p:param>-Dfile.encoding=UTF-8</p:param>
+			</p:parameters>
+		</p:proc>
+		<p:proc id="5" enabled="true">
+			<p:name>IO-CONTROLLER</p:name>
+			<p:path>/home/admin/app/backrits/</p:path>
+			<p:executable>io-controller.jar</p:executable>
+			<p:xml_adapter>controller_adapter_v1.xml</p:xml_adapter>
+			<p:restart_on_fail>true</p:restart_on_fail>
+			<p:dependencies>3</p:dependencies>
+			<p:time_out>300000</p:time_out>
+			<p:parameters>
+				<p:param>-Dfile.encoding=UTF-8</p:param>
+			</p:parameters>
+		</p:proc>
+		<p:proc id="6" enabled="false">
+			<p:name>INCIDENT-MANAGER</p:name>
+			<p:path>/home/admin/app/backrits/</p:path>
+			<p:executable>incident-manager.jar</p:executable>
+			<p:xml_adapter>incident_manager_adapter_v1.xml</p:xml_adapter>
+			<p:restart_on_fail>true</p:restart_on_fail>
+			<p:dependencies>3</p:dependencies>
+			<p:time_out>300000</p:time_out>
+			<p:parameters>
+				<p:param>-Dfile.encoding=UTF-8</p:param>
+			</p:parameters>
+		</p:proc>
+		<p:proc id="7" enabled="true">
+			<p:name>TRAFFIC-MANAGER</p:name>
+			<p:path>/home/admin/app/backrits/</p:path>
+			<p:executable>traffic-manager.jar</p:executable>
+			<p:xml_adapter>traffic_manager_adapter_v1.xml</p:xml_adapter>
+			<p:restart_on_fail>true</p:restart_on_fail>
+			<p:dependencies>3</p:dependencies>
+			<p:time_out>300000</p:time_out>
+			<p:parameters>
+				<p:param>-Dfile.encoding=UTF-8</p:param>
+			</p:parameters>
+		</p:proc>
+		<p:proc id="8" enabled="true">
+			<p:name>HISTORICAL-MANAGER</p:name>
+			<p:path>/home/admin/app/backrits/</p:path>
+			<p:executable>historical-manager.jar</p:executable>
+			<p:xml_adapter>historical_manager_adapter_v1.xml</p:xml_adapter>
+			<p:restart_on_fail>true</p:restart_on_fail>
+			<p:dependencies>3</p:dependencies>
+			<p:time_out>300000</p:time_out>
+			<p:parameters>
+				<p:param>-Dfile.encoding=UTF-8</p:param>
+			</p:parameters>
+		</p:proc>
+	</p:processes>
+</p:server_launcher_adapter_v1>
