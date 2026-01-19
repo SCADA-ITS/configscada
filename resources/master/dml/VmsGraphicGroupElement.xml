@@ -1,18 +1,36 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE RelativeLayout>
 <DML enabled="true" model="VmsGraphicGroupElement">
-	<SELECT>SELECT graphic_group_id as "graphicGroupId",
-				   element_type_id as "elementTypeId",
-				   element_id as "elementId",
-				   enabled as "enabled",
-				   visible as "visible"
-			  FROM conf.vms_graphic_groups_elements
-			  WHERE enabled = true or enabled is null
-	</SELECT>
-	<INSERT>
-	</INSERT>
-	<UPDATE>
-	</UPDATE>
-	<DELETE>
-	</DELETE>
+  <SELECT>SELECT graphic_group_id as "graphicGroupId",
+           element_type_id as "elementTypeId",
+           element_id as "elementId",
+           enabled as "enabled",
+           visible as "visible"
+        FROM conf.vms_graphic_groups_elements
+        WHERE enabled = true or enabled is null
+  </SELECT>
+  <INSERT>INSERT INTO conf.vms_graphic_groups_elements
+          (graphic_group_id,
+           element_type_id,
+           element_id,
+           enabled,
+           visible,
+           created_at,
+           updated_at)
+          VALUES 
+          (:graphicGroupId,
+           :elementTypeId,       
+           :elementId,
+           :enabled, 
+           :visible, 
+           CURRENT_TIMESTAMP, 
+           CURRENT_TIMESTAMP)
+  </INSERT>
+  <UPDATE>
+  </UPDATE>
+  <DELETE>DELETE FROM conf.vms_graphic_groups_elements
+       WHERE element_type_id = :elementTypeId
+         AND graphic_group_id = :graphicGroupId
+         AND element_id = :elementId
+  </DELETE>
 </DML>
