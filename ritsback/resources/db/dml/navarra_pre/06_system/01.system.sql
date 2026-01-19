@@ -27,7 +27,7 @@ INSERT INTO conf.system_param_values
 '{
 	"mail.smtp.auth": "true",
 	"mail.smtp.starttls.enable": "true",
-	"mail.smtp.host": "smtp.serviciodecorreo.es ",
+	"mail.smtp.host": "smtp.serviciodecorreo.es",
 	"mail.smtp.port": "587",
 	"mail.smtp.ssl.trust": "*",
 	"mail.smtp.ssl.protocols": "TLSv1.2",
