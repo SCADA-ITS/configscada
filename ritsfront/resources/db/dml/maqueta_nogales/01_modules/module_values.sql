@@ -44,4 +44,13 @@ INSERT INTO ui.module_values(module_id, module_param_id, value) VALUES
 
 (6100, 13, '2'), (6100, 14, 'alarmas_hist'),
 (6101, 13, '2'), (6101, 14, 'estados_hist'),
-(6110, 13, '2'), (6110, 14, 'pmv_commands');
+(6110, 13, '2'), (6110, 14, 'pmv_commands'),
+
+(6102, 13, '3'), (6102, 14, 'ETD_hist_data'),
+(6103, 13, '3'), (6103, 14, 'ETD_hist_data_hours'),
+(6104, 13, '3'), (6104, 14, 'ETD_hist_data_days'),
+(6105, 13, '3'), (6105, 14, 'ETD_hist_data_months'),
+(6106, 13, '3'), (6106, 14, 'SECTION_hist_data'),
+(6107, 13, '3'), (6107, 14, 'SECTION_hist_data_hours'),
+(6108, 13, '3'), (6108, 14, 'SECTION_hist_data_days'),
+(6109, 13, '3'), (6109, 14, 'SECTION_hist_data_months');

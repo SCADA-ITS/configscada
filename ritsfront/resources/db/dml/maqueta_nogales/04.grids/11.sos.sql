@@ -1,5 +1,5 @@
 INSERT INTO ui.grids(id, adapter_id, "label", enabled, visible) VALUES
-(11, 2, 'LBL_SOS', true, true);
+(11, 2, 'LBL_GRID_SOS', true, true);
 
 INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", required, parameterized, extended, filtered, "label", label_tooltip, source_field, is_pk, is_epoch_milli, align, needs_translation, grouping_summary, width_px, grid_field_group_operation_id, enabled, visible, adjust, header_vertical, fixed_column, replacement_function) VALUES
 --el id lo definimos como: <tipo><numero de fila 4 numeros>
@@ -31,7 +31,9 @@ INSERT INTO ui.grid_option_values(grid_id, grid_option_id, value) VALUES
 (11, 14, 'false'),
 (11, 15, 'false'),
 (11, 16, 'img/grid/sos.png'),
-(11, 17, 'true');
+(11, 17, 'true'),
+(11, 25, 'true'),
+(11, 26, 'true');
 
 INSERT INTO ui.grid_commands(grid_id, "position", "label", icon, "default", module_action_id, args, view_type_id, multiselect, show_text, item_required) VALUES
 (11, 1, 'LBL_CMD_VIEW_EQUIPMENT', 'mdi mdi-eye', true, 101401, NULL, 1, false, false, false),
