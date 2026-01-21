@@ -41,8 +41,10 @@ class getVehicleData {
     boolean onAfterChangeTransitState(Transit transit, TransitTypeStateTransition transitTypeStateTransition) {
 
 		CgiApiMultasPlateNumberResponseDto cgiApiMultasPlateNumberResponseDto;
-		List<TransitValue> transitValues = new ArrayList<>();
 		
+		List<TransitValue> transitValues = EntitiesManager.getInstance().getTransitValues(transit);
+		log.error("Jony transitValues: " + transitValues);
+	
 		log.debug("onAfterChangeTransitState in");
 		log.debug("transitId = " + transit.getId() + 
 				  " currentState = " + transitTypeStateTransition.getParentTransitStateId() + 
@@ -57,7 +59,7 @@ class getVehicleData {
 				transit.setVehicleBrandName(cgiApiMultasPlateNumberResponseDto.getIdentificacion().getDescripcionVehiculo().getMarca().getDescripcion());
 				transit.setVehicleModelName(cgiApiMultasPlateNumberResponseDto.getIdentificacion().getDescripcionVehiculo().getModelo());
 				transit.setVehicleColor(cgiApiMultasPlateNumberResponseDto.getIdentificacion().getDescripcionVehiculo().getColor().getDescripcion());
-				transit.setVehicleTypeName(cgiApiMultasPlateNumberResponseDto.getIdentificacion().getDescripcionVehiculo().getTipoVehiculo().getDescripcion());
+				transit.setVehicleTypeName(cgiApiMultasPlateNumberResponseDto.getIdentificacion().getDescripcionVehiculo().getTipoVehiculo().getDescripcion());	
 				
 				TransitValue apiVehicleITV = new TransitValue();
 				apiVehicleITV.setTransitTypeId(TRANSIT_TYPE_ID);		
@@ -67,8 +69,8 @@ class getVehicleData {
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 				String fechaFormateada = odt.format(formatter);	
 				apiVehicleITV.setValue(fechaFormateada);	
-				
-				transitValues.add(apiVehicleITV);
+
+				transitValues.add(apiVehicleITV);	
 				transit.setTransitValues(transitValues);
 				
 				EntitiesManager.getInstance().updateTransit(transit);
@@ -76,6 +78,7 @@ class getVehicleData {
 				log.debug("onAfterChangeTransitState out");
 			}catch(Exception e){
 				log.error("Se ha producido un error en la petición de datos de vehículo con la matrícula: " + transit.getVehiclePlateNumber());
+				log.error(e.getMessage());
 			}
 		}else{
 			log.debug("No se realiza la consulta de datos de vehículo por no tener ninguna matrícula asociada");
