@@ -55,7 +55,7 @@ BEGIN
           WHERE ss.type_id = 1 and ss.incident_id = i.incident_report_id::int8) as externas
       FROM backoffice.incidents i
       LEFT JOIN backoffice.event_type et 
-        ON i.event_id = et.id
+        ON i.event_type_id = et.id
       LEFT JOIN backoffice.participants p 
         ON i.incident_report_id::int = p.incident_id
       LEFT JOIN backoffice.causes c 

@@ -28,7 +28,7 @@ BEGIN
 	-- 
   	-- smartgen.sg_metadata_tables
   	--
-	INSERT INTO backoffice.sg_metadata_tables (id, name, label, label_singular, label_description, mdi_icon, support_images, support_attachments, metadata, sql_view) VALUES
+	INSERT INTO backoffice.sg_metadata_tables (id, name, label, label_singular, label_description, mdi_icon, support_images, support_attachments, metadata, sql_view, grid_id) VALUES
 	(1, 'incidents', 'Incidencias', 'Incidencias', 'LBL_INCIDENTS_DESCRIPTION', 'mdi mdi-message-alert', true, true, 
 	'{
 		  "tabs": [
@@ -107,39 +107,39 @@ BEGIN
 		  "initialTabLabel": "LBL_SECTION_IDENTIFICATION",
 		  "srcTemplate": "incidentFormTemplate.html"
 	}',
-	null),
-	(2, 'vehicles', 'Vehículos', 'Vehículos', 'Vehículos', 'mdi mdi-message-alert', true, true, null, null),
-	(3, 'participants', 'Participantes', 'Participantes', 'Participantes', 'mdi mdi-message-alert', true, true, null, null),
-	(4, 'closures', 'Cierres', 'Cierres', 'Cierres', 'mdi mdi-message-alert', true, true, null, null),
-	(5, 'event', 'Tipo', 'Tipo', 'Tipo', 'mdi mdi-message-alert', true, true, null, null),
-	(6, 'side', 'Lado', 'Lado', 'Lado', 'mdi mdi-message-alert', true, true, null, null),
-	(7, 'stretch', 'Tramo', 'Tramo', 'Tramo', 'mdi mdi-message-alert', true, true, null, null),
-	(8, 'event_type', 'Tipo de evento', 'Tipo de evento', 'Tipo de evento', 'mdi mdi-message-alert', true, true, null, null),
-	(9, 'collision', 'Colisión', 'Colisión', 'Colisión', 'mdi mdi-message-alert', true, true, null, null),
-	(10, 'object_crash', 'Choque con objeto', 'Choque con objeto', 'Choque con objeto', 'mdi mdi-message-alert', true, true, null, null),
-	(11, 'vehicle_crash', 'Choque con vehículo', 'Choque con vehículo', 'Choque con vehículo', 'mdi mdi-message-alert', true, true, null, null),
-	(12, 'relative_location', 'Ubicación relativa', 'Ubicación relativa', 'Ubicación relativa', 'mdi mdi-message-alert', true, true, null, null),
-	(13, 'vehicle_types', 'Tipo', 'Tipo', 'Tipo', 'mdi mdi-message-alert', true, true, null, null),
-	(14, 'vehicle_services', 'Servicios', 'Servicios', 'Servicios', 'mdi mdi-message-alert', true, true, null, null),
-	(15, 'vehicle_consecuences', 'Consecuencias', 'Consecuencias', 'Consecuencias', 'mdi mdi-message-alert', true, true, null, null),
-	(16, 'vehicle_manoeuvres', 'Maniobras', 'Maniobras', 'Maniobras', 'mdi mdi-message-alert', true, true, null, null),
-	(17, 'vehicle_brands', 'Marca', 'Marca', 'Marca', 'mdi mdi-message-alert', true, true, null, null),
-	(18, 'participant_types', 'Tipo', 'Tipo', 'Tipo', 'mdi mdi-message-alert', true, true, null, null),
-	(19, 'participant_injuries', 'Lesión', 'Lesión', 'Lesión', 'mdi mdi-message-alert', true, true, null, null),
-	(20, 'participant_nacionalities', 'Nacionalidad', 'Nacionalidad', 'Nacionalidad', 'mdi mdi-message-alert', true, true, null, null),
-	(21, 'support_services', 'Servicios de apoyo', 'Servicios de apoyo', 'Servicios de apoyo', 'mdi mdi-message-alert', true, true, null, null),
-	(22, 'damages_responsabilities', 'Daños-responsables', 'Daños-responsables', 'Daños-responsables', 'mdi mdi-message-alert', true, true, null, null),
-	(23, 'damages_evaluations', 'Daños-evaluación', 'Daños-evaluación', 'Daños-evaluación', 'mdi mdi-message-alert', true, true, null, null),
-	(24, 'owner_types', 'Tipo propietario', 'Tipo propietario', 'Tipo propietario', 'mdi mdi-message-alert', true, true, null, null),
-	(25, 'support_service_types', 'Tipo', 'Tipo', 'Tipo', 'mdi mdi-message-alert', true, true, null, null),
-	(26, 'support_service_subtypes', 'Subtipo', 'Subtipo', 'Subtipo', 'mdi mdi-message-alert', true, true, null, null),
-	(27, 'road_conditions', 'Condiciones calzada', 'Condiciones calzada', 'Condiciones calzada', 'mdi mdi-message-alert', true, true, null, null),
-	(28, 'road_types', 'Tipo', 'Tipo', 'Tipo', 'mdi mdi-message-alert', true, true, null, null),
-	(29, 'road_states', 'Estado', 'Estado', 'Estado', 'mdi mdi-message-alert', true, true, null, null),
-	(30, 'weather_states', 'Estado atmosférico', 'Estado atmosférico', 'Estado atmosférico', 'mdi mdi-message-alert', true, true, null, null),
-	(31, 'luminosity', 'Luminosidad', 'Luminosidad', 'Luminosidad', 'mdi mdi-message-alert', true, true, null, null),
-	(32, 'ligth', 'Luz artificial', 'Luz artificial', 'Luz artificial', 'mdi mdi-message-alert', true, true, null, null),
-	(33, 'causes', 'Causa probable', 'Causa probable', 'Causa probable', 'mdi mdi-message-alert', true, true, null, null),
+	null, null),
+	(2, 'vehicles', 'Vehículos', 'Vehículos', 'Vehículos', 'mdi mdi-message-alert', true, true, null, null, null),
+	(3, 'participants', 'Participantes', 'Participantes', 'Participantes', 'mdi mdi-message-alert', true, true, null, null, null),
+	(4, 'closures', 'Cierres', 'Cierres', 'Cierres', 'mdi mdi-message-alert', true, true, null, null, null),
+	(5, 'event', 'Tipo', 'Tipo', 'Tipo', 'mdi mdi-message-alert', true, true, null, null, null),
+	(6, 'side', 'Lado', 'Lado', 'Lado', 'mdi mdi-message-alert', true, true, null, null, null),
+	(7, 'stretch', 'Tramo', 'Tramo', 'Tramo', 'mdi mdi-message-alert', true, true, null, null, null),
+	(8, 'event_type', 'Tipo de evento', 'Tipo de evento', 'Tipo de evento', 'mdi mdi-message-alert', true, true, null, null, null),
+	(9, 'collision', 'Colisión', 'Colisión', 'Colisión', 'mdi mdi-message-alert', true, true, null, null, null),
+	(10, 'object_crash', 'Choque con objeto', 'Choque con objeto', 'Choque con objeto', 'mdi mdi-message-alert', true, true, null, null, null),
+	(11, 'vehicle_crash', 'Choque con vehículo', 'Choque con vehículo', 'Choque con vehículo', 'mdi mdi-message-alert', true, true, null, null, null),
+	(12, 'relative_location', 'Ubicación relativa', 'Ubicación relativa', 'Ubicación relativa', 'mdi mdi-message-alert', true, true, null, null, null),
+	(13, 'vehicle_types', 'Tipo', 'Tipo', 'Tipo', 'mdi mdi-message-alert', true, true, null, null, null),
+	(14, 'vehicle_services', 'Servicios', 'Servicios', 'Servicios', 'mdi mdi-message-alert', true, true, null, null, null),
+	(15, 'vehicle_consecuences', 'Consecuencias', 'Consecuencias', 'Consecuencias', 'mdi mdi-message-alert', true, true, null, null, null),
+	(16, 'vehicle_manoeuvres', 'Maniobras', 'Maniobras', 'Maniobras', 'mdi mdi-message-alert', true, true, null, null, null),
+	(17, 'vehicle_brands', 'Marca', 'Marca', 'Marca', 'mdi mdi-message-alert', true, true, null, null, null),
+	(18, 'participant_types', 'Tipo', 'Tipo', 'Tipo', 'mdi mdi-message-alert', true, true, null, null, null),
+	(19, 'participant_injuries', 'Lesión', 'Lesión', 'Lesión', 'mdi mdi-message-alert', true, true, null, null, null),
+	(20, 'participant_nacionalities', 'Nacionalidad', 'Nacionalidad', 'Nacionalidad', 'mdi mdi-message-alert', true, true, null, null, null),
+	(21, 'support_services', 'Servicios de apoyo', 'Servicios de apoyo', 'Servicios de apoyo', 'mdi mdi-message-alert', true, true, null, null, null),
+	(22, 'damages_responsabilities', 'Daños-responsables', 'Daños-responsables', 'Daños-responsables', 'mdi mdi-message-alert', true, true, null, null, null),
+	(23, 'damages_evaluations', 'Daños-evaluación', 'Daños-evaluación', 'Daños-evaluación', 'mdi mdi-message-alert', true, true, null, null, null),
+	(24, 'owner_types', 'Tipo propietario', 'Tipo propietario', 'Tipo propietario', 'mdi mdi-message-alert', true, true, null, null, null),
+	(25, 'support_service_types', 'Tipo', 'Tipo', 'Tipo', 'mdi mdi-message-alert', true, true, null, null, null),
+	(26, 'support_service_subtypes', 'Subtipo', 'Subtipo', 'Subtipo', 'mdi mdi-message-alert', true, true, null, null, null),
+	(27, 'road_conditions', 'Condiciones calzada', 'Condiciones calzada', 'Condiciones calzada', 'mdi mdi-message-alert', true, true, null, null, null),
+	(28, 'road_types', 'Tipo', 'Tipo', 'Tipo', 'mdi mdi-message-alert', true, true, null, null, null),
+	(29, 'road_states', 'Estado', 'Estado', 'Estado', 'mdi mdi-message-alert', true, true, null, null, null),
+	(30, 'weather_states', 'Estado atmosférico', 'Estado atmosférico', 'Estado atmosférico', 'mdi mdi-message-alert', true, true, null, null, null),
+	(31, 'luminosity', 'Luminosidad', 'Luminosidad', 'Luminosidad', 'mdi mdi-message-alert', true, true, null, null, null),
+	(32, 'ligth', 'Luz artificial', 'Luz artificial', 'Luz artificial', 'mdi mdi-message-alert', true, true, null, null, null),
+	(33, 'causes', 'Causa probable', 'Causa probable', 'Causa probable', 'mdi mdi-message-alert', true, true, null, null, null),
 	(34, 'annual_summary', 'Resumen anual', 'Resumen anual', 'Resumen anual', 'mdi mdi-message-alert', true, true, 
 	'{
 		"srcTemplate": "summaryFormTemplate.html",
@@ -148,77 +148,77 @@ BEGIN
 	'SELECT 
 		id, anio, total_accidentes, atropello, caida, volcadura, con_lesionados, leves, menos_graves, graves, muertos, lesionados, colision, choque, otros
 	FROM 
-		backoffice.annual_summary'),
+		backoffice.annual_summary', null),
 	(35, 'month_summary', 'Resumen mensual', 'Resumen mensual', 'Resumen mensual', 'mdi mdi-message-alert', true, true, null,
 	'SELECT 
 		id, anio, mes, total_accidentes, con_lesionados, muertos, graves, menos_graves, leves, lesionados, atropello, caida, volcadura, colision, choque, otros
 	FROM 
-		backoffice.month_summary'),
+		backoffice.month_summary', 4002),
 	(36, 'incidents_summary', 'Resumen incidencias', 'Resumen incidencias', 'Resumen incidencias', 'mdi mdi-message-alert', true, true, null,
 	'SELECT 
 		id, num_registro, anio, mes, dia, hora, km, tipo_accidente, ilesos, muertos, graves, menos_graves, leves, lesionados, causa, ubicacion_relativa, internas, externas
 	FROM 
-		backoffice.incidents_summary'),
+		backoffice.incidents_summary', 4001),
 	(37, 'm_january', 'Incidencias enero', 'Incidencias enero', 'Incidencias enero', 'mdi mdi-message-alert', true, true, null,
 	'SELECT 
 		id, num_registro, anio, mes, dia, hora, km, tipo_accidente, ilesos, muertos, graves, menos_graves, leves, lesionados, causa, ubicacion_relativa, internas, externas
 	FROM 
-		backoffice.m_january'),
+		backoffice.m_january', null),
 	(38, 'm_february', 'Incidencias febrero', 'Incidencias febrero', 'Incidencias febrero', 'mdi mdi-message-alert', true, true, null,
 	'SELECT 
 		id, num_registro, anio, mes, dia, hora, km, tipo_accidente, ilesos, muertos, graves, menos_graves, leves, lesionados, causa, ubicacion_relativa, internas, externas
 	FROM 
-		backoffice.m_february'),
+		backoffice.m_february', null),
 	(39, 'm_march', 'Incidencias marzo', 'Incidencias marzo', 'Incidencias marzo', 'mdi mdi-message-alert', true, true, null,
 	'SELECT 
 		id, num_registro, anio, mes, dia, hora, km, tipo_accidente, ilesos, muertos, graves, menos_graves, leves, lesionados, causa, ubicacion_relativa, internas, externas
 	FROM 
-		backoffice.m_march'),
+		backoffice.m_march', null),
 	(40, 'm_april', 'Incidencias abril', 'Incidencias abril', 'Incidencias abril', 'mdi mdi-message-alert', true, true, null,
 	'SELECT 
 		id, num_registro, anio, mes, dia, hora, km, tipo_accidente, ilesos, muertos, graves, menos_graves, leves, lesionados, causa, ubicacion_relativa, internas, externas
 	FROM 
-		backoffice.m_april'),
+		backoffice.m_april', null),
 	(41, 'm_may', 'Incidencias mayo', 'Incidencias mayo', 'Incidencias mayo', 'mdi mdi-message-alert', true, true, null,
 	'SELECT 
 		id, num_registro, anio, mes, dia, hora, km, tipo_accidente, ilesos, muertos, graves, menos_graves, leves, lesionados, causa, ubicacion_relativa, internas, externas
 	FROM 
-		backoffice.m_may'),
+		backoffice.m_may', null),
 	(42, 'm_june', 'Incidencias junio', 'Incidencias junio', 'Incidencias junio', 'mdi mdi-message-alert', true, true, null,
 	'SELECT 
 		id, num_registro, anio, mes, dia, hora, km, tipo_accidente, ilesos, muertos, graves, menos_graves, leves, lesionados, causa, ubicacion_relativa, internas, externas
 	FROM 
-		backoffice.m_june'),
+		backoffice.m_june', null),
 	(43, 'm_july', 'Incidencias julio', 'Incidencias julio', 'Incidencias julio', 'mdi mdi-message-alert', true, true, null,
 	'SELECT 
 		id, num_registro, anio, mes, dia, hora, km, tipo_accidente, ilesos, muertos, graves, menos_graves, leves, lesionados, causa, ubicacion_relativa, internas, externas
 	FROM 
-		backoffice.m_july'),
+		backoffice.m_july', null),
 	(44, 'm_august', 'Incidencias agosto', 'Incidencias agosto', 'Incidencias agosto', 'mdi mdi-message-alert', true, true, null,
 	'SELECT 
 		id, num_registro, anio, mes, dia, hora, km, tipo_accidente, ilesos, muertos, graves, menos_graves, leves, lesionados, causa, ubicacion_relativa, internas, externas
 	FROM 
-		backoffice.m_august'),
+		backoffice.m_august', null),
 	(45, 'm_september', 'Incidencias septiembre', 'Incidencias septiembre', 'Incidencias septiembre', 'mdi mdi-message-alert', true, true, null,
 	'SELECT 
 		id, num_registro, anio, mes, dia, hora, km, tipo_accidente, ilesos, muertos, graves, menos_graves, leves, lesionados, causa, ubicacion_relativa, internas, externas
 	FROM 
-		backoffice.m_september'),
+		backoffice.m_september', null),
 	(46, 'm_october', 'Incidencias octubre', 'Incidencias octubre', 'Incidencias octubre', 'mdi mdi-message-alert', true, true, null,
 	'SELECT 
 		id, num_registro, anio, mes, dia, hora, km, tipo_accidente, ilesos, muertos, graves, menos_graves, leves, lesionados, causa, ubicacion_relativa, internas, externas
 	FROM 
-		backoffice.m_october'),
+		backoffice.m_october', null),
 	(47, 'm_november', 'Incidencias noviembre', 'Incidencias noviembre', 'Incidencias noviembre', 'mdi mdi-message-alert', true, true, null,
 	'SELECT 
 		id, num_registro, anio, mes, dia, hora, km, tipo_accidente, ilesos, muertos, graves, menos_graves, leves, lesionados, causa, ubicacion_relativa, internas, externas
 	FROM 
-		backoffice.m_november'),
+		backoffice.m_november', null),
 	(48, 'm_december', 'Incidencias deciembre', 'Incidencias deciembre', 'Incidencias deciembre', 'mdi mdi-message-alert', true, true, null,
 	'SELECT 
 		id, num_registro, anio, mes, dia, hora, km, tipo_accidente, ilesos, muertos, graves, menos_graves, leves, lesionados, causa, ubicacion_relativa, internas, externas
 	FROM 
-		backoffice.m_december');
+		backoffice.m_december', null);
 	
 	INSERT INTO backoffice.sg_metadata_columns (id, sg_metadata_table_id, column_name, "label", label_description, needs_translation, metadata, ref_view_column_id) VALUES
 	(0101, 1, 'incident_report_id', 'Identificador', NULL, true, '{"position": 1, "tableVisible": true, "editable": true, "refName": true}', null),
