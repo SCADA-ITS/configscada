@@ -43,7 +43,6 @@ class getVehicleData {
 		CgiApiMultasPlateNumberResponseDto cgiApiMultasPlateNumberResponseDto;
 		
 		List<TransitValue> transitValues = EntitiesManager.getInstance().getTransitValues(transit);
-		log.error("Jony transitValues: " + transitValues);
 	
 		log.debug("onAfterChangeTransitState in");
 		log.debug("transitId = " + transit.getId() + 

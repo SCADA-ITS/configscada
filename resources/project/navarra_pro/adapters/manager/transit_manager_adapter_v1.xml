@@ -44,6 +44,14 @@
 			<p:manager_class>com.revenga.rits.back.transit.manager.cgi.api.multas.CgiApiMultasExecutor</p:manager_class>
 			<p:executor_params>
 				<p:executor_param_value><![CDATA[cron_expression=0 * * * * ?]]></p:executor_param_value>
+			</p:executor_params>	
+		</p:executor>
+		<p:executor>
+			<p:id>4</p:id>
+			<p:enabled>true</p:enabled>
+			<p:merge_wait_time>1</p:merge_wait_time>
+			<p:manager_class>com.revenga.rits.back.transit.manager.transit.persistence.TransitArchiverExecutor</p:manager_class>
+			<p:executor_params>
 				<p:executor_param_value><![CDATA[cron_expression_archiver=0 * * * * ?]]></p:executor_param_value>
 				<p:executor_param_value><![CDATA[default_archive_after_minutes=1]]></p:executor_param_value>
 				<p:executor_param_value><![CDATA[max_transits_to_archive=50]]></p:executor_param_value>
