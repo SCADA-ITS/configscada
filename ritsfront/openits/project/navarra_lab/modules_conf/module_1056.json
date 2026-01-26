@@ -12,6 +12,10 @@
 		"edit": 105601,
 		"changeState": 105602
 	},
+	"action":{
+		"selectLocation": 105004,
+		"addLocation": 105001
+	},
 	"baseUrlImages": "trs",
 	"readOnly": true,
 	"transitStates": {

@@ -127,5 +127,6 @@
 			}
 		]
 	},
-	"locationTypeFromIncidentWizard": "LocationType:3"
+	"locationTypeFromIncidentWizard": "LocationType:3",
+	"locationTypeFromTRS": "LocationType:4"
 }
