@@ -4,7 +4,8 @@
 		"edit": 105002,
 		"delete": 105003,
 		"select": 105004,
-		"newFromIncidentWizard": 105005
+		"newFromIncidentWizard": 105005,
+		"selectFromTRS": 105006
 	},
 	"restEndpoints": {
 		"locations": "locations",
@@ -128,5 +129,5 @@
 		]
 	},
 	"locationTypeFromIncidentWizard": "LocationType:3",
-	"locationTypeFromTRS": "LocationType:4"	
+	"locationTypeFromTRS": "LocationType:4"
 }

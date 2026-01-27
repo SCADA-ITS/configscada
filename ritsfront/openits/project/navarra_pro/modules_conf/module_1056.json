@@ -13,7 +13,7 @@
 		"changeState": 105602
 	},
 	"action":{
-		"selectLocation": 105004,
+		"selectLocation": 105006,
 		"addLocation": 105001
 	},
 	"baseUrlImages": "trs",
