@@ -25,6 +25,7 @@ INSERT INTO static.transit_type_state_transitions (transit_type_id,parent_transi
 
 --Vehicle data
 (1,4,3,true,'getVehicleData.groovy',true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), --In Review
+(1,4,10,true,'checkLists.groovy',true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), --White list
 
 --In Review
 (1,3,4,false,'getVehicleData.groovy',true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), --Vehicle data

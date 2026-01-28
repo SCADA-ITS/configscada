@@ -26,6 +26,7 @@ INSERT INTO ui.menu_items(id, menu_group_id, "position", module_id, "label", ico
 (0303, 3, 3, 2020, 'LBL_MENU_ITEM_EXTERNAL_INCIDENTS', 'img/menu/backofficeincident.png', 'incidencias externas', 'incidencias externas', true, true),
 (0304, 3, 4, 1024, 'LBL_MENU_ITEM_PLAN_MANAGER', 'img/menu/plan-menu.png', 'Menu item Plan Manager', 'Menu item Plan Manager', true, true),
 (0305, 3, 5, 1055, 'LBL_TRANSIT_LIST_MODULE', 'img/menu/transit-menu.png', 'Transit list Module', 'Transit list Module', true, true),
+(0306, 3, 6, 9000, 'LBL_TRANSIT_LIST_MODULE', 'img/menu/transit-menu.png', 'Transit list Module', 'Transit list Module', true, true),
 
 -- TOOLS
 (0401, 4, 1, 403, 'LBL_MENU_ITEM_REPORTS', 'img/menu/report.png', 'Menu item Reports', 'Menu item Reports', true, true),
