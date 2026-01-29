@@ -315,6 +315,9 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 ('TransitState:7', 78, 'transit_state/DI.png'),
 ('TransitState:8', 78, 'transit_state/AR.png'),
 ('TransitState:9', 78, 'transit_state/FL.png'),
+('TransitState:10', 78, 'transit_state/CL.png'),
+('TransitState:11', 78, 'transit_state/WL.png'),
+('TransitState:12', 78, 'transit_state/BL.png'),
 
 ('TransitState:1', 79, '#6C757D'),
 ('TransitState:2', 79, '#17A2B8'),
@@ -325,6 +328,9 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 ('TransitState:7', 79, '#6F42C1'),
 ('TransitState:8', 79, '#28A745'),
 ('TransitState:9', 79, '#FF0000'),
+('TransitState:10', 79, '#FF0A87'),
+('TransitState:11', 79, '#FFFFFF'),
+('TransitState:12', 79, '#000000'),
 
 ('TransitType:1', 80, '[
 	{
