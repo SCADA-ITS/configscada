@@ -48,7 +48,9 @@ INSERT INTO ui.menu_items(menu_group_id, "position", module_id, "label", icon, "
 (4, 2, 1018, 'LBL_TREE_SELECT_MODULE', 'img/menu/default.png', 'Tree select module', 'Tree select module', true, true),
 (4, 3, 2002, 'LBL_TEST_MAP', 'img/menu/default.png', 'Test map', 'Test map', true, true),
 (4, 4, 1045, 'LBL_HISTORICAL_CHARTS', 'img/menu/chart-menu.png', 'Historical charts', 'Historical Charts', true, true),
-(4, 4, 2003, 'LBL_INFRACTIONS_EDITOR', 'img/menu/default.png', 'Infraction editor', 'Infraction editor', true, true),
+(4, 5, 2003, 'LBL_INFRACTIONS_EDITOR', 'img/menu/default.png', 'Infraction editor', 'Infraction editor', true, true),
+(4, 6, 9000, 'LBL_TRANSIT_LIST_MODULE', 'img/menu/transit-menu.png', 'Transit list Module', 'Transit list Module', true, true),
+(4, 6, 9002, 'LBL_MENU_ITEM_TRANSIT_DISCARDED_REASONS', 'img/menu/transit-menu.png', 'Transit discarded reasons Module', 'Transit discarded reasons Module', true, true),
 
 -- BACKOFFICE
 

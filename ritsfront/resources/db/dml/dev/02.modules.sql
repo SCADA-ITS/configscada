@@ -43,7 +43,11 @@ INSERT INTO ui.modules(id, module_type_id, "name", description, default_view_typ
 (7002, 9, '112 - Vehicles', '112 - Vehicles', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 
 (8000, 9, 'waze_traffic_alert_ext_entities_with_values', 'waze_traffic_alert_ext_entities_with_values', 1, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
-(8001, 9, 'waze_traffic_jam_ext_entities_with_values', 'waze_traffic_jam_ext_entities_with_values', 1, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL);
+(8001, 9, 'waze_traffic_jam_ext_entities_with_values', 'waze_traffic_jam_ext_entities_with_values', 1, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+
+(9000, 9, 'Transits - White list', 'Transits - White list', 1, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(9001, 9, 'Transits - Black list', 'Transits - Black list', 1, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(9002, 9, 'Transits - Discarded reasons', 'Transits - Discarded reasons', 1, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL);
 
 
 --(2001, 1, 'Test module 1', 'Test module 1', 1, null, 'modules/test1Module.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
@@ -137,6 +141,13 @@ INSERT INTO ui.module_values(module_id, module_param_id, value) VALUES
 
 (8000, 13, '3'), (8000, 14, 'all_waze_traffic_alert_ext_entities_with_values'),
 (8001, 13, '3'), (8001, 14, 'all_waze_traffic_jam_ext_entities_with_values'),
+
+(9000, 13, '3'), 
+(9000, 14, 'white_list'),
+(9001, 13, '3'), 
+(9001, 14, 'black_list'),
+(9002, 13, '3'), 
+(9002, 14, 'discarded_reasons'),
 
 (600, 5, 'https://www.waze.com/partnerhub/map-tool');
 

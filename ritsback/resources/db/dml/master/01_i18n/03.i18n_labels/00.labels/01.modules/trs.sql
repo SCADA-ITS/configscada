@@ -107,6 +107,7 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 	('es_ES',1,'LBL_TRANSIT_TAB_GENERAL_SUMMARY_PLATE_NUMBER', 'Modificación de matrícula',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 	('es_ES',1,'LBL_TRS_OPTION_OTHER', 'Otros',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 	('es_ES',1,'LBL_TRS_NEW_LOCATION', 'Nueva localización: ',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+	('es_ES',1,'LBL_TRS_NO_DISCARD_WITHOUT_REASON', 'No se permite rechazar el tránsito sin motivo.',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 
 --en_GB
 	('en_GB',1,'LBL_TRANSIT_LIST_MODULE','Transit manager',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
@@ -189,6 +190,7 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 	('en_GB',1,'LBL_TRS_SELECT_DISCARDED_OPTION','Select one option.',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 	('en_GB',1,'LBL_TRS_REGISTER_LOG','Register',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 	('en_GB',1,'LBL_TRS_NEW_LOCATION', 'New location: ',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+	('en_GB',1,'LBL_TRS_NO_DISCARD_WITHOUT_REASON', 'Not allowed discard the transit without reason.',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 
 --es_CL
 	('es_CL',1,'LBL_TRANSIT_LIST_MODULE','Gestor de tránsitos',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
@@ -271,4 +273,5 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 	('es_CL',1,'LBL_TRS_REQUIRED_TEXT_LOG','Se requiere añadir texto al registro.',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 	('es_CL',1,'LBL_TRS_SELECT_DISCARDED_OPTION','Seleccione una opción.',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 	('es_CL',1,'LBL_TRS_REGISTER_LOG','Registro',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
-	('es_CL',1,'LBL_TRS_NEW_LOCATION', 'Nueva localización: ',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
+	('es_CL',1,'LBL_TRS_NEW_LOCATION', 'Nueva localización: ',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+	('es_CL',1,'LBL_TRS_NO_DISCARD_WITHOUT_REASON', 'No se permite rechazar el tránsito sin motivo.',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);

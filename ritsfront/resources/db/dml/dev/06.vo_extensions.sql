@@ -1000,38 +1000,11 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 			"position": 5,
 			"enabled": true,
 			"jsFile": "modules/trs/transitEditorTabLog.js",
-			"discardedOptions": [
-				{
-					"id": 1,
-					"label": "LBL_TRS_OPTION_1",
-					"message": "LBL_TRS_OPTION_1_DESCRIPTION"
-				},
-				{
-					"id": 2,
-					"label": "LBL_TRS_OPTION_2",
-					"message": "LBL_TRS_OPTION_2_DESCRIPTION"
-				},
-				{
-					"id": 3,
-					"label": "LBL_TRS_OPTION_3",
-					"message": "LBL_TRS_OPTION_3_DESCRIPTION"
-				},
-				{
-					"id": 4,
-					"label": "LBL_TRS_OPTION_4",
-					"message": "LBL_TRS_OPTION_4_DESCRIPTION"
-				},
-				{
-					"id": 5,
-					"label": "LBL_TRS_OPTION_5",
-					"message": "LBL_TRS_OPTION_5_DESCRIPTION"
-				},
-				{
-					"id": 6,
-					"label": "LBL_TRS_OPTION_6",
-					"message": "LBL_TRS_OPTION_6_DESCRIPTION"
-				}
-			]
+			"discardedConfig": {
+			  "backofficeEndpoint": "backoffice/${backOfficeId}/table/${tableName}",
+			  "backofficeId": 3,
+			  "backofficeTable": "discarded_reasons"
+			}
 		}
 	]'),
 ('TransitType:1', 83, 'true');
