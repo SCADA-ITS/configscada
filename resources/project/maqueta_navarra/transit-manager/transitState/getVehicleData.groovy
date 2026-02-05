@@ -49,16 +49,17 @@ class getVehicleData {
 
 	boolean onBeforeChangeTransitState(Transit transit, TransitTypeStateTransition transitTypeStateTransition) {
 
-        	return true;
-    	}
+    	return true;
+	}
     
-    	boolean onAfterChangeTransitState(Transit transit, TransitTypeStateTransition transitTypeStateTransition) {
+	boolean onAfterChangeTransitState(Transit transit, TransitTypeStateTransition transitTypeStateTransition) {
 
 		log.debug("transitId = " + transit.getId() + 
 				  " currentState = " + transitTypeStateTransition.getParentTransitStateId() + 
 				  " nextState = " + transitTypeStateTransition.getChildTransitStateId());	
 		
 		Connection connection;
+		service = new TransitPersistenceService(null);
 	
 		if (transit.getVehiclePlateNumber() != null && transit.getVehiclePlateNumber() != ""){
 	
@@ -68,8 +69,6 @@ class getVehicleData {
 				pedirDatosDGT(transit);
 
 				//Consulto las BBDD de listas blancas y negras a ver si se encuentra en alguna
-				service = new TransitPersistenceService(null);
-
 				connection = DataSourceConnection.getInstance().getConnection();
 				String sql = "SELECT 1 FROM " + DB_SCHEMA + ".white_list WHERE matricula = '" + transit.getVehiclePlateNumber() + "'";
 
@@ -106,10 +105,11 @@ class getVehicleData {
 			}
 		}else{
 			log.debug("No se realiza la consulta de datos de vehículo por no tener ninguna matrícula asociada");
+			service.changeStateTransit(transit.getId(), TRANSIT_STATE_IN_REVIEW, null);
 		}
 					
-        	return true;
-    	}
+        return true;
+    }
 
 	void pedirDatosDGT(Transit transit) {
 		
@@ -130,12 +130,10 @@ class getVehicleData {
 				transit.setVehicleColor(cgiApiMultasPlateNumberResponseDto.getIdentificacion().getDescripcionVehiculo().getColor().getDescripcion());
 				transit.setVehicleTypeName(cgiApiMultasPlateNumberResponseDto.getIdentificacion().getDescripcionVehiculo().getTipoVehiculo().getDescripcion());	
 				
-				log.debug("--> " + cgiApiMultasPlateNumberResponseDto.getItvs().get(0).getFechaCaducidad());
-				
 				TransitValue apiVehicleITV = new TransitValue();
 				apiVehicleITV.setTransitTypeId(TRANSIT_TYPE_ID);		
 				apiVehicleITV.setTransitTypeParamId(TRANSIT_TYPE_PARAM_API_VEHICLE_ITV_DATE);						
-				String fechaOriginal = "2014-12-28T23:00:00.000+00:00";
+				String fechaOriginal = cgiApiMultasPlateNumberResponseDto.getItvs().getItv().get(0).getFechaCaducidad();
 				OffsetDateTime odt = OffsetDateTime.parse(fechaOriginal);
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 				String fechaFormateada = odt.format(formatter);	

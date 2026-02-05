@@ -20,7 +20,12 @@ BEGIN
 		    count(distinct case when i.object_crash_id in (1,2,3) 
 	                         or i.vehicle_crash_id in (1,2,3,4,5,6,7,8,9) then i.id end)::int  AS choque,
 	        count(distinct case when i.event_id = 10 then i.id end)::int as otros,
-	        count(distinct p.incident_id)::int as con_lesionados,
+	        count(
+			  distinct case 
+			    when p.participant_injury_id in (2,3,4)
+			    then i.id
+			  end
+			)::int AS con_lesionados,
 	        count(distinct case when p.participant_injury_id = 2 then p.id end)::int as leves,
 	        count(distinct case when p.participant_injury_id = 3 then p.id end)::int as menos_graves,
 	        count(distinct case when p.participant_injury_id = 4 then p.id end)::int as graves,

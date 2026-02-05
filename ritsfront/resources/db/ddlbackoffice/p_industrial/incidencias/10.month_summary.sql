@@ -29,7 +29,12 @@ BEGIN
 	        ELSE ''-''
 	    END AS mes,
 	    count(distinct i.id) AS total_accidentes,
-	    count(distinct p.incident_id) AS con_lesionados,
+	    count(
+		  distinct case 
+		    when p.participant_injury_id in (2,3,4)
+		    then i.id
+		  end
+		) AS con_lesionados,
 	    count(distinct case when p.participant_injury_id = 5 then p.id end) AS muertos,
 	    count(distinct case when p.participant_injury_id = 4 then p.id end) AS graves,
 	    count(distinct case when p.participant_injury_id = 3 then p.id end) AS menos_graves,

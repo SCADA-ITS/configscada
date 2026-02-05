@@ -48,6 +48,9 @@ INSERT INTO ui.module_values(module_id, module_param_id, value) VALUES
 (9001, 13, '3'), 
 (9001, 14, 'black_list'),
 
+(9002, 13, '3'), 
+(9002, 14, 'discarded_reasons'),
+
 (2020, 9, '1'),
 (2021, 9, '3'),
 (2022, 9, '4');
