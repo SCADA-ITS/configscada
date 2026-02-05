@@ -63,6 +63,23 @@ class EtdParamsAdapterTFA {
 		this.log = log;
 	}
 	
+	def convertToTimestamp(dia, mes, anio, hora, minuto, segundo) {
+		TimeZone tz = TimeZone.getTimeZone("Europe/Madrid");
+		Calendar calendar = Calendar.getInstance(tz);
+
+
+		calendar.clear();
+		calendar.set(Calendar.YEAR, anio);
+		calendar.set(Calendar.MONTH, mes - 1); // Calendar es 0-based
+		calendar.set(Calendar.DATE, dia);
+		calendar.set(Calendar.HOUR_OF_DAY, hora);
+		calendar.set(Calendar.MINUTE, minuto);
+		calendar.set(Calendar.SECOND, segundo);
+
+
+		return calendar.getTimeInMillis();
+	}
+
 	boolean process(Element element, List<Pair<ElementValue, ElementValue>> elementValues) {
 		boolean res = true;
 		int detArrayPos;					
@@ -93,7 +110,18 @@ class EtdParamsAdapterTFA {
 					listAlarmsCreate = new ArrayList();
 					listAlarmsRemove = new ArrayList();
 					listElements = new ArrayList();
-					listElements.add(elementSetValue(PARAM_MEASURE_DATE, TYPE_PARAM_MEASURE, childElement.getId(),String.valueOf(etd_info.get(detArrayPos).timestamp)));	
+					
+					// Timestamp correcto desde componentes de fecha
+					def ts = convertToTimestamp(
+						etd_info.get(detArrayPos).dia,
+						etd_info.get(detArrayPos).mes,
+						etd_info.get(detArrayPos).anio,
+						etd_info.get(detArrayPos).hora,
+						etd_info.get(detArrayPos).minuto,
+						etd_info.get(detArrayPos).segundo
+					);
+
+					listElements.add(elementSetValue(PARAM_MEASURE_DATE, TYPE_PARAM_MEASURE, childElement.getId(),String.valueOf(ts)));	
 					listElements.add(elementSetValue(PARAM_MEASURE_PERIOD, TYPE_PARAM_MEASURE, childElement.getId(),String.valueOf(etd_info.get(detArrayPos).integration_period)));	
 					listElements.add(elementSetValue(PARAM_MEASURE_CURRENT_DIRECTION, TYPE_PARAM_MEASURE, childElement.getId(),String.valueOf(etd_info.get(detArrayPos).current_direction)));	
 					listElements.add(elementSetValue(PARAM_MEASURE_NVEHICLES, TYPE_PARAM_MEASURE, childElement.getId(),String.valueOf(etd_info.get(detArrayPos).n_vehicles)));	
@@ -110,8 +138,10 @@ class EtdParamsAdapterTFA {
 						setDeactivationAlarmsCommandList.add(childElement, EntitiesManager.getInstance().getAlarmConfig(ALARM_DETECTOR_CONGESTION));
 					}
 					
-					listElements.add(elementSetValue(PARAM_MEASURE_FAIL_DATA, TYPE_PARAM_MEASURE, childElement.getId(),String.valueOf(etd_info.get(detArrayPos).fail_data)));	
+					listElements.add(elementSetValue(PARAM_MEASURE_FAIL_DATA, TYPE_PARAM_MEASURE, childElement.getId(),String.valueOf(etd_info.get(detArrayPos).fail_data)));
+
 					if(etd_info.get(detArrayPos).fail_data){
+
 						setActivationAlarmsCommandList.add(childElement, EntitiesManager.getInstance().getAlarmConfig(ALARM_DETECTOR_FAIL));
 					}else{
 						setDeactivationAlarmsCommandList.add(childElement, EntitiesManager.getInstance().getAlarmConfig(ALARM_DETECTOR_FAIL));

@@ -1277,96 +1277,6 @@
          "simplifyType": "NONE"
       },
       {
-         "purgePeriod": 1,
-         "setExtremeLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
-         "intervalLoggingType": "AVERAGE",
-         "dataSourceXid": "DS_ETD_JSON",
-         "discardHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
-         "deviceName": "{det_name}",
-         "enabled": true,
-         "rollup": "NONE",
-         "purgeOverride": false,
-         "chartRenderer": {
-            "numberOfPeriods": 1,
-            "type": "IMAGE",
-            "timePeriodType": "DAYS"
-         },
-         "xid": "DP_{det_name}",
-         "eventDetectors": [],
-         "textRenderer": {
-            "useUnitAsSuffix": false,
-            "format": "0.00",
-            "type": "ANALOG",
-            "suffix": ""
-         },
-         "loggingType": "NONE",
-         "overrideIntervalLoggingSamples": false,
-         "defaultCacheSize": 1,
-         "readPermission": "",
-         "setPermission": "",
-         "intervalLoggingPeriodType": "MINUTES",
-         "intervalLoggingSampleWindowSize": 0,
-         "tolerance": 0,
-         "purgeType": "YEARS",
-         "plotType": "SPLINE",
-         "intervalLoggingPeriod": 1,
-         "discardExtremeValues": false,
-         "tags": {},
-         "unit": "",
-         "pointLocator": {
-            "contextUpdateEvent": "CONTEXT_UPDATE",
-            "variableName": "my",
-            "executionDelaySeconds": 0,
-            "dataType": "NUMERIC",
-            "scriptPermissions": [],
-            "updateCronPattern": "10 0\/1 * ? * * *",
-            "script": "var newDate = new Date( anio.value, mes.value - 1, dia.value, hora.value, minuto.value, segundo.value);\nreturn newDate.getTime();",
-            "logCount": 5,
-            "settable": false,
-            "logLevel": "NONE",
-            "updateEvent": "CRON",
-            "context": [
-               {
-                  "varName": "anio",
-                  "dataPointXid": "DP_{det_name}_anio",
-                  "updateContext": false
-               },
-               {
-                  "varName": "dia",
-                  "dataPointXid": "DP_{det_name}_dia",
-                  "updateContext": false
-               },
-               {
-                  "varName": "hora",
-                  "dataPointXid": "DP_{det_name}_hora",
-                  "updateContext": false
-               },
-               {
-                  "varName": "mes",
-                  "dataPointXid": "DP_{det_name}_mes",
-                  "updateContext": false
-               },
-               {
-                  "varName": "minuto",
-                  "dataPointXid": "DP_{det_name}_min",
-                  "updateContext": false
-               },
-               {
-                  "varName": "segundo",
-                  "dataPointXid": "DP_{det_name}_segundo",
-                  "updateContext": false
-               }
-            ],
-            "logSize": 1
-         },
-         "discardLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
-         "setExtremeHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
-         "name": "timestamp",
-         "chartColour": "",
-         "preventSetExtremeValues": false,
-         "simplifyType": "NONE"
-      },
-      {
          "purgePeriod":1,
          "setExtremeLowLimit":-179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
          "intervalLoggingType":"AVERAGE",
@@ -1474,149 +1384,177 @@
          "preventSetExtremeValues":false,
          "simplifyType":"NONE"
       },
-      {
-         "purgePeriod": 1,
-         "setExtremeLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
-         "intervalLoggingType": "INSTANT",
-         "dataSourceXid": "DS_ETD_JSON",
-         "discardHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
-         "deviceName": "{device_name}",
-         "enabled": true,
-         "rollup": "NONE",
-         "purgeOverride": false,
-         "chartRenderer": {
-            "limit": 10,
-            "type": "TABLE"
-         },
-         "xid": "DP_{device_name}_etd_info",
-         "eventDetectors": [],
-         "textRenderer": {
-            "useUnitAsSuffix": false,
-            "type": "PLAIN",
-            "suffix": ""
-         },
-         "loggingType": "NONE",
-         "overrideIntervalLoggingSamples": false,
-         "defaultCacheSize": 1,
-         "readPermission": "",
-         "setPermission": "",
-         "intervalLoggingPeriodType": "MINUTES",
-         "intervalLoggingSampleWindowSize": 0,
-         "tolerance": 0,
-         "purgeType": "YEARS",
-         "plotType": "STEP",
-         "intervalLoggingPeriod": 1,
-         "discardExtremeValues": false,
-         "tags": {},
-         "unit": "",
-         "pointLocator": {
-            "contextUpdateEvent": "CONTEXT_UPDATE",
-            "variableName": "my",
-            "executionDelaySeconds": 0,
-            "dataType": "ALPHANUMERIC",
-            "scriptPermissions": [],
-            "updateCronPattern": "15 0\/1 * ? * * *",
-            "script": "var etd = [];\n\nfor (ndet = 1; ndet <= 8; ndet++) {\n    if(typeof this['velocidad_media_'+ndet] != 'undefined'){\n        var det = new Object();\n        \n        det.timestamp = this['timestamp_'+ndet].value;\n        det.integration_period = this['periodo_integracion_'+ndet].value \/ 60;\n        det.current_direction = this['sentido_circulacion_'+ndet].value;\n        det.n_vehicles = this['intensidad_total_'+ndet].value;\n        det.occupancy = this['ocupacion_espira_cabeza_'+ndet].value;\n        det.congestion = this['deteccion_congestion_'+ndet].value;\n        det.kamikaze = this['deteccion_intensidad_inversa_'+ndet].value;\n        det.average_speed = this['velocidad_media_'+ndet].value;\n        det.average_length = this['longitud_media_'+ndet].value;\n        det.gap = this['distancia_media_'+ndet].value;\n        det.headway = this['distancia_media_'+ndet].value;\n        det.fail_data = this['fallo_datos_'+ndet].value;\n        det.veh_length_1 = this['vehlong1_'+ndet].value;\n        det.veh_length_2 = this['vehlong2_'+ndet].value;\n        det.veh_speed_1 = this['vehvel1_'+ndet].value;\n        det.veh_speed_2 = this['vehvel2_'+ndet].value;\n        det.veh_speed_3 = this['vehvel3_'+ndet].value;\n        \n        etd.push(det);\n    }\n}\n\nvar jsonString = JSON.stringify(etd);\n\nreturn jsonString;",
-            "logCount": 5,
-            "settable": false,
-            "logLevel": "NONE",
-            "updateEvent": "CRON",
-            "context": [
-               {
-                  "varName": "deteccion_congestion_{det_order}",
-                  "dataPointXid": "DP_{det_name}_deteccion_congestion",
-                  "updateContext": false
-               },
-               {
-                  "varName": "deteccion_intensidad_inversa_{det_order}",
-                  "dataPointXid": "DP_{det_name}_deteccion_intensidad_inversa",
-                  "updateContext": false
-               },
-               {
-                  "varName": "distancia_media_{det_order}",
-                  "dataPointXid": "DP_{det_name}_distancia_media",
-                  "updateContext": false
-               },
-               {
-                  "varName": "fallo_datos_{det_order}",
-                  "dataPointXid": "DP_{det_name}_fallo_datos",
-                  "updateContext": false
-               },
-               {
-                  "varName": "intensidad_total_{det_order}",
-                  "dataPointXid": "DP_{det_name}_intensidad_total",
-                  "updateContext": false
-               },
-               {
-                  "varName": "longitud_media_{det_order}",
-                  "dataPointXid": "DP_{det_name}_longitud_media",
-                  "updateContext": false
-               },
-               {
-                  "varName": "numero_detector_{det_order}",
-                  "dataPointXid": "DP_{det_name}_numero_detector",
-                  "updateContext": false
-               },
-               {
-                  "varName": "ocupacion_espira_cabeza_{det_order}",
-                  "dataPointXid": "DP_{det_name}_ocupacion_espira_cabeza",
-                  "updateContext": false
-               },
-               {
-                  "varName": "periodo_integracion_{det_order}",
-                  "dataPointXid": "DP_{det_name}_periodo_integracion",
-                  "updateContext": false
-               },
-               {
-                  "varName": "sentido_circulacion_{det_order}",
-                  "dataPointXid": "DP_{det_name}_sentido_circulacion",
-                  "updateContext": false
-               },
-               {
-                  "varName": "timestamp_{det_order}",
-                  "dataPointXid": "DP_{det_name}",
-                  "updateContext": false
-               },
-               {
-                  "varName": "vehlong1_{det_order}",
-                  "dataPointXid": "DP_{det_name}_vehlong1",
-                  "updateContext": false
-               },
-               {
-                  "varName": "vehlong2_{det_order}",
-                  "dataPointXid": "DP_{det_name}_vehlong2",
-                  "updateContext": false
-               },
-               {
-                  "varName": "vehvel1_{det_order}",
-                  "dataPointXid": "DP_{det_name}_vehvel1",
-                  "updateContext": false
-               },
-               {
-                  "varName": "vehvel3_{det_order}",
-                  "dataPointXid": "DP_{det_name}_vehvel3",
-                  "updateContext": false
-               },
-               {
-                  "varName": "vehvel2_{det_order}",
-                  "dataPointXid": "DP_{det_name}_vehvel2",
-                  "updateContext": false
-               },
-               {
-                  "varName": "velocidad_media_{det_order}",
-                  "dataPointXid": "DP_{det_name}_velocidad_media",
-                  "updateContext": false
-               }
-            ],
-            "logSize": 1
-         },
-         "discardLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
-         "setExtremeHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
-         "name": "etd_info",
-         "chartColour": "",
-         "preventSetExtremeValues": false,
-         "simplifyType": "NONE"
-      }
+    {
+      "xid":"DP_{device_name}_etd_info",
+      "name":"etd_info",
+      "enabled":true,
+      "loggingType":"NONE",
+      "intervalLoggingPeriodType":"MINUTES",
+      "intervalLoggingType":"INSTANT",
+      "purgeType":"YEARS",
+      "pointLocator":{
+        "dataType":"ALPHANUMERIC",
+        "updateEvent":"CRON",
+        "contextUpdateEvent":"CONTEXT_UPDATE",
+        "context":[
+          {
+            "varName":"deteccion_congestion_{det_order}",
+            "dataPointXid":"DP_{det_name}_deteccion_congestion",
+            "updateContext":false
+          },
+          {
+            "varName":"deteccion_intensidad_inversa_{det_order}",
+            "dataPointXid":"DP_{det_name}_deteccion_intensidad_inversa",
+            "updateContext":false
+          },
+          {
+            "varName":"distancia_media_{det_order}",
+            "dataPointXid":"DP_{det_name}_distancia_media",
+            "updateContext":false
+          },
+          {
+            "varName":"fallo_datos_{det_order}",
+            "dataPointXid":"DP_{det_name}_fallo_datos",
+            "updateContext":false
+          },
+          {
+            "varName":"intensidad_total_{det_order}",
+            "dataPointXid":"DP_{det_name}_intensidad_total",
+            "updateContext":false
+          },
+          {
+            "varName":"longitud_media_{det_order}",
+            "dataPointXid":"DP_{det_name}_longitud_media",
+            "updateContext":false
+          },
+          {
+            "varName":"numero_detector_{det_order}",
+            "dataPointXid":"DP_{det_name}_numero_detector",
+            "updateContext":false
+          },
+          {
+            "varName":"ocupacion_espira_cabeza_{det_order}",
+            "dataPointXid":"DP_{det_name}_ocupacion_espira_cabeza",
+            "updateContext":false
+          },
+          {
+            "varName":"periodo_integracion_{det_order}",
+            "dataPointXid":"DP_{det_name}_periodo_integracion",
+            "updateContext":false
+          },
+          {
+            "varName":"sentido_circulacion_{det_order}",
+            "dataPointXid":"DP_{det_name}_sentido_circulacion",
+            "updateContext":false
+          },
+          {
+            "varName":"vehlong1_{det_order}",
+            "dataPointXid":"DP_{det_name}_vehlong1",
+            "updateContext":false
+          },
+          {
+            "varName":"vehlong2_{det_order}",
+            "dataPointXid":"DP_{det_name}_vehlong2",
+            "updateContext":false
+          },
+          {
+            "varName":"vehvel1_{det_order}",
+            "dataPointXid":"DP_{det_name}_vehvel1",
+            "updateContext":false
+          },
+          {
+            "varName":"vehvel3_{det_order}",
+            "dataPointXid":"DP_{det_name}_vehvel3",
+            "updateContext":false
+          },
+          {
+            "varName":"vehvel2_{det_order}",
+            "dataPointXid":"DP_{det_name}_vehvel2",
+            "updateContext":false
+          },
+          {
+            "varName":"velocidad_media_{det_order}",
+            "dataPointXid":"DP_{det_name}_velocidad_media",
+            "updateContext":false
+          },
+          {
+            "varName":"anio_{det_order}",
+            "dataPointXid":"DP_{det_name}_anio",
+            "updateContext":false
+          },
+          {
+            "varName":"dia_{det_order}",
+            "dataPointXid":"DP_{det_name}_dia",
+            "updateContext":false
+          },
+          {
+            "varName":"hora_{det_order}",
+            "dataPointXid":"DP_{det_name}_hora",
+            "updateContext":false
+          },
+          {
+            "varName":"mes_{det_order}",
+            "dataPointXid":"DP_{det_name}_mes",
+            "updateContext":false
+          },
+          {
+            "varName":"minuto_{det_order}",
+            "dataPointXid":"DP_{det_name}_min",
+            "updateContext":false
+          },
+          {
+            "varName":"segundo_{det_order}",
+            "dataPointXid":"DP_{det_name}_segundo",
+            "updateContext":false
+          }
+        ],
+        "logLevel":"NONE",
+        "variableName":"my",
+        "scriptPermissions":[
+        ],
+        "executionDelaySeconds":0,
+        "logCount":5,
+        "logSize":1.0,
+        "script":"var etd = [];\n\nfor (ndet = 1; ndet <= 8; ndet++) {\n    if(typeof this['velocidad_media_'+ndet] != 'undefined'){\n        var det = new Object();\n        \n        det.anio    = this['anio_'+ndet].value;\n        det.mes     = this['mes_'+ndet].value;\n        det.dia     = this['dia_'+ndet].value;\n        det.hora    = this['hora_'+ndet].value;\n        det.minuto  = this['minuto_'+ndet].value;\n        det.segundo = this['segundo_'+ndet].value;\n\n        det.integration_period = this['periodo_integracion_'+ndet].value \/ 60;\n        det.current_direction = this['sentido_circulacion_'+ndet].value;\n        det.n_vehicles = this['intensidad_total_'+ndet].value;\n        det.occupancy = this['ocupacion_espira_cabeza_'+ndet].value;\n        det.congestion = this['deteccion_congestion_'+ndet].value;\n        det.kamikaze = this['deteccion_intensidad_inversa_'+ndet].value;\n        det.average_speed = this['velocidad_media_'+ndet].value;\n        det.average_length = this['longitud_media_'+ndet].value;\n        det.gap = this['distancia_media_'+ndet].value;\n        det.headway = this['distancia_media_'+ndet].value;\n        det.fail_data = this['fallo_datos_'+ndet].value === 1;\n        det.veh_length_1 = this['vehlong1_'+ndet].value;\n        det.veh_length_2 = this['vehlong2_'+ndet].value;\n        det.veh_speed_1 = this['vehvel1_'+ndet].value;\n        det.veh_speed_2 = this['vehvel2_'+ndet].value;\n        det.veh_speed_3 = this['vehvel3_'+ndet].value;\n        \n        etd.push(det);\n    }\n}\n\nvar jsonString = JSON.stringify(etd);\n\nreturn jsonString;",
+        "settable":false,
+        "updateCronPattern":"15 0\/1 * ? * * *"
+      },
+      "eventDetectors":[
+      ],
+      "plotType":"STEP",
+      "rollup":"NONE",
+      "unit":"",
+      "simplifyType":"NONE",
+      "chartColour":"",
+      "chartRenderer":{
+        "type":"TABLE",
+        "limit":10
+      },
+      "dataSourceXid":"DS_ETD_JSON",
+      "defaultCacheSize":1,
+      "deviceName":"{device_name}",
+      "discardExtremeValues":false,
+      "discardHighLimit":1.7976931348623157E308,
+      "discardLowLimit":-1.7976931348623157E308,
+      "intervalLoggingPeriod":1,
+      "intervalLoggingSampleWindowSize":0,
+      "overrideIntervalLoggingSamples":false,
+      "preventSetExtremeValues":false,
+      "purgeOverride":false,
+      "purgePeriod":1,
+      "readPermission":"",
+      "setExtremeHighLimit":1.7976931348623157E308,
+      "setExtremeLowLimit":-1.7976931348623157E308,
+      "setPermission":"",
+      "tags":{
+      },
+      "textRenderer":{
+        "type":"PLAIN",
+        "useUnitAsSuffix":false,
+        "suffix":""
+      },
+      "tolerance":0.0
+    }
    ],
    "publishers": [
       {
