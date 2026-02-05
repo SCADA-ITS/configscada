@@ -10,7 +10,7 @@
 	},
 	"moduleAction": {
 		"edit": 105601,
-		"changeState": 105602
+		"discard": 105602
 	},
 	"action":{
 		"selectLocation": 105006,
