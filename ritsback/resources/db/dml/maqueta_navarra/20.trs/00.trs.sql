@@ -24,7 +24,7 @@ INSERT INTO static.transit_type_state_transitions (transit_type_id,parent_transi
 (1,2,4,true,'getOCR.groovy',true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), --Vehicle data
 
 --Vehicle data
-(1,4,10,true,'getVehicleData.groovy',true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), --In Review
+(1,4,10,true,'getVehicleData.groovy',true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), --Check lists
 
 --In Review
 (1,3,4,false,null,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), --Vehicle data
@@ -37,10 +37,14 @@ INSERT INTO static.transit_type_state_transitions (transit_type_id,parent_transi
 (1,5,9,false,null,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), --Failed
 
 --Propose for sanction
+(1,6,7,false,null,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), --Discarded
 (1,6,8,false,null,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), --Archived
 
+--Discarded
+(1,7,3,false,null,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), --In Review
+
 --Failed
-(1,9,5,false,null,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), --In Review
+(1,9,3,false,null,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), --In Review
 
 --Checklists
 (1,10,3,false,null,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), --In Review
