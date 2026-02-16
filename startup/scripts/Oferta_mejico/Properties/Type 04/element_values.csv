@@ -1,0 +1,7 @@
+item;element_subtype;alias;description;sessionuid;road;stretchs;pk;sentido;param1_direction;param2_virtual;param3_los_type;param4_los_soften;param5_los_flatten;param6_los_threshold_speed;param7_los_threshold_occupancy;param100_cat_veh_pa1;param101_cat_veh_pa2
+1;1;PM-1-ETD-1;PM-1-ETD-1;PM-1-ETD-1;Autovía;MEXICO;;;true;false;0;false;false;[8, 32, 72];[16, 28, 35];[1];[2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+2;1;PM-2-ETD-1;PM-2-ETD-1;PM-2-ETD-1;Autovía;MEXICO;;;true;false;0;false;false;[8, 32, 72];[16, 28, 35];[1];[2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+3;1;PM-1-ETD-2;PM-1-ETD-2;PM-1-ETD-2;Autovía;MEXICO;;;true;false;0;false;false;[8, 32, 72];[16, 28, 35];[1];[2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+4;1;PM-1-ETD-3;PM-1-ETD-3;PM-1-ETD-3;Autovía;MEXICO;;;true;false;0;false;false;[8, 32, 72];[16, 28, 35];[1];[2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+5;1;PM-1-ETD-4;PM-1-ETD-4;PM-1-ETD-4;Autovía;MEXICO;;;true;false;0;false;false;[8, 32, 72];[16, 28, 35];[1];[2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+6;1;PM-2-ETD-4;PM-2-ETD-4;PM-2-ETD-4;Autovía;MEXICO;;;true;false;0;false;false;[8, 32, 72];[16, 28, 35];[1];[2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]

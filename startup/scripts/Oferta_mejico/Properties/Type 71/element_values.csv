@@ -1,0 +1,5 @@
+item;element_subtype;alias;description;sessionuid;road;stretchs;pk;sentido;on_change_measure;param1_brand;param2_model;param3_protocolo;param4_config_json
+1;18;PMV-1;PMV-1;PMV-1;Autovía ;MEXICO;;;ChangeMeasureHistorical.groovy;Alba Electrónica;;Modbus;"[{""zone"":1,""type"":""graphic"",""vms_group_id"":18},{""zone"":2,""type"":""text"",""maxCharsPerLine"":12}]"
+2;18;PMV-2;PMV-2;PMV-2;Autovía ;MEXICO;;;ChangeMeasureHistorical.groovy;Alba Electrónica;;Modbus;"[{""zone"":1,""type"":""graphic"",""vms_group_id"":18},{""zone"":2,""type"":""text"",""maxCharsPerLine"":12}]"
+3;22;PMV-3;PMV-3;PMV-3;Autovía ;MEXICO;;;ChangeMeasureHistorical.groovy;Alba Electrónica;;Modbus;"[{""zone"":1,""type"":""graphic"",""vms_group_id"":22},{""zone"":2,""type"":""text"",""maxCharsPerLine"":12},{""zone"":3,""type"":""graphic"",""vms_group_id"":22}]"
+4;22;PMV-4;PMV-4;PMV-4;Autovía ;MEXICO;;;ChangeMeasureHistorical.groovy;Alba Electrónica;;Modbus;"[{""zone"":1,""type"":""graphic"",""vms_group_id"":22},{""zone"":2,""type"":""text"",""maxCharsPerLine"":12},{""zone"":3,""type"":""graphic"",""vms_group_id"":22}]"

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<p:historical_element_parser_v1
+	xmlns:p="historical_element_parser_v1"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="historical_element_parser_v1 ../../../../../adapter-lib/src/main/resources/schemas/manager/historical_element_parser_v1.xsd"
+	element_type_id="1">
+	<p:target_table>hist.ws</p:target_table>
+	<p:table_space>tbl_hist</p:table_space>
+	<p:field_element_id>f_element_id</p:field_element_id>
+	<p:field_timestamp>timestamp_at</p:field_timestamp>
+	<p:cron_expression>0 */10 * ? * *</p:cron_expression>
+	<p:fields>
+		<p:field name="Air_Pressure">
+			<p:element_type_param>
+				<p:element_type_param_id>4</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+		<p:field name="Relative_Humidity">
+			<p:element_type_param>
+				<p:element_type_param_id>10</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+		<p:field name="Precipitation_Intensity">
+			<p:element_type_param>
+				<p:element_type_param_id>11</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+		<p:field name="Wind_Speed">
+			<p:element_type_param>
+				<p:element_type_param_id>26</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+		<p:field name="Wind_Direction">
+			<p:element_type_param>
+				<p:element_type_param_id>27</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+		<p:field name="Air_Temperature">
+			<p:element_type_param>
+				<p:element_type_param_id>17</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+		<p:field name="Dew_Point_Temperature">
+			<p:element_type_param>
+				<p:element_type_param_id>18</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+		<p:field name="Precipitation_Type">
+			<p:element_type_param>
+				<p:element_type_param_id>19</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+		<p:field name="Visibility">
+			<p:element_type_param>
+				<p:element_type_param_id>20</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+		<p:field name="Precipitation_Quantity">
+			<p:element_type_param>
+				<p:element_type_param_id>23</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+		<p:field name="Wind_Type">
+			<p:element_type_param>
+				<p:element_type_param_id>28</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+		<p:field name="date">
+			<p:element_type_param>
+				<p:element_type_param_id>29</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>
+		<p:field name="period">
+			<p:element_type_param>
+				<p:element_type_param_id>30</p:element_type_param_id>
+				<p:param_type_id>2</p:param_type_id>
+			</p:element_type_param>
+		</p:field>   
+	</p:fields>
+</p:historical_element_parser_v1>

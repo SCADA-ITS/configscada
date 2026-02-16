@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<p:historical_instant_parser_v2
+	xmlns:p="historical_instant_parser_v2"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="historical_instant_parser_v2 ../../../../adapter-lib/src/main/resources/schemas/manager/historical_instant_parser_v2.xsd "
+	model="ElementState">
+	<p:target_table>hist.element_states</p:target_table>
+	<p:table_space>tbl_hist</p:table_space>
+	<p:fields>
+		<p:field name="Element">
+			<p:soure_field_value>alias</p:soure_field_value>
+			<p:source_entity>Element</p:source_entity>
+			<p:references>
+				<p:reference sourceField="id" targetField="elementId" />
+				<p:reference sourceField="elementTypeId"
+					targetField="elementTypeId" />
+			</p:references>
+		</p:field>
+
+		<p:field name="State_Id">
+			<p:soure_field_value>stateId</p:soure_field_value>
+		</p:field>
+
+		<p:field name="Alias">
+			<p:soure_field_value>alias</p:soure_field_value>
+			<p:source_entity>ElementTypeState</p:source_entity>
+			<p:references>
+				<p:reference sourceField="stateId" targetField="stateId" />
+				<p:reference sourceField="elementTypeId"
+					targetField="elementTypeId" />
+			</p:references>
+
+		</p:field>
+	</p:fields>
+</p:historical_instant_parser_v2>

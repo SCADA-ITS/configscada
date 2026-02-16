@@ -1,0 +1,9 @@
+item;element_subtype;alias;description;sessionuid;road;stretchs;pk;sentido;param1_brand;param2_model;param3_stream_mjpeg;param7_PTZ;param9_hostname;param10_user;param11_password;param12_PTZ;data_proxy
+1;1;CAM-1;CAM-1;CAM-1;Autovía;MEXICO;;N/A;BOSCH;VG4-AutoDome;;;;;;;
+2;1;CAM-2;CAM-2;CAM-2;Autovía;MEXICO;;N/A;BOSCH;VG4-AutoDome;;;;;;;
+3;2;CAM-3;CAM-3;CAM-3;Autovía;MEXICO;;N/A;BOSCH;VideoJet-X20-SN;;;;;;;
+4;2;CAM-4;CAM-4;CAM-4;Autovía;MEXICO;;N/A;BOSCH;VideoJet-X20-SN;;;;;;;
+5;2;CAM-5;CAM-5;CAM-5;Autovía;MEXICO;;N/A;BOSCH;VideoJet-X20-SN;;;;;;;
+6;2;CAM-6;CAM-6;CAM-6;Autovía;MEXICO;;N/A;BOSCH;VideoJet-X20-SN;;;;;;;
+7;2;CAM-7;CAM-7;CAM-7;Autovía;MEXICO;;N/A;BOSCH;VideoJet-X20-SN;;;;;;;
+8;2;CAM-8;CAM-8;CAM-8;Autovía;MEXICO;;N/A;BOSCH;VideoJet-X20-SN;;;;;;;
