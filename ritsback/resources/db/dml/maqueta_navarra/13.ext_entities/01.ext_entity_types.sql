@@ -38,6 +38,7 @@ INSERT INTO static.ext_entity_types(ext_entity_type_id, alias, description, labe
 	  }]
 }',
 true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
 (4, '112 Emergencias', 'Incidencias generadas en sistema 112 Emergencias', 'LBL_EXT_ENTITY_TYPE_112', 'LBL_EXT_ENTITY_TYPE_112_DESC', true, '10 0/1 * * * ? *', 
 '{
 
@@ -115,6 +116,7 @@ true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 }',
 
 true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
 (6, '112 - Vehicles', 'Vehículos asiganados a una incidencia del 112', 'LBL_EXT_ENTITY_TYPE_112_VEHICLES', 'LBL_EXT_ENTITY_TYPE_112_VEHICLES_DESC', true, '50 0/1 * * * ? *', 
 '{
 	"host": "http://192.168.88.163:8100/TrafficIncidents",
@@ -129,7 +131,7 @@ true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 (7, 'Waze traffic alerts', 'Alertas de trafico de waze', 'LBL_EXT_ENTITY_TYPE_WAZE_TRAFFIC_ALERTS', 'LBL_EXT_ENTITY_TYPE_WAZE_TRAFFIC_ALERTS_DESC', true, '0/30 * * * * ? *', 
 '{
-	"url": "http://192.168.88.163:8101/WazeIncidents",
+	"url": "https://www.waze.com/row-partnerhub-api/partners/16934850034/waze-feeds/c46bd65e-1743-4e61-88da-311bab40b8ae?format=1&types=alerts",
 	"reliability": 0,
 	"confidence": 0,
 	"extEntityParamsMapping": [ {"field": "pubMillis", "extEntityTypeParamId": "ExtEntityTypeParam:7:1"},
@@ -297,6 +299,25 @@ true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 					 {"extEntitySubtypeId": "ExtEntitySubtype:9004", "value": "3"},
 					 {"extEntitySubtypeId": "ExtEntitySubtype:9005", "value": "4"},
 					 {"extEntitySubtypeId": "ExtEntitySubtype:9006", "value": "5"}
+		]
+	} 
+}',
+true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(10, 'Balizas V16', 'Balizas V16', 'LBL_EXT_ENTITY_TYPE_112', 'LBL_EXT_ENTITY_TYPE_112_DESC', true, '0 0/1 * * * ? *', 
+'{
+
+	"host": "http://192.168.88.163:8120/DGT",
+	"extEntityParamsMapping": [ {"field": "lon", "extEntityTypeParamId": "ExtEntityTypeParam:10:1"},
+								{"field": "lat", "extEntityTypeParamId": "ExtEntityTypeParam:10:2"}
+							],
+	"extEntityFieldsMapping": [ {"srcField": "actionid", "dstField": "uid"},
+								{"srcField": "device_event_type_value", "dstField": "alias"},
+								{"srcField": "device_event_type", "dstField": "description"}
+							],
+	"extEntitySubtypes": {
+		"field": "device_event_type_value",
+		"mapping": [ {"extEntitySubtypeId": "ExtEntitySubtype:10001", "value": "2"}
 		]
 	} 
 }',

@@ -27,7 +27,7 @@ INSERT INTO static.transit_type_state_transitions (transit_type_id,parent_transi
 (1,4,3,true,'getVehicleData.groovy',true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), --In Review
 
 --In Review
-(1,3,4,false,'getVehicleData.groovy',true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), --Vehicle data
+(1,3,4,false,null,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), --Vehicle data
 (1,3,5,false,null,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), --Pending dispatch
 (1,3,7,false,null,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), --Discarded
 
@@ -37,10 +37,14 @@ INSERT INTO static.transit_type_state_transitions (transit_type_id,parent_transi
 (1,5,9,false,null,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), --Failed
 
 --Propose for sanction
+(1,6,7,false,null,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), --Discarded
 (1,6,8,false,null,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), --Archived
 
+--Discarded
+(1,7,3,false,null,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), --In Review
+
 --Failed
-(1,9,5,false,null,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP); --In Review
+(1,9,3,false,null,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP); --In Review
 
 -- static.vehicle_classes 
 INSERT INTO static.vehicle_classes (vehicle_class_id,alias,label_alias,enabled,visible,created_at,updated_at) VALUES

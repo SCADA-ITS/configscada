@@ -10,6 +10,16 @@ INSERT INTO ui.map_ext_entities (id, default_graphic_icon_id, default_module_act
 (3, 010001, NULL, 
 	'[
 		{ 
+			"extEntityTypeId": "ExtEntityType:10",
+			"visible": true,
+			"enabled": true,
+			"animate": false
+		}
+	]'
+);
+/*(3, 010001, NULL, 
+	'[
+		{ 
 			"extEntityTypeId": "ExtEntityType:1",
 			"visible": true,
 			"enabled": true,
@@ -34,5 +44,5 @@ INSERT INTO ui.map_ext_entities (id, default_graphic_icon_id, default_module_act
 			"animate": false
 		}
 	]'
-);
+);*/
 

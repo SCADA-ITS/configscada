@@ -82,7 +82,8 @@ class SendToTelegramNotification {
 			Stretch imsIncidentStretch = IncidentEntitiesManager.getInstance().getStretch(incidentReport.getAffectionStretchId());
 	
 			message = IncidentEntitiesManager.getInstance().getIncidentTypeTaskValue(values, TASK_TYPE_PARAM_MESSAGE);
-												
+						
+									
 			if (incidentReport.getAlias() != null) 
 				message = message.replace("@alias", incidentReport.getAlias());
 			else
@@ -98,7 +99,7 @@ class SendToTelegramNotification {
 				}else if (IncidentEntitiesManager.getInstance().getImsRoadImpact(incidentReport.getRoadImpactId()).getDescription().contains("irregular")){
 					message = message.replace("@afeccion", "🟡 " + IncidentEntitiesManager.getInstance().getImsRoadImpact(incidentReport.getRoadImpactId()).getDescription());
 				}else if (IncidentEntitiesManager.getInstance().getImsRoadImpact(incidentReport.getRoadImpactId()).getDescription().contains("condicionada")){
-					message = message.replace("@afeccion", "🟠 " + IncidentEntitiesManager.getInstance().getImsRoadImpact(incidentReport.getRoadImpactId()).getDescription());
+					message = message.replace("@afeccion", "🟢 " + IncidentEntitiesManager.getInstance().getImsRoadImpact(incidentReport.getRoadImpactId()).getDescription());
 				}else{
 					message = message.replace("@afeccion", "Sin información de la circulación");
 				}

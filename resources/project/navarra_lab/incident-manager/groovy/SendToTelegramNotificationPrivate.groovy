@@ -96,7 +96,7 @@ class SendToTelegramNotification {
 				}else if (IncidentEntitiesManager.getInstance().getImsRoadImpact(incidentReport.getRoadImpactId()).getDescription().contains("irregular")){
 					message = message.replace("@afeccion", "🟡 " + IncidentEntitiesManager.getInstance().getImsRoadImpact(incidentReport.getRoadImpactId()).getDescription());
 				}else if (IncidentEntitiesManager.getInstance().getImsRoadImpact(incidentReport.getRoadImpactId()).getDescription().contains("condicionada")){
-					message = message.replace("@afeccion", "🟠 " + IncidentEntitiesManager.getInstance().getImsRoadImpact(incidentReport.getRoadImpactId()).getDescription());
+					message = message.replace("@afeccion", "🟢 " + IncidentEntitiesManager.getInstance().getImsRoadImpact(incidentReport.getRoadImpactId()).getDescription());
 				}else{
 					message = message.replace("@afeccion", "Sin información de la circulación");
 				}
