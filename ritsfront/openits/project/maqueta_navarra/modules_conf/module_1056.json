@@ -1,6 +1,7 @@
 {
 	"restEndpoints": {
 		"transit": "trs/transits/${id}",
+		"transitSummary": "trs/transits/${id}/summary",		
 		"changeState" : "trs/transits/${id}/changeState/${stateId}",
 		"updateTransit": "trs/transits/update",
 		"addImage": "trs/transits/${id}/addImage",

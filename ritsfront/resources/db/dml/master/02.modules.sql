@@ -255,7 +255,8 @@ INSERT INTO ui.module_actions(id, module_id, name, description, system_permissio
 (105402, 1054, 'deleteFromIncidentReport', 'delete avoid polygon from incidentReport', null, null),
 (105403, 1054, 'showFromIncidentReport', 'show avoid polygon from incidentReport', null, null),
 (105601, 1056, 'edit', 'edit transit', null, null),
-(105602, 1056, 'changeState', 'change state to transit', null, null);
+(105602, 1056, 'discardState', 'discard state to transit', null, null),
+(105603, 1056, 'changeLocation', 'change location transit', null, null);
 
 
 INSERT INTO ui.module_values(module_id, module_param_id, value) VALUES
