@@ -1,12 +1,12 @@
 DO $$ 
 BEGIN
-  IF EXISTS (SELECT 1 FROM pg_tablespace WHERE spcname = 'tbs_controltrafico_incidents') THEN
+  IF EXISTS (SELECT 1 FROM pg_tablespace WHERE spcname = 'tbl_incidents') THEN
 
   		create table incidents.affection_details (
 			id serial not null,
 			alias varchar null,
 			constraint pk_affection_details primary key (id)
-		) tablespace tbs_controltrafico_incidents;
+		) tablespace tbl_incidents;
   
 		create table incidents.incidents (
 			id serial not null,
@@ -26,7 +26,7 @@ BEGIN
 			num_decesseased int null,
 			max_affection varchar null,
 			constraint pk_incidents primary key (id)
-		) tablespace tbs_controltrafico_incidents;	
+		) tablespace tbl_incidents;	
 		
 		create index idx_affection_detail_id on
 		incidents.incidents

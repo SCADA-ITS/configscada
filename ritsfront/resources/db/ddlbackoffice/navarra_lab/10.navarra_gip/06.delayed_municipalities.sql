@@ -1,6 +1,6 @@
 DO $$ 
 BEGIN
-  IF EXISTS (SELECT 1 FROM pg_tablespace WHERE spcname = 'tbs_controltrafico_incidents') THEN
+  IF EXISTS (SELECT 1 FROM pg_tablespace WHERE spcname = 'tbl_incidents') THEN
 
 		
 		create table incidents.delayed_assigned_municipalities (
@@ -8,7 +8,7 @@ BEGIN
 			delayed_incident_id int null,
 			municipality_id int null,
 			constraint pk_delayed_assigned_municipalities primary key (id)
-		) tablespace tbs_controltrafico_incidents;
+		) tablespace tbl_incidents;
 		
 		
 		create index idx_delayed_municipalities_incident_id on

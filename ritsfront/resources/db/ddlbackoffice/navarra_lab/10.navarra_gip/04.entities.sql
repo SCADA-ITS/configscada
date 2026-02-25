@@ -1,20 +1,20 @@
 DO $$ 
 BEGIN
-  IF EXISTS (SELECT 1 FROM pg_tablespace WHERE spcname = 'tbs_controltrafico_incidents') THEN
+  IF EXISTS (SELECT 1 FROM pg_tablespace WHERE spcname = 'tbl_incidents') THEN
 
 
 		create table incidents.entities (
 			id serial not null,
 			alias varchar null,
 			constraint pk_entities primary key (id)
-		) tablespace tbs_controltrafico_incidents;
+		) tablespace tbl_incidents;
 		
 		create table incidents.assigned_entities (
 			id serial not null,
 			incident_id int null,
 			entity_id int null,
 			constraint pk_assigned_entities primary key (id)
-		) tablespace tbs_controltrafico_incidents;
+		) tablespace tbl_incidents;
 		
 		
 		create index idx_entities_incident_id on

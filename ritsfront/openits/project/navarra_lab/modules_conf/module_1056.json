@@ -27,7 +27,10 @@
 		"proposeForSanction": "TransitState:6",
 		"discarded": "TransitState:7",
 		"archived": "TransitState:8",
-		"failed": "TransitState:9"
+		"failed": "TransitState:9",
+		"checkLists": "TransitState:10",
+		"whiteList": "TransitState:11",
+		"blackList": "TransitState:12"
 	},
 	"tabs": [
 		{

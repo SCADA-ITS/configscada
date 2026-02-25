@@ -2,8 +2,8 @@ SET client_min_messages TO WARNING;
 
 DO $$ 
 BEGIN
-  IF EXISTS (SELECT 1 FROM pg_tablespace WHERE spcname = 'tbs_controltrafico_incidents') THEN
-  
+  --IF EXISTS (SELECT 1 FROM pg_tablespace WHERE spcname = 'tbs_controltrafico_incidents') THEN
+  IF EXISTS (SELECT 1 FROM pg_tablespace WHERE spcname = 'tbl_incidents') THEN
 	DROP SCHEMA incidents CASCADE;
 
 	CREATE SCHEMA incidents;
@@ -27,7 +27,7 @@ BEGIN
 		CONSTRAINT pk_sg_metadata_tables PRIMARY KEY (id)
 	);
 	
-	ALTER TABLE incidents.sg_metadata_tables SET TABLESPACE tbs_controltrafico_incidents;
+	ALTER TABLE incidents.sg_metadata_tables SET TABLESPACE tbl_incidents;
 	
 	-- Table: incidents.sg_metadata_table_images
 	-- Descripción: 
@@ -48,7 +48,7 @@ BEGIN
 
 	ALTER TABLE incidents.sg_metadata_table_images ADD CONSTRAINT fk_sg_metadata_table_images_sg_metadata_table_id FOREIGN KEY (sg_metadata_table_id) references incidents.sg_metadata_tables(id);
 	
-	ALTER TABLE incidents.sg_metadata_table_images SET TABLESPACE tbs_controltrafico_incidents;
+	ALTER TABLE incidents.sg_metadata_table_images SET TABLESPACE tbl_incidents;
 	
 	-- Table: incidents.sg_metadata_table_attachments
 	-- Descripción: 
@@ -69,7 +69,7 @@ BEGIN
 
 	ALTER TABLE incidents.sg_metadata_table_attachments ADD CONSTRAINT fk_sg_metadata_table_attachments_sg_metadata_table_id FOREIGN KEY (sg_metadata_table_id) references incidents.sg_metadata_tables(id);
 	
-	ALTER TABLE incidents.sg_metadata_table_attachments SET TABLESPACE tbs_controltrafico_incidents;
+	ALTER TABLE incidents.sg_metadata_table_attachments SET TABLESPACE tbl_incidents;
 	
 	-- 
 	-- Table: incidents.sg_metadata_table_triggers
@@ -88,7 +88,7 @@ BEGIN
 
 	ALTER TABLE incidents.sg_metadata_table_triggers ADD CONSTRAINT fk_sg_metadata_table_triggers_sg_metadata_table_id FOREIGN KEY (sg_metadata_table_id) references incidents.sg_metadata_tables(id);
 	
-	ALTER TABLE incidents.sg_metadata_table_triggers SET TABLESPACE tbs_controltrafico_incidents;
+	ALTER TABLE incidents.sg_metadata_table_triggers SET TABLESPACE tbl_incidents;
 
 	-- 
 	-- Table: incidents.sg_metadata_table_commands
@@ -116,7 +116,7 @@ BEGIN
 
 	ALTER TABLE incidents.sg_metadata_table_commands ADD CONSTRAINT unique_sg_metadata_table_commands UNIQUE (sg_metadata_table_id, name);
 	
-	ALTER TABLE incidents.sg_metadata_table_commands SET TABLESPACE tbs_controltrafico_incidents;
+	ALTER TABLE incidents.sg_metadata_table_commands SET TABLESPACE tbl_incidents;
 	
 	-- 
 	-- Table: incidents.sg_metadata_columns
@@ -143,7 +143,7 @@ BEGIN
 	
 	ALTER TABLE incidents.sg_metadata_columns ADD CONSTRAINT unique_sg_metadata_columns UNIQUE (sg_metadata_table_id, column_name);
 	
-	ALTER TABLE incidents.sg_metadata_columns SET TABLESPACE tbs_controltrafico_incidents;
+	ALTER TABLE incidents.sg_metadata_columns SET TABLESPACE tbl_incidents;
 	
 	-- 
 	-- Table: incidents.sg_metadata_columnm_fillers
@@ -162,7 +162,7 @@ BEGIN
 
 	ALTER TABLE incidents.sg_metadata_column_fillers ADD CONSTRAINT fk_sg_metadata_column_fillers_sg_metadata_column_id FOREIGN KEY (sg_metadata_column_id) references incidents.sg_metadata_columns(id);
 	
-	ALTER TABLE incidents.sg_metadata_column_fillers SET TABLESPACE tbs_controltrafico_incidents;
+	ALTER TABLE incidents.sg_metadata_column_fillers SET TABLESPACE tbl_incidents;
 	
 	-- 
 	-- Table: incidents.sg_metadata_tasks
@@ -178,7 +178,7 @@ BEGIN
 		CONSTRAINT pk_sg_metadata_tasks PRIMARY KEY (id)
 	);
 	
-	ALTER TABLE incidents.sg_metadata_tasks SET TABLESPACE tbs_controltrafico_incidents;
+	ALTER TABLE incidents.sg_metadata_tasks SET TABLESPACE tbl_incidents;
 	
 	-- 
 	-- Table: incidents.sg_i18n_labels
@@ -197,6 +197,6 @@ BEGIN
 	
 	ALTER TABLE incidents.sg_i18n_labels ADD CONSTRAINT unique_sg_i18n_labels UNIQUE (locale_code, label);
 
-	ALTER TABLE incidents.sg_i18n_labels SET TABLESPACE tbs_controltrafico_incidents;
+	ALTER TABLE incidents.sg_i18n_labels SET TABLESPACE tbl_incidents;
   END IF;
 END $$;

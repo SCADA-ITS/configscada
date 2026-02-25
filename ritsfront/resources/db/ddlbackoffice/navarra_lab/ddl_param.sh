@@ -7,6 +7,7 @@ for eachfile in $yourfilenames; do
 	current_file=$((current_file+1))
 	file_name=$(basename "$eachfile")
 	echo -ne "DDL($current_file / $files_count): $file_name                               \r"
-	psql postgresql://dbo_controltrafico:12hJklfj9.pha9@$1:$2/controltrafico -b -f $eachfile >/dev/null
+	#psql postgresql://dbo_controltrafico:12hJklfj9.pha9@$1:$2/controltrafico -b -f $eachfile >/dev/null
+	psql postgresql://rits:rits@$1:$2/rits -b -f $eachfile >/dev/null
 done
 echo

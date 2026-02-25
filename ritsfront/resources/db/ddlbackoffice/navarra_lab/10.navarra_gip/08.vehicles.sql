@@ -1,26 +1,26 @@
 DO $$ 
 BEGIN
-  IF EXISTS (SELECT 1 FROM pg_tablespace WHERE spcname = 'tbs_controltrafico_incidents') THEN
+  IF EXISTS (SELECT 1 FROM pg_tablespace WHERE spcname = 'tbl_incidents') THEN
 		
 		
 		create table incidents.vehicle_types (
 			id serial not null,
 			alias varchar null,
 			constraint pk_vehicle_types primary key (id)
-		) tablespace tbs_controltrafico_incidents;
+		) tablespace tbl_incidents;
 		
 		create table incidents.vehicle_brands (
 			id serial not null,
 			alias varchar null,
 			constraint pk_vehicle_brands primary key (id)
-		) tablespace tbs_controltrafico_incidents;
+		) tablespace tbl_incidents;
 		
 		create table incidents.vehicle_models (
 			id serial not null,
 			vehicle_brand_id int null,
 			alias varchar null,
 			constraint pk_vehicle_models primary key (id)
-		) tablespace tbs_controltrafico_incidents;
+		) tablespace tbl_incidents;
 		
 		alter table incidents.vehicle_models add constraint fk_vehicle_brand_id foreign key (vehicle_brand_id) references incidents.vehicle_brands(id) ON DELETE CASCADE;
 		
@@ -32,7 +32,7 @@ BEGIN
 			id serial not null,
 			alias varchar null,
 			constraint pk_vehicle_damages primary key (id)
-		) tablespace tbs_controltrafico_incidents;
+		) tablespace tbl_incidents;
 		
 		create table incidents.vehicles (
 			id serial not null,
@@ -45,7 +45,7 @@ BEGIN
 			vehicle_damage_id int null,
 			comment varchar null,
 			constraint pk_vehicles primary key (id)
-		) tablespace tbs_controltrafico_incidents;
+		) tablespace tbl_incidents;
 		
 		create index idx_vehicles_incident_id on
 		incidents.vehicles

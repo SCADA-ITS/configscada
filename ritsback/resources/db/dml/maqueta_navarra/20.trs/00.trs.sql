@@ -49,7 +49,11 @@ INSERT INTO static.transit_type_state_transitions (transit_type_id,parent_transi
 --Checklists
 (1,10,3,false,null,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), --In Review
 (1,10,11,false,null,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), --White list
-(1,10,12,false,null,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP); --Black list
+(1,10,12,false,null,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), --Black list
+
+--Black list
+(1,12,6,false,null,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), --Propose for sanction
+(1,12,7,false,null,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP); --Discarded
 
 -- static.vehicle_classes 
 INSERT INTO static.vehicle_classes (vehicle_class_id,alias,label_alias,enabled,visible,created_at,updated_at) VALUES

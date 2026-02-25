@@ -41,6 +41,16 @@ INSERT INTO ui.module_values(module_id, module_param_id, value) VALUES
 (8001, 13, '1'), 
 (8001, 14, 'all_waze_traffic_jam_ext_entities_with_values'),
 
+(9000, 13, '3'), 
+(9000, 14, 'white_list'),
+
+(9001, 13, '3'), 
+(9001, 14, 'black_list'),
+
+(9002, 13, '3'), 
+(9002, 14, 'discarded_reasons'),
+
 (2020, 9, '1'),
-(2021, 9, '3');
+(2021, 9, '3'),
+(2022, 9, '4');
 

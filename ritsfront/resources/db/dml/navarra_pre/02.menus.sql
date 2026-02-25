@@ -34,6 +34,8 @@ INSERT INTO ui.menu_items(id, menu_group_id, "position", module_id, "label", ico
 (601, 4000, 8, 1050, 'LBL_MENU_ITEM_LOCATION_EDITOR', 'img/menu/locations-menu.png', 'Menu item location editor', 'Menu item location editor', true, true),
 (602, 4000, 9, 1053, 'LBL_MENU_ITEM_ROUTE_EDITOR', 'img/menu/route-menu.png', 'Menu item route editor', 'Menu item route editor', true, true),
 (603, 4000, 10, 1048, 'LBL_MENU_ITEM_EQUIPMENT_EDITOR', 'img/menu/equipment-menu.png', 'Menu item equipment Editor', 'Menu item equipment Editor', true, true),
+(604, 4000, 11, null, '', null, '', null, true, true),
+(605, 4000, 12, 2022, 'LBL_MENU_ITEM_TRANSIT_EDITOR', 'img/menu/transit-menu.png', 'Editor tránsitos', 'Editor tránsitos', true, true),
 
 -- HELP
 (501, 5000, 1, 1047, 'LBL_MENU_HELP_CONTENTS', 'img/menu/help.png', 'Help contents', 'Menu item help contents', true, true);

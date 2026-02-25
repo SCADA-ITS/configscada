@@ -23,6 +23,14 @@ INSERT INTO ui.window_values(module_id, window_param_id, value) VALUES
 (202, 14, 'true'),
 (202, 17, 'true'),
 
+(2020, 8, 'true'),
+(2020, 9, 'img/module/default.png'),
+(2020, 10, 'img/module/default.png'),
+(2020, 11, '#464646'),
+(2020, 12, 'LBL_MENU_ITEM_MAP'),
+(2020, 14, 'true'),
+(2020, 17, 'true'),
+
 (2021, 8, 'true'),
 (2021, 9, 'img/module/default.png'),
 (2021, 10, 'img/module/default.png'),
@@ -30,6 +38,14 @@ INSERT INTO ui.window_values(module_id, window_param_id, value) VALUES
 (2021, 12, 'LBL_MENU_ITEM_MAP'),
 (2021, 14, 'true'),
 (2021, 17, 'true'),
+
+(2022, 8, 'true'),
+(2022, 9, 'img/module/default.png'),
+(2022, 10, 'img/module/default.png'),
+(2022, 11, '#464646'),
+(2022, 12, 'LBL_MENU_ITEM_MAP'),
+(2022, 14, 'true'),
+(2022, 17, 'true'),
 
 (401, 8, 'true'),
 (401, 9, 'img/module/default.png'),

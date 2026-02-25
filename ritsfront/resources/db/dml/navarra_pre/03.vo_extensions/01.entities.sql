@@ -141,6 +141,9 @@ INSERT INTO ui.vo_entities(id, vo_entity_type_id, enabled, visible) VALUES
 ('TransitState:7', 'TransitStateUI', true, true),
 ('TransitState:8', 'TransitStateUI', true, true),
 ('TransitState:9', 'TransitStateUI', true, true),
+('TransitState:10', 'TransitStateUI', true, true),
+('TransitState:11', 'TransitStateUI', true, true),
+('TransitState:12', 'TransitStateUI', true, true),
 
 ('TransitType:1', 'TransitTypeUI', true, true);
 

@@ -3,7 +3,8 @@ BEGIN
   IF EXISTS (SELECT 1 FROM pg_namespace WHERE nspname = 'incidents') THEN
 	
   	INSERT INTO ui.backoffices (id, "name", description, "label", jdbc, "user", "password", "schema", default_metadata_backoffice, default_metadata_table, default_metadata_column, enabled) 
-	VALUES(2, 'incidents', NULL, NULL, 'jdbc:postgresql://10.253.4.23:5432/controltrafico', 'dbo_controltrafico', 'ftNpUo1PR5Pmu1iNfim/Tw==', 'incidents',
+	--VALUES(2, 'incidents', NULL, NULL, 'jdbc:postgresql://10.253.4.23:5432/controltrafico', 'dbo_controltrafico', 'ftNpUo1PR5Pmu1iNfim/Tw==', 'incidents',
+	VALUES(2, 'incidents', NULL, NULL, 'jdbc:postgresql://10.253.5.84:5430/rits', 'rits', 'uMuD7Uy0gpCRL4Jo1w6SOQ==', 'incidents',
 	-- default_metadata_backoffice
 	'{}',
 	-- default_metadata_table

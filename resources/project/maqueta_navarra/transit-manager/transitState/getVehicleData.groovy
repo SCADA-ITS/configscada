@@ -110,8 +110,8 @@ class getVehicleData {
 					
         return true;
     }
-
-	void pedirDatosDGT(Transit transit) {
+    
+    void pedirDatosDGT(Transit transit) {
 		
 		CgiApiMultasPlateNumberResponseDto cgiApiMultasPlateNumberResponseDto;
 				

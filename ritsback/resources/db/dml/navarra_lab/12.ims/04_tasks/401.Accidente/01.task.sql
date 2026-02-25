@@ -19,7 +19,6 @@ INSERT INTO conf.ims_incident_type_tasks (incident_type_task_id, incident_type_i
 (01030401, 401, 3, 8, 'CORREO NORMALIDAD', 'Envio de información vuelta a la normalidad', 'Enviar mediante correo electrónico de manera interna la información de que hay vuelta a la normalidad tras el accidente', true, 1, false, 'SendMailTask', true, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (02030401, 401, 3, 10, 'INFORMACIÓN NORMALIDAD', 'Publicar Telegram vuelta a la normalidad', 'Publicar en el canal público del Gobierno de Navarra la información al ciudadano de que se ha restaurado la normalidad', true, 2, false, 'SendToTelegramNotificationPublic', true, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
-(011000401, 401, 100, 1, 'FINALIZAR BITÁCORA', 'Guardar fecha de fin en bitácora', 'Guardar fecha de fin en bitácora', true, 2, false, 'sendEndIncident', true, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(011010401, 401, 101, 1, 'FINALIZAR BITÁCORA', 'Guardar fecha de fin en bitácora', 'Guardar fecha de fin en bitácora', true, 2, false, 'sendEndIncident', true, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(011000401, 401, 100, 1, 'FINALIZAR BITÁCORA', 'Guardar fecha de fin en bitácora', 'Guardar fecha de fin en bitácora', true, 2, true, 'SendEndIncident', true, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 
