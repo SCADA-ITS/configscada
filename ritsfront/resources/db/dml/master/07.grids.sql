@@ -691,7 +691,8 @@ INSERT INTO ui.grid_commands(grid_id, "position", "label", icon, "default", modu
 (1051, 3, 'LBL_CMD_DELETE', 'mdi mdi-delete', false, 105204, NULL, 2, true, false, true, null, null),
 
 (1052, 1, 'LBL_CMD_EDIT', 'mdi mdi-pencil', true, 105601, null, 2, false, false, true, null, null),
-(1052, 2, 'LBL_CMD_DISCARD_STATE', 'mdi mdi-cancel', false, 105602, null, 2, true, false, true, null, null);
+(1052, 2, 'LBL_CMD_DISCARD_STATE', 'mdi mdi-cancel', false, 105602, null, 2, true, false, true, null, null),
+(1052, 3, 'LBL_CMD_CHANGE_LOCATION', 'mdi mdi-map-marker', false, 105603, null, 2, true, false, true, null, null);
 
 INSERT INTO ui.grid_field_icons(grid_field_id, icon, value, show_value, badge_color, avatar, enabled, label_value) VALUES
 (100002, NULL, NULL, true, false, true, true, NULL),
