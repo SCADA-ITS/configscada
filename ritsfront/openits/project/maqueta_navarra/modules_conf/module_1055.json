@@ -3,6 +3,9 @@
 		"transits": "trs/transits",
 		"grid": "grids/${id}"
 	},
+	"action":{
+		"changeLocation": 105603
+	},
 	"gridTransits": 1052,
 	"thumbnails": {
 		"enabled": true,
