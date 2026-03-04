@@ -22,3 +22,8 @@ INSERT INTO ui.grid_field_icons(grid_field_id, icon, value, show_value, badge_co
 
 (100303, './img/grid/confirmed.png', 'true', false, false, false, true, 'LBL_ICON_CONFIRMED'),
 (100303, './img/grid/not_confirmed.png', 'false', false, false, false, true, 'LBL_ICON_NOT_CONFIRMED');
+
+INSERT INTO ui.grid_field_balloons(grid_field_id, color, value, enabled)VALUES
+(100304, '#C8C8C8', 'Explotación', true),
+(100304, '#C800FF', 'Emergencia', true),
+(100304, '#64C8FF', 'Eventos', true);

@@ -307,7 +307,7 @@ true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (10, 'Balizas V16', 'Balizas V16', 'LBL_EXT_ENTITY_TYPE_112', 'LBL_EXT_ENTITY_TYPE_112_DESC', true, '0 0/1 * * * ? *', 
 '{
 
-	"host": "http://192.168.88.163:8120/DGT",
+	"url": "http://192.168.88.163:8582/events",
 	"extEntityParamsMapping": [ {"field": "lon", "extEntityTypeParamId": "ExtEntityTypeParam:10:1"},
 								{"field": "lat", "extEntityTypeParamId": "ExtEntityTypeParam:10:2"}
 							],
