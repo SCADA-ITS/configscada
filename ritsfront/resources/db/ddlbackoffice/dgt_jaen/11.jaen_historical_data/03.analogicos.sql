@@ -15,7 +15,7 @@ WITH co_data AS (
     WHERE 
         ev.element_type_id = 19
         AND ev.element_type_param_id = 1003
-        AND c.timestamp_at >= NOW() - INTERVAL '1 month'
+        AND c.timestamp_at >= NOW() - INTERVAL '1 year'
         AND c.timestamp_at <= NOW()
 )
 SELECT *
@@ -42,7 +42,7 @@ WITH opac_data AS (
     WHERE 
         ev.element_type_id = 21
         AND ev.element_type_param_id = 1003
-        AND c.timestamp_at >= NOW() - INTERVAL '1 month'
+        AND c.timestamp_at >= NOW() - INTERVAL '1 year'
         AND c.timestamp_at <= NOW()
 )
 SELECT *
@@ -68,7 +68,7 @@ WITH lum_data AS (
     WHERE 
         ev.element_type_id = 14
         AND ev.element_type_param_id = 1003
-        AND c.timestamp_at >= NOW() - INTERVAL '1 month'
+        AND c.timestamp_at >= NOW() - INTERVAL '1 year'
         AND c.timestamp_at <= NOW()
 )
 SELECT *
@@ -104,7 +104,7 @@ WITH ws_data AS (
         ON e.element_id = c.f_element_id
         AND e.element_type_id = 1  
     WHERE 
-        c.timestamp_at >= NOW() - INTERVAL '1 month'
+        c.timestamp_at >= NOW() - INTERVAL '1 year'
         AND c.timestamp_at <= NOW()
 )
 SELECT *
@@ -125,7 +125,7 @@ INNER JOIN conf.element_values ev
 WHERE 
     ev.element_type_id = 18
     AND ev.element_type_param_id = 1003
-    AND c.timestamp_at >= NOW() - INTERVAL '1 month'
+    AND c.timestamp_at >= NOW() - INTERVAL '1 year'
     AND c.timestamp_at <= NOW()
 ORDER BY 
     c.timestamp_at DESC;
@@ -145,7 +145,7 @@ INNER JOIN conf.element_values ev
 WHERE 
     ev.element_type_id = 66
     AND ev.element_type_param_id = 1003
-    AND c.timestamp_at >= NOW() - INTERVAL '1 month'
+    AND c.timestamp_at >= NOW() - INTERVAL '1 year'
     AND c.timestamp_at <= NOW()
 ORDER BY 
     c.timestamp_at DESC;

@@ -194,7 +194,7 @@ INNER JOIN conf.elements el ON el.alias = ac.element
 WHERE il.locale_code = 'es_ES'
   AND el.element_type_id = 71
   AND ac.log_subtype_id = 1
-  AND ac.time_stamp >= now() - INTERVAL '1 month'
+  AND ac.time_stamp >= now() - INTERVAL '1 year'
   AND ac.time_stamp <= now()
 ORDER BY ac.time_stamp DESC;
 
@@ -248,7 +248,7 @@ INNER JOIN conf.elements el ON el.alias = ac.element
 WHERE il.locale_code = 'es_ES'
   AND el.element_type_id = 13
   AND ac.log_subtype_id = 1
-  AND ac.time_stamp >= NOW() - INTERVAL '1 month'
+  AND ac.time_stamp >= NOW() - INTERVAL '1 year'
   AND ac.time_stamp <= NOW()
 ORDER BY ac.time_stamp DESC;
 
@@ -294,7 +294,7 @@ INNER JOIN conf.elements el ON el.alias = ac.element
 WHERE il.locale_code = 'es_ES'
   AND el.element_type_id = 32
   AND ac.log_subtype_id = 1
-  AND ac.time_stamp >= NOW() - INTERVAL '1 month'
+  AND ac.time_stamp >= NOW() - INTERVAL '1 year'
   AND ac.time_stamp <= NOW()
 ORDER BY ac.time_stamp DESC;
 
@@ -398,7 +398,7 @@ WITH circuit_data AS (
         OR (el.element_type_id = 2000 AND ac.command_type ~* '(ILLUMINATION|CIRCUIT)')
       )
       AND ac.log_subtype_id = 1 
-      AND ac.time_stamp >= now() - INTERVAL '1 month'
+      AND ac.time_stamp >= now() - INTERVAL '1 year'
       AND ac.time_stamp <= now()
 )
 SELECT *
@@ -452,7 +452,7 @@ WHERE
     il.locale_code = 'es_ES'
     AND el.element_type_id = 8 
     AND ac.log_subtype_id = 1 
-    AND ac.time_stamp >= NOW() - INTERVAL '1 month'
+    AND ac.time_stamp >= NOW() - INTERVAL '1 year'
     AND ac.time_stamp <= NOW()
 ORDER BY 
     ac.time_stamp DESC;
@@ -559,7 +559,7 @@ WITH ventilation_data AS (
         OR (el.element_type_id = 2000 AND ac.command_type ~* '(VENTILATION|FANS)')
       )
       AND ac.log_subtype_id = 1 
-      AND ac.time_stamp >= now() - INTERVAL '1 month'
+      AND ac.time_stamp >= now() - INTERVAL '1 year'
       AND ac.time_stamp <= now()
 )
 SELECT *

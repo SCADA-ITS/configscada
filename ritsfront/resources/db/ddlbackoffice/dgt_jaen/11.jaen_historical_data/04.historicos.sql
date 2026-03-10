@@ -17,7 +17,7 @@ INNER JOIN conf.element_values ev
 WHERE 
     ev.element_type_id = 8
     AND ev.element_type_param_id = 1003
-    AND c.timestamp_at >= NOW() - INTERVAL '1 month'
+    AND c.timestamp_at >= NOW() - INTERVAL '1 year'
     AND c.timestamp_at <= NOW()
 ORDER BY 
     c.timestamp_at DESC;
@@ -43,7 +43,7 @@ INNER JOIN conf.element_values ev
 WHERE 
     ev.element_type_id = 13
     AND ev.element_type_param_id = 1003
-    AND c.timestamp_at >= NOW() - INTERVAL '1 month'
+    AND c.timestamp_at >= NOW() - INTERVAL '1 year'
     AND c.timestamp_at <= NOW()
 ORDER BY 
     c.timestamp_at DESC;
@@ -71,7 +71,7 @@ INNER JOIN conf.element_values ev
 WHERE 
     ev.element_type_id = 32
     AND ev.element_type_param_id = 1003
-    AND c.timestamp_at >= NOW() - INTERVAL '1 month'
+    AND c.timestamp_at >= NOW() - INTERVAL '1 year'
     AND c.timestamp_at <= NOW()
 ORDER BY 
     c.timestamp_at DESC;
@@ -94,7 +94,7 @@ WITH comando_normalizado_pmv AS (
             ELSE NULL
         END AS comando_json
     FROM hist.pmv p
-    WHERE p.timestamp_at >= now() - interval '1 month'
+    WHERE p.timestamp_at >= now() - interval '1 year'
       AND p.timestamp_at <= now()
 ),
 -- tabla auxiliar para asegurar una sola label por value
