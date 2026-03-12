@@ -71,7 +71,7 @@ class SendToTelegramNotification {
 		
         List<Command> commands = null;
         String api_token = '7673259805:AAEqCaKMZ-SvxE8wpUriuGLegpNxLlOLgRM';
-        String chat_id = '@TraficoNavarra';
+        String chat_id = '-1003712254716';
         String message = null;
 		boolean respuesta = false;
 
@@ -87,7 +87,10 @@ class SendToTelegramNotification {
 				message = message.replace("@alias", incidentReport.getAlias());
 			else
 				message = message.replace("@alias", "");
-			message = message.replace("@tipo", "⚠️ " + IncidentEntitiesManager.getInstance().getImsIncidentType(incidentReport.getIncidentTypeId()).getDescription());
+			if (incidentReport.getIncidentLevelId() == 2) 
+				message = message.replace("@tipo", "⚠️ " + IncidentEntitiesManager.getInstance().getImsIncidentType(incidentReport.getIncidentTypeId()).getDescription());
+			else				
+				message = message.replace("@tipo", IncidentEntitiesManager.getInstance().getImsIncidentType(incidentReport.getIncidentTypeId()).getDescription());
 			message = message.replace("@localizacion", "🚩 " + imsIncidentStretch.getAlias() + " - " + imsIncidentLocation.getAlias());
 			
 			if (IncidentEntitiesManager.getInstance().getImsRoadImpact(incidentReport.getRoadImpactId()) != null){

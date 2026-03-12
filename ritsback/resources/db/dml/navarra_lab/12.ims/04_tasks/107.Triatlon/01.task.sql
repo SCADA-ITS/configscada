@@ -6,7 +6,9 @@ INSERT INTO conf.ims_incident_type_tasks (incident_type_task_id, incident_type_i
 --ETAPA = AL SALTAR LA INCIDENCIA - ANTES DE CONFIRMAR - TAREAS GENERALES
 (01010107, 107, 1, 10, 'ENVIAR TELEGRAM PUBLICO', 'Notificación usuarios por Telegram', 'Enviar información a canal público de Telegram de la incidencia para informar a los ciudadanos.', false, 1, false, 'SendToTelegramNotificationPublic', true, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (02010107, 107, 1, 10, 'ENVIAR TELEGRAM INTERNO', 'Notificación interna por Telegram', 'Enviar información a canal interno de Telegram de la incidencia.', false, 2, false, 'SendToTelegramNotificationPrivate', true, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(03010107, 107, 1, 8, 'ENVIAR CORREO', 'Enviar correo de aviso', 'Enviar correo eléctronico a personal para informar de ocurencia de incidencia', false, 3, false, 'SendMailTask', true, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(03010107, 107, 1, 8, 'ENVIAR CORREO', 'Enviar correo de aviso', 'Enviar correo eléctronico a personal para informar de ocurencia de incidencia', false, 3, false, 'SendMailTask', true, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(011000107, 107, 100, 1, 'FINALIZAR BITÁCORA', 'Guardar fecha de fin en bitácora', 'Guardar fecha de fin en bitácora', true, 2, true, 'SendEndIncident', true, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 
 
