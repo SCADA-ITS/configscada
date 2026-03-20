@@ -356,4 +356,14 @@ true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 		]
 	} 
 }',
+true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(10, 'Balizas V16', 'Balizas V16', 'LBL_EXT_ENTITY_TYPE_V16', 'LBL_EXT_ENTITY_TYPE_V16_DESC', true, '0 0/1 * * * ? *', 
+'{
+	"host": "http://localhost:8000/Eventos_Espana.json",
+	"extEntityParamsMapping": [ {"field": "detection_time", "extEntityTypeParamId": "ExtEntityTypeParam:10:1"}
+							],
+	"extEntityFieldsMapping": [ {"srcField": "actionid", "dstField": "uid"}
+							]
+}',
 true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
