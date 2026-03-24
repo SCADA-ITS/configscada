@@ -49,5 +49,4 @@ INSERT INTO static.ext_entity_type_params (ext_entity_type_id, ext_entity_type_p
 (9, 1, null, 'length', 'Length of route in meters', 'LBL_EXT_ENTITY_TYPE_PARAM_LENGTH_M', 'LBL_EXT_ENTITY_TYPE_PARAM_LENGTH_M_DESC', 1, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (9, 2, null, 'time', 'Time in seconds it takes to cross the route right now', 'LBL_EXT_ENTITY_TYPE_PARAM_DELAY_S', 'LBL_EXT_ENTITY_TYPE_PARAM_DELAY_S_DESC', 1, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
-(10, 1, null, 'length', 'Length of route in meters', 'LBL_EXT_ENTITY_TYPE_PARAM_LENGTH_M', 'LBL_EXT_ENTITY_TYPE_PARAM_LENGTH_M_DESC', 1, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(10, 2, null, 'time', 'Time in seconds it takes to cross the route right now', 'LBL_EXT_ENTITY_TYPE_PARAM_DELAY_S', 'LBL_EXT_ENTITY_TYPE_PARAM_DELAY_S_DESC', 1, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(10, 1, null, 'detection_time', 'detection time', 'LBL_EXT_ENTITY_TYPE_PARAM_DETECTION_TIME', 'LBL_EXT_ENTITY_TYPE_PARAM_DETECTION_TIME_DESC', 2, null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

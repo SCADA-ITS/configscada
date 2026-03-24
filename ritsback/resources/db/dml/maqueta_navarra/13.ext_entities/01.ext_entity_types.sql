@@ -304,21 +304,13 @@ true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 }',
 true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
-(10, 'Balizas V16', 'Balizas V16', 'LBL_EXT_ENTITY_TYPE_112', 'LBL_EXT_ENTITY_TYPE_112_DESC', true, '0 0/1 * * * ? *', 
+(10, 'Balizas V16', 'Balizas V16', 'LBL_EXT_ENTITY_TYPE_V16', 'LBL_EXT_ENTITY_TYPE_V16_DESC', true, '0 0/1 * * * ? *', 
 '{
-
-	"url": "http://192.168.88.163:8582/events",
-	"extEntityParamsMapping": [ {"field": "lon", "extEntityTypeParamId": "ExtEntityTypeParam:10:1"},
-								{"field": "lat", "extEntityTypeParamId": "ExtEntityTypeParam:10:2"}
+	"host": "http://192.168.88.163:8080/events",
+	"extEntityParamsMapping": [ {"field": "detectionTime", "extEntityTypeParamId": "ExtEntityTypeParam:10:1"}
 							],
 	"extEntityFieldsMapping": [ {"srcField": "actionid", "dstField": "uid"},
-								{"srcField": "device_event_type_value", "dstField": "alias"},
-								{"srcField": "device_event_type", "dstField": "description"}
-							],
-	"extEntitySubtypes": {
-		"field": "device_event_type_value",
-		"mapping": [ {"extEntitySubtypeId": "ExtEntitySubtype:10001", "value": "2"}
-		]
-	} 
+								{"srcField": "actionid", "dstField": "alias"}
+							]
 }',
 true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
