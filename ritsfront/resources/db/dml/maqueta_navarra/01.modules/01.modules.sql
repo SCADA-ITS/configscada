@@ -3,6 +3,7 @@ INSERT INTO ui.modules(id, module_type_id, "name", description, default_view_typ
 (201, 3, 'EQUIPMENTS', 'EQUIPMENTS', 1,null, 'modules/mapModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 (202, 3, 'EXTERNAL INCIDENTS MAP', 'EXTERNAL INCIDENTS MAP', 1,null, 'modules/mapModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 (203, 3, 'INTERNAL INCIDENTS MAP', 'INTERNAL INCIDENTS MAP', 1,null, 'modules/mapModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(204, 3, 'V16', 'V16', 1,null, 'modules/mapModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 
 (401, 5, 'ExternalMap', 'ExternalMap', 1, null, 'modules/externalApp.js', 'getView', NULL, NULL, NULL, true, true, NULL),
 (402, 5, 'ExternalMap', 'ExternalMap', 1, null, 'modules/externalApp.js', 'getView', NULL, NULL, NULL, true, true, NULL),

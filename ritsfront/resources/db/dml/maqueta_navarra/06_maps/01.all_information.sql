@@ -145,6 +145,12 @@ INSERT INTO ui.map_ext_entities (id, default_graphic_icon_id, default_module_act
 			"visible": true,
 			"enabled": true,
 			"animate": false
+		},
+		{ 
+			"extEntityTypeId": "ExtEntityType:10",
+			"visible": true,
+			"enabled": true,
+			"animate": false
 		}
 	]'
 );

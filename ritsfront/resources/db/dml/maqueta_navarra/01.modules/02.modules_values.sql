@@ -3,6 +3,7 @@ INSERT INTO ui.module_values(module_id, module_param_id, value) VALUES
 (201, 6, '2'),
 (202, 6, '3'),
 (203, 6, '4'),
+(204, 6, '5'),
 
 (401, 5, 'http://192.168.88.163:8000/google_simple.html'),
 (402, 5, 'http://192.168.88.163:8000/google_complejo.html'),
