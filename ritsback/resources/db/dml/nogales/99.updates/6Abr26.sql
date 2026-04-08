@@ -1,0 +1,1 @@
+update conf.users set session_expire_time_s = 86400;

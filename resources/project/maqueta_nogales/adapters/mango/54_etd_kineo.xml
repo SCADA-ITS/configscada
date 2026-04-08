@@ -20,4 +20,9 @@
 		</p:input>
 	</p:field>
   </p:fields>
+	<p:alarms>
+		<p:alarm source="door_open" active_value="true" alarm_config_id="040054"></p:alarm>
+		<p:alarm source="power_supply" active_value="true" alarm_config_id="030054"></p:alarm>
+		<p:alarm source="low_battery" active_value="true" alarm_config_id="020054"></p:alarm>
+	</p:alarms>
 </p:json_generic_mango_v1>
