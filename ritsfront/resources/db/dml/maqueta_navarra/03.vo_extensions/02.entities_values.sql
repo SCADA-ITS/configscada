@@ -84,6 +84,24 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 ('ExtEntityType:10', 63, 'baliza.png'),
 ('ExtEntityType:10', 64, '["ExtEntityTypeParam:10:1"]'),
 ('ExtEntityType:10', 65, '#d96e6e'),
+('ExtEntityType:10', 67, '
+{
+  "iconos": [
+    {
+      "color": "1",
+      "valor": "baliza.png"
+    },
+    {
+      "color": "2",
+      "valor": "baliza.png"
+    },
+    {
+      "color": "3",
+      "valor": "balizaapagada.png"
+    }
+  ]
+}
+'),
 
 ('ExtEntitySubtype:1001', 66, 'obras_blanco.png'),
 ('ExtEntitySubtype:1001', 70, '

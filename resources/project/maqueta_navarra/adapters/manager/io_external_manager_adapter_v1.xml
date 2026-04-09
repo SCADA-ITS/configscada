@@ -8,7 +8,7 @@
 	<p:executors>
 		<p:executor>
 			<p:id>1</p:id>
-			<p:enabled>true</p:enabled>
+			<p:enabled>false</p:enabled>
 			<p:threads>1</p:threads>
 			<p:merge_wait_time>1</p:merge_wait_time>
 			<p:manager_class>com.revenga.rits.back.io.external.manager.c4entities.C4ExtEntitiesExcutor</p:manager_class>
@@ -20,7 +20,7 @@
 		</p:executor>
 		<p:executor>
 			<p:id>4</p:id>
-			<p:enabled>true</p:enabled>
+			<p:enabled>false</p:enabled>
 			<p:threads>1</p:threads>
 			<p:merge_wait_time>1</p:merge_wait_time>
 			<p:manager_class>com.revenga.rits.back.io.external.manager.c112entities.C112ExtEntitiesExcutor</p:manager_class>
@@ -32,7 +32,7 @@
 		</p:executor>
 		<p:executor>
 			<p:id>5</p:id>
-			<p:enabled>true</p:enabled>
+			<p:enabled>false</p:enabled>
 			<p:threads>1</p:threads>
 			<p:merge_wait_time>1</p:merge_wait_time>
 			<p:manager_class>com.revenga.rits.back.io.external.manager.c112entities.C112ResourcesExtEntitiesExcutor</p:manager_class>
@@ -44,7 +44,7 @@
 		</p:executor>
 		<p:executor>
 			<p:id>6</p:id>
-			<p:enabled>true</p:enabled>
+			<p:enabled>false</p:enabled>
 			<p:threads>1</p:threads>
 			<p:merge_wait_time>1</p:merge_wait_time>
 			<p:manager_class>com.revenga.rits.back.io.external.manager.c112entities.C112VehiclesExtEntitiesExcutor</p:manager_class>
@@ -80,7 +80,7 @@
 		</p:executor>
 		<p:executor>
 			<p:id>9</p:id>
-			<p:enabled>true</p:enabled>
+			<p:enabled>false</p:enabled>
 			<p:threads>1</p:threads>
 			<p:merge_wait_time>1</p:merge_wait_time>
 			<p:manager_class>com.revenga.rits.back.io.external.manager.wazeentities.WazeRoutesExtEntitiesExcutor</p:manager_class>
@@ -88,6 +88,18 @@
 			</p:subscriptors_ref>
 			<p:executor_params>
 				<p:executor_param_value>ext_entity_type=9</p:executor_param_value>
+	  		</p:executor_params>
+		</p:executor>
+		<p:executor>
+			<p:id>10</p:id>
+			<p:enabled>true</p:enabled>
+			<p:threads>1</p:threads>
+			<p:merge_wait_time>1</p:merge_wait_time>
+			<p:manager_class>com.revenga.rits.back.io.external.manager.dgtentities.DgtExtEntitiesExecutor</p:manager_class>
+			<p:subscriptors_ref>
+			</p:subscriptors_ref>
+			<p:executor_params>
+				<p:executor_param_value>ext_entity_type=10</p:executor_param_value>
 	  		</p:executor_params>
 		</p:executor>
 	</p:executors>

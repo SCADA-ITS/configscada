@@ -306,9 +306,9 @@ true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 (10, 'Balizas V16', 'Balizas V16', 'LBL_EXT_ENTITY_TYPE_V16', 'LBL_EXT_ENTITY_TYPE_V16_DESC', true, '0 0/1 * * * ? *', 
 '{
-	"host": "http://192.168.88.163:8080/events",
-	"extEntityParamsMapping": [ {"field": "detectionTime", "extEntityTypeParamId": "ExtEntityTypeParam:10:1"}
-							],
+	"host": "http://192.168.88.163:8050/events",
+	"extEntityParamsMapping": [ {"field": "detectionTime", "extEntityTypeParamId": "ExtEntityTypeParam:10:1"},
+							    {"field": "eventTypeValue", "extEntityTypeParamId": "ExtEntityTypeParam:10:8"}],
 	"extEntityFieldsMapping": [ {"srcField": "actionid", "dstField": "uid"},
 								{"srcField": "actionid", "dstField": "alias"}
 							]
