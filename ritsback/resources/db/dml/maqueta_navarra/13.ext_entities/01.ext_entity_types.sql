@@ -38,7 +38,6 @@ INSERT INTO static.ext_entity_types(ext_entity_type_id, alias, description, labe
 	  }]
 }',
 true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-
 (4, '112 Emergencias', 'Incidencias generadas en sistema 112 Emergencias', 'LBL_EXT_ENTITY_TYPE_112', 'LBL_EXT_ENTITY_TYPE_112_DESC', true, '10 0/1 * * * ? *', 
 '{
 
@@ -116,7 +115,6 @@ true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 }',
 
 true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-
 (6, '112 - Vehicles', 'Vehículos asiganados a una incidencia del 112', 'LBL_EXT_ENTITY_TYPE_112_VEHICLES', 'LBL_EXT_ENTITY_TYPE_112_VEHICLES_DESC', true, '50 0/1 * * * ? *', 
 '{
 	"host": "http://192.168.88.163:8100/TrafficIncidents",
@@ -309,6 +307,17 @@ true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	"host": "http://192.168.88.163:8050/events",
 	"extEntityParamsMapping": [ {"field": "detectionTime", "extEntityTypeParamId": "ExtEntityTypeParam:10:1"},
 							    {"field": "eventTypeValue", "extEntityTypeParamId": "ExtEntityTypeParam:10:8"}],
+	"extEntityFieldsMapping": [ {"srcField": "actionid", "dstField": "uid"},
+								{"srcField": "actionid", "dstField": "alias"}
+							]
+}',
+true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(11, 'Grúas', 'Grúas', 'LBL_EXT_ENTITY_TYPE_TRUCKS', 'LBL_EXT_ENTITY_TYPE_TRUCKS_DESC', true, '0 0/1 * * * ? *', 
+'{
+	"host": "http://192.168.88.163:8070/events",
+	"extEntityParamsMapping": [ {"field": "detectionTime", "extEntityTypeParamId": "ExtEntityTypeParam:11:1"},
+							    {"field": "eventTypeValue", "extEntityTypeParamId": "ExtEntityTypeParam:11:8"}],
 	"extEntityFieldsMapping": [ {"srcField": "actionid", "dstField": "uid"},
 								{"srcField": "actionid", "dstField": "alias"}
 							]
