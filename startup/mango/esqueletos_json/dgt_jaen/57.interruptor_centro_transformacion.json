@@ -116,7 +116,7 @@
         },
         {
             "xid": "DP_{device_name}_error",
-            "name": "state",
+            "name": "error",
             "enabled": true,
             "loggingType":"NONE",
             "intervalLoggingPeriodType": "MINUTES",
