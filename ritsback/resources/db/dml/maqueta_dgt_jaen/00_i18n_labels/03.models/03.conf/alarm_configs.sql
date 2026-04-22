@@ -10,7 +10,7 @@
 --
 
 Update master.i18n_labels
-set "translation" = 'Falta de energía de red'
+set "translation" = 'Fallo de tensión de red'
 where "label" = 'LBL_ALARM_CONFIGS_ALARM_SAI_ALARM_COMMUNICATIONS_LOST' and locale_code in ('es_ES', 'es_CL');
 
 Update master.i18n_labels
