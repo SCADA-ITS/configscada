@@ -8,6 +8,7 @@ import java.io.FileReader;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.lang3.math.NumberUtils;
+import org.apache.commons.collections4.CollectionUtils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -75,23 +76,22 @@ public String construirVMS(byte[] content, Element element, boolean intermitence
 	final String GRAPHIC = "graphic";
 	final String TEXT = "text";
 	final int EST_ALT = 0x33;
+	final int TIPO_CONT_MEM = 0x31;
+	final int TIPO_CONT_GRAFICO = 0x32;
+	final int TIPO_CONT_LIBRE = 0x33;
 	final int PARAM_LINEA = 0x18;
-	final int LITERAL_H = 0x5E;
-	final int LITERAL_L = 0x4C;
-	final int ESTADO_GENERAL = 0x97;
+	final int PARAM_LINEA_INT = 0x58;
+	final int INTERMITENCIA_SI = 0x53;
 
-	final int POS_GRAPHIC = 5;
-	final int POS_GRAPHIC_ALT = 9;
-
-
-	List<String> graphics = new ArrayList();
+	List<Integer> graphics = new ArrayList();
+	List<Integer> graphics_alt = new ArrayList();
 	List<String> texts = new ArrayList();
 	List<Zone> zones = new ArrayList();
 	Zone zone = null;
 	int alternance, flashing_on, flashing_off, num_lineas;
 	List<Integer> contentByte = new ArrayList<Integer>();
 
-	String aux = "", zone_type = "", resultado = "";
+	String zone_type = "", resultado = "";
 	boolean hayAlternancia = false;		
 	
 	String propertiesPath = new File(ResourcesUtil.getPath("io-controller/groovy/mango/input_adapters/vms.properties")).toString();
@@ -100,63 +100,36 @@ public String construirVMS(byte[] content, Element element, boolean intermitence
 	
 	contentByte = content.collect { it & 0xFF }
 
+	if (contentByte == null || contentByte.isEmpty() || contentByte.size() < 3) {
+		log.debug("Trama recibida vacia o demasiado corta.");
+		return "";
+	}
 
 	if((contentByte.get(0) & 0xFF).equals(EST_ALT)){
 		hayAlternancia = true;
 	}
 
-	graphics.add(String.valueOf((contentByte.get(POS_GRAPHIC) & 0xFF).intValue()));
-	if(hayAlternancia){
-		graphics.add(String.valueOf((contentByte.get(POS_GRAPHIC_ALT) & 0xFF).intValue()));
-	}
-	
-	int contador = 0, tam = 0;
-	List<Integer> textArray = new ArrayList<Integer>();
-	for(byte b : contentByte){
-		if(contador >= 2){
-			if((b & 0xFF) == PARAM_LINEA && (contentByte.get(contador - 1) & 0xFF) == PARAM_LINEA && (contentByte.get(contador - 2) & 0xFF) == PARAM_LINEA){
-				tam = contador + 1;
-			}
-			if((b & 0xFF) == 0x00){
-				textArray = contentByte.subList(tam, contador);
-				
-				for(int str : textArray){
-					if (str > 127) resultado += new String(Arrays.copyOfRange(String.format("%c", str).getBytes("UTF-8"),1,2), "Cp437");
-					else resultado += String.format("%c", str);
-				}
-				break;
-			}
-		}
-		contador++;
-		
-	}
-	texts.add(resultado);
-	
-	if(hayAlternancia){
-		log.debug("ENTRA en alternancia")
-		contentByte = contentByte.subList(contador + 1, contentByte.size() );
-		contador = 0;
-		resultado = "";
+	List<Long> intermitences = new ArrayList();
+	intermitences.add(0L); // zona 1 grafica
+	intermitences.add(0L); // zona 2 texto
 
-		for(byte b : contentByte){
-			if(contador >= 2){
-				
-				if((b & 0xFF) == PARAM_LINEA && (contentByte.get(contador - 1) & 0xFF) == PARAM_LINEA && (contentByte.get(contador - 2) & 0xFF) == PARAM_LINEA){
-					tam = contador + 1
-				}
-				if((b & 0xFF) == 0x00){
-					textArray = contentByte.subList(tam, contador);
-					
-					for(byte str : textArray){
-						resultado += String.format("%c", str);
-					}
-					break;
-				}
-			}
-			contador++;
+	int numSubpaneles = Character.getNumericValue((char)(contentByte.get(2) & 0xFF));
+	int index = 3;
+
+	log.debug("Estado recibido: " + contentByte.get(0));
+	log.debug("Topologia recibida: " + contentByte.get(1));
+	log.debug("Numero subpaneles: " + numSubpaneles);
+	log.debug("Hay alternancia: " + hayAlternancia);
+
+	if(hayAlternancia){
+		for(int i = 0; i < numSubpaneles; i++){
+			index = parseSubpanel(contentByte, index, element, graphics, graphics_alt, texts, intermitences, false, log);
+			index = parseSubpanel(contentByte, index, element, graphics, graphics_alt, texts, intermitences, true, log);
 		}
-		texts.add(resultado);
-		log.debug("TEXT_ALTERNANCIA-------> " + texts)
+	}else{
+		for(int i = 0; i < numSubpaneles; i++){
+			index = parseSubpanel(contentByte, index, element, graphics, graphics_alt, texts, intermitences, false, log);
+		}
 	}
 			
 	if(element.getElementSubtypeId() == null || !element.getElementSubtypeId()){
@@ -165,6 +138,8 @@ public String construirVMS(byte[] content, Element element, boolean intermitence
 	}
 	
 	int num_zones = Integer.parseInt(p.getProperty("vms.subtype_" + String.valueOf(element.getElementSubtypeId()) + ".num_zones"));
+	int zones_graphic = 0;
+
 	if(num_zones && num_zones != null){
 		for(int n_zone = 1; n_zone <= num_zones; n_zone++){
 			alternance = Integer.parseInt(p.getProperty("vms.subtype_" + String.valueOf(element.getElementSubtypeId()) + ".alternance"));
@@ -174,6 +149,10 @@ public String construirVMS(byte[] content, Element element, boolean intermitence
 			}else{
 				flashing_on = 0;
 				flashing_off = 0;
+			}
+
+			if(n_zone - 1 < intermitences.size()){
+				flashing_on = intermitences.get(n_zone - 1);
 			}
 			
 			if(alternance != null && flashing_on != null &&  flashing_off != null){	    
@@ -186,14 +165,15 @@ public String construirVMS(byte[] content, Element element, boolean intermitence
 			zone_type = p.getProperty("vms.subtype_" + String.valueOf(element.getElementSubtypeId()) + ".typezone_" + String.valueOf(n_zone));
 			if(zone_type && zone_type != null){
 				if(zone_type.equals(GRAPHIC)){
-					zone.fillGraphic(graphics, element, n_zone);	
+					zone.fillGraphic(graphics, graphics_alt, zones_graphic, log);	
+					zones_graphic++;
 				}else if(zone_type.equals(TEXT)){
 					num_lineas = Integer.parseInt(p.getProperty("vms.subtype_" + String.valueOf(element.getElementSubtypeId()) + ".zone_" + String.valueOf(n_zone) + "." + TEXT + ".num_lines"));
 					if(num_lineas && num_lineas != null){
 						zone.fillText(texts, num_lineas);
 						
 					}else{
-						log.debug("No se encuenta el numero de lineas de la zona de texto " + num_zone + " para el Element:" + element.getElementTypeId() + ":" + element.getId());
+						log.debug("No se encuenta el numero de lineas de la zona de texto " + n_zone + " para el Element:" + element.getElementTypeId() + ":" + element.getId());
 						return "";
 					}
 				}else{
@@ -220,6 +200,154 @@ public String construirVMS(byte[] content, Element element, boolean intermitence
 		log.debug(e.getMessage());
 		return "";
 	}
+}
+
+public int parseSubpanel(List<Integer> contentByte, int index, Element element, List<Integer> graphics, List<Integer> graphics_alt, List<String> texts,
+                         List<Long> intermitences, boolean isAlternance, org.apache.logging.log4j.Logger log){
+
+	if(index >= contentByte.size() || index + 1 >= contentByte.size()){
+		log.debug("Indice fuera de rango parseando subpanel. index=" + index);
+		return contentByte.size();
+	}
+
+	final int TIPO_CONT_MEM = 0x31;
+	final int TIPO_CONT_GRAFICO = 0x32;
+	final int TIPO_CONT_LIBRE = 0x33;
+	final int INTERMITENCIA_SI = 0x53;
+	final int PARAM_LINEA_INT = 0x58;
+
+	int nsp = contentByte.get(index) & 0xFF;
+	int tipo = contentByte.get(index + 1) & 0xFF;
+	int zoneIndex = Character.getNumericValue((char)nsp) - 1;
+
+	log.debug("Parseando subpanel NSP=" + nsp + " tipo=" + tipo + " alternancia=" + isAlternance + " index=" + index);
+
+	// Subpanel grafico (NSP impar)
+	if((nsp % 2) != 0){
+		if(tipo == TIPO_CONT_MEM){
+			if(index + 3 >= contentByte.size()){
+				log.debug("Bloque grafico por memoria incompleto.");
+				return contentByte.size();
+			}
+
+			int memoria = contentByte.get(index + 2) & 0xFF;
+			int inter = contentByte.get(index + 3) & 0xFF;
+
+			int graphicId = obtenerGraphicPorMemoria(element, memoria, zoneIndex + 1, log);
+
+			if(isAlternance){
+				graphics_alt.add(graphicId);
+			}else{
+				graphics.add(graphicId);
+			}
+
+			intermitences.set(zoneIndex, inter == INTERMITENCIA_SI ? 1000L : 0L);
+
+			log.debug("Grafico memoria recibido. zona=" + (zoneIndex + 1) + " memoria=" + memoria + " graphicId=" + graphicId);
+
+			return index + 4;
+		}
+
+		if(tipo == TIPO_CONT_GRAFICO){
+			if(index + 3 >= contentByte.size()){
+				log.debug("Bloque grafico por nombre incompleto.");
+				return contentByte.size();
+			}
+
+			int len = contentByte.get(index + 2) & 0xFF;
+			int nameStart = index + 3;
+			int nameEnd = nameStart + len;
+			int interPos = nameEnd;
+
+			if(interPos >= contentByte.size()){
+				log.debug("Bloque grafico por nombre con longitud fuera de rango. len=" + len);
+				return contentByte.size();
+			}
+
+			byte[] nameBytes = new byte[len];
+			for(int i = 0; i < len; i++){
+				nameBytes[i] = (byte)(contentByte.get(nameStart + i) & 0xFF);
+			}
+
+			String nombre = new String(nameBytes, "US-ASCII").trim().toUpperCase();
+			int inter = contentByte.get(interPos) & 0xFF;
+
+			int graphicId = obtenerGraphic(element, nombre, zoneIndex + 1, log);
+
+			if(isAlternance){
+				graphics_alt.add(graphicId);
+			}else{
+				graphics.add(graphicId);
+			}
+
+			intermitences.set(zoneIndex, inter == INTERMITENCIA_SI ? 1000L : 0L);
+
+			log.debug("Grafico nombre recibido. zona=" + (zoneIndex + 1) + " nombre=" + nombre + " graphicId=" + graphicId);
+
+			return index + 4 + len;
+		}
+
+		log.debug("Tipo de contenido grafico no soportado: " + tipo);
+		return contentByte.size();
+	}
+
+	// Subpanel alfanumerico (NSP par)
+	if(tipo == TIPO_CONT_LIBRE){
+		if(index + 2 >= contentByte.size()){
+			log.debug("Bloque texto libre incompleto.");
+			return contentByte.size();
+		}
+
+		int len = contentByte.get(index + 2) & 0xFF;
+		int contentStart = index + 3;
+		int contentEnd = contentStart + len;
+
+		if(contentEnd > contentByte.size()){
+			log.debug("Bloque texto libre con longitud fuera de rango. len=" + len);
+			return contentByte.size();
+		}
+
+		List<Integer> textContent = contentByte.subList(contentStart, contentEnd);
+
+		if(textContent.size() >= 4){
+			int nl = textContent.get(2) & 0xFF;
+			int attrsStart = 3;
+			int textStart = attrsStart + nl;
+
+			if(textStart <= textContent.size()){
+				for(int i = attrsStart; i < textStart && i < textContent.size(); i++){
+					if((textContent.get(i) & 0xFF) == PARAM_LINEA_INT){
+						intermitences.set(zoneIndex, 1000L);
+					}
+				}
+
+				List<Integer> rawText = textContent.subList(textStart, textContent.size());
+				if(!rawText.isEmpty() && (rawText.get(rawText.size() - 1) & 0xFF) == 0x00){
+					rawText = rawText.subList(0, rawText.size() - 1);
+				}
+
+				byte[] textBytes = new byte[rawText.size()];
+				for(int i = 0; i < rawText.size(); i++){
+					textBytes[i] = (byte)(rawText.get(i) & 0xFF);
+				}
+
+				String resultado = new String(textBytes, "Cp437");
+
+				if(isAlternance){
+					texts.add(resultado);
+				}else{
+					texts.add(resultado);
+				}
+
+				log.debug("Texto recibido. zona=" + (zoneIndex + 1) + " texto=" + resultado.replace("\n", "\\n"));
+			}
+		}
+
+		return contentEnd;
+	}
+
+	log.debug("Tipo de contenido alfanumerico no soportado: " + tipo);
+	return contentByte.size();
 }
 
 
@@ -300,39 +428,79 @@ class Zone{
 		
 	}
 
-	public void fillGraphic(List<String> message, Element element, int numZone) {
+	public void fillGraphic(List<Integer> message, List<Integer> message_alt, int idGraphic, org.apache.logging.log4j.Logger log) {
 		
-		Integer values = 0;
+		Integer values = -1;
 		Integer alternances = 0;
 
-		
-		values = obtenerGraphic(element,Integer.parseInt(message.get(0)),numZone);
-		
-		
-		if (message.size() > 1) {
-			alternances = obtenerGraphic(element,Integer.parseInt(message.get(1)),numZone);
+		if(idGraphic < message.size()){
+			values = message.get(idGraphic);
 		}
 		
-		Graphic graphic = new Graphic(1, values, alternances);
-		graphics.add(graphic);
+		if (values != -1){
+			if (idGraphic < message_alt.size()) {
+				alternances = message_alt.get(idGraphic);
+			}
+			
+			Graphic graphic = new Graphic(1, values, alternances);
+			graphics.add(graphic);
+		}
 	
 	}
+}
+
+public int obtenerGraphic(Element element, String pictoValue, Integer numZone, org.apache.logging.log4j.Logger log){
+	final Long PARAM_CONFIG_JSONCONFIG = 4L;
+
+	ElementValue elementDataJson = EntitiesManager.getInstance().getElementValueConfig(element, PARAM_CONFIG_JSONCONFIG);
 	
-	public int obtenerGraphic(Element element, Integer pictoValue, Integer numZone){
-		final Long PARAM_CONFIG_JSONCONFIG = 4L;
+	def jsonObject = new JsonSlurper().parseText(elementDataJson.getValue());
+	Long group = jsonObject.vms_group_id[numZone - 1];
 	
-		ElementValue elementDataJson = EntitiesManager.getInstance().getElementValueConfig(element, PARAM_CONFIG_JSONCONFIG);
-		
-		def jsonObject = new JsonSlurper().parseText(elementDataJson.getValue());
-		Long group = jsonObject.vms_group_id[numZone - 1];
-		
-		List<VmsGraphicGraphicGroupValue> vmsGraphicGraphicGroupValue = EntitiesManager.getInstance().getByGroup(group);
+	List<VmsGraphicGraphicGroupValue> vmsGraphicGraphicGroupValue = EntitiesManager.getInstance().getByGroup(group);
+	
+	if (!CollectionUtils.isEmpty(vmsGraphicGraphicGroupValue)) {
 		for(VmsGraphicGraphicGroupValue groupValue : vmsGraphicGraphicGroupValue){
-			if(!groupValue.getValue().equals("") || !groupValue.getValue() == null){
-				if(pictoValue.equals(Integer.parseInt(groupValue.getValue()))){
+			if(groupValue.getValue() != null && !groupValue.getValue().equals("")){
+				if(pictoValue.equalsIgnoreCase(groupValue.getValue())){
 					return groupValue.getGraphicId();
 				}
 			}
 		}
+		log.debug("Nombre de pictograma no encontrado en BD: " + pictoValue + " zona=" + numZone);
+		return -1;
+	}else{
+		log.debug("No existen valores graficos para el grupo. zona=" + numZone);
+		return -1;
+	}
+}
+
+public int obtenerGraphicPorMemoria(Element element, Integer pictoValue, Integer numZone, org.apache.logging.log4j.Logger log){
+	final Long PARAM_CONFIG_JSONCONFIG = 4L;
+
+	ElementValue elementDataJson = EntitiesManager.getInstance().getElementValueConfig(element, PARAM_CONFIG_JSONCONFIG);
+	
+	def jsonObject = new JsonSlurper().parseText(elementDataJson.getValue());
+	Long group = jsonObject.vms_group_id[numZone - 1];
+	
+	List<VmsGraphicGraphicGroupValue> vmsGraphicGraphicGroupValue = EntitiesManager.getInstance().getByGroup(group);
+	
+	if (!CollectionUtils.isEmpty(vmsGraphicGraphicGroupValue)) {
+		for(VmsGraphicGraphicGroupValue groupValue : vmsGraphicGraphicGroupValue){
+			if(groupValue.getValue() != null && !groupValue.getValue().equals("")){
+				try{
+					if(pictoValue.equals(Integer.parseInt(groupValue.getValue()))){
+						return groupValue.getGraphicId();
+					}
+				}catch(Exception e){
+					// ignorar valores no numericos
+				}
+			}
+		}
+		log.debug("Memoria grafica no encontrada en BD: " + pictoValue + " zona=" + numZone);
+		return -1;
+	}else{
+		log.debug("No existen valores graficos para el grupo. zona=" + numZone);
+		return -1;
 	}
 }

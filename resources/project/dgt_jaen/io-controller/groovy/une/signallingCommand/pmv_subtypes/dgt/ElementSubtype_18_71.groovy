@@ -135,7 +135,7 @@ class Zone{
     public String getAlign() {
         return align;
     }
-    public void setAlign() {
+    public void setAlign(String align) {
         this.align = align;
     }
     public Long getAlternance_ms() {
@@ -205,51 +205,59 @@ public String checkTextAlign(Zone[] zones, String align) {
 public List<Byte> setGraphicsFrame(Element element, Object object, List<Byte> data, boolean alternance){
 
     final int PRIMER_SUBPANEL = 0x31;
-    final int CONT_MEM = 0x31;
+    final int CONT_GRAFICO_NOMBRE = 0x32;
     final int INTERMITENCIA_NO = 0x4E;
-    final Long GRAPHIC_EMPTY = 255L;
+    final String GRAPHIC_EMPTY = "VACIO";
 
-    Long graphic_id = 0L;
+    String graphic_name = null;
 
-    data.add(PRIMER_SUBPANEL);		//Empezamos rellenando el primer subpanel
-    data.add(CONT_MEM);				//El primer subpanel es de tipo grafico, ponemos que el contenido es por tanto una posición de mem del panel
+    data.add(PRIMER_SUBPANEL);			// Empezamos rellenando el primer subpanel
+    data.add(CONT_GRAFICO_NOMBRE);		// El contenido del gráfico va por nombre
 
-    //Añado el gráfico. Si no tiene, pongo uno en negro.
+    // Añado el gráfico principal. Si no tiene, pongo VACIO.
     for (int i = 0; i < object.size(); i++){
         if(object[i].getGraphics()){
             for(int k = 0; k < object[i].getGraphics().size(); k++){	
-                graphic_id = getGraphic(element, object[i].getZone(), object[i].getGraphics()[k].getValue());	
+                graphic_name = getGraphic(element, object[i].getZone(), object[i].getGraphics()[k].getValue());	
             }
         }
     }
-    if(graphic_id == 0){
-        graphic_id = GRAPHIC_EMPTY;
+    if(graphic_name == null || graphic_name.trim().isEmpty()){
+        graphic_name = GRAPHIC_EMPTY;
     }
 
-    data.add(graphic_id);
-    data.add(INTERMITENCIA_NO);		//No queremos que el gráfico tenga intermitencia
+    graphic_name = graphic_name.trim();
+
+    data.add((byte) graphic_name.length());
+    data.addAll(graphic_name.getBytes("US-ASCII").toList());
+    data.add(INTERMITENCIA_NO);		// No queremos que el gráfico tenga intermitencia
 
     if(alternance){
-        data.add(PRIMER_SUBPANEL);		//Rellenamos contenido del primer subpanel para la alternancia
-        data.add(CONT_MEM);				//Este subpanel es de tipo grafico, ponemos que el contenido es por tanto una posición de mem del panel
+        String graphic_name_alt = null;
 
-        //Añado el gráfico. Si no tiene, pongo uno en negro.
+        data.add(PRIMER_SUBPANEL);		// Rellenamos contenido del primer subpanel para la alternancia
+        data.add(CONT_GRAFICO_NOMBRE);	// Gráfico por nombre
+
+        // Añado el gráfico alternativo. Si no tiene, pongo VACIO.
         for (int i = 0; i < object.size(); i++){
             if(object[i].getGraphics()){
                 for(int k = 0; k < object[i].getGraphics().size(); k++){	
                     if(object[i].getGraphics()[k].getAlternance()){
-                        graphic_id = getGraphic(element, object[i].getZone(), object[i].getGraphics()[k].getAlternance());	
+                        graphic_name_alt = getGraphic(element, object[i].getZone(), object[i].getGraphics()[k].getAlternance());	
                     }
                 }
             }
         }
 
-        if(graphic_id == 0){
-            graphic_id = GRAPHIC_EMPTY;
+        if(graphic_name_alt == null || graphic_name_alt.trim().isEmpty()){
+            graphic_name_alt = GRAPHIC_EMPTY;
         }
 
-        data.add(graphic_id);
-        data.add(INTERMITENCIA_NO);		//No queremos que el gráfico tenga intermitencia
+        graphic_name_alt = graphic_name_alt.trim();
+
+        data.add((byte) graphic_name_alt.length());
+        data.addAll(graphic_name_alt.getBytes("US-ASCII").toList());
+        data.add(INTERMITENCIA_NO);		// No queremos que el gráfico tenga intermitencia
     }
 
     return data;
@@ -278,7 +286,7 @@ public List<Byte> setTextsFrame(Object object, List<Byte> data, boolean alternan
     data.add(0x00);					//Tamaño del texto
     data.add(LITERAL_H);			//Indicamos el tag de texto libre (^L). Corresponde con el "^"
     data.add(LITERAL_L);			//Indicamos el tag de texto libre (^L). Corresponde con la "L"
-    data.add(NUM_LINEAS_TRES);			//Panel de 3 lineas
+    data.add(NUM_LINEAS_TRES);		//Panel de 3 lineas
     data.add(PARAM_LINEA);			//Ponemos por defecto que las lineas sean de color ambar = 0x18
     data.add(PARAM_LINEA);			//Ponemos por defecto que las lineas sean de color ambar = 0x18
     data.add(PARAM_LINEA);			//Ponemos por defecto que las lineas sean de color ambar = 0x18
@@ -313,7 +321,6 @@ public List<Byte> setTextsFrame(Object object, List<Byte> data, boolean alternan
         }
     }
 
-
     aux_text.add(FIN_TEXTO);
 
     data.addAll(aux_text);	
@@ -332,7 +339,7 @@ public List<Byte> setTextsFrame(Object object, List<Byte> data, boolean alternan
         data.add(0x00);					//Tamaño del texto
         data.add(LITERAL_H);			//Indicamos el tag de texto libre (^L). Corresponde con el "^"
         data.add(LITERAL_L);			//Indicamos el tag de texto libre (^L). Corresponde con la "L"
-        data.add(NUM_LINEAS_TRES);			//Panel de 3 lineas
+        data.add(NUM_LINEAS_TRES);		//Panel de 3 lineas
         data.add(PARAM_LINEA);			//Ponemos por defecto que las lineas sean de color ambar = 0x18
         data.add(PARAM_LINEA);			//Ponemos por defecto que las lineas sean de color ambar = 0x18
         data.add(PARAM_LINEA);	        //Ponemos por defecto que las lineas sean de color ambar = 0x18
@@ -376,7 +383,7 @@ public List<Byte> setTextsFrame(Object object, List<Byte> data, boolean alternan
 }
 
             
-public Long getGraphic(Element element, Long numZone, Long picto){
+public getGraphic(Element element, Long numZone, Long picto){
     final Long PARAM_CONFIG_JSONCONFIG = 4L;
 
     ElementValue elementDataJson = EntitiesManager.getInstance().getElementValueConfig(element, PARAM_CONFIG_JSONCONFIG);
@@ -388,7 +395,7 @@ public Long getGraphic(Element element, Long numZone, Long picto){
 
     for(VmsGraphicGraphicGroupValue groupValue : vmsGraphicGraphicGroupValue){
         if(picto.equals(groupValue.getGraphicId())){
-            return Long.parseLong(groupValue.getValue());
+            return groupValue.getValue();
         }
     }
 
