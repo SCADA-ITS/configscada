@@ -170,7 +170,10 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_ES',1,'LBL_ENTITIE_FIELDS_INCIDENT_TYPE_MAP_ID_DESCRIPTION','Id de mapa a mostrar en un tipo de incidencia concreto',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 
 ('es_ES',1,'LBL_ENTITIE_FIELDS_TRANSIT_EDITOR_SELECTION_WINDOW','Mostrar ventana de selección',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
-('es_ES',1,'LBL_ENTITIE_FIELDS_TRANSIT_EDITOR_SELECTION_WINDOW_DESCRIPTION','Mostrar ventana de selección de imágenes del editor de imágenes',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
+('es_ES',1,'LBL_ENTITIE_FIELDS_TRANSIT_EDITOR_SELECTION_WINDOW_DESCRIPTION','Mostrar ventana de selección de imágenes del editor de imágenes',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+
+('es_ES',1,'LBL_ENTITIE_FIELDS_SHOW_MULTIPLE_CHART','Mostrar gráfica múltiple',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+('es_ES',1,'LBL_ENTITIE_FIELDS_SHOW_MULTIPLE_CHART_DESCRIPTION','Mostrar varios gráficos en los gráficos históricos',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
 
 --es_CL
 INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) VALUES
@@ -334,7 +337,10 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_CL',1,'LBL_ENTITIE_FIELDS_INCIDENT_TYPE_MAP_ID_DESCRIPTION','Id de mapa a mostrar en un tipo de incidencia concreto',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 
 ('es_CL',1,'LBL_ENTITIE_FIELDS_TRANSIT_EDITOR_SELECTION_WINDOW','Mostrar ventana de selección',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
-('es_CL',1,'LBL_ENTITIE_FIELDS_TRANSIT_EDITOR_SELECTION_WINDOW_DESCRIPTION','Mostrar ventana de selección de imágenes del editor de imágenes',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
+('es_CL',1,'LBL_ENTITIE_FIELDS_TRANSIT_EDITOR_SELECTION_WINDOW_DESCRIPTION','Mostrar ventana de selección de imágenes del editor de imágenes',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+
+('es_CL',1,'LBL_ENTITIE_FIELDS_SHOW_MULTIPLE_CHART','Mostrar gráfica múltiple',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+('es_CL',1,'LBL_ENTITIE_FIELDS_SHOW_MULTIPLE_CHART_DESCRIPTION','Mostrar varios gráficos en los gráficos históricos',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
 
 --en_GB
 INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) VALUES
@@ -498,7 +504,10 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('en_GB',1,'LBL_ENTITIE_FIELDS_INCIDENT_TYPE_MAP_ID_DESCRIPTION','Map id of incident type',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 
 ('en_GB',1,'LBL_ENTITIE_FIELDS_TRANSIT_EDITOR_SELECTION_WINDOW','Show selection window',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
-('en_GB',1,'LBL_ENTITIE_FIELDS_TRANSIT_EDITOR_SELECTION_WINDOW_DESCRIPTION','Show images selection window of image editor',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
+('en_GB',1,'LBL_ENTITIE_FIELDS_TRANSIT_EDITOR_SELECTION_WINDOW_DESCRIPTION','Show images selection window of image editor',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+
+('en_GB',1,'LBL_ENTITIE_FIELDS_SHOW_MULTIPLE_CHART','Show multiple chart',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+('en_GB',1,'LBL_ENTITIE_FIELDS_SHOW_MULTIPLE_CHART_DESCRIPTION','Show multiple chartis in historical charts module',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
 
 --sk_SK
 --INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) VALUES

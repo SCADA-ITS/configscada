@@ -7,6 +7,7 @@ INSERT INTO ui.vo_entities(id, vo_entity_type_id, enabled, visible) VALUES
 ('ElementTypeParam:1:2:13', 'ElementTypeParamUI', true, true),
 ('ElementTypeParam:1:2:14', 'ElementTypeParamUI', true, true),
 ('ElementTypeParam:1:2:17', 'ElementTypeParamUI', true, true),
+('ElementTypeParam:1:2:18', 'ElementTypeParamUI', true, true),
 ('ElementTypeParam:1:2:20', 'ElementTypeParamUI', true, true),
 
 ('ElementType:2', 'ElementTypeUI', true, true),
@@ -234,6 +235,7 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 ('ElementType:1', 2, 'element_type_1.svg'),
 ('ElementType:1', 14, 'grid/element_type_01.png'),
 ('ElementType:1', 23, '101901'),
+('ElementType:1', 84, '["ElementTypeParam:1:2:10", "ElementTypeParam:1:2:17", "ElementTypeParam:1:2:18"]'),
 
 ('ElementType:2', 1, '4'),
 ('ElementType:2', 2, 'element_type_2.svg'),
