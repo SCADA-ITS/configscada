@@ -36,9 +36,9 @@ INSERT INTO ui.grid_option_values(grid_id, grid_option_id, value) VALUES
 (11, 26, 'true');
 
 INSERT INTO ui.grid_commands(grid_id, "position", "label", icon, "default", module_action_id, args, view_type_id, multiselect, show_text, item_required) VALUES
-(11, 1, 'LBL_CMD_VIEW_EQUIPMENT', 'mdi mdi-eye', true, 101401, NULL, 1, false, false, false),
-(11, 2, 'LBL_CMD_SHOW_ALARMS', 'mdi mdi-bell', false, 100501, null, 1, true, true, true),
-(11, 3, 'LBL_CMD_SHOW_IN_MAP', 'mdi mdi-map-search', false, 200004, null, 1, true, true, true);
+(11, 1, 'LBL_CMD_VIEW_EQUIPMENT', 'mdi mdi-eye', true, 101401, NULL, 2, false, false, false),
+(11, 2, 'LBL_CMD_SHOW_ALARMS', 'mdi mdi-bell', false, 100501, null, 2, true, true, true),
+(11, 3, 'LBL_CMD_SHOW_IN_MAP', 'mdi mdi-map-search', false, 200004, null, 2, true, true, true);
 
 INSERT INTO ui.grid_field_icons(grid_field_id, icon, value, show_value, badge_color, avatar, enabled, label_value) VALUES
 (110004, './img/state/stateUnknown.png', 'ElementTypeState:11:0', false, false, false, true, 'LBL_ELEMENT_TYPE_STATE_UNKNOWN'),

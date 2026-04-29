@@ -55,7 +55,7 @@ INSERT INTO ui.grid_field_replacements(grid_field_id, "label", value, enabled) V
 (030011, 'SI', 'true', true);
 
 INSERT INTO ui.grid_commands(grid_id, "position", "label", icon, "default", module_action_id, args, view_type_id, multiselect, show_text, item_required) VALUES
-(3, 1, 'LBL_CMD_VIEW', 'mdi mdi-eye', true, 101401, null, null, false, false, true),
+(3, 1, 'LBL_CMD_VIEW', 'mdi mdi-eye', true, 101401, null, 2, false, false, true),
 (3, 3, 'LBL_CMD_SHOW_ALARMS', 'mdi mdi-bell', false, 100501, null, 2, true, true, true);
 
 INSERT INTO ui.grid_field_icons(grid_field_id, icon, value, show_value, badge_color, avatar, enabled, label_value) VALUES

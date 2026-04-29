@@ -26,3 +26,6 @@ INSERT INTO conf.element_io_controller_modules (element_type_id, element_id, mod
 (54, 2, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (54, 3, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (54, 4, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+update master.i18n_labels set translation = 'ETD PAT' where label = 'LBL_ELEMENT_TYPE_ATC' and locale_code = 'es_CL';
+update master.i18n_labels set translation = 'Estación de toma de datos PAT' where label = 'LBL_ELEMENT_TYPE_ATC_DESC' and locale_code = 'es_CL';
