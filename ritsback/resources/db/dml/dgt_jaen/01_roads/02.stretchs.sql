@@ -11,14 +11,20 @@ INSERT INTO conf.stretchs (stretch_id, stretch_type_id, alias, description, pk_i
 (1000, 2, 'Despeñaperros', 'Despeñaperros', 0, 0, 0, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (1001, 2, 'Despeñaperros Tubo Madrid', 'Despeñaperros Tubo Madrid', 0, 0, 0, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (1002, 2, 'Despeñaperros Tubo Córdoba', 'Despeñaperros Tubo Córdoba', 0, 0, 0, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1003, 2, 'Despeñaperros Tubo Madrid', 'Despeñaperros Tubo Madrid', 0, 0, 0, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1004, 2, 'Despeñaperros Tubo Córdoba', 'Despeñaperros Tubo Córdoba', 0, 0, 0, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 (2000, 2, 'La Cantera', 'La Cantera', 0, 0, 0, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (2001, 2, 'La Cantera Tubo Madrid', 'La Cantera Tubo Madrid', 0, 0, 0, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (2002, 2, 'La Cantera Tubo Córdoba', 'La Cantera Tubo Córdoba', 0, 0, 0, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2003, 2, 'La Cantera Tubo Madrid', 'La Cantera Tubo Madrid', 0, 0, 0, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2004, 2, 'La Cantera Tubo Córdoba', 'La Cantera Tubo Córdoba', 0, 0, 0, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 (3000, 2, 'El Corzo', 'El Corzo', 0, 0, 0, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (3001, 2, 'El Corzo Tubo Madrid', 'El Corzo Tubo Madrid', 0, 0, 0, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (3002, 2, 'El Corzo Tubo Córdoba', 'El Corzo Tubo Córdoba', 0, 0, 0, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(3003, 2, 'El Corzo Tubo Madrid', 'El Corzo Tubo Madrid', 0, 0, 0, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(3004, 2, 'El Corzo Tubo Córdoba', 'El Corzo Tubo Córdoba', 0, 0, 0, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --Incidencias zonas de incendio
 --tipo de elemento-numero de zona-strech tubo
