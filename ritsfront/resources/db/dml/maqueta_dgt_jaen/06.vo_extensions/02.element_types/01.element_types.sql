@@ -96,6 +96,7 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 ('ElementType:1', 1, '1'),
 ('ElementType:1', 2, 'graphic_icon/01_weather_station.svg'),
 ('ElementType:1', 14, 'grid/element_type_01.png'),
+('ElementType:1', 84, '["ElementTypeParam:1:2:10", "ElementTypeParam:1:2:17", "ElementTypeParam:1:2:18"]'),
 
 ('ElementType:2', 1, '2'),
 ('ElementType:2', 2, 'graphic_icon/02_camera_dai.svg'),
