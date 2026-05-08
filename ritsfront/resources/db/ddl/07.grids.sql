@@ -153,6 +153,7 @@
 		fixed_column bool NULL,
 		replacement_function varchar NULL,
 		precision_filter int NULL,
+		convert_cron bool NULL,
 		CONSTRAINT pk_grid_fields PRIMARY KEY (id)
 	);
 	

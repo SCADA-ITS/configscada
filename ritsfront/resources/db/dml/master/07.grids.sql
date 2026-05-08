@@ -237,7 +237,7 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (105107, 1051, 1, 7, true, false, true, false, 'LBL_GRID_FIELD_LOCATION', 'LBL_GRID_FIELD_LOCATION', 'locationAlias', false, false, NULL, false, false, 150, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
 (105108, 1051, 1, 8, true, false, false, false, 'LBL_GRID_FIELD_INCIDENT_STATE_LABEL_ALIAS', 'LBL_GRID_FIELD_INCIDENT_STATE_LABEL_ALIAS', 'delayedIncidentStateLabelAlias', false, false, NULL, true, false, 150, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
 (105109, 1051, 1, 9, true, false, false, false, 'LBL_GRID_FIELD_CRONEXPRESION', 'LBL_GRID_FIELD_CRONEXPRESION', 'cronExpression', false, false, NULL, true, false, 250, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
-(105110, 1051, 1, 10, true, false, false, false, 'LBL_GRID_FIELD_NEXT_EXEC', 'LBL_GRID_FIELD_NEXT_EXEC', 'cronExpression', false, false, NULL, false, false, 175, NULL, true, true, NULL, NULL, NULL, 'getNextExec', NULL),
+(105110, 1051, 4, 10, true, false, false, false, 'LBL_GRID_FIELD_NEXT_EXEC', 'LBL_GRID_FIELD_NEXT_EXEC', 'cronExpressionDate', false, true, NULL, false, false, 175, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
 
 (105201, 1052, 1, 1, true, false, false, false, 'LBL_GRID_FIELD_ID', 'LBL_GRID_FIELD_ID', 'id', true, false, NULL, false, false, 100, NULL, true, false, NULL, NULL, NULL, NULL, NULL),
 (105202, 1052, 2, 2, true, false, false, false, 'LBL_GRID_FIELD_TRANSIT_ID', 'LBL_GRID_FIELD_TRANSIT_ID', 'id', false, true, true, false, false, 150, NULL, true, false, NULL, NULL, NULL, 'getSimpleId', NULL),
@@ -252,6 +252,7 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (105212, 1052, 1, 11, true, false, false, true, 'Localización', NULL, 'installationCode', false, false, true, false, false, 150, NULL, true, true, NULL, NULL, NULL, NULL, NULL),
 (105215, 1052, 3, 12, true, false, false, false, 'LBL_GRID_FIELD_TRANSIT_SPEED', 'LBL_GRID_FIELD_TRANSIT_SPEED', 'speed', false, false, true, false, false, 100, NULL, true, true, NULL, NULL, NULL, NULL, 2);
 
+UPDATE ui.grid_fields SET convert_cron = true WHERE id = 105110;
 
 INSERT INTO ui.grid_option_values(grid_id, grid_option_id, value) VALUES
 (1000, 1, 'true'),
