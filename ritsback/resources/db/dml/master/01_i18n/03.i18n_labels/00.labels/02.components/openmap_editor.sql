@@ -184,7 +184,7 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 	('es_ES',1,'LBL_MAP_EDITOR_EXPORTER_EXPORT_FILE_DESC','Seleccione un tipo de formato para exportar. No todos los formatos son compatibles con todas las geometrías',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 	('es_ES',1,'LBL_TRANSLATION_NOT_AVAILABLE','La etiqueta no se puede traducir, tiene que empezar por LBL_',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 	('es_ES',1,'LBL_CONFIRM_DISABLE_SUPPORT','La configuración se perderá al guardar los cambios en el editor. ¿Desea continuar?',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
-	
+	('es_ES',1,'LBL_INVALID_ZIP_FILE','Archivo ZIP inválido',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),	
 
 --en_GB
 	('en_GB',1,'LBL_LAYER_ALIAS','Alias',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
@@ -361,6 +361,7 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 	('en_GB',1,'LBL_MAP_EDITOR_EXPORTER_EXPORT_FILE_DESC','Select format file to export. Not all format are compatible with all geometries',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 	('en_GB',1,'LBL_TRANSLATION_NOT_AVAILABLE','Translation not available. Label prefix LBL_ not found',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 	('en_GB',1,'LBL_CONFIRM_DISABLE_SUPPORT','Config will be lost when save changes. Are you sure?',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+	('en_GB',1,'LBL_INVALID_ZIP_FILE','Invalid ZIP file',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),	
 
 --es_CL
 	('es_CL',1,'LBL_LAYER_ALIAS','Alias',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
@@ -536,6 +537,7 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 	('es_CL',1,'LBL_MAP_EDITOR_EXPORTER_EXPORT_FILE','Exportar a fichero',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 	('es_CL',1,'LBL_MAP_EDITOR_EXPORTER_EXPORT_FILE_DESC','Seleccione un tipo de formato para exportar. No todos los formatos son compatibles con todas las geometrías',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 	('es_CL',1,'LBL_TRANSLATION_NOT_AVAILABLE','La etiqueta no se puede traducir, tiene que empezar por LBL_',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
-	('es_CL',1,'LBL_CONFIRM_DISABLE_SUPPORT','La configuración se perderá al guardar los cambios en el editor. ¿Desea continuar?',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
+	('es_CL',1,'LBL_CONFIRM_DISABLE_SUPPORT','La configuración se perderá al guardar los cambios en el editor. ¿Desea continuar?',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+	('es_CL',1,'LBL_INVALID_ZIP_FILE','Archivo ZIP inválido',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
 	
 	
