@@ -2,7 +2,7 @@
 <p:json_generic_mango_v1 name="" version=""
     xmlns:p="json_generic_mango_v1"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="json_generic_mango_v1 ../../../adapter-lib/src/main/resources/schemas/mango/json_generic_mango_v1.xsd "
-    element_type_id="57" array_element_id="91,125,147,160,222,238,323,326,329,332,187,292,290,291,289,288,287,285,284,283,301,299,300,296,297,298,295,294,28,231">
+    element_type_id="57" array_element_id="91,92,125,147,162,221,222,237,238,323,326,329,332,187,292,290,291,289,288,287,285,284,283,301,299,300,296,297,298,295,294,28,231">
     <p:session_uid element_type_param_id="1003" param_type_id="1"></p:session_uid>
     <p:state field="status">
         <p:state_value source="0" input="2" disconnected="true"></p:state_value>

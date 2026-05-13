@@ -56,7 +56,7 @@ INSERT INTO ui.synoptic_layer_elements
 (90905700, 'Element:57:118', 000057, 'INT-Q1-GEN-CGBT-DP3', 1351, 94, false, NULL, true, false, NULL, true),
 (90905700, 'Element:57:149', 000057, 'INT-Q24-CGBT-DP3', 1661, 502, false, NULL, true, false, NULL, true),
 (90905700, 'Element:57:146', 000057, 'INT-Q5-CGBT-DP3', 1661, 384, false, NULL, true, false, NULL, true),
-(90905700, 'Element:57:160', 00005706, 'INT-Q3-CGBT-DP3', 1507, 270, false, NULL, true, false, NULL, true),
+(90905700, 'Element:57:160', 000057, 'INT-Q3-CGBT-DP3', 1507, 270, false, NULL, true, false, NULL, true),
 (90905700, 'Element:57:147', 00005706, 'INT-Q4-CGBT-DP3', 1561, 384, false, NULL, true, false, NULL, true),
 (90905700, 'Element:57:161', 00005703, 'INT-Q6-CGBT-DP3', 1507, 454, false, NULL, true, false, NULL, true),
 (90905700, 'Element:57:125', 00005706, 'INT-Q2-GRU-CGBT-DP3', 1452, 384, false, NULL, true, false, NULL, true),
