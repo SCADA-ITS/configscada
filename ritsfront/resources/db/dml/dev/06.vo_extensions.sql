@@ -756,7 +756,9 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 					"position": 1,
 					"dataType": "DataType:2",
 					"label": "LBL_TRANSIT_TAB_GENERAL_EQUIPMENT_TYPE",
-					"enabled": true
+					"enabled": true,
+					"selectorOptions": ["LBL_ELEMENT_TYPE_TRAFFIC_RADAR", "Radar II", "Radar III"],
+					"editable": ["TransitState:1", "TransitState:2", "TransitState:3", "TransitState:4"]
 				},
 				{
 					"id": 402,
