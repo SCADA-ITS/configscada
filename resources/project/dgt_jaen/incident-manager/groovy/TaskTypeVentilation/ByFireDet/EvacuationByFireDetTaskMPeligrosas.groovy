@@ -43,7 +43,6 @@ class EvacuationByFireDetTask {
 			if (!CollectionUtils.isEmpty(fireDetIds)) {
 
 				Long fireDetId = fireDetIds.iterator().next();
-
 				log.info("EvacuationByFireDetTask - fireDetId: " + fireDetId);
 				
 				List<ElementHierarchy> elementHierarchies = EntitiesManager.getInstance().getsByChild(ElementType.ELEMENT_TYPE_TUBE, 
@@ -86,7 +85,9 @@ class EvacuationByFireDetTask {
 			if (!CollectionUtils.isEmpty(fireDetIds)) {
 
 				Long fireDetId = fireDetIds.iterator().next();
-
+				Long locationId = incidentReport.getLocationId();
+				log.info("EvacuationByFireDetTask - incidentReport.locationId: " + locationId);
+				
 				List<ElementHierarchy> elementHierarchies = EntitiesManager.getInstance().getsByChild(ElementType.ELEMENT_TYPE_TUBE,
 				ELEMENT_TYPE_FIRE_DET, fireDetId);
 
@@ -112,6 +113,7 @@ class EvacuationByFireDetTask {
 		
 						setFireAlarmCommand.setElement(element);
 						setFireAlarmCommand.setStretch(stretch);
+						setFireAlarmCommand.setLocationId(locationId);
 						setFireAlarmCommand.setCriticalWindSpeed(3.17);
 						
 						if (commands == null) {

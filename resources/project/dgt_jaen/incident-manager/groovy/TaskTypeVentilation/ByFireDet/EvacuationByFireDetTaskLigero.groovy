@@ -77,7 +77,7 @@ class EvacuationByFireDetTaskLigero {
 	List<Command> process(ImsIncidentReport incidentReport, ImsIncidentTypeTask incidentTypeTask, List<ImsIncidentTypeTaskValue> values) {
 
 		List<Command> commands = null;
-
+		log.info("incidentReport------> " + incidentReport)
 		if (incidentReport.getAffectionStretchId() != null) {
 
 			Set<Long> fireDetIds = EntitiesManager.getInstance()
@@ -86,6 +86,8 @@ class EvacuationByFireDetTaskLigero {
 			if (!CollectionUtils.isEmpty(fireDetIds)) {
 
 				Long fireDetId = fireDetIds.iterator().next();
+				Long locationId = incidentReport.getLocationId();
+				log.info("EvacuationByFireDetTask - incidentReport.locationId: " + locationId);
 
 				List<ElementHierarchy> elementHierarchies = EntitiesManager.getInstance().getsByChild(ElementType.ELEMENT_TYPE_TUBE,
 				ELEMENT_TYPE_FIRE_DET, fireDetId);
@@ -112,6 +114,7 @@ class EvacuationByFireDetTaskLigero {
 		
 						setFireAlarmCommand.setElement(element);
 						setFireAlarmCommand.setStretch(stretch);
+						setFireAlarmCommand.setLocationId(locationId);
 						setFireAlarmCommand.setCriticalWindSpeed(1.7);
 						
 						if (commands == null) {
