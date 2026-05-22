@@ -491,6 +491,8 @@ INSERT INTO conf.element_tree_nodes(element_tree_node_id, element_tree_id, "labe
         (040157370, 04, '', 57, 370, 370, NULL, true, true),
         (040157371, 04, '', 57, 371, 371, NULL, true, true),
         (040157372, 04, '', 57, 372, 372, NULL, true, true),
+        (040157373, 04, '', 57, 387, 387, NULL, true, true),
+
     (040161, 04, 'Central puntual', NULL, NULL, 16, NULL, true, true),
         (040161001, 04, '', 61, 01, 01, NULL, true, true),
         (040161002, 04, '', 61, 02, 02, NULL, true, true),
@@ -1122,6 +1124,8 @@ INSERT INTO conf.element_tree_node_hierarchies (element_tree_node_hierarchy_id, 
     (040157370, 04, 040157, 040157370, true, true),
     (040157371, 04, 040157, 040157371, true, true),
     (040157372, 04, 040157, 040157372, true, true),
+    (040157373, 04, 040157, 040157373, true, true),
+
 --Fire_det_ct
 (040161, 04, 0401, 040161, true, true),
     (040161001, 04, 040161, 040161001, true, true),

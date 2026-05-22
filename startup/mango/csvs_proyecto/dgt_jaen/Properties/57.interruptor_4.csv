@@ -14,7 +14,7 @@ INT-CREP-DER-2-ILU-NOR-4;http:\/\/172.21.3.202:3000\/api\/v2\/generic\/;ES-05-CA
 INT-EXT-ENT-ILU-NOR-4;http:\/\/172.21.3.202:3000\/api\/v2\/generic\/;ES-05-CA;172.21.57.50;502;81
 INT-EXT-SAL-ILU-NOR-4;http:\/\/172.21.3.202:3000\/api\/v2\/generic\/;ES-05-CA;172.21.57.50;502;82
 INT-K01-CGBT-DP4;http:\/\/172.21.3.202:3000\/api\/v2\/generic\/;ES-05-CA;172.21.57.50;502;0
-INT-F1-CGBT-DP4;http:\/\/172.21.3.202:3000\/api\/v2\/generic\/;ES-05-CA;172.21.57.50;502;1
+INT-F1-F2-F3-CGBT-DP4;http:\/\/172.21.3.202:3000\/api\/v2\/generic\/;ES-05-CA;172.21.57.50;502;1
 INT-Q1-CGBT-DP4;http:\/\/172.21.3.202:3000\/api\/v2\/generic\/;ES-05-CA;172.21.57.50;502;2
 INT-Q2-CGBT-DP4;http:\/\/172.21.3.202:3000\/api\/v2\/generic\/;ES-05-CA;172.21.57.50;502;3
 INT-Q4-CGBT-DP4;http:\/\/172.21.3.202:3000\/api\/v2\/generic\/;ES-05-CA;172.21.57.50;502;4
@@ -25,7 +25,7 @@ INT-K02-CGBT-DP4;http:\/\/172.21.3.202:3000\/api\/v2\/generic\/;ES-05-CA;172.21.
 INT-Q3-CGBT-DP4;http:\/\/172.21.3.202:3000\/api\/v2\/generic\/;ES-05-CA;172.21.57.50;502;9
 INT-Q8-CGBT-DP4;http:\/\/172.21.3.202:3000\/api\/v2\/generic\/;ES-05-CA;172.21.57.50;502;10
 INT-Q9-CGBT-DP4;http:\/\/172.21.3.202:3000\/api\/v2\/generic\/;ES-05-CA;172.21.57.50;502;11
-INT-F2-CGBT-DP4;http:\/\/172.21.3.202:3000\/api\/v2\/generic\/;ES-05-CA;172.21.57.50;502;12
+INT-F4-CGBT-DP4;http:\/\/172.21.3.202:3000\/api\/v2\/generic\/;ES-05-CA;172.21.57.50;502;12
 INT-Q1-SAI-NOR-1;http:\/\/172.21.3.202:3000\/api\/v2\/generic\/;ES-05-CZ;172.21.17.90;502;93
 INT-K01-SAI-NOR-1;http:\/\/172.21.3.202:3000\/api\/v2\/generic\/;ES-05-CZ;172.21.17.90;502;92
 INT-MANI-SAI-NOR-1;http:\/\/172.21.3.202:3000\/api\/v2\/generic\/;ES-05-CZ;172.21.17.90;502;106

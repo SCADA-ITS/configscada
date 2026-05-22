@@ -81,7 +81,7 @@ item;alias;description;sessionuid;road;stretchs;pk;sentido;on_change_measure
 80;INT-EXT-ILU-SUR-3;INT-EXT-ILU-SUR-3;INT-EXT-ILU-SUR-3;Autovía A-4;LT3;;Córdoba;ChangeMeasureHistorical.groovy
 81;INT-Q1-GEN-CGBT-DP2;INT-Q1-GEN-CGBT-DP2;INT-Q1-GEN-CGBT-DP2;Autovía A-4;LT2;;;ChangeMeasureHistorical.groovy
 82;INT-K01-GEN-CGBT-DP2;INT-K01-GEN-CGBT-DP2;INT-K01-GEN-CGBT-DP2;Autovía A-4;LT2;;;ChangeMeasureHistorical.groovy
-83;INT-F1-F2-F1.1-CGBT-DP2;INT-F1-F2-F1.1-CGBT-DP2;INT-F1-F2-F1.1-CGBT-DP2;Autovía A-4;LT2;;;ChangeMeasureHistorical.groovy
+83;INT-F1-TRAFO-DP2;INT-F1-TRAFO-DP2;INT-F1-TRAFO-DP2;Autovía A-4;LT2;;;ChangeMeasureHistorical.groovy
 84;INT-Q1-RED-CGBT-DP2;INT-Q1-RED-CGBT-DP2;INT-Q1-RED-CGBT-DP2;Autovía A-4;LT2;;;ChangeMeasureHistorical.groovy
 85;INT-Q2-CGBT-DP2;INT-Q2-CGBT-DP2;INT-Q2-CGBT-DP2;Autovía A-4;LT2;;;ChangeMeasureHistorical.groovy
 86;INT-K01-RED-CGBT-DP2;INT-K01-RED-CGBT-DP2;INT-K01-RED-CGBT-DP2;Autovía A-4;LT2;;;ChangeMeasureHistorical.groovy
@@ -118,10 +118,10 @@ item;alias;description;sessionuid;road;stretchs;pk;sentido;on_change_measure
 117;INT-F46-F47-D3-CGBT-DP2;INT-F46-F47-D3-CGBT-DP2;INT-F46-F47-D3-CGBT-DP2;Autovía A-4;LT2;;;ChangeMeasureHistorical.groovy
 118;INT-Q1-GEN-CGBT-DP3;INT-Q1-GEN-CGBT-DP3;INT-Q1-GEN-CGBT-DP3;Autovía A-4;LT3;;;ChangeMeasureHistorical.groovy
 119;INT-K01-GEN-CGBT-DP3;INT-K01-GEN-CGBT-DP3;INT-K01-GEN-CGBT-DP3;Autovía A-4;LT3;;;ChangeMeasureHistorical.groovy
-120;INT-F1-B-CGBT-DP3;INT-F1-B-CGBT-DP3;INT-F1-B-CGBT-DP3;Autovía A-4;LT3;;;ChangeMeasureHistorical.groovy
+120;INT-F1-A-TRAFO-DP3;INT-F1-A-TRAFO-DP3;INT-F1-A-TRAFO-DP3;Autovía A-4;LT3;;;ChangeMeasureHistorical.groovy
 121;INT-Q2-GEN-CGBT-DP3;INT-Q2-GEN-CGBT-DP3;INT-Q2-GEN-CGBT-DP3;Autovía A-4;LT3;;;ChangeMeasureHistorical.groovy
 122;INT-K02-GEN-CGBT-DP3;INT-K02-GEN-CGBT-DP3;INT-K02-GEN-CGBT-DP3;Autovía A-4;LT3;;;ChangeMeasureHistorical.groovy
-123;INT-F2-CGBT-DP3;INT-F2-CGBT-DP3;INT-F2-CGBT-DP3;Autovía A-4;LT3;;;ChangeMeasureHistorical.groovy
+123;INT-F1-B-TRAFO-DP3;INT-F1-B-TRAFO-DP3;INT-F1-B-TRAFO-DP3;Autovía A-4;LT3;;;ChangeMeasureHistorical.groovy
 124;INT-Q1-RED-CGBT-DP3;INT-Q1-RED-CGBT-DP3;INT-Q1-RED-CGBT-DP3;Autovía A-4;LT3;;;ChangeMeasureHistorical.groovy
 125;INT-Q2-GRU-CGBT-DP3;INT-Q2-GRU-CGBT-DP3;INT-Q2-GRU-CGBT-DP3;Autovía A-4;LT3;;;ChangeMeasureHistorical.groovy
 126;INT-K01-RED-CGBT-DP3;INT-K01-RED-CGBT-DP3;INT-K01-RED-CGBT-DP3;Autovía A-4;LT3;;;ChangeMeasureHistorical.groovy
@@ -161,7 +161,7 @@ item;alias;description;sessionuid;road;stretchs;pk;sentido;on_change_measure
 160;INT-Q3-CGBT-DP3;INT-Q3-CGBT-DP3;INT-Q3-CGBT-DP3;Autovía A-4;LT3;;;ChangeMeasureHistorical.groovy
 161;INT-Q6-CGBT-DP3;INT-Q6-CGBT-DP3;INT-Q6-CGBT-DP3;Autovía A-4;LT3;;;ChangeMeasureHistorical.groovy
 162;INT-K02-GRU-CGBT-DP3;INT-K02-GRU-CGBT-DP3;INT-K02-GRU-CGBT-DP3;Autovía A-4;LT3;;;ChangeMeasureHistorical.groovy
-164;INT-F6-CGBT-DP3;INT-F6-CGBT-DP3;INT-F6-CGBT-DP3;Autovía A-4;LT3;;;ChangeMeasureHistorical.groovy
+164;INT-F6-F8-CGBT-DP3;INT-F6-F8-CGBT-DP3;INT-F6-F8-CGBT-DP3;Autovía A-4;LT3;;;ChangeMeasureHistorical.groovy
 165;INT-Q27-ILU-NOR-4;INT-Q27-ILU-NOR-4;INT-Q27-ILU-NOR-4;Autovía A-4;LT4;;;ChangeMeasureHistorical.groovy
 166;INT-K02-ILU-NOR-4;INT-K02-ILU-NOR-4;INT-K02-ILU-NOR-4;Autovía A-4;LT4;;;ChangeMeasureHistorical.groovy
 167;INT-MANI-ILU-NOR-4;INT-MANI-ILU-NOR-4;INT-MANI-ILU-NOR-4;Autovía A-4;LT4;;;ChangeMeasureHistorical.groovy
@@ -211,7 +211,7 @@ item;alias;description;sessionuid;road;stretchs;pk;sentido;on_change_measure
 211;INT-EXT-ENT-ILU-SUR-4;INT-EXT-ENT-ILU-SUR-4;INT-EXT-ENT-ILU-SUR-4;Autovía A-4;LT4;;;ChangeMeasureHistorical.groovy
 212;INT-EXT-SAL-ILU-SUR-4;INT-EXT-SAL-ILU-SUR-4;INT-EXT-SAL-ILU-SUR-4;Autovía A-4;LT4;;;ChangeMeasureHistorical.groovy
 213;INT-K01-CGBT-DP4;INT-K01-CGBT-DP4;INT-K01-CGBT-DP4;Autovía A-4;LT4;;;ChangeMeasureHistorical.groovy
-214;INT-F1-CGBT-DP4;INT-F1-CGBT-DP4;INT-F1-CGBT-DP4;Autovía A-4;LT4;;;ChangeMeasureHistorical.groovy
+214;INT-F1-F2-F3-CGBT-DP4;INT-F1-F2-F3-CGBT-DP4;INT-F1-F2-F3-CGBT-DP4;Autovía A-4;LT4;;;ChangeMeasureHistorical.groovy
 215;INT-Q1-CGBT-DP4;INT-Q1-CGBT-DP4;INT-Q1-CGBT-DP4;Autovía A-4;LT4;;;ChangeMeasureHistorical.groovy
 216;INT-Q2-CGBT-DP4;INT-Q2-CGBT-DP4;INT-Q2-CGBT-DP4;Autovía A-4;LT4;;;ChangeMeasureHistorical.groovy
 217;INT-Q4-CGBT-DP4;INT-Q4-CGBT-DP4;INT-Q4-CGBT-DP4;Autovía A-4;LT4;;;ChangeMeasureHistorical.groovy
@@ -222,12 +222,12 @@ item;alias;description;sessionuid;road;stretchs;pk;sentido;on_change_measure
 222;INT-Q3-CGBT-DP4;INT-Q3-CGBT-DP4;INT-Q3-CGBT-DP4;Autovía A-4;LT4;;;ChangeMeasureHistorical.groovy
 223;INT-Q8-CGBT-DP4;INT-Q8-CGBT-DP4;INT-Q8-CGBT-DP4;Autovía A-4;LT4;;;ChangeMeasureHistorical.groovy
 224;INT-Q9-CGBT-DP4;INT-Q9-CGBT-DP4;INT-Q9-CGBT-DP4;Autovía A-4;LT4;;;ChangeMeasureHistorical.groovy
-225;INT-F2-CGBT-DP4;INT-F2-CGBT-DP4;INT-F2-CGBT-DP4;Autovía A-4;LT4;;;ChangeMeasureHistorical.groovy
+225;INT-F4-CGBT-DP4;INT-F4-CGBT-DP4;INT-F4-CGBT-DP4;Autovía A-4;LT4;;;ChangeMeasureHistorical.groovy
 226;INT-Q1-GEN-CGBT-DP1;INT-Q1-GEN-CGBT-DP1;INT-Q1-GEN-CGBT-DP1;Autovía A-4;LT1;;;ChangeMeasureHistorical.groovy
 227;INT-K01-GEN-CGBT-DP1;INT-K01-GEN-CGBT-DP1;INT-K01-GEN-CGBT-DP1;Autovía A-4;LT1;;;ChangeMeasureHistorical.groovy
-228;INT-F1-CGBT-DP1;INT-F1-CGBT-DP1;INT-F1-CGBT-DP1;Autovía A-4;LT1;;;ChangeMeasureHistorical.groovy
+228;INT-F1-TRAFO-DP1;INT-F1-TRAFO-DP1;INT-F1-TRAFO-DP1;Autovía A-4;LT1;;;ChangeMeasureHistorical.groovy
 229;INT-K01-RED-CGBT-DP1;INT-K01-RED-CGBT-DP1;INT-K01-RED-CGBT-DP1;Autovía A-4;LT1;;;ChangeMeasureHistorical.groovy
-230;INT-PROT-CGBT-DP1;INT-PROT-CGBT-DP1;INT-PROT-CGBT-DP1;Autovía A-4;LT1;;;ChangeMeasureHistorical.groovy
+230;INT-F1-F2-F3-CGBT-DP1;INT-F1-F2-F3-CGBT-DP1;INT-F1-F2-F3-CGBT-DP1;Autovía A-4;LT1;;;ChangeMeasureHistorical.groovy
 231;INT-Q1-RED-CGBT-DP1;INT-Q1-RED-CGBT-DP1;INT-Q1-RED-CGBT-DP1;Autovía A-4;LT1;;;ChangeMeasureHistorical.groovy
 232;INT-Q2-CGBT-DP1;INT-Q2-CGBT-DP1;INT-Q2-CGBT-DP1;Autovía A-4;LT1;;;ChangeMeasureHistorical.groovy
 233;INT-Q4-CGBT-DP1;INT-Q4-CGBT-DP1;INT-Q4-CGBT-DP1;Autovía A-4;LT1;;;ChangeMeasureHistorical.groovy
@@ -378,3 +378,4 @@ item;alias;description;sessionuid;road;stretchs;pk;sentido;on_change_measure
 384;INT-CIRC-2-DOMO-SAI-SUR-4;INT-CIRC-2-DOMO-SAI-SUR-4;INT-CIRC-2-DOMO-SAI-SUR-4;Autovía A-4;LT4;;Córdoba;ChangeMeasureHistorical.groovy
 385;INT-CIRC-2B-SAI-SUR-4;INT-CIRC-2B-SAI-SUR-4;INT-CIRC-2B-SAI-SUR-4;Autovía A-4;LT4;;Córdoba;ChangeMeasureHistorical.groovy
 386;INT-RED-FLUJO-EMER-PERM-DER-SAI-SUR-4;INT-RED-FLUJO-EMER-PERM-DER-SAI-SUR-4;INT-RED-FLUJO-EMER-PERM-DER-SAI-SUR-4;Autovía A-4;LT4;;;
+387;INT-F1-F4-CGBT-DP3;INT-F1-F4-CGBT-DP3;INT-F1-F4-CGBT-DP3;Autovía A-4;LT3;;;ChangeMeasureHistorical.groovy

@@ -7,8 +7,8 @@
    viewBox="0 0 1920 1080"
    version="1.1"
    id="svg2"
-   inkscape:version="1.1.2 (b8e25be833, 2022-02-05)"
-   sodipodi:docname="5235-1-1-0-2_CGBT DP2-DRAWIO_v7.svg"
+   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   sodipodi:docname="unifilar_cgbt_lt2.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -23,15 +23,15 @@
      inkscape:pagecheckerboard="0"
      inkscape:document-units="px"
      showgrid="false"
-     inkscape:zoom="0.37014941"
-     inkscape:cx="657.84246"
-     inkscape:cy="262.05634"
+     inkscape:zoom="2.9611953"
+     inkscape:cx="1133.3261"
+     inkscape:cy="198.06191"
      inkscape:window-width="1920"
-     inkscape:window-height="1017"
-     inkscape:window-x="-8"
+     inkscape:window-height="1009"
+     inkscape:window-x="1912"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
-     inkscape:current-layer="main" />
+     inkscape:current-layer="g15" />
   <defs
      id="defs2">
     <clipPath
@@ -3933,13 +3933,15 @@
                sodipodi:role="line"
                id="tspan1967">K01</tspan></text>
           <text
-             transform="matrix(1,0,0,-1,14061,11031)"
+             transform="scale(1,-1)"
              style="font-variant:normal;font-weight:normal;font-size:151.788px;font-family:Arial;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-             id="text1973"><tspan
-               x="0 92.74247 177.1366 227.68201 320.42447 404.8186 455.36401 548.10645 632.50061 674.69763"
-               y="0"
+             id="text1973"
+             x="14656.199"
+             y="-11026.779"><tspan
+               x="14656.199 14748.941 14833.335 14883.881 14976.623 15061.018 15111.562 15204.306 15288.699 15330.896"
+               y="-11026.779"
                sodipodi:role="line"
-               id="tspan1971">F1-F2-F1.1</tspan></text>
+               id="tspan1971">F1</tspan></text>
           <text
              transform="matrix(1,0,0,-1,13611,9269)"
              style="font-variant:normal;font-weight:normal;font-size:151.788px;font-family:Arial;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"

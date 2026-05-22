@@ -81,7 +81,7 @@ INSERT INTO conf.elements (element_type_id, element_subtype_id, element_id, loca
 (57, 1, 80, 0800057, NULL, NULL, 'INT-EXT-ILU-SUR-3', 'INT-EXT-ILU-SUR-3', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, 1, 81, 0810057, NULL, NULL, 'INT-Q1-GEN-CGBT-DP2', 'INT-Q1-GEN-CGBT-DP2', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, 1, 82, 0820057, NULL, NULL, 'INT-K01-GEN-CGBT-DP2', 'INT-K01-GEN-CGBT-DP2', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(57, 1, 83, 0830057, NULL, NULL, 'INT-F1-F2-F1.1-CGBT-DP2', 'INT-F1-F2-F1.1-CGBT-DP2', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(57, 1, 83, 0830057, NULL, NULL, 'INT-F1-TRAFO-DP2', 'INT-F1-TRAFO-DP2', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, 1, 84, 0840057, NULL, NULL, 'INT-Q1-RED-CGBT-DP2', 'INT-Q1-RED-CGBT-DP2', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, 1, 85, 0850057, NULL, NULL, 'INT-Q2-CGBT-DP2', 'INT-Q2-CGBT-DP2', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, 1, 86, 0860057, NULL, NULL, 'INT-K01-RED-CGBT-DP2', 'INT-K01-RED-CGBT-DP2', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -118,10 +118,10 @@ INSERT INTO conf.elements (element_type_id, element_subtype_id, element_id, loca
 (57, 1, 117, 1170057, NULL, NULL, 'INT-F46-F47-D3-CGBT-DP2', 'INT-F46-F47-D3-CGBT-DP2', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, 1, 118, 1180057, NULL, NULL, 'INT-Q1-GEN-CGBT-DP3', 'INT-Q1-GEN-CGBT-DP3', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, 1, 119, 1190057, NULL, NULL, 'INT-K01-GEN-CGBT-DP3', 'INT-K01-GEN-CGBT-DP3', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(57, 1, 120, 1200057, NULL, NULL, 'INT-F1-B-CGBT-DP3', 'INT-F1-B-CGBT-DP3', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(57, 1, 120, 1200057, NULL, NULL, 'INT-F1-A-TRAFO-DP3', 'INT-F1-A-TRAFO-DP3', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, 1, 121, 1210057, NULL, NULL, 'INT-Q2-GEN-CGBT-DP3', 'INT-Q2-GEN-CGBT-DP3', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, 1, 122, 1220057, NULL, NULL, 'INT-K02-GEN-CGBT-DP3', 'INT-K02-GEN-CGBT-DP3', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(57, 1, 123, 1230057, NULL, NULL, 'INT-F2-CGBT-DP3', 'INT-F2-CGBT-DP3', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(57, 1, 123, 1230057, NULL, NULL, 'INT-F1-B-TRAFO-DP3', 'INT-F1-B-TRAFO-DP3', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, 1, 124, 1240057, NULL, NULL, 'INT-Q1-RED-CGBT-DP3', 'INT-Q1-RED-CGBT-DP3', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, 2, 125, 1250057, NULL, NULL, 'INT-Q2-GRU-CGBT-DP3', 'INT-Q2-GRU-CGBT-DP3', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, 1, 126, 1260057, NULL, NULL, 'INT-K01-RED-CGBT-DP3', 'INT-K01-RED-CGBT-DP3', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -161,7 +161,7 @@ INSERT INTO conf.elements (element_type_id, element_subtype_id, element_id, loca
 (57, 1, 160, 1600057, NULL, NULL, 'INT-Q3-CGBT-DP3', 'INT-Q3-CGBT-DP3', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, 1, 161, 1610057, NULL, NULL, 'INT-Q6-CGBT-DP3', 'INT-Q6-CGBT-DP3', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, 2, 162, 1620057, NULL, NULL, 'INT-K02-GRU-CGBT-DP3', 'INT-K02-GRU-CGBT-DP3', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(57, 1, 164, 1640057, NULL, NULL, 'INT-F6-CGBT-DP3', 'INT-F6-CGBT-DP3', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(57, 1, 164, 1640057, NULL, NULL, 'INT-F6-F8-CGBT-DP3', 'INT-F6-F8-CGBT-DP3', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, 1, 165, 1650057, NULL, NULL, 'INT-Q27-ILU-NOR-4', 'INT-Q27-ILU-NOR-4', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, 1, 166, 1660057, NULL, NULL, 'INT-K02-ILU-NOR-4', 'INT-K02-ILU-NOR-4', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, 1, 167, 1670057, NULL, NULL, 'INT-MANI-ILU-NOR-4', 'INT-MANI-ILU-NOR-4', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -211,7 +211,7 @@ INSERT INTO conf.elements (element_type_id, element_subtype_id, element_id, loca
 (57, 1, 211, 2110057, NULL, NULL, 'INT-EXT-ENT-ILU-SUR-4', 'INT-EXT-ENT-ILU-SUR-4', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, 1, 212, 2120057, NULL, NULL, 'INT-EXT-SAL-ILU-SUR-4', 'INT-EXT-SAL-ILU-SUR-4', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, 1, 213, 2130057, NULL, NULL, 'INT-K01-CGBT-DP4', 'INT-K01-CGBT-DP4', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(57, 1, 214, 2140057, NULL, NULL, 'INT-F1-CGBT-DP4', 'INT-F1-CGBT-DP4', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(57, 1, 214, 2140057, NULL, NULL, 'INT-F1-F2-F3-CGBT-DP4', 'INT-F1-F2-F3-CGBT-DP4', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, 1, 215, 2150057, NULL, NULL, 'INT-Q1-CGBT-DP4', 'INT-Q1-CGBT-DP4', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, 1, 216, 2160057, NULL, NULL, 'INT-Q2-CGBT-DP4', 'INT-Q2-CGBT-DP4', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, 1, 217, 2170057, NULL, NULL, 'INT-Q4-CGBT-DP4', 'INT-Q4-CGBT-DP4', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -222,12 +222,12 @@ INSERT INTO conf.elements (element_type_id, element_subtype_id, element_id, loca
 (57, 2, 222, 2220057, NULL, NULL, 'INT-Q3-CGBT-DP4', 'INT-Q3-CGBT-DP4', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, 1, 223, 2230057, NULL, NULL, 'INT-Q8-CGBT-DP4', 'INT-Q8-CGBT-DP4', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, 1, 224, 2240057, NULL, NULL, 'INT-Q9-CGBT-DP4', 'INT-Q9-CGBT-DP4', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(57, 1, 225, 2250057, NULL, NULL, 'INT-F2-CGBT-DP4', 'INT-F2-CGBT-DP4', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(57, 1, 225, 2250057, NULL, NULL, 'INT-F4-CGBT-DP4', 'INT-F4-CGBT-DP4', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, 1, 226, 2260057, NULL, NULL, 'INT-Q1-GEN-CGBT-DP1', 'INT-Q1-GEN-CGBT-DP1', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, 1, 227, 2270057, NULL, NULL, 'INT-K01-GEN-CGBT-DP1', 'INT-K01-GEN-CGBT-DP1', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(57, 1, 228, 2280057, NULL, NULL, 'INT-F1-CGBT-DP1', 'INT-F1-CGBT-DP1', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(57, 1, 228, 2280057, NULL, NULL, 'INT-F1-TRAFO-DP1', 'INT-F1-TRAFO-DP1', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, 1, 229, 2290057, NULL, NULL, 'INT-K01-RED-CGBT-DP1', 'INT-K01-RED-CGBT-DP1', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(57, 1, 230, 2300057, NULL, NULL, 'INT-PROT-CGBT-DP1', 'INT-PROT-CGBT-DP1', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(57, 1, 230, 2300057, NULL, NULL, 'INT-F1-F2-F3-CGBT-DP1', 'INT-F1-F2-F3-CGBT-DP1', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, 2, 231, 2310057, NULL, NULL, 'INT-Q1-RED-CGBT-DP1', 'INT-Q1-RED-CGBT-DP1', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, 1, 232, 2320057, NULL, NULL, 'INT-Q2-CGBT-DP1', 'INT-Q2-CGBT-DP1', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, 1, 233, 2330057, NULL, NULL, 'INT-Q4-CGBT-DP1', 'INT-Q4-CGBT-DP1', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -376,7 +376,9 @@ INSERT INTO conf.elements (element_type_id, element_subtype_id, element_id, loca
 (57, 1, 383, 3830057, NULL, NULL, 'INT-CIRC-1B-SAI-SUR-4', 'INT-CIRC-1B-SAI-SUR-4', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, 1, 384, 3840057, NULL, NULL, 'INT-CIRC-2-DOMO-SAI-SUR-4', 'INT-CIRC-2-DOMO-SAI-SUR-4', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, 1, 385, 3850057, NULL, NULL, 'INT-CIRC-2B-SAI-SUR-4', 'INT-CIRC-2B-SAI-SUR-4', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(57, 1, 386, 3860057, NULL, NULL, 'INT-RED-FLUJO-EMER-PERM-DER-SAI-SUR-4', 'INT-RED-FLUJO-EMER-PERM-DER-SAI-SUR-4', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(57, 1, 386, 3860057, NULL, NULL, 'INT-RED-FLUJO-EMER-PERM-DER-SAI-SUR-4', 'INT-RED-FLUJO-EMER-PERM-DER-SAI-SUR-4', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(57, 1, 387, 3870057, NULL, NULL, 'INT-F1-F4-CGBT-DP3', 'INT-F1-F4-CGBT-DP3', NULL, NULL, 'ChangeMeasureHistorical.groovy', NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
 
 INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_type_id, element_id, element_value_state_id, value, enabled, visible, created_at, updated_at) VALUES
 (57, 1003, 1, 1, NULL, 'INT-Q26-ILU-SUR-2', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -543,7 +545,7 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 
 (57, 1003, 1, 82, NULL, 'INT-K01-GEN-CGBT-DP2', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
-(57, 1003, 1, 83, NULL, 'INT-F1-F2-F1.1-CGBT-DP2', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(57, 1003, 1, 83, NULL, 'INT-F1-TRAFO-DP2', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (57, 1003, 1, 84, NULL, 'INT-Q1-RED-CGBT-DP2', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
@@ -617,13 +619,13 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 
 (57, 1003, 1, 119, NULL, 'INT-K01-GEN-CGBT-DP3', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
-(57, 1003, 1, 120, NULL, 'INT-F1-B-CGBT-DP3', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(57, 1003, 1, 120, NULL, 'INT-F1-A-TRAFO-DP3', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (57, 1003, 1, 121, NULL, 'INT-Q2-GEN-CGBT-DP3', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (57, 1003, 1, 122, NULL, 'INT-K02-GEN-CGBT-DP3', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
-(57, 1003, 1, 123, NULL, 'INT-F2-CGBT-DP3', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(57, 1003, 1, 123, NULL, 'INT-F1-B-TRAFO-DP3', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (57, 1003, 1, 124, NULL, 'INT-Q1-RED-CGBT-DP3', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
@@ -703,7 +705,7 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 
 (57, 1003, 1, 162, NULL, 'INT-K02-GRU-CGBT-DP3', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
-(57, 1003, 1, 164, NULL, 'INT-F6-CGBT-DP3', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(57, 1003, 1, 164, NULL, 'INT-F6-F8-CGBT-DP3', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (57, 1003, 1, 165, NULL, 'INT-Q27-ILU-NOR-4', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
@@ -803,7 +805,7 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 
 (57, 1003, 1, 213, NULL, 'INT-K01-CGBT-DP4', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
-(57, 1003, 1, 214, NULL, 'INT-F1-CGBT-DP4', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(57, 1003, 1, 214, NULL, 'INT-F1-F2-F3-CGBT-DP4', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (57, 1003, 1, 215, NULL, 'INT-Q1-CGBT-DP4', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
@@ -825,17 +827,17 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 
 (57, 1003, 1, 224, NULL, 'INT-Q9-CGBT-DP4', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
-(57, 1003, 1, 225, NULL, 'INT-F2-CGBT-DP4', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(57, 1003, 1, 225, NULL, 'INT-F4-CGBT-DP4', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (57, 1003, 1, 226, NULL, 'INT-Q1-GEN-CGBT-DP1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (57, 1003, 1, 227, NULL, 'INT-K01-GEN-CGBT-DP1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
-(57, 1003, 1, 228, NULL, 'INT-F1-CGBT-DP1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(57, 1003, 1, 228, NULL, 'INT-F1-TRAFO-DP1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (57, 1003, 1, 229, NULL, 'INT-K01-RED-CGBT-DP1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
-(57, 1003, 1, 230, NULL, 'INT-PROT-CGBT-DP1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(57, 1003, 1, 230, NULL, 'INT-F1-F2-F3-CGBT-DP1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
 (57, 1003, 1, 231, NULL, 'INT-Q1-RED-CGBT-DP1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
@@ -1134,7 +1136,9 @@ INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_t
 
 (57, 1003, 1, 385, NULL, 'INT-CIRC-2B-SAI-SUR-4', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 
-(57, 1003, 1, 386, NULL, 'INT-RED-FLUJO-EMER-PERM-DER-SAI-SUR-4', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(57, 1003, 1, 386, NULL, 'INT-RED-FLUJO-EMER-PERM-DER-SAI-SUR-4', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+
+(57, 1003, 1, 387, NULL, 'INT-F1-F4-CGBT-DP3', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO conf.element_io_controller_modules (element_type_id, element_id, module_type_id, module_id, enabled, visible, created_at, updated_at) VALUES
 (57, 1, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -1514,4 +1518,5 @@ INSERT INTO conf.element_io_controller_modules (element_type_id, element_id, mod
 (57, 383, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, 384, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (57, 385, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(57, 386, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(57, 386, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(57, 387, 1, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
