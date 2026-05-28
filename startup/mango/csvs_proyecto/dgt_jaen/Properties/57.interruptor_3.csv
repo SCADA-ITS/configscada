@@ -62,7 +62,7 @@ INT-VENT-3-14-CGBT-DP3;http:\/\/172.21.3.202:3000\/api\/v2\/generic\/;M-01-DP;17
 INT-Q3-CGBT-DP3;http:\/\/172.21.3.202:3000\/api\/v2\/generic\/;M-01-DP;172.21.49.90;502;46
 INT-Q6-CGBT-DP3;http:\/\/172.21.3.202:3000\/api\/v2\/generic\/;M-01-DP;172.21.49.90;502;47
 INT-K02-GRU-CGBT-DP3;http:\/\/172.21.3.202:3000\/api\/v2\/generic\/;M-01-DP;172.21.49.90;502;48
-INT-F1-GRU-CGBT-DP3;http:\/\/172.21.3.202:3000\/api\/v2\/generic\/;M-01-DP;172.21.49.90;502;49
+INT-F1-F4-CGBT-DP3;http:\/\/172.21.3.202:3000\/api\/v2\/generic\/;M-01-DP;172.21.49.90;502;49
 INT-F6-F8-CGBT-DP3;http:\/\/172.21.3.202:3000\/api\/v2\/generic\/;M-01-DP;172.21.49.90;502;50
 INT-Q26-ILU-SUR-4;http:\/\/172.21.3.202:3000\/api\/v2\/generic\/;ES-05-CA;172.21.57.50;502;83
 INT-K01-ILU-SUR-4;http:\/\/172.21.3.202:3000\/api\/v2\/generic\/;ES-05-CA;172.21.57.50;502;85
