@@ -3,3 +3,4 @@ UPDATE conf.alarm_configs SET alarm_level_id = 3, enabled = True, treatment = Tr
 UPDATE conf.alarm_configs SET alarm_level_id = 3, enabled = True, treatment = True WHERE element_type_id = 9 AND alarm_config_id = 170009; --LBL_ALARM_CONFIGS_ALARM_JETFAN_EMERGENCY_STOP
 UPDATE conf.alarm_configs SET alarm_level_id = 3, enabled = True, treatment = True WHERE element_type_id = 9 AND alarm_config_id = 180009; --LBL_ALARM_CONFIGS_ALARM_JETFAN_STARTER_SHOT
 UPDATE conf.alarm_configs SET alarm_level_id = 3, enabled = True, treatment = True WHERE element_type_id = 9 AND alarm_config_id = 190009; --LBL_ALARM_CONFIGS_ALARM_JETFAN_NO_AUTO
+UPDATE conf.alarm_configs SET alarm_level_id = 3, enabled = True, treatment = True WHERE element_type_id = 9 AND alarm_config_id = 200009; --LBL_ALARM_CONFIGS_ALARM_JETFAN_GE_START

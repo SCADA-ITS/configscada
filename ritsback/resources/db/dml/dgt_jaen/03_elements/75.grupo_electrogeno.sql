@@ -1,6 +1,6 @@
 INSERT INTO conf.elements (element_type_id, element_subtype_id, element_id, location_id, keep_values_on_disconnected, inherit_state_id, alias, description, on_change_alarm, on_change_state, on_change_measure, on_schedule, enabled, visible, alert, alarm_count, created_at, updated_at) VALUES
-(75, NULL, 1, 0010075, NULL, NULL, 'GE2-DP', 'GE2-DP', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
-(75, NULL, 2, 0020075, NULL, NULL, 'GE3-DP', 'GE3-DP', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(75, NULL, 1, 0010075, NULL, NULL, 'GE2-DP', 'GE2-DP', 'GeAlarmFan.groovy', NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(75, NULL, 2, 0020075, NULL, NULL, 'GE3-DP', 'GE3-DP', 'GeAlarmFan.groovy', NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (75, NULL, 3, 0030075, NULL, NULL, 'GE4-CA', 'GE4-CA', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (75, NULL, 4, 0040075, NULL, NULL, 'GE1-CZ', 'GE1-CZ', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 

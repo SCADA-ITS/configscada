@@ -9,15 +9,15 @@
 INSERT INTO conf.ims_incident_alarm_conditions (incident_alarm_condition_id, incident_type_id, stretch_id, auto, road_impact_id, enabled, visible, created_at, updated_at)
 VALUES
 --incendio
-(10115011001, 101, 1003, true, 10, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(10115021001, 101, 1004, true, 10, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(10115011001, 101, 1003, true, 20, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(10115021001, 101, 1004, true, 20, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
-(10115012001, 101, 2003, true, 10, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(10115022001, 101, 2004, true, 10, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(10115012001, 101, 2003, true, 20, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(10115022001, 101, 2004, true, 20, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 
-(10115013001, 101, 3003, true, 10, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(10115023001, 101, 3004, true, 10, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(10115013001, 101, 3003, true, 20, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(10115023001, 101, 3004, true, 20, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 -- 
 -- Table: conf.ims_incident_alarm_condition_alarms
