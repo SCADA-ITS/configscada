@@ -28,7 +28,7 @@ class SignallingCommand_8_6 {
     static final String UP_ORDER = 'up_order'
     static final String POWER_SUPPLY = 'power_supply'
     static final boolean TRUE = true
-    static final boolean FALSE = false
+    static final boolean OFF = false
 
     org.apache.logging.log4j.Logger log;
 
