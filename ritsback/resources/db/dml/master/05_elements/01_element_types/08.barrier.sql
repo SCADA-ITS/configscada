@@ -16,7 +16,9 @@ INSERT INTO master.element_type_params (element_type_id, param_type_id, element_
 (8,1,1003, NULL,2, NULL, 'MANGO SESSION_UID', 'MANGO SESSION_UID', 'LBL_ELEMENT_TYPE_PARAM_MANGO_SESSION_UID' , 'LBL_ELEMENT_TYPE_PARAM_MANGO_SESSION_UID_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --MEASURE
-(8,2,1, NULL,1, '1', 'bar_state', 'state for barrier', 'LBL_ELEMENT_TYPE_PARAM_BAR_STATE' , 'LBL_ELEMENT_TYPE_PARAM_BAR_STATE_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(8,2,1, NULL,1, '1', 'bar_state', 'state for barrier', 'LBL_ELEMENT_TYPE_PARAM_BAR_STATE' , 'LBL_ELEMENT_TYPE_PARAM_BAR_STATE_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(8,2,2, NULL,5, NULL, 'power_supply', 'Power supply for barrier', 'LBL_ELEMENT_TYPE_PARAM_POWER_SUPPLY' , 'LBL_ELEMENT_TYPE_PARAM_POWER_SUPPLY_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
 
 -- 
 -- Table: master.element_subtypes
@@ -30,7 +32,10 @@ VALUES
 INSERT INTO master.element_subtype_active_params
 (element_subtype_id, element_type_id, param_type_id, element_type_param_id, enabled, visible, created_at, updated_at)VALUES
 (1, 8, 2, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(2, 8, 2, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(1, 8, 2, 2, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(2, 8, 2, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 8, 2, 2, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 -- 
 -- Table: master.element_type_states

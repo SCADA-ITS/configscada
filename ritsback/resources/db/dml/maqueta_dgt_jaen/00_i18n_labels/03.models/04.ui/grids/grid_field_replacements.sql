@@ -24,6 +24,7 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
     --barreras
     ('es_ES', 1, 'LBL_GRID_FIELD_REPLACEMENTS_UP', 'Subida', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
     ('es_ES', 1, 'LBL_GRID_FIELD_REPLACEMENTS_DOWN', 'Bajada', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    ('es_ES', 1, 'LBL_GRID_FIELD_REPLACEMENTS_ON', 'Encendido', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
     --semaforos
     ('es_ES', 1, 'LBL_GRID_FIELD_REPLACEMENTS_APAGADO', 'Apagado', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),

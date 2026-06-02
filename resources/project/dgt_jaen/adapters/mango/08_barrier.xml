@@ -19,5 +19,12 @@
         <p:param_type_id>2</p:param_type_id>
       </p:input>
     </p:field>
+    <p:field>
+      <p:source>power_supply</p:source>
+      <p:input>
+        <p:element_type_param_id>2</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:input>
+    </p:field>
   </p:fields>
 </p:json_generic_mango_v1>

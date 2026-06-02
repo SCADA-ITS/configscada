@@ -774,6 +774,8 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 	--ElementType:8
 	('es_ES',1,'LBL_ELEMENT_TYPE_PARAM_BAR_STATE', 'Estado de la barrera', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	('es_ES',1,'LBL_ELEMENT_TYPE_PARAM_BAR_STATE_DESC', 'Estado de la barrera', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_ES',1,'LBL_ELEMENT_TYPE_PARAM_POWER_SUPPLY', 'Alimentación de la barrera', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_ES',1,'LBL_ELEMENT_TYPE_PARAM_POWER_SUPPLY_DESC', 'Alimentación de la barrera', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 	--ElementType:9
 	('es_ES',1,'LBL_ELEMENT_TYPE_PARAM_DELAY_BEFORE_START_SEC', 'Segundos antes de arrancar', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -2438,6 +2440,8 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 	--ElementType:8
 	('en_GB',1,'LBL_ELEMENT_TYPE_PARAM_BAR_STATE', 'Barrier state', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	('en_GB',1,'LBL_ELEMENT_TYPE_PARAM_BAR_STATE_DESC', 'Barrier state', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('en_GB',1,'LBL_ELEMENT_TYPE_PARAM_POWER_SUPPLY', 'Power supply barrier', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('en_GB',1,'LBL_ELEMENT_TYPE_PARAM_POWER_SUPPLY_DESC', 'Power supply barrier', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 
 	--ElementType:9
