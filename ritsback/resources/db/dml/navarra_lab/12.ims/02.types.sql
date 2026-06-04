@@ -31,8 +31,8 @@ INSERT INTO conf.ims_incident_types (incident_type_id, ini_incident_state_id, in
 
 (301, 1, 3, 'ROD-001', 'Rodaje',  3, 1, null, false, 2880, 'BackOfficeInitIncident.groovy', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
-(401, 1, 4, 'TRA-001', 'Accidente', 2, 1, null, false, 2880, 'BackOfficeInitIncident.groovy', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(402, 1, 4, 'TRA-002', 'Accidente con implicación de sustancias peligrosas', 2, 1, null, false, 2880, 'BackOfficeInitIncident.groovy', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(401, 1, 4, 'TRA-001', 'Accidente', 2, 1, 600, true, 2880, 'BackOfficeInitIncident.groovy', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(402, 1, 4, 'TRA-002', 'Accidente con implicación de sustancias peligrosas', 2, 1, 600, true, 2880, 'BackOfficeInitIncident.groovy', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (403, 1, 4, 'TRA-003', 'Conducción temeraria', 2, 1, null, false, 2880, 'BackOfficeInitIncident.groovy', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (404, 1, 4, 'TRA-004', 'Congestión', 1, 1, null, false, 2880, 'BackOfficeInitIncident.groovy', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (405, 1, 4, 'TRA-005', 'Derrame de líquidos - firme deslizante', 1, 1, null, false, 2880, 'BackOfficeInitIncident.groovy', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),

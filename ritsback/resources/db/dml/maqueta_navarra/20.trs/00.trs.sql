@@ -5,15 +5,24 @@ INSERT INTO static.transit_types (transit_type_id,alias,description,label_alias,
 
 -- static.transit_type_params
 INSERT INTO static.transit_type_params (transit_type_id, transit_type_param_id, data_type_id, transit_type_param_group_id, alias, description, label_alias, label_description, enabled, visible, created_at, updated_at) VALUES
-(1, 1, 2, null, 'Road Speed limit', 'Road Speed limit', 'LBL_TRANSIT_PARAM_ROAD_SPEED_LIMIT', 'LBL_TRANSIT_PARAM_ROAD_SPEED_LIMIT_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(1, 2, 2, null, 'API Vehicle Brand', 'API Vehicle Brand', 'LBL_TRANSIT_PARAM_API_VEHICLE_BRAND', 'LBL_TRANSIT_PARAM_API_VEHICLE_BRAND_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(1, 3, 2, null, 'API Vehicle Model', 'API Vehicle Model', 'LBL_TRANSIT_PARAM_API_VEHICLE_MODEL', 'LBL_TRANSIT_PARAM_API_VEHICLE_MODEL_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(1, 4, 2, null, 'API Vehicle Color', 'API Vehicle Color', 'LBL_TRANSIT_PARAM_API_VEHICLE_COLOR', 'LBL_TRANSIT_PARAM_API_VEHICLE_COLOR_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(1, 5, 2, null, 'API Vehicle Type', 'API Vehicle Type', 'LBL_TRANSIT_PARAM_API_VEHICLE_TYPE', 'LBL_TRANSIT_PARAM_API_VEHICLE_TYPE_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(1, 6, 2, null, 'API Vehicle ITV Date', 'API Vehicle ITV Date', 'LBL_TRANSIT_PARAM_API_VEHICLE_ITV_DATE', 'LBL_TRANSIT_PARAM_API_VEHICLE_ITV_DATE_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(1, 7, 2, null, 'Speed Threshold Light', 'Speed Threshold Light', 'LBL_TRANSIT_PARAM_SPEED_THRESHOLD_LIGTH', 'LBL_TRANSIT_PARAM_SPEED_THRESHOLD_LIGTH_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(1, 8, 2, null, 'Speed Threshold Heavy', 'Speed Threshold Heavy', 'LBL_TRANSIT_PARAM_SPEED_THRESHOLD_HEAVY', 'LBL_TRANSIT_PARAM_SPEED_THRESHOLD_HEAVY_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-	
+(1, 1, 2, null, 'Road Speed Limit', 'Road Speed Limit', 'LBL_TRANSIT_PARAM_ROAD_SPEED_LIMIT', 'LBL_TRANSIT_PARAM_ROAD_SPEED_LIMIT_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 2, 2, null, 'API Vehicle ITV Date', 'API Vehicle ITV Date', 'LBL_TRANSIT_PARAM_API_VEHICLE_ITV_DATE', 'LBL_TRANSIT_PARAM_API_VEHICLE_ITV_DATE_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 3, 2, null, 'Speed Threshold Light', 'Speed Threshold Light', 'LBL_TRANSIT_PARAM_SPEED_THRESHOLD_LIGTH', 'LBL_TRANSIT_PARAM_SPEED_THRESHOLD_LIGTH_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 4, 2, null, 'Speed Threshold Heavy', 'Speed Threshold Heavy', 'LBL_TRANSIT_PARAM_SPEED_THRESHOLD_HEAVY', 'LBL_TRANSIT_PARAM_SPEED_THRESHOLD_HEAVY_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 5, 2, null, 'API Vehicle Insurance Date', 'API Vehicle Insurance Date', 'LBL_TRANSIT_PARAM_API_VEHICLE_INSURANCE_DATE', 'LBL_TRANSIT_PARAM_API_VEHICLE_INSURANCE_DATE_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 6, 2, null, 'API Vehicle MMA', 'API Vehicle MMA', 'LBL_TRANSIT_PARAM_API_VEHICLE_MMA', 'LBL_TRANSIT_PARAM_API_VEHICLE_MMA_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 7, 2, null, 'Corrected speed', 'Corrected speed', 'LBL_TRANSIT_PARAM_CORRECTED_SPEED', 'LBL_TRANSIT_PARAM_CORRECTED_SPEED_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 8, 2, null, 'Gravity', 'Gravity', 'LBL_TRANSIT_PARAM_GRAVITY', 'LBL_TRANSIT_PARAM_GRAVITY_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 9, 2, null, 'Article', 'Article', 'LBL_TRANSIT_PARAM_ARTICLE', 'LBL_TRANSIT_PARAM_ARTICLE_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 10, 2, null, 'Calculated DBOID', 'Calculated DBOID', 'LBL_TRANSIT_PARAM_CALCULATED_DBOID', 'LBL_TRANSIT_PARAM_CALCULATED_DBOID_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 11, 2, null, 'Location Type', 'Location Type', 'LBL_TRANSIT_PARAM_LOCATION_TYPE', 'LBL_TRANSIT_PARAM_LOCATION_TYPE_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 12, 2, null, 'Road Type', 'Road Type', 'LBL_TRANSIT_PARAM_ROAD_TYPE', 'LBL_TRANSIT_PARAM_ROAD_TYPE_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 13, 2, null, 'Limitation Type', 'Limitation Type', 'LBL_TRANSIT_PARAM_LIMITATION_TYPE', 'LBL_TRANSIT_PARAM_LIMITATION_TYPE_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 14, 2, null, 'Corrected factor', 'Corrected factor', 'LBL_TRANSIT_PARAM_CORRECTED_FACTOR', 'LBL_TRANSIT_PARAM_CORRECTED_FACTOR_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 15, 2, null, 'Vehicle limitation speed', 'Vehicle limitation speed', 'LBL_TRANSIT_PARAM_VEHICLE_LIMITATION_SPEED', 'LBL_TRANSIT_PARAM_VEHICLE_LIMITATION_SPEED_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 16, 2, null, 'Judicial Process', 'Judicial Process', 'LBL_TRANSIT_PARAM_JUDICIAL_PROCESS', 'LBL_TRANSIT_PARAM_JUDICIAL_PROCESS_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 17, 2, null, 'Observations', 'Observations', 'LBL_TRANSIT_PARAM_OBSERVATIONS', 'LBL_TRANSIT_PARAM_OBSERVATIONS_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
 -- static.transit_type_state_transitions
 INSERT INTO static.transit_type_state_transitions (transit_type_id,parent_transit_state_id,child_transit_state_id,auto,groovy_file,enabled,visible,created_at,updated_at) VALUES
 --RADAR INFRACTION TRANSIT
@@ -49,11 +58,7 @@ INSERT INTO static.transit_type_state_transitions (transit_type_id,parent_transi
 --Checklists
 (1,10,3,false,null,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), --In Review
 (1,10,11,false,null,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), --White list
-(1,10,12,false,null,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), --Black list
-
---Black list
-(1,12,6,false,null,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP), --Propose for sanction
-(1,12,7,false,null,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP); --Discarded
+(1,10,12,false,null,true,true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP); --Black list
 
 -- static.vehicle_classes 
 INSERT INTO static.vehicle_classes (vehicle_class_id,alias,label_alias,enabled,visible,created_at,updated_at) VALUES

@@ -42,6 +42,7 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_ES', 1, 'LBL_EXT_ENTITY_TYPE_PARAM_START_NODE', 'origen', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_EXT_ENTITY_TYPE_PARAM_END_NODE', 'destino', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_EXT_ENTITY_TYPE_PARAM_DESCRIPTION', 'descripción', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_EXT_ENTITY_TYPE_PARAM_DETECTION_TIME', 'fecha detección', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 ('es_ES', 1, 'LBL_EXT_ENTITY_TYPE_PARAM_ID_ROAD_DESC', 'id', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_EXT_ENTITY_TYPE_PARAM_ROAD_DESC', 'carretera', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -74,5 +75,6 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_ES', 1, 'LBL_EXT_ENTITY_TYPE_PARAM_DELAY_S_DESC', 'retraso de la congestión en comparación con la velocidad de flujo libre, en segundos (en caso de bloqueo, -1).', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_EXT_ENTITY_TYPE_PARAM_START_NODE_DESC', 'cruce/calle/ciudad más cercana al inicio de la congestión (proporcionado cuando esté disponible).', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_EXT_ENTITY_TYPE_PARAM_END_NODE_DESC', 'cruce/calle/ciudad más cercana al final de la congestión (proporcionado cuando esté disponible).', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('es_ES', 1, 'LBL_EXT_ENTITY_TYPE_PARAM_DESCRIPTION_DESC', 'descripción', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+('es_ES', 1, 'LBL_EXT_ENTITY_TYPE_PARAM_DESCRIPTION_DESC', 'descripción', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_EXT_ENTITY_TYPE_PARAM_DETECTION_TIME_DESC', 'fecha detección', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 

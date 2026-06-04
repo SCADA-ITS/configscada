@@ -47,7 +47,7 @@ DROP TABLE IF EXISTS hist.transits;
 		locality varchar(100) NULL,
 		road varchar(100) NULL,
 		pk varchar(50) NULL,
-		direction varchar(10) NULL,
+		direction varchar(20) NULL,
 		-- Vehicle info		
 		vehicle_type_id int8 NULL,
 		vehicle_id int8 NULL,

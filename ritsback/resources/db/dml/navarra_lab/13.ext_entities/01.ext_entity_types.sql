@@ -30,12 +30,7 @@ INSERT INTO static.ext_entity_types(ext_entity_type_id, alias, description, labe
 					 {"extEntitySubtypeId": "ExtEntitySubtype:1002", "value": "Meteorológicas"},
 					 {"extEntitySubtypeId": "ExtEntitySubtype:1003", "value": "Red Viaria"}
 		]
-	},
-	"incidentReportMappings": [{
-	    "extEntitySubtypeId": "ExtEntitySubtype:1003",
-	    "imsIncidentTypeId": "ImsIncidentType:401",
-	    "confirm": true
-	  }]
+	}
 }',
 true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (4, '112 Emergencias', 'Incidencias generadas en sistema 112 Emergencias', 'LBL_EXT_ENTITY_TYPE_112', 'LBL_EXT_ENTITY_TYPE_112_DESC', true, '10 0/1 * * * ? *', 
@@ -95,7 +90,7 @@ true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	"incidentReportMappings": [{
 	    "extEntitySubtypeId": "ExtEntitySubtype:4001",
 	    "imsIncidentTypeId": "ImsIncidentType:401",
-	    "confirm": true
+	    "confirm": false
 	  }]  
 }',
 true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -239,11 +234,11 @@ true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	"incidentReportMappings": [{
 	    "extEntitySubtypeId": "ExtEntitySubtype:7001",
 	    "imsIncidentTypeId": "ImsIncidentType:401",
-	    "confirm": true
+	    "confirm": false
 	  },{
 	    "extEntitySubtypeId": "ExtEntitySubtype:7002",
 	    "imsIncidentTypeId": "ImsIncidentType:401",
-	    "confirm": true
+	    "confirm": false
 	  }]   
 }',
 true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
