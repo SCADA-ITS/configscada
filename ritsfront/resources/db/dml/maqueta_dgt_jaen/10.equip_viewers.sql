@@ -133,6 +133,7 @@ INSERT INTO ui.equip_viewer_tabs (equip_viewer_id, module_action_id, alias, desc
 ('Element:86:4',100501,'Alarms module' ,'Alarms module', 'LBL_ALARMS', null,  1, true ),
 ('ElementType:87', 100501, 'Alarms module', 'Alarms module', 'LBL_ALARMS', NULL, 1, true),
 ('ElementType:89', 100501, 'Alarms module', 'Alarms module', 'LBL_ALARMS', NULL, 1, true),
+('ElementType:2000', 100501, 'Alarms module', 'Alarms module', 'LBL_ALARMS', NULL, 1, true),
 ('ElementType:2001', 200002, 'Synoptic', 'Synoptic', 'LBL_SYNOPTIC', NULL, 1, true),
 ('ElementType:2002', 200002, 'Synoptic', 'Synoptic', 'LBL_SYNOPTIC', NULL, 1, true);
 
