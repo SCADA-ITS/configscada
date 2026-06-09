@@ -316,6 +316,8 @@ INSERT INTO conf.locations (location_id, location_type_id, alias, description, l
 (0160019, 1, ' pk ', ' pk ', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (0170019, 1, ' pk ', ' pk ', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (0180019, 1, ' pk ', ' pk ', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(0190019, 1, ' pk ', ' pk ', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(0200019, 1, ' pk ', ' pk ', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (0010020, 1, ' pk ', ' pk ', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (0020020, 1, ' pk ', ' pk ', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
 (0030020, 1, ' pk ', ' pk ', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
@@ -1962,15 +1964,6 @@ INSERT INTO conf.locations (location_id, location_type_id, alias, description, l
 (1001, 2, 'Despeñaperros Tubo Madrid', 'Despeñaperros Tubo Madrid', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (1002, 2, 'Despeñaperros Tubo Córdoba', 'Despeñaperros Tubo Córdoba', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
-(1003, 2, 'Despeñaperros TSM 246+600', 'Sector TSM 246+600 del tubo sentido Madrid del túnel de Despeñaperros', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(1004, 2, 'Despeñaperros TSM 247+300', 'Sector TSM 247+300 del tubo sentido Madrid del túnel de Despeñaperros', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(1005, 2, 'Despeñaperros TSM 247+700', 'Sector TSM 247+700 del tubo sentido Madrid del túnel de Despeñaperros', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(1006, 2, 'Despeñaperros TSM 248+200', 'Sector TSM 248+200 del tubo sentido Madrid del túnel de Despeñaperros', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-
-(1007, 2, 'Despeñaperros TSC 247', 'Sector TSC 247 del tubo sentido Córdoba del túnel de Despeñaperros', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(1008, 2, 'Despeñaperros TSC 247+400', 'Sector TSC 247+400 del tubo sentido Córdoba del túnel de Despeñaperros', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(1009, 2, 'Despeñaperros TSC 247+800', 'Sector TSC 247+800 del tubo sentido Córdoba del túnel de Despeñaperros', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(1010, 2, 'Despeñaperros TSC 248+200', 'Sector TSC 248+200 del tubo sentido Córdoba del túnel de Despeñaperros', NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 
 (2000, 2, 'La Cantera', 'La Cantera', null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
