@@ -21,7 +21,7 @@ INSERT INTO conf.element_values
 			"elementTubeId":"Element:2000:1",
 			"stretchs": [{
 				"stretchId": "Stretch:1003",
-				"locationId": 15011001,
+				"locationId": 10015,
 				"alias": "ZI-1-01-DP",	
 				"order": 1,
 				"fansOrderId": [ "Element:9:1", "Element:9:2", "Element:9:3", "Element:9:4", "Element:9:5", 
@@ -30,126 +30,126 @@ INSERT INTO conf.element_values
 			},
 			{
 				"stretchId": "Stretch:1003",
-				"locationId": 15021001,
+				"locationId": 20015,
 				"alias": "ZI-1-02-DP",	
 				"order": 2,
 				"candidatesFansId": [ "Element:9:9", "Element:9:10", "Element:9:8", "Element:9:7", "Element:9:6", "Element:9:5", "Element:9:4", "Element:9:3", "Element:9:1", "Element:9:2"]
 			},
 			{
 				"stretchId": "Stretch:1003",
-				"locationId": 15031001,
+				"locationId": 30015,
 				"alias": "ZI-1-03-DP",	
 				"order": 3,
 				"candidatesFansId": [ "Element:9:9", "Element:9:10", "Element:9:8", "Element:9:7", "Element:9:6", "Element:9:5", "Element:9:4", "Element:9:1", "Element:9:2", "Element:9:3"]
 			},
 			{
 				"stretchId": "Stretch:1003",
-				"locationId": 15041001,
+				"locationId": 40015,
 				"alias": "ZI-1-04-DP",	
 				"order": 4,
 				"candidatesFansId": [ "Element:9:9", "Element:9:10", "Element:9:8", "Element:9:7", "Element:9:6", "Element:9:5", "Element:9:1", "Element:9:2", "Element:9:4", "Element:9:3"]
 			},
 			{
 				"stretchId": "Stretch:1003",
-				"locationId": 15051001,
+				"locationId": 50015,
 				"alias": "ZI-1-05-DP",	
 				"order": 5,
 				"candidatesFansId": [ "Element:9:9", "Element:9:10", "Element:9:8", "Element:9:7", "Element:9:6", "Element:9:1", "Element:9:2", "Element:9:5", "Element:9:3", "Element:9:4"]
 			},
 			{
 				"stretchId": "Stretch:1003",
-				"locationId": 15061001,
+				"locationId": 60015,
 				"alias": "ZI-1-06-DP",	
 				"order": 6,
 				"candidatesFansId": [ "Element:9:9", "Element:9:10", "Element:9:8", "Element:9:7", "Element:9:6", "Element:9:1", "Element:9:2", "Element:9:3", "Element:9:4", "Element:9:5"]
 			},
 			{
 				"stretchId": "Stretch:1003",
-				"locationId": 15071001,
+				"locationId": 70015,
 				"alias": "ZI-1-07-DP",	
 				"order": 7,
 				"candidatesFansId": [ "Element:9:9", "Element:9:10", "Element:9:8", "Element:9:7", "Element:9:6", "Element:9:1", "Element:9:2", "Element:9:3", "Element:9:4", "Element:9:5"]
 			},
 			{
 				"stretchId": "Stretch:1003",
-				"locationId": 15081001,
+				"locationId": 80015,
 				"alias": "ZI-1-08-DP",	
 				"order": 8,
 				"candidatesFansId": [ "Element:9:9", "Element:9:10", "Element:9:8", "Element:9:7", "Element:9:6", "Element:9:1", "Element:9:2", "Element:9:3", "Element:9:4", "Element:9:5"]
 			},
 			{
 				"stretchId": "Stretch:1003",
-				"locationId": 15091001,
+				"locationId": 90015,
 				"alias": "ZI-1-09-DP",	
 				"order": 9,
 				"candidatesFansId": [ "Element:9:9", "Element:9:10", "Element:9:8", "Element:9:1", "Element:9:2", "Element:9:7", "Element:9:3", "Element:9:6", "Element:9:4", "Element:9:5"]
 			},
 			{
 				"stretchId": "Stretch:1003",
-				"locationId": 15101001,
+				"locationId": 100015,
 				"alias": "ZI-1-10-DP",	
 				"order": 10,
 				"candidatesFansId": [ "Element:9:9", "Element:9:10", "Element:9:8", "Element:9:1", "Element:9:2", "Element:9:3", "Element:9:7", "Element:9:4", "Element:9:6", "Element:9:5"]
 			},
 			{
 				"stretchId": "Stretch:1003",
-				"locationId": 15111001,
+				"locationId": 110015,
 				"alias": "ZI-1-11-DP",	
 				"order": 11,
 				"candidatesFansId": [ "Element:9:9", "Element:9:10", "Element:9:1", "Element:9:2", "Element:9:8", "Element:9:3", "Element:9:4", "Element:9:7", "Element:9:5", "Element:9:6"]
 			},
 			{
 				"stretchId": "Stretch:1003",
-				"locationId": 15121001,
+				"locationId": 120015,
 				"alias": "ZI-1-12-DP",	
 				"order": 12,
 				"candidatesFansId": [ "Element:9:9", "Element:9:10", "Element:9:1", "Element:9:2", "Element:9:3", "Element:9:8", "Element:9:4", "Element:9:5", "Element:9:7", "Element:9:6"]
 			},
 			{
 				"stretchId": "Stretch:1003",
-				"locationId": 15131001,
+				"locationId": 130015,
 				"alias": "ZI-1-13-DP",	
 				"order": 13,
 				"candidatesFansId": [ "Element:9:1", "Element:9:2", "Element:9:3", "Element:9:9", "Element:9:10", "Element:9:4", "Element:9:8", "Element:9:5", "Element:9:7", "Element:9:6"]
 			},
 			{
 				"stretchId": "Stretch:1003",
-				"locationId": 15141001,
+				"locationId": 140015,
 				"alias": "ZI-1-14-DP",	
 				"order": 14,
 				"candidatesFansId": [ "Element:9:1", "Element:9:2", "Element:9:3", "Element:9:4", "Element:9:9", "Element:9:10", "Element:9:5", "Element:9:8", "Element:9:7", "Element:9:6"]
 			},
 			{
 				"stretchId": "Stretch:1003",
-				"locationId": 15151001,
+				"locationId": 150015,
 				"alias": "ZI-1-15-DP",	
 				"order": 15,
 				"candidatesFansId": [ "Element:9:1", "Element:9:2", "Element:9:3", "Element:9:4", "Element:9:5", "Element:9:9", "Element:9:10", "Element:9:8", "Element:9:6", "Element:9:7"]
 			},
 			{
 				"stretchId": "Stretch:1003",
-				"locationId": 15161001,
+				"locationId": 160015,
 				"alias": "ZI-1-16-DP",	
 				"order": 16,
 				"candidatesFansId": [ "Element:9:1", "Element:9:2", "Element:9:3", "Element:9:4", "Element:9:5", "Element:9:9", "Element:9:10", "Element:9:8", "Element:9:6", "Element:9:7"]
 			},
 			{
 				"stretchId": "Stretch:1003",
-				"locationId": 15171001,
+				"locationId": 170015,
 				"alias": "ZI-1-17-DP",	
 				"order": 17,
 				"candidatesFansId": [ "Element:9:1", "Element:9:2", "Element:9:3", "Element:9:4", "Element:9:5", "Element:9:9", "Element:9:10", "Element:9:8", "Element:9:6", "Element:9:7"]
 			},
 			{
 				"stretchId": "Stretch:1003",
-				"locationId": 15181001,
+				"locationId": 180015,
 				"alias": "ZI-1-18-DP",	
 				"order": 18,
 				"candidatesFansId": [ "Element:9:1", "Element:9:2", "Element:9:3", "Element:9:4", "Element:9:5", "Element:9:9", "Element:9:10", "Element:9:6", "Element:9:7", "Element:9:8"]
 			},
 			{
 				"stretchId": "Stretch:1003",
-				"locationId": 15191001,
+				"locationId": 190015,
 				"alias": "ZI-1-19-DP",	
 				"order": 19,
 				"candidatesFansId": [ "Element:9:1", "Element:9:2", "Element:9:3", "Element:9:4", "Element:9:5", "Element:9:6", "Element:9:7", "Element:9:9", "Element:9:10", "Element:9:8"]

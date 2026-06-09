@@ -18,6 +18,7 @@ class SendAlarmsToVentilation {
 
 	org.apache.logging.log4j.Logger log;
 
+	final long ALARM_CONFIGS_ALARM_ANEM_INT_INHIBIR = 40018L;
 	final long ALARM_CONFIGS_ALARM_MAX_VIBRATION = 3020009L;
 	final long ALARM_CONFIGS_ALARM_MAX_FRONT_BEARING_TEMP = 3030009L;
 	final long ALARM_CONFIGS_ALARM_MAX_BACK_BEARING_TEMP = 3040009L;
@@ -32,6 +33,7 @@ class SendAlarmsToVentilation {
 
 
 	final List<Long> alarmConfigs = Collections.unmodifiableList(Arrays.asList(
+		ALARM_CONFIGS_ALARM_ANEM_INT_INHIBIR,
 		ALARM_CONFIGS_ALARM_MAX_VIBRATION,
 		ALARM_CONFIGS_ALARM_MAX_FRONT_BEARING_TEMP,
 		ALARM_CONFIGS_ALARM_MAX_BACK_BEARING_TEMP,
