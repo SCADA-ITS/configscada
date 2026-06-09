@@ -4,7 +4,7 @@ INSERT INTO ui.equip_viewers (id, name, description, "label", icon, show_info_ta
 ('ElementSubtype:2:2', 'CAMERA DAI', 'CAMERA DAI', 'LBL_ELEMENT_TYPE_CAMERA', NULL, false, false, false, 4, false, null, null, null, 020002, null, false),
 ('ElementType:3', 'Detector', 'Detector', 'LBL_ELEMENT_TYPE_DETECTOR', NULL, true, false, false, null, false, 225, 3, null, 3, true, true),
 ('ElementType:4', 'Section', 'Section', 'LBL_ELEMENT_TYPE_SECTION', NULL, true, true, false, null, false, 225, 3, null, 020004, true, true),
-('ElementType:8', 'BARRIER', 'BARRIER', 'LBL_ELEMENT_TYPE_BARRIER', NULL, true, false, true, null, true, 300, 1, null, 000008, true, false),
+('ElementType:8', 'BARRIER', 'BARRIER', 'LBL_ELEMENT_TYPE_BARRIER', NULL, true, false, true, null, false, 300, 1, null, 000008, true, false),
 ('ElementSubtype:4:9', 'JETFAN', 'JETFAN', 'LBL_ELEMENT_TYPE_JETFAN', NULL, true, false, true, null, false, null, null, null, 040009, null, false),
 ('ElementSubtype:5:9', 'JETFAN', 'JETFAN', 'LBL_ELEMENT_TYPE_JETFAN', NULL, true, false, true, null, false, null, null, null, 040009, null, false),
 ('ElementSubtype:4:11', 'SOS', 'SOS', 'LBL_ELEMENT_TYPE_SOS', NULL, true, false, false, null, false, 300, 1, null, 000011, false, false),
@@ -133,6 +133,7 @@ INSERT INTO ui.equip_viewer_tabs (equip_viewer_id, module_action_id, alias, desc
 ('Element:86:4',100501,'Alarms module' ,'Alarms module', 'LBL_ALARMS', null,  1, true ),
 ('ElementType:87', 100501, 'Alarms module', 'Alarms module', 'LBL_ALARMS', NULL, 1, true),
 ('ElementType:89', 100501, 'Alarms module', 'Alarms module', 'LBL_ALARMS', NULL, 1, true),
+('ElementType:2000', 100501, 'Alarms module', 'Alarms module', 'LBL_ALARMS', NULL, 1, true),
 ('ElementType:2001', 200002, 'Synoptic', 'Synoptic', 'LBL_SYNOPTIC', NULL, 1, true),
 ('ElementType:2002', 200002, 'Synoptic', 'Synoptic', 'LBL_SYNOPTIC', NULL, 1, true);
 
@@ -147,6 +148,7 @@ INSERT INTO ui.equip_viewer_grp_measures (id, equip_viewer_id, name, description
 (0401, 'ElementType:4', 'General', 'General', 'LBL_ELEMENT_GENERAL', NULL, 1, true),
 (0402, 'ElementType:4', 'Clasificación velocidad', 'Clasificación velocidad', 'LBL_ELEMENT_SPEED_CLASSIFICATION', NULL, 2, true),
 (0403, 'ElementType:4', 'Clasificación longitud', 'Clasificación longitud', 'LBL_ELEMENT_LONG_CLASSIFICATION', NULL, 3, true),
+(0801, 'ElementType:8', 'Medidas', 'Medidas', 'LBL_ELEMENT_MEASURES', NULL, 1, true),
 (040901, 'ElementSubtype:4:9', 'Medidas', 'Medidas', 'LBL_ELEMENT_MEASURES', NULL, 1, true),
 (050901, 'ElementSubtype:5:9', 'Medidas', 'Medidas', 'LBL_ELEMENT_MEASURES', NULL, 1, true),
 (1101, 'ElementSubtype:4:11', 'Medidas', 'Medidas', 'LBL_ELEMENT_MEASURES', NULL, 1, true),
@@ -211,16 +213,15 @@ INSERT INTO ui.equip_viewer_measures (equip_viewer_grp_measure_id, vo_entities_i
 (05000101,'ElementTypeParam:1:2:30', 2, True),
 
 (0301, 'ElementTypeParam:3:2:1', 1, true),
-(0301, 'ElementTypeParam:3:2:2', 8, true),
-(0301, 'ElementTypeParam:3:2:3', 9, true),
+(0301, 'ElementTypeParam:3:2:2', 7, true),
+(0301, 'ElementTypeParam:3:2:3', 8, true),
 (0301, 'ElementTypeParam:3:2:4', 3, true),
-(0301, 'ElementTypeParam:3:2:5', 10, true),
-(0301, 'ElementTypeParam:3:2:6', 5, true),
-(0301, 'ElementTypeParam:3:2:7', 6, true),
-(0301, 'ElementTypeParam:3:2:8', 7, true),
+(0301, 'ElementTypeParam:3:2:6', 4, true),
+(0301, 'ElementTypeParam:3:2:7', 5, true),
+(0301, 'ElementTypeParam:3:2:8', 6, true),
 (0301, 'ElementTypeParam:3:2:9', 2, true),
-(0301, 'ElementTypeParam:3:2:10', 11, true),
-(0301, 'ElementTypeParam:3:2:13', 11, true),
+(0301, 'ElementTypeParam:3:2:10', 9, true),
+(0301, 'ElementTypeParam:3:2:13', 10, true),
 (0301, 'ElementTypeParam:3:2:17', 11, true),
 (0302, 'ElementTypeParam:3:2:40', 1, true),
 (0302, 'ElementTypeParam:3:2:41', 2, true),
@@ -240,6 +241,9 @@ INSERT INTO ui.equip_viewer_measures (equip_viewer_grp_measure_id, vo_entities_i
 (0402, 'ElementTypeParam:4:2:82', 3, true),
 (0403, 'ElementTypeParam:4:2:60', 1, true),
 (0403, 'ElementTypeParam:4:2:61', 2, true),
+
+(0801, 'ElementTypeParam:8:2:2', 1, true),
+
 
 (040901, 'ElementTypeParam:9:2:1', 1, true),
 (040901, 'ElementTypeParam:9:2:2', 2, true),

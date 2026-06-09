@@ -12,7 +12,9 @@ INSERT INTO ui.vo_enum_types(id, alias, description, enabled, visible) VALUES
 (11, 'Apagado_Encendido', 'Apagado_Encendido', true, true),
 (12, 'Remoto_Local', 'Remoto_Local', true, true),
 (13, 'Emergencia_general', 'Emergencia_general', true, true),
-(14, 'ClosedOpened', 'ClosedOpened', true, true);
+(14, 'ClosedOpened', 'ClosedOpened', true, true),
+(15, 'Apagado_Encendido', 'Apagado_Encendido', true, true);
+
 
 
 
@@ -68,7 +70,11 @@ INSERT INTO ui.vo_enum_type_values(id, vo_enum_type_id, "key", value, "translate
 (32, 13, '6', 'LBL_VO_ENUM_TYPE_VALUES_GENERAL', TRUE, null),
 
 (33, 14, 'false', 'LBL_VO_ENUM_TYPE_VALUES_CLOSED', TRUE, null),
-(34, 14, 'true', 'LBL_VO_ENUM_TYPE_VALUES_OPENED', TRUE, null);
+(34, 14, 'true', 'LBL_VO_ENUM_TYPE_VALUES_OPENED', TRUE, null),
+
+(35, 15, 'true', 'LBL_VO_ENUM_TYPE_VALUES_ENCENDIDO', TRUE, null),
+(36, 15, 'false', 'LBL_VO_ENUM_TYPE_VALUES_APAGADO', TRUE, null);
+
 
 
 
@@ -80,6 +86,8 @@ INSERT INTO ui.vo_enum_type_values(id, vo_enum_type_id, "key", value, "translate
 INSERT INTO ui.vo_entity_enum_types(vo_entity_id, enum_type_id) VALUES
 ('ElementTypeParam:1:2:28', 9),
 ('ElementTypeParam:1:2:19', 10),
+
+('ElementTypeParam:8:2:2', 15),
 
 ('ElementTypeParam:9:2:1', 8),
 ('ElementTypeParam:9:2:28', 2),
