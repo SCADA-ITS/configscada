@@ -32,12 +32,12 @@
     <request_list>
         <request>
             <request_frame>0x17</request_frame>
-            <cron_expression>10 * * * * ?</cron_expression>
+            <cron_expression>10 0/2 * * * ?</cron_expression>
             <use_adapter>false</use_adapter>
         </request>
         <request>
             <request_frame>0x1B</request_frame>
-            <cron_expression>45 * * * * ?</cron_expression>
+            <cron_expression>45 0/2 * * * ?</cron_expression>
             <use_adapter>false</use_adapter>
         </request>
         <request>

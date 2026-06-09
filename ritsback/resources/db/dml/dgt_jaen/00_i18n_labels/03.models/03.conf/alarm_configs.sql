@@ -39,6 +39,13 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 --ElementType:71 subtipo 27 -> panel gálibo
 ('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_EXCESS_CLEARANCE', 'Exceso de Gálibo', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
+--ElementType:2000
+('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_CAMBIO_SOLEADO', 'Cambio de régimen a Soleado', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_CAMBIO_CREPUSCULAR', 'Cambio de régimen a Crepuscular', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_CAMBIO_NUBLADO', 'Cambio de régimen a Nublado', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_CAMBIO_NOCTURNO', 'Cambio de régimen a Nocturno', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_CAMBIO_EXTERIOR_NOCTURNO', 'Cambio de régimen a Exterior/Nocturno', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
 --en_GB
 --Element:9 -> jetfan
 ('en_GB', 1, 'LBL_ALARM_CONFIGS_ALARM_JETFAN_STARTER_SHOT', 'Alarm Jetfan starter shot', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
