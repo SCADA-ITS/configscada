@@ -281,7 +281,8 @@ INSERT INTO ui.data_sources(id, data_source_type_id, "name", description, entity
 (276, 3, 'updateTransit', 'update data transit', 'TransitVO', 'id', true, true),
 (277, 3, 'addTransitLog', 'addTransitLog', 'TransitLogVO', 'id', true, true),
 (278, 3, 'deleteTransitLog', 'deleteTransitLog', 'TransitLogVO', 'id', true, true),
-(279, 1, 'getTransitSummary', 'getTransitSummary', 'TransitVO', 'id', true, true);
+(279, 1, 'getTransitSummary', 'getTransitSummary', 'TransitVO', 'id', true, true),
+(280, 1, 'getTransitStates', 'getTransitStates', 'TransitTypeVO', 'id', true, true);
 
 INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) VALUES
 (1, 1, 'http://192.168.88.163:8082/graphql'),
@@ -1674,4 +1675,9 @@ INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) V
 (279, 1, 'http://192.168.88.163:8082/graphql'),
 (279, 2, 'getTransit'),
 (279, 3, 'transitId'),
-(279, 4, NULL);
+(279, 4, NULL),
+
+(280, 1, 'http://192.168.88.163:8082/graphql'),
+(280, 2, 'getTransitStates'),
+(280, 3, 'ids'),
+(280, 4, NULL);
