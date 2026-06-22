@@ -125,6 +125,7 @@ INSERT INTO ui.synoptic_layer_elements
 (91301900, 'Element:19:11', 00001909, 'SCO-1-01-CZ', 899, 1004, false, NULL, true, false, NULL, true),
 (91302100, 'Element:21:11', 00002110, 'OP-1-01-CZ', 950, 1004, false, NULL, true, false, NULL, true),
 (91302100, 'Element:21:12', 00002110, 'OP-2-01-CZ', 755, 117, false, NULL, true, false, NULL, true),
+(91301400, 'Element:14:1', 00001404, 'LUM-0-03-DP', 101, 557, false, NULL, true, false, NULL, true),
 (91301400, 'Element:14:4', 00001404, 'LUM-0-04-CZ', 1527, 1003, false, NULL, true, false, NULL, true),
 (91301500, 'Element:15:50', 00001513, 'ZI-1-04-CZ', 1087, 689, false, NULL, true, false, NULL, true),
 (91301500, 'Element:15:49', 00001513, 'ZI-1-03-CZ', 933, 689, false, NULL, true, false, NULL, true),

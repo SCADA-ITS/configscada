@@ -252,6 +252,7 @@ INSERT INTO ui.synoptic_layer_elements
 (90108900, 'Element:89:3', 000089, 'PUE-GA2-S', 859, 505, false, NULL, true, false, NULL, true),
 (90108900, 'Element:89:1', 000089, 'PUE-GA1-S', 499, 505, false, NULL, true, false, NULL, true),
 (90108900, 'Element:89:2', 000089, 'PUE-GA1-N', 499, 585, false, NULL, true, false, NULL, true),
+(90101400, 'Element:14:3', 000014, 'LUM-0-02-CA', 66, 540, false, NULL, true, false, NULL, true),
 (90101400, 'Element:14:1', 000014, 'LUM-0-03-DP', 1876, 586, false, NULL, true, false, NULL, true),
 (90101800, 'Element:18:4', 000018, 'AN-1-04-DP', 1592, 873, false, NULL, true, false, NULL, true),
 (90101800, 'Element:18:3', 000018, 'AN-1-03-DP', 1207, 873, false, NULL, true, false, NULL, true),
