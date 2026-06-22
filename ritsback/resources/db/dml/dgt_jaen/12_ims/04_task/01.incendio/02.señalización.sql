@@ -1,6 +1,20 @@
 INSERT INTO conf.ims_incident_type_task_values
 (task_type_id, task_type_param_id, incident_type_task_id, value, enabled, visible, created_at, updated_at)
 VALUES
+--presurizacion
+(1, 1, 01020101, '[
+    {
+        "id": 1,
+        "alias": "PRESURIZACION",
+        "from": 1,
+        "to": 1,
+        "elementSubtypeId": "ElementSubtype:3:32",
+        "command": {
+                    "commandElementTypeId": "CommandElementType:1:32",
+                    "commandElementValues": [{"commandElementTypeParamId": "CommandElementTypeParam:2:32:1"}]
+                    }
+    }]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
 --ilumninación
 (3, 1, 01030101, '0', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (3, 2, 01030101, '2', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -29,7 +43,7 @@ VALUES
                     }
     },
 	{
-        "id": 5,
+        "id": 3,
         "alias": "Aspa-Flecha",
         "from": 1,
         "to": 1,
@@ -43,7 +57,7 @@ VALUES
 		}
 	},
 	{
-		"id": 6,
+		"id": 4,
 		"alias": "CLV",
 		"from": 1,
         "to": 1,
@@ -56,7 +70,7 @@ VALUES
 		}
 	},
     {
-        "id": 7,
+        "id": 5,
         "alias": "PMV",
         "from": 1,
         "to": 1,
@@ -70,7 +84,7 @@ VALUES
 		}
 	},
     {
-        "id": 8,
+        "id": 6,
         "alias": "PMV",
         "from": 1,
         "to": 1,
@@ -84,7 +98,7 @@ VALUES
 		}
 	},
     {
-        "id": 9,
+        "id": 7,
         "alias": "STOP",
         "from": 1,
         "to": 1,
@@ -95,21 +109,19 @@ VALUES
                         "commandElementTypeParamId": "CommandElementTypeParam:2:71:1"
 					}]	
 		}
-	},
-    {
-        "id": 10,
-        "alias": "PRESURIZACION",
-        "from": 1,
-        "to": 1,
-        "elementSubtypeId": "ElementSubtype:3:32",
-        "command": {
-                    "commandElementTypeId": "CommandElementType:1:32",
-                    "commandElementValues": [{"commandElementTypeParamId": "CommandElementTypeParam:2:32:1"}]
-                    }
-    }
+	}
 ]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
-
+(1, 1, 01120101, '[
+    {
+        "id": 1,
+        "alias": "ILUMINACION DE EMERGENCIA",
+        "from": 1,
+        "to": 1,
+        "command": {
+                    "commandElementTypeId": "CommandElementType:6:73"
+                }
+    }]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --RESTITUCION
 --ventilación
@@ -129,6 +141,16 @@ VALUES
                     }
     }]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
+(1, 1, 03050101, '[
+    {
+        "id": 1,
+        "alias": "ILUMINACION DE EMERGENCIA",
+        "from": 1,
+        "to": 1,
+        "command": {
+                    "commandElementTypeId": "CommandElementType:3:73"
+                }
+    }]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 --CANCELACION DE INCIDENCIA
 (1, 1, 101020101, '[
     {
@@ -141,4 +163,18 @@ VALUES
                     "commandElementTypeId": "CommandElementType:2:32",
                     "commandElementValues": [{"commandElementTypeParamId": "CommandElementTypeParam:2:32:1"}]
                     }
+    }]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(1, 1, 101050101, '[
+    {
+        "id": 1,
+        "alias": "ILUMINACION DE EMERGENCIA",
+        "from": 1,
+        "to": 1,
+        "command": {
+                    "commandElementTypeId": "CommandElementType:3:73"
+                }
     }]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+
+
