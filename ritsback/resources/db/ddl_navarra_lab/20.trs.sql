@@ -265,7 +265,7 @@ DROP TABLE IF EXISTS master.countries;
 		vehicle_param_group_id int8 NULL,
 		alias varchar(100) NOT NULL,
 		description varchar(200) NOT NULL,
-		label_alias varchar(50) NOT NULL,
+		label_alias varchar(50) NULL,
 		label_description varchar(50) NULL,
 		enabled bool NULL,
 		visible bool NULL,

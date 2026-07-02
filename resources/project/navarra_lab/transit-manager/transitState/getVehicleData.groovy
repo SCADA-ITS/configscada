@@ -1,4 +1,6 @@
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.web.client.RestClientResponseException;
+import org.springframework.web.client.ResourceAccessException;
 import org.springframework.util.CollectionUtils;
 
 import com.revenga.rits.back.data.core.model.Transit;
@@ -6,8 +8,10 @@ import com.revenga.rits.back.data.core.model.TransitValue;
 import com.revenga.rits.back.data.core.model.TransitTypeStateTransition;
 import com.revenga.rits.back.data.core.dao.manager.DataSourceConnection;
 import com.revenga.rits.back.transit.manager.cgi.api.multas.client.helper.CgiApiMultasClientHelper;
+import com.revenga.rits.back.transit.manager.cgi.api.multas.client.helper.CgiApiMultasPropertiesHelper;
 import com.revenga.rits.back.transit.manager.cgi.api.multas.client.helper.CgiApiMultasVehicleSpeedLimitHelper;
 import com.revenga.rits.back.transit.manager.cgi.api.multas.client.CgiApiMultasClient;
+import com.revenga.rits.back.transit.manager.cgi.api.multas.client.config.CgiApiMultasProperties;
 import com.revenga.rits.back.transit.manager.cgi.api.multas.client.dto.CgiApiMultasPlateNumberResponseDto;
 import com.revenga.rits.back.transit.manager.service.EntitiesManager;
 import com.revenga.rits.back.transit.manager.transit.persistence.TransitPersistenceService;
@@ -22,6 +26,7 @@ import java.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
 import java.util.List;
+import groovy.json.JsonSlurper;
 
 class getVehicleData {
 
@@ -38,9 +43,11 @@ class getVehicleData {
 	final long TRANSIT_PARAM_ROAD_TYPE = 12L;
 	final long TRANSIT_PARAM_LIMITATION_TYPE = 13L;
 	final long TRANSIT_PARAM_VEHICLE_LIMITATION_SPEED = 15L;
+	final long TRANSIT_PARAM_OBSERVATIONS = 17L;
 	final Long TRANSIT_STATE_IN_REVIEW = 3L;
 	final Long TRANSIT_STATE_WHITE_LIST = 11L;
 	final Long TRANSIT_STATE_BLACK_LIST = 12L;
+	final String DGT_CONTACT_ERROR_MESSAGE = "Error al contactar con el servicio DGT";
 	final String INFRACTION_TYPE_ARTICLE_48 = "Artículo 48";
 	final String INFRACTION_TYPE_ARTICLE_50 = "Artículo 50";
 	final String INFRACTION_TYPE_ARTICLE_52 = "Artículo 52";
@@ -205,6 +212,7 @@ class getVehicleData {
 			}
 
 			fillTransitVehicleData(transit, response);
+			clearTransitValue(transit, TRANSIT_PARAM_OBSERVATIONS);
 			addOrReplaceTransitValue(transit, TRANSIT_PARAM_API_VEHICLE_ITV_DATE, getFormattedItvExpiryDate(response));
 			addOrReplaceTransitValue(transit, TRANSIT_PARAM_API_VEHICLE_INSURANCE_DATE, getInsuranceExpiryDate(response));
 			addOrReplaceTransitValue(transit, TRANSIT_PARAM_API_VEHICLE_MMA, getVehicleMma(response));
@@ -217,6 +225,14 @@ class getVehicleData {
 			return response;
 
 		} catch (Exception e) {
+			String errorDetail = getErrorDetail(e);
+			if (StringUtils.isBlank(errorDetail) && isDgtContactError(e)) {
+				errorDetail = DGT_CONTACT_ERROR_MESSAGE;
+			}
+			if (StringUtils.isNotBlank(errorDetail)) {
+				addOrReplaceTransitValue(transit, TRANSIT_PARAM_OBSERVATIONS, errorDetail);
+				EntitiesManager.getInstance().updateTransit(transit);
+			}
 			log.error("Se ha producido un error en la peticion de datos de vehiculo con la matricula: {}", plateNumber, e);
 			return null;
 		}
@@ -520,6 +536,86 @@ class getVehicleData {
 		}
 	}
 
+	private String getErrorDetail(Throwable throwable) {
+
+		Throwable current = throwable;
+		while (current != null) {
+			String detail = extractDetailFromThrowable(current);
+			if (StringUtils.isNotBlank(detail)) {
+				return detail;
+			}
+			current = current.getCause();
+		}
+
+		return null;
+	}
+
+	private String extractDetailFromThrowable(Throwable throwable) {
+
+		if (throwable instanceof RestClientResponseException) {
+			String detail = extractDetailFromJson(((RestClientResponseException) throwable).getResponseBodyAsString());
+			if (StringUtils.isNotBlank(detail)) {
+				return detail;
+			}
+		}
+
+		return extractDetailFromMessage(throwable != null ? throwable.getMessage() : null);
+	}
+
+	private boolean isDgtContactError(Throwable throwable) {
+
+		Throwable current = throwable;
+		while (current != null) {
+			if (current instanceof ResourceAccessException) {
+				return true;
+			}
+
+			String message = current.getMessage();
+			if (StringUtils.containsIgnoreCase(message, "Read timed out")
+					|| StringUtils.containsIgnoreCase(message, "Connection timed out")
+					|| StringUtils.containsIgnoreCase(message, "I/O error on")) {
+				return true;
+			}
+
+			current = current.getCause();
+		}
+
+		return false;
+	}
+
+	private String extractDetailFromMessage(String message) {
+
+		if (StringUtils.isBlank(message)) {
+			return null;
+		}
+
+		int bodyIndex = message.indexOf("Body:");
+		if (bodyIndex < 0) {
+			return null;
+		}
+
+		String body = StringUtils.trimToNull(message.substring(bodyIndex + "Body:".length()));
+		return extractDetailFromJson(body);
+	}
+
+	private String extractDetailFromJson(String jsonText) {
+
+		if (StringUtils.isBlank(jsonText)) {
+			return null;
+		}
+
+		try {
+			Object parsed = new JsonSlurper().parseText(jsonText);
+			if (parsed instanceof Map) {
+				return StringUtils.trimToNull(parsed.detail != null ? String.valueOf(parsed.detail) : null);
+			}
+		} catch (Exception e) {
+			log.debug("No se ha podido extraer el campo detail del body de error [{}]: {}", jsonText, e.getMessage());
+		}
+
+		return null;
+	}
+
 	private boolean isMissingRelationError(SQLException exception) {
 
 		SQLException current = exception;
@@ -534,4 +630,17 @@ class getVehicleData {
 
 		return false;
 	}
+
+	private void clearTransitValue(Transit transit, long transitTypeParamId) {
+
+		List<TransitValue> transitValues = transit.getTransitValues();
+		if (transitValues == null) {
+			return;
+		}
+
+		transitValues.removeAll { transitValue ->
+    			Long.valueOf(transitTypeParamId) == transitValue.transitTypeParamId
+		}
+	}
 }
+

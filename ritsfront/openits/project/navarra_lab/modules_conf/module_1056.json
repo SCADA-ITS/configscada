@@ -1,6 +1,7 @@
 {
 	"restEndpoints": {
 		"transit": "trs/transits/${id}",
+		"transitSummary": "trs/transits/${id}/summary",		
 		"changeState" : "trs/transits/${id}/changeState/${stateId}",
 		"updateTransit": "trs/transits/update",
 		"addImage": "trs/transits/${id}/addImage",
@@ -10,7 +11,7 @@
 	},
 	"moduleAction": {
 		"edit": 105601,
-		"changeState": 105602
+		"discard": 105602
 	},
 	"action":{
 		"selectLocation": 105006,

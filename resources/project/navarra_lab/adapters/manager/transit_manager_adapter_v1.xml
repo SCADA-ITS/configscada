@@ -19,12 +19,13 @@
   <p:executor>
 			<p:id>1</p:id>
 			<p:enabled>true</p:enabled>
+			<p:threads>2</p:threads>
 			<p:merge_wait_time>1</p:merge_wait_time>
 			<p:manager_class>com.revenga.rits.back.transit.manager.transit.recovery.une199121.TransitRecoveryUne199121Executor</p:manager_class>
 			<p:executor_params>
 				<p:executor_param_value>cron_job=TransitRecoveryJob;recoveryUne199121_4Transits;0 * * * * ?;300;secring_Revenga.gpg;BjXId2LO9Wx+4eMIMJQEMNOl9TDp/bhl9RtFe9BkK2M=</p:executor_param_value>
 				<p:executor_param_value>elementType=99</p:executor_param_value>
-				<p:executor_param_value>elementSubtype=1</p:executor_param_value>
+        <p:executor_param_value><![CDATA[transits_block_size=10]]></p:executor_param_value>
 			</p:executor_params>
 		</p:executor>
 		<p:executor>
@@ -36,10 +37,11 @@
 				<p:subscriptor_id_ref>1</p:subscriptor_id_ref>
 				<p:subscriptor_id_ref>2</p:subscriptor_id_ref>
 			</p:subscriptors_ref>
-		</p:executor>		
+		</p:executor>	
 		<p:executor>
 			<p:id>3</p:id>
 			<p:enabled>true</p:enabled>
+			<p:threads>2</p:threads>
 			<p:merge_wait_time>1</p:merge_wait_time>
 			<p:manager_class>com.revenga.rits.back.transit.manager.cgi.api.multas.CgiApiMultasExecutor</p:manager_class>
 			<p:executor_params>

@@ -506,7 +506,7 @@
 		description varchar NULL,
 		pk_ini float8 NOT NULL,
 		pk_end float8 NOT NULL,
-		lanes int4 NOT NULL,
+		lanes int8 NOT NULL,
 		road_id int8 NOT NULL,
 		direction int4 NULL,
 		enabled bool NULL,

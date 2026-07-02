@@ -46,5 +46,7 @@ INSERT INTO conf.system_param_values
 -- URL de conexión al smart road info
 (18, 'https://descontroltrafico.admon-cfnavarra.es/api', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 -- Path para servidor de ficheros
-(19, '/home/admin/app/frontrits/resources/trs', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(19, '/home/admin/app/frontrits/resources/trs', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+-- Activación de OCR
+(20, 'true', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 

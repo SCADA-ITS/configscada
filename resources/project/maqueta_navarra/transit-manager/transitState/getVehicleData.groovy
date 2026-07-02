@@ -1,5 +1,6 @@
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.client.RestClientResponseException;
+import org.springframework.web.client.ResourceAccessException;
 import org.springframework.util.CollectionUtils;
 
 import com.revenga.rits.back.data.core.model.Transit;
@@ -46,6 +47,7 @@ class getVehicleData {
 	final Long TRANSIT_STATE_IN_REVIEW = 3L;
 	final Long TRANSIT_STATE_WHITE_LIST = 11L;
 	final Long TRANSIT_STATE_BLACK_LIST = 12L;
+	final String DGT_CONTACT_ERROR_MESSAGE = "Error al contactar con el servicio DGT";
 	final String INFRACTION_TYPE_ARTICLE_48 = "Artículo 48";
 	final String INFRACTION_TYPE_ARTICLE_50 = "Artículo 50";
 	final String INFRACTION_TYPE_ARTICLE_52 = "Artículo 52";
@@ -224,6 +226,9 @@ class getVehicleData {
 
 		} catch (Exception e) {
 			String errorDetail = getErrorDetail(e);
+			if (StringUtils.isBlank(errorDetail) && isDgtContactError(e)) {
+				errorDetail = DGT_CONTACT_ERROR_MESSAGE;
+			}
 			if (StringUtils.isNotBlank(errorDetail)) {
 				addOrReplaceTransitValue(transit, TRANSIT_PARAM_OBSERVATIONS, errorDetail);
 				EntitiesManager.getInstance().updateTransit(transit);
@@ -557,6 +562,27 @@ class getVehicleData {
 		return extractDetailFromMessage(throwable != null ? throwable.getMessage() : null);
 	}
 
+	private boolean isDgtContactError(Throwable throwable) {
+
+		Throwable current = throwable;
+		while (current != null) {
+			if (current instanceof ResourceAccessException) {
+				return true;
+			}
+
+			String message = current.getMessage();
+			if (StringUtils.containsIgnoreCase(message, "Read timed out")
+					|| StringUtils.containsIgnoreCase(message, "Connection timed out")
+					|| StringUtils.containsIgnoreCase(message, "I/O error on")) {
+				return true;
+			}
+
+			current = current.getCause();
+		}
+
+		return false;
+	}
+
 	private String extractDetailFromMessage(String message) {
 
 		if (StringUtils.isBlank(message)) {
@@ -604,6 +630,17 @@ class getVehicleData {
 
 		return false;
 	}
-}
 
+	private void clearTransitValue(Transit transit, long transitTypeParamId) {
+
+		List<TransitValue> transitValues = transit.getTransitValues();
+		if (transitValues == null) {
+			return;
+		}
+
+		transitValues.removeAll { transitValue ->
+    			Long.valueOf(transitTypeParamId) == transitValue.transitTypeParamId
+		}
+	}
+}
 

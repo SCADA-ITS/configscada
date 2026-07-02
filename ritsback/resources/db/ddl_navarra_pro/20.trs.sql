@@ -265,7 +265,7 @@ DROP TABLE IF EXISTS master.countries;
 		vehicle_param_group_id int8 NULL,
 		alias varchar(100) NOT NULL,
 		description varchar(200) NOT NULL,
-		label_alias varchar(50) NOT NULL,
+		label_alias varchar(50) NULL,
 		label_description varchar(50) NULL,
 		enabled bool NULL,
 		visible bool NULL,
@@ -507,7 +507,7 @@ DROP TABLE IF EXISTS master.countries;
 --
 	CREATE TABLE static.transit_type_state_transitions (
 		transit_type_id int8 NOT NULL,
-		parent_transit_state_id int8 NULL,
+		parent_transit_state_id int8 NOT NULL,
 		child_transit_state_id int8 NOT NULL,
 		auto bool NULL,
 		groovy_file varchar(100) NULL,

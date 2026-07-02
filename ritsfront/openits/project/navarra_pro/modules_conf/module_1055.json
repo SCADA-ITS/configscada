@@ -3,6 +3,9 @@
 		"transits": "trs/transits",
 		"grid": "grids/${id}"
 	},
+	"action":{
+		"changeLocation": 105603
+	},
 	"gridTransits": 1052,
 	"thumbnails": {
 		"enabled": true,
@@ -34,6 +37,20 @@
 				"position": 2,
 				"icon": "mdi mdi-calendar-clock",
 				"enabled": true
+			},
+			{
+				"id": 3,
+				"label": "LBL_TRANSIT_STATE",
+				"dataType": "DataType:2",
+				"field": "transitState_labelAlias",
+				"defaultSort": false,
+				"order": "desc",
+				"position": 3,
+				"style": "font-size: 14px; font-weight: 500;",
+				"enabled": true,
+				"customizable": {
+					"color": "transitState_color"
+				}
 			}
 		]
 	},

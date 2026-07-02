@@ -625,6 +625,7 @@ INSERT INTO conf.roads (road_id, road_type_id, alias, description) VALUES
 (624,1,'PA-33','PA-33'),
 (625,1,'PA-34','PA-34'),
 (626,1,'PA-35','PA-35'),
-(627,1,'PA-36','PA-36');
+(627,1,'PA-36','PA-36'),
+(628,1,'APR-15','APR-15');
 
 
