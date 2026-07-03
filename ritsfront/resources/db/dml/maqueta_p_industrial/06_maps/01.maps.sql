@@ -3,7 +3,8 @@ INSERT INTO ui.maps (id, name, description, "label", icon, longitude, latitude, 
 
 INSERT INTO ui.map_layers (id, base_layer, map_id, "name", description, "label", icon, visible) VALUES 
 (1, NULL, 1, 'Layer PMVs', 'Layer PMVs', 'LBL_ELEMENT_TYPE_PANEL', NULL, true),
-(2, NULL, 1, 'Layer Cameras', 'Layer Cameras', 'LBL_ELEMENT_TYPE_CAMERA', NULL, true);
+(2, NULL, 1, 'Layer Cameras', 'Layer Cameras', 'LBL_ELEMENT_TYPE_CAMERA', NULL, true),
+(3, NULL, 1, 'Layer Secciones', 'Layer Secciones', 'LBL_ELEMENT_TYPE_SECTION', NULL, true);
 
 INSERT INTO ui.map_layer_elements (id, layer_id, element_id, graphic_icon_id, "label", longitude, latitude, horizontal_flip, rotate, tooltip, z_index_front, show_text, text_color,selectable) VALUES 
 (1,  1, 'Element:2:1',  010002, '00.3-ASC-DOM-01', -73.11873227116453, -36.79392916826567, false, null, true, 1, false, '#000000',true),
@@ -26,8 +27,8 @@ INSERT INTO ui.map_layer_elements (id, layer_id, element_id, graphic_icon_id, "l
 (18, 1, 'Element:2:18', 010002, '00.3-AAE-DOM-01', -73.12811968855875, -36.83946659295810, false, null, true, 1, false, '#000000',true),
 (19, 2, 'Element:71:1', 010071, '01.4-ASC-PMV-01', -73.12698872883546, -36.80235877780780, false, null, true, 1, false, '#000000',true),
 (20, 2, 'Element:71:2', 010071, '05.1-DES-PMV-01', -73.13020791534186, -36.83182666598559, false, null, true, 1, false, '#000000',true),
-(21, 2, 'Element:4:1',  010004, '01.8-MR1-ETD-01_SEC-1', -73.12807945767094, -36.80415955294186, false, null, true, 1, false, '#000000',true),
-(22, 2, 'Element:4:2',  010004, '01.8-MR1-ETD-01_SEC-2', -73.12768381349360, -36.80413237202204, false, null, true, 1, false, '#000000',true);
+(21, 3, 'Element:4:1',  010004, '01.8-MR1-ETD-01_SEC-1', -73.12807945767094, -36.80415955294186, false, null, true, 1, false, '#000000',true),
+(22, 3, 'Element:4:2',  010004, '01.8-MR1-ETD-01_SEC-2', -73.12768381349360, -36.80413237202204, false, null, true, 1, false, '#000000',true);
 
 INSERT INTO ui.map_layer_element_zooms (map_layer_element_id, zoom_lower, zoom_upper, graphic_icon_id, longitude, latitude, horizontal_flip, rotate, tooltip, show_text, text_color) VALUES
 (5, 14, 15, 010002, -73.13007945767094, -36.80415955294186, false, null, true, false, '#00000'),

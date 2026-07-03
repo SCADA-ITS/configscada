@@ -139,5 +139,24 @@ BEGIN
 		INSERT INTO backoffice.vehicle_brands (alias) VALUES('Volvo');
 		INSERT INTO backoffice.vehicle_brands (alias) VALUES('Wartburg');
 		INSERT INTO backoffice.vehicle_brands (alias) VALUES('Fotón');
+
+		INSERT INTO backoffice.vehicle_directions (alias) VALUES ('Norte a Sur');
+		INSERT INTO backoffice.vehicle_directions (alias) VALUES ('Sur a Norte');
+		INSERT INTO backoffice.vehicle_directions (alias) VALUES ('Oriente a Poniente');
+		INSERT INTO backoffice.vehicle_directions (alias) VALUES ('Poniente a Oriente');
+		
+		INSERT INTO backoffice.vehicle_lanes (alias) VALUES ('Pista 1');
+		INSERT INTO backoffice.vehicle_lanes (alias) VALUES ('Pista 2');
+		INSERT INTO backoffice.vehicle_lanes (alias) VALUES ('Pista 3');
+		INSERT INTO backoffice.vehicle_lanes (alias) VALUES ('Pista 4');
+		INSERT INTO backoffice.vehicle_lanes (alias) VALUES ('Pista 5');
+		INSERT INTO backoffice.vehicle_lanes (alias) VALUES ('Pista 6');
+		INSERT INTO backoffice.vehicle_lanes (alias) VALUES ('Pista 7');
+		INSERT INTO backoffice.vehicle_lanes (alias) VALUES ('Pista 8');
+		INSERT INTO backoffice.vehicle_lanes (alias) VALUES ('Berma');
+		INSERT INTO backoffice.vehicle_lanes (alias) VALUES ('Pista de Incorporación');
+		
+		INSERT INTO backoffice.vehicle_hit_and_run (alias) VALUES ('Sí');
+		INSERT INTO backoffice.vehicle_hit_and_run (alias) VALUES ('No');
   END IF;
 END $$;

@@ -218,39 +218,54 @@ BEGIN
 	'SELECT 
 		id, num_registro, anio, mes, dia, hora, km, tipo_accidente, ilesos, muertos, graves, menos_graves, leves, lesionados, causa, ubicacion_relativa, internas, externas
 	FROM 
-		backoffice.m_december');
+		backoffice.m_december'),
+	(49, 'detection', 'Método de detección', 'Método de detección', 'Método de detección', 'mdi mdi-message-alert', true, true, null, null),
+	(50, 'direction', 'Sentido', 'Sentido', 'Sentido', 'mdi mdi-message-alert', true, true, null, null),
+	(51, 'notice', 'Aviso a Carabineros', 'Aviso a Carabineros', 'Aviso a Carabineros', 'mdi mdi-message-alert', true, true, null, null),
+	(52, 'operator_name', 'Operador de Turno', 'Operador de Turno', 'Operador de Turno', 'mdi mdi-message-alert', true, true, null, null),
+	(53, 'vehicle_directions', 'Sentido', 'Sentido', 'Sentido', 'mdi mdi-message-alert', false, false, null, null),
+	(54, 'vehicle_lanes', 'Pista', 'Pista', 'Pista', 'mdi mdi-message-alert', false, false, null, null),
+	(55, 'vehicle_hit_and_run', 'Vehículo Fuga', 'Vehículo Fuga', 'Vehículo Fuga', 'mdi mdi-message-alert', false, false, null, null),
+	(56, 'participant_hit_and_runs', 'Conductor a la Fuga', 'Conductor a la Fuga', 'Conductor a la Fuga', 'mdi mdi-message-alert', false, false, null, null),
+	(57, 'participant_attentions', 'Atención', 'Atención', 'Atención', 'mdi mdi-message-alert', false, false, null, null);
+	
 	
 	INSERT INTO backoffice.sg_metadata_columns (id, sg_metadata_table_id, column_name, "label", label_description, needs_translation, metadata, ref_view_column_id) VALUES
 	(0101, 1, 'incident_report_id', 'Identificador', NULL, true, '{"position": 1, "tableVisible": true, "editable": true, "refName": true}', null),
-	(0102, 1, 'km', 'km', NULL, true, '{"position": 2, "editable": true, "tableVisible": true}', null),
-	(0103, 1, 'date', 'Fecha', NULL, true, '{"position": 3, "editable": true, "tableVisible": true}', null),
-	(0104, 1, 'event_id', 'Evento', NULL, true, '{"position": 4, "editable": true, "tableVisible": true}', null),
-	(0105, 1, 'side_id', 'Lado carretera', NULL, true, '{"position": 5, "editable": true, "tableVisible": true}', null),
-	(0106, 1, 'stretch_id', 'Tramo', NULL, true, '{"position": 6, "editable": true, "tableVisible": true}', null),
-	(0107, 1, 'event_type_id', 'Tipo de evento', NULL, true, '{"position": 7, "editable": true, "tableVisible": false}', null),
-	(0108, 1, 'collision_id', 'Colisión', NULL, true, '{"position": 8, "editable": true, "tableVisible": false}', null),
-	(0109, 1, 'object_crash_id', 'Choque con objeto', NULL, true, '{"position": 9, "editable": true, "tableVisible": false}', null),
-	(0110, 1, 'vehicle_crash_id', 'Choque con vehículo', NULL, true, '{"position": 10, "editable": true, "tableVisible": false}', null),
-	(0111, 1, 'relative_location_id', 'Ubicación relativa', NULL, true, '{"position": 11, "editable": true, "tableVisible": false}', null),
-	(0112, 1, 'road_condition_id', 'Condiciones calzada', NULL, true, '{"position": 12, "editable": true, "tableVisible": false}', null),
-	(0113, 1, 'road_type_id', 'Tipo carpeta', NULL, true, '{"position": 13, "editable": true, "tableVisible": false}', null),
-	(0114, 1, 'road_state_id', 'Estado carpeta', NULL, true, '{"position": 14, "editable": true, "tableVisible": false}', null),
-	(0115, 1, 'weather_state_id', 'Estado atmosférico', NULL, true, '{"position": 15, "editable": true, "tableVisible": false}', null),
-	(0116, 1, 'luminosity_id', 'Luminosidad', NULL, true, '{"position": 16, "editable": true, "tableVisible": false}', null),
-	(0117, 1, 'ligth_id', 'Luz artificial', NULL, true, '{"position": 17, "editable": true, "tableVisible": false}', null),
-	(0118, 1, 'cause_id', 'Causa probable', NULL, true, '{"position": 18, "editable": true, "tableVisible": false}', null),
-	(0119, 1, 'comments', 'Redacción', NULL, true, '{"multiline": 5, "position": 19, "editable": true, "tableVisible": false}', null),
-	(0120, 1, 'report_by', 'Denuncia realizada por', NULL, true, '{"position": 20, "editable": true, "tableVisible": false}', null),
-	(0121, 1, 'stamped', 'Estampado de carabineros de', NULL, true, '{"position": 21, "editable": true, "tableVisible": false}', null),
-	(0122, 1, 'court', 'Citado al juzgado de', NULL, true, '{"position": 22, "editable": true, "tableVisible": false}', null),
-	(0123, 1, 'citattion_date', 'Fecha de citación', NULL, true, '{"position": 23, "editable": true, "tableVisible": false}', null),
-	(0124, 1, 'report_number', 'Número de parte', NULL, true, '{"position": 24, "editable": true, "tableVisible": false}', null),
-	(0125, 1, 'station', 'Plaza', NULL, true, '{"position": 25, "editable": true, "tableVisible": false}', null),
-	(0126, 1, 'file_number', 'Número de folio', NULL, true, '{"position": 26, "editable": true, "tableVisible": false}', null),
-	(0127, 1, 'patrol_name', 'Nombre de patrullero', NULL, true, '{"position": 27, "editable": true, "tableVisible": false}', null),
-	(0128, 1, 'operator_name', 'Nombre de operador de c.control', NULL, true, '{"position": 28, "editable": true, "tableVisible": false}', null),
-	(0129, 1, 'supervisor_name', 'Nombre supervisor operaciones', NULL, true, '{"position": 29, "editable": true, "tableVisible": false}', null),
-	 
+	(0102, 1, 'km', 'km', NULL, true, '{"position": 3, "editable": true, "tableVisible": true}', null),
+	(0103, 1, 'date', 'Fecha', NULL, true, '{"position": 4, "editable": true, "tableVisible": true}', null),
+	(0104, 1, 'event_id', 'Evento', NULL, true, '{"position": 5, "editable": true, "tableVisible": true}', null),
+	(0105, 1, 'side_id', 'Lado carretera', NULL, true, '{"position": 6, "editable": true, "tableVisible": true}', null),
+	(0106, 1, 'stretch_id', 'Tramo', NULL, true, '{"position": 7, "editable": true, "tableVisible": true}', null),
+	(0107, 1, 'event_type_id', 'Tipo de evento', NULL, true, '{"position": 9, "editable": true, "tableVisible": false}', null),
+	(0108, 1, 'collision_id', 'Colisión', NULL, true, '{"position": 11, "editable": true, "tableVisible": false}', null),
+	(0109, 1, 'object_crash_id', 'Choque con objeto', NULL, true, '{"position": 12, "editable": true, "tableVisible": false}', null),
+	(0110, 1, 'vehicle_crash_id', 'Choque con vehículo', NULL, true, '{"position": 13, "editable": true, "tableVisible": false}', null),
+	(0111, 1, 'relative_location_id', 'Ubicación relativa', NULL, true, '{"position": 14, "editable": true, "tableVisible": false}', null),
+	(0112, 1, 'road_condition_id', 'Condiciones calzada', NULL, true, '{"position": 15, "editable": true, "tableVisible": false}', null),
+	(0113, 1, 'road_type_id', 'Tipo carpeta', NULL, true, '{"position": 16, "editable": true, "tableVisible": false}', null),
+	(0114, 1, 'road_state_id', 'Estado carpeta', NULL, true, '{"position": 17, "editable": true, "tableVisible": false}', null),
+	(0115, 1, 'weather_state_id', 'Estado atmosférico', NULL, true, '{"position": 18, "editable": true, "tableVisible": false}', null),
+	(0116, 1, 'luminosity_id', 'Luminosidad', NULL, true, '{"position": 19, "editable": true, "tableVisible": false}', null),
+	(0117, 1, 'ligth_id', 'Luz artificial', NULL, true, '{"position": 20, "editable": true, "tableVisible": false}', null),
+	(0118, 1, 'cause_id', 'Causa probable', NULL, true, '{"position": 23, "editable": true, "tableVisible": false}', null),
+	(0119, 1, 'comments', 'Redacción', NULL, true, '{"multiline": 5, "position": 24, "editable": true, "tableVisible": false}', null),
+	(0120, 1, 'report_by', 'Denuncia realizada por', NULL, true, '{"position": 25, "editable": true, "tableVisible": false}', null),
+	(0121, 1, 'stamped', 'Estampado de carabineros de', NULL, true, '{"position": 26, "editable": true, "tableVisible": false}', null),
+	(0122, 1, 'court', 'Citado al juzgado de', NULL, true, '{"position": 27, "editable": true, "tableVisible": false}', null),
+	(0123, 1, 'citattion_date', 'Fecha de citación', NULL, true, '{"position": 28, "editable": true, "tableVisible": false}', null),
+	(0124, 1, 'report_number', 'Número de parte', NULL, true, '{"position": 29, "editable": true, "tableVisible": false}', null),
+	(0125, 1, 'station', 'Plaza', NULL, true, '{"position": 30, "editable": true, "tableVisible": false}', null),
+	(0126, 1, 'file_number', 'Número de folio', NULL, true, '{"position": 31, "editable": true, "tableVisible": false}', null),
+	(0127, 1, 'patrol_name', 'Nombre de patrullero', NULL, true, '{"position": 32, "editable": true, "tableVisible": false}', null),
+	(0128, 1, 'operator_name', 'Nombre de operador de c.control', NULL, true, '{"position": 33, "editable": true, "tableVisible": false}', null),
+	(0129, 1, 'supervisor_name', 'Nombre supervisor operaciones', NULL, true, '{"position": 34, "editable": true, "tableVisible": false}', null),
+	(0130, 1, 'detection_id', 'Metodo de detección', NULL, true, '{"position": 21, "editable": true, "tableVisible": false}', null),
+	(0131, 1, 'direction_id', 'Sentido', NULL, true, '{"position": 8, "editable": true, "tableVisible": false}', null),
+	(0132, 1, 'notice_id', 'Aviso a carabineros', NULL, true, '{"position": 22, "editable": true, "tableVisible": false}', null),
+	(0133, 1, 'operator', 'Operador de Turno', NULL, true, '{"position": 2, "editable": false, "tableVisible": false}', null),
+	(0134, 1, 'detection_time', 'Hora de Detección', NULL, true, '{"position": 10, "editable": true, "tableVisible": false}', null),
+
 	(0201, 2, 'incident_report_id', 'Identificador', NULL, true, '{"position": 1, "editable": true, "refName": true}', null),
 	(0202, 2, 'vehicle_type_id', 'Tipo', NULL, true, '{"position": 2, "editable": true}', null),
 	(0203, 2, 'vehicle_service_id', 'Servicio', NULL, true, '{"position": 3, "editable": true}', null),
@@ -259,6 +274,9 @@ BEGIN
 	(0206, 2, 'patent', 'Patente', NULL, true, '{"position": 6, "editable": true}', null),
 	(0207, 2, 'lane', 'Vía', NULL, true, '{"position": 7, "editable": true}', null),
 	(0208, 2, 'vehicle_brand_id', 'Marca', NULL, true, '{"position": 8, "editable": true}', null),
+	(0209, 2, 'vehicle_direction_id', 'Sentido', NULL, true, '{"position": 9, "editable": true}', null),
+	(0210, 2, 'vehicle_lane_id', 'Pista', NULL, true, '{"position": 10, "editable": true}', null),
+	(0211, 2, 'vehicle_hit_and_run_id', 'Vehículo Fuga', NULL, true, '{"position": 11, "editable": true}', null),
 	
 	(0301, 3, 'incident_report_id', 'Identificador', NULL, true, '{"position": 1, "editable": true, "refName": true}', null),
 	(0302, 3, 'participant_name', 'Nombre', NULL, true, '{"position": 2, "editable": true}', null),
@@ -269,6 +287,9 @@ BEGIN
 	(0307, 3, 'participant_type_id', 'Tipo', NULL, true, '{"position": 7, "editable": true}', null),
 	(0308, 3, 'participant_injury_id', 'Lesión', NULL, true, '{"position": 8, "editable": true}', null),
 	(0309, 3, 'participant_nacionality_id', 'Nacionalidad', NULL, true, '{"position": 9, "editable": true}', null),
+	(0310, 3, 'participant_hit_and_run_id', 'Conductor a la Fuga', NULL, true, '{"position": 10, "editable": true}', null),
+	(0311, 3, 'participant_attention_id', 'Atención', NULL, true, '{"position": 11, "editable": true}', null),
+
 
 	(0401, 4, 'incident_report_id', 'Identificador', NULL, true, '{"position": 1, "editable": true, "refName": true}', null),
 	(0402, 4, 'side_road', 'Lado carretera', NULL, true, '{"position": 2, "editable": true}', null),
@@ -577,6 +598,11 @@ BEGIN
 	(4816, 48, 'internas', 'Internas', NULL, true, '{"position": 16, "editable": false}', null),
 	(4817, 48, 'externas', 'Externas', NULL, true, '{"position": 17, "editable": false}', null),
 	(4818, 48, 'num_registro', 'Numero', NULL, true, '{"tableVisible": false}', null);
+
+	INSERT INTO backoffice.sg_metadata_table_triggers (id, sg_metadata_table_id, name, groovy) VALUES
+	(1, 1, 'tg_incidents_operator', 'config/groovy/backoffice/p_industrial/trigger/IncidentOperatorTrigger.groovy'),
+	(2, 1, 'tg_incidents_detection_time', 'config/groovy/backoffice/p_industrial/trigger/IncidentDetectionTimeTrigger.groovy');
+
 	
   END IF;
 END $$;

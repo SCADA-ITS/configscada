@@ -109,13 +109,14 @@ INSERT INTO ui.module_values
 (6103, 13, '3'), (6103, 14, 'ETD_hist_data_hours'),
 (6104, 13, '3'), (6104, 14, 'ETD_hist_data_days'),
 (6105, 13, '3'), (6105, 14, 'ETD_hist_data_months'),
-(6106, 13, '3'), (6102, 14, 'SECTION_hist_data'),
-(6107, 13, '3'), (6103, 14, 'SECTION_hist_data_hours'),
-(6108, 13, '3'), (6104, 14, 'SECTION_hist_data_days'),
-(6109, 13, '3'), (6105, 14, 'SECTION_hist_data_months');
+(6106, 13, '3'), (6106, 14, 'SECTION_hist_data'),
+(6107, 13, '3'), (6107, 14, 'SECTION_hist_data_hours'),
+(6108, 13, '3'), (6108, 14, 'SECTION_hist_data_days'),
+(6109, 13, '3'), (6109, 14, 'SECTION_hist_data_months');
 
 INSERT INTO ui.window_values 
 (module_id, window_param_id, value) VALUES 
+(970, 8, 'true'),
 (970, 12, 'LBL_MENU_ITEM_MAP'),
 
 (1920, 4, '825'),

@@ -31,8 +31,26 @@ BEGIN
 		alias varchar null,
 		constraint pk_vehicle_brands primary key (id)
 	) tablespace tbl_backoffice;
+
+	create table backoffice.vehicle_directions (
+	id serial not null,
+	alias varchar null,
+	constraint pk_vehicle_directions primary key (id)
+	) tablespace tbl_backoffice;
+
+	create table backoffice.vehicle_lanes (
+		id serial not null,
+		alias varchar null,
+		constraint pk_vehicle_lanes primary key (id)
+	) tablespace tbl_backoffice;
+
+	create table backoffice.vehicle_hit_and_run (
+		id serial not null,
+		alias varchar null,
+		constraint pk_vehicle_hit_and_run primary key (id)
+	) tablespace tbl_backoffice;
   
-	create table backoffice.vehicles (			
+	create table backoffice.vehicles (
 		id serial not null,
 		incident_id int null,
 		vehicle_type_id int null,
@@ -42,7 +60,12 @@ BEGIN
 		lane varchar null,
 		patent varchar null,
 		vehicle_brand_id int null,
-  		constraint pk_vehicles primary key (id)
+
+		vehicle_direction_id int null,
+		vehicle_lane_id int null,
+		vehicle_hit_and_run_id int null,
+
+		constraint pk_vehicles primary key (id)
 	) tablespace tbl_backoffice;
 				
 	create index idx_vehicles_incident_id on
@@ -68,6 +91,18 @@ BEGIN
 	create index idx_vehicle_brand_id on
 	backoffice.vehicles
 		using btree (vehicle_brand_id);	
+
+	create index idx_vehicle_direction_id on
+	backoffice.vehicles
+		using btree (vehicle_direction_id);
+
+	create index idx_vehicle_lane_id on
+	backoffice.vehicles
+		using btree (vehicle_lane_id);
+
+	create index idx_vehicle_hit_and_run_id on
+	backoffice.vehicles
+		using btree (vehicle_hit_and_run_id);
 		
 	alter table backoffice.vehicles add constraint fk_vehicle_incident_id foreign key (incident_id) references backoffice.incidents(id) ON DELETE CASCADE;
 	alter table backoffice.vehicles add constraint fk_vehicle_type_id foreign key (vehicle_type_id) references backoffice.vehicle_types(id) ON DELETE CASCADE;
@@ -75,5 +110,8 @@ BEGIN
 	alter table backoffice.vehicles add constraint fk_vehicle_consecuence_id foreign key (vehicle_consecuence_id) references backoffice.vehicle_consecuences(id) ON DELETE CASCADE;
 	alter table backoffice.vehicles add constraint fk_vehicle_manoeuvre_id foreign key (vehicle_manoeuvre_id) references backoffice.vehicle_manoeuvres(id) ON DELETE CASCADE;
 	alter table backoffice.vehicles add constraint fk_vehicle_brand_id foreign key (vehicle_brand_id) references backoffice.vehicle_brands(id) ON DELETE CASCADE;
+	alter table backoffice.vehicles add constraint fk_vehicle_direction_id foreign key (vehicle_direction_id) references backoffice.vehicle_directions(id) ON DELETE CASCADE;
+	alter table backoffice.vehicles add constraint fk_vehicle_lane_id foreign key (vehicle_lane_id) references backoffice.vehicle_lanes(id) ON DELETE CASCADE;
+	alter table backoffice.vehicles add constraint fk_vehicle_hit_and_run_id foreign key (vehicle_hit_and_run_id) references backoffice.vehicle_hit_and_run(id) ON DELETE CASCADE;
   END IF;
 END $$;

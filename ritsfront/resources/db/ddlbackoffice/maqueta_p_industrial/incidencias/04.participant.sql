@@ -19,6 +19,18 @@ BEGIN
 		alias varchar null,
 		constraint pk_participant_types primary key (id)
 	) tablespace tbl_backoffice;
+	
+  	create table backoffice.participant_hit_and_runs (
+		id serial not null,
+		alias varchar null,
+		constraint pk_participant_hit_and_runs primary key (id)
+	) tablespace tbl_backoffice;
+	
+  	create table backoffice.participant_attentions (
+		id serial not null,
+		alias varchar null,
+		constraint pk_participant_attentions primary key (id)
+	) tablespace tbl_backoffice;
   
 	create table backoffice.participants (			
 		id serial not null,
@@ -31,6 +43,8 @@ BEGIN
 		participant_type_id int null,
 		participant_injury_id int null,
 		participant_nacionality_id int null,
+		participant_hit_and_run_id int null,
+		participant_attention_id int null,
 		
   		constraint pk_participants primary key (id)
 	) tablespace tbl_backoffice;
@@ -50,10 +64,20 @@ BEGIN
 	create index idx_participant_type_id on
 	backoffice.participants
 		using btree (participant_type_id);
+				
+	create index idx_participant_hit_and_run_id on
+	backoffice.participants
+		using btree (participant_hit_and_run_id);
+				
+	create index idx_participant_attention_id on
+	backoffice.participants
+		using btree (participant_attention_id);
 		
 	alter table backoffice.participants add constraint fk_participant_incident_id foreign key (incident_id) references backoffice.incidents(id) ON DELETE CASCADE;
 	alter table backoffice.participants add constraint fk_participant_injury_id foreign key (participant_injury_id) references backoffice.participant_injuries(id) ON DELETE CASCADE;
 	alter table backoffice.participants add constraint fk_participant_nacionality_id foreign key (participant_nacionality_id) references backoffice.participant_nacionalities(id) ON DELETE CASCADE;
 	alter table backoffice.participants add constraint fk_participant_type_id foreign key (participant_type_id) references backoffice.participant_types(id) ON DELETE CASCADE;
+	alter table backoffice.participants add constraint fk_participant_hit_and_run_id foreign key (participant_hit_and_run_id) references backoffice.participant_hit_and_runs(id) ON DELETE CASCADE;
+	alter table backoffice.participants add constraint fk_participant_attention_id foreign key (participant_attention_id) references backoffice.participant_attentions(id) ON DELETE CASCADE;
   END IF;
 END $$;

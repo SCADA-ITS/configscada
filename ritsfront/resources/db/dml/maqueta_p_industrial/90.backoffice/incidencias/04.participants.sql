@@ -19,5 +19,13 @@ BEGIN
 		
 		INSERT INTO backoffice.participant_nacionalities (alias) VALUES('Chilena');
 		INSERT INTO backoffice.participant_nacionalities (alias) VALUES('Extranjera');
+
+		INSERT INTO backoffice.participant_hit_and_runs (alias) VALUES('Sí');
+		INSERT INTO backoffice.participant_hit_and_runs (alias) VALUES('No');
+		INSERT INTO backoffice.participant_hit_and_runs (alias) VALUES('N/A');
+		
+		INSERT INTO backoffice.participant_attentions (alias) VALUES('Sí');
+		INSERT INTO backoffice.participant_attentions (alias) VALUES('No');
+		INSERT INTO backoffice.participant_attentions (alias) VALUES('Niega asistencia');
   END IF;
 END $$;

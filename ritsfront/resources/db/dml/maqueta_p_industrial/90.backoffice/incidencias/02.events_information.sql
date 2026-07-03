@@ -64,5 +64,22 @@ BEGIN
 		INSERT INTO backoffice.relative_location(alias) VALUES('Otros no considerados');
 		INSERT INTO backoffice.relative_location(alias) VALUES('Área atención emergencia');
 		INSERT INTO backoffice.relative_location(alias) VALUES('Plaza de pesaje');
+		
+		INSERT INTO backoffice.detection (alias) VALUES('CCT');
+		INSERT INTO backoffice.detection (alias) VALUES('Teléfono Emergencia');
+		INSERT INTO backoffice.detection (alias) VALUES('Vigilancia');
+		INSERT INTO backoffice.detection (alias) VALUES('Otros');
+
+		INSERT INTO backoffice.direction (alias) VALUES('Norte a Sur');
+		INSERT INTO backoffice.direction (alias) VALUES('Sur a Norte');
+		INSERT INTO backoffice.direction (alias) VALUES('Oriente a Poniente');
+		INSERT INTO backoffice.direction (alias) VALUES('Poniente a Oriente');
+
+
+		INSERT INTO backoffice.notice (alias) VALUES('Si');
+		INSERT INTO backoffice.notice (alias) VALUES('No');
+		INSERT INTO backoffice.notice (alias) VALUES('No Aplica');
+
+
   END IF;
 END $$;
