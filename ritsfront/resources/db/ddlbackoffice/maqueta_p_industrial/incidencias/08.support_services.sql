@@ -23,6 +23,7 @@ BEGIN
 		type_id int null,
 		subtype_id int null,
 		arrival_time timestamptz null,
+		response_time varchar null,
 		comment varchar null,
 		quantity int null,
 		departure_time timestamptz null,

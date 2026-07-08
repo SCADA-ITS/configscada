@@ -129,7 +129,6 @@ BEGIN
 	(20, 'participant_nacionalities', 'Nacionalidad', 'Nacionalidad', 'Nacionalidad', 'mdi mdi-message-alert', true, true, null, null),
 	(21, 'support_services', 'Servicios de apoyo', 'Servicios de apoyo', 'Servicios de apoyo', 'mdi mdi-message-alert', true, true, null, null),
 	(22, 'damages_responsabilities', 'Daños-responsables', 'Daños-responsables', 'Daños-responsables', 'mdi mdi-message-alert', true, true, null, null),
-	(23, 'damages_evaluations', 'Daños-evaluación', 'Daños-evaluación', 'Daños-evaluación', 'mdi mdi-message-alert', true, true, null, null),
 	(24, 'owner_types', 'Tipo propietario', 'Tipo propietario', 'Tipo propietario', 'mdi mdi-message-alert', true, true, null, null),
 	(25, 'support_service_types', 'Tipo', 'Tipo', 'Tipo', 'mdi mdi-message-alert', true, true, null, null),
 	(26, 'support_service_subtypes', 'Subtipo', 'Subtipo', 'Subtipo', 'mdi mdi-message-alert', true, true, null, null),
@@ -227,11 +226,15 @@ BEGIN
 	(54, 'vehicle_lanes', 'Pista', 'Pista', 'Pista', 'mdi mdi-message-alert', false, false, null, null),
 	(55, 'vehicle_hit_and_run', 'Vehículo Fuga', 'Vehículo Fuga', 'Vehículo Fuga', 'mdi mdi-message-alert', false, false, null, null),
 	(56, 'participant_hit_and_runs', 'Conductor a la Fuga', 'Conductor a la Fuga', 'Conductor a la Fuga', 'mdi mdi-message-alert', false, false, null, null),
-	(57, 'participant_attentions', 'Atención', 'Atención', 'Atención', 'mdi mdi-message-alert', false, false, null, null);
+	(57, 'participant_attentions', 'Atención', 'Atención', 'Atención', 'mdi mdi-message-alert', false, false, null, null),
+	(58, 'side_roads', 'Lado de carretera', 'Lado de carretera', 'Lado de carretera', 'mdi mdi-message-alert', false, false, null, null),
+	(59, 'lanes', 'Pistas', 'Pistas', 'Pistas', 'mdi mdi-message-alert', false, false, null, null),
+	(60, 'entities', 'Servicio de apoyo', 'Servicio de apoyo', 'Servicio de apoyo', 'mdi mdi-message-alert', false, false, null, null),
+	(61, 'closure_types', 'Tipo de cierre', 'Tipo de cierre', 'Tipo de cierre', 'mdi mdi-message-alert', false, false, null, null);
 	
 	
 	INSERT INTO backoffice.sg_metadata_columns (id, sg_metadata_table_id, column_name, "label", label_description, needs_translation, metadata, ref_view_column_id) VALUES
-	(0101, 1, 'incident_report_id', 'Identificador', NULL, true, '{"position": 1, "tableVisible": true, "editable": true, "refName": true}', null),
+	(0101, 1, 'incident_report_id', 'Identificador', null, false, '{"position": 1, "tableVisible": true, "editable": true, "refName": true}', null),
 	(0102, 1, 'km', 'km', NULL, true, '{"position": 3, "editable": true, "tableVisible": true}', null),
 	(0103, 1, 'date', 'Fecha', NULL, true, '{"position": 4, "editable": true, "tableVisible": true}', null),
 	(0104, 1, 'event_id', 'Evento', NULL, true, '{"position": 5, "editable": true, "tableVisible": true}', null),
@@ -292,33 +295,36 @@ BEGIN
 
 
 	(0401, 4, 'incident_report_id', 'Identificador', NULL, true, '{"position": 1, "editable": true, "refName": true}', null),
-	(0402, 4, 'side_road', 'Lado carretera', NULL, true, '{"position": 2, "editable": true}', null),
-	(0403, 4, 'lanes', 'Pistas', NULL, true, '{"position": 3, "editable": true}', null),
-	(0404, 4, 'entity', 'Servicio apoyo', NULL, true, '{"position": 4, "editable": true}', null),
+	(0402, 4, 'side_road_id', 'Lado carretera', NULL, true, '{"position": 2, "editable": true}', null),
+	(0403, 4, 'lanes_id', 'Pistas', NULL, true, '{"position": 3, "editable": true}', null),
+	(0404, 4, 'entity_id', 'Servicio apoyo', NULL, true, '{"position": 4, "editable": true}', null),
 	(0405, 4, 'reasons', 'Motivos', NULL, true, '{"position": 5, "editable": true}', null),
 	(0406, 4, 'start_hour', 'Hora inicio', NULL, true, '{"position": 6, "editable": true}', null),
 	(0407, 4, 'end_hour', 'Hora fin', NULL, true, '{"position": 7, "editable": true}', null),
-	(0408, 4, 'total_time', 'Tiempo total', NULL, true, '{"position": 8, "editable": true}', null),
-	
+	(0408, 4, 'total_time', 'Tiempo total', NULL, true, '{"position": 8, "editable": false}', null),
+	(0409, 4, 'closure_type_id', 'Tipo de cierre', NULL, true, '{"position": 9, "editable": true}', null),
+	(0410, 4, 'wording', 'Redacción', NULL, true, '{"multiline": 5, "position": 10, "editable": true}', null),
+
 	(2101, 21, 'incident_report_id', 'Identificador total', NULL, true, '{"position": 1, "editable": true, "refName": true}', null),
-	(2102, 21, 'support_service_types', 'Tipo', NULL, true, '{"position":2, "editable": true}', null),
-	(2103, 21, 'support_service_subtypes', 'Subtipo', NULL, true, '{"position": 3, "editable": true}', null),
+	(2102, 21, 'type_id', 'Tipo', NULL, true, '{"position": 2, "editable": true}', null),
+	(2103, 21, 'subtype_id', 'Subtipo', NULL, true, '{"position": 3, "editable": true}', null),
 	(2104, 21, 'arrival_time', 'Llegada', NULL, true, '{"position": 4, "editable": true}', null),
-	(2105, 21, 'comment', 'Comentarios', NULL, true, '{"multiline": 5, "position": 5, "editable": true}', null),
-	(2106, 21, 'quantity', 'Cantidad', NULL, true, '{"position": 6, "editable": true}', null),
-	(2107, 21, 'departure_time', 'Partida', NULL, true, '{"position": 7, "editable": true}', null),
-	
+	(2108, 21, 'response_time', 'Tiempo de Respuesta', NULL, true, '{"position": 5, "editable": false}', null),
+	(2105, 21, 'comment', 'Comentarios', NULL, true, '{"multiline": 5, "position": 6, "editable": true}', null),
+	(2106, 21, 'quantity', 'Cantidad', NULL, true, '{"position": 7, "editable": true}', null),
+	(2107, 21, 'departure_time', 'Partida', NULL, true, '{"position": 8, "editable": true}', null),	
+
 	(2201, 22, 'incident_report_id', 'Identificador total', NULL, true, '{"position": 1, "editable": true, "refName": true}', null),
-	(2202, 22, 'address', 'Dirección', NULL, true, '{"position":2, "editable": true}', null),
-	(2203, 22, 'phone_number', 'Teléfono', NULL, true, '{"position":3, "editable": true}', null),
-	(2204, 22, 'owner_types', 'Tipo propietario', NULL, true, '{"position":4, "editable": true}', null),
-	(2205, 22, 'owner_name', 'Nombre empresa', NULL, true, '{"position":5, "editable": true}', null),
-	
-	(2301, 23, 'incident_report_id', 'Identificador total', NULL, true, '{"position": 1, "editable": true, "refName": true}', null),
-	(2302, 23, 'description', 'Descripción', NULL, true, '{"position":2, "editable": true}', null),
-	(2303, 23, 'quantity', 'Cantidad', NULL, true, '{"position":3, "editable": true}', null),
-	(2304, 23, 'entity', 'Unidad', NULL, true, '{"position":4, "editable": true}', null),
-	
+	(2202, 22, 'address', 'Dirección', NULL, true, '{"position": 2, "editable": true}', null),
+	(2203, 22, 'phone_number', 'Teléfono', NULL, true, '{"position": 3, "editable": true}', null),
+	(2204, 22, 'vehicle_owner_id', 'Tipo propietario', NULL, true, '{"position": 4, "editable": true}', null),
+	(2205, 22, 'owner_name', 'Nombre Empresa; Nombre', NULL, true, '{"position": 5, "editable": true}', null),
+	(2206, 22, 'business_activity', 'Giro de la Empresa', NULL, true, '{"position": 6, "editable": true}', null),
+	(2207, 22, 'rut', 'RUT', NULL, true, '{"position": 7, "editable": true}', null),
+	(2208, 22, 'description', 'Descripción', NULL, true, '{"position": 8, "editable": true}', null),
+	(2209, 22, 'quantity', 'Cantidad', NULL, true, '{"position": 9, "editable": true}', null),
+	(2210, 22, 'entity', 'Unidad', NULL, true, '{"position": 10, "editable": true}', null),
+
 	(3401, 34, 'id', 'id', NULL, true, '{"position": 1, "editable": false, "refName": true}', null),
 	(3402, 34, 'anio', 'Año', NULL, true, '{"position": 2, "editable": false}', null),
 	(3403, 34, 'total_accidentes', 'Total', NULL, true, '{"position": 3, "editable": false}', null),
@@ -597,11 +603,40 @@ BEGIN
 	(4815, 48, 'ubicacion_relativa', 'Ubicación relativa', NULL, true, '{"position": 15, "editable": false}', null),
 	(4816, 48, 'internas', 'Internas', NULL, true, '{"position": 16, "editable": false}', null),
 	(4817, 48, 'externas', 'Externas', NULL, true, '{"position": 17, "editable": false}', null),
-	(4818, 48, 'num_registro', 'Numero', NULL, true, '{"tableVisible": false}', null);
+	(4818, 48, 'num_registro', 'Numero', NULL, true, '{"tableVisible": false}', null),
+
+	(5301, 53, 'id', 'Identificador', NULL, true, '{"position": 1, "editable": false, "tableVisible": false}', null),
+	(5302, 53, 'alias', 'Sentido', NULL, true, '{"position": 2, "editable": false, "tableVisible": true, "refName": true}', null),
+
+	(5401, 54, 'id', 'Identificador', NULL, true, '{"position": 1, "editable": false, "tableVisible": false}', null),
+	(5402, 54, 'alias', 'Pista', NULL, true, '{"position": 2, "editable": false, "tableVisible": true, "refName": true}', null),
+
+	(5501, 55, 'id', 'Identificador', NULL, true, '{"position": 1, "editable": false, "tableVisible": false}', null),
+	(5502, 55, 'alias', 'Vehículo Fuga', NULL, true, '{"position": 2, "editable": false, "tableVisible": true, "refName": true}', null),
+
+	(5601, 56, 'id', 'Identificador', NULL, true, '{"position": 1, "editable": false, "tableVisible": false}', null),
+	(5602, 56, 'alias', 'Conductor a la Fuga', NULL, true, '{"position": 2, "editable": false, "tableVisible": true, "refName": true}', null),
+
+	(5701, 57, 'id', 'Identificador', NULL, true, '{"position": 1, "editable": false, "tableVisible": false}', null),
+	(5702, 57, 'alias', 'Atención', NULL, true, '{"position": 2, "editable": false, "tableVisible": true, "refName": true}', null),
+
+	(5801, 58, 'id', 'Identificador', NULL, true, '{"position": 1, "editable": false, "tableVisible": false}', null),
+	(5802, 58, 'alias', 'Lado de carretera', NULL, true, '{"position": 2, "editable": false, "tableVisible": true, "refName": true}', null),
+
+	(5901, 59, 'id', 'Identificador', NULL, true, '{"position": 1, "editable": false, "tableVisible": false}', null),
+	(5902, 59, 'alias', 'Pistas', NULL, true, '{"position": 2, "editable": false, "tableVisible": true, "refName": true}', null),
+
+	(6001, 60, 'id', 'Identificador', NULL, true, '{"position": 1, "editable": false, "tableVisible": false}', null),
+	(6002, 60, 'alias', 'Servicio de apoyo', NULL, true, '{"position": 2, "editable": false, "tableVisible": true, "refName": true}', null),
+
+	(6101, 61, 'id', 'Identificador', NULL, true, '{"position": 1, "editable": false, "tableVisible": false}', null),
+	(6102, 61, 'alias', 'Tipo de cierre', NULL, true, '{"position": 2, "editable": false, "tableVisible": true, "refName": true}', null);
 
 	INSERT INTO backoffice.sg_metadata_table_triggers (id, sg_metadata_table_id, name, groovy) VALUES
 	(1, 1, 'tg_incidents_operator', 'config/groovy/backoffice/p_industrial/trigger/IncidentOperatorTrigger.groovy'),
-	(2, 1, 'tg_incidents_detection_time', 'config/groovy/backoffice/p_industrial/trigger/IncidentDetectionTimeTrigger.groovy');
+	(2, 1, 'tg_incidents_detection_time', 'config/groovy/backoffice/p_industrial/trigger/IncidentDetectionTimeTrigger.groovy'),
+	(3, 4, 'tg_closures_total_time', 'config/groovy/backoffice/p_industrial/trigger/ClosureTotalTimeTrigger.groovy'),
+	(4, 21, 'tg_support_services_response_time', 'config/groovy/backoffice/p_industrial/trigger/SupportServiceResponseTimeTrigger.groovy');
 
 	
   END IF;

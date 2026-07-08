@@ -7,16 +7,14 @@ import java.sql.PreparedStatement;
 
 import com.revenga.rits.front.openits.backoffice.groovy.AbstractBackOfficeTrigger;
 
-public class IncidentDetectionTimeTrigger extends AbstractBackOfficeTrigger {
+public class SupportServiceResponseTimeTrigger extends AbstractBackOfficeTrigger {
 
-	public IncidentDetectionTimeTrigger(org.apache.logging.log4j.Logger log) {
+	public SupportServiceResponseTimeTrigger(org.apache.logging.log4j.Logger log) {
 		super(log);
 	}
 
 	@Override
 	public boolean onBeforeInsert() throws Exception {
-
-		fillDetectionTimeInRow();
 
 		return true;
 	}
@@ -24,7 +22,7 @@ public class IncidentDetectionTimeTrigger extends AbstractBackOfficeTrigger {
 	@Override
 	public boolean onAfterInsert() throws Exception {
 
-		fillDetectionTimeInDatabase();
+		fillResponseTimeInDatabase();
 
 		return true;
 	}
@@ -32,47 +30,29 @@ public class IncidentDetectionTimeTrigger extends AbstractBackOfficeTrigger {
 	@Override
 	public boolean onBeforeUpdate() throws Exception {
 
-		fillDetectionTimeInRow();
-
 		return true;
 	}
 
 	@Override
 	public boolean onAfterUpdate() throws Exception {
 
-		fillDetectionTimeInDatabase();
+		fillResponseTimeInDatabase();
 
 		return true;
 	}
 
-	private void fillDetectionTimeInRow() throws Exception {
+	private void fillResponseTimeInDatabase() throws Exception {
 
-		if (this.newRow == null) {
+		Long supportServiceId = getSupportServiceId();
+
+		if (supportServiceId == null) {
 			return;
 		}
 
-		String currentDetectionTime = getFieldValue(this.newRow, "detection_time");
-
-		if (currentDetectionTime != null && !currentDetectionTime.trim().isEmpty()) {
-			return;
-		}
-
-		setFieldValue(this.newRow, "detection_time", "now()");
+		updateResponseTime(supportServiceId);
 	}
 
-	private void fillDetectionTimeInDatabase() throws Exception {
-
-		Long incidentId = getIncidentId();
-
-		if (incidentId == null) {
-			return;
-		}
-
-		updateDetectionTime(incidentId);
-		updateSupportServicesResponseTime(incidentId);
-	}
-
-	private Long getIncidentId() throws Exception {
+	private Long getSupportServiceId() throws Exception {
 
 		if (this.id != null) {
 			return this.id;
@@ -99,33 +79,7 @@ public class IncidentDetectionTimeTrigger extends AbstractBackOfficeTrigger {
 		return null;
 	}
 
-	private void updateDetectionTime(Long incidentId) throws Exception {
-
-		final String qry = String.format(
-			"UPDATE %s.incidents " +
-			"   SET detection_time = now() " +
-			" WHERE id = ? " +
-			"   AND detection_time IS NULL",
-			this.backOffice.getSchema()
-		);
-
-		PreparedStatement stmt = null;
-
-		try {
-
-			stmt = this.conn.prepareStatement(qry);
-			stmt.setLong(1, incidentId);
-			stmt.executeUpdate();
-		}
-		finally {
-
-			if (stmt != null) {
-				stmt.close();
-			}
-		}
-	}
-
-	private void updateSupportServicesResponseTime(Long incidentId) throws Exception {
+	private void updateResponseTime(Long supportServiceId) throws Exception {
 
 		final String qry = String.format(
 			"UPDATE %s.support_services support_service " +
@@ -226,7 +180,7 @@ public class IncidentDetectionTimeTrigger extends AbstractBackOfficeTrigger {
 			"           )::bigint AS total_minutes " +
 			"       ) duration " +
 
-			"       WHERE incident.id = ? " +
+			"       WHERE service.id = ? " +
 			"   ) calculated " +
 
 			" WHERE support_service.id = calculated.support_service_id",
@@ -240,7 +194,7 @@ public class IncidentDetectionTimeTrigger extends AbstractBackOfficeTrigger {
 		try {
 
 			stmt = this.conn.prepareStatement(qry);
-			stmt.setLong(1, incidentId);
+			stmt.setLong(1, supportServiceId);
 			stmt.executeUpdate();
 		}
 		finally {
