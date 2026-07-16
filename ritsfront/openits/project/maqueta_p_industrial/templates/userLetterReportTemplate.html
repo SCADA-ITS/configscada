@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carta de usuario</title>
+
+    <style>
+        @page {
+            size: A4 portrait;
+            margin: 18mm 18mm 16mm 18mm;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 11px;
+            line-height: 1.35;
+            color: #111;
+            background: #fff;
+        }
+
+        #template {
+            width: 100%;
+            max-width: 794px;
+            margin: 0 auto;
+            padding: 0;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 28px;
+        }
+
+        .logo img {
+            width: 170px;
+            height: auto;
+        }
+
+        .document-data {
+            min-width: 260px;
+            text-align: right;
+            padding-top: 54px;
+        }
+
+        .document-data div {
+            margin-bottom: 4px;
+        }
+
+        .recipient {
+            margin-top: 10px;
+            margin-bottom: 28px;
+        }
+
+        .recipient-row {
+            display: flex;
+            align-items: baseline;
+            margin-bottom: 2px;
+        }
+
+        .recipient-label {
+            min-width: 58px;
+        }
+
+        .recipient-title,
+        .recipient-name {
+            font-weight: bold;
+        }
+
+        .reference-table {
+            margin: 28px auto 22px auto;
+            border-collapse: collapse;
+            font-weight: bold;
+            text-decoration: underline;
+        }
+
+        .reference-table td {
+            padding: 0;
+            vertical-align: baseline;
+            white-space: nowrap;
+        }
+
+        .reference-label {
+            padding-right: 4px !important;
+        }
+
+        .salutation {
+            margin-bottom: 18px;
+        }
+
+        p {
+            margin: 0 0 14px 0;
+            text-align: justify;
+        }
+
+        .policy-block {
+            margin: 18px 0;
+        }
+
+        .policy-table {
+            border-collapse: collapse;
+            margin-top: 8px;
+        }
+
+        .policy-table td {
+            padding: 1px 12px 1px 0;
+            vertical-align: top;
+        }
+
+        .policy-table .policy-label {
+            width: 88px;
+        }
+
+        .policy-table .colon {
+            width: 15px;
+        }
+
+        .signature {
+            margin-top: 22px;
+        }
+
+        .signature-space {
+            height: 42px;
+        }
+
+        .signature-name,
+        .signature-role,
+        .signature-company {
+            margin: 0;
+            text-align: left;
+        }
+
+        .signature-company {
+            font-weight: bold;
+        }
+
+        .copy {
+            margin-top: 14px;
+            font-size: 9px;
+        }
+
+        .footer {
+            margin-top: 58px;
+            color: #58752c;
+            font-size: 8.5px;
+            line-height: 1.45;
+        }
+
+        .keep-together {
+            page-break-inside: avoid;
+        }
+    </style>
+</head>
+
+<body>
+<div id="template" class="portrait">
+
+    <div class="header">
+        <div class="logo">
+            <img src="./img/logo-project.svg" alt="Puente Industrial - ALEATICA">
+        </div>
+
+        <div class="document-data">
+            <div>
+                Santiago,
+                <span id="field.report_date"></span>
+            </div>
+
+            <div>
+                GG N.º
+                <span id="field.gg_number"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="recipient">
+        <div class="recipient-row">
+            <span class="recipient-title" id="field.recipient_title_id"></span>
+            <span>:&nbsp;</span>
+            <span class="recipient-name" id="field.recipient_name"></span>
+        </div>
+
+        <div class="recipient-row">
+            <span class="recipient-label">Dirección:</span>
+            <span id="field.recipient_address"></span>
+        </div>
+
+        <div class="recipient-row">
+            <span class="recipient-label">Región:</span>
+            <span id="field.recipient_region"></span>
+        </div>
+    </div>
+
+    <table class="reference-table">
+        <tbody>
+            <tr>
+                <td class="reference-label">REF:</td>
+                <td class="reference-value" id="field.reference"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="salutation">
+        De mi consideración:
+    </div>
+
+    <p>
+        Por la presente nos referimos a la situación descrita a continuación:
+        <span id="field.incident_description"></span>
+    </p>
+
+    <p>
+        Al respecto cumplimos con informar a usted que el contrato de concesión de esta obra pública fiscal
+        contempla la existencia de un seguro de responsabilidad civil por daño a terceros, cuyos datos indicamos
+        a continuación:
+    </p>
+
+    <div class="policy-block keep-together">
+        <table class="policy-table">
+            <tbody>
+                <tr>
+                    <td class="policy-label">Compañía</td>
+                    <td class="colon">:</td>
+                    <td>MAPFRE</td>
+                </tr>
+
+                <tr>
+                    <td class="policy-label">N.º Póliza</td>
+                    <td class="colon">:</td>
+                    <td>303-25-00022603</td>
+                </tr>
+
+                <tr>
+                    <td class="policy-label">Ramo</td>
+                    <td class="colon">:</td>
+                    <td>Responsabilidad Civil General</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <p>
+        No obstante, hacemos presente a Ud. que dicha póliza de seguro sólo cubre aquellos daños que sean
+        imputables a culpa o negligencia de la Sociedad Concesionaria y/o del MOP, para lo cual se requiere que
+        éstos sean obligados mediante una sentencia judicial firme a pagar una indemnización por resultar
+        civilmente responsables.
+    </p>
+
+    <p>
+        Sin otro particular, le saluda atentamente,
+    </p>
+
+    <div class="signature keep-together">
+        <div class="signature-space"></div>
+
+        <p class="signature-name">Juan Facuse Meléndez</p>
+        <p class="signature-role">Gerente General</p>
+        <p class="signature-company">Sociedad Concesionaria Puente Industrial S.A.</p>
+
+        <div class="copy">
+            <div>c.c.: Archivo</div>
+            <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sr. Renato Gaete - Inspector Fiscal.</div>
+            <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Concesión Vial Puente Industrial.</div>
+        </div>
+    </div>
+
+    <div class="footer keep-together">
+        <div>Sociedad Concesionaria Puente Industrial S.A.</div>
+        <div>Rosario Norte N.º 615, Piso 7, Oficinas 701, 702, Las Condes</div>
+        <div>Santiago – Chile &nbsp;&nbsp; C.P. 7561160</div>
+        <div>Teléfono: +56 22 871 85 00 / 08 / 09</div>
+    </div>
+
+</div>
+</body>
+</html>

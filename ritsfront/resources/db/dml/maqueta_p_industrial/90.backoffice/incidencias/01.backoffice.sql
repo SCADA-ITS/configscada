@@ -230,8 +230,18 @@ BEGIN
 	(58, 'side_roads', 'Lado de carretera', 'Lado de carretera', 'Lado de carretera', 'mdi mdi-message-alert', false, false, null, null),
 	(59, 'lanes', 'Pistas', 'Pistas', 'Pistas', 'mdi mdi-message-alert', false, false, null, null),
 	(60, 'entities', 'Servicio de apoyo', 'Servicio de apoyo', 'Servicio de apoyo', 'mdi mdi-message-alert', false, false, null, null),
-	(61, 'closure_types', 'Tipo de cierre', 'Tipo de cierre', 'Tipo de cierre', 'mdi mdi-message-alert', false, false, null, null);
-	
+	(61, 'closure_types', 'Tipo de cierre', 'Tipo de cierre', 'Tipo de cierre', 'mdi mdi-message-alert', false, false, null, null),
+	(62, 'user_letter_reports', 'Cartas de usuario', 'Carta de usuario', 'Cartas de usuario', 'mdi mdi-message-alert', false, false,
+	'{
+		"srcTemplate": "userLetterReportTemplate.html"
+	}',
+	null),	
+	(63, 'user_letter_recipient_titles', 'Tratamiento destinatario', 'Tratamiento destinatario', 'Tratamiento destinatario', 'mdi mdi-message-alert', false, false, null, null),
+	(64, 'monthly_incident_reports', 'Reporte de Informe Preliminar', 'Reporte de Informe Preliminar', 'Reporte de Informe Preliminar', 'mdi mdi-message-alert', false, false,
+	'{
+		"srcTemplate": "preliminaryIncidentReportTemplate.html"
+	}',
+	null);
 	
 	INSERT INTO backoffice.sg_metadata_columns (id, sg_metadata_table_id, column_name, "label", label_description, needs_translation, metadata, ref_view_column_id) VALUES
 	(0101, 1, 'incident_report_id', 'Identificador', null, false, '{"position": 1, "tableVisible": true, "editable": true, "refName": true}', null),
@@ -630,7 +640,40 @@ BEGIN
 	(6002, 60, 'alias', 'Servicio de apoyo', NULL, true, '{"position": 2, "editable": false, "tableVisible": true, "refName": true}', null),
 
 	(6101, 61, 'id', 'Identificador', NULL, true, '{"position": 1, "editable": false, "tableVisible": false}', null),
-	(6102, 61, 'alias', 'Tipo de cierre', NULL, true, '{"position": 2, "editable": false, "tableVisible": true, "refName": true}', null);
+	(6102, 61, 'alias', 'Tipo de cierre', NULL, true, '{"position": 2, "editable": false, "tableVisible": true, "refName": true}', null),
+
+	(6201, 62, 'incident_report_id', 'Identificador', NULL, true, '{"position": 1, "editable": true, "refName": true}', null),
+	(6202, 62, 'report_date', 'Fecha', NULL, true, '{"position": 2, "editable": true}', null),
+	(6203, 62, 'gg_number', 'GG Nº', NULL, true, '{"position": 3, "editable": true}', null),
+	(6204, 62, 'recipient_title_id', 'Tratamiento', NULL, true, '{"position": 4, "editable": true}', null),
+	(6205, 62, 'recipient_name', 'Nombre destinatario', NULL, true, '{"position": 5, "editable": true}', null),
+	(6206, 62, 'recipient_address', 'Dirección', NULL, true, '{"position": 6, "editable": true}', null),
+	(6207, 62, 'recipient_region', 'Región', NULL, true, '{"position": 7, "editable": true}', null),
+	(6208, 62, 'reference', 'Referencia', NULL, true, '{"position": 8, "editable": true}', null),
+	(6209, 62, 'incident_description', 'Descripción del suceso', NULL, true, '{"multiline": 5, "position": 9, "editable": true}', null),
+
+	(6301, 63, 'id', 'Identificador', NULL, true, '{"position": 1, "editable": false, "tableVisible": false}', null),
+	(6302, 63, 'alias', 'Tratamiento', NULL, true, '{"position": 2, "editable": false, "tableVisible": true, "refName": true}', null),
+
+	(6401, 64, 'incident_report_id', 'Identificador', NULL, true, '{"position": 1, "editable": true, "refName": true}', null),
+	(6402, 64, 'month_incident_number', 'Nº incidente del mes', NULL, true, '{"position": 2, "editable": true}', null),
+	(6403, 64, 'report_datetime', 'Fecha y hora', NULL, true, '{"position": 3, "editable": true}', null),
+	(6404, 64, 'km', 'Kilómetro', NULL, true, '{"position": 4, "editable": true}', null),
+	(6405, 64, 'commune', 'Comuna', NULL, true, '{"position": 5, "editable": true}', null),
+	(6406, 64, 'sector', 'Sector', NULL, true, '{"position": 6, "editable": true}', null),
+	(6407, 64, 'carriageway', 'Calzada', NULL, true, '{"position": 7, "editable": true}', null),
+	(6408, 64, 'traffic_direction', 'Sentido de tránsito', NULL, true, '{"position": 8, "editable": true}', null),
+	(6409, 64, 'involved_lanes', 'Pistas involucradas', NULL, true, '{"position": 9, "editable": true}', null),
+	(6410, 64, 'traffic_condition', 'Condición de tránsito', NULL, true, '{"position": 10, "editable": true}', null),
+	(6411, 64, 'incident_type', 'Tipo de incidente', NULL, true, '{"position": 11, "editable": true}', null),
+	(6412, 64, 'deaths', 'Fallecidos', NULL, true, '{"position": 12, "editable": true}', null),
+	(6413, 64, 'injured', 'Lesionados', NULL, true, '{"position": 13, "editable": true}', null),
+	(6414, 64, 'involved_vehicles', 'Vehículos involucrados', NULL, true, '{"position": 14, "editable": true}', null),
+	(6415, 64, 'infrastructure_damage', 'Daños a la infraestructura', NULL, true, '{"multiline": 5, "position": 15, "editable": true}', null),
+	(6416, 64, 'event_description', 'Descripción del evento', NULL, true, '{"multiline": 5, "position": 16, "editable": true}', null),
+	(6417, 64, 'road_assistance', 'Asistencia en ruta', NULL, true, '{"multiline": 5, "position": 17, "editable": true}', null),
+	(6418, 64, 'information_responsible', 'Responsable de la información', NULL, true, '{"position": 18, "editable": true}', null),
+	(6419, 64, 'mobile_phone', 'Teléfono móvil', NULL, true, '{"position": 19, "editable": true}', null);
 
 	INSERT INTO backoffice.sg_metadata_table_triggers (id, sg_metadata_table_id, name, groovy) VALUES
 	(1, 1, 'tg_incidents_operator', 'config/groovy/backoffice/p_industrial/trigger/IncidentOperatorTrigger.groovy'),

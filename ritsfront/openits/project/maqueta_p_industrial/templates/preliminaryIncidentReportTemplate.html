@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reporte de Informe Preliminar</title>
+
+    <style>
+        @page {
+            size: A4 portrait;
+            margin: 12mm;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 11px;
+            line-height: 1.35;
+            color: #17233c;
+            background-color: #ffffff;
+        }
+
+        #template {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 14px;
+        }
+
+        .logo img {
+            width: 170px;
+            height: auto;
+        }
+
+        .report-title {
+            margin: 8px 0 4px 0;
+            font-size: 18px;
+            font-weight: bold;
+            color: #17233c;
+        }
+
+        .green-line {
+            width: 100%;
+            height: 2px;
+            margin-bottom: 16px;
+            background-color: #71be44;
+        }
+
+        .section {
+            margin-bottom: 18px;
+            page-break-inside: avoid;
+        }
+
+        .section-title {
+            margin: 0 0 10px 0;
+            padding-bottom: 4px;
+            border-bottom: 2px solid #71be44;
+            font-size: 13px;
+            font-weight: bold;
+            color: #17233c;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+        .data-table td {
+            padding: 4px 8px 4px 0;
+            vertical-align: top;
+        }
+
+        .label {
+            font-weight: bold;
+            color: #17233c;
+        }
+
+        .value {
+            min-height: 16px;
+            color: #17233c;
+        }
+
+        .contract-box {
+            display: inline-block;
+            min-width: 470px;
+            padding: 3px 8px;
+            border: 1px solid #17233c;
+            background-color: #e6e6e6;
+        }
+
+        .description-box {
+            min-height: 90px;
+            padding: 10px;
+            border: 1px solid #a7b0bd;
+            text-align: justify;
+            white-space: pre-wrap;
+        }
+
+        .long-value {
+            min-height: 42px;
+            white-space: pre-wrap;
+        }
+
+        .summary-table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+        .summary-table td {
+            padding: 5px 8px 5px 0;
+            vertical-align: top;
+        }
+
+        .summary-table .label-cell {
+            width: 24%;
+            font-weight: bold;
+        }
+
+        .summary-table .value-cell {
+            width: 26%;
+        }
+
+        .keep-together {
+            page-break-inside: avoid;
+        }
+    </style>
+</head>
+
+<body>
+<div id="template" class="portrait">
+
+    <div class="header">
+        <div class="logo">
+            <img src="./img/logo-project.svg" alt="Puente Industrial - ALEATICA">
+        </div>
+    </div>
+
+    <div class="report-title">
+        Reporte de Informe Preliminar
+    </div>
+
+    <div class="green-line"></div>
+
+    <!-- 1. INFORMACIÓN GENERAL -->
+    <div class="section">
+        <div class="section-title">
+            Información general
+        </div>
+
+        <table class="data-table">
+            <tbody>
+                <tr>
+                    <td class="label" style="width: 22%;">
+                        Nombre del contrato:
+                    </td>
+                    <td colspan="3">
+                        <span class="contract-box">
+                            Obra Pública Fiscal Concesión Vial Puente Industrial
+                        </span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="label">
+                        Nº incidente del mes:
+                    </td>
+                    <td class="value" id="field.month_incident_number"></td>
+
+                    <td class="label">
+                        Fecha y hora:
+                    </td>
+                    <td class="value" id="field.report_datetime"></td>
+                </tr>
+
+                <tr>
+                    <td class="label">
+                        Kilómetro:
+                    </td>
+                    <td class="value" id="field.km"></td>
+
+                    <td class="label">
+                        Comuna:
+                    </td>
+                    <td class="value" id="field.commune"></td>
+                </tr>
+
+                <tr>
+                    <td class="label">
+                        Sector:
+                    </td>
+                    <td class="value" id="field.sector"></td>
+
+                    <td class="label">
+                        Calzada:
+                    </td>
+                    <td class="value" id="field.carriageway"></td>
+                </tr>
+
+                <tr>
+                    <td class="label">
+                        Sentido de tránsito:
+                    </td>
+                    <td colspan="3" class="value" id="field.traffic_direction"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 2. INFORMACIÓN DEL INCIDENTE -->
+    <div class="section">
+        <div class="section-title">
+            Información del incidente
+        </div>
+
+        <table class="summary-table">
+            <tbody>
+                <tr>
+                    <td class="label-cell">
+                        Tipo de incidente:
+                    </td>
+                    <td class="value-cell" id="field.incident_type"></td>
+
+                    <td class="label-cell">
+                        Condición de tránsito:
+                    </td>
+                    <td class="value-cell" id="field.traffic_condition"></td>
+                </tr>
+
+                <tr>
+                    <td class="label-cell">
+                        Pistas involucradas:
+                    </td>
+                    <td class="value-cell" id="field.involved_lanes"></td>
+
+                    <td class="label-cell">
+                        Vehículos involucrados:
+                    </td>
+                    <td class="value-cell" id="field.involved_vehicles"></td>
+                </tr>
+
+                <tr>
+                    <td class="label-cell">
+                        Fallecidos:
+                    </td>
+                    <td class="value-cell" id="field.deaths"></td>
+
+                    <td class="label-cell">
+                        Lesionados:
+                    </td>
+                    <td class="value-cell" id="field.injured"></td>
+                </tr>
+
+                <tr>
+                    <td class="label-cell">
+                        Daños a la infraestructura:
+                    </td>
+                    <td colspan="3">
+                        <div class="long-value" id="field.infrastructure_damage"></div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 3. DESCRIPCIÓN DEL EVENTO -->
+    <div class="section">
+        <div class="section-title">
+            Descripción del evento
+        </div>
+
+        <div class="description-box" id="field.event_description"></div>
+    </div>
+
+    <!-- 4. GESTIÓN DE LA INCIDENCIA -->
+    <div class="section keep-together">
+        <div class="section-title">
+            Gestión de la incidencia
+        </div>
+
+        <table class="data-table">
+            <tbody>
+                <tr>
+                    <td class="label" style="width: 25%;">
+                        Asistencia en ruta:
+                    </td>
+                    <td colspan="3">
+                        <div class="long-value" id="field.road_assistance"></div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="label">
+                        Responsable de la información:
+                    </td>
+                    <td class="value" id="field.information_responsible"></td>
+
+                    <td class="label">
+                        Teléfono móvil:
+                    </td>
+                    <td class="value" id="field.mobile_phone"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+</body>
+</html>
