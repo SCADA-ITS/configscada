@@ -241,8 +241,11 @@ BEGIN
 	'{
 		"srcTemplate": "preliminaryIncidentReportTemplate.html"
 	}',
-	null);
-	
+	null),
+	(65, 'cct_calls', 'Llamadas CCT', 'Llamada CCT', 'Llamadas CCT', 'mdi mdi-phone', false, false, null, null),
+	(66, 'cct_call_reasons', 'Motivos', 'Motivo', 'Motivos', 'mdi mdi-phone', false, false, null, null),
+	(67, 'cct_call_shifts', 'Turnos', 'Turno', 'Turnos', 'mdi mdi-phone', false, false, null, null);
+
 	INSERT INTO backoffice.sg_metadata_columns (id, sg_metadata_table_id, column_name, "label", label_description, needs_translation, metadata, ref_view_column_id) VALUES
 	(0101, 1, 'incident_report_id', 'Identificador', null, false, '{"position": 1, "tableVisible": true, "editable": true, "refName": true}', null),
 	(0102, 1, 'km', 'km', NULL, true, '{"position": 3, "editable": true, "tableVisible": true}', null),
@@ -673,13 +676,29 @@ BEGIN
 	(6416, 64, 'event_description', 'Descripción del evento', NULL, true, '{"multiline": 5, "position": 16, "editable": true}', null),
 	(6417, 64, 'road_assistance', 'Asistencia en ruta', NULL, true, '{"multiline": 5, "position": 17, "editable": true}', null),
 	(6418, 64, 'information_responsible', 'Responsable de la información', NULL, true, '{"position": 18, "editable": true}', null),
-	(6419, 64, 'mobile_phone', 'Teléfono móvil', NULL, true, '{"position": 19, "editable": true}', null);
+	(6419, 64, 'mobile_phone', 'Teléfono móvil', NULL, true, '{"position": 19, "editable": true}', null),
+
+	(6501, 65, 'incident_id', 'Identificador', NULL, true, '{"position": 1, "editable": true, "refName": true}', null),
+	(6502, 65, 'call_number', 'Nº', NULL, true, '{"position": 2, "editable": false, "tableVisible": true}', null),
+	(6503, 65, 'call_datetime', 'Fecha y hora', NULL, true, '{"position": 3, "editable": true, "tableVisible": true}', null),
+	(6504, 65, 'response_time', 'Tiempo de respuesta', NULL, true, '{"position": 4, "editable": true, "tableVisible": true}', null),
+	(6505, 65, 'reason_id', 'Motivo', NULL, true, '{"position": 5, "editable": true, "tableVisible": true}', null),
+	(6506, 65, 'call_description', 'Descripción', NULL, true, '{"multiline": 5, "position": 6, "editable": true, "tableVisible": true}', null),
+	(6507, 65, 'operator', 'Operador de turno', NULL, true, '{"position": 7, "editable": false, "tableVisible": true}', null),
+	(6508, 65, 'shift_id', 'Turno', NULL, true, '{"position": 8, "editable": true, "tableVisible": true}', null),
+
+	(6601, 66, 'id', 'Identificador', NULL, true, '{"position": 1, "editable": false, "tableVisible": false}', null),
+	(6602, 66, 'alias', 'Motivo', NULL, true, '{"position": 2, "editable": false, "tableVisible": true, "refName": true}', null),
+
+	(6701, 67, 'id', 'Identificador', NULL, true, '{"position": 1, "editable": false, "tableVisible": false}', null),
+	(6702, 67, 'alias', 'Turno', NULL, true, '{"position": 2, "editable": false, "tableVisible": true, "refName": true}', null);
 
 	INSERT INTO backoffice.sg_metadata_table_triggers (id, sg_metadata_table_id, name, groovy) VALUES
 	(1, 1, 'tg_incidents_operator', 'config/groovy/backoffice/p_industrial/trigger/IncidentOperatorTrigger.groovy'),
 	(2, 1, 'tg_incidents_detection_time', 'config/groovy/backoffice/p_industrial/trigger/IncidentDetectionTimeTrigger.groovy'),
 	(3, 4, 'tg_closures_total_time', 'config/groovy/backoffice/p_industrial/trigger/ClosureTotalTimeTrigger.groovy'),
-	(4, 21, 'tg_support_services_response_time', 'config/groovy/backoffice/p_industrial/trigger/SupportServiceResponseTimeTrigger.groovy');
+	(4, 21, 'tg_support_services_response_time', 'config/groovy/backoffice/p_industrial/trigger/SupportServiceResponseTimeTrigger.groovy'),
+	(5, 65, 'tg_cct_calls', 'config/groovy/backoffice/p_industrial/trigger/CctCallsTrigger.groovy');
 
 	
   END IF;
