@@ -1,0 +1,12 @@
+item;alias;description;sessionuid;road;stretchs;pk;sentido;param1_brand;param2_model;param3_flip
+1;AN-1-01-DP;AN-1-01-DP;AN-1-01-DP;Autovía A-4;Despeñaperros;248+200;Madrid;Duran;1468;true
+2;AN-1-02-DP;AN-1-02-DP;AN-1-02-DP;Autovía A-4;Despeñaperros;247+700;Madrid;Duran;1468;true
+3;AN-1-03-DP;AN-1-03-DP;AN-1-03-DP;Autovía A-4;Despeñaperros;247+300;Madrid;Duran;1468;true
+4;AN-1-04-DP;AN-1-04-DP;AN-1-04-DP;Autovía A-4;Despeñaperros;246+600;Madrid;Duran;1468;true
+5;AN-2-01-DP;AN-2-01-DP;AN-2-01-DP;Autovía A-4;Despeñaperros;247;Córdoba;Duran;1468;false
+6;AN-2-02-DP;AN-2-02-DP;AN-2-02-DP;Autovía A-4;Despeñaperros;247+400;Córdoba;Duran;1468;false
+7;AN-2-03-DP;AN-2-03-DP;AN-2-03-DP;Autovía A-4;Despeñaperros;247+800;Córdoba;Duran;1468;false
+8;AN-2-04-DP;AN-2-04-DP;AN-2-04-DP;Autovía A-4;Despeñaperros;248+200;Córdoba;Duran;1468;false
+9;AN-1-01-CZ;AN-1-01-CZ;AN-1-01-CZ;Autovía A-4;El Corzo;;Madrid;Duran;1468;true
+10;AN-1-01-CA;AN-1-01-CA;AN-1-01-CA;Autovía A-4;La Cantera;;Madrid;Ortrat;;true
+11;AN-2-01-CA;AN-2-01-CA;AN-2-01-CA;Autovía A-4;La Cantera;;Córdoba;Ortrat;;false

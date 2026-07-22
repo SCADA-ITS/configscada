@@ -1,0 +1,5 @@
+item;alias;description;sessionuid;road;stretchs;pk;sentido;on_change_measure
+1;LUM-0-03-DP;LUM-0-03-DP;LUM-0-03-DP;Autovía A-4;Despeñaperros;;NA;SendValuesToIllumination.groovy
+2;LUM-0-01-CA;LUM-0-01-CA;LUM-0-01-CA;Autovía A-4;La Cantera;;NA;SendValuesToIllumination.groovy
+3;LUM-0-02-CA;LUM-0-02-CA;LUM-0-02-CA;Autovía A-4;La Cantera;;NA;SendValuesToIllumination.groovy
+4;LUM-0-04-CZ;LUM-0-04-CZ;LUM-0-04-CZ;Autovía A-4;El Corzo;;NA;SendValuesToIllumination.groovy

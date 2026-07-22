@@ -1,0 +1,11 @@
+item;alias;description;sessionuid;road;stretchs;pk;sentido;on_change_measure
+1;BA-1-01-CA-D;BA-1-01-CA-D;BA-1-01-CA-D;Autovía A-4;La Cantera;;Madrid;ChangeMeasureHistorical.groovy
+2;BA-1-01-CA-I;BA-1-01-CA-I;BA-1-01-CA-I;Autovía A-4;La Cantera;;Madrid;ChangeMeasureHistorical.groovy
+3;BA-2-01-CZ-D;BA-2-01-CZ-D;BA-2-01-CZ-D;Autovía A-4;El Corzo;;Córdoba;ChangeMeasureHistorical.groovy
+4;BA-2-01-CZ-I;BA-2-01-CZ-I;BA-2-01-CZ-I;Autovía A-4;El Corzo;;Córdoba;ChangeMeasureHistorical.groovy
+5;BA-1-01-DP-D;BA-1-01-DP-D;BA-1-01-DP-D;Autovía A-4;Despeñaperros;;Madrid;ChangeMeasureHistorical.groovy
+6;BA-1-01-DP-I;BA-1-01-DP-I;BA-1-01-DP-I;Autovía A-4;Despeñaperros;;Madrid;ChangeMeasureHistorical.groovy
+7;BA-2-01-DP-D;BA-2-01-DP-D;BA-2-01-DP-D;Autovía A-4;Despeñaperros;;Córdoba;ChangeMeasureHistorical.groovy
+8;BA-2-01-DP-I;BA-2-01-DP-I;BA-2-01-DP-I;Autovía A-4;Despeñaperros;;Córdoba;ChangeMeasureHistorical.groovy
+9;BA-2-01-CA-D;BA-2-01-CA-D;BA-2-01-CA-D;Autovía A-4;La Cantera;;Córdoba;ChangeMeasureHistorical.groovy
+10;BA-2-01-CA-I;BA-2-01-CA-I;BA-2-01-CA-I;Autovía A-4;La Cantera;;Córdoba;ChangeMeasureHistorical.groovy
