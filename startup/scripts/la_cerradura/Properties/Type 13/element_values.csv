@@ -1,25 +1,9 @@
 item;element_subtype;alias;description;sessionuid;road;stretchs;pk;sentido;on_change_measure
-1;1;SMF-1-01-DP;SMF-1-01-DP;SMF-1-01-DP;Autovía A-4;Despeñaperros;;Madrid;ChangeMeasureHistorical.groovy
-2;1;SMF-1-02-DP;SMF-1-02-DP;SMF-1-02-DP;Autovía A-4;Despeñaperros;;Madrid;ChangeMeasureHistorical.groovy
-3;1;SMF-1-03-DP;SMF-1-03-DP;SMF-1-03-DP;Autovía A-4;Despeñaperros;;Madrid;ChangeMeasureHistorical.groovy
-4;1;SMF-1-04-DP;SMF-1-04-DP;SMF-1-04-DP;Autovía A-4;Despeñaperros;;Madrid;ChangeMeasureHistorical.groovy
-5;1;SMF-1-05-DP;SMF-1-05-DP;SMF-1-05-DP;Autovía A-4;Despeñaperros;;Madrid;ChangeMeasureHistorical.groovy
-6;1;SMF-2-01-DP;SMF-2-01-DP;SMF-2-01-DP;Autovía A-4;Despeñaperros;;Córdoba;ChangeMeasureHistorical.groovy
-7;1;SMF-2-02-DP;SMF-2-02-DP;SMF-2-02-DP;Autovía A-4;Despeñaperros;;Córdoba;ChangeMeasureHistorical.groovy
-8;1;SMF-2-03-DP;SMF-2-03-DP;SMF-2-03-DP;Autovía A-4;Despeñaperros;;Córdoba;ChangeMeasureHistorical.groovy
-9;1;SMF-2-04-DP;SMF-2-04-DP;SMF-2-04-DP;Autovía A-4;Despeñaperros;;Córdoba;ChangeMeasureHistorical.groovy
-10;1;SMF-2-05-DP;SMF-2-05-DP;SMF-2-05-DP;Autovía A-4;Despeñaperros;;Córdoba;ChangeMeasureHistorical.groovy
-11;1;SMF-1-04-CA;SMF-1-04-CA;SMF-1-04-CA;Autovía A-4;La Cantera;;Madrid;ChangeMeasureHistorical.groovy
-12;1;SMF-2-02-CA;SMF-2-02-CA;SMF-2-02-CA;Autovía A-4;La Cantera;;Córdoba;ChangeMeasureHistorical.groovy
-13;2;SMF-1-01-CA-D;SMF-1-01-CA-D;SMF-1-01-CA-D;Autovía A-4;La Cantera;;Madrid;ChangeMeasureHistorical.groovy
-14;2;SMF-1-01-CA-C;SMF-1-01-CA-C;SMF-1-01-CA-C;Autovía A-4;La Cantera;;Madrid;ChangeMeasureHistorical.groovy
-15;2;SMF-1-01-CA-I;SMF-1-01-CA-I;SMF-1-01-CA-I;Autovía A-4;La Cantera;;Madrid;ChangeMeasureHistorical.groovy
-16;2;SMF-1-02-CA-D;SMF-1-02-CA-D;SMF-1-02-CA-D;Autovía A-4;La Cantera;;Madrid;ChangeMeasureHistorical.groovy
-17;2;SMF-1-02-CA-C;SMF-1-02-CA-C;SMF-1-02-CA-C;Autovía A-4;La Cantera;;Madrid;ChangeMeasureHistorical.groovy
-18;2;SMF-1-02-CA-I;SMF-1-02-CA-I;SMF-1-02-CA-I;Autovía A-4;La Cantera;;Madrid;ChangeMeasureHistorical.groovy
-19;2;SMF-2-01-CZ-D;SMF-2-01-CZ-D;SMF-2-01-CZ-D;Autovía A-4;El Corzo;;Córdoba;ChangeMeasureHistorical.groovy
-20;2;SMF-2-01-CZ-I;SMF-2-01-CZ-I;SMF-2-01-CZ-I;Autovía A-4;El Corzo;;Córdoba;ChangeMeasureHistorical.groovy
-21;2;SMF-2-02-CZ-D;SMF-2-02-CZ-D;SMF-2-02-CZ-D;Autovía A-4;El Corzo;;Córdoba;ChangeMeasureHistorical.groovy
-22;2;SMF-2-02-CZ-I;SMF-2-02-CZ-I;SMF-2-02-CZ-I;Autovía A-4;El Corzo;;Córdoba;ChangeMeasureHistorical.groovy
-23;1;SMF-2-04-CZ;SMF-2-04-CZ;SMF-2-04-CZ;Autovía A-4;El Corzo;;Córdoba;ChangeMeasureHistorical.groovy
-24;1;SMF-1-01-CZ;SMF-1-01-CZ;SMF-1-01-CZ;Autovía A-4;El Corzo;;Madrid;ChangeMeasureHistorical.groovy
+1;1;SMF-2-01-CE;SMF-2-01-CE;SMF-2-01-CE;Autovía A-44;La Cerradura;;Jaén;
+2;1;SMF-2-02-CE;SMF-2-02-CE;SMF-2-02-CE;Autovía A-44;La Cerradura;;Jaén;
+3;1;SMF-2-03-CE;SMF-2-03-CE;SMF-2-03-CE;Autovía A-44;La Cerradura;;Jaén;
+4;1;SMF-2-04-CE;SMF-2-04-CE;SMF-2-04-CE;Autovía A-44;La Cerradura;;Jaén;
+5;1;SMF-1-01-CE;SMF-1-01-CE;SMF-1-01-CE;Autovía A-44;La Cerradura;;Granada;
+6;1;SMF-1-02-CE;SMF-1-02-CE;SMF-1-02-CE;Autovía A-44;La Cerradura;;Granada;
+7;1;SMF-1-03-CE;SMF-1-03-CE;SMF-1-03-CE;Autovía A-44;La Cerradura;;Granada;
+8;1;SMF-1-04-CE;SMF-1-04-CE;SMF-1-04-CE;Autovía A-44;La Cerradura;;Granada;

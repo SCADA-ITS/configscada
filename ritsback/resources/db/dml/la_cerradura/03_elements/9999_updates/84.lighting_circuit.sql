@@ -1,9 +1,0 @@
-UPDATE conf.alarm_configs SET alarm_level_id = 3, enabled = True, treatment = True WHERE element_type_id = 84 AND alarm_config_id = 10084; --LBL_ALARM_CONFIGS_ALARM_CIRCUIT_DISCONNECTED
-UPDATE conf.alarm_configs SET alarm_level_id = 3, enabled = False, treatment = True WHERE element_type_id = 84 AND alarm_config_id = 20084; --LBL_ALARM_CONFIGS_ALARM_PROT_AUT
-UPDATE conf.alarm_configs SET alarm_level_id = 3, enabled = False, treatment = True WHERE element_type_id = 84 AND alarm_config_id = 30084; --LBL_ALARM_CONFIGS_ALARM_FALLO_HASTIAL
-UPDATE conf.alarm_configs SET alarm_level_id = 3, enabled = True, treatment = True WHERE element_type_id = 84 AND alarm_config_id = 40084; --LBL_ALARM_CONFIGS_ALARM_CIRCUITO_SIN_TENSION
-UPDATE conf.alarm_configs SET alarm_level_id = 3, enabled = True, treatment = True WHERE element_type_id = 84 AND alarm_config_id = 50084; --LBL_ALARM_CONFIGS_ALARM_CIRCUITO_MANUAL
-UPDATE conf.alarm_configs SET alarm_level_id = 3, enabled = True, treatment = True WHERE element_type_id = 84 AND alarm_config_id = 60084; --LBL_ALARM_CONFIGS_ALARM_EMERGENCY_LAMP_FAILURE
-UPDATE conf.alarm_configs SET alarm_level_id = 3, enabled = True, treatment = True WHERE element_type_id = 84 AND alarm_config_id = 70084; --LBL_ALARM_CONFIGS_ALARM_COMM_FAILURE
-UPDATE conf.alarm_configs SET alarm_level_id = 3, enabled = True, treatment = True WHERE element_type_id = 84 AND alarm_config_id = 80084; --LBL_ALARM_CONFIGS_ALARM_GENERAL_FAILURE
-UPDATE conf.alarm_configs SET alarm_level_id = 3, enabled = True, treatment = True WHERE element_type_id = 84 AND alarm_config_id = 90084; --LBL_ALARM_CONFIGS_ALARM_EMERGENCY_MODE

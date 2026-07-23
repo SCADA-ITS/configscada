@@ -1,0 +1,11 @@
+element_type;element_subtype;alias;svg_file;js_custom_type_render;keepRatio
+2;1;CAMERA_DOMO;02_camera_domo.svg;;true
+2;2;CAMERA_DAI;02_camera.svg;;true
+11;;SOS;11_sos.svg;;true
+13;;SEM;13_sem_3_grupos.svg;trafficLight.js;true
+53;2;SEM_2_GRUPOS;53_sem_2_grupos.svg;redTrafficLight.js;true
+18;;ANEM;18_anemometro.svg;inAnemometer.js;true
+19;;CO;19_co.svg;co.js;true
+20;;NO;20_no.svg;no.js;true
+21;;OPAC;21_opac.svg;op.js;true
+71;12;PMV;71_vms_clv_af.svg;vms.js;true

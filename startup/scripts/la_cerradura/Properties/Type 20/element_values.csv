@@ -1,9 +1,5 @@
 item;alias;description;sessionuid;road;stretchs;pk;sentido;on_change_measure;param1_brand;param2_model
-1;SNO-1-01-CA;SNO-1-01-CA;SNO-1-01-CA;Autovía A-4;La Cantera;;Madrid;SendValuesToVentilation.groovy;Ortrat;
-2;SNO-1-02-CA;SNO-1-02-CA;SNO-1-02-CA;Autovía A-4;La Cantera;;Madrid;SendValuesToVentilation.groovy;Ortrat;
-3;SNO-1-03-CA;SNO-1-03-CA;SNO-1-03-CA;Autovía A-4;La Cantera;;Madrid;SendValuesToVentilation.groovy;Ortrat;
-4;SNO-1-04-CA;SNO-1-04-CA;SNO-1-04-CA;Autovía A-4;La Cantera;;Madrid;SendValuesToVentilation.groovy;Ortrat;
-5;SNO-2-01-CA;SNO-2-01-CA;SNO-2-01-CA;Autovía A-4;La Cantera;;Córdoba;SendValuesToVentilation.groovy;Ortrat;
-6;SNO-2-02-CA;SNO-2-02-CA;SNO-2-02-CA;Autovía A-4;La Cantera;;Córdoba;SendValuesToVentilation.groovy;Ortrat;
-7;SNO-2-03-CA;SNO-2-03-CA;SNO-2-03-CA;Autovía A-4;La Cantera;;Córdoba;SendValuesToVentilation.groovy;Ortrat;
-8;SNO-2-04-CA;SNO-2-04-CA;SNO-2-04-CA;Autovía A-4;La Cantera;;Córdoba;SendValuesToVentilation.groovy;Ortrat;
+1;SNO-1-01-CE;SNO-1-01-CE;SNO-1-01-CE;Autovía A-44;La Cerradura;;Granada;;;
+2;SNO-1-02-CE;SNO-1-02-CE;SNO-1-02-CE;Autovía A-44;La Cerradura;;Granada;;;
+3;SNO-2-01-CE;SNO-2-01-CE;SNO-2-01-CE;Autovía A-44;La Cerradura;;Jaén;;;
+4;SNO-2-02-CE;SNO-2-02-CE;SNO-2-02-CE;Autovía A-44;La Cerradura;;Jaén;;;

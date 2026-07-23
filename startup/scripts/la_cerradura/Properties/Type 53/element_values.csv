@@ -1,0 +1,5 @@
+item;element_subtype;alias;description;sessionuid;road;stretchs;pk;sentido;on_change_measure
+1;2;SMF-AA-1-01-CE;SMF-AA-1-01-CE;SMF-AA-1-01-CE;Autovía A-44;La Cerradura;;Granada;
+2;2;SMF-AA-1-02-CE;SMF-AA-1-02-CE;SMF-AA-1-02-CE;Autovía A-44;La Cerradura;;Granada;
+3;2;SMF-AA-2-01-CE;SMF-AA-2-01-CE;SMF-AA-2-01-CE;Autovía A-44;La Cerradura;;Jaén;
+4;2;SMF-AA-2-02-CE;SMF-AA-2-02-CE;SMF-AA-2-02-CE;Autovía A-44;La Cerradura;;Jaén;
