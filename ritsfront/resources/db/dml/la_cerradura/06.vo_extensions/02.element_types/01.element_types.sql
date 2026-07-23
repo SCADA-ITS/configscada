@@ -1,0 +1,359 @@
+INSERT INTO ui.vo_entities(id, vo_entity_type_id, enabled, visible) VALUES
+('ElementType:1', 'ElementTypeUI', true, true),
+('ElementType:2', 'ElementTypeUI', true, true),
+('ElementType:3', 'ElementTypeUI', true, true),
+('ElementType:4', 'ElementTypeUI', true, true),
+('ElementType:5', 'ElementTypeUI', true, true),
+('ElementType:6', 'ElementTypeUI', true, true),
+('ElementType:7', 'ElementTypeUI', true, true),
+('ElementType:8', 'ElementTypeUI', true, true),
+('ElementType:9', 'ElementTypeUI', true, true),
+('ElementType:10', 'ElementTypeUI', true, true),
+('ElementType:11', 'ElementTypeUI', true, true),
+('ElementType:12', 'ElementTypeUI', true, true),
+('ElementType:13', 'ElementTypeUI', true, true),
+('ElementType:14', 'ElementTypeUI', true, true),
+('ElementType:15', 'ElementTypeUI', true, true),
+('ElementType:16', 'ElementTypeUI', true, true),
+('ElementType:17', 'ElementTypeUI', true, true),
+('ElementType:18', 'ElementTypeUI', true, true),
+('ElementType:19', 'ElementTypeUI', true, true),
+('ElementType:20', 'ElementTypeUI', true, true),
+('ElementType:21', 'ElementTypeUI', true, true),
+('ElementType:22', 'ElementTypeUI', true, true),
+('ElementType:23', 'ElementTypeUI', true, true),
+('ElementType:24', 'ElementTypeUI', true, true),
+('ElementType:25', 'ElementTypeUI', true, true),
+('ElementType:26', 'ElementTypeUI', true, true),
+('ElementType:27', 'ElementTypeUI', true, true),
+('ElementType:28', 'ElementTypeUI', true, true),
+('ElementType:29', 'ElementTypeUI', true, true),
+('ElementType:30', 'ElementTypeUI', true, true),
+('ElementType:31', 'ElementTypeUI', true, true),
+('ElementType:32', 'ElementTypeUI', true, true),
+('ElementType:33', 'ElementTypeUI', true, true),
+('ElementType:34', 'ElementTypeUI', true, true),
+('ElementType:35', 'ElementTypeUI', true, true),
+('ElementType:36', 'ElementTypeUI', true, true),
+('ElementType:37', 'ElementTypeUI', true, true),
+('ElementType:38', 'ElementTypeUI', true, true),
+('ElementType:39', 'ElementTypeUI', true, true),
+('ElementType:40', 'ElementTypeUI', true, true),
+('ElementType:41', 'ElementTypeUI', true, true),
+('ElementType:42', 'ElementTypeUI', true, true),
+('ElementType:43', 'ElementTypeUI', true, true),
+('ElementType:44', 'ElementTypeUI', true, true),
+('ElementType:45', 'ElementTypeUI', true, true),
+('ElementType:46', 'ElementTypeUI', true, true),
+('ElementType:47', 'ElementTypeUI', true, true),
+('ElementType:48', 'ElementTypeUI', true, true),
+('ElementType:49', 'ElementTypeUI', true, true),
+('ElementType:50', 'ElementTypeUI', true, true),
+('ElementType:51', 'ElementTypeUI', true, true),
+('ElementType:52', 'ElementTypeUI', true, true),
+('ElementType:53', 'ElementTypeUI', true, true),
+('ElementType:54', 'ElementTypeUI', true, true),
+('ElementType:55', 'ElementTypeUI', true, true),
+('ElementType:56', 'ElementTypeUI', true, true),
+('ElementType:57', 'ElementTypeUI', true, true),
+('ElementType:58', 'ElementTypeUI', true, true),
+('ElementType:59', 'ElementTypeUI', true, true),
+('ElementType:60', 'ElementTypeUI', true, true),
+('ElementType:61', 'ElementTypeUI' ,True, True),
+('ElementType:62', 'ElementTypeUI', true, true),
+('ElementType:63', 'ElementTypeUI', true, true),
+('ElementType:64', 'ElementTypeUI', true, true),
+('ElementType:65', 'ElementTypeUI', true, true),
+('ElementType:66', 'ElementTypeUI', true, true),
+('ElementType:67', 'ElementTypeUI', true, true),
+('ElementType:68', 'ElementTypeUI', true, true),
+('ElementType:69', 'ElementTypeUI', true, true),
+('ElementType:70', 'ElementTypeUI', true, true),
+('ElementType:71', 'ElementTypeUI', true, true),
+('ElementType:72', 'ElementTypeUI', true, true),
+('ElementType:73','ElementTypeUI' ,True,True),
+('ElementType:74', 'ElementTypeUI', true, true),
+('ElementType:75', 'ElementTypeUI', true, true),
+('ElementType:84', 'ElementTypeUI', true, true),
+('ElementType:85', 'ElementTypeUI', true, true),
+('ElementType:86', 'ElementTypeUI', true, true),
+('ElementType:87', 'ElementTypeUI', true, true),
+('ElementType:88', 'ElementTypeUI', true, true),
+('ElementType:89', 'ElementTypeUI', true, true),
+('ElementType:93', 'ElementTypeUI', true, true),
+('ElementType:95', 'ElementTypeUI', true, true),
+('ElementType:96', 'ElementTypeUI', true, true),
+('ElementType:97', 'ElementTypeUI', true, true),
+('ElementType:98', 'ElementTypeUI', true, true),
+('ElementType:99', 'ElementTypeUI', true, true),
+('ElementType:100', 'ElementTypeUI', true, true),
+('ElementType:1000', 'ElementTypeUI', true, true),
+('ElementType:2003', 'ElementTypeUI', true, true),
+('ImsIncidentTypeTask:1010101', 'ImsIncidentTypeTaskUI', true, true);
+
+
+INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
+('ElementType:1', 1, '1'),
+('ElementType:1', 2, 'graphic_icon/01_weather_station.svg'),
+('ElementType:1', 14, 'grid/element_type_01.png'),
+('ElementType:1', 84, '["ElementTypeParam:1:2:10", "ElementTypeParam:1:2:17", "ElementTypeParam:1:2:18"]'),
+
+('ElementType:2', 1, '2'),
+('ElementType:2', 2, 'graphic_icon/02_camera_dai.svg'),
+('ElementType:2', 14, 'grid/element_type_02.png'),
+('ElementType:2', 69, 'true'),
+
+
+('ElementType:3', 1, '3'),
+('ElementType:3', 2, 'graphic_icon/03_detector.svg'),
+('ElementType:3', 14, 'grid/element_type_03.png'),
+
+
+
+('ElementType:4', 1, '4'),
+('ElementType:4', 2, 'graphic_icon/04_section.svg'),
+('ElementType:4', 14, 'grid/element_type_04.png'),
+
+
+('ElementType:5', 72, 'true'),
+('ElementType:6', 72, 'true'),
+('ElementType:7', 72, 'true'),
+
+('ElementType:8', 1, '8'),
+('ElementType:8', 2, 'graphic_icon/08_barrier.svg'),
+('ElementType:8', 14, 'grid/element_type_08.png'),
+('ElementType:8', 69, 'true'),
+
+('ElementType:9', 1, '9'),
+('ElementType:9', 2, 'graphic_icon/09_fan.svg'),
+('ElementType:9', 14, 'grid/element_type_09.png'),
+('ElementType:9', 23, '102703'),
+('ElementType:9', 56, 'false'),
+
+('ElementType:10', 72, 'true'),
+
+('ElementType:11', 1, '11'),
+('ElementType:11', 2, 'graphic_icon/11_sos.svg'),
+('ElementType:11', 14, 'grid/element_type_11.png'),
+
+('ElementType:12', 72, 'true'),
+
+('ElementType:13', 1, '13'),
+('ElementType:13', 2, 'graphic_icon/13_sem_3_grupos.svg'),
+('ElementType:13', 14, 'grid/element_type_13.png'),
+('ElementType:13', 69, 'true'),
+
+('ElementType:14', 1, '14'),
+('ElementType:14', 2, 'graphic_icon/14_lum.svg'),
+('ElementType:14', 14, 'grid/element_type_14.png'),
+
+('ElementType:15', 1, '15'),
+('ElementType:15', 2, 'graphic_icon/15_flame.svg'),
+('ElementType:15', 14, 'grid/element_type_15.png'),
+
+('ElementType:16', 72, 'true'),
+
+('ElementType:17', 1, '17'),
+('ElementType:17', 2, 'graphic_icon/17_galibo.svg'),
+('ElementType:17', 14, 'grid/element_type_17.png'),
+('ElementType:17', 69, 'true'),
+
+('ElementType:18', 1, '18'),
+('ElementType:18', 2, 'graphic_icon/18_anemometro.svg'),
+('ElementType:18', 14, 'grid/element_type_18.png'),
+
+('ElementType:19', 1, '19'),
+('ElementType:19', 2, 'graphic_icon/19_co.svg'),
+('ElementType:19', 14, 'grid/element_type_19.png'),
+
+('ElementType:20', 1, '20'),
+('ElementType:20', 2, 'graphic_icon/20_no.svg'),
+('ElementType:20', 14, 'grid/element_type_20.png'),
+
+('ElementType:21', 1, '21'),
+('ElementType:21', 2, 'graphic_icon/21_opac.svg'),
+('ElementType:21', 14, 'grid/element_type_21.png'),
+
+('ElementType:22', 72, 'true'),
+('ElementType:23', 72, 'true'),
+('ElementType:24', 72, 'true'),
+('ElementType:25', 72, 'true'),
+
+('ElementType:26', 1, '26'),
+('ElementType:26', 2, 'graphic_icon/26_switch.svg'),
+('ElementType:26', 14, 'grid/element_type_26.png'),
+('ElementType:26', 69, 'true'),
+
+('ElementType:27', 1, '27'),
+('ElementType:27', 2, 'graphic_icon/27_plc.svg'),
+('ElementType:27', 14, 'grid/element_type_27.png'),
+('ElementType:27', 69, 'true'),
+
+('ElementType:28', 72, 'true'),
+
+('ElementType:29', 1, '29'),
+('ElementType:29', 2, 'graphic_icon/29_fibrolaser_ct.svg'),
+('ElementType:29', 14, 'grid/element_type_29.png'),
+('ElementType:29', 69, 'true'),
+
+('ElementType:30', 72, 'true'),
+('ElementType:31', 72, 'true'),
+
+('ElementType:32', 1, '32'),
+('ElementType:32', 2, 'graphic_icon/32_presurizacion_vent.svg'),
+('ElementType:32', 14, 'grid/element_type_32.png'),
+('ElementType:32', 69, 'true'),
+
+('ElementType:33', 72, 'true'),
+('ElementType:34', 72, 'true'),
+('ElementType:35', 72, 'true'),
+('ElementType:36', 72, 'true'),
+('ElementType:37', 72, 'true'),
+('ElementType:38', 72, 'true'),
+('ElementType:39', 72, 'true'),
+('ElementType:40', 72, 'true'),
+('ElementType:41', 72, 'true'),
+('ElementType:42', 72, 'true'),
+('ElementType:43', 72, 'true'),
+('ElementType:44', 72, 'true'),
+('ElementType:45', 72, 'true'),
+('ElementType:46', 72, 'true'),
+('ElementType:47', 72, 'true'),
+('ElementType:48', 72, 'true'),
+('ElementType:49', 72, 'true'),
+('ElementType:50', 72, 'true'),
+
+('ElementType:51', 1, '51'),
+('ElementType:51', 2, 'graphic_icon/51_etd.svg'),
+('ElementType:51', 14, 'grid/element_type_51.png'),
+('ElementType:51', 69, 'true'),
+
+('ElementType:52', 72, 'true'),
+
+('ElementType:53', 1, '53'),
+('ElementType:53', 2, 'graphic_icon/53_sem_2_grupos.svg'),
+('ElementType:53', 14, 'grid/element_type_53.png'),
+('ElementType:53', 69, 'true'),
+
+('ElementType:54', 72, 'true'),
+('ElementType:55', 72, 'true'),
+
+
+('ElementType:56', 1, '56'),
+('ElementType:56', 2, 'graphic_icon/56_unifilar.svg'),
+('ElementType:56', 14, 'grid/element_type_56.png'),
+('ElementType:56', 69, 'true'),
+
+('ElementType:57', 1, '57'),
+('ElementType:57', 2, 'graphic_icon/57_switch.svg'),
+('ElementType:57', 14, 'grid/element_type_57.png'),
+('ElementType:57', 69, 'true'),
+
+('ElementType:58', 72, 'true'),
+('ElementType:59', 72, 'true'),
+('ElementType:60', 72, 'true'),
+
+('ElementType:61', 1, '61'),
+('ElementType:61', 2, 'graphic_icon/61_fire_det_ct.svg'),
+('ElementType:61', 14, 'grid/element_type_61.png'),
+('ElementType:61', 69, 'true'),
+
+('ElementType:62', 72, 'true'),
+('ElementType:63', 72, 'true'),
+('ElementType:64', 72, 'true'),
+
+('ElementType:65', 1, '65'),
+('ElementType:65', 2, 'graphic_icon/65_sai.svg'),
+('ElementType:65', 14, 'grid/element_type_65.png'),
+('ElementType:65', 69, 'true'),
+
+('ElementType:66', 1, '66'),
+('ElementType:66', 2, 'graphic_icon/66_vane.svg'),
+('ElementType:66', 14, 'grid/element_type_66.png'),
+
+('ElementType:67', 1, '67'),
+('ElementType:67', 2, 'graphic_icon/67_Central_luz_emer.svg'),
+('ElementType:67', 14, 'grid/element_type_67.png'),
+
+('ElementType:68', 72, 'true'),
+('ElementType:69', 72, 'true'),
+
+('ElementType:70', 1, '70'),
+('ElementType:70', 2, 'graphic_icon/70_analizador_red.svg'),
+('ElementType:70', 14, 'grid/element_type_70.png'),
+
+('ElementType:71', 1, '71'),
+('ElementType:71', 2, 'graphic_icon/71_vms_dgt.svg'),
+('ElementType:71', 14, 'grid/element_type_71.png'),
+('ElementType:71', 23, '102601'),
+('ElementType:71', 30, '102602'),
+('ElementType:71', 69, 'true'),
+
+('ElementType:72', 72, 'true'),
+
+('ElementType:73', 1, '73'),
+('ElementType:73', 2, 'graphic_icon/73_emergency_ilumination.svg'),
+('ElementType:73', 14, 'grid/element_type_84.png'),
+('ElementType:73', 69, 'true'),
+
+('ElementType:74', 72, 'true'),
+
+('ElementType:75', 1, '75'),
+('ElementType:75', 2, 'graphic_icon/75_ge.svg'),
+('ElementType:75', 14, 'grid/element_type_75.png'),
+('ElementType:75', 69, 'true'),
+
+('ElementType:84', 1, '84'),
+('ElementType:84', 2, 'graphic_icon/84_switch.svg'),
+('ElementType:84', 14, 'grid/element_type_84.png'),
+('ElementType:84', 69, 'true'),
+
+('ElementType:85', 72, 'true'),
+
+('ElementType:86', 1, '86'),
+('ElementType:86', 2, 'graphic_icon/86_pump.svg'),
+('ElementType:86', 14, 'grid/element_type_86.png'),
+('ElementType:86', 69, 'true'),
+
+('ElementType:87', 1, '87'),
+('ElementType:87', 2, 'graphic_icon/87_tank.svg'),
+('ElementType:87', 14, 'grid/element_type_87.png'),
+('ElementType:87', 69, 'true'),
+
+('ElementType:88', 72, 'true'),
+
+('ElementType:89', 1, '89'),
+('ElementType:89', 2, 'graphic_icon/89_gate.svg'),
+('ElementType:89', 14, 'grid/element_type_89.png'),
+('ElementType:89', 69, 'true'),
+
+('ElementType:93', 72, 'true'),
+('ElementType:95', 72, 'true'),
+('ElementType:96', 72, 'true'),
+('ElementType:97', 72, 'true'),
+('ElementType:98', 72, 'true'),
+('ElementType:99', 72, 'true'),
+('ElementType:100', 72, 'true'),
+('ElementType:1000', 72, 'true'),
+
+('ElementType:2000', 2, 'graphic_icon/2000_light_control_tube.svg'),
+('ElementType:2000', 72, 'true'),
+('ElementType:2000', 23, '102802'),
+('ElementType:2000', 14, 'grid/element_type_07.png'),
+('ElementType:2000', 56, 'false'),
+
+('ElementType:2001', 72, 'true'),
+('ElementType:2002', 72, 'true'),
+('ElementType:2003', 72, 'true'),
+
+('ElementType:98', 69, 'true'),
+('ElementType:1000', 69, 'true'),
+
+
+('ElementType:2001', 69, 'true'),
+('ElementType:2002', 69, 'true'),
+('ElementType:2003', 69, 'true'),
+
+('ImsIncidentTypeTask:1010101', 40, 'LBL_BUTTON_TEXT');
+
+
