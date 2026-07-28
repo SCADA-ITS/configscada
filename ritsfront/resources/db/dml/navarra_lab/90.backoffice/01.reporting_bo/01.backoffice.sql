@@ -19,6 +19,7 @@ BEGIN
     	"showIdTable": true,
     	"showIdSearch": false,
     	"gridFilters": true,
+		"autorefresh": 60,
 		"editable": false
 	}',
 	-- default_metadata_column
@@ -71,7 +72,7 @@ BEGIN
 			) t
 			ORDER BY fecha_actualizacion DESC
 			FETCH FIRST 1000 ROWS ONLY'
-			, 4001, '{"mapLauncherModuleAction": 200006, "mapLauncherModuleActionViewType": 1}'),
+			, 4001, '{"mapLauncherModuleAction": 200006, "mapLauncherModuleActionViewType": 1,  "autorefresh": 300, "autorefreshMin": 60}'),
 		(2, 'e112_all_ext_entities_with_values', 'LBL_EXT_ENTITY_112', 'LBL_EXT_ENTITY_112', 'LBL_EXT_ENTITY_112_DESCRIPTION', NULL, false, false, 
 			-- sql_view 
 			'SELECT
@@ -112,7 +113,7 @@ BEGIN
 			) t
 			ORDER BY fecha_actualizacion DESC
 			FETCH FIRST 1000 ROWS ONLY'
-			, 4002, '{"mapLauncherModuleAction": 200006, "mapLauncherModuleActionViewType": 1}'),
+			, 4002, '{"mapLauncherModuleAction": 200006, "mapLauncherModuleActionViewType": 1,  "autorefresh": 300, "autorefreshMin": 60}'),
 		(3, 'e112_resources_ext_entities_with_values', 'LBL_EXT_ENTITY_TYPE_112_RESOURCES', 'LBL_EXT_ENTITY_TYPE_112_RESOURCES', 'LBL_EXT_ENTITY_TYPE_112_RESOURCES_DESCRIPTION', NULL, false, false, 
 			-- sql_view 
 			'SELECT 
@@ -174,7 +175,7 @@ BEGIN
 			) t
 			ORDER BY fecha_publicacion DESC
 			FETCH FIRST 1000 ROWS ONLY'
-			, 4005, '{"mapLauncherModuleAction": 200006, "mapLauncherModuleActionViewType": 1}'),
+			, 4005, '{"mapLauncherModuleAction": 200006, "mapLauncherModuleActionViewType": 1,  "autorefresh": 300, "autorefreshMin": 60}'),
 		(6, 'all_waze_traffic_jam_ext_entities_with_values', 'LBL_EXT_ENTITY_WAZE_TRAFFIC_JAM', 'LBL_EXT_ENTITY_WAZE_TRAFFIC_JAM', 'LBL_EXT_ENTITY_WAZE_TRAFFIC_JAM_DESCRIPTION', NULL, false, false, 
 			-- sql_view 
 			'SELECT 
@@ -183,7 +184,7 @@ BEGIN
 				reporting_bo.waze_traffic_jam_ext_entities_with_values
 			ORDER BY fecha_publicacion DESC
 			FETCH FIRST 1000 ROWS ONLY'
-			, 4006, '{"mapLauncherModuleAction": 200006, "mapLauncherModuleActionViewType": 1}');			
+			, 4006, '{"mapLauncherModuleAction": 200006, "mapLauncherModuleActionViewType": 1,  "autorefresh": 300, "autorefreshMin": 60}');			
 			
 	INSERT INTO reporting_bo.sg_metadata_columns (id, sg_metadata_table_id, column_name, "label", label_description, needs_translation, metadata, ref_view_column_id) VALUES
 		(0101, 1, 'id', 'LBL_EXT_ENTITY_C4_COLUMN_ID', NULL, true, '{"position": 1, "editable": false, "refName": true}', NULL),

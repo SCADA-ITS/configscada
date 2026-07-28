@@ -15,6 +15,7 @@ BEGIN
     	"showIdForm": false,
     	"showIdTable": false,
     	"showIdSearch": false,
+		"autorefresh": 60,
     	"gridFilters": true
 	}',
 	-- default_metadata_column
@@ -33,6 +34,7 @@ BEGIN
 	(1, 'incidents', 'LBL_INCIDENTS', 'LBL_INCIDENT', 'LBL_INCIDENTS_DESCRIPTION', 'mdi mdi-message-alert', true, true,'{
 		"formHeight": 800,
     	"formWidth": 1000,
+		"autorefresh": 60,
 	  	 "groupImages": [
 	      	{
 		      "name": "photos",
