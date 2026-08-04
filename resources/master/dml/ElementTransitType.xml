@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="ElementTransitType">
+	<SELECT>SELECT element_type_id as "elementTypeId",
+				   element_id as "elementId",
+				   transit_type_id as "transitTypeId",
+				   infraction_manager_id as "infractionManagerId",
+				   enabled as "enabled",
+				   visible as "visible"
+			  FROM conf.element_transit_types
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>INSERT INTO conf.element_transit_types
+					   (element_type_id,
+					    element_id,
+					    transit_type_id,
+					    infraction_manager_id,
+					    enabled,
+					    visible,
+					    created_at,
+					    updated_at)
+				 VALUES (:elementTypeId,
+				         :elementId,
+				         :transitTypeId,
+				         :infractionManagerId,
+				         :enabled,
+				         :visible,
+				         CURRENT_TIMESTAMP,
+				         CURRENT_TIMESTAMP)
+	</INSERT>
+	<UPDATE>UPDATE conf.element_transit_types
+				SET infraction_manager_id = :infractionManagerId,
+					enabled = :enabled,
+					visible = :visible,
+					updated_at = CURRENT_TIMESTAMP
+			  WHERE element_type_id = :elementTypeId
+				AND element_id = :elementId
+				AND transit_type_id = :transitTypeId
+	</UPDATE>
+	<DELETE>DELETE FROM conf.element_transit_types
+			 WHERE element_type_id = :elementTypeId
+			 AND element_id = :elementId
+			 AND transit_type_id = :transitTypeId
+	</DELETE>
+</DML>
