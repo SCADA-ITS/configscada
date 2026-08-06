@@ -1,6 +1,7 @@
 {
 	"restEndpoints": {
 		"transits": "trs/transits",
+		"transit": "trs/transits/${id}",
 		"grid": "grids/${id}"
 	},
 	"gridTransits": 1052,
