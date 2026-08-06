@@ -209,7 +209,7 @@
 						<p:subscriptor_id_ref>14</p:subscriptor_id_ref>
 					</p:subscriptors_ref>
 					<p:custom_path>true</p:custom_path>
-					<p:path>/topic/extEntity.{extEntityTypeId}.{id}</p:path>
+					<p:path>/topic/extEntity.{extEntityTypeId}</p:path>
 				</p:topic>
 			</p:topics>
 		</p:publisher>

@@ -12,6 +12,7 @@ import com.revenga.rits.back.transit.manager.cgi.api.multas.client.helper.CgiApi
 import com.revenga.rits.back.transit.manager.cgi.api.multas.client.helper.CgiApiMultasVehicleSpeedLimitHelper;
 import com.revenga.rits.back.transit.manager.cgi.api.multas.client.CgiApiMultasClient;
 import com.revenga.rits.back.transit.manager.cgi.api.multas.client.config.CgiApiMultasProperties;
+import com.revenga.rits.back.transit.manager.cgi.api.multas.client.dto.CgiApiMultasPlateDataDto;
 import com.revenga.rits.back.transit.manager.cgi.api.multas.client.dto.CgiApiMultasPlateNumberResponseDto;
 import com.revenga.rits.back.transit.manager.service.EntitiesManager;
 import com.revenga.rits.back.transit.manager.transit.persistence.TransitPersistenceService;
@@ -44,10 +45,12 @@ class getVehicleData {
 	final long TRANSIT_PARAM_LIMITATION_TYPE = 13L;
 	final long TRANSIT_PARAM_VEHICLE_LIMITATION_SPEED = 15L;
 	final long TRANSIT_PARAM_OBSERVATIONS = 17L;
+	final long TRANSIT_PARAM_FOREIGN_PLATE = 20L;
 	final Long TRANSIT_STATE_IN_REVIEW = 3L;
 	final Long TRANSIT_STATE_WHITE_LIST = 11L;
 	final Long TRANSIT_STATE_BLACK_LIST = 12L;
 	final String DGT_CONTACT_ERROR_MESSAGE = "Error al contactar con el servicio DGT";
+	final String FOREIGN_PLATE_NO_DGT_MESSAGE = "Matrícula extranjera. Sin datos DGT";
 	final String INFRACTION_TYPE_ARTICLE_48 = "Artículo 48";
 	final String INFRACTION_TYPE_ARTICLE_50 = "Artículo 50";
 	final String INFRACTION_TYPE_ARTICLE_52 = "Artículo 52";
@@ -126,7 +129,7 @@ class getVehicleData {
 				pedirDatosDGT(transit);
 
 				// Consulto las BBDD de listas blancas y negras a ver si se encuentra en alguna.
-				connection = DataSourceConnection.getInstance().getConnection();
+				/*connection = DataSourceConnection.getInstance().getConnection();
 				boolean ewl = false;
 				boolean ebl = false;
 				try {
@@ -151,17 +154,18 @@ class getVehicleData {
 
 				log.debug("Resultado de peticion de listas. Lista blanca: " + ewl + ". Lista negra: " + ebl);
 				if (ewl) {
-					service.changeStateTransit(transit.getId(), TRANSIT_STATE_WHITE_LIST, null);
+					changeStateTransitWithTrace(transit, TRANSIT_STATE_WHITE_LIST);
 				} else if (ebl) {
-					service.changeStateTransit(transit.getId(), TRANSIT_STATE_BLACK_LIST, null);
+					changeStateTransitWithTrace(transit, TRANSIT_STATE_BLACK_LIST);
 				} else {
-					service.changeStateTransit(transit.getId(), TRANSIT_STATE_IN_REVIEW, null);
-				}
+					changeStateTransitWithTrace(transit, TRANSIT_STATE_IN_REVIEW);
+				}*/
+				changeStateTransitWithTrace(transit, TRANSIT_STATE_IN_REVIEW);
 
 			} catch (Exception e) {
 				log.error(e.getMessage(), e);
-				service.changeStateTransit(transit.getId(), TRANSIT_STATE_IN_REVIEW, null);
-			} finally {
+				changeStateTransitWithTrace(transit, TRANSIT_STATE_IN_REVIEW);
+			} /*finally {
 
 				try {
 					if (whiteListResult != null && !whiteListResult.isClosed()) {
@@ -182,10 +186,10 @@ class getVehicleData {
 				} catch (SQLException e) {
 					log.error(e.getMessage(), e);
 				}
-			}
+			}*/
 		} else {
 			log.debug("No se realiza la consulta de datos de vehiculo por no tener ninguna matricula asociada");
-			service.changeStateTransit(transit.getId(), TRANSIT_STATE_IN_REVIEW, null);
+			changeStateTransitWithTrace(transit, TRANSIT_STATE_IN_REVIEW);
 		}
 
 		return true;
@@ -199,7 +203,22 @@ class getVehicleData {
 
 		String plateNumber = StringUtils.trimToNull(transit.getVehiclePlateNumber());
 
-		if (plateNumber == null || client == null) {
+		if (plateNumber == null) {
+			return null;
+		}
+
+		boolean foreignPlate = CgiApiMultasPlateDataDto.parsePlateNumber(plateNumber).isForeignPlate();
+		addOrReplaceTransitValue(transit, TRANSIT_PARAM_FOREIGN_PLATE, foreignPlate ? "Sí" : "No");
+
+		if (foreignPlate) {
+			log.info("No se realiza la consulta DGT para la matricula extranjera {}", plateNumber);
+			addOrReplaceTransitValue(transit, TRANSIT_PARAM_OBSERVATIONS, FOREIGN_PLATE_NO_DGT_MESSAGE);
+			EntitiesManager.getInstance().updateTransit(transit);
+			return null;
+		}
+
+		if (client == null) {
+			EntitiesManager.getInstance().updateTransit(transit);
 			return null;
 		}
 
@@ -208,6 +227,7 @@ class getVehicleData {
 			log.debug("Resultado de peticion de datos para la matricula {}: {}", plateNumber, response);
 
 			if (response == null) {
+				EntitiesManager.getInstance().updateTransit(transit);
 				return null;
 			}
 
@@ -218,10 +238,27 @@ class getVehicleData {
 			addOrReplaceTransitValue(transit, TRANSIT_PARAM_API_VEHICLE_MMA, getVehicleMma(response));
 			String roadType = EntitiesManager.getInstance().getTransitValue(transit, TRANSIT_PARAM_ROAD_TYPE);
 			Short vehicleSpeedLimit = CgiApiMultasVehicleSpeedLimitHelper.getVehicleSpeedLimit(response, roadType);
-			addOrReplaceTransitValue(transit, TRANSIT_PARAM_VEHICLE_LIMITATION_SPEED, vehicleSpeedLimit);
-			recalculateSanctionData(transit);
+			log.info(
+					"getVehicleData limite DGT. transitId={}, plateNumber={}, roadType={}, calculatedVehicleSpeedLimit={}, currentVehicleSpeedLimit={}, currentGravity={}",
+					transit.getId(), plateNumber, roadType, vehicleSpeedLimit,
+					getTransitValue(transit, TRANSIT_PARAM_VEHICLE_LIMITATION_SPEED),
+					getTransitValue(transit, TRANSIT_PARAM_GRAVITY));
+			if (vehicleSpeedLimit != null) {
+				log.info("getVehicleData recalculando sancion. transitId={}, vehicleSpeedLimit={}",
+						transit.getId(), vehicleSpeedLimit);
+				addOrReplaceTransitValue(transit, TRANSIT_PARAM_VEHICLE_LIMITATION_SPEED, vehicleSpeedLimit);
+				logSanctionData("antes de recalcular sancion", transit);
+				recalculateSanctionData(transit);
+				logSanctionData("despues de recalcular sancion", transit);
+			} else {
+				log.info(
+						"getVehicleData no recalcula sancion porque no hay limite de vehiculo. transitId={}, plateNumber={}",
+						transit.getId(), plateNumber);
+			}
 
-			EntitiesManager.getInstance().updateTransit(transit);
+			logSanctionData("antes de updateTransit tras respuesta DGT", transit);
+			Transit updatedTransit = EntitiesManager.getInstance().updateTransit(transit);
+			logSanctionData("resultado de updateTransit tras respuesta DGT", updatedTransit);
 			return response;
 
 		} catch (Exception e) {
@@ -231,8 +268,13 @@ class getVehicleData {
 			}
 			if (StringUtils.isNotBlank(errorDetail)) {
 				addOrReplaceTransitValue(transit, TRANSIT_PARAM_OBSERVATIONS, errorDetail);
-				EntitiesManager.getInstance().updateTransit(transit);
+				log.info(
+						"getVehicleData error DGT sin recalculo. transitId={}, plateNumber={}, errorDetail={}",
+						transit.getId(), plateNumber, errorDetail);
 			}
+			logSanctionData("antes de updateTransit por error DGT", transit);
+			Transit updatedTransit = EntitiesManager.getInstance().updateTransit(transit);
+			logSanctionData("resultado de updateTransit por error DGT", updatedTransit);
 			log.error("Se ha producido un error en la peticion de datos de vehiculo con la matricula: {}", plateNumber, e);
 			return null;
 		}
@@ -279,6 +321,11 @@ class getVehicleData {
 		String article = StringUtils.defaultString(getInfractionArticle(locationType, limitationType));
 		String gravity = "";
 		String calculatedDboid = "";
+		log.info(
+				"getVehicleData calculo sancion. transitId={}, correctedSpeed={}, roadSpeedLimit={}, vehicleSpeedLimit={}, effectiveSpeedLimit={}, previousGravity={}, previousDboid={}",
+				transit.getId(), correctedSpeed, roadSpeedLimit, vehicleSpeedLimit, effectiveSpeedLimit,
+				getTransitValue(transit, TRANSIT_PARAM_GRAVITY),
+				getTransitValue(transit, TRANSIT_PARAM_CALCULATED_DBOID));
 
 		if (correctedSpeed != null && effectiveSpeedLimit != null) {
 			int speedDifference = correctedSpeed - effectiveSpeedLimit;
@@ -294,6 +341,56 @@ class getVehicleData {
 		addOrReplaceTransitValue(transit, TRANSIT_PARAM_ARTICLE, article);
 		addOrReplaceTransitValue(transit, TRANSIT_PARAM_GRAVITY, gravity);
 		addOrReplaceTransitValue(transit, TRANSIT_PARAM_CALCULATED_DBOID, calculatedDboid);
+		log.info(
+				"getVehicleData resultado calculo sancion. transitId={}, article={}, gravity={}, calculatedDboid={}",
+				transit.getId(), article, gravity, calculatedDboid);
+	}
+
+	private void logSanctionData(String stage, Transit transit) {
+
+		log.info(
+				"getVehicleData estado sancion [{}]. transitId={}, roadSpeedLimit={}, vehicleSpeedLimit={}, correctedSpeed={}, gravity={}, article={}, calculatedDboid={}",
+				stage, transit != null ? transit.getId() : null,
+				getTransitValue(transit, TRANSIT_PARAM_ROAD_SPEED_LIMIT),
+				getTransitValue(transit, TRANSIT_PARAM_VEHICLE_LIMITATION_SPEED),
+				getTransitValue(transit, TRANSIT_PARAM_CORRECTED_SPEED),
+				getTransitValue(transit, TRANSIT_PARAM_GRAVITY),
+				getTransitValue(transit, TRANSIT_PARAM_ARTICLE),
+				getTransitValue(transit, TRANSIT_PARAM_CALCULATED_DBOID));
+	}
+
+	private String getTransitValue(Transit transit, long transitTypeParamId) {
+
+		if (transit == null || transit.getTransitValues() == null) {
+			return null;
+		}
+
+		TransitValue transitValue = transit.getTransitValues().find {
+			Long.valueOf(transitTypeParamId).equals(it.getTransitTypeParamId())
+		};
+		return transitValue != null ? transitValue.getValue() : null;
+	}
+
+	private void changeStateTransitWithTrace(Transit transit, Long targetStateId) {
+
+		logPersistedSanctionData("antes de cambio de estado a " + targetStateId, transit);
+		service.changeStateTransit(transit.getId(), targetStateId, null);
+		logPersistedSanctionData("despues de cambio de estado a " + targetStateId, transit);
+	}
+
+	private void logPersistedSanctionData(String stage, Transit transit) {
+
+		if (transit == null) {
+			logSanctionData(stage, null);
+			return;
+		}
+
+		List<TransitValue> persistedTransitValues = EntitiesManager.getInstance().getTransitValues(transit);
+		Transit transitSnapshot = new Transit();
+		transitSnapshot.setId(transit.getId());
+		transitSnapshot.setTransitValues(
+				persistedTransitValues != null ? new ArrayList<>(persistedTransitValues) : new ArrayList<>());
+		logSanctionData(stage, transitSnapshot);
 	}
 
 	private String getFormattedItvExpiryDate(CgiApiMultasPlateNumberResponseDto response) {
@@ -642,5 +739,5 @@ class getVehicleData {
     			Long.valueOf(transitTypeParamId) == transitValue.transitTypeParamId
 		}
 	}
-}
 
+}
