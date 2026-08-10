@@ -97,6 +97,22 @@
 			"enabled": true
 		},
 		{
+			"id": 6,
+			"transitFilterGroupId": 1,
+			"dataType": "DataType:1",
+			"label": "LBL_TRANSIT_STATE",
+			"refFieldEndpoint": {
+				"type": "REST",
+				"value": "trs/transits/states",
+				"sourceFieldId": "id",
+				"sourceFieldValue": "labelAlias",
+				"sourceFieldOthers": ["labelAlias=LBL_TRANSIT_STATE"]
+			},
+			"targetFields": ["transitStateId"],
+			"position": 3,
+			"enabled": true
+		},
+		{
 			"id": 3,
 			"transitFilterGroupId": 1,
 			"dataType": "DataType:1",
@@ -110,7 +126,7 @@
 				"sourceFieldOthers": ["alias=LBL_ALIAS","elementType.labelAlias=LBL_ELEMENT_TYPE"]
 			},
 			"targetFields": ["elementTypeId", "elementId"],
-			"position": 3,
+			"position": 4,
 			"enabled": true
 		},
 		{
@@ -119,7 +135,7 @@
 			"dataType": "DataType:2",
 			"label": "LBL_TRANSIT_VEHICLE_PLATE_NUMBER",
 			"targetFields": ["vehiclePlateNumber"],
-			"position": 4,
+			"position": 5,
 			"enabled": true
 		},
 		{

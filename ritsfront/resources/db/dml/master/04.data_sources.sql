@@ -1622,8 +1622,8 @@ INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) V
 
 (270, 8, 'http://localhost:8082/graphql'),
 (270, 9, 'changeStateTransit'),
-(270, 10, 'transitId,transitStateId,transitStateOptionId'),
-(270, 11, 'String!,String!,String'),
+(270, 10, 'transitId,transitStateId,transitStateOptionId,assignedUserId'),
+(270, 11, 'String!,String!,String,String'),
 (270, 12, NULL),
 
 (271, 8, 'http://localhost:8082/graphql'),

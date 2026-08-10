@@ -638,11 +638,7 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 				"calculatedFieldExpresion": "return fieldValue.find(type => type.transitTypeParam.id === \"TransitTypeParam:1:10\")?.value;", 
 				"label": "LBL_TRANSIT_TAB_GENERAL_INFRACTION_CALCULATED_DBOID",
 				"enabled": true,
-				"param": "TransitTypeParam:1:10",
-				"selectorOptions": ["6240899900001334507855", "6240899900001369107855", "6240899900001369007855", "6240899900001368907855", "6240899900001368807855",
-									"6240899900001327607855", "6240899900001364307855", "6240899900001364207855", "6240800000090568007630", "6240899900001369207855",
-									"6240899900001328807855", "6240899900001366207855",	"6240899900001366107855", "6240899900001366007855",	"6240899900001365907855" ],
-				"editable": ["TransitState:3", "TransitState:9"]
+				"param": "TransitTypeParam:1:10"
 			},
 			{
 				"id": 109,
