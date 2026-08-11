@@ -6,7 +6,12 @@ import org.springframework.util.CollectionUtils;
 import com.revenga.rits.back.data.core.model.Transit;
 import com.revenga.rits.back.data.core.model.TransitValue;
 import com.revenga.rits.back.data.core.model.TransitTypeStateTransition;
+import com.revenga.rits.back.data.core.model.SystemParam;
+import com.revenga.rits.back.data.core.model.SystemParamValue;
 import com.revenga.rits.back.data.core.dao.manager.DataSourceConnection;
+import com.revenga.rits.back.data.core.util.MailUtil;
+import com.revenga.rits.back.data.core.util.TelegramUtil;
+import com.revenga.rits.back.entities.lib.repository.SystemParamValueRepository;
 import com.revenga.rits.back.transit.manager.cgi.api.multas.client.helper.CgiApiMultasClientHelper;
 import com.revenga.rits.back.transit.manager.cgi.api.multas.client.helper.CgiApiMultasPropertiesHelper;
 import com.revenga.rits.back.transit.manager.cgi.api.multas.client.helper.CgiApiMultasVehicleSpeedLimitHelper;
@@ -20,12 +25,22 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 
+import java.time.Instant;
 import java.time.OffsetDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
 import groovy.json.JsonSlurper;
 
 class getVehicleData {
@@ -55,10 +70,26 @@ class getVehicleData {
 	final String LOCATION_TYPE_TRAVESIA = "Travesía";
 	final String LIMITATION_TYPE_GENERAL = "General";
 	final String LIMITATION_TYPE_ESPECIFICA = "Específica";
+	final String NOTIFICATION_TYPE_TELEGRAM = "Telegram";
+	final String NOTIFICATION_TYPE_EMAIL = "Correo";
 	final String[] GRAVITY_LABELS = [ "Grave - Sin puntos", "Grave - 2 puntos", "Grave - 4 puntos",
 			"Grave - 6 puntos", "Muy grave - 6 puntos" ];
 	private static final String WHITE_LIST_SQL = "SELECT 1 FROM transits_bo.white_list WHERE matricula = ?";
-	private static final String BLACK_LIST_SQL = "SELECT 1 FROM transits_bo.black_list WHERE matricula = ?";
+	private static final String BLACK_LIST_SQL = """
+		SELECT bl.id AS black_list_id,
+		       a.id AS administration_id,
+		       a.name AS administration_name,
+		       nt.name AS notification_type,
+		       ar.recipient
+		  FROM transits_bo.black_list bl
+		  JOIN transits_bo.administrations a ON a.id = bl.administration_id
+		  JOIN transits_bo.notification_types nt ON nt.id = a.notification_type_id
+		  LEFT JOIN transits_bo.administration_recipients ar ON ar.administration_id = a.id
+		 WHERE bl.matricula = ?
+		   AND (bl.fecha_inicio IS NULL OR bl.fecha_inicio <= ?)
+		   AND (bl.fecha_fin IS NULL OR bl.fecha_fin >= ?)
+		 ORDER BY a.id, ar.id
+	""";
 
 	org.apache.logging.log4j.Logger log;
 	private CgiApiMultasClient client;
@@ -66,6 +97,16 @@ class getVehicleData {
 	private TransitPersistenceService service;
 
 	private static final DateTimeFormatter DGT_DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+	private static final DateTimeFormatter NOTIFICATION_DATE_TIME_FORMATTER = DateTimeFormatter
+			.ofPattern("dd/MM/yyyy HH:mm:ss");
+	private static final ZoneId NOTIFICATION_ZONE = ZoneId.of("Europe/Madrid");
+
+	private static class BlackListNotificationConfig {
+		Long administrationId;
+		String administrationName;
+		String notificationType;
+		Set<String> recipients = new LinkedHashSet<>();
+	}
 
 	getVehicleData(org.apache.logging.log4j.Logger log) {
 		this.log = log;
@@ -104,11 +145,10 @@ class getVehicleData {
 
 		Connection connection = null;
 		PreparedStatement whiteListStatement = null;
-		PreparedStatement blackListStatement = null;
 		ResultSet whiteListResult = null;
-		ResultSet blackListResult = null;
 		service = new TransitPersistenceService(null);
 		String plateNumber = StringUtils.trimToNull(transit.getVehiclePlateNumber());
+		Collection<BlackListNotificationConfig> pendingBlackListNotifications = new ArrayList<>();
 
 		log.debug("transit: " + transit);
 		log.debug("Solicitada informacion de vehiculo con la matricula: " + plateNumber);
@@ -128,17 +168,15 @@ class getVehicleData {
 				// Consulto las BBDD de listas blancas y negras a ver si se encuentra en alguna.
 				connection = DataSourceConnection.getInstance().getConnection();
 				boolean ewl = false;
-				boolean ebl = false;
+				Map<Long, BlackListNotificationConfig> blackListNotifications = new LinkedHashMap<>();
 				try {
 					whiteListStatement = connection.prepareStatement(WHITE_LIST_SQL);
 					whiteListStatement.setString(1, plateNumber);
 					whiteListResult = whiteListStatement.executeQuery();
 					ewl = whiteListResult.next();
 
-					blackListStatement = connection.prepareStatement(BLACK_LIST_SQL);
-					blackListStatement.setString(1, plateNumber);
-					blackListResult = blackListStatement.executeQuery();
-					ebl = blackListResult.next();
+					blackListNotifications = findActiveBlackListNotifications(
+							connection, plateNumber, transit.getDateTransit());
 				} catch (SQLException e) {
 					if (isMissingRelationError(e)) {
 						log.error(
@@ -149,11 +187,13 @@ class getVehicleData {
 					}
 				}
 
-				log.debug("Resultado de peticion de listas. Lista blanca: " + ewl + ". Lista negra: " + ebl);
+				boolean ebl = !blackListNotifications.isEmpty();
+				log.debug("Resultado de peticion de listas. Lista blanca: " + ewl + ". Lista negra vigente: " + ebl);
 				if (ewl) {
 					service.changeStateTransit(transit.getId(), TRANSIT_STATE_WHITE_LIST, null);
 				} else if (ebl) {
 					service.changeStateTransit(transit.getId(), TRANSIT_STATE_BLACK_LIST, null);
+					pendingBlackListNotifications = new ArrayList<>(blackListNotifications.values());
 				} else {
 					service.changeStateTransit(transit.getId(), TRANSIT_STATE_IN_REVIEW, null);
 				}
@@ -167,14 +207,8 @@ class getVehicleData {
 					if (whiteListResult != null && !whiteListResult.isClosed()) {
 						whiteListResult.close();
 					}
-					if (blackListResult != null && !blackListResult.isClosed()) {
-						blackListResult.close();
-					}
 					if (whiteListStatement != null && !whiteListStatement.isClosed()) {
 						whiteListStatement.close();
-					}
-					if (blackListStatement != null && !blackListStatement.isClosed()) {
-						blackListStatement.close();
 					}
 					if (connection != null && !connection.isClosed()) {
 						connection.close();
@@ -188,7 +222,167 @@ class getVehicleData {
 			service.changeStateTransit(transit.getId(), TRANSIT_STATE_IN_REVIEW, null);
 		}
 
+		// La notificacion se realiza con la conexion de consulta ya liberada.
+		sendBlackListNotifications(transit, plateNumber, pendingBlackListNotifications);
+
 		return true;
+	}
+
+	private Map<Long, BlackListNotificationConfig> findActiveBlackListNotifications(
+			Connection connection, String plateNumber, Long transitDate) throws SQLException {
+
+		Map<Long, BlackListNotificationConfig> notifications = new LinkedHashMap<>();
+		if (connection == null || StringUtils.isBlank(plateNumber) || transitDate == null) {
+			if (transitDate == null) {
+				log.warn("No se puede comprobar la vigencia de la lista negra porque el transito no tiene fecha");
+			}
+			return notifications;
+		}
+
+		Timestamp transitTimestamp = new Timestamp(transitDate);
+		PreparedStatement statement = null;
+		ResultSet result = null;
+		try {
+			statement = connection.prepareStatement(BLACK_LIST_SQL);
+			statement.setString(1, plateNumber);
+			statement.setTimestamp(2, transitTimestamp);
+			statement.setTimestamp(3, transitTimestamp);
+
+			result = statement.executeQuery();
+			while (result.next()) {
+				Long administrationId = result.getLong("administration_id");
+				BlackListNotificationConfig config = notifications.get(administrationId);
+				if (config == null) {
+					config = new BlackListNotificationConfig();
+					config.administrationId = administrationId;
+					config.administrationName = StringUtils.trimToNull(result.getString("administration_name"));
+					config.notificationType = StringUtils.trimToNull(result.getString("notification_type"));
+					notifications.put(administrationId, config);
+				}
+
+				String recipient = StringUtils.trimToNull(result.getString("recipient"));
+				if (recipient != null) {
+					config.recipients.add(recipient);
+				}
+			}
+		} finally {
+			if (result != null && !result.isClosed()) {
+				result.close();
+			}
+			if (statement != null && !statement.isClosed()) {
+				statement.close();
+			}
+		}
+
+		return notifications;
+	}
+
+	private void sendBlackListNotifications(Transit transit, String plateNumber,
+			Collection<BlackListNotificationConfig> notifications) {
+
+		if (notifications == null || notifications.isEmpty()) {
+			return;
+		}
+
+		String telegramConfig = getTelegramConfig();
+		Properties smtpProperties = null;
+		for (BlackListNotificationConfig notification : notifications) {
+			if (notification.recipients.isEmpty()) {
+				log.warn("La administracion {} no tiene destinatarios configurados para el aviso de lista negra",
+						notification.administrationName);
+				continue;
+			}
+
+			String message = buildBlackListNotificationMessage(transit, plateNumber,
+					notification.administrationName);
+			try {
+				if (NOTIFICATION_TYPE_TELEGRAM.equalsIgnoreCase(notification.notificationType)) {
+					if (telegramConfig == null) {
+						log.error("No se puede enviar el aviso de lista negra por Telegram: no hay configuracion del sistema");
+						continue;
+					}
+					for (String destination : notification.recipients) {
+						TelegramUtil.sendConfigured(telegramConfig, destination, message);
+					}
+				} else if (NOTIFICATION_TYPE_EMAIL.equalsIgnoreCase(notification.notificationType)) {
+					if (smtpProperties == null) {
+						smtpProperties = getSmtpProperties();
+					}
+					if (smtpProperties == null) {
+						log.error("No se puede enviar el aviso de lista negra por correo: no hay configuracion SMTP");
+						continue;
+					}
+					String recipients = String.join(",", notification.recipients);
+					String subject = "[Lista negra] Vehiculo detectado - " + plateNumber;
+					MailUtil.send(smtpProperties, recipients, null, null, subject,
+							message.replace("\n", "<br/>"));
+				} else {
+					log.error("Tipo de aviso no soportado para la administracion {}: {}",
+							notification.administrationName, notification.notificationType);
+				}
+			} catch (Exception e) {
+				log.error("Error enviando el aviso de lista negra a la administracion {}",
+						notification.administrationName, e);
+			}
+		}
+	}
+
+	private String buildBlackListNotificationMessage(Transit transit, String plateNumber, String administrationName) {
+
+		return "Vehiculo incluido en lista negra detectado" +
+				"\nAdministracion: " + StringUtils.defaultString(administrationName) +
+				"\nMatricula: " + StringUtils.defaultString(plateNumber) +
+				"\nTransito: " + (transit != null ? transit.getId() : "") +
+				"\nFecha: " + formatTransitDate(transit != null ? transit.getDateTransit() : null);
+	}
+
+	private String formatTransitDate(Long transitDate) {
+
+		if (transitDate == null) {
+			return "";
+		}
+		return ZonedDateTime.ofInstant(Instant.ofEpochMilli(transitDate), NOTIFICATION_ZONE)
+				.format(NOTIFICATION_DATE_TIME_FORMATTER);
+	}
+
+	private String getTelegramConfig() {
+
+		try {
+			SystemParamValue telegramConfig = new SystemParamValueRepository(false)
+					.get(Long.valueOf(SystemParam.SYSTEM_PARAM_TELEGRAM_CONFIG), false);
+			return telegramConfig != null ? StringUtils.trimToNull(telegramConfig.getValue()) : null;
+		} catch (Exception e) {
+			log.error("No se ha podido cargar la configuracion de Telegram para el aviso de lista negra", e);
+			return null;
+		}
+	}
+
+	private Properties getSmtpProperties() {
+
+		try {
+			SystemParamValue smtpConfig = new SystemParamValueRepository(false)
+					.get(Long.valueOf(SystemParam.SYSTEM_PARAM_SMTP_CONFIG), false);
+			String value = smtpConfig != null ? StringUtils.trimToNull(smtpConfig.getValue()) : null;
+			if (value == null) {
+				return null;
+			}
+
+			Object parsed = new JsonSlurper().parseText(value);
+			if (!(parsed instanceof Map) || parsed.isEmpty()) {
+				return null;
+			}
+
+			Properties properties = new Properties();
+			parsed.each { key, propertyValue ->
+				if (key != null && propertyValue != null) {
+					properties.setProperty(String.valueOf(key), String.valueOf(propertyValue));
+				}
+			};
+			return properties;
+		} catch (Exception e) {
+			log.error("No se ha podido cargar la configuracion SMTP para el aviso de lista negra", e);
+			return null;
+		}
 	}
 
 	private CgiApiMultasPlateNumberResponseDto pedirDatosDGT(Transit transit) {
@@ -643,4 +837,3 @@ class getVehicleData {
 		}
 	}
 }
-

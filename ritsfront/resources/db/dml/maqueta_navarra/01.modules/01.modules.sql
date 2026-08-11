@@ -30,6 +30,7 @@ INSERT INTO ui.modules(id, module_type_id, "name", description, default_view_typ
 (9000, 9, 'Transits - White list', 'Transits - White list', 1, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 (9001, 9, 'Transits - Black list', 'Transits - Black list', 1, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 (9002, 9, 'Transits - Discarded reasons', 'Transits - Discarded reasons', 1, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(9003, 9, 'Transits - Administrations', 'Transits - Administrations', 1, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 
 (2020, 8, 'Selector Tree Module', 'Selector Tree Module', 1, null, 'modules/selectorModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 (2021, 8, 'Selector Tree Module', 'Selector Tree Module', 1, null, 'modules/selectorModule.js', 'getView', 'loadData', NULL, NULL, true, true, true),

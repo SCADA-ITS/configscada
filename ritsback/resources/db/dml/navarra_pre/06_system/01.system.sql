@@ -46,5 +46,15 @@ INSERT INTO conf.system_param_values
 -- URL de conexión al smart road info
 (18, 'https://precontroltrafico.admon-cfnavarra.es/api', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 -- Path para servidor de ficheros
-(19, '/home/admin/app/frontrits/resources/trs', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(19, '/home/admin/app/frontrits/resources/trs', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+-- Configuración del bot y chats de Telegram
+(21,
+'{
+	"token": "7673259805:AAEqCaKMZ-SvxE8wpUriuGLegpNxLlOLgRM",
+	"chats": {
+		"public": "-1003712254716",
+		"private": "-1003712254716"
+	}
+}'
+, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
