@@ -590,33 +590,11 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 		"position": 5,
 		"enabled": true,
 		"jsFile": "modules/trs/transitEditorTabLog.js",
-		"discardedOptions": [
-			{
-				"id": 1,
-				"label": "No se puede identificar la matrícula",
-				"message": "No se puede identificar la matrícula"
-			},
-			{
-				"id": 2,
-				"label": "No coincide la marca, modelo, color o tipo de vehículo",
-				"message": "No coincide la marca, modelo, color o tipo de vehículo"
-			},
-			{
-				"id": 3,
-				"label": "Imagen no válida (oscura, borrosa, sin vehículo…)",
-				"message": "Imagen no válida (oscura, borrosa, sin vehículo…)"
-			},
-			{
-				"id": 4,
-				"label": "Vehículo prioritario (policial, bomberos, ambulancias, …)",
-				"message": "Vehículo prioritario (policial, bomberos, ambulancias, …)"
-			},
-			{
-				"id": 5,
-				"label": "Vehículo en lista blanca",
-				"message": "Vehículo en lista blanca"
-			}
-		]
+		"discardedConfig": {
+			"backofficeEndpoint": "backoffice/${backOfficeId}/table/${tableName}",
+			"backofficeId": 3,
+			"backofficeTable": "discarded_reasons"
+		}
 	}
 ]');
 
