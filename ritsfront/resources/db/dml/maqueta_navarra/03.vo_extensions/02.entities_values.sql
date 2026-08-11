@@ -813,7 +813,8 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 		"discardedConfig": {
 			"backofficeEndpoint": "backoffice/${backOfficeId}/table/${tableName}",
 			"backofficeId": 3,
-			"backofficeTable": "discarded_reasons"
+			"backofficeTable": "discarded_reasons",
+			"messagePrefix": "Motivo de rechazo: "
 		}
 	}
 ]');
