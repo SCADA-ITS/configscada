@@ -58,6 +58,7 @@ class getVehicleData {
 	final String LOCATION_TYPE_TRAVESIA = "Travesía";
 	final String LIMITATION_TYPE_GENERAL = "General";
 	final String LIMITATION_TYPE_ESPECIFICA = "Específica";
+	final String RADAR_TYPE_SECTION = "TRAMO";
 	final String[] GRAVITY_LABELS = [ "Grave - Sin puntos", "Grave - 2 puntos", "Grave - 4 puntos",
 			"Grave - 6 puntos", "Muy grave - 6 puntos" ];
 	private static final String WHITE_LIST_SQL = "SELECT 1 FROM transits_bo.white_list WHERE matricula = ?";
@@ -320,7 +321,7 @@ class getVehicleData {
 		Integer effectiveSpeedLimit = getMostRestrictiveSpeedLimit(roadSpeedLimit, vehicleSpeedLimit);
 		String article = StringUtils.defaultString(getInfractionArticle(locationType, limitationType));
 		String gravity = "";
-		String calculatedDboid = "";
+		String calculatedDboid = null;
 		log.info(
 				"getVehicleData calculo sancion. transitId={}, correctedSpeed={}, roadSpeedLimit={}, vehicleSpeedLimit={}, effectiveSpeedLimit={}, previousGravity={}, previousDboid={}",
 				transit.getId(), correctedSpeed, roadSpeedLimit, vehicleSpeedLimit, effectiveSpeedLimit,
@@ -333,14 +334,17 @@ class getVehicleData {
 			if (speedDifference > 0) {
 				int dboidIndex = getDboidIndex(effectiveSpeedLimit, speedDifference);
 				gravity = StringUtils.defaultString(getGravityLabel(dboidIndex));
-				calculatedDboid = StringUtils.defaultString(
-						getInfractionTypeDboid(article, effectiveSpeedLimit, correctedSpeed));
+				calculatedDboid = getInfractionTypeDboid(transit, article, effectiveSpeedLimit, correctedSpeed);
 			}
 		}
 
 		addOrReplaceTransitValue(transit, TRANSIT_PARAM_ARTICLE, article);
 		addOrReplaceTransitValue(transit, TRANSIT_PARAM_GRAVITY, gravity);
-		addOrReplaceTransitValue(transit, TRANSIT_PARAM_CALCULATED_DBOID, calculatedDboid);
+		if (StringUtils.isNotBlank(calculatedDboid)) {
+			addOrReplaceTransitValue(transit, TRANSIT_PARAM_CALCULATED_DBOID, calculatedDboid);
+		} else {
+			log.debug("Se conserva el DBOID existente del transito {} porque el recalculo no ha producido un valor valido", transit.getId());
+		}
 		log.info(
 				"getVehicleData resultado calculo sancion. transitId={}, article={}, gravity={}, calculatedDboid={}",
 				transit.getId(), article, gravity, calculatedDboid);
@@ -525,7 +529,8 @@ class getVehicleData {
 		return "E".equalsIgnoreCase(limitationType) || LIMITATION_TYPE_ESPECIFICA.equalsIgnoreCase(limitationType);
 	}
 
-	private String getInfractionTypeDboid(String infractionArticle, Integer roadSpeedLimit, Integer correctedVehicleSpeed) {
+	private String getInfractionTypeDboid(Transit transit, String infractionArticle, Integer roadSpeedLimit,
+			Integer correctedVehicleSpeed) {
 
 		if (correctedVehicleSpeed == null || roadSpeedLimit == null) {
 			return "";
@@ -537,7 +542,7 @@ class getVehicleData {
 		}
 
 		int dboidIndex = getDboidIndex(roadSpeedLimit, speedDifference);
-		return dboidIndex >= 0 ? getDboidByArticle(infractionArticle, dboidIndex) : "";
+		return dboidIndex >= 0 ? getDboidByArticle(transit, infractionArticle, dboidIndex) : "";
 	}
 
 	private int getDboidIndex(int roadSpeedLimit, int speedDifference) {
@@ -578,35 +583,46 @@ class getVehicleData {
 		return gravityIndex >= 0 && gravityIndex < GRAVITY_LABELS.length ? GRAVITY_LABELS[gravityIndex] : null;
 	}
 
-	private String getDboidByArticle(String infractionArticle, int dboidIndex) {
+	private String getDboidByArticle(Transit transit, String infractionArticle, int dboidIndex) {
 
-		String[] dboids = getDboidsByArticle(infractionArticle);
+		String[] dboids = getDboidsByArticle(transit, infractionArticle);
 		return dboidIndex >= 0 && dboidIndex < dboids.length ? dboids[dboidIndex] : "";
 	}
 
-	private String[] getDboidsByArticle(String infractionArticle) {
+	private String[] getDboidsByArticle(Transit transit, String infractionArticle) {
 
 		if (INFRACTION_TYPE_ARTICLE_48.equals(infractionArticle)) {
-			return getDboids("48");
+			return getDboids(transit, "48");
 		}
 		if (INFRACTION_TYPE_ARTICLE_50.equals(infractionArticle)) {
-			return getDboids("50");
+			return getDboids(transit, "50");
 		}
 		if (INFRACTION_TYPE_ARTICLE_52.equals(infractionArticle)) {
-			return getDboids("52");
+			return getDboids(transit, "52");
 		}
 		return new String[0];
 	}
 
-	private String[] getDboids(String articleCode) {
+	private String[] getDboids(Transit transit, String articleCode) {
 
 		if (cgiApiMultasProperties == null || cgiApiMultasProperties.getInfractionDboid() == null) {
 			return new String[5];
 		}
 
-		Map<String, CgiApiMultasProperties.ArticleTiers> articles = cgiApiMultasProperties.getInfractionDboid().getArticle();
+		CgiApiMultasProperties.InfractionDboidProperties infractionDboid = cgiApiMultasProperties
+				.getInfractionDboid();
+		Map<String, CgiApiMultasProperties.ArticleTiers> articles = infractionDboid.getArticle();
+		if (isSectionRadar(transit) && infractionDboid.getSection() != null) {
+			articles = infractionDboid.getSection().getArticle();
+		}
 		CgiApiMultasProperties.ArticleTiers articleTiers = articles != null ? articles.get(articleCode) : null;
 		return articleTiers != null ? articleTiers.asArray() : new String[5];
+	}
+
+	private boolean isSectionRadar(Transit transit) {
+
+		String radarType = StringUtils.trimToNull(transit != null ? transit.getRemittanceCode() : null);
+		return "T".equalsIgnoreCase(radarType) || RADAR_TYPE_SECTION.equalsIgnoreCase(radarType);
 	}
 
 	private Integer getMostRestrictiveSpeedLimit(Integer roadSpeedLimit, Integer vehicleSpeedLimit) {
