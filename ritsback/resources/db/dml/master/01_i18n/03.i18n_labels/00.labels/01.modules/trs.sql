@@ -138,6 +138,7 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 	('es_ES',1,'LBL_TRS_INFO_TOOLTIP_EXAMPLE_PERCENT', 'Ejemplo: 4% busca todo lo que empiece por 4, sin importar su longitud.',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 	('es_ES',1,'LBL_TRS_CANT_CHANGE_STATE_DISCARDED', 'No es posible transitar a estado "Rechazado".',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 	('es_ES',1,'LBL_CMD_CHANGE_LOCATION','Cambiar localización',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+	('es_ES',1,'LBL_TRS_NECESSARY_DATA','Faltan datos necesarios para transitar al estado seleccionado.',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),	
 
 --en_GB
 	('en_GB',1,'LBL_TRANSIT_LIST_MODULE','Transit manager',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
@@ -229,7 +230,8 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 	('en_GB',1,'LBL_TRS_INFO_TOOLTIP_EXAMPLE_PERCENT', 'Example: 4% searches for everything that starts with 4, regardless of its length.',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 	('en_GB',1,'LBL_TRS_CANT_CHANGE_STATE_DISCARDED', 'It is not possible to transition to a "Discarded" state',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 	('en_GB',1,'LBL_CMD_CHANGE_LOCATION','Change location',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
-
+	('en_GB',1,'LBL_TRS_NECESSARY_DATA','Necessary data is missing to transition to the selected state.',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+	
 --es_CL
 	('es_CL',1,'LBL_TRANSIT_LIST_MODULE','Gestor de tránsitos',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 	('es_CL',1,'LBL_TRANSIT_LIST','Lista',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
@@ -320,4 +322,5 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 	('es_CL',1,'LBL_TRS_INFO_TOOLTIP_TITLE_PERCENT', '* Porcentaje (%): sustituye cualquier cantidad de caracteres.',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 	('es_CL',1,'LBL_TRS_INFO_TOOLTIP_EXAMPLE_PERCENT', 'Ejemplo: 4% busca todo lo que empiece por 4, sin importar su longitud.',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 	('es_CL',1,'LBL_TRS_CANT_CHANGE_STATE_DISCARDED', 'No es posible transitar a estado "Rechazado".',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
-	('es_CL',1,'LBL_CMD_CHANGE_LOCATION','Cambiar localización',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
+	('es_CL',1,'LBL_CMD_CHANGE_LOCATION','Cambiar localización',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+	('es_CL',1,'LBL_TRS_NECESSARY_DATA','Faltan datos necesarios para transitar al estado seleccionado.',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
