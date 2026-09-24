@@ -17,6 +17,51 @@ streams:
     NO-S2-CCTV-04:
         - rtsp://admin:Revenga2023.@10.50.3.13/Streaming/Channels/103
         - ffmpeg:NO-S2-CCTV-04#video=mjpeg
+    NO-S1S1-CCTV-01:
+        - rtsp://admin:Revenga2023.@10.50.1.10/Streaming/Channels/103
+        - ffmpeg:NO-S1S1-CCTV-01#video=mjpeg
+    NO-S1S1-CCTV-02:
+        - rtsp://admin:Revenga2023.@10.50.1.11/Streaming/Channels/103
+        - ffmpeg:NO-S1S1-CCTV-02#video=mjpeg
+    NO-S1S1-CCTV-03:
+        - rtsp://admin:Revenga2023.@10.50.1.13/Streaming/Channels/103
+        - ffmpeg:NO-S1S1-CCTV-03#video=mjpeg
+    NO-S1S1-CCTV-04:
+        - rtsp://admin:Revenga2023.@10.50.1.14/Streaming/Channels/103
+        - ffmpeg:NO-S1S1-CCTV-04#video=mjpeg
+    NO-S1S1-CCTV-05:
+        - rtsp://admin:Revenga2023.@10.50.1.12/Streaming/Channels/103
+        - ffmpeg:NO-S1S1-CCTV-05#video=mjpeg
+    NO-S1S1-CCTV-06:
+        - rtsp://admin:Revenga2023.@10.50.1.18/Streaming/Channels/103
+        - ffmpeg:NO-S1S1-CCTV-06#video=mjpeg
+    NO-S1S2-CCTV-01:
+        - rtsp://admin:Revenga2023.@10.50.1.15/Streaming/Channels/103
+        - ffmpeg:NO-S1S2-CCTV-01#video=mjpeg
+    NO-S1S2-CCTV-02:
+        - rtsp://admin:Revenga2023.@10.50.1.16/Streaming/Channels/103
+        - ffmpeg:NO-S1S2-CCTV-02#video=mjpeg
+    NO-S1S2-CCTV-03:
+        - rtsp://admin:Revenga2023.@10.50.1.17/Streaming/Channels/103
+        - ffmpeg:NO-S1S2-CCTV-03#video=mjpeg
+    NO-S1S2-CCTV-05:
+        - rtsp://admin:Revenga2023.@10.50.2.15/Streaming/Channels/103
+        - ffmpeg:NO-S1S2-CCTV-05#video=mjpeg
+    NO-S1S2-CCTV-06:
+        - rtsp://admin:Revenga2023.@10.50.2.10/Streaming/Channels/103
+        - ffmpeg:NO-S1S2-CCTV-06#video=mjpeg
+    NO-S1S2-CCTV-07:
+        - rtsp://admin:Revenga2023.@10.50.2.11/Streaming/Channels/103
+        - ffmpeg:NO-S1S2-CCTV-07#video=mjpeg
+    NO-S1S3-CCTV-01:
+        - rtsp://admin:Revenga2023.@10.50.2.12/Streaming/Channels/103
+        - ffmpeg:NO-S1S3-CCTV-01#video=mjpeg
+    NO-S1S3-CCTV-02:
+        - rtsp://admin:Revenga2023.@10.50.2.13/Streaming/Channels/103
+        - ffmpeg:NO-S1S3-CCTV-02#video=mjpeg
+    NO-S1S3-CCTV-03:
+        - rtsp://admin:Revenga2023.@10.50.2.14/Streaming/Channels/103
+        - ffmpeg:NO-S1S3-CCTV-03#video=mjpeg
 
 log:
   level: info  # default level
