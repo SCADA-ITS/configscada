@@ -23,6 +23,8 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_ES', 1, 'LBL_SMART_ROAD_INFO_NEW_LINESTRING_DESCRIPTION', 'Seleccione y ordene los puntos kilométricos que componen la ruta.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_SMART_ROAD_INFO_RANGE_PK', 'Rango de kilómetros', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_SMART_ROAD_INFO_NEED_TWO_POINTS', 'Para crear una ruta son necesarios, al menos, dos puntos kilométricos.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_SMART_ROAD_INFO_SEARCH', 'Búsqueda de puntos kilométricos.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_SMART_ROAD_INFO_SEARCH_DESCRIPTION', 'Seleccione carretera y punto kilométrico a buscar.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --en_GB
 ('en_GB', 1, 'LBL_SMART_ROAD_INFO_KILOMETER', 'Kilometer', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -38,6 +40,8 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('en_GB', 1, 'LBL_SMART_ROAD_INFO_NEW_LINESTRING_DESCRIPTION', 'Select and sort the kilometer points that make up the route.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_SMART_ROAD_INFO_RANGE_PK', 'Kilometer range', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_SMART_ROAD_INFO_NEED_TWO_POINTS', 'To create a route, at least two kilometer points are required.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_SMART_ROAD_INFO_SEARCH', 'Kilometer point search.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_SMART_ROAD_INFO_SEARCH_DESCRIPTION', 'Select road and kilometer point to search.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --sk_SK
 
@@ -54,4 +58,6 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_CL', 1, 'LBL_SMART_ROAD_INFO_NEW_PK_DESCRIPTION', 'Seleccione carretera y punto kilométrico.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_SMART_ROAD_INFO_NEW_LINESTRING_DESCRIPTION', 'Seleccione y ordene los puntos kilométricos que componen la ruta.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_SMART_ROAD_INFO_RANGE_PK', 'Rango de kilómetros', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('es_CL', 1, 'LBL_SMART_ROAD_INFO_NEED_TWO_POINTS', 'Para crear una ruta son necesarios, al menos, dos puntos kilométricos.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+('es_CL', 1, 'LBL_SMART_ROAD_INFO_NEED_TWO_POINTS', 'Para crear una ruta son necesarios, al menos, dos puntos kilométricos.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_SMART_ROAD_INFO_SEARCH', 'Búsqueda de puntos kilométricos.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_SMART_ROAD_INFO_SEARCH_DESCRIPTION', 'Seleccione carretera y punto kilométrico a buscar.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

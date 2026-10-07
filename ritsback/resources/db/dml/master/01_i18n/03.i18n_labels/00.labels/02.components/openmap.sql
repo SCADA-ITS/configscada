@@ -27,6 +27,7 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_ES', 1, 'LBL_OPTIMAL', 'Recomendada', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_DBL_CLICK_TO_SHOW_MORE_PROPERTY_VALUES', 'Doble clic para mostrar todas las propiedades', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_NO_ALTERNATIVE_ROUTE_AVAILABLE', 'No exiten rutas alternativas', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_SEARCH_PK', 'Buscar punto kilométrico', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 
 --en_GB
@@ -46,7 +47,8 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('en_GB', 1, 'LBL_OPTIMAL', 'Optimal', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_DBL_CLICK_TO_SHOW_MORE_PROPERTY_VALUES', 'Double click to show more values', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_NO_ALTERNATIVE_ROUTE_AVAILABLE', 'No available alternative routes', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
- 	
+('en_GB', 1, 'LBL_SEARCH_PK', 'Search kilometric point', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
 --es_CL
 ('es_CL', 1, 'LBL_EXT_ENTITIES', 'Entidades externas', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_ROUTE_OPEN', 'Ruta despejada', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -63,4 +65,5 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_CL', 1, 'LBL_ROUTE_ALTERNATIVE', 'Ruta alternativa', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_OPTIMAL', 'Recomendada', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_DBL_CLICK_TO_SHOW_MORE_PROPERTY_VALUES', 'Doble clic para mostrar todas las propiedades', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('es_CL', 1, 'LBL_NO_ALTERNATIVE_ROUTE_AVAILABLE', 'No exiten rutas alternativas', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+('es_CL', 1, 'LBL_NO_ALTERNATIVE_ROUTE_AVAILABLE', 'No exiten rutas alternativas', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_SEARCH_PK', 'Buscar punto kilométrico', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
