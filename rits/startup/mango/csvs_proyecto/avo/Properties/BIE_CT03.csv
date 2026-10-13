@@ -1,0 +1,13 @@
+device_name;session_uid;sos_electronic_fail;url_publisher;PLC_name;PLC_ip;PLC_port(i);read_permission;write_permission;offset_bie_door_open(i)
+S1TS-BIE-025;S1TS-BIE-025;S1TS-CAB-012;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;CT03_PLC_A;10.133.50.37;28015;monitor;;10000
+S1TS-BIE-029;S1TS-BIE-029;S1TS-CAB-014;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;CT03_PLC_A;10.133.50.37;28015;monitor;;10017
+S1TS-BIE-031;S1TS-BIE-031;S1TS-CAB-015;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;CT03_PLC_A;10.133.50.37;28015;monitor;;10034
+S1TS-BIE-033;S1TS-BIE-033;S1TS-CAB-016;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;CT03_PLC_A;10.133.50.37;28015;monitor;;10051
+S1TS-BIE-035;S1TS-BIE-035;S1TS-CAB-017;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;CT03_PLC_A;10.133.50.37;28015;monitor;;10068
+S1TS-BIE-037;S1TS-BIE-037;S1TS-CAB-018;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;CT03_PLC_A;10.133.50.37;28015;monitor;;10085
+SAEB-BIE-001;SAEB-BIE-001;SAEB-CAB-001;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;CT03_PLC_A;10.133.50.37;28015;monitor;;10102
+SAEB-BIE-003;SAEB-BIE-003;SAEB-CAB-002;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;CT03_PLC_A;10.133.50.37;28015;monitor;;10119
+S1TS-BIE-027;S1TS-BIE-027;S1TS-CAB-013;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;CT03_PLC_A;10.133.50.37;28015;monitor;;10170
+S1TS-BIE-039;S1TS-BIE-039;S1TS-CAB-019;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;CT03_PLC_A;10.133.50.37;28015;monitor;;10255
+S1TS-BIE-041;S1TS-BIE-041;S1TS-CAB-020;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;CT03_PLC_A;10.133.50.37;28015;monitor;;10272
+S1TS-BIE-043;S1TS-BIE-043;S1TS-CAB-021;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;CT03_PLC_A;10.133.50.37;28015;monitor;;10306

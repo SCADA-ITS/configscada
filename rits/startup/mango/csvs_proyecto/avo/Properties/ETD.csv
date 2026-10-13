@@ -1,0 +1,16 @@
+device_name;session_uid;det_name;det_order;host;url_publisher;port(i);num_polling_out_comm;time_polling_ms;read_permission;write_permission
+S1TS-ETD-001;S1TS-ETD-001;S1TS-E+P-001;1;192.168.88.198;http:\/\/192.168.88.176:3000\/api\/v2\/generic\/;1000;2;60000;monitor;
+S1TS-ETD-001;S1TS-ETD-001;S1TS-E+P-002;2;192.168.88.198;http:\/\/192.168.88.176:3000\/api\/v2\/generic\/;1000;2;60000;monitor;
+S1TS-ETD-001;S1TS-ETD-001;S1TS-E+P-003;3;192.168.88.198;http:\/\/192.168.88.176:3000\/api\/v2\/generic\/;1000;2;60000;monitor;
+S1TN-ETD-002;S1TN-ETD-002;S1TN-E+P-004;1;192.168.88.198;http:\/\/192.168.88.176:3000\/api\/v2\/generic\/;1001;2;60000;monitor;
+S1TN-ETD-002;S1TN-ETD-002;S1TN-E+P-005;2;192.168.88.198;http:\/\/192.168.88.176:3000\/api\/v2\/generic\/;1001;2;60000;monitor;
+S1TN-ETD-002;S1TN-ETD-002;S1TN-E+P-006;3;192.168.88.198;http:\/\/192.168.88.176:3000\/api\/v2\/generic\/;1001;2;60000;monitor;
+S1TS-ETD-002;S1TS-ETD-002;S1TS-E+P-004;1;192.168.88.198;http:\/\/192.168.88.176:3000\/api\/v2\/generic\/;1002;2;60000;monitor;
+S1TS-ETD-002;S1TS-ETD-002;S1TS-E+P-005;2;192.168.88.198;http:\/\/192.168.88.176:3000\/api\/v2\/generic\/;1002;2;60000;monitor;
+S1TS-ETD-002;S1TS-ETD-002;S1TS-E+P-006;3;192.168.88.198;http:\/\/192.168.88.176:3000\/api\/v2\/generic\/;1002;2;60000;monitor;
+S1TN-ETD-001;S1TN-ETD-001;S1TN-E+P-001;1;192.168.88.198;http:\/\/192.168.88.176:3000\/api\/v2\/generic\/;1003;2;60000;monitor;
+S1TN-ETD-001;S1TN-ETD-001;S1TN-E+P-002;2;192.168.88.198;http:\/\/192.168.88.176:3000\/api\/v2\/generic\/;1003;2;60000;monitor;
+S1TN-ETD-001;S1TN-ETD-001;S1TN-E+P-003;3;192.168.88.198;http:\/\/192.168.88.176:3000\/api\/v2\/generic\/;1003;2;60000;monitor;
+S1TS-ETD-003;S1TS-ETD-003;S1TS-E+P-007;1;192.168.88.198;http:\/\/192.168.88.176:3000\/api\/v2\/generic\/;1004;2;60000;monitor;
+S1TS-ETD-003;S1TS-ETD-003;S1TS-E+P-008;2;192.168.88.198;http:\/\/192.168.88.176:3000\/api\/v2\/generic\/;1004;2;60000;monitor;
+S1TS-ETD-003;S1TS-ETD-003;S1TS-E+P-009;3;192.168.88.198;http:\/\/192.168.88.176:3000\/api\/v2\/generic\/;1004;2;60000;monitor;

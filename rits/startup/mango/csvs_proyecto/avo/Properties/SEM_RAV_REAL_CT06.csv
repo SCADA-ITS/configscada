@@ -1,0 +1,2 @@
+device_name;session_uid;url_publisher;PLC_name;PLC_ip;PLC_port(i);read_permission;write_permission;offset_light_cmd(i)
+IPRO-SEM-001;IPRO-SEM-001;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;CT06_PLC_D;10.133.50.37;28039;monitor;;14719

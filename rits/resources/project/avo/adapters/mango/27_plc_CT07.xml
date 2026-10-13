@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<p:json_generic_mango_v1 
+	name="" 
+	version="" 
+	xmlns:p="json_generic_mango_v1" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="json_generic_mango_v1 ../../../adapter-lib/src/main/resources/schemas/mango/json_generic_mango_v1.xsd "
+	element_type_id="27"
+    array_element_id="7">
+ <p:session_uid element_type_param_id="1003" param_type_id="1"></p:session_uid>
+  <p:state field="status">
+    <p:state_value source="0" input="2" disconnected="true"></p:state_value>
+    <p:state_value source="1" input="1"></p:state_value>
+  </p:state>
+  <p:fields>
+    <p:field>
+      <p:source>master_cpu_state</p:source>
+      <p:input>
+        <p:element_type_param_id>1</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:input>
+    </p:field>
+	<p:field>
+      <p:source>slave_cpu_state</p:source>
+      <p:input>
+        <p:element_type_param_id>2</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:input>
+    </p:field>
+	<p:field>
+      <p:source>master_cpu_function</p:source>
+      <p:input>
+        <p:element_type_param_id>3</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:input>
+    </p:field>
+	<p:field>
+      <p:source>slave_cpu_function</p:source>
+      <p:input>
+        <p:element_type_param_id>4</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:input>
+    </p:field>
+    <p:field>
+      <p:source>device_error_t1</p:source>
+      <p:input>
+        <p:element_type_param_id>5</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:input>
+    </p:field>
+   	<p:field>
+      <p:source>device_error_t2</p:source>
+      <p:input>
+        <p:element_type_param_id>6</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:input>
+    </p:field>
+   	<p:field>
+      <p:source>device_error_t3</p:source>
+      <p:input>
+        <p:element_type_param_id>7</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:input>
+    </p:field>
+   	<p:field>
+      <p:source>device_error_t4</p:source>
+      <p:input>
+        <p:element_type_param_id>8</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:input>
+    </p:field>
+   	<p:field>
+      <p:source>device_error_t5</p:source>
+      <p:input>
+        <p:element_type_param_id>9</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:input>
+    </p:field>
+    <p:field>
+      <p:source>device_error_t6</p:source>
+      <p:input>
+        <p:element_type_param_id>10</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:input>
+    </p:field>
+   	<p:field>
+      <p:source>device_error_t7</p:source>
+      <p:input>
+        <p:element_type_param_id>11</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:input>
+    </p:field>
+   	<p:field>
+      <p:source>device_error_t8</p:source>
+      <p:input>
+        <p:element_type_param_id>12</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:input>
+    </p:field>
+   	<p:field>
+      <p:source>device_error_t9</p:source>
+      <p:input>
+        <p:element_type_param_id>13</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:input>
+    </p:field>
+   	<p:field>
+      <p:source>device_error_t10</p:source>
+      <p:input>
+        <p:element_type_param_id>14</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:input>
+    </p:field>
+   	<p:field>
+      <p:source>device_error_t11</p:source>
+      <p:input>
+        <p:element_type_param_id>15</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:input>
+    </p:field>
+   	<p:field>
+      <p:source>device_error_t12</p:source>
+      <p:input>
+        <p:element_type_param_id>16</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:input>
+    </p:field>
+   	<p:field>
+      <p:source>device_error_t13</p:source>
+      <p:input>
+        <p:element_type_param_id>17</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:input>
+    </p:field>
+   	<p:field>
+      <p:source>device_error_t14</p:source>
+      <p:input>
+        <p:element_type_param_id>18</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:input>
+    </p:field>
+   	<p:field>
+      <p:source>device_error_t15</p:source>
+      <p:input>
+        <p:element_type_param_id>19</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:input>
+    </p:field>
+   	<p:field>
+      <p:source>device_error_t16</p:source>
+      <p:input>
+        <p:element_type_param_id>20</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:input>
+    </p:field>
+   	<p:field>
+      <p:source>device_error_t17</p:source>
+      <p:input>
+        <p:element_type_param_id>21</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:input>
+    </p:field>
+   	<p:field>
+      <p:source>device_error_t18</p:source>
+      <p:input>
+        <p:element_type_param_id>22</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:input>
+    </p:field>
+   	<p:field>
+      <p:source>device_error_t19</p:source>
+      <p:input>
+        <p:element_type_param_id>23</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:input>
+    </p:field>
+   	<p:field>
+      <p:source>device_error_t20</p:source>
+      <p:input>
+        <p:element_type_param_id>24</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:input>
+    </p:field>
+   	<p:field>
+      <p:source>device_error_t21</p:source>
+      <p:input>
+        <p:element_type_param_id>25</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:input>
+    </p:field>
+    <p:field>
+      <p:source>device_error_t22</p:source>
+      <p:input>
+        <p:element_type_param_id>26</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:input>
+    </p:field>
+    <p:field>
+      <p:source>device_error_t23</p:source>
+      <p:input>
+        <p:element_type_param_id>27</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:input>
+    </p:field>
+    <p:field>
+      <p:source>device_error_t24</p:source>
+      <p:input>
+        <p:element_type_param_id>28</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:input>
+    </p:field>
+    <p:field>
+      <p:source>device_error_t25</p:source>
+      <p:input>
+        <p:element_type_param_id>29</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:input>
+    </p:field>
+    <p:field>
+      <p:source>device_error_t26</p:source>
+      <p:input>
+        <p:element_type_param_id>30</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:input>
+    </p:field>
+    <p:field>
+      <p:source>device_error_t27</p:source>
+      <p:input>
+        <p:element_type_param_id>31</p:element_type_param_id>
+        <p:param_type_id>2</p:param_type_id>
+      </p:input>
+    </p:field>
+  </p:fields>
+   <p:alarms>
+    <p:alarm source="upd_fail_icco_2" active_value="true" alarm_config_id="30970027"></p:alarm>
+    <p:alarm source="upd_fail_2e19" active_value="true" alarm_config_id="30980027"></p:alarm>
+    <p:alarm source="upd_fail_2e20" active_value="true" alarm_config_id="30990027"></p:alarm>
+    <p:alarm source="upd_fail_2e20_2" active_value="true" alarm_config_id="31000027"></p:alarm>
+    <p:alarm source="upd_fail_2e21" active_value="true" alarm_config_id="31010027"></p:alarm>
+    <p:alarm source="upd_fail_2e21_2" active_value="true" alarm_config_id="31020027"></p:alarm>
+    <p:alarm source="upd_fail_sico" active_value="true" alarm_config_id="31030027"></p:alarm>
+    <p:alarm source="upd_fail_2e18_2" active_value="true" alarm_config_id="31040027"></p:alarm>
+    <p:alarm source="upd_fail_2e19_2" active_value="true" alarm_config_id="31050027"></p:alarm>
+    <p:alarm source="upd_fail_ct07" active_value="true" alarm_config_id="31060027"></p:alarm>
+    <p:alarm source="upd_fail_2e18" active_value="true" alarm_config_id="31070027"></p:alarm>
+    <p:alarm source="upd_fail_ct07_2" active_value="true" alarm_config_id="31080027"></p:alarm>
+    <p:alarm source="upd_fail_icco" active_value="true" alarm_config_id="31090027"></p:alarm>
+    <p:alarm source="upd_fail_2e21_4" active_value="true" alarm_config_id="31130027"></p:alarm>
+    <p:alarm source="process_error" active_value="true" alarm_config_id="040027"></p:alarm>
+    <p:alarm source="master_comm" active_value="true" alarm_config_id="050027"></p:alarm>
+    <p:alarm source="slave_comm" active_value="true" alarm_config_id="060027"></p:alarm>
+  </p:alarms>
+</p:json_generic_mango_v1>

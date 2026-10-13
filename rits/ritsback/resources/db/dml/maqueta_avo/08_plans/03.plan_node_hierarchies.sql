@@ -1,0 +1,115 @@
+INSERT INTO conf.plan_node_hierarchies (node_parent_id,node_child_id,enabled,visible) VALUES
+	 (252,253,true,true),
+	 (252,254,true,true),
+	 (252,255,true,true),
+	 (252,256,true,true),
+	 (252,257,true,true),
+	 (258,259,true,true),
+	 (258,260,true,true),
+	 (258,261,true,true),
+	 (258,262,true,true),
+	 (258,263,true,true);
+INSERT INTO conf.plan_node_hierarchies (node_parent_id,node_child_id,enabled,visible) VALUES
+	 (258,264,true,true),
+	 (258,265,true,true),
+	 (258,266,true,true),
+	 (258,267,true,true),
+	 (258,268,true,true),
+	 (258,269,true,true),
+	 (258,270,true,true),
+	 (258,271,true,true),
+	 (258,272,true,true),
+	 (258,273,true,true);
+INSERT INTO conf.plan_node_hierarchies (node_parent_id,node_child_id,enabled,visible) VALUES
+	 (258,274,true,true),
+	 (258,275,true,true),
+	 (258,276,true,true),
+	 (258,277,true,true),
+	 (258,278,true,true),
+	 (258,279,true,true),
+	 (258,280,true,true),
+	 (258,281,true,true),
+	 (258,282,true,true),
+	 (258,283,true,true);
+INSERT INTO conf.plan_node_hierarchies (node_parent_id,node_child_id,enabled,visible) VALUES
+	 (258,284,true,true),
+	 (258,285,true,true),
+	 (258,286,true,true),
+	 (287,288,true,true),
+	 (287,289,true,true),
+	 (287,290,true,true),
+	 (287,291,true,true),
+	 (287,292,true,true),
+	 (287,293,true,true),
+	 (287,294,true,true);
+INSERT INTO conf.plan_node_hierarchies (node_parent_id,node_child_id,enabled,visible) VALUES
+	 (287,295,true,true),
+	 (287,296,true,true),
+	 (287,297,true,true),
+	 (287,298,true,true),
+	 (287,299,true,true),
+	 (287,300,true,true),
+	 (287,301,true,true),
+	 (287,302,true,true),
+	 (287,303,true,true),
+	 (287,304,true,true);
+INSERT INTO conf.plan_node_hierarchies (node_parent_id,node_child_id,enabled,visible) VALUES
+	 (287,305,true,true),
+	 (287,306,true,true),
+	 (287,307,true,true),
+	 (287,308,true,true),
+	 (287,309,true,true),
+	 (287,310,true,true),
+	 (287,311,true,true),
+	 (287,312,true,true),
+	 (287,313,true,true),
+	 (287,314,true,true);
+INSERT INTO conf.plan_node_hierarchies (node_parent_id,node_child_id,enabled,visible) VALUES
+	 (287,315,true,true),
+	 (287,316,true,true),
+	 (287,317,true,true),
+	 (287,318,true,true),
+	 (287,319,true,true),
+	 (287,320,true,true),
+	 (287,321,true,true),
+	 (287,322,true,true),
+	 (287,323,true,true),
+	 (1258,1262,true,true);
+INSERT INTO conf.plan_node_hierarchies (node_parent_id,node_child_id,enabled,visible) VALUES
+	 (1265,1266,true,true),
+	 (1265,1267,true,true),
+	 (1265,1268,true,true),
+	 (1265,1269,true,true),
+	 (1258,1270,true,true),
+	 (1258,1271,true,true),
+	 (1258,1272,true,true),
+	 (1258,1275,true,true),
+	 (1278,1280,true,true),
+	 (1281,1282,true,true);
+INSERT INTO conf.plan_node_hierarchies (node_parent_id,node_child_id,enabled,visible) VALUES
+	 (1281,1283,true,true),
+	 (1282,1284,true,true),
+	 (1282,1285,true,true),
+	 (1282,1286,true,true),
+	 (1283,1288,true,true),
+	 (1283,1289,true,true),
+	 (1282,1292,true,true),
+	 (1278,1293,true,true),
+	 (1278,1294,true,true),
+	 (1295,1296,true,true);
+INSERT INTO conf.plan_node_hierarchies (node_parent_id,node_child_id,enabled,visible) VALUES
+	 (1295,1297,true,true),
+	 (1258,1300,true,true),
+	 (1300,1301,true,true),
+	 (1296,1302,true,true),
+	 (1296,1303,true,true),
+	 (1296,1304,true,true),
+	 (1296,1305,true,true),
+	 (1283,1306,true,true),
+	 (1281,1307,true,true),
+	 (1307,1308,true,true);
+INSERT INTO conf.plan_node_hierarchies (node_parent_id,node_child_id,enabled,visible) VALUES
+	 (1309,1310,true,true),
+	 (1309,1311,true,true),
+	 (1309,1312,true,true),
+	 (258,1313,true,true);

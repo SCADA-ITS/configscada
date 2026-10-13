@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="39.6875mm"
+   height="40.097763mm"
+   viewBox="0 0 39.687501 40.097763"
+   version="1.1"
+   id="svg2"
+   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   sodipodi:docname="71_vms_snow.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="2.925608"
+     inkscape:cx="100.66284"
+     inkscape:cy="114.33521"
+     inkscape:document-units="px"
+     inkscape:current-layer="main"
+     inkscape:document-rotation="0"
+     showgrid="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="1912"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     showguides="false"
+     inkscape:guide-bbox="true"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:pagecheckerboard="0" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="main"
+     inkscape:groupmode="layer"
+     id="main"
+     style="display:inline">
+    <path
+       id="state"
+       style="fill:#ffcc00;fill-opacity:1;fill-rule:evenodd;stroke-width:0.559121"
+       d="M 0,0 H 39.687501 V 40.097765 H 0 Z" />
+    <path
+       id="path283"
+       style="display:inline;fill:#222222;fill-opacity:1;fill-rule:evenodd;stroke-width:0.518235"
+       d="M 1.3229167,1.3229167 H 38.364584 V 38.232226 H 1.3229167 Z" />
+    <g
+       inkscape:groupmode="layer"
+       id="zone1"
+       inkscape:label="zone1"
+       style="display:inline">
+      <path
+         style="display:inline;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke-width:0.500633"
+         d="M 1.984375,1.9843747 H 37.703121 V 37.703125 H 1.984375 Z"
+         id="path191-3" />
+      <image
+         xlink:href="../../DOCUME~1/MobaXterm/project/ausol/img/pictograms/80.bmp"
+         width="34.395832"
+         height="34.395832"
+         preserveAspectRatio="none"
+         id="graphic1-1"
+         x="2.6458368"
+         y="2.6458316"
+         style="display:inline" />
+    </g>
+   </g>
+</svg>

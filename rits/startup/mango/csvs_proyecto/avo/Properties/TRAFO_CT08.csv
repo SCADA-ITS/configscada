@@ -1,0 +1,4 @@
+device_name;plc_name;plc_ip;port(i);url_publisher;offset_alarms(i)
+CT08-TR1-SE8;CT08_PLC_G;10.133.50.37;28056;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;21701
+CT08-TR2-SE8;CT08_PLC_G;10.133.50.37;28056;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;21711
+CT08-TR3-SE8;CT08_PLC_G;10.133.50.37;28056;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;21721

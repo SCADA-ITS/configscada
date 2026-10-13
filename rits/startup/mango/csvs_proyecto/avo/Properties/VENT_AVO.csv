@@ -1,0 +1,13 @@
+device_name;session_uid;plc_name;host;port(i);url_publisher;read_permission;write_permission;offset_ventilation_mode_writer(i);offset_ventilation_regime_writer(i);offset_ventilation_regime_propoused(i);offset_ventilation_mode(i);offset_ventilation_regime(i);offset_iniciar_incendio(i);offset_finalizar_incendio(i);offset_confirmar_incendio(i);offset_cancelar_incendio(i);offset_estado_incendio(i);offset_traffic_state(i)
+canton_1;canton_1;CT02_PLC_C;10.133.50.37;28010;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;;5020;5185;25;20;24;5220;5222;5219;5218;60;63
+canton_2;canton_2;CT03_PLC_C;10.133.50.37;28017;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;;5020;5185;25;20;24;5220;5222;5219;5218;60;63
+canton_3;canton_3;CT04_PLC_C;10.133.50.37;28024;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;;5020;5185;25;20;24;5220;5222;5219;5218;60;63
+canton_4;canton_4;CT05_PLC_C;10.133.50.37;28031;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;;5020;5185;25;20;24;5220;5222;5219;5218;60;63
+canton_5;canton_5;CT06_PLC_C;10.133.50.37;28038;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;;5020;5185;25;20;24;5220;5222;5219;5218;60;63
+canton_6;canton_6;CT07_PLC_C;10.133.50.37;28045;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;;5020;5185;25;20;24;5220;5222;5219;5218;60;63
+canton_7;canton_7;CT08_PLC_C;10.133.50.37;28052;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;;5020;5185;25;20;24;5220;5222;5219;5218;60;63
+canton_8;canton_8;CT08_PLC_C;10.133.50.37;28052;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;;5021;5186;32;21;31;5227;5229;5226;5225;70;73
+canton_9;canton_9;CT06_PLC_C;10.133.50.37;28038;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;;5021;5186;32;21;31;5227;5229;5226;5225;70;73
+canton_10;canton_10;CT06_PLC_C;10.133.50.37;28038;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;;5022;5187;39;22;38;5234;5236;5233;5232;80;83
+canton_11;canton_11;CT05_PLC_C;10.133.50.37;28031;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;;5021;5186;32;21;31;5227;5229;5226;5225;70;73
+canton_12;canton_12;CT04_PLC_C;10.133.50.37;28024;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;;5022;5187;39;22;38;5234;5236;5233;5232;80;83

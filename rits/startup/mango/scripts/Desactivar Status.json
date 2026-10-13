@@ -1,0 +1,38 @@
+{
+  "dataSources": [
+    {
+      "xid": "DS_66fecd5d-af1d-4a6a-82f7-0a8437249aaa",
+      "name": "Desactivar Status",
+      "enabled": false,
+      "type": "SCRIPTING",
+      "alarmLevels": {
+        "SCRIPT_ERROR": "URGENT",
+        "CONTEXT_POINT_DISABLED": "URGENT",
+        "DATA_TYPE_ERROR": "URGENT",
+        "POLL_ABORTED": "URGENT",
+        "LOG_ERROR": "URGENT"
+      },
+      "purgeType": "YEARS",
+      "updatePeriods": 1,
+      "updatePeriodType": "MINUTES",
+      "updateEvent": "UPDATE",
+      "context": [],
+      "logLevel": "NONE",
+      "scriptPermissions": [
+        "superadmin"
+      ],
+      "polling": true,
+      "executionDelaySeconds": 0,
+      "historicalSetting": false,
+      "logCount": 5,
+      "logSize": 1.0,
+      "script": "var dataPoints = DataPointQuery.query(\"eq(name,status)&limit(1000)\");\n\nfor( var k = 0; k < dataPoints.length; k += 1 ) {\n  dataPoints[k].runtime.set(0);\n}\n\nvar dataPoints = DataPointQuery.query(\"eq(name,plc_status)&limit(1000)\");\n\nfor( var k = 0; k < dataPoints.length; k += 1 ) {\n  dataPoints[k].runtime.set(0);\n}",
+      "quantize": false,
+      "useCron": false,
+      "editPermission": "",
+      "purgeOverride": false,
+      "purgePeriod": 1
+    }
+  ],
+  "dataPoints": []
+}

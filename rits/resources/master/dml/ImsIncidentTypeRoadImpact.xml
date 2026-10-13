@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="ImsIncidentTypeRoadImpact">
+	<SELECT>SELECT incident_type_id as "incidentTypeId",
+				   stretch_id as "stretchId",
+				   road_impact_id as "roadImpactId",
+				   enabled as "enabled", 
+				   visible as "visible"
+			  FROM conf.ims_incident_type_road_impacts
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>INSERT INTO conf.ims_incident_type_road_impacts
+					   (incident_type_id,
+					   	stretch_id,
+					   	road_impact_id,
+					    enabled,
+					    visible,
+					    created_at,
+					    updated_at)
+				 VALUES (:incidentTypeId,
+				 		 :stretchId,
+						 :roadImpactId,
+				 		 :enabled,
+				         :visible,
+				         CURRENT_TIMESTAMP,
+				         CURRENT_TIMESTAMP)
+	</INSERT>
+	<UPDATE>
+	</UPDATE>
+	<DELETE>DELETE FROM conf.ims_incident_type_road_impacts
+			   WHERE incident_type_id = :incidentTypeId 
+					AND stretch_id = :stretchId 
+					AND road_impact_id = :roadImpactId
+	</DELETE>
+</DML>

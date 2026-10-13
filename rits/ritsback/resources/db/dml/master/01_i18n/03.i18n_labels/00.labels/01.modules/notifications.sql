@@ -1,0 +1,116 @@
+-- 
+-- Type:   modules
+-- Entity: Alarm service
+-- File:   alarm_service.sql
+-- Langs:  es_ES, en_GB, sk_SK, es_CL
+--
+
+-- 
+-- Table: master.i18n_labels
+--
+-- es_ES
+INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) VALUES
+	
+	('es_ES', 1, 'LBL_SNOOZE', 'Silenciar', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_ES', 1, 'LBL_NO_SELECTED_ALARMS', 'No se han seleccionado alarmas', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_ES', 1, 'LBL_ARE_YOU_SURE_SNOOZE_SELECTED_ALARMS', '¿Desea silenciar las alarmas seleccionadas?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_ES', 1, 'LBL_CLEAN_ALARM', 'Limpiar alarmas', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_ES', 1, 'LBL_ARE_YOU_SURE_CLEAN_SELECTED_ALARMS', '¿Desea limpiar las alarmas seleccionadas?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_ES', 1, 'LBL_ARE_YOU_SURE_CLEAN_ALL_CONFIRMED_ALARMS', '¿Desea limpiar todas las alarmas reconocidas?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_ES', 1, 'LBL_CONFIRM_INCIDENT', 'Confirmar incidencia', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_ES', 1, 'LBL_CLEAN_INCIDENT', 'Limpiar incidencia', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_ES', 1, 'LBL_SNOOZE_INCIDENT', 'Silenciar incidencia', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_ES', 1, 'LBL_NO_INCIDENTS_RECOGNIZED', 'Sin incidencias confirrmados', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_ES', 1, 'LBL_NO_SELECTED_INCIDENTS', 'No se han seleccionado incidencias', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_ES', 1, 'LBL_ARE_YOU_SURE_SNOOZE_SELECTED_INCIDENTS', '¿Desea silenciar las incidencias seleccionadas?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_ES', 1, 'LBL_ARE_YOU_SURE_CLEAN_SELECTED_INCIDENTS', '¿Desea limpiar las incidencias seleccionadas?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_ES', 1, 'LBL_ARE_YOU_SURE_CLEAN_ALL_CONFIRMED_INCIDENTS', '¿Desea limpiar todas las incidencias confirmadas?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_ES', 1, 'LBL_RECOGNIZE_EVENT', 'Reconocer evento', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_ES', 1, 'LBL_ARE_YOU_SURE_RECOGNIZE_SELECTED_EVENTS', '¿Desea reconocer los eventos seleccionados?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_ES', 1, 'LBL_NO_SELECTED_EVENTS', 'No se han seleccionado eventos', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_ES', 1, 'LBL_SNOOZE_EVENT', 'Silenciar evento', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_ES', 1, 'LBL_ARE_YOU_SURE_SNOOZE_SELECTED_EVENTS', '¿Desea silenciar los eventos seleccionados?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_ES', 1, 'LBL_SECS_TO_RECOGNIZED_ITEM', 'Auto-confirmar', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_ES', 1, 'LBL_SEC_AB', 's.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+	
+-- en_GB
+INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) VALUES
+
+	('en_GB', 1, 'LBL_SNOOZE', 'Snooze', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('en_GB', 1, 'LBL_NO_SELECTED_ALARMS', 'No selected alarms', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('en_GB', 1, 'LBL_ARE_YOU_SURE_SNOOZE_SELECTED_ALARMS', 'Are you sure snooze selected alarms?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('en_GB', 1, 'LBL_CLEAN_ALARM', 'Clean alarms', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('en_GB', 1, 'LBL_ARE_YOU_SURE_CLEAN_SELECTED_ALARMS', 'Are you sure clean selected alarms?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('en_GB', 1, 'LBL_ARE_YOU_SURE_CLEAN_ALL_CONFIRMED_ALARMS', 'Are you sure clean all confirmed alarms?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('en_GB', 1, 'LBL_CONFIRM_INCIDENT', 'Confirm incident', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('en_GB', 1, 'LBL_CLEAN_INCIDENT', 'Clean incident', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('en_GB', 1, 'LBL_SNOOZE_INCIDENT', 'Snooze incident', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('en_GB', 1, 'LBL_NO_INCIDENTS_RECOGNIZED', 'No incidents confirmed', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('en_GB', 1, 'LBL_NO_SELECTED_INCIDENTS', 'No selected incidents', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('en_GB', 1, 'LBL_ARE_YOU_SURE_SNOOZE_SELECTED_INCIDENTS', 'Are you sure snooze selected incidents?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('en_GB', 1, 'LBL_ARE_YOU_SURE_CLEAN_SELECTED_INCIDENTS', 'Are you sure clean selected incidents?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('en_GB', 1, 'LBL_ARE_YOU_SURE_CLEAN_ALL_CONFIRMED_INCIDENTS', 'Are you sure clean all confirmed incidents?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('en_GB', 1, 'LBL_RECOGNIZE_EVENT', 'Recognize event', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('en_GB', 1, 'LBL_ARE_YOU_SURE_RECOGNIZE_SELECTED_EVENTS', 'Are you sure recognize selected events?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('en_GB', 1, 'LBL_NO_SELECTED_EVENTS', 'No selected events', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('en_GB', 1, 'LBL_SNOOZE_EVENT', 'Snooze event', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('en_GB', 1, 'LBL_ARE_YOU_SURE_SNOOZE_SELECTED_EVENTS', 'Are you sure snooze selected events?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('en_GB', 1, 'LBL_SECS_TO_RECOGNIZED_ITEM', 'Auto-confirm', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('en_GB', 1, 'LBL_SEC_AB', 's.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+	
+-- sk_SK
+INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) VALUES
+
+	('sk_SK', 1, 'LBL_SNOOZE', 'Odložiť', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('sk_SK', 1, 'LBL_NO_SELECTED_ALARMS', 'Žiadne vybrané alarmy', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('sk_SK', 1, 'LBL_ARE_YOU_SURE_SNOOZE_SELECTED_ALARMS', 'Ste si istí, že ste si vybrali budíky snooze?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('sk_SK', 1, 'LBL_CLEAN_ALARM', 'Čisté alarmy', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('sk_SK', 1, 'LBL_ARE_YOU_SURE_CLEAN_SELECTED_ALARMS', 'Ste si istí, že ste vybrali čisté alarmy?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('sk_SK', 1, 'LBL_ARE_YOU_SURE_CLEAN_ALL_CONFIRMED_ALARMS', 'Ste si istí, že ste vyčistili všetky potvrdené alarmy?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('sk_SK', 1, 'LBL_CONFIRM_INCIDENT', 'Potvrdiť incident', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('sk_SK', 1, 'LBL_CLEAN_INCIDENT', 'Čistý incident', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('sk_SK', 1, 'LBL_SNOOZE_INCIDENT', 'Odložiť incident', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('sk_SK', 1, 'LBL_NO_INCIDENTS_RECOGNIZED', 'Žiadne potvrdené incidenty', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('sk_SK', 1, 'LBL_NO_SELECTED_INCIDENTS', 'Žiadne vybrané incidenty', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('sk_SK', 1, 'LBL_ARE_YOU_SURE_SNOOZE_SELECTED_INCIDENTS', 'Ste si istí, že sú vybrané udalosti snooze?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('sk_SK', 1, 'LBL_ARE_YOU_SURE_CLEAN_SELECTED_INCIDENTS', 'Ste si istí, že ste vybrali čisté incidenty?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('sk_SK', 1, 'LBL_ARE_YOU_SURE_CLEAN_ALL_CONFIRMED_INCIDENTS', 'Ste si istí, že ste vyčistili všetky potvrdené incidenty?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('sk_SK', 1, 'LBL_RECOGNIZE_EVENT', 'Rozpoznať udalosť', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('sk_SK', 1, 'LBL_ARE_YOU_SURE_RECOGNIZE_SELECTED_EVENTS', 'Ste si istí, že rozpoznáte vybrané udalosti?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('sk_SK', 1, 'LBL_NO_SELECTED_EVENTS', 'Žiadne vybrané podujatia', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('sk_SK', 1, 'LBL_SNOOZE_EVENT', 'Udalosť Snooze', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('sk_SK', 1, 'LBL_ARE_YOU_SURE_SNOOZE_SELECTED_EVENTS', 'Ste si istí, že sú vybrané udalosti odložené?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('sk_SK', 1, 'LBL_SECS_TO_RECOGNIZED_ITEM', 'Automatické potvrdenie', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('sk_SK', 1, 'LBL_CLEAN', 'vyčistiť', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('sk_SK', 1, 'LBL_NOTIFICATION_EVENT', 'notifikácia_udalosti', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('sk_SK', 1, 'LBL_RECONNIZE_EVENT', 'rozpoznanie_udalosti', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),		
+	('sk_SK', 1, 'LBL_SEC_AB', 's.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+	
+-- es_CL
+INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) VALUES
+
+	('es_CL', 1, 'LBL_SNOOZE', 'Silenciar', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_CL', 1, 'LBL_NO_SELECTED_ALARMS', 'No se han seleccionado alarmas', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_CL', 1, 'LBL_ARE_YOU_SURE_SNOOZE_SELECTED_ALARMS', '¿Desea silenciar las alarmas seleccionadas?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_CL', 1, 'LBL_CLEAN_ALARM', 'Limpiar alarmas', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_CL', 1, 'LBL_ARE_YOU_SURE_CLEAN_SELECTED_ALARMS', '¿Desea limpiar las alarmas seleccionadas?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_CL', 1, 'LBL_ARE_YOU_SURE_CLEAN_ALL_CONFIRMED_ALARMS', '¿Desea limpiar todas las alarmas reconocidas?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_CL', 1, 'LBL_CONFIRM_INCIDENT', 'Confirmar incidencia', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_CL', 1, 'LBL_CLEAN_INCIDENT', 'Limpiar incidencia', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_CL', 1, 'LBL_SNOOZE_INCIDENT', 'Silenciar incidencia', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_CL', 1, 'LBL_NO_INCIDENTS_RECOGNIZED', 'Sin incidencias confirrmados', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_CL', 1, 'LBL_NO_SELECTED_INCIDENTS', 'No se han seleccionado incidencias', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_CL', 1, 'LBL_ARE_YOU_SURE_SNOOZE_SELECTED_INCIDENTS', '¿Desea silenciar las incidencias seleccionadas?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_CL', 1, 'LBL_ARE_YOU_SURE_CLEAN_SELECTED_INCIDENTS', '¿Desea limpiar las incidencias seleccionadas?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_CL', 1, 'LBL_ARE_YOU_SURE_CLEAN_ALL_CONFIRMED_INCIDENTS', '¿Desea limpiar todas las incidencias confirmadas?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_CL', 1, 'LBL_RECOGNIZE_EVENT', 'Reconocer evento', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_CL', 1, 'LBL_ARE_YOU_SURE_RECOGNIZE_SELECTED_EVENTS', '¿Desea reconocer los eventos seleccionados?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_CL', 1, 'LBL_NO_SELECTED_EVENTS', 'No se han seleccionado eventos', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_CL', 1, 'LBL_SNOOZE_EVENT', 'Silenciar evento', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_CL', 1, 'LBL_ARE_YOU_SURE_SNOOZE_SELECTED_EVENTS', '¿Desea silenciar los eventos seleccionados?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_CL', 1, 'LBL_SECS_TO_RECOGNIZED_ITEM', 'Auto-confirmar', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_CL', 1, 'LBL_SEC_AB', 's.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+	

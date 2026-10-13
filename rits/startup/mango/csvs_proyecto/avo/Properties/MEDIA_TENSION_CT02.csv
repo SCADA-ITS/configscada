@@ -1,0 +1,5 @@
+device_name;session_uid;ct_upd;upd_state;url_publisher;PLC_name;PLC_ip;PLC_port(i);read_permission;write_permission;offset_mt_pat_switch_position(i);offset_mt_disconnect_switch_position(i);offset_fuse_state(i)
+CT02-CLI1-SE2;CT02-CLI1-SE2;CT02_PLC_F;upd_fail_ct02_2;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;CT02_PLC_F;10.133.50.37;28013;monitor;;21800;21800;21800
+CT02-CPF1-SE2;CT02-CPF1-SE2;CT02_PLC_F;upd_fail_ct02_2;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;CT02_PLC_F;10.133.50.37;28013;monitor;;21810;21810;21810
+CT02-CPF2-SE2;CT02-CPF2-SE2;CT02_PLC_F;upd_fail_ct02_2;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;CT02_PLC_F;10.133.50.37;28013;monitor;;21820;21820;21820
+CT02-CPF3-SE2;CT02-CPF3-SE2;CT02_PLC_F;upd_fail_ct02_2;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;CT02_PLC_F;10.133.50.37;28013;monitor;;21830;21830;21830

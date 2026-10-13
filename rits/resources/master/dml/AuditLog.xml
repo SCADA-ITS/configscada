@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="AuditLog">
+	<SELECT>SELECT audit_log_id as "id", 
+	               log_type_id as "logTypeId",
+	               log_subtype_id as "logSubtypeId",
+	               user_id as "userId",
+	               log_level_id as "levelId",
+	               time_stamp as "time",
+	               management_area_ids as "managementAreaIds",
+				   enabled as "enabled", 
+				   visible as "visible"
+              FROM rt.audit_logs
+              WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>INSERT INTO rt.audit_logs
+				   (audit_log_id, 
+				    log_type_id,
+				    log_subtype_id,
+				    user_id,
+				    log_level_id,
+				    time_stamp,
+				    management_area_ids,
+				    enabled, 
+				    visible, 
+				    created_at, 
+				    updated_at)
+		    VALUES (:id,
+				    :logTypeId,
+				    :logSubtypeId,
+				    :userId,
+				    :levelId,
+				    :time,
+				    :managementAreaIds,
+				    :enabled,
+				    :visible,
+				    CURRENT_TIMESTAMP,
+				    CURRENT_TIMESTAMP)
+	</INSERT>
+	<UPDATE>UPDATE rt.audit_logs
+				SET user_id = :userId,
+					log_level_id = :level,
+					time_stamp = :time,
+				 	enabled = :enabled,
+				 	visible = :visible,
+				 	updated_at = CURRENT_TIMESTAMP
+				WHERE audit_log_id = :id
+	</UPDATE>
+	<DELETE>DELETE FROM rt.audit_logs
+				WHERE audit_log_id = :id
+	</DELETE>
+</DML>

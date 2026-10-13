@@ -1,0 +1,95 @@
+dim x
+
+'Copio el valor de las salidas en sus correspondientes entradas
+RV-CONT-A11
+x = getregistervalue(0,0)
+SetRegisterValue 1, 3, x
+
+RV-CONT-A13
+x = getregistervalue(0,1)
+SetRegisterValue 1, 5, x
+
+RV-CONT-A10
+x = getregistervalue(0,2)
+SetRegisterValue 1, 7, x
+
+RV-CONT-A12
+x = getregistervalue(0,3)
+SetRegisterValue 1, 9, x
+
+RV-CONT-A4
+x = getregistervalue(0,4)
+SetRegisterValue 1, 11, x
+
+RV-CONT-A6
+x = getregistervalue(0,5)
+SetRegisterValue 1, 13, x
+
+RV-CONT-A3
+x = getregistervalue(0,6)
+SetRegisterValue 1, 15, x
+
+RV-CONT-A5
+x = getregistervalue(0,7)
+SetRegisterValue 1, 17, x
+
+RV-CONT-RED-RV1
+x = getregistervalue(0,8)
+SetRegisterValue 1, 19, x
+
+RV-CONT-RED-RV2
+x = getregistervalue(0,9)
+SetRegisterValue 1, 21, x
+
+RV-CONT-RED-RV3
+x = getregistervalue(0,10)
+SetRegisterValue 1, 23, x
+
+RV-CONT-AA9-SC
+x = getregistervalue(0,11)
+SetRegisterValue 1, 27, x
+
+RV-CONT-AA8-SC
+x = getregistervalue(0,12)
+SetRegisterValue 1, 29, x
+
+RV-CONT-AA2-SM
+x = getregistervalue(0,13)
+SetRegisterValue 1, 31, x
+
+RV-CONT-AA1-SM
+x = getregistervalue(0,14)
+SetRegisterValue 1, 33, x
+
+RV-CONT-AE7-SM
+x = getregistervalue(0,15)
+SetRegisterValue 1, 35, x
+
+RV-CONT-AE14-SC
+x = getregistervalue(0,16)
+SetRegisterValue 1, 39, x
+
+RV-CONT-AE15-SC
+x = getregistervalue(0,17)
+SetRegisterValue 1, 42, x
+
+RV-CONT-AE16-SM
+x = getregistervalue(0,18)
+SetRegisterValue 1, 45, x
+
+RV-CONT-A15-SC
+x = getregistervalue(0,19)
+SetRegisterValue 1, 47, x
+
+RV-CONT-A16-SC
+x = getregistervalue(0,20)
+SetRegisterValue 1, 49, x
+
+RV-CONT-A17-SM
+x = getregistervalue(0,21)
+SetRegisterValue 1, 51, x
+
+RV-CONT-A18-SM
+x = getregistervalue(0,22)
+SetRegisterValue 1, 53, x
+

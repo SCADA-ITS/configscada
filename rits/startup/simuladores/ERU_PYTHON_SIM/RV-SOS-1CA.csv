@@ -1,0 +1,39 @@
+Direccion;Nombre;Equipo;low_limit_AI;upper_limit_AI;low_limit_sensor;upper_limit_sensor;unidades;fin
+ED0;Puerta Extintor IZQ. abierta;RV-SOS-1CA;"
+";"
+";;;;
+ED1;Puerta SOS abierta;RV-SOS-1CA;;;;;;
+ED2;Puerta Extintor DER. abierta;RV-SOS-1CA;;;;;;
+ED3;RESERVA;RESERVA;;;;;;
+ED4;RESERVA;RESERVA;;;;;;
+ED5;Alarma FA Sensores;RV-SOS-1CA;;;;;;
+ED6;Alarma FA Placa;RV-SOS-1CA;;;;;;
+ED7;RESERVA;RESERVA;;;;;;
+ED8;Temperatura Devanados Motor Ventilador;RV-VENT-VF1-CA;;;;;;
+ED9;Temperatura Devanados Motor Ventilador;RV-VENT-VF2-CA;;;;;;
+ED10;Temperatura Devanados Motor Ventilador;RV-VENT-VF3-CA;;;;;;
+ED11;Temperatura Devanados Motor Ventilador;RV-VENT-VF4-CA;;;;;;
+ED12;RESERVA;RESERVA;;;;;;
+ED13;RESERVA;RESERVA;;;;;;
+ED14;RESERVA;RESERVA;;;;;;
+ED15;RESERVA;RESERVA;;;;;;
+AI0;Nivel de CO;RV-CO-1CA;0;32760;0;300;ppm;
+AI1;Nivel de NO2;RV-NO-1CA;0;32760;0;20;ppm;
+AI2;Nivel de opacidad;RV-OPC-1CA;0;32760;0;15;km-1;
+AI3;RESERVA;RESERVA;0;32760;0;0;reserva;
+AI4;Nivel de Vibración Ventilador;RV-VENT-VF1-CA;0;32760;0;25;mm/s;
+AI5;Nivel de Vibración Ventilador;RV-VENT-VF2-CA;0;32760;0;25;mm/s;
+AI6;Nivel de Vibración Ventilador;RV-VENT-VF3-CA;0;32760;0;25;mm/s;
+AI7;Nivel de Vibración Ventilador;RV-VENT-VF4-CA;0;32760;0;25;mm/s;
+AI8;Velocidad del viento;RV-ANI-1CA;0;32760;-20;20;m/s;
+AI9;Nivel de luminosidad;RV-LUX-2CA;0;32760;1;5000;lux;
+AI10;Nivel de luminosidad;RV-LUX-3CA;0;32760;1;5000;lux;
+AI11;RESERVA;RESERVA;0;32760;0;0;reserva;
+AI12;Temperatura Rodamientos Motor Delantero Ventilador;RV-VENT-VF1-CA;0;32760;0;200;ºC;
+AI13;Temperatura Rodamientos Motor Trasero Ventilador;RV-VENT-VF1-CA;0;32760;0;200;ºC;
+AI14;Temperatura Rodamientos Motor Delantero Ventilador;RV-VENT-VF2-CA;0;32760;0;200;ºC;
+AI15;Temperatura Rodamientos Motor Trasero Ventilador;RV-VENT-VF2-CA;0;32760;0;200;ºC;
+AI16;Temperatura Rodamientos Motor Delantero Ventilador;RV-VENT-VF3-CA;0;32760;0;200;ºC;
+AI17;Temperatura Rodamientos Motor Trasero Ventilador;RV-VENT-VF3-CA;0;32760;0;200;ºC;
+AI18;Temperatura Rodamientos Motor Delantero Ventilador;RV-VENT-VF4-CA;0;32760;0;200;ºC;
+AI19;Temperatura Rodamientos Motor Trasero Ventilador;RV-VENT-VF4-CA;0;32760;0;200;ºC;

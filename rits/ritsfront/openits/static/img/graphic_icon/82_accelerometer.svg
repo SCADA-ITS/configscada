@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="55mm"
+   height="55mm"
+   viewBox="0 0 55 55"
+   version="1.1"
+   id="svg2"
+   inkscape:version="1.0.2-2 (e86c870879, 2021-01-15)"
+   sodipodi:docname="81_accelerometer_state_new.svg">
+  <defs
+     id="defs1087" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.3556054"
+     inkscape:cx="-4.274945"
+     inkscape:cy="171.20784"
+     inkscape:document-units="mm"
+     inkscape:current-layer="main"
+     inkscape:document-rotation="0"
+     showgrid="false"
+     inkscape:window-width="1366"
+     inkscape:window-height="705"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata1090">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Capa 1"
+     inkscape:groupmode="layer"
+     id="main">
+    <rect
+       style="fill:#ffcc00;stroke:none;stroke-width:1.3915;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;fill-opacity:1"
+       id="state"
+       width="55"
+       height="55"
+       x="0"
+       y="0"
+       ry="5" />
+    <rect
+       style="fill:#cccccc;stroke:none;stroke-width:1.265;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect1658"
+       width="45"
+       height="45"
+       x="5"
+       y="5"
+       ry="5" />
+    <image
+       preserveAspectRatio="none"
+       inkscape:svg-dpi="96"
+       width="40"
+       height="40"
+       xlink:href="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFk b2JlIElsbHVzdHJhdG9yIDE5LjAuMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246 IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2 ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHZlcnNpb249IjEu MSIgaWQ9IkxheWVyXzEiIHg9IjBweCIgeT0iMHB4IiB2aWV3Qm94PSIwIDIgOTggOTgiIHN0eWxl PSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAyIDk4IDk4OyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIg d2lkdGg9IjUxMiIgaGVpZ2h0PSI1MTIiPgo8c3R5bGUgdHlwZT0idGV4dC9jc3MiPgoJLnN0MHtm aWxsOnVybCgjU1ZHSURfMV8pO30KCS5zdDF7ZmlsbDp1cmwoI1NWR0lEXzJfKTt9Cgkuc3Qye2Zp bGw6dXJsKCNTVkdJRF8zXyk7fQoJLnN0M3tmaWxsOnVybCgjU1ZHSURfNF8pO30KCS5zdDR7Zmls bDp1cmwoI1NWR0lEXzVfKTt9Cgkuc3Q1e2ZpbGw6dXJsKCNTVkdJRF82Xyk7fQoJLnN0NntmaWxs OnVybCgjU1ZHSURfN18pO30KCS5zdDd7ZmlsbDp1cmwoI1NWR0lEXzhfKTt9Cgkuc3Q4e2ZpbGw6 dXJsKCNTVkdJRF85Xyk7fQoJLnN0OXtmaWxsOnVybCgjU1ZHSURfMTBfKTt9Cjwvc3R5bGU+Cjxn PgoJPGxpbmVhckdyYWRpZW50IGlkPSJTVkdJRF8xXyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNl T25Vc2UiIHgxPSI0NC4zIiB5MT0iMzkuMjAwMiIgeDI9IjQ0LjMiIHkyPSI2Mi43OTk4Ij4KCQk8 c3RvcCBvZmZzZXQ9IjAiIHN0eWxlPSJzdG9wLWNvbG9yOiMwMEVGRDEiLz4KCQk8c3RvcCBvZmZz ZXQ9IjEiIHN0eWxlPSJzdG9wLWNvbG9yOiMwMEFDRUEiLz4KCTwvbGluZWFyR3JhZGllbnQ+Cgk8 cGF0aCBjbGFzcz0ic3QwIiBkPSJNNDQuMywzOS4yYy0xLjcsMC0zLDEuMy0zLDN2MTcuNmMwLDEu NywxLjMsMywzLDNzMy0xLjMsMy0zVjQyLjJDNDcuMyw0MC41LDQ2LDM5LjIsNDQuMywzOS4yeiIv PgoJPGxpbmVhckdyYWRpZW50IGlkPSJTVkdJRF8yXyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNl T25Vc2UiIHgxPSIzNS4wMDAyIiB5MT0iMjkuODk5OSIgeDI9IjM1LjAwMDIiIHkyPSI3Mi4wOTk2 Ij4KCQk8c3RvcCBvZmZzZXQ9IjAiIHN0eWxlPSJzdG9wLWNvbG9yOiMwMEVGRDEiLz4KCQk8c3Rv cCBvZmZzZXQ9IjEiIHN0eWxlPSJzdG9wLWNvbG9yOiMwMEFDRUEiLz4KCTwvbGluZWFyR3JhZGll bnQ+Cgk8cGF0aCBjbGFzcz0ic3QxIiBkPSJNMzUsMjkuOWMtMS43LDAtMywxLjMtMywzdjM2LjJj MCwxLjcsMS4zLDMsMywzczMtMS4zLDMtM1YzMi45QzM4LDMxLjIsMzYuNywyOS45LDM1LDI5Ljl6 Ii8+Cgk8bGluZWFyR3JhZGllbnQgaWQ9IlNWR0lEXzNfIiBncmFkaWVudFVuaXRzPSJ1c2VyU3Bh Y2VPblVzZSIgeDE9IjI1LjYwMDMiIHkxPSIyMS4yMDAyIiB4Mj0iMjUuNjAwMyIgeTI9IjgwLjc5 OTgiPgoJCTxzdG9wIG9mZnNldD0iMCIgc3R5bGU9InN0b3AtY29sb3I6IzAwRUZEMSIvPgoJCTxz dG9wIG9mZnNldD0iMSIgc3R5bGU9InN0b3AtY29sb3I6IzAwQUNFQSIvPgoJPC9saW5lYXJHcmFk aWVudD4KCTxwYXRoIGNsYXNzPSJzdDIiIGQ9Ik0yNS42LDIxLjJjLTEuNywwLTMsMS4zLTMsM3Y1 My42YzAsMS43LDEuMywzLDMsM3MzLTEuMywzLTNWMjQuMkMyOC42LDIyLjUsMjcuMywyMS4yLDI1 LjYsMjEuMnoiLz4KCTxsaW5lYXJHcmFkaWVudCBpZD0iU1ZHSURfNF8iIGdyYWRpZW50VW5pdHM9 InVzZXJTcGFjZU9uVXNlIiB4MT0iMTYuMyIgeTE9IjI5Ljg5OTkiIHgyPSIxNi4zIiB5Mj0iNzIu MDk5NiI+CgkJPHN0b3Agb2Zmc2V0PSIwIiBzdHlsZT0ic3RvcC1jb2xvcjojMDBFRkQxIi8+CgkJ PHN0b3Agb2Zmc2V0PSIxIiBzdHlsZT0ic3RvcC1jb2xvcjojMDBBQ0VBIi8+Cgk8L2xpbmVhckdy YWRpZW50PgoJPHBhdGggY2xhc3M9InN0MyIgZD0iTTE2LjMsMjkuOWMtMS43LDAtMywxLjMtMywz djM2LjJjMCwxLjcsMS4zLDMsMywzczMtMS4zLDMtM1YzMi45QzE5LjMsMzEuMiwxOCwyOS45LDE2 LjMsMjkuOXoiLz4KCTxsaW5lYXJHcmFkaWVudCBpZD0iU1ZHSURfNV8iIGdyYWRpZW50VW5pdHM9 InVzZXJTcGFjZU9uVXNlIiB4MT0iNi45MDAxIiB5MT0iMzguNjAwMSIgeDI9IjYuOTAwMSIgeTI9 IjYzLjQwMDQiPgoJCTxzdG9wIG9mZnNldD0iMCIgc3R5bGU9InN0b3AtY29sb3I6IzAwRUZEMSIv PgoJCTxzdG9wIG9mZnNldD0iMSIgc3R5bGU9InN0b3AtY29sb3I6IzAwQUNFQSIvPgoJPC9saW5l YXJHcmFkaWVudD4KCTxwYXRoIGNsYXNzPSJzdDQiIGQ9Ik02LjksMzguNmMtMS43LDAtMywxLjMt MywzdjE4LjhjMCwxLjcsMS4zLDMsMywzczMtMS4zLDMtM1Y0MS42QzkuOSwzOS45LDguNiwzOC42 LDYuOSwzOC42eiIvPgoJPGxpbmVhckdyYWRpZW50IGlkPSJTVkdJRF82XyIgZ3JhZGllbnRVbml0 cz0idXNlclNwYWNlT25Vc2UiIHgxPSI3Mi40MDA2IiB5MT0iMjEuMjAwMiIgeDI9IjcyLjQwMDYi IHkyPSI4MC43OTk4Ij4KCQk8c3RvcCBvZmZzZXQ9IjAiIHN0eWxlPSJzdG9wLWNvbG9yOiMwMEVG RDEiLz4KCQk8c3RvcCBvZmZzZXQ9IjEiIHN0eWxlPSJzdG9wLWNvbG9yOiMwMEFDRUEiLz4KCTwv bGluZWFyR3JhZGllbnQ+Cgk8cGF0aCBjbGFzcz0ic3Q1IiBkPSJNNzIuNCwyMS4yYy0xLjcsMC0z LDEuMy0zLDN2NTMuNmMwLDEuNywxLjMsMywzLDNzMy0xLjMsMy0zVjI0LjJDNzUuNCwyMi41LDc0 LjEsMjEuMiw3Mi40LDIxLjJ6Ii8+Cgk8bGluZWFyR3JhZGllbnQgaWQ9IlNWR0lEXzdfIiBncmFk aWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjYzLjAwMDIiIHkxPSIyOS44OTk5IiB4Mj0i NjMuMDAwMiIgeTI9IjcyLjA5OTYiPgoJCTxzdG9wIG9mZnNldD0iMCIgc3R5bGU9InN0b3AtY29s b3I6IzAwRUZEMSIvPgoJCTxzdG9wIG9mZnNldD0iMSIgc3R5bGU9InN0b3AtY29sb3I6IzAwQUNF QSIvPgoJPC9saW5lYXJHcmFkaWVudD4KCTxwYXRoIGNsYXNzPSJzdDYiIGQ9Ik02MywyOS45Yy0x LjcsMC0zLDEuMy0zLDN2MzYuMmMwLDEuNywxLjMsMywzLDNzMy0xLjMsMy0zVjMyLjlDNjYsMzEu Miw2NC43LDI5LjksNjMsMjkuOXoiLz4KCTxsaW5lYXJHcmFkaWVudCBpZD0iU1ZHSURfOF8iIGdy YWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIiB4MT0iNTMuNzAwNCIgeTE9IjM0LjYwMDEiIHgy PSI1My43MDA0IiB5Mj0iNjcuNDAwNCI+CgkJPHN0b3Agb2Zmc2V0PSIwIiBzdHlsZT0ic3RvcC1j b2xvcjojMDBFRkQxIi8+CgkJPHN0b3Agb2Zmc2V0PSIxIiBzdHlsZT0ic3RvcC1jb2xvcjojMDBB Q0VBIi8+Cgk8L2xpbmVhckdyYWRpZW50PgoJPHBhdGggY2xhc3M9InN0NyIgZD0iTTUzLjcsMzQu NmMtMS43LDAtMywxLjMtMywzdjI2LjhjMCwxLjcsMS4zLDMsMywzczMtMS4zLDMtM1YzNy42QzU2 LjcsMzUuOSw1NS40LDM0LjYsNTMuNywzNC42eiIvPgoJPGxpbmVhckdyYWRpZW50IGlkPSJTVkdJ RF85XyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSI4MS43MDA0IiB5MT0iMjku ODk5OSIgeDI9IjgxLjcwMDQiIHkyPSI3Mi4wOTk2Ij4KCQk8c3RvcCBvZmZzZXQ9IjAiIHN0eWxl PSJzdG9wLWNvbG9yOiMwMEVGRDEiLz4KCQk8c3RvcCBvZmZzZXQ9IjEiIHN0eWxlPSJzdG9wLWNv bG9yOiMwMEFDRUEiLz4KCTwvbGluZWFyR3JhZGllbnQ+Cgk8cGF0aCBjbGFzcz0ic3Q4IiBkPSJN ODEuNywyOS45Yy0xLjcsMC0zLDEuMy0zLDN2MzYuMmMwLDEuNywxLjMsMywzLDNzMy0xLjMsMy0z VjMyLjlDODQuNywzMS4yLDgzLjQsMjkuOSw4MS43LDI5Ljl6Ii8+Cgk8bGluZWFyR3JhZGllbnQg aWQ9IlNWR0lEXzEwXyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSI5MS4wOTk5 IiB5MT0iMzguNjAwMSIgeDI9IjkxLjA5OTkiIHkyPSI2My40MDA0Ij4KCQk8c3RvcCBvZmZzZXQ9 IjAiIHN0eWxlPSJzdG9wLWNvbG9yOiMwMEVGRDEiLz4KCQk8c3RvcCBvZmZzZXQ9IjEiIHN0eWxl PSJzdG9wLWNvbG9yOiMwMEFDRUEiLz4KCTwvbGluZWFyR3JhZGllbnQ+Cgk8cGF0aCBjbGFzcz0i c3Q5IiBkPSJNOTEuMSwzOC42Yy0xLjcsMC0zLDEuMy0zLDN2MTguOGMwLDEuNywxLjMsMywzLDNz My0xLjMsMy0zVjQxLjZDOTQuMSwzOS45LDkyLjgsMzguNiw5MS4xLDM4LjZ6Ii8+CjwvZz4KCjwv c3ZnPgo= "
+       id="image2314"
+       x="7.5"
+       y="7.5" />
+  </g>
+  <style
+     type="text/css"
+     id="style1985">
+	.st0{fill:url(#SVGID_1_);}
+	.st1{fill:url(#SVGID_2_);}
+	.st2{fill:url(#SVGID_3_);}
+	.st3{fill:url(#SVGID_4_);}
+	.st4{fill:url(#SVGID_5_);}
+	.st5{fill:url(#SVGID_6_);}
+	.st6{fill:url(#SVGID_7_);}
+	.st7{fill:url(#SVGID_8_);}
+	.st8{fill:url(#SVGID_9_);}
+	.st9{fill:url(#SVGID_10_);}
+</style>
+</svg>

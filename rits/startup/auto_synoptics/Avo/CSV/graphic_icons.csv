@@ -1,0 +1,42 @@
+id;name;description;alarms;measures;js_draw_file;width;height;svg_pattern_var;svg_file;js_custom_type_render
+401;WS;WS;false;true;'''component/graphicIcon/graphicIconDefault.js''';25;25;null;'''img/graphic_icon/01_weather_station.svg''';null
+302;CAM_DOMO;CAM_DOMO;false;true;'''component/graphicIcon/graphicIconDefault.js''';25;25;null;'''img/graphic_icon/02_camera_domo.svg''';null
+402;CAM_DAI;CAM_DAI;false;true;'''component/graphicIcon/graphicIconDefault.js''';25;25;null;'''img/graphic_icon/02_camera.svg''';null
+3;DETECTOR;DETECTOR;false;true;'''component/graphicIcon/graphicIconDefault.js''';25;25;null;'''img/graphic_icon/03_detector.svg''';null
+204;SECTION;SECTION;false;true;'''component/graphicIcon/graphicIconCustom.js''';50;50;null;'''img/graphic_icon/04_section.svg''';'''component/graphicIcon/custom/section.js'''
+107;ZONE;ZONE;false;true;'''component/graphicIcon/graphicIconDefault.js''';25;25;null;'''img/graphic_icon/07_zone.svg''';null
+207;ZONE;ZONE;false;true;'''component/graphicIcon/graphicIconDefault.js''';50;50;null;'''img/graphic_icon/07_zone.svg''';null
+307;ZONE;ZONE;false;true;'''component/graphicIcon/graphicIconDefault.js''';65;65;null;'''img/graphic_icon/07_zone.svg''';null
+8;BARR;BARR;false;true;'''component/graphicIcon/graphicIconCustom.js''';25;25;null;'''img/graphic_icon/08_barrier.svg''';'''component/graphicIcon/custom/barrier.js'''
+209;JETFAN;JETFAN;false;true;'''component/graphicIcon/graphicIconCustom.js''';25;25;null;'''img/graphic_icon/09_jetfan.svg''';'''component/graphicIcon/custom/jetfan.js'''
+211;SOS;SOS;false;true;'''component/graphicIcon/graphicIconDefault.js''';25;25;null;'''img/graphic_icon/11_sos.svg''';null
+12;LUX;LUX;false;true;'''component/graphicIcon/graphicIconCustom.js''';25;25;null;'''img/graphic_icon/12_lux.svg''';'''component/graphicIcon/custom/lux.js'''
+13;SEM;SEM;false;true;'''component/graphicIcon/graphicIconCustom.js''';25;25;null;'''img/graphic_icon/13_sem_3_grupos.svg''';'''component/graphicIcon/custom/trafficLightPLC.js'''
+14;LUM;LUM;false;true;'''component/graphicIcon/graphicIconCustom.js''';25;25;null;'''img/graphic_icon/14_lum.svg''';'''component/graphicIcon/custom/lum.js'''
+215;ZI;ZI;false;true;'''component/graphicIcon/graphicIconDefault.js''';25;25;null;'''img/graphic_icon/15_flame.svg''';null
+216;PA_ZONE;PA_ZONE;false;true;'''component/graphicIcon/graphicIconCustom.js''';40;40;null;'''img/graphic_icon/16_pa_zone.svg''';'''component/graphicIcon/custom/pa.js'''
+17;GALIBO;GALIBO;false;true;'''component/graphicIcon/graphicIconDefault.js''';25;25;null;'''img/graphic_icon/17_galibo.svg''';null
+19;CO;CO;false;true;'''component/graphicIcon/graphicIconCustom.js''';25;25;null;'''img/graphic_icon/19_co.svg''';'''component/graphicIcon/custom/co.js'''
+20;NO;NO;false;true;'''component/graphicIcon/graphicIconCustom.js''';25;25;null;'''img/graphic_icon/20_no.svg''';'''component/graphicIcon/custom/no.js'''
+21;OPAC;OPAC;false;true;'''component/graphicIcon/graphicIconCustom.js''';25;25;null;'''img/graphic_icon/21_opac.svg''';'''component/graphicIcon/custom/op.js'''
+24;AXIALFAN;AXIALFAN;false;true;'''component/graphicIcon/graphicIconCustom.js''';25;25;null;'''img/graphic_icon/24_axialfan.svg''';'''component/graphicIcon/custom/axialfan.js'''
+29;FIBROLASER;FIBROLASER;false;true;'''component/graphicIcon/graphicIconCustom.js''';25;25;null;'''img/graphic_icon/29_fibrolaser_ct.svg''';null
+253;SEM_2_GROUPS;SEM_2_GROUPS;false;true;'''component/graphicIcon/graphicIconCustom.js''';25;25;null;'''img/graphic_icon/53_sem_2_grupos.svg''';'''component/graphicIcon/custom/redTrafficLight.js'''
+18;VANE;VANE;false;true;'''component/graphicIcon/graphicIconDefault.js''';25;25;null;'''img/graphic_icon/18_anemometro.svg''';null
+1171;PANEL CLV_AF;PANEL CLV_AF;false;true;'''component/graphicIcon/graphicIconCustom.js''';24;24;null;'''img/graphic_icon/71_vms_clv_af.svg''';'''component/graphicIcon/custom/vms.js'''
+1271;PANEL CLV_AF;PANEL CLV_AF;false;true;'''component/graphicIcon/graphicIconCustom.js''';24;24;null;'''img/graphic_icon/71_vms_clv_af.svg''';'''component/graphicIcon/custom/vms.js'''
+1671;PANEL TXT;PANEL TXT;false;true;'''component/graphicIcon/graphicIconCustom.js''';200;220;null;'''img/graphic_icon/71_vms_dgt_txt_1line.svg''';'''component/graphicIcon/custom/vms.js'''
+1971;PANEL GR_TXT;PANEL GR_TXT;false;true;'''component/graphicIcon/graphicIconCustom.js''';200;220;null;'''img/graphic_icon/71_vms_dgt_gr_txt.svg''';'''component/graphicIcon/custom/vms.js'''
+32;PRESURIZACION;PRESURIZACION;false;true;'''component/graphicIcon/graphicIconDefault.js''';25;25;null;'''img/graphic_icon/32_presurizacion.svg''';null
+56;UF;UF;false;false;'''component/graphicIcon/graphicIconDefault.js''';80;80;null;'''img/graphic_icon/56_unifilar.svg''';null
+57;MAG_DIF;MAG_DIF;false;true;'''component/graphicIcon/graphicIconCustom.js''';40;40;null;'''img/graphic_icon/57_switch.svg''';'''component/graphicIcon/custom/switch.js'''
+58;PULS;PULS;false;false;'''component/graphicIcon/graphicIconDefault.js''';25;25;null;'''img/graphic_icon/58_pulsador.svg''';null
+59;DET_HUM;DET_HUM;false;false;'''component/graphicIcon/graphicIconDefault.js''';25;25;null;'''img/graphic_icon/59_smoke_detector.svg''';null
+60;SIRENA;SIRENA;false;false;'''component/graphicIcon/graphicIconDefault.js''';25;25;null;'''img/graphic_icon/61_fire_det_ct.svg''';null
+61;CENTRAL_LAZO;CENTRAL_LAZO;false;false;'''component/graphicIcon/graphicIconDefault.js''';25;25;null;'''img/graphic_icon/60_sirena.svg''';null
+65;SAI;SAI;false;false;'''component/graphicIcon/graphicIconDefault.js''';60;60;null;'''img/graphic_icon/65_sai.svg''';null
+70;CVM;CVM;false;false;'''component/graphicIcon/graphicIconDefault.js''';80;80;null;'''img/graphic_icon/70_analizador_red.svg''';null
+75;GE;GE;false;false;'''component/graphicIcon/graphicIconDefault.js''';80;80;null;'''img/graphic_icon/75_ge.svg''';null
+86;PUMP;PUMP;false;true;'''component/graphicIcon/graphicIconCustom.js''';25;25;null;'''img/graphic_icon/86_diesel_pump.svg''';'''component/graphicIcon/custom/pump.js'''
+2000;TUBE;TUBE;false;true;'''component/graphicIcon/graphicIconCustom.js''';40;40;null;'''img/graphic_icon/2000_tube_ilumination.svg''';null
+95;SYNC_SERVER;SYNC_SERVER;false;true;'''component/graphicIcon/graphicIconCustom.js''';50;50;null;'''img/graphic_icon/95_sync_server.svg''';null

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="ManagementAreaUser">
+	<SELECT>SELECT management_area_id as "id", 
+				   user_id as "userId",
+				   enabled as "enabled", 
+				   visible as "visible" 
+			  FROM conf.management_area_users
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>INSERT INTO conf.management_area_users
+					   (management_area_id,
+					   	user_id,
+					    enabled,
+					    visible,
+					    created_at,
+					    updated_at)
+				 VALUES (:id,
+				         :userId,				 
+				         :enabled,
+				         :visible,
+				         CURRENT_TIMESTAMP,
+				         CURRENT_TIMESTAMP)
+	</INSERT>
+	<UPDATE>
+	</UPDATE>
+	<DELETE>DELETE FROM conf.management_area_users
+			 WHERE management_area_id = :id
+			 AND  user_id = :userId
+	</DELETE>
+</DML>

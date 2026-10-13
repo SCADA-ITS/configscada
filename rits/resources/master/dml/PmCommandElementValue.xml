@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="PmCommandElementValue">
+	<SELECT>SELECT command_element_type_id as "commandElementTypeId",
+				   element_type_id as "elementTypeId",
+				   element_id as "elementId",
+				   queue_id as "queueId",
+				   command_element_type_param_id as "commandElementTypeParamId",
+				   pm_command_element_id as "pmCommandElementId", 
+				   value as "value",
+				   enabled as "enabled", 
+				   visible as "visible"
+			  FROM rt.pm_command_element_values
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>INSERT INTO rt.pm_command_element_values
+					   (command_element_type_id,
+					    element_type_id,
+					    element_id,
+					   	command_element_type_param_id,
+					   	pm_command_element_id,
+					   	queue_id,
+					   	value,
+					    enabled,
+					    visible,
+					    created_at,
+					    updated_at)
+				 VALUES (:commandElementTypeId,
+				 		 :elementTypeId,
+				 		 :elementId,
+				 		 :commandElementTypeParamId,
+				 		 :pmCommandElementId,
+				 		 :queueId,
+				         :value,
+				         :enabled,
+				         :visible,
+				         CURRENT_TIMESTAMP,
+				         CURRENT_TIMESTAMP)
+	</INSERT>
+	<UPDATE> 
+	</UPDATE>
+	<DELETE>DELETE FROM rt.pm_command_element_values
+			 WHERE command_element_type_id = :commandElementTypeId
+			 AND element_type_id = :elementTypeId
+			 AND element_id = :elementId
+			 AND command_element_type_param_id = :commandElementTypeParamId
+			 AND pm_command_element_id = :pmCommandElementId
+			 AND queue_id = :queueId
+	</DELETE>
+</DML>

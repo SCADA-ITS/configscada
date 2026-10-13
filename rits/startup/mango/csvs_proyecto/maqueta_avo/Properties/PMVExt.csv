@@ -1,0 +1,11 @@
+device_name;session_uid;url_publisher
+IVEN-PMV-001;IVEN-PMV-001;http:\/\/192.168.88.176:3000\/api\/v2\/generic\/
+ICEO-PMV-001;ICEO-PMV-001;http:\/\/192.168.88.176:3000\/api\/v2\/generic\/
+ICEP-PMV-001;ICEP-PMV-001;http:\/\/192.168.88.176:3000\/api\/v2\/generic\/
+S1TN-PMV-003;S1TN-PMV-003;http:\/\/192.168.88.176:3000\/api\/v2\/generic\/
+S1TN-PMV-001;S1TN-PMV-001;http:\/\/192.168.88.176:3000\/api\/v2\/generic\/
+S1TN-PMV-002;S1TN-PMV-002;http:\/\/192.168.88.176:3000\/api\/v2\/generic\/
+IVIP-PMV-001;IVIP-PMV-001;http:\/\/192.168.88.176:3000\/api\/v2\/generic\/
+ICCP-PMV-001;ICCP-PMV-001;http:\/\/192.168.88.176:3000\/api\/v2\/generic\/
+IPRO-PMV-001;IPRO-PMV-001;http:\/\/192.168.88.176:3000\/api\/v2\/generic\/
+IBTO-PMV-001;IBTO-PMV-001;http:\/\/192.168.88.176:3000\/api\/v2\/generic\/

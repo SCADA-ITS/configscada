@@ -1,0 +1,11 @@
+device_name;session_uid;ip;port(i);url_publisher;num_polling_out_comm;time_polling_ms;readriteCommunityr;writeCommunity;read_permission;write_permission
+S1TN-PPV-110;S1TN-PPV-110;10.121.1.147;161;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;2;10000;public;public;monitor;
+IVIP-PPV-205;IVIP-PPV-205;10.122.3.147;161;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;2;10000;public;public;monitor;
+INKO-PPV-1207;INKO-PPV-1207;10.122.4.147;161;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;2;10000;public;public;monitor;
+IPRO-PPV-104;IPRO-PPV-104;10.122.7.147;161;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;2;10000;public;public;monitor;
+ICCO-PPV-102;ICCO-PPV-102;10.123.1.147;161;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;2;10000;public;public;monitor;
+IBTO-PPV-101;IBTO-PPV-101;10.123.4.147;161;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;2;10000;public;public;monitor;
+IVEN-PPV-202;IVEN-PPV-202;10.120.1.147;161;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;2;10000;public;public;monitor;
+ICEO-PPV-201;ICEO-PPV-201;10.120.2.147;161;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;2;10000;public;public;monitor;
+ICNP-PPV-206;ICNP-PPV-206;10.122.6.147;161;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;2;10000;public;public;monitor;
+ICCP-PPV-209;ICCP-PPV-209;10.123.2.147;161;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;2;10000;public;public;monitor;

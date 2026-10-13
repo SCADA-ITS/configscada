@@ -1,0 +1,22 @@
+item;alias;description;sessionuid;road;stretchs;secc;pk;dm;param1_direction;param2_pk_ini;param3_pk_end;param4_name
+1;TT_01;TT_01;;AVO;;;;;false;35.6;38.4;E.Tunel Minero - S.Escriva de Balaguer
+2;TT_02;TT_02;;AVO;;;;;false;35.6;38.9;E.Tunel Minero - S.Candelaria Goyenechea
+3;TT_03;TT_03;;AVO;;;;;false;35.6;41.5;E.Tunel Minero - S.Los Militares
+4;TT_04;TT_04;;AVO;;;;;false;35.6;43.3;E.Tunel Minero - S.Isabel la Católica
+5;TT_05;TT_05;;AVO;;;;;false;35.6;43.8;E.Tunel Minero - S.Tobalaba
+6;TT_06;TT_06;;AVO;;;;;false;41;43.3;E.Vitacura - S.Isabel la Católica
+7;TT_07;TT_07;;AVO;;;;;false;41;43.8;E.Vitacura - S.Tobalaba
+8;TT_08;TT_08;;AVO;;;;;false;41.8;43.3;E.Kennedy Oriente Poniente - S.Isabel la Católica
+9;TT_09;TT_09;;AVO;;;;;false;41.8;43.8;E.Kennedy Oriente Poniente - S.Tobalaba
+10;TT_10;TT_10;;AVO;;;;;false;43.2;42.4;E.Francisco Bilbao - S.Los Militares
+11;TT_11;TT_11;;AVO;;;;;false;43.2;42;E.Francisco Bilbao - S.Cerro colorado
+12;TT_12;TT_12;;AVO;;;;;false;43.2;41.4;E.Francisco Bilbao - S.Kennedy Oriente Poniente
+13;TT_13;TT_13;;AVO;;;;;false;43.2;40.4;E.Francisco Bilbao - S.Costanera Norte
+14;TT_14;TT_14;;AVO;;;;;false;43.2;37.2;E.Francisco Bilbao - S.Ciudad Empresarial
+15;TT_15;TT_15;;AVO;;;;;false;42.5;42',;E.Martín de Zamora - S.Cerro colorado
+16;TT_16;TT_16;;AVO;;;;;false;42.5;41.4;E.Martín de Zamora - S.Kennedy Oriente Poniente
+17;TT_17;TT_17;;AVO;;;;;false;42.5;40.4;E.Martín de Zamora - S.Costanera Norte
+18;TT_18;TT_18;;AVO;;;;;false;42.5;37.2;E.Martín de Zamora - S.Ciudad Empresarial
+19;TT_19;TT_19;;AVO;;;;;false;41.4;40.4;E.Presidente Riesco - S.Costanera Norte
+20;TT_20;TT_20;;AVO;;;;;false;41.4;37.2;E.Presidente Riesco - S.Ciudad Empresarial
+21;TT_21;TT_21;;AVO;;;;;false;40.3;37.2;E.Kennedy Oriente - S.Ciudad Empresarial

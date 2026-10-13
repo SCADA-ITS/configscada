@@ -1,0 +1,5 @@
+device_name;session_uid;PLC_name;PLC_ip;PLC_port(i);url_publisher;read_permission;write_permission;offset_wind_speed(i);offset_sensor_out_of_range(i);offset_wind_direction(i);offset_broken_thread_sensor(i)
+SCNO-ANE-001;SCNO-ANE-001;CT02_PLC_D;10.133.50.37;28011;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;;15503;15501;15500;15501
+SCNO-ANE-002;SCNO-ANE-002;CT02_PLC_D;10.133.50.37;28011;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;;15522;15520;15519;15520
+S1TS-ANE-001;S1TS-ANE-001;CT02_PLC_D;10.133.50.37;28011;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;;15541;15539;15538;15539
+S1TS-ANE-002;S1TS-ANE-002;CT02_PLC_D;10.133.50.37;28011;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;monitor;;15560;15558;15557;15558

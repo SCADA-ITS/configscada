@@ -1,0 +1,58 @@
+INSERT INTO conf.elements (element_type_id, element_subtype_id, element_id, location_id, keep_values_on_disconnected, inherit_state_id, alias, description, on_change_alarm, on_change_state, on_change_measure, on_schedule, enabled, visible, alert, alarm_count, created_at, updated_at) VALUES
+(52, NULL, 1, 0010052, NULL, NULL, 'AVOITSDAI01', 'DAI', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(52, NULL, 2, 0020052, NULL, NULL, 'AVOITSDAI02', 'DAI', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(52, NULL, 3, 0030052, NULL, NULL, 'AVOITSDAI03', 'DAI', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(52, NULL, 4, 0040052, NULL, NULL, 'AVOITSDAI04', 'DAI', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(52, NULL, 5, 0050052, NULL, NULL, 'AVOITSDAI05', 'DAI', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(52, NULL, 6, 0060052, NULL, NULL, 'AVOITSDAI06', 'DAI', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(52, NULL, 7, 0070052, NULL, NULL, 'AVOITSDAI07', 'DAI', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(52, NULL, 8, 0080052, NULL, NULL, 'AVOITSDAI08', 'DAI', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(52, NULL, 9, 0090052, NULL, NULL, 'AVOITSDAI09', 'DAI', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_type_id, element_id, element_value_state_id, value, enabled, visible, created_at, updated_at) VALUES
+(52, 1, 1, 1, NULL, 'Citilog', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(52, 2, 1, 1, NULL, 'DAI', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(52, 1004, 1, 1, NULL, 'AVOITSDAI01', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+
+(52, 1, 1, 2, NULL, 'Citilog', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(52, 2, 1, 2, NULL, 'DAI', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(52, 1004, 1, 2, NULL, 'AVOITSDAI02', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+
+(52, 1, 1, 3, NULL, 'Citilog', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(52, 2, 1, 3, NULL, 'DAI', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(52, 1004, 1, 3, NULL, 'AVOITSDAI03', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+
+(52, 1, 1, 4, NULL, 'Citilog', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(52, 2, 1, 4, NULL, 'DAI', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(52, 1004, 1, 4, NULL, 'AVOITSDAI04', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+
+(52, 1, 1, 5, NULL, 'Citilog', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(52, 2, 1, 5, NULL, 'DAI', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(52, 1004, 1, 5, NULL, 'AVOITSDAI05', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+
+(52, 1, 1, 6, NULL, 'Citilog', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(52, 2, 1, 6, NULL, 'DAI', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(52, 1004, 1, 6, NULL, 'AVOITSDAI06', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+
+(52, 1, 1, 7, NULL, 'Citilog', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(52, 2, 1, 7, NULL, 'DAI', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(52, 1004, 1, 7, NULL, 'AVOITSDAI07', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+
+(52, 1, 1, 8, NULL, 'Citilog', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(52, 2, 1, 8, NULL, 'DAI', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(52, 1004, 1, 8, NULL, 'AVOITSDAI08', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+
+(52, 1, 1, 9, NULL, 'Citilog', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(52, 2, 1, 9, NULL, 'DAI', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(52, 1004, 1, 9, NULL, 'AVOITSDAI09', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+INSERT INTO conf.element_io_controller_modules (element_type_id, element_id, module_type_id, module_id, enabled, visible, created_at, updated_at) VALUES
+(52, 1, 2, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(52, 2, 2, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(52, 3, 2, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(52, 4, 2, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(52, 5, 2, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(52, 6, 2, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(52, 7, 2, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(52, 8, 2, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP), 
+(52, 9, 2, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

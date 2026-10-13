@@ -1,0 +1,231 @@
+-- Disable message for next USE command
+:setvar SQLCMDERRORLEVEL 1
+USE [smartgen]
+GO
+-- Reenable
+:setvar SQLCMDERRORLEVEL 0
+
+SET ANSI_NULLS ON
+SET ANSI_WARNINGS ON
+SET NOCOUNT ON
+
+DROP TABLE IF EXISTS dbo.sg_i18n_labels;
+DROP TABLE IF EXISTS dbo.sg_metadata_tasks;
+DROP TABLE IF EXISTS dbo.sg_metadata_column_fillers; 
+DROP TABLE IF EXISTS dbo.sg_metadata_columns;
+DROP TABLE IF EXISTS dbo.sg_metadata_table_commands; 
+DROP TABLE IF EXISTS dbo.sg_metadata_table_triggers; 
+DROP TABLE IF EXISTS dbo.sg_metadata_table_attachments; 
+DROP TABLE IF EXISTS dbo.sg_metadata_table_images; 
+DROP TABLE IF EXISTS dbo.sg_metadata_tables;
+GO
+
+
+-- Table: dbo.sg_metadata_tables
+-- Descripción: 
+-- Scope: 
+--
+
+CREATE TABLE dbo.sg_metadata_tables (
+	id int IDENTITY(1,1) NOT NULL,
+	name varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+	label varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	label_singular varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	label_description varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	mdi_icon varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	support_images bit NOT NULL,
+	support_attachments bit NOT NULL,
+	metadata varchar(2000) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	CONSTRAINT pk_sg_metadata_tables PRIMARY KEY (id)
+);
+GO
+ CREATE  UNIQUE NONCLUSTERED INDEX sg_metadata_tables_name_key ON dbo.sg_metadata_tables (  name ASC  )  
+	 WITH (  PAD_INDEX = OFF ,FILLFACTOR = 99   ,SORT_IN_TEMPDB = OFF , IGNORE_DUP_KEY = OFF , STATISTICS_NORECOMPUTE = OFF , ONLINE = OFF , ALLOW_ROW_LOCKS = ON , ALLOW_PAGE_LOCKS = ON  )
+	 ON [PRIMARY ] ;
+GO
+	 
+-- Table: dbo.sg_metadata_table_images
+-- Descripción: 
+-- Scope: 
+--
+CREATE TABLE dbo.sg_metadata_table_images (
+	id int IDENTITY(1,1) NOT NULL,
+	sg_metadata_table_id int NOT NULL,
+	id_value int NOT NULL,
+	group_name varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+	file_name varchar(200) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+	description varchar(200) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[position] int NOT NULL,
+	CONSTRAINT pk_sg_metadata_table_images PRIMARY KEY (id)
+);
+GO
+ CREATE NONCLUSTERED INDEX idx_sg_metadata_table_images_sg_metadata_table_id ON dbo.sg_metadata_table_images (  sg_metadata_table_id ASC  )  
+	 WITH (  PAD_INDEX = OFF ,FILLFACTOR = 99   ,SORT_IN_TEMPDB = OFF , IGNORE_DUP_KEY = OFF , STATISTICS_NORECOMPUTE = OFF , ONLINE = OFF , ALLOW_ROW_LOCKS = ON , ALLOW_PAGE_LOCKS = ON  )
+	 ON [PRIMARY ] ;
+GO
+
+
+ALTER TABLE dbo.sg_metadata_table_images ADD CONSTRAINT fk_sg_metadata_table_images_sg_metadata_table_id FOREIGN KEY (sg_metadata_table_id) REFERENCES dbo.sg_metadata_tables(id);
+GO
+
+-- Table: dbo.sg_metadata_table_attachments
+-- Descripción: 
+-- Scope: 
+--
+
+CREATE TABLE dbo.sg_metadata_table_attachments (
+	id int IDENTITY(1,1) NOT NULL,
+	sg_metadata_table_id int NOT NULL,
+	id_value int NOT NULL,
+	group_name varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+	file_name varchar(200) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+	description varchar(200) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[position] int NOT NULL,
+	CONSTRAINT pk_sg_metadata_table_attachments PRIMARY KEY (id)
+);
+GO
+ CREATE NONCLUSTERED INDEX idx_sg_metadata_table_attachments_sg_metadata_table_id ON dbo.sg_metadata_table_attachments (  sg_metadata_table_id ASC  )  
+	 WITH (  PAD_INDEX = OFF ,FILLFACTOR = 99   ,SORT_IN_TEMPDB = OFF , IGNORE_DUP_KEY = OFF , STATISTICS_NORECOMPUTE = OFF , ONLINE = OFF , ALLOW_ROW_LOCKS = ON , ALLOW_PAGE_LOCKS = ON  )
+	 ON [PRIMARY ] ;
+GO
+
+
+ALTER TABLE dbo.sg_metadata_table_attachments ADD CONSTRAINT fk_sg_metadata_table_attachments_sg_metadata_table_id FOREIGN KEY (sg_metadata_table_id) REFERENCES dbo.sg_metadata_tables(id);
+GO
+
+-- Table: dbo.sg_metadata_table_triggers
+-- Descripción: 
+-- Scope: 
+--
+
+CREATE TABLE dbo.sg_metadata_table_triggers (
+	id int IDENTITY(1,1) NOT NULL,
+	sg_metadata_table_id int NOT NULL,
+	name varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	groovy varchar(200) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+	CONSTRAINT pk_sg_metadata_table_triggers PRIMARY KEY (id)
+);
+GO
+ CREATE NONCLUSTERED INDEX idx_sg_metadata_table_triggers_sg_metadata_table_id ON dbo.sg_metadata_table_triggers (  sg_metadata_table_id ASC  )  
+	 WITH (  PAD_INDEX = OFF ,FILLFACTOR = 99   ,SORT_IN_TEMPDB = OFF , IGNORE_DUP_KEY = OFF , STATISTICS_NORECOMPUTE = OFF , ONLINE = OFF , ALLOW_ROW_LOCKS = ON , ALLOW_PAGE_LOCKS = ON  )
+	 ON [PRIMARY ] ;
+GO
+
+
+ALTER TABLE dbo.sg_metadata_table_triggers ADD CONSTRAINT fk_sg_metadata_table_triggers_sg_metadata_table_id FOREIGN KEY (sg_metadata_table_id) REFERENCES dbo.sg_metadata_tables(id);
+GO
+
+-- Table: dbo.sg_metadata_table_commands
+-- Descripción: 
+-- Scope: 
+--
+
+CREATE TABLE dbo.sg_metadata_table_commands (
+	id int IDENTITY(1,1) NOT NULL,
+	sg_metadata_table_id int NOT NULL,
+	name varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+	label varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	label_description varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	mdi_icon varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	require_confirmation bit NOT NULL,
+	available_in_form bit NOT NULL,
+	available_in_table bit NOT NULL,
+	groovy varchar(200) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+	CONSTRAINT pk_sg_metadata_table_commands PRIMARY KEY (id)
+);
+GO
+ CREATE NONCLUSTERED INDEX idx_sg_metadata_table_commands_sg_metadata_table_id ON dbo.sg_metadata_table_commands (  sg_metadata_table_id ASC  )  
+	 WITH (  PAD_INDEX = OFF ,FILLFACTOR = 99   ,SORT_IN_TEMPDB = OFF , IGNORE_DUP_KEY = OFF , STATISTICS_NORECOMPUTE = OFF , ONLINE = OFF , ALLOW_ROW_LOCKS = ON , ALLOW_PAGE_LOCKS = ON  )
+	 ON [PRIMARY ] ;
+GO
+ CREATE  UNIQUE NONCLUSTERED INDEX unique_sg_metadata_table_commands ON dbo.sg_metadata_table_commands (  sg_metadata_table_id ASC  , name ASC  )  
+	 WITH (  PAD_INDEX = OFF ,FILLFACTOR = 99   ,SORT_IN_TEMPDB = OFF , IGNORE_DUP_KEY = OFF , STATISTICS_NORECOMPUTE = OFF , ONLINE = OFF , ALLOW_ROW_LOCKS = ON , ALLOW_PAGE_LOCKS = ON  )
+	 ON [PRIMARY ] ;
+GO
+
+
+ALTER TABLE dbo.sg_metadata_table_commands ADD CONSTRAINT fk_sg_metadata_table_commands_sg_metadata_table_id FOREIGN KEY (sg_metadata_table_id) REFERENCES dbo.sg_metadata_tables(id);
+GO
+-- Table: dbo.sg_metadata_columns
+-- Descripción: 
+-- Scope: 
+--
+
+CREATE TABLE dbo.sg_metadata_columns (
+	id int IDENTITY(1,1) NOT NULL,
+	sg_metadata_table_id int NOT NULL,
+	column_name varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+	label varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	label_description varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	mdi_icon varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	needs_translation bit NOT NULL,
+	metadata varchar(2000) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	CONSTRAINT pk_sg_metadata_columns PRIMARY KEY (id)
+);
+GO
+ CREATE NONCLUSTERED INDEX idx_sg_metadata_columns_sg_metadata_table_id ON dbo.sg_metadata_columns (  sg_metadata_table_id ASC  )  
+	 WITH (  PAD_INDEX = OFF ,FILLFACTOR = 99   ,SORT_IN_TEMPDB = OFF , IGNORE_DUP_KEY = OFF , STATISTICS_NORECOMPUTE = OFF , ONLINE = OFF , ALLOW_ROW_LOCKS = ON , ALLOW_PAGE_LOCKS = ON  )
+	 ON [PRIMARY ] ;
+GO
+ CREATE  UNIQUE NONCLUSTERED INDEX unique_sg_metadata_columns ON dbo.sg_metadata_columns (  sg_metadata_table_id ASC  , column_name ASC  )  
+	 WITH (  PAD_INDEX = OFF ,FILLFACTOR = 99   ,SORT_IN_TEMPDB = OFF , IGNORE_DUP_KEY = OFF , STATISTICS_NORECOMPUTE = OFF , ONLINE = OFF , ALLOW_ROW_LOCKS = ON , ALLOW_PAGE_LOCKS = ON  )
+	 ON [PRIMARY ] ;
+GO
+
+ALTER TABLE dbo.sg_metadata_columns ADD CONSTRAINT fk_sg_metadata_columns_sg_metadata_table_id FOREIGN KEY (sg_metadata_table_id) REFERENCES dbo.sg_metadata_tables(id);
+GO
+-- Table: dbo.sg_metadata_column_fillers
+-- Descripción: 
+-- Scope: 
+--
+
+CREATE TABLE dbo.sg_metadata_column_fillers (
+	id int IDENTITY(1,1) NOT NULL,
+	sg_metadata_column_id int NOT NULL,
+	name varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	groovy varchar(200) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+	CONSTRAINT pk_sg_metadata_column_fillers PRIMARY KEY (id)
+);
+GO
+ CREATE NONCLUSTERED INDEX idx_sg_metadata_column_fillers_sg_metadata_column_id ON dbo.sg_metadata_column_fillers (  sg_metadata_column_id ASC  )  
+	 WITH (  PAD_INDEX = OFF ,FILLFACTOR = 99   ,SORT_IN_TEMPDB = OFF , IGNORE_DUP_KEY = OFF , STATISTICS_NORECOMPUTE = OFF , ONLINE = OFF , ALLOW_ROW_LOCKS = ON , ALLOW_PAGE_LOCKS = ON  )
+	 ON [PRIMARY ] ;
+GO
+
+ALTER TABLE dbo.sg_metadata_column_fillers ADD CONSTRAINT fk_sg_metadata_column_fillers_sg_metadata_column_id FOREIGN KEY (sg_metadata_column_id) REFERENCES dbo.sg_metadata_columns(id);
+GO
+
+-- Table: dbo.sg_metadata_tasks
+-- Descripción: 
+-- Scope: 
+--
+
+CREATE TABLE dbo.sg_metadata_tasks (
+	id int IDENTITY(1,1) NOT NULL,
+	name varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	cron_expression varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+	groovy varchar(200) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+	params varchar(2000) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	CONSTRAINT pk_sg_metadata_tasks PRIMARY KEY (id)
+);
+GO
+
+-- Table: dbo.sg_i18n_labels
+-- Descripción: 
+-- Scope: 
+--
+
+CREATE TABLE dbo.sg_i18n_labels (
+	id int IDENTITY(1,1) NOT NULL,
+	locale_code varchar(10) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+	label varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+	[translation] varchar(200) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+	created_at datetimeoffset NOT NULL,
+	updated_at datetimeoffset NOT NULL,
+	CONSTRAINT pk_sg_i18n_labels PRIMARY KEY (id)
+);
+GO
+ CREATE  UNIQUE NONCLUSTERED INDEX unique_sg_i18n_labels ON dbo.sg_i18n_labels (  locale_code ASC  , label ASC  )  
+	 WITH (  PAD_INDEX = OFF ,FILLFACTOR = 99   ,SORT_IN_TEMPDB = OFF , IGNORE_DUP_KEY = OFF , STATISTICS_NORECOMPUTE = OFF , ONLINE = OFF , ALLOW_ROW_LOCKS = ON , ALLOW_PAGE_LOCKS = ON  )
+	 ON [PRIMARY ] ;
+GO

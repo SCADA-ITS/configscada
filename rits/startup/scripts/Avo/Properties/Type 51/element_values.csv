@@ -1,0 +1,21 @@
+item;alias;description;sessionuid;road;stretchs;secc;pk;sentido;on_change_measure;param1_brand;param2_model;dm
+1;S1TS-ETD-001;Revenga ETD;S1TS-ETD-001;AVO;S1TS-ZON-001;Secc.01-10-01;37+05;;EtdParamsAdapterTFA_AVO.groovy;Revenga;Revenga ETD;750
+2;S1TN-ETD-002;Revenga ETD;S1TN-ETD-002;AVO;;Secc.01-11-13;37+09;;EtdParamsAdapterTFA_AVO.groovy;Revenga;Revenga ETD;785
+3;S1TS-ETD-002;Revenga ETD;S1TS-ETD-002;AVO;S1TS-ZON-017;Secc.01-10-02;38+60;;EtdParamsAdapterTFA_AVO.groovy;Revenga;Revenga ETD;2300
+4;S1TN-ETD-001;Revenga ETD;S1TN-ETD-001;AVO;S1TN_EXT;Secc.01-11-13;37+73;;EtdParamsAdapterTFA_AVO.groovy;Revenga;Revenga ETD;1425
+5;S1TS-ETD-003;Revenga ETD;S1TS-ETD-003;AVO;;Secc.01-10-03;39+10;;EtdParamsAdapterTFA_AVO.groovy;Revenga;Revenga ETD;2800
+6;S2TN-ETD-004;Revenga ETD;S2TN-ETD-004;AVO;;Secc.03-11-10;42+08;;EtdParamsAdapterTFA_AVO.groovy;Revenga;Revenga ETD;5780
+7;S2TN-ETD-003;Revenga ETD;S2TN-ETD-003;AVO;;Secc.03-11-10;42+6;;EtdParamsAdapterTFA_AVO.groovy;Revenga;Revenga ETD;6300
+8;S2TS-ETD-004;Revenga ETD;S2TS-ETD-004;AVO;S2TS-ZON-033;Secc.02-10-06;42+85;;EtdParamsAdapterTFA_AVO.groovy;Revenga;Revenga ETD;6550
+9;S2TN-ETD-002;Revenga ETD;S2TN-ETD-002;AVO;;Secc.03-11-10;43+23;;EtdParamsAdapterTFA_AVO.groovy;Revenga;Revenga ETD;6930
+10;S2TS-ETD-005;Revenga ETD;S2TS-ETD-005;AVO;S2TS-ZON-044;Secc.02-10-07;43+935;;EtdParamsAdapterTFA_AVO.groovy;Revenga;Revenga ETD;7635
+11;S2TN-ETD-001;Revenga ETD;S2TN-ETD-001;AVO;;Secc.03-11-08;44+08;;EtdParamsAdapterTFA_AVO.groovy;Revenga;Revenga ETD;7780
+12;S2TS-ETD-006;Revenga ETD;S2TS-ETD-006;AVO;S2TS-ZON-047;Secc.02-10-07;44+4;;EtdParamsAdapterTFA_AVO.groovy;Revenga;Revenga ETD;8100
+13;S2TN-ETD-008;Revenga ETD;S2TN-ETD-008;AVO;;Secc.03-11-11;39+68;;EtdParamsAdapterTFA_AVO.groovy;Revenga;Revenga ETD;3380
+14;S2TS-ETD-001;Revenga ETD;S2TS-ETD-001;AVO;S2TS-ZON-004;Secc.01-10-03;40+05;;EtdParamsAdapterTFA_AVO.groovy;Revenga;Revenga ETD;3750
+15;S2TN-ETD-007;Revenga ETD;S2TN-ETD-007;AVO;;Secc.03-11-11;40+48;;EtdParamsAdapterTFA_AVO.groovy;Revenga;Revenga ETD;4180
+16;S2TS-ETD-002;Revenga ETD;S2TS-ETD-002;AVO;S2TS-ZON-014;Secc.02-10-04;41;;EtdParamsAdapterTFA_AVO.groovy;Revenga;Revenga ETD;4700
+17;S2TN-ETD-006;Revenga ETD;S2TN-ETD-006;AVO;;Secc.03-11-11;41+28;;EtdParamsAdapterTFA_AVO.groovy;Revenga;Revenga ETD;4980
+18;S2TS-ETD-003;Revenga ETD;S2TS-ETD-003;AVO;S2TS-ZON-021;Secc.02-10-05;41+68;;EtdParamsAdapterTFA_AVO.groovy;Revenga;Revenga ETD;5380
+19;S2TN-ETD-005;Revenga ETD;S2TN-ETD-005;AVO;;Secc.03-11-11;41+88;;EtdParamsAdapterTFA_AVO.groovy;Revenga;Revenga ETD;5580
+20;IVEN-ETD-001;Revenga ETD;IVEN-ETD-001;AVO;;Secc.01-09-15;35+61;;EtdParamsAdapterTFA_AVO.groovy;Revenga;Revenga ETD;2250

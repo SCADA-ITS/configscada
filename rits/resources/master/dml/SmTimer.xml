@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="SmTimer">
+	<SELECT>SELECT timer_id as "id",
+				   threshold_id as "thresholdId",
+				   element_type_id as "elementTypeId",
+				   element_type_param_id as "elementTypeParamId",
+				   param_type_id as "paramTypeId",
+				   min_elements_match_threshold as "minElementsMatchThreshold",
+				   alias as "alias",
+				   description as "description",
+				   label_alias as "labelAlias", 
+				   label_description as "labelDescription",
+				   enabled as "enabled",
+				   visible as "visible"
+			  FROM static.sm_timers
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>
+	</INSERT>
+	<UPDATE>
+	</UPDATE>
+	<DELETE>
+	</DELETE>
+</DML>

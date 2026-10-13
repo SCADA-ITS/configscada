@@ -1,0 +1,2 @@
+device_name;session_uid;url_publisher;ip;port(i);read_permission;write_permission
+UCM-MASTER;UCM-MASTER;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;10.133.50.35;27000;;

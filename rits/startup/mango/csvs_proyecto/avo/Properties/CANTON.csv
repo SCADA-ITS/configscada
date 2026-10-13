@@ -1,0 +1,13 @@
+device_name;session_uid;url_publisher
+CANTON1;CANTON1;http:\/\/192.168.88.176:3000\/api\/v2\/generic\/
+CANTON2;CANTON2;http:\/\/192.168.88.176:3000\/api\/v2\/generic\/
+CANTON3;CANTON3;http:\/\/192.168.88.176:3000\/api\/v2\/generic\/
+CANTON4;CANTON4;http:\/\/192.168.88.176:3000\/api\/v2\/generic\/
+CANTON5;CANTON5;http:\/\/192.168.88.176:3000\/api\/v2\/generic\/
+CANTON6;CANTON6;http:\/\/192.168.88.176:3000\/api\/v2\/generic\/
+CANTON7;CANTON7;http:\/\/192.168.88.176:3000\/api\/v2\/generic\/
+CANTON8;CANTON8;http:\/\/192.168.88.176:3000\/api\/v2\/generic\/
+CANTON9;CANTON9;http:\/\/192.168.88.176:3000\/api\/v2\/generic\/
+CANTON10;CANTON10;http:\/\/192.168.88.176:3000\/api\/v2\/generic\/
+CANTON11;CANTON11;http:\/\/192.168.88.176:3000\/api\/v2\/generic\/
+CANTON12;CANTON12;http:\/\/192.168.88.176:3000\/api\/v2\/generic\/

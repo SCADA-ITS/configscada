@@ -1,0 +1,2 @@
+device_name;session_uid;ct_upd;upd_state;plc_name;host;port(i);url_publisher;offset_state_prot(i);bit_state_prot(i);offset_cmd(i);offset_state(i)
+CT03-EMR-001;CT03-EMR-001;PLC_CT03;upd_fail_ct03_2;CT03_PLC_G;10.133.50.37;28021;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;22744;0;22747;22742

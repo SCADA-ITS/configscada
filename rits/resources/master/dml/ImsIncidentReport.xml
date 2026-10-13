@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="ImsIncidentReport">
+	<SELECT>SELECT i.incident_report_id as "id",
+				   i.incident_type_id as "incidentTypeId",
+				   i.incident_type_cause_id as "incidentTypeCauseId",
+				   i.affection_stretch_id as "affectionStretchId",
+				   i.location_id as "locationId",
+				   i.incident_state_id as "incidentStateId",
+				   i.incident_level_id as "incidentLevelId",	
+				   i.current_user_id as "currentUserId",
+				   i.valid_for_min as "validForMin",
+				   i.confirm as "confirm",
+				   i.road_impact_id as "roadImpactId",
+				   i.enabled as "enabled", 
+				   i.visible as "visible",
+				   i.generated_at as "generatedAt",
+				   i.last_update as "lastUpdate",
+				   r.management_area_id  as "managementAreaId"
+			  FROM rt.ims_incident_reports i	  
+			  INNER JOIN conf.stretchs s ON s.stretch_id = i.affection_stretch_id 
+			  INNER JOIN conf.roads r ON s.road_id = r.road_id 
+			  WHERE i.enabled = true or i.enabled is null 
+	</SELECT>
+	<INSERT>INSERT INTO rt.ims_incident_reports
+					   (incident_report_id,
+					   	incident_type_id,
+					   	incident_type_cause_id,
+					   	affection_stretch_id,
+					   	location_id,
+					   	incident_state_id,
+					   	incident_level_id,
+					   	current_user_id,
+					   	valid_for_min,
+					   	confirm,
+					   	road_impact_id,
+					    enabled,
+					    visible,
+					    last_update,
+					    generated_at,
+					    created_at,
+					    updated_at)
+				 VALUES (:id=getNextValFromSec{'rt.last_incident_report_id'},
+				 		 :incidentTypeId,
+				 		 :incidentTypeCauseId,
+				 		 :affectionStretchId,
+				 		 :locationId,
+				 		 :incidentStateId,
+				 		 :incidentLevelId,
+				 		 :currentUserId,
+				 		 :validForMin,
+				 		 :confirm,
+				 		 :roadImpactId,
+				         :enabled,
+				         :visible,
+				         :lastUpdate,
+				         :generatedAt,
+				         CURRENT_TIMESTAMP,
+				         CURRENT_TIMESTAMP)
+	</INSERT>
+	<UPDATE>UPDATE rt.ims_incident_reports
+			   SET incident_type_id = :incidentTypeId,
+			   	   incident_type_cause_id = :incidentTypeCauseId,
+			       affection_stretch_id = :affectionStretchId,
+			       location_id = :locationId,
+			       incident_state_id = :incidentStateId,
+			       incident_level_id = :incidentLevelId,
+			       current_user_id = :currentUserId,
+			       valid_for_min = :validForMin,
+			       confirm = :confirm,
+			       road_impact_id = :roadImpactId,
+			       enabled = :enabled,
+				   visible = :visible,
+				   last_update = :lastUpdate,
+			       updated_at = CURRENT_TIMESTAMP
+			 WHERE incident_report_id = :id
+	</UPDATE>
+	<DELETE>DELETE FROM rt.ims_incident_reports
+				WHERE incident_report_id = :id
+	</DELETE>
+</DML>

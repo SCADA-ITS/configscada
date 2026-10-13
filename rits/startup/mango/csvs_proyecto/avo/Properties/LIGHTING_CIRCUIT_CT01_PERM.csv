@@ -1,0 +1,4 @@
+device_name;session_uid;ct_upd;upd_state;plc_name;host;port(i);url_publisher;offset_state_prot(i);bit_state_prot(i);offset_cmd(i);offset_state(i)
+AL.SE1-P1;AL.SE1-P1;PLC_CT01;upd_fail_ct01;CT01_PLC_G;10.133.50.37;28007;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;22738;0;22741;22736
+AL.SE1-P2;AL.SE1-P2;PLC_CT01;upd_fail_ct01;CT01_PLC_G;10.133.50.37;28007;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;22738;1;22741;22736
+AL.SE1-P3;AL.SE1-P3;PLC_CT01;upd_fail_ct01;CT01_PLC_G;10.133.50.37;28007;http:\/\/10.133.50.38:3000\/api\/v2\/generic\/;22738;2;22741;22736
