@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Created with Liquid Technologies Online Tools 1.0 (https://www.liquid-technologies.com) -->
+<xs:schema
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	attributeFormDefault="unqualified"
+	targetNamespace="historical_instant_parser_v2"
+	elementFormDefault="qualified"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="historical_instant_parser_v2">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="target_table" type="xs:string" />
+				<xs:element name="table_space" type="xs:string" />
+				<xs:element name="fields">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" name="field">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="soure_field_value"
+											type="xs:string" />
+										<xs:element name="source_entity" type="xs:string"
+											minOccurs="0" maxOccurs="1" />
+										<xs:element name="references" minOccurs="0"
+											maxOccurs="1">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element maxOccurs="unbounded"
+														name="reference">
+														<xs:complexType>
+															<xs:attribute name="sourceField"
+																type="xs:string" use="required" />
+															<xs:attribute name="targetField"
+																type="xs:string" use="required" />
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="name" type="xs:string"
+										use="required" />
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="model" type="xs:string"
+				use="required"></xs:attribute>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

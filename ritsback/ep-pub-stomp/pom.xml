@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.2.1.RELEASE</version>
+		<relativePath /> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>com.revenga.rits.back</groupId>
+	<artifactId>pub-stomp</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>>ep-pub-stomp</name>
+	<description>RTIS EP-PUB-STOMP ==> Endpoint Publisher Stomp Over Websocket</description>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java.version>11</java.version>
+		<maven.test.skip>true</maven.test.skip>
+		
+		<data-core-lib.version>0.0.1-SNAPSHOT</data-core-lib.version>
+		<cache-core-lib.version>0.0.1-SNAPSHOT</cache-core-lib.version>
+		<adapter-lib.version>0.0.1-SNAPSHOT</adapter-lib.version>
+		<front-core-lib.version>0.0.1-SNAPSHOT</front-core-lib.version>
+		<entities-lib.version>0.0.1-SNAPSHOT</entities-lib.version>
+		
+		<commons-lang3.version>3.9</commons-lang3.version>
+	</properties>
+
+	<dependencies>
+	
+		<dependency>
+			<groupId>com.revenga.rits.back</groupId>
+			<artifactId>data-core-lib</artifactId>
+			<version>${data-core-lib.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.revenga.rits.back</groupId>
+			<artifactId>cache-core-lib</artifactId>
+			<version>${cache-core-lib.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.revenga.rits.back</groupId>
+			<artifactId>adapter-lib</artifactId>
+			<version>${adapter-lib.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.revenga.rits.back</groupId>
+			<artifactId>front-core-lib</artifactId>
+			<version>${front-core-lib.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.revenga.rits.back</groupId>
+			<artifactId>entities-lib</artifactId>
+			<version>${entities-lib.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-websocket</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.junit.vintage</groupId>
+					<artifactId>junit-vintage-engine</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- Exclude Spring Boot's Default Logging -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- Add Log4j2 Dependency -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-log4j2</artifactId>
+		</dependency>
+
+		<dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-websocket</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-messaging</artifactId>
+        </dependency>
+		
+	</dependencies>
+
+	<build>
+		<pluginManagement>
+			<plugins>	
+			</plugins>
+		</pluginManagement>
+		<plugins>
+			<plugin>
+				<artifactId>exec-maven-plugin</artifactId>
+				<groupId>org.codehaus.mojo</groupId>
+				<executions>
+					<execution>
+						<!-- Run our version calculation script -->
+						<id>Git commit version file generator</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>${basedir}/../_ritsback/scripts/gitversion.sh</executable>
+							<workingDirectory>${basedir}</workingDirectory>
+							<arguments>
+            					<argument>${basedir}</argument>
+            				</arguments>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<finalName>ep-pub-stomp</finalName>
+				</configuration>
+			</plugin>
+		</plugins>
+		
+	</build>
+
+</project>

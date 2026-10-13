@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Created with Liquid Technologies Online Tools 1.0 (https://www.liquid-technologies.com) -->
+<xs:schema xmlns:p="manager_adapter_v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="manager_adapter_v1" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="manager_adapter_v1">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="subscriptors" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element maxOccurs="unbounded" name="subscriptor">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="id" type="xs:unsignedByte" />
+                    <xs:element name="enabled" type="xs:boolean" />
+                    <xs:element name="entity" type="xs:string" />
+                    <xs:element name="entity_pks" minOccurs="0" maxOccurs="1">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element maxOccurs="unbounded" name="entity_pk" type="xs:string" />
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="cmd_timestamp_filter" type="xs:unsignedByte" minOccurs="0" maxOccurs="1"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="executors">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element maxOccurs="unbounded" name="executor">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="id" type="xs:unsignedByte" />
+                    <xs:element name="enabled" type="xs:boolean" />
+                    <xs:element name="threads" type="xs:unsignedByte" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="thread_redirect_criteria" type="xs:string" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="time_to_start_s" type="xs:long" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="merge_wait_time" type="xs:long" />
+                    <xs:element name="manager_class" type="xs:string" />
+                    <xs:element name="custom_ready_executor" type="xs:boolean" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="manager_params" minOccurs="0" maxOccurs="1">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element maxOccurs="unbounded" name="manager_param_value" type="xs:string" />
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="subscriptors_ref" minOccurs="0" maxOccurs="1">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element maxOccurs="unbounded" name="subscriptor_id_ref" type="xs:unsignedByte" />
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="executor_params" minOccurs="0" maxOccurs="1">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element maxOccurs="unbounded" name="executor_param_value" type="xs:string" />
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="name" type="xs:string" use="required" />
+      <xs:attribute name="version" type="xs:string" use="required" />
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
