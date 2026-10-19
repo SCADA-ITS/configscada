@@ -555,6 +555,64 @@
                 "format": "0.00"
             },
             "tolerance": 0.0
+        },
+        {
+          "xid": "DP_{device_name}_off_order",
+          "name": "off_order",
+          "enabled": true,
+          "loggingType": "NONE",
+          "intervalLoggingPeriodType": "MINUTES",
+          "intervalLoggingType": "INSTANT",
+          "purgeType": "YEARS",
+          "pointLocator": {
+            "range": "COIL_STATUS",
+            "modbusDataType": "BINARY",
+            "writeType": "SETTABLE",
+            "additive": 0.0,
+            "bit": 0,
+            "charset": "ASCII",
+            "multiplier": 1.0,
+            "multistateNumeric": false,
+            "offset": "{offset_off_order}",
+            "registerCount": 0,
+            "slaveId": 1,
+            "slaveMonitor": false
+          },
+          "eventDetectors": [],
+          "plotType": "STEP",
+          "rollup": "NONE",
+          "unit": "",
+          "simplifyType": "NONE",
+          "chartColour": "",
+          "chartRenderer": {
+            "type": "TABLE",
+            "limit": 10
+          },
+          "dataSourceXid": "DS_{source_name}",
+          "defaultCacheSize": 1,
+          "deviceName": "{device_name}",
+          "discardExtremeValues": false,
+          "discardHighLimit": 1.7976931348623157E+308,
+          "discardLowLimit": -1.7976931348623157E+308,
+          "intervalLoggingPeriod": 15,
+          "intervalLoggingSampleWindowSize": 0,
+          "overrideIntervalLoggingSamples": false,
+          "preventSetExtremeValues": false,
+          "purgeOverride": false,
+          "purgePeriod": 1,
+          "readPermission": "",
+          "setExtremeHighLimit": 1.7976931348623157E+308,
+          "setExtremeLowLimit": -1.7976931348623157E+308,
+          "setPermission": "",
+          "tags": {},
+          "textRenderer": {
+            "type": "BINARY",
+            "oneColour": "#00ff00",
+            "oneLabel": "one",
+            "zeroColour": "#0000ff",
+            "zeroLabel": "zero"
+          },
+          "tolerance": 0.0
         }
     ],
     "publishers": [
