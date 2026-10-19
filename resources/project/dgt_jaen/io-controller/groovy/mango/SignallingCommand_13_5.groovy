@@ -28,6 +28,14 @@ class SignallingCommand_13_5 {
 	static final String GREEN_ORDER = "green_order";
 	static final String AMBER_ORDER = "amber_order";
 	static final String RED_ORDER = "red_order";
+	static final String OFF_ORDER = "off_order";
+
+	static final List<String> SEMAFOROS_CON_APAGADO = [
+		"DP_SMF-2-01-CZ-I",
+		"DP_SMF-2-01-CZ-D",
+		"DP_SMF-2-02-CZ-I",
+		"DP_SMF-2-02-CZ-D"
+	];
 	
 	//Values
 	static final boolean ON = true;
@@ -62,6 +70,12 @@ class SignallingCommand_13_5 {
 			xidPointValueTimeModels.add(xidPointValueTimeModel);
 						
 			xidPointValueTimeModels.add(xidPointValueTimeModel);
+
+			if (SEMAFOROS_CON_APAGADO.contains(dataSourceXid)) {
+				xidPointValueTimeModels.add(
+					signallingCommandUtils.getXidPointValueTimeModel(
+						signallingCommand, dataSourceXid + "_" + OFF_ORDER, OFF));
+			}
 
 			ObjectMapper objectMapper = new ObjectMapper();
 			objectMapper.setSerializationInclusion(Include.NON_NULL);

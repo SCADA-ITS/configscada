@@ -1,81 +1,82 @@
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.commons.lang3.exception.ExceptionUtils;
-
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revenga.rits.back.data.core.model.command.SignallingCommand;
 import com.revenga.rits.back.io.controller.driver.mango.MangoDriver;
 import com.revenga.rits.back.mango.core.model.XidPointValueTimeModel;
-import com.revenga.rits.back.mango.core.model.XidPointValueTimeModel.DataTypeEnum
+import com.revenga.rits.back.mango.core.model.XidPointValueTimeModel.DataTypeEnum;
 import com.revenga.rits.back.io.controller.service.EntitiesManager;
-
 import com.revenga.rits.back.data.core.util.ResourcesUtil;
 
 /**
- * 
- * SignallingCommand_13_1: SEM GREEN_LIGHT signalling command 
- * 
+ * Verde existente. Solo los cuatro equipos indicados liberan off_order.
  */
 class SignallingCommand_13_1 {
 
-	GroovyShell shell;
-	def signallingCommandUtils;
-	
-	//XIDs
-	static final String GREEN_ORDER = "green_order";
-	static final String AMBER_ORDER = "amber_order";
-	static final String RED_ORDER = "red_order";
-	
-	//Values
-	static final boolean ON = true;
-	static final boolean OFF = false;
-	
-	
-	org.apache.logging.log4j.Logger log;
-	
-	SignallingCommand_13_1(org.apache.logging.log4j.Logger log) {
-	
-		shell = new GroovyShell();
-		signallingCommandUtils = shell.parse(new File(ResourcesUtil.getPath("io-controller/groovy/mango/SignallingCommandUtils.groovy")));
-		this.log = log;
-	}
-	
-	boolean process(String dataSourceXid, SignallingCommand signallingCommand, MangoDriver driver) {
+    GroovyShell shell;
+    def signallingCommandUtils;
 
-		try {
-			List<XidPointValueTimeModel> xidPointValueTimeModels = new ArrayList<>();
-			XidPointValueTimeModel xidPointValueTimeModel;
+    static final String GREEN_ORDER = "green_order";
+    static final String AMBER_ORDER = "amber_order";
+    static final String RED_ORDER = "red_order";
+    static final String OFF_ORDER = "off_order";
 
-			xidPointValueTimeModel = signallingCommandUtils.getXidPointValueTimeModel(signallingCommand, 
-					dataSourceXid + "_" + GREEN_ORDER, ON);
-			xidPointValueTimeModels.add(xidPointValueTimeModel);
+    static final List<String> SEMAFOROS_CON_APAGADO = [
+        "DP_SMF-2-01-CZ-I",
+        "DP_SMF-2-01-CZ-D",
+        "DP_SMF-2-02-CZ-I",
+        "DP_SMF-2-02-CZ-D"
+    ];
 
-			xidPointValueTimeModel = signallingCommandUtils.getXidPointValueTimeModel(signallingCommand, 
-					dataSourceXid + "_" + AMBER_ORDER, OFF);
-			xidPointValueTimeModels.add(xidPointValueTimeModel);
+    static final boolean ON = true;
+    static final boolean OFF = false;
 
-			xidPointValueTimeModel = signallingCommandUtils.getXidPointValueTimeModel(signallingCommand, 
-					dataSourceXid + "_" + RED_ORDER, OFF);		
-			xidPointValueTimeModels.add(xidPointValueTimeModel);
+    org.apache.logging.log4j.Logger log;
 
-			ObjectMapper objectMapper = new ObjectMapper();
-			objectMapper.setSerializationInclusion(Include.NON_NULL);
-			String message = objectMapper.writeValueAsString(xidPointValueTimeModels);
+    SignallingCommand_13_1(org.apache.logging.log4j.Logger log) {
+        shell = new GroovyShell();
+        signallingCommandUtils = shell.parse(new File(ResourcesUtil.getPath(
+            "io-controller/groovy/mango/SignallingCommandUtils.groovy")));
+        this.log = log;
+    }
 
-			if (driver != null) {
-			
-				driver.send(message);
-			}			
+    boolean process(String dataSourceXid, SignallingCommand signallingCommand, MangoDriver driver) {
+        try {
+            List<XidPointValueTimeModel> xidPointValueTimeModels = new ArrayList<>();
+            XidPointValueTimeModel xidPointValueTimeModel;
 
-		} catch (NumberFormatException | JsonProcessingException e) {
+            xidPointValueTimeModel = signallingCommandUtils.getXidPointValueTimeModel(
+                signallingCommand, dataSourceXid + "_" + GREEN_ORDER, ON);
+            xidPointValueTimeModels.add(xidPointValueTimeModel);
 
-			log.error(e.getMessage());
-			log.debug(ExceptionUtils.getStackTrace(e));
-		}
+            xidPointValueTimeModel = signallingCommandUtils.getXidPointValueTimeModel(
+                signallingCommand, dataSourceXid + "_" + AMBER_ORDER, OFF);
+            xidPointValueTimeModels.add(xidPointValueTimeModel);
 
-		return true;
-	}
+            xidPointValueTimeModel = signallingCommandUtils.getXidPointValueTimeModel(
+                signallingCommand, dataSourceXid + "_" + RED_ORDER, OFF);
+            xidPointValueTimeModels.add(xidPointValueTimeModel);
+
+            if (SEMAFOROS_CON_APAGADO.contains(dataSourceXid)) {
+                xidPointValueTimeModels.add(
+                    signallingCommandUtils.getXidPointValueTimeModel(
+                        signallingCommand, dataSourceXid + "_" + OFF_ORDER, OFF));
+            }
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.setSerializationInclusion(Include.NON_NULL);
+            String message = objectMapper.writeValueAsString(xidPointValueTimeModels);
+
+            if (driver != null) {
+                driver.send(message);
+            }
+        } catch (NumberFormatException | JsonProcessingException e) {
+            log.error(e.getMessage());
+            log.debug(ExceptionUtils.getStackTrace(e));
+        }
+        return true;
+    }
 }
