@@ -1,0 +1,124 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-parent</artifactId>
+	<version>2.2.1.RELEASE</version>
+	<relativePath /> <!-- lookup parent from repository -->
+  </parent>
+  <groupId>com.revenga.rits.back</groupId>
+  <artifactId>front-core-lib</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>front-core-lib</name>
+  <description>RTIS FRONT-CORE ==> Front core library</description>
+  
+  <properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java.version>11</java.version>
+
+		<!-- Use the latest version whenever possible. -->
+		<data-core-lib.version>0.0.1-SNAPSHOT</data-core-lib.version>
+		<cache-core-lib.version>0.0.1-SNAPSHOT</cache-core-lib.version>
+		
+		<maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+
+	</properties>
+	<dependencies>
+
+		<dependency>
+			<groupId>com.revenga.rits.back</groupId>
+			<artifactId>data-core-lib</artifactId>
+			<version>${data-core-lib.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.revenga.rits.back</groupId>
+			<artifactId>cache-core-lib</artifactId>
+			<version>${cache-core-lib.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+			</dependency>
+		
+		<dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-lang3</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-dbcp2</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>javax.persistence</groupId>
+			<artifactId>javax.persistence-api</artifactId>
+		</dependency>
+			
+		<!-- Exclude Spring Boot's Default Logging -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<!-- Add Log4j2 Dependency -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-log4j2</artifactId>
+		</dependency>
+
+	</dependencies>
+  <build>
+		<finalName>front-core-lib</finalName>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>${maven-compiler-plugin.version}</version>
+					<configuration>
+						<source>${java.version}</source>
+						<target>${java.version}</target>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+		<plugins>
+			<plugin>
+				<artifactId>exec-maven-plugin</artifactId>
+				<groupId>org.codehaus.mojo</groupId>
+				<executions>
+					<execution>
+						<!-- Run our version calculation script -->
+						<id>Git commit version file generator</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>${basedir}/../_ritsback/scripts/gitversion.sh</executable>
+							<workingDirectory>${basedir}</workingDirectory>
+							<arguments>
+            					<argument>${basedir}</argument>
+            				</arguments>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>

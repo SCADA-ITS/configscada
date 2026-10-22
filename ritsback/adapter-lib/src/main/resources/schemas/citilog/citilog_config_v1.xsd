@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Created with Liquid Technologies Online Tools 1.0 (https://www.liquid-technologies.com) -->
+<xs:schema xmlns:p="citilog_config_v1"
+		   xmlns:cmn="Citilog-CommonTypes"
+		   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+		   attributeFormDefault="unqualified" 
+		   elementFormDefault="qualified" 
+		   targetNamespace="citilog_config_v1" 
+		   xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:import schemaLocation="Citilog-CommonTypes.xsd" namespace="Citilog-CommonTypes" />
+
+  <xs:element name="citilog_config_v1">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="camera_uid">
+          <xs:complexType>
+            <xs:attribute name="element_type_id" type="xs:long" use="required" />
+            <xs:attribute name="element_type_param_id" type="xs:long" use="required" />
+            <xs:attribute name="param_type_id" type="xs:long" use="required" />
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="camera_alarms" minOccurs="0" maxOccurs="1" >
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element maxOccurs="unbounded" name="camera_alarm">
+                <xs:complexType>
+                  <xs:attribute name="alarm" type="cmn:CL_Enum_AlarmType" use="required" />
+                  <xs:attribute name="lane_id" type="xs:long" use="required" />
+                  <xs:attribute name="alarm_config_id" type="xs:long" use="required" />
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="dai_uid">
+          <xs:complexType>
+            <xs:attribute name="element_type_id" type="xs:long" use="required" />
+            <xs:attribute name="element_type_param_id" type="xs:long" use="required" />
+            <xs:attribute name="param_type_id" type="xs:long" use="required" />
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="dai_alarms" minOccurs="0" maxOccurs="1" >
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element maxOccurs="unbounded" name="dai_alarm">
+                <xs:complexType>
+                  <xs:attribute name="type" type="cmn:CL_Enum_DeviceType" use="required" />
+                  <xs:attribute name="state" type="cmn:CL_Enum_DeviceStateType" use="required" />
+                  <xs:attribute name="alarm_config_id" type="xs:long" use="required" />
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="dai_states" minOccurs="0" maxOccurs="1" >
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element maxOccurs="unbounded" name="dai_state">
+                <xs:complexType>
+                  <xs:attribute name="type" type="cmn:CL_Enum_DeviceType" use="required" />
+                  <xs:attribute name="state" type="cmn:CL_Enum_DeviceStateType" use="required" />
+                  <xs:attribute name="element_state_id" type="xs:long" use="required" />
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="requests">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element maxOccurs="unbounded" name="request">
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                      <xs:attribute name="type" type="cmn:CL_Enum_RequestType" use="required" />
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="name" type="xs:string" use="required" />
+      <xs:attribute name="version" type="xs:string" use="required" />
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

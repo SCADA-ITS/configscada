@@ -1,0 +1,49 @@
+version: '3'
+services:
+  
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx:/etc/nginx
+      
+  db:
+    image: postgres:12
+    ports:
+      - "5430:5432"
+    environment:
+      TZ: "Europe/Madrid"
+    volumes:
+      - ./db:/var/lib/postgresql/data
+  redis:
+    image: eqalpha/keydb
+    command: keydb-server --requirepass rits --notify-keyspace-events KEA --server-threads 8
+    ports:
+      - "6379:6379"
+  activemq:
+    image: ivonet/activemq
+    ports:
+    - "8161:8161"
+    - "61616:61616"
+    - "61613:61613"
+    - "61614:61614"
+
+    environment:
+    - ACTIVEMQ_MIN_MEMORY=512
+    - ACTIVEMQ_MAX_MEMORY=2048
+    - ACTIVEMQ_ENABLED_AUTH=false
+    - ACTIVEMQ_ADMIN_LOGIN=admin
+    - ACTIVEMQ_ADMIN_PASSWORD=secret
+#    - ACTIVEMQ_REMOVE_DEFAULT_ACCOUNT=true
+#    - ACTIVEMQ_WRITE_LOGIN=producer
+#    - ACTIVEMQ_WRITE_PASSWORD=secret
+#    - ACTIVEMQ_READ_LOGIN=consumer
+#    - ACTIVEMQ_READ_PASSWORD=secret
+#    - ACTIVEMQ_JMX_LOGIN=jmx
+#    - ACTIVEMQ_JMX_PASSWORD=secret
+    - ACTIVEMQ_USER_LOGIN=user
+    - ACTIVEMQ_USER_PASSWORD=user
+    volumes:
+      - ./activemq/log/activemq:/var/log/activemq
