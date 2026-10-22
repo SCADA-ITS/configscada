@@ -1,9 +1,0 @@
-{
-  element {
-    id
-  }
-  error
-  commandElementPreconditions {
-    toStr
-  }
-}

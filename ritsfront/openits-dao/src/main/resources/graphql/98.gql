@@ -1,9 +1,0 @@
-{
-  id
-  alias
-  description
-  preset
-  rolePermissions {
-    id
-  }
-}
