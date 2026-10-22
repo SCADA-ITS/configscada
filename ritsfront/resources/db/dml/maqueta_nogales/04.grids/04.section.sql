@@ -44,9 +44,9 @@ INSERT INTO ui.grid_option_values(grid_id, grid_option_id, value) VALUES
 (4, 17, 'true');
 
 INSERT INTO ui.grid_commands(grid_id, "position", "label", icon, "default", module_action_id, args, view_type_id, multiselect, show_text, item_required) VALUES
-(11, 1, 'LBL_CMD_VIEW_EQUIPMENT', 'mdi mdi-eye', true, 101401, NULL, 2, false, false, false),
-(11, 2, 'LBL_CMD_SHOW_ALARMS', 'mdi mdi-bell', false, 100501, null, 2, true, true, true),
-(11, 3, 'LBL_CMD_SHOW_IN_MAP', 'mdi mdi-map-search', false, 200004, null, 2, true, true, true);
+(4, 1, 'LBL_CMD_VIEW_EQUIPMENT', 'mdi mdi-eye', true, 101401, NULL, 2, false, false, false),
+(4, 2, 'LBL_CMD_SHOW_ALARMS', 'mdi mdi-bell', false, 100501, null, 2, true, true, true),
+(4, 3, 'LBL_CMD_SHOW_IN_MAP', 'mdi mdi-map-search', false, 200004, null, 2, true, true, true);
 
 INSERT INTO ui.grid_field_replacements(grid_field_id, "label", value, enabled) VALUES
 (040010, 'NO', 'false', true),
