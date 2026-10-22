@@ -1,8 +1,0 @@
-{
-  id
-  alias
-  description
-  locationType {
-    id
-  }
-}

@@ -1,9 +1,0 @@
-{
-  element {
-    id
-  }
-  currentElementTypeState {
-    id
-  }
-  createdAt
-}
