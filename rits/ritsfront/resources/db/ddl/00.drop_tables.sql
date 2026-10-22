@@ -1,0 +1,4 @@
+SET client_min_messages TO WARNING;
+DROP SCHEMA ui CASCADE;
+
+CREATE SCHEMA ui;

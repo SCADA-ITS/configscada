@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="CommandElement">
+
+	<SELECT>SELECT command_element_type_id as "commandElementTypeId",
+				   element_type_id as "elementTypeId",
+				   command_element_id as "id",
+				   element_id as "elementId",
+				   enabled as "enabled",
+				   visible as "visible"
+			  FROM conf.command_elements
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>INSERT INTO conf.command_elements
+					   (command_element_type_id,
+					   	element_type_id,
+					   	command_element_id,
+					    element_id,
+					    enabled,
+					    visible,
+					    created_at,
+					    updated_at)
+				 VALUES (:commandElementTypeId,
+				 		 :elementTypeId,
+				 		 :id=getNextId{'conf.command_elements'$'command_element_id'$'command_element_type_id=commandElementTypeId;element_type_id=elementTypeId'},
+				 		 :elementId,
+				         :enabled,
+				         :visible,
+				         CURRENT_TIMESTAMP,
+				         CURRENT_TIMESTAMP)
+	</INSERT>
+	<UPDATE>UPDATE conf.command_elements 
+	SET element_id = :elementId,
+	enabled = :enabled,
+	visible = :visible,
+	updated_at = CURRENT_TIMESTAMP
+	 WHERE command_element_type_id = :commandElementTypeId 
+	 AND element_type_id = :elementTypeId 
+	 AND command_element_id = :id
+	</UPDATE>
+	<DELETE>DELETE FROM conf.command_elements
+			 WHERE command_element_type_id = :commandElementTypeId
+			 AND element_type_id = :elementTypeId
+			 AND command_element_id = :id
+	</DELETE>
+</DML>

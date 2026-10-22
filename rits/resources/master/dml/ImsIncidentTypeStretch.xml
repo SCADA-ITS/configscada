@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="ImsIncidentTypeStretch">
+	<SELECT>SELECT incident_type_id as "incidentTypeId",
+				   stretch_id as "stretchId",
+				   default_location_id as "defaultLocationId",
+				   operational_plan_url as "operationalPlanUrl",		   
+				   valid_for_min as "validForMin",  
+				   alias as "alias",
+				   description as "description",
+				   multi_instance as "multiInstance", 
+				   cctv_scenario_id as "cctvScenarioId",	   
+				   enabled as "enabled", 
+				   visible as "visible"
+			  FROM conf.ims_incident_type_stretchs
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>INSERT INTO conf.ims_incident_type_stretchs
+					   (incident_type_id,
+					   	stretch_id,
+					   	default_location_id,
+					   	operational_plan_url,
+					   	valid_for_min,
+					   	alias,
+					   	description,
+					   	multi_instance,
+					    enabled,
+					    visible,
+					    created_at,
+					    updated_at)
+				 VALUES (:incidentTypeId,
+				 		 :stretchId,
+				 		 :defaultLocationId,
+				 		 :operationalPlanUrl,
+				 		 :validForMin,
+				 		 :alias,
+				 		 :description,
+				 		 :multiInstance,
+				 		 :enabled,
+				         :visible,
+				         CURRENT_TIMESTAMP,
+				         CURRENT_TIMESTAMP)
+	</INSERT>
+	<UPDATE>UPDATE conf.ims_incident_type_stretchs
+			   SET default_location_id = :defaultLocationId,
+			   	   operational_plan_url = :operationalPlanUrl,
+			   	   valid_for_min = :validForMin,
+			   	   alias = :alias,
+			   	   description = :description,
+			   	   multi_instance = :multiInstance,
+			   	   enabled = :enabled,
+				   visible = :visible,
+			       updated_at = CURRENT_TIMESTAMP
+			   WHERE incident_type_id = :incidentTypeId 
+					AND stretch_id = :stretchId 
+	</UPDATE>
+	<DELETE>DELETE FROM conf.ims_incident_type_stretchs
+			   WHERE incident_type_id = :incidentTypeId 
+					AND stretch_id = :stretchId
+	</DELETE>
+</DML>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="CCTVScenarioHierarchy">
+	<SELECT>SELECT node_parent_id as "nodeParentId",
+				   node_child_id as "nodeChildId",
+				   enabled as "enabled",
+				   visible as "visible"
+			  FROM conf.cctv_scenario_node_hierarchies
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>
+	</INSERT>
+	<UPDATE> 
+	</UPDATE>
+	<DELETE>
+	</DELETE>
+</DML>

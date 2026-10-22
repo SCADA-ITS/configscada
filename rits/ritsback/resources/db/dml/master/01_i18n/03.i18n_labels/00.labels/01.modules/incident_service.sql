@@ -1,0 +1,16 @@
+-- 
+-- Type:   modules
+-- Entity: Incident service
+-- File:   incident_service.sql
+-- Langs:  es_ES, en_GB, sk_SK, es_CL
+--
+
+-- 
+-- Table: master.i18n_labels
+--
+--INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) VALUES
+--	
+--	('es_ES', 1, 'LBL_AFFECTION_STRETCH', 'Tramo afectado', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--	('en_GB', 1, 'LBL_AFFECTION_STRETCH', 'Affection stretch', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--	('sk_SK', 1, 'LBL_AFFECTION_STRETCH', 'Dotknutý úsek (m)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--	('es_CL', 1, 'LBL_AFFECTION_STRETCH', 'Tramo afectado', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

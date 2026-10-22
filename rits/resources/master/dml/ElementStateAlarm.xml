@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="ElementStateAlarm">
+	<SELECT>SELECT element_type_id as "elementTypeId", 
+				   element_type_state_id as "stateId",
+				   alarm_config_id as "alarmConfigId"
+			  FROM conf.element_state_alarms
+	</SELECT>
+	<INSERT>
+	</INSERT>
+	<UPDATE>
+	</UPDATE>
+	<DELETE>
+	</DELETE>
+</DML>

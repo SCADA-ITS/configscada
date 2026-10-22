@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.16.0.final using JasperReports Library version 6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="incident_report_tasks" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b2424325-4c46-47a0-add8-411fadc9e405">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="rits 171"/>
+	<property name="ireport.jasperserver.url" value="http://192.168.88.168:8081/jasperserver/"/>
+	<property name="ireport.jasperserver.user" value="jasperadmin"/>
+	<property name="ireport.jasperserver.report.resource" value="/Reports/incident_report_tasks_files/main_jrxml"/>
+	<property name="ireport.jasperserver.reportUnit" value="/Reports/incident_report_tasks"/>
+	<style name="Table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Dataset1" uuid="9d6d0712-bb2a-45e7-81c2-96317418084b">
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="rits 171"/>
+		<parameter name="fechaini" class="java.sql.Timestamp"/>
+		<parameter name="fechafin" class="java.sql.Timestamp"/>
+		<queryString language="SQL">
+			<![CDATA[SELECT 
+	hist.ims_incident_report_task_states.incident_report_id,
+	iit.alias as "Incident type",
+	iitt.alias as "Incident type task",
+	u.name_ as "User",
+	iitt.mandatory,
+	iitt.auto,
+	hist.ims_incident_report_task_states.created_at,
+	hist.ims_incident_report_task_states.completed_at
+FROM hist.ims_incident_report_task_states
+inner join conf.ims_incident_type_tasks iitt on iitt.incident_type_task_id = hist.ims_incident_report_task_states.incident_type_task_id 
+inner join rt.ims_incident_reports iir on iir.incident_report_id = hist.ims_incident_report_task_states.incident_report_id 
+inner join conf.ims_incident_types iit on iir.incident_type_id = iit.incident_type_id 
+inner join conf.users u on u.user_id = iit.default_user_id
+WHERE $X{[BETWEEN], hist.ims_incident_report_task_states.created_at, fechaini, fechafin}]]>
+		</queryString>
+		<field name="incident_report_id" class="java.lang.Long">
+			<property name="com.jaspersoft.studio.field.name" value="incident_report_id"/>
+			<property name="com.jaspersoft.studio.field.label" value="incident_report_id"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ims_incident_report_task_states"/>
+		</field>
+		<field name="Incident type" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="Incident type"/>
+			<property name="com.jaspersoft.studio.field.label" value="Incident type"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ims_incident_types"/>
+		</field>
+		<field name="Incident type task" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="Incident type task"/>
+			<property name="com.jaspersoft.studio.field.label" value="Incident type task"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ims_incident_type_tasks"/>
+		</field>
+		<field name="User" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="User"/>
+			<property name="com.jaspersoft.studio.field.label" value="User"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="users"/>
+		</field>
+		<field name="mandatory" class="java.lang.Boolean">
+			<property name="com.jaspersoft.studio.field.name" value="mandatory"/>
+			<property name="com.jaspersoft.studio.field.label" value="mandatory"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ims_incident_type_tasks"/>
+		</field>
+		<field name="auto" class="java.lang.Boolean">
+			<property name="com.jaspersoft.studio.field.name" value="auto"/>
+			<property name="com.jaspersoft.studio.field.label" value="auto"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ims_incident_type_tasks"/>
+		</field>
+		<field name="created_at" class="java.sql.Timestamp">
+			<property name="com.jaspersoft.studio.field.name" value="created_at"/>
+			<property name="com.jaspersoft.studio.field.label" value="created_at"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ims_incident_report_task_states"/>
+		</field>
+		<field name="completed_at" class="java.sql.Timestamp">
+			<property name="com.jaspersoft.studio.field.name" value="completed_at"/>
+			<property name="com.jaspersoft.studio.field.label" value="completed_at"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ims_incident_report_task_states"/>
+		</field>
+	</subDataset>
+	<parameter name="fini" class="java.sql.Timestamp"/>
+	<parameter name="ffin" class="java.sql.Timestamp"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT rt.ims_incident_report_task_states.incident_report_id,
+	rt.ims_incident_report_task_states.incident_type_task_id,
+	rt.ims_incident_report_task_states.completed_at,
+	rt.ims_incident_report_task_states.created_at,
+	conf.ims_incident_type_tasks.mandatory,
+	conf.ims_incident_type_tasks.auto
+FROM rt.ims_incident_report_task_states,
+	conf.ims_incident_type_tasks]]>
+	</queryString>
+	<field name="incident_report_id" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="incident_report_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="incident_report_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ims_incident_report_task_states"/>
+	</field>
+	<field name="incident_type_task_id" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="incident_type_task_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="incident_type_task_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ims_incident_report_task_states"/>
+	</field>
+	<field name="completed_at" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="completed_at"/>
+		<property name="com.jaspersoft.studio.field.label" value="completed_at"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ims_incident_report_task_states"/>
+	</field>
+	<field name="created_at" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="created_at"/>
+		<property name="com.jaspersoft.studio.field.label" value="created_at"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ims_incident_report_task_states"/>
+	</field>
+	<field name="mandatory" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.name" value="mandatory"/>
+		<property name="com.jaspersoft.studio.field.label" value="mandatory"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ims_incident_type_tasks"/>
+	</field>
+	<field name="auto" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.name" value="auto"/>
+		<property name="com.jaspersoft.studio.field.label" value="auto"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ims_incident_type_tasks"/>
+	</field>
+	<title>
+		<band height="51" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="802" height="51" uuid="671f6480-16fe-4325-bcc6-6450344f8254"/>
+				<textElement textAlignment="Center">
+					<font size="29"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Tasks Report"]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="558" y="0" width="244" height="40" uuid="2a5e9dcc-f3fd-4a79-9178-d08b5a354fe5"/>
+				<imageExpression><![CDATA["repo:/Images/wgp_tgp_logo_white.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageFooter>
+		<band height="30" splitType="Stretch">
+			<textField>
+				<reportElement x="600" y="0" width="100" height="30" uuid="41313e21-2bf9-4a0b-82b6-a983b83312ac"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="700" y="0" width="100" height="30" uuid="6e0b3516-3a51-4492-970e-f1df24588c66"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[" of " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="50" splitType="Stretch">
+			<componentElement>
+				<reportElement x="0" y="0" width="800" height="50" uuid="300fdcb7-92ef-470a-99f0-23b87488efeb">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+					<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
+					<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
+					<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="Dataset1" uuid="eacb2eeb-2075-44da-89ba-a3685152b42e">
+						<datasetParameter name="fechaini">
+							<datasetParameterExpression><![CDATA[$P{fini}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="fechafin">
+							<datasetParameterExpression><![CDATA[$P{ffin}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="128" uuid="ac436073-6c5f-4dde-b77b-5b9c5afcba5b">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="128" height="30" uuid="cd972d78-2f7d-4336-990c-7a63d5397ed0"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[Incident report ID]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="20">
+							<textField>
+								<reportElement x="0" y="0" width="128" height="20" uuid="e1c4f365-6369-4310-9554-83509c2718c2"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{incident_report_id}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="128" uuid="2127f5fa-cf2e-4df1-ae37-4b01569ad947">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="128" height="30" uuid="fd486a86-e029-4c86-bdd8-5525036560df"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[Incident type]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="20">
+							<textField>
+								<reportElement x="0" y="0" width="128" height="20" uuid="dd4a4343-2cb2-4e9d-9394-acdaa1955881"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{Incident type}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="128" uuid="cbe5a7c8-61a3-4672-bb99-09871e40a30d">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="128" height="30" uuid="6e6cfa2c-4bd2-47a2-b453-07b707727adc"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[Incident type task]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="20">
+							<textField>
+								<reportElement x="0" y="0" width="128" height="20" uuid="846f3687-aa0b-4508-88bc-95ce8678d433"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{Incident type task}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="82" uuid="526b8f17-24b1-4ef1-a498-18a965c1dc9d">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
+						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="82" height="30" uuid="84e10edb-4a5a-44b6-84b8-a550dfca225f"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[User]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="20">
+							<textField>
+								<reportElement x="0" y="0" width="82" height="20" uuid="1f6ece10-f793-4076-96ed-f840fdf1daa0"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{User}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="64" uuid="b757bb2e-33cc-40e7-a3a8-3398ec3e5221">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column5"/>
+						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="64" height="30" uuid="8a72ef2c-dd81-470c-9b26-cb4fc0fc1ec5"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[Mandatory]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="20">
+							<textField>
+								<reportElement x="0" y="0" width="64" height="20" uuid="5826d755-6f93-4175-b565-a7d1f2e576ea"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{mandatory}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="70" uuid="81dda967-050e-4c24-a189-e449b72d9733">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column6"/>
+						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="70" height="30" uuid="32f95c05-c908-4120-8acb-d63792ee1d5e"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[Automatic]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="20">
+							<textField>
+								<reportElement x="0" y="0" width="70" height="20" uuid="f154bb81-81b0-46c3-ba12-9ad6116d7f5e"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{auto}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="98" uuid="89d5a800-0240-48db-b5f6-0b3c560a36e3">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column7"/>
+						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="98" height="30" uuid="a3a36d19-4a5d-4703-a65a-87ac7cf8d9ae"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[Start date]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="20">
+							<textField pattern="M/d/yyyy h:mm:ss">
+								<reportElement x="0" y="0" width="98" height="20" uuid="df5d539a-dfdd-46a5-a0d7-dc00889cdad3"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{created_at}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="98" uuid="1d891ca7-751c-46d9-a82e-2e5ff079fb3d">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column8"/>
+						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="98" height="30" uuid="452e89b7-7985-4afc-a00e-de1b78769647"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[End date]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="20">
+							<textField pattern="M/d/yyyy h:mm:ss">
+								<reportElement x="0" y="0" width="98" height="20" uuid="ce8a2b7a-8b6d-4095-8901-7e54d236cfa1"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{completed_at} != null ? $F{completed_at} : "-"]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</summary>
+</jasperReport>

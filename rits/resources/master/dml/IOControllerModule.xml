@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="IOControllerModule">
+	<SELECT>SELECT module_type_id as "moduleTypeId",
+					module_id as "id",
+					alias as "alias",
+					description as "description",
+					enabled as "enabled",
+					visible as "visible",
+					created_at as "createdAt",
+					updated_at as "updatedAt"
+			  FROM conf.io_controller_modules
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>
+	</INSERT>
+	<UPDATE>
+	</UPDATE>
+	<DELETE>
+	</DELETE>
+</DML>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="ElementTypeState">
+	<SELECT>SELECT element_type_id as "elementTypeId", 
+				   element_type_state_id as "stateId",
+				   alias as "alias", 
+				   description as "description", 
+				   label_alias as "labelAlias", 
+				   label_description as "labelDescription",
+				   enabled as "enabled", 
+				   visible as "visible"
+			  FROM master.element_type_states
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>
+	</INSERT>
+	<UPDATE>
+	</UPDATE>
+	<DELETE>
+	</DELETE>
+</DML>
