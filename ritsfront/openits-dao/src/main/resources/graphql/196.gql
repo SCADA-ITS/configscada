@@ -1,0 +1,20 @@
+{
+  pid
+  main
+  commandLine
+  cpuLoad
+  cpuTime
+  cpuAverage
+  heapSize
+  heapUsed
+  heapMax
+  threadsLive
+  numRestarts
+  ready
+  gitCommit
+  gitAuthor
+  gitDate
+  gitMessage
+  createdAt
+  updatedAt
+}

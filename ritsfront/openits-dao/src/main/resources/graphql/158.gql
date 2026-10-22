@@ -1,0 +1,16 @@
+{
+  incidentType {
+    id
+    autoConfirmIncident
+  }
+  stretch {
+    id
+    alias
+  }
+  defaultLocation {
+    id
+    alias
+  }
+  operationalPlanUrl
+  multiInstance
+}

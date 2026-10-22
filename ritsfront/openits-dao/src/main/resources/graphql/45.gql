@@ -1,0 +1,13 @@
+{
+  id
+  alias
+  description
+  preset
+  rolePermissions {
+    id
+    alias
+    description
+    labelAlias
+    labelDescription
+  }
+}

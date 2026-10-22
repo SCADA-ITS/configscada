@@ -1,0 +1,15 @@
+{
+  id
+  alias
+  description
+  extIncidentType {
+    id
+  }
+  location {
+    id
+  }
+  incidentInitDate
+  extIncidentValues {
+    id
+  }
+}

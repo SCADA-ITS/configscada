@@ -1,0 +1,102 @@
+/* menu horizontal */
+
+.webix_menu-x.menu-custom .webix_list_item {
+	padding-top: 3px;
+	background-color: transparent;
+	color: var(--blue-soft);
+	margin-top: -6px;
+	border-right: 0px;
+} 
+
+.webix_menu-x.menu-custom .webix_list_item .webix_submenu_icon {
+	display: none
+}
+
+.webix_menu-x.menu-custom .webix_list_item:hover {
+	border-radius: 5px;
+	background-color: var(--blue-mid);
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* menu vertical */
+
+.webix_menu.menu-custom {
+  	background-color: rgb(211, 222, 238);
+  	box-shadow: 0 1.5rem 1.8rem;
+}
+
+.webix_menu.menu-custom .webix_list_item {
+  	background-color: var(--blue-soft-opacity-4);
+  	color: var(--blue-strong);
+}
+
+.webix_menu.menu-custom .webix_list_item:hover {
+  	background-color: var(--blue-mid-opacity-5);
+}
+
+.webix_menu.menu-custom .webix_context_separator .sep_line {
+	background-color: var(--blue-soft-opacity-6);
+}
+
+/* Toolbar */
+
+.logo-project {
+	/*width: 165px;*/
+	height: 75%; 
+	margin-top: 7px; 
+	margin-left: 10px;
+}
+
+.management-area {
+	/*width: 165px;*/
+	height: 75%; 
+	margin-top: 7px; 
+	margin-left: 10px;
+}
+
+.head-color {
+	background: var(--blue-strong);
+}
+
+.main-toolbar {
+	border: 0px;
+	height: 44px;	
+}
+
+.main-toolbar .webix_icon_button .webix_icon {
+    color: var(--blue-soft) !important;
+}
+
+.main-toolbar .webix_icon_button:hover:before {
+	background-color: var(--blue-mid);
+	opacity: 1;
+	transform: scale(1);
+}
+
+.main-toolbar .webix_el_label .webix_el_box {
+	color: var(--blue-soft) !important;
+}
+
+.menu-toolbar {
+	margin-top: -2px !important;
+	height: 34px !important;
+	border: 0px;
+}
+
+.submenu-icon {
+    padding: 6px;
+    background: transparent;
+    width: 20px;
+}
+
+.submenu-text {
+    overflow: hidden;
+    white-space:nowrap;
+    display:inline-block;
+    margin-left: 6px;
+    width: 230px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

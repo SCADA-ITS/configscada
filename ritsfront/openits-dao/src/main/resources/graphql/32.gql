@@ -1,0 +1,34 @@
+{
+  id
+  alarmConfig {
+    id
+    alias
+    labelAlias
+    alarmLevel {
+      id
+      alias
+      description
+      labelAlias
+      labelDescription
+    }
+    alarmType {
+      id
+    }
+  }
+  recognized
+  recognizedComments
+  activation
+  activationComments
+  deactivation
+  deactivationComments
+  sourceElement {
+    id
+    alias
+  }
+  targetElement {
+    id
+    alias
+  }
+  filteredUntil
+  disagree
+}

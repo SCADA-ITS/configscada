@@ -1,0 +1,112 @@
+package com.revenga.rits.front.encrypt.app;
+
+import java.util.Arrays;
+
+import org.apache.commons.lang3.ArrayUtils;
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
+
+import com.revenga.rits.front.encrypt.util.AES;
+
+import lombok.extern.log4j.Log4j2;
+
+@SpringBootApplication
+@ComponentScan(basePackages= {"com.revenga.rits.front.encrypt"})
+@Log4j2
+public class Encrypt implements ApplicationRunner {
+
+	private static final String ARG_ENCRYPT = "-e";
+	private static final String ARG_DECRYPT = "-d";
+	
+	public static void main(String[] args) {
+
+		SpringApplication.run(Encrypt.class, args);
+		
+		if (!ArrayUtils.isEmpty(args) && args.length > 1) {
+			
+			if (args[0].equals(ARG_ENCRYPT)) {
+				
+				encrypt(Arrays.copyOfRange(args, 1, args.length));
+			}
+			else if (args[0].equals(ARG_DECRYPT)){
+				
+				decrypt(Arrays.copyOfRange(args, 1, args.length));
+			}
+			else {
+				
+				printUsage();
+			}
+		}
+		else {
+			
+			printUsage();
+		}
+	}
+	
+	private static void printUsage() {
+		
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append(System.lineSeparator());
+		sb.append("Usage: java -jar encrypt.jar [OPTION] [INPUTS]...");
+		sb.append(System.lineSeparator());
+		sb.append(System.lineSeparator());
+		sb.append("\t-e\t\tEncrypt mode");
+		sb.append(System.lineSeparator());
+		sb.append("\t-d\t\tDecrypt mode");
+		sb.append(System.lineSeparator());
+		sb.append("\t[INPUTS]\tlist of strings separated by a space");
+		sb.append(System.lineSeparator());
+		sb.append(System.lineSeparator());
+		sb.append("Example: java -jar encrypt.jar -e string1 string2 string3");
+		sb.append(System.lineSeparator());
+		
+		log.info(sb.toString());
+	}
+
+	private static void encrypt(String[] strs) {
+		
+		if (!ArrayUtils.isEmpty(strs)) {
+			
+			StringBuilder sb = new StringBuilder();
+			
+			sb.append(System.lineSeparator());
+			sb.append(String.format("%20s\t  \t%20s", "Input", "Encrypted"));
+			sb.append(System.lineSeparator());
+			sb.append(System.lineSeparator());
+			sb.append(System.lineSeparator());
+
+			Arrays.asList(strs).forEach(
+					str -> sb.append(String.format("%20s\t->\t%20s%s", str, AES.encrypt(str), System.lineSeparator())));
+			
+			log.info(sb.toString());
+		}
+	}
+	
+	private static void decrypt(String[] strs) {
+		
+		if (!ArrayUtils.isEmpty(strs)) {
+			
+			StringBuilder sb = new StringBuilder();
+			
+			sb.append(System.lineSeparator());
+			sb.append(String.format("%20s\t  \t%20s", "Input", "Decrypted"));
+			sb.append(System.lineSeparator());
+			sb.append(System.lineSeparator());
+
+			Arrays.asList(strs).forEach(
+					str -> sb.append(String.format("%20s\t->\t%20s%s", str, AES.decrypt(str), System.lineSeparator())));
+			
+			log.info(sb.toString());
+		}
+	}
+
+	@Override
+	public void run(ApplicationArguments args) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+}

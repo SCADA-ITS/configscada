@@ -1,0 +1,69 @@
+package com.revenga.rits.front.openitsdao.model;
+
+import java.io.Serializable;
+import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+
+/**
+ * The persistent class for the map_layer_relationships database table.
+ * 
+ */
+@Entity
+@Table(name="map_layer_relationships")
+@NamedQuery(name="MapLayerRelationship.findAll", query="SELECT m FROM MapLayerRelationship m")
+public class MapLayerRelationship implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private Integer id;
+
+	@Column(name="parent_layer_id")
+	private Integer parentLayerId;
+	
+	@Column(name="child_layer_id")
+	private Integer childLayerId;
+
+	//bi-directional many-to-one association to Map
+	@JsonIgnore
+	@ManyToOne
+	private Map map;
+
+	public MapLayerRelationship() {
+	}
+
+	public Integer getId() {
+		return this.id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public Integer getParentLayerId() {
+		return parentLayerId;
+	}
+
+	public void setParentLayerId(Integer parentLayerId) {
+		this.parentLayerId = parentLayerId;
+	}
+
+	public Integer getChildLayerId() {
+		return childLayerId;
+	}
+
+	public void setChildLayerId(Integer childLayerId) {
+		this.childLayerId = childLayerId;
+	}
+
+	public Map getMap() {
+		return this.map;
+	}
+
+	public void setMap(Map map) {
+		this.map = map;
+	}
+
+}

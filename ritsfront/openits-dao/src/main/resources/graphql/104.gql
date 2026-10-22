@@ -1,0 +1,34 @@
+{
+  id
+  alias
+  description
+  nTimes
+  planOrderStateType {
+    id
+  }
+  planOrderOrder
+  nextPlanOrder {
+    id
+  }
+  nextPlan {
+    id
+  }
+  planOrderType {
+    id
+  }
+  planOrderValues {
+    id
+  }
+  planOrderElementValues {
+    id
+  }
+  planOrderElementTypeStates {
+    id
+  }
+  planOrderConditions {
+    id
+  }
+  comandElement {
+    id
+  }
+}

@@ -1,0 +1,24 @@
+{
+  id
+  auto
+  incidentAlarmConditionAlarms {
+    id
+    alarmConfig {
+      id
+      labelAlias
+    }
+    elementType {
+      id
+      labelAlias
+    }
+    element {
+      id
+      alias
+    }
+    incidentAlarmConditionAlarmType {
+      id
+      alias
+      labelAlias
+    }
+  }
+}

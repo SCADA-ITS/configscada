@@ -1,0 +1,14 @@
+{
+  id
+  labelAlias
+  labelDescription
+  logSubtypes {
+    id
+    labelAlias
+    labelDescription
+  }
+  logTypeParams {
+    id
+    labelAlias
+  }
+}

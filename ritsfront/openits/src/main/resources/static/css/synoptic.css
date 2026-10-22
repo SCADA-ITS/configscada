@@ -1,0 +1,141 @@
+.map-button {
+  position: absolute;
+  left: 20px;
+  margin-top: 10px;
+  /* width: 110px; */
+  min-width: 10%;
+}
+
+#ulButton {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.synoptic-highlight {
+  filter: drop-shadow(0px 0px 7px orange);
+  transition: .5s ease;
+}
+
+/*
+  Synoptic dropdown
+*/
+/* Dropdown Button */
+.dropbtn {
+  background-color: #ebb700;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: absolute;
+  display: inline-block;
+  left: 0;
+}
+
+/* Style the caret/arrow */
+.caret {
+  cursor: pointer;
+  user-select: none; /* Prevent text selection */
+}
+
+/* Create the caret/arrow with a unicode, and style it */
+.caret::before {
+  content: "\25B6";
+  color: black;
+  display: inline-block;
+  margin-right: 6px;
+}
+
+/* Rotate the caret/arrow icon when clicked on (using JavaScript) */
+.caret-down::before {
+  transform: rotate(90deg);
+}
+
+/* Hide the nested list */
+.nested {
+   display: none;
+}
+
+/* Show the nested list when the user clicks on the caret/arrow (with JavaScript) */
+.active {
+  display: block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: rgba(230, 230, 230, 0.75);
+  min-width: 240px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  left: 0;
+  overflow: auto;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  height: 19px;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {
+  background-color: rgba(230, 230, 230, 0.85);
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {
+  background-color: #bf9600;
+}
+
+
+/*
+  Spinner
+*/
+.spinner {
+   position: absolute;
+   left: 50%;
+   top: 50%;
+   height:60px;
+   width:60px;
+   margin:0px auto;
+   -webkit-animation: rotation .6s infinite linear;
+   -moz-animation: rotation .6s infinite linear;
+   -o-animation: rotation .6s infinite linear;
+   animation: rotation .6s infinite linear;
+   border-left:6px solid rgba(191,150,0,.35);
+   border-right:6px solid rgba(191,150,0,.35);
+   border-bottom:6px solid rgba(191,150,0,.35);
+   border-top:6px solid rgba(191,150,0,.8);
+   border-radius:100%;
+}
+
+@-webkit-keyframes rotation {
+   from {-webkit-transform: rotate(0deg);}
+   to {-webkit-transform: rotate(359deg);}
+}
+@-moz-keyframes rotation {
+   from {-moz-transform: rotate(0deg);}
+   to {-moz-transform: rotate(359deg);}
+}
+@-o-keyframes rotation {
+   from {-o-transform: rotate(0deg);}
+   to {-o-transform: rotate(359deg);}
+}
+@keyframes rotation {
+   from {transform: rotate(0deg);}
+   to {transform: rotate(359deg);}
+}
