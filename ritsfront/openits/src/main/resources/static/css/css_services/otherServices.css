@@ -1,0 +1,81 @@
+/* UserService */
+
+.user-template {
+    background: transparent;
+    border: none;
+    color: #FFFFFF;
+    font-size: 13px;
+}
+
+.user-template .webix_template {
+    padding-top: 4px;
+}
+
+.user-template .webix_badge {
+	min-width: 12px;
+	height: 12px;
+	top: 1px;
+	-webkit-animation: icon-red-animation 1s infinite;  /* Safari 4+ */
+	-moz-animation: icon-red-animation 1s infinite;  /* Fx 5+ */
+	-o-animation: icon-red-animation 1s infinite;  /* Opera 12+ */
+	animation: icon-red-animation 1s infinite;
+}
+
+/* AlarmService */
+
+.alarm-template {
+    background: transparent;
+    border: none;
+    color: #FFFFFF;
+    font-size: 13px;
+}
+
+.alarm-template .webix_template {
+    padding-top: 4px;
+}
+
+.alarm-template .webix_badge {
+	background-color: #f57900;
+	top: 1px;
+}
+
+/* TimeService */
+
+.time-template {
+    background: transparent;
+    border: none;
+    color: var(--blue-soft) !important;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.time-template .webix_template {
+    padding-top: 4px;
+}
+
+.toolbar-time {
+   text-align: center;
+}
+
+.toolbar-user {
+   text-align: center;
+   white-space: nowrap;
+   text-overflow: ellipsis;
+   overflow: hidden
+}
+
+.toolbar-user-single {
+   text-align: center;
+   white-space: nowrap;
+   text-overflow: ellipsis;
+   overflow: hidden;
+   padding-top: 8px;
+   font-size: 14px;
+}
+
+.toolbar-user {
+   text-align: center;
+   white-space: nowrap;
+   text-overflow: ellipsis;
+   overflow: hidden;
+}

@@ -1,0 +1,101 @@
+{
+	"moduleAction": {
+	    "pas": 103001,
+		"child": 103002,
+		"commandEdit": 103003
+	},
+	"restEndpoints": {
+		"elementById": "elements/${id}",
+		"elementsByType": "element_types/${id}/elements",
+		"elementsHierarchy": "elements/hierarchy",
+		"pasLibraries": "pas_libraries/element",
+		"pasLibraryByElement": "pas_libraries/element/${id}",
+		"command": "elements/send_command_element",
+		"saveNode": "pas_libraries/${id}/node/${parentNodeIds}",
+		"deleteNode": "pas_libraries/node/${id}",
+		"elementsByTypeSummary": "element_types/${id}/summary"
+		
+	},
+	"equipmentViewer": 101401,
+	"topics": {
+		"pas" : "/topic/element.ElementType:5",
+		"zones" : "/topic/element.ElementType:16.>",
+		"groups" : "/topic/element.ElementType:96.>"
+	},
+	"adapters": {
+		"element": "ws.element.update"
+	},
+	"pas": {
+		"type": "ElementType:5",
+		"paramOnAir": "ElementTypeParam:5:2:1"
+	},
+	"zone": {
+		"type": "ElementType:16",
+		"paramZoneId": "ElementTypeParam:16:1:5",
+		"paramMessageId": "ElementTypeParam:16:2:1001",
+		"paramMessageDesc": "ElementTypeParam:16:2:1002",
+		"paramMessageTag": "ElementTypeParam:16:2:1004",
+		"paramOnAir": "ElementTypeParam:16:2:1"
+	},
+	"group": {
+		"type": "ElementType:96",
+		"paramGroupId": "ElementTypeParam:96:1:5",
+		"paramMessageId": "ElementTypeParam:96:2:1001",
+		"paramMessageDesc": "ElementTypeParam:96:2:1002",
+		"paramMessageTag": "ElementTypeParam:96:2:1004",
+		"paramOnAir": "ElementTypeParam:96:2:1"
+	},
+	"requiredPermissions": {
+		"commandEquipment": "SystemPermission:6"
+	},
+	"commands":{
+		"SEND_MESSAGE_ZONES" :{
+			"commandElementTypeId":"CommandElementType:2:5",
+			"elementId": null,
+			"commandElementValues": [
+				{
+					"commandElementTypeParamId": "CommandElementTypeParam:2:5:1",
+					"value": null
+				},
+				{
+					"commandElementTypeParamId": "CommandElementTypeParam:2:5:2",
+					"value": null
+				}
+			]
+		},
+		"SWITCH_OFF_ZONES" :{
+			"commandElementTypeId":"CommandElementType:1:5",
+			"elementId": null,
+			"commandElementValues": [
+				{
+					"commandElementTypeParamId": "CommandElementTypeParam:1:5:1",
+					"value": null
+				}
+			]
+		},
+		"SEND_MESSAGE_GROUPS" :{
+			"commandElementTypeId":"CommandElementType:4:5",
+			"elementId": null,
+			"commandElementValues": [
+				{
+					"commandElementTypeParamId": "CommandElementTypeParam:4:5:1",
+					"value": null
+				},
+				{
+					"commandElementTypeParamId": "CommandElementTypeParam:4:5:2",
+					"value": null
+				}
+			]
+		},
+		"SWITCH_OFF_GROUPS" :{
+			"commandElementTypeId":"CommandElementType:3:5",
+			"elementId": null,
+			"commandElementValues": [
+				{
+					"commandElementTypeParamId": "CommandElementTypeParam:3:5:1",
+					"value": null
+				}
+			]
+		}
+	}
+}

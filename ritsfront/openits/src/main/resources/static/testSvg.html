@@ -1,0 +1,50 @@
+<html>
+  <body>
+    <textarea id="svg"></textarea>
+    <button id="draw">Draw!</button>
+    <hr />
+    <canvas id="c" width="480" height="480"></canvas>
+    <img id="i" width="300" height="300" src="" />
+
+    <script>
+      let b = document.getElementById("draw");
+      b.onclick = () => {
+        let c = document.getElementById("c");
+        let ctx = c.getContext("2d");
+
+        ctx.clearRect(0, 0, c.width, c.height);
+
+        let svg64 = document.getElementById("svg").value;
+        let b64Start = "data:image/svg+xml;utf8,";
+
+        // prepend a "header"
+        let image64 = b64Start + svg64;
+
+        let img = new Image();
+        img.src = image64;
+
+        document.getElementById("i").src = image64;
+
+        img.onload = function () {
+          ctx.drawImage(this, 0, 0);
+          //callback(this);
+        };
+
+        img.onerror = function (e) {
+          console.log("ERROR: ");
+          console.log(e);
+        };
+
+
+        // Reset the current path
+        ctx.beginPath();
+        // Staring point (10,45)
+        ctx.moveTo(10, 45);
+        // End point (180,47)
+        ctx.lineTo(180, 47);
+        // Make the line visible
+        ctx.stroke();
+      };
+    </script>
+  </body>
+</html>

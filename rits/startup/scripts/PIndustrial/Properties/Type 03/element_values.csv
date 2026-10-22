@@ -1,0 +1,9 @@
+item;alias;description;sessionuid;road;stretchs;pk;param1_direction;param2_order;param3_mask_validation;param4_delay
+1;SEC1_DET1;SEC1_DET1;SEC1_DET1;Puente_Industrial;Puente;3;true;1;0;0
+2;SEC1_DET2;SEC1_DET2;SEC1_DET2;Puente_Industrial;Puente;3;true;2;0;0
+3;SEC1_DET3;SEC1_DET3;SEC1_DET3;Puente_Industrial;Puente;3;true;3;0;0
+4;SEC1_DET4;SEC1_DET4;SEC1_DET4;Puente_Industrial;Puente;3;true;4;0;0
+5;SEC2_DET1;SEC2_DET1;SEC2_DET1;Puente_Industrial;Puente;3;true;1;0;0
+6;SEC2_DET2;SEC2_DET2;SEC2_DET2;Puente_Industrial;Puente;3;true;2;0;0
+7;SEC2_DET3;SEC2_DET3;SEC2_DET3;Puente_Industrial;Puente;3;true;3;0;0
+8;SEC2_DET4;SEC2_DET4;SEC2_DET4;Puente_Industrial;Puente;3;true;4;0;0

@@ -1,0 +1,2 @@
+INSERT INTO conf.stretchs (stretch_id, stretch_type_id, alias, description, pk_ini, pk_end, lanes, road_id, enabled, visible, created_at, updated_at)VALUES
+(1, 1, 'Puente', 'Puente', 0, 6+5, 2, 1, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

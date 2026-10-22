@@ -1,0 +1,323 @@
+[
+	{
+		"detectors": [
+			{
+				"id": 1,
+				"period": 1,
+				"failData": false,
+				"currentDirection": true,
+				"nvehicles": 150,
+				"occupancy": 20,
+				"congestion": false,
+				"kamikaze": false,
+				"speed": 90,
+				"length": 40,
+				"vehLength": [
+					50,
+					100
+				],
+				"vehSpeed": [
+					25,
+					25,
+					100
+				],
+				"order": 1,
+				"direction": true
+			},
+			{
+				"id": 2,
+				"period": 1,
+				"failData": false,
+				"currentDirection": true,
+				"nvehicles": 200,
+				"occupancy": 25,
+				"congestion": false,
+				"kamikaze": false,
+				"speed": 100,
+				"length": 47,
+				"vehLength": [
+					75,
+					125
+				],
+				"vehSpeed": [
+					50,
+					50,
+					100
+				],
+				"order": 2,
+				"direction": true
+			},
+			{
+				"id": 3,
+				"period": 1,
+				"failData": false,
+				"currentDirection": false,
+				"nvehicles": 20,
+				"occupancy": 12,
+				"congestion": true,
+				"kamikaze": true,
+				"speed": 25,
+				"length": 10,
+				"vehLength": [
+					10,
+					10
+				],
+				"vehSpeed": [
+					5,
+					5,
+					10
+				],
+				"order": 1,
+				"direction": true
+			},
+			{
+				"id": 4,
+				"period": 1,
+				"failData": false,
+				"currentDirection": false,
+				"nvehicles": 300,
+				"occupancy": 30,
+				"congestion": true,
+				"kamikaze": true,
+				"speed": 92,
+				"length": 73,
+				"vehLength": [
+					150,
+					150
+				],
+				"vehSpeed": [
+					100,
+					50,
+					150
+				],
+				"order": 2,
+				"direction": true
+			}
+		],
+		"sections": [
+			{
+				"id": 1,
+				"virtual": true,
+				"losSoften": true,
+				"losThresholdSpeed": [
+					8,
+					32,
+					72
+				],
+				"losThresholdOccupancy": [
+					16,
+					28,
+					35
+				],
+				"catVehLength": [
+					[
+						1
+					],
+					[
+						2
+					]
+				],
+				"catVehSpeed": [
+					[
+						1,
+						2
+					],
+					[
+						2,
+						3
+					],
+					[
+						3,
+						1
+					]
+				]
+			},
+			{
+				"id": 2,
+				"virtual": false,
+				"losSoften": false,
+				"losThresholdSpeed": [
+					8,
+					32,
+					72
+				],
+				"losThresholdOccupancy": [
+					16,
+					28,
+					35
+				],
+				"catVehLength": [
+					[
+						1
+					],
+					[
+						2
+					]
+				],
+				"catVehSpeed": [
+					[
+						1,
+						2
+					],
+					[
+						2,
+						3
+					],
+					[
+						3,
+						1
+					]
+				]
+			}
+		],
+		"n": 1
+	},
+	{
+		"detectors": [
+			{
+				"id": 1,
+				"period": 1,
+				"failData": false,
+				"nvehicles": 10,
+				"occupancy": 10,
+				"speed": 30
+			},
+			{
+				"id": 2,
+				"period": 1,
+				"failData": false,
+				"nvehicles": 20,
+				"occupancy": 10,
+				"speed": 30
+			},
+			{
+				"id": 3,
+				"period": 1,
+				"failData": false,
+				"nvehicles": 30,
+				"occupancy": 10,
+				"speed": 30
+			},
+			{
+				"id": 4,
+				"period": 1,
+				"failData": false,
+				"nvehicles": 40,
+				"occupancy": 10,
+				"speed": 30
+			}
+		],
+		"n": 2
+	},
+	{
+		"detectors": [
+			{
+				"id": 1,
+				"period": 1,
+				"failData": false,
+				"nvehicles": 150,
+				"occupancy": 20,
+				"speed": 90
+			},
+			{
+				"id": 2,
+				"period": 1,
+				"failData": false,
+				"nvehicles": 200,
+				"occupancy": 25,
+				"speed": 100
+			},
+			{
+				"id": 3,
+				"period": 1,
+				"failData": false,
+				"nvehicles": 40,
+				"occupancy": 3,
+				"speed": 80
+			},
+			{
+				"id": 4,
+				"period": 1,
+				"failData": false,
+				"nvehicles": 40,
+				"occupancy": 3,
+				"speed": 80
+			}
+		],
+		"n": 3
+	},
+	{
+		"detectors": [
+			{
+				"id": 1,
+				"period": 1,
+				"failData": false,
+				"nvehicles": 150,
+				"occupancy": 20,
+				"speed": 90
+			},
+			{
+				"id": 2,
+				"period": 1,
+				"failData": false,
+				"nvehicles": 200,
+				"occupancy": 25,
+				"speed": 100
+			},
+			{
+				"id": 3,
+				"period": 1,
+				"failData": false,
+				"nvehicles": 10,
+				"occupancy": 45,
+				"speed": 40
+			},
+			{
+				"id": 4,
+				"period": 1,
+				"failData": false,
+				"nvehicles": 10,
+				"occupancy": 45,
+				"speed": 40
+			}
+		],
+		"n": 4
+	},
+	{
+		"detectors": [
+			{
+				"id": 1,
+				"period": 1,
+				"failData": false,
+				"nvehicles": 150,
+				"occupancy": 20,
+				"speed": 90
+			},
+			{
+				"id": 2,
+				"period": 1,
+				"failData": false,
+				"nvehicles": 200,
+				"occupancy": 25,
+				"speed": 100
+			},
+			{
+				"id": 3,
+				"period": 1,
+				"failData": false,
+				"nvehicles": 10,
+				"occupancy": 45,
+				"speed": 80
+			},
+			{
+				"id": 4,
+				"period": 1,
+				"failData": false,
+				"nvehicles": 10,
+				"occupancy": 45,
+				"speed": 80
+			}
+		],
+		"n": 5
+	}
+]

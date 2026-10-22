@@ -1,0 +1,2 @@
+device_name;session_uid;ip;port(i);url_publisher;num_polling_out_comm;time_polling_ms;readCommunity;writeCommunity;read_permission;write_permission
+PMV-01;PMV-01;10.1.1.37;161;http:\/\/192.168.88.80:3000\/api\/v2\/generic\/;2;10000;public;public;monitor;

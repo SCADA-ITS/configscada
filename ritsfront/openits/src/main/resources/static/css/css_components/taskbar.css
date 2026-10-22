@@ -1,0 +1,161 @@
+/* Footer */
+
+.main-footer {
+/*	background: var(--blue-strong); */
+/*	background: var(--blue-strong-opacity-1);*/ 
+/*	background: var(--blue-mid2-opacity-1);*/ 
+/*	background: var(--blue-mid-opacity-1);*/
+	background: var(--blue-backcolor);
+}
+
+.taskbar {
+    background: transparent !important;
+    border-width: 0px !important;
+    height: 44px !important;
+}
+
+.taskbar .webix_img_btn:focus {
+    background: url("../../img/start_hover_bg.png") repeat !important
+}
+
+.taskbar .webix_el_box {
+    padding: 0 !important;
+    height: 37px !important;
+}
+
+.taskbar .webix_el_button {
+    margin-top: 0px !important;
+    margin-left: 0px !important;
+    height: 44px !important;
+}
+
+.taskbar .webix_el_button:hover {
+    background: url("../../img/start_hover_bg.png") repeat !important
+}
+
+.taskbar .webix_image {
+	max-width: 32px !important;
+    height: 25px !important;
+    width: 32px !important;
+    margin-left: -25px !important;
+    margin-bottom: 4px;
+}
+
+.taskbar-min {
+    margin-right: 3px;
+}
+
+.taskbar-min .webix_el_box {
+	border-right: 1px solid var(--blue-soft);
+}
+
+.taskbar-min button {
+	border: none;
+    background: transparent !important;
+}
+
+.taskbar-icon {
+    margin-right: 3px;
+}
+
+.taskbar-icon .webix_el_box {
+/*	border-bottom: 3px solid #b3d9ff;*/
+ 	border-bottom: 3px solid var(--blue-soft);
+}
+
+.taskbar-icon.active .webix_el_box {
+	border-bottom: 3px solid var(--blue-headers-soft);
+}
+
+.taskbar-icon.active .webix_el_box, .toolbar-icon:hover .webix_el_box {
+	background: url("../../img/start_hover_bg.png") repeat !important;
+}
+
+.taskbar-icon button {
+	border: none;
+/*  background: transparent !important;*/
+	background: var(--blue-soft-opacity-1) !important;
+}
+
+.taskbar-icon img, 
+.toolbar-icon button div {
+	width: 36px;
+	height: 36px;
+}
+
+.taskbar-icon button div {
+	line-height: 25px;
+}
+
+.taskbar-icon .app_icon {
+	margin-top: 2px;
+}
+
+.taskbar-icon-tooltip {
+	color: var(--blue-headers);
+	background: var(--blue-backcolor-opacity);
+	border: 1px solid var(--blue-soft);
+	border-radius: 5px;
+	padding: 10px;
+	font-family: Roboto, sans-serif;
+	font-size: 14px;
+	font-weight: 100;
+}
+
+.taskbar-icon-tooltip .title {
+	float: left;
+	padding-left: 20px;
+	padding: 7px 0px 0px 10px;
+}
+
+.taskbar-icon-tooltip .icon {
+	width: 26px;
+    height: 26px;
+    float: left;
+    padding: 5px 0px 0px 0px;
+}
+
+.open-its-version {
+	margin-top: 12px;
+	font-weight: 100;
+	font-size: 13px;
+/*	color: #607D8B;*/
+	color: var(--blue-headers-soft);
+	margin-right: 10px;
+}
+
+.logo-revenga {
+	height: 17px; 
+	margin-top: 6px; 
+	margin-left: 10px;
+}
+
+.active-window-head {
+    height: 32px !important;
+    background: linear-gradient(45deg, var(--blue-mid), var(--blue-mid-opacity-8));
+}
+
+.inactive-window-head {
+    height: 32px !important;
+    background: linear-gradient(45deg, var(--blue-mid-opacity-6), var(--blue-mid-opacity-4));
+}
+
+.active-window-head .webix_view.webix_el_icon,
+.inactive-window-head .webix_view.webix_el_icon {
+	margin-top: 0px !important;
+}
+
+.active-window-head .webix_icon_button .webix_icon,
+.inactive-window-head .webix_icon_button .webix_icon {
+    color: var(--white-text-default) !important;
+    padding: 0px 0px 10px;
+}
+
+.active-window-head .webix_icon_button:hover:before,
+.inactive-window-head .webix_icon_button:hover:before {
+	background-color: var(--blue-mid);
+	opacity: 1;
+	transform: scale(0.70);
+	margin-top: -6px;
+	margin-left: 2px;
+}

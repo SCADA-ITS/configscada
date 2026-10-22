@@ -1,0 +1,17 @@
+{
+  id
+  alias
+  description
+  spathStretchs {
+    spath {
+      id
+    }
+    stretch {
+      id
+    }
+    relStretch {
+      id
+    }
+    position
+  }
+}

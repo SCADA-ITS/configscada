@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="Location">
+	<SELECT>SELECT location_id as "id",
+				   location_type_id as "locationTypeId",
+				   lane as "lane",
+				   alias as "alias",
+				   description as "description",
+				   enabled as "enabled",
+				   visible as "visible"
+			  FROM conf.locations
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>INSERT INTO conf.locations
+						(location_id,
+						 location_type_id,
+						 alias,
+						 lane,
+						 description,
+						 enabled,
+						 visible,
+						 created_at,
+						 updated_at)
+					VALUES
+						(:id=getNextId{'conf.locations'$'location_id'},
+					 	:locationTypeId,
+					 	:alias,
+					 	:lane,
+					 	:description,
+					 	:enabled,
+					 	:visible,
+					 	CURRENT_TIMESTAMP,
+					 	CURRENT_TIMESTAMP)
+	</INSERT>
+	<UPDATE> 
+	</UPDATE>
+	<DELETE>
+	</DELETE>
+</DML>

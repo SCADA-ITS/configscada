@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="LogSubtype">
+	<SELECT>SELECT 	log_subtype_id as "id",
+				   log_type_id as "logTypeId",
+				   alias as "alias",
+				   description as "description",
+				   label_alias as "labelAlias", 
+				   label_description as "labelDescription",
+				   level_output_db as "levelOutputDb",
+				   level_output_stomp as "levelOutputStomp",
+				   level_treatment as "levelTreatment",
+				   enabled as "enabled",
+				   visible as "visible"
+			  FROM master.log_subtypes
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>
+	</INSERT>
+	<UPDATE> 
+	</UPDATE>
+	<DELETE>
+	</DELETE>
+</DML>

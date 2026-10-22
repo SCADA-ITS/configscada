@@ -1,0 +1,17 @@
+{
+  id
+  parent {
+    id
+    alias
+    scenario {
+      id
+    }
+  }
+  child {
+    id
+    alias
+    scenario {
+      id
+    }
+  }
+}

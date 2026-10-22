@@ -1,0 +1,1 @@
+ALTER USER rits WITH PASSWORD '1nF0$$44S.@D@';

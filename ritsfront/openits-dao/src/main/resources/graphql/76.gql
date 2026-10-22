@@ -1,0 +1,44 @@
+{
+  id
+  alias
+  description
+  changedAt
+  planOrders {
+    id
+    alias
+    changedAt
+    planOrderOrder
+    planOrderStateType {
+      id
+      alias
+      labelAlias
+    }
+    planOrderType {
+      id
+      alias
+      labelAlias
+    }
+    planOrderValues {
+      id
+      value
+      planOrderTypeParam {
+        id
+        dataType {
+          id
+          labelAlias
+        }
+      }
+    }
+  }
+  planModeType
+  planStateType {
+    id
+    alias
+    labelAlias
+    labelDescription
+  }
+  currentPlanOrder {
+    alias
+    planOrderOrder
+  }
+}

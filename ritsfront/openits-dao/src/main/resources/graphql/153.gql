@@ -1,0 +1,24 @@
+{
+  id
+  alias
+  description
+  changedAt
+  planOrders {
+    id
+    alias
+    description
+    changedAt
+    planOrderOrder
+  }
+  planStateType {
+    id
+    alias
+    labelAlias
+    labelDescription
+  }
+  currentPlanOrder {
+    id
+    alias
+    planOrderOrder
+  }
+}

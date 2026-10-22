@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="CommandElementValuePrecondition">
+	<SELECT>SELECT command_element_type_id as "commandElementTypeId",
+				   element_type_id as "elementTypeId",
+				   element_id as "elementId",
+				   precondition_id as "preconditionId",
+				   command_element_type_param_id as "commandElementTypeParamId",
+				   threshold_operation_id as "thresholdOperationId",
+				   threshold_val1 as "thresholdVal1",
+				   threshold_val2 as "thresholdVal2",
+				   enabled as "enabled",
+				   visible as "visible"
+			FROM conf.command_element_value_preconditions
+			WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>
+	</INSERT>
+	<UPDATE>
+	</UPDATE>
+	<DELETE>
+	</DELETE>
+</DML>

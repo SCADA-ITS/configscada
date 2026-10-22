@@ -1,0 +1,18 @@
+{
+	"moduleAction": {
+	    "map": 200001,
+	    "synoptic": 200002,
+	    "loadIncidentInMap": 200003,
+	    "element": 200004,
+		"loadAlarmInMap": 200005 
+	},
+	"defaultMap": 1,
+	"restEndpoints": {
+		"map": "maps/${id}",
+		"synoptic": "synoptics/${id}",
+		"incident": "incidents/reports/${id}",
+		"mapsElement": "maps/element/${id}",
+		"synopticsElement": "synoptics/element/${id}",
+		"alarm": "alarms/${id}"
+	}
+}

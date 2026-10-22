@@ -1,0 +1,87 @@
+package com.revenga.rits.front.openitsdao.model;
+
+import java.io.Serializable;
+import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+
+/**
+ * The persistent class for the adapter_params database table.
+ * 
+ */
+@Entity
+@Table(name="adapter_params")
+@NamedQuery(name="AdapterParam.findAll", query="SELECT a FROM AdapterParam a")
+public class AdapterParam implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private Integer id;
+
+	private Boolean enabled;
+
+	private String param;
+
+	private Integer pos;
+
+	private Boolean visible;
+
+	//bi-directional many-to-one association to Adapter
+	@JsonIgnore
+	@ManyToOne
+	private Adapter adapter;
+
+	public AdapterParam() {
+	}
+
+	public Integer getId() {
+		return this.id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public Boolean getEnabled() {
+		return this.enabled;
+	}
+
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	public String getParam() {
+		return this.param;
+	}
+
+	public void setParam(String param) {
+		this.param = param;
+	}
+
+	public Integer getPos() {
+		return this.pos;
+	}
+
+	public void setPos(Integer pos) {
+		this.pos = pos;
+	}
+
+	public Boolean getVisible() {
+		return this.visible;
+	}
+
+	public void setVisible(Boolean visible) {
+		this.visible = visible;
+	}
+
+	public Adapter getAdapter() {
+		return this.adapter;
+	}
+
+	public void setAdapter(Adapter adapter) {
+		this.adapter = adapter;
+	}
+
+}

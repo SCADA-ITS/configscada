@@ -1,0 +1,14 @@
+{
+  id
+  iniIncidentState {
+    id
+    labelAlias
+    finalState
+  }
+  endIncidentState {
+    id
+    labelAlias
+    finalState
+  }
+  auto
+}

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="ElementSubtype">
+	<SELECT>SELECT element_subtype_id as "id",			   				   
+				   element_type_id as "elementTypeId",
+				   alias as "alias", 
+				   description as "description", 
+				   label_alias as "labelAlias", 
+				   label_description as "labelDescription",
+				   enabled as "enabled", 
+				   visible as "visible"
+			  FROM master.element_subtypes
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>
+	</INSERT>
+	<UPDATE>
+	</UPDATE>
+	<DELETE>
+	</DELETE>
+</DML>

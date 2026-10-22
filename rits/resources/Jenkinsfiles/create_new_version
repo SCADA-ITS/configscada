@@ -1,0 +1,130 @@
+def stringVariable = ""
+
+pipeline {
+    agent any
+    
+    environment {
+        VERSION_NUMBER = '1.0.0'
+    }
+    
+    stages {
+        stage('Descargar repositorios') {
+            steps {
+                script {
+					sh 'echo Descargando repositorios de git'
+					
+                    def repos = ['rits', 'ritsback', 'ritsfront']
+        
+                    for (repo in repos) {
+                        dir(repo) {
+                            git(
+                                url: "ssh://git@192.168.88.194:3004/~/${repo}.git",
+                                branch: 'P_Industrial',
+                                changelog: true,
+                                poll: true
+                            )
+                        }
+                    }
+                }
+            }
+        }
+        
+        stage('Loggear últimos commit') {
+            steps {
+                script {
+					sh 'echo Obteniendo información de los cambios desde la última ejecución'
+				
+					def changeLogSets = currentBuild.changeSets
+
+					for (int i = 0; i < changeLogSets.size(); i++) {
+						def entries = changeLogSets[i].items
+						
+						for (int j = 0; j < entries.length; j++) {
+							def entry = entries[j]
+							
+							echo "${entry.commitId} by ${entry.author} on ${new Date(entry.timestamp)}: ${entry.msg}"
+							
+							stringVariable += '<div style="background-color: #f0f0f0; padding: 10px;">'
+							stringVariable += "<strong>Commit: ${entry.commitId}</strong><br/>"
+							stringVariable += "Commit message: ${entry.msg}<br/>"
+							stringVariable += "Autor: ${entry.author}<br/>"
+							stringVariable += "Fecha: ${new Date(entry.timestamp)}<br/><br/>"
+							
+							def files = new ArrayList(entry.affectedFiles)
+							
+							stringVariable += "Ficheros afectados:<br/>"
+							for (int k = 0; k < files.size(); k++) {
+							
+								def file = files[k]
+								                        
+								stringVariable += " - ${file.editType.name} ${file.path}<br/>"
+							}
+							
+							stringVariable += "</div>"
+							stringVariable += "<br/>"
+						}
+					}
+				}
+            }
+        }
+        
+        stage('Crear fichero de version') {
+            steps {
+                script {
+                    def storageDir = 'versiones'
+                    
+                    sh "mkdir -p $storageDir/${env.VERSION_NUMBER}"                 
+                    writeFile file: "$storageDir/${env.VERSION_NUMBER}/${env.VERSION_NUMBER}_version.txt", text: crearFicheroVersion(stringVariable)
+                }
+                
+                script {
+                    def repos = ['rits', 'ritsback', 'ritsfront']
+        
+                    for (repo in repos) {
+                        dir(repo) {
+                            // Definir el nombre del tag
+                            def nombreTag = "OpenITS_${env.VERSION_NUMBER}"
+                        
+                            sh "git tag ${nombreTag}"
+                            sh "git push origin ${nombreTag}"
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            script {
+                // Obtener información sobre todos los commits desde el último build
+                emailext subject: "${JOB_NAME} - Build #${BUILD_NUMBER} - ${currentBuild.currentResult}",
+                        body: """
+                        <html>
+                            <body>
+                                <h2>NUEVA VERSIÓN OPENITS</h2>
+                                <p>Job: ${JOB_NAME}</p>
+                                <p>Se ha creado la versión ${env.VERSION_NUMBER}</p>
+                                <p>Puede consultar el listado actual de versiones en la siguiente URL:</p>
+                                <p>http://192.168.88.195:8080/job/${JOB_NAME}/${BUILD_NUMBER}/execution/node/3/ws/versiones/</p>
+                            </body>
+                        </html>
+                        """,
+                        to: 'jenkins.openits@gmail.com',
+                        mimeType: 'text/html'
+            }
+        }
+    }
+}
+
+def crearFicheroVersion(String stringVariable) {
+    def project = "OpenITS"
+    def version = env.VERSION_NUMBER
+    def date = new Date().format('yyyy-MM-dd HH:mm:ss')
+
+    return "${project}_${version}\n\n \
+        Version: ${version}\n \
+        Proyecto: ${project}\n \
+        Fecha:${date}\n\n \
+        Cambios respecto a la versión anterior:\n" + stringVariable
+}

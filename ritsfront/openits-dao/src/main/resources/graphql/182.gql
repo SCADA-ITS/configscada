@@ -1,0 +1,47 @@
+{
+  id
+  alias
+  description
+  elementTypeState {
+    id
+    labelAlias
+  }
+  elementState {
+    currentElementTypeState {
+      id
+      labelAlias
+    }
+    maxAlarmLevel {
+      id
+      labelAlias
+    }
+  }
+  elementValues {
+    id
+    value
+    updatedAt
+    elementValueState {
+      id
+      labelAlias
+    }
+    elementTypeParam {
+      id
+      alias
+      paramType {
+        id
+      }
+      dataType {
+        id
+        labelAlias
+      }
+      labelUnit
+      threshold1
+      threshold2
+    }
+  }
+  location {
+    id
+    alias
+    description
+  }
+}

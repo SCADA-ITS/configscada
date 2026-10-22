@@ -1,0 +1,16 @@
+{
+  id
+  alias
+  description
+  locationType {
+    id
+  }
+  stretchs {
+    id
+    alias
+    road {
+      id
+      alias
+    }
+  }
+}

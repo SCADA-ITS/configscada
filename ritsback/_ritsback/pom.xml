@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.revenga.rits.back</groupId>
+    <artifactId>_ritsback</artifactId>
+    <packaging>pom</packaging>
+    <version>0.0.1-SNAPSHOT</version>
+    <modules>
+        <module>../data-core-lib</module>
+        <module>../cache-core-lib</module>
+        <module>../entities-lib</module>
+        <module>../front-core-lib</module>
+        <module>../data-loader</module>
+        <module>../adapter-lib</module>
+        <module>../mango-core-lib</module>
+        <module>../io-controller</module>
+        <module>../ep-pub-stomp</module>
+        <module>../service-graphql</module>
+        <module>../manager-lib</module>
+        <module>../equipment-manager</module>
+        <module>../user-manager</module>
+        <module>../historical-manager</module>
+        <module>../plan-manager</module>
+        <module>../incident-manager</module>
+        <module>../traffic-manager</module>
+        <module>../server-launcher</module>
+        <module>../virtual-equipment-manager</module>
+        <module>../io-external-manager</module>
+    </modules>
+</project>

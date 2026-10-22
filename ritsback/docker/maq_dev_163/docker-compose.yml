@@ -1,0 +1,105 @@
+version: '3'
+services:
+
+  timescaledb:
+    image: timescale/timescaledb:latest-pg12
+    ports:
+      - "5430:5432"
+    environment:
+      - POSTGRES_USER=rits
+      - POSTGRES_PASSWORD=rits
+    volumes:
+      - ./timescaledb:/var/lib/postgresql/data
+      
+  haproxy:
+    image: haproxy:latest
+    ports:
+      - "6379:6379"
+      - "9000:9000"
+    volumes:
+      - ./haproxy:/usr/local/etc/haproxy  
+    depends_on:
+      - keydb-1
+      - keydb-2
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx:/etc/nginx
+      
+  keydb-1:
+    image: eqalpha/keydb
+    #command: keydb-server --port 6371 --requirepass rits --masterauth rits --notify-keyspace-events KEA --server-threads 4 --active-replica yes --replicaof keydb-2 6372
+    command: keydb-server --port 6371 --requirepass rits --masterauth rits --notify-keyspace-events KEA --server-threads 12 --active-replica yes --replicaof keydb-2 6372
+    ports:
+      - "6371:6371"
+      
+  keydb-2:
+    image: eqalpha/keydb
+    #command: keydb-server --port 6372 --requirepass rits --masterauth rits --notify-keyspace-events KEA --server-threads 4 --active-replica yes --replicaof keydb-1 6371
+    command: keydb-server --port 6372 --requirepass rits --masterauth rits --notify-keyspace-events KEA --server-threads 12 --active-replica yes --replicaof keydb-1 6371
+    ports:
+      - "6372:6372"
+      
+  ritsback:
+    image: openjdk:11
+    ports:
+      - "3000:3000" # ep-mango-receiver
+      - "8082:8082"
+      - "8190:8190"
+
+    environment:
+      - RITS_RESOURCES=/app/backrits/resources
+      - RITS_LOGS=/app/backrits/logs
+    volumes:
+      - ./backrits:/app/backrits
+    command: sh /app/backrits/start.sh
+    depends_on:
+      - timescaledb
+      - keydb-1
+      - keydb-2
+      - activemq
+      
+  activemq:
+  
+    image: ivonet/activemq
+    ports:
+    - "8161:8161"
+    - "61616:61616"
+    - "61613:61613"
+    - "61614:61614"
+
+    environment:
+    - ACTIVEMQ_MIN_MEMORY=512
+    - ACTIVEMQ_MAX_MEMORY=2048
+    - ACTIVEMQ_ENABLED_AUTH=false
+    - ACTIVEMQ_ADMIN_LOGIN=admin
+    - ACTIVEMQ_ADMIN_PASSWORD=secret
+#    - ACTIVEMQ_REMOVE_DEFAULT_ACCOUNT=true
+#    - ACTIVEMQ_WRITE_LOGIN=producer
+#    - ACTIVEMQ_WRITE_PASSWORD=secret
+#    - ACTIVEMQ_READ_LOGIN=consumer
+#    - ACTIVEMQ_READ_PASSWORD=secret
+#    - ACTIVEMQ_JMX_LOGIN=jmx
+#    - ACTIVEMQ_JMX_PASSWORD=secret
+    - ACTIVEMQ_USER_LOGIN=user
+    - ACTIVEMQ_USER_PASSWORD=user
+    volumes:
+      - ./activemq/log/activemq:/var/log/activemq
+
+  tomcat:
+    image: 'bitnami/tomcat:9.0'
+    user: root
+    ports:
+      - '8090:8080'
+    volumes:
+      - ./tomcat/conf/server.xml:/opt/bitnami/tomcat/conf/server.xml
+      - ./tomcat/webapps:/bitnami/tomcat/data
+
+    environment:
+      - TOMCAT_ALLOW_REMOTE_MANAGEMENT=1
+      - TOMCAT_USERNAME=admin
+      - TOMCAT_PASSWORD=admin

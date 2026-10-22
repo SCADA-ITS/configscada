@@ -1,0 +1,55 @@
+.list-photo {
+	display: inline-block;
+	width: 42px;
+	height: 42px;
+	float: left;
+	padding-top: 7px;
+}
+
+.list-first-line {
+	font-size: 14px;
+	letter-spacing: 0.2px;
+	color: #313131;
+	font-weight: 500;
+	line-height: 20px;
+	display: block;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	padding-left: 10px;
+    padding-top: 10px;
+}
+
+.list-second-line {
+	color: var(--blue-mid);
+	display: block;
+	letter-spacing: 0.2px;
+	line-height: 20px;
+	font-size: 13px;
+	font-weight: 300;
+	max-width:500px;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	padding-left: 10px;
+}
+
+.listview-disabled {
+	cursor: not-allowed;
+	pointer-events: none;
+	background-color: var(--soft-grey);
+	opacity: 0.4;
+}
+
+.list-not-selected .webix_list_item {
+	cursor: default !important;
+}
+
+.list-color {
+    display: block;
+    border-radius: 50%;
+    width: 15px;
+    height: 15px;
+    float: left;
+	margin-top: 12px;	
+}

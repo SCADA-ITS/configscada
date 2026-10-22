@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="ImsTaskTypeParam">
+	<SELECT>SELECT task_type_id as "taskTypeId",
+				   task_type_param_id as "id",
+				   param_type_id as "paramTypeId",
+				   data_type_id as "dataTypeId",
+				   threshold_1 as "threshold1",
+				   threshold_2 as "threshold2",
+				   task_type_param_unit_id as "taskTypeParamUnitId",
+				   alias as "alias",
+				   description as "description",
+				   label_alias as "labelAlias", 
+				   label_description as "labelDescription",
+				   enabled as "enabled",
+				   visible as "visible"
+			  FROM master.ims_task_type_params
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>
+	</INSERT>
+	<UPDATE> 
+	</UPDATE>
+	<DELETE>
+	</DELETE>
+</DML>

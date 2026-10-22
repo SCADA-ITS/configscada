@@ -1,0 +1,29 @@
+{
+  id
+  name
+  password
+  passwordExpiredAt
+  sessionExpireTimeS
+  lockedUntil
+  preset
+  allowMultipleSessions
+  fullName
+  email
+  ldap
+  locale {
+    id
+  }
+  role {
+    id
+    alias
+    rolePermissions {
+      id
+    }
+  }
+  userPermissions {
+    id
+  }
+  managementAreas {
+    id
+  }
+}
