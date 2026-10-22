@@ -1,9 +1,0 @@
-{
-	"searchModuleAction": 103801,
-	"searchOptions": {
-		"ELEMENT": true,
-		"ALARM": true,
-		"INCIDENT": true,
-		"PLAN": true
-	}
-}
