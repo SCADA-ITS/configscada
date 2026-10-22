@@ -1,0 +1,16 @@
+{
+	"moduleAction": {
+	    "add": 101201,
+		"edit": 101202,
+		"remove": 101203
+	},
+	"actionEndpoints": {
+		"add": "users/createRole",
+		"edit": "users/updateRole",
+		"remove": "users/deleteRole/${id}"
+	},
+	"restEndpoints": {
+		"user": "users/role/${id}",
+		"permissions": "users/systemPermissions"
+	}
+}

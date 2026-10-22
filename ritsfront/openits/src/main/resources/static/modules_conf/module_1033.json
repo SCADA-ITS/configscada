@@ -1,0 +1,27 @@
+{
+	"moduleAction": {
+	    "commandEdit": 103301
+	},
+	"restEndpoints": {
+		"elementByIdWithoutChilds": "elements/${id}/withoutChilds",
+		"elementByIdWithParents": "elements/${id}/withParents"
+	},
+	"lightingParams": {
+		"lightingRegimeConfig": "ElementTypeParam:85:1:1",
+		"commands": {
+			"regime": "CommandElementType:1:85"
+		}
+	},
+	"commands": {
+		"SEND_LIGHTING_REGIME": {
+			"commandElementTypeId": "CommandElementType:1:85",
+			"elementId": null,
+			"commandElementValues": [
+				{
+					"commandElementTypeParamId": "CommandElementTypeParam:1:85:1",
+					"value": null
+				}
+			]
+		}
+	}
+}

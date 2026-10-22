@@ -1,0 +1,112 @@
+version: '3'
+services:
+
+  timescaledb:
+    image: timescale/timescaledb:latest-pg12
+    ports:
+      - "5430:5432"
+    environment:
+      - POSTGRES_USER=rits
+      - POSTGRES_PASSWORD=rits
+    volumes:
+      - ./timescaledb:/var/lib/postgresql/data
+      
+#  influxdb:
+#    container_name: influxdb
+#    image: influxdb:latest
+#    volumes:
+#      - ./influxdb:/var/lib/influxdb
+#    environment:
+#      - INFLUXDB_HTTP_LOG_ENABLED=true
+#    ports:
+#      - 8086:8086
+
+#  chronograf:
+#    container_name: chronograf
+#    image: chronograf:latest
+#    ports:
+#      - 8888:8888
+#    volumes:
+#      - "./chronograf:/var/lib/chronograf"
+
+#  kapacitor:
+#    container_name: kapacitor
+#    image: kapacitor:latest
+#    environment:
+#      - KAPACITOR_INFLUXDB_0_URLS_0=http://influxdb:8086
+#      - KAPACITOR_HOSTNAME=kapacitor
+#      - KAPACITOR_LOGGING_LEVEL=INFO
+#      - KAPACITOR_REPORTING_ENABLED=false
+#    volumes:
+#      - "./kapacitor:/var/lib/kapacitor"
+#    ports:
+#      - 9092:9092
+      
+  haproxy:
+    image: haproxy:latest
+    ports:
+      - "6379:6379"
+      - "9000:9000"
+    volumes:
+      - ./haproxy:/usr/local/etc/haproxy  
+    depends_on:
+      - keydb-1
+      - keydb-2
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx:/etc/nginx
+      
+#  db:
+#    image: postgres:12
+#    ports:
+#      - "5430:5432"
+#    environment:
+#      TZ: "Europe/Madrid"
+#    volumes:
+#      - ./db:/var/lib/postgresql/data
+      
+  keydb-1:
+    image: eqalpha/keydb
+    #command: keydb-server --port 6371 --requirepass rits --masterauth rits --notify-keyspace-events KEA --server-threads 4 --active-replica yes --replicaof keydb-2 6372
+    command: keydb-server --port 6371 --requirepass rits --masterauth rits --server-threads 4 --active-replica yes --replicaof keydb-2 6372
+    ports:
+      - "6371:6371"
+      
+  keydb-2:
+    image: eqalpha/keydb
+    #command: keydb-server --port 6372 --requirepass rits --masterauth rits --notify-keyspace-events KEA --server-threads 4 --active-replica yes --replicaof keydb-1 6371
+    command: keydb-server --port 6372 --requirepass rits --masterauth rits --server-threads 4 --active-replica yes --replicaof keydb-1 6371
+    ports:
+      - "6372:6372"
+      
+  activemq:
+  
+    image: ivonet/activemq
+    ports:
+    - "8161:8161"
+    - "61616:61616"
+    - "61613:61613"
+    - "61614:61614"
+
+    environment:
+    - ACTIVEMQ_MIN_MEMORY=512
+    - ACTIVEMQ_MAX_MEMORY=2048
+    - ACTIVEMQ_ENABLED_AUTH=false
+    - ACTIVEMQ_ADMIN_LOGIN=admin
+    - ACTIVEMQ_ADMIN_PASSWORD=secret
+#    - ACTIVEMQ_REMOVE_DEFAULT_ACCOUNT=true
+#    - ACTIVEMQ_WRITE_LOGIN=producer
+#    - ACTIVEMQ_WRITE_PASSWORD=secret
+#    - ACTIVEMQ_READ_LOGIN=consumer
+#    - ACTIVEMQ_READ_PASSWORD=secret
+#    - ACTIVEMQ_JMX_LOGIN=jmx
+#    - ACTIVEMQ_JMX_PASSWORD=secret
+    - ACTIVEMQ_USER_LOGIN=user
+    - ACTIVEMQ_USER_PASSWORD=user
+    volumes:
+      - ./activemq/log/activemq:/var/log/activemq

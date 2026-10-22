@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="SmThreshold">
+	<SELECT>SELECT threshold_id as "id",
+				   alias as "alias",
+				   description as "description",
+				   label_alias as "labelAlias", 
+				   label_description as "labelDescription",
+				   data_type_id as "dataTypeId",
+				   value as "value",
+				   enabled as "enabled",
+				   visible as "visible"
+			  FROM static.sm_thresholds
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>
+	</INSERT>
+	<UPDATE>UPDATE static.sm_thresholds
+				SET value = :value,
+				updated_at = CURRENT_TIMESTAMP
+				WHERE threshold_id = :id 
+	</UPDATE>
+	<DELETE>
+	</DELETE>
+</DML>

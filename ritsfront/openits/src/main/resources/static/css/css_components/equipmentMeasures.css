@@ -1,0 +1,42 @@
+.equipment-measures-values {
+    animation-name: measure-update;
+  	animation-duration: 1s;
+}
+
+.equipment-measures-combo .webix_el_box {
+	padding: 3px 0px !important;
+}
+
+.equipment-measures-combo .webix_inp_static {
+	width: 100% !important;
+}
+
+.equipment-measures-pager {
+	border: none !important;
+}
+
+.equipment-measures-pager .webix_el_box .webix_button {
+	color: var(--blue-mid2-opacity-5);
+}
+
+.equipment-measures-info-icon {
+	margin-left: 1px !important;	
+}
+
+.equipment-measures-info-icon .webix_button {
+	border: 1px solid #CCD7E6;	
+}
+
+.equipment-measures-info-icon .webix_icon_btn {
+	margin: auto;
+	color: var(--blue-soft-opacity-9) !important;
+	vertical-align: initial;
+} 
+
+.equipment-measures-info-label {
+	font-size: 13px !important;
+	font-weight: 500;
+	text-decoration: underline;
+	cursor: pointer;
+	color: var(--blue-mid2) !important;	
+}

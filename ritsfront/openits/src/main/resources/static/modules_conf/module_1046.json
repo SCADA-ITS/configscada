@@ -1,0 +1,10 @@
+{
+	"moduleAction": {
+		"maintenanceMode": 104601,
+		"initEquipment": 104602
+	},
+	"restEndpoints":{
+		"changeState": "element_type_states/send_change_element_state",
+		"elements": "elements/withStates"
+	}
+}

@@ -1,0 +1,88 @@
+.graphic-icon-tooltip {
+	color: var(--blue-text-default);
+	background: cornsilk;
+	border: 1px solid black;
+	border-radius: 5px;
+	padding: 10px;
+	font-family: Roboto, sans-serif;
+	font-size: 14px;
+}
+
+.graphic-icon-tooltip .title {
+	font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 5px;
+    text-align: center;
+    background: #fae286;
+    color: #977800;
+    border: 3px solid #fae286;
+    border-radius: 4px;
+}
+
+.graphic-icon-tooltip .state {
+	letter-spacing: 1px;
+    padding-top: 15px;
+    float: left;
+}
+
+.graphic-icon-tooltip .text {
+	letter-spacing: 1px;
+    padding-top: 50px;
+    padding-left: 15px;
+}
+
+.graphic-icon-tooltip .text_title {
+	letter-spacing: 1px;
+    padding-top: 50px;
+    padding-left: 15px;
+    font-weight: 500;
+    font-size: 17px;
+}
+
+.graphic-icon-tooltip .text_details {
+	padding-left: 25px;
+	padding-top: 8px;
+}
+
+.graphic-icon-tooltip .text_details .ico {
+    font-size: 20px;
+    margin-top: -2px;
+}
+
+.graphic-icon-tooltip .text_details .field {
+	font-weight: 500;
+    padding-left: 20px;
+    font-size: 13px;
+    padding-top: 3px;
+}
+
+.graphic-icon-tooltip .text_details .value {
+	position: absolute;
+    padding-left: 225px;
+    font-size: 13px;
+    margin-top: -15px;
+}
+
+.graphic-icon-tooltip .badge {
+    border-radius: 8px;
+    padding: 6px 20px;
+    color: var(--white-text-default);
+    margin-left: 30px;
+}
+
+.graphic-icon-tooltip .icon {
+	width: 40px;
+    height: 40px;
+    float: left;
+    padding: 5px 0px 0px 15px;
+}
+
+.graphic-icon-tooltip-simple {
+	color: var(--blue-text-default);
+	background: cornsilk;
+	border: 1px solid black;
+	border-radius: 5px;
+	padding: 5px;
+	font-family: Roboto, sans-serif;
+	font-size: 14px;
+}

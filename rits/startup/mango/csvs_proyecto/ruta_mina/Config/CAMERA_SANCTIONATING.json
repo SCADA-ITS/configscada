@@ -1,0 +1,2650 @@
+{
+    "dataSources": [
+        {
+            "xid": "DS_RAD",
+            "purgePeriod": 1,
+            "alarmLevels": {
+                "SCRIPT_ERROR": "DO_NOT_LOG",
+                "CONTEXT_POINT_DISABLED": "DO_NOT_LOG",
+                "RESULT_TYPE_ERROR": "DO_NOT_LOG"
+            },
+            "name": "RAD",
+            "type": "META",
+            "editPermission": "",
+            "enabled": true,
+            "purgeType": "YEARS",
+            "purgeOverride": false
+        },
+        {
+            "purgePeriod": 1,
+            "dateFormat": "DATE_FORMAT_BASIC",
+            "type": "HTTP_JSON_RECEIVER",
+            "setType": "PUBLISHER",
+            "deviceIdWhiteList": [
+                "*"
+            ],
+            "enabled": true,
+            "purgeOverride": false,
+            "xid": "DS_ANPR",
+            "alarmLevels": {
+                "SET_POINT_FAILURE": "DO_NOT_LOG",
+                "JSON_READ_FAILURE": "DO_NOT_LOG"
+            },
+            "name": "ANPR",
+            "setPointUrl": "http://localhost:8080/httpds",
+            "receiveType": "JSON",
+            "editPermission": "",
+            "ipWhiteList": [
+                "*.*.*.*"
+            ],
+            "purgeType": "YEARS"
+        },
+        {
+            "xid": "DS_ANPR_Alarms",
+            "purgePeriod": 1,
+            "alarmLevels": {
+                "SCRIPT_ERROR": "DO_NOT_LOG",
+                "CONTEXT_POINT_DISABLED": "DO_NOT_LOG",
+                "RESULT_TYPE_ERROR": "DO_NOT_LOG"
+            },
+            "name": "ANPR Alarms",
+            "type": "META",
+            "editPermission": "",
+            "enabled": true,
+            "purgeType": "YEARS",
+            "purgeOverride": false
+        },
+        {
+            "xid": "DS_status",
+            "purgePeriod": 1,
+            "alarmLevels": {
+                "SCRIPT_ERROR": "DO_NOT_LOG",
+                "CONTEXT_POINT_DISABLED": "DO_NOT_LOG",
+                "RESULT_TYPE_ERROR": "DO_NOT_LOG"
+            },
+            "name": "status",
+            "type": "META",
+            "editPermission": "",
+            "enabled": true,
+            "purgeType": "YEARS",
+            "purgeOverride": false
+        },
+        {
+            "xid": "DS_status_calcular",
+            "purgePeriod": 1,
+            "alarmLevels": {
+                "SCRIPT_ERROR": "URGENT",
+                "CONTEXT_POINT_DISABLED": "URGENT",
+                "RESULT_TYPE_ERROR": "URGENT"
+            },
+            "name": "status_calcular",
+            "type": "META",
+            "editPermission": "",
+            "enabled": true,
+            "purgeType": "YEARS",
+            "purgeOverride": false
+        }
+    ],
+    "dataPoints": [
+        {
+            "purgePeriod": 1,
+            "setExtremeLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "intervalLoggingType": "AVERAGE",
+            "dataSourceXid": "DS_RAD",
+            "discardHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "deviceName": "RM-RAD-001",
+            "enabled": true,
+            "rollup": "NONE",
+            "purgeOverride": false,
+            "chartRenderer": {
+                "limit": 10,
+                "type": "TABLE"
+            },
+            "xid": "DP_RM-RAD-001_jsonMedidas",
+            "eventDetectors": [],
+            "textRenderer": {
+                "useUnitAsSuffix": false,
+                "type": "PLAIN",
+                "suffix": ""
+            },
+            "loggingType": "ON_CHANGE",
+            "overrideIntervalLoggingSamples": false,
+            "defaultCacheSize": 1,
+            "readPermission": "",
+            "setPermission": "",
+            "intervalLoggingPeriodType": "MINUTES",
+            "intervalLoggingSampleWindowSize": 0,
+            "tolerance": 0,
+            "purgeType": "YEARS",
+            "plotType": "STEP",
+            "intervalLoggingPeriod": 1,
+            "discardExtremeValues": false,
+            "tags": {},
+            "unit": "",
+            "pointLocator": {
+                "contextUpdateEvent": "CONTEXT_CHANGE",
+                "variableName": "my",
+                "executionDelaySeconds": 0,
+                "dataType": "ALPHANUMERIC",
+                "scriptPermissions": [],
+                "updateCronPattern": "",
+                "script": "\nvar rad = [];\n\nvar cam = new Object();\n\ncam.datehour = this['datehour'].value;\ncam.plate = this['plate'].value;\ncam.speed = this['speed'].value;\n\nrad.push(cam);\n\nvar jsonString = JSON.stringify(rad);\n\nLOG.info(\"JSON --> \" + jsonString);\n\nreturn jsonString;",
+                "logCount": 5,
+                "settable": false,
+                "logLevel": "INFO",
+                "updateEvent": "NONE",
+                "context": [
+                    {
+                        "varName": "datehour",
+                        "dataPointXid": "DP_RM-RAD-001_datehour",
+                        "updateContext": true
+                    },
+                    {
+                        "varName": "plate",
+                        "dataPointXid": "DP_RM-RAD-001_plate",
+                        "updateContext": true
+                    },
+                    {
+                        "varName": "speed",
+                        "dataPointXid": "DP_RM-RAD-001_speed",
+                        "updateContext": true
+                    }
+                ],
+                "logSize": 1
+            },
+            "discardLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "setExtremeHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "name": "jsonMedidas",
+            "chartColour": "",
+            "preventSetExtremeValues": false,
+            "simplifyType": "NONE"
+        },
+        {
+            "purgePeriod": 1,
+            "setExtremeLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "intervalLoggingType": "AVERAGE",
+            "dataSourceXid": "DS_status",
+            "discardHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "deviceName": "RM-RAD-001",
+            "enabled": true,
+            "rollup": "NONE",
+            "purgeOverride": false,
+            "chartRenderer": {
+                "numberOfPeriods": 1,
+                "type": "IMAGE",
+                "timePeriodType": "DAYS"
+            },
+            "xid": "DP_RM-RAD-001_status",
+            "eventDetectors": [],
+            "textRenderer": {
+                "useUnitAsSuffix": false,
+                "format": "0.00",
+                "type": "ANALOG",
+                "suffix": ""
+            },
+            "loggingType": "NONE",
+            "overrideIntervalLoggingSamples": false,
+            "defaultCacheSize": 1,
+            "readPermission": "",
+            "setPermission": "",
+            "intervalLoggingPeriodType": "MINUTES",
+            "intervalLoggingSampleWindowSize": 0,
+            "tolerance": 0,
+            "purgeType": "YEARS",
+            "plotType": "SPLINE",
+            "intervalLoggingPeriod": 1,
+            "discardExtremeValues": false,
+            "tags": {},
+            "unit": "",
+            "pointLocator": {
+                "contextUpdateEvent": "CONTEXT_UPDATE",
+                "variableName": "my",
+                "executionDelaySeconds": 0,
+                "dataType": "NUMERIC",
+                "scriptPermissions": [
+                    "superadmin"
+                ],
+                "updateCronPattern": "5 0/1 * * * ?",
+                "script": "\nvar headers = {};\nvar url = 'http://localhost';\nvar result;\nvar parameters = {};\nHttpBuilder.get(url, headers, parameters).resp(function(statusCode, headers, content) { \n  // handle the response, maybe return \"Success!\" or whatever\n  result = statusCode;\n }).err(function(statusCode, headers, content) {\n // handle error responses\n   result = statusCode;\n}).execute();\n\nif(result != -1){\n    return(1.0);\n}else{\n    return(0.0);\n}",
+                "logCount": 5,
+                "settable": false,
+                "logLevel": "INFO",
+                "updateEvent": "CRON",
+                "context": [],
+                "logSize": 1
+            },
+            "discardLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "setExtremeHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "name": "status",
+            "chartColour": "",
+            "preventSetExtremeValues": false,
+            "simplifyType": "NONE"
+        },
+        {
+            "purgePeriod": 1,
+            "setExtremeLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "intervalLoggingType": "INSTANT",
+            "dataSourceXid": "DS_ANPR",
+            "discardHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "deviceName": "RM-RAD-001",
+            "enabled": true,
+            "rollup": "NONE",
+            "purgeOverride": false,
+            "chartRenderer": {
+                "limit": 10,
+                "type": "TABLE"
+            },
+            "xid": "DP_RM-RAD-001_datehour",
+            "eventDetectors": [],
+            "textRenderer": {
+                "useUnitAsSuffix": false,
+                "type": "PLAIN",
+                "suffix": ""
+            },
+            "loggingType": "NONE",
+            "overrideIntervalLoggingSamples": false,
+            "defaultCacheSize": 1,
+            "readPermission": "",
+            "setPermission": "",
+            "intervalLoggingPeriodType": "MINUTES",
+            "intervalLoggingSampleWindowSize": 0,
+            "tolerance": 0,
+            "purgeType": "YEARS",
+            "plotType": "STEP",
+            "intervalLoggingPeriod": 1,
+            "discardExtremeValues": false,
+            "tags": {},
+            "unit": "",
+            "pointLocator": {
+                "settable": false,
+                "deviceIdentifier": "Camera 1",
+                "timestampIdentifier": null,
+                "setPointName": "",
+                "dataType": "ALPHANUMERIC",
+                "binary0Value": "",
+                "parameterName": "/infoplate/DateHour",
+                "deviceIdentifierKey": "/infoplate/CamName",
+                "includeTimestamp": true
+            },
+            "discardLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "setExtremeHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "name": "datehour",
+            "chartColour": "",
+            "preventSetExtremeValues": false,
+            "simplifyType": "NONE"
+        },
+        {
+            "purgePeriod": 1,
+            "setExtremeLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "intervalLoggingType": "INSTANT",
+            "dataSourceXid": "DS_ANPR",
+            "discardHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "deviceName": "RM-RAD-001",
+            "enabled": true,
+            "rollup": "NONE",
+            "purgeOverride": false,
+            "chartRenderer": {
+                "limit": 10,
+                "type": "TABLE"
+            },
+            "xid": "DP_RM-RAD-001_plate",
+            "eventDetectors": [],
+            "textRenderer": {
+                "useUnitAsSuffix": false,
+                "type": "PLAIN",
+                "suffix": ""
+            },
+            "loggingType": "NONE",
+            "overrideIntervalLoggingSamples": false,
+            "defaultCacheSize": 1,
+            "readPermission": "",
+            "setPermission": "",
+            "intervalLoggingPeriodType": "MINUTES",
+            "intervalLoggingSampleWindowSize": 0,
+            "tolerance": 0,
+            "purgeType": "YEARS",
+            "plotType": "STEP",
+            "intervalLoggingPeriod": 15,
+            "discardExtremeValues": false,
+            "tags": {},
+            "unit": "",
+            "pointLocator": {
+                "settable": false,
+                "deviceIdentifier": "Camera 1",
+                "timestampIdentifier": null,
+                "setPointName": "",
+                "dataType": "ALPHANUMERIC",
+                "binary0Value": "",
+                "parameterName": "/infoplate/Plate",
+                "deviceIdentifierKey": "/infoplate/CamName",
+                "includeTimestamp": true
+            },
+            "discardLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "setExtremeHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "name": "plate",
+            "chartColour": "",
+            "preventSetExtremeValues": false,
+            "simplifyType": "NONE"
+        },
+        {
+            "purgePeriod": 1,
+            "setExtremeLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "intervalLoggingType": "AVERAGE",
+            "dataSourceXid": "DS_ANPR_Alarms",
+            "discardHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "deviceName": "RM-RAD-001",
+            "enabled": true,
+            "rollup": "NONE",
+            "purgeOverride": false,
+            "chartRenderer": {
+                "limit": 10,
+                "type": "TABLE"
+            },
+            "xid": "DP_RM-RAD-001_overspeed_alarm",
+            "eventDetectors": [],
+            "textRenderer": {
+                "oneColour": "#00ff00",
+                "zeroColour": "#0000ff",
+                "oneLabel": "one",
+                "type": "BINARY",
+                "zeroLabel": "zero"
+            },
+            "loggingType": "ON_CHANGE",
+            "overrideIntervalLoggingSamples": false,
+            "defaultCacheSize": 1,
+            "readPermission": "",
+            "setPermission": "",
+            "intervalLoggingPeriodType": "MINUTES",
+            "intervalLoggingSampleWindowSize": 0,
+            "tolerance": 0,
+            "purgeType": "YEARS",
+            "plotType": "STEP",
+            "intervalLoggingPeriod": 1,
+            "discardExtremeValues": false,
+            "tags": {},
+            "unit": "",
+            "pointLocator": {
+                "contextUpdateEvent": "CONTEXT_UPDATE",
+                "variableName": "my",
+                "executionDelaySeconds": 0,
+                "dataType": "BINARY",
+                "scriptPermissions": [],
+                "updateCronPattern": "0/10 * * ? * * *",
+                "script": "var actual = new Date(Date.now());\nvar lastupdate = new Date(datehour.value).toUTCString();\n\nLOG.info(\"Date -->\" + actual)\nLOG.info(\"actual -->\" + Date.parse(actual))\nLOG.info(\"lastupdate -->\" + lastupdate)\nLOG.info(\"datehour.value -->\"  +  Date.parse(lastupdate))\nvar difHora = new Date(Date.now()).getTimezoneOffset();\n\nlastupdate = Date.parse(lastupdate) + (difHora*60*1000)\nLOG.info(\"datehour.value -->\" + lastupdate)\nvar diff = Math.abs((Date.parse(actual) - lastupdate) / 1000);\nLOG.info(\"DIFF -->\" + diff)\nreturn diff < 20\n\n\n",
+                "logCount": 5,
+                "settable": true,
+                "logLevel": "INFO",
+                "updateEvent": "CRON",
+                "context": [
+                    {
+                        "varName": "datehour",
+                        "dataPointXid": "DP_RM-RAD-001_datehour",
+                        "updateContext": true
+                    }
+                ],
+                "logSize": 1
+            },
+            "discardLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "setExtremeHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "name": "overspeed_alarm",
+            "chartColour": "",
+            "preventSetExtremeValues": false,
+            "simplifyType": "NONE"
+        },
+        {
+            "purgePeriod": 1,
+            "setExtremeLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "intervalLoggingType": "INSTANT",
+            "dataSourceXid": "DS_ANPR",
+            "discardHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "deviceName": "RM-RAD-001",
+            "enabled": true,
+            "rollup": "NONE",
+            "purgeOverride": false,
+            "chartRenderer": {
+                "limit": 10,
+                "type": "TABLE"
+            },
+            "xid": "DP_RM-RAD-001_speed",
+            "eventDetectors": [],
+            "textRenderer": {
+                "useUnitAsSuffix": false,
+                "type": "PLAIN",
+                "suffix": ""
+            },
+            "loggingType": "NONE",
+            "overrideIntervalLoggingSamples": false,
+            "defaultCacheSize": 1,
+            "readPermission": "",
+            "setPermission": "",
+            "intervalLoggingPeriodType": "MINUTES",
+            "intervalLoggingSampleWindowSize": 0,
+            "tolerance": 0,
+            "purgeType": "YEARS",
+            "plotType": "STEP",
+            "intervalLoggingPeriod": 15,
+            "discardExtremeValues": false,
+            "tags": {},
+            "unit": "",
+            "pointLocator": {
+                "settable": false,
+                "deviceIdentifier": "Camera 1",
+                "timestampIdentifier": null,
+                "setPointName": "",
+                "dataType": "ALPHANUMERIC",
+                "binary0Value": "",
+                "parameterName": "/infoplate/Speed",
+                "deviceIdentifierKey": "/infoplate/CamName",
+                "includeTimestamp": true
+            },
+            "discardLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "setExtremeHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "name": "speed",
+            "chartColour": "",
+            "preventSetExtremeValues": false,
+            "simplifyType": "NONE"
+        },
+        {
+            "purgePeriod": 1,
+            "setExtremeLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "intervalLoggingType": "AVERAGE",
+            "dataSourceXid": "DS_RAD",
+            "discardHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "deviceName": "RM-RAD-002",
+            "enabled": true,
+            "rollup": "NONE",
+            "purgeOverride": false,
+            "chartRenderer": {
+                "limit": 10,
+                "type": "TABLE"
+            },
+            "xid": "DP_RM-RAD-002_jsonMedidas",
+            "eventDetectors": [],
+            "textRenderer": {
+                "useUnitAsSuffix": false,
+                "type": "PLAIN",
+                "suffix": ""
+            },
+            "loggingType": "ON_CHANGE",
+            "overrideIntervalLoggingSamples": false,
+            "defaultCacheSize": 1,
+            "readPermission": "",
+            "setPermission": "",
+            "intervalLoggingPeriodType": "MINUTES",
+            "intervalLoggingSampleWindowSize": 0,
+            "tolerance": 0,
+            "purgeType": "YEARS",
+            "plotType": "STEP",
+            "intervalLoggingPeriod": 1,
+            "discardExtremeValues": false,
+            "tags": {},
+            "unit": "",
+            "pointLocator": {
+                "contextUpdateEvent": "CONTEXT_CHANGE",
+                "variableName": "my",
+                "executionDelaySeconds": 0,
+                "dataType": "ALPHANUMERIC",
+                "scriptPermissions": [],
+                "updateCronPattern": "",
+                "script": "\nvar rad = [];\n\nvar cam = new Object();\n\ncam.datehour = this['datehour'].value;\ncam.plate = this['plate'].value;\ncam.speed = this['speed'].value;\n\nrad.push(cam);\n\nvar jsonString = JSON.stringify(rad);\n\nLOG.info(\"JSON --> \" + jsonString);\n\nreturn jsonString;",
+                "logCount": 5,
+                "settable": false,
+                "logLevel": "INFO",
+                "updateEvent": "NONE",
+                "context": [
+                    {
+                        "varName": "datehour",
+                        "dataPointXid": "DP_RM-RAD-002_datehour",
+                        "updateContext": true
+                    },
+                    {
+                        "varName": "plate",
+                        "dataPointXid": "DP_RM-RAD-002_plate",
+                        "updateContext": true
+                    },
+                    {
+                        "varName": "speed",
+                        "dataPointXid": "DP_RM-RAD-002_speed",
+                        "updateContext": true
+                    }
+                ],
+                "logSize": 1
+            },
+            "discardLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "setExtremeHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "name": "jsonMedidas",
+            "chartColour": "",
+            "preventSetExtremeValues": false,
+            "simplifyType": "NONE"
+        },
+        {
+            "purgePeriod": 1,
+            "setExtremeLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "intervalLoggingType": "AVERAGE",
+            "dataSourceXid": "DS_status",
+            "discardHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "deviceName": "RM-RAD-002",
+            "enabled": true,
+            "rollup": "NONE",
+            "purgeOverride": false,
+            "chartRenderer": {
+                "numberOfPeriods": 1,
+                "type": "IMAGE",
+                "timePeriodType": "DAYS"
+            },
+            "xid": "DP_RM-RAD-002_status",
+            "eventDetectors": [],
+            "textRenderer": {
+                "useUnitAsSuffix": false,
+                "format": "0.00",
+                "type": "ANALOG",
+                "suffix": ""
+            },
+            "loggingType": "NONE",
+            "overrideIntervalLoggingSamples": false,
+            "defaultCacheSize": 1,
+            "readPermission": "",
+            "setPermission": "",
+            "intervalLoggingPeriodType": "MINUTES",
+            "intervalLoggingSampleWindowSize": 0,
+            "tolerance": 0,
+            "purgeType": "YEARS",
+            "plotType": "SPLINE",
+            "intervalLoggingPeriod": 1,
+            "discardExtremeValues": false,
+            "tags": {},
+            "unit": "",
+            "pointLocator": {
+                "contextUpdateEvent": "CONTEXT_UPDATE",
+                "variableName": "my",
+                "executionDelaySeconds": 0,
+                "dataType": "NUMERIC",
+                "scriptPermissions": [
+                    "superadmin"
+                ],
+                "updateCronPattern": "5 0/1 * * * ?",
+                "script": "\nvar headers = {};\nvar url = 'http://localhost';\nvar result;\nvar parameters = {};\nHttpBuilder.get(url, headers, parameters).resp(function(statusCode, headers, content) { \n  // handle the response, maybe return \"Success!\" or whatever\n  result = statusCode;\n }).err(function(statusCode, headers, content) {\n // handle error responses\n   result = statusCode;\n}).execute();\n\nif(result != -1){\n    return(1.0);\n}else{\n    return(0.0);\n}",
+                "logCount": 5,
+                "settable": false,
+                "logLevel": "INFO",
+                "updateEvent": "CRON",
+                "context": [],
+                "logSize": 1
+            },
+            "discardLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "setExtremeHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "name": "status",
+            "chartColour": "",
+            "preventSetExtremeValues": false,
+            "simplifyType": "NONE"
+        },
+        {
+            "purgePeriod": 1,
+            "setExtremeLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "intervalLoggingType": "INSTANT",
+            "dataSourceXid": "DS_ANPR",
+            "discardHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "deviceName": "RM-RAD-002",
+            "enabled": true,
+            "rollup": "NONE",
+            "purgeOverride": false,
+            "chartRenderer": {
+                "limit": 10,
+                "type": "TABLE"
+            },
+            "xid": "DP_RM-RAD-002_datehour",
+            "eventDetectors": [],
+            "textRenderer": {
+                "useUnitAsSuffix": false,
+                "type": "PLAIN",
+                "suffix": ""
+            },
+            "loggingType": "NONE",
+            "overrideIntervalLoggingSamples": false,
+            "defaultCacheSize": 1,
+            "readPermission": "",
+            "setPermission": "",
+            "intervalLoggingPeriodType": "MINUTES",
+            "intervalLoggingSampleWindowSize": 0,
+            "tolerance": 0,
+            "purgeType": "YEARS",
+            "plotType": "STEP",
+            "intervalLoggingPeriod": 1,
+            "discardExtremeValues": false,
+            "tags": {},
+            "unit": "",
+            "pointLocator": {
+                "settable": false,
+                "deviceIdentifier": "Camera 1",
+                "timestampIdentifier": null,
+                "setPointName": "",
+                "dataType": "ALPHANUMERIC",
+                "binary0Value": "",
+                "parameterName": "/infoplate/DateHour",
+                "deviceIdentifierKey": "/infoplate/CamName",
+                "includeTimestamp": true
+            },
+            "discardLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "setExtremeHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "name": "datehour",
+            "chartColour": "",
+            "preventSetExtremeValues": false,
+            "simplifyType": "NONE"
+        },
+        {
+            "purgePeriod": 1,
+            "setExtremeLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "intervalLoggingType": "INSTANT",
+            "dataSourceXid": "DS_ANPR",
+            "discardHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "deviceName": "RM-RAD-002",
+            "enabled": true,
+            "rollup": "NONE",
+            "purgeOverride": false,
+            "chartRenderer": {
+                "limit": 10,
+                "type": "TABLE"
+            },
+            "xid": "DP_RM-RAD-002_plate",
+            "eventDetectors": [],
+            "textRenderer": {
+                "useUnitAsSuffix": false,
+                "type": "PLAIN",
+                "suffix": ""
+            },
+            "loggingType": "NONE",
+            "overrideIntervalLoggingSamples": false,
+            "defaultCacheSize": 1,
+            "readPermission": "",
+            "setPermission": "",
+            "intervalLoggingPeriodType": "MINUTES",
+            "intervalLoggingSampleWindowSize": 0,
+            "tolerance": 0,
+            "purgeType": "YEARS",
+            "plotType": "STEP",
+            "intervalLoggingPeriod": 15,
+            "discardExtremeValues": false,
+            "tags": {},
+            "unit": "",
+            "pointLocator": {
+                "settable": false,
+                "deviceIdentifier": "Camera 1",
+                "timestampIdentifier": null,
+                "setPointName": "",
+                "dataType": "ALPHANUMERIC",
+                "binary0Value": "",
+                "parameterName": "/infoplate/Plate",
+                "deviceIdentifierKey": "/infoplate/CamName",
+                "includeTimestamp": true
+            },
+            "discardLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "setExtremeHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "name": "plate",
+            "chartColour": "",
+            "preventSetExtremeValues": false,
+            "simplifyType": "NONE"
+        },
+        {
+            "purgePeriod": 1,
+            "setExtremeLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "intervalLoggingType": "AVERAGE",
+            "dataSourceXid": "DS_ANPR_Alarms",
+            "discardHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "deviceName": "RM-RAD-002",
+            "enabled": true,
+            "rollup": "NONE",
+            "purgeOverride": false,
+            "chartRenderer": {
+                "limit": 10,
+                "type": "TABLE"
+            },
+            "xid": "DP_RM-RAD-002_overspeed_alarm",
+            "eventDetectors": [],
+            "textRenderer": {
+                "oneColour": "#00ff00",
+                "zeroColour": "#0000ff",
+                "oneLabel": "one",
+                "type": "BINARY",
+                "zeroLabel": "zero"
+            },
+            "loggingType": "ON_CHANGE",
+            "overrideIntervalLoggingSamples": false,
+            "defaultCacheSize": 1,
+            "readPermission": "",
+            "setPermission": "",
+            "intervalLoggingPeriodType": "MINUTES",
+            "intervalLoggingSampleWindowSize": 0,
+            "tolerance": 0,
+            "purgeType": "YEARS",
+            "plotType": "STEP",
+            "intervalLoggingPeriod": 1,
+            "discardExtremeValues": false,
+            "tags": {},
+            "unit": "",
+            "pointLocator": {
+                "contextUpdateEvent": "CONTEXT_UPDATE",
+                "variableName": "my",
+                "executionDelaySeconds": 0,
+                "dataType": "BINARY",
+                "scriptPermissions": [],
+                "updateCronPattern": "0/10 * * ? * * *",
+                "script": "var actual = new Date(Date.now());\nvar lastupdate = new Date(datehour.value).toUTCString();\n\nLOG.info(\"Date -->\" + actual)\nLOG.info(\"actual -->\" + Date.parse(actual))\nLOG.info(\"lastupdate -->\" + lastupdate)\nLOG.info(\"datehour.value -->\"  +  Date.parse(lastupdate))\nvar difHora = new Date(Date.now()).getTimezoneOffset();\n\nlastupdate = Date.parse(lastupdate) + (difHora*60*1000)\nLOG.info(\"datehour.value -->\" + lastupdate)\nvar diff = Math.abs((Date.parse(actual) - lastupdate) / 1000);\nLOG.info(\"DIFF -->\" + diff)\nreturn diff < 20\n\n\n",
+                "logCount": 5,
+                "settable": true,
+                "logLevel": "INFO",
+                "updateEvent": "CRON",
+                "context": [
+                    {
+                        "varName": "datehour",
+                        "dataPointXid": "DP_RM-RAD-002_datehour",
+                        "updateContext": true
+                    }
+                ],
+                "logSize": 1
+            },
+            "discardLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "setExtremeHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "name": "overspeed_alarm",
+            "chartColour": "",
+            "preventSetExtremeValues": false,
+            "simplifyType": "NONE"
+        },
+        {
+            "purgePeriod": 1,
+            "setExtremeLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "intervalLoggingType": "INSTANT",
+            "dataSourceXid": "DS_ANPR",
+            "discardHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "deviceName": "RM-RAD-002",
+            "enabled": true,
+            "rollup": "NONE",
+            "purgeOverride": false,
+            "chartRenderer": {
+                "limit": 10,
+                "type": "TABLE"
+            },
+            "xid": "DP_RM-RAD-002_speed",
+            "eventDetectors": [],
+            "textRenderer": {
+                "useUnitAsSuffix": false,
+                "type": "PLAIN",
+                "suffix": ""
+            },
+            "loggingType": "NONE",
+            "overrideIntervalLoggingSamples": false,
+            "defaultCacheSize": 1,
+            "readPermission": "",
+            "setPermission": "",
+            "intervalLoggingPeriodType": "MINUTES",
+            "intervalLoggingSampleWindowSize": 0,
+            "tolerance": 0,
+            "purgeType": "YEARS",
+            "plotType": "STEP",
+            "intervalLoggingPeriod": 15,
+            "discardExtremeValues": false,
+            "tags": {},
+            "unit": "",
+            "pointLocator": {
+                "settable": false,
+                "deviceIdentifier": "Camera 1",
+                "timestampIdentifier": null,
+                "setPointName": "",
+                "dataType": "ALPHANUMERIC",
+                "binary0Value": "",
+                "parameterName": "/infoplate/Speed",
+                "deviceIdentifierKey": "/infoplate/CamName",
+                "includeTimestamp": true
+            },
+            "discardLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "setExtremeHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "name": "speed",
+            "chartColour": "",
+            "preventSetExtremeValues": false,
+            "simplifyType": "NONE"
+        },
+        {
+            "purgePeriod": 1,
+            "setExtremeLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "intervalLoggingType": "AVERAGE",
+            "dataSourceXid": "DS_RAD",
+            "discardHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "deviceName": "RM-RAD-003",
+            "enabled": true,
+            "rollup": "NONE",
+            "purgeOverride": false,
+            "chartRenderer": {
+                "limit": 10,
+                "type": "TABLE"
+            },
+            "xid": "DP_RM-RAD-003_jsonMedidas",
+            "eventDetectors": [],
+            "textRenderer": {
+                "useUnitAsSuffix": false,
+                "type": "PLAIN",
+                "suffix": ""
+            },
+            "loggingType": "ON_CHANGE",
+            "overrideIntervalLoggingSamples": false,
+            "defaultCacheSize": 1,
+            "readPermission": "",
+            "setPermission": "",
+            "intervalLoggingPeriodType": "MINUTES",
+            "intervalLoggingSampleWindowSize": 0,
+            "tolerance": 0,
+            "purgeType": "YEARS",
+            "plotType": "STEP",
+            "intervalLoggingPeriod": 1,
+            "discardExtremeValues": false,
+            "tags": {},
+            "unit": "",
+            "pointLocator": {
+                "contextUpdateEvent": "CONTEXT_CHANGE",
+                "variableName": "my",
+                "executionDelaySeconds": 0,
+                "dataType": "ALPHANUMERIC",
+                "scriptPermissions": [],
+                "updateCronPattern": "",
+                "script": "\nvar rad = [];\n\nvar cam = new Object();\n\ncam.datehour = this['datehour'].value;\ncam.plate = this['plate'].value;\ncam.speed = this['speed'].value;\n\nrad.push(cam);\n\nvar jsonString = JSON.stringify(rad);\n\nLOG.info(\"JSON --> \" + jsonString);\n\nreturn jsonString;",
+                "logCount": 5,
+                "settable": false,
+                "logLevel": "INFO",
+                "updateEvent": "NONE",
+                "context": [
+                    {
+                        "varName": "datehour",
+                        "dataPointXid": "DP_RM-RAD-003_datehour",
+                        "updateContext": true
+                    },
+                    {
+                        "varName": "plate",
+                        "dataPointXid": "DP_RM-RAD-003_plate",
+                        "updateContext": true
+                    },
+                    {
+                        "varName": "speed",
+                        "dataPointXid": "DP_RM-RAD-003_speed",
+                        "updateContext": true
+                    }
+                ],
+                "logSize": 1
+            },
+            "discardLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "setExtremeHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "name": "jsonMedidas",
+            "chartColour": "",
+            "preventSetExtremeValues": false,
+            "simplifyType": "NONE"
+        },
+        {
+            "purgePeriod": 1,
+            "setExtremeLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "intervalLoggingType": "AVERAGE",
+            "dataSourceXid": "DS_status",
+            "discardHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "deviceName": "RM-RAD-003",
+            "enabled": true,
+            "rollup": "NONE",
+            "purgeOverride": false,
+            "chartRenderer": {
+                "numberOfPeriods": 1,
+                "type": "IMAGE",
+                "timePeriodType": "DAYS"
+            },
+            "xid": "DP_RM-RAD-003_status",
+            "eventDetectors": [],
+            "textRenderer": {
+                "useUnitAsSuffix": false,
+                "format": "0.00",
+                "type": "ANALOG",
+                "suffix": ""
+            },
+            "loggingType": "NONE",
+            "overrideIntervalLoggingSamples": false,
+            "defaultCacheSize": 1,
+            "readPermission": "",
+            "setPermission": "",
+            "intervalLoggingPeriodType": "MINUTES",
+            "intervalLoggingSampleWindowSize": 0,
+            "tolerance": 0,
+            "purgeType": "YEARS",
+            "plotType": "SPLINE",
+            "intervalLoggingPeriod": 1,
+            "discardExtremeValues": false,
+            "tags": {},
+            "unit": "",
+            "pointLocator": {
+                "contextUpdateEvent": "CONTEXT_UPDATE",
+                "variableName": "my",
+                "executionDelaySeconds": 0,
+                "dataType": "NUMERIC",
+                "scriptPermissions": [
+                    "superadmin"
+                ],
+                "updateCronPattern": "5 0/1 * * * ?",
+                "script": "\nvar headers = {};\nvar url = 'http://localhost';\nvar result;\nvar parameters = {};\nHttpBuilder.get(url, headers, parameters).resp(function(statusCode, headers, content) { \n  // handle the response, maybe return \"Success!\" or whatever\n  result = statusCode;\n }).err(function(statusCode, headers, content) {\n // handle error responses\n   result = statusCode;\n}).execute();\n\nif(result != -1){\n    return(1.0);\n}else{\n    return(0.0);\n}",
+                "logCount": 5,
+                "settable": false,
+                "logLevel": "INFO",
+                "updateEvent": "CRON",
+                "context": [],
+                "logSize": 1
+            },
+            "discardLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "setExtremeHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "name": "status",
+            "chartColour": "",
+            "preventSetExtremeValues": false,
+            "simplifyType": "NONE"
+        },
+        {
+            "purgePeriod": 1,
+            "setExtremeLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "intervalLoggingType": "INSTANT",
+            "dataSourceXid": "DS_ANPR",
+            "discardHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "deviceName": "RM-RAD-003",
+            "enabled": true,
+            "rollup": "NONE",
+            "purgeOverride": false,
+            "chartRenderer": {
+                "limit": 10,
+                "type": "TABLE"
+            },
+            "xid": "DP_RM-RAD-003_datehour",
+            "eventDetectors": [],
+            "textRenderer": {
+                "useUnitAsSuffix": false,
+                "type": "PLAIN",
+                "suffix": ""
+            },
+            "loggingType": "NONE",
+            "overrideIntervalLoggingSamples": false,
+            "defaultCacheSize": 1,
+            "readPermission": "",
+            "setPermission": "",
+            "intervalLoggingPeriodType": "MINUTES",
+            "intervalLoggingSampleWindowSize": 0,
+            "tolerance": 0,
+            "purgeType": "YEARS",
+            "plotType": "STEP",
+            "intervalLoggingPeriod": 1,
+            "discardExtremeValues": false,
+            "tags": {},
+            "unit": "",
+            "pointLocator": {
+                "settable": false,
+                "deviceIdentifier": "Camera 1",
+                "timestampIdentifier": null,
+                "setPointName": "",
+                "dataType": "ALPHANUMERIC",
+                "binary0Value": "",
+                "parameterName": "/infoplate/DateHour",
+                "deviceIdentifierKey": "/infoplate/CamName",
+                "includeTimestamp": true
+            },
+            "discardLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "setExtremeHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "name": "datehour",
+            "chartColour": "",
+            "preventSetExtremeValues": false,
+            "simplifyType": "NONE"
+        },
+        {
+            "purgePeriod": 1,
+            "setExtremeLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "intervalLoggingType": "INSTANT",
+            "dataSourceXid": "DS_ANPR",
+            "discardHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "deviceName": "RM-RAD-003",
+            "enabled": true,
+            "rollup": "NONE",
+            "purgeOverride": false,
+            "chartRenderer": {
+                "limit": 10,
+                "type": "TABLE"
+            },
+            "xid": "DP_RM-RAD-003_plate",
+            "eventDetectors": [],
+            "textRenderer": {
+                "useUnitAsSuffix": false,
+                "type": "PLAIN",
+                "suffix": ""
+            },
+            "loggingType": "NONE",
+            "overrideIntervalLoggingSamples": false,
+            "defaultCacheSize": 1,
+            "readPermission": "",
+            "setPermission": "",
+            "intervalLoggingPeriodType": "MINUTES",
+            "intervalLoggingSampleWindowSize": 0,
+            "tolerance": 0,
+            "purgeType": "YEARS",
+            "plotType": "STEP",
+            "intervalLoggingPeriod": 15,
+            "discardExtremeValues": false,
+            "tags": {},
+            "unit": "",
+            "pointLocator": {
+                "settable": false,
+                "deviceIdentifier": "Camera 1",
+                "timestampIdentifier": null,
+                "setPointName": "",
+                "dataType": "ALPHANUMERIC",
+                "binary0Value": "",
+                "parameterName": "/infoplate/Plate",
+                "deviceIdentifierKey": "/infoplate/CamName",
+                "includeTimestamp": true
+            },
+            "discardLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "setExtremeHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "name": "plate",
+            "chartColour": "",
+            "preventSetExtremeValues": false,
+            "simplifyType": "NONE"
+        },
+        {
+            "purgePeriod": 1,
+            "setExtremeLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "intervalLoggingType": "AVERAGE",
+            "dataSourceXid": "DS_ANPR_Alarms",
+            "discardHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "deviceName": "RM-RAD-003",
+            "enabled": true,
+            "rollup": "NONE",
+            "purgeOverride": false,
+            "chartRenderer": {
+                "limit": 10,
+                "type": "TABLE"
+            },
+            "xid": "DP_RM-RAD-003_overspeed_alarm",
+            "eventDetectors": [],
+            "textRenderer": {
+                "oneColour": "#00ff00",
+                "zeroColour": "#0000ff",
+                "oneLabel": "one",
+                "type": "BINARY",
+                "zeroLabel": "zero"
+            },
+            "loggingType": "ON_CHANGE",
+            "overrideIntervalLoggingSamples": false,
+            "defaultCacheSize": 1,
+            "readPermission": "",
+            "setPermission": "",
+            "intervalLoggingPeriodType": "MINUTES",
+            "intervalLoggingSampleWindowSize": 0,
+            "tolerance": 0,
+            "purgeType": "YEARS",
+            "plotType": "STEP",
+            "intervalLoggingPeriod": 1,
+            "discardExtremeValues": false,
+            "tags": {},
+            "unit": "",
+            "pointLocator": {
+                "contextUpdateEvent": "CONTEXT_UPDATE",
+                "variableName": "my",
+                "executionDelaySeconds": 0,
+                "dataType": "BINARY",
+                "scriptPermissions": [],
+                "updateCronPattern": "0/10 * * ? * * *",
+                "script": "var actual = new Date(Date.now());\nvar lastupdate = new Date(datehour.value).toUTCString();\n\nLOG.info(\"Date -->\" + actual)\nLOG.info(\"actual -->\" + Date.parse(actual))\nLOG.info(\"lastupdate -->\" + lastupdate)\nLOG.info(\"datehour.value -->\"  +  Date.parse(lastupdate))\nvar difHora = new Date(Date.now()).getTimezoneOffset();\n\nlastupdate = Date.parse(lastupdate) + (difHora*60*1000)\nLOG.info(\"datehour.value -->\" + lastupdate)\nvar diff = Math.abs((Date.parse(actual) - lastupdate) / 1000);\nLOG.info(\"DIFF -->\" + diff)\nreturn diff < 20\n\n\n",
+                "logCount": 5,
+                "settable": true,
+                "logLevel": "INFO",
+                "updateEvent": "CRON",
+                "context": [
+                    {
+                        "varName": "datehour",
+                        "dataPointXid": "DP_RM-RAD-003_datehour",
+                        "updateContext": true
+                    }
+                ],
+                "logSize": 1
+            },
+            "discardLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "setExtremeHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "name": "overspeed_alarm",
+            "chartColour": "",
+            "preventSetExtremeValues": false,
+            "simplifyType": "NONE"
+        },
+        {
+            "purgePeriod": 1,
+            "setExtremeLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "intervalLoggingType": "INSTANT",
+            "dataSourceXid": "DS_ANPR",
+            "discardHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "deviceName": "RM-RAD-003",
+            "enabled": true,
+            "rollup": "NONE",
+            "purgeOverride": false,
+            "chartRenderer": {
+                "limit": 10,
+                "type": "TABLE"
+            },
+            "xid": "DP_RM-RAD-003_speed",
+            "eventDetectors": [],
+            "textRenderer": {
+                "useUnitAsSuffix": false,
+                "type": "PLAIN",
+                "suffix": ""
+            },
+            "loggingType": "NONE",
+            "overrideIntervalLoggingSamples": false,
+            "defaultCacheSize": 1,
+            "readPermission": "",
+            "setPermission": "",
+            "intervalLoggingPeriodType": "MINUTES",
+            "intervalLoggingSampleWindowSize": 0,
+            "tolerance": 0,
+            "purgeType": "YEARS",
+            "plotType": "STEP",
+            "intervalLoggingPeriod": 15,
+            "discardExtremeValues": false,
+            "tags": {},
+            "unit": "",
+            "pointLocator": {
+                "settable": false,
+                "deviceIdentifier": "Camera 1",
+                "timestampIdentifier": null,
+                "setPointName": "",
+                "dataType": "ALPHANUMERIC",
+                "binary0Value": "",
+                "parameterName": "/infoplate/Speed",
+                "deviceIdentifierKey": "/infoplate/CamName",
+                "includeTimestamp": true
+            },
+            "discardLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "setExtremeHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "name": "speed",
+            "chartColour": "",
+            "preventSetExtremeValues": false,
+            "simplifyType": "NONE"
+        },
+        {
+            "purgePeriod": 1,
+            "setExtremeLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "intervalLoggingType": "AVERAGE",
+            "dataSourceXid": "DS_RAD",
+            "discardHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "deviceName": "RM-RAD-004",
+            "enabled": true,
+            "rollup": "NONE",
+            "purgeOverride": false,
+            "chartRenderer": {
+                "limit": 10,
+                "type": "TABLE"
+            },
+            "xid": "DP_RM-RAD-004_jsonMedidas",
+            "eventDetectors": [],
+            "textRenderer": {
+                "useUnitAsSuffix": false,
+                "type": "PLAIN",
+                "suffix": ""
+            },
+            "loggingType": "ON_CHANGE",
+            "overrideIntervalLoggingSamples": false,
+            "defaultCacheSize": 1,
+            "readPermission": "",
+            "setPermission": "",
+            "intervalLoggingPeriodType": "MINUTES",
+            "intervalLoggingSampleWindowSize": 0,
+            "tolerance": 0,
+            "purgeType": "YEARS",
+            "plotType": "STEP",
+            "intervalLoggingPeriod": 1,
+            "discardExtremeValues": false,
+            "tags": {},
+            "unit": "",
+            "pointLocator": {
+                "contextUpdateEvent": "CONTEXT_CHANGE",
+                "variableName": "my",
+                "executionDelaySeconds": 0,
+                "dataType": "ALPHANUMERIC",
+                "scriptPermissions": [],
+                "updateCronPattern": "",
+                "script": "\nvar rad = [];\n\nvar cam = new Object();\n\ncam.datehour = this['datehour'].value;\ncam.plate = this['plate'].value;\ncam.speed = this['speed'].value;\n\nrad.push(cam);\n\nvar jsonString = JSON.stringify(rad);\n\nLOG.info(\"JSON --> \" + jsonString);\n\nreturn jsonString;",
+                "logCount": 5,
+                "settable": false,
+                "logLevel": "INFO",
+                "updateEvent": "NONE",
+                "context": [
+                    {
+                        "varName": "datehour",
+                        "dataPointXid": "DP_RM-RAD-004_datehour",
+                        "updateContext": true
+                    },
+                    {
+                        "varName": "plate",
+                        "dataPointXid": "DP_RM-RAD-004_plate",
+                        "updateContext": true
+                    },
+                    {
+                        "varName": "speed",
+                        "dataPointXid": "DP_RM-RAD-004_speed",
+                        "updateContext": true
+                    }
+                ],
+                "logSize": 1
+            },
+            "discardLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "setExtremeHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "name": "jsonMedidas",
+            "chartColour": "",
+            "preventSetExtremeValues": false,
+            "simplifyType": "NONE"
+        },
+        {
+            "purgePeriod": 1,
+            "setExtremeLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "intervalLoggingType": "AVERAGE",
+            "dataSourceXid": "DS_status",
+            "discardHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "deviceName": "RM-RAD-004",
+            "enabled": true,
+            "rollup": "NONE",
+            "purgeOverride": false,
+            "chartRenderer": {
+                "numberOfPeriods": 1,
+                "type": "IMAGE",
+                "timePeriodType": "DAYS"
+            },
+            "xid": "DP_RM-RAD-004_status",
+            "eventDetectors": [],
+            "textRenderer": {
+                "useUnitAsSuffix": false,
+                "format": "0.00",
+                "type": "ANALOG",
+                "suffix": ""
+            },
+            "loggingType": "NONE",
+            "overrideIntervalLoggingSamples": false,
+            "defaultCacheSize": 1,
+            "readPermission": "",
+            "setPermission": "",
+            "intervalLoggingPeriodType": "MINUTES",
+            "intervalLoggingSampleWindowSize": 0,
+            "tolerance": 0,
+            "purgeType": "YEARS",
+            "plotType": "SPLINE",
+            "intervalLoggingPeriod": 1,
+            "discardExtremeValues": false,
+            "tags": {},
+            "unit": "",
+            "pointLocator": {
+                "contextUpdateEvent": "CONTEXT_UPDATE",
+                "variableName": "my",
+                "executionDelaySeconds": 0,
+                "dataType": "NUMERIC",
+                "scriptPermissions": [
+                    "superadmin"
+                ],
+                "updateCronPattern": "5 0/1 * * * ?",
+                "script": "\nvar headers = {};\nvar url = 'http://localhost';\nvar result;\nvar parameters = {};\nHttpBuilder.get(url, headers, parameters).resp(function(statusCode, headers, content) { \n  // handle the response, maybe return \"Success!\" or whatever\n  result = statusCode;\n }).err(function(statusCode, headers, content) {\n // handle error responses\n   result = statusCode;\n}).execute();\n\nif(result != -1){\n    return(1.0);\n}else{\n    return(0.0);\n}",
+                "logCount": 5,
+                "settable": false,
+                "logLevel": "INFO",
+                "updateEvent": "CRON",
+                "context": [],
+                "logSize": 1
+            },
+            "discardLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "setExtremeHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "name": "status",
+            "chartColour": "",
+            "preventSetExtremeValues": false,
+            "simplifyType": "NONE"
+        },
+        {
+            "purgePeriod": 1,
+            "setExtremeLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "intervalLoggingType": "INSTANT",
+            "dataSourceXid": "DS_ANPR",
+            "discardHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "deviceName": "RM-RAD-004",
+            "enabled": true,
+            "rollup": "NONE",
+            "purgeOverride": false,
+            "chartRenderer": {
+                "limit": 10,
+                "type": "TABLE"
+            },
+            "xid": "DP_RM-RAD-004_datehour",
+            "eventDetectors": [],
+            "textRenderer": {
+                "useUnitAsSuffix": false,
+                "type": "PLAIN",
+                "suffix": ""
+            },
+            "loggingType": "NONE",
+            "overrideIntervalLoggingSamples": false,
+            "defaultCacheSize": 1,
+            "readPermission": "",
+            "setPermission": "",
+            "intervalLoggingPeriodType": "MINUTES",
+            "intervalLoggingSampleWindowSize": 0,
+            "tolerance": 0,
+            "purgeType": "YEARS",
+            "plotType": "STEP",
+            "intervalLoggingPeriod": 1,
+            "discardExtremeValues": false,
+            "tags": {},
+            "unit": "",
+            "pointLocator": {
+                "settable": false,
+                "deviceIdentifier": "Camera 1",
+                "timestampIdentifier": null,
+                "setPointName": "",
+                "dataType": "ALPHANUMERIC",
+                "binary0Value": "",
+                "parameterName": "/infoplate/DateHour",
+                "deviceIdentifierKey": "/infoplate/CamName",
+                "includeTimestamp": true
+            },
+            "discardLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "setExtremeHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "name": "datehour",
+            "chartColour": "",
+            "preventSetExtremeValues": false,
+            "simplifyType": "NONE"
+        },
+        {
+            "purgePeriod": 1,
+            "setExtremeLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "intervalLoggingType": "INSTANT",
+            "dataSourceXid": "DS_ANPR",
+            "discardHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "deviceName": "RM-RAD-004",
+            "enabled": true,
+            "rollup": "NONE",
+            "purgeOverride": false,
+            "chartRenderer": {
+                "limit": 10,
+                "type": "TABLE"
+            },
+            "xid": "DP_RM-RAD-004_plate",
+            "eventDetectors": [],
+            "textRenderer": {
+                "useUnitAsSuffix": false,
+                "type": "PLAIN",
+                "suffix": ""
+            },
+            "loggingType": "NONE",
+            "overrideIntervalLoggingSamples": false,
+            "defaultCacheSize": 1,
+            "readPermission": "",
+            "setPermission": "",
+            "intervalLoggingPeriodType": "MINUTES",
+            "intervalLoggingSampleWindowSize": 0,
+            "tolerance": 0,
+            "purgeType": "YEARS",
+            "plotType": "STEP",
+            "intervalLoggingPeriod": 15,
+            "discardExtremeValues": false,
+            "tags": {},
+            "unit": "",
+            "pointLocator": {
+                "settable": false,
+                "deviceIdentifier": "Camera 1",
+                "timestampIdentifier": null,
+                "setPointName": "",
+                "dataType": "ALPHANUMERIC",
+                "binary0Value": "",
+                "parameterName": "/infoplate/Plate",
+                "deviceIdentifierKey": "/infoplate/CamName",
+                "includeTimestamp": true
+            },
+            "discardLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "setExtremeHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "name": "plate",
+            "chartColour": "",
+            "preventSetExtremeValues": false,
+            "simplifyType": "NONE"
+        },
+        {
+            "purgePeriod": 1,
+            "setExtremeLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "intervalLoggingType": "AVERAGE",
+            "dataSourceXid": "DS_ANPR_Alarms",
+            "discardHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "deviceName": "RM-RAD-004",
+            "enabled": true,
+            "rollup": "NONE",
+            "purgeOverride": false,
+            "chartRenderer": {
+                "limit": 10,
+                "type": "TABLE"
+            },
+            "xid": "DP_RM-RAD-004_overspeed_alarm",
+            "eventDetectors": [],
+            "textRenderer": {
+                "oneColour": "#00ff00",
+                "zeroColour": "#0000ff",
+                "oneLabel": "one",
+                "type": "BINARY",
+                "zeroLabel": "zero"
+            },
+            "loggingType": "ON_CHANGE",
+            "overrideIntervalLoggingSamples": false,
+            "defaultCacheSize": 1,
+            "readPermission": "",
+            "setPermission": "",
+            "intervalLoggingPeriodType": "MINUTES",
+            "intervalLoggingSampleWindowSize": 0,
+            "tolerance": 0,
+            "purgeType": "YEARS",
+            "plotType": "STEP",
+            "intervalLoggingPeriod": 1,
+            "discardExtremeValues": false,
+            "tags": {},
+            "unit": "",
+            "pointLocator": {
+                "contextUpdateEvent": "CONTEXT_UPDATE",
+                "variableName": "my",
+                "executionDelaySeconds": 0,
+                "dataType": "BINARY",
+                "scriptPermissions": [],
+                "updateCronPattern": "0/10 * * ? * * *",
+                "script": "var actual = new Date(Date.now());\nvar lastupdate = new Date(datehour.value).toUTCString();\n\nLOG.info(\"Date -->\" + actual)\nLOG.info(\"actual -->\" + Date.parse(actual))\nLOG.info(\"lastupdate -->\" + lastupdate)\nLOG.info(\"datehour.value -->\"  +  Date.parse(lastupdate))\nvar difHora = new Date(Date.now()).getTimezoneOffset();\n\nlastupdate = Date.parse(lastupdate) + (difHora*60*1000)\nLOG.info(\"datehour.value -->\" + lastupdate)\nvar diff = Math.abs((Date.parse(actual) - lastupdate) / 1000);\nLOG.info(\"DIFF -->\" + diff)\nreturn diff < 20\n\n\n",
+                "logCount": 5,
+                "settable": true,
+                "logLevel": "INFO",
+                "updateEvent": "CRON",
+                "context": [
+                    {
+                        "varName": "datehour",
+                        "dataPointXid": "DP_RM-RAD-004_datehour",
+                        "updateContext": true
+                    }
+                ],
+                "logSize": 1
+            },
+            "discardLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "setExtremeHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "name": "overspeed_alarm",
+            "chartColour": "",
+            "preventSetExtremeValues": false,
+            "simplifyType": "NONE"
+        },
+        {
+            "purgePeriod": 1,
+            "setExtremeLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "intervalLoggingType": "INSTANT",
+            "dataSourceXid": "DS_ANPR",
+            "discardHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "deviceName": "RM-RAD-004",
+            "enabled": true,
+            "rollup": "NONE",
+            "purgeOverride": false,
+            "chartRenderer": {
+                "limit": 10,
+                "type": "TABLE"
+            },
+            "xid": "DP_RM-RAD-004_speed",
+            "eventDetectors": [],
+            "textRenderer": {
+                "useUnitAsSuffix": false,
+                "type": "PLAIN",
+                "suffix": ""
+            },
+            "loggingType": "NONE",
+            "overrideIntervalLoggingSamples": false,
+            "defaultCacheSize": 1,
+            "readPermission": "",
+            "setPermission": "",
+            "intervalLoggingPeriodType": "MINUTES",
+            "intervalLoggingSampleWindowSize": 0,
+            "tolerance": 0,
+            "purgeType": "YEARS",
+            "plotType": "STEP",
+            "intervalLoggingPeriod": 15,
+            "discardExtremeValues": false,
+            "tags": {},
+            "unit": "",
+            "pointLocator": {
+                "settable": false,
+                "deviceIdentifier": "Camera 1",
+                "timestampIdentifier": null,
+                "setPointName": "",
+                "dataType": "ALPHANUMERIC",
+                "binary0Value": "",
+                "parameterName": "/infoplate/Speed",
+                "deviceIdentifierKey": "/infoplate/CamName",
+                "includeTimestamp": true
+            },
+            "discardLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "setExtremeHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "name": "speed",
+            "chartColour": "",
+            "preventSetExtremeValues": false,
+            "simplifyType": "NONE"
+        },
+        {
+            "purgePeriod": 1,
+            "setExtremeLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "intervalLoggingType": "AVERAGE",
+            "dataSourceXid": "DS_RAD",
+            "discardHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "deviceName": "RM-RAD-005",
+            "enabled": true,
+            "rollup": "NONE",
+            "purgeOverride": false,
+            "chartRenderer": {
+                "limit": 10,
+                "type": "TABLE"
+            },
+            "xid": "DP_RM-RAD-005_jsonMedidas",
+            "eventDetectors": [],
+            "textRenderer": {
+                "useUnitAsSuffix": false,
+                "type": "PLAIN",
+                "suffix": ""
+            },
+            "loggingType": "ON_CHANGE",
+            "overrideIntervalLoggingSamples": false,
+            "defaultCacheSize": 1,
+            "readPermission": "",
+            "setPermission": "",
+            "intervalLoggingPeriodType": "MINUTES",
+            "intervalLoggingSampleWindowSize": 0,
+            "tolerance": 0,
+            "purgeType": "YEARS",
+            "plotType": "STEP",
+            "intervalLoggingPeriod": 1,
+            "discardExtremeValues": false,
+            "tags": {},
+            "unit": "",
+            "pointLocator": {
+                "contextUpdateEvent": "CONTEXT_CHANGE",
+                "variableName": "my",
+                "executionDelaySeconds": 0,
+                "dataType": "ALPHANUMERIC",
+                "scriptPermissions": [],
+                "updateCronPattern": "",
+                "script": "\nvar rad = [];\n\nvar cam = new Object();\n\ncam.datehour = this['datehour'].value;\ncam.plate = this['plate'].value;\ncam.speed = this['speed'].value;\n\nrad.push(cam);\n\nvar jsonString = JSON.stringify(rad);\n\nLOG.info(\"JSON --> \" + jsonString);\n\nreturn jsonString;",
+                "logCount": 5,
+                "settable": false,
+                "logLevel": "INFO",
+                "updateEvent": "NONE",
+                "context": [
+                    {
+                        "varName": "datehour",
+                        "dataPointXid": "DP_RM-RAD-005_datehour",
+                        "updateContext": true
+                    },
+                    {
+                        "varName": "plate",
+                        "dataPointXid": "DP_RM-RAD-005_plate",
+                        "updateContext": true
+                    },
+                    {
+                        "varName": "speed",
+                        "dataPointXid": "DP_RM-RAD-005_speed",
+                        "updateContext": true
+                    }
+                ],
+                "logSize": 1
+            },
+            "discardLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "setExtremeHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "name": "jsonMedidas",
+            "chartColour": "",
+            "preventSetExtremeValues": false,
+            "simplifyType": "NONE"
+        },
+        {
+            "purgePeriod": 1,
+            "setExtremeLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "intervalLoggingType": "AVERAGE",
+            "dataSourceXid": "DS_status",
+            "discardHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "deviceName": "RM-RAD-005",
+            "enabled": true,
+            "rollup": "NONE",
+            "purgeOverride": false,
+            "chartRenderer": {
+                "numberOfPeriods": 1,
+                "type": "IMAGE",
+                "timePeriodType": "DAYS"
+            },
+            "xid": "DP_RM-RAD-005_status",
+            "eventDetectors": [],
+            "textRenderer": {
+                "useUnitAsSuffix": false,
+                "format": "0.00",
+                "type": "ANALOG",
+                "suffix": ""
+            },
+            "loggingType": "NONE",
+            "overrideIntervalLoggingSamples": false,
+            "defaultCacheSize": 1,
+            "readPermission": "",
+            "setPermission": "",
+            "intervalLoggingPeriodType": "MINUTES",
+            "intervalLoggingSampleWindowSize": 0,
+            "tolerance": 0,
+            "purgeType": "YEARS",
+            "plotType": "SPLINE",
+            "intervalLoggingPeriod": 1,
+            "discardExtremeValues": false,
+            "tags": {},
+            "unit": "",
+            "pointLocator": {
+                "contextUpdateEvent": "CONTEXT_UPDATE",
+                "variableName": "my",
+                "executionDelaySeconds": 0,
+                "dataType": "NUMERIC",
+                "scriptPermissions": [
+                    "superadmin"
+                ],
+                "updateCronPattern": "5 0/1 * * * ?",
+                "script": "\nvar headers = {};\nvar url = 'http://localhost';\nvar result;\nvar parameters = {};\nHttpBuilder.get(url, headers, parameters).resp(function(statusCode, headers, content) { \n  // handle the response, maybe return \"Success!\" or whatever\n  result = statusCode;\n }).err(function(statusCode, headers, content) {\n // handle error responses\n   result = statusCode;\n}).execute();\n\nif(result != -1){\n    return(1.0);\n}else{\n    return(0.0);\n}",
+                "logCount": 5,
+                "settable": false,
+                "logLevel": "INFO",
+                "updateEvent": "CRON",
+                "context": [],
+                "logSize": 1
+            },
+            "discardLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "setExtremeHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "name": "status",
+            "chartColour": "",
+            "preventSetExtremeValues": false,
+            "simplifyType": "NONE"
+        },
+        {
+            "purgePeriod": 1,
+            "setExtremeLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "intervalLoggingType": "INSTANT",
+            "dataSourceXid": "DS_ANPR",
+            "discardHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "deviceName": "RM-RAD-005",
+            "enabled": true,
+            "rollup": "NONE",
+            "purgeOverride": false,
+            "chartRenderer": {
+                "limit": 10,
+                "type": "TABLE"
+            },
+            "xid": "DP_RM-RAD-005_datehour",
+            "eventDetectors": [],
+            "textRenderer": {
+                "useUnitAsSuffix": false,
+                "type": "PLAIN",
+                "suffix": ""
+            },
+            "loggingType": "NONE",
+            "overrideIntervalLoggingSamples": false,
+            "defaultCacheSize": 1,
+            "readPermission": "",
+            "setPermission": "",
+            "intervalLoggingPeriodType": "MINUTES",
+            "intervalLoggingSampleWindowSize": 0,
+            "tolerance": 0,
+            "purgeType": "YEARS",
+            "plotType": "STEP",
+            "intervalLoggingPeriod": 1,
+            "discardExtremeValues": false,
+            "tags": {},
+            "unit": "",
+            "pointLocator": {
+                "settable": false,
+                "deviceIdentifier": "Camera 1",
+                "timestampIdentifier": null,
+                "setPointName": "",
+                "dataType": "ALPHANUMERIC",
+                "binary0Value": "",
+                "parameterName": "/infoplate/DateHour",
+                "deviceIdentifierKey": "/infoplate/CamName",
+                "includeTimestamp": true
+            },
+            "discardLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "setExtremeHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "name": "datehour",
+            "chartColour": "",
+            "preventSetExtremeValues": false,
+            "simplifyType": "NONE"
+        },
+        {
+            "purgePeriod": 1,
+            "setExtremeLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "intervalLoggingType": "INSTANT",
+            "dataSourceXid": "DS_ANPR",
+            "discardHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "deviceName": "RM-RAD-005",
+            "enabled": true,
+            "rollup": "NONE",
+            "purgeOverride": false,
+            "chartRenderer": {
+                "limit": 10,
+                "type": "TABLE"
+            },
+            "xid": "DP_RM-RAD-005_plate",
+            "eventDetectors": [],
+            "textRenderer": {
+                "useUnitAsSuffix": false,
+                "type": "PLAIN",
+                "suffix": ""
+            },
+            "loggingType": "NONE",
+            "overrideIntervalLoggingSamples": false,
+            "defaultCacheSize": 1,
+            "readPermission": "",
+            "setPermission": "",
+            "intervalLoggingPeriodType": "MINUTES",
+            "intervalLoggingSampleWindowSize": 0,
+            "tolerance": 0,
+            "purgeType": "YEARS",
+            "plotType": "STEP",
+            "intervalLoggingPeriod": 15,
+            "discardExtremeValues": false,
+            "tags": {},
+            "unit": "",
+            "pointLocator": {
+                "settable": false,
+                "deviceIdentifier": "Camera 1",
+                "timestampIdentifier": null,
+                "setPointName": "",
+                "dataType": "ALPHANUMERIC",
+                "binary0Value": "",
+                "parameterName": "/infoplate/Plate",
+                "deviceIdentifierKey": "/infoplate/CamName",
+                "includeTimestamp": true
+            },
+            "discardLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "setExtremeHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "name": "plate",
+            "chartColour": "",
+            "preventSetExtremeValues": false,
+            "simplifyType": "NONE"
+        },
+        {
+            "purgePeriod": 1,
+            "setExtremeLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "intervalLoggingType": "AVERAGE",
+            "dataSourceXid": "DS_ANPR_Alarms",
+            "discardHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "deviceName": "RM-RAD-005",
+            "enabled": true,
+            "rollup": "NONE",
+            "purgeOverride": false,
+            "chartRenderer": {
+                "limit": 10,
+                "type": "TABLE"
+            },
+            "xid": "DP_RM-RAD-005_overspeed_alarm",
+            "eventDetectors": [],
+            "textRenderer": {
+                "oneColour": "#00ff00",
+                "zeroColour": "#0000ff",
+                "oneLabel": "one",
+                "type": "BINARY",
+                "zeroLabel": "zero"
+            },
+            "loggingType": "ON_CHANGE",
+            "overrideIntervalLoggingSamples": false,
+            "defaultCacheSize": 1,
+            "readPermission": "",
+            "setPermission": "",
+            "intervalLoggingPeriodType": "MINUTES",
+            "intervalLoggingSampleWindowSize": 0,
+            "tolerance": 0,
+            "purgeType": "YEARS",
+            "plotType": "STEP",
+            "intervalLoggingPeriod": 1,
+            "discardExtremeValues": false,
+            "tags": {},
+            "unit": "",
+            "pointLocator": {
+                "contextUpdateEvent": "CONTEXT_UPDATE",
+                "variableName": "my",
+                "executionDelaySeconds": 0,
+                "dataType": "BINARY",
+                "scriptPermissions": [],
+                "updateCronPattern": "0/10 * * ? * * *",
+                "script": "var actual = new Date(Date.now());\nvar lastupdate = new Date(datehour.value).toUTCString();\n\nLOG.info(\"Date -->\" + actual)\nLOG.info(\"actual -->\" + Date.parse(actual))\nLOG.info(\"lastupdate -->\" + lastupdate)\nLOG.info(\"datehour.value -->\"  +  Date.parse(lastupdate))\nvar difHora = new Date(Date.now()).getTimezoneOffset();\n\nlastupdate = Date.parse(lastupdate) + (difHora*60*1000)\nLOG.info(\"datehour.value -->\" + lastupdate)\nvar diff = Math.abs((Date.parse(actual) - lastupdate) / 1000);\nLOG.info(\"DIFF -->\" + diff)\nreturn diff < 20\n\n\n",
+                "logCount": 5,
+                "settable": true,
+                "logLevel": "INFO",
+                "updateEvent": "CRON",
+                "context": [
+                    {
+                        "varName": "datehour",
+                        "dataPointXid": "DP_RM-RAD-005_datehour",
+                        "updateContext": true
+                    }
+                ],
+                "logSize": 1
+            },
+            "discardLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "setExtremeHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "name": "overspeed_alarm",
+            "chartColour": "",
+            "preventSetExtremeValues": false,
+            "simplifyType": "NONE"
+        },
+        {
+            "purgePeriod": 1,
+            "setExtremeLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "intervalLoggingType": "INSTANT",
+            "dataSourceXid": "DS_ANPR",
+            "discardHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "deviceName": "RM-RAD-005",
+            "enabled": true,
+            "rollup": "NONE",
+            "purgeOverride": false,
+            "chartRenderer": {
+                "limit": 10,
+                "type": "TABLE"
+            },
+            "xid": "DP_RM-RAD-005_speed",
+            "eventDetectors": [],
+            "textRenderer": {
+                "useUnitAsSuffix": false,
+                "type": "PLAIN",
+                "suffix": ""
+            },
+            "loggingType": "NONE",
+            "overrideIntervalLoggingSamples": false,
+            "defaultCacheSize": 1,
+            "readPermission": "",
+            "setPermission": "",
+            "intervalLoggingPeriodType": "MINUTES",
+            "intervalLoggingSampleWindowSize": 0,
+            "tolerance": 0,
+            "purgeType": "YEARS",
+            "plotType": "STEP",
+            "intervalLoggingPeriod": 15,
+            "discardExtremeValues": false,
+            "tags": {},
+            "unit": "",
+            "pointLocator": {
+                "settable": false,
+                "deviceIdentifier": "Camera 1",
+                "timestampIdentifier": null,
+                "setPointName": "",
+                "dataType": "ALPHANUMERIC",
+                "binary0Value": "",
+                "parameterName": "/infoplate/Speed",
+                "deviceIdentifierKey": "/infoplate/CamName",
+                "includeTimestamp": true
+            },
+            "discardLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "setExtremeHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "name": "speed",
+            "chartColour": "",
+            "preventSetExtremeValues": false,
+            "simplifyType": "NONE"
+        },
+        {
+            "purgePeriod": 1,
+            "setExtremeLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "intervalLoggingType": "AVERAGE",
+            "dataSourceXid": "DS_RAD",
+            "discardHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "deviceName": "RM-RAD-006",
+            "enabled": true,
+            "rollup": "NONE",
+            "purgeOverride": false,
+            "chartRenderer": {
+                "limit": 10,
+                "type": "TABLE"
+            },
+            "xid": "DP_RM-RAD-006_jsonMedidas",
+            "eventDetectors": [],
+            "textRenderer": {
+                "useUnitAsSuffix": false,
+                "type": "PLAIN",
+                "suffix": ""
+            },
+            "loggingType": "ON_CHANGE",
+            "overrideIntervalLoggingSamples": false,
+            "defaultCacheSize": 1,
+            "readPermission": "",
+            "setPermission": "",
+            "intervalLoggingPeriodType": "MINUTES",
+            "intervalLoggingSampleWindowSize": 0,
+            "tolerance": 0,
+            "purgeType": "YEARS",
+            "plotType": "STEP",
+            "intervalLoggingPeriod": 1,
+            "discardExtremeValues": false,
+            "tags": {},
+            "unit": "",
+            "pointLocator": {
+                "contextUpdateEvent": "CONTEXT_CHANGE",
+                "variableName": "my",
+                "executionDelaySeconds": 0,
+                "dataType": "ALPHANUMERIC",
+                "scriptPermissions": [],
+                "updateCronPattern": "",
+                "script": "\nvar rad = [];\n\nvar cam = new Object();\n\ncam.datehour = this['datehour'].value;\ncam.plate = this['plate'].value;\ncam.speed = this['speed'].value;\n\nrad.push(cam);\n\nvar jsonString = JSON.stringify(rad);\n\nLOG.info(\"JSON --> \" + jsonString);\n\nreturn jsonString;",
+                "logCount": 5,
+                "settable": false,
+                "logLevel": "INFO",
+                "updateEvent": "NONE",
+                "context": [
+                    {
+                        "varName": "datehour",
+                        "dataPointXid": "DP_RM-RAD-006_datehour",
+                        "updateContext": true
+                    },
+                    {
+                        "varName": "plate",
+                        "dataPointXid": "DP_RM-RAD-006_plate",
+                        "updateContext": true
+                    },
+                    {
+                        "varName": "speed",
+                        "dataPointXid": "DP_RM-RAD-006_speed",
+                        "updateContext": true
+                    }
+                ],
+                "logSize": 1
+            },
+            "discardLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "setExtremeHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "name": "jsonMedidas",
+            "chartColour": "",
+            "preventSetExtremeValues": false,
+            "simplifyType": "NONE"
+        },
+        {
+            "purgePeriod": 1,
+            "setExtremeLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "intervalLoggingType": "AVERAGE",
+            "dataSourceXid": "DS_status",
+            "discardHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "deviceName": "RM-RAD-006",
+            "enabled": true,
+            "rollup": "NONE",
+            "purgeOverride": false,
+            "chartRenderer": {
+                "numberOfPeriods": 1,
+                "type": "IMAGE",
+                "timePeriodType": "DAYS"
+            },
+            "xid": "DP_RM-RAD-006_status",
+            "eventDetectors": [],
+            "textRenderer": {
+                "useUnitAsSuffix": false,
+                "format": "0.00",
+                "type": "ANALOG",
+                "suffix": ""
+            },
+            "loggingType": "NONE",
+            "overrideIntervalLoggingSamples": false,
+            "defaultCacheSize": 1,
+            "readPermission": "",
+            "setPermission": "",
+            "intervalLoggingPeriodType": "MINUTES",
+            "intervalLoggingSampleWindowSize": 0,
+            "tolerance": 0,
+            "purgeType": "YEARS",
+            "plotType": "SPLINE",
+            "intervalLoggingPeriod": 1,
+            "discardExtremeValues": false,
+            "tags": {},
+            "unit": "",
+            "pointLocator": {
+                "contextUpdateEvent": "CONTEXT_UPDATE",
+                "variableName": "my",
+                "executionDelaySeconds": 0,
+                "dataType": "NUMERIC",
+                "scriptPermissions": [
+                    "superadmin"
+                ],
+                "updateCronPattern": "5 0/1 * * * ?",
+                "script": "\nvar headers = {};\nvar url = 'http://localhost';\nvar result;\nvar parameters = {};\nHttpBuilder.get(url, headers, parameters).resp(function(statusCode, headers, content) { \n  // handle the response, maybe return \"Success!\" or whatever\n  result = statusCode;\n }).err(function(statusCode, headers, content) {\n // handle error responses\n   result = statusCode;\n}).execute();\n\nif(result != -1){\n    return(1.0);\n}else{\n    return(0.0);\n}",
+                "logCount": 5,
+                "settable": false,
+                "logLevel": "INFO",
+                "updateEvent": "CRON",
+                "context": [],
+                "logSize": 1
+            },
+            "discardLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "setExtremeHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "name": "status",
+            "chartColour": "",
+            "preventSetExtremeValues": false,
+            "simplifyType": "NONE"
+        },
+        {
+            "purgePeriod": 1,
+            "setExtremeLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "intervalLoggingType": "INSTANT",
+            "dataSourceXid": "DS_ANPR",
+            "discardHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "deviceName": "RM-RAD-006",
+            "enabled": true,
+            "rollup": "NONE",
+            "purgeOverride": false,
+            "chartRenderer": {
+                "limit": 10,
+                "type": "TABLE"
+            },
+            "xid": "DP_RM-RAD-006_datehour",
+            "eventDetectors": [],
+            "textRenderer": {
+                "useUnitAsSuffix": false,
+                "type": "PLAIN",
+                "suffix": ""
+            },
+            "loggingType": "NONE",
+            "overrideIntervalLoggingSamples": false,
+            "defaultCacheSize": 1,
+            "readPermission": "",
+            "setPermission": "",
+            "intervalLoggingPeriodType": "MINUTES",
+            "intervalLoggingSampleWindowSize": 0,
+            "tolerance": 0,
+            "purgeType": "YEARS",
+            "plotType": "STEP",
+            "intervalLoggingPeriod": 1,
+            "discardExtremeValues": false,
+            "tags": {},
+            "unit": "",
+            "pointLocator": {
+                "settable": false,
+                "deviceIdentifier": "Camera 1",
+                "timestampIdentifier": null,
+                "setPointName": "",
+                "dataType": "ALPHANUMERIC",
+                "binary0Value": "",
+                "parameterName": "/infoplate/DateHour",
+                "deviceIdentifierKey": "/infoplate/CamName",
+                "includeTimestamp": true
+            },
+            "discardLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "setExtremeHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "name": "datehour",
+            "chartColour": "",
+            "preventSetExtremeValues": false,
+            "simplifyType": "NONE"
+        },
+        {
+            "purgePeriod": 1,
+            "setExtremeLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "intervalLoggingType": "INSTANT",
+            "dataSourceXid": "DS_ANPR",
+            "discardHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "deviceName": "RM-RAD-006",
+            "enabled": true,
+            "rollup": "NONE",
+            "purgeOverride": false,
+            "chartRenderer": {
+                "limit": 10,
+                "type": "TABLE"
+            },
+            "xid": "DP_RM-RAD-006_plate",
+            "eventDetectors": [],
+            "textRenderer": {
+                "useUnitAsSuffix": false,
+                "type": "PLAIN",
+                "suffix": ""
+            },
+            "loggingType": "NONE",
+            "overrideIntervalLoggingSamples": false,
+            "defaultCacheSize": 1,
+            "readPermission": "",
+            "setPermission": "",
+            "intervalLoggingPeriodType": "MINUTES",
+            "intervalLoggingSampleWindowSize": 0,
+            "tolerance": 0,
+            "purgeType": "YEARS",
+            "plotType": "STEP",
+            "intervalLoggingPeriod": 15,
+            "discardExtremeValues": false,
+            "tags": {},
+            "unit": "",
+            "pointLocator": {
+                "settable": false,
+                "deviceIdentifier": "Camera 1",
+                "timestampIdentifier": null,
+                "setPointName": "",
+                "dataType": "ALPHANUMERIC",
+                "binary0Value": "",
+                "parameterName": "/infoplate/Plate",
+                "deviceIdentifierKey": "/infoplate/CamName",
+                "includeTimestamp": true
+            },
+            "discardLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "setExtremeHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "name": "plate",
+            "chartColour": "",
+            "preventSetExtremeValues": false,
+            "simplifyType": "NONE"
+        },
+        {
+            "purgePeriod": 1,
+            "setExtremeLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "intervalLoggingType": "AVERAGE",
+            "dataSourceXid": "DS_ANPR_Alarms",
+            "discardHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "deviceName": "RM-RAD-006",
+            "enabled": true,
+            "rollup": "NONE",
+            "purgeOverride": false,
+            "chartRenderer": {
+                "limit": 10,
+                "type": "TABLE"
+            },
+            "xid": "DP_RM-RAD-006_overspeed_alarm",
+            "eventDetectors": [],
+            "textRenderer": {
+                "oneColour": "#00ff00",
+                "zeroColour": "#0000ff",
+                "oneLabel": "one",
+                "type": "BINARY",
+                "zeroLabel": "zero"
+            },
+            "loggingType": "ON_CHANGE",
+            "overrideIntervalLoggingSamples": false,
+            "defaultCacheSize": 1,
+            "readPermission": "",
+            "setPermission": "",
+            "intervalLoggingPeriodType": "MINUTES",
+            "intervalLoggingSampleWindowSize": 0,
+            "tolerance": 0,
+            "purgeType": "YEARS",
+            "plotType": "STEP",
+            "intervalLoggingPeriod": 1,
+            "discardExtremeValues": false,
+            "tags": {},
+            "unit": "",
+            "pointLocator": {
+                "contextUpdateEvent": "CONTEXT_UPDATE",
+                "variableName": "my",
+                "executionDelaySeconds": 0,
+                "dataType": "BINARY",
+                "scriptPermissions": [],
+                "updateCronPattern": "0/10 * * ? * * *",
+                "script": "var actual = new Date(Date.now());\nvar lastupdate = new Date(datehour.value).toUTCString();\n\nLOG.info(\"Date -->\" + actual)\nLOG.info(\"actual -->\" + Date.parse(actual))\nLOG.info(\"lastupdate -->\" + lastupdate)\nLOG.info(\"datehour.value -->\"  +  Date.parse(lastupdate))\nvar difHora = new Date(Date.now()).getTimezoneOffset();\n\nlastupdate = Date.parse(lastupdate) + (difHora*60*1000)\nLOG.info(\"datehour.value -->\" + lastupdate)\nvar diff = Math.abs((Date.parse(actual) - lastupdate) / 1000);\nLOG.info(\"DIFF -->\" + diff)\nreturn diff < 20\n\n\n",
+                "logCount": 5,
+                "settable": true,
+                "logLevel": "INFO",
+                "updateEvent": "CRON",
+                "context": [
+                    {
+                        "varName": "datehour",
+                        "dataPointXid": "DP_RM-RAD-006_datehour",
+                        "updateContext": true
+                    }
+                ],
+                "logSize": 1
+            },
+            "discardLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "setExtremeHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "name": "overspeed_alarm",
+            "chartColour": "",
+            "preventSetExtremeValues": false,
+            "simplifyType": "NONE"
+        },
+        {
+            "purgePeriod": 1,
+            "setExtremeLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "intervalLoggingType": "INSTANT",
+            "dataSourceXid": "DS_ANPR",
+            "discardHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "deviceName": "RM-RAD-006",
+            "enabled": true,
+            "rollup": "NONE",
+            "purgeOverride": false,
+            "chartRenderer": {
+                "limit": 10,
+                "type": "TABLE"
+            },
+            "xid": "DP_RM-RAD-006_speed",
+            "eventDetectors": [],
+            "textRenderer": {
+                "useUnitAsSuffix": false,
+                "type": "PLAIN",
+                "suffix": ""
+            },
+            "loggingType": "NONE",
+            "overrideIntervalLoggingSamples": false,
+            "defaultCacheSize": 1,
+            "readPermission": "",
+            "setPermission": "",
+            "intervalLoggingPeriodType": "MINUTES",
+            "intervalLoggingSampleWindowSize": 0,
+            "tolerance": 0,
+            "purgeType": "YEARS",
+            "plotType": "STEP",
+            "intervalLoggingPeriod": 15,
+            "discardExtremeValues": false,
+            "tags": {},
+            "unit": "",
+            "pointLocator": {
+                "settable": false,
+                "deviceIdentifier": "Camera 1",
+                "timestampIdentifier": null,
+                "setPointName": "",
+                "dataType": "ALPHANUMERIC",
+                "binary0Value": "",
+                "parameterName": "/infoplate/Speed",
+                "deviceIdentifierKey": "/infoplate/CamName",
+                "includeTimestamp": true
+            },
+            "discardLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "setExtremeHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "name": "speed",
+            "chartColour": "",
+            "preventSetExtremeValues": false,
+            "simplifyType": "NONE"
+        },
+        {
+            "purgePeriod": 1,
+            "setExtremeLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "intervalLoggingType": "AVERAGE",
+            "dataSourceXid": "DS_status_calcular",
+            "discardHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "deviceName": "CAMERA_SANCTIONATING",
+            "enabled": true,
+            "rollup": "NONE",
+            "purgeOverride": false,
+            "chartRenderer": {
+                "numberOfPeriods": 1,
+                "type": "IMAGE",
+                "timePeriodType": "DAYS"
+            },
+            "xid": "DP_CAMERA_SANCTIONATING_status_calcular",
+            "eventDetectors": [],
+            "textRenderer": {
+                "useUnitAsSuffix": false,
+                "format": "0.00",
+                "type": "ANALOG",
+                "suffix": ""
+            },
+            "loggingType": "INTERVAL",
+            "overrideIntervalLoggingSamples": false,
+            "defaultCacheSize": 1,
+            "readPermission": "",
+            "setPermission": "",
+            "intervalLoggingPeriodType": "MINUTES",
+            "intervalLoggingSampleWindowSize": 0,
+            "tolerance": 0,
+            "purgeType": "YEARS",
+            "plotType": "SPLINE",
+            "intervalLoggingPeriod": 1,
+            "discardExtremeValues": false,
+            "tags": {},
+            "unit": "",
+            "pointLocator": {
+                "contextUpdateEvent": "CONTEXT_UPDATE",
+                "variableName": "my",
+                "executionDelaySeconds": 0,
+                "dataType": "NUMERIC",
+                "scriptPermissions": [
+                    "superadmin"
+                ],
+                "updateCronPattern": "50 * * * * ?",
+                "script": "time_polling_min = 1;\ntime_polling_seg = time_polling_min * 60;\ntime_polling_ms = time_polling_seg * 1000;\n\ntry{\n    if(measure001.time == null){\n        status001.set(0.0);\n    } else{\n        if(Date.now() - measure001.time > time_polling_ms){\n            status001.set(0.0);\n        } else{\n            status001.set(1.0);\n        }\n    }\n} catch(e){\n   status001.set(0.0);\n}\n\ntry{\n    if(measure002.time == null){\n        status002.set(0.0);\n    } else{\n        if(Date.now() - measure002.time > time_polling_ms){\n            status002.set(0.0);\n        } else{\n            status002.set(1.0);\n        }\n    }\n} catch(e){\n   status002.set(0.0);\n}\n\ntry{\n    if(measure003.time == null){\n        status003.set(0.0);\n    } else{\n        if(Date.now() - measure003.time > time_polling_ms){\n            status003.set(0.0);\n        } else{\n            status003.set(1.0);\n        }\n    }\n} catch(e){\n   status003.set(0.0);\n}\n\ntry{\n    if(measure004.time == null){\n        status004.set(0.0);\n    } else{\n        if(Date.now() - measure004.time > time_polling_ms){\n            status004.set(0.0);\n        } else{\n            status004.set(1.0);\n        }\n    }\n} catch(e){\n   status004.set(0.0);\n}\n\ntry{\n    if(measure005.time == null){\n        status005.set(0.0);\n    } else{\n        if(Date.now() - measure005.time > time_polling_ms){\n            status005.set(0.0);\n        } else{\n            status005.set(1.0);\n        }\n    }\n} catch(e){\n   status005.set(0.0);\n}\n\ntry{\n    if(measure006.time == null){\n        status006.set(0.0);\n    } else{\n        if(Date.now() - measure006.time > time_polling_ms){\n            status006.set(0.0);\n        } else{\n            status006.set(1.0);\n        }\n    }\n} catch(e){\n   status006.set(0.0);\n}\n\nreturn 1",
+                "logCount": 5,
+                "settable": false,
+                "logLevel": "NONE",
+                "updateEvent": "CRON",
+                "context": [
+                    {
+                        "varName": "status001",
+                        "dataPointXid": "DP_RM-RAD-001_status",
+                        "updateContext": false
+                    },
+                    {
+                        "varName": "measure001",
+                        "dataPointXid": "DP_RM-RAD-001_jsonMedidas",
+                        "updateContext": false
+                    },
+                    {
+                        "varName": "status002",
+                        "dataPointXid": "DP_RM-RAD-002_status",
+                        "updateContext": false
+                    },
+                    {
+                        "varName": "measure002",
+                        "dataPointXid": "DP_RM-RAD-002_jsonMedidas",
+                        "updateContext": false
+                    },
+                    {
+                        "varName": "status003",
+                        "dataPointXid": "DP_RM-RAD-003_status",
+                        "updateContext": false
+                    },
+                    {
+                        "varName": "measure003",
+                        "dataPointXid": "DP_RM-RAD-003_jsonMedidas",
+                        "updateContext": false
+                    },
+                    {
+                        "varName": "status004",
+                        "dataPointXid": "DP_RM-RAD-004_status",
+                        "updateContext": false
+                    },
+                    {
+                        "varName": "measure004",
+                        "dataPointXid": "DP_RM-RAD-004_jsonMedidas",
+                        "updateContext": false
+                    },
+                    {
+                        "varName": "status005",
+                        "dataPointXid": "DP_RM-RAD-005_status",
+                        "updateContext": false
+                    },
+                    {
+                        "varName": "measure005",
+                        "dataPointXid": "DP_RM-RAD-005_jsonMedidas",
+                        "updateContext": false
+                    },
+                    {
+                        "varName": "status006",
+                        "dataPointXid": "DP_RM-RAD-006_status",
+                        "updateContext": false
+                    },
+                    {
+                        "varName": "measure006",
+                        "dataPointXid": "DP_RM-RAD-006_jsonMedidas",
+                        "updateContext": false
+                    }
+                ],
+                "logSize": 1
+            },
+            "discardLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "setExtremeHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+            "name": "status_calcular",
+            "chartColour": "",
+            "preventSetExtremeValues": false,
+            "simplifyType": "NONE"
+        }
+    ],
+    "publishers": [
+        {
+            "publishAttributeChanges": true,
+            "cacheWarningSize": 100,
+            "dateFormat": "DATE_FORMAT_UTC",
+            "useJSON": true,
+            "snapshotSendPeriods": 5,
+            "raiseResultWarning": false,
+            "staticParameters": [],
+            "sendSnapshot": false,
+            "type": "HTTP_SENDER",
+            "usePost": true,
+            "enabled": true,
+            "url": "http://10.140.31.20:3000/api/v2/generic/",
+            "points": [
+                {
+                    "dataPointId": "DP_RM-RAD-001_overspeed_alarm",
+                    "parameterName": "overspeed_alarm",
+                    "includeTimestamp": false
+                },
+                {
+                    "dataPointId": "DP_RM-RAD-001_status",
+                    "parameterName": "status",
+                    "includeTimestamp": false
+                },
+                {
+                    "dataPointId": "DP_RM-RAD-001_jsonMedidas",
+                    "parameterName": "jsonMedidas",
+                    "includeTimestamp": false
+                }
+            ],
+            "xid": "PUB_RM-RAD-001",
+            "publishType": "ALL",
+            "alarmLevels": {
+                "POINT_DISABLED_EVENT": "DO_NOT_LOG",
+                "RESULT_WARNINGS_EVENT": "DO_NOT_LOG",
+                "SEND_EXCEPTION_EVENT": "DO_NOT_LOG",
+                "QUEUE_SIZE_WARNING_EVENT": "DO_NOT_LOG"
+            },
+            "staticHeaders": [
+                {
+                    "value": "RM-RAD-001",
+                    "key": "session-uid"
+                }
+            ],
+            "name": "RM-RAD-001",
+            "snapshotSendPeriodType": "MINUTES",
+            "cacheDiscardSize": 1000
+        },
+        {
+            "publishAttributeChanges": true,
+            "cacheWarningSize": 100,
+            "dateFormat": "DATE_FORMAT_UTC",
+            "useJSON": true,
+            "snapshotSendPeriods": 5,
+            "raiseResultWarning": false,
+            "staticParameters": [],
+            "sendSnapshot": false,
+            "type": "HTTP_SENDER",
+            "usePost": true,
+            "enabled": true,
+            "url": "http://10.140.31.20:3000/api/v2/generic/",
+            "points": [
+                {
+                    "dataPointId": "DP_RM-RAD-002_overspeed_alarm",
+                    "parameterName": "overspeed_alarm",
+                    "includeTimestamp": false
+                },
+                {
+                    "dataPointId": "DP_RM-RAD-002_status",
+                    "parameterName": "status",
+                    "includeTimestamp": false
+                },
+                {
+                    "dataPointId": "DP_RM-RAD-002_jsonMedidas",
+                    "parameterName": "jsonMedidas",
+                    "includeTimestamp": false
+                }
+            ],
+            "xid": "PUB_RM-RAD-002",
+            "publishType": "ALL",
+            "alarmLevels": {
+                "POINT_DISABLED_EVENT": "DO_NOT_LOG",
+                "RESULT_WARNINGS_EVENT": "DO_NOT_LOG",
+                "SEND_EXCEPTION_EVENT": "DO_NOT_LOG",
+                "QUEUE_SIZE_WARNING_EVENT": "DO_NOT_LOG"
+            },
+            "staticHeaders": [
+                {
+                    "value": "RM-RAD-002",
+                    "key": "session-uid"
+                }
+            ],
+            "name": "RM-RAD-002",
+            "snapshotSendPeriodType": "MINUTES",
+            "cacheDiscardSize": 1000
+        },
+        {
+            "publishAttributeChanges": true,
+            "cacheWarningSize": 100,
+            "dateFormat": "DATE_FORMAT_UTC",
+            "useJSON": true,
+            "snapshotSendPeriods": 5,
+            "raiseResultWarning": false,
+            "staticParameters": [],
+            "sendSnapshot": false,
+            "type": "HTTP_SENDER",
+            "usePost": true,
+            "enabled": true,
+            "url": "http://10.140.31.20:3000/api/v2/generic/",
+            "points": [
+                {
+                    "dataPointId": "DP_RM-RAD-003_overspeed_alarm",
+                    "parameterName": "overspeed_alarm",
+                    "includeTimestamp": false
+                },
+                {
+                    "dataPointId": "DP_RM-RAD-003_status",
+                    "parameterName": "status",
+                    "includeTimestamp": false
+                },
+                {
+                    "dataPointId": "DP_RM-RAD-003_jsonMedidas",
+                    "parameterName": "jsonMedidas",
+                    "includeTimestamp": false
+                }
+            ],
+            "xid": "PUB_RM-RAD-003",
+            "publishType": "ALL",
+            "alarmLevels": {
+                "POINT_DISABLED_EVENT": "DO_NOT_LOG",
+                "RESULT_WARNINGS_EVENT": "DO_NOT_LOG",
+                "SEND_EXCEPTION_EVENT": "DO_NOT_LOG",
+                "QUEUE_SIZE_WARNING_EVENT": "DO_NOT_LOG"
+            },
+            "staticHeaders": [
+                {
+                    "value": "RM-RAD-003",
+                    "key": "session-uid"
+                }
+            ],
+            "name": "RM-RAD-003",
+            "snapshotSendPeriodType": "MINUTES",
+            "cacheDiscardSize": 1000
+        },
+        {
+            "publishAttributeChanges": true,
+            "cacheWarningSize": 100,
+            "dateFormat": "DATE_FORMAT_UTC",
+            "useJSON": true,
+            "snapshotSendPeriods": 5,
+            "raiseResultWarning": false,
+            "staticParameters": [],
+            "sendSnapshot": false,
+            "type": "HTTP_SENDER",
+            "usePost": true,
+            "enabled": true,
+            "url": "http://10.140.31.20:3000/api/v2/generic/",
+            "points": [
+                {
+                    "dataPointId": "DP_RM-RAD-004_overspeed_alarm",
+                    "parameterName": "overspeed_alarm",
+                    "includeTimestamp": false
+                },
+                {
+                    "dataPointId": "DP_RM-RAD-004_status",
+                    "parameterName": "status",
+                    "includeTimestamp": false
+                },
+                {
+                    "dataPointId": "DP_RM-RAD-004_jsonMedidas",
+                    "parameterName": "jsonMedidas",
+                    "includeTimestamp": false
+                }
+            ],
+            "xid": "PUB_RM-RAD-004",
+            "publishType": "ALL",
+            "alarmLevels": {
+                "POINT_DISABLED_EVENT": "DO_NOT_LOG",
+                "RESULT_WARNINGS_EVENT": "DO_NOT_LOG",
+                "SEND_EXCEPTION_EVENT": "DO_NOT_LOG",
+                "QUEUE_SIZE_WARNING_EVENT": "DO_NOT_LOG"
+            },
+            "staticHeaders": [
+                {
+                    "value": "RM-RAD-004",
+                    "key": "session-uid"
+                }
+            ],
+            "name": "RM-RAD-004",
+            "snapshotSendPeriodType": "MINUTES",
+            "cacheDiscardSize": 1000
+        },
+        {
+            "publishAttributeChanges": true,
+            "cacheWarningSize": 100,
+            "dateFormat": "DATE_FORMAT_UTC",
+            "useJSON": true,
+            "snapshotSendPeriods": 5,
+            "raiseResultWarning": false,
+            "staticParameters": [],
+            "sendSnapshot": false,
+            "type": "HTTP_SENDER",
+            "usePost": true,
+            "enabled": true,
+            "url": "http://10.140.31.20:3000/api/v2/generic/",
+            "points": [
+                {
+                    "dataPointId": "DP_RM-RAD-005_overspeed_alarm",
+                    "parameterName": "overspeed_alarm",
+                    "includeTimestamp": false
+                },
+                {
+                    "dataPointId": "DP_RM-RAD-005_status",
+                    "parameterName": "status",
+                    "includeTimestamp": false
+                },
+                {
+                    "dataPointId": "DP_RM-RAD-005_jsonMedidas",
+                    "parameterName": "jsonMedidas",
+                    "includeTimestamp": false
+                }
+            ],
+            "xid": "PUB_RM-RAD-005",
+            "publishType": "ALL",
+            "alarmLevels": {
+                "POINT_DISABLED_EVENT": "DO_NOT_LOG",
+                "RESULT_WARNINGS_EVENT": "DO_NOT_LOG",
+                "SEND_EXCEPTION_EVENT": "DO_NOT_LOG",
+                "QUEUE_SIZE_WARNING_EVENT": "DO_NOT_LOG"
+            },
+            "staticHeaders": [
+                {
+                    "value": "RM-RAD-005",
+                    "key": "session-uid"
+                }
+            ],
+            "name": "RM-RAD-005",
+            "snapshotSendPeriodType": "MINUTES",
+            "cacheDiscardSize": 1000
+        },
+        {
+            "publishAttributeChanges": true,
+            "cacheWarningSize": 100,
+            "dateFormat": "DATE_FORMAT_UTC",
+            "useJSON": true,
+            "snapshotSendPeriods": 5,
+            "raiseResultWarning": false,
+            "staticParameters": [],
+            "sendSnapshot": false,
+            "type": "HTTP_SENDER",
+            "usePost": true,
+            "enabled": true,
+            "url": "http://10.140.31.20:3000/api/v2/generic/",
+            "points": [
+                {
+                    "dataPointId": "DP_RM-RAD-006_overspeed_alarm",
+                    "parameterName": "overspeed_alarm",
+                    "includeTimestamp": false
+                },
+                {
+                    "dataPointId": "DP_RM-RAD-006_status",
+                    "parameterName": "status",
+                    "includeTimestamp": false
+                },
+                {
+                    "dataPointId": "DP_RM-RAD-006_jsonMedidas",
+                    "parameterName": "jsonMedidas",
+                    "includeTimestamp": false
+                }
+            ],
+            "xid": "PUB_RM-RAD-006",
+            "publishType": "ALL",
+            "alarmLevels": {
+                "POINT_DISABLED_EVENT": "DO_NOT_LOG",
+                "RESULT_WARNINGS_EVENT": "DO_NOT_LOG",
+                "SEND_EXCEPTION_EVENT": "DO_NOT_LOG",
+                "QUEUE_SIZE_WARNING_EVENT": "DO_NOT_LOG"
+            },
+            "staticHeaders": [
+                {
+                    "value": "RM-RAD-006",
+                    "key": "session-uid"
+                }
+            ],
+            "name": "RM-RAD-006",
+            "snapshotSendPeriodType": "MINUTES",
+            "cacheDiscardSize": 1000
+        }
+    ]
+}

@@ -1,0 +1,31 @@
+{
+	"module": {
+		"user": {
+			"id": 1011,
+			"viewIncidentPermission": "SystemPermission:12",
+			"action": {
+				"settings": 101105,
+				"changePassword": 101105
+			}
+		},
+		"alarm": {
+			"id": 1008,
+			"action": {
+				"recognizeAll": 100802
+			}
+		},
+		"alarmMonitor": {
+			"id": 1005
+		},
+		"incidentReportModule": {
+			"id": 1003
+		},
+		"auditLogs": {
+			"id": 1006
+		},
+		"signalingQueues": {
+			"id": 1039
+		}
+	},
+	"keepAliveSecs": 60
+}

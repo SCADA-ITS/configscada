@@ -1,0 +1,58 @@
+{
+  id
+  alias
+  description
+  labelAlias
+  labelDescription
+  maintenanceState {
+    id
+  }
+  initialState {
+    id
+  }
+  elementTypeStates {
+    id
+    alias
+    description
+    labelAlias
+    labelDescription
+  }
+  elementTypeParams {
+    id
+    labelAlias
+    labelDescription
+    alias
+    dataType {
+      id
+      labelAlias
+    }
+    labelUnit
+    threshold1
+    threshold2
+    paramType {
+      id
+    }
+  }
+  elementSubtypes {
+    id
+    alias
+    description
+    labelAlias
+    labelDescription
+  }
+  commandElementTypes {
+    id
+    alias
+    description
+    labelAlias
+    labelDescription
+  }
+  priorities {
+    id
+    alias
+    labelAlias
+    labelDescription
+    priority
+    defaultPriority
+  }
+}

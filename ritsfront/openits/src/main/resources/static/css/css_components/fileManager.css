@@ -1,0 +1,35 @@
+.file-manager-photo {
+	display: inline-block;
+	width: 42px;
+	height: 42px;
+	float: left;
+	padding-top: 7px;
+}
+
+.file-manager-first-line {
+	font-size: 14px;
+	letter-spacing: 0.2px;
+	color: #313131;
+	font-weight: 500;
+	line-height: 20px;
+	display: block;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	padding-left: 10px;
+    padding-top: 10px;
+}
+
+.file-manager-second-line {
+	color: var(--blue-mid);
+	display: block;
+	letter-spacing: 0.2px;
+	line-height: 20px;
+	font-size: 13px;
+	font-weight: 300;
+	max-width:500px;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	padding-left: 10px;
+}

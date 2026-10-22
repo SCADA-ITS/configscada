@@ -1,0 +1,110 @@
+{
+  "version": "3.0.3",
+
+ 
+  "mode": "TCP",
+
+
+  "port": {
+    "name": "COM1",
+    "baudRate": 19200,
+    "dataBits": 8,
+    "parity": "none",
+    "stopBits": 1
+  },
+
+
+  "frameDelay": null,
+
+ 
+  "tcpPort": "{port}",
+
+  "slaves": {
+    "1": {
+
+      "isOnline": true,
+
+    
+      "registers": {
+
+       
+        "HR0": 1,
+        "HR1": 2,
+        "HR2": 3,
+        "HR6": 60,
+        "HR106": 60,
+	    "HR206": 60,
+	    "HR306": 60,
+	    "HR406": 60,
+        "HR506": 60,
+		"HR606": 60,
+		"HR706": 60,
+		
+		"HR16": 50,
+		"HR116": 50,
+		"HR216": 50,
+		"HR316": 50,
+		"HR416": 50,
+		"HR516": 50,
+		"HR616": 50,
+		"HR716": 50,
+		
+		"HR15": 50,
+		"HR115": 50,
+		"HR215": 50,
+		"HR315": 50,
+		"HR415": 50,
+		"HR515": 50,
+		"HR615": 50,
+		"HR715": 50,
+		
+		"HR9": 5,
+		"HR109": 5,
+		"HR209": 5,
+		"HR309": 5,
+		"HR409": 5,
+		"HR509": 5,
+		"HR609": 5,
+		"HR709": 5,
+		
+		
+		
+		"HR13": 1,
+		"HR113": 1,
+		"HR213": 1,
+		"HR313": 1,
+		"HR413": 1,
+		"HR513": 1,
+		"HR613": 1,
+		"HR713": 1,
+		
+
+  
+        "HR999": { "exception": 3 },
+
+       
+        "IR1": 1,
+        "IR2": 2,
+
+  
+
+  
+        "DI1": true,
+        "DI2": true
+      }
+    },
+    "2": {
+ 
+      "isOnline": false,
+      "registers": {
+        "HR1": 1
+      }
+    }
+  },
+
+  "api": {
+
+    "enable": true,
+    "port": "{port_sim_publisher}"
+  }
+}

@@ -1,0 +1,22 @@
+{
+	"moduleAction":{
+		"showInMapOrSynoptic": 200004
+	},
+	"elementTypeId": "ElementType:71",
+	"restEndpoints": {
+		"elementsTreeByRoadHierarchies": "elements/trees/${id}",
+		"elementsWithStates": "elements/withStates",
+		"elementsByElementTypeId": "element_types/${id}/elements",
+		"elementById": "elements/${id}"
+	},
+	"topic": {
+	
+		"element": "/topic/element",
+		"elementQueue": "/topic/pm_queue"
+	},
+	"action": {
+		"vmsSignalingModuleElements" : 102601,
+		"vmsSignalingModuleEdit" : 102602,
+		"vmsSignalingModule": 1026
+	}
+}

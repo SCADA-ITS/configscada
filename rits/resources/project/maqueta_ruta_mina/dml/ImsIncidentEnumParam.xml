@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="ImsIncidentEnumParam">
+	<SELECT>SELECT incident_enum_param_id as "id", 
+				incident_param_id as "incidentParamId", 
+				value as "value", 
+				enabled as "enabled", 
+				visible as "visible",  
+				created_at as "createdAt", 
+				updated_at as "updatedAt"
+			FROM "static".ims_incident_enum_params;
+	</SELECT>
+</DML>

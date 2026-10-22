@@ -1,0 +1,13 @@
+{
+  id
+  name
+  password
+  passwordExpiredAt
+  sessionExpireTimeS
+  lockedUntil
+  preset
+  allowMultipleSessions
+  fullName
+  email
+  options
+}

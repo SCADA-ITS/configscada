@@ -1,0 +1,98 @@
+{
+	"moduleAction": {
+		"search": 103801
+	},
+	"restEndpoints": {
+		"elements": "elements/withStates",
+		"alarms": "alarms",
+		"incidents": "incidents/reports",
+		"plans": "plans",
+		"plansOrder": "plans/plan_orders/${id}"
+	},
+	"types": {
+		"element": {
+			"default": 101401,
+			"view": 101401,
+			"map": 200004
+		},
+		"alarm": {
+			"default": 101402,
+			"view": {
+				"moduleActionId": 100801,
+				"viewTypeId": 2
+			},
+			"recognize": 100802,
+			"equipment": {
+				"moduleActionId": 101402,
+				"viewTypeId": 2
+			},
+			"map": {
+				"moduleActionId": 200004,
+				"viewTypeId": 1
+			},
+			"levels": {
+				"critical": { "img": "img/grid/critical.png", "values":  [ "AlarmLevel:5", "AlarmLevel:6" ] },
+				"warn": { "img": "img/grid/warn.png", "values":  [ "AlarmLevel:3", "AlarmLevel:4" ] },
+				"info": { "img": "img/grid/info.png", "values":  [ "AlarmLevel:1", "AlarmLevel:2" ] } 
+			},
+			"active": "img/grid/alarm_active.png",
+			"inactive": "img/grid/alarm_inactive.png"
+		},
+		"incident": {
+			"default": 100401,
+			"view": 100401,
+			"confirm": 100402,
+			"map": 200003,
+			"confirmed": "img/grid/confirmed.png",
+			"notConfirmed": "img/grid/not_confirmed.png"
+		},
+		"plan": {
+			"default": 102901,
+			"planOrder": 102902,
+			"planExecutor": 102501,
+			"planStateTypes": {
+				"PlanStateType:0": {
+					"color": "#989898"
+				},
+				"PlanStateType:1": {
+					"color": "#FF2222"
+				},
+				"PlanStateType:2": {
+					"color": "#FFCC00"
+				},
+				"PlanStateType:3": {
+					"color": "#11B900"
+				},
+				"PlanStateType:4": {
+					"color": "#FF8927"
+				},
+				"PlanStateType:5": {
+					"color": "#6495ed"
+				},
+				"PlanStateType:6": {
+					"color": "#000000"
+				}
+			},
+			"planOrderStateTypes": {
+				"PlanOrderStateType:0": {
+					"color": "#989898"
+				},
+				"PlanOrderStateType:1": {
+					"color": "#FFCC00"
+				},
+				"PlanOrderStateType:2": {
+					"color": "#11B900"
+				},
+				"PlanOrderStateType:3": {
+					"color": "#FF8927"
+				}
+			}
+		}
+	},
+	"searchOptions": {
+		"ELEMENT": true,
+		"ALARM": true,
+		"INCIDENT": true,
+		"PLAN": true
+	}
+}

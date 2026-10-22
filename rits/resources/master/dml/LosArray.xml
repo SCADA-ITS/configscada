@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="LosArray">
+	<SELECT>SELECT los_threshold_speed as "losThresholdSpeed",
+				   los_threshold_occupancy as "losThresholdOccupancy",
+				   level_of_service_id as "levelOfServiceId",
+				   enabled as "enabled",
+				   visible as "visible"
+			  FROM static.los_arrays
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>
+	</INSERT>
+	<UPDATE> 
+	</UPDATE>
+	<DELETE>
+	</DELETE>
+</DML>

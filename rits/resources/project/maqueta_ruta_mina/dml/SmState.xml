@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="SmState">
+	<SELECT>SELECT state_machine_id as "stateMachineId",
+				   state_id as "id",
+				   alias as "alias",
+				   description as "description",
+				   label_alias as "labelAlias", 
+				   label_description as "labelDescription",
+				   init_state as "initState",
+				   t_min as "tMin",
+				   enabled as "enabled",
+				   visible as "visible"
+			  FROM static.sm_states
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>
+	</INSERT>
+	<UPDATE>
+	</UPDATE>
+	<DELETE>
+	</DELETE>
+</DML>

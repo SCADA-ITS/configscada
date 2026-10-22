@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="CommandElementType">
+	<SELECT>SELECT command_element_type_id as "id",
+				   element_type_id as "elementTypeId", 
+				   alias as "alias", 
+				   description as "description",
+				   label_alias as "labelAlias", 
+				   label_description as "labelDescription",
+				   on_change as "onChange",
+				   enabled as "enabled", 
+				   visible as "visible",
+				   pm_queue_compatibility as "pmQueueCompatibility"
+			  FROM master.command_element_types
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>
+	</INSERT>
+	<UPDATE>
+	</UPDATE>
+	<DELETE>
+	</DELETE>
+</DML>

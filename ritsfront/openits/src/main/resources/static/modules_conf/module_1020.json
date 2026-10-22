@@ -1,0 +1,146 @@
+{
+	"moduleAction": {
+	    "singleCam": 102001,
+	    "scenario": 102002,
+	    "equipmentViewer": 101401
+	},
+	"commands": {
+		"lock": {
+			"commandElementTypeId": "CommandElementType:1:2",
+			"elementId": null
+		},
+		"preset": {
+			"commandElementTypeId": "CommandElementType:2:2",
+			"elementId": null,
+			"commandElementValues": [
+				{
+					"commandElementTypeParamId": "CommandElementTypeParam:2:2:1",
+					"value": null
+				}
+			]
+		},
+		"ptz": {
+			"commandElementTypeId": "CommandElementType:3:2",
+			"elementId": null,
+			"commandElementValues": [
+				{
+					"commandElementTypeParamId": "CommandElementTypeParam:3:2:1",
+					"value": null
+				}
+			]
+		}
+	},
+	"ptzValue": {
+		"stop": "0",
+		"up": "1",
+		"down": "2",
+		"left": "3",
+		"right": "4",
+		"zoomIn": "5",
+		"zoomOut": "6"
+	},
+	"restEndpoints": {
+		"element": "elements/${id}",
+		"cctvScenario": "cctv_scenarios/${id}",
+		"cctvHierarchies": "cctv_scenarios/hierarchies",
+		"command": "elements/send_command_element"
+	},
+	"multi": {
+		"fit": false
+	},
+	"single": {
+		"fit": false
+	},
+	"requiredPermissions": {
+		"commandEquipment": "SystemPermission:6"
+	},
+	"camConf": {
+		"brand": "ElementTypeParam:2:1:1",
+		"model": "ElementTypeParam:2:1:2",
+		"presetConfigJson": "ElementTypeParam:2:1:6",
+		"featuresPTZ": "ElementTypeParam:2:1:7",
+		"stream_mjpeg": {
+			"url": "ElementTypeParam:2:1:3"
+		},
+		"url_snapshot": "ElementTypeParam:2:1:16",
+		"devices": [
+			{
+				"brand": "Dahua",
+				"model": "Interchange",
+				"decoder": "mjpeg"
+			},
+			{
+				"brand": "Dahua",
+				"model": "Main",
+				"decoder": "mjpeg"
+			},
+			{
+				"brand": "HIKVISION",
+				"model": "DS-2CD2665FWD-IZS",
+				"decoder": "mjpeg"
+			},
+			{
+				"brand": "HIKVISION",
+				"model": "DS-2CD2665FWD-IZS_SNAP",
+				"decoder": "snap"
+			},
+			{
+				"brand": "HIKVISION",
+				"model": "DS-2DF8242IX-AELW",
+				"decoder": "snap"
+			},
+			{
+				"brand": "VIVOTEK",
+				"model": "SD8364E",
+				"decoder": "mjpeg"
+			},
+			{
+				"brand": "VIVOTEK",
+				"model": "SD8364E_SNAP",
+				"decoder": "snap"
+			},
+			{
+				"brand": "Foscam",
+				"model": "C1",
+				"decoder": "snap"
+			},
+			{
+				"brand": "Bosch",
+				"model": "NBE-5503-AL",
+				"decoder": "snap"
+			},
+			{
+				"brand": "Bosch",
+				"model": "NDP-7512-Z30",
+				"decoder": "snap"
+			},
+			{
+				"brand": "HIKVISION",
+				"model": "DS-2DF8242IX-AELW_SNAP",
+				"decoder": "snap"
+			},
+			{
+				"brand": "Foscam",
+				"model": "C1_MJPEG",
+				"decoder": "mjpeg"
+			}
+		],
+		"decoders": {
+			
+			"mjpeg": {
+				"timeCheckStreamMs": 600000,
+				"timeoutConnectStreamMs": 6000,
+				"url": "ElementTypeParam:2:1:3"
+			},
+			"snap": {
+				"timeoutConnectMs": 10000,
+				"defaultFps": 10,
+				"snapshot": true,
+				"fps": "ElementTypeParam:2:1:13", 
+				"url": "ElementTypeParam:2:1:3",
+				"rnd": "ElementTypeParam:2:1:16"
+			}
+		},
+		"other": {}
+	}
+}

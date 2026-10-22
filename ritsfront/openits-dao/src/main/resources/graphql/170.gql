@@ -1,0 +1,19 @@
+{
+  id
+  parent {
+    id
+    alias
+    plan {
+      id
+      alias
+    }
+  }
+  child {
+    id
+    alias
+    plan {
+      id
+      alias
+    }
+  }
+}

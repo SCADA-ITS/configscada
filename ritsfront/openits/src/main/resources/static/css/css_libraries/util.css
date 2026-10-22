@@ -1,0 +1,35 @@
+.default-window {
+	border-color: var(--blue-strong);
+	box-shadow: 0 1.5rem 2.8rem !important;
+	animation: zoomIn;
+    animation-duration: 0.2s;
+}
+
+.window-head-title-wo-buttons {
+	font-weight: 600;
+    font-size: 14px;
+    color: var(--white-text-default);
+    text-align: center;
+    letter-spacing: 2px;
+	padding: 6px 0px 0px 20px;
+}
+
+.window-head-title-w-buttons {
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--white-text-default);
+    text-align: center;
+    letter-spacing: 2px;
+    padding: 6px 0px 0px 85px;
+}
+
+.window-head-title-wo-buttons .webix_el_box,
+.window-head-title-w-buttons .webix_el_box {
+    color: var(--white-text-default) !important;
+    text-align: center !important;
+	margin-top: -10px !important;	
+}
+
+.main-screen-locked-firefox {	
+	filter: blur(4px);
+}

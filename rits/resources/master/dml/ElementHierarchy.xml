@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="ElementHierarchy">
+	<SELECT>SELECT parent_element_type_id as "parentElementTypeId", 
+				   parent_element_id as "parentElementId", 
+				   child_element_type_id as "childElementTypeId", 
+				   child_element_id as "childElementId", 
+				   child_inheritable_state_id as "childInheritableStateId",
+				   enabled as "enabled", 
+				   visible as "visible" 
+			  FROM conf.element_hierarchies
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>INSERT INTO conf.element_hierarchies
+	                (parent_element_type_id,
+	                 parent_element_id,
+	                 child_element_type_id,
+	                 child_element_id,
+	                 child_inheritable_state_id,
+	                 enabled,
+	                 visible,
+	                 created_at,
+	                 updated_at)
+					VALUES 
+					(:parentElementTypeId, 
+					 :parentElementId, 
+					 :childElementTypeId, 
+					 :childElementId,
+					 :childInheritableStateId,
+					 :enabled, 
+					 :visible, 
+					 CURRENT_TIMESTAMP, 
+					 CURRENT_TIMESTAMP)
+	</INSERT>
+	<DELETE>DELETE FROM conf.element_hierarchies
+			 WHERE parent_element_type_id = :parentElementTypeId
+			   AND parent_element_id = :parentElementId
+			   AND child_element_type_id = :childElementTypeId
+			   AND child_element_id = :childElementId
+	</DELETE>
+</DML>

@@ -1,0 +1,1077 @@
+type DataTypeGraphql{
+	id: String!,
+	alias: String,
+	description: String,
+	labelAlias: String,
+	labelDescription: String
+}
+
+type ParamTypeGraphql{
+	id: String!,
+	alias: String,
+	description: String,
+	labelAlias: String,
+	labelDescription: String
+}
+
+type LevelOfServiceGraphql{
+	id: String!,
+	alias: String,
+	description: String,
+	labelAlias: String,
+	labelDescription: String,
+	colour: String,
+	los: Int
+}
+
+type CommandElementTypeParamGraphql{
+	id: String!,
+	alias: String,
+	description: String,
+	dataType: DataTypeGraphql!,
+	elementTypeParam: ElementTypeParamGraphql,
+    labelUnit: String,
+	threshold1: String,
+	threshold2: String,
+	labelAlias: String,
+	labelDescription: String
+}	
+
+type CommandElementTypeGraphql{
+	id: String!,
+	alias: String,
+	description: String,
+	labelAlias: String,
+	labelDescription: String,
+	commandElementTypeParams: [CommandElementTypeParamGraphql],
+	pmQueueCompatibility: Boolean
+}
+
+type ElementHierarchyGraphql{
+	id: String!,
+	parent: ElementGraphql!,
+	child: ElementGraphql!
+	
+}
+ 
+type ElementTypeGraphql{
+	id: String!,
+	elementGroup: ElementGroupGraphql,
+	alias: String,
+	description: String,
+	labelAlias: String,
+	labelDescription: String,
+	isLogic: Boolean,
+	initialState: ElementTypeStateGraphql,
+	maintenanceState: ElementTypeStateGraphql,
+	elementTypeStates: [ElementTypeStateGraphql],
+	elementTypeParams: [ElementTypeParamGraphql],
+	commandElementTypes: [CommandElementTypeGraphql],
+	parents: [ElementTypeGraphql!],
+	elementSubtypes: [ElementSubtypeGraphql],
+	priorities: [PmQueuePriorityGraphql!]
+}
+
+type ElementSubtypeGraphql{
+	id: String!,
+	elementSubtypeActiveParams: [ElementTypeParamGraphql],
+	alias: String,
+	description: String,
+	labelAlias: String,
+	labelDescription: String,
+	commandElementSubtypes: [CommandElementTypeGraphql]
+}
+  
+type ElementTypeParamGraphql{
+	id: String!,
+	alias: String,
+	description: String,
+	labelUnit: String,
+	threshold1: String,
+	threshold2: String,
+	labelAlias: String,
+	labelDescription: String,
+	paramType: ParamTypeGraphql,
+	dataType: DataTypeGraphql,
+	durable: Boolean,
+	defaultValue: String,
+	graphics: [VmsGraphicGraphql]
+}
+ 
+type ElementValueGraphql{
+	id: String!,
+	value: String,
+	elementValueState: ElementValueStateGraphql,
+	elementTypeParam: ElementTypeParamGraphql!,
+	createdAt: Long,
+	updatedAt: Long
+}
+type ElementGroupGraphql{
+	id: String!,
+	alias: String,
+	description: String,
+	labelAlias: String,
+	labelDescription: String
+}
+
+type ElementValueStateGraphql{
+	id: String,
+	alias: String,
+	description: String,
+	labelAlias: String,
+	labelDescription: String
+}
+
+type ElementTypeStateGraphql{
+	id: String,
+	alias: String,
+	description: String,
+	labelAlias: String,
+	labelDescription: String
+}
+
+type ElementGraphql{
+	id: String!,
+	keepValuesOnDisconnected: Boolean,
+	location: LocationGraphql,
+	alias: String,
+	description: String,
+	state: Int,
+	elementTypeState: ElementTypeStateGraphql,
+	elementState: ElementStateGraphql,
+	stateLabel: String,
+	elementType: ElementTypeGraphql!,
+	elementValues: [ElementValueGraphql],
+	childs: [ElementGraphql!],
+	parents: [ElementGraphql!],
+	alarms: [AlarmGraphql!],
+	elementSubtype: ElementSubtypeGraphql,
+	commandElements: [CommandElementTypeGraphql],
+	graphicGroups: [VmsGraphicGroupGraphql],
+	queue: PmQueueGraphql
+}
+
+type ElementStateAlarmGraphql{
+	id: String!,
+	elementType: ElementTypeGraphql!,
+	elementTypeState: ElementTypeStateGraphql!
+}
+
+type ElementStateGraphql{
+	element: ElementGraphql,
+	elementType: ElementTypeGraphql,
+	previousElementTypeState: ElementTypeStateGraphql,
+	currentElementTypeState: ElementTypeStateGraphql,
+	maxAlarmLevel: AlarmLevelGraphql,
+	maintenanceComment: String,
+	createdAt: Long
+}
+
+type CCTVScenarioGraphql{
+	id: String!,
+	alias: String!,
+	description: String,
+	nRows: Int!,
+	nColumns: Int!,
+	elements: [ElementGraphql!]
+}
+
+type CCTVScenarioNodeGraphql{
+	id: String!,
+	alias: String!,
+	description: String,
+	scenario: CCTVScenarioGraphql
+}
+
+
+type CCTVScenarioHierarchyGraphql {
+	id: String!,
+	parent: CCTVScenarioNodeGraphql!,
+	child: CCTVScenarioNodeGraphql!
+}
+
+type ElementTreeNodeGraphql{
+	id: String!,
+	labelAlias: String,
+	position: Int,
+	element: ElementGraphql
+}
+
+type ElementTreeNodeHierarchyGraphql{
+	id: String!,
+	parent: ElementTreeNodeGraphql!,
+	child: ElementTreeNodeGraphql!
+}
+
+type ElementTreeGraphql{
+	id: String!,
+	labelAlias: String!
+	elementTreeNodes: [ElementTreeNodeGraphql!],
+	elementTreeNodeHierarchies: [ElementTreeNodeHierarchyGraphql!]
+}
+	
+
+
+type ThresholdOperationGraphql{
+	id: String!,
+	alias: String,
+	description: String,
+	labelAlias: String,
+	labelDescription: String
+}
+
+type AlarmConfigMeasureGraphql{
+	id: String!,
+	elementTypeParam: ElementTypeParamGraphql!,
+	alarmMeasureOperation: ThresholdOperationGraphql,
+	thresholdVal1: String!,
+	thresholdVal2: String
+}
+
+type AlarmTargetGraphql{
+	id: String!,
+	sourceElement: ElementGraphql!,
+	targetElement: ElementGraphql!
+}
+
+type AlarmConfigGraphql{
+	id: String!,
+	alias: String,
+	description: String,
+	labelAlias: String,
+	labelDescription: String,
+	alarmType: AlarmTypeGraphql!,
+	alarmLevel: AlarmLevelGraphql!,
+	element: ElementGraphql,
+	elementType: ElementTypeGraphql,
+	elementSubtype: ElementSubtypeGraphql,
+	elementTypeState: ElementTypeStateGraphql,
+	mine: Boolean!,
+	treatment: Boolean!,
+	minTimeAlarmed: Long,
+	thresholdTime: Long,
+	alarmConfigMeasures: [AlarmConfigMeasureGraphql!],
+	alarmTargetElements: [AlarmTargetGraphql!],
+	alarmConfigStates: [ElementStateAlarmGraphql!]
+}
+
+type AlarmTypeGraphql{
+	id: String!,
+	alias: String,
+	description: String,
+	labelAlias: String,
+	labelDescription: String
+}
+
+type AlarmLevelGraphql{
+	id: String!,
+	alias: String,
+	description: String,
+	labelAlias: String,
+	labelDescription: String
+}
+
+
+
+type AlarmGraphql{
+	id: String!,
+	alarmConfig: AlarmConfigGraphql!,
+	creationUser: UserGraphql!,
+	recognizedUser: UserGraphql,
+	recognized: Long,
+	recognizedComments: String,
+	activation: Long,
+	activationComments: String,
+	deactivationUser: UserGraphql,
+	deactivation: Long,
+	deactivationComments: String,
+	sourceElement: ElementGraphql,
+	targetElement: ElementGraphql,
+	filteredUntil : Long,
+	disagree: Boolean,
+	createdAt: Long
+}
+
+type AlarmFilteredGraphql{
+	id: String!,
+	alarmConfig: AlarmConfigGraphql!,
+	filteredUntil: Long!,
+	alarmDisabled: Boolean,
+	element: ElementGraphql!,
+	alarm: AlarmGraphql,
+	comment: String,
+	user: UserGraphql
+}
+
+type ManagementAreaGraphql{
+	id: String!,
+	alias: String,
+	description: String
+}
+
+
+type UserGraphql{
+	id: String!,
+	name: String!,
+	password: String!,
+	passwordExpiredAt: Long,
+	sessionExpireTimeS: Int,
+	lockedUntil: Long,
+	preset: Boolean!,
+	allowMultipleSessions: Boolean!,
+	fullName: String,
+	email: String,
+	ldap: Boolean,
+	locale: I18nLocaleGraphql!,
+	role: RoleGraphql!,
+	userSessions: [UserSessionGraphql!],
+	userPermissions: [SystemPermissionGraphql!],
+	roles: [RoleGraphql!],
+	managementAreas: [ManagementAreaGraphql!]
+}
+
+type RoleGraphql{
+	id: String!,
+	alias: String,
+	description: String,
+	preset: Boolean!
+	rolePermissions: [SystemPermissionGraphql!]
+}
+
+type UserSessionGraphql{
+	id: String!,
+	sessionId: String!,
+	loginSince: Long,
+	validUntil: Long,
+	access: String!
+}
+
+type SystemPermissionGraphql{
+	id: String!,
+	alias: String,
+	description: String,
+	labelAlias: String,
+	labelDescription: String	
+} 
+
+type SystemParamGraphql {
+	id: String!,
+	alias: String,
+	description: String,
+	labelAlias: String,
+	labelDescription: String,
+	value: String!
+}
+
+type PlanNodeGraphql{
+	id: String!,
+	alias: String!,
+	description: String,
+	plan: PlanGraphql
+}
+
+type PlanHierarchyGraphql {
+	id: String!,
+	parent: PlanNodeGraphql!,
+	child: PlanNodeGraphql!
+}
+
+type PlanOrderTypeGraphql{
+	id: String!,
+	alias: String,
+	description: String,
+	labelAlias: String,
+	labelDescription: String,
+	planOrderTypeLabel: String,
+	planOrderTypeParams: [PlanOrderTypeParamGraphql]	
+} 
+  
+type PlanOrderTypeParamGraphql{
+	id: String!,
+	alias: String,
+	description: String,
+	labelAlias: String,
+	labelDescription: String,	
+	dataType: DataTypeGraphql!,
+    labelUnit: String,
+	threshold1: String,
+	threshold2: String
+}
+
+type PlanOrderValueGraphql{
+	id: String!,
+	value: String,
+	planOrderTypeParam: PlanOrderTypeParamGraphql!
+}
+
+type PlanGraphql{
+	id: String!,
+	alias: String,
+	description: String,
+	planStateType: PlanStateTypeGraphql,
+	planModeType: Int,
+	planOrders:[PlanOrderGraphql],
+	currentPlanOrder: PlanOrderGraphql,
+	changedAt: Long
+}
+
+type PlanStateTypeGraphql{
+	id: String!,
+	alias: String,
+	description: String,
+	labelAlias: String,
+	labelDescription: String
+}
+
+type PlanOrderGraphql{
+	id: String!,
+	alias: String,
+	description: String,
+	nTimes: Int,
+	planOrderStateType: PlanOrderStateTypeGraphql,
+	planOrderType: 	PlanOrderTypeGraphql!,
+	planOrderValues: [PlanOrderValueGraphql!],
+	comandElement: CommandElementGraphql,
+	planOrderOrder: Int,
+    nextPlanOrder: PlanOrderGraphql,
+    nextPlan: PlanGraphql,
+    planOrderElementValues: [PlanOrderElementValueGraphql!],
+    planOrderElementTypeStates: [PlanOrderElementTypeStateGraphql!],
+    planOrderConditions: [PlanOrderConditionGraphql!],
+    changedAt: Long
+}
+
+type PlanOrderElementValueGraphql{
+	id: String!,
+	element: ElementGraphql!,
+  	elementTypeParam: ElementTypeParamGraphql!,
+  	value: String!
+}
+
+type PlanOrderConditionGraphql{
+	id: String!,
+	element: ElementGraphql!,
+	elementTypeParam: ElementTypeParamGraphql,
+	thresholdOperation: ThresholdOperationGraphql,
+	thresholdVal1: String,
+	thresholdVal2: String,
+	elementTypeState: ElementTypeStateGraphql,
+	planOrderConditionOrder: Int!,
+	nexusAnd: Boolean!
+}
+
+type PlanOrderElementTypeStateGraphql{
+	id: String!,
+ 	element: ElementGraphql!,
+  	elementTypeState: ElementTypeStateGraphql!
+}
+
+type PlanOrderStateTypeGraphql{
+	id: String!,
+	alias: String,
+	description: String,
+	labelAlias: String,
+	labelDescription: String
+}
+
+type PlanScheduleGraphql{
+	id: String!,
+	plan: PlanGraphql!,
+	cronExpression: String!,
+	alias: String,
+	description: String,
+	planScheduleStateType: PlanScheduleStateTypeGraphql,
+}
+
+type PlanScheduleStateTypeGraphql{
+	id: String!,
+	alias: String,
+	description: String,
+	labelAlias: String,
+	labelDescription: String
+}
+
+type CommandElementValueGraphql{
+	id: String!,
+	value: String!,
+	commandElementTypeParam: CommandElementTypeParamGraphql!,
+}
+	
+type CommandElementGraphql{
+	id: String!,
+	element: ElementGraphql!,
+	commandElementType: CommandElementTypeGraphql!,
+	commandElementValues: [CommandElementValueGraphql!]
+}
+
+type GenericDataGraphql{
+	id: String!,
+	value: String!
+}
+
+type VmsGraphicGroupGraphql{
+	id: String!,
+	alias: String,
+	description: String,
+	labelAlias: String,
+	labelDescription: String,
+	graphics: [VmsGraphicGraphql]
+}
+
+type VmsGraphicGraphql{
+    id: String!,
+	alias: String,
+	description: String,
+	graphicType: Int,
+	graphicTypeLabel: String,
+	graphicCategory: VmsGraphicCategoryGraphql
+}
+
+type VmsGraphicCategoryGraphql{
+    id: String!,
+	alias: String,
+	description: String,
+	labelAlias: String,
+	labelDescription: String
+}
+
+type RoadTypeGraphql{
+	id: String!,
+	alias: String,
+	description: String,
+	labelAlias: String,
+	labelDescription: String
+}
+
+type RoadGraphql{
+	id: String!,
+	alias: String,
+	description: String,
+	roadType: RoadTypeGraphql
+}
+
+type StretchTypeGraphql{
+	id: String!,
+	alias: String,
+	description: String,
+	labelAlias: String,
+	labelDescription: String
+}
+
+type StretchGraphql{
+	id: String!,
+	alias: String,
+	description: String,
+	pkIni: Float,
+	pkEnd: Float,
+	lanes: Int,
+	stretchType: StretchTypeGraphql,
+	road: RoadGraphql!,
+	position: Int
+}
+
+type StretchStretchGraphql{
+	id: String!,
+	alias: String,
+	description: String,
+	stretchs: [StretchGraphql!]
+}
+
+type SpathGraphql{
+	id: String!,
+	alias: String,
+	description: String,
+	spathStretchs: [SpathStretchGraphql]
+}
+
+type SpathStretchGraphql{
+	spath: SpathGraphql!,
+	stretch: StretchGraphql!,
+	relStretch: StretchGraphql!,
+	position: Int
+}
+
+type LocationTypeGraphql{
+	id: String!,
+	alias: String,
+	description: String,
+	labelAlias: String,
+	labelDescription: String
+}
+
+type LocationGraphql{
+	id: String!,
+	alias: String,
+	description: String,
+	locationType: LocationTypeGraphql,
+	lane: Int,
+	stretchs: [StretchGraphql!]
+}
+
+type LogTypeParamGraphql{
+	id: String!,
+	alias: String,
+	description: String,
+	labelAlias: String,
+	labelDescription: String
+}
+
+type LogTypeGraphql{
+	id: String!,
+	alias: String,
+	description: String,
+	labelAlias: String,
+	labelDescription: String,
+	logTypeParams: [LogTypeParamGraphql],
+	logSubtypes: [LogSubtypeGraphql]	
+}
+
+type LogSubtypeGraphql{
+	id: String!,
+	alias: String,
+	description: String,
+	labelAlias: String,
+	labelDescription: String
+}
+
+type ImsExtIncidentValueGraphql{
+	id: String!,
+	value: String,
+	extIncidentTypeParam: ImsExtIncidentTypeParamGraphql!
+}
+
+type ImsExtIncidentTypeParamGraphql{
+	id: String!,
+	alias: String,
+	description: String
+}
+
+type ImsExtIncidentGroupGraphql{
+	id: String!,
+	alias: String,
+	description: String,
+	labelAlias: String,
+	labelDescription: String
+}
+
+type ImsExtIncidentTypeGraphql{
+	id: String!,
+	alias: String,
+	description: String,
+	confirmationIsNeeded: Boolean,
+	extIncidentGroup: ImsExtIncidentGroupGraphql!,
+	extIncidentTypeParams: [ImsExtIncidentTypeParamGraphql]
+}
+
+type ImsExtIncidentGraphql{
+	id: String!,
+	alias: String,
+	description: String,
+	extIncidentType: ImsExtIncidentTypeGraphql!,
+	location: LocationGraphql!,
+	incidentInitDate: Long!,
+	extIncidentValues: [ImsExtIncidentValueGraphql]
+}
+
+type ImsIncidentParamGraphql{
+	id: String!,
+	alias: String,
+	description: String,
+	labelAlias: String,
+	labelDescription: String,
+	incidentParamGroup: ImsIncidentParamGroupGraphql!,
+	dataType: DataTypeGraphql!,
+	labelUnit: String,
+	threshold1: String,
+	threshold2: String,
+	incidentEnumsParam: [ImsIncidentEnumParamGraphql]
+}
+
+type ImsIncidentParamGroupGraphql{
+	id: String!,
+	alias: String,
+	description: String,
+	labelAlias: String,
+	labelDescription: String,
+}
+
+type ImsIncidentEnumParamGraphql{
+	id: String!,
+	incidentParam: ImsIncidentParamGraphql!,
+	value: String
+}
+
+type ImsIncidentReportParamValueGraphql{
+	id: String!,
+	incidentParam: ImsIncidentParamGraphql!,
+	incidentReport: ImsIncidentReportGraphql!,
+	value: String
+}
+
+type ImsIncidentAlarmConditionAlarmGraphql{
+	id: String!,
+	alarmConfig: AlarmConfigGraphql!,
+	elementType: ElementTypeGraphql,
+	element: ElementGraphql,
+	incidentAlarmConditionAlarmType: ImsIncidentAlarmConditionAlarmTypeGraphql!
+}
+
+type ImsIncidentAlarmConditionGraphql{
+	id: String!,
+	auto: Boolean!,
+	incidentType: ImsIncidentTypeGraphql!,
+	stretch: StretchGraphql!,
+	incidentAlarmConditionAlarms: [ImsIncidentAlarmConditionAlarmGraphql],
+	roadImpact: RoadImpactGraphql
+}
+
+type ImsIncidentAlarmConditionAlarmTypeGraphql{
+	id: String!,
+	alias: String!,
+	description: String,
+	labelAlias: String,
+	labelDescription: String
+}
+
+type ImsIncidentLevelGraphql{
+	id: String!,
+	priority: Int!,
+	alias: String!,
+	description: String,
+	labelAlias: String,
+	labelDescription: String,
+	pmQueuePriority: PmQueuePriorityGraphql
+}
+
+type ImsIncidentStateGraphql{
+	id: String!,
+	finalState: Boolean!,
+	alias: String!,
+	description: String,
+	labelAlias: String,
+	labelDescription: String
+}
+
+type ImsIncidentTaskPlanGraphql{
+	id: String!,
+	position: Int!,
+	plan: PlanGraphql!,
+	incidentTypeTask: ImsIncidentTypeTaskGraphql!,
+	incidentType: ImsIncidentTypeGraphql!,
+	stretch: StretchGraphql!
+}
+
+type ImsIncidentGroupGraphql{
+	id: String!,
+	alias: String,
+	description: String,
+	labelAlias: String,
+	labelDescription: String
+}
+
+type ImsIncidentTypeCauseGraphql{
+	id: String!,
+	alias: String!,
+	description: String
+}
+
+type ImsIncidentTypeGraphql{
+	id: String!,
+	alias: String!,
+	description: String,
+	iniIncidentState: ImsIncidentStateGraphql!,
+	incidentGroup: ImsIncidentGroupGraphql!,
+	incidentLevel: ImsIncidentLevelGraphql!,
+	defaultUser: UserGraphql!,
+	incidentTypeCauses: [ImsIncidentTypeCauseGraphql!] ,
+	autoConfirmIncident: Int,
+	validForMin: Int,
+	cancelIncident: Boolean,
+	incidentTypeStretchs: [ImsIncidentTypeStretchGraphql!],
+	incidentTypeStateTransitions: [ImsIncidentTypeStateTransitionGraphql!]
+}
+
+type ImsIncidentTypeStateTransitionGraphql{
+	id: String!,
+	incidentType: ImsIncidentTypeGraphql!,
+	iniIncidentState: ImsIncidentStateGraphql!,
+	endIncidentState: ImsIncidentStateGraphql!,
+	auto: Boolean!
+}
+
+type RoadImpactGraphql{
+	id: String!,
+	alias: String, 
+	description: String
+}
+
+type ImsIncidentTypeStretchGraphql{
+	id: String!,
+	alias: String,
+	description: String,
+	incidentType: ImsIncidentTypeGraphql!,
+	stretch: StretchGraphql!,
+	defaultLocation: LocationGraphql,
+	operationalPlanUrl: String,
+	imsIncidentAlarmConditions: [ImsIncidentAlarmConditionGraphql],
+	multiInstance: Boolean!,
+	checkStretchStretch: Boolean,
+	scenario: CCTVScenarioGraphql,
+	spath: [StretchGraphql!],
+	spathId: String,
+	roadImpacts: [RoadImpactGraphql!]
+}
+
+type ImsIncidentReportGraphql{
+	id: String!,
+	generatedAt: Long!,
+	lastUpdate: Long!,
+	validForMin: Int,
+	confirm: Boolean,
+	incidentType: ImsIncidentTypeGraphql!,
+	incidentTypeCause: ImsIncidentTypeCauseGraphql,
+	operationalPlanUrl: String,
+	affectionStretch: StretchGraphql!,
+	location: LocationGraphql,
+	incidentState: ImsIncidentStateGraphql!,
+	incidentLevel: ImsIncidentLevelGraphql!,
+	currentUser: UserGraphql,
+	incidentLogs: [ImsIncidentReportLogGraphql],
+	sequenceOfStates: [ImsIncidentSequenceStateGraphql!],
+	taskStates:[ImsIncidentReportTaskStateGraphql!],
+	alarms: [ImsIncidentReportAlarmGraphql!],
+	scenario: CCTVScenarioGraphql,
+	spath: [StretchGraphql!],
+	incidentParamValues: [ImsIncidentReportParamValueGraphql]!,
+	roadImpact: RoadImpactGraphql,
+	roadImpacts: [RoadImpactGraphql!]
+}
+
+type ImsTaskTypeGraphql{
+	id: String!,
+	alias: String!,
+	description: String,
+	labelAlias: String,
+	labelDescription: String,
+	taskTypeParams: [ImsTaskTypeParamGraphql]
+}
+
+type ImsTaskTypeParamGraphql{
+	id: String!,
+	alias: String!,
+	description: String,
+	labelAlias: String,
+	labelDescription: String,
+	paramType: ParamTypeGraphql!,
+	dataType: DataTypeGraphql!,
+    labelUnit: String,
+	threshold1: String,
+	threshold2: String
+}
+
+type ImsIncidentTypeTaskGraphql{
+	id: String!,
+	alias: String!,
+	description: String,
+	operationDescription: String,
+	incidentType: ImsIncidentTypeGraphql!,
+	stretch: StretchGraphql,
+	taskType: ImsTaskTypeGraphql!,
+	incidentState: ImsIncidentStateGraphql,
+	mandatory: Boolean!,
+	position: Int!,
+	auto: Boolean!,
+	onChange: String,
+	delay: Int,
+	rerun: Boolean,
+	incidentTypeTaskValues: [ImsIncidentTypeTaskValueGraphql],
+	roadImpact: RoadImpactGraphql
+}
+
+type ImsIncidentTypeTaskValueGraphql{	
+	id: String!,
+	value: String!,
+	taskTypeParam: ImsTaskTypeParamGraphql!
+}
+
+type ImsIncidentReportTaskStateGraphql{
+	incidentTypeTask: ImsIncidentTypeTaskGraphql!,
+	elements: [ElementGraphql!],
+	completedAt: Long,
+	error: Boolean,
+	taskPlanStates: [ImsIncidentReportTaskPlanStateGraphql!],
+	incidentReportTaskValues:[ImsIncidentReportTaskValueGraphql!]
+}
+
+type ImsIncidentReportTaskValueGraphql{
+	id: String!,
+	value: String!,
+	taskTypeParam: ImsTaskTypeParamGraphql!
+}
+
+type ImsIncidentSequenceStateGraphql{
+	state: ImsIncidentStateGraphql!,
+	taskStates:[ImsIncidentReportTaskStateGraphql!]
+}
+
+type ImsIncidentReportTaskPlanStateGraphql{
+	incidentTaskPlan: ImsIncidentTaskPlanGraphql!,
+	completedAt:Long
+}
+
+type ImsIncidentReportLogGraphql{
+	id: String!,
+	level: LogLevelEnum!,
+	time: Long!,
+	user: UserGraphql!,
+	logSubtype: LogSubtypeGraphql,
+	incidentReportLogValues: [ImsIncidentReportLogValueGraphql]
+}
+
+type ImsIncidentReportLogValueGraphql{
+	id: String!,
+	value: String!,
+	logTypeParam: LogTypeParamGraphql!
+}
+
+type ImsIncidentReportAlarmGraphql{
+	id: String!,
+	alarmConfig: AlarmConfigGraphql!,
+	element: ElementGraphql!,
+	activation: Long
+}
+
+type I18nLocaleGraphql{
+	id: String!,
+	code: String!,
+	name: String!
+}
+
+type I18nLabelGraphql{
+	id: String!,
+	label: String!,
+	translation: String!
+}
+
+type AuditLogGraphql{
+	id: String!,
+	logType: LogTypeGraphql!,
+	logSubtype: LogSubtypeGraphql,
+	user: UserGraphql!,
+	level: LogLevelEnum!,
+	time: Long!,
+	auditLogValues: [AuditLogValueGraphql]
+}
+
+type AuditLogValueGraphql{
+	id: String!,
+	value: String,
+	logTypeParam: LogTypeParamGraphql!
+}
+
+type CommandElementPreconditionGraphql{
+	id: String!,
+	targetElement: ElementGraphql!,
+	targetElementTypeParam: ElementTypeParamGraphql,
+	thresholdOperation: ThresholdOperationGraphql,
+	thresholdVal1: String,
+	thresholdVal2: String,
+	elementTypeState: ElementTypeStateGraphql,
+	activeAlarmConfig: AlarmConfigGraphql,
+	negative: Boolean,
+	toStr: String,
+	commandElementValuePreconditions: [CommandElementValuePreconditionGraphql!]
+}
+
+type CommandElementValuePreconditionGraphql{
+	id: String!,
+	commandElementTypeParam: CommandElementTypeParamGraphql!,
+	thresholdOperation: ThresholdOperationGraphql!,
+	thresholdVal1: String!,
+	thresholdVal2: String
+}
+
+type CommandElementErrorGraphql{
+	element: ElementGraphql,
+	error: Long,
+	commandElementPreconditions: [CommandElementPreconditionGraphql!]
+}
+
+type ProcessInfoGraphql {
+	pid: Long,
+	main: String!,
+	commandLine: String,
+	cpuLoad: Float,
+	cpuTime: Long,
+	cpuAverage: Float,
+	heapSize: Long,
+	heapUsed: Long,
+	heapMax: Long,
+	threadsLive: Int,
+	numRestarts: Int,
+	ready: Boolean,
+	createdAt: Long,
+	updatedAt: Long,
+	gitCommit: String,
+	gitAuthor: String,
+	gitDate: String,
+	gitMessage: String
+}
+
+type PmQueueGraphql{
+	alias: String!,
+	description: String,
+	labelAlias: String,
+	labelDescription: String,
+	priorities: [PmQueuePriorityGraphql!],
+	commandElements:[PmCommandElementGraphql!]
+}
+
+type PmQueuePriorityGraphql{
+	id: String!,
+	alias: String!,
+	description: String,
+	labelAlias: String,
+	labelDescription: String,
+	priority: Int!,
+	defaultPriority: Boolean,
+	enable: Boolean!,
+	checkConflict: Boolean
+}
+
+type PmCommandElementGraphql{
+	id: String!,
+	commandElementType: CommandElementTypeGraphql!,
+	commandElementValues: [CommandElementValueGraphql!],
+	priority: PmQueuePriorityGraphql!,
+	startTime: Long!,
+	endTime: Long!,
+	enable: Boolean!,
+	source: String,
+	conflict: Boolean
+}
+
+type SmThresholdGraphql{
+	id: String!,
+	value: String,
+	dataType: DataTypeGraphql,
+	labelAlias: String, 
+	labelDescription: String
+}
+
+type SmStateMachineGraphql{
+	id: String!,
+	alias: String,
+	labelAlias: String,
+	description: String,
+	labelDescription: String,
+	smThresholds: [SmThresholdGraphql!]
+	
+}
+
+type ParamHistGraphql{
+	columnName: String!,
+	operation: OperationEnum!,
+	value: String!
+
+}

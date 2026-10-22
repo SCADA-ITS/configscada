@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="ImsIncidentTypeCause">
+	<SELECT>SELECT incident_type_id as "incidentTypeId",
+				   incident_type_cause_id as "id",
+				   alias as "alias",
+				   description as "description",
+				   enabled as "enabled",
+				   visible as "visible"
+			  FROM conf.ims_incident_type_causes
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>INSERT INTO conf.ims_incident_type_causes
+					   (incident_type_id,
+					    incident_type_cause_id,
+					   	alias,
+					   	description,
+					    enabled,
+					    visible,
+					    created_at,
+					    updated_at)
+				 VALUES (:incidentTypeId,
+				 		 :id=getNextId{'conf.ims_incident_type_causes'$'incident_type_cause_id'$'incident_type_id=incidentTypeId'},
+				         :alias,
+				         :description,
+				         :enabled,
+				         :visible,
+				         CURRENT_TIMESTAMP,
+				         CURRENT_TIMESTAMP)
+	</INSERT>
+	<UPDATE>UPDATE conf.ims_incident_type_causes
+			   SET enabled = :enabled,
+				   visible = :visible,
+			       updated_at = CURRENT_TIMESTAMP
+			 WHERE incident_type_id = :incidentTypeId incident_type_cause_id = :id
+	</UPDATE>
+	<DELETE>DELETE FROM conf.ims_incident_type_causes
+				WHERE incident_type_id = :incidentTypeId AND 
+					  incident_type_cause_id = :id			  
+	</DELETE>
+</DML>

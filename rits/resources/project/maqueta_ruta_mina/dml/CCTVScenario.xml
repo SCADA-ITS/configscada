@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="CCTVScenario">
+	<SELECT>SELECT scenario_id as "id",
+				   alias as "alias",
+				   description as "description",
+				   n_rows as "nRows",
+				   n_columns as "nColumns",
+				   enabled as "enabled",
+				   visible as "visible"
+			  FROM conf.cctv_scenarios
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>
+	</INSERT>
+	<UPDATE> 
+	</UPDATE>
+	<DELETE>
+	</DELETE>
+</DML>

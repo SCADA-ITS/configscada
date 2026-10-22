@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.2.1.RELEASE</version>
+		<relativePath /> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>com.revenga.rits.back</groupId>
+	<artifactId>io-controller</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>io-controller</name>
+	<description>RTIS I/O CONTROLLER ==> I/O controller </description>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java.version>11</java.version>
+		<maven.test.skip>false</maven.test.skip>
+		
+		<data-core-lib.version>0.0.1-SNAPSHOT</data-core-lib.version>
+		<cache-core-lib.version>0.0.1-SNAPSHOT</cache-core-lib.version>
+		<adapter-lib.version>0.0.1-SNAPSHOT</adapter-lib.version>
+		<entities-lib.version>0.0.1-SNAPSHOT</entities-lib.version>
+		<mango-core-lib.version>1.0.0</mango-core-lib.version>
+		
+		<commons-collections4.version>4.4</commons-collections4.version>
+		<commons-validator.version>1.6</commons-validator.version>
+	</properties>
+
+	<repositories>
+		<repository>
+			<id>jcenter</id>
+			<name>JCenter</name>
+			<url>https://jcenter.bintray.com/</url>
+		</repository>
+	</repositories>
+	
+	<dependencies>
+	
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.revenga.rits.back</groupId>
+			<artifactId>data-core-lib</artifactId>
+			<version>${data-core-lib.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.revenga.rits.back</groupId>
+			<artifactId>cache-core-lib</artifactId>
+			<version>${cache-core-lib.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.revenga.rits.back</groupId>
+			<artifactId>adapter-lib</artifactId>
+			<version>${adapter-lib.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.revenga.rits.back</groupId>
+			<artifactId>entities-lib</artifactId>
+			<version>${entities-lib.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.revenga.rits.back</groupId>
+			<artifactId>mango-core-lib</artifactId>
+			<version>${mango-core-lib.version}</version>
+		</dependency>
+		<!-- <dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency> -->
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-web -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-web</artifactId>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
+		<dependency>
+		    <groupId>javax.servlet</groupId>
+		    <artifactId>javax.servlet-api</artifactId>
+		</dependency>
+		
+				
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.junit.vintage</groupId>
+					<artifactId>junit-vintage-engine</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- Exclude Spring Boot's Default Logging -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- Add Log4j2 Dependency -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-log4j2</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-collections4 -->
+		<dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-collections4</artifactId>
+		    <version>${commons-collections4.version}</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/commons-validator/commons-validator -->
+		<dependency>
+		    <groupId>commons-validator</groupId>
+		    <artifactId>commons-validator</artifactId>
+		    <version>${commons-validator.version}</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.quartz-scheduler/quartz -->
+		<dependency>
+		    <groupId>org.quartz-scheduler</groupId>
+		    <artifactId>quartz</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.squareup.okhttp3</groupId>
+			<artifactId>okhttp</artifactId>
+			<version>5.0.0-alpha.2</version><!--$NO-MVN-MAN-VER$-->
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.github.03/onvif -->
+		<dependency>
+			<groupId>com.github.03</groupId>
+			<artifactId>onvif</artifactId>
+			<version>1.0.7</version>
+			 <exclusions>
+		        <exclusion>
+		            <groupId>com.burgstaller</groupId>
+		            <artifactId>okhttp-digest</artifactId>
+		        </exclusion>
+		    </exclusions>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-csv -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-csv</artifactId>
+			<version>1.11.0</version>
+		</dependency>
+
+		
+	</dependencies>
+
+	<build>
+		<pluginManagement>
+			<plugins>	
+			</plugins>
+		</pluginManagement>
+		<plugins>
+			<plugin>
+				<artifactId>exec-maven-plugin</artifactId>
+				<groupId>org.codehaus.mojo</groupId>
+				<executions>
+					<execution>
+						<!-- Run our version calculation script -->
+						<id>Git commit version file generator</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>${basedir}/../_ritsback/scripts/gitversion.sh</executable>
+							<workingDirectory>${basedir}</workingDirectory>
+							<arguments>
+            					<argument>${basedir}</argument>
+            				</arguments>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<finalName>io-controller</finalName>
+				</configuration>
+			</plugin>
+				
+		</plugins>
+		
+	</build>
+
+</project>

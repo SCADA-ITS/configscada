@@ -1,0 +1,88 @@
+{
+   "dataPoints": [
+      {
+         "purgePeriod": 1,
+         "setExtremeLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+         "intervalLoggingType": "INSTANT",
+         "dataSourceXid": "DS_FLIR",
+         "discardHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+         "deviceName": "FLIR",
+         "enabled": true,
+         "rollup": "NONE",
+         "purgeOverride": false,
+         "chartRenderer": {
+            "limit": 10,
+            "type": "TABLE"
+         },
+         "xid": "DP_FLIR_cmd",
+         "eventDetectors": [],
+         "textRenderer": {
+            "useUnitAsSuffix": false,
+            "type": "PLAIN",
+            "suffix": ""
+         },
+         "loggingType": "NONE",
+         "overrideIntervalLoggingSamples": false,
+         "defaultCacheSize": 1,
+         "readPermission": "",
+         "setPermission": "",
+         "intervalLoggingPeriodType": "MINUTES",
+         "intervalLoggingSampleWindowSize": 0,
+         "tolerance": 0,
+         "purgeType": "YEARS",
+         "plotType": "STEP",
+         "intervalLoggingPeriod": 1,
+         "discardExtremeValues": false,
+         "tags": {},
+         "unit": "",
+         "pointLocator": {
+            "valueIndex": 0,
+            "queryable": false,
+            "settable": true,
+            "readCommand": "a",
+            "dataType": "ALPHANUMERIC",
+            "valueRegex": "a",
+            "writeCommand": "%VALUE%"
+         },
+         "discardLowLimit": -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+         "setExtremeHighLimit": 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368,
+         "name": "cmd",
+         "chartColour": "",
+         "preventSetExtremeValues": false,
+         "simplifyType": "NONE"
+      }
+   ],
+   "publishers": [],
+   "dataSources": [
+      {
+         "updatePeriodType": "MINUTES",
+         "purgePeriod": 1,
+         "updatePeriods": 1,
+         "type": "TcpIp",
+         "maxHistoricalIOLogs": 1,
+         "socketRetries": 5,
+         "enabled": true,
+         "timeout": 5000,
+         "logIO": false,
+         "purgeOverride": false,
+         "useCron": false,
+         "xid": "DS_FLIR",
+         "responseBufferSize": 20000,
+         "ioLogFileSizeMBytes": 1,
+         "alarmLevels": {
+            "POINT_WRITE_EXCEPTION": "DO_NOT_LOG",
+            "POLL_ABORTED": "DO_NOT_LOG",
+            "DATA_SOURCE_EXCEPTION": "DO_NOT_LOG",
+            "POINT_READ_EXCEPTION": "DO_NOT_LOG"
+         },
+         "port": "{port}",
+         "delimiter": "",
+         "name": "FLIR",
+         "host": "{host}",
+         "quantize": false,
+         "hex": false,
+         "editPermission": "",
+         "purgeType": "YEARS"
+      }
+   ]
+}

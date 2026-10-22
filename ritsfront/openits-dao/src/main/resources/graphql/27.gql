@@ -1,0 +1,48 @@
+{
+  id
+  alias
+  description
+  elementType {
+    id
+  }
+  elementSubtype {
+    id
+  }
+  elementTypeState {
+    id
+  }
+  elementState {
+    currentElementTypeState {
+      id
+    }
+    maxAlarmLevel {
+      id
+    }
+  }
+  elementValues {
+    id
+    value
+    updatedAt
+    elementValueState {
+      id
+    }
+    elementTypeParam {
+      id
+    }
+  }
+  alarms {
+    id
+    alarmConfig {
+      id
+      alarmLevel {
+        id
+      }
+      alarmType {
+        id
+      }
+    }
+    recognized
+    activation
+    deactivation
+  }
+}

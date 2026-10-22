@@ -1,0 +1,39 @@
+{
+	"module": {
+		"alarmMonitor": {
+			"id": 1005
+		},
+		"alarm": {
+			"id": 1008,
+			"action": {
+				"recognizeAll": 100802
+			}
+		},
+		"equipmentViewer":{
+			"id": 1014,
+			"action": {
+				"view": 101402
+			}
+		}
+	},
+	"rest": {
+		"active_alarms": "generic_datas/GenericData:1",
+		"no_recognized_alarms": "generic_datas/GenericData:2",
+		"filtered_alarms": "generic_datas/GenericData:3",
+		"alarms": "alarms",
+		"active_conflicts": "generic_datas/GenericData:6"
+	},
+	"ws": {
+		"alarms": "/topic/alarm.>",
+		"active_alarms":"/topic/generic_data.GenericData:1",
+		"no_recognized_alarms":"/topic/generic_data.GenericData:2",
+		"filtered_alarms":"/topic/generic_data.GenericData:3",
+		"active_conflicts": "/topic/generic_data.GenericData:6"
+	},
+	"notification": {
+		"enabled": true,
+		"timeoutNotificationMs": 0,
+		"maxInactiveNotifications": 10,
+		"recognizeAlarms": 100802
+	}
+}

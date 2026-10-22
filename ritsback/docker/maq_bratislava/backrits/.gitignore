@@ -1,0 +1,11 @@
+/logs/
+/resources/
+/data-loader.jar
+/ep-pub-stomp.jar
+/equipment-manager.jar
+/historical-manager.jar
+/io-controller.jar
+/plan-manager.jar
+/service-graphql.jar
+/user-manager.jar
+/incident-manager.jar

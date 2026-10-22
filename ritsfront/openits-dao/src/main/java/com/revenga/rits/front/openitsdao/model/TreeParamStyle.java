@@ -1,0 +1,119 @@
+package com.revenga.rits.front.openitsdao.model;
+
+import java.io.Serializable;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+
+/**
+ * The persistent class for the tree_param_styles database table.
+ * 
+ */
+@Entity
+@Table(name="tree_param_styles")
+@NamedQuery(name="TreeParamStyle.findAll", query="SELECT t FROM TreeParamStyle t")
+public class TreeParamStyle implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private Integer id;
+
+	private String func;
+	
+	private String operator;
+	
+	private String value1;
+	
+	private String value2;
+	
+	private String resource;
+
+	//bi-directional many-to-one association to TreeStyle
+	@ManyToOne
+	@JoinColumn(name="tree_style_id")
+	private TreeStyle treeStyle;
+	
+	//bi-directional many-to-one association to TreeParam
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name="tree_param_id")
+	private TreeParam treeParam;
+
+	public TreeParamStyle() {
+	}
+
+	public Integer getId() {
+		return this.id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getFunc() {
+		return func;
+	}
+
+	public void setFunc(String func) {
+		this.func = func;
+	}
+
+	public String getOperator() {
+		return operator;
+	}
+
+	public void setOperator(String operator) {
+		this.operator = operator;
+	}
+
+	public String getValue1() {
+		return value1;
+	}
+
+	public void setValue1(String value1) {
+		this.value1 = value1;
+	}
+
+	public String getValue2() {
+		return value2;
+	}
+
+	public void setValue2(String value2) {
+		this.value2 = value2;
+	}
+
+	public String getResource() {
+		return resource;
+	}
+
+	public void setResource(String resource) {
+		this.resource = resource;
+	}
+
+	public TreeStyle getTreeStyle() {
+		return treeStyle;
+	}
+
+	public void setTreeStyle(TreeStyle treeStyle) {
+		this.treeStyle = treeStyle;
+	}
+
+	public TreeParam getTreeParam() {
+		return treeParam;
+	}
+
+	public void setTreeParam(TreeParam treeParam) {
+		this.treeParam = treeParam;
+	}
+
+}

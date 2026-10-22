@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="SpathStretch">
+	<SELECT>SELECT spath_id as "spathId",
+				   stretch_id as "stretchId",
+				   rel_stretch_id as "relStretchId",
+				   position as "position",
+				   enabled as "enabled",
+				   visible as "visible"
+			  FROM conf.spath_stretchs
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>
+	</INSERT>
+	<UPDATE> 
+	</UPDATE>
+	<DELETE>
+	</DELETE>
+</DML>

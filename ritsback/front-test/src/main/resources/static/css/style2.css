@@ -1,0 +1,112 @@
+body {
+/* 	padding: 10px !important; */
+	padding: 0.1px 10px 10px 10px !important;
+	width: 100%;
+	/* background-color: #2d2d2d; */
+	background-color: black;
+}
+
+.panel_custom {
+	margin-top: 10px;
+	/* border-width: 1px; */
+	background: #337ab7;
+/*  	background:-moz-linear-gradient(top,#50220c 0%,#50220c 100%);
+	background:-webkit-gradient(linear,left top,left bottom,color-stop(0%,#50220c),color-stop(100%,#50220c));
+	background:-webkit-linear-gradient(top,#50220c 0%,#50220c 100%);
+	background:-o-linear-gradient(top,#50220c 0%,v 100%);
+	background:-ms-linear-gradient(top,#50220c 0%,#50220c 100%);
+	background:linear-gradient(to bottom,#50220c 0%,#50220c 100%); */
+}
+
+.panel-heading_custom {
+	background: #337ab7;
+/* 	background:-moz-linear-gradient(top,c 0%,#50220c 100%) !important;
+	background:-webkit-gradient(linear,left top,left bottom,color-stop(0%,#50220c),color-stop(100%,#50220c)) !important;
+	background:-webkit-linear-gradient(top,#50220c 0%,#50220c 100%) !important;
+	background:-o-linear-gradient(top,#50220c 0%,v 100%) !important;
+	background:-ms-linear-gradient(top,#50220c 0%,#50220c 100%) !important;
+	background:linear-gradient(to bottom,#50220c 0%,#50220c 100%) !important; */
+}
+
+.menu-style {
+	position: fixed;
+	z-index: 10;
+	width: 100%;
+    padding-right: 20px;
+}
+
+.content-style {
+	margin-top: 100px;
+  	z-index:1;
+}
+
+.vertical-center {
+	min-height: 100%;
+	min-height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+}
+
+.vcenter {
+	display: inline-block;
+	vertical-align: middle;
+	float: none;
+}
+
+#footer {
+	position: absolute;
+	bottom: 0;
+	width: 880px;
+	height: 60px;
+}
+
+.back-to-top {
+	cursor: pointer;
+	position: fixed;
+	bottom: 20px;
+	right: 48px;
+	display: none;
+}
+
+span.back-to-top {
+	width: 30px;
+	height: 30px;
+	line-height: 70px;
+	display: inline-block;
+	border-radius: 70px;
+	background: #fff;
+	border: 1px solid #bed6eb;
+	z-index: 2;
+	position: absolute;
+	left: 0px;
+	text-align: center;
+	font-size: 18px;
+}
+
+span.back-to-top i {
+	color: #bed6eb;
+	top: 5px;
+}
+
+span.back-to-top:hover {
+	border: 1px solid #337ab7;
+}
+
+span.back-to-top:hover i {
+	color: #337ab7;
+}
+
+.rb-etd-step-text {
+	align: center;
+	color: #337ab7;
+	font-weight: bold;
+	font-size: 15px;
+}
+
+.rb-etd-title-text {
+	color: #337ab7;
+	font-weight: bold;
+	font-size: 18px;
+}

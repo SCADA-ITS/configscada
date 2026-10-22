@@ -1,0 +1,131 @@
+package com.revenga.rits.front.openitsdao.model;
+
+import java.io.Serializable;
+import javax.persistence.*;
+import java.util.List;
+
+
+/**
+ * The persistent class for the menu_groups database table.
+ * 
+ */
+@Entity
+@Table(name="menu_groups")
+@NamedQuery(name="MenuGroup.findAll", query="SELECT m FROM MenuGroup m")
+public class MenuGroup implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private Integer id;
+
+	private String description;
+
+	private Boolean enabled;
+
+	private String icon;
+
+	private String label;
+
+	private String name;
+
+	private Boolean visible;
+	
+	private Integer position;
+
+	//bi-directional many-to-one association to MenuItem
+	@OneToMany(mappedBy="menuGroup")
+	private List<MenuItem> menuItems;
+
+	public MenuGroup() {
+	}
+
+	public Integer getId() {
+		return this.id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getDescription() {
+		return this.description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Boolean getEnabled() {
+		return this.enabled;
+	}
+
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	public String getIcon() {
+		return this.icon;
+	}
+
+	public void setIcon(String icon) {
+		this.icon = icon;
+	}
+
+	public String getLabel() {
+		return this.label;
+	}
+
+	public void setLabel(String label) {
+		this.label = label;
+	}
+
+	public String getName() {
+		return this.name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Boolean getVisible() {
+		return this.visible;
+	}
+
+	public void setVisible(Boolean visible) {
+		this.visible = visible;
+	}
+	
+	public Integer getPosition() {
+		return this.position;
+	}
+
+	public void setPosition(Integer position) {
+		this.position = position;
+	}
+
+	public List<MenuItem> getMenuItems() {
+		return this.menuItems;
+	}
+
+	public void setMenuItems(List<MenuItem> menuItems) {
+		this.menuItems = menuItems;
+	}
+
+	public MenuItem addMenuItem(MenuItem menuItem) {
+		getMenuItems().add(menuItem);
+		menuItem.setMenuGroup(this);
+
+		return menuItem;
+	}
+
+	public MenuItem removeMenuItem(MenuItem menuItem) {
+		getMenuItems().remove(menuItem);
+		menuItem.setMenuGroup(null);
+
+		return menuItem;
+	}
+
+	
+
+}

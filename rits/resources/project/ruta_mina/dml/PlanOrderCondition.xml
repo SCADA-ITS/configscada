@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="PlanOrderCondition">
+	<SELECT>SELECT plan_order_condition_id as "id",
+				   plan_id as "planId",
+				   plan_order_id as "planOrderId",
+				   element_type_id as "elementTypeId",
+				   element_id as "elementId",
+				   param_type_id as "paramTypeId",
+				   element_type_param_id as "elementTypeParamId",
+				   threshold_operation_id as "thresholdOperationId",
+				   threshold_val1 as "thresholdVal1",
+				   threshold_val2 as "thresholdVal2",
+				   element_type_state_id as "elementTypeStateId",
+				   plan_order_condition_order as "planOrderConditionOrder",
+				   nexus_and as "nexusAnd",
+				   enabled as "enabled", 
+				   visible as "visible"
+			  FROM conf.plan_order_conditions
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>INSERT INTO conf.plan_order_conditions
+					   (plan_order_condition_id,
+					    plan_id,
+					    plan_order_id,
+					   	element_type_id,
+					   	element_id,
+					   	param_type_id,
+					   	element_type_param_id,
+					   	threshold_operation_id,
+					   	threshold_val1,
+					   	threshold_val2,
+					   	element_type_state_id,
+					   	plan_order_condition_order,
+					   	nexus_and,
+					    enabled,
+					    visible,
+					    created_at,
+					    updated_at)
+				 VALUES (:id=getNextId{'conf.plan_order_conditions'$'plan_order_condition_id'$'plan_id=planId;plan_order_id=planOrderId'},
+				 		 :planId,
+				 		 :planOrderId,
+				 		 :elementTypeId,
+				 		 :elementId,
+				 		 :paramTypeId,
+				 		 :elementTypeParamId,
+				         :thresholdOperationId,
+				         :thresholdVal1,
+				         :thresholdVal2,
+				         :elementTypeStateId,
+				         :planOrderConditionOrder,
+				         :nexusAnd,
+				         :enabled,
+				         :visible,
+				         CURRENT_TIMESTAMP,
+				         CURRENT_TIMESTAMP)
+	</INSERT>
+	<UPDATE>UPDATE conf.plan_order_conditions
+			   SET element_type_id = :elementTypeId,
+			   	   element_id = :elementId,
+			   	   param_type_id = :paramTypeId,
+			   	   element_type_param_id = :elementTypeParamId,
+			   	   threshold_operation_id = :thresholdOperationId,
+				   threshold_val1 = :thresholdVal1,
+				   threshold_val2 = :thresholdVal2,
+				   element_type_state_id = :elementTypeStateId,
+				   plan_order_condition_order = :planOrderConditionOrder,
+				   nexus_and = :nexusAnd,
+				   enabled = :enabled,
+				   visible = :visible,
+				   updated_at = CURRENT_TIMESTAMP
+			 WHERE plan_order_condition_id = :id
+			 AND plan_id = :planId
+			 AND plan_order_id = :planOrderId
+	</UPDATE>
+	<DELETE>DELETE FROM conf.plan_order_conditions
+			 WHERE plan_order_condition_id = :id 
+			 AND plan_id = :planId 
+			 AND plan_order_id = :planOrderId
+	</DELETE>
+</DML>

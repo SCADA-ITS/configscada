@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="ManagementAreaElement">
+	<SELECT>SELECT management_area_id as "id", 
+				   element_type_id as "elementTypeId",
+				   element_id as "elementId",
+				   enabled as "enabled", 
+				   visible as "visible" 
+			  FROM conf.management_area_elements
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>INSERT INTO conf.management_area_elements
+					   (management_area_id,
+					   	element_type_id,
+					   	element_id,
+					    enabled,
+					    visible,
+					    created_at,
+					    updated_at)
+				 VALUES (:id,
+				         :elementTypeId,
+				         :elementId,				 
+				         :enabled,
+				         :visible,
+				         CURRENT_TIMESTAMP,
+				         CURRENT_TIMESTAMP)
+	</INSERT>
+	<UPDATE>
+	</UPDATE>
+	<DELETE>DELETE FROM conf.management_area_elements
+			 WHERE management_area_id = :id
+			 AND  element_type_id= :elementTypeId
+			 AND  element_id= :elementId
+	</DELETE>
+</DML>

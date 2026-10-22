@@ -1,0 +1,23 @@
+{
+	"moduleAction": {
+	    "add": 101101,
+		"edit": 101102,
+		"remove": 101103,
+		"lock": 101104,
+		"changePassword": 101105
+	},
+	"actionEndpoints": {
+		"add": "users/create",
+		"edit": "users/update",
+		"remove": "users/delete/${id}"
+	},
+	"restEndpoints": {
+		"user": "users/${id}",
+		"userRole": "users/role/${id}",
+		"permissions": "users/systemPermissions",
+		"managementAreas" : "management_areas"
+	},
+	"requiredPermissions": {
+		"edit": "SystemPermission:2"
+	}
+}

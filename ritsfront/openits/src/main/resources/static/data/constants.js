@@ -1,0 +1,285 @@
+const LOG_LEVEL = 2;
+
+const MAIN_SCREEN = "mainScreen";
+const MAIN_TAB_ID = "tabs";
+const MAIN_TOOLBAR_ID = "mainToolbar";
+const MAIN_TOOLBAR_ICONS_ID = "mainToolbarIcons";
+const MAIN_BACKGROUND_IMAGE_ID = "mainBackgroundImage";
+const TASKBAR_ID = "taskbar";
+const NO_IMAGE = "img/undefined.png";
+
+const IS_TRUE = function(str) {
+	
+	return (str === true || str === "true" || str === "TRUE");	
+};
+
+const IS_FALSE = function(str) {
+	
+	return (!str || str === "false" || str === "FALSE");	
+};
+
+const START_ON_MONDAY = true;
+
+const SYSTEM_PERMISSION_LOGIN = 1;
+
+const SYSTEM_PROFILES = {
+	USER: "User:1000",
+	ROLE: "Role:1000",
+	ROOT: "User:2000"
+};
+
+const FORMAT_NUMERIC_DATES = {
+	month: '2-digit',
+	day: '2-digit',
+	year: 'numeric',
+	hour: '2-digit',
+	minute: '2-digit',
+	second: '2-digit'
+};
+const FORMAT_STRING_DATES = {
+	weekday: 'long',
+	month: 'long',
+	day: '2-digit',
+	year: 'numeric',
+	hour: '2-digit',
+	minute: '2-digit',
+	second: '2-digit'
+};
+
+const LOGIN_MESSAGE = {
+	AUTHORIZED: { id: "AUTHORIZED", label: "LBL_AUTHORIZED" },
+	DENY_PASSWORD_EXPIRED: { id: "DENY_PASSWORD_EXPIRED", label: "LBL_DENY_PASSWORD_EXPIRED" },
+	DENY_LOCKED: { id: "DENY_LOCKED", label: "LBL_DENY_LOCKED" },
+	DENY_MULTI_SESSION_NOT_ALLOWED: { id: "DENY_MULTI_SESSION_NOT_ALLOWED", label: "LBL_DENY_MULTI_SESSION_NOT_ALLOWED" },
+	WRONG_USER_PASSWORD: { id: "WRONG_USER_PASSWORD", label: "LBL_WRONG_USER_PASSWORD" },
+	DENY_OTHERS: { id: "DENY_OTHERS", label: "LBL_DENY_OTHERS" },
+	LOGOUT: { id: "LOGOUT", label: "LBL_LOGOUT" },
+	UNAUTHORIZED: { id: "UNAUTHORIZED", label: "LBL_UNAUTHORIZED" },
+	SERVER_NOT_AVAILABLE: { id: "SERVER_NOT_AVAILABLE", label: "LBL_SERVER_NOT_AVAILABLE" },
+	MAX_SESSIONS: { id: "MAX_SESSIONS", label: "LBL_MAX_SESSIONS" }
+}
+
+const REQUIRED_PERMISSIONS = {
+	LOGIN: "SystemPermission:1",
+	EDIT_USER: "SystemPermission:2",
+	EDIT_ROL: "SystemPermission:3",
+	EDIT_PLAN: "SystemPermission:4",
+	EXECUTE_PLAN: "SystemPermission:5",
+	SEND_COMMAND: "SystemPermission:6",
+	RECOGNIZE_ALARM: "SystemPermission:7",
+	EDIT_INCIDENT_REPORT: "SystemPermission:8",
+	CREATE_INCIDENT_REPORT: "SystemPermission:9",
+	CONFIRM_INCIDENT_REPORT: "SystemPermission:10",
+	CANCEL_INCIDENT_REPORT: "SystemPermission:11",
+	INCIDENT_VIEW: "SystemPermission:12",
+	EDIT_MANUAL_VMS: "SystemPermission:13",
+	EDIT_LIBRARY_VMS: "SystemPermission:14",
+	AUTOASSIGN_INCIDENT_REPORT: "SystemPermission:15",
+	ASSING_INCIDENT_REPORT_ANOTHER_USER: "SystemPermission:16",
+	HELP_MENU: "SystemPermission:17",
+	EDIT_SMTHRESHOLDS: "SystemPermission:18",
+	EDIT_ALARM_CONFIG: "SystemPermission:19",
+	EDIT_INCIDENT: "SystemPermission:20"
+};
+
+const DEFAULT_SIGNALLING_MODULE_ACTION = 101901;
+
+// Browser Session Storage constants
+const SESSION_STORAGE_SESSION_DATA = "session.data";
+
+// Data souce types
+const STOMP_DATA_SOURCE_TYPE = 2;
+
+// Module type constants
+const MODULE_TYPE_CUSTOM_WINDOW = 1;
+const MODULE_TYPE_GENERIC_GRID_WINDOW = 2;
+const MODULE_TYPE_GENERIC_MAP_WINDOW = 3;
+const MODULE_TYPE_GENERIC_SYNOPTIC_WINDOW = 4;
+const MODULE_TYPE_GENERIC_EXTERNAL_APP_WINDOW = 5;
+const MODULE_TYPE_SERVICE = 6;
+const MODULE_TYPE_GENERIC_MULTI_GRID_WINDOW = 7;
+const MODULE_TYPE_GENERIC_SELECTOR_TREE_WINDOW = 8;
+const MODULE_TYPE_GENERIC_BACKOFFICE_WINDOW = 9;
+
+
+// Module type params constants
+const MODULE_PARAM_TYPE_SERVICE_LOAD_PRIORITY = 1;
+const MODULE_PARAM_TYPE_SERVICE_CONFIG = 2;
+const MODULE_PARAM_TYPE_GENERIC_GRID_WINDOW_GRID_ID = 3;
+const MODULE_PARAM_SYNOPTIC_ID = 4;
+const MODULE_PARAM_TYPE_GENERIC_EXTERNAL_APP_WINDOW_URL = 5;
+const MODULE_PARAM_MAP_ID = 6;
+const MODULE_PARAM_ENTITY_TYPE = 7;
+const MODULE_PARAM_TYPE_CUSTOM_WINDOW_CONFIG = 8;
+const MODULE_PARAM_TYPE_SELECTOR_TREE_ID = 9;
+const MODULE_PARAM_TYPE_CUSTOM_WINDOW_HIERARCHIES = 10;
+const MODULE_PARAM_TYPE_GENERIC_GRID_WINDOW_GRID_PARAM = 11;
+const MODULE_PARAM_TYPE_GENERIC_EXTERNAL_APP_WINDOW_EXTERNAL_WEB_APP = 12;
+const MODULE_PARAM_TYPE_GENERIC_BACKOFFICE_WINDOW_ID = 13;
+const MODULE_PARAM_TYPE_GENERIC_BACKOFFICE_WINDOW_TABLE_NAME = 14;
+const MODULE_PARAM_TYPE_GENERIC_BACKOFFICE_WINDOW_FILTER_COLUMN_NAME = 15;
+const MODULE_PARAM_TYPE_GENERIC_BACKOFFICE_WINDOW_FILTER_COLUMN_VALUE = 16;
+const MODULE_PARAM_TYPE_GENERIC_BACKOFFICE_WINDOW_FILTERS = 17;
+const MODULE_PARAM_TYPE_GENERIC_BACKOFFICE_WINDOW_FILTERS_REQUIRED = 18;
+
+// View type constants
+const VIEW_TYPE_TAB = 1;
+const VIEW_TYPE_WINDOW = 2;
+const VIEW_TYPE_CUSTOM = 3;
+const VIEW_TYPE_EXTERNAL = 4;
+
+// Params for windowed ui
+const WindowParam = Object.freeze({
+	HAS_MIN_BUTTON: 1,
+	HAS_MAX_BUTTON: 2,
+	IS_MAXIMIZED: 3,
+	HEIGHT: 4,
+	WIDTH: 5,
+	X: 6,
+	Y: 7,
+	ALLOW_MULTIPLE_INSTANCES: 8,
+	IMAGE: 9,
+	ICON: 10,
+	COLOR: 11,
+	LABEL: 12,
+	RESIZABLE: 13,
+	EXTERNALIZABLE: 14,
+	MODAL: 15,
+	NOTIFICABLE: 16,
+	RESPONSIVE: 17
+});
+
+// Services
+const Services = Object.freeze({
+	USER_SERVICE: 10,
+	ALARM_SERVICE: 11,
+	EVENT_SERVICE: 12,
+	TIME_SERVICE: 13,
+	STOMP_SUBSCRIPTOR_SERVICE: 14,
+	INCIDENT_SERVICE: 15,
+	TASK_MANAGER_SERVICE: 16,
+	SUBSCRIPTOR_SERVICE: 17
+});
+
+// DataTypes
+const DataType = Object.freeze({
+	INTEGER: "DataType:1",
+	ALPHANUMERIC: "DataType:2",
+	DECIMAL: "DataType:3",
+	TIMESTAMP: "DataType:4",
+	BOOLEAN: "DataType:5",
+});
+
+const StateValue = Object.freeze({
+		INITIALIZED: "ElementValueState:1",
+		ONLINE: "ElementValueState:2",
+		ALERTED: "ElementValueState:3",
+		OFFLINE: "ElementValueState:4"
+	});
+
+const ENTITIES_MANAGER_SCHEDULER_SECS = 600;
+
+function isGraphqlEnabled() { let res = true; try { res = (GRAPHQL_ENABLED === true); } catch {} return res; }
+
+// Type of entities to load
+const EntityType = Object.freeze({
+	ELEMENT_TYPE: { id: 1, syncLoad: false, endpoint: appConfig.restUrl + "element_types", load: isGraphqlEnabled() },
+	ELEMENT_TYPE_STATE: { id: 2, syncLoad: false, endpoint: appConfig.restUrl + "element_type_states", load: isGraphqlEnabled() },
+	ALARM_TYPE: { id: 3, syncLoad: false, endpoint: appConfig.restUrl + "alarms/alarm_types", load: isGraphqlEnabled() },
+	ALARM_LEVEL: { id: 4, syncLoad: false, endpoint: appConfig.restUrl + "alarms/alarm_levels", load: isGraphqlEnabled() },
+	ALARM_CONFIG: { id: 5, syncLoad: false, endpoint: appConfig.restUrl + "alarms/alarm_configs", load: isGraphqlEnabled() },
+	MODULE: { id: 6, syncLoad: true, endpoint: appConfig.restUrl + "modules", load: true },
+	ELEMENT: { id: 7, syncLoad: false, endpoint: appConfig.restUrl + "elements/withCommands", load: isGraphqlEnabled() },
+	LOG_TYPE: { id: 8, syncLoad: false, endpoint: appConfig.restUrl + "log_types", load: isGraphqlEnabled() },
+	USER: { id: 9, syncLoad: true, endpoint: appConfig.restUrl + "users/with_role", load: true },
+	PLAN_SCHEDULE_STATE: { id: 11, syncLoad: false, endpoint: appConfig.restUrl + "plans/plan_schedule_state_types", load: isGraphqlEnabled() },
+	IMS_INCIDENT_GROUP: {id: 12, syncLoad: false, endpoint: appConfig.restUrl + "incidents/imsIncidentGroups", load: isGraphqlEnabled() },
+	IMS_INCIDENT_TYPE: {id: 13, syncLoad: false, endpoint: appConfig.restUrl + "incidents/imsIncidentTypes", load: isGraphqlEnabled() },
+	IMS_INCIDENT_LEVEL: {id: 14, syncLoad: false, endpoint: appConfig.restUrl + "incidents/incidentLevels", load: isGraphqlEnabled() },
+	STRETCH: {id: 15,syncLoad: false, endpoint: appConfig.restUrl + "locations/stretchs", load: isGraphqlEnabled() },
+	ELEMENT_VALUE_STATE: { id: 16, syncLoad: false, endpoint: appConfig.restUrl + "element_type_states/element_values_states", load: isGraphqlEnabled() },
+	PLAN_STATE_TYPE: { id: 17, syncLoad: false, endpoint: appConfig.restUrl + "plans/plan_state_types", load: isGraphqlEnabled() },
+	PLAN_ORDER_TYPE: { id: 18, syncLoad: false, endpoint: appConfig.restUrl + "plans/plan_order_types", load: isGraphqlEnabled() },
+	PLAN_ORDER_STATE_TYPE: { id: 19, syncLoad: false, endpoint: appConfig.restUrl + "plans/plan_order_state_types", load: isGraphqlEnabled() },
+	COMMAND_ELEMENT_TYPE: { id: 20, syncLoad: false, endpoint: appConfig.restUrl + "plans/plan_order_state_types", load: isGraphqlEnabled() },
+	IMS_TASK_TYPE: { id: 21, syncLoad: false, endpoint: appConfig.restUrl + "incidents/taskTypes", load: isGraphqlEnabled() }
+});
+
+
+const CONTENT_TYPE_JSON = {"Content-type": "application/json"};
+
+const HEADER_POST = {
+	"Content-type": "application/json",
+	"accept": "application/json"
+}
+
+const USE_VMS_FAKE_DATA = false;
+
+const ENDPOINT_SEND_COMMAND = "elements/send_command_element";
+const ENDPOINT_SEND_COMMAND_SYNC = "elements/send_command_element_sync";
+const ENDPOINT_SEND_AUDIT_LOG = "audit_logs/send";
+const ENDPOINT_ADD_COMMAND = "elements/add_command_element";
+const ENDPOINT_DELETE_COMMAND = "elements/delete_command_element";
+const ENDPOINT_PRIORITY_ENABLE = "elements/enable_priority/element/${elementId}/priority/${priorityId}";
+const ENDPOINT_PRIORITY_DISABLE = "elements/disable_priority/element/${elementId}/priority/${priorityId}";
+
+const ENDPOINT_SAVE_MODULE_VALUE = "modules/${moduleId}/module_value/save";
+
+const ENDPOINT_GET_MODULE_HELP = "help/${moduleId}/module";
+const ENDPOINT_GET_TAG_HELP = "help/${tag}/tag";
+
+const HELP_PATH = "./help/";
+const HELP_FILE = "index.html";
+
+// DataTypes
+const LogType = Object.freeze({
+	LOG_TYPE_IMS: { 
+		id: "LogType:1",
+	},
+	LOG_TYPE_PLANS: {
+		id: "LogType:2",
+		subtypes: {
+			LOG_SUBTYPE_EXECUTE_PLAN: "LogSubtype:3",
+			LOG_SUBTYPE_STOP_PLAN: "LogSubtype:34",
+			LOG_SUBTYPE_PAUSE_PLAN: "LogSubtype:35"
+		},
+		params: {
+			PLAN: "LogTypeParam:2:1",
+			ARG: "LogTypeParam:2:2",
+			COMMENT: "LogTypeParam:2:3"
+		}
+	},
+	LOG_TYPE_COMMANDS: {
+		id: "LogType:3",
+		subtypes: {
+			LOG_SUBTYPE_EXECUTE_COMMAND: "LogSubtype:1"
+		},
+		params: {
+			COMMAND_TYPE: "LogTypeParam:3:1",
+			ELEMENT: "LogTypeParam:3:2",
+			COMMAND_VALUES: "LogTypeParam:3:3",
+			COMMENT: "LogTypeParam:3:4"
+		}
+	}
+});
+
+// Plan actions
+const PlanAction = Object.freeze({
+	PLAY: "PLAY",
+	STOP: "STOP",
+	PAUSE: "PAUSE",
+	CANCEL: "CANCEL"
+});
+
+// DataTypes
+const LogLevel = Object.freeze({
+	TRACE: { level: 1, color: "#ffc107" },
+  	DEBUG: { level: 2, color: "#ffc107" },
+  	INFO: { level: 3, color: "#ff9800" },
+  	WARN: { level: 4, color: "#ff9800" },
+  	ERROR: { level: 5, color: "#e60000" },
+  	CRITICAL: { level: 6, color: "#cc0000" }
+});
+
+// Number os buttons to show in monitor module left column
+const MAX_NUM_OF_BUTTON_TREES = 3;

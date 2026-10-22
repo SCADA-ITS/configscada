@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="ImsIncidentTypeTaskValue">
+	<SELECT>SELECT task_type_id as "taskTypeId",
+				   task_type_param_id as "taskTypeParamId",
+				   incident_type_task_id as "incidentTypeTaskId",
+				   value as "value",
+				   enabled as "enabled",
+				   visible as "visible"
+			  FROM conf.ims_incident_type_task_values
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>INSERT INTO conf.ims_incident_type_task_values
+					   (task_type_id,
+					   	task_type_param_id,
+					   	incident_type_task_id,
+					   	value,
+					    enabled,
+					    visible,
+					    created_at,
+					    updated_at)
+				 VALUES (:taskTypeId,
+				 		 :taskTypeParamId,
+				 		 :incidentTypeTaskId,
+				    	 :value,
+				         :enabled,
+				         :visible,
+				         CURRENT_TIMESTAMP,
+				         CURRENT_TIMESTAMP)
+	</INSERT>
+	<UPDATE>UPDATE conf.ims_incident_type_task_values
+			   SET value = :value,
+			       updated_at = CURRENT_TIMESTAMP
+			 WHERE incident_type_task_id = :id
+	</UPDATE>
+	<DELETE>DELETE FROM conf.ims_incident_type_task_values
+			 WHERE incident_type_task_id = :incidentTypeTaskId
+	</DELETE>
+</DML>

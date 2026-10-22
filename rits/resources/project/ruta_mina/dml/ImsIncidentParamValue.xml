@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="ImsIncidentReportParamValue">
+	<SELECT>SELECT incident_report_id as "incidentReportId", 
+				incident_param_id as "incidentParamId", 
+				value as "value", 
+				enabled as "enabled", 
+				visible as "visible",  
+				created_at as "createdAt", 
+				updated_at as "updatedAt"
+			FROM "rt".ims_incident_param_values;
+	</SELECT>
+	<INSERT>INSERT INTO rt.ims_incident_param_values
+					   (incident_report_id,
+					    incident_param_id,
+					   	value,
+					   	enabled,
+					   	visible,
+					    created_at,
+					    updated_at)
+				 VALUES (:incidentReportId,
+						 :incidentParamId,
+				 		 :value,
+				 		 :enabled,
+				 		 :visible,
+				         CURRENT_TIMESTAMP,
+				         CURRENT_TIMESTAMP)
+	</INSERT>
+	<UPDATE>UPDATE rt.ims_incident_param_values
+			   SET value = :value, 
+			    updated_at = CURRENT_TIMESTAMP
+			 WHERE incident_param_id = :incidentParamId AND incident_report_id = :incidentReportId
+	</UPDATE>
+	<DELETE>DELETE FROM rt.ims_incident_param_values
+			 WHERE incident_param_id = :incidentParamId AND incident_report_id = :incidentReportId
+	</DELETE>
+</DML>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="Road">
+	<SELECT>SELECT road_id as "id",
+				   road_type_id as "roadTypeId",
+				   alias as "alias",
+				   description as "description",
+				   management_area_id as "managementAreaId"
+			  FROM conf.roads
+	</SELECT>
+	<INSERT>
+	</INSERT>
+	<UPDATE> 
+	</UPDATE>
+	<DELETE>
+	</DELETE>
+</DML>

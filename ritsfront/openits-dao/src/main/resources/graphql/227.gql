@@ -1,0 +1,22 @@
+{
+  id
+  alias
+  description
+  stretchs {
+    id
+    alias
+    description
+    pkIni
+    pkEnd
+    lanes
+    stretchType {
+      id
+      alias
+    }
+    position
+    road {
+      id
+      alias
+    }
+  }
+}
