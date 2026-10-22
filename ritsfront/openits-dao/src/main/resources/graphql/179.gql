@@ -1,0 +1,12 @@
+{
+  id
+  alias
+  description
+  locationType {
+    id
+  }
+  stretchs {
+    id
+    alias
+  }
+}

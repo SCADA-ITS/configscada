@@ -1,0 +1,68 @@
+.headers .webix_el_box {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--white-text-default);
+    background-color: var(--blue-mid-opacity-7);
+    text-align: center;
+}
+
+.header-wizard-first-line {
+	font-size:16px;
+	letter-spacing:0.2px;
+	color: var(--white-text-default);
+	font-weight:500;
+	line-height:20px;
+	display:block;
+	white-space: nowrap;
+	overflow: hidden;
+	padding-left: 10px;
+    padding-top: 7px;
+}
+
+.header-wizard-second-line {
+	color: var(--white-text-default);
+	display:block;
+	letter-spacing:0.2px;
+	line-height:20px;
+	font-size: 13px;
+	font-weight: 300;
+	white-space: nowrap;
+	overflow: hidden;
+	padding-left: 10px;
+}
+
+.header-wizard-step {
+	color: var(--white-text-default);
+	display:block;
+	text-align: right;
+	letter-spacing:0.2px;
+	line-height:20px;
+	font-size: 13px;
+	font-weight: 300;
+	white-space: nowrap;
+	overflow: hidden;
+	padding-right: 10px;
+	padding-top: 17px;
+}
+
+.content-wizard-label {
+	vertical-align: 9px;
+	padding-left: 20px;	
+}
+
+.change-road-impact-button
+.changeuser-button {
+	font-size: 21px;
+	position: absolute;
+    margin: -3px 0px 0px 15px;	
+}
+
+.change-road-impact-button:hover
+.changeuser-button:hover {
+	background-color: var(--soft-grey);
+	border-radius: 50%;
+}
+
+.alarm-radio-options .webix_radio_option {
+	margin: 40px 0px !important;
+}

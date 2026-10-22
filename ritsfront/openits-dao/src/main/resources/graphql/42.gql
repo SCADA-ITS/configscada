@@ -1,0 +1,14 @@
+{
+  id
+  alarmConfig {
+    id
+    alias
+    alarmType {
+      id
+    }
+  }
+  filteredUntil
+  element {
+    id
+  }
+}

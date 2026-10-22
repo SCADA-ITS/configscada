@@ -1,0 +1,11 @@
+.plan-form {
+	height: max-content !important;
+	box-sizing: border-box;
+	border: 1px solid var(--blue-mid-opacity-3) !important;
+	margin: 6px 0px 16px;
+}
+
+.plan-form .webix_inp_label {
+	color: var(--blue-headers) !important;
+	font-size: 14px ;
+}

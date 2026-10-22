@@ -1,0 +1,8 @@
+{
+  id
+  alias
+  description
+  roadType {
+    id
+  }
+}

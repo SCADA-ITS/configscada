@@ -1,0 +1,8 @@
+{
+	"moduleAction": {
+		"recognize": 100701
+	},
+	"actionEndpoints": {
+		"recognize": "log_types/send_recognize_audit_logs"
+	}
+}

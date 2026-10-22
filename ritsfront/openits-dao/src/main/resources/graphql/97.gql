@@ -1,0 +1,57 @@
+{
+  id
+  keepValuesOnDisconnected
+  alias
+  description
+  state
+  longitude
+  latitude
+  icon
+  zoomIn
+  zoomOut
+  positionX
+  positionY
+  elementSubtype {
+    id
+  }
+  location {
+    id
+  }
+  elementType {
+    id
+  }
+  elementTypeState {
+    id
+  }
+  elementValues {
+    id
+    value
+    elementValueState {
+      id
+    }
+    elementTypeParam {
+      id
+    }
+  }
+  alarms {
+    id
+    alarmConfig {
+      id
+      alarmLevel {
+        id
+      }
+      alarmType {
+        id
+      }
+    }
+    recognized
+    activation
+    deactivation
+  }
+  parents {
+    id
+  }
+  childs {
+    id
+  }
+}

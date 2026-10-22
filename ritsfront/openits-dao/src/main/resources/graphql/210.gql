@@ -1,0 +1,29 @@
+{
+  id
+  alias
+  incidentType {
+    id
+    autoConfirmIncident
+  }
+  taskType {
+    id
+    labelAlias
+  }
+  incidentState {
+    id
+  }
+  operationDescription
+  mandatory
+  position
+  auto
+  onChange
+  delay
+  rerun
+  incidentTypeTaskValues {
+    id
+    value
+    taskTypeParam {
+      id
+    }
+  }
+}

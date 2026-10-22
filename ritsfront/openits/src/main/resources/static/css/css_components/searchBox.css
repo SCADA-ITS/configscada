@@ -1,0 +1,69 @@
+/* SearchBox */
+
+.searchbox-template {
+    background: transparent;
+    font-size: 13px;
+    color: var(--blue-soft) !important;
+}
+
+.searchbox-template input {
+    background: transparent;
+    border: 1px solid var(--blue-soft);
+    color: var(--blue-soft) !important;
+}
+
+.searchbox-template input:focus {
+    border: 1px solid var(--blue-soft);
+}
+
+.searchbox-template input::placeholder {
+    color: var(--blue-soft-opacity-7);
+}
+
+.searchbox-template span.webix_input_icon {
+	color: var(--blue-soft-opacity-7);
+}
+
+/* menu horizontal */
+
+.webix_menu-x.dt-submenu_searchbox .webix_list_item,
+.webix_menu-x.dt-submenu_searchbox-tb .webix_list_item {
+	background-color: transparent !important;
+	color: #94a1b3 !important; 
+	width: 34px !important;	
+	height: 34px !important;
+	padding: 0px 0px 0px 10px;
+}
+
+.webix_menu-x.dt-submenu_searchbox .webix_list_item .webix_icon {
+	color: var(--blue-text-default);
+}
+
+.webix_menu-x.dt-submenu_searchbox-tb .webix_list_item .webix_icon {
+	color: var(--blue-soft);
+}
+
+.webix_menu-x.dt-submenu_searchbox .webix_list_item:hover,
+.webix_menu-x.dt-submenu_searchbox-tb .webix_list_item:hover {
+	background-color: transparent !important;
+}
+
+/* menu vertical */
+
+.webix_menu.dt-submenu_searchbox-tb {
+  	background-color: rgb(211, 222, 238);
+  	box-shadow: 0 1.5rem 1.8rem;
+}
+
+.webix_menu.dt-submenu_searchbox-tb .webix_list_item {
+  	background-color: var(--blue-soft-opacity-4);
+  	color: var(--blue-strong);
+}
+
+.webix_menu.dt-submenu_searchbox-tb .webix_list_item:hover {
+  	background-color: var(--blue-mid-opacity-5);
+}
+
+.webix_menu.dt-submenu_searchbox-tb .webix_context_separator .sep_line {
+	background-color: var(--blue-soft-opacity-6);
+}

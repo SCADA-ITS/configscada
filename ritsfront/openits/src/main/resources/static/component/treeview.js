@@ -1,0 +1,1303 @@
+import { util } from "../lib/util.js";
+import { adapter } from "../lib/adapter.js";
+
+const TreeOptions = {
+	ICON: 1,
+	MULTISELECT: 2,
+	SORTED: 3,
+	CMD_BUTTONS: 4,
+	SEARCH: 5,
+	EXPAND_ALL: 6,
+	CHECK_ALL: 7,
+	ROOT_NODE: 8,
+	NO_SHOW_EMPTY_FOLDERS: 9,
+	UNCHECKED_IDS_: 10
+};
+
+const DefOptionValues = { 2: false, 3: true, 4: false, 5: true, 6: false, 7: false, 8: false, 9: false };
+const DefProperties = {
+	TRANSLATE: {
+		name: "translate",
+		value: false
+	},
+	FOLDER: {
+		name: "folder",
+		value: false
+	},
+	IMAGE: {
+		name: "image",
+		value: "not_found_50.png"
+	},
+	STATE_COLOR: {
+		name: "stateColor",
+		value: "transparent"
+	},
+	STATE_LABEL: {
+		name: "stateLabel",
+		value: ""
+	},
+	DISABLED: {
+		name: "disabled",
+		value: false
+	},
+	VALUE_AUX: {
+		name: "valueAux",
+		value: undefined,
+	},
+	VALUE_AUX_TRANSLATE: {
+		name: "valueAuxTranslate",
+		value: false
+	}
+};
+
+const _TRUE = "true";
+const _FALSE = "false";
+
+function assignId(item, dataMap, _self) {
+			
+	if (item) {
+		
+		if (item.id_) {
+		
+			let ids = dataMap.get(item.id_)
+			
+			if (Array.isArray(ids)) {
+				
+				ids.push(item.id);
+			}
+			else {
+				
+				dataMap.set(item.id_, [item.id]);
+			}
+		}
+		
+		if (Array.isArray(item.data) && item.data.length > 0) {
+				
+			item.data.forEach(otherItem => {
+				
+				_self(otherItem, dataMap, _self);
+			});
+		}	
+	}
+}
+
+export default class TreeView {
+
+	constructor(metadata, data, events) {
+
+		this.metadata = metadata;
+		this.data = data;
+		this.stomp = {};
+		this.uid = webix.uid();
+		this.events = events;
+		
+		this.idStompSubscriptor = undefined;
+		
+		this.filterValue = undefined;
+		this.dataMap = undefined;
+		
+		if (Array.isArray(data) && data.length > 0) {
+			
+			this.dataMap = new Map();
+			
+			let datMap = this.dataMap;
+			
+			data.forEach(item => {
+				
+				assignId(item, datMap, assignId);
+			});
+		}
+	}
+
+	getView() {
+
+		let self = this;
+		let view;
+			
+		let searchView = {
+			
+			view: "toolbar",
+			borderless: true,
+			elements: [
+				{ width: 4 },
+				{
+					view: "search",
+					id: "txtSearch-" + self.uid,
+					placeholder: i18n.t("LBL_SEARCH"),
+					on: {
+						onTimedKeyPress: function() {
+							
+							self.filterValue = this.getValue().toLowerCase(); // input data is derived
+							
+							$$("tree-" + self.uid).filter(function(obj) {  // here it filters all titles from the dataset
+			
+								return obj.value.toLowerCase().indexOf(self.filterValue) != -1;
+							});
+						}
+					}
+				},
+				{ width: 4 }
+			]
+		};
+		
+		let tbActionView = {
+			
+			view: "toolbar",
+			borderless: true,
+			elements: [
+				{ width: 4 }
+			]
+		};
+		
+		let multiSelect = self.getTreeOptions(TreeOptions.MULTISELECT);
+		
+		if (multiSelect) {
+			
+			let viewUnselectAll = { 
+				id: "tb_btn-unselect-all-" + this.uid, 
+				view: "icon", 
+				icon: "mdi mdi-checkbox-blank-outline", 
+				value: i18n.t("LBL_UNSELECT_ALL"), 
+				tooltip: function(obj){
+					
+					let tooltip = i18n.t("LBL_NO_ITEMS_TO_SELECT");
+					
+					if($$("tree-"+ self.uid).count() > 0){
+					
+						const ICON_ALL_SELECTED = "mdi mdi-check-box-outline";	
+						tooltip = (obj.icon === ICON_ALL_SELECTED) ? i18n.t("LBL_UNSELECT_ALL") : i18n.t("LBL_SELECT_ALL");
+					} 
+					
+					return tooltip;		
+					
+				},
+				on: {
+					onItemClick: function(obj) {
+						
+						let treeView = $$("tree-" + self.uid); 
+						let icon = $$(obj);
+						
+						if (treeView && icon){
+						
+							if(treeView.count() == treeView.getChecked().length){
+							
+								treeView.uncheckAll();									
+								icon.config.icon = "mdi mdi-checkbox-blank-outline";
+								icon.refresh();
+
+							} else {
+								treeView.checkAll();									
+								icon.config.icon = "mdi mdi-check-box-outline";
+								icon.refresh();							
+							
+							}	
+						}		
+					}
+				}
+			};
+			
+			tbActionView.elements.push(viewUnselectAll);
+		}
+		
+		let viewExpandAll = { 
+			id: "tb_btn-expand-all-" + this.uid, 
+			view: "icon", 
+			icon: "mdi mdi-expand-all", 
+			value: i18n.t("LBL_EXPAND_ALL"), 
+			tooltip: true,
+			on: {
+				onItemClick: function() {
+					
+					$$("tree-" + self.uid).openAll();				
+				}
+			}
+		};
+		
+		let viewColapseAll = { 
+			id: "tb_btn-collapse-all-" + this.uid, 
+			view: "icon", 
+			icon: "mdi mdi-collapse-all", 
+			value: i18n.t("LBL_COLLAPSE_ALL"), 
+			tooltip: true,
+			on: {
+				onItemClick: function() {
+					
+					$$("tree-" + self.uid).closeAll();				
+				}
+			}
+		};  
+		
+		tbActionView.elements.push(viewExpandAll);
+		tbActionView.elements.push(viewColapseAll);
+			
+		tbActionView.elements.push({ width: 4 });
+		
+		drawCommands();
+		
+		view = {
+			id: "treeview-" + this.uid,
+			rows: []
+		};
+		
+		if (self.getTreeOptions(TreeOptions.SEARCH)) {
+			
+			view.rows.push(searchView);		
+		}
+		
+		if (self.getTreeOptions(TreeOptions.CMD_BUTTONS)) {
+		
+			view.rows.push(tbActionView);		
+		}
+		
+		view.rows.push(drawTree());
+		
+		connectWS();
+		
+		function applyProperties(data, level) {
+			
+			let noShowEmptyFolders = self.getTreeOptions(TreeOptions.NO_SHOW_EMPTY_FOLDERS);
+			
+			let res = undefined;
+			
+			if (!level) {
+				
+				level = 1;
+			}
+			else {
+				
+				level++;
+			}
+			
+			if (Array.isArray(data) && data.length > 0) {
+				
+				res = data.map(e => {
+					
+					let item = {};
+					
+					item = e;
+									
+					if (getItemProps(item, DefProperties.TRANSLATE)) {
+						
+						item.value = i18n.t(item.value);
+					}
+					
+					if (item.data && Array.isArray(item.data) && item.data.length > 0) {
+					
+						item.data = applyProperties(item.data, level);	
+						
+						if (noShowEmptyFolders && Array.isArray(item.data)) {
+							
+							let isAllEmpty = true;
+							
+							for (let i = 0; isAllEmpty && i < item.data.length; i++) {
+								
+								isAllEmpty &= (item.data[i].data.length == 0 && item.data[i].props.folder);
+							}
+							
+							if (isAllEmpty) {
+								
+								item.data = [];
+							}
+						}
+					} 
+					
+					item.image = getItemProps(item, DefProperties.IMAGE); 
+					item.disabled = getItemProps(item, DefProperties.DISABLED);
+					
+					return item;
+				});
+				
+				if (noShowEmptyFolders && level === 1) {
+					
+					if (Array.isArray(res)) {
+						
+						res = res.filter(r => Array.isArray(r.data) && r.data.length > 0)
+					}							
+				}
+				
+				return res;
+			}
+		}
+		
+		function addRootNode(data) {
+			
+			let dat = [];
+			
+			dat.push({
+				
+				id: "root",
+				disabled: false,
+				value: "/",
+				props: {
+					folder: true
+				},
+				data: data ? webix.copy(data) : []
+			});
+			
+			return dat;
+		}
+	
+		function drawTree() {
+			
+			let data = applyProperties(webix.copy(self.data));
+			
+			data = self.getTreeOptions(TreeOptions.ROOT_NODE) ? addRootNode(data) : data; 
+			
+			let treeView;
+			
+			treeView = {
+				id: "tree-" + self.uid,
+				view: "tree",
+				borderless: true,
+				css:  multiSelect ? "tree-view-multi" : "tree-view-single",
+				select: !multiSelect,
+				threeState: multiSelect,
+				template: function(obj, common) {
+					
+					let value = obj.value;
+					let valueAux = getItemProps(obj, DefProperties.VALUE_AUX);
+					let valueAuxTranslate = getItemProps(obj, DefProperties.VALUE_AUX_TRANSLATE);
+					let stateColor = getItemProps(obj, DefProperties.STATE_COLOR);
+					let stateLabel = getItemProps(obj, DefProperties.STATE_LABEL);
+					
+					if (valueAux && valueAuxTranslate) {
+						
+						valueAux = i18n.t(valueAux);
+					}
+					
+					obj.disabled = self.getTreeOptions(TreeOptions.DISABLED);
+									
+					let fontWeight = 500;
+					let letterSpacing = "0.2px";
+					let opacity = 1;
+					if (obj.$level > 1) {
+						
+						fontWeight = 100;
+						letterSpacing = "0px";
+					}
+					
+					if (obj.disabled) {
+						
+						opacity = 0.5;
+					}
+					
+					if (valueAux) {
+						
+						value = value + " (" + valueAux + ")";
+					}
+
+					let nodeValue = undefined;
+					
+					if (obj.image) {
+						
+						let img = obj.image;
+						 
+						if (obj.image === DefProperties.IMAGE.value) {
+						
+							if (obj.props.folder) {
+								
+								img = "tree_folder.png";
+							}
+							else {
+								
+								img = "tree_document.png";
+							}
+						}
+						
+						nodeValue = `<div style="margin-left: 30px;" title="${stateLabel}">
+										<div style="position: absolute; width: 2px; height: 24px; background: ${stateColor} !important"></div>	
+										<img style="padding-left: 5px" src="img/${img}" onerror="this.onerror=null;this.src='img/not_found_50.png';"/>
+										<span style="font-weight: ${fontWeight}; letter-spacing: ${letterSpacing}; opacity: ${opacity};]">${value}</span>
+									</div>`;	
+					}
+					else {
+						
+						nodeValue = `<div style="margin-left: 30px; title="${stateLabel}">
+										<div style="position: absolute; width: 2px; height: 24px; background: ${stateColor} !important"></div>
+										<span style="padding-left: 5px;font-weight: ${fontWeight}; letter-spacing: ${letterSpacing}; opacity: ${opacity};]">${value}</span>
+									</div>`;
+					}
+					
+					if (multiSelect) {
+						
+						return common.icon(obj, common) + common.checkbox(obj, common) + nodeValue; 
+					}
+					else {
+						
+						return common.icon(obj, common) + nodeValue;
+					}
+			    },
+				data: data,
+				on: {
+					onAfterLoad: function() {
+						
+						this.sort("#value#", "asc");
+											
+						let expandAll = self.getTreeOptions(TreeOptions.EXPAND_ALL);
+						
+						if (expandAll) {
+							
+							this.openAll();
+						}
+						
+						let checkAll = self.getTreeOptions(TreeOptions.CHECK_ALL);
+						let uncheckedIds_ = self.getTreeOptions(TreeOptions.UNCHECKED_IDS_);
+						let multiselect = self.getTreeOptions(TreeOptions.MULTISELECT);
+						
+						if (multiselect) {
+							
+							if (checkAll) {
+								
+								this.checkAll();
+								
+								if (Array.isArray(uncheckedIds_) && uncheckedIds_.length > 0) {
+									
+									uncheckedIds_.forEach(id_ => {
+										
+										let items = self.getItemsById_(id_);
+										
+										if (Array.isArray(items) && items.length > 0) {
+										
+											items.forEach(item => this.uncheckItem(item.id));	
+										}
+									});
+								}
+							}
+							else {
+								
+								this.uncheckAll();
+							}
+						}
+					},
+					onAfterSelect: function(id) {
+					    
+						let item = this.getItem(id);
+						let currentContext = this;
+						
+						if (item && !multiSelect) {
+							
+							let selectedItem = item.props && !item.props.folder;
+						
+							if (self.events) {
+							
+								// Item selected
+								if (selectedItem && self.events[TreeView.EventTypes.ON_SELECT_ITEM]) {
+									
+									eval(self.events[TreeView.EventTypes.ON_SELECT_ITEM])(item, function(value) {
+									
+										self.enable(value, currentContext);
+									});
+								}
+								// Folder selected
+								else if (!selectedItem && self.events[TreeView.EventTypes.ON_SELECT_FOLDER]) {
+									
+									eval(self.events[TreeView.EventTypes.ON_SELECT_FOLDER])(item, function(value) {
+									
+										self.enable(value, currentContext);
+									});
+								}
+								// Any selected 
+								else if (self.events[TreeView.EventTypes.ON_SELECT_ANY]) {
+									
+									eval(self.events[TreeView.EventTypes.ON_SELECT_ANY])(getBranchItems(item), function(value) {
+									
+										self.enable(value, currentContext);
+									});
+								}
+							}
+						}
+					},
+					onItemDblClick: function(id) {
+					    
+						let item = this.getItem(id);
+						
+						if (item && !multiSelect) {
+							
+							let selectedItem = item.props && !item.props.folder;
+						
+							if (self.events) {
+							
+								// Item selected
+								if (selectedItem && self.events[TreeView.EventTypes.ON_ITEM_DBL_CLIC]) {
+									
+									eval(self.events[TreeView.EventTypes.ON_ITEM_DBL_CLIC])(item);
+								}
+							}
+						}
+					},
+					onItemCheck: function(id) {
+						
+						let item = this.getItem(id);
+						let treeVw = $$("tree-" + self.uid); 
+						let icon = $$("tb_btn-unselect-all-" + self.uid);
+						
+						if (item && multiSelect && self.events && self.events[TreeView.EventTypes.ON_CHECK_ITEM]) {
+									
+							let checkedList = self.getSelected();
+							
+							eval(self.events[TreeView.EventTypes.ON_CHECK_ITEM])(checkedList);
+						}
+						
+						if (treeVw && icon){
+						
+							if(treeVw.count() == treeVw.getChecked().length){
+							
+								icon.config.icon = "mdi mdi-check-box-outline";
+								icon.refresh();
+
+							} else {
+								
+								icon.config.icon = "mdi mdi-checkbox-blank-outline";
+								icon.refresh();							
+							}	
+						}
+					},
+					onAfterRender: function() {
+						
+						let tree = $$("tree-" + self.uid).$view;
+						
+						tree.addEventListener("contextmenu", e => e.preventDefault());
+					},
+					onDestruct: function() {
+						
+						if (self.idStompSubscriptor) {
+							
+							let stompSubscriptorService = window.sm.getService(Services.STOMP_SUBSCRIPTOR_SERVICE);
+
+							if (stompSubscriptorService) {
+				
+								stompSubscriptorService.unsubscribe(self.idStompSubscriptor);
+								self.idStompSubscriptor = undefined;
+							}
+						}
+					}
+					
+				}
+			};
+			
+			return treeView;
+		}
+		
+		function drawCommands() {
+			
+			let viewGroupCommands = [];
+			
+			if (self.metadata && Array.isArray(self.metadata.treeCommands) && self.metadata.treeCommands.length > 0) {
+				
+				self.metadata.treeCommands.sort((a, b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));
+				
+				self.metadata.treeCommands.forEach(treeCommand => {
+					
+					if (treeCommand.grouped) {
+						
+						drawGroupCommands(treeCommand);
+					}
+					else {
+						
+						let viewButtonCommand = { 
+							view: "icon", 
+							icon: treeCommand.icon, 
+							value: i18n.t(treeCommand.label), 
+							tooltip: true,
+							hidden: (treeCommand.disabled === true),
+							on: {
+								onItemClick: function() {
+								
+									executeTreeCommand(treeCommand);			
+								}
+							}
+						};
+						
+						tbActionView.elements.push(viewButtonCommand);
+					}
+					
+				});
+				
+				if (viewGroupCommands.length > 0) {
+					
+					let viewButtonGroupCommand = {
+						view: "menu",
+						id: "groupCommands-" + self.uid,
+						autowidth: true,
+						openAction: "click",
+						width: 34,
+						height: 34,
+						css: "dt-submenu",
+						subMenuPos: "down",
+						data: [
+							{ value: "", icon: "mdi mdi-dots-vertical", submenu: viewGroupCommands },
+						],
+						on: {
+							onMenuItemClick: function(id) {
+								
+								let item = viewGroupCommands.find(e => e.id == id);
+								
+								if(item != undefined) {
+									
+									let treeCommand = self.metadata.treeCommands.find(e => {
+										return e.id === item.treeCommandId
+									});
+									
+									if (treeCommand) {
+										
+										executeTreeCommand(treeCommand);	
+									}
+										
+									this.unselectAll();	
+								}
+							}
+						}
+					};
+							
+					tbActionView.elements.push(viewButtonGroupCommand);
+				}
+			}
+			
+			function drawGroupCommands(treeCommand) {
+				
+				viewGroupCommands.push({
+
+					id: webix.uid(),		
+					value: i18n.t(treeCommand.label),
+					icon: treeCommand.icon,
+					hidden: (treeCommand.disabled === true),
+					treeCommandId: treeCommand.id  
+				});
+			}
+			
+			function executeTreeCommand(treeCommand) {
+			
+				if (treeCommand) {
+				
+					util.module.executeCommand(treeCommand, null, function() { return self.getSelected().map(e => e.id_) }, treeCommand.callbacks);
+				}
+			}
+		}
+		
+		function getItemProps(item, prop) {
+	
+			let propValue = undefined
+	
+			if (item && item.props) {
+	
+				propValue = item.props[prop.name];
+			}
+			
+			if (!propValue) {
+				
+				propValue = prop.value; 
+			}
+			
+			return propValue;
+		}
+		
+		function getBranchItems(item, rootItem, branchItems) {
+			
+			let currentItem = undefined;
+			
+			if (!branchItems) {
+				
+				branchItems = [];
+			}
+		
+			if (item) {
+
+				if (!rootItem) {
+					
+					rootItem = getRoot(item.id);
+					currentItem = rootItem;
+					
+				} else {
+					
+					currentItem = item;
+				}
+
+				if(currentItem) {	 
+					
+					branchItems.push(currentItem);
+				
+					if(currentItem.data && currentItem.data.length > 0) {
+						
+						currentItem.data.forEach(e => getBranchItems(e, rootItem, branchItems));
+					}
+				}
+
+			}
+			
+			function getRoot(id, data) {
+				
+				let rootItm = undefined;
+				
+				if (!data){
+					
+					data = self.data;
+				}
+				
+				if (id && data) {
+					
+					rootItm = data.find(e => e.id === id);
+					
+					let index = 0;
+						
+					while(!rootItm && index < data.length) {
+					
+						if(data[index].data && data[index].data.length > 0) {
+							
+							rootItm = getRoot(id, data[index].data);
+						}
+						index++;
+					}
+				}
+				return rootItm;
+			}
+			
+			return branchItems;
+		}
+		
+		function connectWS() {
+			
+			if (self.metadata && self.metadata.stomp && self.metadata.stomp.topic && self.metadata.stomp.adapter && typeof(self.metadata.stomp.adapter) === "function") {
+				
+				let stompSubscriptorService = window.sm.getService(Services.STOMP_SUBSCRIPTOR_SERVICE);
+		
+				if (stompSubscriptorService) {
+		
+					self.idStompSubscriptor = stompSubscriptorService.subscribe(appConfig.stompUrl, self.metadata.stomp.topic, onMessage);
+				}
+				
+				function onMessage(be, action, timestamp) {
+					
+					let data = {
+						basicElementsVO: [be],
+						action: action,
+						timestamp: timestamp
+					}
+					
+					self.metadata.stomp.adapter(data);
+				}
+			}
+		}
+			
+		return view;
+	}
+	
+	getTreeOptions(option) {
+	
+		let metadata = this.metadata;
+		let optionValue = undefined;
+
+		if (metadata) {
+
+			if (Array.isArray(metadata.treeOptionValues) && metadata.treeOptionValues.length > 0) {
+			
+				optionValue = metadata.treeOptionValues.find(e => e.treeOption.id === option);	
+			}
+			
+			if (optionValue) {
+
+				if (optionValue.value === _TRUE) {
+
+					return true;
+
+				} else if (optionValue.value === _FALSE) {
+
+					return false;
+
+				} else {
+
+					return optionValue.value;
+				}
+			}
+			else {
+	
+				return DefOptionValues[option];
+			}
+		}
+	}
+	
+	getParent(item) {
+		
+		let tree = $$("tree-" + this.uid);
+		let parent = undefined;
+		
+		if (tree && item) {
+			
+			parent = tree.getItem(tree.getParentId(item.id)); 
+		}
+		
+		return parent;
+	}
+	
+	getSelected() {
+		
+		let tree = $$("tree-" + this.uid);
+		let checkedItems = [];
+		let self = this;
+		
+		if (tree) {
+			
+			let multiSelect = this.getTreeOptions(TreeOptions.MULTISELECT);
+			
+			if (multiSelect) {
+				
+				// Clear filter
+				if (self.filterValue) {
+					
+					tree.filter();	
+				}
+				
+				let checkedList = tree.getChecked();
+				
+				if (Array.isArray(checkedList) && checkedList.length > 0) {
+								
+					checkedList.forEach(e => {
+						
+						checkedItems.push(tree.getItem(e));
+					})
+				}
+				
+				// Restore filter
+				if (self.filterValue) {
+					
+					tree.filter(function(obj) {  // here it filters all titles from the dataset
+			
+						return obj.value.toLowerCase().indexOf(self.filterValue) != -1;
+					});	
+				}
+			}
+			else {
+				
+				let selectedItem = undefined;
+				
+				if (selectedItem = tree.getSelectedItem()) {
+					
+					checkedItems.push(selectedItem);	
+				}
+			}
+		}
+		
+		return checkedItems;
+	}
+	
+	getChilds(fromFolder, itemType) {
+	
+		let self = this;
+		let childs = [];
+		let sourceData = undefined;
+		
+		if (fromFolder && fromFolder.props.folder) {
+		
+			calculateSourceData();
+			
+			if (sourceData) {
+				
+				getChilds(sourceData);	
+				
+			} else if (!sourceData && fromFolder.id === "root") {
+
+				fromFolder.data = self.data;
+				getChilds(fromFolder);	
+			}
+		}
+		
+		function calculateSourceData(data) {
+			
+			if (!data) {
+				
+				data = self.data;
+			}
+			
+			if (Array.isArray(data)) {
+				
+				for (let i = 0; !sourceData && i < data.length; i++) {
+					
+					let item = data[i];
+					
+					if (Array.isArray(item.data) && item.data.length > 0) {
+						
+						if (item.id === fromFolder.id) {
+							
+							sourceData = item;
+						}
+						else {
+							
+							calculateSourceData(item.data);
+						}
+					}
+				}
+			}
+		}
+		
+		function getChilds(item) {
+			
+			if (item && item.props && item.props.folder && Array.isArray(item.data) && item.data.length > 0) {
+				
+				item.data.forEach(subData => {
+					
+					if (subData.props.folder && Array.isArray(subData.data) && subData.data.length > 0) {
+						
+						getChilds(subData);
+					}
+					
+					let isChild = (itemType === TreeView.ItemTypes.FOLDER && subData.props.folder);
+					isChild |= (itemType === TreeView.ItemTypes.ITEM && !subData.props.folder);
+					
+					if (isChild) {
+			
+						childs.push(subData);
+					}	
+				});
+			}
+		}
+		
+		return childs;
+	}
+	
+	getFirstItem(fromItem) {
+		
+		let firstItem = undefined;
+		let fromItemFound = false;
+		
+		if (Array.isArray(this.data) && this.data.length > 0) {
+			
+			firstItem = getData(webix.copy(this.data));
+			
+			function getData(data) {
+				
+				let item = undefined;
+				
+				if (Array.isArray(data) && data.length > 0) {
+					
+					data.sort((a, b) => (a.value > b.value) ? 1 : ((b.value > a.value) ? -1 : 0));
+					
+					for (let i = 0; !item && i < data.length; i++) {
+						
+						let d = data[i];
+						
+						fromItemFound |= (fromItem && fromItem.id === d.id);
+						
+						if (d.props.folder === false) {
+							
+							if (!fromItem || fromItemFound) {
+								
+								item = d;	
+							}
+						}
+						else {
+							
+							item = getData(d.data);
+						}
+					}
+				}
+				
+				return item;
+			}
+		}
+		
+		return firstItem;
+	}
+	
+		getFirstFolder() {
+		
+		let firstFolder = undefined;
+		
+		if (Array.isArray(this.data) && this.data.length > 0) {
+			
+			firstFolder = getData(webix.copy(this.data));
+			
+			function getData(data) {
+				
+				let folder = undefined;
+				
+				if (Array.isArray(data) && data.length > 0) {
+					
+					data.sort((a, b) => (a.value > b.value) ? 1 : ((b.value > a.value) ? -1 : 0));
+					
+					for (let i = 0; !folder && i < data.length; i++) {
+						
+						let d = data[i];
+						
+						if (d.props.folder === true) {							
+								
+							folder = d;						
+						} 
+					}
+				}
+				
+				return folder;
+			}
+		}
+		
+		return firstFolder;
+	}
+	
+	update(id, item) {
+		
+		let tree = $$("tree-" + this.uid);
+			
+		if (tree) {
+		
+			tree.updateItem(id, item);	
+		}
+	}
+	
+	getItemsById_(id_) {
+		
+		let tree = $$("tree-" + this.uid);
+		let items = [];
+		
+		if (tree && this.dataMap && this.dataMap.size > 0) {
+			
+			let ids = this.dataMap.get(id_);
+			
+			if (Array.isArray(ids) && ids.length > 0) {
+				
+				ids.forEach(id => {
+					
+					let item = tree.getItem(id);
+					
+					if (item) {
+						
+						items.push(item);	
+					}
+				});
+			}
+		}
+		
+		return items;
+	}
+	
+	updateById_(id_, item) {
+		
+		let tree = $$("tree-" + this.uid);
+
+		if (tree && this.dataMap && this.dataMap.size > 0) {
+			
+			let ids = this.dataMap.get(id_);
+			
+			if (Array.isArray(ids) && ids.length > 0) {
+				
+				ids.forEach(id => {
+					
+					let currentItem = tree.getItem(id);
+					
+					let newItem = webix.copy(item);
+					
+					newItem.id = currentItem.id; 
+					
+					tree.updateItem(id, newItem);
+				});
+			}
+		}
+	}
+	
+	enable(value, context) {
+		
+		let tree = context ? context : $$("tree-" + this.uid);
+			
+		if (tree) {
+			
+			if (value) {
+									
+				tree.enable();
+			} 
+			else {
+				
+				tree.disable();
+			}	
+		}
+	}
+	
+	selectAll() {
+		
+		this.select();
+	}
+	
+	select(id) {
+		
+		let tree = $$("tree-" + this.uid);
+		
+		if (tree) {
+			
+			let multiSelect = this.getTreeOptions(TreeOptions.MULTISELECT);
+			
+			if (!multiSelect) {
+				
+				tree.select(id);
+				tree.showItem(id);
+			}
+			else {
+				
+				if (id) {
+					
+					tree.checkAll(id);
+					tree.showItem(id);
+				}
+				else {
+					
+					tree.checkAll();
+				}
+			}
+		}
+	}
+	
+	unselectAll() {
+		
+		this.unselect();
+	}
+	
+	unselect(id) {
+		
+		let tree = $$("tree-" + this.uid);
+		
+		if (tree) {
+			
+			let multiSelect = this.getTreeOptions(TreeOptions.MULTISELECT);
+			
+			if (!multiSelect) {
+				
+				tree.unselect(id);
+				tree.showItem(id);
+			}
+			else {
+				
+				if (id) {
+					
+					tree.uncheckAll(id);
+					tree.showItem(id);
+				}
+				else {
+					
+					tree.uncheckAll();
+				}
+			}
+		}	
+	}
+	
+	expand(id) {
+		
+		let tree = $$("tree-" + this.uid);
+		
+		if (tree) {
+			
+			if (id) {
+				
+				let selected = tree.getItem(id);
+				let hasRootNode = this.getTreeOptions(TreeOptions.ROOT_NODE);
+				
+				if (selected) {
+					
+					let rootParentId = selected.id; 
+					
+					do {
+						
+						tree.open(rootParentId, true);
+						
+						rootParentId = tree.getParentId(rootParentId);
+						
+					} while (rootParentId != 0 && (!hasRootNode || (hasRootNode && rootParentId != "root")))
+					
+	
+					tree.showItem(id);	
+				}
+			}
+			else {
+				
+				tree.openAll();
+			}
+		}
+	}
+	
+	collapse(id) {
+		
+		let tree = $$("tree-" + this.uid);
+		
+		if (tree) {
+			
+			if (id) {
+				
+				tree.close(id);
+				tree.showItem(id);	
+			}
+			else {
+				
+				tree.closeAll();
+			}
+		}
+	}
+}
+
+Object.defineProperty(TreeView, 'EventTypes', {
+    value: {}
+});
+
+Object.defineProperty(TreeView.EventTypes, "ON_CHECK_ITEM", {
+    value: 1,
+    writable : false,
+    enumerable : true,
+    configurable : false
+});
+
+Object.defineProperty(TreeView.EventTypes, "ON_SELECT_ITEM", {
+    value: 2,
+    writable : false,
+    enumerable : true,
+    configurable : false
+});
+
+Object.defineProperty(TreeView.EventTypes, "ON_SELECT_ANY", {
+    value: 3,
+    writable : false,
+    enumerable : true,
+    configurable : false
+});
+
+Object.defineProperty(TreeView.EventTypes, "ON_SELECT_FOLDER", {
+    value: 4,
+    writable : false,
+    enumerable : true,
+    configurable : false
+});
+
+Object.defineProperty(TreeView.EventTypes, "ON_ITEM_DBL_CLIC", {
+    value: 5,
+    writable : false,
+    enumerable : true,
+    configurable : false
+});
+
+Object.defineProperty(TreeView, "Modes", {
+	value: {}
+});
+
+Object.defineProperty(TreeView.Modes, "SINGLE", {
+    value: 1,
+    writable : false,
+    enumerable : true,
+    configurable : false
+});
+
+Object.defineProperty(TreeView.Modes, "MULTI", {
+    value: 2,
+	writable : false,
+    enumerable : true,
+    configurable : false
+});
+
+Object.defineProperty(TreeView, "ItemTypes", {
+	value: {}
+});
+
+Object.defineProperty(TreeView.ItemTypes, "FOLDER", {
+    value: 1,
+    writable : false,
+    enumerable : true,
+    configurable : false
+});
+
+Object.defineProperty(TreeView.ItemTypes, "ITEM", {
+    value: 2,
+	writable : false,
+    enumerable : true,
+    configurable : false
+});

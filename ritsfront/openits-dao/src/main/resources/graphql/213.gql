@@ -1,0 +1,18 @@
+{
+  id
+  position
+  plan {
+    id
+    alias
+  }
+  incidentTypeTask {
+    id
+  }
+  incidentType {
+    id
+    autoConfirmIncident
+  }
+  stretch {
+    id
+  }
+}

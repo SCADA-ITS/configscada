@@ -1,0 +1,10 @@
+{
+  id
+  alias
+  description
+  nRows
+  nColumns
+  elements {
+    id
+  }
+}

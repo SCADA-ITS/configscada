@@ -1,0 +1,20 @@
+{
+  incidentType {
+    id
+    autoConfirmIncident
+  }
+  stretch {
+    id
+  }
+  defaultLocation {
+    id
+  }
+  operationalPlanUrl
+  multiInstance
+  checkStretchStretch
+  roadImpacts {
+    id
+    alias
+    description
+  }
+}

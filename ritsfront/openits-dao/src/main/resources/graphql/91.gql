@@ -1,0 +1,63 @@
+{
+  id
+  alias
+  description
+  labelAlias
+  labelDescription
+  alarmType {
+    id
+    alias
+    description
+    labelAlias
+    labelDescription
+  }
+  alarmLevel {
+    id
+    alias
+    description
+    labelAlias
+    labelDescription
+  }
+  element {
+    id
+    alias
+  }
+  elementType {
+    id
+    alias
+    description
+    labelAlias
+    labelDescription
+  }
+  mine
+  treatment
+  alarmConfigMeasures {
+    id
+    elementTypeParam {
+      id
+      alias
+      labelAlias
+      threshold1
+    }
+    alarmMeasureOperation {
+      id
+      alias
+      description
+      labelAlias
+      labelDescription
+    }
+    thresholdVal1
+    thresholdVal2
+  }
+  alarmConfigStates {
+    id
+    elementType {
+      id
+    }
+    elementTypeState {
+      id
+      alias
+      labelAlias
+    }
+  }
+}

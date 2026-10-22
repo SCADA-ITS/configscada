@@ -1,0 +1,12 @@
+{
+  id
+  plan {
+    id
+  }
+  cronExpression
+  alias
+  description
+  planScheduleStateType {
+    id
+  }
+}

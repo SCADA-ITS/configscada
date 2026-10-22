@@ -1,0 +1,311 @@
+{
+  id
+  generatedAt
+  confirm
+  operationalPlanUrl
+  incidentState {
+    id
+    labelAlias
+    finalState
+  }
+  currentUser {
+    name
+    id
+  }
+  validForMin
+  incidentType {
+    id
+    alias
+    description
+    autoConfirmIncident
+    incidentGroup {
+      id
+      alias
+      labelAlias
+    }
+  }
+  location {
+    id
+    alias
+    lane
+    stretchs {
+      id
+      alias
+    }
+  }
+  incidentLevel {
+    id
+    alias
+    priority
+    labelAlias
+  }
+  affectionStretch {
+    id
+    alias
+    road {
+      id
+      alias
+    }
+    position
+  }
+  taskStates {
+    incidentReportTaskValues {
+      id
+      value
+      taskTypeParam {
+        id
+      }
+    }
+    incidentTypeTask {
+      id
+      alias
+      description
+      operationDescription
+      mandatory
+      roadImpact {
+        id
+      }
+      position
+      auto
+      onChange
+      delay
+      rerun
+      incidentTypeTaskValues {
+        id
+        value
+        taskTypeParam {
+          id
+        }
+      }
+      taskType {
+        id
+        labelAlias
+        taskTypeParams {
+          id
+          labelAlias
+          paramType {
+            id
+          }
+          dataType {
+            id
+            labelAlias
+          }
+          labelUnit
+          threshold1
+          threshold2
+        }
+      }
+    }
+    completedAt
+    error
+    taskPlanStates {
+      completedAt
+      incidentTaskPlan {
+        id
+        position
+        plan {
+          id
+          alias
+        }
+        stretch {
+          id
+          alias
+        }
+      }
+    }
+    elements {
+      id
+      alias
+      elementType {
+        id
+        alias
+        labelAlias
+      }
+      elementSubtype {
+        id
+        alias
+        labelAlias
+      }
+      commandElements {
+        id
+      }
+      location {
+        id
+        lane
+        stretchs {
+          id
+          alias
+          position
+        }
+      }
+    }
+  }
+  sequenceOfStates {
+    state {
+      id
+      labelAlias
+      labelDescription
+    }
+    taskStates {
+      incidentReportTaskValues {
+        id
+        value
+        taskTypeParam {
+          id
+        }
+      }
+      incidentTypeTask {
+        id
+        alias
+        description
+        onChange
+        delay
+        rerun
+        mandatory
+        roadImpact {
+          id
+        }
+        position
+        auto
+        operationDescription
+        incidentTypeTaskValues {
+          id
+          value
+          taskTypeParam {
+            id
+          }
+        }
+        taskType {
+          id
+          labelAlias
+          taskTypeParams {
+            id
+            labelAlias
+            paramType {
+              id
+            }
+            dataType {
+              id
+              labelAlias
+            }
+            labelUnit
+            threshold1
+            threshold2
+          }
+        }
+      }
+      completedAt
+      error
+      taskPlanStates {
+        completedAt
+        incidentTaskPlan {
+          id
+          position
+          plan {
+            id
+            alias
+          }
+          stretch {
+            id
+            alias
+          }
+        }
+      }
+      elements {
+        id
+        alias
+        elementType {
+          id
+          alias
+          labelAlias
+        }
+        elementSubtype {
+          id
+          alias
+          labelAlias
+        }
+        commandElements {
+          id
+        }
+        location {
+          id
+          lane
+          stretchs {
+            id
+            alias
+            position
+          }
+        }
+      }
+    }
+  }
+  alarms {
+    id
+    activation
+    alarmConfig {
+      id
+      labelAlias
+    }
+    element {
+      id
+      alias
+      elementType {
+        id
+        labelAlias
+      }
+    }
+  }
+  incidentLogs {
+    id
+    level
+    time
+    user {
+      id
+      name
+    }
+    logSubtype {
+      id
+      alias
+      labelAlias
+      description
+    }
+    incidentReportLogValues {
+      id
+      value
+      logTypeParam {
+        id
+        alias
+        description
+        labelAlias
+        labelDescription
+      }
+    }
+  }
+  lastUpdate
+  incidentTypeCause {
+    id
+    alias
+  }
+  scenario {
+    id
+  }
+  spath {
+    id
+    alias
+    road {
+      id
+      alias
+    }
+    position
+  }
+  roadImpact {
+    id
+    alias
+    description
+  }
+  roadImpacts {
+    id
+    alias
+    description
+  }
+}

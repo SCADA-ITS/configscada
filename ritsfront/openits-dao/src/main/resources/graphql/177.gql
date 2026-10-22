@@ -1,0 +1,93 @@
+{
+  id
+  alias
+  description
+  elementType {
+    id
+    labelAlias
+    labelDescription
+  }
+  elementTypeState {
+    id
+    labelAlias
+  }
+  elementValues {
+    id
+    value
+    elementValueState {
+      id
+      labelAlias
+    }
+    elementTypeParam {
+      id
+      alias
+      labelAlias
+      labelDescription
+      dataType {
+        id
+        labelAlias
+      }
+      labelUnit
+      threshold1
+      threshold2
+      paramType {
+        id
+      }
+    }
+  }
+  elementSubtype {
+    id
+    labelAlias
+    labelDescription
+  }
+  commandElements {
+    id
+    labelAlias
+    labelDescription
+    pmQueueCompatibility
+    commandElementTypeParams {
+      id
+      labelAlias
+      labelDescription
+      dataType {
+        id
+        labelAlias
+        labelDescription
+      }
+      elementTypeParam {
+        id
+        dataType {
+          id
+        }
+      }
+      labelUnit
+      threshold1
+      threshold2
+    }
+  }
+  graphicGroups {
+    id
+    labelAlias
+    graphics {
+      id
+      alias
+      graphicType
+      graphicCategory {
+        id
+        labelAlias
+      }
+    }
+  }
+  location {
+    id
+    alias
+    stretchs {
+      id
+      alias
+      road {
+        id
+        alias
+      }
+    }
+  }
+}

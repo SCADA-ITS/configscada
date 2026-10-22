@@ -1,0 +1,22 @@
+{
+  id
+  alias
+  description
+  labelAlias
+  labelDescription
+  taskTypeParams {
+    id
+    labelAlias
+    paramType {
+      id
+      labelAlias
+    }
+    dataType {
+      id
+      labelAlias
+    }
+    labelUnit
+    threshold1
+    threshold2
+  }
+}
