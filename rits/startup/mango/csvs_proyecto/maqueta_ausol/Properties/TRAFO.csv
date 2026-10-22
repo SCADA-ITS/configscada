@@ -1,0 +1,2 @@
+device_name;session_uid;PLC_name;host;port(i);url_publisher;read_permission;write_permission;offset_fail_trafo(i);offset_excess_windings_temperature(i)
+RV-TRAFO-MT-T154;RV-TRAFO-MT-T154;RV-CTGBT;192.168.88.199;1040;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/;monitor;;122;123

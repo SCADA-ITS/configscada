@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="ImsIncidentReportTaskState">
+	<SELECT>SELECT incident_report_id as "incidentReportId",
+				   incident_type_task_id as "incidentTypeTaskId",
+				   completed_at as "completedAt",
+				   error as "error",
+				   enabled as "enabled", 
+				   visible as "visible"
+			  FROM rt.ims_incident_report_task_states
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>INSERT INTO rt.ims_incident_report_task_states
+					   (incident_report_id,
+					   	incident_type_task_id,
+					   	completed_at,
+					   	error,
+					    enabled,
+					    visible,
+					    created_at,
+					    updated_at)
+				 VALUES (:incidentReportId,
+				 		 :incidentTypeTaskId,
+				 		 :completedAt,
+				 		 :error,
+				 		 :enabled,
+				         :visible,
+				         CURRENT_TIMESTAMP,
+				         CURRENT_TIMESTAMP)
+	</INSERT>
+	<UPDATE>UPDATE rt.ims_incident_report_task_states
+			   SET completed_at = :completedAt,
+			   	   error = :error,
+			   	   enabled = :enabled,
+				   visible = :visible,
+			       updated_at = CURRENT_TIMESTAMP
+			   WHERE incident_report_id = :incidentReportId 
+					AND incident_type_task_id = :incidentTypeTaskId 
+	</UPDATE>
+	<DELETE>DELETE FROM rt.ims_incident_report_task_states
+			  WHERE incident_report_id = :incidentReportId 
+					AND incident_type_task_id = :incidentTypeTaskId 
+	</DELETE>
+</DML>

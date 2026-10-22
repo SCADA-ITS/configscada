@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="PlanOrderValue">
+	<SELECT>SELECT plan_id as "planId",
+				   plan_order_id as "planOrderId",
+				   plan_order_type_id as "planOrderTypeId",
+				   plan_order_type_param_id as "planOrderTypeParamId",
+				   value as "value",
+				   enabled as "enabled",
+				   visible as "visible"
+			  FROM conf.plan_order_values
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>INSERT INTO conf.plan_order_values
+					   (plan_id,
+					    plan_order_id,
+					   	plan_order_type_id,
+					   	plan_order_type_param_id,
+					   	value,
+					    enabled,
+					    visible,
+					    created_at,
+					    updated_at)
+				 VALUES (:planId,
+				 		 :planOrderId,
+				 		 :planOrderTypeId,
+				 		 :planOrderTypeParamId,
+				         :value,
+				         :enabled,
+				         :visible,
+				         CURRENT_TIMESTAMP,
+				         CURRENT_TIMESTAMP)
+	</INSERT>
+	<UPDATE>UPDATE conf.plan_order_values
+				SET value = :value,
+				 	enabled = :enabled,
+				 	visible = :visible,
+				 	updated_at = CURRENT_TIMESTAMP
+				WHERE plan_id = :planId 
+				AND plan_order_id = :planOrderId 
+				AND plan_order_type_id = :planOrderTypeId 
+				AND plan_order_type_param_id = :planOrderTypeParamId
+	</UPDATE>
+	<DELETE>DELETE FROM conf.plan_order_values 
+				WHERE plan_id = :planId AND plan_order_id = :planOrderId 
+				AND plan_order_type_id = :planOrderTypeId 
+				AND plan_order_type_param_id = :planOrderTypeParamId
+	</DELETE>
+</DML>

@@ -1,0 +1,15 @@
+device_name;session_uid;eru_name;url_publisher;read_permission;write_permission;offset_alarm_zone(i);offset_fiber_fault(i);offset_avg_temperature(i);offset_max_temperature(i);offset_min_temperature(i);offset_commstatus(i)
+CAS-ZI-2CA;CAS-ZI-2CA;CAS-ERU;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/;monitor;monitor;1001;1009;1017;1017;1017;1201
+CAS-ZI-3CA;CAS-ZI-3CA;CAS-ERU;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/;monitor;monitor;1002;1010;1018;1018;1018;1202
+CAS-ZI-4CA;CAS-ZI-4CA;CAS-ERU;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/;monitor;monitor;1003;1011;1019;1019;1019;1203
+CAS-ZI-5CA;CAS-ZI-5CA;CAS-ERU;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/;monitor;monitor;1004;1012;1020;1020;1020;1204
+CAS-ZI-6CA;CAS-ZI-6CA;CAS-ERU;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/;monitor;monitor;1005;1013;1021;1021;1021;1205
+CAS-ZI-7CA;CAS-ZI-7CA;CAS-ERU;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/;monitor;monitor;1006;1014;1022;1022;1022;1206
+CAS-ZI-8CA;CAS-ZI-8CA;CAS-ERU;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/;monitor;monitor;1007;1015;1023;1023;1023;1207
+CAS-ZI-1MA;CAS-ZI-1MA;CAS-ERU;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/;monitor;monitor;1024;1032;1040;1040;1040;1224
+CAS-ZI-2MA;CAS-ZI-2MA;CAS-ERU;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/;monitor;monitor;1025;1033;1041;1041;1041;1225
+CAS-ZI-3MA;CAS-ZI-3MA;CAS-ERU;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/;monitor;monitor;1026;1034;1042;1042;1042;1226
+CAS-ZI-4MA;CAS-ZI-4MA;CAS-ERU;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/;monitor;monitor;1027;1035;1043;1043;1043;1227
+CAS-ZI-5MA;CAS-ZI-5MA;CAS-ERU;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/;monitor;monitor;1028;1036;1044;1044;1044;1228
+CAS-ZI-6MA;CAS-ZI-6MA;CAS-ERU;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/;monitor;monitor;1029;1037;1045;1045;1045;1229
+CAS-ZI-7MA;CAS-ZI-7MA;CAS-ERU;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/;monitor;monitor;1030;1038;1046;1046;1046;1230

@@ -1,0 +1,7 @@
+device_name;session_uid;ip;port(i);url_publisher;read_permission;write_permission
+RV-MET-1MA;RV-MET-1MA;192.168.11.23;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;
+MM-MET-1MA;MM-MET-1MA;192.168.12.23;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;
+LQ-MET-1MA;LQ-MET-1MA;192.168.14.65;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;
+CH-MET-1MA;CH-MET-1MA;192.168.9.55;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;
+COR-MET-1MA;COR-MET-1MA;192.168.15.111;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;
+STM2-MET-1MA;STM2-MET-1MA;192.168.10.25;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;

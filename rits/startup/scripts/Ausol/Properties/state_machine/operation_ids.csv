@@ -1,0 +1,11 @@
+operation_exp;operation_id;description;
+><;1;Entre;
+==;2;Igual;
+!=;3;Distinto;
+>;4;Mayor;
+>=;5;Mayor o igual;
+<;6;Menor;
+<=;7;Menor o igual;
+_;8;Vacio;
+#;9;No vacio;
+!><;10;No entre;

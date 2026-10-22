@@ -1,0 +1,52 @@
+name;device;channel;description;controller;xAddress;xStatusAddress;xAlarmAddress;xAlarmStatusAddress;multiplier;offset;log;units;avg
+RV-CO-1CA;SOS_1CA;M1AI0;RV-CO-1CA Nivel de CO;WAGO;16600;100;700;148;0.009158;0.0;true;ppm;false
+RV-NO-1CA;SOS_1CA;M1AI1;RV-NO-1CA Nivel de NO;WAGO;16602;101;701;149;0.000611;0.0;true;ppm;false
+RV-OPC-1CA;SOS_1CA;M1AI2;RV-OPC-1CA Nivel de opacidad;WAGO;16604;102;702;150;0.00000305250;0.0;true;m-1;false
+RV-VENT-VF1-CA;SOS_1CA;M2AI0;RV-VENT-VF1-CA Nivel de vibracion;WAGO;16606;103;703;151;0.000763;0.0;false;mm/s;false
+RV-VENT-VF2-CA;SOS_1CA;M2AI1;RV-VENT-VF2-CA Nivel de vibracion;WAGO;16608;104;704;152;0.000763;0.0;false;mm/s;false
+RV-VENT-VF3-CA;SOS_1CA;M2AI2;RV-VENT-VF3-CA Nivel de vibracion;WAGO;16610;105;705;153;0.000763;0.0;false;mm/s;false
+RV-VENT-VF4-CA;SOS_1CA;M2AI3;RV-VENT-VF4-CA Nivel de vibracion;WAGO;16612;106;706;154;0.000763;0.0;false;mm/s;false
+RV-ANI-1CA;SOS_1CA;M2AI4;RV-ANI-1CA Velocidad del viento;WAGO;16614;107;707;155;-0.001221;20;false;m/s;false
+RV-LUX-2CA;SOS_1CA;M2AI5;RV-LUX-2CA Nivel de Luminosidad;WAGO;16616;108;708;156;0.076282;1.0;false;lux;false
+RV-LUX-3CA;SOS_1CA;M2AI6;RV-LUX-3CA Nivel de Luminosidad;WAGO;16618;109;709;157;0.0304945;1.0;false;lux;false
+RV-VENT-VF1-CA;SOS_1CA;M3AI0;RV-VENT-VF1-CA Temperatura rodamientos motor delantero;WAGO;16620;110;710;158;0.0625;0.0;false;C;false
+RV-VENT-VF1-CA;SOS_1CA;M3AI1;RV-VENT-VF1-CA Temperatura rodamientos motor trasero;WAGO;16622;111;711;159;0.0625;0.0;false;C;false
+RV-VENT-VF2-CA;SOS_1CA;M3AI2;RV-VENT-VF2-CA Temperatura rodamientos motor delantero;WAGO;16624;112;712;160;0.0625;0.0;false;C;false
+RV-VENT-VF2-CA;SOS_1CA;M3AI3;RV-VENT-VF2-CA Temperatura rodamientos motor trasero;WAGO;16626;113;713;161;0.0625;0.0;false;C;false
+RV-VENT-VF3-CA;SOS_1CA;M6AI0;RV-VENT-VF3-CA Temperatura rodamientos motor delantero;WAGO;16628;114;714;162;0.0625;0.0;false;C;false
+RV-VENT-VF3-CA;SOS_1CA;M6AI1;RV-VENT-VF3-CA Temperatura rodamientos motor trasero;WAGO;16630;115;715;163;0.0625;0.0;false;C;false
+RV-VENT-VF4-CA;SOS_1CA;M6AI2;RV-VENT-VF4-CA Temperatura rodamientos motor delantero;WAGO;16632;116;716;164;0.0625;0.0;false;C;false
+RV-VENT-VF4-CA;SOS_1CA;M6AI3;RV-VENT-VF4-CA Temperatura rodamientos motor trasero;WAGO;16634;117;717;165;0.0625;0.0;false;C;false
+RV-CO-1MA;SOS_1MA;M1AI0;RV-CO-1MA Nivel de CO;WAGO;16636;118;718;166;0.009158;0.0;true;ppm;false
+RV-NO-1CA;SOS_1MA;M1AI1;RV-NO-1MA Nivel de NO;WAGO;16638;119;719;167;0.000611;0.0;true;ppm;false
+RV-OPC-1MA;SOS_1MA;M1AI2;RV-OPC-1MA Nivel de opacidad;WAGO;16640;120;720;168;0.00000305250;0.0;true;m-1;false
+RV-VENT-VF1-MA;SOS_1MA;M2AI0;RV-VENT-VF1-MA Nivel de vibracion;WAGO;16642;121;721;169;0.000763;0.0;false;mm/s;false
+RV-VENT-VF2-MA;SOS_1MA;M2AI1;RV-VENT-VF2-MA Nivel de vibracion;WAGO;16644;122;722;170;0.000763;0.0;false;mm/s;false
+RV-VENT-VF3-MA;SOS_1MA;M2AI2;RV-VENT-VF3-MA Nivel de vibracion;WAGO;16646;123;723;171;0.000763;0.0;false;mm/s;false
+RV-VENT-VF4-MA;SOS_1MA;M2AI3;RV-VENT-VF4-MA Nivel de vibracion;WAGO;16648;124;724;172;0.000763;0.0;false;mm/s;false
+RV-VENT-VF5-MA;SOS_1MA;M2AI4;RV-VENT-VF5-MA Nivel de vibracion;WAGO;16650;125;725;173;0.000763;0.0;false;mm/s;false
+RV-VENT-VF6-MA;SOS_1MA;M2AI5;RV-VENT-VF6-MA Nivel de vibracion;WAGO;16652;126;726;174;0.000763;0.0;false;mm/s;false
+RV-ANI-1MA;SOS_1MA;M1AI3;RV-ANI-1MA Velocidad del viento;WAGO;16654;127;727;175;-0.001221;20;false;m/s;false
+RV-LUX-2MA;SOS_1MA;M2AI7;RV-LUX-2MA Nivel de Luminosidad;WAGO;16656;128;728;176;0.076282;1.0;false;lux;false
+RV-LUX-3MA;SOS_1MA;M3AI0;RV-LUX-3MA Nivel de Luminosidad;WAGO;16658;129;729;177;0.0304945;1.0;false;lux;false
+RV-VENT-VF1-MA;SOS_1MA;M4AI0;RV-VENT-VF1-MA Temperatura rodamientos motor delantero;WAGO;16660;130;730;178;0.0625;0.0;false;C;false
+RV-VENT-VF1-MA;SOS_1MA;M4AI1;RV-VENT-VF1-MA Temperatura rodamientos motor trasero;WAGO;16662;131;731;179;0.0625;0.0;false;C;false
+RV-VENT-VF2-MA;SOS_1MA;M4AI2;RV-VENT-VF2-MA Temperatura rodamientos motor delantero;WAGO;16664;132;732;180;0.0625;0.0;false;C;false
+RV-VENT-VF2-MA;SOS_1MA;M4AI3;RV-VENT-VF2-MA Temperatura rodamientos motor trasero;WAGO;16666;133;733;181;0.0625;0.0;false;C;false
+RV-VENT-VF3-MA;SOS_1MA;M5AI0;RV-VENT-VF3-MA Temperatura rodamientos motor delantero;WAGO;16668;134;734;182;0.0625;0.0;false;C;false
+RV-VENT-VF3-MA;SOS_1MA;M5AI1;RV-VENT-VF3-MA Temperatura rodamientos motor trasero;WAGO;16670;135;735;183;0.0625;0.0;false;C;false
+RV-VENT-VF4-MA;SOS_1MA;M5AI2;RV-VENT-VF4-MA Temperatura rodamientos motor delantero;WAGO;16672;136;736;184;0.0625;0.0;false;C;false
+RV-VENT-VF4-MA;SOS_1MA;M5AI3;RV-VENT-VF4-MA Temperatura rodamientos motor trasero;WAGO;16674;137;737;185;0.0625;0.0;false;C;false
+RV-VENT-VF5-MA;SOS_1MA;M8AI0;RV-VENT-VF5-MA Temperatura rodamientos motor delantero;WAGO;16676;138;738;186;0.0625;0.0;false;C;false
+RV-VENT-VF5-MA;SOS_1MA;M8AI1;RV-VENT-VF5-MA Temperatura rodamientos motor trasero;WAGO;16678;139;739;187;0.0625;0.0;false;C;false
+RV-VENT-VF6-MA;SOS_1MA;M8AI2;RV-VENT-VF6-MA Temperatura rodamientos motor delantero;WAGO;16680;140;740;188;0.0625;0.0;false;C;false
+RV-VENT-VF6-MA;SOS_1MA;M8AI3;RV-VENT-VF6-MA Temperatura rodamientos motor trasero;WAGO;16682;141;741;189;0.0625;0.0;false;C;false
+RV-LUM-1MA;CT_ITS;M1AI0;RV-LUM-1MA Nivel de luminosidad;WAGO;16684;142;742;190;0.1984126;0.0;false;cd/m 2;true
+RV-LUX-1CA;CT_ITS;M1AI1;RV-LUX-1CA  Nivel de luminosidad;WAGO;16686;143;743;191;0.152594;1.0;false;lux;false
+RV-LUX-4MA;CT_ITS;M1AI2;RV-LUX-4MA  Nivel de luminosidad;WAGO;16688;144;744;192;0.076282;1.0;false;lux;false
+RV-LUM-1CA;Rack_Exterior;M1AI0;RV-LUM-1CA Nivel de luminosidad;WAGO;16690;145;745;193;0.1984126;0.0;false;cd/m 2;true
+RV-LUX-1MA;Rack_Exterior;M1AI2;RV-LUX-1MA  Nivel de luminosidad;WAGO;16692;146;746;194;0.152594;1.0;false;lux;false
+RV-LUX-4CA;Rack_Exterior;M1AI1;RV-LUX-4CA  Nivel de luminosidad;WAGO;16694;147;747;195;0.076282;1.0;false;lux;false
+RV-FOT-1CA;CTGBT;M1AI7;RV-FOT-1CA Nivel de luminosidad ;WAGO;16696;148;748;196;0.305250;0.0;false;lux;true
+RV-VTA-ANE-1CA;Rack_Exterior;M1AI3;RV-VTA-ANE-1CA Velocidad del viento;WAGO;16698;149;749;197;0.00152625;0.0;false;m/s;false
+RV-VTA-ANE-1CA;Rack_Exterior;M1AI4;RV-VTA-ANE-1CA Direccion del viento;WAGO;16800;150;750;198;0.010989;0.0;false;gr;false

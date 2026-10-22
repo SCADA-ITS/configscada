@@ -1,0 +1,244 @@
+{
+    "rightFans": [
+        {
+            "model": "A",
+            "description": "STM2-VENT-VF1-MA",
+            "spinningStatusRegisterXAddress": 16516,
+            "spinningStatusRegisterXStatusAddress": 616,
+            "spinningRegisterXAddress": 25036,
+            "spinningRegisterXStatusAddress": 633,
+            "directSpinInput": {
+                "id": 1,
+                "device": "CGBT",
+                "channel": "M6DI4",
+                "description": "STM2-VENT-VF1-MA Estado giro sentido directo",
+                "controller": "WAGO",
+                "inverseLogic": false
+            },
+            "directSpinOutput": {
+                "id": 2,
+                "device": "CGBT",
+                "channel": "M3DO3",
+                "description": "STM2-VENT-VF1-MA Control giro sentido directo",
+                "controller": "WAGO",
+                "inverseLogic": false
+            },
+            "inverseSpinInput": {
+                "id": 3,
+                "device": "CGBT",
+                "channel": "M6DI5",
+                "description": "STM2-VENT-VF1-MA Estado giro sentido inverso",
+                "controller": "WAGO",
+                "inverseLogic": false
+            },
+            "inverseSpinOutput": {
+                "id": 4,
+                "device": "CGBT",
+                "channel": "M3DO4",
+                "description": "STM2-VENT-VF1-MA Control giro sentido inverso",
+                "controller": "WAGO",
+                "inverseLogic": false
+            }
+        },
+        {
+            "model": "A",
+            "description": "STM2-VENT-VF2-MA",
+            "spinningStatusRegisterXAddress": 16517,
+            "spinningStatusRegisterXStatusAddress": 617,
+            "spinningRegisterXAddress": 25037,
+            "spinningRegisterXStatusAddress": 635,
+            "directSpinInput": {
+                "id": 1,
+                "device": "CGBT",
+                "channel": "M6DI8",
+                "description": "STM2-VENT-VF2-MA Estado giro sentido directo",
+                "controller": "WAGO",
+                "inverseLogic": false
+            },
+            "directSpinOutput": {
+                "id": 2,
+                "device": "CGBT",
+                "channel": "M3DO5",
+                "description": "STM2-VENT-VF2-MA Control giro sentido directo",
+                "controller": "WAGO",
+                "inverseLogic": false
+            },
+            "inverseSpinInput": {
+                "id": 3,
+                "device": "CGBT",
+                "channel": "M6DI8",
+                "description": "STM2-VENT-VF2-MA Estado giro sentido inverso",
+                "controller": "WAGO",
+                "inverseLogic": false
+            },
+            "inverseSpinOutput": {
+                "id": 4,
+                "device": "CGBT",
+                "channel": "M3DO6",
+                "description": "STM2-VENT-VF2-MA Control giro sentido inverso",
+                "controller": "WAGO",
+                "inverseLogic": false
+            }
+        },
+        {
+            "model": "A",
+            "description": "STM2-VENT-VF3-MA",
+            "spinningStatusRegisterXAddress": 16518,
+            "spinningStatusRegisterXStatusAddress": 618,
+            "spinningRegisterXAddress": 25038,
+            "spinningRegisterXStatusAddress": 637,
+            "directSpinInput": {
+                "id": 1,
+                "device": "CGBT",
+                "channel": "M6DI12",
+                "description": "STM2-VENT-VF3-MA Estado giro sentido directo",
+                "controller": "WAGO",
+                "inverseLogic": false
+            },
+            "directSpinOutput": {
+                "id": 2,
+                "device": "CGBT",
+                "channel": "M3DO7",
+                "description": "STM2-VENT-VF3-MA Control giro sentido directo",
+                "controller": "WAGO",
+                "inverseLogic": false
+            },
+            "inverseSpinInput": {
+                "id": 3,
+                "device": "CGBT",
+                "channel": "M6DI13",
+                "description": "STM2-VENT-VF3-MA Estado giro sentido inverso",
+                "controller": "WAGO",
+                "inverseLogic": false
+            },
+            "inverseSpinOutput": {
+                "id": 4,
+                "device": "CGBT",
+                "channel": "M3DO8",
+                "description": "STM2-VENT-VF3-MA Control giro sentido inverso",
+                "controller": "WAGO",
+                "inverseLogic": false
+            }
+        },
+        {
+            "model": "A",
+            "description": "STM2-VENT-VF4-MA",
+            "spinningStatusRegisterXAddress": 16519,
+            "spinningStatusRegisterXStatusAddress": 619,
+            "spinningRegisterXAddress": 25039,
+            "spinningRegisterXStatusAddress": 639,
+            "directSpinInput": {
+                "id": 1,
+                "device": "CGBT",
+                "channel": "M7DI0",
+                "description": "STM2-VENT-VF4-MA Estado giro sentido directo",
+                "controller": "WAGO",
+                "inverseLogic": false
+            },
+            "directSpinOutput": {
+                "id": 2,
+                "device": "CGBT",
+                "channel": "M3DO9",
+                "description": "STM2-VENT-VF4-MA Control giro sentido directo",
+                "controller": "WAGO",
+                "inverseLogic": false
+            },
+            "inverseSpinInput": {
+                "id": 3,
+                "device": "CGBT",
+                "channel": "M7DI1",
+                "description": "STM2-VENT-VF4-MA Estado giro sentido inverso",
+                "controller": "WAGO",
+                "inverseLogic": false
+            },
+            "inverseSpinOutput": {
+                "id": 4,
+                "device": "CGBT",
+                "channel": "M3DO10",
+                "description": "STM2-VENT-VF4-MA Control giro sentido inverso",
+                "controller": "WAGO",
+                "inverseLogic": false
+            }
+        },
+        {
+            "model": "A",
+            "description": "STM2-VENT-VF5-MA",
+            "spinningStatusRegisterXAddress": 16520,
+            "spinningStatusRegisterXStatusAddress": 620,
+            "spinningRegisterXAddress": 25040,
+            "spinningRegisterXStatusAddress": 641,
+            "directSpinInput": {
+                "id": 1,
+                "device": "CGBT",
+                "channel": "M7DI4",
+                "description": "STM2-VENT-VF5-MA Estado giro sentido directo",
+                "controller": "WAGO",
+                "inverseLogic": false
+            },
+            "directSpinOutput": {
+                "id": 2,
+                "device": "CGBT",
+                "channel": "M3DO11",
+                "description": "STM2-VENT-VF5-MA Control giro sentido directo",
+                "controller": "WAGO",
+                "inverseLogic": false
+            },
+            "inverseSpinInput": {
+                "id": 3,
+                "device": "CGBT",
+                "channel": "M7DI5",
+                "description": "STM2-VENT-VF5-MA Estado giro sentido inverso",
+                "controller": "WAGO",
+                "inverseLogic": false
+            },
+            "inverseSpinOutput": {
+                "id": 4,
+                "device": "CGBT",
+                "channel": "M3DO12",
+                "description": "STM2-VENT-VF5-MA Control giro sentido inverso",
+                "controller": "WAGO",
+                "inverseLogic": false
+            }
+        },
+        {
+            "model": "A",
+            "description": "STM2-VENT-VF6-MA",
+            "spinningStatusRegisterXAddress": 16521,
+            "spinningStatusRegisterXStatusAddress": 621,
+            "spinningRegisterXAddress": 25041,
+            "spinningRegisterXStatusAddress": 643,
+            "directSpinInput": {
+                "id": 1,
+                "device": "CGBT",
+                "channel": "M7DI8",
+                "description": "STM2-VENT-VF6-MA Estado giro sentido directo",
+                "controller": "WAGO",
+                "inverseLogic": false
+            },
+            "directSpinOutput": {
+                "id": 2,
+                "device": "CGBT",
+                "channel": "M3DO13",
+                "description": "STM2-VENT-VF6-MA Control giro sentido directo",
+                "controller": "WAGO",
+                "inverseLogic": false
+            },
+            "inverseSpinInput": {
+                "id": 3,
+                "device": "CGBT",
+                "channel": "M7DI9",
+                "description": "STM2-VENT-VF6-MA Estado giro sentido inverso",
+                "controller": "WAGO",
+                "inverseLogic": false
+            },
+            "inverseSpinOutput": {
+                "id": 4,
+                "device": "CGBT",
+                "channel": "M3DO14",
+                "description": "STM2-VENT-VF6-MA Control giro sentido inverso",
+                "controller": "WAGO",
+                "inverseLogic": false
+            }
+        }
+    ]
+}

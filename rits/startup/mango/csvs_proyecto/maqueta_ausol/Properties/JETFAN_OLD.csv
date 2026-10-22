@@ -1,0 +1,17 @@
+device_name;session_uid;eru_name;url_publisher;read_permission;write_permission;offset_fan_state(i);offset_fan_cmd(i);offset_switch(i);offset_gear(i);offset_commstatus(i)
+CAS-VENT-VF1-CA;CAS-VENT-VF1-CA;CAS-ERU;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;16500;25020;15559;15560;608
+CAS-VENT-VF2-CA;CAS-VENT-VF2-CA;CAS-ERU;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;16501;25021;15561;15562;609
+CAS-VENT-VF3-CA;CAS-VENT-VF3-CA;CAS-ERU;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;16502;25022;15563;15564;610
+CAS-VENT-VF4-CA;CAS-VENT-VF4-CA;CAS-ERU;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;16503;25023;15565;15566;611
+CAS-VENT-VF5-CA;CAS-VENT-VF5-CA;CAS-ERU;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;16504;25024;15567;15568;612
+CAS-VENT-VF6-CA;CAS-VENT-VF6-CA;CAS-ERU;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;16505;25025;15569;15570;613
+CAS-VENT-VF1-MA;CAS-VENT-VF1-MA;CAS-ERU;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;16508;25028;15514;15515;626
+CAS-VENT-VF2-MA;CAS-VENT-VF2-MA;CAS-ERU;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;16509;25029;15516;15517;627
+CAS-VENT-VF3-MA;CAS-VENT-VF3-MA;CAS-ERU;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;16510;25030;15518;15519;628
+CAS-VENT-VF4-MA;CAS-VENT-VF4-MA;CAS-ERU;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;16511;25031;15520;15521;629
+CAS-VENT-VF5-MA;CAS-VENT-VF5-MA;CAS-ERU;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;16512;25032;15522;15523;630
+CAS-VENT-VF6-MA;CAS-VENT-VF6-MA;CAS-ERU;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;16513;25033;15524;15525;631
+CAS-VENT-VF7-MA;CAS-VENT-VF7-MA;CAS-ERU;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;16514;25034;15526;15527;632
+CAS-VENT-VF8-MA;CAS-VENT-VF8-MA;CAS-ERU;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;16515;25035;15572;15573;633
+CAS-VENT-VF9-MA;CAS-VENT-VF9-MA;CAS-ERU;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;16516;25036;15574;15575;634
+CAS-VENT-VF10-MA;CAS-VENT-VF10-MA;CAS-ERU;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;16517;25037;15576;15577;635

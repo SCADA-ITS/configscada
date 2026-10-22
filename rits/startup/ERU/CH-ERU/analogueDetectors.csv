@@ -1,0 +1,84 @@
+name;device;channel;description;controller;xAddress;xStatusAddress;xAlarmAddress;xAlarmStatusAddress;multiplier;offset;log;units;avg
+CH-VENT-VF1-CA;SOS_C1;M2AI1;CH-VENT-VF1-CA Nivel de Vibracion Ventilador;WAGO;16600;100;700;148;0.000763;0.0;false;mm/s;false
+CH-VENT-VF2-CA;SOS_C1;M2AI0;CH-VENT-VF2-CA Nivel de Vibracion Ventilador;WAGO;16602;101;701;149;0.000763;0.0;false;mm/s;false
+CH-VENT-VF3-CA;SOS_C1;M1AI7;CH-VENT-VF3-CA Nivel de Vibracion Ventilador;WAGO;16604;102;702;150;0.000763;0.0;false;mm/s;false
+CH-VENT-VF4-CA;SOS_C1;M2AI4;CH-VENT-VF4-CA Nivel de Vibracion Ventilador;WAGO;16606;103;703;151;0.000763;0.0;false;mm/s;false
+CH-VENT-VF5-CA;SOS_C1;M2AI3;CH-VENT-VF5-CA Nivel de Vibracion Ventilador;WAGO;16608;104;704;152;0.000763;0.0;false;mm/s;false
+CH-VENT-VF6-CA;SOS_C1;M2AI2;CH-VENT-VF6-CA Nivel de Vibracion Ventilador;WAGO;16610;105;705;153;0.000763;0.0;false;mm/s;false
+CH-VENT-VF7-CA;SOS_C2;M2AI1;CH-VENT-VF7-CA Nivel de Vibracion Ventilador;WAGO;16612;106;706;154;0.000763;0.0;false;mm/s;false
+CH-VENT-VF8-CA;SOS_C2;M2AI2;CH-VENT-VF8-CA Nivel de Vibracion Ventilador;WAGO;16614;107;707;155;0.000763;0.0;false;mm/s;false
+CH-VENT-VF1-CA;SOS_C1;M4AI0;CH-VENT-VF1-CA Temperatura Rodamientos Delantero Motor Ventilador;WAGO;16616;108;708;156;0.0625;0.0;false;C;false
+CH-VENT-VF1-CA;SOS_C1;M4AI1;CH-VENT-VF1-CA Temperatura Rodamientos Trasero Motor Ventilador;WAGO;16618;109;709;157;0.0625;0.0;false;C;false
+CH-VENT-VF2-CA;SOS_C1;M3AI2;CH-VENT-VF2-CA Temperatura Rodamientos Delantero Motor Ventilador;WAGO;16620;110;710;158;0.0625;0.0;false;C;false
+CH-VENT-VF2-CA;SOS_C1;M3AI3;CH-VENT-VF2-CA Temperatura Rodamientos Trasero Motor Ventilador;WAGO;16622;111;711;159;0.0625;0.0;false;C;false
+CH-VENT-VF3-CA;SOS_C1;M3AI0;CH-VENT-VF3-CA Temperatura Rodamientos Delantero Motor Ventilador;WAGO;16624;112;712;160;0.0625;0.0;false;C;false
+CH-VENT-VF3-CA;SOS_C1;M3AI1;CH-VENT-VF3-CA Temperatura Rodamientos Trasero Motor Ventilador;WAGO;16626;113;713;161;0.0625;0.0;false;C;false
+CH-VENT-VF4-CA;SOS_C1;M5AI2;CH-VENT-VF4-CA Temperatura Rodamientos Delantero Motor Ventilador;WAGO;16628;114;714;162;0.0625;0.0;false;C;false
+CH-VENT-VF4-CA;SOS_C1;M5AI3;CH-VENT-VF4-CA Temperatura Rodamientos Trasero Motor Ventilador;WAGO;16630;115;715;163;0.0625;0.0;false;C;false
+CH-VENT-VF5-CA;SOS_C1;M5AI0;CH-VENT-VF5-CA Temperatura Rodamientos Delantero Motor Ventilador;WAGO;16632;116;716;164;0.0625;0.0;false;C;false
+CH-VENT-VF5-CA;SOS_C1;M5AI1;CH-VENT-VF5-CA Temperatura Rodamientos Trasero Motor Ventilador;WAGO;16634;117;717;165;0.0625;0.0;false;C;false
+CH-VENT-VF6-CA;SOS_C1;M4AI2;CH-VENT-VF6-CA Temperatura Rodamientos Delantero Motor Ventilador;WAGO;16636;118;718;166;0.0625;0.0;false;C;false
+CH-VENT-VF6-CA;SOS_C1;M4AI3;CH-VENT-VF6-CA Temperatura Rodamientos Trasero Motor Ventilador;WAGO;16638;119;719;167;0.0625;0.0;false;C;false
+CH-VENT-VF7-CA;SOS_C2;M3AI2;CH-VENT-VF7-CA Temperatura Rodamientos Delantero Motor Ventilador;WAGO;16640;120;720;168;0.0625;0.0;false;C;false
+CH-VENT-VF7-CA;SOS_C2;M3AI3;CH-VENT-VF7-CA Temperatura Rodamientos Trasero Motor Ventilador;WAGO;16642;121;721;169;0.0625;0.0;false;C;false
+CH-VENT-VF8-CA;SOS_C2;M3AI0;CH-VENT-VF8-CA Temperatura Rodamientos Delantero Motor Ventilador;WAGO;16644;122;722;170;0.0625;0.0;false;C;false
+CH-VENT-VF8-CA;SOS_C2;M3AI1;CH-VENT-VF8-CA Temperatura Rodamientos Trasero Motor Ventilador;WAGO;16646;123;723;171;0.0625;0.0;false;C;false
+CH-VENT-VF1-MA;SOS_M1;M2AI1;CH-VENT-VF1-MA Nivel de Vibracion Ventilador;WAGO;16648;124;724;172;0.000763;0.0;false;mm/s;false
+CH-VENT-VF2-MA;SOS_M1;M2AI0;CH-VENT-VF2-MA Nivel de Vibracion Ventilador;WAGO;16650;125;725;173;0.000763;0.0;false;mm/s;false
+CH-VENT-VF3-MA;SOS_M1;M2AI3;CH-VENT-VF3-MA Nivel de Vibracion Ventilador;WAGO;16652;126;726;174;0.000763;0.0;false;mm/s;false
+CH-VENT-VF4-MA;SOS_M1;M2AI2;CH-VENT-VF4-MA Nivel de Vibracion Ventilador;WAGO;16654;127;727;175;0.000763;0.0;false;mm/s;false
+CH-VENT-VF5-MA;SOS_M3;M1AI4;CH-VENT-VF5-MA Nivel de Vibracion Ventilador;WAGO;16656;128;728;176;0.000763;0.0;false;mm/s;false
+CH-VENT-VF6-MA;SOS_M3;M1AI7;CH-VENT-VF6-MA Nivel de Vibracion Ventilador;WAGO;16658;129;729;177;0.000763;0.0;false;mm/s;false
+CH-VENT-VF7-MA;SOS_M3;M1AI6;CH-VENT-VF7-MA Nivel de Vibracion Ventilador;WAGO;16660;130;730;178;0.000763;0.0;false;mm/s;false
+CH-VENT-VF8-MA;SOS_M3;M1AI5;CH-VENT-VF8-MA Nivel de Vibracion Ventilador;WAGO;16662;131;731;179;0.000763;0.0;false;mm/s;false
+CH-VENT-VF1-MA;SOS_M1;M3AI2;CH-VENT-VF1-MA Temperatura Rodamientos Delantero Motor Ventilador;WAGO;16664;132;732;180;0.0625;0.0;false;C;false
+CH-VENT-VF1-MA;SOS_M1;M3AI3;CH-VENT-VF1-MA Temperatura Rodamientos Trasero Motor Ventilador;WAGO;16666;133;733;181;0.0625;0.0;false;C;false
+CH-VENT-VF2-MA;SOS_M1;M3AI0;CH-VENT-VF2-MA Temperatura Rodamientos Delantero Motor Ventilador;WAGO;16668;134;734;182;0.0625;0.0;false;C;false
+CH-VENT-VF2-MA;SOS_M1;M3AI1;CH-VENT-VF2-MA Temperatura Rodamientos Trasero Motor Ventilador;WAGO;16670;135;735;183;0.0625;0.0;false;C;false
+CH-VENT-VF3-MA;SOS_M1;M4AI2;CH-VENT-VF3-MA Temperatura Rodamientos Delantero Motor Ventilador;WAGO;16672;136;736;184;0.0625;0.0;false;C;false
+CH-VENT-VF3-MA;SOS_M1;M4AI3;CH-VENT-VF3-MA Temperatura Rodamientos Trasero Motor Ventilador;WAGO;16674;137;737;185;0.0625;0.0;false;C;false
+CH-VENT-VF4-MA;SOS_M1;M4AI0;CH-VENT-VF4-MA Temperatura Rodamientos Delantero Motor Ventilador;WAGO;16676;138;738;186;0.0625;0.0;false;C;false
+CH-VENT-VF4-MA;SOS_M1;M4AI1;CH-VENT-VF4-MA Temperatura Rodamientos Trasero Motor Ventilador;WAGO;16678;139;739;187;0.0625;0.0;false;C;false
+CH-VENT-VF5-MA;SOS_M3;M2AI0;CH-VENT-VF5-MA Temperatura Rodamientos Delantero Motor Ventilador;WAGO;16680;140;740;188;0.0625;0.0;false;C;false
+CH-VENT-VF5-MA;SOS_M3;M2AI1;CH-VENT-VF5-MA Temperatura Rodamientos Trasero Motor Ventilador;WAGO;16682;141;741;189;0.0625;0.0;false;C;false
+CH-VENT-VF6-MA;SOS_M3;M3AI2;CH-VENT-VF6-MA Temperatura Rodamientos Delantero Motor Ventilador;WAGO;16684;142;742;190;0.0625;0.0;false;C;false
+CH-VENT-VF6-MA;SOS_M3;M3AI3;CH-VENT-VF6-MA Temperatura Rodamientos Trasero Motor Ventilador;WAGO;16686;143;743;191;0.0625;0.0;false;C;false
+CH-VENT-VF7-MA;SOS_M3;M3AI0;CH-VENT-VF7-MA Temperatura Rodamientos Delantero Motor Ventilador;WAGO;16688;144;744;192;0.0625;0.0;false;C;false
+CH-VENT-VF7-MA;SOS_M3;M2AI1;CH-VENT-VF7-MA Temperatura Rodamientos Trasero Motor Ventilador;WAGO;16690;145;745;193;0.0625;0.0;false;C;false
+CH-VENT-VF8-MA;SOS_M3;M2AI2;CH-VENT-VF8-MA Temperatura Rodamientos Delantero Motor Ventilador;WAGO;16692;146;746;194;0.0625;0.0;false;C;false
+CH-VENT-VF8-MA;SOS_M3;M2AI3;CH-VENT-VF8-MA Temperatura Rodamientos Trasero Motor Ventilador;WAGO;16694;147;747;195;0.0625;0.0;false;C;false
+CH-CO-1CA;SOS_C1;M1AI0;CH-CO-1CA Nivel de CO;WAGO;16696;148;748;196;0.009158;0.0;true;ppm;false
+CH-NO-1CA;SOS_C1;M1AI1;CH-NO-1CA Nivel de NO;WAGO;16698;149;749;197;0.000611;0.0;true;ppm;false
+CH-OPC-1CA;SOS_C1;M1AI2;CH-OPC-1CA Nivel de opacidad;WAGO;16700;150;750;198;0.000003052;0.0;true;m-1;false
+CH-CO-2CA;SOS_C2;M1AI0;CH-CO-2CA Nivel de CO;WAGO;16702;151;751;199;0.009158;0.0;true;ppm;false
+CH-NO-2CA;SOS_C2;M1AI1;CH-NO-2CA Nivel de NO;WAGO;16704;152;752;200;0.000611;0.0;true;ppm;false
+CH-OPC-2CA;SOS_C2;M1AI2;CH-OPC-2CA Nivel de opacidad;WAGO;16706;153;753;201;0.000003052;0.0;true;m-1;false
+CH-CO-3CA;SOS_C3;M1AI0;CH-CO-3CA Nivel de CO;WAGO;16708;154;754;202;0.009158;0.0;true;ppm;false
+CH-NO-3CA;SOS_C3;M1AI1;CH-NO-3CA Nivel de NO;WAGO;16710;155;755;203;0.000611;0.0;true;ppm;false
+CH-OPC-3CA;SOS_C3;M1AI2;CH-OPC-3CA Nivel de opacidad;WAGO;16712;156;756;204;0.000003052;0.0;true;m-1;false
+CH-CO-1MA;SOS_M1;M1AI0;CH-CO-1MA Nivel de CO;WAGO;16714;157;757;205;0.009158;0.0;true;ppm;false
+CH-NO-1MA;SOS_M1;M1AI1;CH-NO-1MA Nivel de NO;WAGO;16716;158;758;206;0.000611;0.0;true;ppm;false
+CH-OPC-1MA;SOS_M1;M1AI2;CH-OPC-1MA Nivel de opacidad;WAGO;16718;159;759;207;0.000003052;0.0;true;m-1;false
+CH-CO-2MA;SOS_M2;M1AI0;CH-CO-2MA Nivel de CO;WAGO;16720;160;760;208;0.009158;0.0;true;ppm;false
+CH-NO-2MA;SOS_M2;M1AI1;CH-NO-2MA Nivel de NO;WAGO;16722;161;761;209;0.000611;0.0;true;ppm;false
+CH-OPC-2MA;SOS_M2;M1AI2;CH-OPC-2MA Nivel de opacidad;WAGO;16724;162;762;210;0.000003052;0.0;true;m-1;false
+CH-CO-3MA;SOS_M3;M1AI0;CH-CO-3MA Nivel de CO;WAGO;16726;163;763;211;0.009158;0.0;true;ppm;false
+CH-NO-3MA;SOS_M3;M1AI1;CH-NO-3MA Nivel de NO;WAGO;16728;164;764;212;0.000611;0.0;true;ppm;false
+CH-OPC-3MA;SOS_M3;M1AI2;CH-OPC-3MA Nivel de opacidad;WAGO;16730;165;765;213;0.000003052;0.0;true;m-1;false
+CH-LUX-1CA;SOS_C1;M1AI4;CH-LUX-1CA Nivel de luminosidad;WAGO;16732;166;766;214;0.0304945054945055;1.0;false;lux;false
+CH-LUX-2CA;SOS_C1;M1AI5;CH-LUX-2CA Nivel de luminosidad;WAGO;16734;167;767;215;0.0304945054945055;1.0;false;lux;false
+CH-LUX-3CA;SOS_C1;M1AI6;CH-LUX-3CA Nivel de luminosidad;WAGO;16736;168;768;216;0.0304945054945055;1.0;false;lux;false
+CH-LUX-4CA;SOS_C2;M2AI0;CH-LUX-4CA Nivel de luminosidad;WAGO;16738;169;769;217;0.0304945054945055;1.0;false;lux;false
+CH-LUX-1MA;SOS_M1;M1AI4;CH-LUX-1MA Nivel de luminosidad;WAGO;16740;170;770;218;0.0304945054945055;1.0;false;lux;false
+CH-LUX-2MA;SOS_M1;M1AI5;CH-LUX-2MA Nivel de luminosidad;WAGO;16742;171;771;219;0.0304945054945055;1.0;false;lux;false
+CH-LUX-3MA;SOS_M1;M1AI6;CH-LUX-3MA Nivel de luminosidad;WAGO;16744;172;772;220;0.0304945054945055;1.0;false;lux;false
+CH-LUX-4MA;SOS_M2;M1AI3;CH-LUX-4MA Nivel de luminosidad;WAGO;16746;173;773;221;0.0304945054945055;1.0;false;lux;false
+CH-LUM-1CA;Rack_Exterior_BC;M1AI0;CH-LUM-1CA Nivel de luminosidad;WAGO;16748;174;774;222;0.1984126;0.0;false;cd/m 2;true
+CH-ANE-1CA;SOS_C1;M1AI3;CH-ANE-1CA Velocidad y Direccion del viento;WAGO;16750;175;775;223;-0.001221;20;false;m/s;false
+CH-ANE-2CA;SOS_C3;M1AI3;CH-ANE-2CA Velocidad y Direccion del viento;WAGO;16752;176;776;224;-0.001221;20;false;m/s;false
+CH-ANE-1MA;SOS_M1;M1AI3;CH-ANE-1MA Velocidad y Direccion del viento;WAGO;16754;177;777;225;-0.001221;20;false;m/s;false
+CH-ANE-2MA;SOS_M3;M1AI3;CH-ANE-2MA Velocidad y Direccion del viento;WAGO;16756;178;778;226;-0.001221;20;false;m/s;false
+CH-LUM-1MA;Rack_Exterior_BM;M1AI0;CH-LUM-1MA Nivel de luminosidad;WAGO;16758;179;779;227;0.1984126;0.0;false;cd/m 2;true
+CH-FOT-1MA;CGBT;M1AI7;Nivel de luminosidad CH-FOT-1MA;WAGO;16760;180;780;228;0.305250;0.0;false;lux;false
+CH-VTA-ANE-1CA;Rack_Exterior_BC;M1AI1;CH-VTA-ANE-1CA Velocidad del viento;WAGO;16762;181;781;229;0.00152625;0.0;false;m/s;false
+CH-VTA-ANE-1CA;Rack_Exterior_BC;M1AI2;CH-VTA-ANE-1CA Direccion del viento;WAGO;16764;182;782;230;0.010989;0.0;false;gr;false

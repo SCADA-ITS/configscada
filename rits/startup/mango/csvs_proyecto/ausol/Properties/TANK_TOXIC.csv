@@ -1,0 +1,10 @@
+device_name;session_uid;PLC_name;host;port(i);url_publisher;read_permission;write_permission;offset_toxic_capacity(i)
+CAS-DEP-TOX-BC;CAS-DEP-TOX-BC;CAS-PLC-CGBT-BC;192.168.5.131;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;1
+CAS-DEP-TOX-BM;CAS-DEP-TOX-BM;CAS-PLC-CGBT-BM;192.168.5.187;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;1
+MM-DEP-TOX-BC;MM-DEP-TOX-BC;MM-CTGBT;192.168.12.54;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;2
+COR-DEP-TOX-BM;COR-DEP-TOX-BM;COR-PLC-CGBT-BM;192.168.15.57;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;1
+STM2-DEP-TOX-BC;STM2-DEP-TOX-BC;STM2-PLC-CGBT-BC;192.168.10.11;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;1
+STM2-DEP-TOX-BM;STM2-DEP-TOX-BM;STM2-PLC-CGBT-BC;192.168.10.11;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;2
+CH-DEP-TOX-BC;CH-DEP-TOX-BC;CH-PLC-CGBT;192.168.9.11;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;1
+CH-DEP-TOX-BM;CH-DEP-TOX-BM;CH-PLC-CGBT;192.168.9.11;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;2
+LQ-DEP-TOX-MA;LQ-DEP-TOX-MA;LQ-PLC-CGBT;192.168.14.11;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;2

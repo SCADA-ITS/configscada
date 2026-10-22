@@ -1,0 +1,4 @@
+device_name;session_uid;url_publisher;url_dai
+RV-DAI;RV-DAI;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/;http:\/\/192.168.88.165
+MM-DAI;MM-DAI;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/;http:\/\/192.168.88.165
+STMI-DAI-1CA;STMI-DAI-1CA;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/;http:\/\/192.168.88.165

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="ImsIncidentAlarmCondition">
+	<SELECT>SELECT incident_alarm_condition_id as "id",
+				   incident_type_id as "incidentTypeId",
+				   stretch_id as "stretchId",
+				   auto as "auto",
+				   road_impact_id as "roadImpactId",
+				   enabled as "enabled",
+				   visible as "visible"
+			  FROM conf.ims_incident_alarm_conditions
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>INSERT INTO conf.ims_incident_alarm_conditions
+					   (incident_alarm_condition_id,
+					   	incident_type_id,
+					   	stretch_id,
+					   	auto,
+					   	road_impact_id,
+					    enabled,
+					    visible,
+					    created_at,
+					    updated_at)
+				 VALUES (:id=getNextId{'conf.ims_incident_alarm_conditions'$'incident_alarm_condition_id'},
+				 		 :incidentTypeId,
+				 		 :stretchId,
+				 		 :auto,
+				 		 :roadImpactId,
+				         :enabled,
+				         :visible,
+				         CURRENT_TIMESTAMP,
+				         CURRENT_TIMESTAMP)
+	</INSERT>
+	<UPDATE>UPDATE conf.ims_incident_alarm_conditions
+			   SET incident_type_id = :incidentTypeId,
+			       stretch_id = :stretchId,
+			       auto = :auto,
+			       road_impact_id = :roadImpactId,
+			       enabled = :enabled,
+				   visible = :visible,
+			       updated_at = CURRENT_TIMESTAMP
+			 WHERE incident_alarm_condition_id = :id
+	</UPDATE>
+	<DELETE>DELETE FROM conf.ims_incident_alarm_conditions
+			 WHERE incident_alarm_condition_id = :id
+	</DELETE>
+</DML>

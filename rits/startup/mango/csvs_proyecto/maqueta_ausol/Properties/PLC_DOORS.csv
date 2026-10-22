@@ -1,0 +1,2 @@
+device_name;session_uid;PLC_name;url_publisher;read_permission;write_permission;endpoint;offset_front_door_open(i);offset_back_door_open(i)
+RV-PLCE-1CA;RV-PLCE-1CA;RV-Rack-Exterior;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/;monitor;;'http://192.168.88.118';23;24

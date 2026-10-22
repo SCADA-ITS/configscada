@@ -1,0 +1,290 @@
+{
+    "dataSources": [
+        {
+            "xid": "DS_{PLC_name}",
+            "name": "{PLC_name}",
+            "enabled": true,
+            "type": "MODBUS_IP",
+            "alarmLevels": {
+                "POINT_WRITE_EXCEPTION": "DO_NOT_LOG",
+                "POLL_ABORTED": "DO_NOT_LOG",
+                "DATA_SOURCE_EXCEPTION": "DO_NOT_LOG",
+                "POINT_READ_EXCEPTION": "DO_NOT_LOG"
+            },
+            "purgeType": "YEARS",
+            "updatePeriods": 10,
+            "updatePeriodType": "SECONDS",
+            "transportType": "TCP_KEEP_ALIVE",
+            "encapsulated": false,
+            "host": "{host}",
+            "port": "{port}",
+            "contiguousBatches": false,
+            "createSlaveMonitorPoints": false,
+            "discardDataDelay": 0,
+            "ioLogFileSizeMBytes": 1.0,
+            "logIO": false,
+            "maxHistoricalIOLogs": 1,
+            "maxReadBitCount": 2000,
+            "maxReadRegisterCount": 125,
+            "maxWriteRegisterCount": 120,
+            "multipleWritesOnly": false,
+            "retries": 0,
+            "timeout": 500,
+            "quantize": false,
+            "useCron": false,
+            "editPermission": "",
+            "purgeOverride": false,
+            "purgePeriod": 1
+        },
+        {
+            "xid": "DS_status",
+            "name": "status",
+            "enabled": true,
+            "type": "META",
+            "alarmLevels": {
+                "SCRIPT_ERROR": "DO_NOT_LOG",
+                "CONTEXT_POINT_DISABLED": "DO_NOT_LOG",
+                "RESULT_TYPE_ERROR": "DO_NOT_LOG"
+            },
+            "purgeType": "YEARS",
+            "editPermission": "",
+            "purgeOverride": false,
+            "purgePeriod": 1
+        }
+    ],
+    "dataPoints": [
+        {
+            "xid": "DP_{device_name}_fail_trafo",
+            "name": "fail_trafo",
+            "enabled": true,
+            "loggingType": "ON_CHANGE",
+            "intervalLoggingPeriodType": "MINUTES",
+            "intervalLoggingType": "INSTANT",
+            "purgeType": "YEARS",
+            "pointLocator": {
+                "range": "INPUT_STATUS",
+                "modbusDataType": "BINARY",
+                "writeType": "SETTABLE",
+                "additive": 0.0,
+                "bit": 0,
+                "charset": "ASCII",
+                "multiplier": 1.0,
+                "multistateNumeric": false,
+                "offset": "{offset_fail_trafo}",
+                "registerCount": 0,
+                "slaveId": 1,
+                "slaveMonitor": false
+            },
+            "eventDetectors": [],
+            "plotType": "STEP",
+            "rollup": "NONE",
+            "unit": "",
+            "simplifyType": "NONE",
+            "chartColour": "",
+            "chartRenderer": {
+                "type": "TABLE",
+                "limit": 10
+            },
+            "dataSourceXid": "DS_{PLC_name}",
+            "defaultCacheSize": 1,
+            "deviceName": "{device_name}",
+            "discardExtremeValues": false,
+            "discardHighLimit": 1.7976931348623157E308,
+            "discardLowLimit": -1.7976931348623157E308,
+            "intervalLoggingPeriod": 1,
+            "intervalLoggingSampleWindowSize": 0,
+            "overrideIntervalLoggingSamples": false,
+            "preventSetExtremeValues": false,
+            "purgeOverride": false,
+            "purgePeriod": 1,
+            "readPermission": "",
+            "setExtremeHighLimit": 1.7976931348623157E308,
+            "setExtremeLowLimit": -1.7976931348623157E308,
+            "setPermission": "",
+            "tags": {},
+            "textRenderer": {
+                "type": "BINARY",
+                "oneColour": "#00ff00",
+                "oneLabel": "one",
+                "zeroColour": "#0000ff",
+                "zeroLabel": "zero"
+            },
+            "tolerance": 0.0
+        },
+        {
+            "xid": "DP_{device_name}_excess_windings_temperature",
+            "name": "excess_windings_temperature",
+            "enabled": true,
+            "loggingType": "ON_CHANGE",
+            "intervalLoggingPeriodType": "MINUTES",
+            "intervalLoggingType": "INSTANT",
+            "purgeType": "YEARS",
+            "pointLocator": {
+                "range": "INPUT_STATUS",
+                "modbusDataType": "BINARY",
+                "writeType": "SETTABLE",
+                "additive": 0.0,
+                "bit": 0,
+                "charset": "ASCII",
+                "multiplier": 1.0,
+                "multistateNumeric": false,
+                "offset": "{offset_excess_windings_temperature}",
+                "registerCount": 0,
+                "slaveId": 1,
+                "slaveMonitor": false
+            },
+            "eventDetectors": [],
+            "plotType": "STEP",
+            "rollup": "NONE",
+            "unit": "",
+            "simplifyType": "NONE",
+            "chartColour": "",
+            "chartRenderer": {
+                "type": "TABLE",
+                "limit": 10
+            },
+            "dataSourceXid": "DS_{PLC_name}",
+            "defaultCacheSize": 1,
+            "deviceName": "{device_name}",
+            "discardExtremeValues": false,
+            "discardHighLimit": 1.7976931348623157E308,
+            "discardLowLimit": -1.7976931348623157E308,
+            "intervalLoggingPeriod": 1,
+            "intervalLoggingSampleWindowSize": 0,
+            "overrideIntervalLoggingSamples": false,
+            "preventSetExtremeValues": false,
+            "purgeOverride": false,
+            "purgePeriod": 1,
+            "readPermission": "",
+            "setExtremeHighLimit": 1.7976931348623157E308,
+            "setExtremeLowLimit": -1.7976931348623157E308,
+            "setPermission": "",
+            "tags": {},
+            "textRenderer": {
+                "type": "BINARY",
+                "oneColour": "#00ff00",
+                "oneLabel": "one",
+                "zeroColour": "#0000ff",
+                "zeroLabel": "zero"
+            },
+            "tolerance": 0.0
+        },
+        {
+            "xid": "DP_{device_name}_status",
+            "name": "status",
+            "enabled": true,
+            "loggingType": "INTERVAL",
+            "intervalLoggingPeriodType": "MINUTES",
+            "intervalLoggingType": "AVERAGE",
+            "purgeType": "YEARS",
+            "pointLocator": {
+                "dataType": "NUMERIC",
+                "updateEvent": "CRON",
+                "contextUpdateEvent": "CONTEXT_UPDATE",
+                "context": [
+                    {
+                        "varName": "fail_trafo",
+                        "dataPointXid": "DP_{device_name}_fail_trafo",
+                        "updateContext": false
+                    }
+                ],
+                "logLevel": "NONE",
+                "variableName": "my",
+                "scriptPermissions": [
+                    "superadmin"
+                ],
+                "executionDelaySeconds": 0,
+                "logCount": 5,
+                "logSize": 1.0,
+                "script": "time_polling_min = 1;\ntime_polling_seg = time_polling_min * 60;\ntime_polling_ms = time_polling_seg * 1000;\n\nif(fail_trafo.time == null){\n    return(0.0);\n}else{\n    if(Date.now() - fail_trafo.time > time_polling_ms ) \n    {\n        return(0.0);\n    }\n    else \n    {\n        return(1.0);\n    }\n}",
+                "settable": false,
+                "updateCronPattern": "5 0\/1 * * * ?"
+            },
+            "eventDetectors": [],
+            "plotType": "SPLINE",
+            "rollup": "NONE",
+            "unit": "",
+            "simplifyType": "NONE",
+            "chartColour": "",
+            "chartRenderer": {
+                "type": "IMAGE",
+                "timePeriodType": "DAYS",
+                "numberOfPeriods": 1
+            },
+            "dataSourceXid": "DS_status",
+            "defaultCacheSize": 1,
+            "deviceName": "{device_name}",
+            "discardExtremeValues": false,
+            "discardHighLimit": 1.7976931348623157E308,
+            "discardLowLimit": -1.7976931348623157E308,
+            "intervalLoggingPeriod": 1,
+            "intervalLoggingSampleWindowSize": 0,
+            "overrideIntervalLoggingSamples": false,
+            "preventSetExtremeValues": false,
+            "purgeOverride": false,
+            "purgePeriod": 1,
+            "readPermission": "",
+            "setExtremeHighLimit": 1.7976931348623157E308,
+            "setExtremeLowLimit": -1.7976931348623157E308,
+            "setPermission": "",
+            "tags": {},
+            "textRenderer": {
+                "type": "ANALOG",
+                "useUnitAsSuffix": false,
+                "suffix": "",
+                "format": "0.00"
+            },
+            "tolerance": 0.0
+        }
+    ],
+    "publishers": [
+        {
+            "publishAttributeChanges": true,
+            "cacheWarningSize": 100,
+            "dateFormat": "DATE_FORMAT_UTC",
+            "useJSON": true,
+            "snapshotSendPeriods": 5,
+            "raiseResultWarning": false,
+            "staticParameters": [],
+            "sendSnapshot": false,
+            "type": "HTTP_SENDER",
+            "usePost": true,
+            "enabled": true,
+            "url": "{url_publisher}",
+            "points": [
+                {
+                    "dataPointId": "DP_{device_name}_status",
+                    "parameterName": "status",
+                    "includeTimestamp": false
+                },
+                {
+                    "dataPointId": "DP_{device_name}_fail_trafo",
+                    "parameterName": "fail_trafo",
+                    "includeTimestamp": false
+                },
+                {
+                    "dataPointId": "DP_{device_name}_excess_windings_temperature",
+                    "parameterName": "excess_windings_temperature",
+                    "includeTimestamp": false
+                }
+            ],
+            "xid": "PUB_{device_name}",
+            "publishType": "CHANGES_ONLY",
+            "alarmLevels": {
+                "POINT_DISABLED_EVENT": "DO_NOT_LOG",
+                "RESULT_WARNINGS_EVENT": "DO_NOT_LOG",
+                "SEND_EXCEPTION_EVENT": "DO_NOT_LOG",
+                "QUEUE_SIZE_WARNING_EVENT": "DO_NOT_LOG"
+            },
+            "staticHeaders": [
+                {
+                    "value": "{session_uid}",
+                    "key": "session-uid"
+                }
+            ],
+            "name": "{device_name}",
+            "snapshotSendPeriodType": "MINUTES",
+            "cacheDiscardSize": 1000
+        }
+    ]
+}

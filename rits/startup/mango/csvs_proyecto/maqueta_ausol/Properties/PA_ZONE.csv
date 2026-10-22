@@ -1,0 +1,17 @@
+device_name;session_uid;id_zone;controller_name;url_publisher
+RV-MEG-1CA;RV-MEG-1CA;59;RV-DAC-1;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/
+RV-MEG-2CA;RV-MEG-2CA;60;RV-DAC-1;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/
+RV-MEG-1MA;RV-MEG-1MA;61;RV-DAC-1;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/
+RV-MEG-2MA;RV-MEG-2MA;62;RV-DAC-1;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/
+STMI-MEG-1CA;STMI-MEG-1CA;59;STMI-DAC-1;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/
+STMI-MEG-2CA;STMI-MEG-2CA;60;STMI-DAC-1;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/
+STMI-MEG-1MA;STMI-MEG-1MA;61;STMI-DAC-1;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/
+STMI-MEG-2MA;STMI-MEG-2MA;62;STMI-DAC-1;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/
+MM-MEG-1MA;MM-MEG-1MA;59;MM-DAC-1;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/
+MM-MEG-2MA;MM-MEG-2MA;60;MM-DAC-1;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/
+MM-MEG-3MA;MM-MEG-3MA;61;MM-DAC-1;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/
+MM-MEG-4MA;MM-MEG-4MA;62;MM-DAC-1;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/
+MM-MEG-1CA;MM-MEG-1CA;63;MM-DAC-1;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/
+MM-MEG-2CA;MM-MEG-2CA;64;MM-DAC-1;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/
+MM-MEG-3CA;MM-MEG-3CA;65;MM-DAC-1;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/
+MM-MEG-4CA;MM-MEG-4CA;66;MM-DAC-1;http:\/\/192.168.88.118:3000\/api\/v2\/generic\/

@@ -1,0 +1,10 @@
+device_name;session_uid;PLC_name;host;port(i);url_publisher;read_permission;write_permission;offset_leak_water(i)
+RV-DETFLJ-PCI-1;RV-DETFLJ-PCI-1;RV-CTITS;192.168.11.10;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;20
+MM-DETFLJ-PCI-1;MM-DETFLJ-PCI-1;MM-CTGBT;192.168.12.54;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;151
+LQ-DETFLJ-PCI-1;LQ-DETFLJ-PCI-1;LQ-PLCL-1;192.168.14.10;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;51
+LQ-DETFLJ-PCI-2;LQ-DETFLJ-PCI-2;LQ-PLCL-1;192.168.14.10;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;52
+CAS-DETFLJ-PCI-1;CAS-DETFLJ-PCI-1;CAS-PLCL-BC;192.168.5.130;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;74
+CAS-DETFLJ-PCI-2;CAS-DETFLJ-PCI-2;CAS-PLCL-BC;192.168.5.130;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;75
+CH-DETFLJ-PCI-1;CH-DETFLJ-PCI-1;CH-PLCL-1;192.168.9.10;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;46
+COR-DETFLJ-PCI-1;COR-DETFLJ-PCI-1;COR-PLCL-BC;192.168.15.10;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;69
+NG-DETFLJ-PCI-1;NG-DETFLJ-PCI-1;NG-PLC-CT-ITS-BM;192.168.17.48;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;69

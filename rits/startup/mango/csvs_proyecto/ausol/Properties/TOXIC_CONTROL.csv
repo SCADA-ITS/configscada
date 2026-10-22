@@ -1,0 +1,10 @@
+device_name;session_uid;PLC_name;host;port(i);url_publisher;read_permission;write_permission;offset_selector_auto_manual(i);offset_opening_gate(i);offset_gate_going_down(i);offset_gate_malfunction(i);offset_gate_opened(i);offset_gate_lowered(i);offset_gate_cmd(i)
+CAS-COMP-TOX-BC;CAS-COMP-TOX-BC;CAS-PLC-CGBT-BC;192.168.5.131;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;112;113;114;115;116;117;768
+CAS-COMP-TOX-BM;CAS-COMP-TOX-BM;CAS-PLC-CGBT-BM;192.168.5.187;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;112;113;114;115;116;117;768
+MM-COMP-TOX-BC;MM-COMP-TOX-BC;MM-CTGBT;192.168.12.54;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;160;161;162;163;64;165;768
+COR-COMP-TOX-BM;COR-COMP-TOX-BM;COR-PLC-CGBT-BM;192.168.15.57;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;112;113;114;115;116;117;768
+STM2-COMP-TOX-BC;STM2-COMP-TOX-BC;STM2-PLC-CGBT-BC;192.168.10.11;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;144;145;146;147;148;149;768
+STM2-COMP-TOX-BM;STM2-COMP-TOX-BM;STM2-PLC-CGBT-BC;192.168.10.11;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;150;151;152;153;154;155;769
+CH-COMP-TOX-BC;CH-COMP-TOX-BC;CH-PLC-CGBT;192.168.9.11;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;166;167;168;169;170;171;768
+CH-COMP-TOX-BM;CH-COMP-TOX-BM;CH-PLC-CGBT;192.168.9.11;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;172;173;174;175;176;177;769
+LQ-COMP-TOX-MA;LQ-COMP-TOX-MA;LQ-PLC-CGBT;192.168.14.11;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;208;209;210;211;212;213;768

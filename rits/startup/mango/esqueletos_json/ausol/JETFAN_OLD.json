@@ -1,0 +1,490 @@
+{
+  "dataSources": [
+    {
+      "xid": "DS_status",
+      "name": "status",
+      "enabled": true,
+      "type": "META",
+      "alarmLevels": {
+        "SCRIPT_ERROR": "DO_NOT_LOG",
+        "CONTEXT_POINT_DISABLED": "DO_NOT_LOG",
+        "RESULT_TYPE_ERROR": "DO_NOT_LOG"
+      },
+      "purgeType": "YEARS",
+      "editPermission": "",
+      "purgeOverride": false,
+      "purgePeriod": 1
+    }
+  ],
+  "dataPoints": [
+    {
+      "xid": "DP_{device_name}_fan_switch",
+      "name": "fan_switch",
+      "enabled": true,
+      "loggingType": "NONE",
+      "intervalLoggingPeriodType": "MINUTES",
+      "intervalLoggingType": "INSTANT",
+      "purgeType": "YEARS",
+      "pointLocator": {
+        "range": "INPUT_STATUS",
+        "modbusDataType": "BINARY",
+        "writeType": "SETTABLE",
+        "additive": 0.0,
+        "bit": 0,
+        "charset": "ASCII",
+        "multiplier": 1.0,
+        "multistateNumeric": false,
+        "offset": "{offset_switch}",
+        "registerCount": 0,
+        "slaveId": 1,
+        "slaveMonitor": false
+      },
+      "eventDetectors": [],
+      "plotType": "STEP",
+      "rollup": "NONE",
+      "unit": "",
+      "simplifyType": "NONE",
+      "chartColour": "",
+      "chartRenderer": {
+        "type": "TABLE",
+        "limit": 10
+      },
+      "dataSourceXid": "DS_{eru_name}",
+      "defaultCacheSize": 1,
+      "deviceName": "{device_name}",
+      "discardExtremeValues": false,
+      "discardHighLimit": 1.7976931348623157E308,
+      "discardLowLimit": -1.7976931348623157E308,
+      "intervalLoggingPeriod": 1,
+      "intervalLoggingSampleWindowSize": 0,
+      "overrideIntervalLoggingSamples": false,
+      "preventSetExtremeValues": false,
+      "purgeOverride": false,
+      "purgePeriod": 1,
+      "readPermission": "",
+      "setExtremeHighLimit": 1.7976931348623157E308,
+      "setExtremeLowLimit": -1.7976931348623157E308,
+      "setPermission": "",
+      "tags": {},
+      "textRenderer": {
+        "type": "BINARY",
+        "oneColour": "#00ff00",
+        "oneLabel": "one",
+        "zeroColour": "#0000ff",
+        "zeroLabel": "zero"
+      },
+      "tolerance": 0.0
+    },
+    {
+      "xid": "DP_{device_name}_fan_gear",
+      "name": "fan_gear",
+      "enabled": true,
+      "loggingType": "NONE",
+      "intervalLoggingPeriodType": "MINUTES",
+      "intervalLoggingType": "INSTANT",
+      "purgeType": "YEARS",
+      "pointLocator": {
+        "range": "INPUT_STATUS",
+        "modbusDataType": "BINARY",
+        "writeType": "SETTABLE",
+        "additive": 0.0,
+        "bit": 0,
+        "charset": "ASCII",
+        "multiplier": 1.0,
+        "multistateNumeric": false,
+        "offset": "{offset_gear}",
+        "registerCount": 0,
+        "slaveId": 1,
+        "slaveMonitor": false
+      },
+      "eventDetectors": [],
+      "plotType": "STEP",
+      "rollup": "NONE",
+      "unit": "",
+      "simplifyType": "NONE",
+      "chartColour": "",
+      "chartRenderer": {
+        "type": "TABLE",
+        "limit": 10
+      },
+      "dataSourceXid": "DS_{eru_name}",
+      "defaultCacheSize": 1,
+      "deviceName": "{device_name}",
+      "discardExtremeValues": false,
+      "discardHighLimit": 1.7976931348623157E308,
+      "discardLowLimit": -1.7976931348623157E308,
+      "intervalLoggingPeriod": 1,
+      "intervalLoggingSampleWindowSize": 0,
+      "overrideIntervalLoggingSamples": false,
+      "preventSetExtremeValues": false,
+      "purgeOverride": false,
+      "purgePeriod": 1,
+      "readPermission": "",
+      "setExtremeHighLimit": 1.7976931348623157E308,
+      "setExtremeLowLimit": -1.7976931348623157E308,
+      "setPermission": "",
+      "tags": {},
+      "textRenderer": {
+        "type": "BINARY",
+        "oneColour": "#00ff00",
+        "oneLabel": "one",
+        "zeroColour": "#0000ff",
+        "zeroLabel": "zero"
+      },
+      "tolerance": 0.0
+    },
+    {
+      "xid": "DP_{device_name}_fan_state",
+      "name": "fan_state",
+      "enabled": true,
+      "loggingType": "NONE",
+      "intervalLoggingPeriodType": "MINUTES",
+      "intervalLoggingType": "AVERAGE",
+      "purgeType": "YEARS",
+      "pointLocator": {
+        "range": "INPUT_REGISTER",
+        "modbusDataType": "TWO_BYTE_INT_UNSIGNED",
+        "writeType": "SETTABLE",
+        "additive": 0.0,
+        "bit": 0,
+        "charset": "ASCII",
+        "multiplier": 1.0,
+        "multistateNumeric": false,
+        "offset": "{offset_fan_state}",
+        "registerCount": 0,
+        "slaveId": 1,
+        "slaveMonitor": false
+      },
+      "eventDetectors": [],
+      "plotType": "SPLINE",
+      "rollup": "NONE",
+      "unit": "",
+      "simplifyType": "NONE",
+      "chartColour": "",
+      "chartRenderer": {
+        "type": "IMAGE",
+        "timePeriodType": "DAYS",
+        "numberOfPeriods": 1
+      },
+      "dataSourceXid": "DS_{eru_name}",
+      "defaultCacheSize": 1,
+      "deviceName": "{device_name}",
+      "discardExtremeValues": false,
+      "discardHighLimit": 1.7976931348623157E308,
+      "discardLowLimit": -1.7976931348623157E308,
+      "intervalLoggingPeriod": 1,
+      "intervalLoggingSampleWindowSize": 0,
+      "overrideIntervalLoggingSamples": false,
+      "preventSetExtremeValues": false,
+      "purgeOverride": false,
+      "purgePeriod": 1,
+      "readPermission": "",
+      "setExtremeHighLimit": 1.7976931348623157E308,
+      "setExtremeLowLimit": -1.7976931348623157E308,
+      "setPermission": "",
+      "tags": {},
+      "textRenderer": {
+        "type": "ANALOG",
+        "useUnitAsSuffix": false,
+        "suffix": "",
+        "format": "0.00"
+      },
+      "tolerance": 0.0
+    },
+    {
+      "xid": "DP_{device_name}_fan_cmd",
+      "name": "fan_cmd",
+      "enabled": true,
+      "loggingType": "NONE",
+      "intervalLoggingPeriodType": "MINUTES",
+      "intervalLoggingType": "AVERAGE",
+      "purgeType": "YEARS",
+      "pointLocator": {
+        "range": "HOLDING_REGISTER",
+        "modbusDataType": "TWO_BYTE_INT_UNSIGNED",
+        "writeType": "SETTABLE",
+        "additive": 0.0,
+        "bit": 0,
+        "charset": "ASCII",
+        "multiplier": 1.0,
+        "multistateNumeric": false,
+        "offset": "{offset_fan_cmd}",
+        "registerCount": 0,
+        "slaveId": 1,
+        "slaveMonitor": false
+      },
+      "eventDetectors": [],
+      "plotType": "SPLINE",
+      "rollup": "NONE",
+      "unit": "",
+      "simplifyType": "NONE",
+      "chartColour": "",
+      "chartRenderer": {
+        "type": "IMAGE",
+        "timePeriodType": "DAYS",
+        "numberOfPeriods": 1
+      },
+      "dataSourceXid": "DS_{eru_name}",
+      "defaultCacheSize": 1,
+      "deviceName": "{device_name}",
+      "discardExtremeValues": false,
+      "discardHighLimit": 1.7976931348623157E308,
+      "discardLowLimit": -1.7976931348623157E308,
+      "intervalLoggingPeriod": 1,
+      "intervalLoggingSampleWindowSize": 0,
+      "overrideIntervalLoggingSamples": false,
+      "preventSetExtremeValues": false,
+      "purgeOverride": false,
+      "purgePeriod": 1,
+      "readPermission": "",
+      "setExtremeHighLimit": 1.7976931348623157E308,
+      "setExtremeLowLimit": -1.7976931348623157E308,
+      "setPermission": "",
+      "tags": {},
+      "textRenderer": {
+        "type": "ANALOG",
+        "useUnitAsSuffix": false,
+        "suffix": "",
+        "format": "0.00"
+      },
+      "tolerance": 0.0
+    },
+    {
+      "xid": "DP_{device_name}_commstatus",
+      "name": "commstatus",
+      "enabled": true,
+      "loggingType": "NONE",
+      "intervalLoggingPeriodType": "MINUTES",
+      "intervalLoggingType": "INSTANT",
+      "purgeType": "YEARS",
+      "pointLocator": {
+        "range": "INPUT_STATUS",
+        "modbusDataType": "BINARY",
+        "writeType": "SETTABLE",
+        "additive": 0.0,
+        "bit": 0,
+        "charset": "ASCII",
+        "multiplier": 1.0,
+        "multistateNumeric": false,
+        "offset": "{offset_commstatus}",
+        "registerCount": 0,
+        "slaveId": 1,
+        "slaveMonitor": false
+      },
+      "eventDetectors": [],
+      "plotType": "STEP",
+      "rollup": "NONE",
+      "unit": "",
+      "simplifyType": "NONE",
+      "chartColour": "",
+      "chartRenderer": {
+        "type": "TABLE",
+        "limit": 10
+      },
+      "dataSourceXid": "DS_{eru_name}",
+      "defaultCacheSize": 1,
+      "deviceName": "{device_name}",
+      "discardExtremeValues": false,
+      "discardHighLimit": 1.7976931348623157E308,
+      "discardLowLimit": -1.7976931348623157E308,
+      "intervalLoggingPeriod": 15,
+      "intervalLoggingSampleWindowSize": 0,
+      "overrideIntervalLoggingSamples": false,
+      "preventSetExtremeValues": false,
+      "purgeOverride": false,
+      "purgePeriod": 1,
+      "readPermission": "",
+      "setExtremeHighLimit": 1.7976931348623157E308,
+      "setExtremeLowLimit": -1.7976931348623157E308,
+      "setPermission": "",
+      "tags": {},
+      "textRenderer": {
+        "type": "BINARY",
+        "oneColour": "#00ff00",
+        "oneLabel": "one",
+        "zeroColour": "#0000ff",
+        "zeroLabel": "zero"
+      },
+      "tolerance": 0.0
+    },
+    {
+      "xid": "DP_{device_name}_status",
+      "name": "status",
+      "enabled": true,
+      "loggingType": "NONE",
+      "intervalLoggingPeriodType": "MINUTES",
+      "intervalLoggingType": "AVERAGE",
+      "purgeType": "YEARS",
+      "pointLocator": {
+        "dataType": "NUMERIC",
+        "changeType": {
+          "type": "NO_CHANGE",
+          "startValue": "1"
+        },
+        "settable": true
+      },
+      "eventDetectors": [],
+      "plotType": "STEP",
+      "rollup": "NONE",
+      "unit": "",
+      "simplifyType": "NONE",
+      "chartColour": "",
+      "chartRenderer": {
+        "type": "IMAGE",
+        "timePeriodType": "DAYS",
+        "numberOfPeriods": 1
+      },
+      "dataSourceXid": "DS_status",
+      "defaultCacheSize": 1,
+      "deviceName": "{device_name}",
+      "discardExtremeValues": false,
+      "discardHighLimit": 1.7976931348623157E308,
+      "discardLowLimit": -1.7976931348623157E308,
+      "intervalLoggingPeriod": 1,
+      "intervalLoggingSampleWindowSize": 0,
+      "overrideIntervalLoggingSamples": false,
+      "preventSetExtremeValues": false,
+      "purgeOverride": false,
+      "purgePeriod": 1,
+      "readPermission": "{read_permission}",
+      "setExtremeHighLimit": 1.7976931348623157E308,
+      "setExtremeLowLimit": -1.7976931348623157E308,
+      "setPermission": "{write_permission}",
+      "tags": {},
+      "textRenderer": {
+        "type": "ANALOG",
+        "useUnitAsSuffix": false,
+        "suffix": "",
+        "format": "0.00"
+      },
+      "tolerance": 0.0
+    },
+    {
+      "xid": "DP_{device_name}_status",
+      "name": "status",
+      "enabled": true,
+      "loggingType": "NONE",
+      "intervalLoggingPeriodType": "MINUTES",
+      "intervalLoggingType": "AVERAGE",
+      "purgeType": "YEARS",
+      "pointLocator": {
+        "dataType": "NUMERIC",
+        "updateEvent": "CRON",
+        "contextUpdateEvent": "CONTEXT_UPDATE",
+        "context": [
+          {
+            "varName": "fan_state",
+            "dataPointXid": "DP_{device_name}_fan_state",
+            "updateContext": false
+          },
+          {
+            "varName": "commstatus",
+            "dataPointXid": "DP_{device_name}_commstatus",
+            "updateContext": false
+          }
+        ],
+        "logLevel": "NONE",
+        "variableName": "my",
+        "scriptPermissions": [
+          "superadmin"
+        ],
+        "executionDelaySeconds": 0,
+        "logCount": 5,
+        "logSize": 1.0,
+        "script": "time_polling_min = 1;\ntime_polling_seg = time_polling_min * 60;\ntime_polling_ms = time_polling_seg * 1000;\n\nif(fan_state.time == null){\n    return(0.0);\n}else{\n    if(Date.now() - fan_state.time > time_polling_ms) \n    {\n        return(0.0);\n    }\n    else \n    {\n        return(commstatus.value ? 1.0 : 0.0);\n    }\n}",
+        "settable": false,
+        "updateCronPattern": "5 0\/1 * * * ?"
+      },
+      "eventDetectors": [],
+      "plotType": "SPLINE",
+      "rollup": "NONE",
+      "unit": "",
+      "simplifyType": "NONE",
+      "chartColour": "",
+      "chartRenderer": {
+        "type": "IMAGE",
+        "timePeriodType": "DAYS",
+        "numberOfPeriods": 1
+      },
+      "dataSourceXid": "DS_status",
+      "defaultCacheSize": 1,
+      "deviceName": "{device_name}",
+      "discardExtremeValues": false,
+      "discardHighLimit": 1.7976931348623157E308,
+      "discardLowLimit": -1.7976931348623157E308,
+      "intervalLoggingPeriod": 1,
+      "intervalLoggingSampleWindowSize": 0,
+      "overrideIntervalLoggingSamples": false,
+      "preventSetExtremeValues": false,
+      "purgeOverride": false,
+      "purgePeriod": 1,
+      "readPermission": "",
+      "setExtremeHighLimit": 1.7976931348623157E308,
+      "setExtremeLowLimit": -1.7976931348623157E308,
+      "setPermission": "",
+      "tags": {},
+      "textRenderer": {
+        "type": "ANALOG",
+        "useUnitAsSuffix": false,
+        "suffix": "",
+        "format": "0.00"
+      },
+      "tolerance": 0.0
+    }
+  ],
+  "publishers": [
+    {
+      "publishAttributeChanges": true,
+      "cacheWarningSize": 100,
+      "dateFormat": "DATE_FORMAT_UTC",
+      "useJSON": true,
+      "snapshotSendPeriods": 5,
+      "raiseResultWarning": true,
+      "staticParameters": [],
+      "sendSnapshot": false,
+      "type": "HTTP_SENDER",
+      "usePost": true,
+      "enabled": true,
+      "url": "{url_publisher}",
+      "points": [
+        {
+          "dataPointId": "DP_{device_name}_fan_state",
+          "parameterName": "fan_state",
+          "includeTimestamp": false
+        },
+        {
+          "dataPointId": "DP_{device_name}_status",
+          "parameterName": "status",
+          "includeTimestamp": false
+        },
+        {
+          "dataPointId": "DP_{device_name}_fan_switch",
+          "parameterName": "fan_switch",
+          "includeTimestamp": false
+        },
+        {
+          "dataPointId": "DP_{device_name}_fan_gear",
+          "parameterName": "fan_gear",
+          "includeTimestamp": false
+        }
+      ],
+      "xid": "PUB_{device_name}",
+      "publishType": "CHANGES_ONLY",
+      "alarmLevels": {
+        "POINT_DISABLED_EVENT": "DO_NOT_LOG",
+        "RESULT_WARNINGS_EVENT": "DO_NOT_LOG",
+        "SEND_EXCEPTION_EVENT": "DO_NOT_LOG",
+        "QUEUE_SIZE_WARNING_EVENT": "DO_NOT_LOG"
+      },
+      "staticHeaders": [
+        {
+          "value": "{session_uid}",
+          "key": "session-uid"
+        }
+      ],
+      "name": "{device_name}",
+      "snapshotSendPeriodType": "MINUTES",
+      "cacheDiscardSize": 1000
+    }
+  ]
+}

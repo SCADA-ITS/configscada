@@ -1,0 +1,27 @@
+name;device;channel;description;controller;xAddress;xStatusAddress;inverseLogic
+CH-CONT-A3-SC;CGBT;M1DO0;CH-CONT-A3-SC Encender/Apagar Contactor Refuerzo CA DER;WAGO;18000;900;false
+CH-CONT-A4-SC;CGBT;M1DO1;CH-CONT-A4-SC Encender/Apagar Contactor Refuerzo CA IZQ;WAGO;18001;901;false
+CH-CONT-A6-SC;CGBT;M1DO2;CH-CONT-A6-SC Encender/Apagar Contactor Refuerzo CA IZQ;WAGO;18002;902;false
+CH-CONT-A5-SC;CGBT;M1DO3;CH-CONT-A5-SC Encender/Apagar Contactor Refuerzo CA DER;WAGO;18003;903;false
+CH-CONT-A7-SC;CGBT;M1DO4;CH-CONT-A7-SC Encender/Apagar Contactor Refuerzo CA DER;WAGO;18004;904;false
+CH-CONT-A8-SC;CGBT;M1DO5;CH-CONT-A8-SC Encender/Apagar Contactor Refuerzo CA IZQ;WAGO;18005;905;false
+CH-CONT-A14-SM;CGBT;M1DO6;CH-CONT-A14-SM Encender/Apagar Contactor Refuerzo MA DER;WAGO;18006;906;false
+CH-CONT-A16-SM;CGBT;M1DO7;CH-CONT-A16-SM Encender/Apagar Contactor  Refuerzo MA DER;WAGO;18007;907;false
+CH-CONT-A18-SM;CGBT;M1DO8;CH-CONT-A18-SM Encender/Apagar Contactor  Refuerzo MA DER;WAGO;18008;908;false
+CH-CONT-A11-SM;CGBT;M1DO9;CH-CONT-A11-SM Encender/Apagar Contactor  Refuerzo MA IZQ;WAGO;18009;909;false
+CH-CONT-A13-SM;CGBT;M1DO10;CH-CONT-A13-SM Encender/Apagar Contactor Refuerzo MA IZQ;WAGO;18010;910;false
+CH-CONT-A15-SM;CGBT;M1DO11;CH-CONT-A15-SM Encender/Apagar Contactor Refuerzo MA IZQ;WAGO;18011;911;false
+CH-CONT-AA1-SC;CGBT;M1DO15;CH-CONT-AA1-SC Encender/Apagar Contactor Permanente CA DER;WAGO;18012;912;true
+CH-CONT-AA2-SC;CGBT;M2DO0;CH-CONT-AA2-SC Encender/Apagar Contactor Permanente CA IZQ;WAGO;18013;913;true
+CH-CONT-AA12-SM;CGBT;M2DO1;CH-CONT-AA12-SM Encender/Apagar Contactor Permanente MA DER;WAGO;18014;914;true
+CH-CONT-AA9-SM;CGBT;M2DO2;CH-CONT-AA9-SM Encender/Apagar Contactor Permanente MA IZQ;WAGO;18015;915;true
+CH-CONT-AE17-SM;CGBT;M2DO3;CH-CONT-AE17-SM Encender/Apagar Contactor Guiado MA DER;WAGO;18016;916;true
+CH-CONT-AE10-SC;CGBT;M2DO4;CH-CONT-AE10-SC Encender/Apagar Contactor  Guiado CA DER;WAGO;18017;917;true
+CH-CONT-AE20-SM;CGBT;M2DO5;CH-CONT-AE20-SM Encender/Apagar Contactor  Guiado MA DER;WAGO;18018;918;true
+CH-CONT-AE19-SC;CGBT;M2DO6;CH-CONT-AE19-SC Encender/Apagar Contactor  Guiado CA DER;WAGO;18019;919;true
+CH-CONT-A19-SC;CGBT;M2DO7;CH-CONT-A19-SC Encender/Apagar Contactor Aproximacion CA DER;WAGO;18020;920;false
+CH-CONT-A20-SC;CGBT;M2DO8;CH-CONT-A20-SC Encender/Apagar Contactor Aproximacion CA IZQ;WAGO;18021;921;false
+CH-CONT-A21-SM;CGBT;M2DO9;CH-CONT-A21-SM Encender/Apagar Contactor Aproximacion MA DER;WAGO;18022;922;false
+CH-CONT-A22-SM;CGBT;M2DO10;CH-CONT-A22-SM Encender/Apagar Contactor Aproximacion MA IZQ;WAGO;18023;923;false
+CH-CUAD-PRES-GAL-CA;ARM_GAL_1;M1DO5;CH-CUAD-PRES-GAL-CA Encender/Apagar Señal Incendio Tubo Cadiz;WAGO;18024;924;false
+CH-CUAD-PRES-GAL-MA;ARM_GAL_1;M1DO4;CH-CUAD-PRES-GAL-MA Encender/Apagar Señal Incendio Tubo Malaga;WAGO;18025;925;false

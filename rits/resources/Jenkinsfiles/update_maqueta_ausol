@@ -1,0 +1,177 @@
+def stringVariable = ""
+
+pipeline {
+    agent any
+    
+    environment {
+        SSH_HOST = '192.168.88.118'
+        SSH_SERVICE = 'app'
+        PASSWORD_CREDENTIALS_ID = 'ssh_maqueta_ausol'  // Reemplaza con el ID de tus credenciales
+    }
+
+    stages {
+        stage('Descargar repositorios') {
+            steps {
+                script {
+					sh 'echo Descargando repositorios de git'
+                
+                    def repos = ['rits', 'ritsback', 'ritsfront']
+        
+                    for (repo in repos) {
+                        dir(repo) {
+                            git(
+                                url: "ssh://git@192.168.88.194:3004/~/${repo}.git",
+                                branch: 'Ausol',
+                                changelog: true,
+                                poll: true
+                            )
+                        }
+                    }
+                }
+            }
+        }
+        stage('Build back') {
+            steps {
+                script {
+                
+					sh 'echo Compilando back'
+                    dir("ritsback/_ritsback") {
+                        
+                        sh 'mvn clean install'
+                    }
+                }
+            }
+        }
+        stage('Deploy back') {
+            steps {
+                script {
+					sh 'echo Desplegando back'
+			
+                    def directorio = 'app/backrits/resources'
+        
+                    if (!fileExists(directorio)) {
+                        sh 'echo El directorio no existe. Creándolo...'
+                        sh "mkdir -p ${directorio}"
+                        sh 'echo Directorio creado exitosamente.'
+                    } else {
+                        sh 'echo El directorio ya existe.'
+                    }
+        
+                    sh 'echo Eliminando binarios antiguos...'
+                    sh 'rm -Rf app/backrits/*.jar'
+                    
+                    sh 'echo Eliminando ficheros de logs...'
+                    sh 'rm -Rf app/backrits/logs/*'
+                    
+                    sh 'echo Copiando binarios nuevos...'
+                    sh 'cp ritsback/data-loader/target/data-loader.jar app/backrits/data-loader.jar'
+                    sh 'cp ritsback/equipment-manager/target/equipment-manager.jar app/backrits/equipment-manager.jar'
+                    sh 'cp ritsback/ep-pub-stomp/target/ep-pub-stomp.jar app/backrits/ep-pub-stomp.jar'
+                    sh 'cp ritsback/historical-manager/target/historical-manager.jar app/backrits/historical-manager.jar'
+                    sh 'cp ritsback/io-controller/target/io-controller.jar app/backrits/io-controller.jar'
+                    sh 'cp ritsback/plan-manager/target/plan-manager.jar app/backrits/plan-manager.jar'
+                    sh 'cp ritsback/service-graphql/target/service-graphql.jar app/backrits/service-graphql.jar'
+                    sh 'cp ritsback/incident-manager/target/incident-manager.jar app/backrits/incident-manager.jar'
+                    sh 'cp ritsback/traffic-manager/target/traffic-manager.jar app/backrits/traffic-manager.jar'
+                    sh 'cp ritsback/virtual-equipment-manager/target/virtual-equipment-manager.jar app/backrits/virtual-equipment-manager.jar'
+                    sh 'cp ritsback/io-external-manager/target/io-external-manager.jar app/backrits/io-external-manager.jar'
+                    sh 'cp ritsback/server-launcher/target/server-launcher.jar app/backrits/server-launcher.jar'
+                    
+                    sh 'echo Eliminando ficheros de recursos antiguos...'
+                    sh 'rm -Rf app/backrits/resources/*'
+                    
+                    sh 'echo Copiando ficheros de recursos nuevos'
+                    sh 'cp -R rits/resources/master/* app/backrits/resources'
+                    sh 'sed -i "s|\\(<p:proc id=\\"10\\" enabled=\\"\\).*\\(\\">\\)|\\1false\\2|" app/backrits/resources/adapters/server-launcher/server_launcher_adapter_v1.xml'
+                    sh 'sed -i "s|\\(jdbc.url=jdbc:postgresql://\\).*\\(:5430/rits\\)|\\1192.168.88.118\\2|" app/backrits/resources/jdbc.properties'
+                    sh 'sed -i "s|\\(redis.host=\\).*|\\1192.168.88.118|" app/backrits/resources/redis.properties'
+                    sh 'sed -i "s|\\(<p:broker>ws://\\).*\\(:61614</p:broker>\\)|\\1192.168.88.118\\2|" app/backrits/resources/adapters/pub-stomp/pub_stomp_adapter_v1.xml'
+
+                    dir('app') {
+                        sh 'tar zcvf backrits.tar.gz backrits'
+                    }
+                }
+                script {
+                    sh 'echo Actualizando back remotamente...'
+                    
+                    def user = 'revenga'
+                    def host = '192.168.88.118'
+
+                    sh "scp app/backrits.tar.gz $user@$host:/home/$user/dev03/"
+                    sh "ssh $user@$host 'cd /home/$user/dev03 && rm -rf backrits && tar zxvf backrits.tar.gz && sleep 15 && exit'"
+                }
+                
+                script {
+                    def rutaBase = 'rits/ritsback/resources/db'
+                    
+                    sh 'echo Ejecutando scripts de back...'
+                    
+                    dir("${rutaBase}") {
+                        sh "./make_param_jenkins.sh maqueta_ausol 192.168.88.118 5430"
+                    }
+                }
+            }
+        }
+
+        stage('Resources front') {
+            steps {
+                script {
+					sh 'echo Copiando recursos de front'
+                    
+                    dir('ritsfront/openits/src/main/resources/') {                        
+                        sh '''sed -i 's|\\(spring.datasource.url=jdbc:postgresql://\\).*|\\1192.168.88.118:5430/rits|' application.properties'''
+                        sh '''sed -i 's|\\(ws://\\).*\\(:61614\\)|\\1192.168.88.118\\2|' static/data/config.js'''
+                    }
+                }
+            }
+        }
+        
+        stage('Build front') {
+            steps {
+                script {
+					sh 'echo Compilando front'
+			
+                    dir("ritsfront/_ritsfront") {
+                        
+                        sh 'mvn clean install'
+                    }
+                }
+            }
+        }
+        
+        stage('Deploy front') {
+            steps {
+                script {
+					sh 'echo Desplegando front'
+                    
+                    def user = 'revenga'
+                    def host = '192.168.88.118'
+    
+                    sh "scp ritsfront/openits/target/openits.jar $user@$host:/home/$user/dev03"
+                    sh "ssh $user@$host \"cd /home/$user/dev03/frontrits && rm -rf openits.jar && mv /home/$user/dev03/openits.jar ./ && sed -i 's|\\(active=\\).*\\( -jar\\)|\\1ausol\\2|' ~/dev03/start.sh\""
+                }
+                script {
+                    def rutaBase = 'rits/ritsfront/resources/db'
+                    
+                    sh 'echo Ejecutando scripts de front...'
+                    
+                    dir("${rutaBase}") {
+                        sh "./make_param.sh maqueta_ausol 192.168.88.118 5430 192.168.88.118"
+                    }
+                }
+            }
+        } 
+        
+        stage('Restart app') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: PASSWORD_CREDENTIALS_ID, usernameVariable: 'SSH_USER', passwordVariable: 'SSH_PASSWORD')]) {
+                    script {
+						sh 'echo Relanzando aplicación remotamente tras ser actualizada'
+						
+                        sh 'sshpass -p $SSH_PASSWORD ssh -t -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST "echo $SSH_PASSWORD | sudo -S service $SSH_SERVICE restart"'
+                    }
+                }
+            }
+        }
+    }
+}

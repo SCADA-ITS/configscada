@@ -1,0 +1,11 @@
+device_name;session_uid;PLC_name;host;port(i);url_publisher;read_permission;write_permission;offset_radio_system_fail(i)
+RV-MOD-1;RV-MOD-1;RV-PLCL-1;192.168.11.10;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;8
+MM-MOD-1;MM-MOD-1;MM-CTITS;192.168.12.10;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;8
+CH-MOD-1;CH-MOD-1;CH-PLCL-1;192.168.9.10;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;49
+COR-MOD-1;COR-MOD-1;COR-PLCL-BC;192.168.15.10;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;59
+EST-MOD-1;EST-MOD-1;EST-PLC-CT-ITS;192.168.16.10;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;9
+LQ-MOD-1;LQ-MOD-1;LQ-PLCL-1;192.168.14.10;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;60
+NG-MOD-1;NG-MOD-1;NG-PLCL-BM;192.168.17.48;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;62
+STM2-MOD-1;STM2-MOD-1;STM2-PLCL-BC;192.168.10.10;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;7
+STMI-MOD-1;STMI-MOD-1;STMI-CTITS;192.168.13.10;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;9
+CAS-MOD-1;CAS-MOD-1;CAS-PLC-CT-C;192.168.5.130;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;;10

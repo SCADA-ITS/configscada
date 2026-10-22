@@ -1,0 +1,15 @@
+device_name;session_uid;url_publisher;PLC_name;host;port(i);offset_alarm_air_conditioner(i);offset_alarm_door_open(i);offset_temperature(i)
+RV-CGBT-1;RV-CGBT-1;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;RV-CTGBT;192.168.11.38;502;120;121;0
+MM-CGBT-1;MM-CGBT-1;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;MM-PLC-CGBT;192.168.12.54;502;142;143;0
+LQ-CGBT-1;LQ-CGBT-1;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;LQ-PLC-CGBT;192.168.14.11;502;1;0;0
+CH-CGBT-1;CH-CGBT-1;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;CH-PLC-CGBT;192.168.9.11;502;158;157;0
+STMI-CGBT-1;STMI-CGBT-1;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;STMI-CTGBT;192.168.13.11;502;0;1;0
+STMI-CITS-1;STMI-CITS-1;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;STMI-CTITS;192.168.13.10;502;0;1;0
+CAS-CGBT-BC;CAS-CGBT-BC;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;CAS-PLC-CGBT-BC;192.168.5.131;502;101;100;0
+CAS-CGBT-BM;CAS-CGBT-BM;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;CAS-PLC-CGBT-BM;192.168.5.187;502;100;99;0
+COR-CGBT-BC;COR-CGBT-BC;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;COR-PLC-CGBT-BC;192.168.15.11;502;103;102;0
+COR-CGBT-BM;COR-CGBT-BM;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;COR-PLC-CGBT-BM;192.168.15.57;502;103;102;0
+EST-CITS-1;EST-CITS-1;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;EST-PLC-CT-ITS;192.168.16.10;502;0;1;0
+STM2-CGBT-BC;STM2-CGBT-BC;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;STM2-PLC-CGBT-BC;192.168.10.11;502;55;54;0
+NG-CGBT-BM;NG-CGBT-BM;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;NG-PLC-CGBT;192.168.17.49;502;135;134;0
+NG-CITS-BC;NG-CITS-BC;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;NG-PLC-CT-BC;192.168.17.10;502;29;28;0

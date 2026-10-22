@@ -1,0 +1,3 @@
+device_name;session_uid;ip;port(i);url_publisher;read_permission;write_permission
+CAS-MET-1CA;CAS-MET-1CA;192.168.5.152;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;
+NG-MET-1MA;NG-MET-1MA;192.168.17.20;502;http:\/\/192.168.0.150:3000\/api\/v2\/generic\/;monitor;

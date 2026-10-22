@@ -1,0 +1,120 @@
+{
+  "dataSources":[
+    {
+      "xid":"DS_status_virtual",
+      "name":"status",
+      "enabled":true,
+      "type":"VIRTUAL",
+      "alarmLevels":{
+        "POLL_ABORTED":"INFORMATION"
+      },
+      "purgeType":"YEARS",
+      "updatePeriods":1,
+      "updatePeriodType":"MINUTES",
+      "polling":true,
+      "quantize":false,
+      "useCron":false,
+      "editPermission":"superadmin",
+      "purgeOverride":false,
+      "purgePeriod":1
+    }
+  ],
+  
+  
+  "dataPoints":[
+    {
+      "xid":"DP_{device_name}_status",
+      "name":"status",
+      "enabled":true,
+      "loggingType":"NONE",
+      "intervalLoggingPeriodType":"MINUTES",
+      "intervalLoggingType":"AVERAGE",
+      "purgeType":"YEARS",
+      "pointLocator":{
+        "dataType":"NUMERIC",
+        "changeType":{
+          "type":"NO_CHANGE",
+          "startValue":"1"
+        },
+        "settable":true
+      },
+      "eventDetectors":[
+      ],
+      "plotType":"SPLINE",
+      "rollup":"NONE",
+      "unit":"",
+      "simplifyType":"NONE",
+      "chartColour":"",
+      "chartRenderer":{
+        "type":"IMAGE",
+        "timePeriodType":"DAYS",
+        "numberOfPeriods":1
+      },
+      "dataSourceXid":"DS_status_virtual",
+      "defaultCacheSize":1,
+      "deviceName":"{device_name}",
+      "discardExtremeValues":false,
+      "discardHighLimit":1.7976931348623157E308,
+      "discardLowLimit":-1.7976931348623157E308,
+      "intervalLoggingPeriod":1,
+      "intervalLoggingSampleWindowSize":0,
+      "overrideIntervalLoggingSamples":false,
+      "preventSetExtremeValues":false,
+      "purgeOverride":false,
+      "purgePeriod":1,
+      "readPermission":"",
+      "setExtremeHighLimit":1.7976931348623157E308,
+      "setExtremeLowLimit":-1.7976931348623157E308,
+      "setPermission":"",
+      "tags":{
+      },
+      "textRenderer":{
+        "type":"ANALOG",
+        "useUnitAsSuffix":false,
+        "suffix":"",
+        "format":"0.00"
+      },
+      "tolerance":0.0
+    }
+  ],
+     "publishers": [
+        {
+            "publishAttributeChanges": true,
+            "cacheWarningSize": 100,
+            "dateFormat": "DATE_FORMAT_UTC",
+            "useJSON": true,
+            "snapshotSendPeriods": 5,
+            "raiseResultWarning": false,
+            "staticParameters": [],
+            "sendSnapshot": false,
+            "type": "HTTP_SENDER",
+            "usePost": true,
+            "enabled": true,
+            "url": "{url_publisher}",
+            "points": [
+                {
+                    "dataPointId": "DP_{device_name}_status",
+                    "parameterName": "status",
+                    "includeTimestamp": false
+                }
+            ],
+            "xid": "PUB_{device_name}",
+            "publishType": "CHANGES_ONLY",
+            "alarmLevels": {
+                "POINT_DISABLED_EVENT": "DO_NOT_LOG",
+                "RESULT_WARNINGS_EVENT": "DO_NOT_LOG",
+                "SEND_EXCEPTION_EVENT": "DO_NOT_LOG",
+                "QUEUE_SIZE_WARNING_EVENT": "DO_NOT_LOG"
+            },
+            "staticHeaders": [
+                {
+                    "value": "{session_uid}",
+                    "key": "session-uid"
+                }
+            ],
+            "name": "{device_name}",
+            "snapshotSendPeriodType": "MINUTES",
+            "cacheDiscardSize": 1000
+        }
+    ]
+}

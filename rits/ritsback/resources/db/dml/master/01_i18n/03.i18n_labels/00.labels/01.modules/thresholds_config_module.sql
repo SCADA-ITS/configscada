@@ -1,0 +1,61 @@
+-- 
+-- Type:   modules
+-- Entity: Thresholds config module
+-- File:   thresholds_config_module.sql
+-- Langs:  es_ES, en_GB, sk_SK, es_CL
+--
+
+-- 
+-- Table: master.i18n_labels
+--
+
+-- es_ES
+INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) VALUES
+('es_ES', 1, 'LBL_SAVE_NEW_THRESHOLD_VALUE', '¿Guardar nuevo valor del umbral?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_THRESHOLD_VALUE', 'Valor de umbral', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_THRESHOLD', 'Umbral', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_LINKED_STATE_MACHINES', 'Máquinas de estado vinculadas', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_STATE_MACHINES', 'Máquinas de estado', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_VARIABLES', 'Variables', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_UNIT', 'Unidad', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_EDIT_SMTHRESHOLDS', 'Editar umbral de máquinas de estado', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_EDIT_SMTHRESHOLDS_DESC', 'Editar umbrales de máquinas de estado', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_CONFIG_THRESHOLDS', 'Configuración de umbrales', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+-- es_CL
+INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) VALUES
+('es_CL', 1, 'LBL_SAVE_NEW_THRESHOLD_VALUE', '¿Guardar nuevo valor del umbral?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_THRESHOLD_VALUE', 'Valor de umbral', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_THRESHOLD', 'Umbral', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_LINKED_STATE_MACHINES', 'Máquinas de estado vinculadas', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_STATE_MACHINES', 'Máquinas de estado', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_VARIABLES', 'Variables', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_UNIT', 'Unidad', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_EDIT_SMTHRESHOLDS', 'Editar umbral de máquinas de estado', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_EDIT_SMTHRESHOLDS_DESC', 'Editar umbrales de máquinas de estado', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_CONFIG_THRESHOLDS', 'Configuración de umbrales', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+-- en_GB
+INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) VALUES
+('en_GB', 1, 'LBL_SAVE_NEW_THRESHOLD_VALUE', 'Save new threshold value?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_THRESHOLD_VALUE', 'Threshold value', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_THRESHOLD', 'Threshold', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_LINKED_STATE_MACHINES', 'Linked state machines', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_STATE_MACHINES', 'State machines', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_VARIABLES', 'Variables', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_UNIT', 'Unity', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_EDIT_SMTHRESHOLDS', 'Edit state machine threshold', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_EDIT_SMTHRESHOLDS_DESC', 'Edit state machine thresholds', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_CONFIG_THRESHOLDS', 'Threshold configuration', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+-- sk_SK
+INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) VALUES
+('sk_SK', 1, 'LBL_SAVE_NEW_THRESHOLD_VALUE', 'Chcete uložiť novú prahovú hodnotu?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_THRESHOLD_VALUE', 'Hraničná hodnota', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_THRESHOLD', 'Prah', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_LINKED_STATE_MACHINES', 'Prepojené štátne automaty', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_STATE_MACHINES', 'Štátne stroje', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_VARIABLES', 'Premenné', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_UNIT', 'Jednota', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_EDIT_SMTHRESHOLDS', 'Upravte prah štátneho stroja', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_EDIT_SMTHRESHOLDS_DESC', 'Upravte prahové hodnoty stavového automatu', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

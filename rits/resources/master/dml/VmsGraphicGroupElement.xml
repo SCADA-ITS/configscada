@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="VmsGraphicGroupElement">
+	<SELECT>SELECT graphic_group_id as "graphicGroupId",
+				   element_type_id as "elementTypeId",
+				   element_id as "elementId",
+				   enabled as "enabled",
+				   visible as "visible"
+			  FROM conf.vms_graphic_groups_elements
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>
+	</INSERT>
+	<UPDATE>
+	</UPDATE>
+	<DELETE>
+	</DELETE>
+</DML>

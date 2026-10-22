@@ -1,0 +1,1 @@
+UPDATE master.system_permissions set enabled = false WHERE system_permission_id = 22;
