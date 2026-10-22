@@ -1,0 +1,9 @@
+device_name;session_uid;url_publisher;PLC_IP;PLC_name;port(i);offset_presence_detection
+Pohybove_cidlo_1;Pohybove_cidlo_1;192.168.88.52;192.168.88.198;PLCRAIDJSKD01;502;5
+Pohybove_cidlo_2;Pohybove_cidlo_2;192.168.88.52;192.168.88.198;PLCRAIDJSKD09;502;5
+Pohybove_cidlo_3;Pohybove_cidlo_3;192.168.88.52;192.168.88.198;PLCRAIDJSKD10;502;7
+Pohybove_cidlo_4;Pohybove_cidlo_4;192.168.88.52;192.168.88.198;PLCRAIDJSKD13;502;7
+Pohybove_cidlo_5;Pohybove_cidlo_5;192.168.88.52;192.168.88.198;PLCRAIDJSKD14;502;7
+Pohybove_cidlo_6;Pohybove_cidlo_6;192.168.88.52;192.168.88.198;PLCRAIDJSKD17;502;5
+Pohybove_cidlo_7;Pohybove_cidlo_7;192.168.88.52;192.168.88.198;PLCRAIDJSKD18;502;5
+Pohybove_cidlo_8;Pohybove_cidlo_8;192.168.88.52;192.168.88.198;PLCRAIDJSKD30;502;5

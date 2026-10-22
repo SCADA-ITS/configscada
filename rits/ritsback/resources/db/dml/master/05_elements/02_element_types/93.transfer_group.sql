@@ -1,0 +1,62 @@
+-- 
+-- Table: master.element_types
+--
+INSERT INTO master.element_types(element_type_id, alias, description,label_alias, label_description, initial_element_type_state_id, connected_element_type_state_id, disconnected_element_type_state_id, enabled, visible, created_at, updated_at) VALUES
+(93, 'TRANSFER_GROUP', 'TRANSFER_GROUP','LBL_ELEMENT_TYPE_TRANSFER_GROUP', 'LBL_ELEMENT_TYPE_TRANSFER_GROUP_DESC', 0, 1, 2, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+-- 
+-- Table: master.element_type_params.DALI
+--
+INSERT INTO master.element_type_params (element_type_id, param_type_id, element_type_param_id, element_type_param_unit_id, data_type_id, default_value, alias, description, label_alias, label_description, enabled, visible, editable, created_at, updated_at) VALUES
+--CONFIG
+(93, 1, 1, NULL, 2, ' ', 'brand', 'brand', 'LBL_ELEMENT_TYPE_PARAM_BRAND' , 'LBL_ELEMENT_TYPE_PARAM_BRAND_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(93, 1, 2, NULL, 2, ' ', 'model', 'model', 'LBL_ELEMENT_TYPE_PARAM_MODEL' , 'LBL_ELEMENT_TYPE_PARAM_MODEL_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(93, 1, 1003, NULL, 2, ' ', 'MANGO_SESSION_UID', 'MANGO SESSION_UID', 'LBL_ELEMENT_TYPE_PARAM_MANGO_SESSION_UID' , 'LBL_ELEMENT_TYPE_PARAM_MANGO_SESSION_UID_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+--
+-- Table: master.element_type_params
+--
+INSERT INTO master.element_type_states(element_type_id, element_type_state_id, alias, description, label_alias, label_description, enabled, visible, created_at, updated_at) VALUES
+(93, 0, 'UNKNOWN', 'Unknown state', 'LBL_ELEMENT_TYPE_STATE_UNKNOWN', 'LBL_ELEMENT_TYPE_STATE_UNKNOWN_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(93, 1, 'UP', 'The state of the equipment is: comunicates', 'LBL_ELEMENT_TYPE_STATE_UP', 'LBL_ELEMENT_TYPE_STATE_UP_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(93, 2, 'DOWN', 'The state of the equipment is: out of communication', 'LBL_ELEMENT_TYPE_STATE_DOWN', 'LBL_ELEMENT_TYPE_STATE_DOWN_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(93, 3, 'ALARMS', 'The state of the equipment is: with alarms', 'LBL_ELEMENT_TYPE_STATE_ALARMS', 'LBL_ELEMENT_TYPE_STATE_ALARMS_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(93, 4, 'MAINTENANCE', 'The state of the equipment is: on Maintenance', 'LBL_ELEMENT_TYPE_STATE_MAINTENANCE', 'LBL_ELEMENT_TYPE_STATE_MAINTENANCE_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+-- 
+-- Table: master.element_type_state_transitions
+--
+INSERT INTO master.element_type_state_transitions
+(element_type_id, current_element_type_state_id, next_element_type_state_id, enabled, visible, editable, created_at, updated_at) VALUES
+(93, 0, 1, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(93, 0, 2, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(93, 1, 2, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(93, 1, 3, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(93, 2, 1, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(93, 2, 3, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(93, 3, 1, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(93, 3, 2, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+
+-- 
+-- Table: master.io_controller_module_type_element_types
+--
+INSERT INTO master.io_controller_module_type_element_types
+(module_type_id, element_type_id, enabled, visible, created_at, updated_at) VALUES
+(1, 93, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+-- 
+-- Table: conf.alarm_configs
+--
+INSERT INTO conf.alarm_configs
+(alarm_config_id, alarm_type_id, alarm_level_id, element_type_id, element_id, element_type_state_id, mine, treatment, alias, description, label_alias, label_description, enabled, visible, created_at, updated_at) VALUES
+(9301, 2, 3, 93, NULL, NULL, true, true, 'ALARM TRANSFER GROUP DISCONNECTED', 'ALARM TRANSFER GROUP DISCONNECTED', 'LBL_ALARM_CONFIGS_ALARM_TRANSFER_GROUP_DISCONNECTED', 'LBL_ALARM_CONFIGS_ALARM_TRANSFER_GROUP_DISCONNECTED_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(9303, 2, 3, 93, NULL, 3, true, true, 'ALARM TRANSFER GROUP GENERAL ALARM', 'ALARM TRANSFER GROUP GENERAL ALARM', 'LBL_ALARM_CONFIGS_ALARM_TRANSFER_GROUP_GENERAL_ALARM', 'LBL_ALARM_CONFIGS_ALARM_TRANSFER_GROUP_GENERAL_ALARM_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(9304, 2, 3, 93, NULL, 3, true, true, 'ALARM TRANSFER GROUP ON', 'ALARM TRANSFER GROUP ON', 'LBL_ALARM_CONFIGS_ALARM_TRANSFER_GROUP_ON', 'LBL_ALARM_CONFIGS_ALARM_TRANSFER_GROUP_ON_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+
+-- 
+-- Table: conf.element_state_alarms
+--
+INSERT INTO conf.element_state_alarms
+(element_type_id, element_type_state_id, alarm_config_id, created_at, updated_at) VALUES
+(93, 2, 9301, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

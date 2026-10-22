@@ -1,0 +1,3 @@
+device_name;session_uid;ip;url_publisher;port(i);time_polling_ms;num_polling_out_comm;readCommunity;writeCommunity;read_permission;write_permission
+NRLPK02PA;NRLPK02PA;192.168.88.198;http:\/\/192.168.88.52:3000\/api\/v2\/generic\/;161;10000;2;public;private;monitor;
+NRLPK02PB;NRLPK02PB;192.168.88.198;http:\/\/192.168.88.52:3000\/api\/v2\/generic\/;163;10000;2;public;private;monitor;

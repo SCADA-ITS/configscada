@@ -1,0 +1,20 @@
+INSERT INTO conf.users (user_id, role_id, name_, password_, password_expired_at, session_expire_time_s, locked_until, preset, allow_multiple_sessions, full_name, email, locale_code, enabled, visible, created_at, updated_at) VALUES
+(1000, 1000, 'system', 'system', NULL, 86400, NULL, False, True, 'system', 'system@revenga.com', 'en_NZ', True, True, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2000, 1000, 'root', 'root', NULL, NULL, NULL, True, True, 'root', 'system@rits.com', 'es_ES', True, True, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 1, 'admin', 'admin', NULL, NULL, NULL, True, True, 'System admin', 'admin@rits.com', 'es_ES', True, True, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 2, 'oper', 'oper', NULL, 300, NULL, True, False, 'System operator', 'oper@rits.com', 'es_ES', True, True, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(4, 1, 'admin@revenga.com', 'admin123', NULL, 86400, NULL, False, True, 'admin', 'admin@revenga.com', 'en_GB', True, True, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(5, 1, 'operator@revenga.com', 'operator', NULL, 86400, NULL, False, True, 'Operator', 'operator@revenga.com', 'sk_SK', True, True, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(6, 1, 'administrator@revenga.com', 'adminadmin', NULL, 86400, NULL, False, True, 'Administrator', 'administrator@revenga.com', 'en_GB', True, True, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(7, 2, 'MINDOP', 'mINDOP$$1', NULL, 86400, NULL, False, True, 'PA', 'mindop@mindop.sk', 'sk_SK', True, True, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(8, 2, 'MINDOP2', 'MINDoP$$2', NULL, 86400, NULL, False, True, 'PA', 'mindop2@mindop.sk', 'sk_SK', True, True, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(9, 2, 'MINDOP3', 'MiNDOP$$3', NULL, 86400, NULL, False, True, 'PA', 'mindop3@mindop.sk', 'sk_SK', True, True, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(10, 2, 'MINDOP4', 'MINdOP$$4', NULL, 86400, NULL, False, True, 'PA', 'mindop4@mindop.sk', 'sk_SK', True, True, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(11, 2, 'MINDOP5', 'MINDOp$$5', NULL, 86400, NULL, False, True, 'PA', 'mindop5@mindop.sk', 'sk_SK', True, True, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(12, 2, 'MINDOP6', 'MInDOP$$6', NULL, 86400, NULL, False, True, 'PA', 'mindop6@mindop.sk', 'sk_SK', True, True, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(13, 2, 'MINDOP7', 'mINdOp$$7', NULL, 86400, NULL, False, True, 'PA', 'mindop7@mindop.sk', 'sk_SK', True, True, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(14, 2, 'INDEPEN', 'IndePEN$$1', NULL, 86400, NULL, False, True, 'PA', 'indepen@mindop.sk', 'sk_SK', True, True, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(15, 2, 'larrieta', 'LaRRieta$$1', NULL, 86400, NULL, False, True, 'PA', 'larrieta@obchvatnula.com', 'en_GB', True, True, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(16, 2, 'monitoruser', 'MINisTer$$2023', NULL, 86400, NULL, False, True, 'monitoruser', '', 'sk_SK', True, True, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1001, 1, 'rchvila@obchvatnula.com', 'Cintra2021', NULL, 86400, NULL, False, True, 'PA', 'rchvila@obchvatnula.com', 'sk_SK', True, True, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+

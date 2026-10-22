@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="AlarmConfig">
+	<SELECT>SELECT alarm_config_id as "id", 
+	               alarm_type_id as "alarmTypeId", 
+	               alarm_level_id as "alarmLevelId", 
+	               element_type_id as "elementTypeId",
+	               element_subtype_id as "elementSubtypeId", 
+	               element_id as "elementId",
+	               element_type_state_id as "elementTypeStateId", 
+	               mine as "mine", 
+	               treatment as "treatment",
+	               alias as "alias", 
+	               description as "description",
+	               label_alias as "labelAlias",
+				   label_description as "labelDescription",
+				   on_create_execute as "onCreateExecute",
+	               enabled as "enabled", 
+	               visible as "visible" 
+              FROM conf.alarm_configs
+              WHERE enabled = true or enabled is null  
+	</SELECT>
+	<INSERT>INSERT INTO conf.alarm_configs
+					   (alarm_config_id,
+					   	alarm_type_id,
+					   	alarm_level_id,
+					   	element_type_id,
+					   	element_subtype_id,
+					    element_id,
+					    element_type_state_id,
+					    mine,
+					    treatment,
+					    alias,
+					    description,
+					    label_alias,
+					    label_description,
+					    enabled,
+					    visible,
+					    created_at,
+					    updated_at)
+				 VALUES (:id=getNextId{'conf.alarm_configs'$'alarm_config_id'},
+				 		 :alarmTypeId,
+				 		 :alarmLevelId,
+				 		 :elementTypeId,
+				 		 :elementSubtypeId,
+				 		 :elementId,
+				 		 :elementTypeStateId,
+				 		 :mine,
+				 		 :treatment,
+				 		 :alias,
+				 		 :description,
+				 		 :labelAlias,
+					     :labelDescription,
+				         :enabled,
+				         :visible,
+				         CURRENT_TIMESTAMP,
+				         CURRENT_TIMESTAMP)
+	</INSERT>
+	<UPDATE>UPDATE conf.alarm_configs
+			   SET alarm_type_id = :alarmTypeId,
+			       alarm_level_id = :alarmLevelId,
+			       element_type_id = :elementTypeId,
+			       element_subtype_id = :elementSubtypeId,
+			       element_id = :elementId,
+			       element_type_state_id = :elementTypeStateId,
+			       mine = :mine,
+			       treatment = :treatment,
+			       alias = :alias,
+			       description = :description,
+			       label_alias = :labelAlias,
+			       label_description = :labelDescription,
+			       updated_at = CURRENT_TIMESTAMP
+			 WHERE alarm_config_id = :id
+	</UPDATE>
+	<DELETE>DELETE FROM conf.alarm_configs
+			 WHERE alarm_config_id = :id
+	</DELETE>
+</DML>

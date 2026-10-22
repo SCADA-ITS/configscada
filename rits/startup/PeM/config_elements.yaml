@@ -1,0 +1,736 @@
+name: GetTablasMaestras
+description: Create a new snippet from a blank template.
+host: EXCEL
+api_set: {}
+script:
+  content: >
+    const LINE_BREAK = "\n";
+
+
+    const ELEMENT_TYPE_PREFIX = "ElementType ";
+
+    const ELEMENT_TYPES_SHEET_NAME = "Element Types";
+
+
+    const COLUMN_NAME_ELEMENT_ALIAS = "alias";
+
+    const COLUMN_NAME_ELEMENT_ROAD = "road";
+
+    const COLUMN_NAME_ELEMENT_STRECH = "streech";
+
+    const COLUMN_NAME_ELEMENT_LOCATION = "pk";
+
+    const COLUMN_NAME_ELEMENT_SUBTYPE = "subType";
+
+
+    const ELEMENT_PROPERTIES_ENUM = [COLUMN_NAME_ELEMENT_ALIAS,
+    COLUMN_NAME_ELEMENT_ROAD, COLUMN_NAME_ELEMENT_STRECH,
+    COLUMN_NAME_ELEMENT_LOCATION, COLUMN_NAME_ELEMENT_SUBTYPE,
+    "element_type_id"];
+
+
+    this.elements = [];
+
+    this.paramsByTypeMap = new Map();
+
+    this.locationsMap = new Map();
+
+    this.roadsMap = new Map();
+
+    this.strechesMap = new Map();
+
+    this.strechLocationsMap = new Map();
+
+    this.elementsMap = new Map(); 
+
+    this.elementValuesMap = new Map();
+
+
+    $("#validate").click(() => tryCatch(validate));
+
+    $("#run").click(() => tryCatch(run));
+
+
+    function clean() {
+      this.elements = [];
+      this.paramsByTypeMap = new Map();
+      this.locationsMap = new Map();
+      this.roadsMap = new Map();
+      this.strechesMap = new Map();
+      this.strechLocationsMap = new Map();
+      this.elementsMap = new Map();
+      this.elementValuesMap = new Map();
+    }
+
+
+    async function validate() {
+      await loadTablesInAllSheets();
+    }
+
+
+    async function run() {
+      clean();
+      // for leerElementos()
+      // almacenarlos en this.elements y en this.elementsByType
+      await loadElementsData();
+
+      // for this.elements getDistinct pks
+      // create Location add to this.locations -> instertLate()
+      console.log("Procesando localizaciones...");
+      this.locationsMap = new Map();
+      let i = 1;
+      for (let element of this.elements) {
+        if (!this.locationsMap.get(element[COLUMN_NAME_ELEMENT_LOCATION])) {
+          let location = new Location();
+          location.location_id = i++;
+          location.location_type_id = 2;
+          location.alias = element.pk;
+          location.description = element[COLUMN_NAME_ELEMENT_LOCATION];
+          location.enabled = true;
+          location.visible = true;
+          this.locationsMap.set(element[COLUMN_NAME_ELEMENT_LOCATION], location);
+        }
+      }
+      console.log("Localizaciones procesadas");
+
+      // for this.elements getDistinct road
+      // create Road add to this.roads -> insertLate()
+      console.log("Procesando roads...");
+      this.roadsMap = new Map();
+      i = 1;
+      for (let element of this.elements) {
+        if (!this.roadsMap.get(element[COLUMN_NAME_ELEMENT_ROAD])) {
+          let road = new Road();
+          road.road_id = i++;
+          road.road_type_id = 2;
+          road.alias = element[COLUMN_NAME_ELEMENT_ROAD];
+          road.description = element[COLUMN_NAME_ELEMENT_ROAD];
+          this.roadsMap.set(element[COLUMN_NAME_ELEMENT_ROAD], road);
+        }
+      }
+      console.log("Roads procesados");
+
+      // for this.elements getDistinct strech
+      // create Strech add to this.streches -> insertLate()
+      console.log("Procesando streches...");
+      this.strechesMap = new Map();
+      i = 1;
+      for (let element of this.elements) {
+        if (!this.strechesMap.get(element[COLUMN_NAME_ELEMENT_STRECH])) {
+          let strech = new Strech();
+          strech.stretch_id = i++;
+          strech.stretch_type_id = 2;
+          strech.alias = element[COLUMN_NAME_ELEMENT_STRECH];
+          strech.description = element[COLUMN_NAME_ELEMENT_STRECH];
+          strech.pk_ini = 0;
+          strech.pk_end = 0;
+          strech.lanes = 0;
+          strech.road_id = 1;
+          strech.enabled = true;
+          strech.visible = true;
+          this.strechesMap.set(element[COLUMN_NAME_ELEMENT_STRECH], strech);
+        }
+      }
+      console.log("Streches procesados");
+
+      // for this.elements getDistinct pk + strech
+      // create StrechLocation add to this.strechLocations -> insertLate()
+      console.log("Procesando strech locations...");
+      this.strechLocationsMap = new Map();
+      for (let element of this.elements) {
+        if (!this.strechLocationsMap.get(element[COLUMN_NAME_ELEMENT_LOCATION] + element[COLUMN_NAME_ELEMENT_STRECH])) {
+          let strechLocation = new StrechLocation();
+          strechLocation.stretch_id = this.strechesMap.get(element[COLUMN_NAME_ELEMENT_STRECH]).stretch_id;
+          strechLocation.location_id = this.locationsMap.get(element[COLUMN_NAME_ELEMENT_LOCATION]).location_id;
+          strechLocation.position = 1;
+          strechLocation.enabled = true;
+          strechLocation.visible = true;
+          this.strechLocationsMap.set(element[COLUMN_NAME_ELEMENT_LOCATION] + element[COLUMN_NAME_ELEMENT_STRECH], strechLocation);
+        }
+      }
+      console.log("Strech locations procesados");
+
+      // for this.elements and elementValues
+      // create Elements add to this.elements -> insertLate()
+      console.log("Procesando elements...");
+      let old_element_type_id = 0;
+      let element_id = 1;
+      this.elementsMap = new Map();
+      this.elementValuesMap = new Map();
+      for (let item of this.elements) {
+        if (item.element_type_id != old_element_type_id) {
+          old_element_type_id = item.element_type_id;
+          element_id = 1;
+        } else {
+          element_id++;
+        }
+
+        let element = new ElementDao();
+        element.element_type_id = item.element_type_id;
+        if (item[COLUMN_NAME_ELEMENT_SUBTYPE]) {
+          element.element_subtype_id = item[COLUMN_NAME_ELEMENT_SUBTYPE];
+        }
+        element.element_id = element_id;
+        element.location_id = this.locationsMap.get(item[COLUMN_NAME_ELEMENT_LOCATION]).location_id;
+        element.alias = item[COLUMN_NAME_ELEMENT_ALIAS];
+        element.description = item[COLUMN_NAME_ELEMENT_ALIAS];
+        this.elementsMap.set("Element:" + element.element_type_id + ":" + element.element_id, element);
+
+        let params = Object.keys(item).filter(e => !ELEMENT_PROPERTIES_ENUM.includes(e));
+        for (let paramAlias of params) {
+          console.log(paramAlias)
+          let param = this.paramsByTypeMap.get(element.element_type_id).find(e => e.alias == paramAlias);
+          let elementValue = new ElementValue();
+          elementValue.element_type_id = element.element_type_id;
+          elementValue.element_type_param_id = param.element_type_param_id;
+          elementValue.element_id = element.element_id;
+          elementValue.value = item[paramAlias];
+          this.elementValuesMap.set(param.id, elementValue);
+        }  
+      }
+      console.log("element procesados");
+
+      // Export File
+      let outputFileText = Location.insertHeader();
+      this.locationsMap.forEach((value, key) => {
+        outputFileText += value.insertRow();
+      });
+      outputFileText = outputFileText.slice(0, -2) + ";" + LINE_BREAK + LINE_BREAK;
+
+      outputFileText += Road.insertHeader();
+      this.roadsMap.forEach((value, key) => {
+        outputFileText += value.insertRow();
+      });
+      outputFileText = outputFileText.slice(0, -2) + ";" + LINE_BREAK + LINE_BREAK;
+
+      outputFileText += Strech.insertHeader();
+      this.strechesMap.forEach((value, key) => {
+        outputFileText += value.insertRow();
+      });
+      outputFileText = outputFileText.slice(0, -2) + ";" + LINE_BREAK + LINE_BREAK;
+
+      outputFileText += StrechLocation.insertHeader();
+      this.strechLocationsMap.forEach((value, key) => {
+        outputFileText += value.insertRow();
+      });
+      outputFileText = outputFileText.slice(0, -2) + ";" + LINE_BREAK + LINE_BREAK;
+
+      outputFileText += ElementDao.insertHeader();
+      this.elementsMap.forEach((value, key) => {
+        outputFileText += value.insertRow();
+      });
+      outputFileText = outputFileText.slice(0, -2) + ";" + LINE_BREAK + LINE_BREAK;
+
+      outputFileText += ElementValue.insertHeader();
+      this.elementValuesMap.forEach((value, key) => {
+        outputFileText += value.insertRow();
+      });
+      outputFileText = outputFileText.slice(0, -2) + ";" + LINE_BREAK + LINE_BREAK;
+
+      var domElement = document.createElement("a");
+      domElement.setAttribute("href", "data:text/plain;charset=utf-8," + encodeURIComponent(outputFileText));
+      domElement.setAttribute("download", "export.sql");
+      domElement.style.display = "none";
+      document.body.appendChild(domElement);
+      domElement.click();
+      document.body.removeChild(domElement);
+    }
+
+
+    async function loadElementsData() {
+      await Excel.run(async (context) => {
+        console.log("Procesando elementos...");
+        let sheets = context.workbook.worksheets;
+        sheets.load("items/name");
+        await context.sync();
+
+        this.elements = [];
+        this.paramsByTypeMap = new Map();
+        for (let sheet of sheets.items) {
+
+          let tables = sheet.tables;
+          tables.load("values");
+          await context.sync();
+          let old_element_type_id = 0;
+          let old_element_subtype_id = null;
+          let element_id = 1;
+          if (sheet.name.startsWith(ELEMENT_TYPE_PREFIX)) {
+            //console.log(sheet.name);
+            let element_type_id = parseInt(sheet.name.split(" ")[1]);
+            let tableRange = sheet.tables.getItemAt(0).getRange();
+            tableRange.load("values");
+            await context.sync();
+            
+            for (let item of tableToJson(tableRange.values)){
+              item.element_type_id = element_type_id;
+              this.elements = this.elements.concat(item);
+            }
+          } else if (sheet.name == ELEMENT_TYPES_SHEET_NAME) {
+            let tableRange = sheet.tables.getItemAt(0).getRange();
+            tableRange.load("values");
+            await context.sync();
+
+            for (let item of tableToJson(tableRange.values)) {
+              item.element_id = parseInt(item.id.split(":")[1]);
+              this.paramsByTypeMap.set(item.element_id, (item.params)?JSON.parse(item.params):"[]");
+            }
+          }
+        }
+        console.log("Elementos procesados");
+      });
+    }
+
+
+    /** Default helper for invoking an action and handling errors. */
+
+    async function tryCatch(callback) {
+      try {
+        await callback();
+      } catch (error) {
+        // Note: In a production add-in, you'd want to notify the user through your add-in's UI.
+        console.error(error);
+      }
+    }
+
+
+    async function loadTablesInAllSheets() {
+      await Excel.run(async (context) => {
+
+        let sheets = context.workbook.worksheets;
+        sheets.load("items/name");
+        await context.sync();
+        for (let sheet of sheets.items) {
+
+          let tables = sheet.tables;
+          tables.load("values");
+          await context.sync();
+          if (tables.count == 0) {
+
+            let range = sheet.getUsedRange();
+            range.load("address");
+            await context.sync();
+            if (Office.context.requirements.isSetSupported("ExcelApi", "1.2")) {
+              
+              sheet.getUsedRange().format.autofitColumns();
+              sheet.getUsedRange().format.autofitRows();
+            }
+
+            // Convert the range to a table.
+            let expensesTable = sheet.tables.add(range.address, true);
+            expensesTable.name = sheet.name.replace(" ", "_");
+            await context.sync();
+          }
+        }
+      });
+    }
+
+
+    // Returns array json from Xls values table
+
+    function tableToJson(values) {
+      let objectArray = [];
+      let objectKeys = [];
+      for (let i = 0; i < values.length; i++) {
+        if (i === 0) {
+          objectKeys = values[i];
+          continue;
+        }
+
+        // Primer registro es pk, si no existe no inserta
+        if (values[i][0]) {
+          let element = {};
+          for (let j = 0; j < values[i].length; j++) {
+            element[objectKeys[j]] = values[i][j];
+          }
+          objectArray.push(element);
+        }
+      }
+
+      return objectArray;
+    }
+
+
+    class ElementDao {
+      constructor() {
+        this.element_type_id = null;
+        this.element_subtype_id = null;
+        this.element_id = null;
+        this.location_id = null;
+        this.keep_values_on_disconnected = null;
+        this.inherit_state_id = null;
+        this.alias = null;
+        this.description = null;
+        this.on_change_alarm = null;
+        this.on_change_state = null;
+        this.on_change_measure = null;
+        this.on_schedule = null;
+        this.enabled = true;
+        this.visible = true;
+        this.alert = false;
+        this.alarm_count = 0;
+        this.created_at = "CURRENT_TIMESTAMP";
+        this.updated_at = "CURRENT_TIMESTAMP";
+      }
+
+      static getSheetName() {
+        let result = "Elements";
+        return result;
+      }
+
+      static insertHeader() {
+        let result =
+          "INSERT INTO conf.elements (element_type_id, element_subtype_id, element_id, location_id, keep_values_on_disconnected, inherit_state_id, alias, description, on_change_alarm, on_change_state, on_change_measure, on_schedule, enabled visible, alert, alarm_count, created_at, updated_at) VALUES " +
+          LINE_BREAK;
+        return result;
+      }
+
+      insertRow() {
+        let result =
+          "( " +
+          this.element_type_id +
+          ", " +
+          this.element_subtype_id +
+          ", " +
+          this.element_id +
+          ", " +
+          this.location_id +
+          ", " +
+          this.keep_values_on_disconnected +
+          ", " +
+          this.inherit_state_id +
+          ", '" +
+          this.alias +
+          "', '" +
+          this.description +
+          "', " +
+          this.on_change_alarm +
+          ", " +
+          this.on_change_state +
+          ", " +
+          this.on_change_measure +
+          ", " +
+          this.on_schedule +
+          ", " +
+          this.enabled +
+          ", " +
+          this.visible +
+          ", " +
+          this.alert +
+          ", " +
+          this.alarm_count +
+          ", " +
+          this.created_at +
+          ", " +
+          this.updated_at +
+          ") ," +
+          LINE_BREAK;
+        return result;
+      }
+    }
+
+
+    class ElementValue {
+      constructor() {
+        this.element_type_id = null;
+        this.element_type_param_id = null;
+        this.param_type_id = 1;
+        this.element_id = null;
+        this.element_value_state_id = null;
+        this.value = null;
+        this.enabled = true;
+        this.visible = true;
+        this.created_at = "CURRENT_TIMESTAMP";
+        this.updated_at = "CURRENT_TIMESTAMP";
+      }
+
+      static getSheetName() {
+        let result = "ElementValues";
+        return result;
+      }
+
+      static insertHeader() {
+        let result =
+          "INSERT INTO conf.element_values (element_type_id, element_type_param_id, param_type_id, element_id, element_value_state_id, value, enabled, visible, created_at, updated_at) VALUES " +
+          LINE_BREAK;
+        return result;
+      }
+
+      insertRow() {
+        let result =
+          "( " +
+          this.element_type_id +
+          ", " +
+          this.element_type_param_id +
+          ", " +
+          this.param_type_id +
+          ", " +
+          this.element_id +
+          ", " +
+          this.element_value_state_id +
+          ", '" +
+          this.value +
+          "', " +
+          this.enabled +
+          ", " +
+          this.visible +
+          ", " +
+          this.created_at +
+          ", " +
+          this.updated_at +
+          ") ," +
+          LINE_BREAK;
+        return result;
+      }
+
+      static updateRow() {
+        let result =
+          "UPDATE conf.element_values SET value ='" +
+          this.value +
+          "' WHERE element_type_id =" +
+          this.element_type_id +
+          " and element_type_param_id=" +
+          this.element_type_param_id +
+          " and element_id=" +
+          this.element_id +
+          ";" +
+          LINE_BREAK;
+        return result;
+      }
+    }
+
+
+    class Location {
+      constructor() {
+        this.location_id = null;
+        this.location_type_id = null;
+        this.alias = null;
+        this.description = null;
+        this.enabled = null;
+        this.visible = null;
+        this.created_at = "CURRENT_TIMESTAMP";
+        this.updated_at = "CURRENT_TIMESTAMP";
+      }
+
+      static getSheetName() {
+        let result = "Locations";
+        return result;
+      }
+
+      static insertHeader() {
+        let result =
+          "INSERT INTO conf.locations (location_id, location_type_id, alias, description, enabled, visible, created_at, updated_at) VALUES " +
+          LINE_BREAK;
+        return result;
+      }
+
+      insertRow() {
+        let result =
+          "( " +
+          this.location_id +
+          ", " +
+          this.location_type_id +
+          ", '" +
+          this.alias +
+          "', '" +
+          this.description +
+          "', " +
+          this.enabled +
+          ", " +
+          this.visible +
+          ", " +
+          this.created_at +
+          ", " +
+          this.updated_at +
+          ") ," +
+          LINE_BREAK;
+        return result;
+      }
+    }
+
+
+    class Road {
+      constructor() {
+        this.road_id = null;
+        this.road_type_id = null;
+        this.alias = null;
+        this.description = null;
+      }
+
+      static getSheetName() {
+        let result = "Roads";
+        return result;
+      }
+
+      static insertHeader() {
+        let result = "INSERT INTO conf.roads (road_id, road_type_id, alias, description) VALUES " + LINE_BREAK;
+        return result;
+      }
+
+      insertRow() {
+        let result =
+          "( " +
+          this.road_id +
+          ", " +
+          this.road_type_id +
+          ", '" +
+          this.alias +
+          "', '" +
+          this.description +
+          "') ," +
+          LINE_BREAK;
+        return result;
+      }
+    }
+
+
+    class Strech {
+      constructor() {
+        this.stretch_id = null;
+        this.stretch_type_id = null;
+        this.alias = null;
+        this.description = null;
+        this.pk_ini = null;
+        this.pk_end = null;
+        this.lanes = null;
+        this.road_id = null;
+        this.enabled = null;
+        this.visible = null;
+        this.created_at = "CURRENT_TIMESTAMP";
+        this.updated_at = "CURRENT_TIMESTAMP";
+      }
+
+      static getSheetName() {
+        let result = "Streches";
+        return result;
+      }
+
+      static insertHeader() {
+        let result =
+          "INSERT INTO conf.stretchs (stretch_id, stretch_type_id, alias, description, pk_ini, pk_end, lanes, road_id, enabled, visible, created_at, updated_at) VALUES " +
+          LINE_BREAK;
+        return result;
+      }
+
+      insertRow() {
+        let result =
+          "( " +
+          this.stretch_id +
+          ", " +
+          this.stretch_type_id +
+          ", " +
+          this.alias +
+          ", " +
+          this.description +
+          ", " +
+          this.pk_ini +
+          ", " +
+          this.pk_end +
+          ", " +
+          this.lanes +
+          ", " +
+          this.road_id +
+          ", " +
+          this.enabled +
+          ", " +
+          this.visible +
+          ", " +
+          this.created_at +
+          ", " +
+          this.updated_at +
+          ") ," +
+          LINE_BREAK;
+        return result;
+      }
+    }
+
+
+    class StrechLocation {
+      constructor() {
+        this.stretch_id = null;
+        this.location_id = null;
+        this.position = null;
+        this.enabled = null;
+        this.visible = null;
+        this.created_at = "CURRENT_TIMESTAMP";
+        this.updated_at = "CURRENT_TIMESTAMP";
+      }
+
+      static getSheetName() {
+        let result = "StrechLocations";
+        return result;
+      }
+
+      static insertHeader() {
+        let result =
+          "INSERT INTO conf.stretch_locations (stretch_id, location_id, position, enabled, visible, created_at, updated_at) VALUES " +
+          LINE_BREAK;
+        return result;
+      }
+
+      insertRow() {
+        let result =
+          "( " +
+          this.stretch_id +
+          ", " +
+          this.location_id +
+          ", " +
+          this.position +
+          ", " +
+          this.enabled +
+          ", " +
+          this.visible +
+          ", " +
+          this.created_at +
+          ", " +
+          this.updated_at +
+          ") ," +
+          LINE_BREAK;
+        return result;
+      }
+    }
+  language: typescript
+template:
+  content: >-
+    <meta http-equiv="Content-Security-Policy"
+    content="upgrade-insecure-requests">
+
+    <button id="validate" class="ms-Button">
+        <span class="ms-Button-label">Validate</span>
+    </button>
+
+    <button id="run" class="ms-Button">
+        <span class="ms-Button-label">Run</span>
+    </button>
+  language: html
+style:
+  content: |-
+    section.samples {
+        margin-top: 20px;
+    }
+
+    section.samples .ms-Button, section.setup .ms-Button {
+        display: block;
+        margin-bottom: 5px;
+        margin-left: 20px;
+        min-width: 80px;
+    }
+  language: css
+libraries: |-
+  # Office.js
+  https://appsforoffice.microsoft.com/lib/1/hosted/office.js
+  @types/office-js
+
+  # CSS Libraries
+  office-ui-fabric-js@1.4.0/dist/css/fabric.min.css
+  office-ui-fabric-js@1.4.0/dist/css/fabric.components.min.css
+  webix/webix.css
+
+  # NPM libraries
+  core-js@2.4.1/client/core.min.js
+  @types/core-js
+
+  jquery@3.1.1
+  @types/jquery@3.3.1
+
+  webix@9.1.0
+  @types/webix

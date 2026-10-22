@@ -1,0 +1,55 @@
+-- Para los identificadores de los sinopticos seguiremos los siguientes criterios
+-- Id iterado --> 3 cifras
+--INSERT INTO ui.synoptics 
+--(id, name, description, label, icon, base_layer, exclusive_layers) VALUES 
+--(931, 'TREE_CAM_DAI', 'TREE_CAM_DAI', 'LBL_TREE_CAM_DAI', NULL, 'img/synoptics/Bratislava_CAMERA_DAI.svg', false);
+--
+---- Para los identificadores de synoptic_layers seguiremos los siguientes criterios
+---- Id Synoptico                                   --> 3 cifras
+---- Id tipo (000 si no hay tipo asociado)          --> 3 cifras
+---- Id subTipo (00 si tiene tipo, iterador si no)  --> 2 cifras
+--INSERT INTO ui.synoptic_layers 
+--(id, synoptic_id, name, label, visible) VALUES 
+--(93100200, 931, 'CAM_DAI', 'LBL_CAM_DAI', true),
+--(93105200, 931, 'DAI_SERVER', 'LBL_DAI_SERVER', true);
+--
+--INSERT INTO ui.synoptic_commands 
+--(id, synoptic_id, position, label, icon, "default", module_action_id, args, view_type_id, multiselect, show_text, item_required, context) VALUES 
+--(87, 931, 0, 'LBL_CMD_ALARMS', 'mdi mdi-pencil', false, 100501, NULL, 2, true, NULL, false, true),
+--(88, 931, 1, 'LBL_ELEMENT', 'mdi mdi-pencil', true, 101401, NULL, 2, false, NULL, true, true),
+--(89, 931, 2, 'LBL_COMMAND_EQUIPMENT', 'mdi mdi-pencil', false, 101701, NULL, 2, true, NULL, false, true);
+--
+--INSERT INTO ui.synoptic_layer_elements 
+--(layer_id, element_id, graphic_icon_id, label, x, y,  horizontal_flip, rotate, tooltip, show_text, text_color, selectable) VALUES 
+--(93100200, 'Element:2:180', 00000200, 'AIDJSKD24', 734, 818, false, NULL, true, false, NULL, true),
+--(93100200, 'Element:2:181', 00000200, 'AIDJSKD25', 734, 855, false, NULL, true, false, NULL, true),
+--(93100200, 'Element:2:182', 00000200, 'AIDJSKD26', 734, 890, false, NULL, true, false, NULL, true),
+--(93100200, 'Element:2:183', 00000200, 'AIDJSKD27', 734, 928, false, NULL, true, false, NULL, true),
+--(93100200, 'Element:2:184', 00000200, 'AIDJSKD28', 734, 966, false, NULL, true, false, NULL, true),
+--(93100200, 'Element:2:185', 00000200, 'AIDJSKD29', 734, 1005, false, NULL, true, false, NULL, true),
+--(93100200, 'Element:2:186', 00000200, 'AIDJSKD30', 734, 1039, false, NULL, true, false, NULL, true),
+--(93100200, 'Element:2:179', 00000200, 'AIDJSKD23', 612, 1039, false, NULL, true, false, NULL, true),
+--(93100200, 'Element:2:178', 00000200, 'AIDJSKD22', 612, 1005, false, NULL, true, false, NULL, true),
+--(93100200, 'Element:2:177', 00000200, 'AIDJSKD21', 612, 966, false, NULL, true, false, NULL, true),
+--(93100200, 'Element:2:176', 00000200, 'AIDJSKD20', 612, 928, false, NULL, true, false, NULL, true),
+--(93100200, 'Element:2:175', 00000200, 'AIDJSKD19', 612, 890, false, NULL, true, false, NULL, true),
+--(93100200, 'Element:2:174', 00000200, 'AIDJSKD18', 612, 855, false, NULL, true, false, NULL, true),
+--(93100200, 'Element:2:173', 00000200, 'AIDJSKD17', 612, 818, false, NULL, true, false, NULL, true),
+--(93100200, 'Element:2:172', 00000200, 'AIDJSKD16', 612, 783, false, NULL, true, false, NULL, true),
+--(93100200, 'Element:2:171', 00000200, 'AIDJSKD15', 495, 1039, false, NULL, true, false, NULL, true),
+--(93100200, 'Element:2:170', 00000200, 'AIDJSKD14', 495, 1005, false, NULL, true, false, NULL, true),
+--(93100200, 'Element:2:169', 00000200, 'AIDJSKD13', 495, 966, false, NULL, true, false, NULL, true),
+--(93100200, 'Element:2:168', 00000200, 'AIDJSKD12', 495, 928, false, NULL, true, false, NULL, true),
+--(93100200, 'Element:2:167', 00000200, 'AIDJSKD11', 495, 890, false, NULL, true, false, NULL, true),
+--(93100200, 'Element:2:166', 00000200, 'AIDJSKD10', 495, 855, false, NULL, true, false, NULL, true),
+--(93100200, 'Element:2:165', 00000200, 'AIDJSKD09', 495, 818, false, NULL, true, false, NULL, true),
+--(93100200, 'Element:2:164', 00000200, 'AIDJSKD08', 495, 783, false, NULL, true, false, NULL, true),
+--(93100200, 'Element:2:163', 00000200, 'AIDJSKD07', 387, 1039, false, NULL, true, false, NULL, true),
+--(93100200, 'Element:2:162', 00000200, 'AIDJSKD06', 387, 1005, false, NULL, true, false, NULL, true),
+--(93100200, 'Element:2:161', 00000200, 'AIDJSKD05', 387, 966, false, NULL, true, false, NULL, true),
+--(93100200, 'Element:2:160', 00000200, 'AIDJSKD04', 387, 928, false, NULL, true, false, NULL, true),
+--(93100200, 'Element:2:159', 00000200, 'AIDJSKD03', 387, 890, false, NULL, true, false, NULL, true),
+--(93100200, 'Element:2:158', 00000200, 'AIDJSKD02', 387, 855, false, NULL, true, false, NULL, true),
+--(93100200, 'Element:2:157', 00000200, 'AIDJSKD01', 387, 818, false, NULL, true, false, NULL, true),
+--(93105200, 'Element:52:1', 000052, 'PDAISRV01', 483, 702, false, NULL, true, false, NULL, true);
+

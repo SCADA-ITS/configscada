@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="RolePermission">
+	<SELECT>SELECT role_id as "roleId",
+				   system_permission_id as "systemPermissionId",
+				   enabled as "enabled",
+				   visible as "visible",
+				   created_at as "createdAt",
+				   updated_at as "updatedAt"
+			  FROM conf.role_permissions
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>INSERT INTO conf.role_permissions
+					    (role_id,
+					    system_permission_id,
+					    enabled, 
+					    visible, 
+					    created_at, 
+					    updated_at)
+				 VALUES (:roleId,
+				         :systemPermissionId,
+				         :enabled,
+				         :visible,
+				         CURRENT_TIMESTAMP,
+				         CURRENT_TIMESTAMP)
+	</INSERT>
+	<UPDATE>
+	</UPDATE>
+	<DELETE>DELETE FROM conf.role_permissions
+				WHERE role_id = :roleId 
+					AND system_permission_id = :systemPermissionId 
+	</DELETE>
+</DML>

@@ -1,0 +1,10 @@
+device_name;session_uid;url_publisher;PLC_ip;PLC_name;port(i);read_permission;write_permission;door_open_offset(i);power_supply_offset(i);batery_low_offset(i);overload_ups_offset(i)
+RNRKD02L;RNRKD02L;http:\/\/192.168.88.168:3000\/api\/v2\/generic\/;192.168.88.189;PLCRNRKD02L;502;monitor;;12;13;14;15
+RNRKD04L;RNRKD04L;http:\/\/192.168.88.168:3000\/api\/v2\/generic\/;192.168.88.189;PLCRNRKD04L;502;monitor;;12;13;14;15
+RNRSPS405JSPP;RNRSPS405JSPP;http:\/\/192.168.88.168:3000\/api\/v2\/generic\/;192.168.88.189;PLCRNRSPS405JSPP;502;monitor;;12;13;14;15
+RNRJS20P;RNRJS20P;http:\/\/192.168.88.168:3000\/api\/v2\/generic\/;192.168.88.189;PLCRNRJS20P;502;monitor;;12;13;14;15
+RNRJS16P;RNRJS16P;http:\/\/192.168.88.168:3000\/api\/v2\/generic\/;192.168.88.189;PLCRNRJS16P;502;monitor;;12;13;14;15
+RNRPK02L;RNRPK02L;http:\/\/192.168.88.168:3000\/api\/v2\/generic\/;192.168.88.189;PLCRNRPK02L;502;monitor;;12;13;14;15
+RNRPK20L;RNRPK20L;http:\/\/192.168.88.168:3000\/api\/v2\/generic\/;192.168.88.189;PLCRNRPK20L;502;monitor;;12;13;14;15
+RNRPK21P;RNRPK21P;http:\/\/192.168.88.168:3000\/api\/v2\/generic\/;192.168.88.189;PLCRNRPK21P;502;monitor;;12;13;14;15
+RNRPK22P;RNRPK22P;http:\/\/192.168.88.168:3000\/api\/v2\/generic\/;192.168.88.189;PLCRNRPK22P;502;monitor;;12;13;14;15

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="StretchLocation">
+	<SELECT>SELECT stretch_id as "stretchId",
+				   location_id as "locationId",
+				   position as "position",
+				   enabled as "enabled",
+				   visible as "visible"
+			  FROM conf.stretch_locations
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>
+	</INSERT>
+	<UPDATE> 
+	</UPDATE>
+	<DELETE>
+	</DELETE>
+</DML>

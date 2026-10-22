@@ -1,0 +1,6 @@
+device_name;session_uid;ip;url_publisher;port(i);time_polling_ms;num_polling_out_comm;readCommunity;writeCommunity;read_permission;write_permission;det_order;det_name;meteo_name
+NRLJSRL1;NRLJSRL1;192.168.88.189;http:\/\/192.168.88.168:3000\/api\/v2\/generic\/;161;10000;2;public;private;monitor;;1;DET01-ADPJS25L;MDJS404L
+NRLJSRL1;NRLJSRL1;192.168.88.189;http:\/\/192.168.88.168:3000\/api\/v2\/generic\/;161;10000;2;public;private;monitor;;2;DET02-ADPJS25L;MDJS404L
+NRLJSRL1;NRLJSRL1;192.168.88.189;http:\/\/192.168.88.168:3000\/api\/v2\/generic\/;161;10000;2;public;private;monitor;;3;DET03-ADPJS25L;MDJS404L
+NRLJSRP2;NRLJSRP2;192.168.88.189;http:\/\/192.168.88.168:3000\/api\/v2\/generic\/;161;10000;2;public;private;monitor;;1;DET01-ADPJS28P;MDJS404L
+NRLJSRP2;NRLJSRP2;192.168.88.189;http:\/\/192.168.88.168:3000\/api\/v2\/generic\/;161;10000;2;public;private;monitor;;2;DET02-ADPJS28P;MDJS404L

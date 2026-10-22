@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="ImsIncidentAlarmConditionAlarm">
+	<SELECT>SELECT incident_alarm_condition_alarm_id as "id",
+				   incident_alarm_condition_id as "incidentAlarmConditionId",
+				   incident_alarm_condition_alarm_type_id as "incidentAlarmConditionAlarmTypeId",
+				   alarm_config_id as "alarmConfigId",
+				   element_type_id as "elementTypeId",
+				   element_id as "elementId",
+				   min_alarmed_elements as "minAlarmedElements",
+				   enabled as "enabled",
+				   visible as "visible"
+			  FROM conf.ims_incident_alarm_condition_alarms
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>INSERT INTO conf.ims_incident_alarm_condition_alarms
+					   (incident_alarm_condition_alarm_id,
+					   	incident_alarm_condition_id,
+					   	incident_alarm_condition_alarm_type_id,
+					   	alarm_config_id,
+					   	element_type_id,
+					   	element_id,
+					   	min_alarmed_elements,
+					    enabled,
+					    visible,
+					    created_at,
+					    updated_at)
+				 VALUES (:id=getNextId{'conf.ims_incident_alarm_condition_alarms'$'incident_alarm_condition_alarm_id'},
+				 		 :incidentAlarmConditionId,
+				 		 :incidentAlarmConditionAlarmTypeId,
+				 		 :alarmConfigId,
+				 		 :elementTypeId,
+				 		 :elementId,
+				 		 :minAlarmedElements,
+				         :enabled,
+				         :visible,
+				         CURRENT_TIMESTAMP,
+				         CURRENT_TIMESTAMP)
+	</INSERT>
+	<UPDATE>UPDATE conf.ims_incident_alarm_condition_alarms
+			   SET incident_alarm_condition_id = :incidentAlarmConditionId,
+			       incident_alarm_condition_alarm_type_id = :incidentAlarmConditionAlarmTypeId,
+			       alarm_config_id = :alarmConfigId,
+			       element_type_id = :elementTypeId,
+			       element_id = :elementId,
+			       min_alarmed_elements = :minAlarmedElements,
+			       enabled = :enabled,
+				   visible = :visible,
+			       updated_at = CURRENT_TIMESTAMP
+			 WHERE incident_alarm_condition_alarm_id = :id
+	</UPDATE>
+	<DELETE>DELETE FROM conf.ims_incident_alarm_condition_alarms
+			 WHERE incident_alarm_condition_alarm_id = :id
+	</DELETE>
+</DML>

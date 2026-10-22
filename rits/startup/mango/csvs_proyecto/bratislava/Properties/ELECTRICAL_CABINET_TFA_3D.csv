@@ -1,0 +1,13 @@
+device_name;session_uid;url_publisher;PLC_ip;PLC_name;port(i);read_permission;write_permission;door_open_offset(i);power_supply_offset(i);batery_low_offset(i);overload_ups_offset(i)
+R3DDH03L;R3DDH03L;http:\/\/10.120.50.248:3000\/api\/v2\/generic\/;10.191.7.9;PLCR3DDH03L;502;monitor;;0;1;2;3
+R3DDH02P;R3DDH02P;http:\/\/10.120.50.248:3000\/api\/v2\/generic\/;10.191.4.5;PLCR3DDH02P;502;monitor;;0;1;2;3
+R3DDH01L;R3DDH01L;http:\/\/10.120.50.248:3000\/api\/v2\/generic\/;10.191.3.2;PLCR3DDH01L;502;monitor;;0;1;2;3
+R3DKD01L;R3DKD01L;http:\/\/10.120.50.248:3000\/api\/v2\/generic\/;10.191.2.3;PLCR3DKD01L;502;monitor;;0;1;2;3
+R3DJS03P;R3DJS03P;http:\/\/10.120.50.248:3000\/api\/v2\/generic\/;10.191.11.12;PLCR3DJS03P;502;monitor;;0;1;2;3
+R3DJS04L;R3DJS04L;http:\/\/10.120.50.248:3000\/api\/v2\/generic\/;10.191.12.13;PLCR3DJS04L;502;monitor;;0;1;2;3
+R3DJS04P;R3DJS04P;http:\/\/10.120.50.248:3000\/api\/v2\/generic\/;10.191.14.2;PLCR3DJS04P;502;monitor;;0;1;2;3
+R3DJS05P;R3DJS05P;http:\/\/10.120.50.248:3000\/api\/v2\/generic\/;10.191.15.2;PLCR3DJS05P;502;monitor;;0;1;2;3
+R3DJS01L;R3DJS01L;http:\/\/10.120.50.248:3000\/api\/v2\/generic\/;10.191.8.3;PLCR3DJS01L;502;monitor;;0;1;2;3
+R3DJS02P;R3DJS02P;http:\/\/10.120.50.248:3000\/api\/v2\/generic\/;10.191.10.18;PLCR3DJS02P;502;monitor;;0;1;2;3
+R3DSR01P;R3DSR01P;http:\/\/10.120.50.248:3000\/api\/v2\/generic\/;10.191.17.31;PLCR3DSR01P;502;monitor;;0;1;2;3
+R3DPK01L;R3DPK01L;http:\/\/10.120.50.248:3000\/api\/v2\/generic\/;10.191.20.2;PLCR3DPK01L;502;monitor;;0;1;2;3

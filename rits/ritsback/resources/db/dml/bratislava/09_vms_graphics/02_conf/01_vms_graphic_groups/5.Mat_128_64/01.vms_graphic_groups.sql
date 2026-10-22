@@ -1,0 +1,61 @@
+INSERT INTO conf.vms_graphic_groups (graphic_group_id, alias, description, label_alias, label_description, enabled, visible, created_at, updated_at) VALUES
+(5, 'MAT_128x64', 'MAT_128x64', NULL, NULL, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+
+INSERT INTO conf.vms_graphic_groups_elements (graphic_group_id, element_type_id, element_id, enabled, visible, created_at, updated_at) VALUES
+(5, 71, 97, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(5, 71, 98, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(5, 71, 99, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(5, 71, 100, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(5, 71, 101, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(5, 71, 102, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(5, 71, 103, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(5, 71, 108, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(5, 71, 109, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(5, 71, 110, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(5, 71, 111, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(5, 71, 112, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(5, 71, 113, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(5, 71, 114, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(5, 71, 115, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(5, 71, 116, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(5, 71, 117, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(5, 71, 118, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+
+INSERT INTO conf.vms_graphic_graphic_group_values (graphic_type_id, graphic_id, graphic_group_id, value, enabled, visible, created_at, updated_at) VALUES
+(1, 863, 5, '[tr1,1,0,0]Brno[g11,40,1][g6,1,22]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 864, 5, '[tr1,1,0,0]Brno[g11,40,1][g7,1,22]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 865, 5, '[tr1,1,0,0]Kom[hcE1]rno,Wien[tr1,21,0,0]Budapest[g12,72,21][g9,1,41][g6,31,41]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 866, 5, '[tr1,1,0,0]Wien[g10,40,1][tr57,1,0,0],Brno[g11,100,1][tr1,22,0,0][hc17D]ilina[tr1,41,0,0]Budapest[g12,72,41]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 867, 5, '[tr1,1,0,0]Brno[g11,40,1][g9,1,22][g6,31,22]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 868, 5, '[tr1,1,0,0]Dunajsk[hcE1][tr75,1,0,0]Streda[tr1,22,0,0]Kom[hcE1]rno[g8,1,41]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 869, 5, '[tr1,1,0,0]Wien[g10,40,1][tr57,1,0,0],Brno[g11,100,1][tr1,20,0,0]Budapest[g12,72,20][g9,1,41][g6,31,41]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 870, 5, '[tr1,1,0,0]Wien[g10,40,1][tr57,1,0,0],Brno[g11,100,1][tr1,22,0,0][hc17D]ilina[tr1,41,0,0][g9,1,41]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 871, 5, '[tr1,1,0,0]Wien[g10,40,1][tr57,1,0,0],Brno[g11,100,1][tr1,22,0,0][hc17D]ilina[tr1,41,0,0][g8,1,41][g7,31,41][g6,61,41]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 872, 5, '[tr1,1,0,0][hc17D]ilina, Nitra[g9,1,22]', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+(1, 10084, 5, '1', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 10081, 5, '2', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 10080, 5, '3', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 10066, 5, '4', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 10085, 5, '5', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 855, 5, '6', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 856, 5, '7', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 857, 5, '8', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 858, 5, '9', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 852, 5, '10', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 853, 5, '11', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 854, 5, '12', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 10067, 5, '13', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 10082, 5, '14', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 10078, 5, '15', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--(1, 10081, 5, '16', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 10063, 5, '17', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 10064, 5, '18', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 10065, 5, '19', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--(1, 10066, 5, '20', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--(1, 10080, 5, '21', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--(1, 10084, 5, '22', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 10328, 5, '23', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 515, 5, '24', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

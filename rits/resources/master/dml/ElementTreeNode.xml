@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="ElementTreeNode">
+	<SELECT>SELECT element_tree_node_id as "id",
+				   element_tree_id as "elementTreeId",
+				   label as "labelAlias",
+				   element_type_id as "elementTypeId",
+				   element_id as "elementId",
+				   position as "position",
+				   management_area_id as "managementAreaId",
+				   enabled as "enabled",
+				   visible as "visible"
+			  FROM conf.element_tree_nodes
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>
+	</INSERT>
+	<UPDATE> 
+	</UPDATE>
+	<DELETE>
+	</DELETE>
+</DML>

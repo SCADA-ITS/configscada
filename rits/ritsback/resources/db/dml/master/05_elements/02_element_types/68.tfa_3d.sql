@@ -1,0 +1,111 @@
+-- 
+-- Table: master.element_types
+--
+INSERT INTO master.element_types
+(element_type_id, element_group_id, alias, description,label_alias, label_description, initial_element_type_state_id, connected_element_type_state_id, disconnected_element_type_state_id, enabled, visible, created_at, updated_at) VALUES
+(68, 3, 'TFA_3D', 'TFA_3D', 'LBL_ELEMENT_TYPE_TFA_3D', 'LBL_ELEMENT_TYPE_TFA_3D_DESC', 0, 1, 2, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+--
+-- Table: master.element_type_params
+--
+INSERT INTO master.element_type_params (element_type_id, param_type_id, element_type_param_id, element_type_param_unit_id, data_type_id, default_value, alias, description, label_alias, label_description, enabled, visible, editable, created_at, updated_at) VALUES
+--CONFIG
+(68,1,1, NULL,2, ' ', 'brand', 'brand', 'LBL_ELEMENT_TYPE_PARAM_BRAND' , 'LBL_ELEMENT_TYPE_PARAM_BRAND_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(68,1,2, NULL,2, ' ', 'model', 'model', 'LBL_ELEMENT_TYPE_PARAM_MODEL' , 'LBL_ELEMENT_TYPE_PARAM_MODEL_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(68,1,1003, NULL,2, '', 'MANGO SESSION_UID', 'MANGO SESSION_UID', 'LBL_ELEMENT_TYPE_PARAM_MANGO_SESSION_UID' , 'LBL_ELEMENT_TYPE_PARAM_MANGO_SESSION_UID_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+--MEASURE
+(68, 2, 1, NULL,2, '', 'activate_panel', 'activate_panel', 'LBL_ELEMENT_TYPE_PARAM_ACTIVATE_PANEL' , 'LBL_ELEMENT_TYPE_PARAM_ACTIVATE_PANEL_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(68, 2, 2, NULL,2, ' ', 'etd_info', 'etd_info', 'LBL_ELEMENT_TYPE_PARAM_TFA_3D_ETD_INFO' , 'LBL_ELEMENT_TYPE_PARAM_TFA_3D_ETD_INFO_DESC', true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+-- 
+-- Table: master.element_type_states
+--
+INSERT INTO master.element_type_states(element_type_id, element_type_state_id, alias, description, label_alias, label_description, enabled, visible, created_at, updated_at) VALUES
+(68, 0, 'UNKNOWN', 'Unknown state', 'LBL_ELEMENT_TYPE_STATE_UNKNOWN', 'LBL_ELEMENT_TYPE_STATE_UNKNOWN_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(68, 1, 'UP', 'The state of the equipment is: comunicates', 'LBL_ELEMENT_TYPE_STATE_UP', 'LBL_ELEMENT_TYPE_STATE_UP_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(68, 2, 'DOWN', 'The state of the equipment is: out of communication', 'LBL_ELEMENT_TYPE_STATE_DOWN', 'LBL_ELEMENT_TYPE_STATE_DOWN_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(68, 3, 'ALARMS', 'The state of the equipment is: with alarms', 'LBL_ELEMENT_TYPE_STATE_ALARMS', 'LBL_ELEMENT_TYPE_STATE_ALARMS_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(68, 4, 'SANCTION_MODE', 'The state of the equipment is in sanction mode', 'LBL_ELEMENT_TYPE_STATE_SANCTION_MODE', 'LBL_ELEMENT_TYPE_STATE_SANCTION_MODE_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(68, 5, 'MAINTENANCE', 'The state of the equipment is: on Maintenance', 'LBL_ELEMENT_TYPE_STATE_MAINTENANCE', 'LBL_ELEMENT_TYPE_STATE_MAINTENANCE_DESC', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+-- 
+-- Table: master.element_type_state_transitions
+--
+INSERT INTO master.element_type_state_transitions (element_type_id, current_element_type_state_id, next_element_type_state_id, enabled, visible, editable, created_at, updated_at) VALUES
+(68, 1, 2, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(68, 1, 3, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(68, 1, 4, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(68, 2, 1, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(68, 2, 3, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(68, 2, 4, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(68, 3, 1, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(68, 3, 2, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(68, 3, 4, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(68, 4, 1, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(68, 4, 2, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(68, 4, 3, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(68, 0, 1, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(68, 0, 2, true, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+
+INSERT INTO master.element_hierarchies_allowed
+(parent_element_type_id, child_element_type_id, enabled, visible, created_at, updated_at) VALUES
+(68, 3, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+-- 
+-- Table: master.command_element_types
+--
+
+INSERT INTO master.command_element_types
+(command_element_type_id, element_type_id, alias, description, label_alias, label_description, enabled, visible, created_at, updated_at) VALUES
+(1, 68, 'SANCTION ON', 'SANCTION ON', 'LBL_COMMAND_ELEMENT_TYPE_SANCTION_ON', null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 68, 'SANCTION OFF', 'SANCTION OFF', 'LBL_COMMAND_ELEMENT_TYPE_SANCTION_OFF', null, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+-- 
+-- Table: master.io_controller_module_type_element_types
+--
+INSERT INTO master.io_controller_module_type_element_types
+(module_type_id, element_type_id, enabled, visible, created_at, updated_at) VALUES
+(1, 68, true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+-- 
+-- Table: conf.alarm_configs
+--
+INSERT INTO conf.alarm_configs
+(alarm_config_id, alarm_type_id, alarm_level_id, element_type_id, element_id, element_type_state_id, mine, treatment, alias, description, label_alias, label_description, enabled, visible, created_at, updated_at) VALUES
+(6801, 1, 5, 68, NULL, 3, true, false, 'ACTIVATE PANEL STATE', 'ALARM_ACTIVATE_PANEL_STATE', 'LBL_ALARM_CONFIGS_ACTIVATE_PANEL_STATE', '', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(6802, 1, 5, 68, NULL, 3, true, false, 'COMMUNICATION CONCENTRATOR 1', 'ALARM_COMM_CONCENTRATOR_1', 'LBL_ALARM_CONFIGS_COMM_CONCENTRATOR_1', '', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(6803, 1, 5, 68, NULL, 3, true, false, 'COMMUNICATION CAMERA 1', 'ALARM_COMM_CAMERA_1', 'LBL_ALARM_CONFIGS_COMM_CAMERA_1', '', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(6804, 1, 5, 68, NULL, 3, true, false, 'COMMUNICATION CAMERA 2', 'ALARM_COMM_CAMERA_2', 'LBL_ALARM_CONFIGS_COMM_CAMERA_2', '', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(6805, 1, 5, 68, NULL, 3, true, false, 'COMMUNICATION CAMERA 3', 'ALARM_COMM_CAMERA_3', 'LBL_ALARM_CONFIGS_COMM_CAMERA_3', '', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(6806, 1, 5, 68, NULL, 3, true, false, 'COMMUNICATION CAMERA 4', 'ALARM_COMM_CAMERA_4', 'LBL_ALARM_CONFIGS_COMM_CAMERA_4', '', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(6807, 1, 5, 68, NULL, 3, true, false, 'CONTEXT CAMERA', 'ALARM_CONTEXT_CAMERA', 'LBL_ALARM_CONFIGS_CONTEXT_CAMERA', '', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(6809, 1, 5, 68, NULL, 3, true, false, 'COMMUNICATION ANPR', 'ALARM_COMM_ANPR', 'LBL_ALARM_CONFIGS_COMM_ANPR', '', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(6810, 1, 6, 68, NULL, 3, true, false, 'DANGEROUS GOODS VEHICLE', 'ALARM_DANGEROUS_GOODS_VEHICLE', 'LBL_ALARM_CONFIGS_DANGEROUS_GOODS_VEHICLE', '', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(6811, 1, 6, 68, NULL, 3, true, false, 'TAILSBACK', 'ALARM_TAILSBACK', 'LBL_ALARM_CONFIGS_TAILSBACK', '', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(6812, 1, 6, 68, NULL, 3, true, false, 'COLLAPSE', 'ALARM_COLLAPSE', 'LBL_ALARM_CONFIGS_COLLAPSE', '', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(6813, 1, 6, 68, NULL, 3, true, false, 'VEHICLE OPPOSSITE DIRECTION', 'ALARM_VEHICLE_OPPOSSITE_DIRECTION', 'LBL_ALARM_CONFIGS_VEHICLE_OPPOSSITE_DIRECTION', '', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(6814, 1, 5, 68, NULL, 3, true, false, 'VEHICLE OVERSIZE', 'ALARM_VEHICLE_OVERSIZE', 'LBL_ALARM_CONFIGS_VEHICLE_OVERSIZE', '', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(6815, 1, 5, 68, NULL, 3, true, false, 'SPEED LIMIT', 'ALARM_SPEED_LIMIT', 'LBL_ALARM_CONFIGS_SPEED_LIMIT', '', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(6816, 1, 5, 68, NULL, 3, true, false, 'VEHICLE OVERWEIGHT', 'ALARM_VEHICLE_OVERWEIGHT', 'LBL_ALARM_CONFIGS_VEHICLE_OVERWEIGHT', '', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(6817, 1, 5, 68, NULL, 3, true, false, 'COMMUNICATION LASER 1', 'ALARM_COMM_LASER_1', 'LBL_ALARM_CONFIGS_COMM_LASER_1', '', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(6818, 1, 5, 68, NULL, 3, true, false, 'COMMUNICATION LASER 2', 'ALARM_COMM_LASER_2', 'LBL_ALARM_CONFIGS_COMM_LASER_2', '', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(6819, 1, 5, 68, NULL, 3, true, false, 'COMMUNICATION LASER 3', 'ALARM_COMM_LASER_3', 'LBL_ALARM_CONFIGS_COMM_LASER_3', '', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(6820, 1, 5, 68, NULL, 3, true, false, 'DETECTION LASER 1', 'ALARM_DET_LASER_1', 'LBL_ALARM_CONFIGS_DET_LASER_1', '', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(6821, 1, 5, 68, NULL, 3, true, false, 'DETECTION LASER 2', 'ALARM_DET_LASER_2', 'LBL_ALARM_CONFIGS_DET_LASER_2', '', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(6822, 1, 5, 68, NULL, 3, true, false, 'DETECTION LASER 3', 'ALARM_DET_LASER_3', 'LBL_ALARM_CONFIGS_DET_LASER_3', '', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(6823, 1, 5, 68, NULL, 3, true, false, 'ERROR LASER 1', 'ALARM_ERROR_LASER_1', 'LBL_ALARM_CONFIGS_ERROR_LASER_1', '', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(6824, 1, 5, 68, NULL, 3, true, false, 'ERROR LASER 2', 'ALARM_ERROR_LASER_2', 'LBL_ALARM_CONFIGS_ERROR_LASER_2', '', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(6825, 1, 5, 68, NULL, 3, true, false, 'ERROR LASER 3', 'ALARM_ERROR_LASER_3', 'LBL_ALARM_CONFIGS_ERROR_LASER_3', '', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(6826, 1, 5, 68, NULL, 3, true, false, 'POLLUTION LASER 1', 'ALARM_POLLUTION_LASER_1', 'LBL_ALARM_CONFIGS_POLLUTION_LASER_1', '', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(6827, 1, 5, 68, NULL, 3, true, false, 'POLLUTION LASER 2', 'ALARM_POLLUTION_LASER_2', 'LBL_ALARM_CONFIGS_POLLUTION_LASER_2', '', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(6828, 1, 5, 68, NULL, 3, true, false, 'POLLUTION LASER 3', 'ALARM_POLLUTION_LASER_3', 'LBL_ALARM_CONFIGS_POLLUTION_LASER_3', '', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(6829, 1, 5, 68, NULL, 3, true, false, 'COMMUNICATION WIM', 'ALARM_COMM_WIM', 'LBL_ALARM_CONFIGS_COMM_WIM', '', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(6830, 1, 5, 68, NULL, 3, true, false, 'WIM DIAGNOSTIC FAULT', 'ALARM_WIM_DIAGNOSTIC_FAULT', 'LBL_ALARM_CONFIGS_WIM_DIAGNOSTIC_FAULT', '', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(6831, 1, 5, 68, NULL, 3, true, false, 'COMMUNICATION PANEL 1', 'ALARM_COMM_PANEL_1', 'LBL_ALARM_CONFIGS_COMM_PANEL_1', '', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(6832, 1, 5, 68, NULL, 3, true, false, 'COMMUNICATION PANEL 2', 'ALARM_COMM_PANEL_2', 'LBL_ALARM_CONFIGS_COMM_PANEL_2', '', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(6833, 1, 5, 68, NULL, 3, true, false, 'COMMUNICATION PANEL 3', 'ALARM_COMM_PANEL_3', 'LBL_ALARM_CONFIGS_COMM_PANEL_3', '', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(6834, 1, 5, 68, NULL, 3, true, false, 'COMMUNICATION PANEL 4', 'ALARM_COMM_PANEL_4', 'LBL_ALARM_CONFIGS_COMM_PANEL_4', '', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(6835, 1, 5, 68, NULL, 3, true, false, 'COMMUNICATION PANEL 5', 'ALARM_COMM_PANEL_5', 'LBL_ALARM_CONFIGS_COMM_PANEL_5', '', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(6836, 1, 5, 68, NULL, 3, true, false, 'COMMUNICATION PANEL 6', 'ALARM_COMM_PANEL_6', 'LBL_ALARM_CONFIGS_COMM_PANEL_6', '', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(6837, 1, 5, 68, NULL, 3, true, false, 'COMMUNICATION PANEL 7', 'ALARM_COMM_PANEL_7', 'LBL_ALARM_CONFIGS_COMM_PANEL_7', '', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
