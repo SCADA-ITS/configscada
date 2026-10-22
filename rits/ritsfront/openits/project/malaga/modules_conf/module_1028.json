@@ -1,0 +1,116 @@
+{
+	"moduleAction": {
+	    "tunnel": 102801,
+	    "tube": 102802,
+		"circuit": 102803,
+		"dali": 102804,
+		"busDali": 102805,
+		"tubeFromEquipment": 102806
+	},
+	"containerAction": {
+	    "tunnel": 200002
+	},
+	"equipmentViewer": 101401,
+	"restEndpoints": {
+		"elementsByIdType": "element_types/${id}/elementsWithChilds",
+		"elementById": "elements/${id}",
+		"elementByIds": "elements",
+		"command": "elements/send_command_element",
+		"elementsHierarchy": "elements/hierarchy",
+		"grid": "grids/${id}"
+	},
+	"topics": {
+		"tube" : "/topic/element.ElementType:2000",
+		"tunnel" : "/topic/element.ElementType:2002",
+		"circuits" : "/topic/element.ElementType:84.>",
+		"dalis" : "/topic/element.ElementType:85.>"
+	},
+	"adapters": {
+		"element": "ws.element.update"
+	},
+	"gridId": 1013,
+	"elementType": "ElementType:2002",
+	"elementTypeTube" :"ElementType:2000",
+	"elementTypeIdCircuit": "ElementType:84",
+	"elementTypeIdDali": "ElementType:85",
+	"elementTypeChild": "Element:2000",
+	"viewEquipmentMeasures": {
+		"enabled": false,
+		"options": {
+			"combo": true,
+			"width": 320,
+			"rows": 1, 
+			"equipmentViewer":101401			
+		},
+		"elementTypes": ["ElementType:14", "ElementType:31"]
+	},
+	"params":{
+		"lightingRegimeConfig": "ElementTypeParam:2000:1:2",
+		"currentRegime": "ElementTypeParam:2000:2:4", 
+		"proposedRegime" : "ElementTypeParam:2000:2:6",
+		"lightingMode" : "ElementTypeParam:2000:2:3",
+		"circuitState" : "ElementTypeParam:84:2:1",
+		"daliState" : "ElementTypeParam:85:2:1",
+		"daliRegimeConfig": "ElementTypeParam:85:1:1",
+		"tubeState": "ElementTypeParam:2000:2:8"
+	},
+	"lightingModeOptions" :[
+		{"id": "1", "label" : "LBL_MODE_LIGHT_AUTO", "disable" : true},
+		{"id": "0", "label" : "LBL_MODE_LIGHT_MANUAL", "disable" : false}
+	],
+	"requiredPermissions": {
+		"commandEquipment": "SystemPermission:6"
+	},
+	"commands":{
+		"SEND_CIRCUIT_ON" :{
+			"commandElementTypeId":"CommandElementType:9:2000",
+			"elementId": null,
+			"commandElementValues": [
+				{
+					"commandElementTypeParamId": "CommandElementTypeParam:9:2000:1",
+					"value": null
+				}
+			]
+		},
+		"SEND_CIRCUIT_OFF" :{
+			"commandElementTypeId":"CommandElementType:8:2000",
+			"elementId": null,
+			"commandElementValues": [
+				{
+					"commandElementTypeParamId": "CommandElementTypeParam:8:2000:1",
+					"value": null
+				}
+			]
+		},
+		"SEND_DALI_REGIME" :{
+			"commandElementTypeId":"CommandElementType:1:85",
+			"elementId": null,
+			"commandElementValues": [
+				{
+					"commandElementTypeParamId": "CommandElementTypeParam:1:85:1",
+					"value": null
+				}
+			]
+		},
+		"SEND_LIGHTING_MODE" :{
+			"commandElementTypeId":"CommandElementType:6:2000",
+			"elementId": null,
+			"commandElementValues": [
+				{
+					"commandElementTypeParamId": "CommandElementTypeParam:6:2000:1",
+					"value": null
+				}
+			]
+		},
+		"SEND_LIGHTING_REGIME" :{
+			"commandElementTypeId":"CommandElementType:7:2000",
+			"elementId": null,
+			"commandElementValues": [
+				{
+					"commandElementTypeParamId": "CommandElementTypeParam:7:2000:1",
+					"value": null
+				}
+			]
+		}
+	}
+}

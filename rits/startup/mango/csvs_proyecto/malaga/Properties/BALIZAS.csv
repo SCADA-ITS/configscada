@@ -1,0 +1,3 @@
+device_name;session_uid;url_publisher
+BAL_A;BAL_A;http:\/\/10.50.192.84:3000\/api\/v2\/generic\/
+BAL_V;BAL_V;http:\/\/10.50.192.84:3000\/api\/v2\/generic\/

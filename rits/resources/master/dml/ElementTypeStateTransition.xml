@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="ElementTypeStateTransition">
+	<SELECT>SELECT element_type_id as "elementTypeId", 
+				   current_element_type_state_id as "currentElementTypeStateId",
+				   next_element_type_state_id as "nextElementTypeStateId",
+				   enabled as "enabled", 
+				   visible as "visible"
+			  FROM master.element_type_state_transitions
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>
+	</INSERT>
+	<UPDATE>
+	</UPDATE>
+	<DELETE>
+	</DELETE>
+</DML>

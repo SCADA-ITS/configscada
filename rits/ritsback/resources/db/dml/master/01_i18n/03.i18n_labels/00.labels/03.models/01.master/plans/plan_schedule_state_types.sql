@@ -1,0 +1,10 @@
+-- 
+-- Type:   model
+-- Entity: master.plan_schedule_state_types
+-- File:   plan_schedule_state_types.sql
+-- Langs:  es_ES, en_GB, sk_SK, es_CL
+--
+
+-- 
+-- Table: master.i18n_labels
+--

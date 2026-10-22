@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="PlanOrderCommandElement">
+	<SELECT>SELECT plan_id as "planId",
+	               plan_order_id as "planOrderId",
+	               command_element_type_id as "commandElementTypeId",
+	               element_type_id as "elementTypeId",
+	               command_element_id as "commandElementId",
+				   enabled as "enabled",
+				   visible as "visible"
+			  FROM conf.plan_order_command_elements
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>INSERT INTO conf.plan_order_command_elements
+					   (plan_id,
+					   	plan_order_id,
+					   	command_element_type_id,
+					    element_type_id,
+					    command_element_id,
+					    enabled,
+					    visible,
+					    created_at,
+					    updated_at)
+				 VALUES (:planId,
+				 		 :planOrderId,
+				         :commandElementTypeId,
+				         :elementTypeId,
+				         :commandElementId,
+				         :enabled,
+				         :visible,
+				         CURRENT_TIMESTAMP,
+				         CURRENT_TIMESTAMP)
+	</INSERT>
+	<UPDATE>UPDATE conf.plan_order_command_elements
+			   SET command_element_type_id = :commandElementTypeId,
+			   		element_type_id = :elementTypeId,
+			   		command_element_id = :commandElementId,
+			   		enabled = :enabled,
+				   visible = :visible,
+				   updated_at = CURRENT_TIMESTAMP
+			 WHERE plan_id = :planId
+			 AND plan_order_id = :planOrderId
+	</UPDATE>
+	<DELETE>DELETE FROM conf.plan_order_command_elements 
+	WHERE plan_id = :planId 
+	AND plan_order_id = :planOrderId
+	</DELETE>
+</DML>

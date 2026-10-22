@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="PmElementTypeQueue">
+	<SELECT>SELECT element_type_id as "elementTypeId",
+				   queue_id as "queueId",
+				   enabled as "enabled",
+				   visible as "visible"
+			  FROM master.pm_element_type_queues
+			  WHERE enabled = true or enabled is null
+	</SELECT>
+	<INSERT>
+	</INSERT>
+	<UPDATE> 
+	</UPDATE>
+	<DELETE>
+	</DELETE>
+</DML>

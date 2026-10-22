@@ -1,0 +1,8 @@
+SET client_min_messages TO WARNING;
+DROP SCHEMA conf CASCADE;
+DROP SCHEMA static CASCADE;
+DROP SCHEMA master CASCADE;
+
+CREATE SCHEMA master;
+CREATE SCHEMA conf;
+CREATE SCHEMA static;

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="55.078053mm"
+   height="55.078053mm"
+   viewBox="0 0 55.078053 55.078053"
+   version="1.1"
+   id="svg2"
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"
+   sodipodi:docname="2000_tube_ilumination.svg">
+  <defs
+     id="defs2">
+    <rect
+       x="7.2218195"
+       y="7.3588165"
+       width="18.226722"
+       height="20.798387"
+       id="rect848" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.9313063"
+     inkscape:cx="196.9842"
+     inkscape:cy="98.550923"
+     inkscape:document-units="mm"
+     inkscape:current-layer="g236"
+     inkscape:document-rotation="0"
+     showgrid="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Capa 1"
+     inkscape:groupmode="layer"
+     id="main"
+     transform="translate(0.03902605,0.03902605)">
+    <g
+       id="g236">
+      <rect
+         style="fill:#ffcc00;stroke:#000000;stroke-width:0.0780521;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:10"
+         id="state"
+         width="55"
+         height="55"
+         x="0"
+         y="0"
+         ry="5" />
+      <rect
+         style="fill:#cccccc;stroke:#000000;stroke-width:0.0780521;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:10"
+         id="rect12"
+         width="45"
+         height="45"
+         x="5"
+         y="5"
+         ry="5" />
+      <rect
+         style="opacity:1;fill:#000080;fill-rule:evenodd;stroke:#000000;stroke-width:1.5;stroke-linecap:square;stroke-linejoin:round;paint-order:stroke markers fill;stroke-miterlimit:4;stroke-dasharray:none"
+         id="nocturno"
+         width="6.4581695"
+         height="10.458167"
+         x="8.587779"
+         y="35.954803" />
+      <rect
+         style="opacity:1;fill:#000080;fill-rule:evenodd;stroke:#000000;stroke-width:1.5;stroke-linecap:square;stroke-linejoin:round;paint-order:stroke markers fill;stroke-miterlimit:4;stroke-dasharray:none"
+         id="crepuscular"
+         width="6.0413556"
+         height="18.041351"
+         x="19.407187"
+         y="28.157204" />
+      <rect
+         style="opacity:1;fill:#000080;fill-rule:evenodd;stroke:#000000;stroke-width:1.5;stroke-linecap:square;stroke-linejoin:round;paint-order:stroke markers fill;stroke-miterlimit:4;stroke-dasharray:none"
+         id="nublado"
+         width="5.7235737"
+         height="25.723572"
+         x="30.177076"
+         y="20.496761" />
+      <rect
+         style="opacity:1;fill:#000080;fill-rule:evenodd;stroke:#000000;stroke-width:1.5;stroke-linecap:square;stroke-linejoin:round;paint-order:stroke markers fill;stroke-miterlimit:4;stroke-dasharray:none"
+         id="soleado"
+         width="5.4633131"
+         height="33.46331"
+         x="40.918205"
+         y="12.963386" />
+      <text
+         xml:space="preserve"
+         style="font-size:15px;line-height:1.25;font-family:Arial;-inkscape-font-specification:Arial;letter-spacing:0px;word-spacing:0px;stroke-width:0.264583"
+         x="7.7698078"
+         y="19.140566"
+         id="mode"><tspan
+           sodipodi:role="line"
+           id="tspan852"
+           x="7.7698078"
+           y="19.140566"
+           style="stroke-width:0.264583">A</tspan></text>
+    </g>
+  </g>
+</svg>

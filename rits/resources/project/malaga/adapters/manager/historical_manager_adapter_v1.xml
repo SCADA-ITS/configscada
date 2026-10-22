@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<p:manager_adapter_v1 name="" version=""
+	xmlns:p="manager_adapter_v1"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="manager_adapter_v1 ../../../adapter-lib/src/main/resources/schemas/manager/manager_adapter_v1.xsd ">
+	<p:subscriptors>
+		<p:subscriptor>
+			<p:id>2</p:id>
+			<p:enabled>true</p:enabled>
+			<p:entity>SetAlarmsPublishCommand</p:entity>
+		</p:subscriptor>
+		<p:subscriptor>
+			<p:id>3</p:id>
+			<p:enabled>true</p:enabled>
+			<p:entity>SetElementStatesPublishCommand</p:entity>
+		</p:subscriptor>
+	</p:subscriptors>
+	<p:executors>
+		<p:executor>
+			<p:id>2</p:id>
+			<p:enabled>true</p:enabled>
+			<p:merge_wait_time>500</p:merge_wait_time>
+			<p:manager_class>com.revenga.rits.back.historical.manager.executor.AlarmExecutor</p:manager_class>
+			<p:subscriptors_ref>
+				<p:subscriptor_id_ref>2</p:subscriptor_id_ref>
+			</p:subscriptors_ref>
+			<p:executor_params>
+				<p:executor_param_value>parser_file=historical-manager/alarms.xml</p:executor_param_value>
+			</p:executor_params>
+		</p:executor>
+		<p:executor>
+			<p:id>3</p:id>
+			<p:enabled>true</p:enabled>
+			<p:merge_wait_time>500</p:merge_wait_time>
+			<p:manager_class>com.revenga.rits.back.historical.manager.executor.ElementStateExecutor</p:manager_class>
+			<p:subscriptors_ref>
+				<p:subscriptor_id_ref>3</p:subscriptor_id_ref>
+			</p:subscriptors_ref>
+			<p:executor_params>
+				<p:executor_param_value>parser_file=historical-manager/element_state.xml</p:executor_param_value>
+			</p:executor_params>
+		</p:executor>
+	</p:executors>
+</p:manager_adapter_v1>

@@ -1,0 +1,24 @@
+import java.util.List;
+
+import com.revenga.rits.back.equipment.manager.helper.SignallingCommandHelper;
+import com.revenga.rits.back.data.core.model.command.Command;
+import com.revenga.rits.back.data.core.model.PmCommandElement;
+
+
+class SetFansResetTotalHoursCommand {
+
+	org.apache.logging.log4j.Logger log;
+
+	static final long COMMAND_ELEMENT_TYPE_ID = 5L;
+
+	SetFansResetTotalHoursCommand(org.apache.logging.log4j.Logger log) {
+
+		this.log = log;
+	}
+
+	List<Command> process(PmCommandElement command) {
+
+		return SignallingCommandHelper.get(command, COMMAND_ELEMENT_TYPE_ID);
+	}
+	
+}

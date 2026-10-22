@@ -1,0 +1,44 @@
+-- 
+-- Type:   modules
+-- Entity: Equipment viewer
+-- File:   equipment_viewer.sql
+-- Langs:  es_ES, en_GB, sk_SK, es_CL
+--
+
+-- 
+-- Table: master.i18n_labels
+--
+
+INSERT INTO master.i18n_labels (locale_code, module_id, "label", "translation", created_at, updated_at) VALUES
+--es_ES
+('es_ES', 1, 'LBL_INFO_MEASURES_MOSAIC', 'Mosaico de medidas', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_TABLE_MEASURES', 'Tabla de medidas', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_CHART_TAB', 'Gráfico de medidas', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_MEASURE_OUT_OF_RANGE', 'Medida fuera de rango', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_GROUP', 'Grupo', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_CHART_LINE', 'Gráfico de líneas', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_CHART_CURVED_LINE', 'Gráfico de líneas curvas', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_CHART_BAR', 'Gráfico de barras', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_EQUIPMENT_DOC', 'Documentación', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+--en_GB
+('en_GB', 1, 'LBL_INFO_MEASURES_MOSAIC', 'Measures mosaic', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_TABLE_MEASURES', 'Measures table', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_CHART_TAB', 'Measures chart', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_MEASURE_OUT_OF_RANGE', 'Measure out of range', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_GROUP', 'Group', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_CHART_LINE', 'Line chart', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_CHART_CURVED_LINE', 'Line curved chart', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_CHART_BAR', 'Bar chart', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_EQUIPMENT_DOC', 'Documentation', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+--en_CL
+('es_CL', 1, 'LBL_INFO_MEASURES_MOSAIC', 'Mosaico de medidas', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_TABLE_MEASURES', 'Tabla de medidas', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_CHART_TAB', 'Gráfico de medidas', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_MEASURE_OUT_OF_RANGE', 'Medida fuera de rango', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_GROUP', 'Grupo', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_CHART_LINE', 'Gráfico de líneas', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_CHART_CURVED_LINE', 'Gráfico de líneas curvas', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_CHART_BAR', 'Gráfico de barras', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_EQUIPMENT_DOC', 'Documentación', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

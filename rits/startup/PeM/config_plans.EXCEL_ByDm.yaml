@@ -1,0 +1,737 @@
+name: config_plans
+description: Configurador de planes
+host: EXCEL
+api_set: {}
+script:
+  content: |
+    $("#run").click(() => tryCatch(run));
+
+    const LINE_BREAK = "\n";
+
+    this.elementsByTypeMap;
+    this.plansConfigArray = [];
+    this.elementsConfigArray = [];
+
+    this.plansDao = [];
+    this.planNodesDao = [];
+    this.planNodeHirarchiesDao = [];
+    this.commandElementsDao = [];
+    this.commandElementValuesDao = [];
+    this.planOrdersDao = [];
+    this.planOrderCommandElementsDao = [];
+
+    this.initialPlanId;
+    this.initialCommandId;
+
+    async function run() {
+      if (!this.elementsByTypeMap) {
+        webix.message({ type: "error", text: "Cargue la carpeta Properties" });
+        alert("Cargue la carpeta Properties");
+      } else {
+        await loadDataSheet2();
+        this.elementsConfigArray.forEach((element) => {
+          //console.warn(element);
+          let item = this.elementsByTypeMap[element.elementTypeId].find((item) => item.alias == element.alias);
+          updateObject(item, element);
+          //console.warn(item);
+          if (!item) {
+            console.error("Falla la carga del equipo: " + element.alias);
+          }
+          item.elementId = "Element:" + item.elementTypeId + ":" + item.item;
+          element = item;
+        });
+
+        await loadDataSheet1();
+
+        let planId = 0;
+        if (this.initialPlanId && this.initialPlanId != "") {
+          planId = this.initialPlanId - 1;
+        }
+        let planNodeId = 1;
+        let commandElementId = 1;
+        if (this.initialCommandId && this.initialCommandId != "") {
+          commandElementId = this.initialCommandId;
+        }
+        let planOrderId = 1;
+        let planOrderOrder = 1;
+        let lastPlan;
+        let lastNode;
+        for (let i = 0; i < this.plansConfigArray.length; i++) {
+          // PlanNodes
+          let planNode = new PlanNode();
+          if (!lastNode || lastNode.alias != this.plansConfigArray[i].plan) {
+            planNode.nodeId = planNodeId++;
+            planNode.alias = this.plansConfigArray[i].plan;
+            planNode.description = this.plansConfigArray[i].plan;
+            lastNode = planNode;
+          }
+
+          // Plans
+          if (this.plansConfigArray[i].elementTypeId && typeof this.plansConfigArray[i].elementTypeId == "number") {
+            let plan = new Plan();
+            if (!lastPlan || lastPlan != this.plansConfigArray[i].plan) {
+              planId++;
+              plan.planId = planId;
+              plan.alias = this.plansConfigArray[i].plan;
+              plan.description = null;
+              this.plansDao.push(plan);
+              lastPlan = this.plansConfigArray[i].plan;
+              planOrderId = 1;
+              planOrderOrder = 1;
+            }
+            planNode.planId = planId;
+
+            let elementsByDmRange;
+            if (
+              !this.plansConfigArray[i].dmRange ||
+              !this.plansConfigArray[i].dmRange.toString().trim() ||
+              this.plansConfigArray[i].dmRange == "*"
+            ) {
+              elementsByDmRange = this.elementsByTypeMap[this.plansConfigArray[i].elementTypeId].filter((x) => x.dm);
+            } else {
+              let idElementsByDm = getNumbers(this.plansConfigArray[i].dmRange);
+              elementsByDmRange = this.elementsByTypeMap[this.plansConfigArray[i].elementTypeId].filter(
+                (x) => x.dm && idElementsByDm.includes(x.dm)
+              );
+            }
+
+            elementsByDmRange.forEach((elementByDm) => {
+              //planOrders
+              let planOrder = new PlanOrder();
+              planOrder.planId = planId;
+              planOrder.planOrderId = planOrderId++;
+              planOrder.planOrderOrder = planOrderOrder++;
+              planOrder.alias = this.plansConfigArray[i].order;
+              planOrder.description = this.plansConfigArray[i].order;
+              this.planOrdersDao.push(planOrder);
+
+              // commandElement
+              let commandElement = new CommandElement();
+              commandElement.commandElementTypeId = this.plansConfigArray[i].command;
+              commandElement.elementTypeId = this.plansConfigArray[i].elementTypeId;
+              commandElement.commandElementId = commandElementId++;
+              commandElement.elementId = elementByDm.item;
+              this.commandElementsDao.push(commandElement);
+
+              // commandElementValues
+              if (this.plansConfigArray[i].value) {
+                let commandElementValue = new CommandElementValue();
+                commandElementValue.commandElementTypeId = this.plansConfigArray[i].command;
+                commandElementValue.elementTypeId = this.plansConfigArray[i].elementTypeId;
+                commandElementValue.commandElementId = commandElement.commandElementId;
+                commandElementValue.value = this.plansConfigArray[i].value;
+                this.commandElementValuesDao.push(commandElementValue);
+              }
+
+              // planOrderCommandElements
+              let planOrderCommandElement = new PlanOrderCommandElement();
+              planOrderCommandElement.commandElementTypeId = this.plansConfigArray[i].command;
+              planOrderCommandElement.elementTypeId = this.plansConfigArray[i].elementTypeId;
+              planOrderCommandElement.commandElementId = commandElement.commandElementId;
+              planOrderCommandElement.planId = planId;
+              planOrderCommandElement.planOrderId = planOrder.planOrderId;
+              this.planOrderCommandElementsDao.push(planOrderCommandElement);
+            });
+          }
+
+          if (planNode && planNode.nodeId) {
+            this.planNodesDao.push(planNode);
+          }
+
+          // planNodeHirarchies
+          if (this.plansConfigArray[i].parent && this.plansConfigArray[i].parent.trim() && planNode && planNode.nodeId) {
+            let parentNodeArray = this.planNodesDao.filter(
+              (x) => x.alias == this.plansConfigArray[i].parent && x.nodeId < planNode.nodeId
+            );
+            let parentNode = parentNodeArray[parentNodeArray.length - 1];
+            let planNodeHirarchy = new PlanNodeHirarchy();
+            planNodeHirarchy.nodeParentId = parentNode.nodeId;
+            planNodeHirarchy.nodeChildId = planNode.nodeId;
+            this.planNodeHirarchiesDao.push(planNodeHirarchy);
+          }
+        }
+
+        // Export File
+        let outputFileText = Plan.insertHeader();
+        this.plansDao.forEach((dao) => {
+          outputFileText += dao.insertRow();
+        });
+        outputFileText = outputFileText.slice(0, -2) + ";" + LINE_BREAK + LINE_BREAK;
+
+        outputFileText += PlanNode.insertHeader();
+        this.planNodesDao.forEach((dao) => {
+          outputFileText += dao.insertRow();
+        });
+        outputFileText = outputFileText.slice(0, -2) + ";" + LINE_BREAK + LINE_BREAK;
+
+        outputFileText += PlanNodeHirarchy.insertHeader();
+        this.planNodeHirarchiesDao.forEach((dao) => {
+          outputFileText += dao.insertRow();
+        });
+        outputFileText = outputFileText.slice(0, -2) + ";" + LINE_BREAK + LINE_BREAK;
+
+        outputFileText += CommandElement.insertHeader();
+        this.commandElementsDao.forEach((dao) => {
+          outputFileText += dao.insertRow();
+        });
+        outputFileText = outputFileText.slice(0, -2) + ";" + LINE_BREAK + LINE_BREAK;
+
+        outputFileText += CommandElementValue.insertHeader();
+        this.commandElementValuesDao.forEach((dao) => {
+          outputFileText += dao.insertRow();
+        });
+        outputFileText = outputFileText.slice(0, -2) + ";" + LINE_BREAK + LINE_BREAK;
+
+        outputFileText += PlanOrder.insertHeader();
+        this.planOrdersDao.forEach((dao) => {
+          outputFileText += dao.insertRow();
+        });
+        outputFileText = outputFileText.slice(0, -2) + ";" + LINE_BREAK + LINE_BREAK;
+
+        outputFileText += PlanOrderCommandElement.insertHeader();
+        this.planOrderCommandElementsDao.forEach((dao) => {
+          outputFileText += dao.insertRow();
+        });
+        outputFileText = outputFileText.slice(0, -2) + ";" + LINE_BREAK + LINE_BREAK;
+
+        var domElement = document.createElement("a");
+        domElement.setAttribute("href", "data:text/plain;charset=utf-8," + encodeURIComponent(outputFileText));
+        domElement.setAttribute("download", "export.sql");
+        domElement.style.display = "none";
+        document.body.appendChild(domElement);
+        domElement.click();
+        document.body.removeChild(domElement);
+      }
+    }
+
+    function getNumbers(stringNumbers) {
+      var nums = [];
+      stringNumbers = stringNumbers.toString();
+      var entries = stringNumbers.split(",");
+      var length = entries.length;
+
+      var i, entry, low, high, range;
+
+      for (i = 0; i < length; i++) {
+        entry = entries[i];
+        if (!~entry.indexOf("-")) {
+          nums.push(+entry);
+        } else {
+          range = entry.split("-");
+          low = +range[0];
+          high = +range[1];
+
+          if (high < low) {
+            low = low ^ high;
+            high = low ^ high;
+            low = low ^ high;
+          }
+
+          while (low <= high) {
+            nums.push(low++);
+          }
+        }
+      }
+
+      return nums.sort(function(a, b) {
+        return a - b;
+      });
+    }
+
+    /** Default helper for invoking an action and handling errors. */
+    async function tryCatch(callback) {
+      try {
+        await callback();
+      } catch (error) {
+        // Note: In a production add-in, you'd want to notify the user through your add-in's UI.
+        console.error(error);
+      }
+    }
+
+    async function loadDataSheet2() {
+      await Excel.run(async (context) => {
+        this.elementsConfigArray = [];
+        let sheets = context.workbook.worksheets;
+        sheets.load("items/name");
+        await context.sync();
+        let dataSheet = sheets.items[1];
+        let tableRange = dataSheet.tables.getItemAt(0).getRange();
+        tableRange.load("values");
+        await context.sync();
+        this.elementsConfigArray = tableToJson(tableRange.values);
+        //console.log(JSON.stringify(this.elementsConfigArray));
+      });
+    }
+
+    async function loadDataSheet1() {
+      await Excel.run(async (context) => {
+        this.plansConfigArray = [];
+        let sheets = context.workbook.worksheets;
+        sheets.load("items/name");
+        await context.sync();
+        let dataSheet = sheets.items[0];
+        let tableRange = dataSheet.tables.getItemAt(0).getRange();
+        tableRange.load("values");
+        let rangeParams = dataSheet.getRange("M1:M2");
+        rangeParams.load("values");
+        await context.sync();
+        this.initialPlanId = rangeParams.values[0][0];
+        this.initialCommandId = rangeParams.values[1][0];
+        this.plansConfigArray = tableToJson(tableRange.values);
+        
+        //Order plans
+        let planConfigMap = new Map();
+        for (let planConfig of this.plansConfigArray){
+          if (!planConfigMap.get(planConfig.plan)){
+            planConfigMap.set(planConfig.plan, []);
+          }
+          planConfigMap.get(planConfig.plan).push(planConfig);
+        }
+        this.plansConfigArray = [];
+        await planConfigMap.forEach(function (value, key) {
+          //console.log(value);
+          for (let item of value) {
+            this.plansConfigArray.push(item);
+          }
+        });
+      });
+    }
+
+    // Returns array json from Xls values table
+    function tableToJson(values) {
+      let objectArray = [];
+      let objectKeys = [];
+      for (let i = 0; i < values.length; i++) {
+        if (i === 0) {
+          objectKeys = values[i];
+          continue;
+        }
+
+        // Primer registro es pk, si no existe no inserta
+        if (values[i][0]) {
+          let element = {};
+          for (let j = 0; j < values[i].length; j++) {
+            element[objectKeys[j]] = values[i][j];
+          }
+          objectArray.push(element);
+        }
+      }
+
+      return objectArray;
+    }
+
+    // Drop elements folder *script/properties*
+    var dropZone = document.getElementById("drop_zone");
+    dropZone.addEventListener("dragover", handleDragOver, false);
+    dropZone.addEventListener("drop", handleFileSelect, false);
+
+    function handleDragOver(evt) {
+      evt.stopPropagation();
+      evt.preventDefault();
+      evt.dataTransfer.dropEffect = "copy";
+    }
+
+    function handleFileSelect(event) {
+      event.stopPropagation();
+      event.preventDefault();
+
+      if (event.dataTransfer && event.dataTransfer.items) {
+        var items = event.dataTransfer.items;
+        for (var i = 0; i < items.length; i++) {
+          var item = items[i].webkitGetAsEntry();
+          if (item) {
+            addDirectory(item, null);
+          }
+        }
+        return;
+      }
+
+      function addDirectory(item, parent) {
+        var _this = this;
+        if (item.isDirectory) {
+          var directoryReader = item.createReader();
+          directoryReader.readEntries(function(entries) {
+            entries.forEach(function(entry) {
+              addDirectory(entry, item);
+            });
+          });
+        } else {
+          item.file((f) => {
+            if (parent.name.includes("Type") && f.name == "element_values.csv") {
+              console.log(f.name + (parent ? " parent: " + parent.name : ""));
+              var fr = new FileReader();
+              fr.onload = () => {
+                if (!this.elementsByTypeMap) {
+                  this.elementsByTypeMap = {};
+                }
+                this.elementsByTypeMap[parseInt(parent.name.split(" ")[1]) + ""] = csvToJson(fr.result);
+              };
+              fr.readAsText(f);
+            }
+          });
+        }
+      }
+    }
+
+    //parse CSV file content to JSON
+    function csvToJson(csv) {
+      var lines = csv.split("\n");
+      var result = [];
+      var headers = lines[0].split(";");
+
+      for (var i = 1; i < lines.length; i++) {
+        var obj = {};
+        var currentline = lines[i].split(";");
+
+        for (var j = 0; j < headers.length; j++) {
+          obj[headers[j]] = currentline[j];
+        }
+
+        result.push(obj);
+      }
+
+      return result;
+    }
+
+    function updateObject(oldItem, newItem) {
+      if (oldItem) {
+        if (newItem) {
+          for (let i in newItem) {
+            if (typeof newItem[i] === "object" && newItem[i] !== null) {
+              oldItem[i] = updateObject(oldItem[i], newItem[i]);
+            } else if (newItem[i] !== undefined) {
+              oldItem[i] = newItem[i];
+            }
+          }
+        }
+      } else {
+        oldItem = newItem;
+      }
+
+      return oldItem;
+    }
+
+    class Plan {
+      constructor(planId, alias, description) {
+        this.planId = planId;
+        this.planModeTypeId = 1;
+        this.alias = alias;
+        this.description = description;
+        this.enabled = true;
+        this.visible = true;
+        this.createdAt = "CURRENT_TIMESTAMP";
+        this.updatedAt = "CURRENT_TIMESTAMP";
+      }
+
+      static insertHeader() {
+        let result =
+          "INSERT INTO conf.plans (plan_id, plan_mode_type_id, alias, description, enabled, visible, created_at, updated_at) VALUES " +
+          LINE_BREAK;
+        return result;
+      }
+
+      insertRow() {
+        let result =
+          "( " +
+          this.planId +
+          ", " +
+          this.planModeTypeId +
+          ", '" +
+          this.alias +
+          "', " +
+          this.description +
+          ", " +
+          this.enabled +
+          ", " +
+          this.visible +
+          ", " +
+          this.createdAt +
+          ", " +
+          this.updatedAt +
+          ")," +
+          LINE_BREAK;
+        return result;
+      }
+    }
+
+    class PlanNode {
+      constructor(planId = null, nodeId, alias, description) {
+        this.planId = planId;
+        this.nodeId = nodeId;
+        this.alias = alias;
+        this.description = description;
+        this.enabled = true;
+        this.visible = true;
+      }
+
+      static insertHeader() {
+        let result =
+          "INSERT INTO conf.plan_nodes (node_id, alias, description, plan_id, enabled, visible) VALUES " + LINE_BREAK;
+        return result;
+      }
+
+      insertRow() {
+        let result =
+          "( " +
+          this.nodeId +
+          ", '" +
+          this.alias +
+          "', '" +
+          this.description +
+          "', " +
+          this.planId +
+          ", " +
+          this.enabled +
+          ", " +
+          this.visible +
+          ")," +
+          LINE_BREAK;
+        return result;
+      }
+    }
+
+    class PlanNodeHirarchy {
+      constructor(nodeParentId, nodeChildId) {
+        this.nodeParentId = nodeParentId;
+        this.nodeChildId = nodeChildId;
+        this.enabled = true;
+        this.visible = true;
+      }
+
+      static insertHeader() {
+        let result =
+          "INSERT INTO conf.plan_node_hierarchies (node_parent_id, node_child_id, enabled, visible) VALUES " + LINE_BREAK;
+        return result;
+      }
+
+      insertRow() {
+        let result =
+          "( " +
+          this.nodeParentId +
+          ", " +
+          this.nodeChildId +
+          ", " +
+          this.enabled +
+          ", " +
+          this.visible +
+          ")," +
+          LINE_BREAK;
+        return result;
+      }
+    }
+
+    class CommandElement {
+      constructor(commandElementTypeId, elementTypeId, commandElementId, elementId) {
+        this.commandElementTypeId = commandElementTypeId;
+        this.elementTypeId = elementTypeId;
+        this.commandElementId = commandElementId;
+        this.elementId = elementId;
+        this.enabled = true;
+        this.visible = true;
+        this.createdAt = "CURRENT_TIMESTAMP";
+        this.updatedAt = "CURRENT_TIMESTAMP";
+      }
+
+      static insertHeader() {
+        let result =
+          "INSERT INTO conf.command_elements (command_element_type_id, element_type_id, command_element_id, element_id, enabled, visible, created_at, updated_at) VALUES " +
+          LINE_BREAK;
+        return result;
+      }
+
+      insertRow() {
+        let result =
+          "( " +
+          this.commandElementTypeId +
+          ", " +
+          this.elementTypeId +
+          ", " +
+          this.commandElementId +
+          ", " +
+          this.elementId +
+          ", " +
+          this.enabled +
+          ", " +
+          this.visible +
+          ", " +
+          this.createdAt +
+          ", " +
+          this.updatedAt +
+          ")," +
+          LINE_BREAK;
+        return result;
+      }
+    }
+
+    class CommandElementValue {
+      constructor(commandElementTypeId, elementTypeId, commandElementId, value) {
+        this.commandElementTypeId = commandElementTypeId;
+        this.elementTypeId = elementTypeId;
+        this.commandElementTypeParamId = 1;
+        this.commandElementId = commandElementId;
+        this.value = value;
+        this.enabled = true;
+        this.visible = true;
+        this.createdAt = "CURRENT_TIMESTAMP";
+        this.updatedAt = "CURRENT_TIMESTAMP";
+      }
+
+      static insertHeader() {
+        let result =
+          "INSERT INTO conf.command_element_values (command_element_type_id, element_type_id, command_element_type_param_id, command_element_id, value, enabled, visible, created_at, updated_at) VALUES " +
+          LINE_BREAK;
+        return result;
+      }
+
+      insertRow() {
+        let result =
+          "( " +
+          this.commandElementTypeId +
+          ", " +
+          this.elementTypeId +
+          ", " +
+          this.commandElementTypeParamId +
+          ", " +
+          this.commandElementId +
+          ", '" +
+          this.value +
+          "', " +
+          this.enabled +
+          ", " +
+          this.visible +
+          ", " +
+          this.createdAt +
+          ", " +
+          this.updatedAt +
+          ")," +
+          LINE_BREAK;
+        return result;
+      }
+    }
+
+    class PlanOrder {
+      constructor(planId, planOrderId, planOrderOrder, alias, description) {
+        this.planId = planId;
+        this.planOrderId = planOrderId;
+        this.planOrderOrder = planOrderOrder;
+        this.alias = alias;
+        this.description = description;
+        this.planOrderTypeId = 1;
+        this.nextPlanOrderId = null;
+        this.nextPlanId = null;
+        this.enabled = true;
+        this.visible = true;
+        this.createdAt = "CURRENT_TIMESTAMP";
+        this.updatedAt = "CURRENT_TIMESTAMP";
+      }
+
+      static insertHeader() {
+        let result =
+          "INSERT INTO conf.plan_orders(plan_id, plan_order_id, plan_order_type_id, plan_order_order, next_plan_order_id, next_plan_id, alias, description, enabled, visible, created_at, updated_at) VALUES " +
+          LINE_BREAK;
+        return result;
+      }
+
+      insertRow() {
+        let result =
+          "( " +
+          this.planId +
+          ", " +
+          this.planOrderId +
+          ", " +
+          this.planOrderTypeId +
+          ", " +
+          this.planOrderOrder +
+          ", " +
+          this.nextPlanOrderId +
+          ", " +
+          this.nextPlanId +
+          ", '" +
+          this.alias +
+          "', '" +
+          this.description +
+          "', " +
+          this.enabled +
+          ", " +
+          this.visible +
+          ", " +
+          this.createdAt +
+          ", " +
+          this.updatedAt +
+          ") ," +
+          LINE_BREAK;
+        return result;
+      }
+    }
+
+    class PlanOrderCommandElement {
+      constructor(commandElementTypeId, elementTypeId, commandElementId, planId, planOrderId) {
+        this.commandElementTypeId = commandElementTypeId;
+        this.elementTypeId = elementTypeId;
+        this.commandElementId = commandElementId;
+        this.planId = planId;
+        this.planOrderId = planOrderId;
+        this.enabled = true;
+        this.visible = true;
+        this.createdAt = "CURRENT_TIMESTAMP";
+        this.updatedAt = "CURRENT_TIMESTAMP";
+      }
+
+      static insertHeader() {
+        let result =
+          "INSERT INTO conf.plan_order_command_elements(command_element_type_id, element_type_id, command_element_id, plan_id, plan_order_id, enabled, visible, created_at, updated_at) VALUES " +
+          LINE_BREAK;
+        return result;
+      }
+
+      insertRow() {
+        let result =
+          "( " +
+          this.commandElementTypeId +
+          ", " +
+          this.elementTypeId +
+          ", " +
+          this.commandElementId +
+          ", " +
+          this.planId +
+          ", " +
+          this.planOrderId +
+          ", " +
+          this.enabled +
+          ", " +
+          this.visible +
+          ", " +
+          this.createdAt +
+          ", " +
+          this.updatedAt +
+          ")," +
+          LINE_BREAK;
+        return result;
+      }
+    }
+  language: typescript
+template:
+  content: "<h1> Carga de elementos </h1>\r\n<form>\r\n\t<div id=\"drop_zone\">Suelta aquí la carpeta Properties</div>\r\n\t<output id=\"drop_zone_ouput\"></output>\r\n\t<br><br>\r\n\t<div style=\"text-align:center\">\r\n\t\t<a href=\"#\" id=\"run\" class=\"runBtn\"><span>Run</span></a>\r\n\t</div>\r\n</form>"
+  language: html
+style:
+  content: "h1{\r\n  text-align: center;\r\n  font-size: 40px;\r\n  color: green; \r\n}\r\n.sombra{\r\n  position: relative;\r\n  margin: 8px;\r\n  height: 3px;\r\n  border:none;\r\n  display: inline-block;\r\n  background: #dde1e7;\r\n  text-decoration: none;\r\n  font-weight: 300;\r\n  font-size: 14px;\r\n  color: #5a84a2;\r\n  padding: 15px 10px;\r\n  border-radius: 10px;\r\n  text-align: 1;\r\n  box-shadow: 4px 4px 8px #9b989d, -4px -4px 8px rgb(243, 243, 243)\r\n}\r\n.sombra:focus{\r\n  box-shadow: inset 4px 4px 8px rgb(175, 175, 175),\r\n    inset -8px -8px 16px rgb(243, 243, 243);\r\n}\r\n.runBtn{\r\n  position: relative;\r\n  margin: 0;\r\n  height: 15px;\r\n  border:none;\r\n  display: inline-block;\r\n  background: #dde1e7;\r\n  text-decoration: none;\r\n  font-weight: 300;\r\n  font-size: 14px;\r\n  color: green;\r\n  padding: 15px 18px;\r\n  border-radius: 10px;\r\n  box-shadow: 4px 4px 8px #9b989d, -4px -4px 8px rgb(243, 243, 243)\r\n}\r\n.runBtn:hover{\r\n  box-shadow: inset 4px 4px 8px rgb(175, 175, 175),\r\n    inset -8px -8px 16px rgb(243, 243, 243);\r\n}\r\n.runBtn:hover span{\r\n  display: inline-block;\r\n  transform: scale(0.98)\r\n}\r\n\r\n#drop_zone {\r\n    border: 2px dashed #bbb;\r\n    -moz-border-radius: 5px;\r\n    -webkit-border-radius: 5px;\r\n    border-radius: 5px;\r\n    padding: 25px;\r\n    text-align: center;\r\n    font: 20pt bold 'Vollkorn';\r\n    color: #bbb;\r\n}"
+  language: css
+libraries: |-
+  # Office.js
+  https://appsforoffice.microsoft.com/lib/1/hosted/office.js
+  @types/office-js
+
+  # CSS Libraries
+  office-ui-fabric-js@1.4.0/dist/css/fabric.min.css
+  office-ui-fabric-js@1.4.0/dist/css/fabric.components.min.css
+  webix/webix.css
+
+  # NPM libraries
+  core-js@2.4.1/client/core.min.js
+  @types/core-js
+
+  jquery@3.1.1
+  @types/jquery@3.3.1
+
+  webix@9.1.0
+  @types/webix

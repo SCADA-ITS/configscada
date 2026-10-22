@@ -1,0 +1,11 @@
+-- 
+-- Type:   modules
+-- Entity: Task manager service
+-- File:   task_manager_service.sql
+-- Langs:  es_ES, en_GB, sk_SK, es_CL
+--
+
+-- 
+-- Table: master.i18n_labels
+--
+

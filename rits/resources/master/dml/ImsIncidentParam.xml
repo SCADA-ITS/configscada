@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="ImsIncidentParam">
+	<SELECT>SELECT incident_param_id as "id", 
+				incident_param_group_id as "incidentParamGroupId", 
+				data_type_id as "dataTypeId", 
+				threshold_1 as "threshold1", 
+				threshold_2 as "threshold2", 
+				param_unit_id as "incidentParamUnitId", 
+				alias as "alias", 
+				description as "description", 
+				label_alias as "labelAlias", 
+				label_description as "labelDescription", 
+				enabled as "enabled", 
+				visible as "visible", 
+				created_at as "createdAt", 
+				updated_at as "updatedAt"
+			FROM "static".ims_incident_params;
+	</SELECT>
+</DML>

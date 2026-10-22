@@ -1,0 +1,2 @@
+PLC_name;device_name;session_uid;ip;port(i);url_publisher
+WAGO;BUS-VAO;BUS-VAO;172.22.128.245;502;http:\/\/10.50.192.84:3000\/api\/v2\/generic\/

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RelativeLayout>
+<DML enabled="true" model="ElementState">
+	<SELECT>SELECT et.element_type_id as "elementTypeId",
+                   e.element_id as "elementId",
+                   et.initial_element_type_state_id as "previousStateId",
+                   et.initial_element_type_state_id as "stateId"
+              FROM conf.elements e,
+                   master.element_types et
+             WHERE  (e.enabled = true or e.enabled is null)
+               AND e.element_type_id = et.element_type_id
+
+	</SELECT>
+	<INSERT>
+	</INSERT>
+	<UPDATE>
+	</UPDATE>
+	<DELETE>
+	</DELETE>
+</DML>
