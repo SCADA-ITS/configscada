@@ -4,467 +4,1016 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ficha del Incidente</title>
+
     <style>
-		#template {
-			width: 100%;
-			height: 100%;
-			margin: auto;           
-			position: absolute;     
-			top: 0; bottom: 0;
-			left: 0; right: 0;
-		}
+        @page {
+            size: A4 portrait;
+            margin: 18mm;
+        }
 
-		#concesion {
-			display: inline-block;
-			width: 500px;          
-			background-color: #D3D3D3;
-			border: 2pt solid black;
-			padding: 2px 6px;    
-			box-sizing: border-box;
-		}
-		
-		.separador {
-			height: 3px;
-			background-color: #71be44;
-			width: 100%;
-			margin: 20px 0; 
-		}
-	
-		.label {
-			text-align: left;
-			font-weight: bold;
-		}
+        #template.incident-report,
+        #template.incident-report * {
+            box-sizing: border-box;
+        }
 
-		.data {
-			margin-left: 10px;
-		}
+        #template.incident-report {
+            position: static;
+            width: 100%;
+            height: auto;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 12px;
+            line-height: 1.45;
+            color: #17233c;
+            background: #fff;
+            overflow-wrap: anywhere;
+        }
 
-		.container {
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			color: #72BF44;
-		}
+        .incident-report .container {
+            break-inside: avoid;
+            page-break-inside: avoid;
+        }
 
-		.column caption
-		{
-			display: none;
-		}
+        .incident-report .container img {
+            display: block;
+            width: 152px;
+            height: auto;
+        }
 
-		.column {
-			flex: 1;
-		}
-		
-		
-	    .bold {
-			font-weight: bold;
-	    }
+        .incident-report h1 {
+            margin: 17px 0 0;
+            font-size: 21px;
+            line-height: 1.25;
+            break-after: avoid;
+            page-break-after: avoid;
+        }
 
-		.fecha {
-			grid-column: span 3; 
-		}
-		
-		.grid-container {
-			display: grid;
-			grid-template-columns: repeat(6, 1fr); 
-			gap: 4px; 
-			padding: 8px;
-		}
-		
-		.tabla-via {
-			border-collapse: collapse;
-			text-align: center;
-			font-family: Arial, sans-serif;
-		}
-		.tabla-via td {
-			border: 1px solid black;
-			padding: 4px;
-		}
-		.tabla-via .header {
-			font-style: italic;
-			font-weight: bold;
-			border: none;
-		}
-		.tabla-via .footer {
-			font-style: italic;
-			font-weight: bold;
-			border: none;
-		}
-		.tabla-via .arrow {
-			font-size: 18px;
-		}
-		
-		.backoffice-tables {
-		  width: 100%;
-		  border-collapse: collapse; 
-		}
-		
-		.backoffice-tables th,
-		.backoffice-tables td {
-		  text-align: center;
-		  vertical-align: middle;
-		}
-		
-		.backoffice-tables caption
-		{
-			display: none;
-		}
-	</style>
+        .incident-report h2 {
+            margin: 0 0 8px;
+            padding: 6px;
+            font-size: 15px;
+            line-height: 1.3;
+            background: #f0f2f4;
+            break-after: avoid;
+            page-break-after: avoid;
+        }
+
+        .incident-report .separador {
+            height: 3px;
+            width: 100%;
+            margin: 17px 0;
+            background: #71be44;
+            break-after: avoid;
+            page-break-after: avoid;
+        }
+
+        .incident-report .label {
+            display: block;
+            padding: 5px 6px;
+            font-weight: bold;
+            text-align: left;
+            background: #f0f2f4;
+        }
+
+        .incident-report .data {
+            margin: 0;
+        }
+
+        .incident-report .value:empty::before {
+            content: "-";
+        }
+
+        .incident-report .information-fields {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 5px 12px;
+        }
+
+        .incident-report .field-pair {
+            display: grid;
+            grid-template-columns: minmax(0, 48fr) minmax(0, 52fr);
+            min-width: 0;
+            align-items: stretch;
+            break-inside: avoid;
+            page-break-inside: avoid;
+        }
+
+        .incident-report .field-pair .data {
+            min-width: 0;
+            padding: 5px 6px;
+        }
+
+        .incident-report .event-details,
+        .incident-report .road-details {
+            width: 100%;
+            table-layout: fixed;
+            border-collapse: collapse;
+            text-align: center;
+            break-inside: avoid;
+            page-break-inside: avoid;
+        }
+
+        .incident-report .event-details th,
+        .incident-report .event-details td,
+        .incident-report .road-details th,
+        .incident-report .road-details td {
+            padding: 5px 4px;
+            vertical-align: top;
+            font-size: 11px;
+            overflow-wrap: anywhere;
+        }
+
+        .incident-report .event-details th,
+        .incident-report .road-details th {
+            background: #f0f2f4;
+        }
+
+        .incident-report thead {
+            display: table-header-group;
+            break-inside: avoid;
+            page-break-inside: avoid;
+            break-after: avoid;
+            page-break-after: avoid;
+        }
+
+        .incident-report .free-text {
+            margin: 0;
+            padding: 0;
+            white-space: pre-wrap;
+            orphans: 3;
+            widows: 3;
+        }
+
+        .incident-report .value p,
+        .incident-report .free-text p,
+        .incident-report .backoffice-tables td p {
+            margin: 0;
+            padding: 0;
+            line-height: inherit;
+            white-space: pre-wrap !important;
+            overflow-wrap: anywhere;
+            word-break: normal;
+        }
+
+        .incident-report .record-section {
+            break-inside: avoid;
+            page-break-inside: avoid;
+        }
+
+        .incident-report .backoffice-tables {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            table-layout: fixed;
+            border-collapse: collapse;
+            font-size: 10.5px;
+            line-height: 1.35;
+        }
+
+        .incident-report .backoffice-tables caption {
+            display: none;
+        }
+
+        .incident-report .backoffice-tables th,
+        .incident-report .backoffice-tables td {
+            padding: 5px 3px;
+            border-bottom: 1px solid #d7dde4;
+            text-align: center;
+            vertical-align: top;
+            overflow-wrap: anywhere;
+            word-break: normal;
+        }
+
+        .incident-report .backoffice-tables th {
+            font-weight: bold;
+            background: #f0f2f4;
+        }
+
+        .incident-report .backoffice-tables td p:empty::before {
+            content: "-";
+        }
+
+        .incident-report .backoffice-tables > tr {
+            break-inside: avoid;
+            page-break-inside: avoid;
+        }
+
+        .incident-report .backoffice-tables > tr:first-of-type {
+            break-before: avoid;
+            page-break-before: avoid;
+        }
+
+        .incident-report .backoffice-tables > tr:not(:has(> td > p:not(:empty))),
+        .incident-report .backoffice-tables:not(:has(> tr > td > p:not(:empty))) > thead {
+            display: none;
+        }
+
+        .incident-report .backoffice-tables:not(:has(> tr > td > p:not(:empty)))::after {
+            display: table-caption;
+            caption-side: bottom;
+            padding: 3px 0;
+            content: "No hay registros para esta incidencia.";
+            text-align: left;
+            font-size: 12px;
+            color: #526175;
+        }
+
+        /* Vehículos */
+
+        .incident-report .vehicle-table th:nth-child(1) {
+            width: 9%;
+        }
+
+        .incident-report .vehicle-table th:nth-child(2) {
+            width: 10%;
+        }
+
+        .incident-report .vehicle-table th:nth-child(3) {
+            width: 12%;
+        }
+
+        .incident-report .vehicle-table th:nth-child(4) {
+            width: 12%;
+        }
+
+        .incident-report .vehicle-table th:nth-child(5) {
+            width: 10%;
+        }
+
+        .incident-report .vehicle-table th:nth-child(6) {
+            width: 9%;
+        }
+
+        .incident-report .vehicle-table th:nth-child(7) {
+            width: 9%;
+        }
+
+        .incident-report .vehicle-table th:nth-child(8) {
+            width: 11%;
+        }
+
+        .incident-report .vehicle-table th:nth-child(9) {
+            width: 9%;
+        }
+
+        .incident-report .vehicle-table th:nth-child(10) {
+            width: 9%;
+        }
+
+        /* Tablas con textos libres debajo de cada registro */
+
+        .incident-report .detail-table {
+            display: table;
+            width: 100%;
+        }
+
+        .incident-report .detail-table > thead > tr,
+        .incident-report .detail-table > tr {
+            display: grid;
+            width: 100%;
+        }
+
+        .incident-report .detail-table > tr {
+            margin-bottom: 12px;
+            border-bottom: 1px solid #d7dde4;
+        }
+
+        .incident-report .detail-table > tr:last-of-type {
+            margin-bottom: 0;
+        }
+
+        .incident-report .detail-table th,
+        .incident-report .detail-table td {
+            width: auto;
+            min-width: 0;
+            grid-row: 1;
+            border-bottom: 0;
+        }
+
+        .incident-report .detail-table td::before {
+            padding: 5px 6px;
+            margin-bottom: 3px;
+            background: #f0f2f4;
+            font-weight: bold;
+            break-after: avoid;
+            page-break-after: avoid;
+        }
+
+        /* Participantes */
+
+        .incident-report .participant-table tr {
+            grid-template-columns:
+                minmax(0, 20fr)
+                minmax(0, 11fr)
+                minmax(0, 5fr)
+                minmax(0, 9fr)
+                minmax(0, 11fr)
+                minmax(0, 11fr)
+                minmax(0, 12fr)
+                minmax(0, 10fr)
+                minmax(0, 11fr);
+        }
+
+        .incident-report .participant-table tr > :nth-child(1) {
+            grid-column: 1;
+            text-align: left;
+        }
+
+        .incident-report .participant-table tr > :nth-child(2) {
+            grid-column: 2;
+        }
+
+        .incident-report .participant-table tr > :nth-child(3) {
+            grid-column: 3;
+        }
+
+        .incident-report .participant-table tr > :nth-child(5) {
+            grid-column: 4;
+        }
+
+        .incident-report .participant-table tr > :nth-child(6) {
+            grid-column: 5;
+        }
+
+        .incident-report .participant-table tr > :nth-child(7) {
+            grid-column: 6;
+        }
+
+        .incident-report .participant-table tr > :nth-child(8) {
+            grid-column: 7;
+        }
+
+        .incident-report .participant-table tr > :nth-child(9) {
+            grid-column: 8;
+        }
+
+        .incident-report .participant-table tr > :nth-child(10) {
+            grid-column: 9;
+        }
+
+        .incident-report .participant-table th:nth-child(4) {
+            display: none;
+        }
+
+        .incident-report .participant-table > tr > td:nth-child(4) {
+            grid-column: 1 / -1;
+            grid-row: 2;
+            padding: 7px 0 8px;
+            text-align: left;
+            font-size: 12px;
+        }
+
+        .incident-report .participant-table > tr > td:nth-child(4)::before {
+            content: "Dirección";
+            display: block;
+        }
+
+        /* Cierres */
+
+        .incident-report .closures-table tr {
+            grid-template-columns:
+                minmax(0, 10fr)
+                minmax(0, 12fr)
+                minmax(0, 16fr)
+                minmax(0, 16fr)
+                minmax(0, 17fr)
+                minmax(0, 17fr)
+                minmax(0, 12fr);
+        }
+
+        .incident-report .closures-table tr > :nth-child(1) {
+            grid-column: 1;
+        }
+
+        .incident-report .closures-table tr > :nth-child(2) {
+            grid-column: 2;
+        }
+
+        .incident-report .closures-table tr > :nth-child(3) {
+            grid-column: 3;
+        }
+
+        .incident-report .closures-table tr > :nth-child(5) {
+            grid-column: 4;
+        }
+
+        .incident-report .closures-table tr > :nth-child(7) {
+            grid-column: 5;
+        }
+
+        .incident-report .closures-table tr > :nth-child(8) {
+            grid-column: 6;
+        }
+
+        .incident-report .closures-table tr > :nth-child(9) {
+            grid-column: 7;
+        }
+
+        .incident-report .closures-table th:nth-child(4),
+        .incident-report .closures-table th:nth-child(6) {
+            display: none;
+        }
+
+        .incident-report .closures-table > tr > td:nth-child(4),
+        .incident-report .closures-table > tr > td:nth-child(6) {
+            grid-column: 1 / -1;
+            padding: 7px 0 8px;
+            text-align: left;
+            font-size: 12px;
+        }
+
+        .incident-report .closures-table > tr > td:nth-child(4) {
+            grid-row: 2;
+        }
+
+        .incident-report .closures-table > tr > td:nth-child(6) {
+            grid-row: 3;
+        }
+
+        .incident-report .closures-table > tr > td:nth-child(4)::before {
+            content: "Motivos";
+            display: block;
+        }
+
+        .incident-report .closures-table > tr > td:nth-child(6)::before {
+            content: "Redacción";
+            display: block;
+        }
+
+        /* Servicios de apoyo */
+
+        .incident-report .support-table tr {
+            grid-template-columns: repeat(6, minmax(0, 1fr));
+        }
+
+        .incident-report .support-table tr > :nth-child(1) {
+            grid-column: 1;
+            text-align: left;
+        }
+
+        .incident-report .support-table tr > :nth-child(2) {
+            grid-column: 2;
+        }
+
+        .incident-report .support-table tr > :nth-child(3) {
+            grid-column: 3;
+        }
+
+        .incident-report .support-table tr > :nth-child(4) {
+            grid-column: 4;
+        }
+
+        .incident-report .support-table tr > :nth-child(6) {
+            grid-column: 5;
+        }
+
+        .incident-report .support-table tr > :nth-child(7) {
+            grid-column: 6;
+        }
+
+        .incident-report .support-table th:nth-child(5) {
+            display: none;
+        }
+
+        .incident-report .support-table > tr > td:nth-child(5) {
+            grid-column: 1 / -1;
+            grid-row: 2;
+            padding: 7px 0 8px;
+            text-align: left;
+            font-size: 12px;
+        }
+
+        .incident-report .support-table > tr > td:nth-child(5)::before {
+            content: "Comentarios";
+            display: block;
+        }
+
+        /* Daños y responsables */
+
+        .incident-report .damages-table tr {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+
+        .incident-report .damages-table tr > :nth-child(3) {
+            grid-column: 1;
+            text-align: left;
+        }
+
+        .incident-report .damages-table tr > :nth-child(2) {
+            grid-column: 2;
+        }
+
+        .incident-report .damages-table tr > :nth-child(6) {
+            grid-column: 3;
+        }
+
+        .incident-report .damages-table tr > :nth-child(7) {
+            grid-column: 4;
+        }
+
+        .incident-report .damages-table th:nth-child(1),
+        .incident-report .damages-table th:nth-child(4),
+        .incident-report .damages-table th:nth-child(5) {
+            display: none;
+        }
+
+        .incident-report .damages-table > tr > td:nth-child(1),
+        .incident-report .damages-table > tr > td:nth-child(4),
+        .incident-report .damages-table > tr > td:nth-child(5) {
+            grid-column: 1 / -1;
+            padding: 7px 0 8px;
+            text-align: left;
+            font-size: 12px;
+        }
+
+        .incident-report .damages-table > tr > td:nth-child(4) {
+            grid-row: 2;
+        }
+
+        .incident-report .damages-table > tr > td:nth-child(1) {
+            grid-row: 3;
+        }
+
+        .incident-report .damages-table > tr > td:nth-child(5) {
+            grid-row: 4;
+        }
+
+        .incident-report .damages-table > tr > td:nth-child(4)::before {
+            content: "Nombre / Empresa";
+            display: block;
+        }
+
+        .incident-report .damages-table > tr > td:nth-child(1)::before {
+            content: "Dirección";
+            display: block;
+        }
+
+        .incident-report .damages-table > tr > td:nth-child(5)::before {
+            content: "Descripción";
+            display: block;
+        }
+
+        /* Causa probable y esquema de vía */
+
+        .incident-report .cause-and-road {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+            margin-top: 13px;
+            break-inside: avoid;
+            page-break-inside: avoid;
+        }
+
+        .incident-report .cause-and-road .label {
+            margin-bottom: 4px;
+        }
+
+        .incident-report .tabla-via {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: center;
+        }
+
+        .incident-report .tabla-via td {
+            padding: 4px;
+            border: 1px solid #d7dde4;
+        }
+
+        .incident-report .tabla-via .footer td {
+            border: 0;
+        }
+
+        /* Fotos y croquis */
+
+        .incident-report .image-section {
+            break-inside: avoid;
+            page-break-inside: avoid;
+        }
+
+        .incident-report .image-group caption {
+            display: none;
+        }
+
+        .incident-report .image-group img {
+            display: block !important;
+            width: auto !important;
+            height: auto !important;
+            max-width: 100% !important;
+            max-height: 195mm;
+            margin: 10px auto !important;
+            object-fit: contain;
+            break-inside: avoid;
+            page-break-inside: avoid;
+        }
+
+        .incident-report .image-group:not(:has(img))::after {
+            content: "No hay imágenes registradas para esta incidencia.";
+            color: #526175;
+        }
+
+        @media print {
+            body:has(#template.incident-report) {
+                margin: 0 !important;
+            }
+
+            .webix_ui_print:has(#template.incident-report),
+            .webix_ui_print:has(#template.incident-report) > .webix_template {
+                position: static !important;
+                box-sizing: border-box !important;
+                width: 100% !important;
+                min-width: 0 !important;
+                max-width: 100% !important;
+                height: auto !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                overflow: visible !important;
+            }
+
+            #template.incident-report {
+                print-color-adjust: exact;
+                -webkit-print-color-adjust: exact;
+            }
+        }
+    </style>
 </head>
-</body>
-<div id="template" class="portrait">
+
+<body>
+<div id="template" class="portrait incident-report">
+
     <div class="container">
-        <div class="column">
-            <img src="./img/logo-project.svg" alt="Logo de la concesionaria">
+        <img src="./img/logo-project.svg" alt="Logo de la concesionaria">
+    </div>
+
+    <h1>Ficha registro de eventos</h1>
+
+    <div class="separador"></div>
+
+    <section>
+        <h2>Identificación</h2>
+
+        <div class="information-fields">
+            <div class="field-pair">
+                <span class="label">Concesión</span>
+                <span class="data" id="concesion">PUENTE INDUSTRIAL</span>
+            </div>
+
+            <div class="field-pair">
+                <span class="label">Identificador</span>
+                <span class="data value" id="field.incident_report_id"></span>
+            </div>
+
+            <div class="field-pair">
+                <span class="label">Fecha</span>
+                <span class="data value" id="field.date"></span>
+            </div>
+
+            <div class="field-pair">
+                <span class="label">km</span>
+                <span class="data value" id="field.km"></span>
+            </div>
+
+            <div class="field-pair">
+                <span class="label">Evento</span>
+                <span class="data value" id="field.event_id"></span>
+            </div>
+
+            <div class="field-pair">
+                <span class="label">Tramo</span>
+                <span class="data value" id="field.stretch_id"></span>
+            </div>
+
+            <div class="field-pair">
+                <span class="label">Sentido</span>
+                <span class="data value" id="field.direction_id"></span>
+            </div>
+
+            <div class="field-pair">
+                <span class="label">Operador de turno</span>
+                <span class="data value" id="field.operator"></span>
+            </div>
+
+            <div class="field-pair">
+                <span class="label">Lado carretera</span>
+                <span class="data value" id="field.side_id"></span>
+            </div>
+
+            <div class="field-pair">
+                <span class="label">Método de detección</span>
+                <span class="data value" id="field.detection_id"></span>
+            </div>
+
+            <div class="field-pair">
+                <span class="label">Hora de detección</span>
+                <span class="data value" id="field.detection_time"></span>
+            </div>
         </div>
-    </div>
+    </section>
 
-    <div>
-        <h1>Ficha registro de eventos</h1>
-    </div>
-	
-	<div class="separador"></div>
-	
-	<div>
-		<table>
-		  <tr>
-			<td class="label">
-				<span>Identificación</span>
-			</td>
-			<td>
-				<span style="margin-left: 100px;" class="label">Accidente del mes (N°):</span>
-				<span class="data" id="field.incident_report_id"></span>
-			</td>
-		  </tr>
-		  <tr>
-			<td>
-				<span class="label">Concesión:</span>
-				<span class="data" id="concesion">NOGALES</span>
-			</td>
-			<td>
-				<span style="margin-left: 100px;" class="label">Kilómetro (con un decimal):</span>
-				<span class="data" id="field.km"></span>
-			</td>
-		  </tr>
-		  <tr>
-			<td style="height:20px;"></td>
-		  </tr>
-		</table>
-		<div class="grid-container">
-		  <div class="fecha">
-			<span class="label">Fecha</span>
-			<span class="data" id="field.date"></span>
-		  </div>
-		  <div id="field.event_id"></div>
-		  <div id="field.side_id"></div>
-		  <div id="field.stretch_id"></div>
-		</div>
-	</div>
-	
-	<div class="separador"></div>
-	
-	<div>
-		<table>
-		  <tr>
-			<td style="width:20%;">
-				<span class="label">Tipo de evento</span>
-			</td>
-			<td style="width:20%;">
-				<span class="label">Colisión</span>
-			</td>
-			<td style="width:20%;">
-				<span class="label">Choque c/ objeto</span>
-			</td>
-			<td style="width:20%;">
-				<span class="label">Choque con otro Vehículo Detenido</span>
-			</td>
-			<td style="width:20%;">
-				<span class="label">Ubicación relativa</span>
-			</td>
-		  </tr>
-		  <tr>
-			<td style="width:20%;">
-				<span class="data" id="field.event_type_id"></span>
-			</td>
-			<td style="width:20%;">
-				<span class="data" id="field.collision_id"></span>
-			</td>
-			<td style="width:20%;">
-				<span class="data" id="field.object_crash_id"></span>
-			</td>
-			<td style="width:20%;">
-				<span class="data" id="field.vehicle_crash_id"></span>
-			</td>
-			<td style="width:20%;">
-				<span class="data" id="field.relative_location_id"></span>
-			</td>
-		  </tr>
-		  <tr>
-			<td style="height:20px;"></td>
-		  </tr>
-		</table>
-	</div>
-	
-	<div class="separador"></div>
-	
-	<div>
+    <div class="separador"></div>
+
+    <section>
+        <table class="event-details">
+            <thead>
+                <tr>
+                    <th>Tipo de evento</th>
+                    <th>Colisión</th>
+                    <th>Choque con objeto</th>
+                    <th>Choque con vehículo</th>
+                    <th>Ubicación relativa</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <span class="value" id="field.event_type_id"></span>
+                    </td>
+                    <td>
+                        <span class="value" id="field.collision_id"></span>
+                    </td>
+                    <td>
+                        <span class="value" id="field.object_crash_id"></span>
+                    </td>
+                    <td>
+                        <span class="value" id="field.vehicle_crash_id"></span>
+                    </td>
+                    <td>
+                        <span class="value" id="field.relative_location_id"></span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <div class="separador"></div>
+
+    <section>
         <h2>Redacción de lo sucedido</h2>
-		<p id = "field.comments"></p>
-    </div>
-	
-	<div class="separador"></div>
-	
-	<div>
-        <h2>Vehículos participantes</h2>
-    </div>
-	<div>
-		<table class = "backoffice-tables" id = "field.vehicles">
-			<tbody>
-				<tr>
-					<th style="width:14.28%;" id="field.vehicles.vehicle_type_id"></th>				
-					<th style="width:14.28%;" id="field.vehicles.vehicle_service_id"></th>					
-					<th style="width:14.28%;" id="field.vehicles.vehicle_consecuence_id"></th>					
-					<th style="width:14.28%;" id="field.vehicles.vehicle_manoeuvre_id"></th>				
-					<th style="width:14.28%;" id="field.vehicles.lane"></th>							
-					<th style="width:14.28%;" id="field.vehicles.patent"></th>				
-					<th style="width:14.28%;" id="field.vehicles.vehicle_brand_id"></th>	
-				</tr>
-			</tbody>
-		</table>
-	</div>
-	
-	<div class="separador"></div>
-	
-	<div>
-		<table style="width:100%; border-collapse:collapse; text-align:center;">
-		  <tr>
-			<td colspan="3" class="bold" style="width:50%;">Carpeta</td>
-			<td colspan="3" class="bold" style="width:50%;">Estado visibilidad</td>
-		  </tr>
-		  <tr>
-			<td style="height:20px;"></td>
-		  </tr>
-		  <tr>
-			<td class="bold" style="width:16.66%;">Tipo</td>
-			<td class="bold" style="width:16.66%;">Estado</td>
-			<td class="bold" style="width:16.66%;">Condiciones calzada</td>
-			<td class="bold" style="width:16.66%;">Estado atmosferico</td>
-			<td class="bold" style="width:16.66%;">Luminosidad</td>
-			<td class="bold" style="width:16.66%;">Luz artificial</td>
-		  </tr>
-		  <tr>
-			<td class="data" style="width:16.66%;" id="field.road_type_id"></td>
-			<td class="data" style="width:16.66%;" id="field.road_state_id"></td>
-			<td class="data" style="width:16.66%;" id="field.road_condition_id"></td>
-			<td class="data" style="width:16.66%;" id="field.weather_state_id"></td>
-			<td class="data" style="width:16.66%;" id="field.luminosity_id"></td>
-			<td class="data" style="width:16.66%;" id="field.ligth_id"></td>
-		  </tr>
-		  <tr>
-			<td style="height:20px;"></td>
-		  </tr>
-		</table>
-	</div>
-	<div>
-		<table style="width:100%;">
-			<tr>
-				<td style="width:50%;">
-					<table>
-					  <tr>
-						<td class="bold">Causa probable</td>
-					  </tr>
-					  <tr>
-						<td class="data" id="field.cause_id"></td>
-					  </tr>
-					</table>
-				</td>
-				<td style="width:50%;">
-					<table class="tabla-via">
-					  <tr>
-						<td colspan="4" class="header">Vía</td>
-					  </tr>
-					  <tr>
-						<td colspan="2" class="arrow">←──────────</td>
-						<td>2</td>
-						<td>X</td>
-					  </tr>
-					  <tr>
-						<td colspan="2" class="arrow">──────────→</td>
-						<td>1</td>
-						<td> </td>
-					  </tr>
-					  <tr>
-						<td colspan="2" class="footer" style="text-align: left;">Km 25</td>
-						<td colspan="2" class="footer" style="text-align: right;">Km 26</td>
-					  </tr>
-					</table>
-				</td>
-			</tr>
-		</table>
-	</div>    
-	
-	<div class="separador"></div>
-	<div>
-        <h2>Listado de personas involucradas</h2>
-    </div>	
-	<div>	
-		<table class = "backoffice-tables" id = "field.participants">
-			<tbody>
-				<tr>
-					<th style="width:12.5%;" id="field.participants.participant_name"></th>				
-					<th style="width:12.5%;" id="field.participants.participant_rut"></th>					
-					<th style="width:12.5%;" id="field.participants.participant_age"></th>					
-					<th style="width:12.5%;" id="field.participants.participant_address"></th>				
-					<th style="width:12.5%;" id="field.participants.participant_vehicle"></th>				
-					<th style="width:12.5%;" id="field.participants.participant_type_id"></th>			
-					<th style="width:12.5%;" id="field.participants.participant_injury_id"></th>			
-					<th style="width:12.5%;" id="field.participants.participant_nacionality_id"></th>	
-				</tr>
-			</tbody>
-		</table>
-    </div> 
-	
-	<div class="separador"></div>
-	<div>
-        <h2>Detalle de cortes de transito</h2>
-    </div>	
-	<div>
-		<table class = "backoffice-tables" id = "field.closures">
-			<tbody>
-				<tr>
-					<th style="width:14.28%;" id="field.closures.side_road"></th>				
-					<th style="width:10%;" id="field.closures.lanes"></th>					
-					<th style="width:14.28%;" id="field.closures.entity"></th>					
-					<th style="width:22.84%;" id="field.closures.reasons"></th>				
-					<th style="width:14.28%;" id="field.closures.start_hour"></th>				
-					<th style="width:14.28%;" id="field.closures.end_hour"></th>			
-					<th style="width:10%;" id="field.closures.total_time"></th>				
-				</tr>
-			</tbody>
-		</table>
-    </div>
-	
-	<div class="separador"></div>
-	<div>
-        <h2>Servicios de apoyo</h2>
-    </div>	
-	<div>
-		<table class = "backoffice-tables" id = "field.support_services">
-			<tbody>
-				<tr>
-					<th style="width:16.66%;" id="field.support_services.type_id"></th>				
-					<th style="width:16.66%;" id="field.support_services.subtype_id"></th>					
-					<th style="width:16.66%;" id="field.support_services.arrival_time"></th>					
-					<th style="width:16.66%;" id="field.support_services.comment"></th>				
-					<th style="width:16.66%;" id="field.support_services.quantity"></th>				
-					<th style="width:16.66%;" id="field.support_services.departure_time"></th>				
-				</tr>
-			</tbody>
-		</table>
-    </div>
-	
-	<div class="separador"></div>
-	<div>
-        <h2>Daños. Identificación responsable daños al camino</h2>
-    </div>	
-	<div>
-		<table class = "backoffice-tables" id = "field.damages_responsabilities">
-			<tbody>
-				<tr>
-					<th style="width:25%;" id="field.damages_responsabilities.address"></th>				
-					<th style="width:25%;" id="field.damages_responsabilities.phone_number"></th>					
-					<th style="width:25%;" id="field.damages_responsabilities.vehicle_owner_id"></th>					
-					<th style="width:25%;" id="field.damages_responsabilities.owner_name"></th>					
-				</tr>
-			</tbody>
-		</table>
-    </div>
-	
-	<div class="separador"></div>
-	<div>
-        <h2>Daños. Evaluación preliminar de los daños</h2>
-    </div>	
-	<div>
-		
-		<table class = "backoffice-tables" id = "field.damages_evaluations">
-			<tbody>
-				<tr>
-					<th style="width:33%;" id="field.damages_evaluations.description"></th>				
-					<th style="width:33%;" id="field.damages_evaluations.quantity"></th>					
-					<th style="width:33%;" id="field.damages_evaluations.entity"></th>							
-				</tr>
-			</tbody>
-		</table>
-    </div>
-	
-	<div class="separador"></div>
-	<div>
-        <h2>Denuncio del accidente</h2>
-		<table>
-		  <tr>
-			<td class="bold">Denuncia realizada por:</td>
-			<td class="data" id="field.report_by"></td>
-		  </tr>
-		  <tr>
-			<td class="bold">Estampado de Carabineros de:</td>
-			<td class="data" id="field.stamped"></td>
-		  </tr>
-		  <tr>
-			<td class="bold">Citado al juzgado de:</td>
-			<td class="data" id="field.court"></td>
-		  </tr>
-		  <tr>
-			<td class="bold">Fecha de citación:</td>
-			<td class="data" id="field.citattion_date"></td>
-		  </tr>
-		  <tr>
-			<td class="bold">Número de parte/constancia:</td>
-			<td class="data" id="field.report_number"></td>
-		  </tr>
-		  <tr>
-			<td style="height:20px;"></td>
-		  </tr>
-		</table>
-		
-		<h2>Antecedentes reclamo</h2>
-		<table>
-		  <tr>
-			<td class="bold">Plaza:</td>
-			<td class="data" id="field.station"></td>
-		  </tr>
-		  <tr>
-			<td class="bold">Número de folio:</td>
-			<td class="data" id="field.file_number"></td>
-		  </tr>
-		  <tr>
-			<td class="bold">Nombre de Patrullero:</td>
-			<td class="data" id="field.patrol_name"></td>
-		  </tr>
-		  <tr>
-			<td class="bold">Nombre operador C. de Control:</td>
-			<td class="data" id="field.operator_name"></td>
-		  </tr>
-		  <tr>
-			<td class="bold">Nombre supervisor operaciones:</td>
-			<td class="data" id="field.supervisor_name"></td>
-		  </tr>
-		</table>
-    </div>
-	
-	<div class="separador"></div>
-	<div>
-		<div>
-			<h2>Fotos de la evidencia</h2>
-		</div>
-		
-		<div class="column" id="groupImage.photos"></div>
+        <div class="free-text value" id="field.comments"></div>
+    </section>
 
-		<div style="margin-top: 300px;">
-			<h2>Fotos croquis del accidente</h2>
-		</div>
-		
-		<div class="column" id="groupImage.sketch"></div>
-	</div>
+    <div class="separador"></div>
+
+    <section class="record-section">
+        <h2>Vehículos participantes</h2>
+
+        <table class="backoffice-tables vehicle-table" id="field.vehicles">
+            <thead>
+                <tr>
+                    <th id="field.vehicles.vehicle_type_id">Tipo</th>
+                    <th id="field.vehicles.vehicle_service_id">Servicio</th>
+                    <th id="field.vehicles.vehicle_consecuence_id">Consecuencia</th>
+                    <th id="field.vehicles.vehicle_manoeuvre_id">Maniobra</th>
+                    <th id="field.vehicles.lane">Vía</th>
+                    <th id="field.vehicles.patent">Patente</th>
+                    <th id="field.vehicles.vehicle_brand_id">Marca</th>
+                    <th id="field.vehicles.vehicle_direction_id">Sentido</th>
+                    <th id="field.vehicles.vehicle_lane_id">Pista</th>
+                    <th id="field.vehicles.vehicle_hit_and_run_id">Vehículo fuga</th>
+                </tr>
+            </thead>
+        </table>
+    </section>
+
+    <div class="separador"></div>
+
+    <section>
+        <table class="road-details">
+            <thead>
+                <tr>
+                    <th>Tipo de carpeta</th>
+                    <th>Estado de carpeta</th>
+                    <th>Condiciones calzada</th>
+                    <th>Estado atmosférico</th>
+                    <th>Luminosidad</th>
+                    <th>Luz artificial</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <span class="value" id="field.road_type_id"></span>
+                    </td>
+                    <td>
+                        <span class="value" id="field.road_state_id"></span>
+                    </td>
+                    <td>
+                        <span class="value" id="field.road_condition_id"></span>
+                    </td>
+                    <td>
+                        <span class="value" id="field.weather_state_id"></span>
+                    </td>
+                    <td>
+                        <span class="value" id="field.luminosity_id"></span>
+                    </td>
+                    <td>
+                        <span class="value" id="field.ligth_id"></span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="cause-and-road">
+            <div>
+                <span class="label">Causa probable</span>
+                <div class="free-text value" id="field.cause_id"></div>
+            </div>
+
+            <div>
+                <span class="label">Vía</span>
+
+                <!-- Esquema estático conservado del HTML original. -->
+                <table class="tabla-via">
+                    <tbody>
+                        <tr>
+                            <td colspan="2">←──────────</td>
+                            <td>2</td>
+                            <td>X</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">──────────→</td>
+                            <td>1</td>
+                            <td></td>
+                        </tr>
+                        <tr class="footer">
+                            <td colspan="2" style="text-align:left;">Km 25</td>
+                            <td colspan="2" style="text-align:right;">Km 26</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <div class="separador"></div>
+
+    <section class="record-section">
+        <h2>Listado de personas involucradas</h2>
+
+        <table class="backoffice-tables detail-table participant-table"
+               id="field.participants">
+            <thead>
+                <tr>
+                    <th id="field.participants.participant_name">Nombre</th>
+                    <th id="field.participants.participant_rut">RUT</th>
+                    <th id="field.participants.participant_age">Edad</th>
+                    <th id="field.participants.participant_address">Dirección</th>
+                    <th id="field.participants.participant_vehicle">Patente</th>
+                    <th id="field.participants.participant_type_id">Tipo</th>
+                    <th id="field.participants.participant_injury_id">Lesión</th>
+                    <th id="field.participants.participant_nacionality_id">Nacionalidad</th>
+                    <th id="field.participants.participant_hit_and_run_id">Conductor a la fuga</th>
+                    <th id="field.participants.participant_attention_id">Atención</th>
+                </tr>
+            </thead>
+        </table>
+    </section>
+
+    <div class="separador"></div>
+
+    <section class="record-section">
+        <h2>Detalle de cortes de tránsito</h2>
+
+        <table class="backoffice-tables detail-table closures-table"
+               id="field.closures">
+            <thead>
+                <tr>
+                    <th id="field.closures.side_road_id">Lado carretera</th>
+                    <th id="field.closures.lanes_id">Pistas</th>
+                    <th id="field.closures.entity_id">Servicio apoyo</th>
+                    <th id="field.closures.reasons">Motivos</th>
+                    <th id="field.closures.closure_type_id">Tipo de cierre</th>
+                    <th id="field.closures.wording">Redacción</th>
+                    <th id="field.closures.start_hour">Hora inicio</th>
+                    <th id="field.closures.end_hour">Hora fin</th>
+                    <th id="field.closures.total_time">Tiempo total</th>
+                </tr>
+            </thead>
+        </table>
+    </section>
+
+    <div class="separador"></div>
+
+    <section class="record-section">
+        <h2>Servicios de apoyo</h2>
+
+        <table class="backoffice-tables detail-table support-table"
+               id="field.support_services">
+            <thead>
+                <tr>
+                    <th id="field.support_services.type_id">Tipo</th>
+                    <th id="field.support_services.subtype_id">Subtipo</th>
+                    <th id="field.support_services.arrival_time">Llegada</th>
+                    <th id="field.support_services.response_time">Tiempo de respuesta</th>
+                    <th id="field.support_services.comment">Comentarios</th>
+                    <th id="field.support_services.quantity">Cantidad</th>
+                    <th id="field.support_services.departure_time">Partida</th>
+                </tr>
+            </thead>
+        </table>
+    </section>
+
+    <div class="separador"></div>
+
+    <section class="record-section">
+        <h2>Daños. Identificación responsable daños al camino</h2>
+
+        <table class="backoffice-tables detail-table damages-table"
+               id="field.damages_responsabilities">
+            <thead>
+                <tr>
+                    <th id="field.damages_responsabilities.address">Dirección</th>
+                    <th id="field.damages_responsabilities.phone_number">Teléfono</th>
+                    <th id="field.damages_responsabilities.vehicle_owner_id">Tipo propietario</th>
+                    <th id="field.damages_responsabilities.owner_name">Nombre / Empresa</th>
+                    <th id="field.damages_responsabilities.description">Descripción</th>
+                    <th id="field.damages_responsabilities.quantity">Cantidad</th>
+                    <th id="field.damages_responsabilities.entity">Unidad</th>
+                </tr>
+            </thead>
+        </table>
+    </section>
+
+    <div class="separador"></div>
+
+    <section>
+        <h2>Denuncio del accidente</h2>
+
+        <div class="information-fields">
+            <div class="field-pair">
+                <span class="label">Denuncia realizada por</span>
+                <span class="data value" id="field.report_by"></span>
+            </div>
+
+            <div class="field-pair">
+                <span class="label">Estampado de Carabineros de</span>
+                <span class="data value" id="field.stamped"></span>
+            </div>
+
+            <div class="field-pair">
+                <span class="label">Citado al juzgado de</span>
+                <span class="data value" id="field.court"></span>
+            </div>
+
+            <div class="field-pair">
+                <span class="label">Fecha de citación</span>
+                <span class="data value" id="field.citattion_date"></span>
+            </div>
+
+            <div class="field-pair">
+                <span class="label">Número de parte</span>
+                <span class="data value" id="field.report_number"></span>
+            </div>
+        </div>
+    </section>
+
+    <div class="separador"></div>
+
+    <section>
+        <h2>Antecedentes reclamo</h2>
+
+        <div class="information-fields">
+            <div class="field-pair">
+                <span class="label">Plaza</span>
+                <span class="data value" id="field.station"></span>
+            </div>
+
+            <div class="field-pair">
+                <span class="label">Número de folio</span>
+                <span class="data value" id="field.file_number"></span>
+            </div>
+
+            <div class="field-pair">
+                <span class="label">Nombre de Patrullero</span>
+                <span class="data value" id="field.patrol_name"></span>
+            </div>
+
+            <div class="field-pair">
+                <span class="label">Nombre operador C. de Control</span>
+                <span class="data value" id="field.operator_name"></span>
+            </div>
+
+            <div class="field-pair">
+                <span class="label">Nombre supervisor operaciones</span>
+                <span class="data value" id="field.supervisor_name"></span>
+            </div>
+        </div>
+    </section>
+
+    <div class="separador"></div>
+
+    <section class="image-section">
+        <h2>Fotos de la evidencia</h2>
+        <div class="image-group" id="groupImage.photos"></div>
+    </section>
+
+    <div class="separador"></div>
+
+    <section class="image-section">
+        <h2>Fotos croquis del accidente</h2>
+        <div class="image-group" id="groupImage.sketch"></div>
+    </section>
+
 </div>
 </body>
 </html>

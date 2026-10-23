@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reporte de Informe Preliminar</title>
+
+    <style>
+        @page {
+            size: A4 portrait;
+            margin: 18mm;
+        }
+
+        #template.preliminary-report,
+        #template.preliminary-report * {
+            box-sizing: border-box;
+        }
+
+        #template.preliminary-report {
+            position: static;
+            width: 100%;
+            height: auto;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 12px;
+            line-height: 1.45;
+            color: #17233c;
+            background: #fff;
+            overflow-wrap: anywhere;
+        }
+
+        .preliminary-report .container {
+            break-inside: avoid;
+            page-break-inside: avoid;
+        }
+
+        .preliminary-report .container img {
+            display: block;
+            width: 152px;
+            height: auto;
+        }
+
+        .preliminary-report h1 {
+            margin: 17px 0 0;
+            font-size: 21px;
+            line-height: 1.25;
+            break-after: avoid;
+            page-break-after: avoid;
+        }
+
+        .preliminary-report h2 {
+            margin: 0 0 8px;
+            padding: 6px;
+            font-size: 15px;
+            line-height: 1.3;
+            background: #f0f2f4;
+            break-after: avoid;
+            page-break-after: avoid;
+        }
+
+        .preliminary-report .separador {
+            height: 3px;
+            width: 100%;
+            margin: 17px 0;
+            background: #71be44;
+            break-after: avoid;
+            page-break-after: avoid;
+        }
+
+        .preliminary-report .label {
+            display: block;
+            padding: 5px 6px;
+            font-weight: bold;
+            text-align: left;
+            background: #f0f2f4;
+        }
+
+        .preliminary-report .information-fields {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 5px 12px;
+        }
+
+        .preliminary-report .field-pair {
+            display: grid;
+            grid-template-columns: minmax(0, 48fr) minmax(0, 52fr);
+            min-width: 0;
+            align-items: stretch;
+            break-inside: avoid;
+            page-break-inside: avoid;
+        }
+
+        .preliminary-report .field-pair .data {
+            min-width: 0;
+            margin: 0;
+            padding: 5px 6px;
+        }
+
+        .preliminary-report .field-block {
+            margin-bottom: 10px;
+        }
+
+        .preliminary-report .field-block .label {
+            margin-bottom: 4px;
+        }
+
+        .preliminary-report .value:empty::before {
+            content: "-";
+        }
+
+        .preliminary-report .free-text {
+            margin: 0;
+            padding: 0;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+            word-break: normal;
+            orphans: 3;
+            widows: 3;
+        }
+
+        .preliminary-report .value p,
+        .preliminary-report .free-text p {
+            margin: 0;
+            padding: 0;
+            line-height: inherit;
+            white-space: pre-wrap !important;
+            overflow-wrap: anywhere;
+        }
+
+        @media print {
+            body:has(#template.preliminary-report) {
+                margin: 0 !important;
+            }
+
+            .webix_ui_print:has(#template.preliminary-report),
+            .webix_ui_print:has(#template.preliminary-report) > .webix_template {
+                position: static !important;
+                box-sizing: border-box !important;
+                width: 100% !important;
+                min-width: 0 !important;
+                max-width: 100% !important;
+                height: auto !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                overflow: visible !important;
+            }
+
+            #template.preliminary-report {
+                print-color-adjust: exact;
+                -webkit-print-color-adjust: exact;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<div id="template" class="portrait preliminary-report">
+
+    <div class="container">
+        <img
+            src="./img/logo-project.svg"
+            alt="Puente Industrial - ALEATICA"
+        >
+    </div>
+
+    <h1>Reporte de Informe Preliminar</h1>
+
+    <div class="separador"></div>
+
+    <section>
+        <h2>Información general</h2>
+
+        <div class="field-block">
+            <span class="label">Nombre del contrato</span>
+            <div class="free-text">Obra Pública Fiscal Concesión Vial Puente Industrial.</div>
+        </div>
+
+        <div class="information-fields">
+            <div class="field-pair">
+                <span class="label">N.º incidente del mes</span>
+                <span class="data value" id="field.month_incident_number"></span>
+            </div>
+
+            <div class="field-pair">
+                <span class="label">Fecha</span>
+                <span class="data value" id="field.report_date"></span>
+            </div>
+
+            <div class="field-pair">
+                <span class="label">Kilómetro</span>
+                <span class="data value" id="field.km"></span>
+            </div>
+
+            <div class="field-pair">
+                <span class="label">Hora</span>
+                <span class="data value" id="field.report_time"></span>
+            </div>
+
+            <div class="field-pair">
+                <span class="label">Comuna</span>
+                <span class="data value" id="field.commune"></span>
+            </div>
+
+            <div class="field-pair">
+                <span class="label">Sector</span>
+                <span class="data value" id="field.sector"></span>
+            </div>
+
+            <div class="field-pair">
+                <span class="label">Calzada</span>
+                <span class="data value" id="field.carriageway"></span>
+            </div>
+
+            <div class="field-pair">
+                <span class="label">Sentido de tránsito</span>
+                <span class="data value" id="field.traffic_direction"></span>
+            </div>
+
+            <div class="field-pair">
+                <span class="label">Pistas involucradas</span>
+                <span class="data value" id="field.involved_lanes"></span>
+            </div>
+
+            <div class="field-pair">
+                <span class="label">Condición de tránsito</span>
+                <span class="data value" id="field.traffic_condition"></span>
+            </div>
+        </div>
+    </section>
+
+    <div class="separador"></div>
+
+    <section>
+        <h2>Información del incidente</h2>
+
+        <div class="information-fields">
+            <div class="field-pair">
+                <span class="label">Tipo de incidente</span>
+                <span class="data value" id="field.incident_type"></span>
+            </div>
+
+            <div class="field-pair">
+                <span class="label">Vehículos involucrados</span>
+                <span class="data value" id="field.involved_vehicles"></span>
+            </div>
+
+            <div class="field-pair">
+                <span class="label">Fallecidos</span>
+                <span class="data value" id="field.deaths"></span>
+            </div>
+
+            <div class="field-pair">
+                <span class="label">Lesionados</span>
+                <span class="data value" id="field.injured"></span>
+            </div>
+        </div>
+    </section>
+
+    <div class="separador"></div>
+
+    <section>
+        <h2>Daños a la infraestructura</h2>
+        <div class="free-text value" id="field.infrastructure_damage"></div>
+    </section>
+
+    <div class="separador"></div>
+
+    <section>
+        <h2>Descripción del evento</h2>
+        <div class="free-text value" id="field.event_description"></div>
+    </section>
+
+    <div class="separador"></div>
+
+    <section>
+        <h2>Asistencia en ruta</h2>
+        <div class="free-text value" id="field.road_assistance"></div>
+    </section>
+
+    <div class="separador"></div>
+
+    <section>
+        <h2>Responsable de la información</h2>
+
+        <div class="information-fields">
+            <div class="field-pair">
+                <span class="label">Responsable de la información</span>
+                <span class="data value" id="field.information_responsible"></span>
+            </div>
+
+            <div class="field-pair">
+                <span class="label">Teléfono móvil</span>
+                <span class="data value" id="field.mobile_phone"></span>
+            </div>
+        </div>
+    </section>
+
+</div>
+</body>
+</html>

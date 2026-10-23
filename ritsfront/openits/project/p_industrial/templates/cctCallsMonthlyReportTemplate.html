@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informe mensual de llamadas CCT</title>
+
+    <style>
+        @page {
+            size: A4 landscape;
+            margin: 12mm;
+        }
+
+        #template.cct-monthly-report,
+        #template.cct-monthly-report * {
+            box-sizing: border-box;
+        }
+
+        #template.cct-monthly-report {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 11px;
+            line-height: 1.35;
+            color: #17233c;
+            overflow-wrap: anywhere;
+        }
+
+        .cct-monthly-report .report-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 18px;
+        }
+
+        .cct-monthly-report .report-header img {
+            width: 170px;
+            height: auto;
+        }
+
+        .cct-monthly-report .report-heading {
+            text-align: right;
+            min-width: 0;
+        }
+
+        .cct-monthly-report h1 {
+            font-size: 19px;
+            margin: 0 0 8px;
+        }
+
+        .cct-monthly-report .period {
+            font-size: 13px;
+            margin: 0;
+        }
+
+        .cct-monthly-report .report-summary {
+            border-top: 2px solid #71be44;
+            padding-top: 9px;
+            margin-bottom: 14px;
+        }
+
+        .cct-monthly-report table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+        .cct-monthly-report caption {
+            display: none;
+        }
+
+        .cct-monthly-report th,
+        .cct-monthly-report td {
+            border: 1px solid #a7b0bd;
+            padding: 7px 5px;
+            vertical-align: top;
+            text-align: center;
+            overflow-wrap: anywhere;
+        }
+
+        .cct-monthly-report th {
+            background: #17233c;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .cct-monthly-report td p {
+            margin: 0;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+        }
+
+        .cct-monthly-report .call-details td:nth-child(6) {
+            text-align: left;
+        }
+
+        .cct-monthly-report .call-details td:nth-child(4) {
+            white-space: pre-wrap;
+        }
+
+        .cct-monthly-report tr:nth-child(even) td {
+            background: #f3f5f8;
+        }
+
+        .cct-monthly-report thead {
+            display: table-header-group;
+        }
+
+        .cct-monthly-report tr {
+            break-inside: avoid;
+            page-break-inside: avoid;
+        }
+
+        .cct-monthly-report .summary-panels {
+            display: flex;
+            gap: 22px;
+            margin: 0 0 20px;
+            break-inside: avoid;
+            page-break-inside: avoid;
+        }
+
+        .cct-monthly-report .summary-panel {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .cct-monthly-report h2 {
+            font-size: 13px;
+            margin: 0 0 8px;
+        }
+
+        .cct-monthly-report .summary-panel th:first-child,
+        .cct-monthly-report .summary-panel td:first-child {
+            text-align: left;
+            width: 72%;
+        }
+
+        .cct-monthly-report .summary-panel td,
+        .cct-monthly-report .summary-panel th {
+            padding: 4px 7px;
+        }
+
+        .cct-monthly-report .summary-panel tfoot {
+            font-weight: bold;
+        }
+
+        .cct-monthly-report .summary-panel .commercial {
+            background: #92d050;
+            color: #17233c;
+        }
+
+        .cct-monthly-report .summary-panel .emergency {
+            background: #e60000;
+            color: #fff;
+        }
+
+        .cct-monthly-report .summary-panel .assistance,
+        .cct-monthly-report .summary-panel .night {
+            background: #002060;
+            color: #fff;
+        }
+
+        .cct-monthly-report .summary-panel .test,
+        .cct-monthly-report .summary-panel .day {
+            background: #ffff00;
+            color: #17233c;
+        }
+
+        @media print {
+            body:has(#template.cct-monthly-report) {
+                margin: 0 !important;
+            }
+
+            .webix_ui_print:has(#template.cct-monthly-report),
+            .webix_ui_print:has(#template.cct-monthly-report) > .webix_template {
+                position: static !important;
+                box-sizing: border-box !important;
+                width: 100% !important;
+                min-width: 0 !important;
+                max-width: 100% !important;
+                height: auto !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                overflow: visible !important;
+            }
+
+            #template.cct-monthly-report {
+                print-color-adjust: exact;
+                -webkit-print-color-adjust: exact;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="template" class="landscape cct-monthly-report">
+
+        <div class="report-header">
+            <img
+                src="./img/logo-project.svg"
+                alt="Puente Industrial - ALEATICA"
+            >
+
+            <div class="report-heading">
+                <h1>Informe mensual de llamadas CCT</h1>
+
+                <p class="period">
+                    <span id="field.mes"></span>
+                    de
+                    <span id="field.anio"></span>
+                </p>
+            </div>
+        </div>
+
+        <div class="report-summary">
+            <strong>Concesión:</strong>
+            PUENTE INDUSTRIAL
+
+            &nbsp;&nbsp;
+
+            <strong>Total de llamadas:</strong>
+            <span class="total_llamadas"></span>
+        </div>
+
+        <div class="summary-panels">
+
+            <div class="summary-panel">
+                <h2>Llamadas por motivo</h2>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Motivo</th>
+                            <th>Llamadas</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td class="assistance">Asistencia en ruta</td>
+                            <td id="field.asistencia_ruta"></td>
+                        </tr>
+
+                        <tr>
+                            <td>Simulacro</td>
+                            <td id="field.simulacro"></td>
+                        </tr>
+
+                        <tr>
+                            <td>Otro</td>
+                            <td id="field.otro"></td>
+                        </tr>
+
+                        <tr>
+                            <td class="test">Prueba</td>
+                            <td id="field.prueba"></td>
+                        </tr>
+
+                        <tr>
+                            <td class="emergency">Emergencia</td>
+                            <td id="field.emergencia"></td>
+                        </tr>
+
+                        <tr>
+                            <td class="commercial">Comercial</td>
+                            <td id="field.comercial"></td>
+                        </tr>
+
+                        <tr>
+                            <td>Sin clasificar</td>
+                            <td id="field.motivo_sin_clasificar"></td>
+                        </tr>
+                    </tbody>
+
+                    <tfoot>
+                        <tr>
+                            <td>Total</td>
+                            <td>
+                                <span class="total_llamadas"></span>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <div class="summary-panel">
+                <h2>Llamadas por turno</h2>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Turno</th>
+                            <th>Llamadas</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td class="day">Día</td>
+                            <td id="field.turno_dia"></td>
+                        </tr>
+
+                        <tr>
+                            <td class="night">Noche</td>
+                            <td id="field.turno_noche"></td>
+                        </tr>
+
+                        <tr>
+                            <td>Sin clasificar</td>
+                            <td id="field.turno_sin_clasificar"></td>
+                        </tr>
+                    </tbody>
+
+                    <tfoot>
+                        <tr>
+                            <td>Total</td>
+                            <td>
+                                <span class="total_llamadas"></span>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+        </div>
+
+        <h2 style="break-after: avoid; page-break-after: avoid;">
+            Detalle de llamadas del mes
+        </h2>
+
+        <table
+            id="field.cct_calls_monthly_detail"
+            class="call-details"
+        >
+            <colgroup>
+                <col style="width: 5%">
+                <col style="width: 10%">
+                <col style="width: 8%">
+                <col style="width: 11%">
+                <col style="width: 15%">
+                <col style="width: 29%">
+                <col style="width: 14%">
+                <col style="width: 8%">
+            </colgroup>
+
+            <thead>
+                <tr>
+                    <th id="field.cct_calls_monthly_detail.call_number">
+                        N.º
+                    </th>
+
+                    <th id="field.cct_calls_monthly_detail.call_date">
+                        Fecha
+                    </th>
+
+                    <th id="field.cct_calls_monthly_detail.call_time">
+                        Hora
+                    </th>
+
+                    <th id="field.cct_calls_monthly_detail.response_time">
+                        Tiempo de respuesta
+                    </th>
+
+                    <th id="field.cct_calls_monthly_detail.reason">
+                        Motivo
+                    </th>
+
+                    <th id="field.cct_calls_monthly_detail.call_description">
+                        Descripción
+                    </th>
+
+                    <th id="field.cct_calls_monthly_detail.operator">
+                        Operador de turno
+                    </th>
+
+                    <th id="field.cct_calls_monthly_detail.shift">
+                        Turno
+                    </th>
+                </tr>
+            </thead>
+        </table>
+
+    </div>
+</body>
+</html>

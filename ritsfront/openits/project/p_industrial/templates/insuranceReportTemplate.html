@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reporte a compañía de seguros</title>
+
+    <style>
+        @page {
+            size: A4 portrait;
+            margin: 18mm;
+        }
+
+        #template.insurance-report,
+        #template.insurance-report * {
+            box-sizing: border-box;
+        }
+
+        #template.insurance-report {
+            position: static;
+            width: 100%;
+            height: auto;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 12px;
+            line-height: 1.45;
+            color: #17233c;
+            background: #fff;
+            overflow-wrap: anywhere;
+        }
+
+        .insurance-report .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            break-inside: avoid;
+            page-break-inside: avoid;
+        }
+
+        .insurance-report .container img {
+            display: block;
+            width: 152px;
+            height: auto;
+        }
+
+        .insurance-report .report-date {
+            display: grid;
+            grid-template-columns: auto auto;
+            gap: 6px;
+            align-items: center;
+            text-align: right;
+        }
+
+        .insurance-report h1 {
+            margin: 17px 0 0;
+            font-size: 21px;
+            line-height: 1.25;
+            break-after: avoid;
+            page-break-after: avoid;
+        }
+
+        .insurance-report h2 {
+            margin: 0 0 8px;
+            padding: 6px;
+            font-size: 15px;
+            line-height: 1.3;
+            background: #f0f2f4;
+            break-after: avoid;
+            page-break-after: avoid;
+        }
+
+        .insurance-report .participant-section {
+            break-inside: avoid;
+            page-break-inside: avoid;
+        }
+
+        .insurance-report .separador {
+            height: 3px;
+            width: 100%;
+            margin: 17px 0;
+            background-color: #71be44;
+            break-after: avoid;
+            page-break-after: avoid;
+        }
+
+        .insurance-report .label,
+        .insurance-report .bold {
+            font-weight: bold;
+        }
+
+        .insurance-report .data {
+            margin: 0;
+        }
+
+        .insurance-report .label {
+            display: block;
+            padding: 5px 6px;
+            text-align: left;
+            background: #f0f2f4;
+        }
+
+        .insurance-report .value {
+            display: inline;
+        }
+
+        .insurance-report .value:empty::before,
+        .insurance-report .incident_number:empty::before {
+            content: "-";
+        }
+
+        .insurance-report #concesion {
+            max-width: 100%;
+            white-space: normal;
+        }
+
+        .insurance-report .information-fields {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 5px 12px;
+        }
+
+        .insurance-report .field-pair {
+            display: grid;
+            grid-template-columns: minmax(0, 48fr) minmax(0, 52fr);
+            align-items: stretch;
+            min-width: 0;
+            break-inside: avoid;
+            page-break-inside: avoid;
+        }
+
+        .insurance-report .field-pair .data {
+            display: block;
+            min-width: 0;
+            padding: 5px 6px;
+        }
+
+        .insurance-report .event-details,
+        .insurance-report .road-details {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+            text-align: center;
+            break-inside: avoid;
+            page-break-inside: avoid;
+        }
+
+        .insurance-report .event-details th,
+        .insurance-report .event-details td,
+        .insurance-report .road-details th,
+        .insurance-report .road-details td {
+            padding: 5px 4px;
+            vertical-align: top;
+            font-size: 11px;
+            overflow-wrap: anywhere;
+        }
+
+        .insurance-report .event-details thead,
+        .insurance-report .road-details thead {
+            display: table-header-group;
+        }
+
+        .insurance-report .event-details th,
+        .insurance-report .road-details th {
+            background: #f0f2f4;
+        }
+
+        .insurance-report .event-details tr,
+        .insurance-report .road-details tr {
+            break-inside: avoid;
+            page-break-inside: avoid;
+        }
+
+        .insurance-report .probable-cause {
+            margin-top: 13px;
+        }
+
+        .insurance-report .probable-cause .label {
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .insurance-report .free-text,
+        .insurance-report .incident-narrative,
+        .insurance-report .cause-text {
+            margin: 0;
+            padding: 0;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+            word-break: normal;
+            break-inside: auto;
+            page-break-inside: auto;
+        }
+
+        .insurance-report .free-text p,
+        .insurance-report .incident-narrative p,
+        .insurance-report .cause-text p,
+        .insurance-report .value p {
+            margin: 0;
+            padding: 0;
+            line-height: inherit;
+            white-space: pre-wrap !important;
+            overflow-wrap: anywhere;
+        }
+
+        .insurance-report .backoffice-tables {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            border-collapse: collapse;
+            table-layout: fixed;
+            font-size: 10.5px;
+            line-height: 1.35;
+        }
+
+        .insurance-report .backoffice-tables caption {
+            display: none;
+        }
+
+        .insurance-report .backoffice-tables thead {
+            display: table-header-group;
+            break-inside: avoid;
+            page-break-inside: avoid;
+            break-after: avoid;
+            page-break-after: avoid;
+        }
+
+        .insurance-report .backoffice-tables th,
+        .insurance-report .backoffice-tables td {
+            padding: 5px 3px;
+            border-bottom: 1px solid #d7dde4;
+            text-align: center;
+            vertical-align: top;
+            overflow-wrap: anywhere;
+            word-break: normal;
+        }
+
+        .insurance-report .backoffice-tables th {
+            font-weight: bold;
+            background: #f0f2f4;
+        }
+
+        .insurance-report .backoffice-tables td p {
+            margin: 0;
+            padding: 0;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+            word-break: normal;
+        }
+
+        .insurance-report .backoffice-tables td p:empty::before {
+            content: "-";
+        }
+
+        .insurance-report .backoffice-tables > tr {
+            break-inside: avoid;
+            page-break-inside: avoid;
+        }
+
+        .insurance-report .backoffice-tables th:first-child,
+        .insurance-report .backoffice-tables > tr > td:first-child {
+            display: none;
+        }
+
+        .insurance-report .backoffice-tables > tr:not(:has(> td:first-child > p:not(:empty))) {
+            display: none;
+        }
+
+        .insurance-report .backoffice-tables:not(:has(> tr > td:first-child > p:not(:empty)))::after {
+            display: table-caption;
+            caption-side: bottom;
+            padding: 3px 0 0;
+            text-align: left;
+            font-size: 12px;
+            color: #526175;
+        }
+
+        .insurance-report .vehicle-table:not(:has(> tr > td:first-child > p:not(:empty)))::after {
+            content: "No hay vehículos registrados para esta incidencia.";
+        }
+
+        .insurance-report .participant-table:not(:has(> tr > td:first-child > p:not(:empty)))::after {
+            display: block;
+            content: "No hay participantes registrados para esta incidencia.";
+        }
+
+        .insurance-report .vehicle-table th:nth-child(2) {
+            width: 9%;
+        }
+
+        .insurance-report .vehicle-table th:nth-child(3) {
+            width: 10%;
+        }
+
+        .insurance-report .vehicle-table th:nth-child(4) {
+            width: 12%;
+        }
+
+        .insurance-report .vehicle-table th:nth-child(5) {
+            width: 12%;
+        }
+
+        .insurance-report .vehicle-table th:nth-child(6) {
+            width: 9%;
+        }
+
+        .insurance-report .vehicle-table th:nth-child(7) {
+            width: 10%;
+        }
+
+        .insurance-report .vehicle-table th:nth-child(8) {
+            width: 9%;
+        }
+
+        .insurance-report .vehicle-table th:nth-child(9) {
+            width: 11%;
+        }
+
+        .insurance-report .vehicle-table th:nth-child(10) {
+            width: 9%;
+        }
+
+        .insurance-report .vehicle-table th:nth-child(11) {
+            width: 9%;
+        }
+
+        /* Personas: nueve campos arriba y Dirección debajo de cada registro. */
+        .insurance-report .participant-table {
+            display: table;
+            width: 100%;
+        }
+
+        .insurance-report .participant-table > thead {
+            display: table-header-group;
+        }
+
+        .insurance-report .participant-table > thead > tr,
+        .insurance-report .participant-table > tr {
+            display: grid;
+            width: 100%;
+            grid-template-columns:
+                minmax(0, 20fr)
+                minmax(0, 11fr)
+                minmax(0, 5fr)
+                minmax(0, 9fr)
+                minmax(0, 11fr)
+                minmax(0, 11fr)
+                minmax(0, 12fr)
+                minmax(0, 10fr)
+                minmax(0, 11fr);
+        }
+
+        .insurance-report .participant-table > tr {
+            margin-bottom: 12px;
+            border-bottom: 1px solid #d7dde4;
+        }
+
+        .insurance-report .participant-table > tr:last-of-type {
+            margin-bottom: 0;
+        }
+
+        .insurance-report .participant-table th,
+        .insurance-report .participant-table td {
+            width: auto;
+            min-width: 0;
+            grid-row: 1;
+            border-bottom: 0;
+        }
+
+        .insurance-report .participant-table tr > :nth-child(2) {
+            grid-column: 1;
+            text-align: left;
+        }
+
+        .insurance-report .participant-table tr > :nth-child(3) {
+            grid-column: 2;
+        }
+
+        .insurance-report .participant-table tr > :nth-child(4) {
+            grid-column: 3;
+        }
+
+        .insurance-report .participant-table tr > :nth-child(6) {
+            grid-column: 4;
+        }
+
+        .insurance-report .participant-table tr > :nth-child(7) {
+            grid-column: 5;
+        }
+
+        .insurance-report .participant-table tr > :nth-child(8) {
+            grid-column: 6;
+        }
+
+        .insurance-report .participant-table tr > :nth-child(9) {
+            grid-column: 7;
+        }
+
+        .insurance-report .participant-table tr > :nth-child(10) {
+            grid-column: 8;
+        }
+
+        .insurance-report .participant-table tr > :nth-child(11) {
+            grid-column: 9;
+        }
+
+        .insurance-report .participant-table th:nth-child(5) {
+            display: none;
+        }
+
+        .insurance-report .participant-table > tr > td:nth-child(5) {
+            grid-column: 1 / -1;
+            grid-row: 2;
+            padding: 7px 0 8px;
+            text-align: left;
+            font-size: 12px;
+            white-space: pre-wrap;
+            break-inside: auto;
+            page-break-inside: auto;
+        }
+
+        .insurance-report .participant-table > tr > td:nth-child(5)::before {
+            content: "Dirección";
+            display: block;
+            margin-bottom: 3px;
+            padding: 5px 6px;
+            background: #f0f2f4;
+            font-weight: bold;
+            break-after: avoid;
+            page-break-after: avoid;
+        }
+
+        .insurance-report .participant-table > tr:first-of-type {
+            break-before: avoid;
+            page-break-before: avoid;
+        }
+
+        .insurance-report .incident-narrative,
+        .insurance-report .free-text {
+            orphans: 3;
+            widows: 3;
+        }
+
+        @media print {
+            body:has(#template.insurance-report) {
+                margin: 0 !important;
+            }
+
+            .webix_ui_print:has(#template.insurance-report),
+            .webix_ui_print:has(#template.insurance-report) > .webix_template {
+                position: static !important;
+                box-sizing: border-box !important;
+                width: 100% !important;
+                min-width: 0 !important;
+                max-width: 100% !important;
+                height: auto !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                overflow: visible !important;
+            }
+
+            #template.insurance-report {
+                print-color-adjust: exact;
+                -webkit-print-color-adjust: exact;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<div id="template" class="portrait insurance-report">
+
+    <div class="container">
+        <div class="column">
+            <img src="./img/logo-project.svg"
+                 alt="Puente Industrial - ALEATICA">
+        </div>
+
+        <div class="report-date">
+            <span class="label">Fecha de emisión:</span>
+            <span id="field.report_date"></span>
+        </div>
+    </div>
+
+    <h1>Reporte a compañía de seguros</h1>
+
+    <div class="separador"></div>
+
+    <section>
+        <h2>Identificación</h2>
+
+        <div class="information-fields">
+            <div class="field-pair">
+                <span class="label">Concesión</span>
+                <span class="data" id="concesion">PUENTE INDUSTRIAL</span>
+            </div>
+
+            <div class="field-pair">
+                <span class="label">Identificador</span>
+                <span class="data value incident_number"></span>
+            </div>
+
+            <div class="field-pair">
+                <span class="label">Fecha</span>
+                <span class="data value" id="field.incident_datetime"></span>
+            </div>
+
+            <div class="field-pair">
+                <span class="label">km</span>
+                <span class="data value" id="field.km"></span>
+            </div>
+
+            <div class="field-pair">
+                <span class="label">Evento</span>
+                <span class="data value" id="field.event"></span>
+            </div>
+
+            <div class="field-pair">
+                <span class="label">Tramo</span>
+                <span class="data value" id="field.stretch"></span>
+            </div>
+
+            <div class="field-pair">
+                <span class="label">Sentido</span>
+                <span class="data value" id="field.traffic_direction"></span>
+            </div>
+
+            <div class="field-pair">
+                <span class="label">Operador de turno</span>
+                <span class="data value" id="field.incident_operator"></span>
+            </div>
+
+            <div class="field-pair">
+                <span class="label">Lado carretera</span>
+                <span class="data value" id="field.road_side"></span>
+            </div>
+
+            <div class="field-pair">
+                <span class="label">Aviso a Carabineros</span>
+                <span class="data value" id="field.police_notice"></span>
+            </div>
+
+            <div class="field-pair">
+                <span class="label">Método de detección</span>
+                <span class="data value" id="field.detection_method"></span>
+            </div>
+
+            <div class="field-pair">
+                <span class="label">Hora de detección</span>
+                <span class="data value" id="field.detection_datetime"></span>
+            </div>
+        </div>
+    </section>
+
+    <div class="separador"></div>
+
+    <section>
+        <table class="event-details">
+            <thead>
+                <tr>
+                    <th>Tipo de evento</th>
+                    <th>Colisión</th>
+                    <th>Choque con objeto</th>
+                    <th>Choque con vehículo</th>
+                    <th>Ubicación relativa</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>
+                        <span class="value" id="field.event_type"></span>
+                    </td>
+                    <td>
+                        <span class="value" id="field.collision"></span>
+                    </td>
+                    <td>
+                        <span class="value" id="field.object_crash"></span>
+                    </td>
+                    <td>
+                        <span class="value" id="field.vehicle_crash"></span>
+                    </td>
+                    <td>
+                        <span class="value" id="field.relative_location"></span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <div class="separador"></div>
+
+    <section>
+        <h2>Redacción de lo sucedido</h2>
+        <div class="incident-narrative"
+             id="field.incident_description"></div>
+    </section>
+
+    <div class="separador"></div>
+
+    <section>
+        <h2>Vehículos participantes</h2>
+
+        <table class="backoffice-tables vehicle-table"
+               id="field.insurance_report_vehicles"
+               aria-label="Vehículos participantes">
+            <thead>
+                <tr>
+                    <th id="field.insurance_report_vehicles.vehicle_id">
+                        Identificador técnico del vehículo
+                    </th>
+                    <th id="field.insurance_report_vehicles.vehicle_type">
+                        Tipo
+                    </th>
+                    <th id="field.insurance_report_vehicles.vehicle_service">
+                        Servicio
+                    </th>
+                    <th id="field.insurance_report_vehicles.consequence">
+                        Consecuencia
+                    </th>
+                    <th id="field.insurance_report_vehicles.manoeuvre">
+                        Maniobra
+                    </th>
+                    <th id="field.insurance_report_vehicles.patent">
+                        Patente
+                    </th>
+                    <th id="field.insurance_report_vehicles.roadway">
+                        Vía
+                    </th>
+                    <th id="field.insurance_report_vehicles.brand">
+                        Marca
+                    </th>
+                    <th id="field.insurance_report_vehicles.direction">
+                        Sentido
+                    </th>
+                    <th id="field.insurance_report_vehicles.lane">
+                        Pista
+                    </th>
+                    <th id="field.insurance_report_vehicles.hit_and_run">
+                        Vehículo fuga
+                    </th>
+                </tr>
+            </thead>
+        </table>
+    </section>
+
+    <div class="separador"></div>
+
+    <section>
+        <table class="road-details">
+            <thead>
+                <tr>
+                    <th>Tipo de carpeta</th>
+                    <th>Estado de carpeta</th>
+                    <th>Condiciones calzada</th>
+                    <th>Estado atmosférico</th>
+                    <th>Luminosidad</th>
+                    <th>Luz artificial</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>
+                        <span class="value" id="field.road_type"></span>
+                    </td>
+                    <td>
+                        <span class="value" id="field.road_state"></span>
+                    </td>
+                    <td>
+                        <span class="value" id="field.road_condition"></span>
+                    </td>
+                    <td>
+                        <span class="value" id="field.weather_state"></span>
+                    </td>
+                    <td>
+                        <span class="value" id="field.luminosity"></span>
+                    </td>
+                    <td>
+                        <span class="value" id="field.artificial_light"></span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="probable-cause">
+            <span class="label">Causa probable</span>
+            <div class="cause-text" id="field.probable_cause"></div>
+        </div>
+    </section>
+
+    <div class="separador"></div>
+
+    <section class="participant-section">
+        <h2>Listado de personas involucradas</h2>
+
+        <table class="backoffice-tables participant-table"
+               id="field.insurance_report_participants"
+               aria-label="Personas involucradas">
+            <thead>
+                <tr>
+                    <th id="field.insurance_report_participants.participant_id">
+                        Identificador técnico del participante
+                    </th>
+                    <th id="field.insurance_report_participants.participant_name">
+                        Nombre
+                    </th>
+                    <th id="field.insurance_report_participants.participant_rut">
+                        RUT
+                    </th>
+                    <th id="field.insurance_report_participants.participant_age">
+                        Edad
+                    </th>
+                    <th id="field.insurance_report_participants.participant_address">
+                        Dirección
+                    </th>
+                    <th id="field.insurance_report_participants.patent">
+                        Patente
+                    </th>
+                    <th id="field.insurance_report_participants.participant_type">
+                        Tipo
+                    </th>
+                    <th id="field.insurance_report_participants.injury">
+                        Lesión
+                    </th>
+                    <th id="field.insurance_report_participants.nationality">
+                        Nacionalidad
+                    </th>
+                    <th id="field.insurance_report_participants.hit_and_run">
+                        Conductor a la fuga
+                    </th>
+                    <th id="field.insurance_report_participants.attention">
+                        Atención
+                    </th>
+                </tr>
+            </thead>
+        </table>
+    </section>
+
+    <div class="separador"></div>
+
+    <section>
+        <h2>Redacción para la aseguradora</h2>
+        <div class="free-text" id="field.report_text"></div>
+    </section>
+
+    <div class="separador"></div>
+
+    <section>
+        <h2>Texto complementario</h2>
+        <div class="free-text" id="field.additional_text"></div>
+    </section>
+
+</div>
+</body>
+</html>
