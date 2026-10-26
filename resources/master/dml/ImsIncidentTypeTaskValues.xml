@@ -31,9 +31,13 @@
 	<UPDATE>UPDATE conf.ims_incident_type_task_values
 			   SET value = :value,
 			       updated_at = CURRENT_TIMESTAMP
-			 WHERE incident_type_task_id = :id
+			 WHERE task_type_id = :taskTypeId
+			   AND task_type_param_id = :taskTypeParamId
+			   AND incident_type_task_id = :incidentTypeTaskId
 	</UPDATE>
 	<DELETE>DELETE FROM conf.ims_incident_type_task_values
-			 WHERE incident_type_task_id = :incidentTypeTaskId
+			 WHERE task_type_id = :taskTypeId
+			   AND task_type_param_id = :taskTypeParamId
+			   AND incident_type_task_id = :incidentTypeTaskId
 	</DELETE>
 </DML>
