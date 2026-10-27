@@ -158,7 +158,7 @@ fill_db_back() {
 
   if [ $? -eq 0 ]; then  
      #Empezamos con los scripts de ddl
-     cd ~/repositorio/rits/ritsback/resources/db/ddl
+     cd ~/repo_github/configscada/ritsback/resources/db/ddl
   
      yourfilenames=`find . -name '*.sql' -print0 | sort -z | xargs -r0`
      files_count=`echo $yourfilenames | wc -w`
@@ -179,7 +179,7 @@ fill_db_back() {
      last_progress=0
 
      #Continuamos con los scripts de master 
-     cd ~/repositorio/rits/ritsback/resources/db/dml/master
+     cd ~/repo_github/configscada/ritsback/resources/db/dml/master
   
      yourfilenames=`find . -name '*.sql' -print0 | sort -z | xargs -r0`
      files_count=`echo $yourfilenames | wc -w`
@@ -200,7 +200,7 @@ fill_db_back() {
      last_progress=0
 
      #Continuamos con los scripts de proyecto 
-     cd ~/repositorio/rits/ritsback/resources/db/dml/$PROJECTBBDD
+     cd ~/repo_github/configscada/ritsback/resources/db/dml/$PROJECTBBDD
   
      yourfilenames=`find . -name '*.sql' -print0 | sort -z | xargs -r0`
      files_count=`echo $yourfilenames | wc -w`
@@ -224,7 +224,7 @@ fill_db_front() {
 
   if [ $? -eq 0 ]; then  
      #Empezamos con los scripts de ddl
-     cd ~/repositorio/rits/ritsfront/resources/db/ddl
+     cd ~/repo_github/configscada/ritsfront/resources/db/ddl
   
      yourfilenames=`find . -name '*.sql' -print0 | sort -z | xargs -r0`
      files_count=`echo $yourfilenames | wc -w`
@@ -245,7 +245,7 @@ fill_db_front() {
      last_progress=0
 
      #Continuamos con los scripts de master 
-     cd ~/repositorio/rits/ritsfront/resources/db/dml/master
+     cd ~/repo_github/configscada/ritsfront/resources/db/dml/master
   
      yourfilenames=`find . -name '*.sql' -print0 | sort -z | xargs -r0`
      files_count=`echo $yourfilenames | wc -w`
@@ -266,7 +266,7 @@ fill_db_front() {
      last_progress=0
 
      #Continuamos con los scripts de proyecto 
-     cd ~/repositorio/rits/ritsfront/resources/db/dml/$PROJECTBBDD
+     cd ~/repo_github/configscada/ritsfront/resources/db/dml/$PROJECTBBDD
 
      yourfilenames=`find . -name '*.sql' -print0 | sort -z | xargs -r0`
      files_count=`echo $yourfilenames | wc -w`
@@ -292,7 +292,7 @@ fill_db_front() {
 back() {
 #Compilo el back
 echo -e "\n\nCompiling backrits..."
-cd ~/repositorio/ritsback/_ritsback
+cd ~/repo_github/backscada
 mvn install
 
 sleep 4
@@ -305,32 +305,32 @@ echo -e "\n\nDeleting trace files..."
 sudo rm -Rf ~/app/backrits/logs/*
 
 echo -e "\n\nCopying new binaries..."
-cp ~/repositorio/ritsback/data-loader/target/data-loader.jar ~/app/backrits/data-loader.jar
-cp ~/repositorio/ritsback/equipment-manager/target/equipment-manager.jar ~/app/backrits/equipment-manager.jar
-cp ~/repositorio/ritsback/ep-pub-stomp/target/ep-pub-stomp.jar ~/app/backrits/ep-pub-stomp.jar
-cp ~/repositorio/ritsback/historical-manager/target/historical-manager.jar ~/app/backrits/historical-manager.jar
-cp ~/repositorio/ritsback/io-controller/target/io-controller.jar ~/app/backrits/io-controller.jar
-cp ~/repositorio/ritsback/plan-manager/target/plan-manager.jar ~/app/backrits/plan-manager.jar
-cp ~/repositorio/ritsback/service-graphql/target/service-graphql.jar ~/app/backrits/service-graphql.jar
-cp ~/repositorio/ritsback/incident-manager/target/incident-manager.jar ~/app/backrits/incident-manager.jar
-cp ~/repositorio/ritsback/traffic-manager/target/traffic-manager.jar ~/app/backrits/traffic-manager.jar
-cp ~/repositorio/ritsback/virtual-equipment-manager/target/virtual-equipment-manager.jar ~/app/backrits/virtual-equipment-manager.jar
-cp ~/repositorio/ritsback/io-external-manager/target/io-external-manager.jar ~/app/backrits/io-external-manager.jar
-cp ~/repositorio/ritsback/server-launcher/target/server-launcher.jar ~/app/backrits/server-launcher.jar
+cp ~/repo_github/backscada/data-loader/target/data-loader.jar ~/app/backrits/data-loader.jar
+cp ~/repo_github/backscada/equipment-manager/target/equipment-manager.jar ~/app/backrits/equipment-manager.jar
+cp ~/repo_github/backscada/ep-pub-stomp/target/ep-pub-stomp.jar ~/app/backrits/ep-pub-stomp.jar
+cp ~/repo_github/backscada/historical-manager/target/historical-manager.jar ~/app/backrits/historical-manager.jar
+cp ~/repo_github/backscada/io-controller/target/io-controller.jar ~/app/backrits/io-controller.jar
+cp ~/repo_github/backscada/plan-manager/target/plan-manager.jar ~/app/backrits/plan-manager.jar
+cp ~/repo_github/backscada/service-graphql/target/service-graphql.jar ~/app/backrits/service-graphql.jar
+cp ~/repo_github/backscada/incident-manager/target/incident-manager.jar ~/app/backrits/incident-manager.jar
+cp ~/repo_github/backscada/traffic-manager/target/traffic-manager.jar ~/app/backrits/traffic-manager.jar
+cp ~/repo_github/backscada/virtual-equipment-manager/target/virtual-equipment-manager.jar ~/app/backrits/virtual-equipment-manager.jar
+cp ~/repo_github/backscada/io-external-manager/target/io-external-manager.jar ~/app/backrits/io-external-manager.jar
+cp ~/repo_github/backscada/server-launcher/target/server-launcher.jar ~/app/backrits/server-launcher.jar
         
 echo -e "\n\nDeleting old resource files..."
 sudo rm -Rf ~/app/backrits/resources/*
 
 echo -e "\n\nChanging back parameters..."
-sed -i "s|\(<p:broker>ws://\).*|\1$REMOTE_HOST:61614</p:broker>|" ~/repositorio/rits/resources/project/$PROJECT/adapters/pub-stomp/pub_stomp_adapter_v1.xml
-sed -i "s|\(<p:path>/home/\).*|\1$USER/app/backrits/</p:path>|" ~/repositorio/rits/resources/project/$PROJECT/adapters/server-launcher/server_launcher_adapter_v1.xml
-sed -i "s|\(jdbc.url=jdbc:postgresql://\).*|\1$REMOTE_BBDD:5430/rits|" ~/repositorio/rits/resources/project/$PROJECT/jdbc.properties
-sed -i "s|\(redis.host=\).*|\1$REMOTE_HOST|" ~/repositorio/rits/resources/project/$PROJECT/redis.properties
+sed -i "s|\(<p:broker>ws://\).*|\1$REMOTE_HOST:61614</p:broker>|" ~/repo_github/configscada/resources/project/$PROJECT/adapters/pub-stomp/pub_stomp_adapter_v1.xml
+sed -i "s|\(<p:path>/home/\).*|\1$USER/app/backrits/</p:path>|" ~/repo_github/configscada/resources/project/$PROJECT/adapters/server-launcher/server_launcher_adapter_v1.xml
+sed -i "s|\(jdbc.url=jdbc:postgresql://\).*|\1$REMOTE_BBDD:5430/rits|" ~/repo_github/configscada/resources/project/$PROJECT/jdbc.properties
+sed -i "s|\(redis.host=\).*|\1$REMOTE_HOST|" ~/repo_github/configscada/resources/project/$PROJECT/redis.properties
 
 echo -e "\n\nCopying new resources..."
-cp -R ~/repositorio/rits/resources/master/* ~/app/backrits/resources
-cp -R ~/repositorio/rits/resources/project/$PROJECT/* ~/app/backrits/resources
-cp -R ~/repositorio/rits/resources/project/$PROJECT/start.sh ~/app/backrits/start.sh
+cp -R ~/repo_github/configscada/resources/master/* ~/app/backrits/resources
+cp -R ~/repo_github/configscada/resources/project/$PROJECT/* ~/app/backrits/resources
+cp -R ~/repo_github/configscada/resources/project/$PROJECT/start.sh ~/app/backrits/start.sh
 
 #Comprimo el fichero para mandarlo por sftp
 echo -e "\n\nCompressing backrits..."
@@ -359,26 +359,26 @@ EOF
 front() {
 #Copio recursos del front
 echo -e "\n\nCopying front resources..."
-sed -i "s|\(spring.profiles.active=\).*|\1$PROJECT|" ~/repositorio/ritsfront/openits/src/main/resources/application.properties
-sed -i "s|\(spring.datasource.url=jdbc:postgresql://\).*|\1$REMOTE_BBDD:5430/rits|" ~/repositorio/ritsfront/openits/src/main/resources/application.properties
-sed -i "s|\(ws://\).*\(:61614\)|\1$REMOTE_HOST\2|" ~/repositorio/ritsfront/openits/src/main/resources/project/$PROJECT/data/config.js
-rm -R ~/repositorio/ritsfront/openits/src/main/resources/project
-cp ~/repositorio/rits/ritsfront/openits/*.properties ~/repositorio/ritsfront/openits/src/main/resources/
-cp -r ~/repositorio/rits/ritsfront/openits/static ~/repositorio/ritsfront/openits/src/main/resources/
-cp -r ~/repositorio/rits/ritsfront/openits/project ~/repositorio/ritsfront/openits/src/main/resources/
-cp -r ~/repositorio/rits/ritsfront/openits/config ~/repositorio/ritsfront/openits/src/main/resources/
+sed -i "s|\(spring.profiles.active=\).*|\1$PROJECT|" ~/repo_github/frontscada/openits/src/main/resources/application.properties
+sed -i "s|\(spring.datasource.url=jdbc:postgresql://\).*|\1$REMOTE_BBDD:5430/rits|" ~/repo_github/frontscada/openits/src/main/resources/application.properties
+sed -i "s|\(ws://\).*\(:61614\)|\1$REMOTE_HOST\2|" ~/repo_github/frontscada/openits/src/main/resources/project/$PROJECT/data/config.js
+rm -R ~/repo_github/frontscada/openits/src/main/resources/project
+cp ~/repo_github/configscada/ritsfront/openits/*.properties ~/repo_github/frontscada/openits/src/main/resources/
+cp -r ~/repo_github/configscada/ritsfront/openits/static ~/repo_github/frontscada/openits/src/main/resources/
+cp -r ~/repo_github/configscada/ritsfront/openits/project ~/repo_github/frontscada/openits/src/main/resources/
+cp -r ~/repo_github/configscada/ritsfront/openits/config ~/repo_github/frontscada/openits/src/main/resources/
 
 #Compilo el front
 echo -e "\n\nCompiling front..."
 cd
-cd repositorio/ritsfront/_ritsfront
+cd ~/repo_github/frontscada/_ritsfront
 mvn install
 
 sleep 10 
 
 #Subo el archivo a la maquina remota
 echo -e "\n\nUploading openits.jar to remote machine..."
-cd ~/repositorio/ritsfront/openits/target
+cd ~/repo_github/frontscada/openits/target
 sftp $USER@$REMOTE_HOST<<EOF
    put openits.jar
    quit
