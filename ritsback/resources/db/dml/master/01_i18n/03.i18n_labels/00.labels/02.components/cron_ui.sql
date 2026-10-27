@@ -47,7 +47,7 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('sk_SK', 1, 'LBL_DAY(S)_STARTING_ON_THE', 'dni začínajúce v', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('sk_SK', 1, 'LBL_OF_THE_MONTH', 'mesiaca', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('sk_SK', 1, 'LBL_CRONUI_NEW_EXPRESSION_DIFERENT_CURRENT', 'Nový výraz cron je odlišný od súčasného: ', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('sk_SK', 1, 'LBL_CRONUI_SAVE_DESCRIPTION', '¿Desea guardar los cambios realizados?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_CRONUI_SAVE_DESCRIPTION', 'Chcete uložiť zmeny realizados?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('sk_SK', 1, 'LBL_CRONUI_CURRENT', 'Aktuálny výraz: ', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('sk_SK', 1, 'LBL_CRONUI_NEW', 'Nový výraz:', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	

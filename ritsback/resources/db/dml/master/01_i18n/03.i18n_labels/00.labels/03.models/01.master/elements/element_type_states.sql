@@ -120,3 +120,7 @@ INSERT INTO master.i18n_labels (locale_code, module_id, "label", "translation", 
     ('es_CL',1,'LBL_ELEMENT_TYPE_STATE_EXTRACTION_DESC', 'Fuego en fase de extracción', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
     ('es_CL',1,'LBL_ELEMENT_TYPE_STATE_MAINTENANCE', 'Modo mantenimiento', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
     ('es_CL',1,'LBL_ELEMENT_TYPE_STATE_MAINTENANCE_DESC', 'Modo mantenimiento', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) VALUES
+('sk_SK', 1, 'LBL_ELEMENT_TYPE_STATE_SANCTION_MODE', 'Režim sanción', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_ELEMENT_TYPE_STATE_SANCTION_MODE_DESC', 'Režim sanción', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

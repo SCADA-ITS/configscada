@@ -18,8 +18,11 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('en_GB', 1, 'LBL_VALUE_OUTSIDE_THRESHOLS', 'Value outside thresholds', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
  	
 --sk_SK
-('sk_SK', 1, 'LBL_INVALID_VALUE', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_INVALID_VALUE', 'Hodnota invalido', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --es_CL
 ('es_CL', 1, 'LBL_INVALID_VALUE', 'Valor invalido', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_VALUE_OUTSIDE_THRESHOLS', 'Valor fuera de rango', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) VALUES
+('sk_SK', 1, 'LBL_VALUE_OUTSIDE_THRESHOLS', 'Hodnota mimo rozsahu', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

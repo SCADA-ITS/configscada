@@ -56,3 +56,6 @@ INSERT INTO master.i18n_labels (locale_code, module_id, "label", "translation", 
 ('es_CL',1,'LBL_MENU_SUBSYTEM','Subsistemas',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 ('es_CL',1,'LBL_MENU_MANAGER','Gestión',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 ('es_CL',1,'LBL_MENU_TOOLS','Herramientas',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
+
+INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) VALUES
+('sk_SK', 1, 'LBL_VIRTUAL', 'Všeobecné', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

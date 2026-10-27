@@ -27,3 +27,9 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_CL', 1, 'LBL_COMPONENTS_INFO', 'Componentes', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_DATABASE', 'Base de datos', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_VERSION', 'Versión', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) VALUES
+('sk_SK', 1, 'LBL_ALL_RIGHTS_RESERVED', 'Všetky práva vyhradené', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_COMPONENTS_INFO', 'Komponenty', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_DATABASE', 'Databáza', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_VERSION', 'Verzia', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

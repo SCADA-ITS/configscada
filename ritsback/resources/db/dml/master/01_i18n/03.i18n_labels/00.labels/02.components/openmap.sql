@@ -67,3 +67,21 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_CL', 1, 'LBL_DBL_CLICK_TO_SHOW_MORE_PROPERTY_VALUES', 'Doble clic para mostrar todas las propiedades', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_NO_ALTERNATIVE_ROUTE_AVAILABLE', 'No exiten rutas alternativas', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_SEARCH_PK', 'Buscar punto kilométrico', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) VALUES
+('sk_SK', 1, 'LBL_ALTERNATIVE_ROUTE', 'Alternatívna trasa', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_ALTERNATIVE_ROUTE_TO', 'Alternatívna trasa a', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_CLICK_OVER_AFFECTED_CLOSED_ROUTE_TO_SHOW_ALTERNATIVE_ROUTE', 'Kliknite na uzavretú trasu, aby sa zobrazila alternatívna trasa', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_CLICK_OVER_CLOSED_ROUTE_TO_HIDE_THIS_ROUTE', 'Kliknite na uzavretú trasu, aby ste skryli túto alternatívnu trasu', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_CLICK_TO_HIDE_ALTERNATIVE_ROUTE', 'Kliknutím skryjete alternatívnu trasu', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_CLICK_TO_SHOW_AND_HIDE_ALTERNATIVE_ROUTE', 'Kliknutím zobrazíte alebo skryjete alternatívnu trasu', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_DBL_CLICK_TO_CHANGE_ALTERNATIVE_ROUTE', 'Dvojklikom zmeníte alternatívnu trasu', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_DBL_CLICK_TO_SHOW_MORE_PROPERTY_VALUES', 'Dvojklikom zobrazíte všetky vlastnosti', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_EXT_ENTITIES', 'Entidades externas', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_NO_ALTERNATIVE_ROUTE_AVAILABLE', 'Neexistujú alternatívne trasy', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_OPTIMAL', 'Recomendada', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_ROUTE_ALTERNATIVE', 'Alternatívna trasa', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_ROUTE_CLOSURE', 'Trasa cortada', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_ROUTE_HAS_CLOSURES', 'Trasa tiene cortes', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_ROUTE_OPEN', 'Trasa despejada', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_SELECT_ALTERNATIVE_ROUTE', 'Vyberte alternatívnu trasu a zobrazte ju...', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

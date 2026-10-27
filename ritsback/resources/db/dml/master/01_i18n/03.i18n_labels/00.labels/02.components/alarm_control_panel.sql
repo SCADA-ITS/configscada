@@ -33,3 +33,8 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_CL',1,'LBL_ALARM_DEACTIVATION','Desactivación',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 ('es_CL',1,'LBL_ALARMS_RECOGNIZE_ALL','Reconocer todas',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 ('es_CL',1,'LBL_ALARMS_RECOGNIZE_ALL_DESCRIPTION','Reconocer todas',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
+
+INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) VALUES
+('sk_SK', 1, 'LBL_ALARM_ACTIVATION', 'Spustenie', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_ALARM_DEACTIVATION', 'Deaktivácia', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_ELEMENT_TYPE_ALIAS', 'Alias', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

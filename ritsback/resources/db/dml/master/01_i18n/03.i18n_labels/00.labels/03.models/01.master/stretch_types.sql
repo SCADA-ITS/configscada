@@ -23,3 +23,7 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 --es_CL
     ('es_CL',1,'LBL_STRETCH_TYPE_ELEMENT','Tramo de elemento',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
     ('es_CL',1,'LBL_STRETCH_TYPE_INCIDENT_REPORT','Tramo de incidencia',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
+
+INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) VALUES
+('sk_SK', 1, 'LBL_STRETCH_TYPE_ELEMENT', 'Usek prvku', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_STRETCH_TYPE_INCIDENT_REPORT', 'Úsek incidentu', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

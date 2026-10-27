@@ -61,3 +61,18 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_CL', 1, 'LBL_SMART_ROAD_INFO_NEED_TWO_POINTS', 'Para crear una ruta son necesarios, al menos, dos puntos kilométricos.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_SMART_ROAD_INFO_SEARCH', 'Búsqueda de puntos kilométricos.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_SMART_ROAD_INFO_SEARCH_DESCRIPTION', 'Seleccione carretera y punto kilométrico a buscar.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) VALUES
+('sk_SK', 1, 'LBL_SMART_ROAD_INFO_KILOMETER', 'Kilometer', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_SMART_ROAD_INFO_METER', 'Metro', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_SMART_ROAD_INFO_NEED_TWO_POINTS', 'Na vytvorenie trasy sú potrebné aspoň dva kilometrové body.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_SMART_ROAD_INFO_NEW_LINESTRING_DESCRIPTION', 'Vyberte a zoradte kilometrové body, ktoré tvoria trasu.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_SMART_ROAD_INFO_NEW_PK_DESCRIPTION', 'Vyberte cestu a kilometrový bod.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_SMART_ROAD_INFO_PK', 'Kilometrový bod', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_SMART_ROAD_INFO_PKS', 'Kilometrové body', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_SMART_ROAD_INFO_RANGE_PK', 'Rango kilómetros', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_SMART_ROAD_INFO_ROAD', 'Cesta', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_SMART_ROAD_INFO_ROADS', 'Cesty', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_SMART_ROAD_INFO_SELECTOR_LINESTRING', 'Creación trasa', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_SMART_ROAD_INFO_SELECTOR_PK', 'Výber kilometrového bodu', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_SMART_ROAD_INFO_SELECTOR_ROAD', 'Výber cesty', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

@@ -45,3 +45,12 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_CL', 1, 'LBL_SIZE', 'Tamaño en disco', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_UPLOAD', 'Subir', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
+INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) VALUES
+('sk_SK', 1, 'LBL_DOWNLOAD', 'Stiahnuť', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_DROP_FILES_HERE', 'Pretiahnite súbory sem', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_FILE_CONFIRM_DELETE', 'Potvrdenie odstránenia súboru', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_FILE_CONFIRM_DELETE_DESCRIPTTION', 'Naozaj chcete odstrániť súbor?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_LAST_MODIFIED', 'Dátum poslednej úpravy', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_REFRESH', 'Obnoviť', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_SIZE', 'Veľkosť na disku', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_UPLOAD', 'Nahrať', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

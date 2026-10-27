@@ -176,10 +176,10 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('sk_SK', 1, 'LBL_PLAYER','Výber oznamu',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 ('sk_SK', 1, 'LBL_PLAYER_DESCRIPTION','Vyberte oznam na odoslanie',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 ('sk_SK', 1, 'LBL_SELECTED_ZONES_DESCRIPTION', 'selected?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('sk_SK', 1, 'LBL_SENT_GROUP', 'GROUPS: Play mensajes', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_SENT_GROUP', 'Grupos: reproducir správy', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('sk_SK', 1, 'LBL_SENT_ZONE', 'ZONES: Play messages', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('sk_SK', 1, 'LBL_STOP_GROUP', 'GROUPS: Stop mensajes', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('sk_SK', 1, 'LBL_STOP_ZONE', 'ZONES: Stop mensajes', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_STOP_GROUP', 'Grupos: parar správy', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_STOP_ZONE', 'Zonas: parar správy', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --es_CL
 ('es_CL', 1, 'LBL_MULTISELECTION_NOT_ALLOWED_IN_PAS_MODULE', 'Multiselección no permitida', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -242,3 +242,20 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_CL', 1, 'LBL_SOUND_PLAYER', 'Reproduciendo', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_STOP_GROUP', 'GRUPOS: Parar mensajes', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_STOP_ZONE', 'ZONAS: Parar mensajes', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) VALUES
+('sk_SK', 1, 'LBL_NOT_ALL_SELECTED_GROUPS_ARE_PLAYING_DESCRIPTION', 'No se están reproduciendo správy en všetky grupos vybrané', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_NOT_ALL_SELECTED_ZONES_ARE_PLAYING', 'Neprehráva sa žiadna správa', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_NOT_ALL_SELECTED_ZONES_ARE_PLAYING_DESCRIPTION', 'Zonas megafonía vybrané no están reproduciendo ningún správa', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_NOT_FOUND_PAS_LIBRARY', 'No se ha encontrado librería správy audio', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_NOT_FOUND_PAS_LIBRARY_TEXT', 'Sistema no dispone librería správy audio', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_PAS', 'Rozhlas', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_PAS_GROUP', 'Skupina', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_PAS_LIBRARY', 'Libreria', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_PAS_LIBRARY_PLAYER_HEADER', 'Reproductor správy', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_SELECTED_GROUPS', 'Vybrané skupiny', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_SELECTED_GROUP_IS_NOT_PLAYING_DESCRIPTION', 'No se está reproduciendo ningún správa en grupo vybraný', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_SELECTED_ZONES', 'Vybrané zóny', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_SELECTED_ZONE_IS_NOT_PLAYING', 'Neprehráva sa žiadna správa', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_SELECTED_ZONE_IS_NOT_PLAYING_DESCRIPTION', 'Zona megafonía vybraná no está reproduciendo ningún správa', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_SOUND_PLAYER', 'Reproduciendo', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

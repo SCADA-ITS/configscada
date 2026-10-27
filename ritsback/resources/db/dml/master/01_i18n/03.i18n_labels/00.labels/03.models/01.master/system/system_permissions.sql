@@ -125,8 +125,8 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 	('en_GB', 1, 'LBL_SYSTEM_PERMISSION_EDIT_USER', 'Edit users', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	('en_GB', 1, 'LBL_SYSTEM_PERMISSION_EDIT_USER_DESC', 'Allows edit users', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	--SystemPermission:3
-	('en_GB', 1, 'LBL_SYSTEM_PERMISSION_EDIT_ROL', 'Edit rol', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-	('en_GB', 1, 'LBL_SYSTEM_PERMISSION_EDIT_ROL_DESC', 'Allows edit roles', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('en_GB', 1, 'LBL_SYSTEM_PERMISSION_EDIT_ROL', 'Edit role', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('en_GB', 1, 'LBL_SYSTEM_PERMISSION_EDIT_ROL_DESC', 'Allows editing application roles', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	--SystemPermission:4
 	('en_GB', 1, 'LBL_SYSTEM_PERMISSION_PLAN_ADMIN', 'Plans management', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	('en_GB', 1, 'LBL_SYSTEM_PERMISSION_PLAN_ADMIN_DESC', 'Allows create plans and edit of existing ones', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -147,7 +147,7 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 	('en_GB', 1, 'LBL_SYSTEM_PERMISSION_CREATE_INCIDENT_DESC', 'Allows creating an incident manually in the incident manager', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	--SystemPermission:10
 	('en_GB', 1, 'LBL_SYSTEM_PERMISSION_CONFIRM_INCIDENT', 'Confirm incident', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-	('en_GB', 1, 'LBL_SYSTEM_PERMISSION_CONFIRM_INCIDENT_DESC', 'Permite confirar una incidencia genera automáticamente para su posterior gestión', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('en_GB', 1, 'LBL_SYSTEM_PERMISSION_CONFIRM_INCIDENT_DESC', 'Allows confirming an automatically generated incident for later handling', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	--SystemPermission:11
 	('en_GB', 1, 'LBL_SYSTEM_PERMISSION_CANCEL_INCIDENT', 'Cancel incident', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	('en_GB', 1, 'LBL_SYSTEM_PERMISSION_CANCEL_INCIDENT_DESC', 'Allows configuring an incident to be generated automatically for later management', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -179,7 +179,7 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 	('en_GB', 1, 'LBL_SYSTEM_PERMISSION_EDIT_INCIDENTS', 'Incident configuration', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	('en_GB', 1, 'LBL_SYSTEM_PERMISSION_EDIT_INCIDENTS_DESC', 'Allows editing the configuration of an incident type', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	--SystemPermission:21
-	('en_GB', 1, 'LBL_SYSTEM_PERMISSION_EDIT_PLAN_ORDER_AUTOMATISM', 'Editar orden de tipo automatismo', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('en_GB', 1, 'LBL_SYSTEM_PERMISSION_EDIT_PLAN_ORDER_AUTOMATISM', 'Edit automation order type', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	('en_GB', 1, 'LBL_SYSTEM_PERMISSION_EDIT_PLAN_ORDER_AUTOMATISM_DESC', 'Edit order of automation type', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),	
 	--SystemPermission:22
 	('en_GB', 1, 'LBL_SYSTEM_PERMISSION_EDIT_ALARM_CONFIG', 'Add, delete, and edit alarm configuration', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -191,8 +191,8 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 	('en_GB', 1, 'LBL_SYSTEM_PERMISSION_RESTART_SYSTEM_PROCESSES', 'Restart processes', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	('en_GB', 1, 'LBL_SYSTEM_PERMISSION_RESTART_SYSTEM_PROCESSES_DESC', 'Allows you to restart system processes', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	--SystemPermission:25
-	('en_GB', 1, 'LBL_SYSTEM_PERMISSION_EDIT_EQUIPMENTS', 'Edit equipments', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-	('en_GB', 1, 'LBL_SYSTEM_PERMISSION_EDIT_EQUIPMENTS_DESC', 'User can create, edit, clone and delete equipments', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('en_GB', 1, 'LBL_SYSTEM_PERMISSION_EDIT_EQUIPMENTS', 'Edit equipment', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('en_GB', 1, 'LBL_SYSTEM_PERMISSION_EDIT_EQUIPMENTS_DESC', 'Allows creating, editing, cloning, and deleting system equipment', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	--SystemPermission:27
 	('en_GB', 1, 'LBL_SYSTEM_PERMISSION_EDIT_MAPS', 'Edit maps', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	('en_GB', 1, 'LBL_SYSTEM_PERMISSION_EDIT_MAPS_DESC', 'Allows edit maps', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -416,3 +416,19 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 	--SystemPermission:36
 	('es_CL', 1, 'LBL_SYSTEM_PERMISSION_SHOW_EXTERNAL_INCIDENTS', 'Permite visualizar la tabla con la información de las incidencias externas', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	('es_CL', 1, 'LBL_SYSTEM_PERMISSION_SHOW_EXTERNAL_INCIDENTS_DESC', 'Permite visualizar la tabla con la información de las incidencias externas', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) VALUES
+('sk_SK', 1, 'LBL_SYSTEM_PERMISSION_EDIT_LOCATIONS', 'Editor polohy', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_SYSTEM_PERMISSION_EDIT_LOCATIONS_DESC', 'Editor polohy', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_SYSTEM_PERMISSION_EDIT_ROUTES', 'Editor trasy', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_SYSTEM_PERMISSION_EDIT_ROUTES_DESC', 'Editor trasy', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_SYSTEM_PERMISSION_SHOW_EQUIPMENT', 'Permite visualizar menú ktoré muestr grid s tipos zariadenia y su información', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_SYSTEM_PERMISSION_SHOW_EQUIPMENT_DESC', 'Permite visualizar menú ktoré muestr grid s tipos zariadenia y su información', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_SYSTEM_PERMISSION_SHOW_EXTERNAL_INCIDENTS', 'Permite visualizar tabuľke s información incidenty externas', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_SYSTEM_PERMISSION_SHOW_EXTERNAL_INCIDENTS_DESC', 'Permite visualizar tabuľke s información incidenty externas', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_SYSTEM_PERMISSION_SHOW_INCIDENT_BACKOFFICE', 'Permite visualizar bitácora incidenty', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_SYSTEM_PERMISSION_SHOW_INCIDENT_BACKOFFICE_DESC', 'Permite visualizar bitácora incidenty', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_SYSTEM_PERMISSION_TRANSITS', 'Správca tranzitov', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_SYSTEM_PERMISSION_TRANSITS_DESC', 'Estor tránsitos', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_SYSTEM_PERMISSION_VIEW_EXTERNAL_REPORTS', 'Zobraziť informes en jasper', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_SYSTEM_PERMISSION_VIEW_EXTERNAL_REPORTS_DESC', 'Zobraziť informes en jasper', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

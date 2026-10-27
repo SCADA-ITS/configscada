@@ -48,4 +48,11 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_CL', 1, 'LBL_DEACTIVATE_DAI_ALARMS_BY_TASK','Alarmas deshabilitadas por una incidencia',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_FILTERED_UNTIL', 'Hasta', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
    	
-   	
+
+
+INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) VALUES
+('sk_SK', 1, 'LBL_CREATE_ALARMS_FILTER', 'Vytvoriť alarmy inhibidas', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_CREATE_ALARMS_FILTER_CONFIRM', 'Vytvoriť alarm', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_CREATE_MANUAL_ALARM', 'Vytvoriť alarm manuálne', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_CREATE_MANUAL_ALARM_DESCRIPTION', 'Vytvoriť alarm manuálne', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_CREATE_MUTE_ALARMS', 'Vytvoriť alarm silenciada', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

@@ -32,3 +32,17 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_CL', 1, 'LBL_ALARM_TYPE_STATE_ALERT', 'Estado', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_ALARM_TYPE_MEASURE_ALERT', 'Umbral medida', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_ALARM_TYPE_NOTIFICATION', 'Notificación', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) VALUES
+('en_GB', 1, 'LBL_ALARM_CONFIGS_ALARM_CAMERA_OVERSPEED', 'Camera overspeed alarm', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_ALARM_CONFIGS_ALARM_JETFAN_NO_AUTO', 'Jetfan not in automatic mode alarm', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_ALARM_CONFIGS_ALARM_JETFAN_STARTER_SHOT', 'Jetfan starter trip alarm', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_ALARM_CONFIGS_ALARM_CAMERA_OVERSPEED', 'Alarma de exceso de velocidad de camara', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_ALARM_CONFIGS_ALARM_JETFAN_NO_AUTO', 'Alarma de jetfan en modo no automatico', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_ALARM_CONFIGS_ALARM_JETFAN_STARTER_SHOT', 'Alarma de disparo del arrancador del jetfan', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_CAMERA_OVERSPEED', 'Alarma de exceso de velocidad de camara', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_JETFAN_NO_AUTO', 'Alarma de jetfan en modo no automatico', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_ALARM_CONFIGS_ALARM_JETFAN_STARTER_SHOT', 'Alarma de disparo del arrancador del jetfan', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_ALARM_CONFIGS_ALARM_CAMERA_OVERSPEED', 'Alarm prekrocenia rychlosti kamery', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_ALARM_CONFIGS_ALARM_JETFAN_NO_AUTO', 'Alarm jetfanu mimo automatickeho rezimu', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_ALARM_CONFIGS_ALARM_JETFAN_STARTER_SHOT', 'Alarm vypnutia startera jetfanu', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

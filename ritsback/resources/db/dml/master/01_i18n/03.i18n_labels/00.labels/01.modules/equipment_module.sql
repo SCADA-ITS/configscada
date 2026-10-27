@@ -19,3 +19,6 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 
 -- es_CL
 ('es_CL', 1, 'LBL_EQUIPMENT_TREE', 'Equipamiento', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) VALUES
+('sk_SK', 1, 'LBL_EQUIPMENT_TREE', 'Zariadenia', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

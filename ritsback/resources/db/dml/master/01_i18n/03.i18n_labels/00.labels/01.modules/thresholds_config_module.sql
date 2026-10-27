@@ -56,3 +56,6 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_CL', 1, 'LBL_EDIT_SMTHRESHOLDS', 'Editar umbral de máquinas de estado', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_EDIT_SMTHRESHOLDS_DESC', 'Editar umbrales de máquinas de estado', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_CONFIG_THRESHOLDS', 'Configuración de umbrales', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) VALUES
+('sk_SK', 1, 'LBL_CONFIG_THRESHOLDS', 'Nastavenie prahov', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

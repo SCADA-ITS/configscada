@@ -31,3 +31,10 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_CL', 1, 'LBL_SEARCHBOX_SEARCH_ALARM', 'Buscar alarma...', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_SEARCHBOX_SEARCH_INCIDENT', 'Buscar incidencia...', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_SEARCHBOX_SEARCH_PLAN', 'Buscar plan...', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) VALUES
+('sk_SK', 1, 'LBL_SEARCHBOX_SEARCH_ALARM', 'Buscar alarm...', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_SEARCHBOX_SEARCH_ALL', 'Hľadať', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_SEARCHBOX_SEARCH_ELEMENT', 'Buscar zariadenie...', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_SEARCHBOX_SEARCH_INCIDENT', 'Buscar incident...', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_SEARCHBOX_SEARCH_PLAN', 'Hľadať plán...', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

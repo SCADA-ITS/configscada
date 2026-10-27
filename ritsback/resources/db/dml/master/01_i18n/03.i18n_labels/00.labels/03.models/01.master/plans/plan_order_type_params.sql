@@ -80,3 +80,6 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 	--PlanOrderType:10 (AUTOMATISM)
 	('es_CL',1,'LBL_PLAN_ORDER_TYPE_PARAM_AUTOMATISM_GROOVY_PATH','Ruta de Groovy',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 	('es_CL',1,'LBL_PLAN_ORDER_TYPE_PARAM_AUTOMATISM_PARAMS','Argumentos',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
+
+INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) VALUES
+('sk_SK', 1, 'LBL_PLAN_ORDER_TYPE_PARAM_AUTOMATISM_GROOVY_PATH', 'Trasa Groovy', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

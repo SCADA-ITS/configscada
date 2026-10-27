@@ -56,3 +56,6 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 	('es_CL',1,'LBL_PLAN_ORDER_TYPE_LOOP','Bucle',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 	('es_CL',1,'LBL_PLAN_ORDER_TYPE_EVENT','Notificación',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 	('es_CL',1,'LBL_PLAN_ORDER_TYPE_AUTOMATISM','Automatismo',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
+
+INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) VALUES
+('sk_SK', 1, 'LBL_PLAN_ORDER_TYPE_EVENT', 'Hlásenie', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

@@ -46,3 +46,11 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_CL', 1, 'LBL_UNAUTHORIZED', 'Usuario no autorizado', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_SESSION_CLOSED_BY_EXCEED_IDLE_TIME', 'Sesión cerrada por tiempo de inactividad excedido.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_WRONG_USER_PASSWORD', 'Contraseña incorrecta', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) VALUES
+('sk_SK', 1, 'LBL_AUTHORIZED', 'Používateľ autorizado', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_DENY_LOCKED', 'Používateľ bloqueado', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_DENY_MULTI_SESSION_NOT_ALLOWED', 'Multi-sesión no permitida', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_DENY_OTHERS', 'Acceso denegado', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_DENY_PASSWORD_EXPIRED', 'Heslo caducada', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_WRONG_USER_PASSWORD', 'Nesprávne heslo', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

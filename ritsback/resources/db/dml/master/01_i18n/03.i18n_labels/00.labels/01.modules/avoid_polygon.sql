@@ -79,3 +79,26 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_CL', 1, 'LBL_AVOID_POLYGON_SAVE_DESCRIPTION', '¿Desea guardar los cambios realizados?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_AVOID_POLYGON_SAVE_DELETE_DESCRIPTION', '¿Desea eliminar el/los corte/s seleccionada/os?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_AVOID_POLYGON_SAVE_REQUIRED_CLOSE_POLYLINE', 'La geometría guardada es una polilínea, ¿desea cerrar la polilínea como polígono y guardarlo?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) VALUES
+('sk_SK', 1, 'LBL_AVOID_POLYGON', 'Zóna a evitar', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_AVOID_POLYGONS', 'Zóny a evitar', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_AVOID_POLYGONS_WIZARD_DELETE_FROM_INCIDENT_REPORT_HEADER_DESCRIPTION', 'Odstrániť vybrané zóny, ktorým sa treba vyhnúť', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_AVOID_POLYGONS_WIZARD_DELETE_HEADER_STEP_1', 'Elimine zóny a evitar asociadas a incident', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_AVOID_POLYGONS_WIZARD_FROM_INCIDENT_REPORT_HEADER', 'Zóny, ktorým sa treba vyhnúť', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_AVOID_POLYGONS_WIZARD_NEW_FROM_INCIDENT_REPORT_HEADER_DESCRIPTION', 'Zóny, ktorým sa treba vyhnúť, a údaje', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_AVOID_POLYGONS_WIZARD_NEW_HEADER_STEP_1', 'Trace zóny a evitar asociadas a incident e incluya dáta', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_AVOID_POLYGONS_WIZARD_SHOW_FROM_INCIDENT_REPORT_HEADER_DESCRIPTION', 'Zobraziť vybrané zóny, ktorým sa treba vyhnúť', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_AVOID_POLYGONS_WIZARD_SHOW_HEADER_STEP_1', 'Zóny a evitar asociadas a incident y sus dáta', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_AVOID_POLYGON_LIST', 'Lista zóny a evitar asociados a incident', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_AVOID_POLYGON_SAVE_DELETE_DESCRIPTION', 'Chcete odstrániť / zóna/s a evitar seleccionada/as?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_AVOID_POLYGON_SAVE_DESCRIPTION', 'Chcete uložiť zmeny realizados?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_AVOID_POLYGON_SAVE_REQUIRED_CLOSE_POLYLINE', 'Uložená geometria je polyčiara. Chcete ju uzavrieť ako polygón a uložiť?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_AVOID_POLYGON_WIZARD_DELETE_FROM_INCIDENT_REPORT_HEADER', 'Odstrániť zónu, ktorej sa treba vyhnúť, priradenú k incidentu', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_AVOID_POLYGON_WIZARD_NEW_FROM_INCIDENT_REPORT_HEADER', 'Vytvoriť zónu, ktorej sa treba vyhnúť, priradenú k incidentu', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_AVOID_POLYGON_WIZARD_SHOW_FROM_INCIDENT_REPORT_HEADER', 'Zobraziť zónu, ktorej sa treba vyhnúť, priradenú k incidentu', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_CONFIG_AVOID_POLYGONS', 'Nastavenie zóna a evitar', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_DELETE_AVOID_POLYGONS', 'Eliminación zóny a evitar', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_EDIT_AVOID_POLYGONS', 'Upraviť zóny a evitar', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_LABEL_POLYGON_ALIAS', 'Názov zóna a evitar', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_SHOW_AVOID_POLYGONS', 'Zobraziť zonas a evitar', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

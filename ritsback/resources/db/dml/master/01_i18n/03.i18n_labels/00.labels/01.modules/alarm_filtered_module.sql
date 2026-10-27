@@ -129,3 +129,13 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_CL', 1, 'LBL_ARE_YOU_SURE_DISABLE', '¿Está seguro que desea deshabilitar la alarma?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_COMMENTS', 'Comentarios', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_DIALOG_DISABLE_ALARMS', 'Deshabilitar alarma', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) VALUES
+('sk_SK', 1, 'LBL_ALARM_FILTERED', 'Odložiť budík', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_ALARM_FILTERED_VIEW', 'Alarmy inhibidas', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_ALARM_FILTER_HEADER', 'Vytvoriť alarm inhibida', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_ALARM_FILTER_RADIO_DISABLE', 'Alarm deshabilitada', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_ALARM_FILTER_RADIO_DISABLED', 'Alarm deshabilitada', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_ALARM_FILTER_RADIO_MUTE', 'Alarm silenciada', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_ALARM_FILTER_TYPE', 'Typ', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_ALARM_FILTER_ZERO_ALARMS', 'No sú alarmas inhibidas', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

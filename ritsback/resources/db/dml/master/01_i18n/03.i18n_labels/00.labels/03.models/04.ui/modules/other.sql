@@ -17,7 +17,7 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 --en_GB
 ('en_GB', 1, 'LBL_EQUIPMENTS','Equipments',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_LIGHTING_MANAGER', 'Lighting manager', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('en_GB', 1, 'LBL_MAP', 'MAPA', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_MAP', 'MAP', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_VENTILATION_MANAGER', 'Ventilation manager', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_WELCOME_SCREEN', 'Home', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
@@ -35,3 +35,6 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_CL', 1, 'LBL_MAP', 'MAPA', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_VENTILATION_MANAGER', 'Sistema de ventilación', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_WELCOME_SCREEN', 'Inicio', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) VALUES
+('sk_SK', 1, 'LBL_VENTILATION_MANAGER', 'Systém vetrania', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

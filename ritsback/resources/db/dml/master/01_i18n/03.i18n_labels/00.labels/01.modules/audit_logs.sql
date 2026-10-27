@@ -22,3 +22,7 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 --es_CL
 ('es_CL', 1, 'LBL_AUDIT_LOG_REZOGNIZE_CONFIRM', 'Reconocer', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_AUDIT_LOG_REZOGNIZE_CONFIRM_DESCRIPTION', '¿Esta seguro que desea reconocer las auditorías seleccionadas?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) VALUES
+('sk_SK', 1, 'LBL_AUDIT_LOG_REZOGNIZE_CONFIRM', 'Potvrdiť', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_AUDIT_LOG_REZOGNIZE_CONFIRM_DESCRIPTION', 'Naozaj chcete potvrdiť vybrané audity?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

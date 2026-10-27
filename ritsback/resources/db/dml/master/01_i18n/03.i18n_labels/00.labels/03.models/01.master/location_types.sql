@@ -29,3 +29,9 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
     ('es_CL',1,'LBL_LOCATION_TYPE_INCIDENT_REPORT','Localización de incidencia',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
     ('es_CL',1,'LBL_LOCATION_TYPE_INCIDENT_REPORT_TEMP','Localización de incidencia temporal',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
     ('es_CL',1,'LBL_LOCATION_TYPE_RADAR','Localización de radar',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
+
+INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) VALUES
+('sk_SK', 1, 'LBL_LOCATION_TYPE_ELEMENT', 'Umiestnenie prvku', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_LOCATION_TYPE_INCIDENT_REPORT', 'Umiestnenie incident', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_LOCATION_TYPE_INCIDENT_REPORT_TEMP', 'Umiestnenie incident temporal', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_LOCATION_TYPE_RADAR', 'Umiestnenie radaru', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

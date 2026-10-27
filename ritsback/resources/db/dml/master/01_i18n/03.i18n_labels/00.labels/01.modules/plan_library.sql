@@ -95,7 +95,7 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 
 --sk_SK
 ('sk_SK', 1, 'LBL_ARE_YOU_SURE_REMOVE_CHANGE_PARAM_CONFIG', 'Naozaj chcete vymazať zmenu konfigurácie parametrov?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('sk_SK', 1, 'LBL_ARE_YOU_SURE_UNDO_ALL_VALUES', 'Naozaj chcete zmeny vrátiť späť?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_ARE_YOU_SURE_UNDO_ALL_VALUES', 'Naozaj chcete vrátiť späť vykonané zmeny?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('sk_SK', 1, 'LBL_CREATE_SIGNALING_ORDER', 'Vytvoriť signálny poriadok', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('sk_SK', 1, 'LBL_DATA_TYPE','Typ údajov',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
 ('sk_SK', 1, 'LBL_ELEMENTS_OF_DIFFERENT_SUBTYPE', 'Prvky rôznych podtypov', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -164,3 +164,17 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 ('es_CL', 1, 'LBL_THRESHOLD_OPERATION_TWO', 'Valor #2', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_TYPE_OF_OPERATION', 'Tipo de operación', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
+INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) VALUES
+('sk_SK', 1, 'LBL_CAN_NOT_MOVE_SELECTED_ORDER_DESCRIPTION', 'Orden no puede moverse', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_DELETE', 'Odstranit prvok', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_DELETE_DESCRIPTION', 'Vymazať', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_NEW', 'Nový', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_NEW_FOLDER', 'Novy priecinok', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_NEW_FOLDER_DESCRIPTION', 'Vytvorit novy priecinok', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_NEW_FOLDER_NAME', 'Zadajte nazov noveho priecinka', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_NEW_ITEM', 'Nová nastavenie', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_NEW_ITEM_DESCRIPTION', 'Vytvorit novy prvok', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_PLAN', 'Scenár', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_PLAN_LIBRARY_ORDER_VALUE_ID', 'Hodnota', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_PLAN_LIBRARY_REQUIRED_PARAMS', 'Chybaju povinne polia', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_PLAN_ORDER_TYPE_CONFIRM', 'Potvrdenie prikazu', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
