@@ -91,7 +91,33 @@ BEGIN
 			alias varchar null,
 			constraint pk_causes  primary key (id)
 		) tablespace tbl_backoffice;
-  
+
+		create table backoffice.direction (
+			id serial not null,
+			alias varchar null,
+			constraint pk_direction  primary key (id)
+		) tablespace tbl_backoffice;
+
+		create table backoffice.detection (
+			id serial not null,
+			alias varchar null,
+			constraint pk_detection primary key (id)
+		) tablespace tbl_backoffice;
+
+		create table backoffice.notice (
+			id serial not null,
+			alias varchar null,
+			constraint pk_notice primary key (id)
+		) tablespace tbl_backoffice;
+
+		create table backoffice.comunne (
+			id serial not null,
+			alias varchar null,
+			constraint pk_comunne primary key (id)
+		) tablespace tbl_backoffice;
+
+
+
 		create table backoffice.incidents (
 			id serial not null,
 			incident_report_id  varchar null,
@@ -114,7 +140,11 @@ BEGIN
 			luminosity_id int null,
 			ligth_id int null,
 			cause_id int null,
-			
+			detection_id int null,
+			direction_id int null,
+			notice_id int null,
+			comunne_id int null,
+
 			report_by varchar null,
 			stamped varchar null,
 			court varchar null,
@@ -125,6 +155,7 @@ BEGIN
 			patrol_name varchar null,
 			operator_name varchar null,
 			supervisor_name varchar null,
+			operator varchar null,
 			
 			constraint pk_incidents primary key (id)
 		) tablespace tbl_backoffice;
@@ -188,7 +219,24 @@ BEGIN
 		create index idx_cause_id on
 		backoffice.incidents
 			using btree (cause_id);
-			
+
+		create index idx_detection_id on
+		backoffice.incidents
+			using btree (detection_id);
+
+		create index idx_direction_id on
+		backoffice.incidents
+			using btree (direction_id);
+
+		create index idx_notice_id on
+		backoffice.incidents
+			using btree (notice_id);
+
+		create index idx_comunne_id on
+		backoffice.incidents
+			using btree (comunne_id);
+
+
 		alter table backoffice.incidents add constraint fk_type_event_id foreign key (event_id) references backoffice.event(id) ON DELETE RESTRICT;
 		alter table backoffice.incidents add constraint fk_type_side_id foreign key (side_id) references backoffice.side(id) ON DELETE RESTRICT;
 		alter table backoffice.incidents add constraint fk_type_stretch_id foreign key (stretch_id) references backoffice.stretch(id) ON DELETE RESTRICT;
@@ -204,8 +252,11 @@ BEGIN
 		alter table backoffice.incidents add constraint fk_luminosity_id foreign key (luminosity_id) references backoffice.luminosity(id) ON DELETE RESTRICT;
 		alter table backoffice.incidents add constraint fk_ligth_id foreign key (ligth_id) references backoffice.ligth(id) ON DELETE RESTRICT;
 		alter table backoffice.incidents add constraint fk_cause_id foreign key (cause_id) references backoffice.causes(id) ON DELETE RESTRICT;
+		alter table backoffice.incidents add constraint fk_detection_id foreign key (detection_id) references backoffice.detection(id) ON DELETE RESTRICT;
+		alter table backoffice.incidents add constraint fk_direction_id foreign key (direction_id) references backoffice.direction(id) ON DELETE RESTRICT;
+		alter table backoffice.incidents add constraint fk_notice_id foreign key (notice_id) references backoffice.notice(id) ON DELETE RESTRICT;
+		alter table backoffice.incidents add constraint fk_comunne_id foreign key (comunne_id) references backoffice.comunne(id) ON DELETE RESTRICT;
 	END IF;
 END $$;
-
 
 

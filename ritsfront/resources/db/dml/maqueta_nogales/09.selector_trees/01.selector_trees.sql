@@ -4,7 +4,8 @@ INSERT INTO ui.selector_trees(id, "label", default_module_id, enabled, visible) 
 
 INSERT INTO ui.selector_tree_nodes(id, selector_tree_id, "label", image, module_id, enabled, visible, position) VALUES
 (0101, 1, 'LBL_INCIDENTS', null, 6000, true, true, 1),
-(0102, 1, 'LBL_MASTER', null, null, true, true, 2),
+(0105, 1, 'Llamadas al sistema', null, 6033, true, true, 2),
+(0102, 1, 'LBL_MASTER', null, null, true, true, 3),
 	(010201, 1, 'LBL_VEHICLES', null, null, true, true, 3),
 		(01020101, 1, 'LBL_VEHICLE_TYPES', null, 6012, true, true, 4),
 		(01020102, 1, 'LBL_VEHICLE_BRANDS', null, 6016, true, true, 5),

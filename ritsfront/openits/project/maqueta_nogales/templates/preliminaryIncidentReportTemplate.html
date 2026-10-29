@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reporte de Informe Preliminar</title>
+    <style>
+        @page { size: A4 portrait; margin: 12mm; }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 11px;
+            line-height: 1.35;
+            color: #17233c;
+            background: #fff;
+        }
+        #template { width: 100%; margin: 0; padding: 0; }
+        .header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 14px;
+        }
+        .logo img { width: 170px; height: auto; }
+        .report-title {
+            margin: 8px 0 4px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .green-line {
+            width: 100%;
+            height: 2px;
+            margin-bottom: 16px;
+            background-color: #71be44;
+        }
+        .section { margin-bottom: 18px; page-break-inside: avoid; }
+        .section-title {
+            margin: 0 0 10px;
+            padding-bottom: 4px;
+            border-bottom: 2px solid #71be44;
+            font-size: 13px;
+            font-weight: bold;
+        }
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+        .data-table td {
+            padding: 5px 8px 5px 0;
+            vertical-align: top;
+        }
+        .label { width: 24%; font-weight: bold; }
+        .value { width: 26%; min-height: 16px; }
+        .long-field { margin-top: 10px; }
+        .long-field .label { display: block; width: auto; margin-bottom: 4px; }
+        .long-value {
+            min-height: 55px;
+            padding: 8px;
+            border: 1px solid #a7b0bd;
+            white-space: pre-wrap;
+            text-align: justify;
+        }
+    </style>
+</head>
+<body>
+<div id="template" class="portrait">
+    <div class="header">
+        <div class="logo">
+            <img src="./img/logo-project.svg" alt="Concesión Nogales-Puchuncaví">
+        </div>
+    </div>
+
+    <div class="report-title">Reporte de Informe Preliminar</div>
+    <div class="green-line"></div>
+
+    <div class="section">
+        <div class="section-title">Información del evento</div>
+        <table class="data-table">
+            <tbody>
+                <tr>
+                    <td class="label">Tipo evento:</td>
+                    <td class="value" id="field.event_type"></td>
+                    <td class="label">Fecha:</td>
+                    <td class="value" id="field.event_date"></td>
+                </tr>
+                <tr>
+                    <td class="label">Ruta:</td>
+                    <td class="value" id="field.route"></td>
+                    <td class="label">Km:</td>
+                    <td class="value" id="field.km"></td>
+                </tr>
+                <tr>
+                    <td class="label">Comuna:</td>
+                    <td class="value" id="field.commune"></td>
+                    <td class="label">Hora:</td>
+                    <td class="value" id="field.event_time"></td>
+                </tr>
+                <tr>
+                    <td class="label">Sector:</td>
+                    <td class="value" id="field.sector"></td>
+                    <td class="label">Sentido:</td>
+                    <td class="value" id="field.direction"></td>
+                </tr>
+                <tr>
+                    <td class="label">Pista:</td>
+                    <td class="value" id="field.lane"></td>
+                    <td class="label">Estado:</td>
+                    <td class="value" id="field.status"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Gestión y consecuencias</div>
+        <table class="data-table">
+            <tbody>
+                <tr>
+                    <td class="label">Aviso a Carabineros:</td>
+                    <td class="value" id="field.police_notice"></td>
+                    <td class="label">Presencia de Carabineros:</td>
+                    <td class="value" id="field.police_presence"></td>
+                </tr>
+                <tr>
+                    <td class="label">Lesionados:</td>
+                    <td class="value" id="field.injured"></td>
+                    <td class="label">Fallecidos:</td>
+                    <td class="value" id="field.deaths"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="long-field">
+            <span class="label">Gestión de tránsito:</span>
+            <div class="long-value" id="field.traffic_management"></div>
+        </div>
+
+        <div class="long-field">
+            <span class="label">Descripción del evento:</span>
+            <div class="long-value" id="field.event_description"></div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

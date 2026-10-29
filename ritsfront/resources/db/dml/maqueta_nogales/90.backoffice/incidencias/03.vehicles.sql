@@ -40,6 +40,9 @@ BEGIN
 		
 		INSERT INTO backoffice.vehicle_consecuences (alias) VALUES('Con daños');
 		INSERT INTO backoffice.vehicle_consecuences (alias) VALUES('Sin daños');
+
+		INSERT INTO backoffice.vehicle_hit_and_run (alias) VALUES ('Sí');
+		INSERT INTO backoffice.vehicle_hit_and_run (alias) VALUES ('No');
 		
 		INSERT INTO backoffice.vehicle_manoeuvres (alias) VALUES('Viaja derecho por vía');
 		INSERT INTO backoffice.vehicle_manoeuvres (alias) VALUES('Vira derecho hacía vía');
@@ -57,6 +60,29 @@ BEGIN
 		INSERT INTO backoffice.vehicle_manoeuvres (alias) VALUES('Cruzando la vía');
 		INSERT INTO backoffice.vehicle_manoeuvres (alias) VALUES('Frena en vía');
 		INSERT INTO backoffice.vehicle_manoeuvres (alias) VALUES('Otras');
+
+		INSERT INTO backoffice.vehicle_lanes (alias) VALUES ('Pista 1');
+		INSERT INTO backoffice.vehicle_lanes (alias) VALUES ('Pista 2');
+		INSERT INTO backoffice.vehicle_lanes (alias) VALUES ('Pista 3');
+		INSERT INTO backoffice.vehicle_lanes (alias) VALUES ('Pista 4');
+
+		INSERT INTO backoffice.vehicle_traffic_lanes (alias) VALUES ('Calle de servicio');
+		INSERT INTO backoffice.vehicle_traffic_lanes (alias) VALUES ('Ramal entrada');
+		INSERT INTO backoffice.vehicle_traffic_lanes (alias) VALUES ('Ramal salida');
+		INSERT INTO backoffice.vehicle_traffic_lanes (alias) VALUES ('Paso Inferior');
+		INSERT INTO backoffice.vehicle_traffic_lanes (alias) VALUES ('Calle local');
+		INSERT INTO backoffice.vehicle_traffic_lanes (alias) VALUES ('Paso Superior');
+		INSERT INTO backoffice.vehicle_traffic_lanes (alias) VALUES ('Vías de cobro');
+		INSERT INTO backoffice.vehicle_traffic_lanes (alias) VALUES ('F-190');
+		INSERT INTO backoffice.vehicle_traffic_lanes (alias) VALUES ('Las Romazas');
+		INSERT INTO backoffice.vehicle_traffic_lanes (alias) VALUES ('Otra');
+
+
+		INSERT INTO backoffice.vehicle_directions (alias) VALUES ('Oriente - Poniente');
+		INSERT INTO backoffice.vehicle_directions (alias) VALUES ('Poniente - Oriente');
+		INSERT INTO backoffice.vehicle_directions (alias) VALUES ('Norte - Sur');
+		INSERT INTO backoffice.vehicle_directions (alias) VALUES ('Sur - Norte');
+
 		
 		INSERT INTO backoffice.vehicle_brands (alias) VALUES('Abarth');
 		INSERT INTO backoffice.vehicle_brands (alias) VALUES('Alfa Romeo');

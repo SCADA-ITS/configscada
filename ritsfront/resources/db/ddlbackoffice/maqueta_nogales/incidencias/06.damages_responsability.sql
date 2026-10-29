@@ -15,6 +15,11 @@ BEGIN
 		phone_number varchar null,
 		vehicle_owner_id int null,
 		owner_name varchar null,
+		business_activity varchar null,
+		rut varchar null,
+		description varchar null,
+		quantity int null,
+		entity varchar null,
 		
   		constraint pk_damages_responsabilities primary key (id)
 	) tablespace tbl_backoffice;

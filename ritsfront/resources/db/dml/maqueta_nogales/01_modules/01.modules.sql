@@ -25,7 +25,6 @@ INSERT INTO ui.modules(id, module_type_id, "name", description, default_view_typ
 (6019, 9, 'INCIDENTS - participant_nacionalities', 'Incidents - participant_nacionalities', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 (6020, 9, 'INCIDENTS - support_services', 'Incidents - participant_nacionalities', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 (6021, 9, 'INCIDENTS - damages_responsabilities', 'Incidents - participant_nacionalities', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
-(6022, 9, 'INCIDENTS - damages_evaluations', 'Incidents - participant_nacionalities', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 (6023, 9, 'INCIDENTS - owner_types', 'Incidents - participant_nacionalities', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 (6024, 9, 'INCIDENTS - support_service_types', 'Incidents - participant_nacionalities', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 (6025, 9, 'INCIDENTS - support_service_subtypes', 'Incidents - participant_nacionalities', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
@@ -36,6 +35,7 @@ INSERT INTO ui.modules(id, module_type_id, "name", description, default_view_typ
 (6030, 9, 'INCIDENTS - luminosity', 'Incidents - participant_nacionalities', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 (6031, 9, 'INCIDENTS - ligth', 'Incidents - participant_nacionalities', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 (6032, 9, 'INCIDENTS - causes', 'Incidents - participant_nacionalities', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(6033, 9, 'SYSTEM CALLS - cct_calls', 'Llamadas al sistema', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 
 (6050, 9, 'SUMMARY - annual', 'SUMMARY - annual', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 (6051, 9, 'SUMMARY - month', 'SUMMARY - month', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),

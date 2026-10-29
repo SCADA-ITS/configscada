@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reporte a compañía de seguros</title>
+    <style>
+        @page { size: A4 portrait; margin: 12mm; }
+        * { box-sizing: border-box; }
+        body { margin: 0; font-family: Arial, Helvetica, sans-serif; font-size: 10.5px; line-height: 1.35; color: #17233c; background: #fff; }
+        #template { width: 100%; margin: 0; padding: 0; }
+        .header { display: flex; align-items: center; justify-content: space-between; min-height: 55px; margin-bottom: 8px; }
+        .logo img { width: 170px; height: auto; }
+        .issue-date { display: flex; align-items: stretch; }
+        .issue-date .label, .issue-date .value { padding: 8px 10px; }
+        .issue-date .label { background: #eef0f2; font-weight: 700; }
+        .report-title { margin: 10px 0 12px; font-size: 18px; font-weight: 700; }
+        .green-line { height: 3px; margin: 0 0 14px; background: #69bd45; }
+        .section { margin: 0 0 15px; }
+        .section-title { margin: 0 0 8px; padding: 7px 8px; background: #eef0f2; font-size: 13px; font-weight: 700; }
+        .section-rule { height: 3px; margin-top: 12px; background: #69bd45; }
+        .data-table { width: 100%; border-collapse: separate; border-spacing: 0 4px; table-layout: fixed; }
+        .data-table td { padding: 6px 8px; vertical-align: top; overflow-wrap: anywhere; }
+        .data-table .label { width: 23%; background: #eef0f2; font-weight: 700; }
+        .data-table .value { width: 27%; white-space: pre-wrap; }
+        .classification-table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+        .classification-table th { padding: 7px 5px; background: #eef0f2; font-weight: 700; }
+        .classification-table td { padding: 7px 5px; text-align: center; vertical-align: top; }
+        .text-value { min-height: 24px; padding: 2px 0; white-space: pre-wrap; }
+        .dynamic-groups:empty::after { content: "-"; display: block; padding: 8px 0; }
+        .report-card { margin: 0 0 12px; border: 1px solid #d3d9df; border-top: 2px solid #69bd45; page-break-inside: avoid; }
+        .report-card-title { padding: 7px 9px; background: #eef0f2; font-weight: 700; }
+        .report-card-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 14px; padding: 8px; }
+        .report-card-field { min-width: 0; }
+        .report-card-label { min-height: 35px; padding: 7px 6px; background: #eef0f2; font-weight: 700; }
+        .report-card-value { min-height: 27px; padding: 7px 6px 2px; overflow-wrap: anywhere; white-space: pre-wrap; }
+        .dynamic-section-title { margin-top: 16px; }
+        .photos:empty { display: none; }
+        .photos caption { display: block; width: 100%; margin: 0 0 8px; padding: 7px 8px; background: #eef0f2; font-size: 13px; font-weight: 700; text-align: left; }
+        .photos img { max-width: 80%; height: auto; margin: 15px auto !important; }
+        @media print {
+            .report-card { break-inside: avoid; }
+            .section-title, .report-card-title, .report-card-label, .data-table .label,
+            .classification-table th, .issue-date .label { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+        }
+    </style>
+</head>
+<body>
+<div id="template" class="portrait">
+    <div class="header">
+        <div class="logo"><img src="./img/logo-project.svg" alt="Concesión Nogales-Puchuncaví"></div>
+        <div class="issue-date"><span class="label">Fecha de emisión:</span><span class="value event_date"></span></div>
+    </div>
+
+    <div class="report-title">Reporte a compañía de seguros</div>
+    <div class="green-line"></div>
+
+    <div class="section">
+        <div class="section-title">Identificación</div>
+        <table class="data-table"><tbody>
+            <tr><td class="label">Concesión</td><td class="value">NOGALES-PUCHUNCAVÍ</td><td class="label">Identificador</td><td class="value incident_report_id"></td></tr>
+            <tr><td class="label">Fecha</td><td class="value"><span class="event_date"></span> <span class="event_time"></span></td><td class="label">km</td><td class="value km"></td></tr>
+            <tr><td class="label">Evento</td><td class="value event_type"></td><td class="label">Sector</td><td class="value sector"></td></tr>
+            <tr><td class="label">Sentido</td><td class="value direction"></td><td class="label">Estado</td><td class="value status"></td></tr>
+            <tr><td class="label">Ruta</td><td class="value route"></td><td class="label">Comuna</td><td class="value commune"></td></tr>
+        </tbody></table>
+        <div class="section-rule"></div>
+    </div>
+
+    <div class="section">
+        <table class="classification-table"><thead><tr><th>Pista</th><th>Condición de la calzada</th><th>Estado atmosférico</th><th>Visibilidad</th></tr></thead>
+        <tbody><tr><td id="field.lane"></td><td id="field.road_condition"></td><td id="field.weather_state"></td><td id="field.visibility"></td></tr></tbody></table>
+        <div class="section-rule"></div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Descripción del evento</div>
+        <div class="text-value" id="field.event_description"></div>
+        <table class="data-table"><tbody><tr><td class="label">Lesionados</td><td class="value" id="field.injured"></td><td class="label">Fallecidos</td><td class="value" id="field.deaths"></td></tr></tbody></table>
+        <div class="section-rule"></div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Vehículos participantes</div>
+        <div id="field.vehicle_participants" class="dynamic-groups"></div>
+        <div class="section-rule"></div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Antecedentes policiales</div>
+        <table class="data-table"><tbody>
+            <tr><td class="label">Carabineros</td><td class="value" id="field.police_station"></td><td class="label">Oficial a cargo</td><td class="value" id="field.officer_in_charge"></td></tr>
+            <tr><td class="label">Parte policial</td><td class="value" id="field.police_report"></td><td class="label">Juzgado</td><td class="value" id="field.court"></td></tr>
+        </tbody></table>
+        <div class="section-rule"></div>
+    </div>
+
+    <div class="section"><div class="photos" id="groupImage.photos"></div></div>
+</div>
+</body>
+</html>

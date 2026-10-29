@@ -3,321 +3,179 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ficha del Incidente</title>
+    <title>Ficha del incidente</title>
     <style>
-        body {
-			font-family: 'Guardian Sans', sans-serif;
-			margin: 20px;
-		}
-		
-		h2 {
-			font-size: 1.5em;
-			color: #6F605A;
-		}
-
-		.container {
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			color: #72BF44;
-		}
-
-		.column {
-			flex: 1;
-		}
-
-		.text-container {
-			text-align: left;
-			margin-left: 250px;
-		}
-
-		.text-container h1 {
-			color: #72BF44;
-		}
-
-		.text-container h2, .text-container span {
-			display: inline;
-			font-size: 1.5em;
-		}
-
-		.text-container span {
-			margin-left: 10px;
-		}
-
-		.myspan {
-			color: #6F605A;
-		}
-		
-		.div-separator{
-			margin-top: 40px;
-		}
-
-		.separator {
-			height: 2px;
-			background-color: #72BF44;
-			border: none;
-			margin: 0;
-		}
-
-		.separator-container {
-			margin-top: 40px;
-			margin-bottom: 40px;
-		}
-
-		.separator-container h1 {
-			margin: 2px;
-			color: #72BF44;
-		}
-
-		.small-h2 {
-			font-size: 1em;
-			background-color: #00BBE7;
-			color: #F2F1EF;
-			padding: 10px;
-			margin: 0;
-			box-sizing: border-box;
-			display: inline-block;
-		}
-
-		.row {
-			display: flex;
-			align-items: center;
-		}
-
-		.row > div {
-			margin: 0 10px;
-		}
-
-		.left-align {
-			flex: 1;
-		}
-
-		.left-align .small-h2 {
-			width: 350px;
-		}
-
-		.left-align span {
-			margin-left: 20px;
-		}
-
-		.right-align {
-			flex: 1;
-			display: flex;
-			align-items: center;
-		}
-
-		.right-align .small-h2 {
-			width: 350px;
-		}
-
-		.right-align span {
-			margin-left: 20px;
-		}
-		
-		table {
-            width: 100%; 
-            border-collapse: collapse; 
-			margin-top: 40px;
-        }
-
-        td {
-            width: 10%; 
-            text-align: left; 
-        }
-		
-        tbody {
-            font-weight: bold; 
-            text-align: center; 
-            color: #6F605A; 
-        }
-		
-		caption {
-            font-size: 2em;
-            font-weight: bold;
-            text-align: left; 
-			color: #72BF44;
-            border-bottom: 3px solid #72BF44;
-        }
-</style>
+        #template { width: 100%; height: 100%; box-sizing: border-box; padding: 12px; font-family: Arial, sans-serif; color: #333; }
+        .header { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+        .header img { max-width: 260px; max-height: 90px; }
+        .header-title { text-align: right; }
+        .header-title h1 { margin: 0; color: #72bf44; }
+        .section { margin-top: 22px; }
+        .section-title { margin: 0 0 12px; padding-bottom: 5px; color: #72bf44; border-bottom: 3px solid #72bf44; }
+        .field-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px 18px; }
+        .field { min-height: 42px; }
+        .field-wide { grid-column: 1 / -1; }
+        .label { display: block; margin-bottom: 4px; font-weight: bold; }
+        .data { display: block; min-height: 20px; }
+        .backoffice-tables { width: 100%; border-collapse: collapse; table-layout: auto; }
+        .backoffice-tables caption { display: none; }
+        .backoffice-tables th, .backoffice-tables td { padding: 5px; text-align: center; vertical-align: middle; border: 1px solid #d0d0d0; }
+        .image-title { margin-top: 18px; font-weight: bold; }
+    </style>
 </head>
-<div id="template">
-    <div class="container">
-        <div class="column">
-            <img src="./img/logo-project.svg" alt="Logo de la concesionaria">
+<body>
+<div id="template" class="portrait">
+    <div class="header">
+        <img src="./img/logo-project.svg" alt="Logo de la concesionaria">
+        <div class="header-title"><h1>Ficha registro de eventos</h1><strong>Concesión Nogales</strong></div>
+    </div>
+
+    <section class="section">
+        <h2 class="section-title">Información</h2>
+        <div class="field-grid">
+            <div class="field"><span class="label">Identificador</span><span class="data" id="field.incident_report_id"></span></div>
+            <div class="field"><span class="label">Fecha</span><span class="data" id="field.date"></span></div>
+            <div class="field"><span class="label">Kilómetro</span><span class="data" id="field.km"></span></div>
+            <div class="field"><span class="label">Evento</span><span class="data" id="field.event_id"></span></div>
+            <div class="field"><span class="label">Lado de carretera</span><span class="data" id="field.side_id"></span></div>
+            <div class="field"><span class="label">Tramo</span><span class="data" id="field.stretch_id"></span></div>
+            <div class="field"><span class="label">Comuna</span><span class="data" id="field.comunne_id"></span></div>
+            <div class="field"><span class="label">Sentido</span><span class="data" id="field.direction_id"></span></div>
+            <div class="field"><span class="label">Método de detección</span><span class="data" id="field.detection_id"></span></div>
+            <div class="field"><span class="label">Aviso a Carabineros</span><span class="data" id="field.notice_id"></span></div>
+            <div class="field"><span class="label">Operador de turno</span><span class="data" id="field.operator"></span></div>
         </div>
-        <div class="column text-container">
-            <h1>FICHA DEL INCIDENTE</h1>
-            <h2>Concesión:</h2><span id="class="myspan">Nogales</span>
+    </section>
+
+    <section class="section">
+        <h2 class="section-title">Clasificación del evento</h2>
+        <div class="field-grid">
+            <div class="field"><span class="label">Tipo de evento</span><span class="data" id="field.event_type_id"></span></div>
+            <div class="field"><span class="label">Colisión</span><span class="data" id="field.collision_id"></span></div>
+            <div class="field"><span class="label">Choque con objeto</span><span class="data" id="field.object_crash_id"></span></div>
+            <div class="field"><span class="label">Choque con vehículo</span><span class="data" id="field.vehicle_crash_id"></span></div>
+            <div class="field"><span class="label">Ubicación relativa</span><span class="data" id="field.relative_location_id"></span></div>
         </div>
-    </div>
+    </section>
 
-    <div class="separator-container">
-        <h1>Datos de la incidencia</h1>
-        <hr class="separator">
-    </div>
+    <section class="section">
+        <h2 class="section-title">Redacción de lo sucedido</h2>
+        <div class="data" id="field.comments"></div>
+    </section>
 
-	<div class="div-separator">
-		<div class="row">
-			<div class="left-align">
-				<h2 class="small-h2">Fecha de inicio del incidente</h2>
-				<span id="field.created_at" class="myspan"></span>
-			</div>
-			<div class="right-align">
-				<h2 class="small-h2">Tipo de detección</h2>			
-				<span id="field.type_detection" class="myspan"></span>
-			</div>
-		</div>
+    <section class="section">
+        <h2 class="section-title">Vehículos participantes</h2>
+        <table class="backoffice-tables" id="field.vehicles"><tbody><tr>
+            <th id="field.vehicles.vehicle_type_id"></th>
+            <th id="field.vehicles.vehicle_service_id"></th>
+            <th id="field.vehicles.vehicle_consecuence_id"></th>
+            <th id="field.vehicles.vehicle_manoeuvre_id"></th>
+            <th id="field.vehicles.vehicle_lanes_id"></th>
+            <th id="field.vehicles.vehicle_traffic_lanes_id"></th>
+            <th id="field.vehicles.patent"></th>
+            <th id="field.vehicles.vehicle_directions_id"></th>
+            <th id="field.vehicles.vehicle_hit_and_run_id"></th>
+            <th id="field.vehicles.vehicle_brand_id"></th>
+        </tr></tbody></table>
+    </section>
 
-		<div class="row">
-			<div class="left-align"></div>
-			<div class="right-align">
-				<h2 class="small-h2">Origen de detección</h2>			
-				<span id="field.source_id" class="myspan"></span>
-			</div>
-		</div>
+    <section class="section">
+        <h2 class="section-title">Estado de la vía y visibilidad</h2>
+        <div class="field-grid">
+            <div class="field"><span class="label">Tipo de carpeta</span><span class="data" id="field.road_type_id"></span></div>
+            <div class="field"><span class="label">Estado de carpeta</span><span class="data" id="field.road_state_id"></span></div>
+            <div class="field"><span class="label">Condición de la calzada</span><span class="data" id="field.road_condition_id"></span></div>
+            <div class="field"><span class="label">Estado atmosférico</span><span class="data" id="field.weather_state_id"></span></div>
+            <div class="field"><span class="label">Luminosidad</span><span class="data" id="field.luminosity_id"></span></div>
+            <div class="field"><span class="label">Luz artificial</span><span class="data" id="field.ligth_id"></span></div>
+            <div class="field field-wide"><span class="label">Causa probable</span><span class="data" id="field.cause_id"></span></div>
+        </div>
+    </section>
 
-		<div class="row">
-			<div class="left-align"></div>
-			<div class="right-align">
-				<h2 class="small-h2">Elemento de detección</h2>			
-						<span id="field.element_id" class="myspan"></span>
-			</div>
-		</div>
-	</div>
-	
-	<div class="div-separator">
-		<div class="row">
-			<div class="left-align">
-				<h2 class="small-h2">Tipo de evento</h2>
-				<span id="field.incident_type" class="myspan"></span>
-			</div>
-			<div class="right-align">
-				<h2 class="small-h2">Nivel de gravedad</h2>			
-				<span id="field.level" class="myspan"></span>
-			</div>
-		</div>
-	</div>
-	
-	<div class="div-separator">
-		<div class="row">
-			<div class="left-align">
-				<h2 class="small-h2">Nombre de contacto</h2>
-				<span id="field.user_n" class="myspan"></span>
-			</div>
-			<div class="right-align">
-				<h2 class="small-h2">Telefono de contacto</h2>			
-				<span id="field.phone" class="myspan"></span>
-			</div>
-		</div>
-	</div>
-	
-	<div class="separator-container">
-        <h1>Ubicación de la incidencia</h1>
-        <hr class="separator">
-    </div>
-	
-	<div class="div-separator">
-		<div class="row">
-			<div class="left-align">
-				<h2 class="small-h2">km inicial</h2>
-				<span id="field.km_start" class="myspan"></span>
-			</div>
-			<div class="right-align">
-				<h2 class="small-h2">km final</h2>			
-				<span id="field.km_end" class="myspan"></span>
-			</div>
-		</div>
-	</div>
-	
-    <table id = "field.vehicles">
-		<tbody>
-			<tr>
-					<td id="field.vehicles.vehicle_type_id"></td>				
-					<td id="field.vehicles.vehicle_brand_id"></td>					
-					<td id="field.vehicles.vehicle_model_id"></td>					
-					<td id="field.vehicles.patent"></td>				
-					<td id="field.vehicles.color"></td>				
-					<td id="field.vehicles.vehicle_damage_id"></td>				
-					<td id="field.vehicles.attended_id"></td>				
-					<td id="field.vehicles.assistance_type_id"></td>				
-					<td id="field.vehicles.transfer_place_id"></td>			
-					<td id="field.vehicles.comment"></td>
-			</tr>
-		</tbody>
-    </table>
-	
-    <table id = "field.participants">
-		<tbody>
-			<tr>
-					<td id="field.participants.name"></td>				
-					<td id="field.participants.rut"></td>					
-					<td id="field.participants.address"></td>					
-					<td id="field.participants.phone"></td>				
-					<td id="field.participants.age"></td>				
-					<td id="field.participants.gender_id"></td>				
-					<td id="field.participants.stage_id"></td>				
-					<td id="field.participants.user_type_id"></td>				
-					<td id="field.participants.injury_type_id"></td>			
-					<td id="field.participants.injury_level_id"></td>
-			</tr>
-		</tbody>
-    </table>
-	
-    <table id = "field.assigned_resources">
-		<tbody>
-			<tr>
-					<td id="field.assigned_resources.action_id"></td>				
-					<td id="field.assigned_resources.typology_id"></td>					
-					<td id="field.assigned_resources.resource_id"></td>					
-					<td id="field.assigned_resources.release_date"></td>				
-					<td id="field.assigned_resources.comment"></td>		
-			</tr>
-		</tbody>
-    </table>
-	
-    <table id = "field.interrupt_agents">
-		<tbody>
-			<tr>
-					<td id="field.interrupt_agents.agents_id"></td>				
-					<td id="field.interrupt_agents.inicio"></td>					
-					<td id="field.interrupt_agents.final"></td>					
-					<td id="field.interrupt_agents.comentarios"></td>		
-			</tr>
-		</tbody>
-    </table>
-	
-    <table id = "field.unavailable_lanes">
-		<tbody>
-			<tr>
-					<td id="field.unavailable_lanes.lane_action_id"></td>				
-					<td id="field.unavailable_lanes.lane_id"></td>					
-					<td id="field.unavailable_lanes.start_action"></td>					
-					<td id="field.unavailable_lanes.comment"></td>		
-			</tr>
-		</tbody>
-    </table>
-	
-	<div class="separator-container">
-        <h1>Detalle de la incidencia</h1>
-        <hr class="separator">
-    </div>
-	
-	<div class="div-separator">
-		<h2>Descripción breve</h2>
-		<span id="field.comment"></span>
-	</div>
-	
-	<div class="div-separator">
-		<h2>Fotos de la evidencia</h2>
-	</div>
-	
-	<div class="column" id="groupImage.photos"></div>
+    <section class="section">
+        <h2 class="section-title">Personas involucradas</h2>
+        <table class="backoffice-tables" id="field.participants"><tbody><tr>
+            <th id="field.participants.participant_name"></th>
+            <th id="field.participants.participant_rut"></th>
+            <th id="field.participants.participant_age"></th>
+            <th id="field.participants.participant_address"></th>
+            <th id="field.participants.participant_vehicle"></th>
+            <th id="field.participants.participant_type_id"></th>
+            <th id="field.participants.participant_injury_id"></th>
+            <th id="field.participants.participant_nacionality_id"></th>
+            <th id="field.participants.participant_hit_and_run_id"></th>
+            <th id="field.participants.phone_number"></th>
+        </tr></tbody></table>
+    </section>
 
-	<div class="div-separator">
-		<h2>Fotos croquis del accidente</h2>
-	</div>
-	
-	<div class="column" id="groupImage.sketch"></div>
+    <section class="section">
+        <h2 class="section-title">Cierres</h2>
+        <table class="backoffice-tables" id="field.closures"><tbody><tr>
+            <th id="field.closures.side_roads_id"></th>
+            <th id="field.closures.lanes_id"></th>
+            <th id="field.closures.clousure_entities_id"></th>
+            <th id="field.closures.closure_types_id"></th>
+            <th id="field.closures.start_hour"></th>
+            <th id="field.closures.end_hour"></th>
+            <th id="field.closures.start_km"></th>
+            <th id="field.closures.end_km"></th>
+            <th id="field.closures.total_time"></th>
+            <th id="field.closures.comments"></th>
+        </tr></tbody></table>
+    </section>
 
+    <section class="section">
+        <h2 class="section-title">Servicios de apoyo</h2>
+        <table class="backoffice-tables" id="field.support_services"><tbody><tr>
+            <th id="field.support_services.type_id"></th>
+            <th id="field.support_services.subtype_id"></th>
+            <th id="field.support_services.detection_time"></th>
+            <th id="field.support_services.arrival_time"></th>
+            <th id="field.support_services.response_time"></th>
+            <th id="field.support_services.comment"></th>
+            <th id="field.support_services.quantity"></th>
+            <th id="field.support_services.departure_time"></th>
+        </tr></tbody></table>
+    </section>
+
+    <section class="section">
+        <h2 class="section-title">Daños y responsables</h2>
+        <table class="backoffice-tables" id="field.damages_responsabilities"><tbody><tr>
+            <th id="field.damages_responsabilities.address"></th>
+            <th id="field.damages_responsabilities.phone_number"></th>
+            <th id="field.damages_responsabilities.vehicle_owner_id"></th>
+            <th id="field.damages_responsabilities.owner_name"></th>
+            <th id="field.damages_responsabilities.business_activity"></th>
+            <th id="field.damages_responsabilities.rut"></th>
+            <th id="field.damages_responsabilities.description"></th>
+            <th id="field.damages_responsabilities.quantity"></th>
+            <th id="field.damages_responsabilities.entity"></th>
+        </tr></tbody></table>
+    </section>
+
+    <section class="section">
+        <h2 class="section-title">Denuncia y antecedentes</h2>
+        <div class="field-grid">
+            <div class="field"><span class="label">Denuncia realizada por</span><span class="data" id="field.report_by"></span></div>
+            <div class="field"><span class="label">Estampado de Carabineros de</span><span class="data" id="field.stamped"></span></div>
+            <div class="field"><span class="label">Citado al juzgado de</span><span class="data" id="field.court"></span></div>
+            <div class="field"><span class="label">Fecha de citación</span><span class="data" id="field.citattion_date"></span></div>
+            <div class="field"><span class="label">Número de parte/constancia</span><span class="data" id="field.report_number"></span></div>
+            <div class="field"><span class="label">Plaza</span><span class="data" id="field.station"></span></div>
+            <div class="field"><span class="label">Número de folio</span><span class="data" id="field.file_number"></span></div>
+            <div class="field"><span class="label">Nombre de patrullero</span><span class="data" id="field.patrol_name"></span></div>
+            <div class="field"><span class="label">Nombre operador del centro de control</span><span class="data" id="field.operator_name"></span></div>
+            <div class="field"><span class="label">Nombre supervisor de operaciones</span><span class="data" id="field.supervisor_name"></span></div>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2 class="section-title">Evidencias</h2>
+        <div class="image-title">Fotografías</div>
+        <div id="groupImage.photos"></div>
+        <div class="image-title">Croquis del accidente</div>
+        <div id="groupImage.sketch"></div>
+    </section>
 </div>
+</body>
 </html>

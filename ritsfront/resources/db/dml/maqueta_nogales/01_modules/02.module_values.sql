@@ -26,7 +26,6 @@ INSERT INTO ui.module_values(module_id, module_param_id, value) VALUES
 (6019, 13, '1'), (6019, 14, 'participant_nacionalities'),
 (6020, 13, '1'), (6020, 14, 'support_services'),
 (6021, 13, '1'), (6021, 14, 'damages_responsabilities'),
-(6022, 13, '1'), (6022, 14, 'damages_evaluations'),
 (6023, 13, '1'), (6023, 14, 'owner_types'),
 (6024, 13, '1'), (6024, 14, 'support_service_types'),
 (6025, 13, '1'), (6025, 14, 'support_service_subtypes'),
@@ -37,6 +36,7 @@ INSERT INTO ui.module_values(module_id, module_param_id, value) VALUES
 (6030, 13, '1'), (6030, 14, 'luminosity'),
 (6031, 13, '1'), (6031, 14, 'ligth'),
 (6032, 13, '1'), (6032, 14, 'causes'),
+(6033, 13, '1'), (6033, 14, 'cct_calls'),
 
 (6050, 13, '1'), (6050, 14, 'annual_summary'),
 (6051, 13, '1'), (6051, 14, 'month_summary'),

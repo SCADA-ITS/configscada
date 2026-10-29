@@ -17,7 +17,11 @@ BEGIN
 		INSERT INTO backoffice.participant_injuries (alias) VALUES('Grave');
 		INSERT INTO backoffice.participant_injuries (alias) VALUES('Muerto');
 		
-		INSERT INTO backoffice.participant_nacionalities (alias) VALUES('Chilena');
-		INSERT INTO backoffice.participant_nacionalities (alias) VALUES('Extranjera');
+			INSERT INTO backoffice.participant_hit_and_run (alias) VALUES('Sí');
+			INSERT INTO backoffice.participant_hit_and_run (alias) VALUES('No');
+
+			INSERT INTO backoffice.participant_nacionalities (alias) VALUES('Chilena');
+			INSERT INTO backoffice.participant_nacionalities (alias) VALUES('Extranjera');
+
   END IF;
 END $$;
