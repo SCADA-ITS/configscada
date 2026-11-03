@@ -31,6 +31,44 @@ BEGIN
 	INSERT INTO backoffice.sg_metadata_tables (id, name, label, label_singular, label_description, mdi_icon, support_images, support_attachments, metadata, sql_view) VALUES
 	(1, 'incidents', 'Incidencias', 'Incidencias', 'LBL_INCIDENTS_DESCRIPTION', 'mdi mdi-message-alert', true, true, 
 	'{
+		  "referTables": [
+		    {
+		      "name": "vehicles",
+		      "position": 1
+		    },
+		    {
+		      "name": "participants",
+		      "position": 2
+		    },
+		    {
+		      "name": "closures",
+		      "position": 3
+		    },
+		    {
+		      "name": "damages_responsabilities",
+		      "position": 4
+		    },
+		    {
+		      "name": "support_services",
+		      "position": 5
+		    },
+		    {
+		      "name": "user_letter_reports",
+		      "position": 6
+		    },
+		    {
+		      "name": "preliminary_incident_reports",
+		      "position": 7
+		    },
+		    {
+		      "name": "insurance_reports",
+		      "position": 8
+		    },
+		    {
+		      "name": "cct_calls",
+		      "position": 9
+		    }
+		  ],
 		  "tabs": [
 		    {
 		      "label": "LBL_SECTION_ACCUSATION",
@@ -239,7 +277,10 @@ BEGIN
 	(63, 'user_letter_recipient_titles', 'Tratamiento destinatario', 'Tratamiento destinatario', 'Tratamiento destinatario', 'mdi mdi-message-alert', false, false, null, null),
 	(64, 'preliminary_incident_reports', 'Informe preliminar', 'Informe preliminar', 'Informe preliminar', 'mdi mdi-message-alert', false, false,
 	'{
-		"srcTemplate": "preliminaryIncidentReportTemplate.html"
+		"srcTemplate": "preliminaryIncidentReportTemplate.html",
+		"showIdForm": false,
+		"showIdTable": false,
+		"showIdSearch": false
 	}',
 	null),
 	(65, 'cct_calls', 'Llamadas CCT', 'Llamada CCT', 'Llamadas CCT', 'mdi mdi-phone', false, false, null, null),
@@ -303,7 +344,7 @@ BEGIN
 	(0204, 2, 'vehicle_consecuence_id', 'Consecuencia', NULL, true, '{"position": 4, "editable": true}', null),
 	(0205, 2, 'vehicle_manoeuvre_id', 'Maniobra', NULL, true, '{"position": 5, "editable": true}', null),
 	(0206, 2, 'patent', 'Patente', NULL, true, '{"position": 6, "editable": true}', null),
-	(0207, 2, 'lane', 'Vía', NULL, true, '{"position": 7, "editable": true}', null),
+	(0207, 2, 'lane', 'Sector', NULL, true, '{"position": 7, "editable": true}', null),
 	(0208, 2, 'vehicle_brand_id', 'Marca', NULL, true, '{"position": 8, "editable": true}', null),
 	(0209, 2, 'vehicle_direction_id', 'Sentido', NULL, true, '{"position": 9, "editable": true}', null),
 	(0210, 2, 'vehicle_lane_id', 'Pista', NULL, true, '{"position": 10, "editable": true}', null),
@@ -669,31 +710,31 @@ BEGIN
 	(6207, 62, 'recipient_region', 'Región', NULL, true, '{"position": 7, "editable": true}', null),
 	(6208, 62, 'reference', 'Referencia', NULL, true, '{"position": 8, "editable": true}', null),
 	(6209, 62, 'incident_description', 'Descripción del suceso', NULL, true, '{"multiline": 5, "position": 9, "editable": true}', null),
+	(6210, 62, 'insurance_company', 'Compañía', NULL, true, '{"position": 10, "editable": true, "required": false, "formVisible": true, "tableVisible": false}', null),
+	(6211, 62, 'insurance_policy_number', 'N.º Póliza', NULL, true, '{"position": 11, "editable": true, "required": false, "formVisible": true, "tableVisible": false}', null),
+	(6212, 62, 'insurance_branch', 'Ramo', NULL, true, '{"position": 12, "editable": true, "required": false, "formVisible": true, "tableVisible": false}', null),
+	(6213, 62, 'signatory_name', 'Nombre del firmante', NULL, true, '{"position": 13, "editable": true, "required": false, "formVisible": true, "tableVisible": false}', null),
+	(6214, 62, 'signatory_role', 'Cargo del firmante', NULL, true, '{"position": 14, "editable": true, "required": false, "formVisible": true, "tableVisible": false}', null),
 
 	(6301, 63, 'id', 'Identificador', NULL, true, '{"position": 1, "editable": false, "tableVisible": false}', null),
 	(6302, 63, 'alias', 'Tratamiento', NULL, true, '{"position": 2, "editable": false, "tableVisible": true, "refName": true}', null),
 
-	(6401, 64, 'incident_report_id', 'Identificador', NULL, true, '{"position": 1, "editable": true, "refName": true}', null),
-	(6402, 64, 'month_incident_number', 'Nº incidente del mes', NULL, true, '{"position": 2, "editable": true}', null),
-	(6403, 64, 'report_datetime', 'Fecha y hora', NULL, true, '{"position": 3, "editable": false}', null),
-	(6404, 64, 'km', 'Kilómetro', NULL, true, '{"position": 4, "editable": false}', null),
-	(6405, 64, 'commune', 'Comuna', NULL, true, '{"position": 5, "editable": true}', null),
-	(6406, 64, 'sector', 'Sector', NULL, true, '{"position": 6, "editable": true}', null),
-	(6407, 64, 'carriageway', 'Calzada', NULL, true, '{"position": 7, "editable": true}', null),
-	(6408, 64, 'traffic_direction', 'Sentido de tránsito', NULL, true, '{"position": 8, "editable": false}', null),
-	(6409, 64, 'involved_lanes', 'Pistas involucradas', NULL, true, '{"position": 9, "editable": true}', null),
-	(6410, 64, 'traffic_condition', 'Condición de tránsito', NULL, true, '{"position": 10, "editable": true}', null),
-	(6411, 64, 'incident_type', 'Tipo de incidente', NULL, true, '{"position": 11, "editable": false}', null),
-	(6412, 64, 'deaths', 'Fallecidos', NULL, true, '{"position": 12, "editable": false}', null),
-	(6413, 64, 'injured', 'Lesionados', NULL, true, '{"position": 13, "editable": false}', null),
-	(6414, 64, 'involved_vehicles', 'Vehículos involucrados', NULL, true, '{"position": 14, "editable": false}', null),
-	(6415, 64, 'infrastructure_damage', 'Daños a la infraestructura', NULL, true, '{"multiline": 5, "position": 15, "editable": false}', null),
-	(6416, 64, 'event_description', 'Descripción del evento', NULL, true, '{"multiline": 5, "position": 16, "editable": false}', null),
-	(6417, 64, 'road_assistance', 'Asistencia en ruta', NULL, true, '{"multiline": 5, "position": 17, "editable": true}', null),
-	(6418, 64, 'information_responsible', 'Responsable de la información', NULL, true, '{"position": 18, "editable": true}', null),
-	(6419, 64, 'mobile_phone', 'Teléfono móvil', NULL, true, '{"position": 19, "editable": true}', null),
-	(6420, 64, 'report_date', 'Fecha', NULL, false, '{"position":20,"editable":false,"tableVisible":false,"formVisible":false}', null),
-	(6421, 64, 'report_time', 'Hora', NULL, false, '{"position":21,"editable":false,"tableVisible":false,"formVisible":false}', null),
+	(6401, 64, 'incident_id', 'Incidencias', NULL, false, '{"position":0,"editable":false,"formVisible":false,"tableVisible":false,"refName":true}', null),
+	(6404, 64, 'km', 'Kilómetro', NULL, true, '{"position":4,"editable":false,"formVisible":false,"tableVisible":true}', null),
+	(6406, 64, 'sector', 'Sector', NULL, true, '{"position":5,"editable":false,"formVisible":false,"tableVisible":true}', null),
+	(6408, 64, 'traffic_direction', 'Sentido de tránsito', NULL, true, '{"position":6,"editable":false,"formVisible":false,"tableVisible":true}', null),
+	(6409, 64, 'involved_lanes', 'Pistas involucradas', NULL, true, '{"position":7,"editable":false,"formVisible":false,"tableVisible":true}', null),
+	(6410, 64, 'traffic_condition', 'Condición de tránsito', NULL, true, '{"position":8,"editable":true,"formVisible":true,"tableVisible":true}', null),
+	(6412, 64, 'deaths', 'Fallecidos', NULL, true, '{"position":9,"editable":false,"formVisible":false,"tableVisible":true}', null),
+	(6413, 64, 'injured', 'Lesionados', NULL, true, '{"position":10,"editable":false,"formVisible":false,"tableVisible":true}', null),
+	(6416, 64, 'event_description', 'Descripción', NULL, true, '{"multiline":5,"position":12,"editable":false,"formVisible":false,"tableVisible":true}', null),
+	(6420, 64, 'report_date', 'Fecha', NULL, false, '{"position":2,"editable":false,"formVisible":false,"tableVisible":true}', null),
+	(6421, 64, 'report_time', 'Hora', NULL, false, '{"position":3,"editable":false,"formVisible":false,"tableVisible":true}', null),
+	(6422, 64, 'congestion', 'Congestión', NULL, true, '{"position":11,"editable":true,"formVisible":true,"tableVisible":true}', null),
+	(6423, 64, 'report_status', 'Estado', NULL, true, '{"position":13,"editable":true,"formVisible":true,"tableVisible":true}', null),
+	(6424, 64, 'event_category', 'Tipo', NULL, false, '{"position":1,"editable":false,"formVisible":false,"tableVisible":true}', null),
+	(6425, 64, 'consequences_html', 'Bloque de consecuencias', NULL, false, '{"position":90,"editable":false,"formVisible":false,"tableVisible":false}', null),
+	(6426, 64, 'report_title', 'Título del informe', NULL, false, '{"position":91,"editable":false,"formVisible":false,"tableVisible":false}', null),
 
 	(6501, 65, 'incident_id', 'Identificador', NULL, true, '{"position": 1, "editable": true, "refName": true}', null),
 	(6502, 65, 'call_number', 'Nº', NULL, true, '{"position": 2, "editable": false, "tableVisible": true}', null),
@@ -780,7 +821,7 @@ BEGIN
 	(7208, 72, 'consequence', 'Consecuencia', NULL, false, '{"position":8,"editable":false,"tableVisible":true}', NULL),
 	(7209, 72, 'manoeuvre', 'Maniobra', NULL, false, '{"position":9,"editable":false,"tableVisible":true}', NULL),
 	(7210, 72, 'patent', 'Patente', NULL, false, '{"position":10,"editable":false,"tableVisible":true}', NULL),
-	(7211, 72, 'roadway', 'Vía', NULL, false, '{"position":11,"editable":false,"tableVisible":true}', NULL),
+	(7211, 72, 'roadway', 'Sector', NULL, false, '{"position":11,"editable":false,"tableVisible":true}', NULL),
 	(7212, 72, 'brand', 'Marca', NULL, false, '{"position":12,"editable":false,"tableVisible":true}', NULL),
 	(7213, 72, 'direction', 'Sentido', NULL, false, '{"position":13,"editable":false,"tableVisible":true}', NULL),
 	(7214, 72, 'lane', 'Pista', NULL, false, '{"position":14,"editable":false,"tableVisible":true}', NULL),

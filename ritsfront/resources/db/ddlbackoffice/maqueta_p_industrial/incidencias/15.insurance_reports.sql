@@ -160,7 +160,7 @@ BEGIN
                 consequence.alias AS consequence,
                 manoeuvre.alias AS manoeuvre,
                 vehicle.patent,
-                vehicle.lane AS roadway,
+                sector.alias AS roadway,
                 brand.alias AS brand,
                 direction.alias AS direction,
                 lane.alias AS lane,
@@ -185,7 +185,9 @@ BEGIN
             LEFT JOIN backoffice.vehicle_lanes lane
                 ON lane.id = vehicle.vehicle_lane_id
             LEFT JOIN backoffice.vehicle_hit_and_run hit_and_run
-                ON hit_and_run.id = vehicle.vehicle_hit_and_run_id;
+                ON hit_and_run.id = vehicle.vehicle_hit_and_run_id
+            LEFT JOIN backoffice.sector sector
+                ON sector.id = vehicle.sector_id;
 
             -- Una fila por participante y reporte; sin cruzar vehiculos.
             CREATE OR REPLACE VIEW backoffice.insurance_report_participants AS

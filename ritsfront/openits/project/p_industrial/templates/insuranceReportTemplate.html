@@ -72,8 +72,8 @@
         }
 
         .insurance-report .participant-section {
-            break-inside: avoid;
-            page-break-inside: avoid;
+            break-inside: auto;
+            page-break-inside: auto;
         }
 
         .insurance-report .separador {
@@ -285,161 +285,198 @@
             content: "No hay participantes registrados para esta incidencia.";
         }
 
-        .insurance-report .vehicle-table th:nth-child(2) {
-            width: 9%;
+        /* Vehículos: una ficha independiente por vehículo. */
+
+        .insurance-report section:has(> .vehicle-table) {
+            break-inside: auto;
+            page-break-inside: auto;
         }
 
-        .insurance-report .vehicle-table th:nth-child(3) {
-            width: 10%;
-        }
-
-        .insurance-report .vehicle-table th:nth-child(4) {
-            width: 12%;
-        }
-
-        .insurance-report .vehicle-table th:nth-child(5) {
-            width: 12%;
-        }
-
-        .insurance-report .vehicle-table th:nth-child(6) {
-            width: 9%;
-        }
-
-        .insurance-report .vehicle-table th:nth-child(7) {
-            width: 10%;
-        }
-
-        .insurance-report .vehicle-table th:nth-child(8) {
-            width: 9%;
-        }
-
-        .insurance-report .vehicle-table th:nth-child(9) {
-            width: 11%;
-        }
-
-        .insurance-report .vehicle-table th:nth-child(10) {
-            width: 9%;
-        }
-
-        .insurance-report .vehicle-table th:nth-child(11) {
-            width: 9%;
-        }
-
-        /* Personas: nueve campos arriba y Dirección debajo de cada registro. */
-        .insurance-report .participant-table {
-            display: table;
+        .insurance-report .vehicle-table {
+            display: block;
             width: 100%;
+            font-size: 12px;
+            counter-reset: insurance-vehicle;
+        }
+
+        .insurance-report .vehicle-table > thead {
+            display: none;
+        }
+
+        .insurance-report .vehicle-table > tr {
+            display: grid;
+            width: 100%;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 8px 0;
+            padding: 0 0 8px;
+            margin: 0 0 16px;
+            border: 1px solid #d7dde4;
+            border-top: 2px solid #71be44;
+            break-inside: avoid;
+            page-break-inside: avoid;
+        }
+
+        .insurance-report .vehicle-table > tr:has(> td:first-child > p:not(:empty)) {
+            counter-increment: insurance-vehicle;
+        }
+
+        .insurance-report .vehicle-table > tr::before {
+            content: "Vehículo participante " counter(insurance-vehicle);
+            grid-column: 1 / -1;
+            grid-row: 1;
+            padding: 7px 10px;
+            background: #f0f2f4;
+            border-bottom: 1px solid #d7dde4;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .insurance-report .vehicle-table > tr:last-of-type {
+            margin-bottom: 0;
+        }
+
+        .insurance-report .vehicle-table > tr > td {
+            display: block;
+            width: auto;
+            min-width: 0;
+            margin: 0 6px;
+            padding: 0;
+            border: 0;
+            text-align: left;
+        }
+
+        .insurance-report .vehicle-table > tr > td::before {
+            display: flex;
+            align-items: center;
+            min-height: 30px;
+            padding: 5px 6px;
+            background: #f0f2f4;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .insurance-report .vehicle-table > tr > td > p {
+            min-height: 28px;
+            padding: 6px;
+            font-size: 12px;
+            line-height: 1.45;
+        }
+
+        .insurance-report .vehicle-table > tr > td:nth-child(2)::before { content: "Tipo"; }
+        .insurance-report .vehicle-table > tr > td:nth-child(3)::before { content: "Servicio"; }
+        .insurance-report .vehicle-table > tr > td:nth-child(4)::before { content: "Consecuencia"; }
+        .insurance-report .vehicle-table > tr > td:nth-child(5)::before { content: "Maniobra"; }
+        .insurance-report .vehicle-table > tr > td:nth-child(6)::before { content: "Patente"; }
+        .insurance-report .vehicle-table > tr > td:nth-child(7)::before { content: "Sector"; }
+        .insurance-report .vehicle-table > tr > td:nth-child(8)::before { content: "Marca"; }
+        .insurance-report .vehicle-table > tr > td:nth-child(9)::before { content: "Sentido"; }
+        .insurance-report .vehicle-table > tr > td:nth-child(10)::before { content: "Pista"; }
+        .insurance-report .vehicle-table > tr > td:nth-child(11)::before { content: "Vehículo fuga"; }
+
+        /* Participantes: una ficha independiente por persona. */
+
+        .insurance-report section:has(> .participant-table) {
+            break-inside: auto;
+            page-break-inside: auto;
+        }
+
+        .insurance-report .participant-table {
+            display: block;
+            width: 100%;
+            font-size: 12px;
+            counter-reset: insurance-participant;
         }
 
         .insurance-report .participant-table > thead {
-            display: table-header-group;
+            display: none;
         }
 
-        .insurance-report .participant-table > thead > tr,
         .insurance-report .participant-table > tr {
             display: grid;
             width: 100%;
-            grid-template-columns:
-                minmax(0, 20fr)
-                minmax(0, 11fr)
-                minmax(0, 5fr)
-                minmax(0, 9fr)
-                minmax(0, 11fr)
-                minmax(0, 11fr)
-                minmax(0, 12fr)
-                minmax(0, 10fr)
-                minmax(0, 11fr);
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 8px 0;
+            padding: 0 0 8px;
+            margin: 0 0 16px;
+            border: 1px solid #d7dde4;
+            border-top: 2px solid #71be44;
+            break-inside: avoid;
+            page-break-inside: avoid;
         }
 
-        .insurance-report .participant-table > tr {
-            margin-bottom: 12px;
+        .insurance-report .participant-table > tr:has(> td:first-child > p:not(:empty)) {
+            counter-increment: insurance-participant;
+        }
+
+        .insurance-report .participant-table > tr::before {
+            content: "Persona involucrada " counter(insurance-participant);
+            grid-column: 1 / -1;
+            grid-row: 1;
+            padding: 7px 10px;
+            background: #f0f2f4;
             border-bottom: 1px solid #d7dde4;
+            font-size: 12px;
+            font-weight: bold;
         }
 
         .insurance-report .participant-table > tr:last-of-type {
             margin-bottom: 0;
         }
 
-        .insurance-report .participant-table th,
-        .insurance-report .participant-table td {
+        .insurance-report .participant-table > tr > td {
+            display: block;
             width: auto;
             min-width: 0;
-            grid-row: 1;
-            border-bottom: 0;
-        }
-
-        .insurance-report .participant-table tr > :nth-child(2) {
-            grid-column: 1;
+            margin: 0 6px;
+            padding: 0;
+            border: 0;
             text-align: left;
         }
 
-        .insurance-report .participant-table tr > :nth-child(3) {
-            grid-column: 2;
-        }
-
-        .insurance-report .participant-table tr > :nth-child(4) {
-            grid-column: 3;
-        }
-
-        .insurance-report .participant-table tr > :nth-child(6) {
-            grid-column: 4;
-        }
-
-        .insurance-report .participant-table tr > :nth-child(7) {
-            grid-column: 5;
-        }
-
-        .insurance-report .participant-table tr > :nth-child(8) {
-            grid-column: 6;
-        }
-
-        .insurance-report .participant-table tr > :nth-child(9) {
-            grid-column: 7;
-        }
-
-        .insurance-report .participant-table tr > :nth-child(10) {
-            grid-column: 8;
-        }
-
-        .insurance-report .participant-table tr > :nth-child(11) {
-            grid-column: 9;
-        }
-
-        .insurance-report .participant-table th:nth-child(5) {
-            display: none;
-        }
-
-        .insurance-report .participant-table > tr > td:nth-child(5) {
-            grid-column: 1 / -1;
-            grid-row: 2;
-            padding: 7px 0 8px;
-            text-align: left;
-            font-size: 12px;
-            white-space: pre-wrap;
-            break-inside: auto;
-            page-break-inside: auto;
-        }
-
-        .insurance-report .participant-table > tr > td:nth-child(5)::before {
-            content: "Dirección";
-            display: block;
-            margin-bottom: 3px;
+        .insurance-report .participant-table > tr > td::before {
+            display: flex;
+            align-items: center;
+            min-height: 30px;
             padding: 5px 6px;
             background: #f0f2f4;
+            font-size: 11px;
             font-weight: bold;
-            break-after: avoid;
-            page-break-after: avoid;
         }
 
-        .insurance-report .participant-table > tr:first-of-type {
-            break-before: avoid;
-            page-break-before: avoid;
+        .insurance-report .participant-table > tr > td > p {
+            min-height: 28px;
+            padding: 6px;
+            font-size: 12px;
+            line-height: 1.45;
         }
 
-        .insurance-report .incident-narrative,
-        .insurance-report .free-text {
-            orphans: 3;
-            widows: 3;
+        .insurance-report .participant-table > tr > td:nth-child(2) { grid-column: 1; grid-row: 2; }
+        .insurance-report .participant-table > tr > td:nth-child(3) { grid-column: 2; grid-row: 2; }
+        .insurance-report .participant-table > tr > td:nth-child(4) { grid-column: 3; grid-row: 2; }
+        .insurance-report .participant-table > tr > td:nth-child(6) { grid-column: 4; grid-row: 2; }
+        .insurance-report .participant-table > tr > td:nth-child(7) { grid-column: 1; grid-row: 3; }
+        .insurance-report .participant-table > tr > td:nth-child(8) { grid-column: 2; grid-row: 3; }
+        .insurance-report .participant-table > tr > td:nth-child(9) { grid-column: 3; grid-row: 3; }
+        .insurance-report .participant-table > tr > td:nth-child(11) { grid-column: 4; grid-row: 3; }
+        .insurance-report .participant-table > tr > td:nth-child(10) { grid-column: 1; grid-row: 4; }
+        .insurance-report .participant-table > tr > td:nth-child(5) { grid-column: 2 / -1; grid-row: 4; }
+
+        .insurance-report .participant-table > tr > td:nth-child(2)::before { content: "Nombre"; }
+        .insurance-report .participant-table > tr > td:nth-child(3)::before { content: "RUT"; }
+        .insurance-report .participant-table > tr > td:nth-child(4)::before { content: "Edad"; }
+        .insurance-report .participant-table > tr > td:nth-child(5)::before { content: "Dirección"; }
+        .insurance-report .participant-table > tr > td:nth-child(6)::before { content: "Patente"; }
+        .insurance-report .participant-table > tr > td:nth-child(7)::before { content: "Tipo"; }
+        .insurance-report .participant-table > tr > td:nth-child(8)::before { content: "Lesión"; }
+        .insurance-report .participant-table > tr > td:nth-child(9)::before { content: "Nacionalidad"; }
+        .insurance-report .participant-table > tr > td:nth-child(10)::before { content: "Conductor a la fuga"; }
+        .insurance-report .participant-table > tr > td:nth-child(11)::before { content: "Atención"; }
+
+        @media screen and (max-width: 560px) {
+            .insurance-report .vehicle-table > tr,
+            .insurance-report .participant-table > tr {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
         }
 
         @media print {
@@ -450,10 +487,7 @@
             .webix_ui_print:has(#template.insurance-report),
             .webix_ui_print:has(#template.insurance-report) > .webix_template {
                 position: static !important;
-                box-sizing: border-box !important;
                 width: 100% !important;
-                min-width: 0 !important;
-                max-width: 100% !important;
                 height: auto !important;
                 margin: 0 !important;
                 padding: 0 !important;
@@ -569,21 +603,11 @@
 
             <tbody>
                 <tr>
-                    <td>
-                        <span class="value" id="field.event_type"></span>
-                    </td>
-                    <td>
-                        <span class="value" id="field.collision"></span>
-                    </td>
-                    <td>
-                        <span class="value" id="field.object_crash"></span>
-                    </td>
-                    <td>
-                        <span class="value" id="field.vehicle_crash"></span>
-                    </td>
-                    <td>
-                        <span class="value" id="field.relative_location"></span>
-                    </td>
+                    <td><span class="value" id="field.event_type"></span></td>
+                    <td><span class="value" id="field.collision"></span></td>
+                    <td><span class="value" id="field.object_crash"></span></td>
+                    <td><span class="value" id="field.vehicle_crash"></span></td>
+                    <td><span class="value" id="field.relative_location"></span></td>
                 </tr>
             </tbody>
         </table>
@@ -610,36 +634,16 @@
                     <th id="field.insurance_report_vehicles.vehicle_id">
                         Identificador técnico del vehículo
                     </th>
-                    <th id="field.insurance_report_vehicles.vehicle_type">
-                        Tipo
-                    </th>
-                    <th id="field.insurance_report_vehicles.vehicle_service">
-                        Servicio
-                    </th>
-                    <th id="field.insurance_report_vehicles.consequence">
-                        Consecuencia
-                    </th>
-                    <th id="field.insurance_report_vehicles.manoeuvre">
-                        Maniobra
-                    </th>
-                    <th id="field.insurance_report_vehicles.patent">
-                        Patente
-                    </th>
-                    <th id="field.insurance_report_vehicles.roadway">
-                        Vía
-                    </th>
-                    <th id="field.insurance_report_vehicles.brand">
-                        Marca
-                    </th>
-                    <th id="field.insurance_report_vehicles.direction">
-                        Sentido
-                    </th>
-                    <th id="field.insurance_report_vehicles.lane">
-                        Pista
-                    </th>
-                    <th id="field.insurance_report_vehicles.hit_and_run">
-                        Vehículo fuga
-                    </th>
+                    <th id="field.insurance_report_vehicles.vehicle_type">Tipo</th>
+                    <th id="field.insurance_report_vehicles.vehicle_service">Servicio</th>
+                    <th id="field.insurance_report_vehicles.consequence">Consecuencia</th>
+                    <th id="field.insurance_report_vehicles.manoeuvre">Maniobra</th>
+                    <th id="field.insurance_report_vehicles.patent">Patente</th>
+                    <th id="field.insurance_report_vehicles.roadway">Sector</th>
+                    <th id="field.insurance_report_vehicles.brand">Marca</th>
+                    <th id="field.insurance_report_vehicles.direction">Sentido</th>
+                    <th id="field.insurance_report_vehicles.lane">Pista</th>
+                    <th id="field.insurance_report_vehicles.hit_and_run">Vehículo fuga</th>
                 </tr>
             </thead>
         </table>
@@ -662,24 +666,12 @@
 
             <tbody>
                 <tr>
-                    <td>
-                        <span class="value" id="field.road_type"></span>
-                    </td>
-                    <td>
-                        <span class="value" id="field.road_state"></span>
-                    </td>
-                    <td>
-                        <span class="value" id="field.road_condition"></span>
-                    </td>
-                    <td>
-                        <span class="value" id="field.weather_state"></span>
-                    </td>
-                    <td>
-                        <span class="value" id="field.luminosity"></span>
-                    </td>
-                    <td>
-                        <span class="value" id="field.artificial_light"></span>
-                    </td>
+                    <td><span class="value" id="field.road_type"></span></td>
+                    <td><span class="value" id="field.road_state"></span></td>
+                    <td><span class="value" id="field.road_condition"></span></td>
+                    <td><span class="value" id="field.weather_state"></span></td>
+                    <td><span class="value" id="field.luminosity"></span></td>
+                    <td><span class="value" id="field.artificial_light"></span></td>
                 </tr>
             </tbody>
         </table>
