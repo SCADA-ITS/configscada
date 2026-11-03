@@ -269,7 +269,7 @@ BEGIN
 	(59, 'lanes', 'Pistas', 'Pistas', 'Pistas', 'mdi mdi-message-alert', false, false, null, null),
 	(60, 'entities', 'Servicio de apoyo', 'Servicio de apoyo', 'Servicio de apoyo', 'mdi mdi-message-alert', false, false, null, null),
 	(61, 'closure_types', 'Tipo de cierre', 'Tipo de cierre', 'Tipo de cierre', 'mdi mdi-message-alert', false, false, null, null),
-	(62, 'user_letter_reports', 'Cartas de usuario', 'Carta de usuario', 'Cartas de usuario', 'mdi mdi-message-alert', false, false,
+	(62, 'user_letter_reports', 'Cartas de usuarios', 'Cartas de usuarios', 'Cartas de usuarios', 'mdi mdi-message-alert', false, false,
 	'{
 		"srcTemplate": "userLetterReportTemplate.html"
 	}',
@@ -297,7 +297,7 @@ BEGIN
 	     '{"editable":false,"showIdForm":false,"showIdTable":false,"showIdSearch":false}',
 	     'SELECT id, period_id, call_number, call_date, call_time, response_time, reason, call_description, operator, shift FROM backoffice.cct_calls_monthly_detail'),
 
-	(70, 'insurance_reports', 'Reporte Cía. de seguros', 'Reporte Cía. de seguros', 'Reporte Cía. de seguros', 'mdi mdi-file-document-outline', false, false, '{"showIdForm":false,"showIdTable":false,"showIdSearch":false}', NULL),
+	(70, 'insurance_reports', 'Compañia de seguros', 'Compañia de seguros', 'Compañia de seguros', 'mdi mdi-file-document-outline', false, false, '{"showIdForm":false,"showIdTable":false,"showIdSearch":false}', NULL),
 	(71, 'insurance_report_data', 'Reportes compañía de seguros', 'Reporte compañía de seguros', 'Reportes compañía de seguros', 'mdi mdi-file-document-outline', false, false, '{"srcTemplate":"insuranceReportTemplate.html","editable":false,"gridFilters":true,"showIdForm":false,"showIdTable":false,"showIdSearch":false}', 'SELECT id, incident_id, report_datetime, report_date, report_text, additional_text, incident_number, incident_operator, km, incident_datetime, event, road_side, stretch, traffic_direction, event_type, detection_datetime, collision, object_crash, vehicle_crash, relative_location, road_condition, road_type, road_state, weather_state, luminosity, artificial_light, detection_method, police_notice, probable_cause, incident_description FROM backoffice.insurance_report_data'),
 	(72, 'insurance_report_vehicles', 'Vehículos del reporte', 'Vehículo del reporte', 'Vehículos del reporte', 'mdi mdi-file-document-outline', false, false, '{"editable":false,"showIdForm":false,"showIdTable":false,"showIdSearch":false}', 'SELECT id, insurance_report_id, vehicle_id, incident_id, incident_number, vehicle_type, vehicle_service, consequence, manoeuvre, patent, roadway, brand, direction, lane, hit_and_run FROM backoffice.insurance_report_vehicles'),
 	(73, 'insurance_report_participants', 'Participantes del reporte', 'Participante del reporte', 'Participantes del reporte', 'mdi mdi-file-document-outline', false, false, '{"editable":false,"showIdForm":false,"showIdTable":false,"showIdSearch":false}', 'SELECT id, insurance_report_id, participant_id, incident_id, incident_number, participant_name, participant_rut, participant_age, participant_address, patent, participant_type, injury, nationality, hit_and_run, attention FROM backoffice.insurance_report_participants');
