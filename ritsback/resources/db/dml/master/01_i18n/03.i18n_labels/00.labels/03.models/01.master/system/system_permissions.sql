@@ -116,6 +116,9 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 	--SystemPermission:36
 	('es_ES', 1, 'LBL_SYSTEM_PERMISSION_SHOW_EXTERNAL_INCIDENTS', 'Permite visualizar la tabla con la información de las incidencias externas', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	('es_ES', 1, 'LBL_SYSTEM_PERMISSION_SHOW_EXTERNAL_INCIDENTS_DESC', 'Permite visualizar la tabla con la información de las incidencias externas', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    --SystemPermission:37
+	('es_ES', 1, 'LBL_SYSTEM_PERMISSION_EDIT_INCIDENT_TYPES_ADVANCED', 'Editor de incidencias avanzado', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_ES', 1, 'LBL_SYSTEM_PERMISSION_EDIT_INCIDENT_TYPES_ADVANCED_DESC', 'Permite editar la configuración avanzada de las incidencias del sistema', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	
 --en_GB
 	--SystemPermission:1
@@ -223,7 +226,10 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 	--SystemPermission:36
 	('en_GB', 1, 'LBL_SYSTEM_PERMISSION_SHOW_EXTERNAL_INCIDENTS', 'It allows you to view the table with information on external incidents', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	('en_GB', 1, 'LBL_SYSTEM_PERMISSION_SHOW_EXTERNAL_INCIDENTS_DESC', 'It allows you to view the table with information on external incidents', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-
+    --SystemPermission:37
+	('en_GB', 1, 'LBL_SYSTEM_PERMISSION_EDIT_INCIDENT_TYPES_ADVANCED', 'Edit incidents advanced', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('en_GB', 1, 'LBL_SYSTEM_PERMISSION_EDIT_INCIDENT_TYPES_ADVANCED_DESC', 'It allows you to advanced edit the system incidents', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	
 --sk_SK
 	--SystemPermission:1
 	('sk_SK', 1, 'LBL_SYSTEM_PERMISSION_LOGIN', 'Prihlásenie', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -309,6 +315,9 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 	--SystemPermission:29
 	('sk_SK', 1, 'LBL_SYSTEM_PERMISSION_EDIT_MAPS_ADVANCED', 'Úprava máp (expert)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	('sk_SK', 1, 'LBL_SYSTEM_PERMISSION_EDIT_MAPS_ADVANCED_DESC', 'Umožňuje upravovať mapy (expert)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	--SystemPermission:37
+	('sk_SK', 1, 'LBL_SYSTEM_PERMISSION_EDIT_INCIDENT_TYPES_ADVANCED', 'Pokročilý editor incidentov', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('sk_SK', 1, 'LBL_SYSTEM_PERMISSION_EDIT_INCIDENT_TYPES_ADVANCED_DESC', 'Umožňuje úpravu pokročilých nastavení konfigurácie pre systémové incidenty', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	
 --es_CL
 	--SystemPermission:1
@@ -415,4 +424,8 @@ INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",crea
 	('es_CL', 1, 'LBL_SYSTEM_PERMISSION_SHOW_INCIDENT_BACKOFFICE_DESC', 'Permite visualizar la bitácora de incidencias', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 	--SystemPermission:36
 	('es_CL', 1, 'LBL_SYSTEM_PERMISSION_SHOW_EXTERNAL_INCIDENTS', 'Permite visualizar la tabla con la información de las incidencias externas', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-	('es_CL', 1, 'LBL_SYSTEM_PERMISSION_SHOW_EXTERNAL_INCIDENTS_DESC', 'Permite visualizar la tabla con la información de las incidencias externas', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+	('es_CL', 1, 'LBL_SYSTEM_PERMISSION_SHOW_EXTERNAL_INCIDENTS_DESC', 'Permite visualizar la tabla con la información de las incidencias externas', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    --SystemPermission:37
+	('es_CL', 1, 'LBL_SYSTEM_PERMISSION_EDIT_INCIDENT_TYPES_ADVANCED', 'Editor de incidencias avanzado', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+	('es_CL', 1, 'LBL_SYSTEM_PERMISSION_EDIT_INCIDENT_TYPES_ADVANCED_DESC', 'Permite editar la configuración avanzada de las incidencias del sistema', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+	
