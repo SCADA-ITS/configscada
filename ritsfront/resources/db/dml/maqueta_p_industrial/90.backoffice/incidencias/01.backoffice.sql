@@ -57,16 +57,8 @@ BEGIN
 		      "position": 6
 		    },
 		    {
-		      "name": "preliminary_incident_reports",
-		      "position": 7
-		    },
-		    {
 		      "name": "insurance_reports",
 		      "position": 8
-		    },
-		    {
-		      "name": "cct_calls",
-		      "position": 9
 		    }
 		  ],
 		  "tabs": [
@@ -275,15 +267,15 @@ BEGIN
 	}',
 	null),	
 	(63, 'user_letter_recipient_titles', 'Tratamiento destinatario', 'Tratamiento destinatario', 'Tratamiento destinatario', 'mdi mdi-message-alert', false, false, null, null),
-	(64, 'preliminary_incident_reports', 'Informe preliminar', 'Informe preliminar', 'Informe preliminar', 'mdi mdi-message-alert', false, false,
-	'{
-		"srcTemplate": "preliminaryIncidentReportTemplate.html",
-		"showIdForm": false,
-		"showIdTable": false,
-		"showIdSearch": false
-	}',
-	null),
-	(65, 'cct_calls', 'Llamadas CCT', 'Llamada CCT', 'Llamadas CCT', 'mdi mdi-phone', false, false, null, null),
+	(64, 'preliminary_incident_reports', 'Incidentes', 'Informe de incidente', 'Informe preliminar de incidente', 'mdi mdi-file-document-outline', false, false,
+    '{
+        "srcTemplate": "preliminaryIncidentReportTemplate.html",
+        "showIdForm": false,
+        "showIdTable": false,
+        "showIdSearch": false
+    }',
+    null),
+(65, 'cct_calls', 'Llamadas CCT', 'Llamada CCT', 'Llamadas CCT', 'mdi mdi-phone', false, false, null, null),
 	(66, 'cct_call_reasons', 'Motivos', 'Motivo', 'Motivos', 'mdi mdi-phone', false, false, null, null),
 	(67, 'cct_call_shifts', 'Turnos', 'Turno', 'Turnos', 'mdi mdi-phone', false, false, null, null),
 
@@ -300,7 +292,9 @@ BEGIN
 	(70, 'insurance_reports', 'Compañia de seguros', 'Compañia de seguros', 'Compañia de seguros', 'mdi mdi-file-document-outline', false, false, '{"showIdForm":false,"showIdTable":false,"showIdSearch":false}', NULL),
 	(71, 'insurance_report_data', 'Reportes compañía de seguros', 'Reporte compañía de seguros', 'Reportes compañía de seguros', 'mdi mdi-file-document-outline', false, false, '{"srcTemplate":"insuranceReportTemplate.html","editable":false,"gridFilters":true,"showIdForm":false,"showIdTable":false,"showIdSearch":false}', 'SELECT id, incident_id, report_datetime, report_date, report_text, additional_text, incident_number, incident_operator, km, incident_datetime, event, road_side, stretch, traffic_direction, event_type, detection_datetime, collision, object_crash, vehicle_crash, relative_location, road_condition, road_type, road_state, weather_state, luminosity, artificial_light, detection_method, police_notice, probable_cause, incident_description FROM backoffice.insurance_report_data'),
 	(72, 'insurance_report_vehicles', 'Vehículos del reporte', 'Vehículo del reporte', 'Vehículos del reporte', 'mdi mdi-file-document-outline', false, false, '{"editable":false,"showIdForm":false,"showIdTable":false,"showIdSearch":false}', 'SELECT id, insurance_report_id, vehicle_id, incident_id, incident_number, vehicle_type, vehicle_service, consequence, manoeuvre, patent, roadway, brand, direction, lane, hit_and_run FROM backoffice.insurance_report_vehicles'),
-	(73, 'insurance_report_participants', 'Participantes del reporte', 'Participante del reporte', 'Participantes del reporte', 'mdi mdi-file-document-outline', false, false, '{"editable":false,"showIdForm":false,"showIdTable":false,"showIdSearch":false}', 'SELECT id, insurance_report_id, participant_id, incident_id, incident_number, participant_name, participant_rut, participant_age, participant_address, patent, participant_type, injury, nationality, hit_and_run, attention FROM backoffice.insurance_report_participants');
+	(73, 'insurance_report_participants', 'Participantes del reporte', 'Participante del reporte', 'Participantes del reporte', 'mdi mdi-file-document-outline', false, false, '{"editable":false,"showIdForm":false,"showIdTable":false,"showIdSearch":false}', 'SELECT id, insurance_report_id, participant_id, incident_id, incident_number, participant_name, participant_rut, participant_age, participant_address, patent, participant_type, injury, nationality, hit_and_run, attention FROM backoffice.insurance_report_participants'),
+    (74, 'preliminary_accident_reports', 'Accidentes', 'Informe de accidente', 'Informe preliminar de accidente', 'mdi mdi-file-document-outline', false, false,
+    '{"srcTemplate":"preliminaryAccidentReportTemplate.html","showIdForm":false,"showIdTable":false,"showIdSearch":false}', null);
 
 	INSERT INTO backoffice.sg_metadata_columns (id, sg_metadata_table_id, column_name, "label", label_description, needs_translation, metadata, ref_view_column_id) VALUES
 	(0101, 1, 'incident_report_id', 'Identificador', null, false, '{"position": 1, "tableVisible": true, "editable": true, "refName": true}', null),
@@ -719,27 +713,44 @@ BEGIN
 	(6301, 63, 'id', 'Identificador', NULL, true, '{"position": 1, "editable": false, "tableVisible": false}', null),
 	(6302, 63, 'alias', 'Tratamiento', NULL, true, '{"position": 2, "editable": false, "tableVisible": true, "refName": true}', null),
 
-	(6401, 64, 'incident_id', 'Incidencias', NULL, false, '{"position":0,"editable":false,"formVisible":false,"tableVisible":false,"refName":true}', null),
-	(6404, 64, 'km', 'Kilómetro', NULL, true, '{"position":4,"editable":false,"formVisible":false,"tableVisible":true}', null),
-	(6406, 64, 'sector', 'Sector', NULL, true, '{"position":5,"editable":false,"formVisible":false,"tableVisible":true}', null),
-	(6408, 64, 'traffic_direction', 'Sentido de tránsito', NULL, true, '{"position":6,"editable":false,"formVisible":false,"tableVisible":true}', null),
-	(6409, 64, 'involved_lanes', 'Pistas involucradas', NULL, true, '{"position":7,"editable":false,"formVisible":false,"tableVisible":true}', null),
-	(6410, 64, 'traffic_condition', 'Condición de tránsito', NULL, true, '{"position":8,"editable":true,"formVisible":true,"tableVisible":true}', null),
-	(6412, 64, 'deaths', 'Fallecidos', NULL, true, '{"position":9,"editable":false,"formVisible":false,"tableVisible":true}', null),
-	(6413, 64, 'injured', 'Lesionados', NULL, true, '{"position":10,"editable":false,"formVisible":false,"tableVisible":true}', null),
-	(6416, 64, 'event_description', 'Descripción', NULL, true, '{"multiline":5,"position":12,"editable":false,"formVisible":false,"tableVisible":true}', null),
-	(6420, 64, 'report_date', 'Fecha', NULL, false, '{"position":2,"editable":false,"formVisible":false,"tableVisible":true}', null),
-	(6421, 64, 'report_time', 'Hora', NULL, false, '{"position":3,"editable":false,"formVisible":false,"tableVisible":true}', null),
-	(6422, 64, 'congestion', 'Congestión', NULL, true, '{"position":11,"editable":true,"formVisible":true,"tableVisible":true}', null),
-	(6423, 64, 'report_status', 'Estado', NULL, true, '{"position":13,"editable":true,"formVisible":true,"tableVisible":true}', null),
-	(6424, 64, 'event_category', 'Tipo', NULL, false, '{"position":1,"editable":false,"formVisible":false,"tableVisible":true}', null),
-	(6425, 64, 'consequences_html', 'Bloque de consecuencias', NULL, false, '{"position":90,"editable":false,"formVisible":false,"tableVisible":false}', null),
-	(6426, 64, 'report_title', 'Título del informe', NULL, false, '{"position":91,"editable":false,"formVisible":false,"tableVisible":false}', null),
+	(6401, 64, 'id', 'Identificador', NULL, false, '{"position":1,"editable":false,"formVisible":false,"tableVisible":false}', NULL),
+    (6402, 64, 'contract_name', 'Nombre del contrato', NULL, false, '{"position":2,"editable":false,"required":false,"formVisible":false,"tableVisible":false}', NULL),
 
-	(6501, 65, 'incident_id', 'Identificador', NULL, true, '{"position": 1, "editable": true, "refName": true}', null),
+    (6403, 64, 'incident_type', 'Tipo de incidente', NULL, true, '{"position":3,"editable":true,"required":false,"formVisible":true,"tableVisible":true}', NULL),
+    (6420, 64, 'report_date', 'Fecha y hora', NULL, false, '{"position":4,"editable":true,"required":false,"formVisible":true,"tableVisible":true}', NULL),
+    (6404, 64, 'km', 'Kilómetro', NULL, true, '{"position":5,"editable":true,"required":false,"formVisible":true,"tableVisible":true}', NULL),
+    (6406, 64, 'sector', 'Sector', NULL, true, '{"position":6,"editable":true,"required":false,"formVisible":true,"tableVisible":true}', NULL),
+    (6408, 64, 'traffic_direction', 'Sentido del tránsito', NULL, true, '{"position":7,"editable":true,"required":false,"formVisible":true,"tableVisible":true}', NULL),
+    (6409, 64, 'involved_lanes', 'Pistas involucradas', NULL, true, '{"position":8,"editable":true,"required":false,"formVisible":true,"tableVisible":true}', NULL),
+    (6410, 64, 'traffic_condition', 'Condición del tránsito', NULL, true, '{"position":9,"editable":true,"required":false,"formVisible":true,"tableVisible":true}', NULL),
+    (6422, 64, 'congestion', 'Congestión', NULL, true, '{"position":10,"editable":true,"required":false,"formVisible":true,"tableVisible":true}', NULL),
+    (6416, 64, 'event_description', 'Descripción', NULL, true, '{"multiline":5,"position":11,"editable":true,"required":false,"formVisible":true,"tableVisible":true}', NULL),
+    (6423, 64, 'report_status', 'Estado', NULL, true, '{"position":12,"editable":true,"required":false,"formVisible":true,"tableVisible":true}', NULL),
+    (6427, 64, 'report_date_print', 'Fecha para impresión', NULL, false, '{"position":90,"editable":false,"required":false,"formVisible":false,"tableVisible":false}', NULL),
+    (6428, 64, 'report_time_print', 'Hora para impresión', NULL, false, '{"position":91,"editable":false,"required":false,"formVisible":false,"tableVisible":false}', NULL),
+
+    (7401, 74, 'id', 'Identificador', NULL, false, '{"position":1,"editable":false,"formVisible":false,"tableVisible":false}', NULL),
+    (7402, 74, 'contract_name', 'Nombre del contrato', NULL, false, '{"position":2,"editable":false,"required":false,"formVisible":false,"tableVisible":false}', NULL),
+
+    (7403, 74, 'accident_type', 'Tipo de accidente', NULL, true, '{"position":3,"editable":true,"required":false,"formVisible":true,"tableVisible":true}', NULL),
+    (7404, 74, 'report_date', 'Fecha y hora', NULL, false, '{"position":4,"editable":true,"required":false,"formVisible":true,"tableVisible":true}', NULL),
+    (7406, 74, 'km', 'Kilómetro', NULL, true, '{"position":5,"editable":true,"required":false,"formVisible":true,"tableVisible":true}', NULL),
+    (7407, 74, 'sector', 'Sector', NULL, true, '{"position":6,"editable":true,"required":false,"formVisible":true,"tableVisible":true}', NULL),
+    (7408, 74, 'traffic_direction', 'Sentido del tránsito', NULL, true, '{"position":7,"editable":true,"required":false,"formVisible":true,"tableVisible":true}', NULL),
+    (7409, 74, 'involved_lanes', 'Pistas involucradas', NULL, true, '{"position":8,"editable":true,"required":false,"formVisible":true,"tableVisible":true}', NULL),
+    (7410, 74, 'traffic_condition', 'Condición del tránsito', NULL, true, '{"position":9,"editable":true,"required":false,"formVisible":true,"tableVisible":true}', NULL),
+    (7411, 74, 'deaths', 'Fallecidos', NULL, true, '{"position":10,"editable":true,"required":false,"formVisible":true,"tableVisible":true}', NULL),
+    (7412, 74, 'injured', 'Lesionados', NULL, true, '{"position":11,"editable":true,"required":false,"formVisible":true,"tableVisible":true}', NULL),
+    (7413, 74, 'congestion', 'Congestión', NULL, true, '{"position":12,"editable":true,"required":false,"formVisible":true,"tableVisible":true}', NULL),
+    (7414, 74, 'event_description', 'Descripción', NULL, true, '{"multiline":5,"position":13,"editable":true,"required":false,"formVisible":true,"tableVisible":true}', NULL),
+    (7415, 74, 'report_status', 'Estado', NULL, true, '{"position":14,"editable":true,"required":false,"formVisible":true,"tableVisible":true}', NULL),
+    (7416, 74, 'report_date_print', 'Fecha para impresión', NULL, false, '{"position":90,"editable":false,"required":false,"formVisible":false,"tableVisible":false}', NULL),
+    (7417, 74, 'report_time_print', 'Hora para impresión', NULL, false, '{"position":91,"editable":false,"required":false,"formVisible":false,"tableVisible":false}', NULL),
+
+    (6501, 65, 'id', 'Identificador', NULL, true, '{"position":1,"editable":false,"tableVisible":false,"formVisible":false}', NULL),	
 	(6502, 65, 'call_number', 'Nº', NULL, true, '{"position": 2, "editable": false, "tableVisible": true}', null),
 	(6503, 65, 'call_datetime', 'Fecha y hora', NULL, true, '{"position": 3, "editable": true, "tableVisible": true}', null),
-	(6504, 65, 'response_time', 'Tiempo de respuesta', NULL, true, '{"position": 4, "editable": false, "tableVisible": true}', null),
+	(6504, 65, 'response_time', 'Tiempo de respuesta', NULL, true, '{"position":4,"editable":true,"tableVisible":true}', NULL),	
 	(6505, 65, 'reason_id', 'Motivo', NULL, true, '{"position": 5, "editable": true, "tableVisible": true}', null),
 	(6506, 65, 'call_description', 'Descripción', NULL, true, '{"multiline": 5, "position": 6, "editable": true, "tableVisible": true}', null),
 	(6507, 65, 'operator', 'Operador de turno', NULL, true, '{"position": 7, "editable": false, "tableVisible": true}', null),

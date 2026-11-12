@@ -60,6 +60,11 @@ INSERT INTO ui.selector_tree_nodes (
     (010404, 1, 'Resumen mensual de llamadas CCT', null, 6053, true, true, 42),
 
 (010405, 1, 'Reportes compañía de seguros', null, 6054, true, true, 43),
+(010406, 1, 'Llamadas CCT', null, 6055, true, true, 44),
+
+(0105, 1, 'Informe preliminar', null, null, true, true, 45),
+    (010501, 1, 'Accidente', null, 6056, true, true, 46),
+    (010502, 1, 'Incidente', null, 6057, true, true, 47),
 
 (0201, 2, 'LBL_REPORT_ALARMS', null, 6100, true, true, 1),
 (0202, 2, 'LBL_REPORT_STATES', null, 6101, true, true, 1),
@@ -127,6 +132,9 @@ INSERT INTO ui.selector_tree_hierarchies (
 (1, 0104, 010402, true, true),
 (1, 0104, 010403, true, true),
 (1, 0104, 010404, true, true),
+
+(1, 0105, 010501, true, true),
+(1, 0105, 010502, true, true),
 
 (2, 0203, 020301, true, true),
     (2, 020301, 02030101, true, true),

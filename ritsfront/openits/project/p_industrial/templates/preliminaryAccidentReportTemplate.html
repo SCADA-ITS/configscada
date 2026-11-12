@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informe preliminar</title>
+    <style>
+        @page { size: A4 portrait; margin: 18mm; }
+        #template.preliminary-report, #template.preliminary-report * { box-sizing: border-box; }
+        #template.preliminary-report {
+            position: static; width: 100%; height: auto; margin: 0; padding: 0;
+            font-family: Arial, Helvetica, sans-serif; font-size: 13px; line-height: 1.5;
+            color: #111; background: #fff; overflow-wrap: anywhere;
+        }
+        .preliminary-report .report-logo {
+            display: block; width: 152px; height: auto; break-after: avoid; page-break-after: avoid;
+        }
+        .preliminary-report h1 {
+            margin: 24px 0 18px; font-size: 16px; font-weight: bold; line-height: 1.35;
+            break-after: avoid; page-break-after: avoid;
+        }
+        .preliminary-report .numbered-fields { counter-reset: report-item; }
+        .preliminary-report .report-line {
+            display: grid; grid-template-columns: 2.6ch minmax(0, 1fr); column-gap: 0.5ch;
+            align-items: baseline; margin: 0 0 8px; counter-increment: report-item;
+            break-inside: avoid; page-break-inside: avoid;
+        }
+        .preliminary-report .report-line::before {
+            content: counter(report-item) "."; text-align: right; font-variant-numeric: tabular-nums;
+        }
+        .preliminary-report .report-content { min-width: 0; }
+        .preliminary-report .label { font-weight: normal; }
+        .preliminary-report .data { white-space: pre-wrap; overflow-wrap: anywhere; word-break: normal; }
+        .preliminary-report .value:empty::before { content: "-"; }
+        .preliminary-report .description-value, .preliminary-report .data p {
+            display: inline; margin: 0; padding: 0; line-height: inherit; white-space: pre-wrap !important;
+        }
+        .preliminary-report .description-line {
+            break-inside: auto; page-break-inside: auto; orphans: 3; widows: 3;
+        }
+        @media print {
+            body:has(#template.preliminary-report) { margin: 0 !important; }
+            .webix_ui_print:has(#template.preliminary-report),
+            .webix_ui_print:has(#template.preliminary-report) > .webix_template {
+                position: static !important; box-sizing: border-box !important;
+                width: 100% !important; min-width: 0 !important; max-width: 100% !important;
+                height: auto !important; margin: 0 !important; padding: 0 !important; overflow: visible !important;
+            }
+        }
+    </style>
+</head>
+<body>
+<div id="template" class="portrait preliminary-report">
+    <img class="report-logo" src="./img/logo-project.svg" alt="Puente Industrial - ALEATICA">
+    <h1>INFORME EN CASO DE ACCIDENTE</h1>
+    <div class="numbered-fields">
+        <div class="report-line"><div class="report-content"><span class="label">Nombre del Contrato:</span> Concesión Vial Puente Industrial</div></div>
+        <div class="report-line"><div class="report-content"><span class="label">Tipo de accidente:</span> <span class="data value" id="field.accident_type"></span></div></div>
+        <div class="report-line"><div class="report-content"><span class="label">Fecha:</span> <span class="data value" id="field.report_date_print"></span></div></div>
+        <div class="report-line"><div class="report-content"><span class="label">Hora:</span> <span class="data value" id="field.report_time_print"></span></div></div>
+        <div class="report-line"><div class="report-content"><span class="label">Kilómetro:</span> <span class="data value" id="field.km"></span></div></div>
+        <div class="report-line"><div class="report-content"><span class="label">Sector:</span> <span class="data value" id="field.sector"></span></div></div>
+        <div class="report-line"><div class="report-content"><span class="label">Sentido de Tránsito:</span> <span class="data value" id="field.traffic_direction"></span></div></div>
+        <div class="report-line"><div class="report-content"><span class="label">Pistas involucradas:</span> <span class="data value" id="field.involved_lanes"></span></div></div>
+        <div class="report-line"><div class="report-content"><span class="label">Condición del Tránsito:</span> <span class="data value" id="field.traffic_condition"></span></div></div>
+        <div class="report-line"><div class="report-content"><span class="label">Fallecidos:</span> <span class="data value" id="field.deaths"></span></div></div>
+        <div class="report-line"><div class="report-content"><span class="label">Lesionados:</span> <span class="data value" id="field.injured"></span></div></div>
+        <div class="report-line"><div class="report-content"><span class="label">Congestión:</span> <span class="data value" id="field.congestion"></span></div></div>
+        <div class="report-line description-line"><div class="report-content"><span class="label">Descripción:</span> <div class="data value description-value" id="field.event_description"></div></div></div>
+        <div class="report-line"><div class="report-content"><span class="label">Estado:</span> <span class="data value" id="field.report_status"></span></div></div>
+    </div>
+</div>
+</body>
+</html>
