@@ -43,6 +43,7 @@ INSERT INTO master.i18n_labels (locale_code, module_id, "label", "translation", 
 ('es_ES', 1, 'LBL_MENU_ITEM_ROUTE_EDITOR', 'Editor de rutas', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_MENU_ITEM_MAP_EDITOR', 'Editor de mapas', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_ES', 1, 'LBL_MENU_ITEM_TRANSIT_DISCARDED_REASONS', 'Motivos de rechazo', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_ES', 1, 'LBL_MENU_ITEM_LIGHTING_CONFIG', 'Configuración de iluminación', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --en_GB--
 ('en_GB', 1, 'LBL_MENU_ITEM_ABOUT', 'About', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -78,6 +79,7 @@ INSERT INTO master.i18n_labels (locale_code, module_id, "label", "translation", 
 ('en_GB', 1, 'LBL_MENU_ITEM_ROUTE_EDITOR', 'Routes editor', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_MENU_ITEM_MAP_EDITOR', 'Maps editor', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('en_GB', 1, 'LBL_MENU_ITEM_TRANSIT_DISCARDED_REASONS', 'Discarded reasons', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('en_GB', 1, 'LBL_MENU_ITEM_LIGHTING_CONFIG', 'Lighting config', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --sk_SK--
 ('sk_SK', 1, 'LBL_MENU_ITEM_ABOUT', 'About', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -110,6 +112,7 @@ INSERT INTO master.i18n_labels (locale_code, module_id, "label", "translation", 
 ('sk_SK', 1, 'LBL_MENU_ITEM_ROUTE_EDITOR', 'Editor trasy', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('sk_SK', 1, 'LBL_MENU_ITEM_MAP_EDITOR', 'Editor máp', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('sk_SK', 1, 'LBL_MENU_ITEM_TRANSIT_DISCARDED_REASONS', 'Dôvody zamietnutia', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('sk_SK', 1, 'LBL_MENU_ITEM_LIGHTING_CONFIG', 'Nastavenie osvetlenia', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 --es_CL--
 ('es_CL', 1, 'LBL_MENU_ITEM_ABOUT', 'Acerca de', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -144,7 +147,8 @@ INSERT INTO master.i18n_labels (locale_code, module_id, "label", "translation", 
 ('es_CL', 1, 'LBL_MENU_ITEM_LOCATION_EDITOR', 'Editor de localizaciones', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_MENU_ITEM_ROUTE_EDITOR', 'Editor de rutas', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('es_CL', 1, 'LBL_MENU_ITEM_MAP_EDITOR', 'Editor de mapas', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('es_CL', 1, 'LBL_MENU_ITEM_TRANSIT_DISCARDED_REASONS', 'Motivos de rechazo', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+('es_CL', 1, 'LBL_MENU_ITEM_TRANSIT_DISCARDED_REASONS', 'Motivos de rechazo', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('es_CL', 1, 'LBL_MENU_ITEM_LIGHTING_CONFIG', 'Configuración de iluminación', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO master.i18n_labels (locale_code,module_id,"label","translation",created_at,updated_at) VALUES
 ('sk_SK', 1, 'LBL_MENU_ITEM_AUDITS', 'Audity', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),

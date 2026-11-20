@@ -131,6 +131,8 @@ INSERT INTO ui.modules(id, module_type_id, "name", description, default_view_typ
 
 (1057, 8, 'Map editor module', 'Map editor module', 1, 'SystemPermission:27', 'modules/mapEditorModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 
+(1058, 1, 'Config lighting module', 'Config lighting module', 2, NULL, 'modules/signaling/lighting/configLightingModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+
 (2000, 1, 'Map launcher Module', 'Map launcher Module', 1, null, 'modules/mapLauncherModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL);
 
 
@@ -662,4 +664,12 @@ INSERT INTO ui.window_values(module_id, window_param_id, value) VALUES
 (1056, 10, 'img/module/transit.png'),
 (1056, 11, '#464646'),
 (1056, 12, 'LBL_TRANSIT'),
-(1056, 14, 'true');
+(1056, 14, 'true'),
+
+(1058, 4, '700'),
+(1058, 5, '1200'),
+(1058, 8, 'true'),
+(1058, 10, 'img/module/lighting-config.png'),
+(1058, 11, '#464646'),
+(1058, 12, 'LBL_LIGHTING_CONFIG_HEADER'),
+(1058, 14, 'false');

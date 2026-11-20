@@ -3,8 +3,12 @@
 --
 INSERT INTO conf.elements
 (element_type_id,  element_subtype_id,  element_id,  location_id,  keep_values_on_disconnected,  inherit_state_id,  alias,  description,  on_change_alarm,  on_change_state,  on_change_measure,  on_schedule,  enabled,  visible,  alert,  alarm_count,  created_at,  updated_at) VALUES 
-(2000, NULL, 1, 1, NULL,  NULL, 'TUBE_1', 'TUBE_1', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(2000, NULL, 2, 1, NULL,  NULL, 'TUBE_2', 'TUBE_2', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(2000, NULL, 1, 1, NULL,  NULL, 'Despeñaperros tubo sentido Madrid', 'Despeñaperros tubo sentido Madrid', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2000, NULL, 2, 1, NULL,  NULL, 'Despeñaperros tubo sentido Córdoba', 'Despeñaperros tubo sentido Córdoba', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2000, NULL, 3, 1, NULL,  NULL, 'La Cantera tubo sentido Madrid', 'La Cantera tubo sentido Madrid', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2000, NULL, 4, 1, NULL,  NULL, 'La Cantera tubo sentido Córdoba', 'La Cantera tubo sentido Córdoba', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2000, NULL, 5, 1, NULL,  NULL, 'El Corzo tubo sentido Madrid', 'El Corzo tubo sentido Madrid', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2000, NULL, 6, 1, NULL,  NULL, 'El Corzo tubo sentido Córdoba', 'El Corzo tubo sentido Córdoba', NULL, NULL, NULL, NULL, true, true, false, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 -- 
 -- Table: conf.element_values.METEO

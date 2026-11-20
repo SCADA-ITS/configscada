@@ -40,7 +40,7 @@ INSERT INTO ui.menu_items(menu_group_id, "position", module_id, "label", icon, "
 -- OTHERS
 --(3, 1, 402, 'LBL_CONTROL_PANEL', 'img/menu/control-panel-menu.png', 'Menu item Control Panel', 'Menu item  CCTV', true, true),
 --(3, 2, 403, 'LBL_MENU_ITEM_REPORTS', 'img/menu/default.png', 'Menu item Reports', 'Menu item Reports', true, true),
-(3, 1, 600, 'WAZE', 'img/menu/default.png', 'WAZE', 'WAZE', true, true),
+
 
 
 -- TEST
@@ -50,7 +50,8 @@ INSERT INTO ui.menu_items(menu_group_id, "position", module_id, "label", icon, "
 (4, 4, 1045, 'LBL_HISTORICAL_CHARTS', 'img/menu/chart-menu.png', 'Historical charts', 'Historical Charts', true, true),
 (4, 5, 2003, 'LBL_INFRACTIONS_EDITOR', 'img/menu/default.png', 'Infraction editor', 'Infraction editor', true, true),
 (4, 6, 9000, 'LBL_TRANSIT_LIST_MODULE', 'img/menu/transit-menu.png', 'Transit list Module', 'Transit list Module', true, true),
-(4, 6, 9002, 'LBL_MENU_ITEM_TRANSIT_DISCARDED_REASONS', 'img/menu/transit-menu.png', 'Transit discarded reasons Module', 'Transit discarded reasons Module', true, true),
+(4, 7, 9002, 'LBL_MENU_ITEM_TRANSIT_DISCARDED_REASONS', 'img/menu/transit-menu.png', 'Transit discarded reasons Module', 'Transit discarded reasons Module', true, true),
+(4, 8, 600, 'WAZE', 'img/menu/default.png', 'WAZE', 'WAZE', true, true),
 
 -- BACKOFFICE
 
@@ -83,6 +84,9 @@ INSERT INTO ui.menu_items(menu_group_id, "position", module_id, "label", icon, "
 (4000, 7, 1048, 'LBL_MENU_ITEM_EQUIPMENT_EDITOR', 'img/menu/equipment-menu.png', 'Menu item equipment Editor', 'Menu item equipment Editor', true, true),
 (4000, 7, 1050, 'LBL_MENU_ITEM_LOCATION_EDITOR', 'img/menu/locations-menu.png', 'Menu item location editor', 'Menu item location editor', true, true),
 (4000, 7, 1053, 'LBL_MENU_ITEM_ROUTE_EDITOR', 'img/menu/route-menu.png', 'Menu item route editor', 'Menu item route editor', true, true),
+(4000, 7, 1058, 'LBL_MENU_ITEM_LIGHTING_CONFIG', 'img/menu/lighting-config.png', 'Menu item lighting config', 'Menu item lighting config', true, true),
 
 -- HELP
-(5000, 3, 1047, 'LBL_MENU_HELP_CONTENTS', 'img/menu/default.png', 'Help contents', 'Menu item help contents', true, true);
+(5000, 2, 1047, 'LBL_MENU_HELP_CONTENTS', 'img/menu/default.png', 'Help contents', 'Menu item help contents', true, true),
+(5000, 1, 1043, 'LBL_MENU_ITEM_TASK_MANAGER', 'img/menu/task-menu.png', 'Task manager', 'Menu item Task manager', true, true),
+(5000, 3, 1036, 'LBL_MENU_ITEM_ABOUT', 'img/menu/help.png', 'Menu item about', 'Menu item about', true, true);
