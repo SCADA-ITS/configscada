@@ -49,6 +49,12 @@ BEGIN
 		alias varchar null,
 		constraint pk_vehicle_hit_and_run primary key (id)
 	) tablespace tbl_backoffice;
+
+	create table backoffice.sector (
+    	id serial not null,
+    	alias varchar null,
+    	constraint pk_sector primary key (id)
+	) tablespace tbl_backoffice;
   
 	create table backoffice.vehicles (
 		id serial not null,
@@ -57,7 +63,7 @@ BEGIN
 		vehicle_service_id int null,
 		vehicle_consecuence_id int null,
 		vehicle_manoeuvre_id int null,
-		lane varchar null,
+		sector_id int null,
 		patent varchar null,
 		vehicle_brand_id int null,
 
@@ -103,6 +109,10 @@ BEGIN
 	create index idx_vehicle_hit_and_run_id on
 	backoffice.vehicles
 		using btree (vehicle_hit_and_run_id);
+
+	create index idx_sector_id on
+	backoffice.vehicles
+		using btree (sector_id);		
 		
 	alter table backoffice.vehicles add constraint fk_vehicle_incident_id foreign key (incident_id) references backoffice.incidents(id) ON DELETE CASCADE;
 	alter table backoffice.vehicles add constraint fk_vehicle_type_id foreign key (vehicle_type_id) references backoffice.vehicle_types(id) ON DELETE CASCADE;
@@ -113,5 +123,6 @@ BEGIN
 	alter table backoffice.vehicles add constraint fk_vehicle_direction_id foreign key (vehicle_direction_id) references backoffice.vehicle_directions(id) ON DELETE CASCADE;
 	alter table backoffice.vehicles add constraint fk_vehicle_lane_id foreign key (vehicle_lane_id) references backoffice.vehicle_lanes(id) ON DELETE CASCADE;
 	alter table backoffice.vehicles add constraint fk_vehicle_hit_and_run_id foreign key (vehicle_hit_and_run_id) references backoffice.vehicle_hit_and_run(id) ON DELETE CASCADE;
+	alter table backoffice.vehicles add constraint fk_sector_id foreign key (sector_id) references backoffice.sector(id) ON DELETE CASCADE;
   END IF;
 END $$;

@@ -43,6 +43,11 @@ INSERT INTO ui.modules
 (6050, 9, 'SUMMARY - annual', 'SUMMARY - annual', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 (6051, 9, 'SUMMARY - month', 'SUMMARY - month', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 (6052, 9, 'SUMMARY - incidents', 'SUMMARY - incidents', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(6053, 9, 'SUMMARY - CCT monthly', 'Resumen mensual de llamadas CCT', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(6054, 9, 'SUMMARY - insurance reports', 'Reportes compañía de seguros', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(6055, 9, 'INCIDENTS - cct_calls', 'Llamadas CCT', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(6056, 9, 'INCIDENTS - preliminary_accident_reports', 'Informes preliminares de accidentes', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
+(6057, 9, 'INCIDENTS - preliminary_incident_reports', 'Informes preliminares de incidentes', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 
 (6100, 9, 'REPORTS - alarms', 'REPORTS - alarms', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
 (6101, 9, 'REPORTS - states', 'REPORTS - states', 2, null, 'modules/backOffice/backOfficeModule.js', 'getView', 'loadData', NULL, NULL, true, true, NULL),
@@ -100,6 +105,11 @@ INSERT INTO ui.module_values
 (6050, 13, '1'), (6050, 14, 'annual_summary'),
 (6051, 13, '1'), (6051, 14, 'month_summary'),
 (6052, 13, '1'), (6052, 14, 'incidents_summary'),
+(6053, 13, '1'), (6053, 14, 'cct_calls_monthly_summary'),
+(6054, 13, '1'), (6054, 14, 'insurance_report_data'),
+(6055, 13, '1'), (6055, 14, 'cct_calls'),
+(6056, 13, '1'), (6056, 14, 'preliminary_accident_reports'),
+(6057, 13, '1'), (6057, 14, 'preliminary_incident_reports'),
 
 (6100, 13, '2'), (6100, 14, 'alarmas_hist'),
 (6101, 13, '2'), (6101, 14, 'estados_hist'),

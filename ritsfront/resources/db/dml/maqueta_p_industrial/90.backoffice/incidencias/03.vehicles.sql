@@ -158,5 +158,23 @@ BEGIN
 		
 		INSERT INTO backoffice.vehicle_hit_and_run (alias) VALUES ('Sí');
 		INSERT INTO backoffice.vehicle_hit_and_run (alias) VALUES ('No');
+
+		INSERT INTO backoffice.sector (alias) VALUES ('Viaducto Costanera');
+		INSERT INTO backoffice.sector (alias) VALUES ('Paso Superior ENAP');
+		INSERT INTO backoffice.sector (alias) VALUES ('Viaducto Hualpén.');
+		INSERT INTO backoffice.sector (alias) VALUES ('Puente Industrial');
+		INSERT INTO backoffice.sector (alias) VALUES ('Ramal Poniente');
+		INSERT INTO backoffice.sector (alias) VALUES ('Ramal Oriente');
+		INSERT INTO backoffice.sector (alias) VALUES ('Atravieso R160.');
+		INSERT INTO backoffice.sector (alias) VALUES ('Faja Fiscal');
+		INSERT INTO backoffice.sector (alias) VALUES ('Viaducto Los Batros');
+		INSERT INTO backoffice.sector (alias) VALUES ('Enlace Oriente');
+		INSERT INTO backoffice.sector (alias) VALUES ('Enlace Poniente');
+		INSERT INTO backoffice.sector (alias) VALUES ('Pórticos de Cobro');
+		INSERT INTO backoffice.sector (alias) VALUES ('Pórticos de Mensajería Variable.');
+		INSERT INTO backoffice.sector (alias) VALUES ('Mirador 1.');
+		INSERT INTO backoffice.sector (alias) VALUES ('Mirador 2.');
+		INSERT INTO backoffice.sector (alias) VALUES ('Pasarela 1.');
+		INSERT INTO backoffice.sector (alias) VALUES ('Pasarela 3.');
   END IF;
 END $$;

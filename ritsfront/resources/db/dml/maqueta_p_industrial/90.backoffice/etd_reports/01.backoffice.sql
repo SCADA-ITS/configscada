@@ -3,7 +3,7 @@ BEGIN
   IF EXISTS (SELECT 1 FROM pg_namespace WHERE nspname = 'hist') THEN
 	
   	INSERT INTO ui.backoffices (id, "name", description, "label", jdbc, "user", "password", "schema", default_metadata_backoffice, default_metadata_table, default_metadata_column, enabled) 
-	VALUES(3, 'etd_reports', NULL, NULL, 'jdbc:sqlserver://;serverName=10.140.31.103;databaseName=PuenteIndustrial', 'sa', 'TkMFCQOQzi92f6CXerDDUg==', 'reports',
+	VALUES(3, 'etd_reports', NULL, NULL, 'jdbc:sqlserver://;serverName=192.168.56.103;databaseName=PuenteIndustrial', 'sa', 'TkMFCQOQzi92f6CXerDDUg==', 'reports',
 	-- default_metadata_backoffice
 	'{}',
 	-- default_metadata_table

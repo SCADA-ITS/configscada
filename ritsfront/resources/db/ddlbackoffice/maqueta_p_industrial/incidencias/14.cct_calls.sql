@@ -1,52 +1,43 @@
-DO $$ 
+DO $$
 BEGIN
-  IF EXISTS (SELECT 1 FROM pg_tablespace WHERE spcname = 'tbl_backoffice') THEN
-  
-	create table backoffice.cct_call_reasons (
-		id serial not null,
-		alias varchar null,
+	IF EXISTS (
+		SELECT 1
+		FROM pg_tablespace
+		WHERE spcname = 'tbl_backoffice'
+	) THEN
 
-  		constraint pk_cct_call_reasons primary key (id)
-	) tablespace tbl_backoffice;
+		CREATE TABLE backoffice.cct_call_reasons (
+			id serial NOT NULL,
+			alias varchar NULL,
+			CONSTRAINT pk_cct_call_reasons PRIMARY KEY (id)
+		) TABLESPACE tbl_backoffice;
 
-	create table backoffice.cct_call_shifts (
-		id serial not null,
-		alias varchar null,
+		CREATE TABLE backoffice.cct_call_shifts (
+			id serial NOT NULL,
+			alias varchar NULL,
+			CONSTRAINT pk_cct_call_shifts PRIMARY KEY (id)
+		) TABLESPACE tbl_backoffice;
 
-  		constraint pk_cct_call_shifts primary key (id)
-	) tablespace tbl_backoffice;
+		CREATE TABLE backoffice.cct_calls (
+			id serial NOT NULL,
+			call_number int NULL,
+			call_datetime timestamptz NULL,
+			response_time varchar NULL,
+			reason_id int NULL,
+			call_description varchar NULL,
+			operator varchar NULL,
+			shift_id int NULL,
+			CONSTRAINT pk_cct_calls PRIMARY KEY (id)
+		) TABLESPACE tbl_backoffice;
 
-	create table backoffice.cct_calls (
-		id serial not null,
-		incident_id int null,
-		call_number int null,
-		call_datetime timestamptz,
-		response_time varchar null,
-		reason_id int null,
-		call_description varchar null,
-		operator varchar null,
-		shift_id int null,
+		CREATE INDEX idx_cct_calls_reason_id
+			ON backoffice.cct_calls USING btree (reason_id);
 
-  		constraint pk_cct_calls primary key (id)
-	) tablespace tbl_backoffice;
+		CREATE INDEX idx_cct_calls_shift_id
+			ON backoffice.cct_calls USING btree (shift_id);
 
-	create index idx_cct_calls_incident_id on
-	backoffice.cct_calls
-		using btree (incident_id);
+		ALTER TABLE backoffice.cct_calls ADD CONSTRAINT fk_cct_calls_reason_id FOREIGN KEY (reason_id) REFERENCES backoffice.cct_call_reasons(id) ON DELETE RESTRICT;
+		ALTER TABLE backoffice.cct_calls ADD CONSTRAINT fk_cct_calls_shift_id FOREIGN KEY (shift_id) REFERENCES backoffice.cct_call_shifts(id) ON DELETE RESTRICT;
 
-	create index idx_cct_calls_reason_id on
-	backoffice.cct_calls
-		using btree (reason_id);
-
-	create index idx_cct_calls_shift_id on
-	backoffice.cct_calls
-		using btree (shift_id);
-
-	alter table backoffice.cct_calls add constraint fk_cct_calls_incident_id foreign key (incident_id) references backoffice.incidents(id) ON DELETE CASCADE;
-
-	alter table backoffice.cct_calls add constraint fk_cct_calls_reason_id foreign key (reason_id) references backoffice.cct_call_reasons(id);
-
-	alter table backoffice.cct_calls add constraint fk_cct_calls_shift_id foreign key (shift_id) references backoffice.cct_call_shifts(id);
-
-  END IF;
+	END IF;
 END $$;
